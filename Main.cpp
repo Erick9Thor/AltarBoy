@@ -19,6 +19,25 @@ enum main_states
 
 Application* App = NULL;
 
+char* LoadShaderSource(const char* shader_file_name)
+{
+	char* data = nullptr;
+	FILE* file = nullptr;
+	fopen_s(&file, shader_file_name, "b");
+	if (file)
+	{
+		fseek(file, 0, SEEK_END);
+		int size = ftell(file);
+		data = (char*)malloc(size + 1);
+		fseek(file, 0, SEEK_SET);
+		fread(data, 1, size, file);
+		data[size] = 0;
+		fclose(file);
+	}
+	return data;
+}
+
+
 int main(int argc, char ** argv)
 {
 	int main_return = EXIT_FAILURE;

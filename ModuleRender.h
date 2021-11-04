@@ -12,6 +12,14 @@ public:
 	ModuleRender();
 	~ModuleRender();
 
+	char* LoadShaderSource(const char* shader_file_name);
+	unsigned int CompileShader(unsigned type, const char* source);
+	unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
+
+	void RenderVBO(unsigned vbo, unsigned program);
+
+	unsigned CreateTriangleVBO();
+
 	bool Init();
 	update_status PreUpdate();
 	update_status Update();
@@ -21,4 +29,6 @@ public:
 
 private:
 	void* context;
+	unsigned program;
+	unsigned vbo;
 };
