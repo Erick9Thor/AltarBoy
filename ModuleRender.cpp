@@ -4,6 +4,9 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "GL/glew.h"
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
 
 
 ModuleRender::ModuleRender()
@@ -144,6 +147,13 @@ bool ModuleRender::Init()
 	program = CreateProgram(vertex_id, fragment_id);
 
 	vbo = CreateTriangleVBO();
+
+
+	ImGui::CreateContext();
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(App->window->window, context);
+	ImGui_ImplOpenGL3_Init();
 
 	return true;
 }
