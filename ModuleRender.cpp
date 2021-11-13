@@ -4,10 +4,6 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "GL/glew.h"
-#include "imgui.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_opengl3.h"
-
 
 ModuleRender::ModuleRender()
 {
@@ -47,9 +43,6 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 // Destructor
 ModuleRender::~ModuleRender()
 {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
 }
 
 // 05 - Simple function to load C/c++ filer on our case for upload fragmernt and vertx files
