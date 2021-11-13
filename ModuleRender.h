@@ -21,6 +21,8 @@ public:
 	unsigned CreateTriangleVBO();
 
 	bool Init();
+	void initGlew();
+	void initializeOpenGLviaSDL();
 	update_status PreUpdate();
 	update_status Update();
 	update_status PostUpdate();
