@@ -4,9 +4,9 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "GL/glew.h"
+
 #include "ImGuiComponents/AppLog.h"
 
-class AppLog;
 
 class ModuleGui : public Module
 {
@@ -21,10 +21,6 @@ public:
 	bool CleanUp();
 
 	void ShowAboutWindow(bool* p_open);
-	void ShowAppLog(bool* p_open);
-
-
-	AppLog* log = nullptr;
 
 private:
 

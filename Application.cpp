@@ -1,5 +1,6 @@
 #pragma once
 #include "Application.h"
+#include "ImGuiComponents/AppLog.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"

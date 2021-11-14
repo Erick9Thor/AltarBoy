@@ -5,6 +5,8 @@
 #include "ModuleRender.h"
 #include "SDL.h"
 
+#include "ImGuiComponents/AppLog.h"
+
 #include "GL/glew.h"
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
@@ -13,7 +15,6 @@
 
 ModuleGui::ModuleGui()
 {
-    log = new AppLog();
 }
 
 // Destructor
@@ -39,11 +40,10 @@ update_status ModuleGui::PreUpdate()
 	ImGui::NewFrame();
 
 	bool show = true;
-	// ImGui::ShowDemoWindow(&showDemos);
-    // ShowAboutWindow(&showDemos);
+	// ImGui::ShowDemoWindow(&show);
+    // ShowAboutWindow(&show);
 
-    ShowAppLog(&show);
-
+    Logger->Draw(&show);
 
 	return UPDATE_CONTINUE;
 }
@@ -206,30 +206,3 @@ void ModuleGui::ShowAboutWindow(bool* p_open)
     }
     ImGui::End();
 }
-
-void ModuleGui::ShowAppLog(bool* p_open)
-{
-    static AppLog log;
-
-    ImGui::SetNextWindowSize(ImVec2(500, 400), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Example: Log", p_open);
-    if (ImGui::SmallButton("[Debug] Add 5 entries"))
-    {
-        static int counter = 0;
-        const char* categories[3] = { "info", "warn", "error" };
-        const char* words[] = { "Bumfuzzled", "Cattywampus", "Snickersnee", "Abibliophobia", "Absquatulate", "Nincompoop", "Pauciloquent" };
-        for (int n = 0; n < 5; n++)
-        {
-            const char* category = categories[counter % IM_ARRAYSIZE(categories)];
-            const char* word = words[counter % IM_ARRAYSIZE(words)];
-            log.AddLog("[%05d] [%s] Hello, current time is %.1f, here's a word: '%s'\n",
-                ImGui::GetFrameCount(), category, ImGui::GetTime(), word);
-            counter++;
-        }
-    }
-    ImGui::End();
-
-    // Actually call in the regular Log helper (which will Begin() into the same window as we just did)
-    log.Draw("Example: Log", p_open);
-}
-

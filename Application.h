@@ -12,6 +12,8 @@ class ModuleInput;
 class ModuleRenderExercise;
 class ModuleGui;
 
+class AppLog;
+
 class Application
 {
 public:
@@ -28,6 +30,8 @@ public:
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 	ModuleGui* gui = nullptr;
+
+	AppLog* console = nullptr;
 
 private:
 

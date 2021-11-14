@@ -8,6 +8,8 @@
 #pragma comment( lib, "SDL/lib/x64/SDL2.lib" )
 #pragma comment( lib, "SDL/lib/x64/SDL2main.lib" )
 
+#include "ImGuiComponents/AppLog.h"
+
 enum main_states
 {
 	MAIN_CREATION,  
@@ -18,9 +20,11 @@ enum main_states
 };
 
 Application* App = NULL;
+AppLog* Logger = NULL;
 
 int main(int argc, char ** argv)
 {
+	Logger = new AppLog();
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
 
