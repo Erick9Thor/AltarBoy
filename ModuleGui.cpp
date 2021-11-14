@@ -66,6 +66,7 @@ bool ModuleGui::CleanUp()
 update_status ModuleGui::showBasicMenu() {
     static bool showcase = false;
     static bool show_console = false;
+    static bool show_abaout = false;
 
 
         if (ImGui::BeginMainMenuBar())
@@ -97,6 +98,9 @@ update_status ModuleGui::showBasicMenu() {
 
                 if (ImGui::MenuItem("Download source!"))
                     App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
+                if (ImGui::MenuItem("Abaout"))
+                    show_abaout = !show_abaout;
 
                 ImGui::EndMenu();
             }
@@ -132,6 +136,12 @@ update_status ModuleGui::showBasicMenu() {
         if (show_console) {
             Logger->Draw();
         }
+
+        if (show_abaout) {
+            showAbaoutInfo();
+        }
+
+
 
         return UPDATE_CONTINUE;
 }
@@ -171,8 +181,10 @@ void ModuleGui::showHardwareInfo() {
 
 void ModuleGui::showAbaoutInfo()
 {
-    ImGui::Text("Engine name: %i", TITLE);
-    ImGui::Text("Version: %i", ENGINE_VERSION);
+    bool show_another_window = true;
+    ImGui::Begin("Aboout Window", &show_another_window);  
+    ImGui::Text("Engine name: %s", TITLE);
+    ImGui::Text("Version: %s", ENGINE_VERSION);
     ImGui::Separator();
     ImGui::Text("My Engine for C++ UPC MASTER!");
     ImGui::Text("Eric Torres Perramon");
@@ -181,5 +193,7 @@ void ModuleGui::showAbaoutInfo()
 
 
     // LICENSE
+
+    ImGui::End();
 }
 

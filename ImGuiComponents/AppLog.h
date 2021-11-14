@@ -45,9 +45,8 @@ public:
 	}
 
 	void Draw() {
-		ImGui::Begin("Console");
-
-
+		bool show_another_window = true;
+		ImGui::Begin("Console", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 		if (ImGui::BeginPopup("Options"))
 		{
 			ImGui::Checkbox("Auto-scroll", &autoscroll);
