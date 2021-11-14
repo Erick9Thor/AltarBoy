@@ -11,21 +11,16 @@ class ModuleWindow : public Module
 public:
 
 	ModuleWindow();
-
-	// Destructor
 	virtual ~ModuleWindow();
 
-	// Called before quitting
 	bool Init();
-
-	// Called before quitting
 	bool CleanUp();
 
-public:
-	//The window we'll be rendering to
-	SDL_Window* window = NULL;
+	void SetFullscreen(bool set);
+	void SetResizable(bool set);
 
-	//The surface contained by the window
+public:
+	SDL_Window* window = NULL;
 	SDL_Surface* screen_surface = NULL;
 };
 

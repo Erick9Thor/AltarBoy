@@ -1,11 +1,11 @@
-#pragma once
+#ifndef __GLOBALS_H__
+#define __GLOBALS_H__
+
 #include <windows.h>
 #include <stdio.h>
 #include "ImGuiComponents/AppLog.h"
 
 #define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
-
-// void log(const char file[], int line, const char* format, ...);
 
 enum update_status
 {
@@ -15,8 +15,11 @@ enum update_status
 };
 
 // Configuration -----------
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 1080
+#define SCREEN_HEIGHT 720
 #define FULLSCREEN false
 #define VSYNC true
 #define TITLE "ALTAR BOOY"
+#define ENGINE_VERSION "0.0.1"
+
+#endif // __GLOBALS_H__

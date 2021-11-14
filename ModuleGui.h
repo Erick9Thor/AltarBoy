@@ -11,7 +11,7 @@
 class ModuleGui : public Module
 {
 public:
-	ModuleGui();
+	ModuleGui() :fps_log(100), ms_log(100) {};
 	~ModuleGui();
 
 	bool Init();
@@ -20,8 +20,15 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	void ShowAboutWindow(bool* p_open);
+	update_status showBasicMenu();
+	
+	void showFPSGraph();
+	void showConfigWindow();
+	void showHardwareInfo();
+	void showAbaoutInfo();
 
 private:
+	std::vector<float> ms_log;
+	std::vector<float> fps_log;
 
 };

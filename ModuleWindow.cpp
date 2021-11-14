@@ -68,3 +68,6 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
+void ModuleWindow::SetFullscreen(bool set) {}
+
+void ModuleWindow::SetResizable(bool set) {}

@@ -25,6 +25,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void RequestBrowser(const char* url) const;
+	int GetFramerateLimit() const;
+
 public:
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
@@ -34,7 +37,7 @@ public:
 	AppLog* console = nullptr;
 
 private:
-
+	int	capped_ms;
 	std::vector<Module*> modules;
 
 };

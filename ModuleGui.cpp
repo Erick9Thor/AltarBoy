@@ -13,11 +13,6 @@
 #include "imgui_impl_opengl3.h"
 
 
-ModuleGui::ModuleGui()
-{
-}
-
-// Destructor
 ModuleGui::~ModuleGui()
 {
 }
@@ -35,17 +30,13 @@ bool ModuleGui::Init()
 
 update_status ModuleGui::PreUpdate()
 {
+    update_status ret;
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	bool show = true;
-	// ImGui::ShowDemoWindow(&show);
-    // ShowAboutWindow(&show);
-
-    Logger->Draw(&show);
-
-	return UPDATE_CONTINUE;
+	return showBasicMenu();
 }
 
 // Called every draw update
@@ -72,137 +63,123 @@ bool ModuleGui::CleanUp()
 	return true;
 }
 
-void ModuleGui::ShowAboutWindow(bool* p_open)
-{
-    if (!ImGui::Begin("About Dear ImGui", p_open, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::End();
-        return;
-    }
+update_status ModuleGui::showBasicMenu() {
+    static bool showcase = false;
+    static bool show_console = false;
 
-    ImGui::Text("Dear ImGui %s", ImGui::GetVersion());
-    ImGui::Separator();
 
-    static bool show_config_info = false;
-    ImGui::Checkbox("Config/Build Information", &show_config_info);
-    if (show_config_info)
-    {
-        ImGuiIO& io = ImGui::GetIO();
-        ImGuiStyle& style = ImGui::GetStyle();
-
-        bool copy_to_clipboard = ImGui::Button("Copy to clipboard");
-        ImVec2 child_size = ImVec2(0, ImGui::GetTextLineHeightWithSpacing() * 18);
-        ImGui::BeginChildFrame(ImGui::GetID("cfg_infos"), child_size, ImGuiWindowFlags_NoMove);
-        if (copy_to_clipboard)
+        if (ImGui::BeginMainMenuBar())
         {
-            ImGui::LogToClipboard();
-            ImGui::LogText("```\n"); // Back quotes will make text appears without formatting when pasting on GitHub
+            if (ImGui::BeginMenu("File"))
+            {
+                ImGui::MenuItem("New ...");
+                ImGui::MenuItem("Load ...");
+               
+                if (ImGui::MenuItem("Quit", "ESC"))
+                    return UPDATE_STOP;
+
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Help"))
+            {
+                if (ImGui::MenuItem("Gui Demo"))
+                    showcase = !showcase;
+
+                if (ImGui::MenuItem("Documentation"))
+                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/wiki");
+
+                if (ImGui::MenuItem("Download latest"))
+                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/releases");
+
+                if (ImGui::MenuItem("Report a bug"))
+                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/issues");
+
+                if (ImGui::MenuItem("Download source!"))
+                    App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Console"))
+            {
+                show_console = !show_console;
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("FPS counter"))
+            {
+                showFPSGraph();
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Window conf"))
+            {
+                showConfigWindow();
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMainMenuBar();
         }
 
-        ImGui::Text("Dear ImGui %s (%d)", IMGUI_VERSION, IMGUI_VERSION_NUM);
-        ImGui::Separator();
-        ImGui::Text("sizeof(size_t): %d, sizeof(ImDrawIdx): %d, sizeof(ImDrawVert): %d", (int)sizeof(size_t), (int)sizeof(ImDrawIdx), (int)sizeof(ImDrawVert));
-        ImGui::Text("define: __cplusplus=%d", (int)__cplusplus);
-#ifdef IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_OBSOLETE_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_WIN32_DEFAULT_CLIPBOARD_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_WIN32_DEFAULT_IME_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_WIN32_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_WIN32_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_DEFAULT_FORMAT_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_DEFAULT_FORMAT_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_DEFAULT_MATH_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_DEFAULT_MATH_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_DEFAULT_FILE_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_DEFAULT_FILE_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_FILE_FUNCTIONS
-        ImGui::Text("define: IMGUI_DISABLE_FILE_FUNCTIONS");
-#endif
-#ifdef IMGUI_DISABLE_DEFAULT_ALLOCATORS
-        ImGui::Text("define: IMGUI_DISABLE_DEFAULT_ALLOCATORS");
-#endif
-#ifdef IMGUI_USE_BGRA_PACKED_COLOR
-        ImGui::Text("define: IMGUI_USE_BGRA_PACKED_COLOR");
-#endif
-#ifdef _WIN32
-        ImGui::Text("define: _WIN32");
-#endif
-#ifdef _WIN64
-        ImGui::Text("define: _WIN64");
-#endif
-#ifdef __linux__
-        ImGui::Text("define: __linux__");
-#endif
-#ifdef __APPLE__
-        ImGui::Text("define: __APPLE__");
-#endif
-#ifdef _MSC_VER
-        ImGui::Text("define: _MSC_VER=%d", _MSC_VER);
-#endif
-#ifdef _MSVC_LANG
-        ImGui::Text("define: _MSVC_LANG=%d", (int)_MSVC_LANG);
-#endif
-#ifdef __MINGW32__
-        ImGui::Text("define: __MINGW32__");
-#endif
-#ifdef __MINGW64__
-        ImGui::Text("define: __MINGW64__");
-#endif
-#ifdef __GNUC__
-        ImGui::Text("define: __GNUC__=%d", (int)__GNUC__);
-#endif
-#ifdef __clang_version__
-        ImGui::Text("define: __clang_version__=%s", __clang_version__);
-#endif
-        ImGui::Separator();
-        ImGui::Text("io.BackendPlatformName: %s", io.BackendPlatformName ? io.BackendPlatformName : "NULL");
-        ImGui::Text("io.BackendRendererName: %s", io.BackendRendererName ? io.BackendRendererName : "NULL");
-        ImGui::Text("io.ConfigFlags: 0x%08X", io.ConfigFlags);
-        if (io.ConfigFlags & ImGuiConfigFlags_NavEnableKeyboard)        ImGui::Text(" NavEnableKeyboard");
-        if (io.ConfigFlags & ImGuiConfigFlags_NavEnableGamepad)         ImGui::Text(" NavEnableGamepad");
-        if (io.ConfigFlags & ImGuiConfigFlags_NavEnableSetMousePos)     ImGui::Text(" NavEnableSetMousePos");
-        if (io.ConfigFlags & ImGuiConfigFlags_NavNoCaptureKeyboard)     ImGui::Text(" NavNoCaptureKeyboard");
-        if (io.ConfigFlags & ImGuiConfigFlags_NoMouse)                  ImGui::Text(" NoMouse");
-        if (io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange)      ImGui::Text(" NoMouseCursorChange");
-        if (io.MouseDrawCursor)                                         ImGui::Text("io.MouseDrawCursor");
-        if (io.ConfigMacOSXBehaviors)                                   ImGui::Text("io.ConfigMacOSXBehaviors");
-        if (io.ConfigInputTextCursorBlink)                              ImGui::Text("io.ConfigInputTextCursorBlink");
-        if (io.ConfigWindowsResizeFromEdges)                            ImGui::Text("io.ConfigWindowsResizeFromEdges");
-        if (io.ConfigWindowsMoveFromTitleBarOnly)                       ImGui::Text("io.ConfigWindowsMoveFromTitleBarOnly");
-        if (io.ConfigMemoryCompactTimer >= 0.0f)                        ImGui::Text("io.ConfigMemoryCompactTimer = %.1f", io.ConfigMemoryCompactTimer);
-        ImGui::Text("io.BackendFlags: 0x%08X", io.BackendFlags);
-        if (io.BackendFlags & ImGuiBackendFlags_HasGamepad)             ImGui::Text(" HasGamepad");
-        if (io.BackendFlags & ImGuiBackendFlags_HasMouseCursors)        ImGui::Text(" HasMouseCursors");
-        if (io.BackendFlags & ImGuiBackendFlags_HasSetMousePos)         ImGui::Text(" HasSetMousePos");
-        if (io.BackendFlags & ImGuiBackendFlags_RendererHasVtxOffset)   ImGui::Text(" RendererHasVtxOffset");
-        ImGui::Separator();
-        ImGui::Text("io.Fonts: %d fonts, Flags: 0x%08X, TexSize: %d,%d", io.Fonts->Fonts.Size, io.Fonts->Flags, io.Fonts->TexWidth, io.Fonts->TexHeight);
-        ImGui::Text("io.DisplaySize: %.2f,%.2f", io.DisplaySize.x, io.DisplaySize.y);
-        ImGui::Text("io.DisplayFramebufferScale: %.2f,%.2f", io.DisplayFramebufferScale.x, io.DisplayFramebufferScale.y);
-        ImGui::Separator();
-        ImGui::Text("style.WindowPadding: %.2f,%.2f", style.WindowPadding.x, style.WindowPadding.y);
-        ImGui::Text("style.WindowBorderSize: %.2f", style.WindowBorderSize);
-        ImGui::Text("style.FramePadding: %.2f,%.2f", style.FramePadding.x, style.FramePadding.y);
-        ImGui::Text("style.FrameRounding: %.2f", style.FrameRounding);
-        ImGui::Text("style.FrameBorderSize: %.2f", style.FrameBorderSize);
-        ImGui::Text("style.ItemSpacing: %.2f,%.2f", style.ItemSpacing.x, style.ItemSpacing.y);
-        ImGui::Text("style.ItemInnerSpacing: %.2f,%.2f", style.ItemInnerSpacing.x, style.ItemInnerSpacing.y);
 
-        if (copy_to_clipboard)
+        if (showcase)
         {
-            ImGui::LogText("\n```\n");
-            ImGui::LogFinish();
+            ImGui::ShowDemoWindow();
+            ImGui::ShowMetricsWindow();
         }
-        ImGui::EndChildFrame();
-    }
-    ImGui::End();
+
+        if (show_console) {
+            Logger->Draw();
+        }
+
+        return UPDATE_CONTINUE;
 }
+
+
+void ModuleGui::showFPSGraph() {
+    ImGui::Text("Limit Framerate:");
+    ImGui::SameLine();
+    ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", App->GetFramerateLimit());
+
+    char title[25];
+    sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
+    ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+    sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
+    ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
+}
+
+void ModuleGui::showConfigWindow()
+{
+    bool fullscreen = false;
+    bool resizable = false;
+
+    if (ImGui::Checkbox("Fullscreen", &fullscreen))
+        App->window->SetFullscreen(fullscreen);
+
+    ImGui::SameLine();
+    if (ImGui::Checkbox("Resizable", &resizable))
+        App->window->SetResizable(resizable);
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("Restart to apply");
+}
+
+// TODO: add show hardware options
+void ModuleGui::showHardwareInfo() {
+    
+}
+
+void ModuleGui::showAbaoutInfo()
+{
+    ImGui::Text("Engine name: %i", TITLE);
+    ImGui::Text("Version: %i", ENGINE_VERSION);
+    ImGui::Separator();
+    ImGui::Text("My Engine for C++ UPC MASTER!");
+    ImGui::Text("Eric Torres Perramon");
+
+    // FIND HOW TO ADD LIBRARIES
+
+
+    // LICENSE
+}
+

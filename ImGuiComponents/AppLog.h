@@ -44,12 +44,9 @@ public:
 		Clear();
 	}
 
-	void Draw(bool* p_open) {
-		if (!ImGui::Begin("Console", p_open))
-		{
-			ImGui::End();
-			return;
-		}
+	void Draw() {
+		ImGui::Begin("Console");
+
 
 		if (ImGui::BeginPopup("Options"))
 		{

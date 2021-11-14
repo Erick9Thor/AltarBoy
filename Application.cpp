@@ -60,3 +60,16 @@ bool Application::CleanUp()
 
 	return ret;
 }
+
+void Application::RequestBrowser(const char* url) const
+{
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+}
+
+int Application::GetFramerateLimit() const
+{
+	if (capped_ms > 0)
+		return (int)((1.0f / (float)capped_ms) * 1000.0f);
+	else
+		return 0;
+}
