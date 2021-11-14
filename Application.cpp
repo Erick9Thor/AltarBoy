@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleInput.h"
 #include "ModuleGui.h"
+#include "DebugDraw/ModuleDebugDraw.h"
 
 using namespace std;
 
@@ -15,14 +16,13 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(gui = new ModuleGui());
+	modules.push_back(debug_draw = new ModuleDebugDraw());
 }
 
 Application::~Application()
 {
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
-    {
-        delete *it;
-    }
+		RELEASE(*it)
 }
 
 bool Application::Init()
@@ -59,6 +59,12 @@ bool Application::CleanUp()
 		ret = (*it)->CleanUp();
 
 	return ret;
+}
+
+void Application::DebugDraw()
+{
+	for (vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
+			(*it)->DrawDebug();
 }
 
 void Application::RequestBrowser(const char* url) const

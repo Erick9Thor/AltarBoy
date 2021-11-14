@@ -36,4 +36,7 @@ public:
 	{ 
 		return true; 
 	}
+
+	virtual void DrawDebug()
+	{}
 };

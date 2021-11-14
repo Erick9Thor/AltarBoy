@@ -1,4 +1,6 @@
 #pragma once
+#ifndef __APPLICATION_CPP__
+#define __APPLICATION_CPP__
 
 #include<list>
 #include "Globals.h"
@@ -11,6 +13,7 @@ class ModuleTextures;
 class ModuleInput;
 class ModuleRenderExercise;
 class ModuleGui;
+class ModuleDebugDraw;
 
 class AppLog;
 
@@ -25,6 +28,8 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void DebugDraw();
+
 	void RequestBrowser(const char* url) const;
 	int GetFramerateLimit() const;
 
@@ -33,6 +38,8 @@ public:
 	ModuleWindow* window = nullptr;
 	ModuleInput* input = nullptr;
 	ModuleGui* gui = nullptr;
+	ModuleDebugDraw* debug_draw = nullptr;
+
 
 	AppLog* console = nullptr;
 
@@ -43,3 +50,5 @@ private:
 };
 
 extern Application* App;
+
+#endif // __APPLICATION_CPP__
