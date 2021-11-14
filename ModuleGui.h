@@ -20,6 +20,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void Draw();
+
 	update_status showBasicMenu();
 	
 	void showFPSGraph();

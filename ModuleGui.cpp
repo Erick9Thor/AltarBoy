@@ -20,40 +20,39 @@ ModuleGui::~ModuleGui()
 // 006 - Creation Context
 bool ModuleGui::Init()
 {
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-    //io.ConfigViewportsNoAutoMerge = true;
-    //io.ConfigViewportsNoTaskBarIcon = true;
 	
 	ImGui::CreateContext();
-	ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
-	ImGui_ImplOpenGL3_Init("#version 330");
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+    io.IniFilename = "imgui.ini";
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
+    io.WantSetMousePos = true;
+    ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
+    ImGui_ImplOpenGL3_Init("#version 330");
+  
+    // Setup style
+    ImGui::StyleColorsDark();
 
 	return true;
 }
 
 update_status ModuleGui::PreUpdate()
 {
-    update_status ret;
-
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
+	ImGui_ImplSDL2_NewFrame(App->window->window);
 	ImGui::NewFrame();
 
-	return showBasicMenu();
+    return UPDATE_CONTINUE;
 }
 
 // Called every draw update
 update_status ModuleGui::Update()
 {
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    update_status ret = UPDATE_CONTINUE;
+    ret = showBasicMenu();
+    Draw();
 
-	return UPDATE_CONTINUE;
+    return ret;
 }
 
 update_status ModuleGui::PostUpdate()
@@ -71,11 +70,19 @@ bool ModuleGui::CleanUp()
 	return true;
 }
 
+void ModuleGui::Draw()
+{
+    // Debug Draw on selected GameObject
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    SDL_GL_MakeCurrent(App->window->window, App->renderer->context);
+}
+
 update_status ModuleGui::showBasicMenu() {
     static bool showcase = false;
     static bool show_console = false;
     static bool show_abaout = false;
-
 
         if (ImGui::BeginMainMenuBar())
         {
@@ -134,7 +141,6 @@ update_status ModuleGui::showBasicMenu() {
             ImGui::EndMainMenuBar();
         }
 
-
         if (showcase)
         {
             ImGui::ShowDemoWindow();
@@ -148,8 +154,6 @@ update_status ModuleGui::showBasicMenu() {
         if (show_abaout) {
             showAbaoutInfo();
         }
-
-
 
         return UPDATE_CONTINUE;
 }
