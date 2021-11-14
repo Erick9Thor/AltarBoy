@@ -3,6 +3,7 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
+#include <vector>
 
 class ModuleRender;
 class ModuleWindow;
@@ -30,7 +31,7 @@ public:
 
 private:
 
-	std::list<Module*> modules;
+	std::vector<Module*> modules;
 
 };
 

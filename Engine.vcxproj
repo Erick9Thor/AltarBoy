@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ImGuiComponents\AppLog.cpp" />
     <ClCompile Include="DebugDraw\ModuleDebugDraw.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
@@ -192,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ImGuiComponents\AppLog.h" />
     <ClInclude Include="DebugDraw\debugdraw.h" />
     <ClInclude Include="DebugDraw\debug_draw.hpp" />
     <ClInclude Include="DebugDraw\ModuleDebugDraw.h" />

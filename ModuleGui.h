@@ -4,10 +4,9 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "GL/glew.h"
+#include "ImGuiComponents/AppLog.h"
 
-struct SDL_Texture;
-struct SDL_Renderer;
-struct SDL_Rect;
+class AppLog;
 
 class ModuleGui : public Module
 {
@@ -20,6 +19,12 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
+
+	void ShowAboutWindow(bool* p_open);
+	void ShowAppLog(bool* p_open);
+
+
+	AppLog* log = nullptr;
 
 private:
 
