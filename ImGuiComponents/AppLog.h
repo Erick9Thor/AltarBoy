@@ -45,8 +45,7 @@ public:
 	}
 
 	void Draw() {
-		bool show_another_window = true;
-		ImGui::Begin("Console", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+		ImGui::Begin("Console", &show_another_window);
 		if (ImGui::BeginPopup("Options"))
 		{
 			ImGui::Checkbox("Auto-scroll", &autoscroll);
@@ -108,11 +107,22 @@ public:
 		ImGui::EndChild();
 		ImGui::End();
 	}
+
+	void setShowConsole(bool s) {
+		show_another_window = s;
+	}
+
+	// Getter
+	bool getShowConsole() {
+		return show_another_window;
+	}
+
 private:
 	ImGuiTextBuffer buff;
 	ImGuiTextFilter filter;
 	ImVector<int> line_offsets;
 	bool autoscroll;
+	bool show_another_window = false;
 };
 
 extern AppLog* Logger;

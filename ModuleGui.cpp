@@ -81,7 +81,6 @@ void ModuleGui::Draw()
 
 update_status ModuleGui::showBasicMenu() {
     static bool showcase = false;
-    static bool show_console = false;
     static bool show_abaout = false;
 
         if (ImGui::BeginMainMenuBar())
@@ -122,7 +121,7 @@ update_status ModuleGui::showBasicMenu() {
 
             if (ImGui::BeginMenu("Console"))
             {
-                show_console = !show_console;
+                Logger->setShowConsole(!Logger->getShowConsole());
                 ImGui::EndMenu();
             }
 
@@ -147,9 +146,7 @@ update_status ModuleGui::showBasicMenu() {
             ImGui::ShowMetricsWindow();
         }
 
-        if (show_console) {
-            Logger->Draw();
-        }
+        if (Logger->getShowConsole()) Logger->Draw();
 
         if (show_abaout) {
             showAbaoutInfo();

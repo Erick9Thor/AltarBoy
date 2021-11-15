@@ -32,5 +32,4 @@ public:
 private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
-
 };
