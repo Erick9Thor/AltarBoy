@@ -1,9 +1,13 @@
+#pragma once
+#ifndef __MODULE_GUI_H__
+#define __MODULE_GUI_H__
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
-#include "GL/glew.h"
+#include "glew.h"
 
 #include "ImGuiComponents/AppLog.h"
 
@@ -33,3 +37,5 @@ private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
 };
+
+#endif // MODULE_GUI_H

@@ -1,6 +1,10 @@
 #pragma once
+#ifndef __MODULE_RENDER_H__
+#define __MODULE_RENDER_H__
+
 #include "Module.h"
 #include "Globals.h"
+
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -35,3 +39,5 @@ private:
 	unsigned program;
 	unsigned vbo;
 };
+
+#endif

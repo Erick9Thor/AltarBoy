@@ -112,7 +112,6 @@ public:
 		show_another_window = s;
 	}
 
-	// Getter
 	bool getShowConsole() {
 		return show_another_window;
 	}
