@@ -9,7 +9,7 @@ class ModuleCamera :
         ModuleCamera();
         ~ModuleCamera();
 
-        void OnDebugDraw(bool selected) const;
+        // void OnDebugDraw(bool selected) const;
         
         //008 - Wraping frustrum of the camera
         void SetFOV(float fov);

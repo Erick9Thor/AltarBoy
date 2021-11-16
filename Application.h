@@ -14,6 +14,7 @@ class ModuleInput;
 class ModuleRenderExercise;
 class ModuleGui;
 class ModuleDebugDraw;
+class ModuleCamera;
 
 class AppLog;
 
@@ -39,6 +40,7 @@ public:
 	ModuleInput* input = nullptr;
 	ModuleGui* gui = nullptr;
 	ModuleDebugDraw* debug_draw = nullptr;
+	ModuleCamera* camera = nullptr;
 
 	AppLog* console = nullptr;
 
