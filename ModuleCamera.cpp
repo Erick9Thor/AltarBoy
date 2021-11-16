@@ -26,12 +26,16 @@ ModuleCamera::~ModuleCamera()
 
 void ModuleCamera::SetFOV(float fov)
 {
-	// frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f);
+	frustum.SetHorizontalFovAndAspectRatio(fov, frustum.AspectRatio());
 }
 
 void ModuleCamera::SetAspectRatio(float aspect_ratio)
 {
-	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, aspect_ratio);
+	frustum.SetVerticalFovAndAspectRatio(frustum.HorizontalFov(), aspect_ratio);
+}
+
+void ModuleCamera::SetPlaneDistances(float nearDistance, float farDistance) {
+	frustum.SetViewPlaneDistances(nearDistance, farDistance);
 }
 
 float4x4 ModuleCamera::getProjectionMatrix()
