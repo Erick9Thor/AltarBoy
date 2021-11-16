@@ -170,8 +170,8 @@ void ModuleGui::showFPSGraph() {
 
 void ModuleGui::showConfigWindow()
 {
-    bool fullscreen = false;
-    bool resizable = false;
+    bool fullscreen = App->window->IsFullscreen();
+    bool resizable = App->window->IsResizable();
 
     if (ImGui::Checkbox("Fullscreen", &fullscreen))
         App->window->SetFullscreen(fullscreen);

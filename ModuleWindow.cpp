@@ -29,10 +29,19 @@ bool ModuleWindow::Init()
 		int height = SCREEN_HEIGHT;
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
-		if(FULLSCREEN == true)
-		{
+		SDL_DisplayMode DM;
+		SDL_GetDesktopDisplayMode(0, &DM);
+
+		//Use OpenGL 3.2
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+
+		if (FULLSCREEN == true)
 			flags |= SDL_WINDOW_FULLSCREEN;
-		}
+
+		if (RELIZABLE == true)
+			flags |= SDL_WINDOW_RESIZABLE;
+
 
 		window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
@@ -68,6 +77,36 @@ bool ModuleWindow::CleanUp()
 	return true;
 }
 
-void ModuleWindow::SetFullscreen(bool set) {}
+void ModuleWindow::SetFullscreen(bool set) {
+	if (set != fullscreen)
+	{
+		fullscreen = set;
+		if (fullscreen == true)
+		{
+			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
+				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+			fullscreen_desktop = false;
+			SDL_Log("this is a test");
+		}
+		else
+		{
+			if (SDL_SetWindowFullscreen(window, 0) != 0)
+				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+		}
+	}
+}
 
-void ModuleWindow::SetResizable(bool set) {}
+bool ModuleWindow::IsFullscreen() const
+{
+	return fullscreen;
+}
+
+bool ModuleWindow::IsResizable() const
+{
+	return resizable;
+}
+
+void ModuleWindow::SetResizable(bool set) {
+	resizable = set;
+}
+
