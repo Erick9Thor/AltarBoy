@@ -1,5 +1,6 @@
 #pragma once
 #include "Module.h"
+#include "Math.h"
 
 class ModuleCamera :
     public Module
@@ -7,11 +8,15 @@ class ModuleCamera :
     public:
         ModuleCamera();
         ~ModuleCamera();
-        /*
-        void setFov();
-        void SetAspectRatio();
-        void GetProjectionMatrix();
-        void GetViewMatrix()
-        */
+
+        void OnDebugDraw(bool selected) const;
+        
+        //008 - Wraping frustrum of the camera
+        void SetFOV(float fov);
+        void SetAspectRatio(float aspect_ratio);
+
+    private:
+        Frustum frustum;
+
 };
 

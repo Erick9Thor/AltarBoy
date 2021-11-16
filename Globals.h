@@ -7,6 +7,9 @@
 
 #define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
 
+#define DEGTORAD 0.0174532925199432957f
+
+
 enum update_status
 {
 	UPDATE_CONTINUE = 1,
