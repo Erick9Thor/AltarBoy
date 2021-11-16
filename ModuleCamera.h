@@ -15,8 +15,12 @@ class ModuleCamera :
         void SetFOV(float fov);
         void SetAspectRatio(float aspect_ratio);
 
+        float4x4 getProjectionMatrix();
+        float4x4 getViewMatrix();
+
     private:
         Frustum frustum;
-
+        float4x4 projectionGL;
+        float4x4 viewGL;
 };
 

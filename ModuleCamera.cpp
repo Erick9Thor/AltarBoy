@@ -11,11 +11,13 @@ ModuleCamera::ModuleCamera()
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
 
-	float4x4 projectionGL = frustum.ProjectionMatrix().Transposed();
-		//Send the frustum projection matrix to OpenGL
-		// direct mode would be:
-		glMatrixMode(GL_PROJECTION);
+	projectionGL = frustum.ProjectionMatrix().Transposed();
+	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(*projectionGL.v);
+
+	viewGL = float4x4(frustum.ViewMatrix()).Transposed();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(*viewGL.v);
 }
 
 ModuleCamera::~ModuleCamera()
@@ -24,11 +26,20 @@ ModuleCamera::~ModuleCamera()
 
 void ModuleCamera::SetFOV(float fov)
 {
-
+	// frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f);
 }
-
 
 void ModuleCamera::SetAspectRatio(float aspect_ratio)
 {
+	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, aspect_ratio);
+}
 
+float4x4 ModuleCamera::getProjectionMatrix()
+{
+	return projectionGL;
+}
+
+float4x4 ModuleCamera::getViewMatrix()
+{
+	return viewGL;
 }

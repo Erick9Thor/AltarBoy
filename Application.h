@@ -40,13 +40,11 @@ public:
 	ModuleGui* gui = nullptr;
 	ModuleDebugDraw* debug_draw = nullptr;
 
-
 	AppLog* console = nullptr;
 
 private:
 	int	capped_ms;
 	std::vector<Module*> modules;
-
 };
 
 extern Application* App;
