@@ -16,6 +16,7 @@ class ModuleGui;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
+class Program;
 
 class AppLog;
 
@@ -45,6 +46,7 @@ public:
 	ModuleTexture* texture = nullptr;
 
 	AppLog* console = nullptr;
+	Program* program = nullptr;
 
 private:
 	int	capped_ms;

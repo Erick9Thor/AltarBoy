@@ -200,6 +200,7 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
+    <ClCompile Include="Resources\Program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -309,6 +310,7 @@
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
+    <ClInclude Include="Resources\Program.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Game\fragment-shader.txt" />
