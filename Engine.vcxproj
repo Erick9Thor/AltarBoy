@@ -198,6 +198,7 @@
     <ClCompile Include="ModuleGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
+    <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +307,7 @@
     <ClInclude Include="ModuleGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRender.h" />
+    <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +315,11 @@
     <Text Include="Game\vertex-shader.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DevIL\include\IL\build-lua" />
+    <None Include="DevIL\include\IL\build-python" />
+    <None Include="DevIL\include\IL\config.h.win" />
+    <None Include="DevIL\include\IL\DevIL.i" />
+    <None Include="DevIL\include\IL\stamp-h.in" />
     <None Include="MathGeoLib\include\Geometry\KDTree.inl" />
     <None Include="MathGeoLib\include\Geometry\QuadTree.inl" />
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
@@ -320,6 +327,11 @@
     <None Include="MathGeoLib\include\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="MathGeoLib\include\Math\float2.inl" />
     <None Include="MathGeoLib\include\Math\Matrix.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="DevIL\lib\DevIL.lib" />
+    <Library Include="DevIL\lib\ILU.lib" />
+    <Library Include="DevIL\lib\ILUT.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

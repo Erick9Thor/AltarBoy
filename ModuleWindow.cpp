@@ -29,13 +29,6 @@ bool ModuleWindow::Init()
 		int height = SCREEN_HEIGHT;
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
-		SDL_DisplayMode DM;
-		SDL_GetDesktopDisplayMode(0, &DM);
-
-		//Use OpenGL 3.2
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-
 		if (FULLSCREEN == true)
 			flags |= SDL_WINDOW_FULLSCREEN;
 

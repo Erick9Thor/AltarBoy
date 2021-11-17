@@ -17,6 +17,8 @@ ModuleCamera::ModuleCamera()
 	projectionGL = frustum.ProjectionMatrix().Transposed();
 	
 	viewGL = float4x4(frustum.ViewMatrix()).Transposed();
+
+	rotationMatrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
 }
 
 ModuleCamera::~ModuleCamera()
@@ -35,6 +37,11 @@ void ModuleCamera::SetAspectRatio(float aspect_ratio)
 
 void ModuleCamera::SetPlaneDistances(float nearDistance, float farDistance) {
 	frustum.SetViewPlaneDistances(nearDistance, farDistance);
+}
+
+update_status ModuleCamera::Update()
+{
+	return UPDATE_CONTINUE;
 }
 
 float4x4 ModuleCamera::getProjectionMatrix()

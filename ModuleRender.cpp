@@ -9,10 +9,6 @@
 #include "glew.h"
 #include "MathGeoLib.h"
 
-ModuleRender::ModuleRender()
-{
-}
-
 void __stdcall DebugMessageGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
 	if (id == 131185 || id == 131204) return;
@@ -56,6 +52,10 @@ void __stdcall DebugMessageGL(GLenum source, GLenum type, GLuint id, GLenum seve
 
 	sprintf_s(tmp_string, 4095, "<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 	OutputDebugString(tmp_string);
+}
+
+ModuleRender::ModuleRender()
+{
 }
 
 // Destructor
@@ -165,6 +165,51 @@ void DestroyVBO(unsigned vbo)
 	glDeleteBuffers(1, &vbo);
 }
 
+bool ModuleRender::initGlew()
+{
+	GLenum err = glewInit();
+
+	if (err != GLEW_OK)
+	{
+		LOG("Glew library could not init %s\n", glewGetErrorString(err));
+		return false;
+	}
+	else
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	return true;
+}
+
+bool ModuleRender::initializeOpenGLviaSDL()
+{
+	
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // we want a double buffer
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // we want to have a depth buffer with 24 bits
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
+
+	context = SDL_GL_CreateContext(App->window->window);
+
+	LOG("Creating Renderer context");
+	if (context == nullptr)
+	{
+		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		return false;
+	}
+}
+
+void ModuleRender::WindowResized(unsigned width, unsigned height)
+{
+	glViewport(0, 0, width, height);
+}
+
 // Called before render is available
 bool ModuleRender::Init()
 {
@@ -209,46 +254,6 @@ bool ModuleRender::Init()
 
 
 	return true;
-}
-
-bool ModuleRender::initGlew()
-{
-	GLenum err = glewInit();
-
-	if (err != GLEW_OK)
-	{
-		LOG("Glew library could not init %s\n", glewGetErrorString(err));
-		return false;
-	}
-	else
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-	return true;
-}
-
-bool ModuleRender::initializeOpenGLviaSDL()
-{
-	
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // we want a double buffer
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // we want to have a depth buffer with 24 bits
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
-
-	context = SDL_GL_CreateContext(App->window->window);
-
-	LOG("Creating Renderer context");
-	if (context == nullptr)
-	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
-		return false;
-	}
 }
 
 update_status ModuleRender::PreUpdate()
@@ -299,9 +304,3 @@ bool ModuleRender::CleanUp()
 	DestroyVBO(vbo);
 	return true;
 }
-
-void ModuleRender::WindowResized(unsigned width, unsigned height)
-{
-	glViewport(0, 0, width, height);
-}
-

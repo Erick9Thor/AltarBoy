@@ -14,6 +14,7 @@ class ModuleCamera :
         void SetAspectRatio(float aspect_ratio);
 
         void SetPlaneDistances(float nearDistance, float farDistance);
+        update_status Update();
 
         const vec& Pos() const { return frustum.Pos(); }
 
@@ -25,5 +26,6 @@ class ModuleCamera :
         Frustum frustum;
         float4x4 projectionGL;
         float4x4 viewGL;
-};
+        float3x3 rotationMatrix;
+ };
 
