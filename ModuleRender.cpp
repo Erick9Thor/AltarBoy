@@ -125,9 +125,6 @@ bool ModuleRender::Init()
 
 	if (ret == true)
 	{
-		// Initialize clear color
-		glClearColor(0.4f, 0.4f, 0.4f, 1.f);
-
 		// Initialize some OpenGL global states
 		glEnable(GL_DEPTH_TEST); // Enable depth test
 		glEnable(GL_CULL_FACE); // Enable cull backward faces
@@ -136,11 +133,8 @@ bool ModuleRender::Init()
 		glEnable(GL_DEBUG_OUTPUT); // Enable output callback
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
-
 		glDebugMessageCallback(&DebugMessageGL, nullptr); // Set the callback
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
 	}
-
 
 	return true;
 }
@@ -166,10 +160,10 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
-	App->debug_draw->Draw(App->camera->getViewMatrix(), App->camera->getProjectionMatrix(), SCREEN_WIDTH, SCREEN_HEIGHT);
+	App->debug_draw->Draw(App->camera->view, App->camera->proj, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	// Update a window with the content of our current buffer
 	SDL_GL_SwapWindow(App->window->window);
+
 	return UPDATE_CONTINUE;
 }
 

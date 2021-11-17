@@ -1,6 +1,4 @@
 #pragma once
-#ifndef __APPLICATION_CPP__
-#define __APPLICATION_CPP__
 
 #include<list>
 #include "Globals.h"
@@ -48,6 +46,8 @@ public:
 	ModuleRenderExercise* rendererExercise = nullptr;
 
 	AppLog* console = nullptr;
+
+	// TODO: Convert this on a utils provider or something like
 	Program* program = nullptr;
 
 private:
@@ -56,5 +56,3 @@ private:
 };
 
 extern Application* App;
-
-#endif // __APPLICATION_CPP__

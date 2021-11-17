@@ -26,12 +26,19 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+    keyboard = SDL_GetKeyboardState(NULL);
+
+    for (int i = 0; i < NUM_MOUSE_BUTTONS; i++)
+        mouse_buttons[i] = false;
+
 	return ret;
 }
 
 // Called every draw update
 update_status ModuleInput::Update()
 {
+    SDL_PumpEvents();
+
     SDL_Event sdlEvent;
 
     while (SDL_PollEvent(&sdlEvent) != 0)
@@ -45,10 +52,18 @@ update_status ModuleInput::Update()
                 if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
                     App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
+            case SDL_MOUSEBUTTONDOWN:
+                mouse_buttons[sdlEvent.button.button - 1] = true;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                mouse_buttons[sdlEvent.button.button - 1] = false;
+                break;
+            case SDL_MOUSEMOTION:
+                mouse_motion_x = sdlEvent.motion.xrel;
+                mouse_motion_y = sdlEvent.motion.yrel;
+                break;
         }
     }
-
-    keyboard = SDL_GetKeyboardState(NULL);
 
     return UPDATE_CONTINUE;
 }
@@ -59,4 +74,20 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+const Uint8 ModuleInput::GetKey(SDL_Scancode key) const
+{
+    return keyboard[key];
+}
+
+const bool ModuleInput::GetMouseButton(unsigned int key) const
+{
+    return mouse_buttons[key - 1];
+}
+
+const void ModuleInput::GetMouseMotion(int& x, int& y) const
+{
+    x = mouse_motion_x;
+    y = mouse_motion_y;
 }
