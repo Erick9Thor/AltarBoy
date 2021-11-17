@@ -22,6 +22,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void printCoordinatesSystem();
+
 	bool initGlew();
 	bool initializeOpenGLviaSDL();
 
