@@ -12,21 +12,34 @@ public:
 	~ModuleCamera();
 
 	bool Init();
+	update_status PreUpdate();
 	update_status Update();
-	void WindowResized(unsigned width, unsigned height);
+	update_status PostUpdate();
+	bool CleanUp();
 
-	void SetFOV(float fov);
-	void SetAspectRatio(float aspect_ratio);
+	void SetPosition(const float3& position);
+	void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
+	void SetHorizontalFov(float fov_deg);
+	void LookAt(const float3& position);
 
-	void SetPlaneDistances(float nearDistance, float farDistance);
+	void RefreshFov();
+	void WindowResized(unsigned int screen_width, unsigned int screen_height);
 
-	float4x4 view, proj;
-	float3x3 rotationMatrix;
+	void checkCameraControl();
+
+	bool locked;
+	float3 position;
+
+	float4x4 GetView() const;
+	float4x4 GetProjection() const;
 
 private:
-	void ViewProjectionMatrix();
-
 	Frustum frustum;
-	int aspect;
-	float3 position;
+	float aspect_ratio;
+	float horizontal_fov;
+	float3 look_position;
+	float3x3 rotationMatrix;
+
+	float4x4 view;
+	float4x4 projection;
 };

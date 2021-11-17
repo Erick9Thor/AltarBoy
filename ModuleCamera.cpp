@@ -1,68 +1,117 @@
-#include "ModuleCamera.h"
+#include "glew.h"
 
 #include "Application.h"
-#include "ModuleInput.h"
-#include "SDL.h"
+#include "ModuleWindow.h"
+#include "ModuleCamera.h"
+#include "ModuleWindow.h"
+#include "ModuleInput.h";
+
+#include "Math/MathConstants.h"
 
 ModuleCamera::ModuleCamera()
 {
-	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
-	frustum.SetViewPlaneDistances(0.1f, 200.0f);
 }
 
 ModuleCamera::~ModuleCamera()
 {
 }
 
-void ModuleCamera::ViewProjectionMatrix()
-{
-	
-	frustum.SetVerticalFovAndAspectRatio(DEGTORAD * 45.0f, frustum.AspectRatio());
-
-	frustum.SetPos(position);
-	frustum.SetFront(rotationMatrix.WorldZ());
-	frustum.SetUp(rotationMatrix.WorldY());
-
-	view = float4x4(frustum.ViewMatrix());
-	proj = frustum.ProjectionMatrix();
-}
-
-void ModuleCamera::WindowResized(unsigned width, unsigned height)
-{
-	SetAspectRatio(width / height);
-
-	ViewProjectionMatrix();
-}
-
-void ModuleCamera::SetFOV(float fov)
-{
-	frustum.SetHorizontalFovAndAspectRatio(fov, frustum.AspectRatio());
-}
-
-void ModuleCamera::SetAspectRatio(float aspect_ratio)
-{
-	frustum.SetVerticalFovAndAspectRatio(frustum.HorizontalFov(), aspect_ratio);
-}
-
-void ModuleCamera::SetPlaneDistances(float nearDistance, float farDistance) {
-	frustum.SetViewPlaneDistances(nearDistance, farDistance);
-}
-
 bool ModuleCamera::Init()
 {
-	// Initial camera position
-	position = float3(3.0f, 4.0f, 8.0f);
+    // TODO: Remove redundant variables when it works
+    position = float3(0.0f, 0.0f, 1.0f);
 
-	rotationMatrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
+    frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
+    auto screen_surface = App->window->screen_surface;
 
-	SetAspectRatio(SCREEN_WIDTH / SCREEN_HEIGHT);
+    SetAspectRatio(screen_surface->w, screen_surface->h);
+    SetHorizontalFov(90.0f);
 
-	ViewProjectionMatrix();
+    RefreshFov();
+    frustum.SetViewPlaneDistances(0.1f, 100.0f);
 
-	return true;
+    SetPosition(position);
+    frustum.SetFront(float3::unitZ);
+    frustum.SetUp(float3::unitY);
+
+    LookAt(float3(0.0f, 0.0f, 0.0f));
+
+    return true;
+}
+
+update_status ModuleCamera::PreUpdate()
+{
+    SetPosition(position);
+
+    if (locked)
+        LookAt(float3(0.0f, 0.0f, 0.0f));
+
+    return UPDATE_CONTINUE;
 }
 
 update_status ModuleCamera::Update()
+{
+    return UPDATE_CONTINUE;
+}
+
+update_status ModuleCamera::PostUpdate()
+{
+	checkCameraControl();
+
+    return UPDATE_CONTINUE;
+}
+
+bool ModuleCamera::CleanUp()
+{
+    return false;
+}
+
+void ModuleCamera::SetPosition(const float3& new_position)
+{
+    frustum.SetPos(position);
+}
+
+void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
+{
+    aspect_ratio = (float)screen_width / (float)screen_height;
+}
+
+void ModuleCamera::SetHorizontalFov(float fov_deg)
+{
+    static const float deg_to_rad = pi / 180.0f;
+    horizontal_fov = fov_deg * deg_to_rad;
+}
+
+float4x4 ModuleCamera::GetView() const
+{
+	return float4x4(frustum.ViewMatrix()).Transposed();
+}
+
+float4x4 ModuleCamera::GetProjection() const
+{
+	return frustum.ProjectionMatrix().Transposed();
+}
+
+void ModuleCamera::LookAt(const float3& look_position)
+{
+    float3 direction = look_position - frustum.Pos();
+	rotationMatrix = float3x3::LookAt(frustum.Front(), direction.Normalized(), frustum.Up(), float3::unitY);
+    frustum.SetFront(rotationMatrix.MulDir(frustum.Front()).Normalized());
+    frustum.SetUp(rotationMatrix.MulDir(frustum.Up()).Normalized());
+}
+
+void ModuleCamera::RefreshFov()
+{
+    frustum.SetHorizontalFovAndAspectRatio(horizontal_fov, aspect_ratio);
+}
+
+void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_height)
+{
+    SetAspectRatio(screen_width, screen_height);
+    RefreshFov();
+}
+
+void ModuleCamera::checkCameraControl()
 {
 	bool change = false;
 
@@ -131,8 +180,11 @@ update_status ModuleCamera::Update()
 		}
 	}
 
-	if (change)
-		ViewProjectionMatrix();
+	if (change) {
+		frustum.SetVerticalFovAndAspectRatio(DEGTORAD * 45.0f, frustum.AspectRatio());
 
-	return UPDATE_CONTINUE;
+		frustum.SetPos(position);
+		frustum.SetFront(rotationMatrix.WorldZ());
+		frustum.SetUp(rotationMatrix.WorldY());
+	}
 }

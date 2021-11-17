@@ -3,11 +3,18 @@
 #include "../Application.h"
 #include "../ModuleCamera.h"
 #include "../ModuleTexture.h"
+#include "../ModuleWindow.h"
 #include "../GL/glew.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+
+#include "SDL.h"
+
+#include "IL/il.h"
+#include "IL/ilu.h"
+
 
 ModuleRenderExercise::ModuleRenderExercise()
 {
@@ -17,116 +24,105 @@ ModuleRenderExercise::~ModuleRenderExercise()
 {
 }
 
-bool ModuleRenderExercise::Init()
-{
-	LOG("Buffer: Creating vertex buffer");
+unsigned int CreateSquareVBO() {
+	float positions[] = {
+		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+	};
+	unsigned int vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo); // set vbo active 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+	// Position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
+	glEnableVertexAttribArray(0);
+	// Texture coord attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
-	GLfloat vertex[] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		-1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, // texcoords
-		1.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f
+	return vbo;
+}
+
+unsigned int CreateSquareEBO()
+{
+	unsigned int indices[] = {
+		0, 1, 2,
+		2, 3, 0
 	};
 
-	glGenBuffers(1, &vBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex), vertex, GL_STATIC_DRAW);
+	unsigned int ebo;
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(
-		0,
-		3,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)0
-	);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(
-		1,
-		2,
-		GL_FLOAT,
-		GL_FALSE,
-		0,
-		(void*)(sizeof(float) * 3 * 4) // buffer offset
-	);
+	return ebo;
+}
 
-	LOG("Textures: Generating texture and setting its parameters");
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	LOG("Textures: Reading the texture file and setting its data");
-
-	unsigned int devILTexture;
-	int width, height;
-	byte* data = nullptr;
-	App->texture->GetTextureData(devILTexture, "..\\Resources\\Lenna.png", width, height, data);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-	App->texture->CleanTexture(devILTexture);
-	glGenerateTextureMipmap(texture);
+bool ModuleRenderExercise::Init()
+{
 
 	LOG("Shaders: Creating program");
-	program = App->program->CreateProgram("..\\Resources\\shaders\\vertex-shader.txt", "..\\Resources\\shaders\\fragment-shader.txt");
+	shader_id = App->program->CreateProgram("..\\Resources\\shaders\\vertex-shader.txt", "..\\Resources\\shaders\\fragment-shader.txt");
+	glUseProgram(shader_id);
 
-	model = float4x4::FromTRS(float3(2.0f, 0.0f, 0.0f),
-		float4x4::RotateZ(pi / 4.0f),
-		float3(2.0f, 1.0f, 0.0f));
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	int w, h;
+	SDL_GetWindowSize(App->window->window, &w, &h);
+	glViewport(0, 0, w, h);
+
+	square_vbo = CreateSquareVBO();
+	square_ebo = CreateSquareEBO();
+
+	unsigned int img_id = App->texture->GetTextureData("..\\Resources\\Lenna.png");
+
+	// Generate
+	glGenTextures(1, &App->texture->texture_id);
+	glBindTexture(GL_TEXTURE_2D, App->texture->texture_id);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	// TODO: Manage tex parameters via gui
+	// TODO: Generate mip map
+	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
+		ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
+		ilGetData());
+
+	ilDeleteImages(1, &img_id);
+
+	model = float4x4::identity;
 
 	return true;
 }
 
+update_status ModuleRenderExercise::PreUpdate()
+{
+	return UPDATE_CONTINUE;
+}
+
 update_status ModuleRenderExercise::Update()
 {
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square_ebo);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	glUseProgram(program);
-	glUniformMatrix4fv(glGetUniformLocation(program, "model"), 1, GL_TRUE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "view"), 1, GL_TRUE, &App->camera->view[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, &App->camera->proj[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, &App->camera->GetView()[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "proj"), 1, GL_FALSE, &App->camera->GetProjection()[0][0]);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	glUniform1i(glGetUniformLocation(program, "texture"), 0);
-
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glDisableVertexAttribArray(0);
+	glBindTexture(GL_TEXTURE_2D, App->texture->texture_id);
 
 	return UPDATE_CONTINUE;
 }
 
 bool ModuleRenderExercise::CleanUp()
 {
-	glDeleteBuffers(1, &vBuffer);
-
-	glDeleteProgram(program);
-
-	glDeleteTextures(1, &texture);
-
+	glDeleteBuffers(1, &square_ebo);
+	glDeleteBuffers(1, &square_vbo);
 	return true;
-}
-
-void ModuleRenderExercise::DrawTextureImGui(bool& showWindow)
-{
-	ImGui::Begin("Texture info", &showWindow);
-	unsigned int width, height, depth, format;
-	App->texture->GetLastTextureInfo(width, height, depth, format);
-	ImGui::Text("Witdh: %i", width);
-	ImGui::Text("Height: %i", height);
-	ImGui::Text("Depth: %i", depth);
-	ImGui::Text("Format: %i", format);
-
-	ImGui::End();
-}
-
-void ModuleRenderExercise::SetTextureParameters()
-{
 }

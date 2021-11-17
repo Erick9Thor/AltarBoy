@@ -93,6 +93,7 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // we want a double buffer
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // we want to have a depth buffer with 24 bits
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
 	context = SDL_GL_CreateContext(App->window->window);
 
@@ -119,7 +120,7 @@ bool ModuleRender::Init()
 
 	// 004 - Init OpenGL via SDL
 	ret = initializeOpenGLviaSDL();
-
+	
 	// 004 - Init the glew library to wrap some sdl functions
 	ret = initGlew();
 
@@ -134,6 +135,7 @@ bool ModuleRender::Init()
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
 		glDebugMessageCallback(&DebugMessageGL, nullptr); // Set the callback
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
 	}
 
 	return true;
@@ -160,7 +162,7 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
-	App->debug_draw->Draw(App->camera->view, App->camera->proj, SCREEN_WIDTH, SCREEN_HEIGHT);
+	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	SDL_GL_SwapWindow(App->window->window);
 

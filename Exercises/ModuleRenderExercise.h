@@ -10,17 +10,14 @@ public:
 	~ModuleRenderExercise();
 
 	bool Init();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 
-	void DrawTextureImGui(bool& showWindow);
-
 private:
-	unsigned int program;
-	unsigned int vBuffer;
-	unsigned int texture;
+	unsigned int square_vbo;
+	unsigned int square_ebo;
+	unsigned int shader_id;
 
 	float4x4 model;
-
-	void SetTextureParameters();
 };

@@ -9,15 +9,18 @@ public:
 	~ModuleTexture();
 
 	bool Init();
+	update_status Update();
 
 	bool CleanUp();
 
-	void GetTextureData(unsigned int& texture, const char* source, int& width, int& height, byte*& data);
+	unsigned int GetTextureData(const char* path);
+
+
 	void CleanTexture(unsigned int& texture);
 
-	void GetLastTextureInfo(unsigned int& width, unsigned int& height, unsigned int& depth, unsigned int& format) const;
-
+	unsigned int texture_id;
 private:
+
 	unsigned int width;
 	unsigned int height;
 	unsigned int depth;
