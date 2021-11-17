@@ -1,6 +1,6 @@
-#include "../Globals.h"
+#include "Globals.h"
 #include "Program.h"
-#include "../GL/glew.h"
+#include "glew.h"
 
 #include <stdlib.h>
 

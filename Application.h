@@ -16,8 +16,9 @@ class ModuleGui;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
-class Program;
+class ModuleRenderExercise;
 
+class Program;
 class AppLog;
 
 class Application
@@ -44,6 +45,7 @@ public:
 	ModuleDebugDraw* debug_draw = nullptr;
 	ModuleCamera* camera = nullptr;
 	ModuleTexture* texture = nullptr;
+	ModuleRenderExercise* rendererExercise = nullptr;
 
 	AppLog* console = nullptr;
 	Program* program = nullptr;

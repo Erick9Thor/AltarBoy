@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions); _CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SDL\include;glew-2.1.0\include\GL;ImGui;MathGeoLib\include;DevIL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL\include;glew-2.1.0\include\GL;ImGui;MathGeoLib\include;DevIL\include;Exercises\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -198,9 +198,10 @@
     <ClCompile Include="ModuleGui.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
+    <ClCompile Include="Exercises\ModuleRenderExercise.cpp" />
     <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Resources\Program.cpp" />
+    <ClCompile Include="Program.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="ImGui\imstb_rectpack.h" />
     <ClInclude Include="ImGui\imstb_textedit.h" />
     <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\GJK.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\GJK2D.h" />
     <ClInclude Include="MathGeoLib\include\Algorithm\Random\LCG.h" />
@@ -308,13 +310,10 @@
     <ClInclude Include="ModuleGui.h" />
     <ClInclude Include="ModuleInput.h" />
     <ClInclude Include="ModuleRender.h" />
+    <ClInclude Include="Exercises\ModuleRenderExercise.h" />
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="Resources\Program.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Game\fragment-shader.txt" />
-    <Text Include="Game\vertex-shader.txt" />
+    <ClInclude Include="Program.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DevIL\include\IL\build-lua" />
@@ -334,6 +333,9 @@
     <Library Include="DevIL\lib\DevIL.lib" />
     <Library Include="DevIL\lib\ILU.lib" />
     <Library Include="DevIL\lib\ILUT.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Lenna.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
