@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions); _CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SDL\include;glew-2.1.0\include\GL;ImGui;MathGeoLib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SDL\include;glew-2.1.0\include\GL;ImGui;MathGeoLib\include;DevIL\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -202,6 +202,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="DevIL\include\IL\devil_cpp_wrapper.hpp" />
+    <ClInclude Include="DevIL\include\IL\devil_internal_exports.h" />
+    <ClInclude Include="DevIL\include\IL\il.h" />
+    <ClInclude Include="DevIL\include\IL\ilu.h" />
+    <ClInclude Include="DevIL\include\IL\ilut.h" />
+    <ClInclude Include="DevIL\include\IL\ilut_config.h" />
+    <ClInclude Include="DevIL\include\IL\ilu_region.h" />
+    <ClInclude Include="DevIL\include\IL\il_wrap.h" />
     <ClInclude Include="ImGuiComponents\AppLog.h" />
     <ClInclude Include="DebugDraw\debugdraw.h" />
     <ClInclude Include="DebugDraw\debug_draw.hpp" />

@@ -2,6 +2,9 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
+#include "DebugDraw/ModuleDebugDraw.h"
+
 #include "SDL.h"
 #include "glew.h"
 #include "MathGeoLib.h"
@@ -271,6 +274,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
+
 	//005 - Each frame called for rendering triangle
 	RenderVBO(vbo, program);
 	return UPDATE_CONTINUE;
@@ -278,6 +282,8 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
+	App->debug_draw->Draw(App->camera->getViewMatrix(), App->camera->getProjectionMatrix(), SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	// Update a window with the content of our current buffer
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;

@@ -3,21 +3,20 @@
 
 ModuleCamera::ModuleCamera()
 {
+
+	float initial_aspect_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
+
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetViewPlaneDistances(0.1f, 200.0f);
-	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, 1.3f);
+	frustum.SetHorizontalFovAndAspectRatio(DEGTORAD * 90.0f, initial_aspect_ratio);
 
-	frustum.SetPos(float3(0.0f, 1.0f, -2.0f));
+	frustum.SetPos(float3(0.0f, 4.0f, 8.0f));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
 
 	projectionGL = frustum.ProjectionMatrix().Transposed();
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(*projectionGL.v);
-
+	
 	viewGL = float4x4(frustum.ViewMatrix()).Transposed();
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(*viewGL.v);
 }
 
 ModuleCamera::~ModuleCamera()
