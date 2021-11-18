@@ -4,7 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
-#include "ModuleInput.h";
+#include "ModuleInput.h"
 
 #include "Math/MathConstants.h"
 
@@ -90,6 +90,16 @@ float4x4 ModuleCamera::GetView() const
 float4x4 ModuleCamera::GetProjection() const
 {
 	return frustum.ProjectionMatrix().Transposed();
+}
+
+float4x4 ModuleCamera::GetViewSDL() const
+{
+	return float4x4(frustum.ViewMatrix());
+}
+
+float4x4 ModuleCamera::GetProjectionSDL() const
+{
+	return frustum.ProjectionMatrix();
 }
 
 void ModuleCamera::LookAt(const float3& look_position)

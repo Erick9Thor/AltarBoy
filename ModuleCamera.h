@@ -33,6 +33,9 @@ public:
 	float4x4 GetView() const;
 	float4x4 GetProjection() const;
 
+	float4x4 GetViewSDL() const;
+	float4x4 GetProjectionSDL() const;
+
 private:
 	Frustum frustum;
 	float aspect_ratio;

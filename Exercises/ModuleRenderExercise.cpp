@@ -108,14 +108,16 @@ update_status ModuleRenderExercise::PreUpdate()
 update_status ModuleRenderExercise::Update()
 {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square_ebo);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glUseProgram(shader_id);
 
-	glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, &App->camera->GetView()[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(shader_id, "proj"), 1, GL_FALSE, &App->camera->GetProjection()[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, (const float*)&model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, (const float*)&App->camera->GetView()[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(shader_id, "proj"), 1, GL_FALSE, (const float*)&App->camera->GetProjection()[0][0]);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, App->texture->texture_id);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	return UPDATE_CONTINUE;
 }

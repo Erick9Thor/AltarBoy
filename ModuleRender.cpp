@@ -157,13 +157,12 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	printCoordinatesSystem();
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
 {
-	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), SCREEN_WIDTH, SCREEN_HEIGHT);
+	App->debug_draw->Draw(App->camera->GetViewSDL(), App->camera->GetProjectionSDL(), SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	SDL_GL_SwapWindow(App->window->window);
 
@@ -177,30 +176,4 @@ bool ModuleRender::CleanUp()
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);
 	return true;
-}
-
-void ModuleRender::printCoordinatesSystem() {
-
-	glLineWidth(2.0f);
-	glBegin(GL_LINES);
-	// red X
-	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(1.0f, 0.0f, 0.0f);
-	glVertex3f(1.0f, 0.1f, 0.0f); glVertex3f(1.1f, -0.1f, 0.0f);
-	glVertex3f(1.1f, 0.1f, 0.0f); glVertex3f(1.0f, -0.1f, 0.0f);
-	// green Y
-	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(-0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
-	glVertex3f(0.05f, 1.25f, 0.0f); glVertex3f(0.0f, 1.15f, 0.0f);
-	glVertex3f(0.0f, 1.15f, 0.0f); glVertex3f(0.0f, 1.05f, 0.0f);
-
-	// blue Z
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-0.05f, 0.1f, 1.05f); glVertex3f(0.05f, 0.1f, 1.05f);
-	glVertex3f(0.05f, 0.1f, 1.05f); glVertex3f(-0.05f, -0.1f, 1.05f);
-	glVertex3f(-0.05f, -0.1f, 1.05f); glVertex3f(0.05f, -0.1f, 1.05f);
-	glEnd();
-	glLineWidth(1.0f);
 }
