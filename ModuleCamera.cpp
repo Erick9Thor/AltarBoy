@@ -115,70 +115,28 @@ void ModuleCamera::checkCameraControl()
 {
 	bool change = false;
 
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
+
+	if (App->input->GetKey(SDL_SCANCODE_W))
 	{
-		int deltaX, deltaY;
-		App->input->GetMouseMotion(deltaX, deltaY);
-
-		float3x3 rotationDeltaMatrix =
-			float3x3::RotateAxisAngle(rotationMatrix.WorldX(), deltaY * 0.25f * DEGTORAD) *
-			float3x3::RotateAxisAngle(float3(0.0f, 1.0f, 0.0f), -deltaX * 0.25f * DEGTORAD);
-
-		rotationMatrix = rotationDeltaMatrix * rotationMatrix;
-
-		LOG("%i %i", deltaX, deltaY);
-
-		float speed = 0.1f;
-		if (App->input->GetKey(SDL_SCANCODE_LSHIFT))
-			speed *= 2.0f;
-
-		if (App->input->GetKey(SDL_SCANCODE_W))
-			position += rotationMatrix.WorldZ() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_S))
-			position -= rotationMatrix.WorldZ() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_A))
-			position += rotationMatrix.WorldX() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_D))
-			position -= rotationMatrix.WorldX() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_Q))
-			position += rotationMatrix.WorldY() * speed;
-		if (App->input->GetKey(SDL_SCANCODE_E))
-			position -= rotationMatrix.WorldY() * speed;
-
+		position += float3(0.0f, 0.0f, -0.1f);
 		change = true;
 	}
-	else if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
+	if (App->input->GetKey(SDL_SCANCODE_S))
 	{
-		int deltaX, deltaY;
-		App->input->GetMouseMotion(deltaX, deltaY);
-
-		position += rotationMatrix.WorldX() * deltaX * 0.1f + rotationMatrix.WorldY() * deltaY * 0.1f;
-
+		position += float3(0.0f, 0.0f, 0.1f);
 		change = true;
 	}
-	else
+	if (App->input->GetKey(SDL_SCANCODE_A))
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W))
-		{
-			position += float3(0.0f, 0.0f, -0.1f);
-			change = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_S))
-		{
-			position += float3(0.0f, 0.0f, 0.1f);
-			change = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_A))
-		{
-			position += float3(-0.1f, 0.0f, 0.0f);
-			change = true;
-		}
-		if (App->input->GetKey(SDL_SCANCODE_D))
-		{
-			position += float3(0.1f, 0.0f, 0.0f);
-			change = true;
-		}
+		position += float3(-0.1f, 0.0f, 0.0f);
+		change = true;
 	}
+	if (App->input->GetKey(SDL_SCANCODE_D))
+	{
+		position += float3(0.1f, 0.0f, 0.0f);
+		change = true;
+	}
+	
 
 	if (change) {
 		frustum.SetVerticalFovAndAspectRatio(DEGTORAD * 45.0f, frustum.AspectRatio());
