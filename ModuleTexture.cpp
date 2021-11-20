@@ -49,5 +49,6 @@ update_status ModuleTexture::Update()
 
 void ModuleTexture::CleanTexture(unsigned int& texture)
 {
+	LOG("Cleaning textures");
 	ilDeleteImages(1, &texture);
 }

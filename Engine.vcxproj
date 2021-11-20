@@ -393,6 +393,7 @@
     <ClInclude Include="Program.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assimp\assimp-vc141-mt.dll" />
     <None Include="Assimp\include\assimp\color4.inl" />
     <None Include="Assimp\include\assimp\material.inl" />
     <None Include="Assimp\include\assimp\matrix3x3.inl" />
@@ -401,6 +402,8 @@
     <None Include="Assimp\include\assimp\SmoothingGroups.inl" />
     <None Include="Assimp\include\assimp\vector2.inl" />
     <None Include="Assimp\include\assimp\vector3.inl" />
+    <None Include="Assimp\lib\assimp-vc141-mt.dll" />
+    <None Include="Assimp\lib\assimp-vc141-mt.exp" />
     <None Include="DevIL\include\IL\build-lua" />
     <None Include="DevIL\include\IL\build-python" />
     <None Include="DevIL\include\IL\config.h.win" />
@@ -415,6 +418,7 @@
     <None Include="MathGeoLib\include\Math\Matrix.inl" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="Assimp\lib\assimp-vc141-mt.lib" />
     <Library Include="DevIL\lib\DevIL.lib" />
     <Library Include="DevIL\lib\ILU.lib" />
     <Library Include="DevIL\lib\ILUT.lib" />

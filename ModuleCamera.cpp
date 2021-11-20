@@ -19,7 +19,7 @@ ModuleCamera::~ModuleCamera()
 bool ModuleCamera::Init()
 {
     // TODO: Remove redundant variables when it works
-    position = float3(0.0f, 0.0f, 1.0f);
+    position = float3(0.0f, 0.0f, 50.0f);
 
     frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     auto screen_surface = App->window->screen_surface;
@@ -28,7 +28,7 @@ bool ModuleCamera::Init()
     SetHorizontalFov(90.0f);
 
     RefreshFov();
-    frustum.SetViewPlaneDistances(0.1f, 100.0f);
+    frustum.SetViewPlaneDistances(0.1f, 200.0f);
 
     SetPosition(position);
     frustum.SetFront(float3::unitZ);
@@ -150,9 +150,6 @@ void ModuleCamera::checkCameraControl()
 
 	if (change) {
 		frustum.SetVerticalFovAndAspectRatio(DEGTORAD * 45.0f, frustum.AspectRatio());
-
 		frustum.SetPos(position);
-		frustum.SetFront(rotationMatrix.WorldZ());
-		frustum.SetUp(rotationMatrix.WorldY());
 	}
 }

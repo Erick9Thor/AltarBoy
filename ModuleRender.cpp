@@ -109,6 +109,7 @@ bool ModuleRender::initializeOpenGLviaSDL()
 
 void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
+	SDL_GetWindowSize(App->window->window, (int*)&width, (int*)&height);
 	glViewport(0, 0, width, height);
 }
 
@@ -120,6 +121,8 @@ bool ModuleRender::Init()
 
 	// 004 - Init OpenGL via SDL
 	ret = initializeOpenGLviaSDL();
+
+	if (ret != true) return false;
 	
 	// 004 - Init the glew library to wrap some sdl functions
 	ret = initGlew();
@@ -162,7 +165,9 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
-	App->debug_draw->Draw(App->camera->GetViewSDL(), App->camera->GetProjectionSDL(), SCREEN_WIDTH, SCREEN_HEIGHT);
+	auto screen_surface = App->window->screen_surface;
+
+	App->debug_draw->Draw(App->camera->GetViewSDL(), App->camera->GetProjectionSDL(), screen_surface->w, screen_surface->h);
 
 	SDL_GL_SwapWindow(App->window->window);
 

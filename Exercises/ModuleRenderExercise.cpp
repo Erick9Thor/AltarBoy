@@ -93,8 +93,8 @@ bool ModuleRenderExercise::Init()
 		ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
 		ilGetData());
 
-	ilDeleteImages(1, &img_id);
-
+	App->texture->CleanTexture(img_id);
+	
 	model = float4x4::identity;
 
 	return true;
@@ -107,6 +107,7 @@ update_status ModuleRenderExercise::PreUpdate()
 
 update_status ModuleRenderExercise::Update()
 {
+	// BIND BUFFER
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square_ebo);
 	glUseProgram(shader_id);
 
@@ -114,6 +115,7 @@ update_status ModuleRenderExercise::Update()
 	glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, (const float*)&App->camera->GetView()[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(shader_id, "proj"), 1, GL_FALSE, (const float*)&App->camera->GetProjection()[0][0]);
 
+	// BIND TEXTURES AND DRW
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, App->texture->texture_id);
 
