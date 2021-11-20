@@ -64,7 +64,7 @@ bool ModuleRenderExercise::Init()
 {
 
 	LOG("Shaders: Creating program");
-	shader_id = App->program->CreateProgram("vertex-shader.txt", "fragment-shader.txt");
+	shader_id = App->program->CreateProgram("Resources\\vertex-shader.txt", "Resources\\fragment-shader.txt");
 	glUseProgram(shader_id);
 
 	glEnable(GL_TEXTURE_2D);
@@ -78,7 +78,7 @@ bool ModuleRenderExercise::Init()
 	square_vbo = CreateSquareVBO();
 	square_ebo = CreateSquareEBO();
 
-	unsigned int img_id = App->texture->GetTextureData("Lenna.png");
+	unsigned int img_id = App->texture->GetTextureData("Resources\\Lenna.png");
 
 	// Generate
 	glGenTextures(1, &App->texture->texture_id);
@@ -87,8 +87,6 @@ bool ModuleRenderExercise::Init()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	// TODO: Manage tex parameters via gui
-	// TODO: Generate mip map
 	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
 		ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
 		ilGetData());

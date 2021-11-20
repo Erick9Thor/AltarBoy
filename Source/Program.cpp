@@ -49,6 +49,10 @@ unsigned CompileShader(unsigned type, const char* source)
 	return shader_id;
 }
 
+Program::Program()
+{
+}
+
 unsigned int Program::CreateProgram(const char* vtx_shader_file_name, const char* frg_shader_file_name) const
 {
 	unsigned vtx_shader = CompileShader(GL_VERTEX_SHADER, LoadShaderSource(vtx_shader_file_name));
