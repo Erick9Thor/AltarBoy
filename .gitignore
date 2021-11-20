@@ -19,7 +19,6 @@ mono_crash.*
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-x86/
 [Ww][Ii][Nn]32/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
@@ -49,6 +48,7 @@ nunit-*.xml
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
+[Rr]eleasePS/
 dlldata.c
 
 # Benchmark Results
@@ -357,3 +357,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Glew
+!Source/glew-2.1.0/*
+
+imgui.ini
