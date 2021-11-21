@@ -2,12 +2,16 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleProgram.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
 
 #include "SDL.h"
 #include "glew.h"
+
 #include "MathGeoLib.h"
+#include "il.h"
+#include "ilu.h"
 
 void __stdcall DebugMessageGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
@@ -63,29 +67,9 @@ ModuleRender::~ModuleRender()
 {
 }
 
-bool ModuleRender::initGlew()
-{
-	GLenum err = glewInit();
-
-	if (err != GLEW_OK)
-	{
-		LOG("Glew library could not init %s\n", glewGetErrorString(err));
-		return false;
-	}
-	else
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-
-	return true;
-}
-
 bool ModuleRender::initializeOpenGLviaSDL()
 {
-	
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -107,51 +91,64 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	return true;
 }
 
-void ModuleRender::WindowResized(unsigned width, unsigned height)
+bool ModuleRender::initGlew()
 {
-	SDL_GetWindowSize(App->window->window, (int*)&width, (int*)&height);
-	glViewport(0, 0, width, height);
+	GLenum err = glewInit();
+
+	if (err != GLEW_OK)
+	{
+		LOG("Glew library could not init %s\n", glewGetErrorString(err));
+		return false;
+	}
+	else
+		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+
+	LOG("Vendor: %s", glGetString(GL_VENDOR));
+	LOG("Renderer: %s", glGetString(GL_RENDERER));
+	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+	return true;
 }
 
-// Called before render is available
 bool ModuleRender::Init()
 {
 	LOG("Creating 3D Renderer context");
 	bool ret = true;
 
-	// 004 - Init OpenGL via SDL
 	ret = initializeOpenGLviaSDL();
 
 	if (ret != true) return false;
-	
-	// 004 - Init the glew library to wrap some sdl functions
+
 	ret = initGlew();
 
-	if (ret == true)
-	{
-		// Initialize some OpenGL global states
+	if (ret == true) {
+
 		glEnable(GL_DEPTH_TEST); // Enable depth test
 		glEnable(GL_CULL_FACE); // Enable cull backward faces
 		glFrontFace(GL_CCW); // Front faces will be counter clockwise
 
 		glEnable(GL_DEBUG_OUTPUT); // Enable output callback
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-
 		glDebugMessageCallback(&DebugMessageGL, nullptr); // Set the callback
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
+
+		// Textures params
+		glEnable(GL_TEXTURE_2D);
+	
+		int w, h;
+		SDL_GetWindowSize(App->window->window, &w, &h);
+		glViewport(0, 0, w, h);
 	}
+
+	house = new Model("BakerHouse.fbx");
 
 	return true;
 }
 
 update_status ModuleRender::PreUpdate()
 {
-	// 004 - Clearing the screen
-	int window_width, window_height;
-
-	SDL_GetWindowSize(App->window->window, &window_width, &window_height);
-	glViewport(0, 0, window_width, window_height);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	return UPDATE_CONTINUE;
@@ -160,25 +157,36 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
+	auto &a = App->window->screen_surface;
+	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), a->w, a->h);
+
+	// Note: Debug draw disables blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	house->Draw();
+
+
 	return UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
-{
-	auto screen_surface = App->window->screen_surface;
-
-	App->debug_draw->Draw(App->camera->GetViewSDL(), App->camera->GetProjectionSDL(), screen_surface->w, screen_surface->h);
-
+{	
 	SDL_GL_SwapWindow(App->window->window);
-
+	
 	return UPDATE_CONTINUE;
 }
 
 // Called before quitting
 bool ModuleRender::CleanUp()
 {
-	// 004 - Destroy window and delete OPenGL context
 	LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);
 	return true;
 }
+
+void ModuleRender::WindowResized(unsigned int width, unsigned int height)
+{
+	SDL_GetWindowSize(App->window->window, (int*)&width, (int*)&height);
+	glViewport(0, 0, width, height);
+}
+

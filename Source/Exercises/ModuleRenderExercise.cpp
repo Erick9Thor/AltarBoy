@@ -24,7 +24,7 @@ ModuleRenderExercise::ModuleRenderExercise()
 ModuleRenderExercise::~ModuleRenderExercise()
 {
 }
-
+/*
 unsigned int CreateSquareVBO() {
 	float positions[] = {
 		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -59,12 +59,12 @@ unsigned int CreateSquareEBO()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	return ebo;
-}
+}**/
 
 bool ModuleRenderExercise::Init()
 {
 
-	LOG("Shaders: Creating program");
+	/*LOG("Shaders: Creating program");
 	shader_id = App->program->CreateProgram("Resources\\vertex-shader.txt", "Resources\\fragment-shader.txt");
 	glUseProgram(shader_id);
 
@@ -94,7 +94,7 @@ bool ModuleRenderExercise::Init()
 
 	App->texture->CleanTexture(img_id);
 	
-	model = float4x4::identity;
+	model = float4x4::identity;*/
 
 	return true;
 }
@@ -107,7 +107,7 @@ update_status ModuleRenderExercise::PreUpdate()
 update_status ModuleRenderExercise::Update()
 {
 	// BIND BUFFER
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square_ebo);
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, square_ebo);
 	glUseProgram(shader_id);
 
 	glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, (const float*)&model[0][0]);
@@ -118,7 +118,7 @@ update_status ModuleRenderExercise::Update()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, App->texture->texture_id);
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
 
 	return UPDATE_CONTINUE;
 }

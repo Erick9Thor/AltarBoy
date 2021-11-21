@@ -1,35 +1,29 @@
 #pragma once
 
-#include "Globals.h"
-
-#include <assimp/scene.h>
-#include <assimp/cimport.h>
-#include <assimp/postprocess.h>
-
 #include "Mesh.h"
 
+#include "assimp/scene.h"
+
 #include <vector>
-#include <glew.h>
-#include <string>
 using namespace std;
+
+struct Texture {
+	unsigned id;	
+	string path;
+};
 
 class Model
 {
 	public:
 		Model(const char* file_name);
+		~Model();
 		void Draw();
 
 	private:
+		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
-		Mesh* processMesh(aiMesh* mesh, const aiScene* scene);
-
-		vector<Texture> loadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName);
-
-		unsigned int TextureFromFile(const char* path);
-		
-		vector<Texture> textures_loaded;
-		vector<int> materials;
-		vector<Mesh*> meshes;
-		string directory;
+		Texture LoadTexture(const char* path);
+		vector<unsigned> textures;
+		vector<Mesh> meshes;
 };
 

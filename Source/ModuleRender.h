@@ -1,10 +1,7 @@
 #pragma once
-#ifndef __MODULE_RENDER_H__
-#define __MODULE_RENDER_H__
-
 #include "Module.h"
 #include "Globals.h"
-
+#include "Model.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -15,7 +12,7 @@ class ModuleRender : public Module
 public:
 	ModuleRender();
 	~ModuleRender();
-	
+
 	bool Init();
 	update_status PreUpdate();
 	update_status Update();
@@ -24,10 +21,12 @@ public:
 
 	bool initGlew();
 	bool initializeOpenGLviaSDL();
-
+	
 	void WindowResized(unsigned width, unsigned height);
 
 	void* context;
-};
 
-#endif
+private:
+	Model* house = nullptr;
+	unsigned int texture_id;
+};

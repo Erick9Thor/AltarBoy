@@ -7,16 +7,16 @@
 #include "ModuleGui.h"
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
+#include "ModuleProgram.h"
 #include "Exercises/ModuleRenderExercise.h"
 #include "Exercises/ModuleLoadModels.h"
-#include "Program.h"
 #include "ModuleDebugDraw.h"
 
 using namespace std;
 
 Application::Application()
 {
-	program = new Program();
+	// program = new Program();
 	// Order matters: they will Init/start/update in this order
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
@@ -25,6 +25,7 @@ Application::Application()
 	modules.push_back(renderer = new ModuleRender());
 	// modules.push_back(rendererExercise = new ModuleRenderExercise());
 	modules.push_back(moduleLoadModels = new ModuleLoadModels());
+	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(gui = new ModuleGui());
 }

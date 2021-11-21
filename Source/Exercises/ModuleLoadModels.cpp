@@ -1,5 +1,4 @@
 #include "ModuleLoadModels.h"
-#include "../Program.h"
 #include "../Application.h"
 #include "../ModuleCamera.h"
 #include "../ModuleTexture.h"
@@ -8,13 +7,8 @@
 
 bool ModuleLoadModels::Init()
 {
-	LOG("Shaders: Creating program");
-	App->program->CreateProgramID("Bakerhouse\\model_loading.vs", "Bakerhouse\\model_loading.fs");
-	LOG("Shaders: Shaders created correctly");
-
-
-	LOG("Model: Creating Model");
-	ourModel = new Model("Bakerhouse\\BakerHouse.fbx");
+	/*LOG("Model: Creating Model");
+	ourModel = new Model("BakerHouse.fbx");*/
 
 	return true;
 }
@@ -26,7 +20,7 @@ update_status ModuleLoadModels::PreUpdate()
 
 update_status ModuleLoadModels::Update()
 {
-	ourModel->Draw();
+	/*ourModel->Draw();*/
 	return UPDATE_CONTINUE;
 }
 

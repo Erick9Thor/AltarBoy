@@ -15,6 +15,7 @@ class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
 class ModuleLoadModels;
+class ModuleProgram;
 
 class Program;
 class AppLog;
@@ -45,11 +46,9 @@ public:
 	ModuleTexture* texture = nullptr;
 	ModuleRenderExercise* rendererExercise = nullptr;
 	ModuleLoadModels* moduleLoadModels = nullptr;
+	ModuleProgram* program = nullptr;
 
 	AppLog* console = nullptr;
-
-	// TODO: Convert this on a utils provider or something like
-	Program* program = nullptr;
 
 private:
 	int	capped_ms;
