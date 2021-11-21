@@ -1,6 +1,6 @@
 #include "ModuleRenderExercise.h"
 
-#include "../Program.h"
+#include "../ModuleProgram.h"
 #include "../Application.h"
 #include "../ModuleCamera.h"
 #include "../ModuleTexture.h"
