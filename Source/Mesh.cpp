@@ -39,7 +39,7 @@ void Mesh::LoadEBO(const aiMesh* mesh)
 	unsigned index_size = sizeof(unsigned) * mesh->mNumFaces * 3;
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_size, nullptr, GL_STATIC_DRAW);
 
-	unsigned* indices = (unsigned*)(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_MAP_WRITE_BIT));
+	unsigned* indices = (unsigned*)(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY));
 	for (unsigned i = 0; i < mesh->mNumFaces; ++i)
 	{
 		assert(mesh->mFaces[i].mNumIndices == 3); // note: assume triangles = 3 indices per face
@@ -80,9 +80,9 @@ Mesh::Mesh(aiMesh* mesh, vector<Vertex> vertices, vector<unsigned int> indices, 
 	CreateVAO();
 }
 
-void Mesh::Draw(const std::vector<unsigned>& model_textures, unsigned int material_index)
+void Mesh::Draw(unsigned int material_index)
 {
-	unsigned program = App->program->getDefaultProgram();
+	unsigned program = App->program->getProgramID();
 
 	const float4x4& view = App->camera->GetView();
 	const float4x4& proj = App->camera->GetProjection();
@@ -95,7 +95,7 @@ void Mesh::Draw(const std::vector<unsigned>& model_textures, unsigned int materi
 	glUniformMatrix4fv(glGetUniformLocation(program, "proj"), 1, GL_TRUE, (const float*)&proj);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, model_textures[material_index]);
+	glBindTexture(GL_TEXTURE_2D, textures[0].id);
 
 	glUniform1i(glGetUniformLocation(program, "diffuse"), 0);
 	glBindVertexArray(VAO);

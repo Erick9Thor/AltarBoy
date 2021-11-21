@@ -16,7 +16,7 @@ using namespace std;
 class Model
 {
 	public:
-		void Load(const char* file_name);
+		Model(const char* file_name);
 		void Draw();
 
 	private:
@@ -25,12 +25,11 @@ class Model
 
 		vector<Texture> loadMaterialTextures(aiMaterial* material, aiTextureType type, string typeName);
 
-		unsigned int TextureFromFile(const char* path, const string& directory);
+		unsigned int TextureFromFile(const char* path);
 		
-		vector<unsigned> textures;
+		vector<Texture> textures_loaded;
 		vector<int> materials;
 		vector<Mesh*> meshes;
-		vector<Texture> textures_loaded;
 		string directory;
 };
 

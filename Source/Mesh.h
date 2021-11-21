@@ -34,7 +34,7 @@ class Mesh
 {
 	public:
 		Mesh(aiMesh* mesh, vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
-		void Draw(const std::vector<unsigned>& model_textures, unsigned int indx);
+		void Draw(unsigned int indx);
 
 	private:
 		void CreateVAO();

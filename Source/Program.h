@@ -2,14 +2,16 @@
 class Program
 {
 	public: 
-		Program();
 		unsigned int CreateProgram(const char* vtx_shader_file_name, const char* frg_shader_file_name) const;
+		void CreateProgramID(const char* vtx_shader_file_name, const char* frg_shader_file_name);
 
-		inline unsigned int getDefaultProgram() const {
-			return default_program;
+		void use();
+
+		inline unsigned int getProgramID() const {
+			return ID;
 		}
 
 	private: 
-		unsigned int default_program;
+		unsigned int ID;
 };
 

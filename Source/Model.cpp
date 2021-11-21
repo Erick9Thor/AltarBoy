@@ -5,9 +5,9 @@
 #include "il.h"
 #include "ilu.h"
 
-void Model::Load(const char* file_name)
+Model::Model(const char* file_name)
 {
-    const aiScene* scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality);
+    const aiScene* scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (scene)
 	{
 		LoadMeshes(scene);
@@ -21,7 +21,7 @@ void Model::Load(const char* file_name)
 void Model::Draw()
 {
 	for (vector<Mesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
-		(*it)->Draw(textures, it - meshes.begin());
+		(*it)->Draw(it - meshes.begin());
 	}
 }
 
@@ -139,7 +139,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* material, aiTextureType 
         if (!skip)
         {   // if texture hasn't been loaded already, load it
             Texture texture;
-            texture.id = TextureFromFile(str.C_Str(), this->directory);
+            texture.id = TextureFromFile(str.C_Str());
             texture.type = typeName;
             texture.path = str.C_Str();
             textures.push_back(texture);
@@ -149,7 +149,7 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* material, aiTextureType 
     return textures;
 }
 
-unsigned int Model::TextureFromFile(const char* path, const string& directory)
+unsigned int Model::TextureFromFile(const char* path)
 {
 
     unsigned int textureID;

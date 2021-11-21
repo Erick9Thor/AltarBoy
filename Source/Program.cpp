@@ -1,5 +1,5 @@
-#include "Globals.h"
 #include "Program.h"
+#include "Globals.h"
 #include "glew.h"
 
 #include <stdlib.h>
@@ -49,10 +49,6 @@ unsigned CompileShader(unsigned type, const char* source)
 	return shader_id;
 }
 
-Program::Program()
-{
-}
-
 unsigned int Program::CreateProgram(const char* vtx_shader_file_name, const char* frg_shader_file_name) const
 {
 	unsigned vtx_shader = CompileShader(GL_VERTEX_SHADER, LoadShaderSource(vtx_shader_file_name));
@@ -81,4 +77,38 @@ unsigned int Program::CreateProgram(const char* vtx_shader_file_name, const char
 	glDeleteShader(frg_shader);
 
 	return program;
+}
+
+void Program::CreateProgramID(const char* vtx_shader_file_name, const char* frg_shader_file_name)
+{
+	unsigned vtx_shader = CompileShader(GL_VERTEX_SHADER, LoadShaderSource(vtx_shader_file_name));
+	unsigned frg_shader = CompileShader(GL_FRAGMENT_SHADER, LoadShaderSource(frg_shader_file_name));
+
+	ID = glCreateProgram();
+	glAttachShader(ID, vtx_shader);
+	glAttachShader(ID, frg_shader);
+	glLinkProgram(ID);
+	int res;
+	glGetProgramiv(ID, GL_LINK_STATUS, &res);
+	if (res == GL_FALSE)
+	{
+		int len = 0;
+		glGetProgramiv(ID, GL_INFO_LOG_LENGTH, &len);
+		if (len > 0)
+		{
+			int written = 0;
+			char* info = (char*)malloc(len);
+			glGetProgramInfoLog(ID, len, &written, info);
+			LOG("Program Log Info: %s", info);
+			free(info);
+		}
+	}
+	glDeleteShader(vtx_shader);
+	glDeleteShader(frg_shader);
+}
+
+
+void Program::use()
+{
+	glUseProgram(ID);
 }
