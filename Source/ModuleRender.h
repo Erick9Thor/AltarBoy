@@ -26,7 +26,7 @@ public:
 
 	void* context;
 
-private:
 	Model* house = nullptr;
+private:
 	unsigned int texture_id;
 };

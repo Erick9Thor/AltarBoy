@@ -18,12 +18,12 @@ class Model
 		Model(const char* file_name);
 		~Model();
 		void Draw();
+		void DrawGui();
 
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
 		Texture LoadTexture(const char* path);
-		void DrawImGui();
 		vector<unsigned> textures;
 		vector<Mesh> meshes;
 

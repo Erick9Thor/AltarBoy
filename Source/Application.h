@@ -34,9 +34,7 @@ public:
 	void DebugDraw();
 
 	void RequestBrowser(const char* url) const;
-
 	int GetFramerateLimit() const;
-	
 	float GetDeltaTime() { return deltaTime; };
 
 public:

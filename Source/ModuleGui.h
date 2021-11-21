@@ -26,7 +26,7 @@ public:
 
 	void Draw();
 
-	update_status showBasicMenu();
+	void showMenu();
 	
 	void showFPSGraph();
 	void showConfigWindow();
@@ -36,6 +36,11 @@ public:
 private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
+
+	bool showCameraWindow = false;
+	bool showTextureWindow = false;
+	bool showModelWindow = false;
+	bool fpsCounter = false;
 };
 
 #endif // MODULE_GUI_H

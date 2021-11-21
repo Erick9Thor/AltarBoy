@@ -54,6 +54,27 @@ bool ModuleCamera::CleanUp()
 	return false;
 }
 
+void ModuleCamera::DrawGui()
+{
+	ImGui::Text("Variables");
+	if (ImGui::DragFloat("Vertical FOV", &initialVerticalFov, 1.0f, 10.0f, 160.0f, "%.2f")) {
+		if (aspect_ratio >= 1)
+			verticalFov = DEGTORAD * initialVerticalFov;
+		else
+			verticalFov = math::Atan(math::Tan(DEGTORAD * initialVerticalFov) / aspect_ratio);
+	}
+	ImGui::DragFloat("Near distance near Z:", &nearPlaneDistance, 1.0f, 0.1f, 5.0f, "%.2f");
+	ImGui::DragFloat("Far distance Z", &farPlaneDistance, 5.0f, 6.0f, 400.0f, "%.2f");
+
+	ImGui::Text("Set position");
+	ImGui::DragFloat("position-X", &position.x, 1.0f, -25.0f, 25.0f, "%.2f");
+	ImGui::DragFloat("position-Y", &position.y, 1.0f, -25.0f, 25.0f, "%.2f");
+	ImGui::DragFloat("position-Z", &position.z, 1.0f, -25.0f, 25.0f, "%.2f");
+	ImGui::Separator();
+
+	LookAt();
+}
+
 void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
 {
 	aspect_ratio = (float)screen_width / (float)screen_height;

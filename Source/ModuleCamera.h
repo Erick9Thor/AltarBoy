@@ -17,6 +17,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void DrawGui();
+
 	void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
 	void WindowResized(unsigned int screen_width, unsigned int screen_height);
 	void checkCameraControl();

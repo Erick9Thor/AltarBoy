@@ -3,6 +3,9 @@
 #include "ModuleGui.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
+#include "ModuleCamera.h"
+#include "ModuleTexture.h"
+#include "Model.h"
 #include "SDL.h"
 
 #include "ImGuiComponents/AppLog.h"
@@ -48,11 +51,9 @@ update_status ModuleGui::PreUpdate()
 // Called every draw update
 update_status ModuleGui::Update()
 {
-    update_status ret = UPDATE_CONTINUE;
-    ret = showBasicMenu();
+    showMenu();
     Draw();
-
-    return ret;
+    return UPDATE_CONTINUE;
 }
 
 update_status ModuleGui::PostUpdate()
@@ -79,80 +80,113 @@ void ModuleGui::Draw()
     SDL_GL_MakeCurrent(App->window->window, App->renderer->context);
 }
 
-update_status ModuleGui::showBasicMenu() {
+void ModuleGui::showMenu() {
     static bool showcase = false;
     static bool show_abaout = false;
 
-        if (ImGui::BeginMainMenuBar())
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("File"))
         {
-            if (ImGui::BeginMenu("File"))
-            {
-                ImGui::MenuItem("New ...");
-                ImGui::MenuItem("Load ...");
+            ImGui::MenuItem("New ...");
+            ImGui::MenuItem("Load ...");
                
-                if (ImGui::MenuItem("Quit", "ESC"))
-                    return UPDATE_STOP;
+            if (ImGui::MenuItem("Quit", "ESC"))
+                return UPDATE_STOP;
 
-                ImGui::EndMenu();
-            }
+            ImGui::EndMenu();
+        }
 
-            if (ImGui::BeginMenu("Help"))
-            {
-                if (ImGui::MenuItem("Gui Demo"))
-                    showcase = !showcase;
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Documentation"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/wiki");
 
-                if (ImGui::MenuItem("Documentation"))
-                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/wiki");
+            if (ImGui::MenuItem("Download latest"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/releases");
 
-                if (ImGui::MenuItem("Download latest"))
-                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/releases");
+            if (ImGui::MenuItem("Report a bug"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/issues");
 
-                if (ImGui::MenuItem("Report a bug"))
-                    App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/issues");
+            if (ImGui::MenuItem("Download source!"))
+                App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
 
-                if (ImGui::MenuItem("Download source!"))
-                    App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+            if (ImGui::MenuItem("Abaout"))
+                show_abaout = !show_abaout;
 
-                if (ImGui::MenuItem("Abaout"))
-                    show_abaout = !show_abaout;
+            ImGui::EndMenu();
+        }
 
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Console"))
+        if (ImGui::BeginMenu("Tools"))
+        {
+            if (ImGui::MenuItem("Console"))
             {
                 Logger->setShowConsole(!Logger->getShowConsole());
-                ImGui::EndMenu();
             }
-
-            if (ImGui::BeginMenu("FPS counter"))
+            if (ImGui::MenuItem("Camera"))
             {
-                showFPSGraph();
-                ImGui::EndMenu();
+                showCameraWindow = !showCameraWindow;
             }
-
-            if (ImGui::BeginMenu("Window conf"))
+            if (ImGui::MenuItem("Texture info"))
             {
-                showConfigWindow();
-                ImGui::EndMenu();
+                showTextureWindow = !showTextureWindow;
             }
-
-            ImGui::EndMainMenuBar();
+            if (ImGui::MenuItem("Model info"))
+            {
+                showModelWindow = !showModelWindow;
+            }
+            if (ImGui::MenuItem("FPS counter"))
+            {
+                fpsCounter = !fpsCounter;
+            }
+            ImGui::EndMenu();
         }
 
-        if (showcase)
+        if (ImGui::BeginMenu("Window conf"))
         {
-            ImGui::ShowDemoWindow();
-            ImGui::ShowMetricsWindow();
+            showConfigWindow();
+            ImGui::EndMenu();
         }
 
-        if (Logger->getShowConsole()) Logger->Draw();
+        ImGui::EndMainMenuBar();
+    }
 
-        if (show_abaout) {
-            showAbaoutInfo();
+    if (showCameraWindow)
+    {
+        if (ImGui::Begin("Camera", &showCameraWindow))
+        {
+            App->camera->DrawGui();
+
+            ImGui::End();
         }
+    }
 
-        return UPDATE_CONTINUE;
+    /* TODO: TEXTURE INFO
+    if (showTextureWindow)
+    {
+        if (ImGui::Begin("Texture", &showCameraWindow))
+        {
+            App->texture->DrawGui();
+
+            ImGui::End();
+        }   
+    }*/
+
+    if (showModelWindow)
+    {
+        if (ImGui::Begin("Model", &showModelWindow))
+        {
+            App->renderer->house->DrawGui();
+
+            ImGui::End();
+        }
+    }
+
+    if (Logger->getShowConsole()) Logger->Draw();
+
+    if (show_abaout) {
+        showAbaoutInfo();
+    }
 }
 
 
@@ -197,12 +231,6 @@ void ModuleGui::showAbaoutInfo()
     ImGui::Separator();
     ImGui::Text("My Engine for C++ UPC MASTER!");
     ImGui::Text("Eric Torres Perramon");
-
-    // FIND HOW TO ADD LIBRARIES
-
-
-    // LICENSE
-
     ImGui::End();
 }
 

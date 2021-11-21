@@ -90,7 +90,7 @@ Texture Model::LoadTexture(const char* path)
 	return texture;
 }
 
-void Model::DrawImGui()
+void Model::DrawGui()
 {
 	ImGui::Text("Name: %s", m_Name);
 	ImGui::Text("Num vertices: %i", numVertices);

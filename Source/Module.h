@@ -39,4 +39,6 @@ public:
 
 	virtual void DrawDebug()
 	{}
+
+	virtual void DrawGui() {}
 };
