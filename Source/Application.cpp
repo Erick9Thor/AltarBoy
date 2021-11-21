@@ -16,8 +16,6 @@ using namespace std;
 
 Application::Application()
 {
-	// program = new Program();
-	// Order matters: they will Init/start/update in this order
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(camera = new ModuleCamera());
@@ -48,6 +46,10 @@ bool Application::Init()
 
 update_status Application::Update()
 {
+	float currentTime = SDL_GetTicks();
+	deltaTime = (currentTime - lastTime) / 1000.0f;
+	lastTime = currentTime;
+
 	update_status ret = UPDATE_CONTINUE;
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)

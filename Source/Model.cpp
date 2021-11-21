@@ -14,12 +14,20 @@
 
 Model::Model(const char* file_name)
 {
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(file_name, aiProcess_Triangulate);
+
+	m_Name = file_name;
+
+	const aiScene* scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
 	if (scene)
 	{
 		LoadTextures(scene);
 		LoadMeshes(scene);
+
+		for (Mesh& mesh : meshes)
+		{
+			numVertices += mesh.GetNumVertices();
+			numTriangles += mesh.GetNumIndices() / 3;
+		}
 	}
 	else
 	{
@@ -44,11 +52,9 @@ void Model::LoadTextures(const aiScene* scene)
 	textures.reserve(scene->mNumMaterials);
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
 	{
-		// Atm we only support a single texture so index is hardcoded to 0
 		static const int index = 0;
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
 		{
-			// TODO: Move stuff to textures module and change to store similar to struct
 			textures.push_back(LoadTexture(file.data).id);
 		}
 	}
@@ -82,4 +88,11 @@ Texture Model::LoadTexture(const char* path)
 
 	ilDeleteImages(1, &img_id);
 	return texture;
+}
+
+void Model::DrawImGui()
+{
+	ImGui::Text("Name: %s", m_Name);
+	ImGui::Text("Num vertices: %i", numVertices);
+	ImGui::Text("Num triangles: %i", numTriangles);
 }

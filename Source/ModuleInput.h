@@ -24,11 +24,16 @@ public:
 	const bool GetMouseButton(unsigned int key) const;
 	const void GetMouseMotion(int& x, int& y) const;
 
+	const bool MouseWheel() const { return mouse_wheel; };
+	const void GetMouseWheel(int& x, int& y) const { x = mouse_wheel_x; y = mouse_wheel_y; };
+
 private:
 	const Uint8* keyboard = NULL;
 	bool mouse_buttons[NUM_MOUSE_BUTTONS];
 	int mouse_motion_x;
 	int mouse_motion_y;
+	bool mouse_wheel;
+	int mouse_wheel_x, mouse_wheel_y;
 };
 
 #endif // MODULE_INPUT_H

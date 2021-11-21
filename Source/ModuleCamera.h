@@ -16,19 +16,10 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
-	
-	void SetPosition(const float3& position);
+
 	void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
-	void SetHorizontalFov(float fov_deg);
-	void LookAt(const float3& position);
-
-	void RefreshFov();
 	void WindowResized(unsigned int screen_width, unsigned int screen_height);
-
 	void checkCameraControl();
-
-	bool locked;
-	float3 position;
 
 	float4x4 GetGLView() const;
 	float4x4 GetView() const;
@@ -36,10 +27,25 @@ public:
 	float4x4 GetGLProjection() const;
 	float4x4 GetProjection() const;
 
+	void RefreshFov();
+
 private:
+
+	void LookAt();
+
+	float3x3 rotationMatrix;
+
 	Frustum frustum;
 	float aspect_ratio;
-	float horizontal_fov;
-	float3 look_position;
+	float3 position;
+
+	float initialVerticalFov = 45.0f;
+	float verticalFov = DEGTORAD * initialVerticalFov;
+	float nearPlaneDistance = 0.1f;
+	float farPlaneDistance = 200.0f;
+
+	float CameraSpeed = 10.0f;
+	float mouseSpeedForRotation = 5.0f;
+	float mouseSpeedForMovement = 2.5f;
 };
 

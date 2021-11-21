@@ -41,6 +41,10 @@ update_status ModuleInput::Update()
 
     SDL_Event sdlEvent;
 
+    mouse_motion_x = mouse_motion_y = 0;
+    mouse_wheel = false;
+    mouse_wheel_x = mouse_wheel_y = 0;
+
     while (SDL_PollEvent(&sdlEvent) != 0)
     {
         ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
@@ -61,6 +65,11 @@ update_status ModuleInput::Update()
             case SDL_MOUSEMOTION:
                 mouse_motion_x = sdlEvent.motion.xrel;
                 mouse_motion_y = sdlEvent.motion.yrel;
+                break;
+            case SDL_MOUSEWHEEL:
+                mouse_wheel = true;
+                mouse_wheel_x = sdlEvent.wheel.x;
+                mouse_wheel_y = sdlEvent.wheel.y;
                 break;
         }
     }

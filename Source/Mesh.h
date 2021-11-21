@@ -18,6 +18,14 @@ class Mesh
 		void CreateVAO();
 
 		void Draw(const std::vector<unsigned>& model_textures);
+
+
+		unsigned int GetNumVertices() const {
+			return num_vertices;
+		};
+		unsigned int GetNumIndices() const {
+			return num_indices;
+		};
 	
 	private:
 		unsigned VBO, EBO, VAO;

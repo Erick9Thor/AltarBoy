@@ -34,7 +34,10 @@ public:
 	void DebugDraw();
 
 	void RequestBrowser(const char* url) const;
+
 	int GetFramerateLimit() const;
+	
+	float GetDeltaTime() { return deltaTime; };
 
 public:
 	ModuleRender* renderer = nullptr;
@@ -53,6 +56,9 @@ public:
 private:
 	int	capped_ms;
 	std::vector<Module*> modules;
+
+	float deltaTime = 0.0f;
+	float lastTime = 0.0f;
 };
 
 extern Application* App;
