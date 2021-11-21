@@ -90,9 +90,6 @@ void ModuleGui::showMenu() {
         {
             ImGui::MenuItem("New ...");
             ImGui::MenuItem("Load ...");
-               
-            if (ImGui::MenuItem("Quit", "ESC"))
-                return UPDATE_STOP;
 
             ImGui::EndMenu();
         }

@@ -141,8 +141,6 @@ bool ModuleRender::Init()
 		glViewport(0, 0, w, h);
 	}
 
-	house = new Model("BakerHouse.fbx");
-
 	return true;
 }
 
@@ -160,11 +158,8 @@ update_status ModuleRender::Update()
 	auto &a = App->window->screen_surface;
 	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), a->w, a->h);
 
-	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	house->Draw();
-
 
 	return UPDATE_CONTINUE;
 }

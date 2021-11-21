@@ -87,7 +87,6 @@ void Mesh::CreateVAO()
 void Mesh::Draw(const std::vector<unsigned>& model_textures)
 {
 	unsigned program_id = App->program->program_id;
-	const float4x4& proj = App->camera->GetGLProjection();
 	float4x4 model = float4x4::identity;
 	
 	glUseProgram(program_id);

@@ -7,8 +7,8 @@
 
 bool ModuleLoadModels::Init()
 {
-	/*LOG("Model: Creating Model");
-	ourModel = new Model("BakerHouse.fbx");*/
+	LOG("Model: Creating Model");
+	ourModel = new Model("BakerHouse.fbx");
 
 	return true;
 }
@@ -20,7 +20,7 @@ update_status ModuleLoadModels::PreUpdate()
 
 update_status ModuleLoadModels::Update()
 {
-	/*ourModel->Draw();*/
+	ourModel->Draw();
 	return UPDATE_CONTINUE;
 }
 
