@@ -11,11 +11,13 @@
 #include "Exercises/ModuleRenderExercise.h"
 #include "Exercises/ModuleLoadModels.h"
 #include "ModuleDebugDraw.h"
+#include "Timer.h";
 
 using namespace std;
 
 Application::Application()
 {
+	
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(camera = new ModuleCamera());
@@ -26,6 +28,7 @@ Application::Application()
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(gui = new ModuleGui());
+
 }
 
 Application::~Application()
@@ -50,6 +53,10 @@ update_status Application::Update()
 	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
+	Timer fperformance;
+	fperformance.StartMicroseconds();
+
+
 	update_status ret = UPDATE_CONTINUE;
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -60,6 +67,9 @@ update_status Application::Update()
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PostUpdate();
+
+	LOG("Time expend to ini modules: %f", fperformance.ReadMicroseconds());
+
 
 	return ret;
 }
