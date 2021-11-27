@@ -18,33 +18,29 @@ ModuleTexture::~ModuleTexture()
 bool ModuleTexture::Init()
 {
 	LOG("Init Image library using DevIL lib version %d", IL_VERSION);
-
-	return true;
-}
-
-bool ModuleTexture::CleanUp()
-{
-	LOG("Freeing textures and Image library");
-
 	return true;
 }
 
 unsigned int ModuleTexture::GetTextureData(const char* path)
 {
-	ILuint name; // The image name to return.
-	ilGenImages(1, &name); // Grab a new image name.
-	ilBindImage(name);
-	ilLoadImage(path);
+	LOG("Loading texure from: %s", path);
+
+	ILuint texture_id; 
+	ilGenImages(1, &texture_id); 
+	ilBindImage(texture_id);
+
+	if (!ilLoadImage(path)) {
+		LOG("Error loading texture from: %s", path);
+	}
+
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	iluRotate(180.0f);
+	
+	ILinfo textureInfo;
+	iluGetImageInfo(&textureInfo);
+	if (textureInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+		iluFlipImage();
 
-	return name;
-}
-
-update_status ModuleTexture::Update()
-{
-
-	return UPDATE_CONTINUE;
+	return texture_id;
 }
 
 void ModuleTexture::CleanTexture(unsigned int& texture)

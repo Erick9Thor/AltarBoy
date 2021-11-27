@@ -20,6 +20,8 @@ class Model
 		void Draw();
 		void DrawGui();
 
+		void CleanUp();
+
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);

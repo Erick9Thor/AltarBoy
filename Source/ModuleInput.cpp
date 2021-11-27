@@ -1,8 +1,10 @@
 #include "Globals.h"
-#include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "SDL.h"
+
+#include "Application.h"
+#include "Exercises/ModuleLoadModels.h"
 
 #include "imgui_impl_sdl.h"
 
@@ -39,38 +41,47 @@ update_status ModuleInput::Update()
 {
     SDL_PumpEvents();
 
-    SDL_Event sdlEvent;
+    SDL_Event event;
 
     mouse_motion_x = mouse_motion_y = 0;
     mouse_wheel = false;
     mouse_wheel_x = mouse_wheel_y = 0;
 
-    while (SDL_PollEvent(&sdlEvent) != 0)
+    while (SDL_PollEvent(&event) != 0)
     {
-        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
-        switch (sdlEvent.type)
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        switch (event.type)
         {
             case SDL_QUIT:
                 return UPDATE_STOP;
             case SDL_WINDOWEVENT:
-                if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-                    App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
+                if (event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+                    App->renderer->WindowResized(event.window.data1, event.window.data2);
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                mouse_buttons[sdlEvent.button.button - 1] = true;
+                mouse_buttons[event.button.button - 1] = true;
                 break;
             case SDL_MOUSEBUTTONUP:
-                mouse_buttons[sdlEvent.button.button - 1] = false;
+                mouse_buttons[event.button.button - 1] = false;
                 break;
             case SDL_MOUSEMOTION:
-                mouse_motion_x = sdlEvent.motion.xrel;
-                mouse_motion_y = sdlEvent.motion.yrel;
+                mouse_motion_x = event.motion.xrel;
+                mouse_motion_y = event.motion.yrel;
                 break;
             case SDL_MOUSEWHEEL:
                 mouse_wheel = true;
-                mouse_wheel_x = sdlEvent.wheel.x;
-                mouse_wheel_y = sdlEvent.wheel.y;
+                mouse_wheel_x = event.wheel.x;
+                mouse_wheel_y = event.wheel.y;
                 break;
+            case SDL_DROPFILE: 
+            {
+                LOG("Dropped file: %s", event.drop.file);
+
+                App->moduleLoadModels->LoadModel(event.drop.file);
+                
+                SDL_free(event.drop.file);
+                break;
+            }
         }
     }
 

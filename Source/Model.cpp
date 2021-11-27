@@ -96,3 +96,13 @@ void Model::DrawGui()
 	ImGui::Text("Num vertices: %i", numVertices);
 	ImGui::Text("Num triangles: %i", numTriangles);
 }
+
+void Model::CleanUp()
+{
+	for (Mesh& mesh : meshes) {
+		mesh.CleanUp();
+	}
+	for (unsigned texture_id : textures) {
+		glDeleteTextures(1, &texture_id);
+	}
+}

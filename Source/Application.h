@@ -45,7 +45,6 @@ public:
 	ModuleDebugDraw* debug_draw = nullptr;
 	ModuleCamera* camera = nullptr;
 	ModuleTexture* texture = nullptr;
-	ModuleRenderExercise* rendererExercise = nullptr;
 	ModuleLoadModels* moduleLoadModels = nullptr;
 	ModuleProgram* program = nullptr;
 

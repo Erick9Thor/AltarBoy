@@ -11,7 +11,6 @@
 #include "Exercises/ModuleRenderExercise.h"
 #include "Exercises/ModuleLoadModels.h"
 #include "ModuleDebugDraw.h"
-#include "Timer.h";
 
 using namespace std;
 
@@ -23,7 +22,6 @@ Application::Application()
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
-	// modules.push_back(rendererExercise = new ModuleRenderExercise());
 	modules.push_back(moduleLoadModels = new ModuleLoadModels());
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
@@ -49,8 +47,8 @@ bool Application::Init()
 
 update_status Application::Update()
 {
-	float currentTime = SDL_GetTicks();
-	deltaTime = (currentTime - lastTime) / 1000.0f;
+	uint32_t currentTime = SDL_GetTicks();
+	deltaTime = (float)(currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
 	update_status ret = UPDATE_CONTINUE;

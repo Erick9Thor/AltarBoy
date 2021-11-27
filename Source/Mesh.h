@@ -17,8 +17,9 @@ class Mesh
 		void LoadEBO(const aiMesh* mesh);
 		void CreateVAO();
 
-		void Draw(const std::vector<unsigned>& model_textures);
+		void CleanUp();
 
+		void Draw(const std::vector<unsigned>& model_textures);
 
 		unsigned int GetNumVertices() const {
 			return num_vertices;

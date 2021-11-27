@@ -15,6 +15,8 @@ class ModuleLoadModels :
 		update_status PostUpdate();
 		bool CleanUp();
 
+		void LoadModel(const char* _fileName);
+
 	private:
 		unsigned int progam_id;
 
