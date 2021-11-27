@@ -29,8 +29,8 @@ class Model
 		vector<unsigned> textures;
 		vector<Mesh> meshes;
 
-		unsigned int numVertices = 0;
-		unsigned int numTriangles = 0;
+		unsigned int num_vertices = 0;
+		unsigned int num_triangles = 0;
 		const char* m_Name;
 };
 

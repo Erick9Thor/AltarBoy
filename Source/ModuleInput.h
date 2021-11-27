@@ -17,8 +17,8 @@ public:
 	~ModuleInput();
 
 	bool Init();
-	update_status Update();
-	bool CleanUp();
+	update_status PreUpdate() override;
+	bool CleanUp() override;
 
 	const Uint8 GetKey(SDL_Scancode key) const;
 	const bool GetMouseButton(unsigned int key) const;

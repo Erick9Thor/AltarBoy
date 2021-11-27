@@ -22,40 +22,40 @@ class AppLog;
 
 class Application
 {
-public:
+	public:
 
-	Application();
-	~Application();
+		Application();
+		~Application();
 
-	bool Init();
-	update_status Update();
-	bool CleanUp();
+		bool Init();
+		update_status Update();
+		bool CleanUp();
 
-	void DebugDraw();
+		void DebugDraw();
 
-	void RequestBrowser(const char* url) const;
-	int GetFramerateLimit() const;
-	float GetDeltaTime() { return deltaTime; };
+		void RequestBrowser(const char* url) const;
+		int GetFramerateLimit() const;
+		inline float GetDeltaTime() { return delta_time; };
 
-public:
-	ModuleRender* renderer = nullptr;
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleGui* gui = nullptr;
-	ModuleDebugDraw* debug_draw = nullptr;
-	ModuleCamera* camera = nullptr;
-	ModuleTexture* texture = nullptr;
-	ModuleLoadModels* moduleLoadModels = nullptr;
-	ModuleProgram* program = nullptr;
+	public:
+		ModuleRender* renderer = nullptr;
+		ModuleWindow* window = nullptr;
+		ModuleInput* input = nullptr;
+		ModuleGui* gui = nullptr;
+		ModuleDebugDraw* debug_draw = nullptr;
+		ModuleCamera* camera = nullptr;
+		ModuleTexture* texture = nullptr;
+		ModuleLoadModels* moduleLoadModels = nullptr;
+		ModuleProgram* program = nullptr;
 
-	AppLog* console = nullptr;
+		AppLog* console = nullptr;
 
-private:
-	int	capped_ms;
-	std::vector<Module*> modules;
+	private:
+		int	capped_ms;
+		std::vector<Module*> modules;
 
-	float deltaTime = 0.0f;
-	float lastTime = 0.0f;
+		float delta_time = 0.0f;
+		float last_time = 0.0f;
 };
 
 extern Application* App;

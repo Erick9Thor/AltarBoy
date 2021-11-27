@@ -14,6 +14,7 @@
 
 Model::Model(const char* file_name)
 {
+	LOG("Loading model from this path: %s", file_name);
 
 	m_Name = file_name;
 
@@ -25,8 +26,8 @@ Model::Model(const char* file_name)
 
 		for (Mesh& mesh : meshes)
 		{
-			numVertices += mesh.GetNumVertices();
-			numTriangles += mesh.GetNumIndices() / 3;
+			num_vertices += mesh.GetNumVertices();
+			num_triangles += mesh.GetNumIndices() / 3;
 		}
 	}
 	else
@@ -37,6 +38,7 @@ Model::Model(const char* file_name)
 
 Model::~Model()
 {
+	delete[] m_Name;
 }
 
 void Model::Draw()
@@ -62,13 +64,12 @@ void Model::LoadTextures(const aiScene* scene)
 
 void Model::LoadMeshes(const aiScene* scene)
 {
-	// Create vbo using mVertices, mTextureCoords and mNumVertices
+	LOG("Loading meshes");
 	textures.reserve(scene->mNumMeshes);
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
 		meshes.push_back(Mesh(scene->mMeshes[i]));
 	}
-	LOG("Loading meshes")
 }
 
 Texture Model::LoadTexture(const char* path)
@@ -93,8 +94,8 @@ Texture Model::LoadTexture(const char* path)
 void Model::DrawGui()
 {
 	ImGui::Text("Name: %s", m_Name);
-	ImGui::Text("Num vertices: %i", numVertices);
-	ImGui::Text("Num triangles: %i", numTriangles);
+	ImGui::Text("Num vertices: %i", num_vertices);
+	ImGui::Text("Num triangles: %i", num_triangles);
 }
 
 void Model::CleanUp()

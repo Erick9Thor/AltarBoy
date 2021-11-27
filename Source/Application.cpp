@@ -16,7 +16,6 @@ using namespace std;
 
 Application::Application()
 {
-	
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(camera = new ModuleCamera());
@@ -26,7 +25,6 @@ Application::Application()
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(gui = new ModuleGui());
-
 }
 
 Application::~Application()
@@ -48,8 +46,8 @@ bool Application::Init()
 update_status Application::Update()
 {
 	uint32_t currentTime = SDL_GetTicks();
-	deltaTime = (float)(currentTime - lastTime) / 1000.0f;
-	lastTime = currentTime;
+	delta_time = (float)(currentTime - last_time) / 1000.0f;
+	last_time = currentTime;
 
 	update_status ret = UPDATE_CONTINUE;
 

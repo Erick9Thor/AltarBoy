@@ -79,7 +79,7 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
-	context = SDL_GL_CreateContext(App->window->window);
+	context = SDL_GL_CreateContext(App->window->getWindow());
 
 	LOG("Creating Renderer context");
 	if (context == nullptr)
@@ -137,7 +137,7 @@ bool ModuleRender::Init()
 		glEnable(GL_TEXTURE_2D);
 	
 		int w, h;
-		SDL_GetWindowSize(App->window->window, &w, &h);
+		SDL_GetWindowSize(App->window->getWindow(), &w, &h);
 		glViewport(0, 0, w, h);
 	}
 
@@ -155,8 +155,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	auto &a = App->window->screen_surface;
-	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), a->w, a->h);
+	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -166,7 +165,7 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {	
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(App->window->getWindow());
 	
 	return UPDATE_CONTINUE;
 }
@@ -181,7 +180,7 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::WindowResized(unsigned int width, unsigned int height)
 {
-	SDL_GetWindowSize(App->window->window, (int*)&width, (int*)&height);
+	SDL_GetWindowSize(App->window->getWindow(), (int*)&width, (int*)&height);
 	glViewport(0, 0, width, height);
 }
 

@@ -35,19 +35,19 @@ private:
 
 	void LookAt();
 
-	float3x3 rotationMatrix;
+	float3x3 rotation_matrix;
 
 	Frustum frustum;
 	float aspect_ratio;
 	float3 position;
 
-	float initialVerticalFov = 45.0f;
-	float verticalFov = DEGTORAD * initialVerticalFov;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 200.0f;
+	float initial_vertical_fov = 45.0f;
+	float vertical_fov = DEGTORAD * initial_vertical_fov;
+	float near_plane_distance = 0.1f;
+	float far_plane_distance = 200.0f;
 
-	float CameraSpeed = 10.0f;
-	float mouseSpeedForRotation = 5.0f;
-	float mouseSpeedForMovement = 2.5f;
+	float camera_speed = 10.0f;
+	float mouse_speed_rotation = 5.0f;
+	float mouse_speed_movement = 2.5f;
 };
 

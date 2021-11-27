@@ -37,10 +37,10 @@ private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
 
-	bool showCameraWindow = false;
-	bool showTextureWindow = false;
-	bool showModelWindow = false;
-	bool fpsCounter = false;
+	bool show_camera_window = false;
+	bool show_texture_window = false;
+	bool show_model_window = false;
+	bool fps_counter = false;
 };
 
 #endif // MODULE_GUI_H

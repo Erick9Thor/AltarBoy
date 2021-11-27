@@ -68,7 +68,7 @@ bool ModuleRenderExercise::Init()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	int w, h;
-	SDL_GetWindowSize(App->window->window, &w, &h);
+	SDL_GetWindowSize(App->window->getWindow(), &w, &h);
 	glViewport(0, 0, w, h);
 
 	square_vbo = CreateSquareVBO();

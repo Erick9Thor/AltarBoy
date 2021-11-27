@@ -1,5 +1,4 @@
-#ifndef __ModuleWindow_H__
-#define __ModuleWindow_H__
+#pragma once
 
 #include "Module.h"
 #include "SDL.h"
@@ -8,28 +7,30 @@ class Application;
 
 class ModuleWindow : public Module
 {
-public:
+	public:
 
-	ModuleWindow();
-	virtual ~ModuleWindow();
+		ModuleWindow();
+		virtual ~ModuleWindow();
 
-	bool Init();
-	bool CleanUp();
+		bool Init();
+		bool CleanUp();
 
-	void SetFullscreen(bool set);
-	void SetResizable(bool set);
+		void SetFullscreen(bool set);
+		void SetResizable(bool set);
 
-	bool IsFullscreen() const;
-	bool IsResizable() const;
+		bool IsFullscreen() const;
+		bool IsResizable() const;
 
-public:
-	SDL_Window* window = NULL;
-	SDL_Surface* screen_surface = NULL;
+		inline SDL_Surface* getScreenSurface() { return screen_surface; }
+		inline SDL_Window* getWindow() { return window; }
 
-	bool fullscreen = false;
-	bool resizable = false;
+	private:
+		SDL_Window* window = NULL;
+		SDL_Surface* screen_surface = NULL;
 
-	bool fullscreen_desktop = false;
+		bool fullscreen = false;
+		bool resizable = false;
+
+		bool fullscreen_desktop = false;
 };
 
-#endif // __ModuleWindow_H__

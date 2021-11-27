@@ -30,7 +30,7 @@ bool ModuleGui::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
+    ImGui_ImplSDL2_InitForOpenGL(App->window->getWindow(), App->renderer->context);
     ImGui_ImplOpenGL3_Init("#version 330");
   
     // Setup style
@@ -44,7 +44,7 @@ bool ModuleGui::Init()
 update_status ModuleGui::PreUpdate()
 {
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->window);
+	ImGui_ImplSDL2_NewFrame(App->window->getWindow());
 	ImGui::NewFrame();
 
     return UPDATE_CONTINUE;
@@ -54,12 +54,12 @@ update_status ModuleGui::PreUpdate()
 update_status ModuleGui::Update()
 {
     showMenu();
-    Draw();
     return UPDATE_CONTINUE;
 }
 
 update_status ModuleGui::PostUpdate()
 {
+    Draw();
 	return UPDATE_CONTINUE;
 }
 
@@ -68,7 +68,7 @@ void ModuleGui::Draw()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_MakeCurrent(App->window->window, App->renderer->context);
+    SDL_GL_MakeCurrent(App->window->getWindow(), App->renderer->context);
 }
 
 bool ModuleGui::CleanUp()
@@ -122,19 +122,19 @@ void ModuleGui::showMenu() {
             }
             if (ImGui::MenuItem("Camera"))
             {
-                showCameraWindow = !showCameraWindow;
+                show_camera_window = !show_camera_window;
             }
             if (ImGui::MenuItem("Texture info"))
             {
-                showTextureWindow = !showTextureWindow;
+                show_texture_window = !show_texture_window;
             }
             if (ImGui::MenuItem("Model info"))
             {
-                showModelWindow = !showModelWindow;
+                show_model_window = !show_model_window;
             }
             if (ImGui::MenuItem("FPS counter"))
             {
-                fpsCounter = !fpsCounter;
+                fps_counter = !fps_counter;
             }
             ImGui::EndMenu();
         }
@@ -148,9 +148,9 @@ void ModuleGui::showMenu() {
         ImGui::EndMainMenuBar();
     }
 
-    if (showCameraWindow)
+    if (show_camera_window)
     {
-        if (ImGui::Begin("Camera", &showCameraWindow))
+        if (ImGui::Begin("Camera", &show_camera_window))
         {
             App->camera->DrawGui();
 
@@ -169,9 +169,9 @@ void ModuleGui::showMenu() {
         }   
     }*/
 
-    if (showModelWindow)
+    if (show_model_window)
     {
-        if (ImGui::Begin("Model", &showModelWindow))
+        if (ImGui::Begin("Model", &show_model_window))
         {
             App->renderer->house->DrawGui();
 
