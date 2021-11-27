@@ -46,4 +46,6 @@ enum update_status
 #define TITLE "ALTAR BOOY"
 #define ENGINE_VERSION "0.0.1"
 
+#define FPS_LOG_SIZE 100
+
 #endif // __GLOBALS_H__

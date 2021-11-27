@@ -14,7 +14,7 @@
 
 Model::Model(const char* file_name)
 {
-	LOG("Loading model from this path: %s", file_name);
+	LOG("[Model] Loading model from this path: %s", file_name);
 
 	m_Name = file_name;
 
@@ -32,7 +32,7 @@ Model::Model(const char* file_name)
 	}
 	else
 	{
-		LOG("Error loading %s: %s", file_name, aiGetErrorString());
+		LOG("[Model] Error loading %s: %s", file_name, aiGetErrorString());
 	}
 }
 
@@ -50,6 +50,8 @@ void Model::Draw()
 
 void Model::LoadTextures(const aiScene* scene)
 {
+	LOG("[Model] Texture loading for model...");
+
 	aiString file;
 	textures.reserve(scene->mNumMaterials);
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
@@ -60,11 +62,15 @@ void Model::LoadTextures(const aiScene* scene)
 			textures.push_back(LoadTexture(file.data).id);
 		}
 	}
+
+	LOG("[Model] Finishd model texture loading");
+
 }
 
 void Model::LoadMeshes(const aiScene* scene)
 {
-	LOG("Loading meshes");
+	LOG("[Model] Loading meshes");
+
 	textures.reserve(scene->mNumMeshes);
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
@@ -100,6 +106,8 @@ void Model::DrawGui()
 
 void Model::CleanUp()
 {
+	LOG("[Model] Cleaning model");
+
 	for (Mesh& mesh : meshes) {
 		mesh.CleanUp();
 	}

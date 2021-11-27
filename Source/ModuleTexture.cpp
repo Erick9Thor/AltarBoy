@@ -17,20 +17,20 @@ ModuleTexture::~ModuleTexture()
 
 bool ModuleTexture::Init()
 {
-	LOG("Init Image library using DevIL lib version %d", IL_VERSION);
+	LOG("[ModuleTexture] Init Image library using DevIL lib version %d", IL_VERSION);
 	return true;
 }
 
 unsigned int ModuleTexture::GetTextureData(const char* path)
 {
-	LOG("Loading texure from: %s", path);
+	LOG("[ModuleTexture] Loading texure from: %s", path);
 
 	ILuint texture_id; 
 	ilGenImages(1, &texture_id); 
 	ilBindImage(texture_id);
 
 	if (!ilLoadImage(path)) {
-		LOG("Error loading texture from: %s", path);
+		LOG("[ModuleTexture] Error loading texture from: %s", path);
 	}
 
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
@@ -45,6 +45,6 @@ unsigned int ModuleTexture::GetTextureData(const char* path)
 
 void ModuleTexture::CleanTexture(unsigned int& texture)
 {
-	LOG("Cleaning textures");
+	LOG("[ModuleTexture] Cleaning textures");
 	ilDeleteImages(1, &texture);
 }

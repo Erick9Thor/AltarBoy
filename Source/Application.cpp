@@ -4,10 +4,11 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleInput.h"
-#include "ModuleGui.h"
+#include "ModuleEditor.h"
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
 #include "ModuleProgram.h"
+#include "ModuleHardware.h"
 #include "Exercises/ModuleRenderExercise.h"
 #include "Exercises/ModuleLoadModels.h"
 #include "ModuleDebugDraw.h"
@@ -16,15 +17,21 @@ using namespace std;
 
 Application::Application()
 {
+	frames = 0;
+	last_frame_ms = -1;
+	last_fps = -1;
+	capped_ms = 1000 / 60;
+
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
+	modules.push_back(hw = new ModuleHardware());
 	modules.push_back(moduleLoadModels = new ModuleLoadModels());
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
-	modules.push_back(gui = new ModuleGui());
+	modules.push_back(editor = new ModuleEditor());
 }
 
 Application::~Application()
@@ -45,9 +52,8 @@ bool Application::Init()
 
 update_status Application::Update()
 {
-	uint32_t currentTime = SDL_GetTicks();
-	delta_time = (float)(currentTime - last_time) / 1000.0f;
-	last_time = currentTime;
+	delta_time = (float)ms_timer.Read() / 1000.0f;
+	ms_timer.Start();
 
 	update_status ret = UPDATE_CONTINUE;
 
@@ -60,7 +66,31 @@ update_status Application::Update()
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PostUpdate();
 
+	FinishUpdate();
 	return ret;
+}
+
+void Application::FinishUpdate()
+{
+	// Recap on framecount and fps
+	++frames;
+	++fps_counter;
+
+	if (fps_timer.Read() >= 1000)
+	{
+		last_fps = fps_counter;
+		fps_counter = 0;
+		fps_timer.Start();
+	}
+
+	last_frame_ms = ms_timer.Read();
+
+	// cap fps
+	if (capped_ms > 0 && (last_frame_ms < capped_ms))
+		SDL_Delay(capped_ms - last_frame_ms);
+
+	// notify the editor
+	editor->AddFPS((float)last_fps, (float)last_frame_ms);
 }
 
 bool Application::CleanUp()
@@ -90,4 +120,12 @@ int Application::GetFramerateLimit() const
 		return (int)((1.0f / (float)capped_ms) * 1000.0f);
 	else
 		return 0;
+}
+
+void Application::SetFramerateLimit(int max_framerate)
+{
+	if (max_framerate > 0)
+		capped_ms = 1000 / max_framerate;
+	else
+		capped_ms = 0;
 }
