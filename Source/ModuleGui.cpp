@@ -23,18 +23,20 @@ ModuleGui::~ModuleGui()
 // 006 - Creation Context
 bool ModuleGui::Init()
 {
-	
+    IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-    io.IniFilename = "imgui.ini";
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
+
     ImGui_ImplSDL2_InitForOpenGL(App->window->window, App->renderer->context);
     ImGui_ImplOpenGL3_Init("#version 330");
   
     // Setup style
     ImGui::StyleColorsDark();
+
+    io.IniFilename = "imgui.ini";
 
 	return true;
 }
@@ -61,23 +63,21 @@ update_status ModuleGui::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
-// 006 - Destroying imgui contect
-bool ModuleGui::CleanUp()
-{
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImGui::DestroyContext();
-
-	return true;
-}
 
 void ModuleGui::Draw()
 {
-    // Debug Draw on selected GameObject
-
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     SDL_GL_MakeCurrent(App->window->window, App->renderer->context);
+}
+
+bool ModuleGui::CleanUp()
+{
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
+
+    return true;
 }
 
 void ModuleGui::showMenu() {
@@ -185,7 +185,6 @@ void ModuleGui::showMenu() {
         showAbaoutInfo();
     }
 }
-
 
 void ModuleGui::showFPSGraph() {
     ImGui::Text("Limit Framerate:");

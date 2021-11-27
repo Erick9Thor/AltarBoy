@@ -53,10 +53,6 @@ update_status Application::Update()
 	deltaTime = (currentTime - lastTime) / 1000.0f;
 	lastTime = currentTime;
 
-	Timer fperformance;
-	fperformance.StartMicroseconds();
-
-
 	update_status ret = UPDATE_CONTINUE;
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
@@ -67,9 +63,6 @@ update_status Application::Update()
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
 		ret = (*it)->PostUpdate();
-
-	LOG("Time expend to ini modules: %f", fperformance.ReadMicroseconds());
-
 
 	return ret;
 }

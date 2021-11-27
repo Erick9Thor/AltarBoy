@@ -27,6 +27,16 @@ enum update_status
        }\
     }
 
+// Array buffer deletes
+#define RELEASE_ARRAY( x )\
+	{\
+       if( x != nullptr )\
+       {\
+           delete[] x;\
+	       x = nullptr;\
+		 }\
+	 }
+
 // Configuration -----------
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
