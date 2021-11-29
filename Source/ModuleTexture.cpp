@@ -48,3 +48,7 @@ void ModuleTexture::CleanTexture(unsigned int& texture)
 	LOG("[ModuleTexture] Cleaning textures");
 	ilDeleteImages(1, &texture);
 }
+
+void ModuleTexture::DrawGui() {
+
+}

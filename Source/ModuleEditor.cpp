@@ -51,7 +51,6 @@ update_status ModuleEditor::PreUpdate()
     return UPDATE_CONTINUE;
 }
 
-// Called every draw update
 update_status ModuleEditor::Update()
 {
     showMenu();
@@ -171,16 +170,16 @@ void ModuleEditor::showMenu() {
         }
     }
 
-    /* TODO: TEXTURE INFO
-    if (showTextureWindow)
+    
+    if (show_texture_window)
     {
-        if (ImGui::Begin("Texture", &showCameraWindow))
+        if (ImGui::Begin("Texture", &show_texture_window))
         {
             App->texture->DrawGui();
 
             ImGui::End();
         }   
-    }*/
+    }
 
     if (show_model_window)
     {

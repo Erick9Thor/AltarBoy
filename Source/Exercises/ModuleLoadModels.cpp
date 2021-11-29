@@ -36,8 +36,7 @@ bool ModuleLoadModels::CleanUp()
 
 void ModuleLoadModels::LoadModel(const char* _fileName)
 {
-	delete ourModel;
 
-	// TODO: Path file formating
+	ourModel->CleanUp();
 	ourModel = new Model(_fileName);
 }
