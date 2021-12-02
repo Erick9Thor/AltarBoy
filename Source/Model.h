@@ -19,7 +19,7 @@ class Model
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
-		Texture LoadTexture(const char* path);
+
 		vector<Texture> textures;
 		vector<Mesh> meshes;
 

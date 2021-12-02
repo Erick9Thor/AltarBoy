@@ -23,6 +23,7 @@ class ModuleTexture : public Module
 		bool CleanUp();
 
 		unsigned int GetTextureData(const char* path);
+		Texture LoadTexture(const char* path);
 		void CleanTexture(unsigned int& texture);
 
 		void DrawGui();

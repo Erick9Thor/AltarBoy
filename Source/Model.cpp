@@ -52,17 +52,19 @@ void Model::LoadTextures(const aiScene* scene)
 
 	aiString file;
 	textures.reserve(scene->mNumMaterials);
+	
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
 	{
 		static const int index = 0;
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
 		{
-			// textures.push_back(LoadTexture(file.data).id);
+			Texture texture = App->texture->LoadTexture(file.data);
+			textures.push_back(texture);
+		}
+		else {
+			LOG("Failed loading texture %s:", aiGetErrorString());
 		}
 	}
-
-	LOG("[Model] Finishd model texture loading");
-
 }
 
 void Model::LoadMeshes(const aiScene* scene)
@@ -76,28 +78,9 @@ void Model::LoadMeshes(const aiScene* scene)
 	}
 }
 
-Texture Model::LoadTexture(const char* path)
-{
-	Texture texture;
-	texture.path = path;
-	unsigned int img_id = App->texture->GetTextureData(path);
-
-	glGenTextures(1, &texture.id);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
-		ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
-		ilGetData());
-
-	ilDeleteImages(1, &img_id);
-	return texture;
-}
-
 void Model::DrawGui()
 {
-//	ImGui::Text("Name: %s", m_Name);
+	ImGui::Text("Name: %s", m_Name);
 	ImGui::Text("Num vertices: %i", num_vertices);
 	ImGui::Text("Num triangles: %i", num_triangles);
 }
