@@ -71,7 +71,6 @@ update_status Application::Update()
 
 void Application::FinishUpdate()
 {
-	// Recap on framecount and fps
 	++frames;
 	++fps_counter;
 
@@ -84,11 +83,9 @@ void Application::FinishUpdate()
 
 	last_frame_ms = ms_timer.Read();
 
-	// cap fps
 	if (capped_ms > 0 && (last_frame_ms < capped_ms))
 		SDL_Delay(capped_ms - last_frame_ms);
 
-	// notify the editor
 	editor->AddFPS((float)last_fps, (float)last_frame_ms);
 }
 

@@ -37,9 +37,7 @@ Model::Model(const char* file_name)
 }
 
 Model::~Model()
-{
-	delete[] m_Name;
-}
+{}
 
 void Model::Draw()
 {
@@ -99,7 +97,7 @@ Texture Model::LoadTexture(const char* path)
 
 void Model::DrawGui()
 {
-	ImGui::Text("Name: %s", m_Name);
+//	ImGui::Text("Name: %s", m_Name);
 	ImGui::Text("Num vertices: %i", num_vertices);
 	ImGui::Text("Num triangles: %i", num_triangles);
 }
