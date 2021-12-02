@@ -14,6 +14,8 @@ class ModuleProgram :
         unsigned int CompileShader(unsigned type, const char* source);
         unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
 
+        bool CleanUp();
+
         unsigned int GetProgramID() { return program_id; }
 
     private:

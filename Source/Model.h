@@ -1,16 +1,10 @@
 #pragma once
 
+#include "ModuleTexture.h"
+
 #include "Mesh.h"
-
 #include "assimp/scene.h"
-
 #include <vector>
-using namespace std;
-
-struct Texture {
-	unsigned id;	
-	string path;
-};
 
 class Model
 {
@@ -26,7 +20,7 @@ class Model
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
 		Texture LoadTexture(const char* path);
-		vector<unsigned> textures;
+		vector<Texture> textures;
 		vector<Mesh> meshes;
 
 		unsigned int num_vertices = 0;

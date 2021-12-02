@@ -4,7 +4,7 @@
 #include "SDL.h"
 
 #include "Application.h"
-#include "Exercises/ModuleLoadModels.h"
+#include "ModuleScene.h"
 
 #include "imgui_impl_sdl.h"
 
@@ -18,13 +18,13 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
-	LOG("Init SDL input event system");
+	LOG("[M_INPUT] Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_INPUT] SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -75,9 +75,9 @@ update_status ModuleInput::PreUpdate()
                 break;
             case SDL_DROPFILE: 
             {
-                LOG("Dropped file: %s", event.drop.file);
+                LOG("[M_INPUT] Dropped file: %s", event.drop.file);
 
-                App->moduleLoadModels->LoadModel(event.drop.file);
+                App->scene->LoadModel(event.drop.file);
                 
                 SDL_free(event.drop.file);
                 break;
@@ -91,7 +91,7 @@ update_status ModuleInput::PreUpdate()
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
-	LOG("Quitting SDL input event subsystem");
+	LOG("[M_INPUT] Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

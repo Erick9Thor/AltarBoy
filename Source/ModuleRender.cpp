@@ -81,10 +81,10 @@ bool ModuleRender::initializeOpenGLviaSDL()
 
 	context = SDL_GL_CreateContext(App->window->getWindow());
 
-	LOG("Creating Renderer context");
+	LOG("[M_Render] Creating Renderer context");
 	if (context == nullptr)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_Render] OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		return false;
 	}
 
@@ -97,23 +97,23 @@ bool ModuleRender::initGlew()
 
 	if (err != GLEW_OK)
 	{
-		LOG("Glew library could not init %s\n", glewGetErrorString(err));
+		LOG("[M_Render] Glew library could not init %s\n", glewGetErrorString(err));
 		return false;
 	}
 	else
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG("[M_Render] Using Glew %s", glewGetString(GLEW_VERSION));
 
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	LOG("[M_Render] Vendor: %s", glGetString(GL_VENDOR));
+	LOG("[M_Render] Renderer: %s", glGetString(GL_RENDERER));
+	LOG("[M_Render] OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("[M_Render] GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	return true;
 }
 
 bool ModuleRender::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG("[M_Render] Creating 3D Renderer context");
 	bool ret = true;
 
 	ret = initializeOpenGLviaSDL();
@@ -173,7 +173,7 @@ update_status ModuleRender::PostUpdate()
 // Called before quitting
 bool ModuleRender::CleanUp()
 {
-	LOG("Destroying renderer");
+	LOG("[M_Render] Destroying renderer");
 	SDL_GL_DeleteContext(context);
 	return true;
 }

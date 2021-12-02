@@ -171,8 +171,7 @@
     <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp" />
-    <ClCompile Include="Exercises\ModuleLoadModels.cpp" />
-    <ClCompile Include="Exercises\ModuleRenderExercise.cpp" />
+    <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK2D.cpp" />
@@ -255,8 +254,7 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
-    <ClInclude Include="Exercises\ModuleLoadModels.h" />
-    <ClInclude Include="Exercises\ModuleRenderExercise.h" />
+    <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />

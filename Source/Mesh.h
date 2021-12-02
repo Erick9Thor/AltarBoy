@@ -1,9 +1,10 @@
 #pragma once
 
+#include "ModuleTexture.h"
+
 #include "assimp/scene.h"
 #include <vector>
 
-using namespace std;
 
 class Mesh
 {
@@ -12,14 +13,11 @@ class Mesh
 		Mesh(const aiMesh* mesh);
 	
 		~Mesh();
-	
-		void LoadVBO(const aiMesh* mesh);
-		void LoadEBO(const aiMesh* mesh);
-		void CreateVAO();
 
 		void CleanUp();
 
-		void Draw(const std::vector<unsigned>& model_textures);
+		void Draw(const std::vector<Texture>& model_textures);
+
 
 		unsigned int GetNumVertices() const {
 			return num_vertices;
@@ -29,6 +27,10 @@ class Mesh
 		};
 	
 	private:
+		void LoadVBO(const aiMesh* mesh);
+		void LoadEBO(const aiMesh* mesh);
+		void CreateVAO();
+
 		unsigned VBO, EBO, VAO;
 		unsigned num_vertices, num_indices, texture_index;
 };

@@ -9,8 +9,7 @@
 #include "ModuleTexture.h"
 #include "ModuleProgram.h"
 #include "ModuleHardware.h"
-#include "Exercises/ModuleRenderExercise.h"
-#include "Exercises/ModuleLoadModels.h"
+#include "ModuleScene.h"
 #include "ModuleDebugDraw.h"
 
 using namespace std;
@@ -28,7 +27,7 @@ Application::Application()
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(hw = new ModuleHardware());
-	modules.push_back(moduleLoadModels = new ModuleLoadModels());
+	modules.push_back(scene = new ModuleScene());
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(editor = new ModuleEditor());
@@ -120,12 +119,4 @@ int Application::GetFramerateLimit() const
 		return (int)((1.0f / (float)capped_ms) * 1000.0f);
 	else
 		return 0;
-}
-
-void Application::SetFramerateLimit(int max_framerate)
-{
-	if (max_framerate > 0)
-		capped_ms = 1000 / max_framerate;
-	else
-		capped_ms = 0;
 }

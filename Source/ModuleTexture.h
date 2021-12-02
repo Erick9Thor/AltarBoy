@@ -4,6 +4,15 @@
 #include "il.h"
 #include "ilu.h"
 
+#include <string>
+
+using namespace std;
+
+struct Texture {
+	unsigned id;
+	string path;
+};
+
 class ModuleTexture : public Module
 {
 	public:
@@ -11,6 +20,7 @@ class ModuleTexture : public Module
 		~ModuleTexture();
 
 		bool Init();
+		bool CleanUp();
 
 		unsigned int GetTextureData(const char* path);
 		void CleanTexture(unsigned int& texture);

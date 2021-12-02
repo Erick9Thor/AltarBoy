@@ -1,11 +1,11 @@
 #pragma once
-#include "../Module.h"
-#include "../Math.h"
+#include "Module.h"
+#include "Math.h"
 
 
 class Model;
 
-class ModuleLoadModels :
+class ModuleScene :
     public Module
 {
 	public:

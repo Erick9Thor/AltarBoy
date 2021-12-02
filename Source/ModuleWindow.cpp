@@ -14,12 +14,12 @@ ModuleWindow::~ModuleWindow()
 // Called before render is available
 bool ModuleWindow::Init()
 {
-	LOG("Init SDL window & surface");
+	LOG("[M_Window] Init SDL window & surface");
 	bool ret = true;
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_Window] SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	else
@@ -40,7 +40,7 @@ bool ModuleWindow::Init()
 
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG("[M_Window] Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
 		else
@@ -58,7 +58,7 @@ bool ModuleWindow::Init()
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG("[M_Window] Destroying SDL window and quitting all SDL systems");
 
 	//Destroy window
 	if(window != NULL)
@@ -78,14 +78,13 @@ void ModuleWindow::SetFullscreen(bool set) {
 		if (fullscreen == true)
 		{
 			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
-				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+				LOG("[M_Window] Could not switch to fullscreen: %s\n", SDL_GetError());
 			fullscreen_desktop = false;
-			SDL_Log("this is a test");
 		}
 		else
 		{
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+				LOG("[M_Window] Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
 }

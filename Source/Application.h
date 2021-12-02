@@ -15,7 +15,7 @@ class ModuleEditor;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
-class ModuleLoadModels;
+class ModuleScene;
 class ModuleProgram;
 class ModuleHardware;
 
@@ -41,7 +41,7 @@ class Application
 		inline float GetDeltaTime() { return delta_time; };
 
 		int GetFramerateLimit() const;
-		void SetFramerateLimit(int max_framerate);
+		
 
 	public:
 		ModuleRender* renderer = nullptr;
@@ -51,7 +51,7 @@ class Application
 		ModuleDebugDraw* debug_draw = nullptr;
 		ModuleCamera* camera = nullptr;
 		ModuleTexture* texture = nullptr;
-		ModuleLoadModels* moduleLoadModels = nullptr;
+		ModuleScene* scene = nullptr;
 		ModuleProgram* program = nullptr;
 		ModuleHardware* hw = nullptr;
 

@@ -29,6 +29,6 @@ bool ModuleHardware::Init()
 	return true;
 }
 
-// Destructor
 ModuleHardware::~ModuleHardware()
 {}
+

@@ -59,7 +59,7 @@ void Model::LoadTextures(const aiScene* scene)
 		static const int index = 0;
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
 		{
-			textures.push_back(LoadTexture(file.data).id);
+			// textures.push_back(LoadTexture(file.data).id);
 		}
 	}
 
@@ -111,7 +111,5 @@ void Model::CleanUp()
 	for (Mesh& mesh : meshes) {
 		mesh.CleanUp();
 	}
-	for (unsigned texture_id : textures) {
-		glDeleteTextures(1, &texture_id);
-	}
+	
 }
