@@ -12,37 +12,46 @@
 #include "il.h"
 #include "ilu.h"
 
-Model::Model(const char* file_name)
+
+
+Model::Model(const string& model_path)
 {
-	LOG("[Model] Loading model from this path: %s", file_name);
+	LOG("[Model] Loading model from this path: %s", model_path);
 
-	m_Name = file_name;
+	path = model_path.substr(0, model_path.find_last_of("/\\") + 1);
+	file_name = model_path.substr(model_path.find_last_of("/\\") + 1);
+	name = file_name.substr(0, std::string::size_type(file_name.find_last_of('.')));
 
-	const aiScene* scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
+	const aiScene* scene = aiImportFile(model_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
 	if (scene)
 	{
 		LoadTextures(scene);
 		LoadMeshes(scene);
 
-		for (Mesh& mesh : meshes)
+		for (unsigned int i = 0; i < meshes.size(); ++i)
 		{
-			num_vertices += mesh.GetNumVertices();
-			num_triangles += mesh.GetNumIndices() / 3;
+			num_triangles += meshes[i]->GetNumIndices() / 3;
+			num_vertices += meshes[i]->GetNumVertices();
 		}
 	}
 	else
 	{
-		LOG("[Model] Error loading %s: %s", file_name, aiGetErrorString());
+		LOG("[Model] Error loading %s: %s", model_path, aiGetErrorString());
 	}
 }
 
 Model::~Model()
-{}
+{
+	for (int i = 0; i < textures.size(); ++i)
+		delete textures[i];
+	for (int i = 0; i < meshes.size(); ++i)
+		delete meshes[i];
+}
 
 void Model::Draw()
 {
-	for (Mesh& mesh : meshes) {
-		mesh.Draw(textures);
+	for (unsigned int i = 0; i < meshes.size(); ++i) {
+		meshes[i]->Draw(textures);
 	}
 }
 
@@ -51,15 +60,13 @@ void Model::LoadTextures(const aiScene* scene)
 	LOG("[Model] Texture loading for model...");
 
 	aiString file;
-	textures.reserve(scene->mNumMaterials);
+	textures = vector<Texture*>(scene->mNumMaterials);
 	
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
 	{
-		static const int index = 0;
-		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
+		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
 		{
-			Texture texture = App->texture->LoadTexture(file.data);
-			textures.push_back(texture);
+			textures[i] = new Texture(file.data);
 		}
 		else {
 			LOG("Failed loading texture %s:", aiGetErrorString());
@@ -71,26 +78,15 @@ void Model::LoadMeshes(const aiScene* scene)
 {
 	LOG("[Model] Loading meshes");
 
-	textures.reserve(scene->mNumMeshes);
+	meshes = vector<Mesh*>(scene->mNumMeshes);
+
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
-		meshes.push_back(Mesh(scene->mMeshes[i]));
+		meshes[i] = new Mesh(scene->mMeshes[i]);
 	}
 }
 
 void Model::DrawGui()
 {
-	ImGui::Text("Name: %s", m_Name);
-	ImGui::Text("Num vertices: %i", num_vertices);
-	ImGui::Text("Num triangles: %i", num_triangles);
-}
 
-void Model::CleanUp()
-{
-	LOG("[Model] Cleaning model");
-
-	for (Mesh& mesh : meshes) {
-		mesh.CleanUp();
-	}
-	
 }

@@ -20,12 +20,10 @@ Mesh::Mesh(const aiMesh* mesh)
 }
 
 Mesh::~Mesh()
-{}
-
-void Mesh::CleanUp()
 {
-	glDeleteBuffers(1, &EBO);
 	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &VAO);
 }
 
 void Mesh::LoadVBO(const aiMesh* mesh)
@@ -85,7 +83,7 @@ void Mesh::CreateVAO()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * num_vertices));
 }
 
-void Mesh::Draw(const std::vector<Texture>& model_textures)
+void Mesh::Draw(const std::vector<Texture*>& model_textures)
 {
 	unsigned program_id = App->program->GetProgramID();
 	float4x4 model = float4x4::identity;
@@ -96,7 +94,7 @@ void Mesh::Draw(const std::vector<Texture>& model_textures)
 	glUniformMatrix4fv(glGetUniformLocation(program_id, "proj"), 1, GL_FALSE, &App->camera->GetGLProjection()[0][0]);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, model_textures[texture_index].id);
+	glBindTexture(GL_TEXTURE_2D, model_textures[texture_index]->getID());
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, nullptr);

@@ -1,17 +1,11 @@
 #pragma once
 #include "Module.h"
+#include "Texture.h"
 
 #include "il.h"
 #include "ilu.h"
 
 #include <string>
-
-using namespace std;
-
-struct Texture {
-	unsigned id;
-	string path;
-};
 
 class ModuleTexture : public Module
 {
@@ -23,7 +17,6 @@ class ModuleTexture : public Module
 		bool CleanUp();
 
 		unsigned int GetTextureData(const char* path);
-		Texture LoadTexture(const char* path);
 		void CleanTexture(unsigned int& texture);
 
 		void DrawGui();

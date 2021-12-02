@@ -11,13 +11,9 @@ class Mesh
 	public:
 	
 		Mesh(const aiMesh* mesh);
-	
 		~Mesh();
 
-		void CleanUp();
-
-		void Draw(const std::vector<Texture>& model_textures);
-
+		void Draw(const std::vector<Texture*>& model_textures);
 
 		unsigned int GetNumVertices() const {
 			return num_vertices;
