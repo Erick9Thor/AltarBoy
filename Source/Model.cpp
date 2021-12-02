@@ -16,11 +16,17 @@
 
 Model::Model(const string& model_path)
 {
-	LOG("[Model] Loading model from this path: %s", model_path);
 
 	path = model_path.substr(0, model_path.find_last_of("/\\") + 1);
+
+	if (path.size() > 0) {
+		LOG("[Model] Loading model from this path: %s", path.c_str());
+	}
+
 	file_name = model_path.substr(model_path.find_last_of("/\\") + 1);
 	name = file_name.substr(0, std::string::size_type(file_name.find_last_of('.')));
+
+	LOG("[Model] Loading model: %s", name.c_str());
 
 	const aiScene* scene = aiImportFile(model_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
 	if (scene)

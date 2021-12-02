@@ -12,6 +12,8 @@ public:
 	{
 	}
 
+	virtual ~Module() = default;
+
 	virtual bool Init() 
 	{
 		return true; 

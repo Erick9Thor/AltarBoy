@@ -157,8 +157,8 @@ void ModuleEditor::showMenu() {
         if (ImGui::Begin("Camera", &show_camera_window))
         {
             App->camera->DrawGui();
-            ImGui::End();
         }
+        ImGui::End();
     }
 
     if (show_fps_counter)
@@ -166,8 +166,8 @@ void ModuleEditor::showMenu() {
         if (ImGui::Begin("FPS counter", &show_fps_counter))
         {
             showFPSGraph();
-            ImGui::End();
         }
+        ImGui::End();
     }
 
     
@@ -176,9 +176,8 @@ void ModuleEditor::showMenu() {
         if (ImGui::Begin("Texture", &show_texture_window))
         {
             App->texture->DrawGui();
-
-            ImGui::End();
         }   
+        ImGui::End();
     }
 
     if (show_model_window)
@@ -186,8 +185,8 @@ void ModuleEditor::showMenu() {
         if (ImGui::Begin("Model", &show_model_window))
         {
             App->renderer->house->DrawGui();
-            ImGui::End();
         }
+        ImGui::End();
     }
 
     if (Logger->getShowConsole()) Logger->Draw();
@@ -196,8 +195,8 @@ void ModuleEditor::showMenu() {
         if (ImGui::Begin("Aboout Window", &show_abaout))
         {
             showAbaoutInfo();
-            ImGui::End();
         }
+        ImGui::End();
     }
 }
 

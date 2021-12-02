@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp" />
@@ -212,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
@@ -255,6 +258,7 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
