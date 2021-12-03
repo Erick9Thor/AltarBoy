@@ -28,7 +28,6 @@ bool ModuleTexture::CleanUp()
 
 unsigned int ModuleTexture::GetTextureData(const char* path)
 {
-	LOG("[M_Texture] Loading texure from: %s", path);
 
 	ILuint texture_id; 
 	ilGenImages(1, &texture_id); 

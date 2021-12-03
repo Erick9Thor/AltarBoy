@@ -13,21 +13,17 @@ Texture::Texture(const char* file_data, const char* path)
 	LOG("[Texture] Loading texture");
 	bool texture_loaded = false;
 
-	string model_texture_path(path);
+	string model_texture_path(file_data);
 	string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
 
 	string default_path("Textures\\");
 
-	if (texture_id = App->texture->GetTextureData((model_texture_path + file_data).c_str()) != 0) {
-		LOG("[Texture] Texture found on: %s", (model_texture_path + file_data).c_str());
+	if (texture_id = App->texture->GetTextureData((path + texture_file).c_str()) != 0) {
+		LOG("[Texture] Texture found on: %s", path);
 		texture_loaded = true;
 	} 
-	else if (texture_id = App->texture->GetTextureData((path + texture_file).c_str()) != 0) {
-		LOG("[Texture] Texture found on: %s", (path + texture_file).c_str());
-		texture_loaded = true;
-	}
 	else if (texture_id = App->texture->GetTextureData((default_path + file_data).c_str()) != 0) {
-		LOG("[Texture] Texture found on: %s", default_path.c_str());
+		LOG("[Texture] Texture found on: %s", (default_path + file_data).c_str());
 		texture_loaded = true;
 	}
 
