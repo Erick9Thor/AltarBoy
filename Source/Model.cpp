@@ -56,7 +56,7 @@ Model::~Model()
 void Model::Draw()
 {
 	for (unsigned int i = 0; i < meshes.size(); ++i) {
-		meshes[i]->Draw(textures);
+		meshes[i]->Draw(textures, m_model);
 	}
 }
 
@@ -74,7 +74,7 @@ void Model::LoadTextures(const aiScene* scene)
 			textures[i] = new Texture(file.data, path.c_str());
 		}
 		else {
-			LOG("Failed loading texture %s:", aiGetErrorString());
+			LOG("[Model] Failed loading texture %s:", aiGetErrorString());
 		}
 	}
 }
@@ -87,7 +87,12 @@ void Model::LoadMeshes(const aiScene* scene)
 
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
-		meshes[i] = new Mesh(scene->mMeshes[i]);
+		if (scene->mMeshes[i]->HasPositions()) {
+			meshes[i] = new Mesh(scene->mMeshes[i]);
+		}
+		else {
+			LOG("[Model] Failed loading mesh: %d: %s", i, aiGetErrorString());
+		}
 	}
 }
 

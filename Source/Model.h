@@ -6,7 +6,7 @@
 #include "Mesh.h"
 #include "assimp/scene.h"
 #include <vector>
-
+#include "Math.h"
 
 #include <string.h>
 using namespace std;
@@ -25,6 +25,8 @@ class Model
 
 		vector<Texture*> textures;
 		vector<Mesh*> meshes;
+
+		float4x4 m_model = float4x4::identity;
 
 		unsigned int num_vertices = 0;
 		unsigned int num_triangles = 0;

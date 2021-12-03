@@ -4,6 +4,7 @@
 
 #include "assimp/scene.h"
 #include <vector>
+#include "Math.h"
 
 
 class Mesh
@@ -13,7 +14,7 @@ class Mesh
 		Mesh(const aiMesh* mesh);
 		~Mesh();
 
-		void Draw(const std::vector<Texture*>& model_textures);
+		void Draw(const std::vector<Texture*>& model_textures, float4x4& model);
 
 		unsigned int GetNumVertices() const {
 			return num_vertices;
