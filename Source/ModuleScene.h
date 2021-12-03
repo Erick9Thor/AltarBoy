@@ -17,6 +17,8 @@ class ModuleScene :
 
 		void LoadModel(const char* _fileName);
 
+		void DrawGui();
+
 	private:
 		unsigned int progam_id;
 

@@ -19,6 +19,8 @@ class Model
 		void Draw();
 		void DrawGui();
 
+		void DrawTransform();
+
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
@@ -26,7 +28,6 @@ class Model
 		vector<Texture*> textures;
 		vector<Mesh*> meshes;
 
-		float4x4 m_model = float4x4::identity;
 
 		unsigned int num_vertices = 0;
 		unsigned int num_triangles = 0;
@@ -34,5 +35,9 @@ class Model
 		string name;
 		string path;
 		string file_name;
+
+		float4x4 m_model;
+		float3 local_pos, local_rot_euler, local_scale;
+		Quat m_rotation;
 };
 

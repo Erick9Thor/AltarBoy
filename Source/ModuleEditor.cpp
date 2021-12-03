@@ -6,6 +6,7 @@
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
 #include "ModuleHardware.h"
+#include "ModuleScene.h"
 #include "Model.h"
 #include "SDL.h"
 
@@ -132,7 +133,7 @@ void ModuleEditor::showMenu() {
             {
                 show_texture_window = !show_texture_window;
             }
-            if (ImGui::MenuItem("Model info"))
+            if (ImGui::MenuItem("Model"))
             {
                 show_model_window = !show_model_window;
             }
@@ -184,7 +185,7 @@ void ModuleEditor::showMenu() {
     {
         if (ImGui::Begin("Model", &show_model_window))
         {
-            App->renderer->house->DrawGui();
+            App->scene->DrawGui();
         }
         ImGui::End();
     }

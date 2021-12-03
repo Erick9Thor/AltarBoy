@@ -27,6 +27,12 @@ Model::Model(const string& model_path)
 
 	LOG("[Model] Loading model: %s", name.c_str());
 
+	m_model = float4x4::identity;
+	local_pos = float3(0.0f, 0.0f, 0.0f);
+	local_rot_euler = float3(0.0f, 0.0f, 0.0f);
+	local_scale = float3(1.0f, 1.0f, 1.0f);
+	m_rotation = Quat::identity;
+
 	const aiScene* scene = importer.ReadFile(model_path, aiProcess_Triangulate);
 	if (scene)
 	{
@@ -98,5 +104,62 @@ void Model::LoadMeshes(const aiScene* scene)
 
 void Model::DrawGui()
 {
+	ImGui::Indent();
 
+	char go_name[50];
+	strcpy_s(go_name, 50, name.c_str());
+	ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+	ImGui::InputText("###", go_name, 50, name_input_flags);
+	ImGui::SameLine();
+
+	ImGui::Unindent();
+
+	ImGui::Separator();
+	ImGui::Separator();
+
+	DrawTransform();
 }
+
+void Model::DrawTransform()
+{
+	ImGui::Indent();
+
+
+	if (ImGui::Button("Reset"))
+	{
+		m_model = float4x4::identity;
+	}
+
+	if (ImGui::SliderFloat3("Position", &local_pos[0], -10.0f, 10.0f))
+	{
+		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+	}
+	if (ImGui::SliderFloat3("Rotation", &local_rot_euler[0], 0.0f, 360.0f))
+	{
+		m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * DEGTORAD, local_rot_euler.y * DEGTORAD, local_rot_euler.z * DEGTORAD);
+		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+	}
+	if (ImGui::SliderFloat3("Scale", &local_scale[0], 0, 10.0f))
+	{
+		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+	}
+
+	ImGui::Separator();
+	ImGui::Separator();
+
+	ImGui::Text("Local Matrix");
+	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			ImGui::Text("%f", m_model[j][i]);
+			if (j < 3) ImGui::SameLine();
+		}
+	}
+	ImGui::PopStyleColor();
+	ImGui::Separator();
+}
+
+

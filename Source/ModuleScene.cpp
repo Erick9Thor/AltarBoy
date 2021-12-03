@@ -39,3 +39,8 @@ void ModuleScene::LoadModel(const char* _fileName)
 	delete ourModel;
 	ourModel = new Model(_fileName);
 }
+
+void ModuleScene::DrawGui()
+{
+	ourModel->DrawGui();
+}
