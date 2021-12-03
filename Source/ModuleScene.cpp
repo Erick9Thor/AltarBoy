@@ -37,7 +37,5 @@ bool ModuleScene::CleanUp()
 void ModuleScene::LoadModel(const char* _fileName)
 {
 	delete ourModel;
-
-	// TODO: Path file formating
 	ourModel = new Model(_fileName);
 }

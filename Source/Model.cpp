@@ -12,10 +12,9 @@
 #include "il.h"
 #include "ilu.h"
 
-
-
 Model::Model(const string& model_path)
 {
+	Assimp::Importer importer;
 
 	path = model_path.substr(0, model_path.find_last_of("/\\") + 1);
 
@@ -28,7 +27,7 @@ Model::Model(const string& model_path)
 
 	LOG("[Model] Loading model: %s", name.c_str());
 
-	const aiScene* scene = aiImportFile(model_path.c_str(), aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
+	const aiScene* scene = importer.ReadFile(model_path, aiProcess_Triangulate);
 	if (scene)
 	{
 		LoadTextures(scene);
@@ -71,8 +70,8 @@ void Model::LoadTextures(const aiScene* scene)
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
 	{
 		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
-		{
-			textures[i] = new Texture(file.data);
+		{		
+			textures[i] = new Texture(file.data, path.c_str());
 		}
 		else {
 			LOG("Failed loading texture %s:", aiGetErrorString());

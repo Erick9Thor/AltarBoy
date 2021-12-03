@@ -6,7 +6,7 @@ using namespace std;
 class Texture
 {
 	public:
-		Texture(const char* path);
+		Texture(const char* file_data, const char* path);
 		~Texture();
 
 		inline unsigned int getID() { return texture_id; }

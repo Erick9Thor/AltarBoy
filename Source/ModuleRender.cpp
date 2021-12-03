@@ -65,6 +65,7 @@ ModuleRender::ModuleRender()
 // Destructor
 ModuleRender::~ModuleRender()
 {
+	SDL_GL_DeleteContext(context);
 }
 
 bool ModuleRender::initializeOpenGLviaSDL()
@@ -79,9 +80,9 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
+	LOG("[M_Render] Creating Renderer context");
 	context = SDL_GL_CreateContext(App->window->getWindow());
 
-	LOG("[M_Render] Creating Renderer context");
 	if (context == nullptr)
 	{
 		LOG("[M_Render] OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
@@ -133,9 +134,6 @@ bool ModuleRender::Init()
 		glDebugMessageCallback(&DebugMessageGL, nullptr); // Set the callback
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
 
-		// Textures params
-		glEnable(GL_TEXTURE_2D);
-	
 		int w, h;
 		SDL_GetWindowSize(App->window->getWindow(), &w, &h);
 		glViewport(0, 0, w, h);

@@ -36,6 +36,7 @@ unsigned int ModuleTexture::GetTextureData(const char* path)
 
 	if (!ilLoadImage(path)) {
 		LOG("[M_Texture] Error loading texture from: %s", path);
+		return 0;
 	}
 
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
