@@ -1,6 +1,8 @@
 #include "Globals.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleCamera.h"
+#include "ModuleWindow.h"
 #include "SDL.h"
 
 #include "Application.h"
@@ -43,8 +45,8 @@ update_status ModuleInput::PreUpdate()
 
     SDL_Event event;
 
-    mouse_motion_x = mouse_motion_y = 0;
     mouse_wheel = false;
+    mouse_motion_x = mouse_motion_y = 0;
     mouse_wheel_x = mouse_wheel_y = 0;
 
     while (SDL_PollEvent(&event) != 0)
@@ -57,6 +59,7 @@ update_status ModuleInput::PreUpdate()
             case SDL_WINDOWEVENT:
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
                     App->renderer->WindowResized(event.window.data1, event.window.data2);
+                    // App->camera->WindowResized(event.window.data1, event.window.data2);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 mouse_buttons[event.button.button - 1] = true;

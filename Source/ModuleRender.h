@@ -18,11 +18,10 @@ class ModuleRender : public Module
 		update_status Update();
 		update_status PostUpdate();
 		bool CleanUp();
+		void WindowResized(unsigned int width, unsigned int height);
 
 		bool initGlew();
 		bool initializeOpenGLviaSDL();
-	
-		void WindowResized(unsigned width, unsigned height);
 
 		void* context;
 

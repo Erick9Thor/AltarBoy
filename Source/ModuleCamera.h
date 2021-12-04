@@ -21,7 +21,7 @@ public:
 
 	void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
 	void WindowResized(unsigned int screen_width, unsigned int screen_height);
-	void checkCameraControl();
+	void CheckCameraControl();
 
 	float4x4 GetGLView() const;
 	float4x4 GetView() const;
@@ -35,7 +35,7 @@ public:
 
 private:
 
-	void LookAt();
+	void UpdateCamera();
 
 	float3 referencePoint = float3::zero;
 	float3x3 rotation_matrix;

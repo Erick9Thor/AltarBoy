@@ -26,7 +26,6 @@ bool ModuleCamera::Init()
 	rotation_matrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
 
 	auto screen_surface = App->window->getScreenSurface();
-
 	SetAspectRatio(screen_surface->w, screen_surface->h);
 
 	frustum.SetPos(position);
@@ -45,7 +44,7 @@ update_status ModuleCamera::PreUpdate()
 
 update_status ModuleCamera::Update()
 {
-	checkCameraControl();
+	CheckCameraControl();
 	return UPDATE_CONTINUE;
 }
 
@@ -77,7 +76,7 @@ void ModuleCamera::DrawGui()
 	ImGui::DragFloat("position-Z", &position.z, 1.0f, -25.0f, 25.0f, "%.2f");
 	ImGui::Separator();
 
-	LookAt();
+	UpdateCamera();
 }
 
 void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
@@ -85,7 +84,12 @@ void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen
 	aspect_ratio = (float)screen_width / (float)screen_height;
 }
 
-void ModuleCamera::LookAt()
+void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_height)
+{
+	UpdateCamera();
+}
+
+void ModuleCamera::UpdateCamera()
 {
 	frustum.SetPos(position);
     frustum.SetFront(rotation_matrix.WorldZ());
@@ -114,7 +118,7 @@ float4x4 ModuleCamera::GetProjection() const
     return frustum.ProjectionMatrix();
 }
 
-void ModuleCamera::checkCameraControl()
+void ModuleCamera::CheckCameraControl()
 {
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
@@ -173,13 +177,7 @@ void ModuleCamera::checkCameraControl()
 		OrbitCamera(-deltaX * 1.5f, -deltaY * 1.5f);
 	}
 	
-	LookAt();
-}
-
-void ModuleCamera::WindowResized(unsigned width, unsigned height)
-{
-	RefreshFov();
-	LookAt();
+	UpdateCamera();
 }
 
 void ModuleCamera::RefreshFov()

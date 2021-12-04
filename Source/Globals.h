@@ -41,7 +41,7 @@ enum update_status
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
 #define FULLSCREEN false
-#define RELIZABLE false
+#define RELIZABLE true
 #define VSYNC true
 #define TITLE "ALTAR BOOY"
 #define ENGINE_VERSION "0.0.1"
