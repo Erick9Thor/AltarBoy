@@ -29,8 +29,7 @@ Mesh::~Mesh()
 
 void Mesh::CreateAABB(const aiMesh* mesh)
 {
-	aabb.SetNegativeInfinity();
-	aabb.Enclose((float3*)&mesh->mVertices[0], mesh->mNumVertices);
+	aabb.SetFrom((float3*)&mesh->mVertices[0], mesh->mNumVertices);
 }
 
 void Mesh::LoadVBO(const aiMesh* mesh)

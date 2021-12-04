@@ -14,13 +14,8 @@
 
 using namespace std;
 
-Application::Application()
+Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_ms(1000 / 60)
 {
-	frames = 0;
-	last_frame_ms = -1;
-	last_fps = -1;
-	capped_ms = 1000 / 60;
-
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(camera = new ModuleCamera());

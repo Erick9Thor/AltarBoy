@@ -21,6 +21,8 @@ class Model
 
 		void DrawTransform();
 
+		float3 GetCenter();
+
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
@@ -38,5 +40,7 @@ class Model
 		float4x4 m_model;
 		float3 local_pos, local_rot_euler, local_scale;
 		Quat m_rotation;
+
+		AABB m_aabb;
 };
 

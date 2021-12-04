@@ -8,7 +8,7 @@
 bool ModuleScene::Init()
 {
 	LOG("Model: Creating Model");
-	ourModel = new Model("BakerHouse.fbx");
+	scene_model = new Model("BakerHouse.fbx");
 
 	return true;
 }
@@ -20,7 +20,7 @@ update_status ModuleScene::PreUpdate()
 
 update_status ModuleScene::Update()
 {
-	ourModel->Draw();
+	scene_model->Draw();
 	return UPDATE_CONTINUE;
 }
 
@@ -36,11 +36,12 @@ bool ModuleScene::CleanUp()
 
 void ModuleScene::LoadModel(const char* _fileName)
 {
-	delete ourModel;
-	ourModel = new Model(_fileName);
+	delete scene_model;
+	scene_model = new Model(_fileName);
+	App->camera->FocusOnModel(scene_model);
 }
 
 void ModuleScene::DrawGui()
 {
-	ourModel->DrawGui();
+	scene_model->DrawGui();
 }

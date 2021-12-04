@@ -5,6 +5,7 @@
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleScene.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"
@@ -20,13 +21,15 @@ ModuleCamera::~ModuleCamera()
 bool ModuleCamera::Init()
 {
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
-	frustum.SetViewPlaneDistances(near_plane_distance, far_plane_distance);
-
-	position = float3(0.0f, 8.0f, 10.0f);
-	rotation_matrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
+	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
 
 	auto screen_surface = App->window->getScreenSurface();
 	SetAspectRatio(screen_surface->w, screen_surface->h);
+
+	frustum.SetVerticalFovAndAspectRatio(vertical_fov, aspect_ratio);
+
+	position = float3(0.0f, 8.0f, 10.0f);
+	rotation_matrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
 
 	frustum.SetPos(position);
 	frustum.SetFront(rotation_matrix.WorldZ());
@@ -37,19 +40,9 @@ bool ModuleCamera::Init()
 	return true;
 }
 
-update_status ModuleCamera::PreUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
 update_status ModuleCamera::Update()
 {
 	CheckCameraControl();
-	return UPDATE_CONTINUE;
-}
-
-update_status ModuleCamera::PostUpdate()
-{
 	return UPDATE_CONTINUE;
 }
 
@@ -67,8 +60,6 @@ void ModuleCamera::DrawGui()
 		else
 			vertical_fov = math::Atan(math::Tan(DEGTORAD * initial_vertical_fov) / aspect_ratio);
 	}
-	ImGui::DragFloat("Near distance near Z:", &near_plane_distance, 1.0f, 0.1f, 5.0f, "%.2f");
-	ImGui::DragFloat("Far distance Z", &far_plane_distance, 5.0f, 6.0f, 400.0f, "%.2f");
 
 	ImGui::Text("Set position");
 	ImGui::DragFloat("position-X", &position.x, 1.0f, -25.0f, 25.0f, "%.2f");
@@ -84,18 +75,13 @@ void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen
 	aspect_ratio = (float)screen_width / (float)screen_height;
 }
 
-void ModuleCamera::WindowResized(unsigned int screen_width, unsigned int screen_height)
-{
-	UpdateCamera();
-}
-
 void ModuleCamera::UpdateCamera()
 {
+	RefreshFov();
+
 	frustum.SetPos(position);
     frustum.SetFront(rotation_matrix.WorldZ());
     frustum.SetUp(rotation_matrix.WorldY());
-	
-	RefreshFov();
 }
 
 float4x4 ModuleCamera::GetGLView() const
@@ -153,7 +139,7 @@ void ModuleCamera::CheckCameraControl()
 				position -= rotation_matrix.WorldY() * delta_time * camera_speed * multiplier;
 		}
 	}
-	else if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
+	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
 	{
 		int deltaX, deltaY;
 		App->input->GetMouseMotion(deltaX, deltaY);
@@ -162,7 +148,7 @@ void ModuleCamera::CheckCameraControl()
 			rotation_matrix.WorldY() * deltaY * App->GetDeltaTime() * mouse_speed_movement;
 
 	}
-	else if (App->input->MouseWheel())
+	if (App->input->MouseWheel())
 	{
 		int wheelX, wheelY;
 		App->input->GetMouseWheel(wheelX, wheelY);
@@ -170,11 +156,15 @@ void ModuleCamera::CheckCameraControl()
 		position += rotation_matrix.WorldZ() * wheelY * App->GetDeltaTime() * camera_speed;
 
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_LALT)) {
+	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
 		int deltaX, deltaY;
 		App->input->GetMouseMotion(deltaX, deltaY);
 
-		OrbitCamera(-deltaX * 1.5f, -deltaY * 1.5f);
+		OrbitCamera(deltaX * 1.5f, deltaY * 1.5f);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F)) {
+		FocusOnModel(App->scene->scene_model);
 	}
 	
 	UpdateCamera();
@@ -187,13 +177,26 @@ void ModuleCamera::RefreshFov()
 
 void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 {
-	float3 vector = frustum.Pos() - referencePoint;
+	float3 vector = position - referencePoint;
 
-	Quat quat_y(frustum.Up(), motion_x * 0.003f);
-	Quat quat_x(frustum.WorldRight(), motion_y * 0.003f);
+	Quat quat_y(rotation_matrix.WorldY(), motion_x * 0.003f);
+	Quat quat_x(rotation_matrix.WorldX().Neg(), motion_y * 0.003f);
 
 	vector = quat_x.Transform(vector);
 	vector = quat_y.Transform(vector);
-
+	
 	position = vector + referencePoint;
+
+	float3 front = (float3(referencePoint.x, referencePoint.y, referencePoint.z) - position).Normalized();
+	float3 right = Cross(float3::unitY, front).Normalized();
+	float3 up = Cross(front, right).Normalized();
+
+	rotation_matrix = float3x3(right, up, front);
+}
+
+void ModuleCamera::FocusOnModel(Model* model)
+{
+	float3 m_center = model->GetCenter();
+	position = model->GetCenter() - rotation_matrix.WorldZ().Normalized() * 15.0f;
+	UpdateCamera();
 }

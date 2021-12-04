@@ -9,7 +9,6 @@
 
 #define DEGTORAD 0.0174532925199432957f
 
-
 enum update_status
 {
 	UPDATE_CONTINUE = 1,

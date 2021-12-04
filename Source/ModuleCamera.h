@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "Model.h"
 
 #include "MathGeoLib.h"
 
@@ -12,17 +13,15 @@ public:
 	~ModuleCamera();
 
 	bool Init();
-	update_status PreUpdate();
 	update_status Update();
-	update_status PostUpdate();
 	bool CleanUp();
 
 	void DrawGui();
 
 	void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
-	void WindowResized(unsigned int screen_width, unsigned int screen_height);
 	void CheckCameraControl();
 
+	// TODO: Make GL standard
 	float4x4 GetGLView() const;
 	float4x4 GetView() const;
 
@@ -33,6 +32,8 @@ public:
 
 	void OrbitCamera(float motion_x, float motion_y);
 
+	void FocusOnModel(Model* model);
+
 private:
 
 	void UpdateCamera();
@@ -40,14 +41,12 @@ private:
 	float3 referencePoint = float3::zero;
 	float3x3 rotation_matrix;
 
+	float initial_vertical_fov = 45.0f;
+	float vertical_fov = DEGTORAD * initial_vertical_fov;
+
 	Frustum frustum;
 	float aspect_ratio;
 	float3 position;
-
-	float initial_vertical_fov = 45.0f;
-	float vertical_fov = DEGTORAD * initial_vertical_fov;
-	float near_plane_distance = 0.1f;
-	float far_plane_distance = 200.0f;
 
 	float camera_speed = 10.0f;
 	float mouse_speed_rotation = 5.0f;

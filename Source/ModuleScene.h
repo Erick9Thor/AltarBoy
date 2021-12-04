@@ -19,9 +19,9 @@ class ModuleScene :
 
 		void DrawGui();
 
+		Model* scene_model;
+
 	private:
 		unsigned int progam_id;
-
-		Model* ourModel;
 };
 

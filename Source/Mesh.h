@@ -23,6 +23,9 @@ class Mesh
 			return num_indices;
 		};
 
+		AABB getAABB() {
+			return aabb;
+		}
 	
 	private:
 		void CreateAABB(const aiMesh* mesh);

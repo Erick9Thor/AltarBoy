@@ -89,12 +89,14 @@ void Model::LoadMeshes(const aiScene* scene)
 {
 	LOG("[Model] Loading meshes");
 
+	m_aabb.SetNegativeInfinity();
 	meshes = vector<Mesh*>(scene->mNumMeshes);
 
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
 		if (scene->mMeshes[i]->HasPositions()) {
 			meshes[i] = new Mesh(scene->mMeshes[i]);
+			m_aabb.Enclose(meshes[i]->getAABB());
 		}
 		else {
 			LOG("[Model] Failed loading mesh: %d: %s", i, aiGetErrorString());
@@ -127,9 +129,6 @@ void Model::DrawGui()
 void Model::DrawTransform()
 {
 	ImGui::Indent();
-
-
-
 
 	if (ImGui::Button("Reset"))
 	{
@@ -166,6 +165,11 @@ void Model::DrawTransform()
 	}
 	ImGui::PopStyleColor();
 	ImGui::Separator();
+}
+
+float3 Model::GetCenter()
+{
+	return m_aabb.CenterPoint();
 }
 
 
