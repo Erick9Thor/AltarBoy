@@ -31,10 +31,13 @@ public:
 
 	void RefreshFov();
 
+	void OrbitCamera(float motion_x, float motion_y);
+
 private:
 
 	void LookAt();
 
+	float3 referencePoint = float3::zero;
 	float3x3 rotation_matrix;
 
 	Frustum frustum;

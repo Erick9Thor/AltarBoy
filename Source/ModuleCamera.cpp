@@ -29,7 +29,12 @@ bool ModuleCamera::Init()
 
 	SetAspectRatio(screen_surface->w, screen_surface->h);
 
-	LookAt();
+	frustum.SetPos(position);
+	frustum.SetFront(rotation_matrix.WorldZ());
+	frustum.SetUp(rotation_matrix.WorldY());
+
+	RefreshFov();
+
 	return true;
 }
 
@@ -82,11 +87,11 @@ void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen
 
 void ModuleCamera::LookAt()
 {
-	RefreshFov();
-
-    frustum.SetPos(position);
+	frustum.SetPos(position);
     frustum.SetFront(rotation_matrix.WorldZ());
     frustum.SetUp(rotation_matrix.WorldY());
+	
+	RefreshFov();
 }
 
 float4x4 ModuleCamera::GetGLView() const
@@ -161,6 +166,12 @@ void ModuleCamera::checkCameraControl()
 		position += rotation_matrix.WorldZ() * wheelY * App->GetDeltaTime() * camera_speed;
 
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_LALT)) {
+		int deltaX, deltaY;
+		App->input->GetMouseMotion(deltaX, deltaY);
+
+		OrbitCamera(-deltaX * 1.5f, -deltaY * 1.5f);
+	}
 	
 	LookAt();
 }
@@ -174,4 +185,17 @@ void ModuleCamera::WindowResized(unsigned width, unsigned height)
 void ModuleCamera::RefreshFov()
 {
 	frustum.SetVerticalFovAndAspectRatio(vertical_fov, aspect_ratio);
+}
+
+void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
+{
+	float3 vector = frustum.Pos() - referencePoint;
+
+	Quat quat_y(frustum.Up(), motion_x * 0.003f);
+	Quat quat_x(frustum.WorldRight(), motion_y * 0.003f);
+
+	vector = quat_x.Transform(vector);
+	vector = quat_y.Transform(vector);
+
+	position = vector + referencePoint;
 }

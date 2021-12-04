@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	virtual ~Module() = default;
+	~Module() {};
 
 	virtual bool Init() 
 	{
