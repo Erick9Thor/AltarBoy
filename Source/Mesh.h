@@ -22,13 +22,17 @@ class Mesh
 		unsigned int GetNumIndices() const {
 			return num_indices;
 		};
+
 	
 	private:
+		void CreateAABB(const aiMesh* mesh);
 		void LoadVBO(const aiMesh* mesh);
 		void LoadEBO(const aiMesh* mesh);
 		void CreateVAO();
 
 		unsigned VBO, EBO, VAO;
 		unsigned num_vertices, num_indices, texture_index;
+
+		AABB aabb;
 };
 

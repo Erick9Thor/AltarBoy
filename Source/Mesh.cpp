@@ -16,6 +16,7 @@ Mesh::Mesh(const aiMesh* mesh)
 	texture_index = mesh->mMaterialIndex;
 	LoadVBO(mesh);
 	LoadEBO(mesh);
+	CreateAABB(mesh);
 	CreateVAO();
 }
 
@@ -24,6 +25,12 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteBuffers(1, &VAO);
+}
+
+void Mesh::CreateAABB(const aiMesh* mesh)
+{
+	aabb.SetNegativeInfinity();
+	aabb.Enclose((float3*)&mesh->mVertices[0], mesh->mNumVertices);
 }
 
 void Mesh::LoadVBO(const aiMesh* mesh)

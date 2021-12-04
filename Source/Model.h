@@ -28,7 +28,6 @@ class Model
 		vector<Texture*> textures;
 		vector<Mesh*> meshes;
 
-
 		unsigned int num_vertices = 0;
 		unsigned int num_triangles = 0;
 		

@@ -115,6 +115,10 @@ void Model::DrawGui()
 	ImGui::Unindent();
 
 	ImGui::Separator();
+
+	ImGui::Text("Vertices: %i", num_vertices);
+	ImGui::Text("Triangles: %i", num_triangles);
+
 	ImGui::Separator();
 
 	DrawTransform();
@@ -123,6 +127,8 @@ void Model::DrawGui()
 void Model::DrawTransform()
 {
 	ImGui::Indent();
+
+
 
 
 	if (ImGui::Button("Reset"))
