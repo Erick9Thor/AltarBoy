@@ -38,7 +38,7 @@ private:
 
 	void UpdateCamera();
 
-	float3 referencePoint = float3::zero;
+	float3 reference_point = float3::zero;
 	float3x3 rotation_matrix;
 
 	float initial_vertical_fov = 45.0f;

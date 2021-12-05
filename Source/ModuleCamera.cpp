@@ -177,7 +177,7 @@ void ModuleCamera::RefreshFov()
 
 void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 {
-	float3 vector = position - referencePoint;
+	float3 vector = position - reference_point;
 
 	Quat quat_y(rotation_matrix.WorldY(), motion_x * 0.003f);
 	Quat quat_x(rotation_matrix.WorldX().Neg(), motion_y * 0.003f);
@@ -185,9 +185,9 @@ void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 	vector = quat_x.Transform(vector);
 	vector = quat_y.Transform(vector);
 	
-	position = vector + referencePoint;
+	position = vector + reference_point;
 
-	float3 front = (float3(referencePoint.x, referencePoint.y, referencePoint.z) - position).Normalized();
+	float3 front = (float3(reference_point.x, reference_point.y, reference_point.z) - position).Normalized();
 	float3 right = Cross(float3::unitY, front).Normalized();
 	float3 up = Cross(front, right).Normalized();
 

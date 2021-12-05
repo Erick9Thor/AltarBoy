@@ -8,6 +8,7 @@
 #define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
 
 #define DEGTORAD 0.0174532925199432957f
+#define RADTODEG 57.295779513082320876f
 
 enum update_status
 {
