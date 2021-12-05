@@ -45,6 +45,8 @@ public:
 	}
 
 	void Draw() {
+		ImGui::SetNextWindowSize(ImVec2(1100, 170), ImGuiCond_FirstUseEver);
+
 		ImGui::Begin("Console", &show_another_window);
 		if (ImGui::BeginPopup("Options"))
 		{

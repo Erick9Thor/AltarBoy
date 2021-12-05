@@ -196,6 +196,6 @@ void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 
 void ModuleCamera::FocusOnModel(Model* model)
 {
-	position = model->GetCenter() - rotation_matrix.WorldZ().Normalized() * model->GetDiameter().y * 2.f;
+	position = model->GetCenter() - rotation_matrix.WorldZ().Normalized() * model->GetDiameter().Length();
 	UpdateCamera();
 }

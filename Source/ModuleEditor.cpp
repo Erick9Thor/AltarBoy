@@ -33,7 +33,9 @@ bool ModuleEditor::Init()
     io.WantSetMousePos = true;
 
     ImGui_ImplSDL2_InitForOpenGL(App->window->getWindow(), App->renderer->context);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    ImGui_ImplOpenGL3_Init();
+
+    Logger->setShowConsole(!Logger->getShowConsole());
   
     // Setup style
     ImGui::StyleColorsDark();
@@ -46,8 +48,76 @@ bool ModuleEditor::Init()
 update_status ModuleEditor::PreUpdate()
 {
 	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame(App->window->getWindow());
+	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+
+    constexpr ImGuiWindowFlags dockspace_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+        ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_MenuBar;
+
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    ImGui::Begin("Dockspace", nullptr, dockspace_flags);
+    ImGui::PopStyleVar(3);
+
+    const ImGuiID dockSpaceId = ImGui::GetID("DockspaceID");
+
+    ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("Help"))
+        {
+            if (ImGui::MenuItem("Documentation"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/wiki");
+
+            if (ImGui::MenuItem("Download latest"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/releases");
+
+            if (ImGui::MenuItem("Report a bug"))
+                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/issues");
+
+            if (ImGui::MenuItem("Download source!"))
+                App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+
+            if (ImGui::MenuItem("About"))
+                show_abaout = !show_abaout;
+
+            if (ImGui::MenuItem("Quit"))
+                return UPDATE_STOP;
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Tools"))
+        {
+            if (ImGui::MenuItem("Console"))
+            {
+                Logger->setShowConsole(!Logger->getShowConsole());
+            }
+            if (ImGui::MenuItem("Camera"))
+            {
+                show_camera_window = !show_camera_window;
+            }
+            if (ImGui::MenuItem("FPS counter"))
+            {
+                show_fps_counter = !show_fps_counter;
+            }
+            ImGui::EndMenu();
+        }
+    }
+
+    ImGui::EndMainMenuBar();
+
+    ImGui::End();
 
     return UPDATE_CONTINUE;
 }
@@ -81,78 +151,8 @@ bool ModuleEditor::CleanUp()
     return true;
 }
 
-void ModuleEditor::showMenu() {
-    static bool showcase = false;
-    static bool show_abaout = false;
-    static bool show_camera_window = false;
-    static bool show_texture_window = false;
-    static bool show_model_window = false;
-    static bool show_fps_counter = false;
-
-    if (ImGui::BeginMainMenuBar())
-    {
-        if (ImGui::BeginMenu("File"))
-        {
-            ImGui::MenuItem("New ...");
-            ImGui::MenuItem("Load ...");
-
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Help"))
-        {
-            if (ImGui::MenuItem("Documentation"))
-                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/wiki");
-
-            if (ImGui::MenuItem("Download latest"))
-                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/releases");
-
-            if (ImGui::MenuItem("Report a bug"))
-                App->RequestBrowser("https://github.com/Erick9Thor/Engine3D/issues");
-
-            if (ImGui::MenuItem("Download source!"))
-                App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-
-            if (ImGui::MenuItem("Abaout"))
-                show_abaout = !show_abaout;
-
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Tools"))
-        {
-            if (ImGui::MenuItem("Console"))
-            {
-                Logger->setShowConsole(!Logger->getShowConsole());
-            }
-            if (ImGui::MenuItem("Camera"))
-            {
-                show_camera_window = !show_camera_window;
-            }
-            if (ImGui::MenuItem("Texture info"))
-            {
-                show_texture_window = !show_texture_window;
-            }
-            if (ImGui::MenuItem("Model"))
-            {
-                show_model_window = !show_model_window;
-            }
-            if (ImGui::MenuItem("FPS counter"))
-            {
-                show_fps_counter = !show_fps_counter;
-            }
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Window conf"))
-        {
-            showConfigWindow();
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndMainMenuBar();
-    }
-
+void ModuleEditor::showMenu() 
+{ 
     if (show_camera_window)
     {
         if (ImGui::Begin("Camera", &show_camera_window))
@@ -170,7 +170,6 @@ void ModuleEditor::showMenu() {
         }
         ImGui::End();
     }
-
     
     if (show_texture_window)
     {
@@ -230,26 +229,6 @@ void ModuleEditor::AddFPS(float fps, float ms)
 
     fps_log[count - 1] = fps;
     ms_log[count - 1] = ms;
-}
-
-void ModuleEditor::showConfigWindow()
-{
-    bool fullscreen = App->window->IsFullscreen();
-    bool resizable = App->window->IsResizable();
-
-    if (ImGui::Checkbox("Fullscreen", &fullscreen))
-        App->window->SetFullscreen(fullscreen);
-
-    ImGui::SameLine();
-    if (ImGui::Checkbox("Resizable", &resizable))
-        App->window->SetResizable(resizable);
-    if (ImGui::IsItemHovered())
-        ImGui::SetTooltip("Restart to apply");
-}
-
-// TODO: add show hardware options
-void ModuleEditor::showHardwareInfo() {
-    
 }
 
 void ModuleEditor::showAbaoutInfo()
