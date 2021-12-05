@@ -29,12 +29,12 @@ _Menciona las herramientas que utilizaste para crear tu proyecto_
 
 You can find out much more about how to use this project in our  https://github.com/Erick9Thor/Engine3D
 
-## Autores ✒️
+## Authors ✒️
 
 * **Eric Torres** - *main worker/owner* - [Erick9Thor](https://github.com/Erick9Thor)
 
 You can also look at the list of all the [contributors](https://github.com/your/project/contributors).
 
-## Licencia 📄
+## Licence 📄
 
 This project is under the License [LICENSE.md](LICENSE.md).
