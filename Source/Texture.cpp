@@ -43,6 +43,10 @@ Texture::Texture(const char* file_data, const char* path)
 	ilDeleteImages(1, &texture_id);
 }
 
+void Texture::DrawImGui()
+{
+	ImGui::Image((void*)(intptr_t)texture_id, ImVec2(150, 150));
+}
 
 Texture::~Texture() {
 	LOG("[Texture] Cleaning textures");

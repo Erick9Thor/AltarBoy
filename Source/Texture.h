@@ -11,6 +11,8 @@ class Texture
 
 		inline unsigned int getID() { return texture_id; }
 
+		void DrawImGui();
+
 	private:
 		unsigned int texture_id;
 		string texture_path;

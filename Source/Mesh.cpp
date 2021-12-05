@@ -11,12 +11,11 @@
 #include "MathGeoLib.h"
 
 
-Mesh::Mesh(const aiMesh* mesh)
+Mesh::Mesh(const aiMesh* mesh): mesh(mesh), texture_index(mesh->mMaterialIndex)
 {
-	texture_index = mesh->mMaterialIndex;
-	LoadVBO(mesh);
-	LoadEBO(mesh);
-	CreateAABB(mesh);
+	LoadVBO();
+	LoadEBO();
+	CreateAABB();
 	CreateVAO();
 }
 
@@ -27,12 +26,18 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &VAO);
 }
 
-void Mesh::CreateAABB(const aiMesh* mesh)
+void Mesh::DrawImGui()
+{
+	float3 mesh_center = aabb.CenterPoint();
+	ImGui::Text("Center point: %f, %f, %f", mesh_center.x, mesh_center.y, mesh_center.z);
+}
+
+void Mesh::CreateAABB()
 {
 	aabb.SetFrom((float3*)&mesh->mVertices[0], mesh->mNumVertices);
 }
 
-void Mesh::LoadVBO(const aiMesh* mesh)
+void Mesh::LoadVBO()
 {
 	num_vertices = mesh->mNumVertices;
 	glGenBuffers(1, &VBO);
@@ -55,7 +60,7 @@ void Mesh::LoadVBO(const aiMesh* mesh)
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
-void Mesh::LoadEBO(const aiMesh* mesh)
+void Mesh::LoadEBO()
 {
 	num_indices = mesh->mNumFaces * 3;
 

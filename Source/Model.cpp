@@ -130,41 +130,62 @@ void Model::DrawTransform()
 {
 	ImGui::Indent();
 
-	if (ImGui::Button("Reset"))
-	{
-		m_model = float4x4::identity;
-	}
+	if (ImGui::CollapsingHeader("Transform")) {
 
-	if (ImGui::SliderFloat3("Position", &local_pos[0], -10.0f, 10.0f))
-	{
-		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
-	}
-	if (ImGui::SliderFloat3("Rotation", &local_rot_euler[0], 0.0f, 360.0f))
-	{
-		m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * DEGTORAD, local_rot_euler.y * DEGTORAD, local_rot_euler.z * DEGTORAD);
-		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
-	}
-	if (ImGui::SliderFloat3("Scale", &local_scale[0], 0, 10.0f))
-	{
-		m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
-	}
-
-	ImGui::Separator();
-	ImGui::Separator();
-
-	ImGui::Text("Local Matrix");
-	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
-
-	for (int i = 0; i < 4; ++i)
-	{
-		for (int j = 0; j < 4; j++)
+		if (ImGui::Button("Reset"))
 		{
-			ImGui::Text("%f", m_model[j][i]);
-			if (j < 3) ImGui::SameLine();
+			m_model = float4x4::identity;
+		}
+
+		if (ImGui::SliderFloat3("Position", &local_pos[0], -10.0f, 10.0f))
+		{
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		if (ImGui::SliderFloat3("Rotation", &local_rot_euler[0], 0.0f, 360.0f))
+		{
+			m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * DEGTORAD, local_rot_euler.y * DEGTORAD, local_rot_euler.z * DEGTORAD);
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		if (ImGui::SliderFloat3("Scale", &local_scale[0], 0, 10.0f))
+		{
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		ImGui::Separator();
+		ImGui::Separator();
+
+		ImGui::Text("Local Matrix");
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				ImGui::Text("%f", m_model[j][i]);
+				if (j < 3) ImGui::SameLine();
+			}
+		}
+		ImGui::PopStyleColor();
+		ImGui::Separator();
+	}
+
+	if (ImGui::CollapsingHeader("Meshes"))
+	{
+		for (unsigned int i = 0; i < meshes.size(); ++i)
+		{
+			ImGui::Text("Mesh %i:", i);
+			ImGui::Indent();
+			meshes[i]->DrawImGui();
+			ImGui::Unindent();
 		}
 	}
-	ImGui::PopStyleColor();
-	ImGui::Separator();
+
+	if (ImGui::CollapsingHeader("Textures"))
+	{
+		for (unsigned int i = 0; i < textures.size(); ++i)
+		{
+			textures[i]->DrawImGui();
+		}
+	}
+
 }
 
 float3 Model::GetCenter()

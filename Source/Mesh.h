@@ -26,11 +26,15 @@ class Mesh
 		AABB getAABB() {
 			return aabb;
 		}
+
+		void DrawImGui();
 	
 	private:
-		void CreateAABB(const aiMesh* mesh);
-		void LoadVBO(const aiMesh* mesh);
-		void LoadEBO(const aiMesh* mesh);
+		const aiMesh* mesh;
+
+		void CreateAABB();
+		void LoadVBO();
+		void LoadEBO();
 		void CreateVAO();
 
 		unsigned VBO, EBO, VAO;

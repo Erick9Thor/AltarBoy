@@ -170,15 +170,6 @@ void ModuleEditor::showMenu()
         }
         ImGui::End();
     }
-    
-    if (show_texture_window)
-    {
-        if (ImGui::Begin("Texture", &show_texture_window))
-        {
-            App->texture->DrawGui();
-        }   
-        ImGui::End();
-    }
 
     if (show_model_window)
     {

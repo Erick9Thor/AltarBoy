@@ -34,9 +34,8 @@ private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
 
+	bool show_model_window = true;
 	bool show_abaout = false;
 	bool show_camera_window = false;
-	bool show_texture_window = false;
-	bool show_model_window = false;
 	bool show_fps_counter = false;
 };
