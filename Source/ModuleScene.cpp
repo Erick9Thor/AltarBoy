@@ -7,7 +7,7 @@
 
 bool ModuleScene::Init()
 {
-	LOG("Model: Creating Model");
+	LOG("[Scene] Creating Model");
 	scene_model = new Model("BakerHouse.fbx");
 
 	return true;

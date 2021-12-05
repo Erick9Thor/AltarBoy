@@ -22,8 +22,8 @@ Texture::Texture(const char* file_data, const char* path)
 		LOG("[Texture] Texture found on: %s", path);
 		texture_loaded = true;
 	} 
-	else if (texture_id = App->texture->GetTextureData((default_path + file_data).c_str()) != 0) {
-		LOG("[Texture] Texture found on: %s", (default_path + file_data).c_str());
+	else if (texture_id = App->texture->GetTextureData((default_path + texture_file).c_str()) != 0) {
+		LOG("[Texture] Texture found on: %s", (default_path + texture_file).c_str());
 		texture_loaded = true;
 	}
 
