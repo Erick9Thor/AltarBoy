@@ -4,7 +4,7 @@
 #include "Globals.h"
 
 ComponentTransform::ComponentTransform(GameObject* new_GameObject, const float4x4& transform) :
-	Component(Component::Type::Transform, false)
+	Component(Component::Type::Transform, new_GameObject)
 {
 	local_transform = transform;
 	local_transform.Decompose(local_position, local_rotation, local_scale);
