@@ -17,6 +17,8 @@ class Component
 	Component(Type type, GameObject*);
 	virtual ~Component();
 
+	inline Type GetType() const { return type; };
+
 	GameObject* gameObject = nullptr;
 
 	protected:
