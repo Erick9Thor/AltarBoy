@@ -4,59 +4,72 @@
 #include "Globals.h"
 #include "Module.h"
 #include <vector>
+#include "Timer.h"
 
 class ModuleRender;
 class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleRenderExercise;
-class ModuleGui;
+class ModuleEditor;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
-class ModuleLoadModels;
+class ModuleScene;
 class ModuleProgram;
+class ModuleHardware;
 
 class Program;
 class AppLog;
 
 class Application
 {
-public:
+	public:
 
-	Application();
-	~Application();
+		Application();
+		~Application();
 
-	bool Init();
-	update_status Update();
-	bool CleanUp();
+		bool Init();
+		update_status Update();
 
-	void DebugDraw();
+		void FinishUpdate();
+		bool CleanUp();
 
-	void RequestBrowser(const char* url) const;
-	int GetFramerateLimit() const;
-	float GetDeltaTime() { return deltaTime; };
+		void DebugDraw();
 
-public:
-	ModuleRender* renderer = nullptr;
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleGui* gui = nullptr;
-	ModuleDebugDraw* debug_draw = nullptr;
-	ModuleCamera* camera = nullptr;
-	ModuleTexture* texture = nullptr;
-	ModuleRenderExercise* rendererExercise = nullptr;
-	ModuleLoadModels* moduleLoadModels = nullptr;
-	ModuleProgram* program = nullptr;
+		void RequestBrowser(const char* url) const;
+		inline float GetDeltaTime() { return delta_time; };
 
-	AppLog* console = nullptr;
+		int GetFramerateLimit() const;
+		
 
-private:
-	int	capped_ms;
-	std::vector<Module*> modules;
+	public:
+		ModuleRender* renderer = nullptr;
+		ModuleWindow* window = nullptr;
+		ModuleInput* input = nullptr;
+		ModuleEditor* editor = nullptr;
+		ModuleDebugDraw* debug_draw = nullptr;
+		ModuleCamera* camera = nullptr;
+		ModuleTexture* texture = nullptr;
+		ModuleScene* scene = nullptr;
+		ModuleProgram* program = nullptr;
+		ModuleHardware* hw = nullptr;
 
-	float deltaTime = 0.0f;
-	float lastTime = 0.0f;
+		AppLog* console = nullptr;
+
+	private:
+
+		Timer ms_timer;
+		Timer fps_timer;
+
+		int frames;
+		int	capped_ms;
+		int	fps_counter;
+		int	last_frame_ms;
+		int	last_fps;
+		float delta_time = 0.0f;
+
+		std::vector<Module*> modules;
 };
 
 extern Application* App;

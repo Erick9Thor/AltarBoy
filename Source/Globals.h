@@ -9,7 +9,6 @@
 
 #define DEGTORAD 0.0174532925199432957f
 
-
 enum update_status
 {
 	UPDATE_CONTINUE = 1,
@@ -41,9 +40,11 @@ enum update_status
 #define SCREEN_WIDTH 1080
 #define SCREEN_HEIGHT 720
 #define FULLSCREEN false
-#define RELIZABLE false
+#define RELIZABLE true
 #define VSYNC true
 #define TITLE "ALTAR BOOY"
 #define ENGINE_VERSION "0.0.1"
+
+#define FPS_LOG_SIZE 100
 
 #endif // __GLOBALS_H__

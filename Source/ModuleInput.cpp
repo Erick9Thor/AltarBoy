@@ -1,8 +1,12 @@
 #include "Globals.h"
-#include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleRender.h"
+#include "ModuleCamera.h"
+#include "ModuleWindow.h"
 #include "SDL.h"
+
+#include "Application.h"
+#include "ModuleScene.h"
 
 #include "imgui_impl_sdl.h"
 
@@ -16,13 +20,13 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
-	LOG("Init SDL input event system");
+	LOG("[M_INPUT] Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_INPUT] SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 
@@ -35,42 +39,51 @@ bool ModuleInput::Init()
 }
 
 // Called every draw update
-update_status ModuleInput::Update()
+update_status ModuleInput::PreUpdate()
 {
     SDL_PumpEvents();
 
-    SDL_Event sdlEvent;
+    SDL_Event event;
 
-    mouse_motion_x = mouse_motion_y = 0;
     mouse_wheel = false;
+    mouse_motion_x = mouse_motion_y = 0;
     mouse_wheel_x = mouse_wheel_y = 0;
 
-    while (SDL_PollEvent(&sdlEvent) != 0)
+    while (SDL_PollEvent(&event) != 0)
     {
-        ImGui_ImplSDL2_ProcessEvent(&sdlEvent);
-        switch (sdlEvent.type)
+        ImGui_ImplSDL2_ProcessEvent(&event);
+        switch (event.type)
         {
             case SDL_QUIT:
                 return UPDATE_STOP;
             case SDL_WINDOWEVENT:
-                if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED || sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-                    App->renderer->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
+                if (event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+                    App->window->WindowResized();
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                mouse_buttons[sdlEvent.button.button - 1] = true;
+                mouse_buttons[event.button.button - 1] = true;
                 break;
             case SDL_MOUSEBUTTONUP:
-                mouse_buttons[sdlEvent.button.button - 1] = false;
+                mouse_buttons[event.button.button - 1] = false;
                 break;
             case SDL_MOUSEMOTION:
-                mouse_motion_x = sdlEvent.motion.xrel;
-                mouse_motion_y = sdlEvent.motion.yrel;
+                mouse_motion_x = event.motion.xrel;
+                mouse_motion_y = event.motion.yrel;
                 break;
             case SDL_MOUSEWHEEL:
                 mouse_wheel = true;
-                mouse_wheel_x = sdlEvent.wheel.x;
-                mouse_wheel_y = sdlEvent.wheel.y;
+                mouse_wheel_x = event.wheel.x;
+                mouse_wheel_y = event.wheel.y;
                 break;
+            case SDL_DROPFILE: 
+            {
+                LOG("[M_INPUT] Dropped file: %s", event.drop.file);
+
+                App->scene->LoadModel(event.drop.file);
+                
+                SDL_free(event.drop.file);
+                break;
+            }
         }
     }
 
@@ -80,7 +93,7 @@ update_status ModuleInput::Update()
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
-	LOG("Quitting SDL input event subsystem");
+	LOG("[M_INPUT] Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }

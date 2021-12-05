@@ -1,34 +1,49 @@
 #pragma once
 
+#include "ModuleTexture.h"
+#include "Texture.h"
+
 #include "Mesh.h"
-
 #include "assimp/scene.h"
-
 #include <vector>
-using namespace std;
+#include "Math.h"
 
-struct Texture {
-	unsigned id;	
-	string path;
-};
+#include <string.h>
+using namespace std;
 
 class Model
 {
 	public:
-		Model(const char* file_name);
+		Model(const std::string& model_path);
 		~Model();
 		void Draw();
 		void DrawGui();
 
+		void DrawTransform();
+
+		float3 GetCenter();
+		vec GetDiameter();
+
+		float3 GetLocalPosition() { return local_pos; }
+
 	private:
 		void LoadTextures(const aiScene* scene);
 		void LoadMeshes(const aiScene* scene);
-		Texture LoadTexture(const char* path);
-		vector<unsigned> textures;
-		vector<Mesh> meshes;
 
-		unsigned int numVertices = 0;
-		unsigned int numTriangles = 0;
-		const char* m_Name;
+		vector<Texture*> textures;
+		vector<Mesh*> meshes;
+
+		unsigned int num_vertices = 0;
+		unsigned int num_triangles = 0;
+		
+		string name;
+		string path;
+		string file_name;
+
+		float4x4 m_model;
+		float3 local_pos, local_rot_euler, local_scale;
+		Quat m_rotation;
+
+		AABB m_aabb;
 };
 

@@ -12,87 +12,189 @@
 #include "il.h"
 #include "ilu.h"
 
-Model::Model(const char* file_name)
+Model::Model(const string& model_path)
 {
+	Assimp::Importer importer;
 
-	m_Name = file_name;
+	path = model_path.substr(0, model_path.find_last_of("/\\") + 1);
 
-	const aiScene* scene = aiImportFile(file_name, aiProcessPreset_TargetRealtime_MaxQuality || aiProcess_Triangulate);
+	if (path.size() > 0) {
+		LOG("[Model] Loading model from this path: %s", path.c_str());
+	}
+
+	file_name = model_path.substr(model_path.find_last_of("/\\") + 1);
+	name = file_name.substr(0, std::string::size_type(file_name.find_last_of('.')));
+
+	LOG("[Model] Loading model: %s", name.c_str());
+
+	m_model = float4x4::identity;
+	local_pos = float3(0.0f, 0.0f, 0.0f);
+	local_rot_euler = float3(0.0f, 0.0f, 0.0f);
+	local_scale = float3(1.0f, 1.0f, 1.0f);
+	m_rotation = Quat::identity;
+
+	const aiScene* scene = importer.ReadFile(model_path, aiProcess_Triangulate);
 	if (scene)
 	{
 		LoadTextures(scene);
 		LoadMeshes(scene);
 
-		for (Mesh& mesh : meshes)
+		for (unsigned int i = 0; i < meshes.size(); ++i)
 		{
-			numVertices += mesh.GetNumVertices();
-			numTriangles += mesh.GetNumIndices() / 3;
+			num_triangles += meshes[i]->GetNumIndices() / 3;
+			num_vertices += meshes[i]->GetNumVertices();
 		}
 	}
 	else
 	{
-		LOG("Error loading %s: %s", file_name, aiGetErrorString());
+		LOG("[Model] Error loading %s: %s", model_path, aiGetErrorString());
 	}
 }
 
 Model::~Model()
 {
+	for (int i = 0; i < textures.size(); ++i)
+		delete textures[i];
+	for (int i = 0; i < meshes.size(); ++i)
+		delete meshes[i];
 }
 
 void Model::Draw()
 {
-	for (Mesh& mesh : meshes) {
-		mesh.Draw(textures);
+	for (unsigned int i = 0; i < meshes.size(); ++i) {
+		meshes[i]->Draw(textures, m_model);
 	}
 }
 
 void Model::LoadTextures(const aiScene* scene)
 {
+	LOG("[Model] Texture loading for model...");
+
 	aiString file;
-	textures.reserve(scene->mNumMaterials);
+	textures = vector<Texture*>(scene->mNumMaterials);
+	
 	for (unsigned i = 0; i < scene->mNumMaterials; ++i)
 	{
-		static const int index = 0;
-		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
-		{
-			textures.push_back(LoadTexture(file.data).id);
+		if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &file) == AI_SUCCESS)
+		{		
+			textures[i] = new Texture(file.data, path.c_str());
+		}
+		else {
+			LOG("[Model] Failed loading texture %s:", aiGetErrorString());
 		}
 	}
 }
 
 void Model::LoadMeshes(const aiScene* scene)
 {
-	// Create vbo using mVertices, mTextureCoords and mNumVertices
-	textures.reserve(scene->mNumMeshes);
+	LOG("[Model] Loading meshes");
+
+	m_aabb.SetNegativeInfinity();
+	meshes = vector<Mesh*>(scene->mNumMeshes);
+
 	for (unsigned i = 0; i < scene->mNumMeshes; i++)
 	{
-		meshes.push_back(Mesh(scene->mMeshes[i]));
+		if (scene->mMeshes[i]->HasPositions()) {
+			meshes[i] = new Mesh(scene->mMeshes[i]);
+			m_aabb.Enclose(meshes[i]->getAABB());
+		}
+		else {
+			LOG("[Model] Failed loading mesh: %d: %s", i, aiGetErrorString());
+		}
 	}
-	LOG("Loading meshes")
-}
-
-Texture Model::LoadTexture(const char* path)
-{
-	Texture texture;
-	texture.path = path;
-	unsigned int img_id = App->texture->GetTextureData(path);
-
-	glGenTextures(1, &texture.id);
-	glBindTexture(GL_TEXTURE_2D, texture.id);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), ilGetInteger(IL_IMAGE_WIDTH),
-		ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
-		ilGetData());
-
-	ilDeleteImages(1, &img_id);
-	return texture;
 }
 
 void Model::DrawGui()
 {
-	ImGui::Text("Name: %s", m_Name);
-	ImGui::Text("Num vertices: %i", numVertices);
-	ImGui::Text("Num triangles: %i", numTriangles);
+	ImGui::Indent();
+
+	char go_name[50];
+	strcpy_s(go_name, 50, name.c_str());
+	ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+	ImGui::InputText("###", go_name, 50, name_input_flags);
+	ImGui::SameLine();
+
+	ImGui::Unindent();
+
+	ImGui::Separator();
+
+	ImGui::Text("Vertices: %i", num_vertices);
+	ImGui::Text("Triangles: %i", num_triangles);
+
+	ImGui::Separator();
+
+	DrawTransform();
 }
+
+void Model::DrawTransform()
+{
+	ImGui::Indent();
+
+	if (ImGui::CollapsingHeader("Transform")) {
+
+		if (ImGui::Button("Reset"))
+		{
+			m_model = float4x4::identity;
+		}
+
+		if (ImGui::SliderFloat3("Position", &local_pos[0], -10.0f, 10.0f))
+		{
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		if (ImGui::SliderFloat3("Rotation", &local_rot_euler[0], 0.0f, 360.0f))
+		{
+			m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * DEGTORAD, local_rot_euler.y * DEGTORAD, local_rot_euler.z * DEGTORAD);
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		if (ImGui::SliderFloat3("Scale", &local_scale[0], 0, 10.0f))
+		{
+			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
+		}
+		ImGui::Separator();
+		ImGui::Separator();
+
+		ImGui::Text("Local Matrix");
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				ImGui::Text("%f", m_model[j][i]);
+				if (j < 3) ImGui::SameLine();
+			}
+		}
+		ImGui::PopStyleColor();
+		ImGui::Separator();
+	}
+
+	if (ImGui::CollapsingHeader("Meshes"))
+	{
+		for (unsigned int i = 0; i < meshes.size(); ++i)
+		{
+			ImGui::Text("Mesh %i:", i);
+			ImGui::Indent();
+			meshes[i]->DrawImGui();
+			ImGui::Unindent();
+		}
+	}
+
+	if (ImGui::CollapsingHeader("Textures"))
+	{
+		for (unsigned int i = 0; i < textures.size(); ++i)
+		{
+			textures[i]->DrawImGui();
+		}
+	}
+
+}
+
+float3 Model::GetCenter()
+{
+	return m_aabb.CenterPoint();
+}
+
+vec Model::GetDiameter()
+{
+	return m_aabb.Size();
+}
+

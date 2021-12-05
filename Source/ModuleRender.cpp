@@ -62,9 +62,9 @@ ModuleRender::ModuleRender()
 {
 }
 
-// Destructor
 ModuleRender::~ModuleRender()
 {
+	SDL_GL_DeleteContext(context);
 }
 
 bool ModuleRender::initializeOpenGLviaSDL()
@@ -79,12 +79,12 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
-	context = SDL_GL_CreateContext(App->window->window);
+	LOG("[M_Render] Creating Renderer context");
+	context = SDL_GL_CreateContext(App->window->getWindow());
 
-	LOG("Creating Renderer context");
 	if (context == nullptr)
 	{
-		LOG("OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_Render] OpenGL context could not be created! SDL_Error: %s\n", SDL_GetError());
 		return false;
 	}
 
@@ -97,23 +97,23 @@ bool ModuleRender::initGlew()
 
 	if (err != GLEW_OK)
 	{
-		LOG("Glew library could not init %s\n", glewGetErrorString(err));
+		LOG("[M_Render] Glew library could not init %s\n", glewGetErrorString(err));
 		return false;
 	}
 	else
-		LOG("Using Glew %s", glewGetString(GLEW_VERSION));
+		LOG("[M_Render] Using Glew %s", glewGetString(GLEW_VERSION));
 
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	LOG("[M_Render] Vendor: %s", glGetString(GL_VENDOR));
+	LOG("[M_Render] Renderer: %s", glGetString(GL_RENDERER));
+	LOG("[M_Render] OpenGL version supported %s", glGetString(GL_VERSION));
+	LOG("[M_Render] GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	return true;
 }
 
 bool ModuleRender::Init()
 {
-	LOG("Creating 3D Renderer context");
+	LOG("[M_Render] Creating 3D Renderer context");
 	bool ret = true;
 
 	ret = initializeOpenGLviaSDL();
@@ -133,11 +133,8 @@ bool ModuleRender::Init()
 		glDebugMessageCallback(&DebugMessageGL, nullptr); // Set the callback
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
 
-		// Textures params
-		glEnable(GL_TEXTURE_2D);
-	
 		int w, h;
-		SDL_GetWindowSize(App->window->window, &w, &h);
+		SDL_GetWindowSize(App->window->getWindow(), &w, &h);
 		glViewport(0, 0, w, h);
 	}
 
@@ -146,7 +143,7 @@ bool ModuleRender::Init()
 
 update_status ModuleRender::PreUpdate()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	return UPDATE_CONTINUE;
@@ -155,8 +152,7 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	auto &a = App->window->screen_surface;
-	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), a->w, a->h);
+	App->debug_draw->Draw(App->camera->GetView(), App->camera->GetProjection(), App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -166,7 +162,7 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {	
-	SDL_GL_SwapWindow(App->window->window);
+	SDL_GL_SwapWindow(App->window->getWindow());
 	
 	return UPDATE_CONTINUE;
 }
@@ -174,14 +170,14 @@ update_status ModuleRender::PostUpdate()
 // Called before quitting
 bool ModuleRender::CleanUp()
 {
-	LOG("Destroying renderer");
+	LOG("[M_Render] Destroying renderer");
 	SDL_GL_DeleteContext(context);
 	return true;
 }
 
 void ModuleRender::WindowResized(unsigned int width, unsigned int height)
 {
-	SDL_GetWindowSize(App->window->window, (int*)&width, (int*)&height);
+	SDL_GetWindowSize(App->window->getWindow(), (int*)&width, (int*)&height);
 	glViewport(0, 0, width, height);
 }
 

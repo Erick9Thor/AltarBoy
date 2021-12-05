@@ -1,32 +1,35 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 
 ModuleWindow::ModuleWindow()
 {
 }
 
-// Destructor
 ModuleWindow::~ModuleWindow()
 {
 }
 
-// Called before render is available
 bool ModuleWindow::Init()
 {
-	LOG("Init SDL window & surface");
+	LOG("[M_Window] Init SDL window & surface");
 	bool ret = true;
 
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+		LOG("[M_Window] SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
 	else
 	{
-		//Create window
-		int width = SCREEN_WIDTH;
-		int height = SCREEN_HEIGHT;
+		SDL_DisplayMode DM;
+		SDL_GetCurrentDisplayMode(0, &DM);
+
+		width = DM.w * 0.75f;
+		height = DM.h * 0.75f;
+
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
 		if (FULLSCREEN == true)
@@ -40,16 +43,14 @@ bool ModuleWindow::Init()
 
 		if(window == NULL)
 		{
-			LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+			LOG("[M_Window] Window could not be created! SDL_Error: %s\n", SDL_GetError());
 			ret = false;
 		}
 		else
 		{
 			//Get window surface
-			
 			screen_surface = SDL_GetWindowSurface(window);
 		}
-
 	}
 
 	return ret;
@@ -58,15 +59,13 @@ bool ModuleWindow::Init()
 // Called before quitting
 bool ModuleWindow::CleanUp()
 {
-	LOG("Destroying SDL window and quitting all SDL systems");
+	LOG("[M_Window] Destroying SDL window and quitting all SDL systems");
 
-	//Destroy window
 	if(window != NULL)
 	{
 		SDL_DestroyWindow(window);
 	}
 
-	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
 }
@@ -78,14 +77,13 @@ void ModuleWindow::SetFullscreen(bool set) {
 		if (fullscreen == true)
 		{
 			if (SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN) != 0)
-				LOG("Could not switch to fullscreen: %s\n", SDL_GetError());
+				LOG("[M_Window] Could not switch to fullscreen: %s\n", SDL_GetError());
 			fullscreen_desktop = false;
-			SDL_Log("this is a test");
 		}
 		else
 		{
 			if (SDL_SetWindowFullscreen(window, 0) != 0)
-				LOG("Could not switch to windowed: %s\n", SDL_GetError());
+				LOG("[M_Window] Could not switch to windowed: %s\n", SDL_GetError());
 		}
 	}
 }
@@ -98,6 +96,14 @@ bool ModuleWindow::IsFullscreen() const
 bool ModuleWindow::IsResizable() const
 {
 	return resizable;
+}
+
+void ModuleWindow::WindowResized()
+{
+	SDL_UpdateWindowSurface(window);
+	screen_surface = SDL_GetWindowSurface(window);
+	App->renderer->WindowResized(screen_surface->w, screen_surface->h);
+	App->camera->SetAspectRatio(screen_surface->w, screen_surface->h);
 }
 
 void ModuleWindow::SetResizable(bool set) {

@@ -11,18 +11,33 @@
 #include "MathGeoLib.h"
 
 
-Mesh::Mesh(const aiMesh* mesh)
+Mesh::Mesh(const aiMesh* mesh): mesh(mesh), texture_index(mesh->mMaterialIndex)
 {
-	texture_index = mesh->mMaterialIndex;
-	LoadVBO(mesh);
-	LoadEBO(mesh);
+	LoadVBO();
+	LoadEBO();
+	CreateAABB();
 	CreateVAO();
 }
 
 Mesh::~Mesh()
-{}
+{
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+	glDeleteBuffers(1, &VAO);
+}
 
-void Mesh::LoadVBO(const aiMesh* mesh)
+void Mesh::DrawImGui()
+{
+	float3 mesh_center = aabb.CenterPoint();
+	ImGui::Text("Center point: %f, %f, %f", mesh_center.x, mesh_center.y, mesh_center.z);
+}
+
+void Mesh::CreateAABB()
+{
+	aabb.SetFrom((float3*)&mesh->mVertices[0], mesh->mNumVertices);
+}
+
+void Mesh::LoadVBO()
 {
 	num_vertices = mesh->mNumVertices;
 	glGenBuffers(1, &VBO);
@@ -34,26 +49,21 @@ void Mesh::LoadVBO(const aiMesh* mesh)
 	unsigned uv_offset = position_size;
 	unsigned uv_size = sizeof(float) * 2 * mesh->mNumVertices;
 
-	// Update buffer data attributes, nullptr assigns no data
 	glBufferData(GL_ARRAY_BUFFER, buffer_size, nullptr, GL_STATIC_DRAW);
-	// Update buffer subset with vertex positions
 	glBufferSubData(GL_ARRAY_BUFFER, 0, position_size, mesh->mVertices);
 
-	// Map a section of a buffer data store to fill it in a custom manner
 	float2* uvs = (float2*)(glMapBufferRange(GL_ARRAY_BUFFER, uv_offset, uv_size, GL_MAP_WRITE_BIT));
 	for (unsigned i = 0; i < mesh->mNumVertices; ++i)
 	{
-		// Fill remaining buffer with uwus
 		uvs[i] = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
 	}
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 }
 
-void Mesh::LoadEBO(const aiMesh* mesh)
+void Mesh::LoadEBO()
 {
 	num_indices = mesh->mNumFaces * 3;
 
-	// Generate & activate buffer
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
@@ -79,25 +89,25 @@ void Mesh::CreateVAO()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0); // Positions
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0); 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * num_vertices)); // Texture coords
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * num_vertices));
 }
 
-void Mesh::Draw(const std::vector<unsigned>& model_textures)
+void Mesh::Draw(const std::vector<Texture*>& model_textures, float4x4& model)
 {
-	unsigned program_id = App->program->program_id;
-	float4x4 model = float4x4::identity;
-	
+	unsigned program_id = App->program->GetProgramID();
+
 	glUseProgram(program_id);
-	glUniformMatrix4fv(glGetUniformLocation(program_id, "model"), 1, GL_FALSE, &model[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(program_id, "model"), 1, GL_TRUE, &model[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program_id, "view"), 1, GL_FALSE, &App->camera->GetGLView()[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(program_id, "proj"), 1, GL_FALSE, &App->camera->GetGLProjection()[0][0]);
-	
-	glActiveTexture(GL_TEXTURE0);	
-	glBindTexture(GL_TEXTURE_2D, model_textures[texture_index]);
 
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, model_textures[texture_index]->getID());
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, nullptr);
+	glDisable(GL_TEXTURE_2D);
 }

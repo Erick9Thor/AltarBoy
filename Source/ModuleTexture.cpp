@@ -7,48 +7,47 @@
 
 ModuleTexture::ModuleTexture()
 {
-	ilInit();
 }
 
 ModuleTexture::~ModuleTexture()
 {
-	ilShutDown();
 }
 
 bool ModuleTexture::Init()
 {
-	LOG("Init Image library using DevIL lib version %d", IL_VERSION);
-
+	LOG("[M_Texture] Init Image library using DevIL lib version %d", IL_VERSION);
+	ilInit();
 	return true;
 }
 
 bool ModuleTexture::CleanUp()
 {
-	LOG("Freeing textures and Image library");
-
+	ilShutDown();
 	return true;
 }
 
 unsigned int ModuleTexture::GetTextureData(const char* path)
 {
-	ILuint name; // The image name to return.
-	ilGenImages(1, &name); // Grab a new image name.
-	ilBindImage(name);
-	ilLoadImage(path);
+
+	ILuint texture_id; 
+	ilGenImages(1, &texture_id); 
+	ilBindImage(texture_id);
+
+	if (!ilLoadImage(path)) {
+		LOG("[M_Texture] Error loading texture from: %s", path);
+		return 0;
+	}
+
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	iluRotate(180.0f);
+	
+	ILinfo textureInfo;
+	iluGetImageInfo(&textureInfo);
+	if (textureInfo.Origin == IL_ORIGIN_UPPER_LEFT)
+		iluFlipImage();
 
-	return name;
+	return texture_id;
 }
 
-update_status ModuleTexture::Update()
-{
+void ModuleTexture::DrawGui() {
 
-	return UPDATE_CONTINUE;
-}
-
-void ModuleTexture::CleanTexture(unsigned int& texture)
-{
-	LOG("Cleaning textures");
-	ilDeleteImages(1, &texture);
 }

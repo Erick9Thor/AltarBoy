@@ -1,5 +1,4 @@
-#ifndef __MODULE_INPUT_H__
-#define __MODULE_INPUT_H__
+#pragma once
 
 #include "Module.h"
 #include "Globals.h"
@@ -17,8 +16,8 @@ public:
 	~ModuleInput();
 
 	bool Init();
-	update_status Update();
-	bool CleanUp();
+	update_status PreUpdate() override;
+	bool CleanUp() override;
 
 	const Uint8 GetKey(SDL_Scancode key) const;
 	const bool GetMouseButton(unsigned int key) const;
@@ -35,5 +34,3 @@ private:
 	bool mouse_wheel;
 	int mouse_wheel_x, mouse_wheel_y;
 };
-
-#endif // MODULE_INPUT_H

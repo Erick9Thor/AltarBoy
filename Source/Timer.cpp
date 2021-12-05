@@ -1,24 +1,30 @@
 #include "Timer.h"
 
-void Timer::StartMicroseconds()
+Timer::Timer()
 {
-    start_time = SDL_GetPerformanceCounter();
+	Start();
 }
 
-double Timer::ReadMicroseconds()
+void Timer::Start()
 {
-    static const double frequency = (double)SDL_GetPerformanceFrequency();
-    last_time = SDL_GetPerformanceCounter();
-    return (double)((last_time - start_time) * 1000000) / frequency;
+	running = true;
+	start_time = SDL_GetTicks();
 }
 
-void Timer::StartMiliseconds()
+void Timer::Stop()
 {
-    start_time = SDL_GetTicks();
+	running = false;
+	last_time = SDL_GetTicks();
 }
 
-float Timer::ReadMiliseconds()
+int Timer::Read()
 {
-    last_time = SDL_GetTicks();
-    return (last_time - start_time) / 1000.0f;
+	if (running == true)
+	{
+		return SDL_GetTicks() - start_time;
+	}
+	else
+	{
+		return last_time - start_time;
+	}
 }

@@ -6,12 +6,16 @@
 class Timer
 {
 	public:
-		void StartMicroseconds();
-		double ReadMicroseconds();
+		
+		Timer();
 
-		void StartMiliseconds();
-		float ReadMiliseconds();
+		void Start();
+		void Stop();
+
+		int Read();
+
 	private:
+		bool running;
 		float start_time;
 		float last_time = 0.0f;
 };
