@@ -172,4 +172,8 @@ float3 Model::GetCenter()
 	return m_aabb.CenterPoint();
 }
 
+vec Model::GetDiameter()
+{
+	return m_aabb.Size();
+}
 

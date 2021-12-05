@@ -22,6 +22,9 @@ class Model
 		void DrawTransform();
 
 		float3 GetCenter();
+		vec GetDiameter();
+
+		float3 GetLocalPosition() { return local_pos; }
 
 	private:
 		void LoadTextures(const aiScene* scene);
