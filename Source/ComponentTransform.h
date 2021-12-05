@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "GameObject.h"
 
+#include "Math.h"
+
 class GameObject;
 
 class ComponentTransform :

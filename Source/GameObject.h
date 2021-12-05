@@ -1,8 +1,7 @@
 #pragma once
-
 #include "Math.h"
-#include "Component.h"
 
+#include "Component.h"
 #include <vector>;
 using namespace std;
 
@@ -21,5 +20,6 @@ class GameObject
 	private:
 		std::vector<Component*> components;
 		ComponentTransform* transform = nullptr;
+		std::string	name;
 };
 

@@ -1,7 +1,11 @@
 #include "GameObject.h"
+#include "Globals.h"
+
+#include "ComponentTransform.h"
 
 GameObject::GameObject()
 {
+	CreateComponent(new ComponentTransform(this, float4x4::identity));
 }
 
 GameObject::~GameObject()
@@ -20,7 +24,7 @@ void GameObject::CreateComponent(Component* component)
 		case(Component::Type::Transform):
 		{
 			components.push_back(component);
-			transform = (C_Transform*)component;
+			transform = (ComponentTransform*)component;
 			component->gameObject = this;
 			break;
 		}
