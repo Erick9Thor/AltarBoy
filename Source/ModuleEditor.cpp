@@ -134,7 +134,6 @@ update_status ModuleEditor::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
-
 void ModuleEditor::Draw()
 {
     ImGui::Render();

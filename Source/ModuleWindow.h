@@ -21,6 +21,8 @@ class ModuleWindow : public Module
 		bool IsFullscreen() const;
 		bool IsResizable() const;
 
+		void WindowResized();
+
 		inline SDL_Surface* getScreenSurface() { return screen_surface; }
 		inline SDL_Window* getWindow() { return window; }
 
@@ -32,5 +34,8 @@ class ModuleWindow : public Module
 		bool resizable = false;
 
 		bool fullscreen_desktop = false;
+		
+		int width;
+		int height;
 };
 

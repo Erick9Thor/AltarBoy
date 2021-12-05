@@ -1,17 +1,17 @@
 #include "Globals.h"
 #include "Application.h"
+#include "ModuleRender.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 
 ModuleWindow::ModuleWindow()
 {
 }
 
-// Destructor
 ModuleWindow::~ModuleWindow()
 {
 }
 
-// Called before render is available
 bool ModuleWindow::Init()
 {
 	LOG("[M_Window] Init SDL window & surface");
@@ -24,9 +24,12 @@ bool ModuleWindow::Init()
 	}
 	else
 	{
-		//Create window
-		int width = SCREEN_WIDTH;
-		int height = SCREEN_HEIGHT;
+		SDL_DisplayMode DM;
+		SDL_GetCurrentDisplayMode(0, &DM);
+
+		width = DM.w * 0.75f;
+		height = DM.h * 0.75f;
+
 		Uint32 flags = SDL_WINDOW_SHOWN |  SDL_WINDOW_OPENGL;
 
 		if (FULLSCREEN == true)
@@ -46,10 +49,8 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			
 			screen_surface = SDL_GetWindowSurface(window);
 		}
-
 	}
 
 	return ret;
@@ -60,13 +61,11 @@ bool ModuleWindow::CleanUp()
 {
 	LOG("[M_Window] Destroying SDL window and quitting all SDL systems");
 
-	//Destroy window
 	if(window != NULL)
 	{
 		SDL_DestroyWindow(window);
 	}
 
-	//Quit SDL subsystems
 	SDL_Quit();
 	return true;
 }
@@ -97,6 +96,14 @@ bool ModuleWindow::IsFullscreen() const
 bool ModuleWindow::IsResizable() const
 {
 	return resizable;
+}
+
+void ModuleWindow::WindowResized()
+{
+	SDL_UpdateWindowSurface(window);
+	screen_surface = SDL_GetWindowSurface(window);
+	App->renderer->WindowResized(screen_surface->w, screen_surface->h);
+	App->camera->SetAspectRatio(screen_surface->w, screen_surface->h);
 }
 
 void ModuleWindow::SetResizable(bool set) {

@@ -58,7 +58,7 @@ update_status ModuleInput::PreUpdate()
                 return UPDATE_STOP;
             case SDL_WINDOWEVENT:
                 if (event.window.event == SDL_WINDOWEVENT_RESIZED || event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-                    App->renderer->WindowResized(event.window.data1, event.window.data2);
+                    App->window->WindowResized();
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 mouse_buttons[event.button.button - 1] = true;
