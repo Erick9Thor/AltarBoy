@@ -79,3 +79,35 @@ Component* GameObject::CreateComponent(Component::Type type)
 	return new_component;
 }
 
+void GameObject::Update()
+{
+	if (transform)
+	{
+		OnTransformUpdated();
+	}
+
+	std::vector<Component*>::iterator it;
+	for (it = components.begin(); it != components.end(); ++it)
+	{
+		(*it)->Update();
+	}
+}
+
+void GameObject::OnTransformUpdated() {
+	UpdateAABB();
+}
+
+const AABB& GameObject::GetAABB() const
+{
+	return aabb;
+}
+
+const OBB& GameObject::GetOBB() const
+{
+	return obb;
+}
+
+void GameObject::UpdateAABB()
+{
+	//TODO: Find the way to convert model aabb
+}

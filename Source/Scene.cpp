@@ -49,3 +49,13 @@ void Scene::Play()
 void Scene::Stop()
 {
 }
+
+void Scene::Update()
+{
+	root->Update();
+}
+
+void Scene::DrawScene()
+{
+
+}

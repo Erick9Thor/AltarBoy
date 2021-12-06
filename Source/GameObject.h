@@ -20,6 +20,16 @@ class GameObject
 		void AddComponent(Component* component);
 		Component* CreateComponent(Component::Type type);
 
+		void Update();
+
+		void OnTransformUpdated();
+
+		const AABB& GetAABB() const;
+
+		const OBB& GetOBB() const;
+
+		void UpdateAABB();
+
 		template<typename RetComponent>
 		const RetComponent* GetComponent() const
 		{
@@ -58,6 +68,9 @@ class GameObject
 		std::vector<Component*> components;
 		ComponentTransform* transform = nullptr;
 		std::string	name;
+
+		AABB aabb;
+		OBB	obb;
 
 };
 

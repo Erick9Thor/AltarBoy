@@ -25,6 +25,10 @@ class Scene
 		void Stop();
 
 	private:
+
+		void Update();
+		void DrawScene();
+
 		ModuleSceneManager* manager_owner = nullptr;
 
 		GameObject* root = nullptr;

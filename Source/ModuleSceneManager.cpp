@@ -5,7 +5,7 @@
 
 ModuleSceneManager::ModuleSceneManager()
 {
-	main_scene = new Scene();
+	// main_scene = new Scene();
 }
 
 ModuleSceneManager::~ModuleSceneManager()
@@ -14,6 +14,9 @@ ModuleSceneManager::~ModuleSceneManager()
 
 update_status ModuleSceneManager::Update()
 {
+	// main_scene->Update();
+	// main_scene->DrawScene();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -22,5 +25,5 @@ void ModuleSceneManager::LoadModel(const char* _fileName)
 	// delete scene_model;
 	// scene_model = new Model(_fileName);
 
-	// Need to refactor model class to convert a game object
+	// TODO: Need to refactor model class to convert a game object
 }

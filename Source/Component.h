@@ -18,6 +18,7 @@ class Component
 	virtual ~Component();
 
 	virtual void OnTransformUpdated() {};
+	virtual void Update() {};
 
 	inline Type GetType() const { return type; };
 
