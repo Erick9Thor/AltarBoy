@@ -6,18 +6,20 @@
 #include "SDL.h"
 
 #include "Application.h"
-#include "ModuleScene.h"
+#include "ModuleSceneManager.h"
 
 #include "imgui_impl_sdl.h"
 
 ModuleInput::ModuleInput()
-{}
+{
+    keyboard = SDL_GetKeyboardState(NULL);
+}
 
-// Destructor
 ModuleInput::~ModuleInput()
-{}
+{
+    RELEASE_ARRAY(keyboard);
+}
 
-// Called before render is available
 bool ModuleInput::Init()
 {
 	LOG("[M_INPUT] Init SDL input event system");
@@ -30,15 +32,12 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
-    keyboard = SDL_GetKeyboardState(NULL);
-
     for (int i = 0; i < NUM_MOUSE_BUTTONS; i++)
         mouse_buttons[i] = false;
 
 	return ret;
 }
 
-// Called every draw update
 update_status ModuleInput::PreUpdate()
 {
     SDL_PumpEvents();

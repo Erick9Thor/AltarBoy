@@ -5,7 +5,7 @@
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleScene.h"
+#include "ModuleSceneManager.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"
@@ -164,7 +164,7 @@ void ModuleCamera::CheckCameraControl()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
-		FocusOnModel(App->scene->scene_model);
+		// FocusOnModel(App->scene->scene_model);
 	}
 	
 	UpdateCamera();
