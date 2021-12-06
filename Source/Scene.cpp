@@ -20,7 +20,9 @@ void Scene::AddGameObject(GameObject* newGameObject, GameObject* parent)
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
 {
-	return nullptr;
+	GameObject* foo = new GameObject(parent ? parent : root, name);
+	foo->scene_owner = this;
+	return foo;
 }
 
 GameObject* Scene::CreateCamera()
@@ -29,12 +31,15 @@ GameObject* Scene::CreateCamera()
 	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(10, 10, 0));
 	camera->CreateComponent(Component::Type::Camera);
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
-	return nullptr;
+
+	main_camera = camera->GetComponent<ComponentCamera>();
+
+	return camera;
 }
 
 const ComponentCamera* Scene::GetMainCamera() const
 {
-	return nullptr;
+	return main_camera;
 }
 
 void Scene::Play()

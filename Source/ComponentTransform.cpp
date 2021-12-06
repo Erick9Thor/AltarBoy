@@ -3,6 +3,13 @@
 #include "GameObject.h"
 #include "Globals.h"
 
+
+
+ComponentTransform::ComponentTransform(GameObject* new_GameObject, float3 position, Quat rotation, float3 scale) : Component(Component::Type::Transform, new_GameObject),
+local_position(position), local_rotation(rotation), local_scale(scale)
+{
+}
+
 ComponentTransform::ComponentTransform(GameObject* new_GameObject, const float4x4& transform) :
 	Component(Component::Type::Transform, new_GameObject)
 {

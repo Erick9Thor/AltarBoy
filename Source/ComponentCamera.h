@@ -20,6 +20,8 @@ class ComponentCamera :
         float4x4 GetOpenGLProjectionMatrix() const;
 
         void OnTransformUpdated() override;
+        
+        static inline Type GetType() { return Type::Camera; };
 
     private:
         float hFov = 0.0f;

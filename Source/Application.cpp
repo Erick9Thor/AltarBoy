@@ -18,7 +18,7 @@ Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_m
 {
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
-	modules.push_back(camera = new ModuleCamera());
+	// modules.push_back(camera = new ModuleCamera());
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(hw = new ModuleHardware());

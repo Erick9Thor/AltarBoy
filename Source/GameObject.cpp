@@ -9,6 +9,15 @@ GameObject::GameObject()
 	AddComponent(new ComponentTransform(this, float4x4::identity));
 }
 
+GameObject::GameObject(GameObject* parent, const char* name, const float3& translation, const Quat& rotation, const float3& scale) : name(name)
+{
+	this->parent = parent;
+	if (parent)
+		parent->childs.push_back(this);
+
+	AddComponent(new ComponentTransform(this, translation, rotation, scale));
+}
+
 GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name) : name(name)
 {
 	this->parent = parent;
