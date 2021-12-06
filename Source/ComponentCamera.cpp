@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 
+#include "ComponentTransform.h"
+
 ComponentCamera::ComponentCamera(GameObject* gameObject): Component(Component::Type::Camera, gameObject)
 {
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
@@ -55,4 +57,11 @@ float4x4 ComponentCamera::GetOpenGLProjectionMatrix() const
 	proj = frustum.ProjectionMatrix();
 	proj.Transpose();
 	return proj;
+}
+
+void ComponentCamera::OnTransformUpdated()
+{
+	ComponentTransform* transform = gameObject->GetComponent<ComponentTransform>();
+	frustum.SetFrame(transform->GetPosition(), transform->GetFwd(), transform->GetUp());
+	frustum.GetPlanes(planes);
 }

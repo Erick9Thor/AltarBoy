@@ -11,9 +11,19 @@ class GameObject
 {
 	public:
 		GameObject();
+		GameObject(GameObject* parent, const float4x4& transform, const char* name);
 		~GameObject();
 
-		void CreateComponent(Component* component);
+		void AddComponent(Component* component);
+		Component* CreateComponent(Component::Type type);
+
+		template<typename RetComponent>
+		RetComponent* GetComponent()
+		{
+			
+			// TODO
+			return nullptr;
+		}
 
 		GameObject* parent = nullptr;
 		std::vector<GameObject*> childs;

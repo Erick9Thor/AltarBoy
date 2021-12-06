@@ -2,10 +2,20 @@
 #include "Globals.h"
 
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 
 GameObject::GameObject()
 {
-	CreateComponent(new ComponentTransform(this, float4x4::identity));
+	AddComponent(new ComponentTransform(this, float4x4::identity));
+}
+
+GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name) : name(name)
+{
+	this->parent = parent;
+	if (parent) {
+		parent->childs.push_back(parent);
+	}
+	AddComponent(new ComponentTransform(this, transform));
 }
 
 GameObject::~GameObject()
@@ -18,7 +28,7 @@ GameObject::~GameObject()
 	childs.clear();
 }
 
-void GameObject::CreateComponent(Component* component)
+void GameObject::AddComponent(Component* component)
 {
 	switch (component->GetType()) {
 		case(Component::Type::Transform):
@@ -36,3 +46,27 @@ void GameObject::CreateComponent(Component* component)
 		}
 	}
 }
+
+Component* GameObject::CreateComponent(Component::Type type)
+{
+	Component* new_component = nullptr;
+	switch (type)
+	{
+		case(Component::Type::Transform):
+		{
+			return transform;
+		}
+		case(Component::Type::Camera):
+		{
+			new_component = new ComponentCamera(this);
+			new_component->OnTransformUpdated();
+			break;
+		}
+	}
+	if (new_component)
+	{
+		components.push_back(new_component);
+	}
+	return new_component;
+}
+

@@ -19,6 +19,8 @@ class ComponentCamera :
         float4x4 GetOpenGLViewMatrix() const;
         float4x4 GetOpenGLProjectionMatrix() const;
 
+        void OnTransformUpdated() override;
+
     private:
         float hFov = 0.0f;
         Frustum	frustum;
