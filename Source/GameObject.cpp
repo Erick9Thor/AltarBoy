@@ -4,37 +4,50 @@
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
+
 GameObject::GameObject()
 {
-	AddComponent(new ComponentTransform(this, float4x4::identity));
-}
+	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 
-GameObject::GameObject(GameObject* parent, const char* name, const float3& translation, const Quat& rotation, const float3& scale) : name(name)
-{
-	this->parent = parent;
-	if (parent)
-		parent->childs.push_back(this);
-
-	AddComponent(new ComponentTransform(this, translation, rotation, scale));
 }
 
 GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name) : name(name)
 {
-	this->parent = parent;
-	if (parent) {
-		parent->childs.push_back(parent);
-	}
+	SetNewParent(parent);
 	AddComponent(new ComponentTransform(this, transform));
+}
+
+GameObject::GameObject(GameObject* parent, const char* name, const float3& translation, const Quat& rotation, const float3& scale) : name(name)
+{
+	SetNewParent(parent);
+	AddComponent(new ComponentTransform(this, translation, rotation, scale));
 }
 
 GameObject::~GameObject()
 {
 	for (unsigned int i = 0; i < childs.size(); i++)
 	{
-		delete childs[i];
-		childs[i] = nullptr;
+		RELEASE(childs[i]);
+	}
+	for (unsigned int i = 0; i < components.size(); i++)
+	{
+		RELEASE(components[i]);
 	}
 	childs.clear();
+}
+
+void GameObject::SetNewParent(GameObject* new_parent)
+{
+	if (new_parent == parent)
+		return;
+
+	if (parent)
+		parent->childs.erase(std::remove(childs.begin(), childs.end(), this), childs.end());
+
+	if (new_parent)
+		new_parent->childs.push_back(this);
+
+	parent = new_parent;
 }
 
 void GameObject::AddComponent(Component* component)
@@ -44,13 +57,13 @@ void GameObject::AddComponent(Component* component)
 		{
 			components.push_back(component);
 			transform = (ComponentTransform*)component;
-			component->gameObject = this;
+			component->SetGameObject(this);
 			break;
 		}
 		case(Component::Type::Camera):
 		{
 			components.push_back((Component*)component);
-			component->gameObject = this;
+			component->SetGameObject(this);
 			break;
 		}
 	}
@@ -62,17 +75,14 @@ Component* GameObject::CreateComponent(Component::Type type)
 	switch (type)
 	{
 		case(Component::Type::Transform):
-		{
 			return transform;
-		}
+		break;
 		case(Component::Type::Camera):
-		{
 			new_component = new ComponentCamera(this);
 			new_component->OnTransformUpdated();
-			break;
-		}
+		break;
 	}
-	if (new_component)
+	if (new_component !=nullptr)
 	{
 		components.push_back(new_component);
 	}
@@ -83,13 +93,14 @@ void GameObject::Update()
 {
 	if (transform)
 	{
-		OnTransformUpdated();
+		// TODO: UPDATE AABB
+		// OnTransformUpdated();
 	}
 
 	std::vector<Component*>::iterator it;
 	for (it = components.begin(); it != components.end(); ++it)
 	{
-		(*it)->Update();
+		(*it)->OnUpdate();
 	}
 }
 

@@ -52,7 +52,7 @@ void Scene::Stop()
 
 void Scene::Update()
 {
-	root->Update();
+	// root->Update();
 }
 
 void Scene::DrawScene()

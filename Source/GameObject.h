@@ -11,11 +11,15 @@ class Scene;
 
 class GameObject
 {
+	friend class Component;
+
 	public:
 		GameObject();
 		GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 		GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
-		~GameObject();
+		virtual ~GameObject();
+
+		void SetNewParent(GameObject* new_parent);
 
 		void AddComponent(Component* component);
 		Component* CreateComponent(Component::Type type);
@@ -23,12 +27,11 @@ class GameObject
 		void Update();
 
 		void OnTransformUpdated();
-
 		const AABB& GetAABB() const;
-
 		const OBB& GetOBB() const;
-
 		void UpdateAABB();
+
+		inline ComponentTransform* GetTransform() { return transform; }
 
 		template<typename RetComponent>
 		const RetComponent* GetComponent() const
@@ -71,6 +74,4 @@ class GameObject
 
 		AABB aabb;
 		OBB	obb;
-
 };
-

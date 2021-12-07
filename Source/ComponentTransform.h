@@ -14,6 +14,8 @@ class ComponentTransform :
         ComponentTransform(GameObject* new_GameObject, const float4x4& transform = float4x4::identity);
         ~ComponentTransform();
 
+        void SetPosition(float3 newPosition);
+
         void SetLocalTransform(float4x4 newTransform);
         void SetGlobalTransform(float4x4 transform);
 
@@ -30,10 +32,11 @@ class ComponentTransform :
         inline float3 GetUp() const { return transform.WorldY(); }
         inline float3 GetRight() const { return transform.WorldX(); }
 
-
         void LookAt(float3 target, float3 worldUp = float3::unitY);
 
         static inline Type GetType() { return Type::Transform; };
+        void OnTransformUpdated() override;
+
 
     private:
         float4x4 local_transform;

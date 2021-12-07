@@ -9,25 +9,27 @@ class ComponentCamera :
 {
     
     public:
-        ComponentCamera(GameObject* gameObject);
+        ComponentCamera(GameObject* conatiner);
         ~ComponentCamera();
 
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
         void SetFOV(float fov);
 
-        float4x4 GetOpenGLViewMatrix() const;
-        float4x4 GetOpenGLProjectionMatrix() const;
+        float4x4 GetViewMatrix(const bool transpose = true) const;
+        float4x4 GetProjectionMatrix(const bool transpose = true) const;
 
         void OnTransformUpdated() override;
+
+        void SetResolution(float width, float height);
         
         static inline Type GetType() { return Type::Camera; };
+
+        Plane planes[6];
+        float3 reference_point = float3::zero;
 
     private:
         float hFov = 0.0f;
         Frustum	frustum;
-        float3 reference_point = float3::zero;
-
-        Plane planes[6];
 };
 

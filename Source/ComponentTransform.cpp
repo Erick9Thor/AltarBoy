@@ -30,9 +30,9 @@ void ComponentTransform::SetLocalTransform(float4x4 newTransform)
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
 {
 	local_transform = transform;
-	if (gameObject->parent)
+	if (game_object->parent)
 	{
-		local_transform = gameObject->parent->GetComponent<ComponentTransform>()->GetTransform().Transposed() * transform;
+		local_transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform().Transposed() * transform;
 	}
 	SetLocalTransform(local_transform);
 }
@@ -55,4 +55,14 @@ void ComponentTransform::LookAt(float3 target, float3 worldUp)
 	float3 up = fwd.Cross(right).Normalized();
 
 	SetRotationAxis(right, up, fwd);
+}
+
+void ComponentTransform::OnTransformUpdated()
+{
+}
+
+void ComponentTransform::SetPosition(float3 newPosition)
+{
+	transform.SetTranslatePart(newPosition);
+	SetGlobalTransform(transform);
 }

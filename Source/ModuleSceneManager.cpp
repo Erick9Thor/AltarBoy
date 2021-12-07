@@ -5,7 +5,7 @@
 
 ModuleSceneManager::ModuleSceneManager()
 {
-	// main_scene = new Scene();
+	main_scene = new Scene();
 }
 
 ModuleSceneManager::~ModuleSceneManager()
@@ -14,8 +14,8 @@ ModuleSceneManager::~ModuleSceneManager()
 
 update_status ModuleSceneManager::Update()
 {
-	// main_scene->Update();
-	// main_scene->DrawScene();
+	main_scene->Update();
+	main_scene->DrawScene();
 
 	return UPDATE_CONTINUE;
 }

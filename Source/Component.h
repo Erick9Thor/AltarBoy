@@ -12,19 +12,23 @@ class Component
 			Mesh,
 			Texture,
 			Camera,
+			Unknown
 		};
 
-	Component(Type type, GameObject*);
-	virtual ~Component();
+		Component(Type type, GameObject* container);
+		virtual ~Component();
 
-	virtual void OnTransformUpdated() {};
-	virtual void Update() {};
+		inline Type GetType() const { return type; };
 
-	inline Type GetType() const { return type; };
+		void SetGameObject(GameObject* container) { game_object = container; }
+		const GameObject* GetGameObject() const;
+		GameObject* GetGameObject();
 
-	GameObject* gameObject = nullptr;
+		virtual void OnTransformUpdated() {};
+		virtual void OnUpdate() {};
 
 	protected:
+		GameObject* game_object = nullptr;
 		bool active = true;
 		Type type = None;
 };
