@@ -154,9 +154,10 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	App->debug_draw->Draw(App->camera->getMainCamera()->GetViewMatrix(false), 
-		App->camera->getMainCamera()->GetProjectionMatrix(false),
-		App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
+	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
+	float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
+
+	App->debug_draw->Draw(view, proj, App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -48,28 +48,6 @@ void ModuleCamera::CheckCameraControl()
 
 		ZoomCamera(wheelY);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F))
-	{
-		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
-		// TODO: need get gameObject of the scene
-		
-		// GameObject* gameObject = ((GameObject*)Engine->moduleEditor->selectedGameObjects[0]);
-		// FocusCameraOnPosition(gameObject->GetComponent<C_Transform>()->GetPosition(), distance);
-	}
-
-	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT)) {
-
-
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LALT))
-	{
-		// position += rotation_matrix.WorldZ() * deltaY * App->GetDeltaTime() * mouse_speed_rotation;
-	}
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
-	{
-	}
 }
 
 void ModuleCamera::ZoomCamera(int zoom)

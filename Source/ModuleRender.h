@@ -24,9 +24,4 @@ class ModuleRender : public Module
 		bool initializeOpenGLviaSDL();
 
 		void* context;
-
-		Model* house = nullptr;
-
-	private:
-		unsigned int texture_id;
 };

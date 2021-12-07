@@ -22,7 +22,6 @@ ModuleEditor::~ModuleEditor()
 {
 }
 
-// 006 - Creation Context
 bool ModuleEditor::Init()
 {
     IMGUI_CHECKVERSION();
