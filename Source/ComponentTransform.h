@@ -24,7 +24,6 @@ class ComponentTransform :
         inline void SetLocalPosition(float3 newPosition) { SetLocalTransform(newPosition, local_rotation, local_scale); }
         inline void SetLocalTransform(float3 position, Quat rotation, float3 scale) { SetLocalTransform(float4x4::FromTRS(position, rotation, scale)); }
 
-
         inline float4x4 GetTransform() const { return transform; }
 
         inline float3 GetPosition() const { return transform.TranslatePart(); }

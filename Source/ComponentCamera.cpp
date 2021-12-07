@@ -15,8 +15,8 @@ ComponentCamera::ComponentCamera(GameObject* container): Component(Component::Ty
 	frustum.SetHorizontalFovAndAspectRatio(hFov * DEGTORAD, (float)DEFAULT_CAMERA_WIDTH / (float)DEFAULT_CAMERA_HEIGHT);
 
 	frustum.SetPos(float3(0, 0, 0));
-	frustum.SetFront(float3::unitZ);
-	frustum.SetUp(float3::unitY);
+	frustum.SetFront(float3x3::identity.WorldZ());
+	frustum.SetUp(float3x3::identity.WorldY());
 
 	frustum.GetPlanes(planes);
 }
@@ -65,7 +65,6 @@ float4x4 ComponentCamera::GetProjectionMatrix(const bool transpose) const
 	}
 	return proj;
 }
-
 
 void ComponentCamera::OnTransformUpdated()
 {

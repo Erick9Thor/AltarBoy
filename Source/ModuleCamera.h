@@ -12,7 +12,8 @@ class ModuleCamera : public Module
 	public:
 		ModuleCamera();
 		~ModuleCamera();
-		
+
+		bool Init() override;
 		update_status Update();
 
 		void SetAspectRatio(unsigned int screen_width, unsigned int screen_height);
