@@ -79,7 +79,7 @@ Component* GameObject::CreateComponent(Component::Type type)
 		break;
 		case(Component::Type::Camera):
 			new_component = new ComponentCamera(this);
-			new_component->OnTransformUpdated();
+			// new_component->OnTransformUpdated();
 		break;
 	}
 	if (new_component !=nullptr)
@@ -96,23 +96,4 @@ void GameObject::Update()
 	{
 		(*it)->OnUpdate();
 	}
-}
-
-void GameObject::OnTransformUpdated() {
-	UpdateAABB();
-}
-
-const AABB& GameObject::GetAABB() const
-{
-	return aabb;
-}
-
-const OBB& GameObject::GetOBB() const
-{
-	return obb;
-}
-
-void GameObject::UpdateAABB()
-{
-	//TODO: Find the way to convert model aabb
 }

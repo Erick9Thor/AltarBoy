@@ -24,8 +24,9 @@ class Component
 		const GameObject* GetGameObject() const;
 		GameObject* GetGameObject();
 
-		virtual void OnTransformUpdated() {};
 		virtual void OnUpdate() {};
+
+		virtual void OnTransformUpdated() {};
 
 	protected:
 		GameObject* game_object = nullptr;

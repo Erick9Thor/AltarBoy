@@ -14,7 +14,7 @@ ComponentCamera::ComponentCamera(GameObject* container): Component(Component::Ty
 
 	frustum.SetHorizontalFovAndAspectRatio(hFov * DEGTORAD, (float)DEFAULT_CAMERA_WIDTH / (float)DEFAULT_CAMERA_HEIGHT);
 
-	frustum.SetPos(float3(0, 0, 0));
+	frustum.SetPos(float3(0.0f, 8.0f, 10.0f));
 	frustum.SetFront(float3x3::identity.WorldZ());
 	frustum.SetUp(float3x3::identity.WorldY());
 

@@ -15,8 +15,8 @@ class GameObject
 
 	public:
 		GameObject();
-		GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 		GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
+		GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 		virtual ~GameObject();
 
 		void SetNewParent(GameObject* new_parent);
@@ -27,9 +27,6 @@ class GameObject
 		void Update();
 
 		void OnTransformUpdated();
-		const AABB& GetAABB() const;
-		const OBB& GetOBB() const;
-		void UpdateAABB();
 
 		inline ComponentTransform* GetTransform() { return transform; }
 
