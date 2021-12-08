@@ -16,7 +16,7 @@ Is just unity, you have the same controls of the camera, are provided to two mod
 
 Theare are diferents GUIs to show configurations of the current model.
 
-## Builded with 🛠️
+## Build with 🛠️
 
 _Menciona las herramientas que utilizaste para crear tu proyecto_
 
@@ -35,6 +35,6 @@ You can find out much more about how to use this project in our  https://github.
 
 You can also look at the list of all the [contributors](https://github.com/your/project/contributors).
 
-## Licence 📄
+## License 📄
 
 This project is under the License [LICENSE.md](LICENSE.md).
