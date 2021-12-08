@@ -29,8 +29,11 @@ bool ModuleCamera::Init()
 	main_camera = (ComponentCamera*)cameraGameObject->CreateComponent(Component::Camera);
 
 	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
-	cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
+	// cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
+	main_camera->LookAt(float3::zero);
 	cameraGameObject->Update();
+
+	main_camera->SetFOV(65.0f);
 
 	return true;
 }

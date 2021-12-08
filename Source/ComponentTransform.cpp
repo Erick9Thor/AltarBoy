@@ -6,8 +6,9 @@
 
 
 ComponentTransform::ComponentTransform(GameObject* new_GameObject, float3 position, Quat rotation, float3 scale) : Component(Component::Type::Transform, new_GameObject),
-local_position(position), local_rotation(rotation), local_scale(scale)
+	local_position(position), local_rotation(rotation), local_scale(scale)
 {
+	SetLocalTransform(position, rotation, scale);
 }
 
 ComponentTransform::ComponentTransform(GameObject* new_GameObject, const float4x4& transform) :
@@ -18,6 +19,26 @@ ComponentTransform::ComponentTransform(GameObject* new_GameObject, const float4x
 
 ComponentTransform::~ComponentTransform()
 {
+}
+
+void ComponentTransform::LookAt(float3 target, float3 worldUp)
+{
+	float3 direction = target - GetPosition();
+
+	float3 fwd = direction.Normalized();
+	float3 right = worldUp.Cross(fwd).Normalized();
+	float3 up = fwd.Cross(right).Normalized();
+
+	SetRotationAxis(right, up, fwd);
+}
+
+void ComponentTransform::SetRotationAxis(float3 x, float3 y, float3 z)
+{
+	transform.SetCol3(0, x);
+	transform.SetCol3(1, y);
+	transform.SetCol3(2, z);
+
+	SetGlobalTransform(transform);
 }
 
 void ComponentTransform::SetLocalTransform(float4x4 newTransform)
@@ -35,26 +56,6 @@ void ComponentTransform::SetGlobalTransform(float4x4 transform)
 		local_transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform().Transposed() * transform;
 	}
 	SetLocalTransform(local_transform);
-}
-
-void ComponentTransform::SetRotationAxis(float3 x, float3 y, float3 z)
-{
-	transform.SetCol3(0, x);
-	transform.SetCol3(1, y);
-	transform.SetCol3(2, z);
-
-	SetGlobalTransform(transform);
-}
-
-void ComponentTransform::LookAt(float3 target, float3 worldUp)
-{
-	float3 direction = target - GetPosition();
-
-	float3 fwd = direction.Normalized();
-	float3 right = worldUp.Cross(fwd).Normalized();
-	float3 up = fwd.Cross(right).Normalized();
-
-	SetRotationAxis(right, up, fwd);
 }
 
 void ComponentTransform::OnTransformUpdated()

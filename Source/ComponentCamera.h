@@ -12,6 +12,8 @@ class ComponentCamera :
         ComponentCamera(GameObject* conatiner);
         ~ComponentCamera();
 
+        void LookAt(const float3& position);
+
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
         void SetFOV(float fov);

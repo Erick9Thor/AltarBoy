@@ -91,12 +91,6 @@ Component* GameObject::CreateComponent(Component::Type type)
 
 void GameObject::Update()
 {
-	if (transform)
-	{
-		// TODO: UPDATE AABB
-		// OnTransformUpdated();
-	}
-
 	std::vector<Component*>::iterator it;
 	for (it = components.begin(); it != components.end(); ++it)
 	{

@@ -25,17 +25,25 @@ ComponentCamera::~ComponentCamera()
 {
 }
 
+void ComponentCamera::LookAt(const float3& position)
+{
+	float3 direction = position - frustum.Pos();
+
+	float3x3 m_look_on = float3x3::LookAt(frustum.Front(), direction.Normalized(), frustum.Up(), float3::unitY);
+
+	frustum.SetFront(m_look_on.MulDir(frustum.Front()).Normalized());
+	frustum.SetUp(m_look_on.MulDir(frustum.Up()).Normalized());
+}
+
 void ComponentCamera::SetNearPlane(float distance)
 {
-	if (distance > 0 && distance < frustum.FarPlaneDistance())
-		frustum.SetViewPlaneDistances(distance, frustum.FarPlaneDistance());
+	frustum.SetViewPlaneDistances(distance, frustum.FarPlaneDistance());
 	frustum.GetPlanes(planes);
 }
 
 void ComponentCamera::SetFarPlane(float distance)
 {
-	if (distance > 0 && distance > frustum.NearPlaneDistance())
-		frustum.SetViewPlaneDistances(frustum.NearPlaneDistance(), distance);
+	frustum.SetViewPlaneDistances(frustum.NearPlaneDistance(), distance);
 	frustum.GetPlanes(planes);
 }
 
