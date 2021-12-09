@@ -26,10 +26,6 @@ class GameObject
 
 		void Update();
 
-		void OnTransformUpdated();
-
-		inline ComponentTransform* GetTransform() { return transform; }
-
 		template<typename RetComponent>
 		const RetComponent* GetComponent() const
 		{
