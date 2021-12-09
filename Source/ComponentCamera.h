@@ -22,8 +22,6 @@ class ComponentCamera :
         void OnTransformUpdated() override;
 
         void SetResolution(float width, float height);
-
-        void ForceRotate(float pitch, float yaw);
         
         static inline Type GetType() { return Type::Camera; };
 

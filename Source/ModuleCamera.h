@@ -24,6 +24,10 @@ class ModuleCamera : public Module
 
 		// Camera actions
 		void ZoomCamera(int zoom);
+		void OrbitCamera(float motion_x, float motion_y);
+		void MoveCamera(float motion_x, float motion_y);
+		void FocusCameraOnTarget(const float3& target, float distance);
+		void RotationCamera(float motion_x, float motion_y);
 
 	private:
 		ComponentCamera* main_camera = nullptr;
