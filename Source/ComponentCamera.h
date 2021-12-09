@@ -12,8 +12,6 @@ class ComponentCamera :
         ComponentCamera(GameObject* conatiner);
         ~ComponentCamera();
 
-        void LookAt(const float3& position);
-
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
         void SetFOV(float fov);
@@ -24,6 +22,8 @@ class ComponentCamera :
         void OnTransformUpdated() override;
 
         void SetResolution(float width, float height);
+
+        void ForceRotate(float pitch, float yaw);
         
         static inline Type GetType() { return Type::Camera; };
 
@@ -31,7 +31,7 @@ class ComponentCamera :
         float3 reference_point = float3::zero;
 
     private:
-        float hFov = 0.0f;
+        float hFov;
         Frustum	frustum;
 };
 

@@ -95,5 +95,6 @@ void GameObject::Update()
 	for (it = components.begin(); it != components.end(); ++it)
 	{
 		(*it)->OnUpdate();
+		(*it)->OnTransformUpdated();
 	}
 }
