@@ -15,7 +15,7 @@ class ModuleEditor;
 class ModuleDebugDraw;
 class ModuleCamera;
 class ModuleTexture;
-class ModuleScene;
+class ModuleSceneManager;
 class ModuleProgram;
 class ModuleHardware;
 
@@ -51,7 +51,7 @@ class Application
 		ModuleDebugDraw* debug_draw = nullptr;
 		ModuleCamera* camera = nullptr;
 		ModuleTexture* texture = nullptr;
-		ModuleScene* scene = nullptr;
+		ModuleSceneManager* scene = nullptr;
 		ModuleProgram* program = nullptr;
 		ModuleHardware* hw = nullptr;
 

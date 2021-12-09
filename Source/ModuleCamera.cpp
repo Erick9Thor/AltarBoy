@@ -1,42 +1,40 @@
 #include "ModuleCamera.h"
+#include "GameObject.h"
 
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
-#include "ModuleScene.h"
+#include "ComponentTransform.h"
+#include "ComponentCamera.h"
+#include "ModuleSceneManager.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"
 
+#define MULT_CAM 15.0f
+#define MOUSE_SPEED 5.0f
+
 ModuleCamera::ModuleCamera()
 {
+	
 }
 
 ModuleCamera::~ModuleCamera()
 {
+
 }
 
-bool ModuleCamera::Init()
+bool ModuleCamera::Init() 
 {
-	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
-	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
+	GameObject* cameraGameObject = new GameObject();
+	main_camera = (ComponentCamera*)cameraGameObject->CreateComponent(Component::Camera);
 
-	auto screen_surface = App->window->getScreenSurface();
-	SetAspectRatio(screen_surface->w, screen_surface->h);
-
-	frustum.SetVerticalFovAndAspectRatio(vertical_fov, aspect_ratio);
-
-	position = float3(0.0f, 8.0f, 10.0f);
-	rotation_matrix = float3x3::FromEulerXYZ(DEGTORAD * -30.0f, DEGTORAD * 180.0f, 0.0f);
-
-	frustum.SetPos(position);
-	frustum.SetFront(rotation_matrix.WorldZ());
-	frustum.SetUp(rotation_matrix.WorldY());
-
-	RefreshFov();
-
+	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
+	cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
+	cameraGameObject->Update();
+	
 	return true;
 }
 
@@ -46,115 +44,34 @@ update_status ModuleCamera::Update()
 	return UPDATE_CONTINUE;
 }
 
-bool ModuleCamera::CleanUp()
-{
-	return false;
-}
-
-void ModuleCamera::DrawGui()
-{
-	ImGui::Text("Variables");
-	if (ImGui::DragFloat("Vertical FOV", &initial_vertical_fov, 1.0f, 10.0f, 160.0f, "%.2f")) {
-		if (aspect_ratio >= 1)
-			vertical_fov = DEGTORAD * initial_vertical_fov;
-		else
-			vertical_fov = math::Atan(math::Tan(DEGTORAD * initial_vertical_fov) / aspect_ratio);
-	}
-
-	ImGui::Text("Set position");
-	ImGui::DragFloat("position-X", &position.x, 1.0f, -25.0f, 25.0f, "%.2f");
-	ImGui::DragFloat("position-Y", &position.y, 1.0f, -25.0f, 25.0f, "%.2f");
-	ImGui::DragFloat("position-Z", &position.z, 1.0f, -25.0f, 25.0f, "%.2f");
-	ImGui::Separator();
-
-	UpdateCamera();
-}
-
 void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
 {
-	aspect_ratio = (float)screen_width / (float)screen_height;
-}
-
-void ModuleCamera::UpdateCamera()
-{
-	RefreshFov();
-
-	frustum.SetPos(position);
-    frustum.SetFront(rotation_matrix.WorldZ());
-    frustum.SetUp(rotation_matrix.WorldY());
-}
-
-float4x4 ModuleCamera::GetGLView() const
-{
-    return float4x4(frustum.ViewMatrix()).Transposed();
-}
-
-float4x4 ModuleCamera::GetView() const
-{
-    return float4x4(frustum.ViewMatrix());
-}
-
-float4x4 ModuleCamera::GetGLProjection() const
-{
-    return frustum.ProjectionMatrix().Transposed();
-}
-
-float4x4 ModuleCamera::GetProjection() const
-{
-    return frustum.ProjectionMatrix();
+	main_camera->SetResolution(screen_width, screen_height);
 }
 
 void ModuleCamera::CheckCameraControl()
 {
+
+	// Keyboard for WASD movement -------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
 		int deltaX, deltaY;
 		App->input->GetMouseMotion(deltaX, deltaY);
 
-		if (App->input->GetKey(SDL_SCANCODE_LALT))
-		{
-			position += rotation_matrix.WorldZ() * deltaY * App->GetDeltaTime() * mouse_speed_rotation;
-		}
-		else {
-			static float delta_time = App->GetDeltaTime();
+		float deltaPitch = deltaY * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD;
+		float deltaYaw = -deltaX * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD;
 
-			rotation_matrix = float3x3::RotateAxisAngle(float3::unitY, -deltaX * delta_time * mouse_speed_rotation * DEGTORAD) *
-				rotation_matrix * float3x3::RotateAxisAngle(float3::unitX, deltaY * delta_time * mouse_speed_rotation * DEGTORAD);
-
-			float multiplier = 1.0f;
-			if (App->input->GetKey(SDL_SCANCODE_LSHIFT))
-				multiplier = 3.0f;
-
-			if (App->input->GetKey(SDL_SCANCODE_W))
-				position += rotation_matrix.WorldZ() * delta_time * camera_speed * multiplier;
-			if (App->input->GetKey(SDL_SCANCODE_S))
-				position -= rotation_matrix.WorldZ() * delta_time * camera_speed * multiplier;
-			if (App->input->GetKey(SDL_SCANCODE_A))
-				position += rotation_matrix.WorldX() * delta_time * camera_speed * multiplier;
-			if (App->input->GetKey(SDL_SCANCODE_D))
-				position -= rotation_matrix.WorldX() * delta_time * camera_speed * multiplier;
-			if (App->input->GetKey(SDL_SCANCODE_Q))
-				position += rotation_matrix.WorldY() * delta_time * camera_speed * multiplier;
-			if (App->input->GetKey(SDL_SCANCODE_E))
-				position -= rotation_matrix.WorldY() * delta_time * camera_speed * multiplier;
-		}
+		RotationCamera(deltaPitch, deltaYaw);
+		MoveCamera(deltaX, deltaY);
 	}
-	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
-	{
-		int deltaX, deltaY;
-		App->input->GetMouseMotion(deltaX, deltaY);
 
-		position += rotation_matrix.WorldX() * deltaX * App->GetDeltaTime() * mouse_speed_movement +
-			rotation_matrix.WorldY() * deltaY * App->GetDeltaTime() * mouse_speed_movement;
-
-	}
+	// Mouse ----------------------------
 	if (App->input->MouseWheel())
 	{
 		int wheelX, wheelY;
 		App->input->GetMouseWheel(wheelX, wheelY);
 
-		position += rotation_matrix.WorldZ() * wheelY * App->GetDeltaTime() * camera_speed;
-
+		ZoomCamera(wheelY);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
 		int deltaX, deltaY;
@@ -162,40 +79,90 @@ void ModuleCamera::CheckCameraControl()
 
 		OrbitCamera(deltaX * 1.5f, deltaY * 1.5f);
 	}
-
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
-		FocusOnModel(App->scene->scene_model);
+		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
+		// Find the way to get the model gameObject
+		// FocusCameraOnPosition(gameObject->GetComponent<C_Transform>()->GetPosition(), distance);
 	}
-	
-	UpdateCamera();
 }
 
-void ModuleCamera::RefreshFov()
+void ModuleCamera::ZoomCamera(int zoom)
 {
-	frustum.SetVerticalFovAndAspectRatio(vertical_fov, aspect_ratio);
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+	float distance = main_camera->reference_point.Distance(transform->GetPosition());
+	vec newPos = transform->GetPosition() + transform->GetFwd() * zoom * distance * 0.05f;
+
+	transform->SetPosition(newPos);
+	main_camera->GetGameObject()->Update();
 }
 
 void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 {
-	float3 vector = position - referencePoint;
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+	float3 vector = transform->GetPosition() - main_camera->reference_point;
 
-	Quat quat_y(rotation_matrix.WorldY(), motion_x * 0.003f);
-	Quat quat_x(rotation_matrix.WorldX().Neg(), motion_y * 0.003f);
+	vector = Quat(transform->GetUp(), motion_x * 0.003f).Transform(vector);
+	vector = Quat(transform->GetRight().Neg(), motion_y * 0.003f).Transform(vector);
 
-	vector = quat_x.Transform(vector);
-	vector = quat_y.Transform(vector);
-	
-	position = vector + referencePoint;
+	transform->SetPosition(vector + main_camera->reference_point);
 
-	float3 front = (float3(referencePoint.x, referencePoint.y, referencePoint.z) - position).Normalized();
-	float3 right = Cross(float3::unitY, front).Normalized();
-	float3 up = Cross(front, right).Normalized();
-
-	rotation_matrix = float3x3(right, up, front);
+	main_camera->GetGameObject()->GetComponent<ComponentTransform>()->LookAt(main_camera->reference_point);
+	main_camera->GetGameObject()->Update();
 }
 
-void ModuleCamera::FocusOnModel(Model* model)
+void ModuleCamera::MoveCamera(float motion_x, float motion_y) {
+	static float delta_time = App->GetDeltaTime();
+
+	float multiplier = 1.0f;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT)) multiplier *= 5.0f;
+	if (App->input->GetKey(SDL_SCANCODE_LALT)) multiplier *= 0.5f;
+
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+	float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
+
+	if (App->input->GetKey(SDL_SCANCODE_W))
+		deltaFwd += transform->GetFwd() * delta_time * MULT_CAM * multiplier;
+	if (App->input->GetKey(SDL_SCANCODE_S))
+		deltaFwd -= transform->GetFwd() * delta_time * MULT_CAM * multiplier;
+	if (App->input->GetKey(SDL_SCANCODE_A))
+		deltaRight += transform->GetRight() * delta_time * MULT_CAM * multiplier;
+	if (App->input->GetKey(SDL_SCANCODE_D))
+		deltaRight -= transform->GetRight() * delta_time * MULT_CAM * multiplier;
+	if (App->input->GetKey(SDL_SCANCODE_Q))
+		deltaUp += float3::unitY * delta_time * MULT_CAM * multiplier;
+	if (App->input->GetKey(SDL_SCANCODE_E))
+		deltaUp -= float3::unitY * delta_time * MULT_CAM * multiplier;
+
+	transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
+	main_camera->GetGameObject()->Update();
+	main_camera->reference_point += deltaRight + deltaUp;
+}
+
+void ModuleCamera::FocusCameraOnTarget(const float3& target, float distance)
 {
-	position = model->GetCenter() - rotation_matrix.WorldZ().Normalized() * model->GetDiameter().Length();
-	UpdateCamera();
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+	float3 v = transform->GetFwd().Neg();
+
+	transform->SetPosition(target + (v * distance));
+	main_camera->GetGameObject()->Update();
+
+	main_camera->reference_point = target;
+}
+
+void ModuleCamera::RotationCamera(float motion_x, float motion_y) {
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+
+	Quat yaw_quat = Quat::RotateY(motion_y);
+	Quat pitch_quat = Quat::RotateAxisAngle(transform->GetRight(), motion_x);
+
+	float3 newRight = yaw_quat * transform->GetRight();
+
+	float3 newUp = pitch_quat * yaw_quat * transform->GetUp();
+	float3 newFwd = pitch_quat * yaw_quat * transform->GetFwd();
+
+	transform->SetRotationAxis(newRight, newUp, newFwd);
+	main_camera->GetGameObject()->Update();
+
+	float distancetoReference = (main_camera->reference_point - transform->GetPosition()).Length();
+	main_camera->reference_point = transform->GetPosition() + newFwd * distancetoReference;
 }

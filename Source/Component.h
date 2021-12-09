@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h";
+class GameObject;
 
 class Component
 {
@@ -12,14 +12,24 @@ class Component
 			Mesh,
 			Texture,
 			Camera,
+			Unknown
 		};
 
-	Component(Type type, GameObject*);
-	virtual ~Component();
+		Component(Type type, GameObject* container);
+		virtual ~Component();
 
-	GameObject* gameObject = nullptr;
+		inline Type GetType() const { return type; };
+
+		void SetGameObject(GameObject* container) { game_object = container; }
+		const GameObject* GetGameObject() const;
+		GameObject* GetGameObject();
+
+		virtual void OnUpdate() {};
+
+		virtual void OnTransformUpdated() {};
 
 	protected:
+		GameObject* game_object = nullptr;
 		bool active = true;
 		Type type = None;
 };

@@ -9,7 +9,7 @@
 #include "ModuleTexture.h"
 #include "ModuleProgram.h"
 #include "ModuleHardware.h"
-#include "ModuleScene.h"
+#include "ModuleSceneManager.h"
 #include "ModuleDebugDraw.h"
 
 using namespace std;
@@ -22,7 +22,7 @@ Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_m
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(hw = new ModuleHardware());
-	modules.push_back(scene = new ModuleScene());
+	modules.push_back(scene = new ModuleSceneManager());
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(editor = new ModuleEditor());

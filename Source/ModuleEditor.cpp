@@ -6,7 +6,7 @@
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
 #include "ModuleHardware.h"
-#include "ModuleScene.h"
+#include "ModuleSceneManager.h"
 #include "Model.h"
 #include "SDL.h"
 
@@ -22,7 +22,6 @@ ModuleEditor::~ModuleEditor()
 {
 }
 
-// 006 - Creation Context
 bool ModuleEditor::Init()
 {
     IMGUI_CHECKVERSION();
