@@ -10,6 +10,8 @@
 
 #include "ImGuiComponents/AppLog.h"
 
+#include "Leaks.h"
+
 enum main_states
 {
 	MAIN_CREATION,  

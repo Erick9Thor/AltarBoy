@@ -15,6 +15,8 @@
 #include "il.h"
 #include "ilu.h"
 
+#include "Leaks.h"
+
 void __stdcall DebugMessageGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
 	if (id == 131185 || id == 131204) return;

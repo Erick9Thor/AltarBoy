@@ -11,6 +11,7 @@
 #include "assimp/postprocess.h"
 #include "MathGeoLib.h"
 
+#include "Leaks.h"
 
 Mesh::Mesh(const aiMesh* mesh): mesh(mesh), texture_index(mesh->mMaterialIndex)
 {

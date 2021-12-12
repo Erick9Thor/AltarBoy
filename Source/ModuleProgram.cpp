@@ -4,6 +4,8 @@
 
 #include "MathGeoLib.h"
 
+#include "Leaks.h"
+
 ModuleProgram::ModuleProgram()
 {
 

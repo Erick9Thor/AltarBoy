@@ -4,6 +4,7 @@
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
+#include "Leaks.h"
 
 GameObject::GameObject()
 {

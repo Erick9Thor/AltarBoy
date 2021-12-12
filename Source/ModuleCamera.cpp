@@ -13,6 +13,8 @@
 #include "glew.h"
 #include "Math/MathConstants.h"
 
+#include "Leaks.h"
+
 #define MULT_CAM 15.0f
 #define MOUSE_SPEED 5.0f
 
@@ -46,7 +48,7 @@ update_status ModuleCamera::Update()
 
 void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
 {
-	main_camera->SetResolution(screen_width, screen_height);
+	main_camera->SetResolution((float) screen_width, (float) screen_height);
 }
 
 void ModuleCamera::CheckCameraControl()
@@ -62,7 +64,7 @@ void ModuleCamera::CheckCameraControl()
 		float deltaYaw = -deltaX * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD;
 
 		RotationCamera(deltaPitch, deltaYaw);
-		MoveCamera(deltaX, deltaY);
+		MoveCamera((float) deltaX, (float) deltaY);
 	}
 
 	// Mouse ----------------------------

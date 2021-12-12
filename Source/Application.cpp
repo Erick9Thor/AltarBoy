@@ -12,6 +12,8 @@
 #include "ModuleSceneManager.h"
 #include "ModuleDebugDraw.h"
 
+#include "Leaks.h"
+
 using namespace std;
 
 Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_ms(1000 / 60)
@@ -22,7 +24,7 @@ Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_m
 	modules.push_back(texture = new ModuleTexture());
 	modules.push_back(renderer = new ModuleRender());
 	modules.push_back(hw = new ModuleHardware());
-	modules.push_back(scene = new ModuleSceneManager());
+	modules.push_back(scene_manager = new ModuleSceneManager());
 	modules.push_back(program = new ModuleProgram());
 	modules.push_back(debug_draw = new ModuleDebugDraw());
 	modules.push_back(editor = new ModuleEditor());

@@ -10,6 +10,8 @@
 
 #include "imgui_impl_sdl.h"
 
+#include "Leaks.h"
+
 ModuleInput::ModuleInput()
 {
     keyboard = SDL_GetKeyboardState(NULL);
@@ -78,7 +80,7 @@ update_status ModuleInput::PreUpdate()
             {
                 LOG("[M_INPUT] Dropped file: %s", event.drop.file);
 
-                App->scene->LoadModel(event.drop.file);
+                App->scene_manager->LoadModel(event.drop.file);
                 
                 SDL_free(event.drop.file);
                 break;

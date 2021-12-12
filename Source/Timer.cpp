@@ -1,5 +1,7 @@
 #include "Timer.h"
 
+#include "Leaks.h"
+
 Timer::Timer()
 {
 	Start();

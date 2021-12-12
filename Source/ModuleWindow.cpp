@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 
+#include "Leaks.h"
+
 ModuleWindow::ModuleWindow()
 {
 }

@@ -10,6 +10,8 @@
 #include "Model.h"
 #include "SDL.h"
 
+#include "GameObject.h"
+
 #include "ImGuiComponents/AppLog.h"
 
 #include "glew.h"
@@ -17,6 +19,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+#include "Leaks.h"
 
 ModuleEditor::~ModuleEditor()
 {
@@ -151,6 +154,11 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::showMenu() 
 { 
+
+    if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
+        DrawHierarchyTree(App->scene_manager->GetRoot());
+    }
+
     if (show_camera_window)
     {
         if (ImGui::Begin("Camera", &show_camera_window))
@@ -173,7 +181,7 @@ void ModuleEditor::showMenu()
     {
         if (ImGui::Begin("Model", &show_model_window))
         {
-            App->scene->DrawGui();
+            App->scene_manager->DrawGui();
         }
         ImGui::End();
     }
@@ -187,6 +195,29 @@ void ModuleEditor::showMenu()
         }
         ImGui::End();
     }
+}
+
+void ModuleEditor::DrawHierarchyTree(GameObject* root)
+{
+    if (ImGui::TreeNodeEx("GameObjecs", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it)
+            RecursiveDraw(*it);
+
+        ImGui::TreePop();
+    }
+}
+
+void ModuleEditor::RecursiveDraw(GameObject* go)
+{
+    unsigned int flags = 0;
+
+    // ADD flags for go
+    if (go->childs.size() == 0)
+        flags |= ImGuiTreeNodeFlags_Leaf;
+    
+    
+   
 }
 
 void ModuleEditor::showFPSGraph() {

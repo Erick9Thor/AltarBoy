@@ -8,6 +8,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
+#include "Leaks.h"
+
 Texture::Texture(const char* file_data, const char* path)
 {
 	LOG("[Texture] Loading texture");

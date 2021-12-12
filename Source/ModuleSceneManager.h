@@ -19,6 +19,9 @@ class ModuleSceneManager :
 
 		void LoadModel(const char* _fileName);
 
+		GameObject* GetRoot();
+		const GameObject* GetRoot() const;
+
 		Model* scene_model;
 
 	private:

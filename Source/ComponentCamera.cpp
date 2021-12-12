@@ -4,6 +4,8 @@
 
 #include "ComponentTransform.h"
 
+#include "Leaks.h"
+
 #define DEFAULT_CAMERA_WIDTH 1920
 #define DEFAULT_CAMERA_HEIGHT 1080
 

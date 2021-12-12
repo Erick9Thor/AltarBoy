@@ -1,5 +1,7 @@
 #include "Component.h"
 
+#include "Leaks.h"
+
 Component::Component(Type type, GameObject* container): type(type), game_object(container)
 {
 }

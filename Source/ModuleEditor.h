@@ -6,6 +6,7 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
+#include "GameObject.h"
 
 #include "ImGuiComponents/AppLog.h"
 
@@ -24,6 +25,9 @@ public:
 	void Draw();
 
 	void showMenu();
+
+	void DrawHierarchyTree(GameObject* root);
+	void RecursiveDraw(GameObject* go);
 	
 	void showFPSGraph();
 	void AddFPS(float fps, float ms);
@@ -34,6 +38,7 @@ private:
 	std::vector<float> ms_log;
 	std::vector<float> fps_log;
 
+	bool show_hirarchy = true;
 	bool show_model_window = true;
 	bool show_abaout = false;
 	bool show_camera_window = false;

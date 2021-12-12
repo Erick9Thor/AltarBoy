@@ -12,6 +12,8 @@
 #include "il.h"
 #include "ilu.h"
 
+#include "Leaks.h"
+
 Model::Model(const string& model_path)
 {
 	Assimp::Importer importer;

@@ -3,6 +3,8 @@
 
 #include "Model.h"
 
+#include "Leaks.h"
+
 ModuleSceneManager::ModuleSceneManager()
 {
 	main_scene = new Scene();
@@ -26,4 +28,14 @@ void ModuleSceneManager::LoadModel(const char* _fileName)
 	// scene_model = new Model(_fileName);
 
 	// TODO: Need to refactor model class to convert a game object
+}
+
+GameObject* ModuleSceneManager::GetRoot()
+{
+	return main_scene->root;
+}
+
+const GameObject* ModuleSceneManager::GetRoot() const
+{
+	return main_scene->root;
 }

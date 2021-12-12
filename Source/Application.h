@@ -51,7 +51,7 @@ class Application
 		ModuleDebugDraw* debug_draw = nullptr;
 		ModuleCamera* camera = nullptr;
 		ModuleTexture* texture = nullptr;
-		ModuleSceneManager* scene = nullptr;
+		ModuleSceneManager* scene_manager = nullptr;
 		ModuleProgram* program = nullptr;
 		ModuleHardware* hw = nullptr;
 
