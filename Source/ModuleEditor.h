@@ -39,7 +39,7 @@ private:
 	std::vector<float> fps_log;
 
 	bool show_hirarchy = true;
-	bool show_model_window = true;
+	bool show_inspector_window = true;
 	bool show_abaout = false;
 	bool show_camera_window = false;
 	bool show_fps_counter = false;

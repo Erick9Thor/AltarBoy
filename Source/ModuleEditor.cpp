@@ -177,9 +177,9 @@ void ModuleEditor::showMenu()
         ImGui::End();
     }
 
-    if (show_model_window)
+    if (show_inspector_window)
     {
-        if (ImGui::Begin("Model", &show_model_window))
+        if (ImGui::Begin("Inspector", &show_inspector_window))
         {
             App->scene_manager->DrawGui();
         }
