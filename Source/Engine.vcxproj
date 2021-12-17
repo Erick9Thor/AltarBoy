@@ -266,7 +266,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Leaks.h" />
     <ClInclude Include="ModuleSceneManager.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />

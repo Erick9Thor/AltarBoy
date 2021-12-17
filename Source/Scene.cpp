@@ -4,8 +4,6 @@
 #include "ComponentCamera.h"
 #include "Component.h"
 
-#include "Leaks.h"
-
 Scene::Scene()
 {
 	root = new GameObject(nullptr, float4x4::identity, "Root");

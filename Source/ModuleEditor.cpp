@@ -19,8 +19,6 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-#include "Leaks.h"
-
 ModuleEditor::~ModuleEditor()
 {
 }
@@ -155,9 +153,9 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::showMenu() 
 { 
 
-    if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
+    /*if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
         DrawHierarchyTree(App->scene_manager->GetRoot());
-    }
+    }*/
 
     if (show_camera_window)
     {

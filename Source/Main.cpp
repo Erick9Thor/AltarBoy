@@ -10,7 +10,19 @@
 
 #include "ImGuiComponents/AppLog.h"
 
-#include "Leaks.h"
+#ifdef _DEBUG
+#define DEBUG_NEW new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DEBUG_NEW
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+#endif
+
+void DumpLeaks(void)
+{
+	_CrtDumpMemoryLeaks(); // Show leaks with file and line where allocation was made
+}
+
 
 enum main_states
 {
@@ -26,6 +38,7 @@ AppLog* Logger = NULL;
 
 int main(int argc, char ** argv)
 {
+	atexit(DumpLeaks);
 	Logger = new AppLog();
 
 	int main_return = EXIT_FAILURE;

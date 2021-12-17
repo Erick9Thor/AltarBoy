@@ -5,8 +5,6 @@
 #include "il.h"
 #include "ilu.h"
 
-#include "Leaks.h"
-
 ModuleTexture::ModuleTexture()
 {
 }

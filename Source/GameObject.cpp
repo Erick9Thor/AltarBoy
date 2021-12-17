@@ -4,12 +4,9 @@
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
-#include "Leaks.h"
-
 GameObject::GameObject()
 {
 	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
-
 }
 
 GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name) : name(name)

@@ -12,8 +12,6 @@
 #include "ModuleSceneManager.h"
 #include "ModuleDebugDraw.h"
 
-#include "Leaks.h"
-
 using namespace std;
 
 Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_ms(1000 / 60)

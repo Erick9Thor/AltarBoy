@@ -3,8 +3,6 @@
 
 #include "Model.h"
 
-#include "Leaks.h"
-
 ModuleSceneManager::ModuleSceneManager()
 {
 	main_scene = new Scene();

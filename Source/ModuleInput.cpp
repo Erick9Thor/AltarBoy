@@ -10,8 +10,6 @@
 
 #include "imgui_impl_sdl.h"
 
-#include "Leaks.h"
-
 ModuleInput::ModuleInput()
 {
     keyboard = SDL_GetKeyboardState(NULL);

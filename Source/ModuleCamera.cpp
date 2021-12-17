@@ -13,10 +13,8 @@
 #include "glew.h"
 #include "Math/MathConstants.h"
 
-#include "Leaks.h"
-
 #define MULT_CAM 15.0f
-#define MOUSE_SPEED 5.0f
+#define MOUSE_SPEED 10.0f
 
 ModuleCamera::ModuleCamera()
 {
@@ -57,14 +55,12 @@ void ModuleCamera::CheckCameraControl()
 	// Keyboard for WASD movement -------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
-		int deltaX, deltaY;
-		App->input->GetMouseMotion(deltaX, deltaY);
+		int mouse_x, mouse_y;
+		App->input->GetMouseMotion(mouse_x, mouse_y);
 
-		float deltaPitch = deltaY * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD;
-		float deltaYaw = -deltaX * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD;
-
-		RotationCamera(deltaPitch, deltaYaw);
-		MoveCamera((float) deltaX, (float) deltaY);
+		RotationCamera(-(float)mouse_x * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD,
+			(float)mouse_y * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD);
+		MoveCamera((float)mouse_y, (float)mouse_y);
 	}
 
 	// Mouse ----------------------------
@@ -154,11 +150,11 @@ void ModuleCamera::FocusCameraOnTarget(const float3& target, float distance)
 void ModuleCamera::RotationCamera(float motion_x, float motion_y) {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 
-	Quat yaw_quat = Quat::RotateY(motion_y);
-	Quat pitch_quat = Quat::RotateAxisAngle(transform->GetRight(), motion_x);
-
+	
+	Quat yaw_quat = Quat::RotateY(motion_x);
 	float3 newRight = yaw_quat * transform->GetRight();
 
+	Quat pitch_quat = Quat::RotateAxisAngle(newRight, motion_y);
 	float3 newUp = pitch_quat * yaw_quat * transform->GetUp();
 	float3 newFwd = pitch_quat * yaw_quat * transform->GetFwd();
 
