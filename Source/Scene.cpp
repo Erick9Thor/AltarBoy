@@ -11,6 +11,8 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	delete root;
+	delete main_camera;
 }
 
 void Scene::AddGameObject(GameObject* newGameObject, GameObject* parent)

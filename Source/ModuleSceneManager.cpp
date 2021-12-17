@@ -10,6 +10,7 @@ ModuleSceneManager::ModuleSceneManager()
 
 ModuleSceneManager::~ModuleSceneManager()
 {
+	delete main_scene;
 }
 
 update_status ModuleSceneManager::Update()
