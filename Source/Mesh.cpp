@@ -107,8 +107,8 @@ void Mesh::Draw(float4x4& model, const std::vector<Texture>& model_textures)
 
 	App->program->Activate();
 	App->program->BindUniformFloat4x4("model", &model[0][0]);
-	App->program->BindUniformFloat4x4("view", &App->camera->getMainCamera()->GetViewMatrix()[0][0]);
-	App->program->BindUniformFloat4x4("proj", &App->camera->getMainCamera()->GetProjectionMatrix()[0][0]);
+	App->program->BindUniformFloat4x4("view", &App->camera->getViewPortCamera()->GetViewMatrix()[0][0]);
+	App->program->BindUniformFloat4x4("proj", &App->camera->getViewPortCamera()->GetProjectionMatrix()[0][0]);
 
 	App->texture->Bind(model_textures[texture_index].id);
 	glBindVertexArray(vao);
