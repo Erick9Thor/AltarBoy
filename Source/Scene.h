@@ -35,6 +35,7 @@ class Scene
 		void Draw();
 
 	private:
+		void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent);
 		bool LoadTextures(const aiScene* scene, const std::string& model_path);
 		bool LoadTexture(const aiMaterial* texture, const std::string& model_path);		
 

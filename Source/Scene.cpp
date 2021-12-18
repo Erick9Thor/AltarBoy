@@ -46,9 +46,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	auto model_path = path.substr(0, path.find_last_of("/\\") + 1);
 	auto file_name = path.substr(path.find_last_of("/\\") + 1);
 	auto name = file_name.substr(0, std::string::size_type(file_name.find_last_of('.')));
-
-	GameObject* model = CreateNewGameObject("TestModel", root);
-	
+	GameObject* model = nullptr;
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
 	if (scene)
@@ -56,20 +54,8 @@ GameObject* Scene::LoadFBX(const std::string& path)
 		bool success;
 		success = LoadTextures(scene, model_path);
 		if (success) {
-			for (unsigned i = 0; i < scene->mNumMeshes; i++)
-			{
-				// TODO: Detect and manage failures here				
-				aiMesh* mesh = scene->mMeshes[i];
-				GameObject* model_part = CreateNewGameObject("TestModelPart", model);
-				model_part->CreateComponent(Component::Type::Mesh);
-				model_part->GetComponent<ComponentMesh>()->Load(mesh);
-				model_part->CreateComponent(Component::Type::Material);
-				model_part->GetComponent<ComponentMaterial>()->SetTexture(textures[mesh->mMaterialIndex]);
-				//TODO: Set based on nodes later on
-				//TODO: Not load repeated textures and share their id
-				//model_part->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 0, 0));
-				LOG("Loaded mesh %d", i);
-			}
+			model = CreateNewGameObject("TestModel", root);
+			LoadNode(scene, scene->mRootNode, model);
 		}
 		else {
 			LOG("Could not load model %s",file_name.c_str())
@@ -83,6 +69,26 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	importer.FreeScene();	
 
 	return model;
+}
+
+void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent)
+{
+	GameObject* node_object = CreateNewGameObject("TestModelNode", parent);
+
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	{
+		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+		GameObject* model_part = CreateNewGameObject("TestModelPart", node_object);
+		model_part->CreateComponent(Component::Type::Mesh);
+		model_part->GetComponent<ComponentMesh>()->Load(mesh);
+		model_part->CreateComponent(Component::Type::Material);
+		model_part->GetComponent<ComponentMaterial>()->SetTexture(textures[mesh->mMaterialIndex]);
+	}
+	// then do the same for each of its children
+	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	{
+		LoadNode(scene, node->mChildren[i], node_object);
+	}
 }
 
 bool Scene::LoadTextures(const aiScene* scene, const std::string& model_path)
