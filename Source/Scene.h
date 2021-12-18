@@ -15,7 +15,7 @@ class Scene
 		Scene();
 		~Scene();
 
-		void AddGameObject(GameObject* newGameObject, GameObject* parent = nullptr);
+		void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
 		GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 
 		GameObject* CreateCamera(); 
@@ -27,7 +27,7 @@ class Scene
 	private:
 
 		void Update();
-		void DrawScene();
+		void Draw();
 
 		ModuleSceneManager* manager_owner = nullptr;
 

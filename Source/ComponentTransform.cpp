@@ -73,8 +73,6 @@ void ComponentTransform::SetGlobalTransform(float4x4 transform)
 	}
 }
 
-
-
 void ComponentTransform::OnTransformUpdated()
 {
 }

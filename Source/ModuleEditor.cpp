@@ -32,7 +32,7 @@ bool ModuleEditor::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->context);
+    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
     ImGui_ImplOpenGL3_Init();
 
     Logger->setShowConsole(!Logger->getShowConsole());
@@ -133,7 +133,7 @@ void ModuleEditor::Draw()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->context);
+    SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
 }
 
 bool ModuleEditor::CleanUp()

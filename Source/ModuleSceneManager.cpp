@@ -16,7 +16,7 @@ ModuleSceneManager::~ModuleSceneManager()
 update_status ModuleSceneManager::Update(const float delta)
 {
 	main_scene->Update();
-	main_scene->DrawScene();
+	main_scene->Draw();
 
 	return UPDATE_CONTINUE;
 }

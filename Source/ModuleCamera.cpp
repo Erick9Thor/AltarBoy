@@ -57,19 +57,19 @@ void ModuleCamera::Controller(const float delta)
 		int moved_x, moved_y;
 		App->input->GetMouseDelta(moved_x, moved_y);
 
-		RotationCamera(-(float)moved_x * delta * rot_speed, (float)moved_y * delta * rot_speed);
+		Rotate(-(float)moved_x * delta * rot_speed, (float)moved_y * delta * rot_speed);
 		MovementController(delta);
 	}
 
 	// Mouse ----------------------------
 	int scrolled_y = App->input->GetScrollDelta();
 	if (scrolled_y != 0)
-		ZoomCamera(zoom_speed * -scrolled_y);
+		Zoom(zoom_speed * -scrolled_y);
 
 	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
 		int moved_x, moved_y;
 		App->input->GetMouseDelta(moved_x, moved_y);
-		OrbitCamera(-rot_speed * (float)moved_y * delta, -rot_speed * (float)moved_x * delta);
+		Orbit(-rot_speed * (float)moved_y * delta, -rot_speed * (float)moved_x * delta);
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
@@ -79,7 +79,7 @@ void ModuleCamera::Controller(const float delta)
 	}
 }
 
-void ModuleCamera::ZoomCamera(int zoom)
+void ModuleCamera::Zoom(int zoom)
 {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float distance = main_camera->reference_point.Distance(transform->GetPosition());
@@ -89,7 +89,7 @@ void ModuleCamera::ZoomCamera(int zoom)
 	main_camera->GetGameObject()->Update();
 }
 
-void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
+void ModuleCamera::Orbit(float motion_x, float motion_y)
 {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float3 vector = transform->GetPosition() - main_camera->reference_point;
@@ -133,7 +133,7 @@ void ModuleCamera::MovementController(const float delta) {
 	main_camera->reference_point += deltaRight + deltaUp;
 }
 
-void ModuleCamera::FocusCameraOnTarget(const float3& target, float distance)
+void ModuleCamera::LookAt(const float3& target, float distance)
 {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float3 v = transform->GetFwd().Neg();
@@ -144,7 +144,7 @@ void ModuleCamera::FocusCameraOnTarget(const float3& target, float distance)
 	main_camera->reference_point = target;
 }
 
-void ModuleCamera::RotationCamera(float motion_x, float motion_y) {
+void ModuleCamera::Rotate(float motion_x, float motion_y) {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 
 	
