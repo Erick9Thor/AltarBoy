@@ -20,7 +20,7 @@ class ModuleCamera : public Module
 
 		void CheckCameraControl();
 
-		ComponentCamera* getMainCamera() { return main_camera; }
+		ComponentCamera* getViewPortCamera() { return main_camera; }
 
 		// Camera actions
 		void ZoomCamera(int zoom);

@@ -25,11 +25,14 @@ class ComponentCamera :
         
         static inline Type GetType() { return Type::Camera; };
 
+        inline unsigned int GetRenderTarget() const { return renderTexture; }
+
         Plane planes[6];
         float3 reference_point = float3::zero;
 
     private:
         float hFov;
         Frustum	frustum;
+        unsigned int renderTexture = 0;
 };
 

@@ -102,8 +102,8 @@ void Mesh::Draw(const std::vector<Texture*>& model_textures, float4x4& model)
 
 	glUseProgram(program_id);
 	glUniformMatrix4fv(glGetUniformLocation(program_id, "model"), 1, GL_TRUE, &model[0][0]);
-	glUniformMatrix4fv(glGetUniformLocation(program_id, "view"), 1, GL_FALSE, *App->camera->getMainCamera()->GetProjectionMatrix().v);
-	glUniformMatrix4fv(glGetUniformLocation(program_id, "proj"), 1, GL_FALSE, *App->camera->getMainCamera()->GetViewMatrix().v);
+	glUniformMatrix4fv(glGetUniformLocation(program_id, "view"), 1, GL_FALSE, *App->camera->getViewPortCamera()->GetProjectionMatrix().v);
+	glUniformMatrix4fv(glGetUniformLocation(program_id, "proj"), 1, GL_FALSE, *App->camera->getViewPortCamera()->GetViewMatrix().v);
 
 	glEnable(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0);

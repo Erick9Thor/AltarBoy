@@ -11,6 +11,8 @@
 #include "SDL.h"
 
 #include "GameObject.h"
+#include "Scene.h"
+#include "ComponentCamera.h"
 
 #include "ImGuiComponents/AppLog.h"
 
@@ -127,7 +129,8 @@ update_status ModuleEditor::PreUpdate()
 update_status ModuleEditor::Update()
 {
     showMenu();
-    DrawViewport();
+    // TODO: ADD frame buffer to component camera.
+    // DrawViewport();
     Draw();
     return UPDATE_CONTINUE;
 }
@@ -277,4 +280,22 @@ void ModuleEditor::showAbaoutInfo()
 
 void ModuleEditor::DrawViewport()
 {
+    ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar;
+    if (!ImGui::Begin("Scene", 0, flags))
+    {
+        ImGui::End();
+        ImGui::PopStyleVar();
+        return;
+    }
+    ImGui::PopStyleVar();
+
+    DrawScene();
+
+    ImGui::End();
+}
+
+void ModuleEditor::DrawScene()
+{
+    // const ImVec2 newViewportPanelSize = ImGui::GetContentRegionAvail();
+    // ImGui::Image((ImTextureID)App->camera->getViewPortCamera()->GetRenderTarget(), ImVec2{ newViewportPanelSize.x, newViewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 }

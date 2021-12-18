@@ -23,6 +23,7 @@ public:
 	bool CleanUp();
 
 	void DrawViewport();
+	void DrawScene();
 
 	void Draw();
 

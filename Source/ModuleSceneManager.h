@@ -24,6 +24,10 @@ class ModuleSceneManager :
 
 		Model* scene_model;
 
+		Scene* getActiveScene() {
+			return main_scene;
+		}
+
 	private:
 		Scene* main_scene = nullptr;
 };

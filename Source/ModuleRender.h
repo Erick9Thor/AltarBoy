@@ -17,6 +17,9 @@ class ModuleRender : public Module
 		update_status PreUpdate();
 		update_status Update();
 		update_status PostUpdate();
+
+		void GenerateFrameBuffer();
+		
 		bool CleanUp();
 		void WindowResized(unsigned int width, unsigned int height);
 
@@ -24,4 +27,11 @@ class ModuleRender : public Module
 		bool initializeOpenGLviaSDL();
 
 		void* context;
+
+	private:
+		unsigned int frame_buffer;
+		unsigned int fb_texture;
+		unsigned int depth_stencil_buffer;
+
+		float2 viewportPanelSize = float2(0.0f, 0.0f);
 };

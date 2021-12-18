@@ -17,6 +17,10 @@
 
 #include "Leaks.h"
 
+#include "imgui.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
+
 void __stdcall DebugMessageGL(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
 	if (id == 131185 || id == 131204) return;
@@ -142,6 +146,8 @@ bool ModuleRender::Init()
 		glViewport(0, 0, w, h);
 	}
 
+	GenerateFrameBuffer();
+
 	return true;
 }
 
@@ -156,13 +162,42 @@ update_status ModuleRender::PreUpdate()
 // Called every draw update
 update_status ModuleRender::Update()
 {
-	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
-	float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
+	ImGui::Begin("Scene");
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	const ImVec2 newViewportPanelSize = ImGui::GetContentRegionAvail();
+	if (viewportPanelSize.x != newViewportPanelSize.x || viewportPanelSize.y != newViewportPanelSize.y) {
+		viewportPanelSize.x = newViewportPanelSize.x;
+		viewportPanelSize.y = newViewportPanelSize.y;
+
+		//Resize textures
+		glBindTexture(GL_TEXTURE_2D, fb_texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportPanelSize.x, viewportPanelSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportPanelSize.x, viewportPanelSize.y);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+		App->camera->SetAspectRatio(viewportPanelSize.x, viewportPanelSize.y);
+	}
+
+	glViewport(0, 0, viewportPanelSize.x, viewportPanelSize.y);
+
+	float4x4 view = App->camera->getViewPortCamera()->GetViewMatrix(false);
+	float4x4 proj = App->camera->getViewPortCamera()->GetProjectionMatrix(false);
 
 	App->debug_draw->Draw(view, proj, App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	ImGui::Image((ImTextureID)fb_texture, ImVec2{ newViewportPanelSize.x, newViewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
@@ -172,6 +207,39 @@ update_status ModuleRender::PostUpdate()
 	SDL_GL_SwapWindow(App->window->getWindow());
 	
 	return UPDATE_CONTINUE;
+}
+
+void ModuleRender::GenerateFrameBuffer()
+{
+	//Generating buffers for target rendering
+	glGenFramebuffers(1, &frame_buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
+	//Generating texture to render to
+	glGenTextures(1, &fb_texture);
+	glBindTexture(GL_TEXTURE_2D, fb_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Generating the depth & stencil buffer
+	glGenRenderbuffers(1, &depth_stencil_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+	//Configuring frame buffer
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		LOG("[M_Render] Error creating frame buffer");
+	}
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 // Called before quitting
