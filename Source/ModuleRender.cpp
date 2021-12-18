@@ -98,7 +98,7 @@ void ModuleRender::CreateContext()
 	SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
 	glViewport(0, 0, w, h);
 
-	clear_color = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	clear_color = float4(0.1f, 0.1f, 0.1f, 1.0f);
 }
 
 void ModuleRender::SetGLOptions()

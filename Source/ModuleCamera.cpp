@@ -69,7 +69,7 @@ void ModuleCamera::Controller(const float delta)
 	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
 		int moved_x, moved_y;
 		App->input->GetMouseDelta(moved_x, moved_y);
-		Orbit(-rot_speed * (float)moved_y * delta, -rot_speed * (float)moved_x * delta);
+		Orbit(moved_x * 1.5f, moved_y * 1.5f);
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
