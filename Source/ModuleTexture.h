@@ -11,12 +11,14 @@ class ModuleTexture : public Module
 {
 	public:
 		ModuleTexture();
-		~ModuleTexture();
+		~ModuleTexture() override;
 
-		bool Init();
-		bool CleanUp();
+		bool Init() override;
+		bool CleanUp() override;
 
 		unsigned int GetTextureData(const char* path);
+
+		// TODO: Implemet?
 		void CleanTexture(unsigned int& texture);
 
 		void DrawGui();

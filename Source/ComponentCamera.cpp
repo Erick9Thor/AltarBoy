@@ -13,7 +13,7 @@ ComponentCamera::ComponentCamera(GameObject* container): Component(Component::Ty
 	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
 
 	hFov = 90.0f;
-	frustum.SetHorizontalFovAndAspectRatio(hFov * DEGTORAD, (float)DEFAULT_CAMERA_WIDTH / (float)DEFAULT_CAMERA_HEIGHT);
+	frustum.SetHorizontalFovAndAspectRatio(hFov * to_rad, (float)DEFAULT_CAMERA_WIDTH / (float)DEFAULT_CAMERA_HEIGHT);
 
 	frustum.SetPos(float3(0.0f, 0.0f, 0.0f));
 	frustum.SetFront(float3x3::identity.WorldZ());
@@ -41,7 +41,7 @@ void ComponentCamera::SetFarPlane(float distance)
 void ComponentCamera::SetFOV(float fov)
 {
 	hFov = fov;
-	frustum.SetHorizontalFovAndAspectRatio(hFov * DEGTORAD, frustum.AspectRatio());
+	frustum.SetHorizontalFovAndAspectRatio(hFov * to_rad, frustum.AspectRatio());
 	frustum.GetPlanes(planes);
 }
 

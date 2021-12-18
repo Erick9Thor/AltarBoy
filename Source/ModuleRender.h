@@ -11,13 +11,14 @@ class ModuleRender : public Module
 {
 	public:
 		ModuleRender();
-		~ModuleRender();
+		~ModuleRender() override;
 
-		bool Init();
-		update_status PreUpdate();
-		update_status Update();
-		update_status PostUpdate();
-		bool CleanUp();
+		bool Init() override;
+		update_status PreUpdate(const float delta) override;
+		update_status Update(const float delta) override;
+		update_status PostUpdate(const float delta) override;
+		bool CleanUp() override;
+
 		void WindowResized(unsigned int width, unsigned int height);
 
 		bool initGlew();

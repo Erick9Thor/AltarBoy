@@ -9,12 +9,12 @@ class ModuleProgram :
     public:
         ModuleProgram();
 
-        bool Init();
+        bool Init() override;
         char* LoadShaderSource(const char* shader_file_name);
         unsigned int CompileShader(unsigned type, const char* source);
         unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
 
-        bool CleanUp();
+        bool CleanUp() override;
 
         unsigned int GetProgramID() { return program_id; }
 

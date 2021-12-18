@@ -19,9 +19,9 @@ public:
 public:
 
 	ModuleHardware();
-	~ModuleHardware();
+	~ModuleHardware() override;
 
-	bool Init();
+	bool Init() override;
 
 	inline hw_info GetInfo() { return info; };
 

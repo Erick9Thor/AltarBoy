@@ -14,13 +14,12 @@ class ModuleEditor : public Module
 {
 public:
 	ModuleEditor() :fps_log(100), ms_log(100) {};
-	~ModuleEditor();
+	~ModuleEditor() override;
 
-	bool Init();
-	update_status PreUpdate();
-	update_status Update();
-	update_status PostUpdate();
-	bool CleanUp();
+	bool Init() override;
+	update_status PreUpdate(const float delta) override;
+	update_status Update(const float delta) override;
+	bool CleanUp() override;
 
 	void Draw();
 

@@ -13,9 +13,6 @@
 #include "glew.h"
 #include "Math/MathConstants.h"
 
-#define MULT_CAM 15.0f
-#define MOUSE_SPEED 10.0f
-
 ModuleCamera::ModuleCamera()
 {
 	
@@ -38,9 +35,9 @@ bool ModuleCamera::Init()
 	return true;
 }
 
-update_status ModuleCamera::Update()
+update_status ModuleCamera::Update(const float delta)
 {
-	CheckCameraControl();
+	Controller(delta);
 	return UPDATE_CONTINUE;
 }
 
@@ -49,33 +46,31 @@ void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen
 	main_camera->SetResolution((float) screen_width, (float) screen_height);
 }
 
-void ModuleCamera::CheckCameraControl()
-{
 
+void ModuleCamera::Controller(const float delta)
+{
+	static const float zoom_speed = 3.0f;
+	static const float rot_speed = 2.0f;
 	// Keyboard for WASD movement -------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
-		int mouse_x, mouse_y;
-		App->input->GetMouseMotion(mouse_x, mouse_y);
+		int moved_x, moved_y;
+		App->input->GetMouseDelta(moved_x, moved_y);
 
-		RotationCamera(-(float)mouse_x * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD,
-			(float)mouse_y * App->GetDeltaTime() * MOUSE_SPEED * DEGTORAD);
-		MoveCamera((float)mouse_y, (float)mouse_y);
+		RotationCamera(-(float)moved_x * delta * rot_speed, (float)moved_y * delta * rot_speed);
+		MovementController(delta);
 	}
 
 	// Mouse ----------------------------
-	if (App->input->MouseWheel())
-	{
-		int wheelX, wheelY;
-		App->input->GetMouseWheel(wheelX, wheelY);
+	int scrolled_y = App->input->GetScrollDelta();
+	if (scrolled_y != 0)
+		ZoomCamera(zoom_speed * -scrolled_y);
 
-		ZoomCamera(wheelY);
-	}
 	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
-		int deltaX, deltaY;
-		App->input->GetMouseMotion(deltaX, deltaY);
+		int moved_x, moved_y;
+		App->input->GetMouseDelta(moved_x, moved_y);
+		OrbitCamera(-rot_speed * (float)moved_y * delta, -rot_speed * (float)moved_x * delta);
 
-		OrbitCamera(deltaX * 1.5f, deltaY * 1.5f);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
 		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
@@ -108,28 +103,30 @@ void ModuleCamera::OrbitCamera(float motion_x, float motion_y)
 	main_camera->GetGameObject()->Update();
 }
 
-void ModuleCamera::MoveCamera(float motion_x, float motion_y) {
-	static float delta_time = App->GetDeltaTime();
+void ModuleCamera::MovementController(const float delta) {
 
-	float multiplier = 1.0f;
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT)) multiplier *= 5.0f;
-	if (App->input->GetKey(SDL_SCANCODE_LALT)) multiplier *= 0.5f;
+	static const float move_speed = 15.0f;
+	static const float speed_modifier = 2.0f;
+
+	float effective_speed = move_speed;
+	if (App->input->GetKeyMod(KMOD_SHIFT))
+		effective_speed *= speed_modifier;
 
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
 
 	if (App->input->GetKey(SDL_SCANCODE_W))
-		deltaFwd += transform->GetFwd() * delta_time * MULT_CAM * multiplier;
+		deltaFwd += transform->GetFwd() * delta * effective_speed;
 	if (App->input->GetKey(SDL_SCANCODE_S))
-		deltaFwd -= transform->GetFwd() * delta_time * MULT_CAM * multiplier;
+		deltaFwd -= transform->GetFwd() * delta * effective_speed;
 	if (App->input->GetKey(SDL_SCANCODE_A))
-		deltaRight += transform->GetRight() * delta_time * MULT_CAM * multiplier;
+		deltaRight += transform->GetRight() * delta * effective_speed;
 	if (App->input->GetKey(SDL_SCANCODE_D))
-		deltaRight -= transform->GetRight() * delta_time * MULT_CAM * multiplier;
+		deltaRight -= transform->GetRight() * delta * effective_speed;
 	if (App->input->GetKey(SDL_SCANCODE_Q))
-		deltaUp += float3::unitY * delta_time * MULT_CAM * multiplier;
+		deltaUp += float3::unitY * delta * effective_speed;
 	if (App->input->GetKey(SDL_SCANCODE_E))
-		deltaUp -= float3::unitY * delta_time * MULT_CAM * multiplier;
+		deltaUp -= float3::unitY * delta * effective_speed;
 
 	transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
 	main_camera->GetGameObject()->Update();

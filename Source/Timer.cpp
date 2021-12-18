@@ -1,9 +1,6 @@
 #include "Timer.h"
 
-Timer::Timer()
-{
-	Start();
-}
+#include "SDL.h"
 
 void Timer::Start()
 {
@@ -11,20 +8,40 @@ void Timer::Start()
 	start_time = SDL_GetTicks();
 }
 
-void Timer::Stop()
+double Timer::Read()
 {
-	running = false;
-	last_time = SDL_GetTicks();
+	if (running) {
+		unsigned int now = SDL_GetTicks();
+		current_time = (double)(now - start_time); // ms
+	}
+	return current_time;
 }
 
-int Timer::Read()
+double Timer::Stop()
 {
-	if (running == true)
-	{
-		return SDL_GetTicks() - start_time;
+	return Read();
+	running = false;
+}
+
+
+void PerformanceTimer::Start()
+{
+	running = true;
+	start_time = SDL_GetPerformanceCounter();
+}
+
+double PerformanceTimer::Read()
+{
+	static const double frequency = (double)SDL_GetPerformanceFrequency();
+	if (running) {
+		unsigned long long now = SDL_GetPerformanceCounter();
+		current_time = (double)((now - start_time) * 1000.0 / frequency);
 	}
-	else
-	{
-		return last_time - start_time;
-	}
+	return current_time;
+}
+
+double PerformanceTimer::Stop()
+{
+	return Read();
+	running = false;
 }

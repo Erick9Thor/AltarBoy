@@ -7,8 +7,9 @@
 
 #define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
 
-#define DEGTORAD 0.0174532925199432957f
-#define RADTODEG 57.295779513082320876f
+#define M_PI 3.14159265358979323846
+constexpr float to_rad = (float)M_PI / 180.0f;
+constexpr float to_deg = 180.0f / (float)M_PI;
 
 enum update_status
 {
@@ -38,11 +39,9 @@ enum update_status
 	 }
 
 // Configuration -----------
-#define SCREEN_WIDTH 1080
-#define SCREEN_HEIGHT 720
+#define WINDOWED_RATIO 0.75f
 #define FULLSCREEN false
-#define RELIZABLE true
-#define VSYNC true
+#define RESIZABLE true
 #define TITLE "ALTAR BOOY"
 #define ENGINE_VERSION "0.0.1"
 

@@ -14,11 +14,11 @@ class ModuleDebugDraw : public Module
 public:
 
     ModuleDebugDraw();
-    ~ModuleDebugDraw();
+    ~ModuleDebugDraw() override;
 
-	bool            Init();
-	update_status   Update();
-	bool            CleanUp();
+	bool            Init() override;
+	update_status   Update(const float delta) override;
+	bool            CleanUp() override;
 
     void            Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
 private:

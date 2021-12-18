@@ -49,7 +49,7 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 {
 	local_transform = new_transform;
 	local_transform.Decompose(local_position, local_rotation, local_scale);
-	local_rotation_euler = local_rotation.ToEulerXYZ() * RADTODEG;
+	local_rotation_euler = local_rotation.ToEulerXYZ() * to_deg;
 
 	// TODO: Update hierachy of childs recursively (for each child recursively call these lines encapsulated in a method)
 	if (game_object->parent) {

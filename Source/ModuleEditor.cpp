@@ -32,7 +32,7 @@ bool ModuleEditor::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(App->window->getWindow(), App->renderer->context);
+    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->context);
     ImGui_ImplOpenGL3_Init();
 
     Logger->setShowConsole(!Logger->getShowConsole());
@@ -45,7 +45,7 @@ bool ModuleEditor::Init()
 	return true;
 }
 
-update_status ModuleEditor::PreUpdate()
+update_status ModuleEditor::PreUpdate(const float delta)
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
@@ -122,23 +122,18 @@ update_status ModuleEditor::PreUpdate()
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::Update()
+update_status ModuleEditor::Update(const float delta)
 {
     showMenu();
     Draw();
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
 void ModuleEditor::Draw()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_MakeCurrent(App->window->getWindow(), App->renderer->context);
+    SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->context);
 }
 
 bool ModuleEditor::CleanUp()
@@ -221,7 +216,7 @@ void ModuleEditor::RecursiveDraw(GameObject* go)
 void ModuleEditor::showFPSGraph() {
     ImGui::Text("Limit Framerate:");
     ImGui::SameLine();
-    ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", App->GetFramerateLimit());
+    //ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", App->GetFramerateLimit());
 
     char title[25];
     sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);

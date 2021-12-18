@@ -12,24 +12,24 @@ public:
 	{
 	}
 
-	~Module() {};
+	virtual ~Module() {};
 
 	virtual bool Init() 
 	{
 		return true; 
 	}
 
-	virtual update_status PreUpdate()
+	virtual update_status PreUpdate(const float delta)
 	{
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status Update()
+	virtual update_status Update(const float delta)
 	{
 		return UPDATE_CONTINUE;
 	}
 
-	virtual update_status PostUpdate()
+	virtual update_status PostUpdate(const float delta)
 	{
 		return UPDATE_CONTINUE;
 	}

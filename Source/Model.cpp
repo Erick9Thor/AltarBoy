@@ -143,7 +143,7 @@ void Model::DrawTransform()
 		}
 		if (ImGui::SliderFloat3("Rotation", &local_rot_euler[0], 0.0f, 360.0f))
 		{
-			m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * DEGTORAD, local_rot_euler.y * DEGTORAD, local_rot_euler.z * DEGTORAD);
+			m_rotation = Quat::FromEulerXYZ(local_rot_euler.x * to_rad, local_rot_euler.y * to_rad, local_rot_euler.z * to_rad);
 			m_model = float4x4::FromTRS(local_pos, m_rotation, local_scale);
 		}
 		if (ImGui::SliderFloat3("Scale", &local_scale[0], 0, 10.0f))

@@ -82,7 +82,7 @@ bool ModuleRender::initializeOpenGLviaSDL()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
 	LOG("[M_Render] Creating Renderer context");
-	context = SDL_GL_CreateContext(App->window->getWindow());
+	context = SDL_GL_CreateContext(App->window->GetWindow());
 
 	if (context == nullptr)
 	{
@@ -136,14 +136,14 @@ bool ModuleRender::Init()
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
 
 		int w, h;
-		SDL_GetWindowSize(App->window->getWindow(), &w, &h);
+		SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
 		glViewport(0, 0, w, h);
 	}
 
 	return true;
 }
 
-update_status ModuleRender::PreUpdate()
+update_status ModuleRender::PreUpdate(const float delta)
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -152,12 +152,13 @@ update_status ModuleRender::PreUpdate()
 }
 
 // Called every draw update
-update_status ModuleRender::Update()
+update_status ModuleRender::Update(const float delta)
 {
 	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
 	float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
 
-	App->debug_draw->Draw(view, proj, App->window->getScreenSurface()->w, App->window->getScreenSurface()->h);
+	SDL_Surface* screen_surface = App->window->GetScreenSurface();
+	App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -165,9 +166,9 @@ update_status ModuleRender::Update()
 	return UPDATE_CONTINUE;
 }
 
-update_status ModuleRender::PostUpdate()
+update_status ModuleRender::PostUpdate(const float delta)
 {	
-	SDL_GL_SwapWindow(App->window->getWindow());
+	SDL_GL_SwapWindow(App->window->GetWindow());
 	
 	return UPDATE_CONTINUE;
 }
@@ -182,7 +183,6 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::WindowResized(unsigned int width, unsigned int height)
 {
-	SDL_GetWindowSize(App->window->getWindow(), (int*)&width, (int*)&height);
 	glViewport(0, 0, width, height);
 }
 

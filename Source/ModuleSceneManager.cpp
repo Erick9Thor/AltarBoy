@@ -13,7 +13,7 @@ ModuleSceneManager::~ModuleSceneManager()
 	delete main_scene;
 }
 
-update_status ModuleSceneManager::Update()
+update_status ModuleSceneManager::Update(const float delta)
 {
 	main_scene->Update();
 	main_scene->DrawScene();
