@@ -77,7 +77,7 @@ Component* GameObject::CreateComponent(Component::Type type)
 		break;
 		case(Component::Type::Camera):
 			new_component = new ComponentCamera(this);
-			// new_component->OnTransformUpdated();
+			new_component->OnTransformUpdated();
 		break;
 	}
 	if (new_component !=nullptr)

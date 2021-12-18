@@ -126,6 +126,29 @@ update_status ModuleRender::PreUpdate(const float delta)
 
 update_status ModuleRender::Update(const float delta)
 {
+	ImGui::Begin("Scene");
+
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	const ImVec2 newViewportPanelSize = ImGui::GetContentRegionAvail();
+
+	if (viewportPanelSize.x != newViewportPanelSize.x || viewportPanelSize.y != newViewportPanelSize.y) {
+		viewportPanelSize.x = newViewportPanelSize.x;
+		viewportPanelSize.y = newViewportPanelSize.y;
+
+		//Resize textures
+		glBindTexture(GL_TEXTURE_2D, fb_texture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportPanelSize.x, viewportPanelSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportPanelSize.x, viewportPanelSize.y);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+		App->camera->SetAspectRatio(viewportPanelSize.x, viewportPanelSize.y);
+	}
+
 	if (debug_draw)
 	{
 		SDL_Surface* screen_surface = App->window->GetScreenSurface();
@@ -134,9 +157,18 @@ update_status ModuleRender::Update(const float delta)
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
+
 	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	ImGui::Image((ImTextureID)fb_texture, ImVec2{ newViewportPanelSize.x, newViewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }

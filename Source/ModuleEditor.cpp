@@ -156,9 +156,10 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::showMenu() 
 { 
 
-    /*if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
+    if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
         DrawHierarchyTree(App->scene_manager->GetRoot());
-    }*/
+        ImGui::End();
+    }
 
     if (show_camera_window)
     {
