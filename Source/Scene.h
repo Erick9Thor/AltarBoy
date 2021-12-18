@@ -28,15 +28,15 @@ class Scene
 		GameObject* CreateCamera();
 		const ComponentCamera* GetMainCamera() const;
 
+		void Update();
+		
 		void Play();
 		void Stop();
+		void Draw();
 
 	private:
 		bool LoadTextures(const aiScene* scene, const std::string& model_path);
-		bool LoadTexture(const aiMaterial* texture, const std::string& model_path);
-
-		void Update();
-		void Draw();
+		bool LoadTexture(const aiMaterial* texture, const std::string& model_path);		
 
 		ModuleSceneManager* manager_owner = nullptr;
 

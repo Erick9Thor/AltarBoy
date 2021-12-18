@@ -104,3 +104,22 @@ void GameObject::Update()
 		(*it)->OnTransformUpdated();
 	}
 }
+
+void GameObject::DrawAll()
+{
+	// Draw yourself
+	Draw();
+	// Draw children recursively
+	for (GameObject* child : childs) {
+		child->DrawAll();
+	}
+}
+
+void GameObject::Draw()
+{
+	// Call draw on all components
+	for (Component* component : components) {
+		component->Draw();
+	}
+}
+

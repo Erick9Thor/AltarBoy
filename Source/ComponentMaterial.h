@@ -9,6 +9,7 @@ public:
     ~ComponentMaterial() override;
     static inline Type GetType() { return Type::Material; };
     void SetTexture(Texture new_texture) { texture = new_texture; }
+    inline unsigned GetTextureId() const { return texture.id; }
 private:
     Texture texture;
     // Shader id

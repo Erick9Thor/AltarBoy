@@ -6,6 +6,7 @@
 #include "ModuleCamera.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
+#include "ComponentMaterial.h"
 
 #include "glew.h"
 
@@ -111,7 +112,7 @@ void ComponentMesh::Draw()
 	App->program->BindUniformFloat4x4("view", &App->camera->getMainCamera()->GetViewMatrix()[0][0]);
 	App->program->BindUniformFloat4x4("proj", &App->camera->getMainCamera()->GetProjectionMatrix()[0][0]);
 
-	//App->texture->Bind(model_textures[texture_index].id);
+	App->texture->Bind(game_object->GetComponent<ComponentMaterial>()->GetTextureId());
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, nullptr);
 	App->texture->Unbind();

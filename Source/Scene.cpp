@@ -166,5 +166,5 @@ void Scene::Update()
 
 void Scene::Draw()
 {
-
+	root->DrawAll();
 }
