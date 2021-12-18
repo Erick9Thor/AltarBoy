@@ -13,7 +13,7 @@
 class ModuleEditor : public Module
 {
 public:
-	ModuleEditor() :fps_log(100), ms_log(100) {};
+	ModuleEditor();
 	~ModuleEditor() override;
 
 	bool Init() override;
@@ -34,9 +34,6 @@ public:
 	void showAbaoutInfo();
 
 private:
-	// TODO (bernat): Fix fps
-	std::vector<float> ms_log;
-	std::vector<float> fps_log;
 
 	bool show_hirarchy = true;
 	bool show_inspector_window = true;
