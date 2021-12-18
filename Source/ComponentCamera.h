@@ -31,7 +31,7 @@ class ComponentCamera :
         float3 reference_point = float3::zero;
 
     private:
-        float hFov;
+        float horizontal_fov;
         Frustum	frustum;
         unsigned int renderTexture = 0;
 };

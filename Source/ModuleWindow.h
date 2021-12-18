@@ -7,35 +7,38 @@ class Application;
 
 class ModuleWindow : public Module
 {
-	public:
+public:
 
-		ModuleWindow();
-		virtual ~ModuleWindow();
+	ModuleWindow();
+	~ModuleWindow() override;
 
-		bool Init();
-		bool CleanUp();
+	bool Init() override;
+	bool CleanUp() override;
 
-		void SetFullscreen(bool set);
-		void SetResizable(bool set);
+	void WindowResized();
+	void SetFullScreen(bool fullscreen);
+	void SetResizable(bool resizable);
+	void SetSize(int w, int h);
+	void SetVsync(bool vsync);
 
-		bool IsFullscreen() const;
-		bool IsResizable() const;
+	void OptionsMenu();
 
-		void WindowResized();
+	inline SDL_Surface* GetScreenSurface() const { return screen_surface; }
+	inline SDL_Window* GetWindow() const { return window; }
 
-		inline SDL_Surface* getScreenSurface() { return screen_surface; }
-		inline SDL_Window* getWindow() { return window; }
+private:
+	void GetMonitorResolution(int& width, int& height);
 
-	private:
-		SDL_Window* window = NULL;
-		SDL_Surface* screen_surface = NULL;
+	SDL_Window* window = NULL;
+	SDL_Surface* screen_surface = NULL;
 
-		bool fullscreen = false;
-		bool resizable = false;
-
-		bool fullscreen_desktop = false;
-		
-		int width;
-		int height;
+	bool fullscreen;
+	bool resizable;
+	int width;
+	int max_width;
+	int max_height;
+	int height;
+	int refresh_rate;
+	bool vsync;
 };
 

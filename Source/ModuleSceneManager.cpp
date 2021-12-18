@@ -3,8 +3,6 @@
 
 #include "Model.h"
 
-#include "Leaks.h"
-
 ModuleSceneManager::ModuleSceneManager()
 {
 	main_scene = new Scene();
@@ -12,12 +10,13 @@ ModuleSceneManager::ModuleSceneManager()
 
 ModuleSceneManager::~ModuleSceneManager()
 {
+	delete main_scene;
 }
 
-update_status ModuleSceneManager::Update()
+update_status ModuleSceneManager::Update(const float delta)
 {
 	main_scene->Update();
-	main_scene->DrawScene();
+	main_scene->Draw();
 
 	return UPDATE_CONTINUE;
 }

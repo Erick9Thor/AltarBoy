@@ -13,9 +13,9 @@ class ModuleSceneManager :
 {
 	public:
 		ModuleSceneManager();
-		~ModuleSceneManager();
+		~ModuleSceneManager() override;
 
-		update_status Update() override;
+		update_status Update(const float delta) override;
 
 		void LoadModel(const char* _fileName);
 

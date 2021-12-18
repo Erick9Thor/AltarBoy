@@ -1,49 +1,60 @@
 #pragma once
 
 #include "ModuleTexture.h"
-#include "Texture.h"
-
 #include "Mesh.h"
-#include "assimp/scene.h"
-#include <vector>
-#include "Math.h"
 
-#include <string.h>
-using namespace std;
+#include "assimp/scene.h"
+#include "MathGeoLib.h"
+
+#include <vector>
+#include <string>
 
 class Model
 {
-	public:
-		Model(const std::string& model_path);
-		~Model();
-		void Draw();
-		void DrawGui();
+public:
+	Model();
+	~Model();
 
-		void DrawTransform();
+	void Load(const std::string& file_name);
+	void Draw();
+	void CleanUp();
 
-		float3 GetCenter();
-		vec GetDiameter();
+	const float3 GetCenter() const;
+	const float3 GetPosition() const;
+	const OBB& GetOBB() { return oriented_bounding_box; }
 
-		float3 GetLocalPosition() { return local_pos; }
+	void OptionsMenu();
+	void PropertiesWindow(bool* p_open);
 
-	private:
-		void LoadTextures(const aiScene* scene);
-		void LoadMeshes(const aiScene* scene);
+private:
+	bool LoadMeshes(const aiScene* scene);
+	bool LoadTextures(const aiScene* scene);
+	bool LoadTexture(const aiMaterial* texture);
 
-		vector<Texture*> textures;
-		vector<Mesh*> meshes;
+	void GenerateAABB();
+	void UpdateOBB();
 
-		unsigned int num_vertices = 0;
-		unsigned int num_triangles = 0;
-		
-		string name;
-		string path;
-		string file_name;
+	void UpdateMatrix();
 
-		float4x4 m_model;
-		float3 local_pos, local_rot_euler, local_scale;
-		Quat m_rotation;
+	struct ModelInfo {
+		std::string name;
+		std::string path;
+		std::string file_name;
+	};
 
-		AABB m_aabb;
+	ModelInfo info;
+	bool loaded = false;
+
+	float4x4 matrix = float4x4::identity;
+
+	float3 position;
+	float3 rotation;
+	float3 scale;
+
+	std::vector<Texture> textures;
+	std::vector<Mesh> meshes;
+
+	AABB bounding_box;
+	OBB oriented_bounding_box;
 };
 

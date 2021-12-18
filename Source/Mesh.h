@@ -3,43 +3,48 @@
 #include "ModuleTexture.h"
 
 #include "assimp/scene.h"
+#include "MathGeoLib.h"
+
 #include <vector>
-#include "Math.h"
 
 
 class Mesh
 {
-	public:
-	
-		Mesh(const aiMesh* mesh);
-		~Mesh();
+public:
 
-		void Draw(const std::vector<Texture*>& model_textures, float4x4& model);
+	Mesh();
+	~Mesh();
 
-		unsigned int GetNumVertices() const {
-			return num_vertices;
-		};
-		unsigned int GetNumIndices() const {
-			return num_indices;
-		};
+	void Load(const aiMesh* mesh);
+	void Draw(float4x4& model, const std::vector<Texture>& model_textures);
+	void CleanUp();
 
-		AABB getAABB() {
-			return aabb;
-		}
+	inline unsigned GetNumVertices() const { return num_vertices; }
+	inline unsigned GetNumIndexes() const { return num_indices; }
+	const AABB& GetAABB() const { return bounding_box; }
+	bool IsLoaded() const { return loaded; }
 
-		void DrawImGui();
-	
-	private:
-		const aiMesh* mesh;
+private:
+	void LoadVBO(const aiMesh* mesh);
+	void LoadEBO(const aiMesh* mesh);
+	void CreateVAO();
+	void GenerateAABB(const aiMesh* mesh);
 
-		void CreateAABB();
-		void LoadVBO();
-		void LoadEBO();
-		void CreateVAO();
+	struct Vertex
+	{
+		float3 position;
+		float3 normal;
+		float2 tex_coords;
+	};
 
-		unsigned VBO, EBO, VAO;
-		unsigned num_vertices, num_indices, texture_index;
+	AABB bounding_box;
 
-		AABB aabb;
+	bool loaded;
+	unsigned vbo;
+	unsigned num_vertices;
+	unsigned ebo;
+	unsigned num_indices;
+	unsigned vao;
+	unsigned texture_index;
 };
 

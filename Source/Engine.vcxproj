@@ -105,7 +105,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc142-mtd.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc142-mtd.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -213,7 +213,6 @@
     <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -266,7 +265,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Leaks.h" />
     <ClInclude Include="ModuleSceneManager.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
@@ -327,7 +325,6 @@
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>

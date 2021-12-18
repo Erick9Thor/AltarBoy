@@ -10,20 +10,19 @@ class ComponentTransform :
     public Component
 {
     public:
-        ComponentTransform(GameObject* new_GameObject, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
-        ComponentTransform(GameObject* new_GameObject, const float4x4& transform = float4x4::identity);
+        ComponentTransform(GameObject* new_object, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
+        ComponentTransform(GameObject* new_object, const float4x4& transform = float4x4::identity);
         ~ComponentTransform();
 
-        void SetPosition(float3 newPosition);
-
-        void SetLocalTransform(float4x4 newTransform);
-        void SetGlobalTransform(float4x4 transform);
-
+        void SetPosition(float3 new_position);
         void SetRotationAxis(float3 x, float3 y, float3 z);
 
-        inline void SetLocalPosition(float3 newPosition) { SetLocalTransform(newPosition, local_rotation, local_scale); }
-        inline void SetLocalTransform(float3 position, Quat rotation, float3 scale) { SetLocalTransform(float4x4::FromTRS(position, rotation, scale)); }
+        void SetLocalTransform(float4x4 new_transform);
+        inline void SetLocalTransform(float3 position, Quat rotation, float3 scale);
+        inline void SetLocalPosition(float3 new_position) { SetLocalTransform(new_position, local_rotation, local_scale); }
 
+        void SetGlobalTransform(float4x4 transform);           
+        
         inline float4x4 GetTransform() const { return transform; }
 
         inline float3 GetPosition() const { return transform.TranslatePart(); }
@@ -31,7 +30,7 @@ class ComponentTransform :
         inline float3 GetUp() const { return transform.WorldY(); }
         inline float3 GetRight() const { return transform.WorldX(); }
 
-        void LookAt(float3 target, float3 worldUp = float3::unitY);
+        void LookAt(float3 target, float3 world_up = float3::unitY);
 
         static inline Type GetType() { return Type::Transform; };
         void OnTransformUpdated() override;

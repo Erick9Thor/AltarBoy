@@ -12,11 +12,9 @@
 #include "ModuleSceneManager.h"
 #include "ModuleDebugDraw.h"
 
-#include "Leaks.h"
-
 using namespace std;
 
-Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_ms(1000 / 60)
+Application::Application()
 {
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
@@ -32,58 +30,41 @@ Application::Application(): frames(0), last_frame_ms(-1), last_fps(-1), capped_m
 
 Application::~Application()
 {
-	for(vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
-		RELEASE(*it)
+	for (vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
+		delete *it;
 }
 
 bool Application::Init()
 {
 	bool ret = true;
 
-	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
+	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init();
 
+	delta = 0;
+	timer = PerformanceTimer();
+	timer.Start();
+	prev_tick_time = timer.Read();
 	return ret;
 }
 
 update_status Application::Update()
 {
-	delta_time = (float)ms_timer.Read() / 1000.0f;
-	ms_timer.Start();
-
+	double tick_time = timer.Read();
+	delta = (tick_time - prev_tick_time) / 1000.0;
+	prev_tick_time = tick_time;
 	update_status ret = UPDATE_CONTINUE;
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate();
+		ret = (*it)->PreUpdate((float)delta);
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update();
+		ret = (*it)->Update((float)delta);
 
 	for(vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate();
+		ret = (*it)->PostUpdate((float)delta);
 
-	FinishUpdate();
 	return ret;
-}
-
-void Application::FinishUpdate()
-{
-	++frames;
-	++fps_counter;
-
-	if (fps_timer.Read() >= 1000)
-	{
-		last_fps = fps_counter;
-		fps_counter = 0;
-		fps_timer.Start();
-	}
-
-	last_frame_ms = ms_timer.Read();
-
-	if (capped_ms > 0 && (last_frame_ms < capped_ms))
-		SDL_Delay(capped_ms - last_frame_ms);
-
-	editor->AddFPS((float)last_fps, (float)last_frame_ms);
 }
 
 bool Application::CleanUp()
@@ -107,10 +88,3 @@ void Application::RequestBrowser(const char* url) const
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-int Application::GetFramerateLimit() const
-{
-	if (capped_ms > 0)
-		return (int)((1.0f / (float)capped_ms) * 1000.0f);
-	else
-		return 0;
-}

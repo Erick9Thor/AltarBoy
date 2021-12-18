@@ -32,15 +32,11 @@ class Application
 		bool Init();
 		update_status Update();
 
-		void FinishUpdate();
 		bool CleanUp();
 
 		void DebugDraw();
 
 		void RequestBrowser(const char* url) const;
-		inline float GetDeltaTime() { return delta_time; };
-
-		int GetFramerateLimit() const;
 		
 
 	public:
@@ -58,17 +54,10 @@ class Application
 		AppLog* console = nullptr;
 
 	private:
+		PerformanceTimer timer;
 
-		Timer ms_timer;
-		Timer fps_timer;
-
-		int frames;
-		int	capped_ms;
-		int	fps_counter;
-		int	last_frame_ms;
-		int	last_fps;
-		float delta_time = 0.0f;
-
+		double  delta = 0;
+		double  prev_tick_time = 0;
 		std::vector<Module*> modules;
 };
 

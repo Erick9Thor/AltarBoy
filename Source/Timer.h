@@ -1,22 +1,27 @@
 #pragma once
 
-#include "SDL.h"
-
-
 class Timer
 {
-	public:
-		
-		Timer();
+public:
+	void Start();
+	double Read();
+	double Stop();
+private:
+	bool running = false;
+	unsigned int start_time;
+	double current_time;
+};
 
-		void Start();
-		void Stop();
 
-		int Read();
-
-	private:
-		bool running;
-		float start_time;
-		float last_time = 0.0f;
+class PerformanceTimer
+{
+public:
+	void Start();
+	double Read();
+	double Stop();
+private:
+	bool running = false;
+	unsigned long long start_time;
+	double current_time;
 };
 

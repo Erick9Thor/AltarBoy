@@ -21,7 +21,9 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-#include "Leaks.h"
+ModuleEditor::ModuleEditor()
+{
+}
 
 ModuleEditor::~ModuleEditor()
 {
@@ -36,7 +38,7 @@ bool ModuleEditor::Init()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(App->window->getWindow(), App->renderer->context);
+    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
     ImGui_ImplOpenGL3_Init();
 
     Logger->setShowConsole(!Logger->getShowConsole());
@@ -49,7 +51,7 @@ bool ModuleEditor::Init()
 	return true;
 }
 
-update_status ModuleEditor::PreUpdate()
+update_status ModuleEditor::PreUpdate(const float delta)
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
@@ -126,7 +128,7 @@ update_status ModuleEditor::PreUpdate()
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::Update()
+update_status ModuleEditor::Update(const float delta)
 {
     showMenu();
     // TODO: ADD frame buffer to component camera.
@@ -135,16 +137,11 @@ update_status ModuleEditor::Update()
     return UPDATE_CONTINUE;
 }
 
-update_status ModuleEditor::PostUpdate()
-{
-	return UPDATE_CONTINUE;
-}
-
 void ModuleEditor::Draw()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    SDL_GL_MakeCurrent(App->window->getWindow(), App->renderer->context);
+    SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
 }
 
 bool ModuleEditor::CleanUp()
@@ -159,9 +156,9 @@ bool ModuleEditor::CleanUp()
 void ModuleEditor::showMenu() 
 { 
 
-    if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
+    /*if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
         DrawHierarchyTree(App->scene_manager->GetRoot());
-    }
+    }*/
 
     if (show_camera_window)
     {
@@ -176,7 +173,7 @@ void ModuleEditor::showMenu()
     {
         if (ImGui::Begin("FPS counter", &show_fps_counter))
         {
-            showFPSGraph();
+            App->renderer->FpsGraph();
         }
         ImGui::End();
     }
@@ -222,37 +219,6 @@ void ModuleEditor::RecursiveDraw(GameObject* go)
     
     
    
-}
-
-void ModuleEditor::showFPSGraph() {
-    ImGui::Text("Limit Framerate:");
-    ImGui::SameLine();
-    ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%i", App->GetFramerateLimit());
-
-    char title[25];
-    sprintf_s(title, 25, "Framerate %.1f", fps_log[fps_log.size() - 1]);
-    ImGui::PlotHistogram("##framerate", &fps_log[0], fps_log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
-    sprintf_s(title, 25, "Milliseconds %0.1f", ms_log[ms_log.size() - 1]);
-    ImGui::PlotHistogram("##milliseconds", &ms_log[0], ms_log.size(), 0, title, 0.0f, 40.0f, ImVec2(310, 100));
-}
-
-void ModuleEditor::AddFPS(float fps, float ms)
-{
-    static int count = 0;
-
-    if (count == FPS_LOG_SIZE)
-    {
-        for (int i = 0; i < FPS_LOG_SIZE - 1; ++i)
-        {
-            fps_log[i] = fps_log[i + 1];
-            ms_log[i] = ms_log[i + 1];
-        }
-    }
-    else
-        ++count;
-
-    fps_log[count - 1] = fps;
-    ms_log[count - 1] = ms;
 }
 
 void ModuleEditor::showAbaoutInfo()

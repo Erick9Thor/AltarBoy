@@ -4,8 +4,6 @@
 #include "ComponentCamera.h"
 #include "Component.h"
 
-#include "Leaks.h"
-
 Scene::Scene()
 {
 	root = new GameObject(nullptr, float4x4::identity, "Root");
@@ -13,9 +11,11 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	delete root;
+	delete main_camera;
 }
 
-void Scene::AddGameObject(GameObject* newGameObject, GameObject* parent)
+void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
 
 }
@@ -57,7 +57,7 @@ void Scene::Update()
 	// root->Update();
 }
 
-void Scene::DrawScene()
+void Scene::Draw()
 {
 
 }
