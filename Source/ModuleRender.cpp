@@ -229,7 +229,6 @@ void ModuleRender::RetrieveGpuInfo()
 bool ModuleRender::CleanUp()
 {
 	LOG("Destroying renderer");
-	delete model;
 	SDL_GL_DeleteContext(context);
 
 	return true;

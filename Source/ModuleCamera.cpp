@@ -64,7 +64,7 @@ void ModuleCamera::Controller(const float delta)
 	// Mouse ----------------------------
 	int scrolled_y = App->input->GetScrollDelta();
 	if (scrolled_y != 0)
-		Zoom(zoom_speed * -scrolled_y);
+		Zoom(-(float)scrolled_y * zoom_speed);
 
 	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
 		int moved_x, moved_y;
@@ -79,11 +79,11 @@ void ModuleCamera::Controller(const float delta)
 	}
 }
 
-void ModuleCamera::Zoom(int zoom)
+void ModuleCamera::Zoom(float zoom)
 {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float distance = main_camera->reference_point.Distance(transform->GetPosition());
-	vec newPos = transform->GetPosition() + transform->GetFwd() * zoom * distance * 0.05f;
+	vec newPos = transform->GetPosition() + float(zoom) * transform->GetFwd() * distance * 0.05f;
 
 	transform->SetPosition(newPos);
 	main_camera->GetGameObject()->Update();

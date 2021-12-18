@@ -1,7 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Model.h"
+
+#include "Math.h"
 
 #include <vector>
 
@@ -40,7 +41,6 @@ public:
 	void FpsGraph();
 	void AddFrame(const float delta);
 
-	inline Model* GetModel() const { return model; }
 	inline void* GetGLContext() const { return context; }
 	inline const GpuData GetGpuData() const { return gpu; }
 	inline const GlVersion GetGlVersion() { return gl; }
@@ -54,7 +54,6 @@ private:
 	void RetrieveGpuInfo();
 
 	void* context;
-	Model* model = nullptr;
 	bool debug_draw = true;
 
 	float4 clear_color;

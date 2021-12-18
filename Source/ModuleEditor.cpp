@@ -7,7 +7,6 @@
 #include "ModuleTexture.h"
 #include "ModuleHardware.h"
 #include "ModuleSceneManager.h"
-#include "Model.h"
 #include "SDL.h"
 
 #include "GameObject.h"

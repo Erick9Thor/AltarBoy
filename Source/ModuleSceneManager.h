@@ -3,10 +3,8 @@
 #include "Math.h"
 
 class GameObject;
-class Model;
 class ComponentCamera;
 class Scene;
-class Model;
 
 class ModuleSceneManager :
     public Module
@@ -15,14 +13,16 @@ class ModuleSceneManager :
 		ModuleSceneManager();
 		~ModuleSceneManager() override;
 
+		bool Init() override;
 		update_status Update(const float delta) override;
+		bool CleanUp() override;
 
-		void LoadModel(const char* _fileName);
+		void LoadModel(const char* model_path);
 
 		GameObject* GetRoot();
 		const GameObject* GetRoot() const;
 
-		Model* scene_model;
+		GameObject* scene_model;
 
 	private:
 		Scene* main_scene = nullptr;

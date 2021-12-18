@@ -3,6 +3,8 @@
 
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentMesh.h"
+#include "ComponentMaterial.h"
 
 GameObject::GameObject()
 {
@@ -74,16 +76,22 @@ Component* GameObject::CreateComponent(Component::Type type)
 	{
 		case(Component::Type::Transform):
 			return transform;
-		break;
+			break;
 		case(Component::Type::Camera):
 			new_component = new ComponentCamera(this);
 			// new_component->OnTransformUpdated();
-		break;
+			break;
+		case(Component::Type::Mesh):
+			new_component = new ComponentMesh(this);
+			break;
+		case(Component::Type::Material):
+			new_component = new ComponentMaterial(this);
+			break;
 	}
-	if (new_component !=nullptr)
-	{
+	if (new_component != nullptr)
 		components.push_back(new_component);
-	}
+	else
+		LOG("Falied to create component")
 	return new_component;
 }
 

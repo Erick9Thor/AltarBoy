@@ -10,14 +10,14 @@ class ComponentCamera :
     
     public:
         ComponentCamera(GameObject* conatiner);
-        ~ComponentCamera();
+        ~ComponentCamera() override;
 
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
         void SetFOV(float fov);
 
-        float4x4 GetViewMatrix(const bool transpose = true) const;
-        float4x4 GetProjectionMatrix(const bool transpose = true) const;
+        float4x4 GetViewMatrix(const bool transpose = false) const;
+        float4x4 GetProjectionMatrix(const bool transpose = false) const;
 
         void OnTransformUpdated() override;
 

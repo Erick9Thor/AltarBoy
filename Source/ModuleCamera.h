@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Model.h"
 
 #include "MathGeoLib.h"
 
@@ -24,7 +23,7 @@ class ModuleCamera : public Module
 		ComponentCamera* getMainCamera() { return main_camera; }
 
 		// Camera actions
-		void Zoom(int zoom);
+		void Zoom(float zoom);
 		void Orbit(float motion_x, float motion_y);
 		void LookAt(const float3& target, float distance);
 		void Rotate(float motion_x, float motion_y);
