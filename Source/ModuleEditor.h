@@ -22,6 +22,8 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+	void DrawViewport();
+
 	void Draw();
 
 	void showMenu();

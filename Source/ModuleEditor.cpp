@@ -63,7 +63,7 @@ update_status ModuleEditor::PreUpdate()
     ImGui::SetNextWindowSize(viewport->Size);
     ImGui::SetNextWindowViewport(viewport->ID);
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 1.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
@@ -127,6 +127,7 @@ update_status ModuleEditor::PreUpdate()
 update_status ModuleEditor::Update()
 {
     showMenu();
+    DrawViewport();
     Draw();
     return UPDATE_CONTINUE;
 }
@@ -274,3 +275,6 @@ void ModuleEditor::showAbaoutInfo()
     ImGui::Text("DevIL lib version %d", IL_VERSION);
 }
 
+void ModuleEditor::DrawViewport()
+{
+}
