@@ -42,7 +42,6 @@ class ModuleRender : public Module
 		void FpsGraph();
 		void AddFrame(const float delta);
 
-		inline Model* GetModel() const { return model; }
 		inline void* GetGLContext() const { return context; }
 		inline const GpuData GetGpuData() const { return gpu; }
 		inline const GlVersion GetGlVersion() { return gl; }
@@ -56,7 +55,6 @@ class ModuleRender : public Module
 		void RetrieveGpuInfo();
 
 		void* context;
-		Model* model = nullptr;
 		bool debug_draw = true;
 
 		float4 clear_color;
@@ -70,7 +68,6 @@ class ModuleRender : public Module
 		std::vector<float> ms_log;
 		float current_fps;
 		float current_ms;
-
 
 	private:
 		unsigned int frame_buffer;

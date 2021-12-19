@@ -20,7 +20,7 @@ class ModuleCamera : public Module
 		void Controller(const float delta);
 		void MovementController(const float delta);
 
-		ComponentCamera* getViewPortCamera() { return main_camera; }
+		ComponentCamera* getMainCamera() { return main_camera; }
 
 		// Camera actions
 		void Zoom(float zoom);

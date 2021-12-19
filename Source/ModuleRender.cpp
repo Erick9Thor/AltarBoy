@@ -139,21 +139,21 @@ update_status ModuleRender::Update(const float delta)
 
 		//Resize textures
 		glBindTexture(GL_TEXTURE_2D, fb_texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, viewportPanelSize.x, viewportPanelSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) viewportPanelSize.x, (GLsizei) viewportPanelSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, viewportPanelSize.x, viewportPanelSize.y);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (GLsizei)viewportPanelSize.x, (GLsizei)viewportPanelSize.y);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-		App->camera->SetAspectRatio(viewportPanelSize.x, viewportPanelSize.y);
+		App->camera->SetAspectRatio((unsigned int)viewportPanelSize.x, (unsigned int)viewportPanelSize.y);
 	}
 
 	if (debug_draw)
 	{
 		SDL_Surface* screen_surface = App->window->GetScreenSurface();
-		float4x4 view = App->camera->getViewPortCamera()->GetViewMatrix(false);
-		float4x4 proj = App->camera->getViewPortCamera()->GetProjectionMatrix(false);
+		float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
+		float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
