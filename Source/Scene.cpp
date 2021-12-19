@@ -54,7 +54,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 		bool success;
 		success = LoadTextures(scene, model_path);
 		if (success) {
-			model = CreateNewGameObject("TestModel", root);
+			model = CreateNewGameObject(name.c_str(), root);
 			LoadNode(scene, scene->mRootNode, model);
 		}
 		else {
@@ -73,12 +73,10 @@ GameObject* Scene::LoadFBX(const std::string& path)
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent)
 {
-	GameObject* node_object = CreateNewGameObject("TestModelNode", parent);
-
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		GameObject* model_part = CreateNewGameObject("TestModelPart", node_object);
+		GameObject* model_part = CreateNewGameObject("TestModelPart", parent);
 		model_part->CreateComponent(Component::Type::Mesh);
 		model_part->GetComponent<ComponentMesh>()->Load(mesh);
 		model_part->CreateComponent(Component::Type::Material);
@@ -87,7 +85,7 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	// then do the same for each of its children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		LoadNode(scene, node->mChildren[i], node_object);
+		LoadNode(scene, node->mChildren[i], parent);
 	}
 }
 
