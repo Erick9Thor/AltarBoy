@@ -29,6 +29,10 @@ class GameObject
 
 		void Update();
 
+		void DrawAll();
+		void Draw();
+
+
 		template<typename RetComponent>
 		const RetComponent* GetComponent() const
 		{

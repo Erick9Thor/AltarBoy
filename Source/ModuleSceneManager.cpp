@@ -1,16 +1,20 @@
 #include "ModuleSceneManager.h"
 #include "Scene.h"
 
-#include "Model.h"
-
 ModuleSceneManager::ModuleSceneManager()
 {
-	main_scene = new Scene();
+	
 }
 
 ModuleSceneManager::~ModuleSceneManager()
 {
-	delete main_scene;
+}
+
+bool ModuleSceneManager::Init()
+{
+	main_scene = new Scene();
+	LoadModel("BakerHouse.fbx");
+	return true;
 }
 
 update_status ModuleSceneManager::Update(const float delta)
@@ -21,12 +25,18 @@ update_status ModuleSceneManager::Update(const float delta)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneManager::LoadModel(const char* _fileName)
+bool ModuleSceneManager::CleanUp()
+{
+	//TODO: Implement properly
+	delete main_scene;
+	return true;
+}
+
+void ModuleSceneManager::LoadModel(const char* model_path)
 {
 	// delete scene_model;
-	// scene_model = new Model(_fileName);
-
 	// TODO: Need to refactor model class to convert a game object
+	scene_model = main_scene->LoadFBX(model_path);
 }
 
 GameObject* ModuleSceneManager::GetRoot()

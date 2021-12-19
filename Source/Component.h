@@ -10,19 +10,21 @@ class Component
 			None,
 			Transform,
 			Mesh,
-			Texture,
+			Material,
 			Camera,
 			Unknown
 		};
 
-		Component(Type type, GameObject* container);
-		virtual ~Component();
+		Component(Type type, GameObject* container) : type(type), game_object(container) {}
+		virtual ~Component() {};
+
+		virtual void Draw() {};
 
 		inline Type GetType() const { return type; };
 
 		void SetGameObject(GameObject* container) { game_object = container; }
-		const GameObject* GetGameObject() const;
-		GameObject* GetGameObject();
+		const GameObject* GetGameObject() const { return game_object; }
+		GameObject* GetGameObject() { return game_object; }
 
 		virtual void OnUpdate() {};
 

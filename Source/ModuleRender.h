@@ -1,7 +1,8 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "Model.h"
+
+#include "Math.h"
 
 #include <vector>
 
