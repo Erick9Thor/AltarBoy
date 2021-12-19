@@ -23,7 +23,6 @@ void DumpLeaks(void)
 	_CrtDumpMemoryLeaks(); // Show leaks with file and line where allocation was made
 }
 
-
 enum main_states
 {
 	MAIN_CREATION,  

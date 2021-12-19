@@ -102,7 +102,6 @@ void GameObject::RemoveChild(GameObject* gameObject)
 		if ((*it) == gameObject)
 		{
 			childs.erase(it);
-			break;
 		}
 	}
 }
