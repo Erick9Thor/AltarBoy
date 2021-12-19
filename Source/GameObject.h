@@ -23,6 +23,9 @@ class GameObject
 
 		void AddComponent(Component* component);
 		Component* CreateComponent(Component::Type type);
+		void RemoveChild(GameObject* gameObject);
+
+		void Destroy();
 
 		void Update();
 
@@ -58,10 +61,12 @@ class GameObject
 		std::vector<GameObject*> childs;
 
 		Scene* scene_owner = nullptr;
+		
+		std::string	name;
+		bool hierarchy_open = false;
 	private:
 		std::vector<Component*> components;
 		ComponentTransform* transform = nullptr;
-		std::string	name;
 
 		AABB aabb;
 		OBB	obb;

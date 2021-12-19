@@ -201,25 +201,46 @@ void ModuleEditor::showMenu()
 
 void ModuleEditor::DrawHierarchyTree(GameObject* root)
 {
-    if (ImGui::TreeNodeEx("GameObjecs", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it)
-            RecursiveDraw(*it);
+    DrawGOChilds(root);
+}
 
+void ModuleEditor::DrawGOChilds(GameObject* root)
+{
+    for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it)
+        DrawGameObject(*it);
+}
+
+void ModuleEditor::DrawGameObject(GameObject* go)
+{
+    ShowGameObject(go);
+
+    if (ImGui::BeginPopup(go->name.c_str()))
+    {
+        if (ImGui::Button("Delete"))
+        {
+            ((GameObject*)go)->Destroy();
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
+    if (go->hierarchy_open == true)
+    {
+        DrawGOChilds(go);
         ImGui::TreePop();
     }
 }
 
-void ModuleEditor::RecursiveDraw(GameObject* go)
+void ModuleEditor::ShowGameObject(GameObject* go)
 {
-    unsigned int flags = 0;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+    if (go->childs.empty())
+    {
+        flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+    }
 
-    // ADD flags for go
-    if (go->childs.size() == 0)
-        flags |= ImGuiTreeNodeFlags_Leaf;
-    
-    
-   
+    bool nodeOpen = ImGui::TreeNodeEx(go, flags, go->name.c_str());
+    go->hierarchy_open = go->childs.empty() ? false : nodeOpen;
 }
 
 void ModuleEditor::showAbaoutInfo()

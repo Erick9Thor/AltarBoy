@@ -29,11 +29,10 @@ public:
 	void showMenu();
 
 	void DrawHierarchyTree(GameObject* root);
-	void RecursiveDraw(GameObject* go);
+	void DrawGOChilds(GameObject* root);
+	void DrawGameObject(GameObject* go);
+	void ShowGameObject(GameObject* go);
 	
-	void showFPSGraph();
-	void AddFPS(float fps, float ms);
-
 	void showAbaoutInfo();
 
 private:
