@@ -5,6 +5,7 @@
 #include "ModuleProgram.h"
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
+#include "ModuleSceneManager.h"
 
 #include "ComponentCamera.h"
 
@@ -157,13 +158,13 @@ update_status ModuleRender::Update(const float delta)
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
+	glViewport(0, 0, viewportPanelSize.x, viewportPanelSize.y);
 
 	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	App->scene_manager->DrawScenes();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

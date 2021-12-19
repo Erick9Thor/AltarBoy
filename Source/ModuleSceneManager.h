@@ -17,6 +17,8 @@ class ModuleSceneManager :
 		update_status Update(const float delta) override;
 		bool CleanUp() override;
 
+		void DrawScenes();
+
 		void LoadModel(const char* model_path);
 
 		GameObject* GetRoot();

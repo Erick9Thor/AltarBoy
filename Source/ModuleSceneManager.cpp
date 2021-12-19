@@ -20,8 +20,6 @@ bool ModuleSceneManager::Init()
 update_status ModuleSceneManager::Update(const float delta)
 {
 	main_scene->Update();
-	main_scene->Draw();
-
 	return UPDATE_CONTINUE;
 }
 
@@ -30,6 +28,11 @@ bool ModuleSceneManager::CleanUp()
 	//TODO: Implement properly
 	delete main_scene;
 	return true;
+}
+
+void ModuleSceneManager::DrawScenes()
+{
+	main_scene->Draw();
 }
 
 void ModuleSceneManager::LoadModel(const char* model_path)
