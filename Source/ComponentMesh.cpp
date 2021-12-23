@@ -127,3 +127,11 @@ void ComponentMesh::CleanUp()
 	glDeleteBuffers(1, &vbo);
 	loaded = false;
 }
+
+void ComponentMesh::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+}

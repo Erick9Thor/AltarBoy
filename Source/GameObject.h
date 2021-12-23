@@ -32,6 +32,7 @@ class GameObject
 		void DrawAll();
 		void Draw();
 
+		const std::vector<Component*>& GetComponents() const { return components; }
 
 		template<typename RetComponent>
 		const RetComponent* GetComponent() const
@@ -61,6 +62,7 @@ class GameObject
 			return nullptr;
 		}
 
+
 		GameObject* parent = nullptr;
 		std::vector<GameObject*> childs;
 
@@ -68,6 +70,7 @@ class GameObject
 		
 		std::string	name;
 		bool hierarchy_open = false;
+
 	private:
 		std::vector<Component*> components;
 		ComponentTransform* transform = nullptr;

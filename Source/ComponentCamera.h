@@ -25,7 +25,7 @@ class ComponentCamera :
         
         static inline Type GetType() { return Type::Camera; };
 
-        inline unsigned int GetRenderTarget() const { return renderTexture; }
+        void DrawGui() override;
 
         Plane planes[6];
         float3 reference_point = float3::zero;
@@ -33,6 +33,5 @@ class ComponentCamera :
     private:
         float horizontal_fov;
         Frustum	frustum;
-        unsigned int renderTexture = 0;
 };
 

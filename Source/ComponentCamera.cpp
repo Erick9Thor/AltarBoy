@@ -78,3 +78,11 @@ void ComponentCamera::SetResolution(float width, float height)
 	float vertical_fov = frustum.VerticalFov();
 	frustum.SetVerticalFovAndAspectRatio(vertical_fov, width / height);
 }
+
+void ComponentCamera::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+}

@@ -6,6 +6,7 @@
 #include "ModuleCamera.h"
 #include "ModuleTexture.h"
 #include "ModuleHardware.h"
+#include "ModuleInput.h"
 #include "ModuleSceneManager.h"
 #include "SDL.h"
 
@@ -130,8 +131,6 @@ update_status ModuleEditor::PreUpdate(const float delta)
 update_status ModuleEditor::Update(const float delta)
 {
     showMenu();
-    // TODO: ADD frame buffer to component camera.
-    // DrawViewport();
     Draw();
     return UPDATE_CONTINUE;
 }
@@ -154,9 +153,18 @@ bool ModuleEditor::CleanUp()
 
 void ModuleEditor::showMenu() 
 { 
+    if (show_hirarchy) {
+        if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
+            DrawHierarchyTree(App->scene_manager->GetRoot());
+        }
+        ImGui::End();
+    }
 
-    if (ImGui::Begin("Hierarchy", &show_hirarchy)) {
-        DrawHierarchyTree(App->scene_manager->GetRoot());
+    if (show_inspector_window) {
+        if (ImGui::Begin("Inspector", &show_inspector_window))
+        {
+            InspectorDrawGameObject(selected_Go);
+        }
         ImGui::End();
     }
 
@@ -174,15 +182,6 @@ void ModuleEditor::showMenu()
         if (ImGui::Begin("FPS counter", &show_fps_counter))
         {
             App->renderer->FpsGraph();
-        }
-        ImGui::End();
-    }
-
-    if (show_inspector_window)
-    {
-        if (ImGui::Begin("Inspector", &show_inspector_window))
-        {
-            App->scene_manager->DrawGui();
         }
         ImGui::End();
     }
@@ -205,22 +204,18 @@ void ModuleEditor::DrawHierarchyTree(GameObject* root)
 
 void ModuleEditor::DrawGOChilds(GameObject* root)
 {
-    for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it)
+    for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it) {
         DrawGameObject(*it);
+    }
 }
 
 void ModuleEditor::DrawGameObject(GameObject* go)
 {
     ShowGameObject(go);
 
-    if (ImGui::BeginPopup(go->name.c_str()))
+    if (ImGui::IsItemHovered() && App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
-        if (ImGui::Button("Delete"))
-        {
-            ((GameObject*)go)->Destroy();
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
+        selected_Go = go;
     }
 
     if (go->hierarchy_open == true)
@@ -240,6 +235,47 @@ void ModuleEditor::ShowGameObject(GameObject* go)
 
     bool nodeOpen = ImGui::TreeNodeEx(go, flags, go->name.c_str());
     go->hierarchy_open = go->childs.empty() ? false : nodeOpen;
+}
+
+void ModuleEditor::InspectorDrawGameObject(GameObject* go)
+{
+    if (go != nullptr) {
+
+        char go_name[50];
+        strcpy_s(go_name, 50, go->name.c_str());
+        ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+        if (ImGui::InputText("###", go_name, 50, name_input_flags))
+            go->name = go_name;
+
+        std::vector<Component*> go_components = go->GetComponents();
+        for (vector<Component*>::iterator it = go_components.begin(); it != go_components.end(); ++it)
+            (*it)->DrawGui();
+
+        if (ImGui::Button("Add Component"))
+        {
+            ImGui::OpenPopup("Add Component Popup");
+        }
+
+        if (ImGui::BeginPopup("Add Component Popup"))
+        {
+            if (ImGui::MenuItem("Mesh"))
+            {
+                go->CreateComponent(Component::Type::Mesh);
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGui::MenuItem("Material"))
+            {
+                go->CreateComponent(Component::Type::Material);
+                ImGui::CloseCurrentPopup();
+            }
+            if (ImGui::MenuItem("Camera"))
+            {
+                go->CreateComponent(Component::Type::Camera);
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+    }
 }
 
 void ModuleEditor::showAbaoutInfo()
@@ -265,24 +301,3 @@ void ModuleEditor::showAbaoutInfo()
     ImGui::Text("DevIL lib version %d", IL_VERSION);
 }
 
-void ModuleEditor::DrawViewport()
-{
-    ImGuiWindowFlags flags = ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar;
-    if (!ImGui::Begin("Scene", 0, flags))
-    {
-        ImGui::End();
-        ImGui::PopStyleVar();
-        return;
-    }
-    ImGui::PopStyleVar();
-
-    DrawScene();
-
-    ImGui::End();
-}
-
-void ModuleEditor::DrawScene()
-{
-    // const ImVec2 newViewportPanelSize = ImGui::GetContentRegionAvail();
-    // ImGui::Image((ImTextureID)App->camera->getViewPortCamera()->GetRenderTarget(), ImVec2{ newViewportPanelSize.x, newViewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-}

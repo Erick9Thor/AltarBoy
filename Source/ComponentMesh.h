@@ -25,6 +25,7 @@ public:
 	inline unsigned GetNumIndexes() const { return num_indices; }
 	const AABB& GetAABB() const { return bounding_box; }
 	bool IsLoaded() const { return loaded; }
+	void DrawGui() override;
 
 private:
 	void LoadVBO(const aiMesh* mesh);

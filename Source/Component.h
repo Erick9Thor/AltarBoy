@@ -30,6 +30,8 @@ class Component
 
 		virtual void OnTransformUpdated() {};
 
+		virtual void DrawGui() {};
+
 	protected:
 		GameObject* game_object = nullptr;
 		bool active = true;
