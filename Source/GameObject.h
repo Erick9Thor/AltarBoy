@@ -32,6 +32,10 @@ class GameObject
 		void DrawAll();
 		void Draw();
 
+		void OnTransformUpdated();
+		
+		inline bool IsEnabled() { return enabled; }
+
 		const std::vector<Component*>& GetComponents() const { return components; }
 
 		template<typename RetComponent>
@@ -72,6 +76,7 @@ class GameObject
 		bool hierarchy_open = false;
 
 	private:
+		bool enabled = true;
 		std::vector<Component*> components;
 		ComponentTransform* transform = nullptr;
 

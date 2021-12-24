@@ -125,11 +125,17 @@ void GameObject::Destroy()
 
 void GameObject::Update()
 {
-	std::vector<Component*>::iterator it;
-	for (it = components.begin(); it != components.end(); ++it)
-	{
-		(*it)->OnUpdate();
-		(*it)->OnTransformUpdated();
+	if (transform->HasChanged()) {
+		OnTransformUpdated();
+	}
+
+	for (Component* component : components) {
+		component->Update();
+	}		
+
+	for (GameObject* child : childs) {
+		if(child->IsEnabled())
+			child->Update();
 	}
 }
 
@@ -149,5 +155,16 @@ void GameObject::Draw()
 	for (Component* component : components) {
 		component->Draw();
 	}
+}
+
+void GameObject::OnTransformUpdated()
+{
+	// Update components
+	for (Component* component : components)
+		component->OnTransformUpdated();
+	
+	// Update children
+	for (GameObject* child : childs)
+		child->OnTransformUpdated();
 }
 

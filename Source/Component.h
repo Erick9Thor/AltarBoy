@@ -26,7 +26,7 @@ class Component
 		const GameObject* GetGameObject() const { return game_object; }
 		GameObject* GetGameObject() { return game_object; }
 
-		virtual void OnUpdate() {};
+		virtual void Update() {};
 
 		virtual void OnTransformUpdated() {};
 

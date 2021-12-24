@@ -35,10 +35,14 @@ class ComponentTransform :
 
         static inline Type GetType() { return Type::Transform; };
 
-        void OnTransformUpdated() override;
+        void OnTransformUpdated() override { changed = false; }
         void DrawGui() override;
 
+        inline bool HasChanged() const { return changed; }
+
     private:
+        bool changed = false;
+
         float4x4 local_transform;
         float4x4 transform;
 

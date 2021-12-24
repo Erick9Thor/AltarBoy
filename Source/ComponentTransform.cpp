@@ -50,21 +50,17 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 	local_transform = new_transform;
 	local_transform.Decompose(local_position, local_rotation, local_scale);
 	local_rotation_euler = local_rotation.ToEulerXYZ() * to_deg;
-
+	
 	UpdateGlobalTransforms();
 }
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
 {
-	if (game_object->parent)
-	{
-		// Use parent global transform to get local transform
+	// Use parent global transform to get local transform
+	if (game_object->parent)	
 		SetLocalTransform(game_object->parent->GetComponent<ComponentTransform>()->GetTransform().Transposed() * transform);
-	}
 	else
-	{
 		SetLocalTransform(transform);
-	}
 }
 
 void ComponentTransform::UpdateGlobalTransforms()
@@ -74,13 +70,13 @@ void ComponentTransform::UpdateGlobalTransforms()
 		transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform() * local_transform;
 	else
 		transform = local_transform;
+
+	// Set transform as changed
+	changed = true;
+
 	// Update children
 	for (GameObject* child : game_object->childs)
 		child->GetComponent<ComponentTransform>()->UpdateGlobalTransforms();
-}
-
-void ComponentTransform::OnTransformUpdated()
-{
 }
 
 void ComponentTransform::SetPosition(float3 new_transform)

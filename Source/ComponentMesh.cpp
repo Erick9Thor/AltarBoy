@@ -132,6 +132,6 @@ void ComponentMesh::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
+		ImGui::Text("Mesh Data : %dt, (%dv, %di)", num_indices / 3, num_vertices, num_indices);
 	}
 }
