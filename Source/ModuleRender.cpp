@@ -60,24 +60,24 @@ void ModuleRender::GenerateFrameBuffer()
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Configuring frame buffer
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
 
 	//Generating the depth & stencil buffer
 	glGenRenderbuffers(1, &depth_stencil_buffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
-
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-	//Configuring frame buffer
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);	
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		LOG("[M_Render] Error creating frame buffer");
 	}
+
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -95,9 +95,7 @@ void ModuleRender::CreateContext()
 	context = SDL_GL_CreateContext(App->window->GetWindow());
 	GLenum err = glewInit();
 
-	int w, h;
-	SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
-	glViewport(0, 0, w, h);
+	glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
 
 	clear_color = float4(0.1f, 0.1f, 0.1f, 1.0f);
 }
@@ -130,24 +128,25 @@ update_status ModuleRender::Update(const float delta)
 	ImGui::Begin("Scene");
 
 	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	const ImVec2 newViewportPanelSize = ImGui::GetContentRegionAvail();
+	const ImVec2 new_viewport_size = ImGui::GetContentRegionAvail();
 
-	if (viewportPanelSize.x != newViewportPanelSize.x || viewportPanelSize.y != newViewportPanelSize.y) {
-		viewportPanelSize.x = newViewportPanelSize.x;
-		viewportPanelSize.y = newViewportPanelSize.y;
+	if (viewport_size.x != new_viewport_size.x || viewport_size.y != new_viewport_size.y) {
+		viewport_size.x = new_viewport_size.x;
+		viewport_size.y = new_viewport_size.y;
 
 		//Resize textures
 		glBindTexture(GL_TEXTURE_2D, fb_texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) viewportPanelSize.x, (GLsizei) viewportPanelSize.y, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)viewport_size.x, (int)viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (GLsizei)viewportPanelSize.x, (GLsizei)viewportPanelSize.y);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)viewport_size.x, (int)viewport_size.y);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-		App->camera->SetAspectRatio((unsigned int)viewportPanelSize.x, (unsigned int)viewportPanelSize.y);
+		glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
+		App->camera->SetAspectRatio((unsigned)viewport_size.x, (unsigned)viewport_size.y);
 	}
 
 	if (debug_draw)
@@ -158,7 +157,6 @@ update_status ModuleRender::Update(const float delta)
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
-	glViewport(0, 0, viewportPanelSize.x, viewportPanelSize.y);
 
 	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
@@ -168,7 +166,7 @@ update_status ModuleRender::Update(const float delta)
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	ImGui::Image((ImTextureID)fb_texture, ImVec2{ newViewportPanelSize.x, newViewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+	ImGui::Image((void*)(intptr_t)fb_texture, ImVec2{ new_viewport_size.x, new_viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 	ImGui::End();
 
 	return UPDATE_CONTINUE;
