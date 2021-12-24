@@ -51,13 +51,7 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 	local_transform.Decompose(local_position, local_rotation, local_scale);
 	local_rotation_euler = local_rotation.ToEulerXYZ() * to_deg;
 
-	// TODO: Update hierachy of childs recursively (for each child recursively call these lines encapsulated in a method)
-	if (game_object->parent) {
-		transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform() * local_transform;
-	}
-	else {
-		transform = local_transform;
-	}
+	UpdateGlobalTransforms();
 }
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
@@ -71,6 +65,18 @@ void ComponentTransform::SetGlobalTransform(float4x4 transform)
 	{
 		SetLocalTransform(transform);
 	}
+}
+
+void ComponentTransform::UpdateGlobalTransforms()
+{
+	// Updates current transform based on parent and calls to update the children
+	if (game_object->parent)
+		transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform() * local_transform;
+	else
+		transform = local_transform;
+	// Update children
+	for (GameObject* child : game_object->childs)
+		child->GetComponent<ComponentTransform>()->UpdateGlobalTransforms();
 }
 
 void ComponentTransform::OnTransformUpdated()

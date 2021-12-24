@@ -21,7 +21,8 @@ class ComponentTransform :
         inline void SetLocalTransform(float3 position, Quat rotation, float3 scale);
         inline void SetLocalPosition(float3 new_position) { SetLocalTransform(new_position, local_rotation, local_scale); }
 
-        void SetGlobalTransform(float4x4 transform);           
+        void SetGlobalTransform(float4x4 transform);
+        void UpdateGlobalTransforms();
         
         inline float4x4 GetTransform() const { return transform; }
 
