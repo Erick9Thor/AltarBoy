@@ -95,11 +95,11 @@ Component* GameObject::CreateComponent(Component::Type type)
 	return new_component;
 }
 
-void GameObject::RemoveChild(GameObject* gameObject)
+void GameObject::RemoveChild(GameObject* game_object)
 {
-	for (vector<GameObject*>::const_iterator it = gameObject->childs.begin(); it != gameObject->childs.end(); ++it)
+	for (vector<GameObject*>::const_iterator it = game_object->childs.begin(); it != game_object->childs.end(); ++it)
 	{
-		if ((*it) == gameObject)
+		if ((*it) == game_object)
 		{
 			childs.erase(it);
 		}
@@ -115,7 +115,8 @@ void GameObject::Destroy()
 	}
 
 	if (scene_owner)
-		// scene_owner->OnDestroyGameObject(this);
+		// TODO: Manage object destruction on scene
+		//scene_owner->OnDestroyGameObject(this);
 
 	for (unsigned int i = 0; i < childs.size(); ++i)
 	{

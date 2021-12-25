@@ -76,17 +76,28 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		GameObject* model_part = CreateNewGameObject("TestModelPart", parent);
+		GameObject* model_part = CreateNewGameObject(node->mName.C_Str(), parent);
 		model_part->CreateComponent(Component::Type::Mesh);
 		model_part->GetComponent<ComponentMesh>()->Load(mesh);
 		model_part->CreateComponent(Component::Type::Material);
 		model_part->GetComponent<ComponentMaterial>()->SetTexture(textures[mesh->mMaterialIndex]);
+
+		aiVector3D aiTranslation, aiScale;
+		aiQuaternion aiRotation;
+		node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+		model_part->GetComponent<ComponentTransform>()->SetLocalTransform(
+			float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
+			Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w),
+			float3(aiScale.x, aiScale.y, aiScale.z)
+		);
 	}
+
 	// then do the same for each of its children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
 		LoadNode(scene, node->mChildren[i], parent);
 	}
+	
 }
 
 bool Scene::LoadTextures(const aiScene* scene, const std::string& model_path)

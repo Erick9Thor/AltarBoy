@@ -26,7 +26,7 @@ class ModuleSceneManager :
 
 		GameObject* scene_model;
 
-		Scene* getActiveScene() {
+		Scene* GetActiveScene() {
 			return main_scene;
 		}
 
