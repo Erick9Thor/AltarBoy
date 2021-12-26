@@ -167,5 +167,25 @@ void GameObject::OnTransformUpdated()
 	// Update children
 	for (GameObject* child : childs)
 		child->OnTransformUpdated();
+
+	UpdateBoundingBoxes();
+}
+
+void GameObject::UpdateBoundingBoxes()
+{
+	constexpr float default_bounding_size = 1.0f;
+	ComponentMesh* mesh = GetComponent<ComponentMesh>();
+	if (mesh) {
+		obb = mesh->GetAABB();
+		obb.Transform(transform->GetTransform());
+
+		// Enclose is accumulative, reset the box
+		aabb.SetNegativeInfinity();
+		aabb.Enclose(obb);
+	}	
+	// If there is no mesh generate a default size
+	aabb.SetNegativeInfinity();
+	aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+	obb = aabb;
 }
 

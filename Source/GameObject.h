@@ -18,23 +18,21 @@ class GameObject
 		GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
 		GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 		virtual ~GameObject();
+		inline bool IsEnabled() { return enabled; }
 
 		void SetNewParent(GameObject* new_parent);
-
 		void AddComponent(Component* component);
 		Component* CreateComponent(Component::Type type);
 		void RemoveChild(GameObject* gameObject);
 
 		void Destroy();
-
 		void Update();
-
 		void DrawAll();
 		void Draw();
 
 		void OnTransformUpdated();
-		
-		inline bool IsEnabled() { return enabled; }
+
+		void UpdateBoundingBoxes();
 
 		const std::vector<Component*>& GetComponents() const { return components; }
 
