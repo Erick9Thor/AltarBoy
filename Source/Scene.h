@@ -35,14 +35,13 @@ class Scene
 		void Draw();
 
 	private:
-		void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent);
-		bool LoadTextures(const aiScene* scene, const std::string& model_path);
-		bool LoadTexture(const aiMaterial* texture, const std::string& model_path);		
+		void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
+		std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
+		Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
 
 		ModuleSceneManager* manager_owner = nullptr;
 
 		GameObject* root = nullptr;
-		std::vector<Texture> textures;
 		ComponentCamera* main_camera = nullptr;
 };
 
