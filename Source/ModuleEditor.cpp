@@ -163,7 +163,7 @@ void ModuleEditor::showMenu()
     if (show_inspector_window) {
         if (ImGui::Begin("Inspector", &show_inspector_window))
         {
-            InspectorDrawGameObject(selected_Go);
+            InspectorDrawGameObject(selected_go);
         }
         ImGui::End();
     }
@@ -216,7 +216,7 @@ void ModuleEditor::DrawGameObject(GameObject* game_object)
     if (ImGui::IsItemHovered())
     {
         if (App->input->GetMouseButton(SDL_BUTTON_LEFT))
-            selected_Go = game_object;
+            selected_go = game_object;
 
         if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) )
         {

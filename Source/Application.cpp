@@ -77,12 +77,6 @@ bool Application::CleanUp()
 	return ret;
 }
 
-void Application::DebugDraw()
-{
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
-			(*it)->DrawDebug();
-}
-
 void Application::RequestBrowser(const char* url) const
 {
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);

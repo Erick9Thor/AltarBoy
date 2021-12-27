@@ -24,6 +24,8 @@ class ModuleEditor : public Module
 		void Draw();
 		void showMenu();
 
+		GameObject* getSelectedGO() const { return selected_go; }
+
 		// HIERARCHY
 		void DrawHierarchyTree(GameObject* root);
 		void DrawGOChilds(GameObject* root);
@@ -37,7 +39,7 @@ class ModuleEditor : public Module
 
 	private:
 
-		GameObject* selected_Go = nullptr;
+		GameObject* selected_go = nullptr;
 
 		bool show_hirarchy = true;
 		bool show_inspector_window = true;

@@ -3,8 +3,10 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
-#include <vector>
 #include "Timer.h"
+#include <vector>
+
+using namespace std;
 
 class ModuleRender;
 class ModuleWindow;
@@ -34,11 +36,7 @@ class Application
 
 		bool CleanUp();
 
-		void DebugDraw();
-
 		void RequestBrowser(const char* url) const;
-		
-
 	public:
 		ModuleRender* renderer = nullptr;
 		ModuleWindow* window = nullptr;

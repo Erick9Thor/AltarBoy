@@ -25,7 +25,7 @@ class ModuleCamera : public Module
 		// Camera actions
 		void Zoom(float zoom);
 		void Orbit(float motion_x, float motion_y);
-		void LookAt(const float3& target, float distance);
+		void FocusOnModel(const float3& target, float distance);
 		void Rotate(float motion_x, float motion_y);
 
 	private:

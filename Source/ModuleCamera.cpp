@@ -1,14 +1,16 @@
-#include "ModuleCamera.h"
 #include "GameObject.h"
-
 #include "Application.h"
+
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 #include "ModuleCamera.h"
 #include "ModuleWindow.h"
 #include "ModuleInput.h"
+#include "ModuleEditor.h"
+#include "ModuleSceneManager.h"
+
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
-#include "ModuleSceneManager.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"
@@ -80,8 +82,8 @@ void ModuleCamera::Controller(const float delta)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_F)) {
 		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
-		// Find the way to get the model gameObject
-		// FocusCameraOnPosition(gameObject->GetComponent<C_Transform>()->GetPosition(), distance);
+		GameObject* go = App->editor->getSelectedGO();
+		FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
 	}
 }
 
@@ -139,7 +141,7 @@ void ModuleCamera::MovementController(const float delta) {
 	main_camera->reference_point += deltaRight + deltaUp;
 }
 
-void ModuleCamera::LookAt(const float3& target, float distance)
+void ModuleCamera::FocusOnModel(const float3& target, float distance)
 {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float3 v = transform->GetFwd().Neg();
@@ -152,7 +154,6 @@ void ModuleCamera::LookAt(const float3& target, float distance)
 
 void ModuleCamera::Rotate(float motion_x, float motion_y) {
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
-
 	
 	Quat yaw_quat = Quat::RotateY(motion_x);
 	float3 newRight = yaw_quat * transform->GetRight();
