@@ -204,50 +204,83 @@ void ModuleEditor::DrawHierarchyTree(GameObject* root)
 
 void ModuleEditor::DrawGOChilds(GameObject* root)
 {
-    for (vector<GameObject*>::const_iterator it = root->childs.begin(); it != root->childs.end(); ++it) {
-        DrawGameObject(*it);
+    for (GameObject* game_object : root->childs) {
+        DrawGameObject(game_object);
     }
 }
 
-void ModuleEditor::DrawGameObject(GameObject* go)
+void ModuleEditor::DrawGameObject(GameObject* game_object)
 {
-    ShowGameObject(go);
+    ShowGameObject(game_object);
 
-    if (ImGui::IsItemHovered() && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (ImGui::IsItemHovered())
     {
-        selected_Go = go;
+        if (App->input->GetMouseButton(SDL_BUTTON_LEFT))
+            selected_Go = game_object;
+
+        if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) )
+        {
+            ImGui::OpenPopup(game_object->name.c_str());
+        }  
     }
 
-    if (go->hierarchy_open == true)
+    // TODO: Make robust to repeted game object names
+    if (ImGui::BeginPopup(game_object->name.c_str())) {
+        // Alternativs: ImGui::Selectable, ImGuiHelper::ValueSelection
+        // TODO: Open options to create/destroy new object or move up down in the list of childs
+        if (ImGui::MenuItem("Add Gameojbect"))
+        {
+            App->scene_manager->GetActiveScene()->CreateNewGameObject("Test", game_object);
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Delete Gameojbect"))
+        {
+            // TODO: Make it work
+            //game_object->Destroy();
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Move Up"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Move Down"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+    
+
+    if (game_object->hierarchy_open == true)
     {
-        DrawGOChilds(go);
+        DrawGOChilds(game_object);
         ImGui::TreePop();
     }
 }
 
-void ModuleEditor::ShowGameObject(GameObject* go)
+void ModuleEditor::ShowGameObject(GameObject* game_object)
 {
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-    if (go->childs.empty())
+    if (game_object->childs.empty())
     {
         flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
     }
 
-    bool nodeOpen = ImGui::TreeNodeEx(go, flags, go->name.c_str());
-    go->hierarchy_open = go->childs.empty() ? false : nodeOpen;
+    bool nodeOpen = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
+    game_object->hierarchy_open = game_object->childs.empty() ? false : nodeOpen;
 }
 
-void ModuleEditor::InspectorDrawGameObject(GameObject* go)
+void ModuleEditor::InspectorDrawGameObject(GameObject* game_object)
 {
-    if (go != nullptr) {
+    if (game_object != nullptr) {
 
         char go_name[50];
-        strcpy_s(go_name, 50, go->name.c_str());
+        strcpy_s(go_name, 50, game_object->name.c_str());
         ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
         if (ImGui::InputText("###", go_name, 50, name_input_flags))
-            go->name = go_name;
+            game_object->name = go_name;
 
-        std::vector<Component*> go_components = go->GetComponents();
+        std::vector<Component*> go_components = game_object->GetComponents();
         for (vector<Component*>::iterator it = go_components.begin(); it != go_components.end(); ++it)
             (*it)->DrawGui();
 
@@ -260,17 +293,17 @@ void ModuleEditor::InspectorDrawGameObject(GameObject* go)
         {
             if (ImGui::MenuItem("Mesh"))
             {
-                go->CreateComponent(Component::Type::Mesh);
+                game_object->CreateComponent(Component::Type::Mesh);
                 ImGui::CloseCurrentPopup();
             }
             if (ImGui::MenuItem("Material"))
             {
-                go->CreateComponent(Component::Type::Material);
+                game_object->CreateComponent(Component::Type::Material);
                 ImGui::CloseCurrentPopup();
             }
             if (ImGui::MenuItem("Camera"))
             {
-                go->CreateComponent(Component::Type::Camera);
+                game_object->CreateComponent(Component::Type::Camera);
                 ImGui::CloseCurrentPopup();
             }
             ImGui::EndPopup();

@@ -95,11 +95,11 @@ Component* GameObject::CreateComponent(Component::Type type)
 	return new_component;
 }
 
-void GameObject::RemoveChild(GameObject* gameObject)
+void GameObject::RemoveChild(GameObject* game_object)
 {
-	for (vector<GameObject*>::const_iterator it = gameObject->childs.begin(); it != gameObject->childs.end(); ++it)
+	for (vector<GameObject*>::const_iterator it = game_object->childs.begin(); it != game_object->childs.end(); ++it)
 	{
-		if ((*it) == gameObject)
+		if ((*it) == game_object)
 		{
 			childs.erase(it);
 		}
@@ -115,7 +115,8 @@ void GameObject::Destroy()
 	}
 
 	if (scene_owner)
-		// scene_owner->OnDestroyGameObject(this);
+		// TODO: Manage object destruction on scene
+		//scene_owner->OnDestroyGameObject(this);
 
 	for (unsigned int i = 0; i < childs.size(); ++i)
 	{
@@ -125,11 +126,17 @@ void GameObject::Destroy()
 
 void GameObject::Update()
 {
-	std::vector<Component*>::iterator it;
-	for (it = components.begin(); it != components.end(); ++it)
-	{
-		(*it)->OnUpdate();
-		(*it)->OnTransformUpdated();
+	if (transform->HasChanged()) {
+		OnTransformUpdated();
+	}
+
+	for (Component* component : components) {
+		component->Update();
+	}		
+
+	for (GameObject* child : childs) {
+		if(child->IsEnabled())
+			child->Update();
 	}
 }
 
@@ -149,5 +156,36 @@ void GameObject::Draw()
 	for (Component* component : components) {
 		component->Draw();
 	}
+}
+
+void GameObject::OnTransformUpdated()
+{
+	// Update components
+	for (Component* component : components)
+		component->OnTransformUpdated();
+	
+	// Update children
+	for (GameObject* child : childs)
+		child->OnTransformUpdated();
+
+	UpdateBoundingBoxes();
+}
+
+void GameObject::UpdateBoundingBoxes()
+{
+	constexpr float default_bounding_size = 1.0f;
+	ComponentMesh* mesh = GetComponent<ComponentMesh>();
+	if (mesh) {
+		obb = mesh->GetAABB();
+		obb.Transform(transform->GetTransform());
+
+		// Enclose is accumulative, reset the box
+		aabb.SetNegativeInfinity();
+		aabb.Enclose(obb);
+	}	
+	// If there is no mesh generate a default size
+	aabb.SetNegativeInfinity();
+	aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+	obb = aabb;
 }
 

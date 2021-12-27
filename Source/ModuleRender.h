@@ -66,12 +66,12 @@ private:
 	static const unsigned n_bins = 50;
 	std::vector<float> fps_log;
 	std::vector<float> ms_log;
-	float current_fps;
-	float current_ms;
+	float current_fps = 0.0f;
+	float current_ms = 0.0f;
 
-	unsigned int frame_buffer;
-	unsigned int fb_texture;
-	unsigned int depth_stencil_buffer;
+	unsigned frame_buffer = 0;
+	unsigned fb_texture = 0;
+	unsigned depth_stencil_buffer = 0;
 
-	float2 viewportPanelSize = float2(0.0f, 0.0f);
+	float2 viewport_size = float2(0.0f, 0.0f);
 };

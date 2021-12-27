@@ -39,7 +39,7 @@ void ModuleSceneManager::LoadModel(const char* model_path)
 {
 	// delete scene_model;
 	// TODO: Need to refactor model class to convert a game object
-	scene_model = main_scene->LoadFBX(model_path);
+	main_scene->LoadFBX(model_path);
 }
 
 GameObject* ModuleSceneManager::GetRoot()

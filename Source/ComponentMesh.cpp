@@ -20,86 +20,74 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Load(const aiMesh* mesh)
 {
-	LoadVBO(mesh);
-	LoadEBO(mesh);
-	CreateVAO();
-	GenerateAABB(mesh);
+	Import(mesh);
+	GenerateBuffers();
+	GenerateAABB();
 	loaded = true;
 }
 
-void ComponentMesh::LoadVBO(const aiMesh* mesh)
+// TODO: Move to importer
+void ComponentMesh::Import(const aiMesh* mesh)
 {
-
 	num_vertices = mesh->mNumVertices;
-	unsigned vertex_size = (sizeof(float) * 3 + sizeof(float) * 3 + sizeof(float) * 2);
-	unsigned buffer_size = vertex_size * num_vertices;
+	vertices_buffer_size = mesh->mNumVertices * 3;
+	vertices = new float[vertices_buffer_size];
+	memcpy(vertices, mesh->mVertices, vertices_buffer_size * sizeof(float));
 
-	std::vector<Vertex> vertexs;
-	vertexs.reserve(num_vertices);
+	// TODO: use mesh->HasFaces(), mesh->HasNormals() and mesh->HasTextureCoords() to load if exists
+	normals_buffer_size = mesh->mNumVertices * 3;
+	normals = new float[normals_buffer_size];
+	memcpy(normals, mesh->mNormals, normals_buffer_size * sizeof(float));
 
-	for (unsigned i = 0; i < num_vertices; ++i)
-	{
-		Vertex v;
-		v.position = float3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-		v.normal = float3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
-		v.tex_coords = float2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
-		vertexs.push_back(v);
-	}
-
-	// Generate, activate and fill buffer
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * num_vertices, &vertexs[0], GL_STATIC_DRAW);
-	vertexs.clear();
-}
-
-void ComponentMesh::LoadEBO(const aiMesh* mesh)
-{
+	tex_coords_buffer_size = mesh->mNumVertices * 2;
+	tex_coords = new float[tex_coords_buffer_size];
+	for (unsigned i = 0; i < mesh->mNumVertices; i++)
+		memcpy(&tex_coords[i * 2], &mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
+	
 	num_indices = mesh->mNumFaces * 3;
-
-	// Generate & activate buffer
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-
-	// Compute size, each face is 3 vertex indexes
-	unsigned index_size = sizeof(unsigned) * mesh->mNumFaces * 3;
-
-	// Update buffer data attributes
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_size, nullptr, GL_STATIC_DRAW);
-
-	// Map buffer and fill it in a custom manner
-	unsigned* indices = (unsigned*)glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+	indices_buffer_size = num_indices;
+	indices = new unsigned[indices_buffer_size];
 	for (unsigned i = 0; i < mesh->mNumFaces; ++i)
-	{
-		assert(mesh->mFaces[i].mNumIndices == 3);
-		*(indices++) = mesh->mFaces[i].mIndices[0];
-		*(indices++) = mesh->mFaces[i].mIndices[1];
-		*(indices++) = mesh->mFaces[i].mIndices[2];
-	}
-	glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		memcpy(&indices[i * 3], mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
 }
 
-void ComponentMesh::CreateVAO()
+void ComponentMesh::GenerateBuffers()
 {
-	static const unsigned stride = sizeof(Vertex);
-	// Generate vao, activate & bind buffers
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
-	// Define layout, index, size, type, normalized, stride, pointer
+	// Positions (3 values per coord)
+	glGenBuffers(1, &vertices_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, vertices_buffer);
+	glBufferData(GL_ARRAY_BUFFER, vertices_buffer_size * sizeof(float), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0); // Positions
+
+	// Normals (3 values per coord)
+	glGenBuffers(1, &normals_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
+	glBufferData(GL_ARRAY_BUFFER, normals_buffer_size * sizeof(float), normals, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * (3))); // Normals
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * (3 + 3))); // Texture coords
+
+	// Texture Coords (2 values per coord)
+	glGenBuffers(1, &tex_coords_buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, tex_coords_buffer);
+	glBufferData(GL_ARRAY_BUFFER, tex_coords_buffer_size * sizeof(float), tex_coords, GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);	
+
+	// Indices (1 value)
+	glGenBuffers(1, &indices_buffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices_buffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_buffer_size * sizeof(unsigned), indices, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
 }
 
-void ComponentMesh::GenerateAABB(const aiMesh* mesh)
+void ComponentMesh::GenerateAABB()
 {
-	bounding_box.SetFrom((float3*)&mesh->mVertices[0], mesh->mNumVertices);
+	bounding_box.SetFrom((float3*)&vertices, num_vertices);
 }
 
 void ComponentMesh::Draw()
@@ -122,9 +110,22 @@ void ComponentMesh::Draw()
 
 void ComponentMesh::CleanUp()
 {
-	assert(loaded == true);
-	glDeleteBuffers(1, &ebo);
-	glDeleteBuffers(1, &vbo);
+	if (loaded) {
+		glDeleteBuffers(1, &indices_buffer);
+		glDeleteBuffers(1, &vertices_buffer);
+		glDeleteBuffers(1, &normals_buffer);
+		glDeleteBuffers(1, &tex_coords_buffer);
+
+		delete[] indices;
+		delete[] vertices;
+		delete[] normals;
+		delete[] tex_coords;
+
+		indices_buffer_size = 0;
+		vertices_buffer_size = 0;
+		normals_buffer_size = 0;
+		tex_coords_buffer_size = 0;
+	}	
 	loaded = false;
 }
 
@@ -132,6 +133,6 @@ void ComponentMesh::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
+		ImGui::Text("%d Triangles\n%d vertices\n%d indices", num_indices / 3, num_vertices, num_indices);
 	}
 }

@@ -24,9 +24,7 @@ class ModuleSceneManager :
 		GameObject* GetRoot();
 		const GameObject* GetRoot() const;
 
-		GameObject* scene_model;
-
-		Scene* getActiveScene() {
+		Scene* GetActiveScene() {
 			return main_scene;
 		}
 

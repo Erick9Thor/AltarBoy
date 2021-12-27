@@ -18,10 +18,17 @@ class ComponentTransform :
         void SetRotationAxis(float3 x, float3 y, float3 z);
 
         void SetLocalTransform(float4x4 new_transform);
-        inline void SetLocalTransform(float3 position, Quat rotation, float3 scale);
-        inline void SetLocalPosition(float3 new_position) { SetLocalTransform(new_position, local_rotation, local_scale); }
+        void SetLocalTransform(float3 position, Quat rotation, float3 scale);
 
-        void SetGlobalTransform(float4x4 transform);           
+
+        inline void SetLocalPosition(float3 new_position) { SetLocalTransform(new_position, local_rotation, local_scale); }
+        inline void SetLocalScale(float3 new_scale) { SetLocalTransform(local_position, local_rotation, new_scale); }
+        inline void SetLocalRotation(Quat new_rotation) { SetLocalTransform(local_position, new_rotation, local_scale); }
+        void SetLocalRotation(float3 rotation_angles);
+        
+
+        void SetGlobalTransform(float4x4 transform);
+        void UpdateGlobalTransforms();
         
         inline float4x4 GetTransform() const { return transform; }
 
@@ -34,10 +41,14 @@ class ComponentTransform :
 
         static inline Type GetType() { return Type::Transform; };
 
-        void OnTransformUpdated() override;
+        void OnTransformUpdated() override { changed = false; }
         void DrawGui() override;
 
+        inline bool HasChanged() const { return changed; }
+
     private:
+        bool changed = false;
+
         float4x4 local_transform;
         float4x4 transform;
 
