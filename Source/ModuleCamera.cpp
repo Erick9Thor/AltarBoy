@@ -13,6 +13,9 @@
 #include "glew.h"
 #include "Math/MathConstants.h"
 
+#include "ImGuizmo.h"
+
+
 ModuleCamera::ModuleCamera()
 {
 	
@@ -31,7 +34,9 @@ bool ModuleCamera::Init()
 	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
 	cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
 	cameraGameObject->Update();
-	
+
+	ImGuizmo::Enable(true);
+
 	return true;
 }
 
@@ -51,7 +56,8 @@ void ModuleCamera::Controller(const float delta)
 {
 	static const float zoom_speed = 3.0f;
 	static const float rot_speed = 2.0f;
-	// Keyboard for WASD movement -------
+
+	// Keyboard movement ---------------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
 		int moved_x, moved_y;

@@ -33,8 +33,9 @@ class ComponentTransform :
         void LookAt(float3 target, float3 world_up = float3::unitY);
 
         static inline Type GetType() { return Type::Transform; };
-        void OnTransformUpdated() override;
 
+        void OnTransformUpdated() override;
+        void DrawGui() override;
 
     private:
         float4x4 local_transform;

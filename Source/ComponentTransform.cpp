@@ -82,3 +82,11 @@ void ComponentTransform::SetPosition(float3 new_transform)
 	transform.SetTranslatePart(new_transform);
 	SetGlobalTransform(transform);
 }
+
+void ComponentTransform::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+}

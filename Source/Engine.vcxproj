@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\imGizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\imGizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +149,7 @@
     <ClCompile Include="ComponentMaterial.cpp" />
     <ClCompile Include="ComponentMesh.cpp" />
     <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="Dependencies\imGizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -222,6 +223,7 @@
     <ClInclude Include="ComponentTransform.h" />
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
+    <ClInclude Include="Dependencies\imGizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitOps.h" />

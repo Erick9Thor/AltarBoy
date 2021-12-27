@@ -12,34 +12,36 @@
 
 class ModuleEditor : public Module
 {
-public:
-	ModuleEditor();
-	~ModuleEditor() override;
+	public:
+		ModuleEditor();
+		~ModuleEditor() override;
 
-	bool Init() override;
-	update_status PreUpdate(const float delta) override;
-	update_status Update(const float delta) override;
-	bool CleanUp() override;
+		bool Init() override;
+		update_status PreUpdate(const float delta) override;
+		update_status Update(const float delta) override;
+		bool CleanUp() override;
+		
+		void Draw();
+		void showMenu();
 
-	void DrawViewport();
-	void DrawScene();
+		// HIERARCHY
+		void DrawHierarchyTree(GameObject* root);
+		void DrawGOChilds(GameObject* root);
+		void DrawGameObject(GameObject* go);
+		void ShowGameObject(GameObject* go);
 
-	void Draw();
-
-	void showMenu();
-
-	void DrawHierarchyTree(GameObject* root);
-	void DrawGOChilds(GameObject* root);
-	void DrawGameObject(GameObject* go);
-	void ShowGameObject(GameObject* go);
+		// INSPECTOR
+		void InspectorDrawGameObject(GameObject* go);
 	
-	void showAbaoutInfo();
+		void showAbaoutInfo();
 
-private:
+	private:
 
-	bool show_hirarchy = true;
-	bool show_inspector_window = true;
-	bool show_abaout = false;
-	bool show_camera_window = false;
-	bool show_fps_counter = false;
+		GameObject* selected_Go = nullptr;
+
+		bool show_hirarchy = true;
+		bool show_inspector_window = true;
+		bool show_abaout = false;
+		bool show_camera_window = false;
+		bool show_fps_counter = false;
 };
