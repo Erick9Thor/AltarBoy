@@ -28,6 +28,8 @@ class ModuleSceneManager :
 			return main_scene;
 		}
 
+		bool isSceneRuning() { return false; }
+
 	private:
 		Scene* main_scene = nullptr;
 };

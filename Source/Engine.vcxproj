@@ -224,6 +224,7 @@
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
     <ClInclude Include="Dependencies\imGizmo\ImGuizmo.h" />
+    <ClInclude Include="Dependencies\imgui\IconsFontAwesome5.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitOps.h" />

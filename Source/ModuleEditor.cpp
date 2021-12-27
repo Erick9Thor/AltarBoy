@@ -20,6 +20,7 @@
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
+#include <IconsFontAwesome5.h>
 
 ModuleEditor::ModuleEditor()
 {
@@ -34,6 +35,12 @@ bool ModuleEditor::Init()
     IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+    io.Fonts->AddFontDefault();
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
+    ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 10.0f, &icons_config, icons_ranges);
+    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAR, 10.0f, &icons_config, icons_ranges);
 
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
@@ -78,8 +85,14 @@ update_status ModuleEditor::PreUpdate(const float delta)
 
     ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 4));
     if (ImGui::BeginMainMenuBar())
     {
+        FileMenu();
+        EditMenu();
+        GoMenu();
+
         if (ImGui::BeginMenu("Help"))
         {
             if (ImGui::MenuItem("Documentation"))
@@ -103,34 +116,102 @@ update_status ModuleEditor::PreUpdate(const float delta)
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Tools"))
-        {
-            if (ImGui::MenuItem("Console"))
-            {
-                Logger->setShowConsole(!Logger->getShowConsole());
-            }
-            if (ImGui::MenuItem("Camera"))
-            {
-                show_camera_window = !show_camera_window;
-            }
-            if (ImGui::MenuItem("FPS counter"))
-            {
-                show_fps_counter = !show_fps_counter;
-            }
-            ImGui::EndMenu();
-        }
-    }
+        ViewMenu();
 
-    ImGui::EndMainMenuBar();
+        ImGui::PopStyleVar(2);
+
+        float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
+        ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
+        
+        ImGui::EndMainMenuBar();
+    }
 
     ImGui::End();
 
     return UPDATE_CONTINUE;
 }
 
+void ModuleEditor::FileMenu()
+{
+    // TODO: shortcuts
+
+    if (!ImGui::BeginMenu("File")) return;
+    if (ImGui::MenuItem(ICON_FA_PLUS "New"))
+    {
+        //TODO: Create a new scene
+    }
+    if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, !App->scene_manager->isSceneRuning()))
+    {
+        //TODO: Save the current scene
+    }
+    if (ImGui::MenuItem("Save as", nullptr, false, !App->scene_manager->isSceneRuning()))
+    {
+        //TODO: Save as
+    }
+    ImGui::EndMenu();
+}
+
+void ModuleEditor::ViewMenu()
+{
+    if (ImGui::BeginMenu("View"))
+    {
+        if (ImGui::MenuItem("Console"))
+        {
+            Logger->setShowConsole(!Logger->getShowConsole());
+        }
+        if (ImGui::MenuItem("Camera"))
+        {
+            show_camera_window = !show_camera_window;
+        }
+        if (ImGui::MenuItem("FPS counter"))
+        {
+            show_fps_counter = !show_fps_counter;
+        }
+        ImGui::EndMenu();
+    }
+}
+
+void ModuleEditor::EditMenu()
+{
+    // TODO: shortcuts
+    const bool is_go_selected = getSelectedGO() != nullptr;
+
+    if (!ImGui::BeginMenu("Edit")) return;
+
+    if (ImGui::MenuItem(ICON_FA_UNDO "Undo", nullptr, false, canUndo()))
+    {
+        //TODO: 
+    }
+    if (ImGui::MenuItem(ICON_FA_REDO "Redo", nullptr, false, canRedo()))
+    {
+        //TODO: 
+    }
+    ImGui::Separator();
+    if (ImGui::MenuItem(ICON_FA_CLIPBOARD "Copy", nullptr, false, is_go_selected))
+    {
+        //TODO: 
+    }
+    if (ImGui::MenuItem(ICON_FA_PASTE "Paste", nullptr, false, canPaste()))
+    {
+        //TODO: 
+    }
+    if (ImGui::MenuItem(ICON_FA_CLONE "Duplicate", nullptr, false, is_go_selected))
+    {
+        //TODO: 
+    }
+    ImGui::EndMenu();
+}
+
+void ModuleEditor::GoMenu()
+{
+    if (!ImGui::BeginMenu("GameObject")) return;
+
+    ImGui::EndMenu();
+}
+
 update_status ModuleEditor::Update(const float delta)
 {
-    showMenu();
+    showWindowsViewports();
     Draw();
     return UPDATE_CONTINUE;
 }
@@ -151,7 +232,7 @@ bool ModuleEditor::CleanUp()
     return true;
 }
 
-void ModuleEditor::showMenu() 
+void ModuleEditor::showWindowsViewports() 
 { 
     if (show_hirarchy) {
         if (ImGui::Begin("Hierarchy", &show_hirarchy)) {

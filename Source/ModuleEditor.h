@@ -10,6 +10,9 @@
 
 #include "ImGuiComponents/AppLog.h"
 
+#include <string.h>
+using namespace std;
+
 class ModuleEditor : public Module
 {
 	public:
@@ -21,8 +24,19 @@ class ModuleEditor : public Module
 		update_status Update(const float delta) override;
 		bool CleanUp() override;
 		
+		// Main menu bar
+		void FileMenu();
+		void EditMenu();
+		void GoMenu();
+		void ViewMenu();
+
+		//Edit actions
+		bool canUndo() { return false; }
+		bool canRedo() { return false; }
+		bool canPaste() { return false; }
+		
 		void Draw();
-		void showMenu();
+		void showWindowsViewports();
 
 		GameObject* getSelectedGO() const { return selected_go; }
 
@@ -46,4 +60,5 @@ class ModuleEditor : public Module
 		bool show_abaout = false;
 		bool show_camera_window = false;
 		bool show_fps_counter = false;
+		bool show_asset_browser = false;
 };
