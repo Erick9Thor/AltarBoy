@@ -10,9 +10,6 @@
 
 #include "ImGuiComponents/AppLog.h"
 
-#include <string.h>
-using namespace std;
-
 class ModuleEditor : public Module
 {
 	public:
@@ -23,19 +20,25 @@ class ModuleEditor : public Module
 		update_status PreUpdate(const float delta) override;
 		update_status Update(const float delta) override;
 		bool CleanUp() override;
+
+		void GenerateDockingSpace();
 		
 		// Main menu bar
+		update_status MainMenuBar();
 		void FileMenu();
 		void EditMenu();
 		void GoMenu();
 		void ViewMenu();
+
+		// Scene bar
+		void ToolbarButton(ImFont* font, const char* font_icon);
 
 		//Edit actions
 		bool canUndo() { return false; }
 		bool canRedo() { return false; }
 		bool canPaste() { return false; }
 		
-		void Draw();
+		void RenderGui();
 		void showWindowsViewports();
 
 		GameObject* getSelectedGO() const { return selected_go; }
@@ -54,6 +57,9 @@ class ModuleEditor : public Module
 	private:
 
 		GameObject* selected_go = nullptr;
+
+		ImFont* m_big_icon_font;
+		ImFont* m_small_icon_font;
 
 		bool show_hirarchy = true;
 		bool show_inspector_window = true;

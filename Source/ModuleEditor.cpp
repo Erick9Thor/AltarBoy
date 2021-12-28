@@ -34,15 +34,23 @@ bool ModuleEditor::Init()
 {
     IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
 
+    ImGuiIO& io = ImGui::GetIO(); 
+    (void)io;
+
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+   
+    //TODO: ADD resource loader for fonts and icons
     io.Fonts->AddFontDefault();
     static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_FA, 0 };
-    ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 10.0f, &icons_config, icons_ranges);
-    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAR, 10.0f, &icons_config, icons_ranges);
+    ImFontConfig icons_config; 
+    icons_config.MergeMode = true; 
+    icons_config.PixelSnapH = true;
+    m_big_icon_font = io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, 10.0f, &icons_config, icons_ranges);
+    m_small_icon_font = io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAR, 10.0f, &icons_config, icons_ranges);
 
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;  // Enable Keyboard Controls
     io.WantSetMousePos = true;
 
     ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
@@ -64,27 +72,22 @@ update_status ModuleEditor::PreUpdate(const float delta)
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-    constexpr ImGuiWindowFlags dockspace_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
-        ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_MenuBar;
+    return UPDATE_CONTINUE;
+}
 
-    const ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
-    ImGui::SetNextWindowViewport(viewport->ID);
+update_status ModuleEditor::Update(const float delta)
+{
+    GenerateDockingSpace();
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 1.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+    update_status retval = MainMenuBar();
+    showWindowsViewports();
 
-    ImGui::Begin("Dockspace", nullptr, dockspace_flags);
-    ImGui::PopStyleVar(3);
+    RenderGui();
+    return retval;
+}
 
-    const ImGuiID dockSpaceId = ImGui::GetID("DockspaceID");
-
-    ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
-
+update_status ModuleEditor::MainMenuBar()
+{
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0);
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 4));
     if (ImGui::BeginMainMenuBar())
@@ -122,13 +125,41 @@ update_status ModuleEditor::PreUpdate(const float delta)
 
         float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
         ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
-        
+
+        ToolbarButton(m_big_icon_font, ICON_FA_PLAY);
+        ToolbarButton(m_big_icon_font, ICON_FA_PAUSE);
+        ToolbarButton(m_big_icon_font, ICON_FA_PLAY);
+
         ImGui::EndMainMenuBar();
     }
 
     ImGui::End();
 
     return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::GenerateDockingSpace()
+{
+    constexpr ImGuiWindowFlags dockspace_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
+        ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_MenuBar;
+
+    const ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->Pos);
+    ImGui::SetNextWindowSize(viewport->Size);
+    ImGui::SetNextWindowViewport(viewport->ID);
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 1.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    ImGui::Begin("Dockspace", nullptr, dockspace_flags);
+    ImGui::PopStyleVar(3);
+
+    const ImGuiID dockSpaceId = ImGui::GetID("DockspaceID");
+
+    ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 }
 
 void ModuleEditor::FileMenu()
@@ -171,6 +202,31 @@ void ModuleEditor::ViewMenu()
     }
 }
 
+void ModuleEditor::ToolbarButton(ImFont* font, const char* font_icon)
+{
+    const ImVec4 col_active = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
+    const ImVec4 bg_color = false ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
+
+    ImGui::SameLine();
+    auto frame_padding = ImGui::GetStyle().FramePadding;
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Text, bg_color);
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, ImGui::GetStyle().FramePadding.y));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, frame_padding);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
+
+    ImGui::PushFont(font);
+    if (ImGui::Button(font_icon)) {
+        // TODO: function
+    }
+
+    ImGui::PopFont();
+    ImGui::PopStyleColor(4);
+    ImGui::PopStyleVar(3);
+}
+
 void ModuleEditor::EditMenu()
 {
     // TODO: shortcuts
@@ -209,14 +265,7 @@ void ModuleEditor::GoMenu()
     ImGui::EndMenu();
 }
 
-update_status ModuleEditor::Update(const float delta)
-{
-    showWindowsViewports();
-    Draw();
-    return UPDATE_CONTINUE;
-}
-
-void ModuleEditor::Draw()
+void ModuleEditor::RenderGui()
 {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
