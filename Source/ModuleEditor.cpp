@@ -81,7 +81,7 @@ update_status ModuleEditor::Update(const float delta)
     GenerateDockingSpace();
 
     update_status retval = MainMenuBar();
-    SceneBar();
+    ToolSceneBar();
 
     showWindowsViewports();
 
@@ -91,12 +91,21 @@ update_status ModuleEditor::Update(const float delta)
     return UPDATE_CONTINUE;
 }
 
-void ModuleEditor::SceneBar()
+void ModuleEditor::ToolSceneBar()
 {
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_MenuBar;
     float height = ImGui::GetFrameHeight();
     if (ImGui::BeginViewportSideBar("##SceneEditor", NULL, ImGuiDir_Up, height, window_flags)) {
         if (ImGui::BeginMenuBar()) {
+            
+            float z = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.15f - 30 - ImGui::GetCursorPosX();
+            ImGui::Dummy(ImVec2(z, ImGui::GetTextLineHeight()));
+
+            ToolbarButton(m_big_icon_font, ICON_FA_UNDO);
+            ToolbarButton(m_big_icon_font, ICON_FA_EXPAND_ALT);
+            ToolbarButton(m_big_icon_font, ICON_FA_HOME);
+            ToolbarButton(m_big_icon_font, ICON_FA_GLOBE);
+
             float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
             ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
 
@@ -145,12 +154,8 @@ update_status ModuleEditor::MainMenuBar()
         ViewMenu();
 
         ImGui::PopStyleVar(2);
-
-        
-
         ImGui::EndMainMenuBar();
     }
-
 
     return UPDATE_CONTINUE;
 }
@@ -249,7 +254,7 @@ void ModuleEditor::SceneViewport()
 {
     ImGui::SetNextWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
-    ImGui::Begin("Scene");
+    ImGui::Begin(ICON_FA_GLOBE "Scene");
 
     const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
     float x = viewportPanelSize.x, y = viewportPanelSize.y;
