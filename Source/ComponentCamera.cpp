@@ -3,9 +3,8 @@
 #include "ModuleWindow.h"
 
 #include "ComponentTransform.h"
-
-#define DEFAULT_CAMERA_WIDTH 1920
-#define DEFAULT_CAMERA_HEIGHT 1080
+#include "ModuleRender.h"
+#include <glew.h>
 
 ComponentCamera::ComponentCamera(GameObject* container): Component(Component::Type::Camera, container)
 {
@@ -20,10 +19,40 @@ ComponentCamera::ComponentCamera(GameObject* container): Component(Component::Ty
 	frustum.SetUp(float3x3::identity.WorldY());
 
 	frustum.GetPlanes(planes);
+	GenerateFrameBuffer();
 }
 
 ComponentCamera::~ComponentCamera()
 {
+}
+
+void ComponentCamera::GenerateFrameBuffer()
+{
+	glGenFramebuffers(1, &frame_buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+	
+	glGenTextures(1, &fb_texture);
+	glBindTexture(GL_TEXTURE_2D, fb_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Depth and stencil buffer
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
+	glGenRenderbuffers(1, &depth_stencil_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		LOG("[M_Render] Error creating frame buffer");
+	}
+
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void ComponentCamera::SetNearPlane(float distance)
@@ -75,8 +104,24 @@ void ComponentCamera::OnTransformUpdated()
 
 void ComponentCamera::SetResolution(float width, float height)
 {
+	if (resolution_x != width || resolution_y != height)
+	{
+		resolution_x = width;
+		resolution_y = height;
+		ResizeFrameBuffer();
+	}
 	float vertical_fov = frustum.VerticalFov();
 	frustum.SetVerticalFovAndAspectRatio(vertical_fov, width / height);
+}
+
+void ComponentCamera::ResizeFrameBuffer() {
+	glBindTexture(GL_TEXTURE_2D, fb_texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)resolution_x, (int)resolution_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)resolution_x, (int)resolution_y);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
 void ComponentCamera::DrawGui()

@@ -35,7 +35,6 @@ public:
 	bool CleanUp() override;
 
 	void WindowResized(unsigned width, unsigned height);
-	void GenerateFrameBuffer();
 
 	void OptionsMenu();
 	void PerformanceMenu(const float delta);
@@ -68,10 +67,4 @@ private:
 	std::vector<float> ms_log;
 	float current_fps = 0.0f;
 	float current_ms = 0.0f;
-
-	unsigned frame_buffer = 0;
-	unsigned fb_texture = 0;
-	unsigned depth_stencil_buffer = 0;
-
-	float2 viewport_size = float2(0.0f, 0.0f);
 };

@@ -2,6 +2,9 @@
 #include "Component.h"
 #include "Math.h"
 
+#define DEFAULT_CAMERA_WIDTH 1920
+#define DEFAULT_CAMERA_HEIGHT 1080
+
 class GameObject;
 
 class ComponentCamera :
@@ -11,6 +14,11 @@ class ComponentCamera :
     public:
         ComponentCamera(GameObject* conatiner);
         ~ComponentCamera() override;
+
+        void GenerateFrameBuffer();
+        void ResizeFrameBuffer();
+        unsigned int GetFrameBuffer() const { return frame_buffer; }
+        unsigned int GetTextureId() const { return fb_texture; }
 
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
@@ -22,6 +30,7 @@ class ComponentCamera :
         void OnTransformUpdated() override;
 
         void SetResolution(float width, float height);
+
         
         static inline Type GetType() { return Type::Camera; };
 
@@ -33,5 +42,13 @@ class ComponentCamera :
     private:
         float horizontal_fov;
         Frustum	frustum;
+
+        // FrameBuffer and depht stencil buffer
+        unsigned int frame_buffer = 0;
+        unsigned int fb_texture = 0;
+        unsigned int depth_stencil_buffer = 0;
+
+        float resolution_x = DEFAULT_CAMERA_WIDTH;
+        float resolution_y = DEFAULT_CAMERA_HEIGHT;
 };
 

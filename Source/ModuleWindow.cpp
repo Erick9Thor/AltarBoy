@@ -84,8 +84,7 @@ void ModuleWindow::WindowResized()
 	SDL_UpdateWindowSurface(window);
 	screen_surface = SDL_GetWindowSurface(window);
 	App->renderer->WindowResized(screen_surface->w, screen_surface->h);
-	// TODO: Adapt
-	App->camera->SetAspectRatio(screen_surface->w, screen_surface->h);
+	
 }
 
 void ModuleWindow::SetFullScreen(bool fullscreen)

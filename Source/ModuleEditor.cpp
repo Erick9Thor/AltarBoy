@@ -85,7 +85,7 @@ update_status ModuleEditor::Update(const float delta)
 
     showWindowsViewports();
 
-    //TODO: Docking scene
+    SceneViewport();
 
     RenderGui();
     return UPDATE_CONTINUE;
@@ -243,6 +243,24 @@ void ModuleEditor::ToolbarButton(ImFont* font, const char* font_icon)
     ImGui::PopFont();
     ImGui::PopStyleColor(4);
     ImGui::PopStyleVar(3);
+}
+
+void ModuleEditor::SceneViewport()
+{
+    ImGui::SetNextWindowSize(ImVec2(800, 600), ImGuiCond_FirstUseEver);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+    ImGui::Begin("Scene");
+
+    const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+    float x = viewportPanelSize.x, y = viewportPanelSize.y;
+
+    App->renderer->WindowResized(x, y);
+    App->camera->SetAspectRatio((unsigned)x, (unsigned)y);
+
+    ImGui::Image((ImTextureID)(App->camera->getMainCamera()->GetTextureId()), ImVec2{ x, y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+    ImGui::End();
+    ImGui::PopStyleVar();
 }
 
 void ModuleEditor::EditMenu()

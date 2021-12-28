@@ -33,6 +33,7 @@ class ModuleEditor : public Module
 
 		// Scene bar
 		void ToolbarButton(ImFont* font, const char* font_icon);
+		void SceneViewport();
 
 		//Edit actions
 		bool canUndo() { return false; }

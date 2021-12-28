@@ -43,42 +43,7 @@ bool ModuleRender::Init()
 	fps_log = std::vector<float>(n_bins);
 	ms_log = std::vector<float>(n_bins);
 
-	GenerateFrameBuffer();
-
 	return true;
-}
-
-void ModuleRender::GenerateFrameBuffer()
-{
-	//Generating buffers for target rendering
-	glGenFramebuffers(1, &frame_buffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-
-	//Generating texture to render to
-	glGenTextures(1, &fb_texture);
-	glBindTexture(GL_TEXTURE_2D, fb_texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//Configuring frame buffer
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
-
-	//Generating the depth & stencil buffer
-	glGenRenderbuffers(1, &depth_stencil_buffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);	
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		LOG("[M_Render] Error creating frame buffer");
-	}
-
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void ModuleRender::CreateContext()
@@ -94,8 +59,6 @@ void ModuleRender::CreateContext()
 
 	context = SDL_GL_CreateContext(App->window->GetWindow());
 	GLenum err = glewInit();
-
-	glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
 
 	clear_color = float4(0.1f, 0.1f, 0.1f, 1.0f);
 }
@@ -124,30 +87,9 @@ update_status ModuleRender::PreUpdate(const float delta)
 }
 
 update_status ModuleRender::Update(const float delta)
-{
-	ImGui::Begin("Scene");
-
-	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+{	
+	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->getMainCamera()->GetFrameBuffer());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	const ImVec2 new_viewport_size = ImGui::GetContentRegionAvail();
-
-	if (viewport_size.x != new_viewport_size.x || viewport_size.y != new_viewport_size.y) {
-		viewport_size.x = new_viewport_size.x;
-		viewport_size.y = new_viewport_size.y;
-
-		//Resize textures
-		glBindTexture(GL_TEXTURE_2D, fb_texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)viewport_size.x, (int)viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)viewport_size.x, (int)viewport_size.y);
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-		glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
-		App->camera->SetAspectRatio((unsigned)viewport_size.x, (unsigned)viewport_size.y);
-	}
 
 	if (debug_draw)
 	{
@@ -157,17 +99,12 @@ update_status ModuleRender::Update(const float delta)
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
-
-	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	App->scene_manager->DrawScenes();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	ImGui::Image((void*)(intptr_t)fb_texture, ImVec2{ new_viewport_size.x, new_viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
