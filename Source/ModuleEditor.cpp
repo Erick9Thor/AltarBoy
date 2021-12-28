@@ -21,6 +21,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include <IconsFontAwesome5.h>
+#include <imgui_internal.h>
 
 ModuleEditor::ModuleEditor()
 {
@@ -53,15 +54,15 @@ bool ModuleEditor::Init()
 
     io.WantSetMousePos = true;
 
-    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
-    ImGui_ImplOpenGL3_Init();
-
-    Logger->setShowConsole(!Logger->getShowConsole());
-  
     // Setup style
     ImGui::StyleColorsDark();
 
     io.IniFilename = "imgui.ini";
+
+    Logger->setShowConsole(!Logger->getShowConsole());
+
+    ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
+    ImGui_ImplOpenGL3_Init();
 
 	return true;
 }
@@ -80,10 +81,32 @@ update_status ModuleEditor::Update(const float delta)
     GenerateDockingSpace();
 
     update_status retval = MainMenuBar();
+    SceneBar();
+
     showWindowsViewports();
 
+    //TODO: Docking scene
+
     RenderGui();
-    return retval;
+    return UPDATE_CONTINUE;
+}
+
+void ModuleEditor::SceneBar()
+{
+    ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_MenuBar;
+    float height = ImGui::GetFrameHeight();
+    if (ImGui::BeginViewportSideBar("##SceneEditor", NULL, ImGuiDir_Up, height, window_flags)) {
+        if (ImGui::BeginMenuBar()) {
+            float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
+            ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
+
+            ToolbarButton(m_big_icon_font, ICON_FA_PLAY);
+            ToolbarButton(m_big_icon_font, ICON_FA_PAUSE);
+            ToolbarButton(m_big_icon_font, ICON_FA_STEP_FORWARD);
+            ImGui::EndMenuBar();
+        }
+    }
+    ImGui::End();
 }
 
 update_status ModuleEditor::MainMenuBar()
@@ -123,43 +146,38 @@ update_status ModuleEditor::MainMenuBar()
 
         ImGui::PopStyleVar(2);
 
-        float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
-        ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
-
-        ToolbarButton(m_big_icon_font, ICON_FA_PLAY);
-        ToolbarButton(m_big_icon_font, ICON_FA_PAUSE);
-        ToolbarButton(m_big_icon_font, ICON_FA_PLAY);
+        
 
         ImGui::EndMainMenuBar();
     }
 
-    ImGui::End();
 
     return UPDATE_CONTINUE;
 }
 
 void ModuleEditor::GenerateDockingSpace()
 {
-    constexpr ImGuiWindowFlags dockspace_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar |
-        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
-        ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus |
-        ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_MenuBar;
-
-    const ImGuiViewport* viewport = ImGui::GetMainViewport();
-    ImGui::SetNextWindowPos(viewport->Pos);
-    ImGui::SetNextWindowSize(viewport->Size);
+    ImGuiViewport* viewport = ImGui::GetMainViewport();
+    ImGui::SetNextWindowPos(viewport->WorkPos);
+    ImGui::SetNextWindowSize(viewport->WorkSize);
     ImGui::SetNextWindowViewport(viewport->ID);
 
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 1.0f);
+    ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
+    ImGuiWindowFlags host_window_flags = 0;
+    host_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
+    host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
+        host_window_flags |= ImGuiWindowFlags_NoBackground;
+
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-
-    ImGui::Begin("Dockspace", nullptr, dockspace_flags);
+    ImGui::Begin("DockSpace Window", nullptr, host_window_flags);
     ImGui::PopStyleVar(3);
 
-    const ImGuiID dockSpaceId = ImGui::GetID("DockspaceID");
-
-    ImGui::DockSpace(dockSpaceId, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+    ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags, nullptr);
+    ImGui::End();
 }
 
 void ModuleEditor::FileMenu()

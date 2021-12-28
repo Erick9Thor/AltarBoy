@@ -19,6 +19,7 @@ class ModuleEditor : public Module
 		bool Init() override;
 		update_status PreUpdate(const float delta) override;
 		update_status Update(const float delta) override;
+		void SceneBar();
 		bool CleanUp() override;
 
 		void GenerateDockingSpace();
