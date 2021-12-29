@@ -9,22 +9,36 @@
 
 class GameObject;
 
-class ComponentMesh :
-    public Component
+class ComponentMesh : public Component
 {
 public:
-    ComponentMesh(GameObject* conatiner);
-    ~ComponentMesh() override;
-	static inline Type GetType() { return Type::Mesh; };
+	ComponentMesh(GameObject* conatiner);
+	~ComponentMesh() override;
+	static inline Type GetType()
+	{
+		return Type::Mesh;
+	};
 
 	void Load(const aiMesh* mesh);
 	void Draw();
 	void CleanUp();
 
-	inline unsigned GetNumVertices() const { return num_vertices; }
-	inline unsigned GetNumIndexes() const { return num_indices; }
-	AABB GetAABB() const { return bounding_box; }
-	bool IsLoaded() const { return loaded; }
+	inline unsigned GetNumVertices() const
+	{
+		return num_vertices;
+	}
+	inline unsigned GetNumIndexes() const
+	{
+		return num_indices;
+	}
+	AABB GetAABB() const
+	{
+		return bounding_box;
+	}
+	bool IsLoaded() const
+	{
+		return loaded;
+	}
 	void DrawGui() override;
 
 private:
@@ -46,7 +60,7 @@ private:
 	unsigned vertices_buffer;
 	unsigned normals_buffer;
 	unsigned tex_coords_buffer;
-	
+
 	// Track buffer sizes
 	unsigned indices_buffer_size;
 	unsigned vertices_buffer_size;

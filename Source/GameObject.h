@@ -13,71 +13,76 @@ class GameObject
 {
 	friend class Component;
 
-	public:
-		GameObject();
-		GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
-		GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
-		virtual ~GameObject();
-		inline bool IsEnabled() { return enabled; }
+public:
+	GameObject();
+	GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
+	GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
+	virtual ~GameObject();
+	inline bool IsEnabled()
+	{
+		return enabled;
+	}
 
-		void SetNewParent(GameObject* new_parent);
-		void AddComponent(Component* component);
-		Component* CreateComponent(Component::Type type);
-		void RemoveChild(GameObject* gameObject);
+	void SetNewParent(GameObject* new_parent);
+	void AddComponent(Component* component);
+	Component* CreateComponent(Component::Type type);
+	void RemoveChild(GameObject* gameObject);
 
-		void Destroy();
-		void Update();
-		void DrawAll();
-		void Draw();
+	void Destroy();
+	void Update();
+	void DrawAll();
+	void Draw();
 
-		void OnTransformUpdated();
+	void OnTransformUpdated();
 
-		void UpdateBoundingBoxes();
+	void UpdateBoundingBoxes();
 
-		const std::vector<Component*>& GetComponents() const { return components; }
+	const std::vector<Component*>& GetComponents() const
+	{
+		return components;
+	}
 
-		template<typename RetComponent>
-		const RetComponent* GetComponent() const
+	template<typename RetComponent>
+	const RetComponent* GetComponent() const
+	{
+		Component::Type type = RetComponent::GetType();
+		for (unsigned int i = 0; i < components.size(); i++)
 		{
-			Component::Type type = RetComponent::GetType();
-			for (unsigned int i = 0; i < components.size(); i++)
+			if (components[i]->GetType() == type)
 			{
-				if (components[i]->GetType() == type)
-				{
-					return ((RetComponent*)(components[i]));
-				}
+				return ((RetComponent*) (components[i]));
 			}
-			return nullptr;
 		}
+		return nullptr;
+	}
 
-		template<typename RetComponent>
-		RetComponent* GetComponent()
+	template<typename RetComponent>
+	RetComponent* GetComponent()
+	{
+		Component::Type type = RetComponent::GetType();
+		for (unsigned int i = 0; i < components.size(); i++)
 		{
-			Component::Type type = RetComponent::GetType();
-			for (unsigned int i = 0; i < components.size(); i++)
+			if (components[i]->GetType() == type)
 			{
-				if (components[i]->GetType() == type)
-				{
-					return ((RetComponent*)(components[i]));
-				}
+				return ((RetComponent*) (components[i]));
 			}
-			return nullptr;
 		}
+		return nullptr;
+	}
 
+	GameObject* parent = nullptr;
+	std::vector<GameObject*> childs;
 
-		GameObject* parent = nullptr;
-		std::vector<GameObject*> childs;
+	Scene* scene_owner = nullptr;
 
-		Scene* scene_owner = nullptr;
-		
-		std::string	name;
-		bool hierarchy_open = false;
+	std::string name;
+	bool hierarchy_open = false;
 
-	private:
-		bool enabled = true;
-		std::vector<Component*> components;
-		ComponentTransform* transform = nullptr;
+private:
+	bool enabled = true;
+	std::vector<Component*> components;
+	ComponentTransform* transform = nullptr;
 
-		AABB aabb;
-		OBB	obb;
+	AABB aabb;
+	OBB obb;
 };

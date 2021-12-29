@@ -10,13 +10,15 @@ struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
 
-struct GpuData {
+struct GpuData
+{
 	unsigned char* name;
 	unsigned char* brand;
 	float vram_budget_mb;
 };
 
-struct GlVersion {
+struct GlVersion
+{
 	unsigned char* glew;
 	unsigned char* opengl;
 	unsigned char* glsl;
@@ -41,10 +43,18 @@ public:
 	void FpsGraph();
 	void AddFrame(const float delta);
 
-	inline void* GetGLContext() const { return context; }
-	inline const GpuData GetGpuData() const { return gpu; }
-	inline const GlVersion GetGlVersion() { return gl; }
-
+	inline void* GetGLContext() const
+	{
+		return context;
+	}
+	inline const GpuData GetGpuData() const
+	{
+		return gpu;
+	}
+	inline const GlVersion GetGlVersion()
+	{
+		return gl;
+	}
 
 private:
 	void CreateContext();

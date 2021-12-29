@@ -6,7 +6,8 @@
 
 #include <string>
 
-struct Texture {
+struct Texture
+{
 	bool loaded = false;
 	unsigned id;
 	std::string path;
@@ -14,8 +15,7 @@ struct Texture {
 	unsigned height;
 };
 
-class ModuleTexture :
-	public Module
+class ModuleTexture : public Module
 {
 public:
 	ModuleTexture();
@@ -28,7 +28,10 @@ public:
 	void Bind(unsigned id, unsigned slot = GL_TEXTURE0);
 	void Unbind(unsigned slot = GL_TEXTURE0);
 
-	inline const short GetDevilVersion() const { return devil_version; }
+	inline const short GetDevilVersion() const
+	{
+		return devil_version;
+	}
 
 	void OptionsMenu();
 

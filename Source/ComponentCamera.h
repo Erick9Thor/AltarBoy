@@ -7,48 +7,53 @@
 
 class GameObject;
 
-class ComponentCamera :
-    public Component
+class ComponentCamera : public Component
 {
-    
-    public:
-        ComponentCamera(GameObject* conatiner);
-        ~ComponentCamera() override;
+public:
+	ComponentCamera(GameObject* conatiner);
+	~ComponentCamera() override;
 
-        void GenerateFrameBuffer();
-        void ResizeFrameBuffer();
-        unsigned int GetFrameBuffer() const { return frame_buffer; }
-        unsigned int GetTextureId() const { return fb_texture; }
+	void GenerateFrameBuffer();
+	void ResizeFrameBuffer();
+	unsigned int GetFrameBuffer() const
+	{
+		return frame_buffer;
+	}
+	unsigned int GetTextureId() const
+	{
+		return fb_texture;
+	}
 
-        void SetNearPlane(float distance);
-        void SetFarPlane(float distance);
-        void SetFOV(float fov);
+	void SetNearPlane(float distance);
+	void SetFarPlane(float distance);
+	void SetFOV(float fov);
 
-        float4x4 GetViewMatrix(const bool transpose = false) const;
-        float4x4 GetProjectionMatrix(const bool transpose = false) const;
+	float4x4 GetViewMatrix(const bool transpose = false) const;
+	float4x4 GetProjectionMatrix(const bool transpose = false) const;
 
-        void OnTransformUpdated() override;
+	void OnTransformUpdated() override;
 
-        void SetResolution(float width, float height);
+	void SetResolution(float width, float height);
 
-        
-        static inline Type GetType() { return Type::Camera; };
+	static inline Type GetType()
+	{
+		return Type::Camera;
+	};
 
-        void DrawGui() override;
+	void DrawGui() override;
 
-        Plane planes[6];
-        float3 reference_point = float3::zero;
+	Plane planes[6];
+	float3 reference_point = float3::zero;
 
-    private:
-        float horizontal_fov;
-        Frustum	frustum;
+private:
+	float horizontal_fov;
+	Frustum frustum;
 
-        // FrameBuffer and depht stencil buffer
-        unsigned int frame_buffer = 0;
-        unsigned int fb_texture = 0;
-        unsigned int depth_stencil_buffer = 0;
+	// FrameBuffer and depht stencil buffer
+	unsigned int frame_buffer = 0;
+	unsigned int fb_texture = 0;
+	unsigned int depth_stencil_buffer = 0;
 
-        float resolution_x = DEFAULT_CAMERA_WIDTH;
-        float resolution_y = DEFAULT_CAMERA_HEIGHT;
+	float resolution_x = DEFAULT_CAMERA_WIDTH;
+	float resolution_y = DEFAULT_CAMERA_HEIGHT;
 };
-

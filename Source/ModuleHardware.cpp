@@ -17,8 +17,8 @@ bool ModuleHardware::Init()
 	info.n_cpu = SDL_GetCPUCount();
 	info.ram_gb = SDL_GetSystemRAM() / 1024.0f;
 
-	info.gpu = (unsigned char*)glGetString(GL_RENDERER);
-	info.gpu_brand = (unsigned char*)glGetString(GL_VENDOR);
+	info.gpu = (unsigned char*) glGetString(GL_RENDERER);
+	info.gpu_brand = (unsigned char*) glGetString(GL_VENDOR);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &info.vram_mb_budget);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &info.vram_mb_free);
 
@@ -31,4 +31,3 @@ bool ModuleHardware::Init()
 
 ModuleHardware::~ModuleHardware()
 {}
-

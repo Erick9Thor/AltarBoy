@@ -7,16 +7,15 @@ class Application;
 class Module
 {
 public:
-
 	Module()
 	{
 	}
 
 	virtual ~Module() {};
 
-	virtual bool Init() 
+	virtual bool Init()
 	{
-		return true; 
+		return true;
 	}
 
 	virtual update_status PreUpdate(const float delta)
@@ -34,9 +33,9 @@ public:
 		return UPDATE_CONTINUE;
 	}
 
-	virtual bool CleanUp() 
-	{ 
-		return true; 
+	virtual bool CleanUp()
+	{
+		return true;
 	}
 
 	virtual void DrawDebug()

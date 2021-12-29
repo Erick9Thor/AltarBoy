@@ -17,21 +17,18 @@
 
 #include "ImGuizmo.h"
 
-
 ModuleCamera::ModuleCamera()
 {
-	
 }
 
 ModuleCamera::~ModuleCamera()
 {
-
 }
 
-bool ModuleCamera::Init() 
+bool ModuleCamera::Init()
 {
 	GameObject* cameraGameObject = new GameObject();
-	main_camera = (ComponentCamera*)cameraGameObject->CreateComponent(Component::Camera);
+	main_camera = (ComponentCamera*) cameraGameObject->CreateComponent(Component::Camera);
 
 	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
 	cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
@@ -53,7 +50,6 @@ void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen
 	main_camera->SetResolution((float) screen_width, (float) screen_height);
 }
 
-
 void ModuleCamera::Controller(const float delta)
 {
 	static const float zoom_speed = 3.0f;
@@ -65,22 +61,23 @@ void ModuleCamera::Controller(const float delta)
 		int moved_x, moved_y;
 		App->input->GetMouseDelta(moved_x, moved_y);
 
-		Rotate(-(float)moved_x * delta * rot_speed, (float)moved_y * delta * rot_speed);
+		Rotate(-(float) moved_x * delta * rot_speed, (float) moved_y * delta * rot_speed);
 		MovementController(delta);
 	}
 
 	// Mouse ----------------------------
 	int scrolled_y = App->input->GetScrollDelta();
 	if (scrolled_y != 0)
-		Zoom(-(float)scrolled_y * zoom_speed);
+		Zoom(-(float) scrolled_y * zoom_speed);
 
-	if (App->input->GetKey(SDL_SCANCODE_LALT)) {
+	if (App->input->GetKey(SDL_SCANCODE_LALT))
+	{
 		int moved_x, moved_y;
 		App->input->GetMouseDelta(moved_x, moved_y);
 		Orbit(moved_x * 1.5f, moved_y * 1.5f);
-
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F)) {
+	if (App->input->GetKey(SDL_SCANCODE_F))
+	{
 		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
 		GameObject* go = App->editor->getSelectedGO();
 		FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
@@ -111,8 +108,8 @@ void ModuleCamera::Orbit(float motion_x, float motion_y)
 	main_camera->GetGameObject()->Update();
 }
 
-void ModuleCamera::MovementController(const float delta) {
-
+void ModuleCamera::MovementController(const float delta)
+{
 	static const float move_speed = 15.0f;
 	static const float speed_modifier = 2.0f;
 
@@ -152,9 +149,10 @@ void ModuleCamera::FocusOnModel(const float3& target, float distance)
 	main_camera->reference_point = target;
 }
 
-void ModuleCamera::Rotate(float motion_x, float motion_y) {
+void ModuleCamera::Rotate(float motion_x, float motion_y)
+{
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
-	
+
 	Quat yaw_quat = Quat::RotateY(motion_x);
 	float3 newRight = yaw_quat * transform->GetRight();
 

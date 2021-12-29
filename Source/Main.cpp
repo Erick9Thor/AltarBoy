@@ -5,13 +5,13 @@
 #include "glew.h"
 
 #include "SDL.h"
-#pragma comment( lib, "SDL2.lib" )
-#pragma comment( lib, "SDL2main.lib" )
+#pragma comment(lib, "SDL2.lib")
+#pragma comment(lib, "SDL2main.lib")
 
 #include "ImGuiComponents/AppLog.h"
 
 #ifdef _DEBUG
-#define DEBUG_NEW new( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)
 #define new DEBUG_NEW
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -25,7 +25,7 @@ void DumpLeaks(void)
 
 enum main_states
 {
-	MAIN_CREATION,  
+	MAIN_CREATION,
 	MAIN_START,
 	MAIN_UPDATE,
 	MAIN_FINISH,
@@ -35,7 +35,7 @@ enum main_states
 Application* App = NULL;
 AppLog* Logger = NULL;
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
 	atexit(DumpLeaks);
 	Logger = new AppLog();
@@ -83,7 +83,7 @@ int main(int argc, char ** argv)
 			if (update_return == UPDATE_STOP)
 				state = MAIN_FINISH;
 		}
-			break;
+		break;
 
 		case MAIN_FINISH:
 
@@ -98,9 +98,7 @@ int main(int argc, char ** argv)
 			state = MAIN_EXIT;
 
 			break;
-
 		}
-
 	}
 
 	delete App;

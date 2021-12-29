@@ -39,9 +39,9 @@ bool ModuleProgram::Init()
 	Activate();
 	BindUniformBool("is_directional", light.directional);
 	BindUniformFloat("ambient_strength", &light.ambient_strength);
-	BindUniformFloat3("light_color", (float*)&light.color[0]);
-	BindUniformFloat3("ligh_direction", (float*)&light.direction[0]);
-	BindUniformFloat3("light_position", (float*)&light.position[0]);
+	BindUniformFloat3("light_color", (float*) &light.color[0]);
+	BindUniformFloat3("ligh_direction", (float*) &light.direction[0]);
+	BindUniformFloat3("light_position", (float*) &light.position[0]);
 	Deactivate();
 
 	return true;
@@ -92,18 +92,20 @@ void ModuleProgram::OptionsMenu()
 
 	if (ImGui::Checkbox("Directional", &light.directional))
 		BindUniformBool("is_directional", light.directional);
-	if (light.directional) {
+	if (light.directional)
+	{
 		if (ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f))
-			BindUniformFloat3("ligh_direction", (float*)&light.direction[0]);
+			BindUniformFloat3("ligh_direction", (float*) &light.direction[0]);
 	}
-	else {
+	else
+	{
 		if (ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f))
-			BindUniformFloat3("light_position", (float*)&light.position[0]);
+			BindUniformFloat3("light_position", (float*) &light.position[0]);
 	}
 
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	if (ImGui::ColorPicker3("Light Color", &light.color[0], flag))
-		BindUniformFloat3("light_color", (float*)&light.color[0]);
+		BindUniformFloat3("light_color", (float*) &light.color[0]);
 
 	Deactivate();
 }
@@ -117,7 +119,7 @@ char* ModuleProgram::LoadShaderSource(const char* shader_file_name)
 	{
 		fseek(file, 0, SEEK_END);
 		int size = ftell(file);
-		data = (char*)malloc(size + 1);
+		data = (char*) malloc(size + 1);
 		fseek(file, 0, SEEK_SET);
 		fread(data, 1, size, file);
 		data[size] = 0;
@@ -140,7 +142,7 @@ unsigned int ModuleProgram::CompileShader(unsigned type, const char* source)
 		if (len > 0)
 		{
 			int written = 0;
-			char* info = (char*)malloc(len);
+			char* info = (char*) malloc(len);
 			glGetShaderInfoLog(shader_id, len, &written, info);
 			LOG("Log Info: %s", info);
 			free(info);
@@ -165,7 +167,7 @@ unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
 		if (len > 0)
 		{
 			int written = 0;
-			char* info = (char*)malloc(len);
+			char* info = (char*) malloc(len);
 			glGetProgramInfoLog(program_id, len, &written, info);
 			LOG("Program Log Info: %s", info);
 			free(info);

@@ -328,6 +328,7 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include="Dependencies\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
