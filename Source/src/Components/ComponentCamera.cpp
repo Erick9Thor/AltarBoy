@@ -1,10 +1,12 @@
-#include "ComponentCamera.h"
-#include "Application.h"
-#include "ModuleWindow.h"
+#include "../Application.h"
+#include "../Modules/ModuleWindow.h"
+#include "../Modules/ModuleRender.h"
 
+#include "ComponentCamera.h"
 #include "ComponentTransform.h"
-#include "ModuleRender.h"
+
 #include <glew.h>
+#include <imgui.h>
 
 ComponentCamera::ComponentCamera(GameObject* container)
 	: Component(Component::Type::Camera, container)

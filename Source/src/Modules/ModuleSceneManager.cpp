@@ -1,5 +1,5 @@
 #include "ModuleSceneManager.h"
-#include "Scene.h"
+#include "../Scene.h"
 
 ModuleSceneManager::ModuleSceneManager()
 {

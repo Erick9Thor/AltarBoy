@@ -1,5 +1,6 @@
-#include "Globals.h"
-#include "Application.h"
+#include "../Globals.h"
+#include "../Application.h"
+
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "ModuleProgram.h"
@@ -7,7 +8,7 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
 
-#include "ComponentCamera.h"
+#include "../Components/ComponentCamera.h"
 
 #include "SDL.h"
 #include "glew.h"

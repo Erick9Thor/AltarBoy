@@ -144,11 +144,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="ComponentCamera.cpp" />
-    <ClCompile Include="ComponentMaterial.cpp" />
-    <ClCompile Include="ComponentMesh.cpp" />
-    <ClCompile Include="ComponentTransform.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Components\ComponentCamera.cpp" />
+    <ClCompile Include="src\Components\ComponentMaterial.cpp" />
+    <ClCompile Include="src\Components\ComponentMesh.cpp" />
+    <ClCompile Include="src\Components\ComponentTransform.cpp" />
     <ClCompile Include="Dependencies\imGizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
@@ -176,9 +176,9 @@
     <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="ModuleSceneManager.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Modules\ModuleSceneManager.cpp" />
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK2D.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\Random\LCG.cpp" />
@@ -202,25 +202,25 @@
     <ClCompile Include="Dependencies\MathGeoLib\Geometry\Triangle2D.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Geometry\TriangleMesh.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Time\Clock.cpp" />
-    <ClCompile Include="ModuleCamera.cpp" />
-    <ClCompile Include="ModuleDebugDraw.cpp" />
-    <ClCompile Include="ModuleEditor.cpp" />
-    <ClCompile Include="ModuleHardware.cpp" />
-    <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleProgram.cpp" />
-    <ClCompile Include="ModuleTexture.cpp" />
-    <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="src\Modules\ModuleCamera.cpp" />
+    <ClCompile Include="src\Modules\ModuleDebugDraw.cpp" />
+    <ClCompile Include="src\Modules\ModuleEditor.cpp" />
+    <ClCompile Include="src\Modules\ModuleHardware.cpp" />
+    <ClCompile Include="src\Modules\ModuleInput.cpp" />
+    <ClCompile Include="src\Modules\ModuleRender.cpp" />
+    <ClCompile Include="src\Modules\ModuleProgram.cpp" />
+    <ClCompile Include="src\Modules\ModuleTexture.cpp" />
+    <ClCompile Include="src\Modules\ModuleWindow.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentCamera.h" />
-    <ClInclude Include="ComponentMaterial.h" />
-    <ClInclude Include="ComponentMesh.h" />
-    <ClInclude Include="ComponentTransform.h" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Components\Component.h" />
+    <ClInclude Include="src\Components\ComponentCamera.h" />
+    <ClInclude Include="src\Components\ComponentMaterial.h" />
+    <ClInclude Include="src\Components\ComponentMesh.h" />
+    <ClInclude Include="src\Components\ComponentTransform.h" />
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
     <ClInclude Include="Dependencies\imGizmo\ImGuizmo.h" />
@@ -266,9 +266,9 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="ModuleSceneManager.h" />
-    <ClInclude Include="Globals.h" />
+    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\Modules\ModuleSceneManager.h" />
+    <ClInclude Include="src\Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h" />
@@ -312,20 +312,20 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="ImGuiComponents\AppLog.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="Module.h" />
-    <ClInclude Include="ModuleCamera.h" />
-    <ClInclude Include="ModuleDebugDraw.h" />
-    <ClInclude Include="ModuleEditor.h" />
-    <ClInclude Include="ModuleHardware.h" />
-    <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleProgram.h" />
-    <ClInclude Include="ModuleTexture.h" />
-    <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="src\UI\AppLog.h" />
+    <ClInclude Include="src\Utils\Math.h" />
+    <ClInclude Include="src\Modules\Module.h" />
+    <ClInclude Include="src\Modules\ModuleCamera.h" />
+    <ClInclude Include="src\Modules\ModuleDebugDraw.h" />
+    <ClInclude Include="src\Modules\ModuleEditor.h" />
+    <ClInclude Include="src\Modules\ModuleHardware.h" />
+    <ClInclude Include="src\Modules\ModuleInput.h" />
+    <ClInclude Include="src\Modules\ModuleRender.h" />
+    <ClInclude Include="src\Modules\ModuleProgram.h" />
+    <ClInclude Include="src\Modules\ModuleTexture.h" />
+    <ClInclude Include="src\Modules\ModuleWindow.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

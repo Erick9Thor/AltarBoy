@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "ImGuiComponents/AppLog.h"
+#include "UI/AppLog.h"
 
 #define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
 

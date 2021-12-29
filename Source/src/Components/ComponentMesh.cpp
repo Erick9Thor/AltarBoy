@@ -1,14 +1,15 @@
 #include "ComponentMesh.h"
-
-#include "Application.h"
-#include "ModuleProgram.h"
-#include "ModuleRender.h"
-#include "ModuleCamera.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 
+#include "../Application.h"
+#include "../Modules/ModuleProgram.h"
+#include "../Modules/ModuleRender.h"
+#include "../Modules/ModuleCamera.h"
+
 #include "glew.h"
+#include <imgui.h>
 
 ComponentMesh::ComponentMesh(GameObject* conatiner)
 	: Component(Component::Type::Mesh, conatiner)

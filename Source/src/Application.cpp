@@ -1,16 +1,18 @@
 #pragma once
+
 #include "Application.h"
-#include "ImGuiComponents/AppLog.h"
-#include "ModuleWindow.h"
-#include "ModuleRender.h"
-#include "ModuleInput.h"
-#include "ModuleEditor.h"
-#include "ModuleCamera.h"
-#include "ModuleTexture.h"
-#include "ModuleProgram.h"
-#include "ModuleHardware.h"
-#include "ModuleSceneManager.h"
-#include "ModuleDebugDraw.h"
+#include "UI/AppLog.h"
+
+#include "Modules/ModuleWindow.h"
+#include "Modules/ModuleRender.h"
+#include "Modules/ModuleInput.h"
+#include "Modules/ModuleEditor.h"
+#include "Modules/ModuleCamera.h"
+#include "Modules/ModuleTexture.h"
+#include "Modules/ModuleProgram.h"
+#include "Modules/ModuleHardware.h"
+#include "Modules/ModuleSceneManager.h"
+#include "Modules/ModuleDebugDraw.h"
 
 using namespace std;
 
