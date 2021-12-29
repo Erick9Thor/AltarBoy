@@ -26,37 +26,37 @@ class AppLog;
 
 class Application
 {
-	public:
+public:
 
-		Application();
-		~Application();
+	Application();
+	~Application();
 
-		bool Init();
-		update_status Update();
+	bool Init();
+	update_status Update();
 
-		bool CleanUp();
+	bool CleanUp();
 
-		void RequestBrowser(const char* url) const;
-	public:
-		ModuleRender* renderer = nullptr;
-		ModuleWindow* window = nullptr;
-		ModuleInput* input = nullptr;
-		ModuleEditor* editor = nullptr;
-		ModuleDebugDraw* debug_draw = nullptr;
-		ModuleCamera* camera = nullptr;
-		ModuleTexture* texture = nullptr;
-		ModuleSceneManager* scene_manager = nullptr;
-		ModuleProgram* program = nullptr;
-		ModuleHardware* hw = nullptr;
+	void RequestBrowser(const char* url) const;
+public:
+	ModuleRender* renderer = nullptr;
+	ModuleWindow* window = nullptr;
+	ModuleInput* input = nullptr;
+	ModuleEditor* editor = nullptr;
+	ModuleDebugDraw* debug_draw = nullptr;
+	ModuleCamera* camera = nullptr;
+	ModuleTexture* texture = nullptr;
+	ModuleSceneManager* scene_manager = nullptr;
+	ModuleProgram* program = nullptr;
+	ModuleHardware* hw = nullptr;
 
-		AppLog* console = nullptr;
+	AppLog* console = nullptr;
 
-	private:
-		PerformanceTimer timer;
+private:
+	PerformanceTimer timer;
 
-		double  delta = 0;
-		double  prev_tick_time = 0;
-		std::vector<Module*> modules;
+	double  delta = 0;
+	double  prev_tick_time = 0;
+	std::vector<Module*> modules;
 };
 
 extern Application* App;

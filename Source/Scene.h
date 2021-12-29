@@ -17,31 +17,30 @@ class Scene
 {
 	friend class ModuleSceneManager;
 
-	public: 
-		Scene();
-		~Scene();
+public:
+	Scene();
+	~Scene();
 
-		void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
-		GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
-		GameObject* LoadFBX(const std::string& path);
+	void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
+	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
+	GameObject* LoadFBX(const std::string& path);
 
-		GameObject* CreateCamera();
-		const ComponentCamera* GetMainCamera() const;
+	GameObject* CreateCamera();
+	const ComponentCamera* GetMainCamera() const;
 
-		void Update();
-		
-		void Play();
-		void Stop();
-		void Draw();
+	void Update();
 
-	private:
-		void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
-		std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
-		Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
+	void Play();
+	void Stop();
+	void Draw();
 
-		ModuleSceneManager* manager_owner = nullptr;
+private:
+	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
+	std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
+	Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
 
-		GameObject* root = nullptr;
-		ComponentCamera* main_camera = nullptr;
+	ModuleSceneManager* manager_owner = nullptr;
+
+	GameObject* root = nullptr;
+	ComponentCamera* main_camera = nullptr;
 };
-

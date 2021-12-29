@@ -10,20 +10,18 @@ class Camera;
 
 class ModuleDebugDraw : public Module
 {
-
 public:
+	ModuleDebugDraw();
+	~ModuleDebugDraw() override;
 
-    ModuleDebugDraw();
-    ~ModuleDebugDraw() override;
+	bool Init() override;
+	update_status Update(const float delta) override;
+	bool CleanUp() override;
 
-	bool            Init() override;
-	update_status   Update(const float delta) override;
-	bool            CleanUp() override;
+	void Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
 
-    void            Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
 private:
-
-    static DDRenderInterfaceCoreGL* implementation;
+	static DDRenderInterfaceCoreGL* implementation;
 };
 
 #endif /* _MODULE_DEBUGDRAW_H_ */

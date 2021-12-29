@@ -10,7 +10,8 @@
 
 #include "glew.h"
 
-ComponentMesh::ComponentMesh(GameObject* conatiner) : Component(Component::Type::Mesh, conatiner)
+ComponentMesh::ComponentMesh(GameObject* conatiner)
+	: Component(Component::Type::Mesh, conatiner)
 {
 }
 
@@ -43,7 +44,7 @@ void ComponentMesh::Import(const aiMesh* mesh)
 	tex_coords = new float[tex_coords_buffer_size];
 	for (unsigned i = 0; i < mesh->mNumVertices; i++)
 		memcpy(&tex_coords[i * 2], &mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
-	
+
 	num_indices = mesh->mNumFaces * 3;
 	indices_buffer_size = num_indices;
 	indices = new unsigned[indices_buffer_size];
@@ -60,22 +61,22 @@ void ComponentMesh::GenerateBuffers()
 	glGenBuffers(1, &vertices_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices_buffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices_buffer_size * sizeof(float), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(0);
 
 	// Normals (3 values per coord)
 	glGenBuffers(1, &normals_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, normals_buffer);
 	glBufferData(GL_ARRAY_BUFFER, normals_buffer_size * sizeof(float), normals, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
 	glEnableVertexAttribArray(1);
 
 	// Texture Coords (2 values per coord)
 	glGenBuffers(1, &tex_coords_buffer);
 	glBindBuffer(GL_ARRAY_BUFFER, tex_coords_buffer);
 	glBufferData(GL_ARRAY_BUFFER, tex_coords_buffer_size * sizeof(float), tex_coords, GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);	
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*) 0);
+	glEnableVertexAttribArray(2);
 
 	// Indices (1 value)
 	glGenBuffers(1, &indices_buffer);
@@ -87,7 +88,7 @@ void ComponentMesh::GenerateBuffers()
 
 void ComponentMesh::GenerateAABB()
 {
-	bounding_box.SetFrom((float3*)&vertices, num_vertices);
+	bounding_box.SetFrom((float3*) &vertices, num_vertices);
 }
 
 void ComponentMesh::Draw()
@@ -95,7 +96,7 @@ void ComponentMesh::Draw()
 	assert(loaded == true);
 	// TODO: Get material and transform components to draw sadge
 	App->program->Activate();
-	
+
 	App->program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 	App->program->BindUniformFloat4x4("view", &App->camera->getMainCamera()->GetViewMatrix()[0][0]);
 	App->program->BindUniformFloat4x4("proj", &App->camera->getMainCamera()->GetProjectionMatrix()[0][0]);
@@ -110,7 +111,8 @@ void ComponentMesh::Draw()
 
 void ComponentMesh::CleanUp()
 {
-	if (loaded) {
+	if (loaded)
+	{
 		glDeleteBuffers(1, &indices_buffer);
 		glDeleteBuffers(1, &vertices_buffer);
 		glDeleteBuffers(1, &normals_buffer);
@@ -125,7 +127,7 @@ void ComponentMesh::CleanUp()
 		vertices_buffer_size = 0;
 		normals_buffer_size = 0;
 		tex_coords_buffer_size = 0;
-	}	
+	}
 	loaded = false;
 }
 

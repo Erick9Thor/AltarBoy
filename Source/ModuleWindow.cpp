@@ -17,13 +17,12 @@ ModuleWindow::~ModuleWindow()
 bool ModuleWindow::Init()
 {
 	GetMonitorResolution(max_width, max_height);
-	width = (int)(max_width * WINDOWED_RATIO);
-	height = (int)(max_height * WINDOWED_RATIO);
+	width = (int) (max_width * WINDOWED_RATIO);
+	height = (int) (max_height * WINDOWED_RATIO);
 
 	fullscreen = FULLSCREEN;
 	resizable = RESIZABLE;
 	vsync = true;
-
 
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -84,8 +83,6 @@ void ModuleWindow::WindowResized()
 	SDL_UpdateWindowSurface(window);
 	screen_surface = SDL_GetWindowSurface(window);
 	App->renderer->WindowResized(screen_surface->w, screen_surface->h);
-	// TODO: Adapt
-	App->camera->SetAspectRatio(screen_surface->w, screen_surface->h);
 }
 
 void ModuleWindow::SetFullScreen(bool fullscreen)
@@ -99,7 +96,7 @@ void ModuleWindow::SetFullScreen(bool fullscreen)
 
 void ModuleWindow::SetResizable(bool resizable)
 {
-	SDL_SetWindowResizable(window, (SDL_bool)resizable);
+	SDL_SetWindowResizable(window, (SDL_bool) resizable);
 }
 
 void ModuleWindow::SetSize(int w, int h)
@@ -109,7 +106,7 @@ void ModuleWindow::SetSize(int w, int h)
 
 void ModuleWindow::SetVsync(bool vsync)
 {
-	SDL_GL_SetSwapInterval((int)vsync);
+	SDL_GL_SetSwapInterval((int) vsync);
 }
 
 void ModuleWindow::OptionsMenu()
@@ -121,15 +118,18 @@ void ModuleWindow::OptionsMenu()
 	if (ImGui::Checkbox("Vsync", &vsync))
 		SetVsync(vsync);
 
-	if (!fullscreen) {
+	if (!fullscreen)
+	{
 		ImGui::Separator();
 		if (ImGui::Checkbox("Resizable", &resizable))
 			SetResizable(resizable);
 
-		if (ImGui::SliderInt("Width", &width, 0, max_width)) {
+		if (ImGui::SliderInt("Width", &width, 0, max_width))
+		{
 			SetSize(width, height);
 		}
-		if (ImGui::SliderInt("Height", &height, 0, max_height)) {
+		if (ImGui::SliderInt("Height", &height, 0, max_height))
+		{
 			SetSize(width, height);
 		}
 	}
@@ -145,4 +145,3 @@ void ModuleWindow::GetMonitorResolution(int& width, int& height)
 	width = monitor.right;
 	height = monitor.bottom;
 }
-

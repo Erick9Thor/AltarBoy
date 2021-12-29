@@ -28,7 +28,6 @@ Scene::~Scene()
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
-
 }
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
@@ -37,7 +36,6 @@ GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
 	foo->scene_owner = this;
 	return foo;
 }
-
 
 GameObject* Scene::LoadFBX(const std::string& path)
 {
@@ -60,7 +58,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	{
 		LOG("Error loading file %s: %s", file_name.c_str(), aiGetErrorString());
 	}
-	importer.FreeScene();	
+	importer.FreeScene();
 
 	return model;
 }
@@ -82,8 +80,7 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 		model_part->GetComponent<ComponentTransform>()->SetLocalTransform(
 			float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
 			Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w),
-			float3(aiScale.x, aiScale.y, aiScale.z)
-		);
+			float3(aiScale.x, aiScale.y, aiScale.z));
 	}
 
 	// then do the same for each of its children
@@ -91,7 +88,6 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	{
 		LoadNode(scene, node->mChildren[i], parent, textures);
 	}
-	
 }
 
 std::vector<Texture> Scene::LoadTextures(const aiScene* scene, const std::string& model_path)

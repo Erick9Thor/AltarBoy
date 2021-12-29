@@ -224,6 +224,7 @@
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
     <ClInclude Include="Dependencies\imGizmo\ImGuizmo.h" />
+    <ClInclude Include="Dependencies\imgui\IconsFontAwesome5.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitOps.h" />
@@ -327,6 +328,7 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include="Dependencies\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

@@ -3,7 +3,6 @@
 
 ModuleSceneManager::ModuleSceneManager()
 {
-	
 }
 
 ModuleSceneManager::~ModuleSceneManager()

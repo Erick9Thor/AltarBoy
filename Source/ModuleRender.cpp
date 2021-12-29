@@ -43,42 +43,7 @@ bool ModuleRender::Init()
 	fps_log = std::vector<float>(n_bins);
 	ms_log = std::vector<float>(n_bins);
 
-	GenerateFrameBuffer();
-
 	return true;
-}
-
-void ModuleRender::GenerateFrameBuffer()
-{
-	//Generating buffers for target rendering
-	glGenFramebuffers(1, &frame_buffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-
-	//Generating texture to render to
-	glGenTextures(1, &fb_texture);
-	glBindTexture(GL_TEXTURE_2D, fb_texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	//Configuring frame buffer
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
-
-	//Generating the depth & stencil buffer
-	glGenRenderbuffers(1, &depth_stencil_buffer);
-	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);	
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		LOG("[M_Render] Error creating frame buffer");
-	}
-
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void ModuleRender::CreateContext()
@@ -94,8 +59,6 @@ void ModuleRender::CreateContext()
 
 	context = SDL_GL_CreateContext(App->window->GetWindow());
 	GLenum err = glewInit();
-
-	glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
 
 	clear_color = float4(0.1f, 0.1f, 0.1f, 1.0f);
 }
@@ -125,29 +88,8 @@ update_status ModuleRender::PreUpdate(const float delta)
 
 update_status ModuleRender::Update(const float delta)
 {
-	ImGui::Begin("Scene");
-
-	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->getMainCamera()->GetFrameBuffer());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	const ImVec2 new_viewport_size = ImGui::GetContentRegionAvail();
-
-	if (viewport_size.x != new_viewport_size.x || viewport_size.y != new_viewport_size.y) {
-		viewport_size.x = new_viewport_size.x;
-		viewport_size.y = new_viewport_size.y;
-
-		//Resize textures
-		glBindTexture(GL_TEXTURE_2D, fb_texture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (int)viewport_size.x, (int)viewport_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glBindTexture(GL_TEXTURE_2D, 0);
-
-		glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, (int)viewport_size.x, (int)viewport_size.y);
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-		glViewport(0, 0, (int)viewport_size.x, (int)viewport_size.y);
-		App->camera->SetAspectRatio((unsigned)viewport_size.x, (unsigned)viewport_size.y);
-	}
 
 	if (debug_draw)
 	{
@@ -157,17 +99,12 @@ update_status ModuleRender::Update(const float delta)
 		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
 	}
 
-
-	// Note: Debug draw disables blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	App->scene_manager->DrawScenes();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	ImGui::Image((void*)(intptr_t)fb_texture, ImVec2{ new_viewport_size.x, new_viewport_size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-	ImGui::End();
 
 	return UPDATE_CONTINUE;
 }
@@ -187,7 +124,8 @@ void ModuleRender::WindowResized(unsigned width, unsigned height)
 	glViewport(0, 0, w, h);
 }
 
-void GLOptionCheck(GLenum option, bool enable) {
+void GLOptionCheck(GLenum option, bool enable)
+{
 	if (enable)
 		glEnable(option);
 	else
@@ -196,7 +134,6 @@ void GLOptionCheck(GLenum option, bool enable) {
 
 void ModuleRender::OptionsMenu()
 {
-
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
 	ImGui::Text("Background Color");
@@ -208,7 +145,6 @@ void ModuleRender::OptionsMenu()
 		ImGui::SameLine();
 		ImGui::Checkbox("Bounding Box", &App->debug->ShouldDrawBoundingBox());
 	}*/
-
 
 	static bool line_smooth = false;
 	if (ImGui::Checkbox("Line Smooth", &line_smooth))
@@ -238,9 +174,9 @@ void ModuleRender::FpsGraph()
 
 	char title[25];
 	sprintf_s(title, 25, "Framerate %.1f", current_fps);
-	ImGui::PlotHistogram("##framerate", &fps_log[0], (int)fps_log.size(), 0, title, 0.0f, 1000.f, ImVec2(310, 100));
+	ImGui::PlotHistogram("##framerate", &fps_log[0], (int) fps_log.size(), 0, title, 0.0f, 1000.f, ImVec2(310, 100));
 	sprintf_s(title, 25, "Milliseconds %0.1f", current_ms);
-	ImGui::PlotHistogram("##milliseconds", &ms_log[0], (int)ms_log.size(), 0, title, 0.0f, 20.0f, ImVec2(310, 100));
+	ImGui::PlotHistogram("##milliseconds", &ms_log[0], (int) ms_log.size(), 0, title, 0.0f, 20.0f, ImVec2(310, 100));
 }
 
 void ModuleRender::AddFrame(const float delta)
@@ -255,14 +191,16 @@ void ModuleRender::AddFrame(const float delta)
 
 	if (time >= update_frequency_seconds)
 	{
-		if (filled_bins == n_bins) {
+		if (filled_bins == n_bins)
+		{
 			for (int i = 0; i < n_bins - 1; ++i)
 			{
 				fps_log[i] = fps_log[i + 1];
 				ms_log[i] = ms_log[i + 1];
 			}
 		}
-		else {
+		else
+		{
 			++filled_bins;
 		}
 		fps_log[filled_bins - 1] = float(frames) / time;
@@ -276,9 +214,9 @@ void ModuleRender::AddFrame(const float delta)
 
 void ModuleRender::RetrieveLibVersions()
 {
-	gl.glew = (unsigned char*)glewGetString(GLEW_VERSION);
-	gl.opengl = (unsigned char*)glGetString(GL_VERSION);
-	gl.glsl = (unsigned char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+	gl.glew = (unsigned char*) glewGetString(GLEW_VERSION);
+	gl.opengl = (unsigned char*) glGetString(GL_VERSION);
+	gl.glsl = (unsigned char*) glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	LOG("Using Glew %s", gl.glew);
 	LOG("OpenGL version supported %s", gl.opengl);
@@ -287,12 +225,12 @@ void ModuleRender::RetrieveLibVersions()
 
 void ModuleRender::RetrieveGpuInfo()
 {
-	gpu.name = (unsigned char*)glGetString(GL_RENDERER);
-	gpu.brand = (unsigned char*)glGetString(GL_VENDOR);
+	gpu.name = (unsigned char*) glGetString(GL_RENDERER);
+	gpu.brand = (unsigned char*) glGetString(GL_VENDOR);
 
 	int vram_budget;
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram_budget);
-	gpu.vram_budget_mb = (float)vram_budget / 1024.0f;
+	gpu.vram_budget_mb = (float) vram_budget / 1024.0f;
 }
 
 bool ModuleRender::CleanUp()
@@ -305,32 +243,72 @@ bool ModuleRender::CleanUp()
 
 void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
 {
-	const char* tmp_source = "", * tmp_type = "", * tmp_severity = "";
-	switch (source) {
-	case GL_DEBUG_SOURCE_API: tmp_source = "API"; break;
-	case GL_DEBUG_SOURCE_WINDOW_SYSTEM: tmp_source = "Window System"; break;
-	case GL_DEBUG_SOURCE_SHADER_COMPILER: tmp_source = "Shader Compiler"; break;
-	case GL_DEBUG_SOURCE_THIRD_PARTY: tmp_source = "Third Party"; break;
-	case GL_DEBUG_SOURCE_APPLICATION: tmp_source = "Application"; break;
-	case GL_DEBUG_SOURCE_OTHER: tmp_source = "Other"; break;
+	const char *tmp_source = "", *tmp_type = "", *tmp_severity = "";
+	switch (source)
+	{
+	case GL_DEBUG_SOURCE_API:
+		tmp_source = "API";
+		break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+		tmp_source = "Window System";
+		break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER:
+		tmp_source = "Shader Compiler";
+		break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:
+		tmp_source = "Third Party";
+		break;
+	case GL_DEBUG_SOURCE_APPLICATION:
+		tmp_source = "Application";
+		break;
+	case GL_DEBUG_SOURCE_OTHER:
+		tmp_source = "Other";
+		break;
 	};
-	switch (type) {
-	case GL_DEBUG_TYPE_ERROR: tmp_type = "Error"; break;
-	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: tmp_type = "Deprecated Behaviour"; break;
-	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: tmp_type = "Undefined Behaviour"; break;
-	case GL_DEBUG_TYPE_PORTABILITY: tmp_type = "Portability"; break;
-	case GL_DEBUG_TYPE_PERFORMANCE: tmp_type = "Performance"; break;
-	case GL_DEBUG_TYPE_MARKER: tmp_type = "Marker"; break;
-	case GL_DEBUG_TYPE_PUSH_GROUP: tmp_type = "Push Group"; break;
-	case GL_DEBUG_TYPE_POP_GROUP: tmp_type = "Pop Group"; break;
-	case GL_DEBUG_TYPE_OTHER: tmp_type = "Other"; break;
+	switch (type)
+	{
+	case GL_DEBUG_TYPE_ERROR:
+		tmp_type = "Error";
+		break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+		tmp_type = "Deprecated Behaviour";
+		break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+		tmp_type = "Undefined Behaviour";
+		break;
+	case GL_DEBUG_TYPE_PORTABILITY:
+		tmp_type = "Portability";
+		break;
+	case GL_DEBUG_TYPE_PERFORMANCE:
+		tmp_type = "Performance";
+		break;
+	case GL_DEBUG_TYPE_MARKER:
+		tmp_type = "Marker";
+		break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:
+		tmp_type = "Push Group";
+		break;
+	case GL_DEBUG_TYPE_POP_GROUP:
+		tmp_type = "Pop Group";
+		break;
+	case GL_DEBUG_TYPE_OTHER:
+		tmp_type = "Other";
+		break;
 	};
-	switch (severity) {
-	case GL_DEBUG_SEVERITY_HIGH: tmp_severity = "high"; break;
-	case GL_DEBUG_SEVERITY_MEDIUM: tmp_severity = "medium"; break;
-	case GL_DEBUG_SEVERITY_LOW: tmp_severity = "low"; break;
+	switch (severity)
+	{
+	case GL_DEBUG_SEVERITY_HIGH:
+		tmp_severity = "high";
+		break;
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		tmp_severity = "medium";
+		break;
+	case GL_DEBUG_SEVERITY_LOW:
+		tmp_severity = "low";
+		break;
 		// case GL_DEBUG_SEVERITY_NOTIFICATION: tmp_severity = "notification"; break;
-	default: return;
+	default:
+		return;
 	};
 	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }

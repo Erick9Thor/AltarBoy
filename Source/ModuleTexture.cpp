@@ -29,16 +29,15 @@ Texture ModuleTexture::Load(const char* path)
 	texture.path = path;
 	unsigned int img_id = LoadImg(path);
 
-	if (img_id != 0) {
+	if (img_id != 0)
+	{
 		glGenTextures(1, &texture.id);
 		glBindTexture(GL_TEXTURE_2D, texture.id);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), texture.width = ilGetInteger(IL_IMAGE_WIDTH),
-			texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE,
-			ilGetData());
+		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), texture.width = ilGetInteger(IL_IMAGE_WIDTH), texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -60,19 +59,17 @@ void ModuleTexture::Unbind(unsigned slot)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void SetOption(unsigned option, unsigned value) {
+void SetOption(unsigned option, unsigned value)
+{
 	glTexParameteri(GL_TEXTURE_2D, option, value);
 }
 
 void ModuleTexture::OptionsMenu()
 {
-	const char* labels_mag[] = { "Linear", "Nearest" };
-	const unsigned values_mag[] = { GL_LINEAR, GL_NEAREST };
-	const char* labels_min[] = { "Nearest", "Linear", "Nearest Mipmaps Nearest Criteria",
-		"Nearest Mipmap Linear Criteria", "Linear Mipmaps (Two Closest) Nearest Criteria",
-	"Linear Mipmaps (Two Closest) Linear Criteria" };
-	const unsigned values_min[] = { GL_NEAREST, GL_LINEAR, GL_NEAREST_MIPMAP_NEAREST,
-		GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR };
+	const char* labels_mag[] = {"Linear", "Nearest"};
+	const unsigned values_mag[] = {GL_LINEAR, GL_NEAREST};
+	const char* labels_min[] = {"Nearest", "Linear", "Nearest Mipmaps Nearest Criteria", "Nearest Mipmap Linear Criteria", "Linear Mipmaps (Two Closest) Nearest Criteria", "Linear Mipmaps (Two Closest) Linear Criteria"};
+	const unsigned values_min[] = {GL_NEAREST, GL_LINEAR, GL_NEAREST_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR};
 	static int mag_filter = 0; // Default is GL_LINEAR
 	static int min_filter = 3; // Default is GL_NEAREST_MIPMAP_LINEAR
 

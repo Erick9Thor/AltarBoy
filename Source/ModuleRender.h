@@ -10,13 +10,15 @@ struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
 
-struct GpuData {
+struct GpuData
+{
 	unsigned char* name;
 	unsigned char* brand;
 	float vram_budget_mb;
 };
 
-struct GlVersion {
+struct GlVersion
+{
 	unsigned char* glew;
 	unsigned char* opengl;
 	unsigned char* glsl;
@@ -35,17 +37,24 @@ public:
 	bool CleanUp() override;
 
 	void WindowResized(unsigned width, unsigned height);
-	void GenerateFrameBuffer();
 
 	void OptionsMenu();
 	void PerformanceMenu(const float delta);
 	void FpsGraph();
 	void AddFrame(const float delta);
 
-	inline void* GetGLContext() const { return context; }
-	inline const GpuData GetGpuData() const { return gpu; }
-	inline const GlVersion GetGlVersion() { return gl; }
-
+	inline void* GetGLContext() const
+	{
+		return context;
+	}
+	inline const GpuData GetGpuData() const
+	{
+		return gpu;
+	}
+	inline const GlVersion GetGlVersion()
+	{
+		return gl;
+	}
 
 private:
 	void CreateContext();
@@ -68,10 +77,4 @@ private:
 	std::vector<float> ms_log;
 	float current_fps = 0.0f;
 	float current_ms = 0.0f;
-
-	unsigned frame_buffer = 0;
-	unsigned fb_texture = 0;
-	unsigned depth_stencil_buffer = 0;
-
-	float2 viewport_size = float2(0.0f, 0.0f);
 };

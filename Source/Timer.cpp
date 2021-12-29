@@ -10,9 +10,10 @@ void Timer::Start()
 
 double Timer::Read()
 {
-	if (running) {
+	if (running)
+	{
 		unsigned int now = SDL_GetTicks();
-		current_time = (double)(now - start_time); // ms
+		current_time = (double) (now - start_time); // ms
 	}
 	return current_time;
 }
@@ -23,7 +24,6 @@ double Timer::Stop()
 	running = false;
 }
 
-
 void PerformanceTimer::Start()
 {
 	running = true;
@@ -32,10 +32,11 @@ void PerformanceTimer::Start()
 
 double PerformanceTimer::Read()
 {
-	static const double frequency = (double)SDL_GetPerformanceFrequency();
-	if (running) {
+	static const double frequency = (double) SDL_GetPerformanceFrequency();
+	if (running)
+	{
 		unsigned long long now = SDL_GetPerformanceCounter();
-		current_time = (double)((now - start_time) * 1000.0 / frequency);
+		current_time = (double) ((now - start_time) * 1000.0 / frequency);
 	}
 	return current_time;
 }

@@ -5,8 +5,8 @@
 class ModuleHardware : public Module
 {
 public:
-
-	struct hw_info {
+	struct hw_info
+	{
 		SDL_version sdl_version;
 		int n_cpu;
 		float ram_gb;
@@ -17,15 +17,16 @@ public:
 	};
 
 public:
-
 	ModuleHardware();
 	~ModuleHardware() override;
 
 	bool Init() override;
 
-	inline hw_info GetInfo() { return info; };
+	inline hw_info GetInfo()
+	{
+		return info;
+	};
 
 private:
-
 	mutable hw_info info;
 };
