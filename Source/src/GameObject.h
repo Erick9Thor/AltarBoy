@@ -1,7 +1,6 @@
 #pragma once
-#include "Math.h"
-
-#include "Component.h"
+#include "Utils/Math.h"
+#include "Components/Component.h"
 
 #include <vector>
 using namespace std;

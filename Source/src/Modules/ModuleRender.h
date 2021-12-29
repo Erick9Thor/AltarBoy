@@ -1,8 +1,8 @@
 #pragma once
 #include "Module.h"
-#include "Globals.h"
+#include "../Globals.h"
 
-#include "Math.h"
+#include "../Utils/Math.h"
 
 #include <vector>
 

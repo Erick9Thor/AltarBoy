@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Math.h"
-#include "ModuleTexture.h"
-#include "Component.h"
+#include "Modules/ModuleTexture.h"
+#include "Components/Component.h"
 
 #include "assimp/scene.h"
 

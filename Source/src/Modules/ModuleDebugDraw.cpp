@@ -1,4 +1,4 @@
-#include "Globals.h"
+#include "../Globals.h"
 #include "ModuleDebugDraw.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION

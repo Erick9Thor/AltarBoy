@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "Application.h"
-#include "ModuleRender.h"
+#include "Modules/ModuleRender.h"
 #include "Globals.h"
 #include "glew.h"
 
@@ -8,7 +8,7 @@
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2main.lib")
 
-#include "ImGuiComponents/AppLog.h"
+#include "UI/AppLog.h"
 
 #ifdef _DEBUG
 #define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)

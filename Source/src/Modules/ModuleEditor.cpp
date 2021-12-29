@@ -1,5 +1,5 @@
-#include "Globals.h"
-#include "Application.h"
+#include "../Globals.h"
+#include "../Application.h"
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -10,11 +10,11 @@
 #include "ModuleSceneManager.h"
 #include "SDL.h"
 
-#include "GameObject.h"
-#include "Scene.h"
-#include "ComponentCamera.h"
+#include "../GameObject.h"
+#include "../Scene.h"
+#include "../Components/ComponentCamera.h"
 
-#include "ImGuiComponents/AppLog.h"
+#include "../UI/AppLog.h"
 
 #include "glew.h"
 #include "imgui.h"

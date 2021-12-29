@@ -1,5 +1,5 @@
-#include "GameObject.h"
-#include "Application.h"
+#include "../GameObject.h"
+#include "../Application.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
@@ -9,8 +9,8 @@
 #include "ModuleEditor.h"
 #include "ModuleSceneManager.h"
 
-#include "ComponentTransform.h"
-#include "ComponentCamera.h"
+#include "../Components/ComponentTransform.h"
+#include "../Components/ComponentCamera.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"

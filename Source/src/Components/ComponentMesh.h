@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "ModuleTexture.h"
+#include "../Modules/ModuleTexture.h"
 
 #include "assimp/scene.h"
 #include "MathGeoLib.h"

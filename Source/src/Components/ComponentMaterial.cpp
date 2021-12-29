@@ -1,4 +1,5 @@
 #include "ComponentMaterial.h"
+#include <imgui.h>
 
 ComponentMaterial::ComponentMaterial(GameObject* conatiner)
 	: Component(Component::Type::Material, conatiner)

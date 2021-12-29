@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Globals.h"
-#include "Application.h"
+#include "../Globals.h"
+#include "../Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
-#include "GameObject.h"
+#include "../GameObject.h"
 
-#include "ImGuiComponents/AppLog.h"
+#include "../UI/AppLog.h"
 
 class ModuleEditor : public Module
 {

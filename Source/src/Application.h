@@ -1,9 +1,10 @@
 #pragma once
 
-#include<list>
 #include "Globals.h"
-#include "Module.h"
-#include "Timer.h"
+#include "Modules/Module.h"
+#include "Utils/Timer.h"
+
+#include<list>
 #include <vector>
 
 using namespace std;

@@ -1,10 +1,10 @@
 #include "GameObject.h"
 #include "Globals.h"
 
-#include "ComponentTransform.h"
-#include "ComponentCamera.h"
-#include "ComponentMesh.h"
-#include "ComponentMaterial.h"
+#include "Components/ComponentTransform.h"
+#include "Components/ComponentCamera.h"
+#include "Components/ComponentMesh.h"
+#include "Components/ComponentMaterial.h"
 
 GameObject::GameObject()
 {

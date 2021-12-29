@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include "ModuleTexture.h"
+#include "../Modules/ModuleTexture.h"
 
 class ComponentMaterial : public Component
 {
