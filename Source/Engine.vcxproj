@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\imGizmo</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\imGizmo</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,12 +144,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\imGuizmo\GraphEditor.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Components\ComponentCamera.cpp" />
     <ClCompile Include="src\Components\ComponentMaterial.cpp" />
     <ClCompile Include="src\Components\ComponentMesh.cpp" />
     <ClCompile Include="src\Components\ComponentTransform.cpp" />
-    <ClCompile Include="Dependencies\imGizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -221,6 +225,12 @@
     <ClCompile Include="src\UI\WindowScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImGradient.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\ComponentCamera.h" />
@@ -229,7 +239,6 @@
     <ClInclude Include="src\Components\ComponentTransform.h" />
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
-    <ClInclude Include="Dependencies\imGizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imgui\IconsFontAwesome5.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h" />

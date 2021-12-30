@@ -24,6 +24,44 @@ double Timer::Stop()
 	running = false;
 }
 
+void Timer::StartGame()
+{
+	if (game_started) return;
+	game_started = true;
+	game_running = true;
+}
+
+void Timer::StopGame()
+{
+	if (!game_started) return;
+	game_started = false;
+	game_running = false;
+}
+
+void Timer::PauseGame()
+{
+	if (!game_started) return;
+	if (!game_running) return;
+
+	game_running = false;
+}
+
+void Timer::ResumeGame()
+{
+	if (!game_started) return;
+	if (game_running) return;
+
+	game_running = true;
+}
+
+void Timer::StepGame()
+{
+	if (!game_started) StartGame();
+	if (game_running) PauseGame();
+
+	game_step_once = true;
+}
+
 void PerformanceTimer::Start()
 {
 	running = true;
