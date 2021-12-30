@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -213,6 +213,12 @@
     <ClCompile Include="src\Modules\ModuleWindow.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Utils\Timer.cpp" />
+    <ClCompile Include="src\UI\Window.cpp" />
+    <ClCompile Include="src\UI\WindowAbout.cpp" />
+    <ClCompile Include="src\UI\WindowConfiguration.cpp" />
+    <ClCompile Include="src\UI\WindowHierarchy.cpp" />
+    <ClCompile Include="src\UI\WindowInspector.cpp" />
+    <ClCompile Include="src\UI\WindowScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -326,6 +332,12 @@
     <ClInclude Include="src\Modules\ModuleWindow.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Utils\Timer.h" />
+    <ClInclude Include="src\UI\Window.h" />
+    <ClInclude Include="src\UI\WindowAbout.h" />
+    <ClInclude Include="src\UI\WindowConfiguration.h" />
+    <ClInclude Include="src\UI\WindowHierarchy.h" />
+    <ClInclude Include="src\UI\WindowInspector.h" />
+    <ClInclude Include="src\UI\WindowScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
