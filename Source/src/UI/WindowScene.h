@@ -12,7 +12,7 @@ public:
 	WindowScene();
 	void Update() override;
 
-	bool ToolbarButton(ImFont* font, const char* font_icon);
+	bool ToolbarButton(ImFont* font, const char* font_icon, bool active);
 
 private:
 	void GuizmoControl();

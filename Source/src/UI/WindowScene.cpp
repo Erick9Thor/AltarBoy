@@ -111,45 +111,45 @@ void WindowScene::SceneControl()
 
 	if (scene_timer->HasGameStarted())
 	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP)) scene_timer->StopGame();
+		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning())) scene_timer->StopGame();
 
 		if (scene_timer->IsGameRunning())
 		{
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE)) scene_timer->PauseGame();
+			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, !scene_timer->IsGameRunning())) scene_timer->PauseGame();
 		}
 		else
 		{
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY)) scene_timer->ResumeGame();
+			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->ResumeGame();
 		}
 	}
 	else
 	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY)) scene_timer->StartGame();
+		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->StartGame();
 	}
 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD)) scene_timer->StepGame();
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD, scene_timer->IsGameRunning())) scene_timer->StepGame();
 	ImGui::Separator();
 }
 
 void WindowScene::GuizmoControl()
 {
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT)) current_guizmo_operation = ImGuizmo::TRANSLATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO)) current_guizmo_operation = ImGuizmo::ROTATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT))  current_guizmo_operation = ImGuizmo::SCALE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, current_guizmo_operation == ImGuizmo::TRANSLATE)) current_guizmo_operation = ImGuizmo::TRANSLATE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, current_guizmo_operation == ImGuizmo::ROTATE)) current_guizmo_operation = ImGuizmo::ROTATE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, current_guizmo_operation == ImGuizmo::SCALE)) current_guizmo_operation = ImGuizmo::SCALE; 
 
 	ImGui::SameLine();
 	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 	ImGui::SameLine();
 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME)) current_guizmo_mode = ImGuizmo::LOCAL;
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE)) current_guizmo_mode = ImGuizmo::WORLD;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, current_guizmo_mode == ImGuizmo::LOCAL)) current_guizmo_mode = ImGuizmo::LOCAL;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, current_guizmo_mode == ImGuizmo::WORLD)) current_guizmo_mode = ImGuizmo::WORLD;
 }
 
 //TODO: Move to utils gui and add tooltips
-bool WindowScene::ToolbarButton(ImFont* font, const char* font_icon)
+bool WindowScene::ToolbarButton(ImFont* font, const char* font_icon, bool active)
 {
 	const ImVec4 col_active = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
-	const ImVec4 bg_color = false ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
+	const ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
 
 	ImGui::SameLine();
 	auto frame_padding = ImGui::GetStyle().FramePadding;
@@ -164,12 +164,16 @@ bool WindowScene::ToolbarButton(ImFont* font, const char* font_icon)
 	ImGui::PushFont(font);
 	if (ImGui::Button(font_icon))
 	{
-		return true;
+		active = true;
+	}
+	else
+	{
+		active = false;
 	}
 
 	ImGui::PopFont();
 	ImGui::PopStyleColor(4);
 	ImGui::PopStyleVar(3);
 
-	return false;
+	return active;
 }
