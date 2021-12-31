@@ -1,11 +1,14 @@
 #include "WindowScene.h"
 
 #include "../Application.h"
+#include "../GameObject.h"
+
 #include "../Modules/ModuleInput.h"
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleCamera.h"
 
 #include "../Components/ComponentCamera.h"
+#include "../Components/ComponentTransform.h"
 
 #include <IconsFontAwesome5.h>
 #include <imgui_internal.h>
@@ -43,10 +46,20 @@ void WindowScene::DrawScene()
 
 	App->camera->SetAspectRatio((unsigned) size.x, (unsigned) size.y);
 	App->renderer->WindowResized(size.x, size.y);
+	gizmo_rect_origin = {
+		size.x,
+		size.y,
+	};
+
+	ImDrawList* draw_list = ImGui::GetWindowDrawList();
+	ImDrawVert* last_vertex = draw_list->VtxBuffer.end();
+	texture_size = {
+		last_vertex->pos.x,
+		last_vertex->pos.y,
+	};
 
 	ImGui::Image((ImTextureID)(App->camera->getMainCamera()->GetTextureId()), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
-	ImGui::End();
 
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
@@ -61,12 +74,34 @@ void WindowScene::DrawScene()
 		}
 	}
 
+	//TODO: Fix 
+
+	float view_manipulate_right = gizmo_rect_origin.x + texture_size.x;
+	float view_manipulate_top = gizmo_rect_origin.y;
+	ImGuizmo::SetDrawlist();
+	ImGuizmo::SetRect(gizmo_rect_origin.x, gizmo_rect_origin.y, texture_size.x, texture_size.y);
+
 	GameObject* selected_object = App->editor->getSelectedGO();
 
+	float4x4 m_view = App->camera->getMainCamera()->GetViewMatrix(true);
+	float4x4 m_projection = App->camera->getMainCamera()->GetProjectionMatrix(true);
 	if (selected_object) {
-		// Get transform and try to decompose or something like
+		float4x4 model_projection = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
+
+		ImGuizmo::Manipulate(m_view.ptr(), m_projection.ptr(), current_guizmo_operation, current_guizmo_mode, model_projection.ptr(), nullptr, nullptr);
+		if (ImGuizmo::IsUsing())
+		{
+			float4x4 newMatrix;
+			newMatrix.Set(model_projection);
+			selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(newMatrix.Transposed());
+		}
 	}
 
+	ImGuizmo::ViewManipulate(m_view.ptr(), 4, ImVec2(view_manipulate_right - imguizmo_size, view_manipulate_top), ImVec2(imguizmo_size, imguizmo_size), 0x10101010);
+	
+	//TODO ADD look at when manipulating cube
+
+	ImGui::End();
 }
 
 void WindowScene::SceneControl()
