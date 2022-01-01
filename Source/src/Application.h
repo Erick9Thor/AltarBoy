@@ -50,8 +50,6 @@ public:
 	ModuleProgram* program = nullptr;
 	ModuleHardware* hw = nullptr;
 
-	AppLog* console = nullptr;
-
 private:
 	PerformanceTimer timer;
 

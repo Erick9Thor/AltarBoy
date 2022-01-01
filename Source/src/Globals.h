@@ -3,9 +3,6 @@
 
 #include <windows.h>
 #include <stdio.h>
-#include "UI/AppLog.h"
-
-#define LOG(format, ...) Logger->AddLog(__FILE__, __LINE__, format, __VA_ARGS__);
 
 #define M_PI 3.14159265358979323846
 constexpr float to_rad = (float) M_PI / 180.0f;

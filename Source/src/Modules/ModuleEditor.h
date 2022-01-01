@@ -15,8 +15,7 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
-
-#include "../UI/AppLog.h"
+#include "../UI/WindowConsole.h"
 
 class ModuleEditor : public Module
 {
@@ -74,4 +73,5 @@ private:
 	WindowInspector w_inspector;
 	WindowConfiguration w_configuration;
 	WindowAbout w_about;
+	WindowConsole w_console;
 };

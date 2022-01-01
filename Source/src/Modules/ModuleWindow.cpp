@@ -1,10 +1,13 @@
 #include "../Globals.h"
 #include "../Application.h"
+#include "../Utils/Logger.h"
+
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleCamera.h"
 
 #include "wtypes.h"
+#include <imgui.h>
 
 ModuleWindow::ModuleWindow()
 {

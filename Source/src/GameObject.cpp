@@ -1,5 +1,7 @@
 #include "GameObject.h"
+
 #include "Globals.h"
+#include "Utils/Logger.h"
 
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentCamera.h"
@@ -94,7 +96,7 @@ Component* GameObject::CreateComponent(Component::Type type)
 	if (new_component != nullptr)
 		components.push_back(new_component);
 	else
-		LOG("Falied to create component")
+		LOG("Falied to create component");
 	return new_component;
 }
 

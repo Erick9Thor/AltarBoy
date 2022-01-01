@@ -1,5 +1,6 @@
 #include "../Globals.h"
 #include "../Application.h"
+#include "../Utils/Logger.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -49,7 +50,7 @@ bool ModuleRender::Init()
 
 void ModuleRender::CreateContext()
 {
-	LOG("Creating Renderer context");
+	//LOG("Creating Renderer context");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -236,7 +237,7 @@ void ModuleRender::RetrieveGpuInfo()
 
 bool ModuleRender::CleanUp()
 {
-	LOG("Destroying renderer");
+	//LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -311,5 +312,5 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 	default:
 		return;
 	};
-	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
+	//LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }

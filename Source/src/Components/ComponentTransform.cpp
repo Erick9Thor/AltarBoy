@@ -3,6 +3,7 @@
 
 #include "../GameObject.h"
 #include "../Globals.h"
+#include <imgui.h>
 
 ComponentTransform::ComponentTransform(GameObject* new_object, float3 position, Quat rotation, float3 scale)
 	: Component(Component::Type::Transform, new_object)

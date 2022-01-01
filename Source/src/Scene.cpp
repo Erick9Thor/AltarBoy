@@ -1,5 +1,7 @@
 #include "Globals.h"
 
+#include "Utils/Logger.h"
+
 #include "Application.h"
 #include "Scene.h"
 #include "GameObject.h"

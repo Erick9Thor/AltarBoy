@@ -1,6 +1,7 @@
 #include "../Application.h"
 #include "../Modules/ModuleWindow.h"
 #include "../Modules/ModuleRender.h"
+#include "../Utils/Logger.h"
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
