@@ -15,7 +15,7 @@ ComponentCamera::ComponentCamera(GameObject* container)
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
 
-	horizontal_fov = 90.0f;
+	horizontal_fov = 65.0f;
 	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, (float) DEFAULT_CAMERA_WIDTH / (float) DEFAULT_CAMERA_HEIGHT);
 
 	frustum.SetPos(float3(0.0f, 0.0f, 0.0f));
@@ -116,8 +116,7 @@ void ComponentCamera::SetResolution(float width, float height)
 		resolution_y = height;
 		ResizeFrameBuffer();
 	}
-	float vertical_fov = frustum.VerticalFov();
-	frustum.SetVerticalFovAndAspectRatio(vertical_fov, width / height);
+	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, (width / height));
 }
 
 void ComponentCamera::ResizeFrameBuffer()

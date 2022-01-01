@@ -23,9 +23,9 @@ void WindowScene::Update()
 {
 	if (!App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W)) current_guizmo_operation = ImGuizmo::TRANSLATE;
-		if (App->input->GetKey(SDL_SCANCODE_E)) current_guizmo_operation = ImGuizmo::ROTATE;
-		if (App->input->GetKey(SDL_SCANCODE_R)) current_guizmo_operation = ImGuizmo::SCALE;
+		if (App->input->GetKey(SDL_SCANCODE_W)) guizmo_operation = ImGuizmo::TRANSLATE;
+		if (App->input->GetKey(SDL_SCANCODE_E)) guizmo_operation = ImGuizmo::ROTATE;
+		if (App->input->GetKey(SDL_SCANCODE_R)) guizmo_operation = ImGuizmo::SCALE;
 	}
 	if (ImGui::Begin(ICON_FA_GLOBE "Scene", &active))
 	{
@@ -37,29 +37,27 @@ void WindowScene::Update()
 
 		SceneControl();
 		DrawScene();
+		ImGui::End();
 	};
 }
 
 void WindowScene::DrawScene()
 {
 	ImVec2 size = ImGui::GetContentRegionAvail();
-
-	App->camera->SetAspectRatio((unsigned) size.x, (unsigned) size.y);
-	App->renderer->WindowResized(size.x, size.y);
-	gizmo_rect_origin = {
+	texture_size = {
 		size.x,
 		size.y,
 	};
 
-	ImDrawList* draw_list = ImGui::GetWindowDrawList();
-	ImDrawVert* last_vertex = draw_list->VtxBuffer.end();
-	texture_size = {
-		last_vertex->pos.x,
-		last_vertex->pos.y,
-	};
+	// TODO: Improve size management
+	App->camera->SetAspectRatio((unsigned) texture_size.x, (unsigned) texture_size.y);
+	App->renderer->WindowResized((unsigned) texture_size.x, (unsigned) texture_size.y);
 
-	ImGui::Image((ImTextureID)(App->camera->getMainCamera()->GetTextureId()), size, ImVec2 {0, 1}, ImVec2 {1, 0});
-
+	// Has to be the top left corner of the image in imgui coords, top is y = 0
+	gizmo_rect_origin = ImGui::GetCursorScreenPos();
+	//maybe needed based on some examples: gizmo_rect_origin.y -= 25.0f;
+	
+	ImGui::Image((void*)(intptr_t)App->camera->getMainCamera()->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
@@ -74,34 +72,32 @@ void WindowScene::DrawScene()
 		}
 	}
 
-	//TODO: Fix 
-
-	float view_manipulate_right = gizmo_rect_origin.x + texture_size.x;
-	float view_manipulate_top = gizmo_rect_origin.y;
-	ImGuizmo::SetDrawlist();
-	ImGuizmo::SetRect(gizmo_rect_origin.x, gizmo_rect_origin.y, texture_size.x, texture_size.y);
+	constexpr bool transposed = true;
+	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(transposed);
+	//TODO ADD look at when manipulating cube
+	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(gizmo_rect_origin.x + texture_size.x - imguizmo_size.x, gizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
 
 	GameObject* selected_object = App->editor->getSelectedGO();
-
-	float4x4 m_view = App->camera->getMainCamera()->GetViewMatrix(true);
-	float4x4 m_projection = App->camera->getMainCamera()->GetProjectionMatrix(true);
+	if (!selected_object) return;
+	
 	if (selected_object) {
-		float4x4 model_projection = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
+		// Using GL format which means transposing them
+		float4x4 projection = App->camera->getMainCamera()->GetProjectionMatrix(transposed);
+		float4x4 model = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
+		float4x4 delta;
 
-		ImGuizmo::Manipulate(m_view.ptr(), m_projection.ptr(), current_guizmo_operation, current_guizmo_mode, model_projection.ptr(), nullptr, nullptr);
-		if (ImGuizmo::IsUsing())
+		//TODO: Fix
+		ImGuizmo::SetRect(gizmo_rect_origin.x, gizmo_rect_origin.y, (float) size.x, (float) size.y);
+		ImGuizmo::SetDrawlist();	
+
+		ImGuizmo::Manipulate((float*) &view, (float*) &projection, guizmo_operation, guizmo_mode, (float*) &model, (float*) &delta);
+		if (ImGuizmo::IsUsing() && !delta.IsIdentity())
 		{
-			float4x4 newMatrix;
-			newMatrix.Set(model_projection);
-			selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(newMatrix.Transposed());
+			// Transpose back again to store in our format
+			model.Transpose();
+			selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(model);
 		}
 	}
-
-	ImGuizmo::ViewManipulate(m_view.ptr(), 4, ImVec2(view_manipulate_right - imguizmo_size, view_manipulate_top), ImVec2(imguizmo_size, imguizmo_size), 0x10101010);
-	
-	//TODO ADD look at when manipulating cube
-
-	ImGui::End();
 }
 
 void WindowScene::SceneControl()
@@ -133,16 +129,16 @@ void WindowScene::SceneControl()
 
 void WindowScene::GuizmoControl()
 {
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, current_guizmo_operation == ImGuizmo::TRANSLATE)) current_guizmo_operation = ImGuizmo::TRANSLATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, current_guizmo_operation == ImGuizmo::ROTATE)) current_guizmo_operation = ImGuizmo::ROTATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, current_guizmo_operation == ImGuizmo::SCALE)) current_guizmo_operation = ImGuizmo::SCALE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE)) guizmo_operation = ImGuizmo::TRANSLATE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE)) guizmo_operation = ImGuizmo::ROTATE; 
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE)) guizmo_operation = ImGuizmo::SCALE; 
 
 	ImGui::SameLine();
 	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 	ImGui::SameLine();
 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, current_guizmo_mode == ImGuizmo::LOCAL)) current_guizmo_mode = ImGuizmo::LOCAL;
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, current_guizmo_mode == ImGuizmo::WORLD)) current_guizmo_mode = ImGuizmo::WORLD;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL)) guizmo_mode = ImGuizmo::LOCAL;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD)) guizmo_mode = ImGuizmo::WORLD;
 }
 
 //TODO: Move to utils gui and add tooltips

@@ -55,10 +55,7 @@ public:
 		assert(go);
 		selected_go = go;
 	}
-	GameObject* getSelectedGO() const
-	{
-		return selected_go;
-	}
+	GameObject* getSelectedGO() const{ return selected_go; }
 
 	ImFont* m_big_icon_font;
 	ImFont* m_small_icon_font;
