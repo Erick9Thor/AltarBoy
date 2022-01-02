@@ -37,7 +37,9 @@ Texture ModuleTexture::Load(const char* path)
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), texture.width = ilGetInteger(IL_IMAGE_WIDTH), texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), 
+			texture.width = ilGetInteger(IL_IMAGE_WIDTH), texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 
+			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -45,6 +47,38 @@ Texture ModuleTexture::Load(const char* path)
 		texture.loaded = true; // False by default
 	}
 	return texture;
+}
+
+TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
+{
+	TextureCube cube;
+	cube.loaded = true;
+
+	glGenTextures(1, &cube.id);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
+
+	// Expected file order x, -x, y, -y, z, -z
+	for (int i = 0; i < 6; ++i) {
+		unsigned int img_id = LoadImg(paths[i]);
+		iluFlipImage();
+		if (img_id == 0) {
+			cube.loaded = false;
+			continue; // Try loading the other parts despite failing
+		}
+		// Take advantage of opengl enum with index
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), 
+			cube.widths[i] = ilGetInteger(IL_IMAGE_WIDTH), cube.heighths[i] = ilGetInteger(IL_IMAGE_HEIGHT), 
+			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+			
+	}
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	return cube;
 }
 
 void ModuleTexture::Bind(unsigned id, unsigned slot)
@@ -88,7 +122,6 @@ unsigned int ModuleTexture::LoadImg(const char* path)
 		return 0;
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	iluFlipImage();
-
 	return img_id;
 }
 

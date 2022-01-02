@@ -15,6 +15,14 @@ struct Texture
 	unsigned height;
 };
 
+struct TextureCube
+{
+	bool loaded = false;
+	unsigned id;
+	unsigned widths[6];
+	unsigned heighths[6];
+};
+
 class ModuleTexture : public Module
 {
 public:
@@ -25,6 +33,7 @@ public:
 	bool CleanUp() override;
 
 	Texture Load(const char* path);
+	TextureCube LoadCubeMap(const char* paths[6]);
 	void Bind(unsigned id, unsigned slot = GL_TEXTURE0);
 	void Unbind(unsigned slot = GL_TEXTURE0);
 

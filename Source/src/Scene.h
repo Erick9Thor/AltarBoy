@@ -3,7 +3,6 @@
 #include "Math.h"
 #include "Modules/ModuleTexture.h"
 #include "Components/Component.h"
-
 #include "assimp/scene.h"
 
 #include <string>
@@ -12,6 +11,7 @@
 class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
+class Skybox;
 
 class Scene
 {
@@ -43,4 +43,6 @@ private:
 
 	GameObject* root = nullptr;
 	ComponentCamera* main_camera = nullptr;
+
+	Skybox* skybox;
 };

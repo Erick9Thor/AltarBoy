@@ -12,6 +12,9 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 #include "Modules/ModuleTexture.h"
+#include "Modules/ModuleProgram.h"
+
+#include "Skybox.h"
 
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
@@ -20,12 +23,14 @@
 Scene::Scene()
 {
 	root = new GameObject(nullptr, float4x4::identity, "Root");
+	skybox = new Skybox();
 	//GameObject* test_model = LoadFBX("BakerHouse.fbx"); // Need to call when opengl is running
 }
 
 Scene::~Scene()
 {
 	delete root;
+	delete skybox;
 	delete main_camera;
 }
 
@@ -172,8 +177,8 @@ void Scene::Draw(ComponentCamera* camera)
 	glViewport(0, 0, res_x, res_y);
 
 	// TODO: Change with skybox
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	skybox->Draw(camera);
 	
 	float4x4 view = camera->GetViewMatrix(false);
 	float4x4 proj = camera->GetProjectionMatrix(false);
