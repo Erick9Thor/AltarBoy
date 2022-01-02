@@ -6,6 +6,7 @@
 using namespace std;
 
 class ComponentTransform;
+class ComponentCamera;
 class Scene;
 
 class GameObject
@@ -29,8 +30,8 @@ public:
 
 	void Destroy();
 	void Update();
-	void DrawAll();
-	void Draw();
+	void DrawAll(ComponentCamera* camera);
+	void Draw(ComponentCamera* camera);
 
 	void OnTransformUpdated();
 

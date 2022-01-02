@@ -29,9 +29,9 @@ bool ModuleSceneManager::CleanUp()
 	return true;
 }
 
-void ModuleSceneManager::DrawScenes()
+void ModuleSceneManager::DrawMainScene(ComponentCamera* camera)
 {
-	main_scene->Draw();
+	main_scene->Draw(camera);
 }
 
 void ModuleSceneManager::LoadModel(const char* model_path)

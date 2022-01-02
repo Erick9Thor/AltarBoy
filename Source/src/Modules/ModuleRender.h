@@ -64,7 +64,6 @@ private:
 	void RetrieveGpuInfo();
 
 	void* context;
-	bool debug_draw = true;
 
 	float4 clear_color;
 

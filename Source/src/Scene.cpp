@@ -3,6 +3,7 @@
 #include "Utils/Logger.h"
 
 #include "Application.h"
+#include "Modules/ModuleDebugDraw.h"
 #include "Scene.h"
 #include "GameObject.h"
 #include "Components/Component.h"
@@ -162,7 +163,21 @@ void Scene::Update()
 	// root->Update();
 }
 
-void Scene::Draw()
+void Scene::Draw(ComponentCamera* camera)
 {
-	root->DrawAll();
+	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	unsigned res_x, res_y;
+	camera->GetResolution(res_x, res_y);
+	glViewport(0, 0, res_x, res_y);
+	float4x4 view = camera->GetViewMatrix(false);
+	float4x4 proj = camera->GetProjectionMatrix(false);
+
+	App->debug_draw->Draw(view, proj, res_x, res_y);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	root->DrawAll(camera);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

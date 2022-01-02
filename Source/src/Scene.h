@@ -32,7 +32,7 @@ public:
 
 	void Play();
 	void Stop();
-	void Draw();
+	void Draw(ComponentCamera* camera);
 
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);

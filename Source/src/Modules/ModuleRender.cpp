@@ -90,29 +90,8 @@ update_status ModuleRender::PreUpdate(const float delta)
 
 update_status ModuleRender::Update(const float delta)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->getMainCamera()->GetFrameBuffer());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	// TODO: Structure properly, it does not make sense to have a scene manager draw 
-	// and all this stuff necessary here
-	ComponentCamera* camera = App->camera->getMainCamera();
-	unsigned res_x, res_y;
-	camera->GetResolution(res_x, res_y);
-	glViewport(0, 0, res_x, res_y);
-
-	if (debug_draw)
-	{
-		float4x4 view = camera->GetViewMatrix(false);
-		float4x4 proj = camera->GetProjectionMatrix(false);
-		App->debug_draw->Draw(view, proj, res_x, res_y);
-	}
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	App->scene_manager->DrawScenes();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	ComponentCamera* camera = App->camera->GetMainCamera();
+	App->scene_manager->DrawMainScene(camera);
 
 	return UPDATE_CONTINUE;
 }

@@ -92,15 +92,15 @@ void ComponentMesh::GenerateAABB()
 	bounding_box.SetFrom((float3*) &vertices, num_vertices);
 }
 
-void ComponentMesh::Draw()
+void ComponentMesh::Draw(ComponentCamera* camera)
 {
 	assert(loaded == true);
 	// TODO: Get material and transform components to draw sadge
 	App->program->Activate();
 
 	App->program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
-	App->program->BindUniformFloat4x4("view", &App->camera->getMainCamera()->GetViewMatrix()[0][0]);
-	App->program->BindUniformFloat4x4("proj", &App->camera->getMainCamera()->GetProjectionMatrix()[0][0]);
+	App->program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
+	App->program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
 	App->texture->Bind(game_object->GetComponent<ComponentMaterial>()->GetTextureId());
 	glBindVertexArray(vao);

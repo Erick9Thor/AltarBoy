@@ -20,10 +20,7 @@ public:
 	void Controller(const float delta);
 	void MovementController(const float delta);
 
-	ComponentCamera* getMainCamera()
-	{
-		return main_camera;
-	}
+	ComponentCamera* GetMainCamera() { return main_camera; }
 
 	// Camera actions
 	void Zoom(float zoom);

@@ -51,11 +51,12 @@ void WindowScene::DrawScene()
 
 	// TODO: Improve size management
 	App->camera->OnResize((unsigned) texture_size.x, (unsigned) texture_size.y);
+	ComponentCamera* camera = App->camera->GetMainCamera();
 
 	// Has to be the top left corner of the image in imgui coords, top is y = 0
 	gizmo_rect_origin = ImGui::GetCursorScreenPos();
 	
-	ImGui::Image((void*)(intptr_t)App->camera->getMainCamera()->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
+	ImGui::Image((void*) (intptr_t) camera->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
@@ -71,7 +72,7 @@ void WindowScene::DrawScene()
 	}
 
 	constexpr bool transposed = true;
-	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(transposed);
+	float4x4 view = camera->GetViewMatrix(transposed);
 
 	//TODO ADD look at when manipulating cube
 	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(gizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
@@ -82,7 +83,7 @@ void WindowScene::DrawScene()
 	
 	if (selected_object) {
 		// Using GL format which means transposing them
-		float4x4 projection = App->camera->getMainCamera()->GetProjectionMatrix(transposed);
+		float4x4 projection = camera->GetProjectionMatrix(transposed);
 		float4x4 model = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
 		float4x4 delta;
 

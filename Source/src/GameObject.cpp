@@ -148,23 +148,23 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::DrawAll()
+void GameObject::DrawAll(ComponentCamera* camera)
 {
 	// Draw yourself
-	Draw();
+	Draw(camera);
 	// Draw children recursively
 	for (GameObject* child : childs)
 	{
-		child->DrawAll();
+		child->DrawAll(camera);
 	}
 }
 
-void GameObject::Draw()
+void GameObject::Draw(ComponentCamera* camera)
 {
 	// Call draw on all components
 	for (Component* component : components)
 	{
-		component->Draw();
+		component->Draw(camera);
 	}
 }
 
