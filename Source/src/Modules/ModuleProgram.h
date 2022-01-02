@@ -1,6 +1,8 @@
 #pragma once
 #include "Module.h"
 
+#include "../Program.h"
+
 #include "MathGeoLib.h"
 
 class ModuleProgram : public Module
@@ -12,28 +14,22 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
-	void Activate();
-	void Deactivate();
-	void BindUniformFloat4x4(const char* name, const float* data, bool transpose = true);
-	void BindUniformFloat3(const char* name, const float* data);
-	void BindUniformFloat(const char* name, const float* data);
-	void BindUniformBool(const char* name, bool value);
-
-	inline const int GetProgramId() const
-	{
-		return program_id;
-	}
+	Program* GetMainProgram() const { return main_program; }
+	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void OptionsMenu();
 
 private:
 	char* LoadShaderSource(const char* shader_file_name);
 	unsigned int CompileShader(unsigned type, const char* source);
-	unsigned CreateProgram(unsigned vtx_shader, unsigned frg_shader);
+	void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader);
+	Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
 
-	unsigned int vertex_shader_id;
-	unsigned int fragment_shader_id;
-	unsigned int program_id;
+	Program* CreateMainProgram();
+	Program* CreateSkyboxProgram();
+
+	Program* main_program;
+	Program* skybox_program;
 
 	struct Light
 	{

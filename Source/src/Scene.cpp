@@ -166,11 +166,15 @@ void Scene::Update()
 void Scene::Draw(ComponentCamera* camera)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	unsigned res_x, res_y;
 	camera->GetResolution(res_x, res_y);
 	glViewport(0, 0, res_x, res_y);
+
+	// TODO: Change with skybox
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	
 	float4x4 view = camera->GetViewMatrix(false);
 	float4x4 proj = camera->GetProjectionMatrix(false);
 

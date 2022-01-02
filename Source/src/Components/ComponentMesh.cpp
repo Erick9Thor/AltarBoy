@@ -7,6 +7,7 @@
 #include "../Modules/ModuleProgram.h"
 #include "../Modules/ModuleRender.h"
 #include "../Modules/ModuleCamera.h"
+#include "../Program.h"
 
 #include "glew.h"
 #include <imgui.h>
@@ -96,18 +97,21 @@ void ComponentMesh::Draw(ComponentCamera* camera)
 {
 	assert(loaded == true);
 	// TODO: Get material and transform components to draw sadge
-	App->program->Activate();
 
-	App->program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
-	App->program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-	App->program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
+	Program* program = App->program->GetMainProgram();
+
+	program->Activate();
+
+	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+	program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
+	program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
 	App->texture->Bind(game_object->GetComponent<ComponentMaterial>()->GetTextureId());
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, nullptr);
 	App->texture->Unbind();
 
-	App->program->Deactivate();
+	program->Deactivate();
 }
 
 void ComponentMesh::CleanUp()
