@@ -45,9 +45,9 @@ update_status ModuleCamera::Update(const float delta)
 	return UPDATE_CONTINUE;
 }
 
-void ModuleCamera::SetAspectRatio(unsigned int screen_width, unsigned int screen_height)
+void ModuleCamera::OnResize(unsigned int screen_width, unsigned int screen_height)
 {
-	main_camera->SetResolution((float) screen_width, (float) screen_height);
+	main_camera->SetResolution(screen_width, screen_height);
 }
 
 void ModuleCamera::Controller(const float delta)

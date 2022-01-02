@@ -32,7 +32,8 @@ public:
 
 	void OnTransformUpdated() override;
 
-	void SetResolution(float width, float height);
+	void SetResolution(unsigned width, unsigned height);
+	void GetResolution(unsigned& width, unsigned& height);
 
 	static inline Type GetType()
 	{
@@ -53,6 +54,6 @@ private:
 	unsigned int fb_texture = 0;
 	unsigned int depth_stencil_buffer = 0;
 
-	float resolution_x = DEFAULT_CAMERA_WIDTH;
-	float resolution_y = DEFAULT_CAMERA_HEIGHT;
+	unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
+	unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;
 };

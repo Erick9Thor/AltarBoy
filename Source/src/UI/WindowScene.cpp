@@ -50,12 +50,10 @@ void WindowScene::DrawScene()
 	};
 
 	// TODO: Improve size management
-	App->camera->SetAspectRatio((unsigned) texture_size.x, (unsigned) texture_size.y);
-	App->renderer->WindowResized((unsigned) texture_size.x, (unsigned) texture_size.y);
+	App->camera->OnResize((unsigned) texture_size.x, (unsigned) texture_size.y);
 
 	// Has to be the top left corner of the image in imgui coords, top is y = 0
 	gizmo_rect_origin = ImGui::GetCursorScreenPos();
-	//maybe needed based on some examples: gizmo_rect_origin.y -= 25.0f;
 	
 	ImGui::Image((void*)(intptr_t)App->camera->getMainCamera()->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
@@ -74,8 +72,10 @@ void WindowScene::DrawScene()
 
 	constexpr bool transposed = true;
 	float4x4 view = App->camera->getMainCamera()->GetViewMatrix(transposed);
+
 	//TODO ADD look at when manipulating cube
-	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(gizmo_rect_origin.x + texture_size.x - imguizmo_size.x, gizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
+	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(gizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
+		gizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
 
 	GameObject* selected_object = App->editor->getSelectedGO();
 	if (!selected_object) return;

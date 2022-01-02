@@ -80,24 +80,16 @@ void ComponentCamera::SetFOV(float fov)
 
 float4x4 ComponentCamera::GetViewMatrix(const bool transpose) const
 {
-	static float4x4 view;
-	view = frustum.ViewMatrix();
 	if (transpose)
-	{
-		view.Transpose();
-	}
-	return view;
+		return float4x4(frustum.ViewMatrix()).Transposed();
+	return float4x4(frustum.ViewMatrix());
 }
 
 float4x4 ComponentCamera::GetProjectionMatrix(const bool transpose) const
 {
-	static float4x4 proj;
-	proj = frustum.ProjectionMatrix();
 	if (transpose)
-	{
-		proj.Transpose();
-	}
-	return proj;
+		return frustum.ProjectionMatrix().Transposed();
+	return frustum.ProjectionMatrix();
 }
 
 void ComponentCamera::OnTransformUpdated()
@@ -108,7 +100,7 @@ void ComponentCamera::OnTransformUpdated()
 	frustum.GetPlanes(planes);
 }
 
-void ComponentCamera::SetResolution(float width, float height)
+void ComponentCamera::SetResolution(unsigned width, unsigned height)
 {
 	if (resolution_x != width || resolution_y != height)
 	{
@@ -116,7 +108,13 @@ void ComponentCamera::SetResolution(float width, float height)
 		resolution_y = height;
 		ResizeFrameBuffer();
 	}
-	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, (width / height));
+	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, ((float)width / (float)height));
+}
+
+void ComponentCamera::GetResolution(unsigned& width, unsigned& height)
+{
+	width = resolution_x;
+	height = resolution_y;
 }
 
 void ComponentCamera::ResizeFrameBuffer()

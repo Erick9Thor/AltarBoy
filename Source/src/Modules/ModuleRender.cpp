@@ -93,12 +93,18 @@ update_status ModuleRender::Update(const float delta)
 	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->getMainCamera()->GetFrameBuffer());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+	// TODO: Structure properly, it does not make sense to have a scene manager draw 
+	// and all this stuff necessary here
+	ComponentCamera* camera = App->camera->getMainCamera();
+	unsigned res_x, res_y;
+	camera->GetResolution(res_x, res_y);
+	glViewport(0, 0, res_x, res_y);
+
 	if (debug_draw)
 	{
-		SDL_Surface* screen_surface = App->window->GetScreenSurface();
-		float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
-		float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
-		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
+		float4x4 view = camera->GetViewMatrix(false);
+		float4x4 proj = camera->GetProjectionMatrix(false);
+		App->debug_draw->Draw(view, proj, res_x, res_y);
 	}
 
 	glEnable(GL_BLEND);
@@ -121,6 +127,7 @@ update_status ModuleRender::PostUpdate(const float delta)
 
 void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
+	// TODO: Manage properly since viewport is now a different size and not on window
 	int w, h;
 	SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
 	glViewport(0, 0, w, h);

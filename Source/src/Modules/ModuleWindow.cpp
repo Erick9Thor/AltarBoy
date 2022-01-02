@@ -85,7 +85,6 @@ void ModuleWindow::WindowResized()
 	// Update window surface so it is correct
 	SDL_UpdateWindowSurface(window);
 	screen_surface = SDL_GetWindowSurface(window);
-	App->renderer->WindowResized(screen_surface->w, screen_surface->h);
 }
 
 void ModuleWindow::SetFullScreen(bool fullscreen)
