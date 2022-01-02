@@ -99,42 +99,13 @@ void ComponentTransform::SetPosition(float3 new_transform)
 void ComponentTransform::DrawGui()
 {
 	static bool locked_scale = true;
-	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		float3 position = local_position;
 		float3 scale = local_scale;
-		float3 rotation = local_rotation_euler;
-
-		ImGui::Text("Translation");
-		if (ImGui::SliderFloat3("t.XYZ", &position[0], -5.0f, 5.0f))
-			SetLocalPosition(position);
-
-		ImGui::Separator();
-		ImGui::Text("Scale");
-		ImGui::Checkbox("Lock", &locked_scale);
-		ImGui::SameLine();
-
-		float3 scale_delta = scale;
-		if (ImGui::SliderFloat3("s.XYZ", &scale[0], 0.005f, 5.0f))
-		{
-			if (locked_scale)
-			{
-				scale_delta -= scale;
-				for (int i = 0; i < 3; i++)
-				{
-					if (scale_delta[i] != 0.0f)
-					{
-						scale = float3(scale[i]);
-						break; // Only one axis can change
-					}
-				}
-			}
-			SetLocalScale(scale);
-		}
-
-		ImGui::Separator();
-		ImGui::Text("Rotation");
-		if (ImGui::SliderFloat3("r.XYZ", &rotation[0], 0.0f, 360.0f))
-			SetLocalRotation(rotation);
+		float3 rotation = local_rotation_euler;		
+		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
+		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
+		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
 	}
 }
