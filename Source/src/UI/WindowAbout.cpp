@@ -39,8 +39,6 @@ void WindowAbout::Update()
 		ImGui::Text("Vram Usage:  %.1f Mb", (float) (App->hw->GetInfo().vram_mb_budget - App->hw->GetInfo().vram_mb_free));
 		ImGui::Separator();
 		ImGui::Text("DevIL lib version %d", IL_VERSION);
-
-		ImGui::EndChildFrame();
 	}
 	ImGui::End();
 }

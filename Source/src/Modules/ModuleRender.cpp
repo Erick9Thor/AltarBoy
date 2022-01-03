@@ -40,7 +40,13 @@ bool ModuleRender::Init()
 	RetrieveLibVersions();
 
 	SetGLOptions();
-	EnableGLDebug();
+	
+#ifdef _DEBUG
+	glEnable(GL_DEBUG_OUTPUT); // Enable output callback
+	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	glDebugMessageCallback(&OurOpenGLErrorFunction, nullptr); // Set the callback
+	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
+#endif
 
 	fps_log = std::vector<float>(n_bins);
 	ms_log = std::vector<float>(n_bins);
@@ -72,14 +78,6 @@ void ModuleRender::SetGLOptions()
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise
 }
 
-void ModuleRender::EnableGLDebug()
-{
-	glEnable(GL_DEBUG_OUTPUT); // Enable output callback
-	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	glDebugMessageCallback(&OurOpenGLErrorFunction, nullptr); // Set the callback
-	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, true); // Filter notifications
-}
-
 update_status ModuleRender::PreUpdate(const float delta)
 {
 	glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
@@ -92,7 +90,6 @@ update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
 	App->scene_manager->DrawMainScene(camera);
-
 	return UPDATE_CONTINUE;
 }
 
@@ -128,20 +125,21 @@ void ModuleRender::OptionsMenu()
 	ImGui::PushItemWidth(150.0f);
 	ImGui::ColorPicker3("Clear Color", &clear_color[0], flag);
 
-	/*ImGui::Checkbox("Debug Draw", &debug_draw);
+	/*ImGui::Checkbox("Debug Draw", &bounding_boxes);
 	if (debug_draw) {
 		ImGui::SameLine();
 		ImGui::Checkbox("Bounding Box", &App->debug->ShouldDrawBoundingBox());
 	}*/
 
-	static bool line_smooth = false;
+	//TODO: Should be only affect the Draw scene
+	/*static bool line_smooth = false;
 	if (ImGui::Checkbox("Line Smooth", &line_smooth))
 		GLOptionCheck(GL_LINE_SMOOTH, line_smooth);
 
 	ImGui::SameLine();
 	static bool polygon_smooth = false;
 	if (ImGui::Checkbox("Polygon Smooth", &polygon_smooth))
-		GLOptionCheck(GL_POLYGON_SMOOTH, polygon_smooth);
+		GLOptionCheck(GL_POLYGON_SMOOTH, polygon_smooth);*/
 }
 
 void ModuleRender::PerformanceMenu(const float delta)

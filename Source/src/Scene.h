@@ -34,6 +34,8 @@ public:
 	void Stop();
 	void Draw(ComponentCamera* camera);
 
+	void OptionsMenu();
+
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
 	std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
@@ -45,4 +47,5 @@ private:
 	ComponentCamera* main_camera = nullptr;
 
 	Skybox* skybox;
+	bool skybox_active = true;
 };

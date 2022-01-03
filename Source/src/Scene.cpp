@@ -178,7 +178,9 @@ void Scene::Draw(ComponentCamera* camera)
 
 	// TODO: Change with skybox
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	skybox->Draw(camera);
+	if (skybox_active) {
+		skybox->Draw(camera);
+	}
 	
 	float4x4 view = camera->GetViewMatrix(false);
 	float4x4 proj = camera->GetProjectionMatrix(false);
@@ -187,6 +189,12 @@ void Scene::Draw(ComponentCamera* camera)
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	root->DrawAll(camera);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Scene::OptionsMenu() {
+	ImGui::Checkbox("Skybox", &skybox_active);
 }

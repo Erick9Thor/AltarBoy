@@ -32,7 +32,19 @@ bool ModuleEditor::Init()
 	(void) io;
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+	io.ConfigFlags |= ImGuiConfigFlags_NoMouseCursorChange;
 	io.ConfigWindowsMoveFromTitleBarOnly = true;
+
+	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+	{
+		io.ConfigViewportsNoAutoMerge = false;
+		io.ConfigViewportsNoTaskBarIcon = true;
+	}
+
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	{
+		io.ConfigDockingTransparentPayload = true;
+	}
 
 	//TODO: ADD resource loader for fonts and icons
 	io.Fonts->AddFontDefault();
@@ -49,10 +61,10 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
+	windows.push_back(&w_configuration);
 	windows.push_back(&w_hierarchy);
 	windows.push_back(&w_scene);
 	windows.push_back(&w_inspector);
-	windows.push_back(&w_configuration);
 	windows.push_back(&w_about);
 	windows.push_back(&w_console);
 
@@ -113,9 +125,6 @@ update_status ModuleEditor::MainMenuBar()
 
 			if (ImGui::MenuItem("Download source!"))
 				App->RequestBrowser("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-
-			//if (ImGui::MenuItem("About"))
-			//show_abaout = !show_abaout;
 
 			if (ImGui::MenuItem("Quit"))
 				return UPDATE_STOP;
@@ -179,22 +188,11 @@ void ModuleEditor::ViewMenu()
 {
 	if (ImGui::BeginMenu("View"))
 	{
-		if (ImGui::MenuItem("Console"))
-		{
-			// Logger->setShowConsole(!Logger->getShowConsole());
-		}
-		if (ImGui::MenuItem("Camera"))
-		{
-			//show_camera_window = !show_camera_window;
-		}
-		if (ImGui::MenuItem("FPS counter"))
-		{
-			//show_fps_counter = !show_fps_counter;
-		}
 		ImGui::MenuItem(w_scene.name, "", &w_scene.active);
 		ImGui::MenuItem(w_inspector.name, "", &w_inspector.active);
 		ImGui::MenuItem(w_hierarchy.name, "", &w_hierarchy.active);
 		ImGui::MenuItem(w_configuration.name, "", &w_configuration.active);
+		ImGui::MenuItem(w_about.name, "", &w_about.active);
 		ImGui::EndMenu();
 	}
 }

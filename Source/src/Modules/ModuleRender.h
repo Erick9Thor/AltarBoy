@@ -59,7 +59,6 @@ public:
 private:
 	void CreateContext();
 	void SetGLOptions();
-	void EnableGLDebug();
 	void RetrieveLibVersions();
 	void RetrieveGpuInfo();
 
