@@ -34,6 +34,7 @@ void WindowInspector::InspectorDrawGameObject(GameObject* game_object)
 		for (vector<Component*>::iterator it = go_components.begin(); it != go_components.end(); ++it)
 			(*it)->DrawGui();
 
+		ImGui::Separator();
 		if (ImGui::Button("Add Component"))
 		{
 			ImGui::OpenPopup("Add Component Popup");

@@ -1,5 +1,6 @@
 #include "../Globals.h"
 #include "../Application.h"
+#include "../Utils/Logger.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -49,7 +50,7 @@ bool ModuleRender::Init()
 
 void ModuleRender::CreateContext()
 {
-	LOG("Creating Renderer context");
+	//LOG("Creating Renderer context");
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -89,23 +90,8 @@ update_status ModuleRender::PreUpdate(const float delta)
 
 update_status ModuleRender::Update(const float delta)
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, App->camera->getMainCamera()->GetFrameBuffer());
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	if (debug_draw)
-	{
-		SDL_Surface* screen_surface = App->window->GetScreenSurface();
-		float4x4 view = App->camera->getMainCamera()->GetViewMatrix(false);
-		float4x4 proj = App->camera->getMainCamera()->GetProjectionMatrix(false);
-		App->debug_draw->Draw(view, proj, screen_surface->w, screen_surface->h);
-	}
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	App->scene_manager->DrawScenes();
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	ComponentCamera* camera = App->camera->GetMainCamera();
+	App->scene_manager->DrawMainScene(camera);
 
 	return UPDATE_CONTINUE;
 }
@@ -120,6 +106,7 @@ update_status ModuleRender::PostUpdate(const float delta)
 
 void ModuleRender::WindowResized(unsigned width, unsigned height)
 {
+	// TODO: Manage properly since viewport is now a different size and not on window
 	int w, h;
 	SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
 	glViewport(0, 0, w, h);
@@ -236,7 +223,7 @@ void ModuleRender::RetrieveGpuInfo()
 
 bool ModuleRender::CleanUp()
 {
-	LOG("Destroying renderer");
+	//LOG("Destroying renderer");
 	SDL_GL_DeleteContext(context);
 
 	return true;
@@ -311,5 +298,5 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 	default:
 		return;
 	};
-	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
+	//LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }

@@ -1,6 +1,7 @@
 #include "../Application.h"
 #include "../Modules/ModuleWindow.h"
 #include "../Modules/ModuleRender.h"
+#include "../Utils/Logger.h"
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
@@ -14,7 +15,7 @@ ComponentCamera::ComponentCamera(GameObject* container)
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
 
-	horizontal_fov = 90.0f;
+	horizontal_fov = 65.0f;
 	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, (float) DEFAULT_CAMERA_WIDTH / (float) DEFAULT_CAMERA_HEIGHT);
 
 	frustum.SetPos(float3(0.0f, 0.0f, 0.0f));
@@ -79,24 +80,16 @@ void ComponentCamera::SetFOV(float fov)
 
 float4x4 ComponentCamera::GetViewMatrix(const bool transpose) const
 {
-	static float4x4 view;
-	view = frustum.ViewMatrix();
 	if (transpose)
-	{
-		view.Transpose();
-	}
-	return view;
+		return float4x4(frustum.ViewMatrix()).Transposed();
+	return float4x4(frustum.ViewMatrix());
 }
 
 float4x4 ComponentCamera::GetProjectionMatrix(const bool transpose) const
 {
-	static float4x4 proj;
-	proj = frustum.ProjectionMatrix();
 	if (transpose)
-	{
-		proj.Transpose();
-	}
-	return proj;
+		return frustum.ProjectionMatrix().Transposed();
+	return frustum.ProjectionMatrix();
 }
 
 void ComponentCamera::OnTransformUpdated()
@@ -107,7 +100,7 @@ void ComponentCamera::OnTransformUpdated()
 	frustum.GetPlanes(planes);
 }
 
-void ComponentCamera::SetResolution(float width, float height)
+void ComponentCamera::SetResolution(unsigned width, unsigned height)
 {
 	if (resolution_x != width || resolution_y != height)
 	{
@@ -115,8 +108,13 @@ void ComponentCamera::SetResolution(float width, float height)
 		resolution_y = height;
 		ResizeFrameBuffer();
 	}
-	float vertical_fov = frustum.VerticalFov();
-	frustum.SetVerticalFovAndAspectRatio(vertical_fov, width / height);
+	frustum.SetHorizontalFovAndAspectRatio(horizontal_fov * to_rad, ((float)width / (float)height));
+}
+
+void ComponentCamera::GetResolution(unsigned& width, unsigned& height)
+{
+	width = resolution_x;
+	height = resolution_y;
 }
 
 void ComponentCamera::ResizeFrameBuffer()

@@ -1,6 +1,7 @@
 #pragma once
 
 class GameObject;
+class ComponentCamera;
 
 class Component
 {
@@ -21,7 +22,7 @@ public:
 
 	virtual ~Component() {};
 
-	virtual void Draw() {};
+	virtual void Draw(ComponentCamera* camera) {};
 
 	inline Type GetType() const
 	{

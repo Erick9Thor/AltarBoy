@@ -69,8 +69,8 @@ public:
 	{
 		changed = false;
 	}
-	void DrawGui() override;
 
+	void DrawGui() override;
 	inline bool HasChanged() const
 	{
 		return changed;
@@ -79,9 +79,9 @@ public:
 private:
 	bool changed = false;
 
-	float4x4 local_transform;
 	float4x4 transform;
 
+	float4x4 local_transform;
 	float3 local_position;
 	float3 local_scale;
 	Quat local_rotation;

@@ -14,8 +14,6 @@
 #include "../Scene.h"
 #include "../Components/ComponentCamera.h"
 
-#include "../UI/AppLog.h"
-
 #include "ImGuizmo.h"
 
 #include "glew.h"
@@ -51,12 +49,12 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
-	//Logger->setShowConsole(!Logger->getShowConsole());
 	windows.push_back(&w_hierarchy);
 	windows.push_back(&w_scene);
 	windows.push_back(&w_inspector);
 	windows.push_back(&w_configuration);
 	windows.push_back(&w_about);
+	windows.push_back(&w_console);
 
 	return true;
 }
@@ -183,7 +181,7 @@ void ModuleEditor::ViewMenu()
 	{
 		if (ImGui::MenuItem("Console"))
 		{
-			Logger->setShowConsole(!Logger->getShowConsole());
+			// Logger->setShowConsole(!Logger->getShowConsole());
 		}
 		if (ImGui::MenuItem("Camera"))
 		{

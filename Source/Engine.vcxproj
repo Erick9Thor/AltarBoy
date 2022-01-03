@@ -149,6 +149,9 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
+    <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\Utils\Logger.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Components\ComponentCamera.cpp" />
     <ClCompile Include="src\Components\ComponentMaterial.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="src\UI\WindowHierarchy.cpp" />
     <ClCompile Include="src\UI\WindowInspector.cpp" />
     <ClCompile Include="src\UI\WindowScene.cpp" />
+    <ClCompile Include="src\UI\WindowConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
@@ -231,6 +235,9 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="src\Skybox.h" />
+    <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\Utils\Logger.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Components\ComponentCamera.h" />
@@ -327,7 +334,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="src\UI\AppLog.h" />
     <ClInclude Include="src\Utils\Math.h" />
     <ClInclude Include="src\Modules\Module.h" />
     <ClInclude Include="src\Modules\ModuleCamera.h" />
@@ -347,6 +353,7 @@
     <ClInclude Include="src\UI\WindowHierarchy.h" />
     <ClInclude Include="src\UI\WindowInspector.h" />
     <ClInclude Include="src\UI\WindowScene.h" />
+    <ClInclude Include="src\UI\WindowConsole.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

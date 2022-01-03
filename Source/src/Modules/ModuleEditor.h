@@ -15,8 +15,7 @@
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
-
-#include "../UI/AppLog.h"
+#include "../UI/WindowConsole.h"
 
 class ModuleEditor : public Module
 {
@@ -56,10 +55,7 @@ public:
 		assert(go);
 		selected_go = go;
 	}
-	GameObject* getSelectedGO() const
-	{
-		return selected_go;
-	}
+	GameObject* getSelectedGO() const{ return selected_go; }
 
 	ImFont* m_big_icon_font;
 	ImFont* m_small_icon_font;
@@ -74,4 +70,5 @@ private:
 	WindowInspector w_inspector;
 	WindowConfiguration w_configuration;
 	WindowAbout w_about;
+	WindowConsole w_console;
 };

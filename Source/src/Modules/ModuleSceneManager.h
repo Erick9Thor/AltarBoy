@@ -16,7 +16,7 @@ public:
 	update_status Update(const float delta) override;
 	bool CleanUp() override;
 
-	void DrawScenes();
+	void DrawMainScene(ComponentCamera* camera);
 
 	void LoadModel(const char* model_path);
 

@@ -1,6 +1,9 @@
 #include "Globals.h"
 
+#include "Utils/Logger.h"
+
 #include "Application.h"
+#include "Modules/ModuleDebugDraw.h"
 #include "Scene.h"
 #include "GameObject.h"
 #include "Components/Component.h"
@@ -9,6 +12,9 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 #include "Modules/ModuleTexture.h"
+#include "Modules/ModuleProgram.h"
+
+#include "Skybox.h"
 
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
@@ -17,12 +23,14 @@
 Scene::Scene()
 {
 	root = new GameObject(nullptr, float4x4::identity, "Root");
+	skybox = new Skybox();
 	//GameObject* test_model = LoadFBX("BakerHouse.fbx"); // Need to call when opengl is running
 }
 
 Scene::~Scene()
 {
 	delete root;
+	delete skybox;
 	delete main_camera;
 }
 
@@ -160,7 +168,25 @@ void Scene::Update()
 	// root->Update();
 }
 
-void Scene::Draw()
+void Scene::Draw(ComponentCamera* camera)
 {
-	root->DrawAll();
+	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
+
+	unsigned res_x, res_y;
+	camera->GetResolution(res_x, res_y);
+	glViewport(0, 0, res_x, res_y);
+
+	// TODO: Change with skybox
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	skybox->Draw(camera);
+	
+	float4x4 view = camera->GetViewMatrix(false);
+	float4x4 proj = camera->GetProjectionMatrix(false);
+
+	App->debug_draw->Draw(view, proj, res_x, res_y);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	root->DrawAll(camera);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

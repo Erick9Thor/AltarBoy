@@ -8,6 +8,7 @@
 #include <vector>
 
 class GameObject;
+class ComponentCamera;
 
 class ComponentMesh : public Component
 {
@@ -20,7 +21,7 @@ public:
 	};
 
 	void Load(const aiMesh* mesh);
-	void Draw();
+	void Draw(ComponentCamera* camera);
 	void CleanUp();
 
 	inline unsigned GetNumVertices() const

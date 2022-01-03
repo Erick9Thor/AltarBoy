@@ -1,14 +1,14 @@
-#include <stdlib.h>
+#include "Globals.h"
+#include "Utils/Logger.h"
+
 #include "Application.h"
 #include "Modules/ModuleRender.h"
-#include "Globals.h"
-#include "glew.h"
 
+#include "glew.h"
+#include <stdlib.h>
 #include "SDL.h"
 #pragma comment(lib, "SDL2.lib")
 #pragma comment(lib, "SDL2main.lib")
-
-#include "UI/AppLog.h"
 
 #ifdef _DEBUG
 #define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -33,12 +33,10 @@ enum main_states
 };
 
 Application* App = NULL;
-AppLog* Logger = NULL;
 
 int main(int argc, char** argv)
 {
 	atexit(DumpLeaks);
-	Logger = new AppLog();
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -103,6 +101,5 @@ int main(int argc, char** argv)
 
 	delete App;
 	LOG("Bye :)\n");
-	delete Logger;
 	return main_return;
 }
