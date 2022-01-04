@@ -23,7 +23,6 @@ void WindowConfiguration::Update()
 			App->renderer->OptionsMenu();
 			ImGui::Separator();
 			App->scene_manager->GetActiveScene()->OptionsMenu();
-			// ImGui::Checkbox("Draw Bounding Boxes", &draw_all_bounding_boxes);
 		}
 		if (ImGui::CollapsingHeader("Engine Camera"))
 		{

@@ -48,4 +48,5 @@ private:
 
 	Skybox* skybox;
 	bool skybox_active = true;
+	bool draw_all_bounding_boxes = false;
 };

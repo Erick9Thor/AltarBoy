@@ -30,12 +30,19 @@ public:
 
 	void Destroy();
 	void Update();
-	void DrawAll(ComponentCamera* camera);
+	void DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes = false);
 	void Draw(ComponentCamera* camera);
 
 	void OnTransformUpdated();
 
+	// BOUNDING BOX
+	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
+
+	const OBB& GetOBB()
+	{
+		return obb;
+	};
 
 	const std::vector<Component*>& GetComponents() const
 	{

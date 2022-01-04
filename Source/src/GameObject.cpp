@@ -7,6 +7,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include <debugdraw.h>
 
 GameObject::GameObject()
 {
@@ -148,7 +149,7 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::DrawAll(ComponentCamera* camera)
+void GameObject::DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes)
 {
 	// Draw yourself
 	Draw(camera);
@@ -156,6 +157,9 @@ void GameObject::DrawAll(ComponentCamera* camera)
 	for (GameObject* child : childs)
 	{
 		child->DrawAll(camera);
+		if (draw_all_bounding_boxes) {
+			child->DrawBoundingBox();
+		}
 	}
 }
 
@@ -179,6 +183,18 @@ void GameObject::OnTransformUpdated()
 		child->OnTransformUpdated();
 
 	UpdateBoundingBoxes();
+}
+
+void GameObject::DrawBoundingBox()
+{
+	ddVec3 p[8];
+	// This order was pure trial and error, i dont know how to really do it
+	// Using center and points does not show the rotation
+	static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+	for (int i = 0; i < 8; ++i)
+		p[i] = this->obb.CornerPoint(order[i]);
+
+	dd::box(p, dd::colors::White);
 }
 
 void GameObject::UpdateBoundingBoxes()

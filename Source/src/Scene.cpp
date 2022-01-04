@@ -190,11 +190,12 @@ void Scene::Draw(ComponentCamera* camera)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	root->DrawAll(camera);
+	root->DrawAll(camera, draw_all_bounding_boxes);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void Scene::OptionsMenu() {
 	ImGui::Checkbox("Skybox", &skybox_active);
+	ImGui::Checkbox("Draw Bounding Boxes", &draw_all_bounding_boxes);
 }
