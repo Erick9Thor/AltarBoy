@@ -607,7 +607,7 @@ update_status ModuleDebugDraw::Update(const float delta)
 	
 	if (draw_bounding_boxes) {
 		Scene* scene = App->scene_manager->GetActiveScene();
-		scene->DebugDraw();
+		App->scene_manager->GetActiveScene()->GetRoot()->DebugDrawAll();
 	}
 		
 	return UPDATE_CONTINUE;

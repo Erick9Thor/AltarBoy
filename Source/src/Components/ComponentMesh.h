@@ -21,7 +21,7 @@ public:
 	};
 
 	void Load(const aiMesh* mesh);
-	void Draw(ComponentCamera* camera);
+	void Draw(ComponentCamera* camera) override;
 	void CleanUp();
 
 	inline unsigned GetNumVertices() const

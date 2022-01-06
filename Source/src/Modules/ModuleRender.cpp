@@ -8,6 +8,9 @@
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
+#include "../Scene.h"
+#include "../Skybox.h"
+#include "../GameObject.h"
 
 #include "../Components/ComponentCamera.h"
 
@@ -54,6 +57,36 @@ bool ModuleRender::Init()
 	return true;
 }
 
+void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
+{
+	GameObject* root = scene->GetRoot();
+	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
+
+	unsigned res_x, res_y;
+	camera->GetResolution(res_x, res_y);
+	glViewport(0, 0, res_x, res_y);
+
+	// TODO: Change with skybox
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	if (scene->draw_skybox)
+	{
+		scene->GetSkybox()->Draw(camera);
+	}
+
+	float4x4 view = camera->GetViewMatrix(false);
+	float4x4 proj = camera->GetProjectionMatrix(false);
+
+	App->debug_draw->Draw(view, proj, res_x, res_y);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	root->DrawAll(camera);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+}
+
 void ModuleRender::CreateContext()
 {
 	//LOG("Creating Renderer context");
@@ -89,7 +122,10 @@ update_status ModuleRender::PreUpdate(const float delta)
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
-	App->scene_manager->DrawMainScene(camera);
+	// TODO: Add debug camera
+	ComponentCamera* culling = camera;
+		
+	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
 }
 

@@ -25,18 +25,32 @@ public:
 	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 	GameObject* LoadFBX(const std::string& path);
 
-	GameObject* CreateCamera();
-	const ComponentCamera* GetMainCamera() const;
+	GameObject* CreateDebugCamera();
 
 	void Update();
 
 	void Play();
 	void Stop();
-	void Draw(ComponentCamera* camera);
-	// Must be called from module debug draw
-	void DebugDraw();
 
 	void OptionsMenu();
+
+	GameObject* GetRoot() const
+	{
+		return root;
+	}
+
+	Skybox* GetSkybox() const
+	{
+		return skybox;
+	}
+
+	const ComponentCamera* GetDebugCamera() const
+	{
+		return debug_camera;
+	}
+
+
+	bool draw_skybox = true;
 
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
@@ -46,9 +60,9 @@ private:
 	ModuleSceneManager* manager_owner = nullptr;
 
 	GameObject* root = nullptr;
-	ComponentCamera* main_camera = nullptr;
+	ComponentCamera* debug_camera = nullptr;
 
 	Skybox* skybox;
-	bool skybox_active = true;
+	
 	bool draw_all_bounding_boxes = false;
 };

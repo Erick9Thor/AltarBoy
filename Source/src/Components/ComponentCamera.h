@@ -12,6 +12,8 @@ public:
 	ComponentCamera(GameObject* conatiner);
 	~ComponentCamera() override;
 
+	void Draw(ComponentCamera* camera) override;
+
 	void GenerateFrameBuffer();
 	void ResizeFrameBuffer();
 	unsigned int GetFrameBuffer() const
@@ -25,6 +27,7 @@ public:
 
 	void SetNearPlane(float distance);
 	void SetFarPlane(float distance);
+	void SetPlaneDistances(const float near_distance, const float far_distance);
 	void SetFOV(float fov);
 
 	float4x4 GetViewMatrix(const bool transpose = false) const;
@@ -44,6 +47,7 @@ public:
 
 	Plane planes[6];
 	float3 reference_point = float3::zero;
+	bool draw_frustum = false;
 
 private:
 	float horizontal_fov;

@@ -24,14 +24,14 @@ Scene::Scene()
 {
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 	skybox = new Skybox();
-	//GameObject* test_model = LoadFBX("BakerHouse.fbx"); // Need to call when opengl is running
+	CreateDebugCamera();
 }
 
 Scene::~Scene()
 {
 	delete root;
 	delete skybox;
-	delete main_camera;
+	delete debug_camera;
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
@@ -138,21 +138,17 @@ Texture Scene::LoadTexture(const aiMaterial* material, const std::string& model_
 	return texture;
 }
 
-GameObject* Scene::CreateCamera()
+GameObject* Scene::CreateDebugCamera()
 {
-	GameObject* camera = CreateNewGameObject("Camera", root);
-	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(10, 10, 0));
+	GameObject* camera = CreateNewGameObject("Debug Camera", root);
+	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(5, 5, 0));
 	camera->CreateComponent(Component::Type::Camera);
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
 
-	main_camera = camera->GetComponent<ComponentCamera>();
+	debug_camera = camera->GetComponent<ComponentCamera>();
+	debug_camera->draw_frustum = true;
 
 	return camera;
-}
-
-const ComponentCamera* Scene::GetMainCamera() const
-{
-	return main_camera;
 }
 
 void Scene::Play()
@@ -168,41 +164,9 @@ void Scene::Update()
 	root->Update();
 }
 
-void Scene::Draw(ComponentCamera* camera)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
-
-	unsigned res_x, res_y;
-	camera->GetResolution(res_x, res_y);
-	glViewport(0, 0, res_x, res_y);
-
-	// TODO: Change with skybox
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	if (skybox_active) {
-		skybox->Draw(camera);
-	}
-	
-	float4x4 view = camera->GetViewMatrix(false);
-	float4x4 proj = camera->GetProjectionMatrix(false);
-
-	App->debug_draw->Draw(view, proj, res_x, res_y);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	root->DrawAll(camera);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void Scene::DebugDraw()
-{
-	root->DebugDrawAll();
-}
-
 void Scene::OptionsMenu() {
 	static bool bounding_boxes = false;
-	ImGui::Checkbox("Skybox", &skybox_active);
+	ImGui::Checkbox("Skybox", &draw_skybox);
 	if (ImGui::Checkbox("Draw Bounding Boxes", &bounding_boxes))
 		App->debug_draw->ToggleBoundingBoxes(bounding_boxes);
 }

@@ -5,6 +5,7 @@
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
+#include "debugdraw.h"
 
 #include <glew.h>
 #include <imgui.h>
@@ -28,6 +29,16 @@ ComponentCamera::ComponentCamera(GameObject* container)
 
 ComponentCamera::~ComponentCamera()
 {
+}
+
+void ComponentCamera::Draw(ComponentCamera* camera)
+{
+	if (draw_frustum) {
+		float4x4 inverse_clip;
+		float4x4 matrix = GetProjectionMatrix() * GetViewMatrix();
+		matrix.Inverse();
+		dd::frustum(matrix, dd::colors::Yellow);
+	}
 }
 
 void ComponentCamera::GenerateFrameBuffer()
@@ -61,13 +72,18 @@ void ComponentCamera::GenerateFrameBuffer()
 
 void ComponentCamera::SetNearPlane(float distance)
 {
-	frustum.SetViewPlaneDistances(distance, frustum.FarPlaneDistance());
-	frustum.GetPlanes(planes);
+	SetPlaneDistances(distance, frustum.FarPlaneDistance());
+
 }
 
 void ComponentCamera::SetFarPlane(float distance)
 {
-	frustum.SetViewPlaneDistances(frustum.NearPlaneDistance(), distance);
+	SetPlaneDistances(frustum.NearPlaneDistance(), distance);
+}
+
+void ComponentCamera::SetPlaneDistances(const float near_distance, const float far_distance)
+{
+	frustum.SetViewPlaneDistances(near_distance, far_distance);
 	frustum.GetPlanes(planes);
 }
 
@@ -132,5 +148,12 @@ void ComponentCamera::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		
+		ImGui::Checkbox("Draw Frustum", &draw_frustum);
+
+		
+		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
+		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
+			SetPlaneDistances(planes[0], planes[1]);
 	}
 }

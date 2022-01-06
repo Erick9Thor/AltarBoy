@@ -9,6 +9,8 @@
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
+class ComponentCamera;
+class Scene;
 
 struct GpuData
 {
@@ -55,6 +57,8 @@ public:
 	{
 		return gl;
 	}
+	
+	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
 
 private:
 	void CreateContext();
