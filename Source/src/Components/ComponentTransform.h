@@ -12,6 +12,10 @@ public:
 	ComponentTransform(GameObject* new_object, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
 	ComponentTransform(GameObject* new_object, const float4x4& transform = float4x4::identity);
 	~ComponentTransform();
+	static inline Type GetType()
+	{
+		return Type::Transform;
+	};
 
 	void SetPosition(float3 new_position);
 	void SetRotationAxis(float3 x, float3 y, float3 z);
@@ -34,7 +38,7 @@ public:
 	void SetLocalRotation(float3 rotation_angles);
 
 	void SetGlobalTransform(float4x4 transform);
-	void UpdateGlobalTransforms();
+	void UpdateGlobalTransformHierarchy();
 
 	inline float4x4 GetTransform() const
 	{
@@ -60,11 +64,6 @@ public:
 
 	void LookAt(float3 target, float3 world_up = float3::unitY);
 
-	static inline Type GetType()
-	{
-		return Type::Transform;
-	};
-
 	void OnTransformUpdated() override
 	{
 		changed = false;
@@ -77,7 +76,7 @@ public:
 	}
 
 private:
-	bool changed = false;
+	bool changed = true;
 
 	float4x4 transform;
 

@@ -67,7 +67,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 		LOG("Error loading file %s: %s", file_name.c_str(), aiGetErrorString());
 	}
 	importer.FreeScene();
-
+	model->OnTransformUpdated();
 	return model;
 }
 
@@ -165,7 +165,7 @@ void Scene::Stop()
 
 void Scene::Update()
 {
-	// root->Update();
+	root->Update();
 }
 
 void Scene::Draw(ComponentCamera* camera)
@@ -190,12 +190,19 @@ void Scene::Draw(ComponentCamera* camera)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	root->DrawAll(camera, draw_all_bounding_boxes);
+	root->DrawAll(camera);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void Scene::DebugDraw()
+{
+	root->DebugDrawAll();
+}
+
 void Scene::OptionsMenu() {
+	static bool bounding_boxes = false;
 	ImGui::Checkbox("Skybox", &skybox_active);
-	ImGui::Checkbox("Draw Bounding Boxes", &draw_all_bounding_boxes);
+	if (ImGui::Checkbox("Draw Bounding Boxes", &bounding_boxes))
+		App->debug_draw->ToggleBoundingBoxes(bounding_boxes);
 }

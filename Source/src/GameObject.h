@@ -14,7 +14,7 @@ class GameObject
 	friend class Component;
 
 public:
-	GameObject();
+	GameObject(const char* name = "Unnamed");
 	GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
 	GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 	virtual ~GameObject();
@@ -30,12 +30,14 @@ public:
 
 	void Destroy();
 	void Update();
-	void DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes = false);
+	void DrawAll(ComponentCamera* camera);
 	void Draw(ComponentCamera* camera);
 
 	void OnTransformUpdated();
 
 	// BOUNDING BOX
+	// TODO: Define draw flags
+	void DebugDrawAll();
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 

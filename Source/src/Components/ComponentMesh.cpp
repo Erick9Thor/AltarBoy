@@ -90,7 +90,7 @@ void ComponentMesh::GenerateBuffers()
 
 void ComponentMesh::GenerateAABB()
 {
-	bounding_box.SetFrom((float3*) &vertices, num_vertices);
+	bounding_box.SetFrom((float3*) vertices, num_vertices);
 }
 
 void ComponentMesh::Draw(ComponentCamera* camera)

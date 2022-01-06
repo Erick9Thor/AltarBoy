@@ -19,9 +19,11 @@ public:
 	bool CleanUp() override;
 
 	void Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
+	void ToggleBoundingBoxes(bool enable) { draw_bounding_boxes = enable; }
 
 private:
 	static DDRenderInterfaceCoreGL* implementation;
+	bool draw_bounding_boxes = false;
 };
 
 #endif /* _MODULE_DEBUGDRAW_H_ */

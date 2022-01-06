@@ -33,6 +33,8 @@ public:
 	void Play();
 	void Stop();
 	void Draw(ComponentCamera* camera);
+	// Must be called from module debug draw
+	void DebugDraw();
 
 	void OptionsMenu();
 

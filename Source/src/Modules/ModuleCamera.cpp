@@ -27,7 +27,7 @@ ModuleCamera::~ModuleCamera()
 
 bool ModuleCamera::Init()
 {
-	GameObject* cameraGameObject = new GameObject();
+	GameObject* cameraGameObject = new GameObject("Main Camera");
 	main_camera = (ComponentCamera*) cameraGameObject->CreateComponent(Component::Camera);
 
 	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
