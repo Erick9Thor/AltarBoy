@@ -186,11 +186,20 @@ void GameObject::OnTransformUpdated()
 void GameObject::DebugDrawAll()
 {
 	// Draw yourself
-	DrawBoundingBox();
+	DebugDraw();
 	// Draw children recursively
 	for (GameObject* child : childs)
 	{
 		child->DebugDrawAll();
+	}
+}
+
+void GameObject::DebugDraw()
+{
+	DrawBoundingBox();
+	for (Component* component : components)
+	{
+		component->DebugDraw();
 	}
 }
 

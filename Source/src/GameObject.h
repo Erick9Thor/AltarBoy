@@ -38,13 +38,19 @@ public:
 	// BOUNDING BOX
 	// TODO: Define draw flags
 	void DebugDrawAll();
+	void DebugDraw();
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
-	const OBB& GetOBB()
+	const OBB& GetOBB() const
 	{
 		return obb;
 	};
+
+	const AABB& GetAABB()
+	{
+		return aabb;
+	}
 
 	const std::vector<Component*>& GetComponents() const
 	{

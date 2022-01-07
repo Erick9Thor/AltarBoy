@@ -59,7 +59,6 @@ bool ModuleRender::Init()
 
 void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
 {
-	GameObject* root = scene->GetRoot();
 	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
 
 	unsigned res_x, res_y;
@@ -81,7 +80,12 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	root->DrawAll(camera);
+	GameObject* root = scene->GetRoot();
+	render_list.Update(culling, root);
+	for (RenderTarget& target : render_list.GetNodes())
+		target.game_object->Draw(camera);
+
+	//root->DrawAll(camera);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -123,7 +127,7 @@ update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
 	// TODO: Add debug camera
-	ComponentCamera* culling = camera;
+	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
 		
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
@@ -160,22 +164,6 @@ void ModuleRender::OptionsMenu()
 	ImGui::Text("Background Color");
 	ImGui::PushItemWidth(150.0f);
 	ImGui::ColorPicker3("Clear Color", &clear_color[0], flag);
-
-	/*ImGui::Checkbox("Debug Draw", &bounding_boxes);
-	if (debug_draw) {
-		ImGui::SameLine();
-		ImGui::Checkbox("Bounding Box", &App->debug->ShouldDrawBoundingBox());
-	}*/
-
-	//TODO: Should be only affect the Draw scene
-	/*static bool line_smooth = false;
-	if (ImGui::Checkbox("Line Smooth", &line_smooth))
-		GLOptionCheck(GL_LINE_SMOOTH, line_smooth);
-
-	ImGui::SameLine();
-	static bool polygon_smooth = false;
-	if (ImGui::Checkbox("Polygon Smooth", &polygon_smooth))
-		GLOptionCheck(GL_POLYGON_SMOOTH, polygon_smooth);*/
 }
 
 void ModuleRender::PerformanceMenu(const float delta)

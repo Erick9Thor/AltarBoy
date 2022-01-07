@@ -605,7 +605,7 @@ update_status ModuleDebugDraw::Update(const float delta)
 {
 	dd::xzSquareGrid(-30, 30, -0.1f, 1.0f, dd::colors::Gray);
 	
-	if (draw_bounding_boxes) {
+	if (debug_draw) {
 		Scene* scene = App->scene_manager->GetActiveScene();
 		App->scene_manager->GetActiveScene()->GetRoot()->DebugDrawAll();
 	}

@@ -31,7 +31,7 @@ ComponentCamera::~ComponentCamera()
 {
 }
 
-void ComponentCamera::Draw(ComponentCamera* camera)
+void ComponentCamera::DebugDraw()
 {
 	if (draw_frustum) {
 		float4x4 inverse_clip;

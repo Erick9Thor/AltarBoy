@@ -44,7 +44,7 @@ public:
 		return skybox;
 	}
 
-	const ComponentCamera* GetDebugCamera() const
+	ComponentCamera* GetDebugCamera() const
 	{
 		return debug_camera;
 	}

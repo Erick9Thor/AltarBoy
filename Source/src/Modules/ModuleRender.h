@@ -4,6 +4,8 @@
 
 #include "../Utils/Math.h"
 
+#include "../RenderList.h"
+
 #include <vector>
 
 struct SDL_Texture;
@@ -67,6 +69,8 @@ private:
 	void RetrieveGpuInfo();
 
 	void* context;
+
+	RenderList render_list;
 
 	float4 clear_color;
 

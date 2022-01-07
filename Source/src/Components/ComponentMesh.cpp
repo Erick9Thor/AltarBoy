@@ -142,5 +142,6 @@ void ComponentMesh::DrawGui()
 	{
 		ImGui::Text("%d Triangles\n%d vertices\n%d indices", num_indices / 3, num_vertices, num_indices);
 		// ImGui::Checkbox("Draw Bounding Boxes", &draw_bounding_boxes);
+		ImGui::Checkbox("Visible", &visible);
 	}
 }

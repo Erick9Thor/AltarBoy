@@ -12,17 +12,22 @@ public:
 	ComponentCamera(GameObject* conatiner);
 	~ComponentCamera() override;
 
-	void Draw(ComponentCamera* camera) override;
+	void DebugDraw() override;
 
 	void GenerateFrameBuffer();
 	void ResizeFrameBuffer();
-	unsigned int GetFrameBuffer() const
+	inline unsigned int GetFrameBuffer() const
 	{
 		return frame_buffer;
 	}
-	unsigned int GetTextureId() const
+	inline unsigned int GetTextureId() const
 	{
 		return fb_texture;
+	}
+
+	inline const Frustum& GetFrustum() const
+	{
+		return frustum;
 	}
 
 	void SetNearPlane(float distance);

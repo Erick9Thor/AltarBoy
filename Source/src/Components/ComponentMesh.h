@@ -40,6 +40,12 @@ public:
 	{
 		return loaded;
 	}
+
+	bool IsVisible() const
+	{
+		return visible;
+	}
+
 	void DrawGui() override;
 
 private:
@@ -49,6 +55,7 @@ private:
 
 	AABB bounding_box;
 	bool loaded;
+	bool visible = true;
 
 	unsigned num_indices;
 	unsigned num_vertices;

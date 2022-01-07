@@ -23,6 +23,7 @@ public:
 	virtual ~Component() {};
 
 	virtual void Draw(ComponentCamera* camera) {};
+	virtual void DebugDraw() {};
 
 	inline Type GetType() const
 	{

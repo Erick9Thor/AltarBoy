@@ -31,7 +31,6 @@ Scene::~Scene()
 {
 	delete root;
 	delete skybox;
-	delete debug_camera;
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
@@ -146,6 +145,7 @@ GameObject* Scene::CreateDebugCamera()
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
 
 	debug_camera = camera->GetComponent<ComponentCamera>();
+	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
 
 	return camera;
@@ -165,8 +165,8 @@ void Scene::Update()
 }
 
 void Scene::OptionsMenu() {
-	static bool bounding_boxes = false;
+	static bool debug_draw = true;
 	ImGui::Checkbox("Skybox", &draw_skybox);
-	if (ImGui::Checkbox("Draw Bounding Boxes", &bounding_boxes))
-		App->debug_draw->ToggleBoundingBoxes(bounding_boxes);
+	if (ImGui::Checkbox("Debug Draw", &debug_draw))
+		App->debug_draw->SetDebugDraw(debug_draw);
 }
