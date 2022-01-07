@@ -149,6 +149,7 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
+    <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="src\Quadtree.h" />
     <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Program.h" />
