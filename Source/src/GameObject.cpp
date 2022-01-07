@@ -3,11 +3,16 @@
 #include "Globals.h"
 #include "Utils/Logger.h"
 
+#include "Application.h"
+#include "Scene.h"
+#include "Quadtree.h"
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+
 #include <debugdraw.h>
+
 
 GameObject::GameObject(const char* name)
 	: name(name)
@@ -232,4 +237,11 @@ void GameObject::UpdateBoundingBoxes()
 	aabb.SetNegativeInfinity();
 	aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
 	obb = aabb;
+
+	// Without the check main camera crashes bcs there is no quadtree
+	if (scene_owner) {
+		Quadtree* quadtree = scene_owner->GetQuadtree();
+		quadtree->Remove(this);
+		quadtree->Insert(this);
+	}
 }

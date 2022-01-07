@@ -23,7 +23,7 @@ public:
 
 private:
 	static DDRenderInterfaceCoreGL* implementation;
-	bool debug_draw = false;
+	bool debug_draw = true;
 };
 
 #endif /* _MODULE_DEBUGDRAW_H_ */

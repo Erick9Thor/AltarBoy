@@ -12,6 +12,7 @@ class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
 class Skybox;
+class Quadtree;
 
 class Scene
 {
@@ -34,17 +35,22 @@ public:
 
 	void OptionsMenu();
 
-	GameObject* GetRoot() const
+	inline GameObject* GetRoot() const
 	{
 		return root;
 	}
 
-	Skybox* GetSkybox() const
+	inline Skybox* GetSkybox() const
 	{
 		return skybox;
 	}
 
-	ComponentCamera* GetDebugCamera() const
+	inline Quadtree* GetQuadtree() const
+	{
+		return quadtree;
+	}
+
+	inline ComponentCamera* GetDebugCamera() const
 	{
 		return debug_camera;
 	}
@@ -63,6 +69,7 @@ private:
 	ComponentCamera* debug_camera = nullptr;
 
 	Skybox* skybox;
+	Quadtree* quadtree = nullptr;
 	
 	bool draw_all_bounding_boxes = false;
 };

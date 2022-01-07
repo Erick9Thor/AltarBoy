@@ -15,6 +15,7 @@
 #include "Modules/ModuleProgram.h"
 
 #include "Skybox.h"
+#include "Quadtree.h"
 
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
@@ -22,8 +23,12 @@
 
 Scene::Scene()
 {
-	root = new GameObject(nullptr, float4x4::identity, "Root");
+	quadtree = new Quadtree();
 	skybox = new Skybox();
+
+	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+	root = new GameObject(nullptr, float4x4::identity, "Root");
+	
 	CreateDebugCamera();
 }
 
@@ -31,6 +36,7 @@ Scene::~Scene()
 {
 	delete root;
 	delete skybox;
+	delete quadtree;
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
