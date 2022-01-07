@@ -33,10 +33,25 @@ public:
 
 	bool IsLeaf() const;
 
+	const AABB& GetBox() const
+	{
+		return box;
+	
+	}
+
+	const std::list<GameObject*>& GetObjects() const {
+		return objects;
+	}
+
+	QuadtreeNode* GetChildren() const {
+		return childs[0];
+	}
+
+	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
+
 private:
 	AABB box;
-	QuadtreeNode* parent;
-	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
+	QuadtreeNode* parent;	
 	std::list<GameObject*> objects;
 	
 };
@@ -52,6 +67,11 @@ public:
 
 	void Insert(GameObject* game_object);
 	void Remove(GameObject* game_object);
+
+	inline QuadtreeNode* GetRoot()
+	{
+		return root;
+	}
 		
 
 private:

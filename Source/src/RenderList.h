@@ -8,6 +8,8 @@
 class GameObject;
 class ComponentMesh;
 class ComponentCamera;
+class Quadtree;
+class QuadtreeNode;
 
 struct RenderTarget
 {
@@ -21,6 +23,8 @@ class RenderList
 {
 public:
 	void Update(ComponentCamera* camera, GameObject* game_object);
+	void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
+
 	std::vector<RenderTarget>& GetNodes()
 	{
 		return nodes;
@@ -32,8 +36,8 @@ public:
 
 
 private:
-
-	void CollectObjects(ComponentCamera* camera, GameObject* game_object);
+	void CollectObjects(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
+	void CollectObjects(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
 	void CollectMesh(const float3& camera_pos, GameObject* game_object);
 
 	std::vector<RenderTarget> nodes;

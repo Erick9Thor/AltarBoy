@@ -3,27 +3,58 @@
 #include "GameObject.h"
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
+#include "Quadtree.h"
 
 void RenderList::Update(ComponentCamera* camera, GameObject* game_object)
 {
 	nodes.clear();
-	CollectObjects(camera, game_object);
+	Frustum frustum = camera->GetFrustum();
+	float3 camera_pos = frustum.WorldMatrix().TranslatePart();
+	CollectObjects(camera, camera_pos, game_object);
 }
 
-void RenderList::CollectObjects(ComponentCamera* camera, GameObject* game_object)
+void RenderList::Update(ComponentCamera* camera, QuadtreeNode* quadtree)
 {
+	nodes.clear();
 	Frustum frustum = camera->GetFrustum();
-	// TODO: Debug this
-	bool inside = frustum.Intersects(game_object->GetOBB());
+	float3 camera_pos = frustum.WorldMatrix().TranslatePart();
+	CollectObjects(camera, camera_pos, quadtree);
+}
 
-	if (inside)
-	{
-		float3 camera_pos = frustum.WorldMatrix().TranslatePart();
+void RenderList::CollectObjects(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object)
+{
+	bool inside = camera->GetFrustum().Intersects(game_object->GetOBB());
+	if (inside) {
+		
 		CollectMesh(camera_pos, game_object);
 	}
 
 	for (GameObject* child : game_object->childs)
-		CollectObjects(camera, child);
+		CollectObjects(camera, camera_pos, child);
+}
+
+void RenderList::CollectObjects(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree)
+{
+	Frustum frustum = camera->GetFrustum();
+	bool quad_inside = frustum.Intersects(quadtree->GetBox());
+	// Check if node intersects camera
+	if (quad_inside) {
+		// Check any gameobjects intersect
+		for (GameObject* game_object : quadtree->GetObjects()) {
+			bool object_inside = frustum.Intersects(game_object->GetOBB());
+
+			if (object_inside) {
+				CollectMesh(camera_pos, game_object);
+			}
+		}
+		// Call for all childs (What to do if it is duplicated when collecting)?
+		if (!quadtree->IsLeaf()) {
+			for (QuadtreeNode* child : quadtree->childs)
+			{
+				CollectObjects(camera, camera_pos, child);
+			}
+		}	
+	}
 }
 
 void RenderList::CollectMesh(const float3& camera_pos, GameObject* game_object)
@@ -45,5 +76,4 @@ void RenderList::CollectMesh(const float3& camera_pos, GameObject* game_object)
 			});
 		nodes.insert(it, target);
 	}
-	
 }

@@ -231,12 +231,14 @@ void GameObject::UpdateBoundingBoxes()
 		// Enclose is accumulative, reset the box
 		aabb.SetNegativeInfinity();
 		aabb.Enclose(obb);
-		return;
 	}
-	// If there is no mesh generate a default size
-	aabb.SetNegativeInfinity();
-	aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
-	obb = aabb;
+	else
+	{
+		// If there is no mesh generate a default size
+		aabb.SetNegativeInfinity();
+		aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+		obb = aabb;
+	}
 
 	// Without the check main camera crashes bcs there is no quadtree
 	if (scene_owner) {

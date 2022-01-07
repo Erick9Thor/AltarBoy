@@ -72,7 +72,6 @@ GameObject* Scene::LoadFBX(const std::string& path)
 		LOG("Error loading file %s: %s", file_name.c_str(), aiGetErrorString());
 	}
 	importer.FreeScene();
-	model->OnTransformUpdated();
 	return model;
 }
 

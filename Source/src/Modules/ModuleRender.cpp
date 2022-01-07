@@ -10,6 +10,7 @@
 #include "ModuleSceneManager.h"
 #include "../Scene.h"
 #include "../Skybox.h"
+#include "../Quadtree.h"
 #include "../GameObject.h"
 
 #include "../Components/ComponentCamera.h"
@@ -81,7 +82,8 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	GameObject* root = scene->GetRoot();
-	render_list.Update(culling, root);
+	//render_list.Update(culling, root);
+	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
 	for (RenderTarget& target : render_list.GetNodes())
 		target.game_object->Draw(camera);
 
