@@ -10,12 +10,14 @@
 #include "../UI/WindowHierarchy.h"
 #include "../UI/WindowInspector.h"
 #include "../UI/WindowScene.h"
+#include "../UI/WindowResource.h"
+#include "../UI/WindowProject.h"
+#include "../UI/WindowConsole.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
 #include "SDL.h"
 #include "glew.h"
-#include "../UI/WindowConsole.h"
 
 class ModuleEditor : public Module
 {
@@ -58,4 +60,6 @@ private:
 	WindowConfiguration w_configuration;
 	WindowAbout w_about;
 	WindowConsole w_console;
+	WindowResource w_resource;
+	WindowProject w_project;
 };

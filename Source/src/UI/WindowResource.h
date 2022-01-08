@@ -1,9 +1,9 @@
 #pragma once
 #include "Window.h"
 
-class WindowProject : public Window
+class WindowResource : public Window
 {
 public:
-	WindowProject();
+	WindowResource();
 	void Update() override;
 };

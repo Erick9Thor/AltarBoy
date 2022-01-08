@@ -67,6 +67,8 @@ bool ModuleEditor::Init()
 	windows.push_back(&w_inspector);
 	windows.push_back(&w_about);
 	windows.push_back(&w_console);
+	windows.push_back(&w_resource);
+	windows.push_back(&w_project);
 
 	return true;
 }
@@ -192,6 +194,8 @@ void ModuleEditor::ViewMenu()
 		ImGui::MenuItem(w_hierarchy.name, "", &w_hierarchy.active);
 		ImGui::MenuItem(w_configuration.name, "", &w_configuration.active);
 		ImGui::MenuItem(w_about.name, "", &w_about.active);
+		ImGui::MenuItem(w_resource.name, "", &w_resource.active);
+		ImGui::MenuItem(w_project.name, "", &w_project.active);
 		ImGui::EndMenu();
 	}
 }

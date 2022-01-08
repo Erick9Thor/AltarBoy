@@ -151,10 +151,12 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
+    <ClCompile Include="src\Importers\JsonFormaterValue.cpp" />
     <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\UI\WindowProject.cpp" />
     <ClCompile Include="src\Utils\Logger.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Components\ComponentCamera.cpp" />
@@ -231,6 +233,7 @@
     <ClCompile Include="src\UI\WindowInspector.cpp" />
     <ClCompile Include="src\UI\WindowScene.cpp" />
     <ClCompile Include="src\UI\WindowConsole.cpp" />
+    <ClCompile Include="src\UI\WindowResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
@@ -239,10 +242,12 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="src\Importers\JsonFormaterValue.h" />
     <ClInclude Include="src\Quadtree.h" />
     <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\UI\WindowProject.h" />
     <ClInclude Include="src\Utils\Logger.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Components\Component.h" />
@@ -359,6 +364,7 @@
     <ClInclude Include="src\UI\WindowInspector.h" />
     <ClInclude Include="src\UI\WindowScene.h" />
     <ClInclude Include="src\UI\WindowConsole.h" />
+    <ClInclude Include="src\UI\WindowResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
