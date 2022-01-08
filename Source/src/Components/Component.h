@@ -1,5 +1,8 @@
 #pragma once
 
+#include "../Utils/UID.h"
+#include "../Importers/JsonFormaterValue.h"
+
 class GameObject;
 class ComponentCamera;
 
@@ -22,17 +25,21 @@ public:
 
 	virtual ~Component() {};
 
+	virtual void Update() {};
 	virtual void Draw(ComponentCamera* camera) {};
-
-	inline Type GetType() const
-	{
-		return type;
-	};
+	virtual void OnTransformUpdated() {};
+	virtual void Save(JsonFormaterValue jComponent) const {};
+	virtual void Load(JsonFormaterValue jComponent) {};
 
 	void SetGameObject(GameObject* container)
 	{
 		game_object = container;
 	}
+
+	inline Type GetType() const
+	{
+		return type;
+	};
 	const GameObject* GetGameObject() const
 	{
 		return game_object;
@@ -42,14 +49,13 @@ public:
 		return game_object;
 	}
 
-	virtual void Update() {};
-
-	virtual void OnTransformUpdated() {};
-
 	virtual void DrawGui() {};
 
 protected:
-	GameObject* game_object = nullptr;
 	bool active = true;
 	Type type = Type::Unknown;
+
+private:
+	UID id = 0;
+	GameObject* game_object = nullptr;
 };
