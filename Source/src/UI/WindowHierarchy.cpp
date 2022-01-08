@@ -29,6 +29,8 @@ void WindowHierarchy::Update()
 void WindowHierarchy::DrawHierarchyTree(GameObject* root)
 {
 	DrawGOChilds(root);
+	if (!App->input->GetMouseButton(SDL_BUTTON_LEFT))
+		dragged_object = nullptr;
 }
 
 void WindowHierarchy::DrawGOChilds(GameObject* root)
@@ -43,14 +45,29 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 {
 	ShowGameObject(game_object);
 
-	if (ImGui::IsItemHovered())
+	if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 	{
-		if (App->input->GetMouseButton(SDL_BUTTON_LEFT)) {
-			App->editor->SetSelectedGO(game_object);
+		if (dragged_object && dragged_object != game_object)
+		{
+			ImGui::BeginTooltip();
+			ImGui::Text("% s->% s ", dragged_object->name.c_str(), game_object->name.c_str());
+			ImGui::EndTooltip();
 		}
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
+		
+		if (ImGui::IsMouseClicked(0))
+		{
+			App->editor->SetSelectedGO(game_object);
+			dragged_object = game_object;
+		}
+		if (ImGui::IsMouseClicked(1))
 		{
 			ImGui::OpenPopup(game_object->name.c_str());
+		}
+
+		if (dragged_object && ImGui::IsMouseReleased(0) && dragged_object != game_object)
+		{
+			dragged_object->SetNewParent(game_object);
+			dragged_object = nullptr;
 		}
 	}
 
@@ -67,7 +84,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		if (ImGui::MenuItem("Delete Gameojbect"))
 		{
 			// TODO: Make it work
-			//game_object->Destroy();
+			game_object->Destroy();
 			ImGui::CloseCurrentPopup();
 		}
 		if (ImGui::MenuItem("Move Up"))
@@ -91,10 +108,13 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 void WindowHierarchy::ShowGameObject(GameObject* game_object)
 {
 	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+	flags |= ImGuiTreeNodeFlags_DefaultOpen;
+
 	if (game_object->childs.empty())
-	{
 		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-	}
+
+	if (game_object == App->editor->GetSelectedGO())
+		flags |= ImGuiTreeNodeFlags_Selected;
 
 	bool nodeOpen = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
 	game_object->hierarchy_open = game_object->childs.empty() ? false : nodeOpen;

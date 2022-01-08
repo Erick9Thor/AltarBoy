@@ -53,7 +53,8 @@ void GameObject::SetNewParent(GameObject* new_parent)
 		return;
 
 	if (parent)
-		parent->childs.erase(std::remove(childs.begin(), childs.end(), this), childs.end());
+		parent->RemoveChild(this);
+	
 
 	if (new_parent)
 		new_parent->childs.push_back(this);
@@ -109,13 +110,7 @@ Component* GameObject::CreateComponent(Component::Type type)
 
 void GameObject::RemoveChild(GameObject* game_object)
 {
-	for (vector<GameObject*>::const_iterator it = game_object->childs.begin(); it != game_object->childs.end(); ++it)
-	{
-		if ((*it) == game_object)
-		{
-			childs.erase(it);
-		}
-	}
+	childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
 }
 
 void GameObject::Destroy()
@@ -127,8 +122,7 @@ void GameObject::Destroy()
 	}
 
 	if (scene_owner)
-		// TODO: Manage object destruction on scene
-		//scene_owner->OnDestroyGameObject(this);
+		scene_owner->DestroyGameObject(this);
 
 		for (unsigned int i = 0; i < childs.size(); ++i)
 		{

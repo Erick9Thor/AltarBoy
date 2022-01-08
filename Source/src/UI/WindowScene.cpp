@@ -61,21 +61,15 @@ void WindowScene::SceneController()
 
 	if (scene_timer->HasGameStarted())
 	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning())) scene_timer->StopGame();
+		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning()))scene_timer->StopGame();
 
 		if (scene_timer->IsGameRunning())
-		{
 			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, !scene_timer->IsGameRunning())) scene_timer->PauseGame();
-		}
 		else
-		{
 			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->ResumeGame();
-		}
 	}
 	else
-	{
 		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->StartGame();
-	}
 
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD, scene_timer->IsGameRunning())) scene_timer->StepGame();
 	ImGui::Separator();
@@ -155,14 +149,7 @@ bool WindowScene::ToolbarButton(ImFont* font, const char* font_icon, bool active
 	ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
 
 	ImGui::PushFont(font);
-	if (ImGui::Button(font_icon))
-	{
-		active = true;
-	}
-	else
-	{
-		active = false;
-	}
+	active = ImGui::Button(font_icon);
 
 	ImGui::PopFont();
 	ImGui::PopStyleColor(4);

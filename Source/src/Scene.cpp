@@ -39,13 +39,22 @@ Scene::~Scene()
 	delete quadtree;
 }
 
+void Scene::DestroyGameObject(GameObject* game_object)
+{
+	quadtree->Remove(game_object);
+	RELEASE(game_object);
+}
+
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
-	// TODO: Implement
+	GameObject* new_parent = parent ? parent : root;
+	new_parent->childs.push_back(new_object);
+	quadtree->Insert(new_object);
 }
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
 {
+	// It will insert itself into quadtree on first bounding box update
 	GameObject* foo = new GameObject(parent ? parent : root, name);
 	foo->scene_owner = this;
 	return foo;

@@ -23,6 +23,7 @@ public:
 	~Scene();
 
 	void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
+	void DestroyGameObject(GameObject* game_object);
 	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 	GameObject* LoadFBX(const std::string& path);
 
