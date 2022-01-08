@@ -50,6 +50,19 @@ inline void ComponentTransform::SetLocalTransform(float3 position, Quat rotation
 	SetLocalTransform(new_transform);
 }
 
+inline void ComponentTransform::SetLocalPosition(float3 new_position)
+{
+	SetLocalTransform(new_position, local_rotation, local_scale);
+}
+inline void ComponentTransform::SetLocalScale(float3 new_scale)
+{
+	SetLocalTransform(local_position, local_rotation, new_scale);
+}
+inline void ComponentTransform::SetLocalRotation(Quat new_rotation)
+{
+	SetLocalTransform(local_position, new_rotation, local_scale);
+}
+
 void ComponentTransform::SetLocalRotation(float3 rotation_angles)
 {
 	float3 rotation = rotation_angles * to_rad;

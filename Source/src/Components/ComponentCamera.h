@@ -11,24 +11,16 @@ class ComponentCamera : public Component
 public:
 	ComponentCamera(GameObject* conatiner);
 	~ComponentCamera() override;
+	static inline Type GetType() { return Type::Camera; };
 
 	void DebugDraw() override;
 
 	void GenerateFrameBuffer();
 	void ResizeFrameBuffer();
-	inline unsigned int GetFrameBuffer() const
-	{
-		return frame_buffer;
-	}
-	inline unsigned int GetTextureId() const
-	{
-		return fb_texture;
-	}
 
-	inline const Frustum& GetFrustum() const
-	{
-		return frustum;
-	}
+	inline unsigned int GetFrameBuffer() const { return frame_buffer; }
+	inline unsigned int GetTextureId() const { return fb_texture; }
+	inline const Frustum& GetFrustum() const { return frustum; }
 
 	void SetNearPlane(float distance);
 	void SetFarPlane(float distance);
@@ -43,11 +35,6 @@ public:
 	void SetResolution(unsigned width, unsigned height);
 	void GetResolution(unsigned& width, unsigned& height);
 
-	static inline Type GetType()
-	{
-		return Type::Camera;
-	};
-
 	void DrawGui() override;
 
 	Plane planes[6];
@@ -58,7 +45,6 @@ private:
 	float horizontal_fov;
 	Frustum frustum;
 
-	// FrameBuffer and depht stencil buffer
 	unsigned int frame_buffer = 0;
 	unsigned int fb_texture = 0;
 	unsigned int depth_stencil_buffer = 0;

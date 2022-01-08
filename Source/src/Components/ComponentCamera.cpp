@@ -73,7 +73,6 @@ void ComponentCamera::GenerateFrameBuffer()
 void ComponentCamera::SetNearPlane(float distance)
 {
 	SetPlaneDistances(distance, frustum.FarPlaneDistance());
-
 }
 
 void ComponentCamera::SetFarPlane(float distance)
@@ -148,9 +147,7 @@ void ComponentCamera::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		
 		ImGui::Checkbox("Draw Frustum", &draw_frustum);
-
 		
 		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
 		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
