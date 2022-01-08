@@ -42,25 +42,16 @@ public:
 
 	void WindowResized(unsigned width, unsigned height);
 
+	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+
 	void OptionsMenu();
 	void PerformanceMenu(const float delta);
 	void FpsGraph();
 	void AddFrame(const float delta);
 
-	inline void* GetGLContext() const
-	{
-		return context;
-	}
-	inline const GpuData GetGpuData() const
-	{
-		return gpu;
-	}
-	inline const GlVersion GetGlVersion()
-	{
-		return gl;
-	}
-	
-	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+	inline void* GetGLContext() const { return context; }
+	inline const GpuData GetGpuData() const { return gpu; }
+	inline const GlVersion GetGlVersion() { return gl; }
 
 private:
 	void CreateContext();

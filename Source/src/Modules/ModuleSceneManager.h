@@ -2,9 +2,10 @@
 #include "Module.h"
 #include "Math.h"
 
+#include "../Scene.h"
+
 class GameObject;
 class ComponentCamera;
-class Scene;
 
 class ModuleSceneManager : public Module
 {
@@ -18,18 +19,13 @@ public:
 
 	void LoadModel(const char* model_path);
 
-	GameObject* GetRoot();
-	const GameObject* GetRoot() const;
+	GameObject* GetRoot() { return main_scene->root; }
+	const GameObject* GetRoot() const { return main_scene->root; }
+	Scene* GetActiveScene() { return main_scene; }
+	const Scene* GetActiveScene() const { return main_scene; }
 
-	Scene* GetActiveScene()
-	{
-		return main_scene;
-	}
-
-	bool isSceneRuning()
-	{
-		return false;
-	}
+	// TODO
+	bool IsSceneRuning() { return false; }
 
 private:
 	Scene* main_scene = nullptr;

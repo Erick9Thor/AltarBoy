@@ -7,8 +7,9 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 
-ModuleHardware::ModuleHardware()
-{}
+ModuleHardware::ModuleHardware() {}
+
+ModuleHardware::~ModuleHardware() {}
 
 bool ModuleHardware::Init()
 {
@@ -28,6 +29,3 @@ bool ModuleHardware::Init()
 
 	return true;
 }
-
-ModuleHardware::~ModuleHardware()
-{}

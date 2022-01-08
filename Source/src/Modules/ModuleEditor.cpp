@@ -83,7 +83,6 @@ update_status ModuleEditor::PreUpdate(const float delta)
 
 update_status ModuleEditor::Update(const float delta)
 {
-
 	ImGui::CaptureMouseFromApp(true);
 	ImGui::CaptureKeyboardFromApp(true);
 
@@ -173,11 +172,11 @@ void ModuleEditor::FileMenu()
 	{
 		//TODO: Create a new scene
 	}
-	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, !App->scene_manager->isSceneRuning()))
+	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, !App->scene_manager->IsSceneRuning()))
 	{
 		//TODO: Save the current scene
 	}
-	if (ImGui::MenuItem("Save as", nullptr, false, !App->scene_manager->isSceneRuning()))
+	if (ImGui::MenuItem("Save as", nullptr, false, !App->scene_manager->IsSceneRuning()))
 	{
 		//TODO: Save as
 	}
@@ -200,15 +199,15 @@ void ModuleEditor::ViewMenu()
 void ModuleEditor::EditMenu()
 {
 	// TODO: shortcuts
-	const bool is_go_selected = getSelectedGO() != nullptr;
+	const bool is_go_selected = GetSelectedGO() != nullptr;
 
 	if (!ImGui::BeginMenu("Edit")) return;
 
-	if (ImGui::MenuItem(ICON_FA_UNDO "Undo", nullptr, false, canUndo()))
+	if (ImGui::MenuItem(ICON_FA_UNDO "Undo", nullptr, false, CanUndo()))
 	{
 		//TODO:
 	}
-	if (ImGui::MenuItem(ICON_FA_REDO "Redo", nullptr, false, canRedo()))
+	if (ImGui::MenuItem(ICON_FA_REDO "Redo", nullptr, false, CanRedo()))
 	{
 		//TODO:
 	}
@@ -217,7 +216,7 @@ void ModuleEditor::EditMenu()
 	{
 		//TODO:
 	}
-	if (ImGui::MenuItem(ICON_FA_PASTE "Paste", nullptr, false, canPaste()))
+	if (ImGui::MenuItem(ICON_FA_PASTE "Paste", nullptr, false, CanPaste()))
 	{
 		//TODO:
 	}

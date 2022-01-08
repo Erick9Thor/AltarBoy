@@ -44,7 +44,7 @@ bool ModuleRender::Init()
 	RetrieveLibVersions();
 
 	SetGLOptions();
-	
+
 #ifdef _DEBUG
 	glEnable(GL_DEBUG_OUTPUT); // Enable output callback
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -82,15 +82,16 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	GameObject* root = scene->GetRoot();
+
+	//Draw alternatives 0 optiomization, no quadtree
+	//root->DrawAll(camera);
 	//render_list.Update(culling, root);
+
 	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
 	for (RenderTarget& target : render_list.GetNodes())
 		target.game_object->Draw(camera);
 
-	//root->DrawAll(camera);
-
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 }
 
 void ModuleRender::CreateContext()
@@ -130,7 +131,7 @@ update_status ModuleRender::Update(const float delta)
 	ComponentCamera* camera = App->camera->GetMainCamera();
 	// TODO: Add debug camera
 	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
-		
+
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
 }

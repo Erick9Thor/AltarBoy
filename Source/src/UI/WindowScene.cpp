@@ -78,7 +78,7 @@ void WindowScene::DrawScene()
 	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(gizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
 		gizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
 
-	GameObject* selected_object = App->editor->getSelectedGO();
+	GameObject* selected_object = App->editor->GetSelectedGO();
 	if (!selected_object) return;
 	
 	if (selected_object) {

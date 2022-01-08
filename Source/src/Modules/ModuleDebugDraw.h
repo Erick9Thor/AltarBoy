@@ -1,8 +1,6 @@
-#ifndef _MODULE_DEBUGDRAW_H_
-#define _MODULE_DEBUGDRAW_H_
+#pragma once
 
 #include "Module.h"
-
 #include "Math/float4x4.h"
 
 class DDRenderInterfaceCoreGL;
@@ -25,5 +23,3 @@ private:
 	static DDRenderInterfaceCoreGL* implementation;
 	bool debug_draw = true;
 };
-
-#endif /* _MODULE_DEBUGDRAW_H_ */

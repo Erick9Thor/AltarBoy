@@ -17,13 +17,9 @@
 
 #include "ImGuizmo.h"
 
-ModuleCamera::ModuleCamera()
-{
-}
+ModuleCamera::ModuleCamera() {}
 
-ModuleCamera::~ModuleCamera()
-{
-}
+ModuleCamera::~ModuleCamera() {}
 
 bool ModuleCamera::Init()
 {
@@ -79,7 +75,7 @@ void ModuleCamera::Controller(const float delta)
 	if (App->input->GetKey(SDL_SCANCODE_F))
 	{
 		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
-		GameObject* go = App->editor->getSelectedGO();
+		GameObject* go = App->editor->GetSelectedGO();
 		FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
 	}
 }
