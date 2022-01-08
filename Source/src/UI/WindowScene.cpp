@@ -6,6 +6,7 @@
 #include "../Modules/ModuleInput.h"
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleCamera.h"
+#include "../Modules/ModuleRender.h"
 
 #include "../Components/ComponentCamera.h"
 #include "../Components/ComponentTransform.h"
@@ -29,46 +30,82 @@ void WindowScene::Update()
 	}
 	if (ImGui::Begin(ICON_FA_GLOBE "Scene", &active))
 	{
-		GuizmoControl();
-
+		GuizmoOptionsController();
 		ImGui::SameLine();
 		ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 		ImGui::SameLine();
-
-		SceneControl();
+		SceneController();
 		DrawScene();
 		ImGui::End();
 	};
 }
 
+void WindowScene::GuizmoOptionsController()
+{
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE)) guizmo_operation = ImGuizmo::TRANSLATE;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE)) guizmo_operation = ImGuizmo::ROTATE;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE)) guizmo_operation = ImGuizmo::SCALE;
+
+	ImGui::SameLine();
+	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+	ImGui::SameLine();
+
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL)) guizmo_mode = ImGuizmo::LOCAL;
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD)) guizmo_mode = ImGuizmo::WORLD;
+}
+
+void WindowScene::SceneController()
+{
+	float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
+	ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
+
+	if (scene_timer->HasGameStarted())
+	{
+		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning())) scene_timer->StopGame();
+
+		if (scene_timer->IsGameRunning())
+		{
+			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, !scene_timer->IsGameRunning())) scene_timer->PauseGame();
+		}
+		else
+		{
+			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->ResumeGame();
+		}
+	}
+	else
+	{
+		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->StartGame();
+	}
+
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD, scene_timer->IsGameRunning())) scene_timer->StepGame();
+	ImGui::Separator();
+}
+
 void WindowScene::DrawScene()
 {
 	ImVec2 size = ImGui::GetContentRegionAvail();
-	texture_size = {
-		size.x,
-		size.y,
-	};
-
-	// TODO: Improve size management
-	App->camera->OnResize((unsigned) texture_size.x, (unsigned) texture_size.y);
+	if (size.x != texture_size.x || size.y != texture_size.y) {
+		texture_size = {
+			size.x,
+			size.y,
+		};
+		App->camera->OnResize((unsigned) texture_size.x, (unsigned) texture_size.y);
+	}
+	
 	ComponentCamera* camera = App->camera->GetMainCamera();
 
 	// Has to be the top left corner of the image in imgui coords, top is y = 0
 	gizmo_rect_origin = ImGui::GetCursorScreenPos();
 	
-	ImGui::Image((void*) (intptr_t) camera->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
+	ImGui::Image((void*) (intptr_t) App->renderer->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) || App->input->GetKey(SDL_SCANCODE_LALT))
-		{
 			ImGuizmo::Enable(false);
-		}
 		else
-		{
 			ImGuizmo::Enable(true);
-		}
 	}
 
 	constexpr bool transposed = true;
@@ -99,47 +136,6 @@ void WindowScene::DrawScene()
 			selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(model);
 		}
 	}
-}
-
-void WindowScene::SceneControl()
-{
-	float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
-	ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
-
-	if (scene_timer->HasGameStarted())
-	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning())) scene_timer->StopGame();
-
-		if (scene_timer->IsGameRunning())
-		{
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, !scene_timer->IsGameRunning())) scene_timer->PauseGame();
-		}
-		else
-		{
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->ResumeGame();
-		}
-	}
-	else
-	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->StartGame();
-	}
-
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD, scene_timer->IsGameRunning())) scene_timer->StepGame();
-	ImGui::Separator();
-}
-
-void WindowScene::GuizmoControl()
-{
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE)) guizmo_operation = ImGuizmo::TRANSLATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE)) guizmo_operation = ImGuizmo::ROTATE; 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE)) guizmo_operation = ImGuizmo::SCALE; 
-
-	ImGui::SameLine();
-	ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
-	ImGui::SameLine();
-
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL)) guizmo_mode = ImGuizmo::LOCAL;
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD)) guizmo_mode = ImGuizmo::WORLD;
 }
 
 //TODO: Move to utils gui and add tooltips

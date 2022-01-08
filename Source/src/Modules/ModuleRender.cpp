@@ -44,6 +44,7 @@ bool ModuleRender::Init()
 	RetrieveLibVersions();
 
 	SetGLOptions();
+	GenerateFrameBuffer();
 
 #ifdef _DEBUG
 	glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -58,40 +59,56 @@ bool ModuleRender::Init()
 	return true;
 }
 
-void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
+void ModuleRender::GenerateFrameBuffer()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
+	glGenFramebuffers(1, &frame_buffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
-	unsigned res_x, res_y;
-	camera->GetResolution(res_x, res_y);
-	glViewport(0, 0, res_x, res_y);
+	glGenTextures(1, &fb_texture);
+	glBindTexture(GL_TEXTURE_2D, fb_texture);
 
-	// TODO: Change with skybox
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	if (scene->draw_skybox)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Depth and stencil buffer
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
+	glGenRenderbuffers(1, &depth_stencil_buffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		scene->GetSkybox()->Draw(camera);
+		LOG("[M_Render] Error creating frame buffer");
 	}
 
-	float4x4 view = camera->GetViewMatrix(false);
-	float4x4 proj = camera->GetProjectionMatrix(false);
-
-	App->debug_draw->Draw(view, proj, res_x, res_y);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	GameObject* root = scene->GetRoot();
-
-	//Draw alternatives 0 optiomization, no quadtree
-	//root->DrawAll(camera);
-	//render_list.Update(culling, root);
-
-	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
-	for (RenderTarget& target : render_list.GetNodes())
-		target.game_object->Draw(camera);
-
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void ModuleRender::ResizeFrameBuffer(int heigth, int width)
+{
+	glBindTexture(GL_TEXTURE_2D, fb_texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
+	glBindRenderbuffer(GL_RENDERBUFFER, 0);
+}
+
+void ModuleRender::ManageResolution(ComponentCamera* camera)
+{
+	unsigned res_x, res_y;
+	camera->GetResolution(res_x, res_y);
+	if (res_x != fb_height || res_y != fb_width) {		
+		ResizeFrameBuffer(res_x, res_y);
+		glViewport(0, 0, res_x, res_y);
+		fb_height = res_x;
+		fb_width = res_y;		
+	}	
 }
 
 void ModuleRender::CreateContext()
@@ -118,14 +135,6 @@ void ModuleRender::SetGLOptions()
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise
 }
 
-update_status ModuleRender::PreUpdate(const float delta)
-{
-	glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	return UPDATE_CONTINUE;
-}
-
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
@@ -136,20 +145,51 @@ update_status ModuleRender::Update(const float delta)
 	return UPDATE_CONTINUE;
 }
 
+void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
+	ManageResolution(camera);
+
+	if (scene->draw_skybox)
+	{
+		scene->GetSkybox()->Draw(camera);
+		glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	}
+	else
+	{
+		glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	}
+
+	float4x4 view = camera->GetViewMatrix(false);
+	float4x4 proj = camera->GetProjectionMatrix(false);
+
+	App->debug_draw->Draw(view, proj, fb_height, fb_width);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	GameObject* root = scene->GetRoot();
+
+	//Draw alternatives 0 optiomization, no quadtree
+	//root->DrawAll(camera);
+	//render_list.Update(culling, root);
+
+	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+	for (RenderTarget& target : render_list.GetNodes())
+		target.game_object->Draw(camera);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+
 update_status ModuleRender::PostUpdate(const float delta)
 {
 	SDL_GL_SwapWindow(App->window->GetWindow());
 	AddFrame(delta);
 
 	return UPDATE_CONTINUE;
-}
-
-void ModuleRender::WindowResized(unsigned width, unsigned height)
-{
-	// TODO: Manage properly since viewport is now a different size and not on window
-	int w, h;
-	SDL_GetWindowSize(App->window->GetWindow(), &w, &h);
-	glViewport(0, 0, w, h);
 }
 
 void GLOptionCheck(GLenum option, bool enable)

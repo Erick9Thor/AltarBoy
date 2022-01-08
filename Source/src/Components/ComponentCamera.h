@@ -15,11 +15,6 @@ public:
 
 	void DebugDraw() override;
 
-	void GenerateFrameBuffer();
-	void ResizeFrameBuffer();
-
-	inline unsigned int GetFrameBuffer() const { return frame_buffer; }
-	inline unsigned int GetTextureId() const { return fb_texture; }
 	inline const Frustum& GetFrustum() const { return frustum; }
 
 	void SetNearPlane(float distance);
@@ -33,7 +28,7 @@ public:
 	void OnTransformUpdated() override;
 
 	void SetResolution(unsigned width, unsigned height);
-	void GetResolution(unsigned& width, unsigned& height);
+	void GetResolution(unsigned& width, unsigned& height) const;
 
 	void DrawGui() override;
 
@@ -44,10 +39,6 @@ public:
 private:
 	float horizontal_fov;
 	Frustum frustum;
-
-	unsigned int frame_buffer = 0;
-	unsigned int fb_texture = 0;
-	unsigned int depth_stencil_buffer = 0;
 
 	unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
 	unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;

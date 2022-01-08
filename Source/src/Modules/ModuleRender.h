@@ -35,14 +35,12 @@ public:
 	~ModuleRender() override;
 
 	bool Init() override;
-	update_status PreUpdate(const float delta) override;
 	update_status Update(const float delta) override;
 	update_status PostUpdate(const float delta) override;
 	bool CleanUp() override;
 
-	void WindowResized(unsigned width, unsigned height);
-
-	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+	inline unsigned int GetFrameBuffer() const { return frame_buffer; }
+	inline unsigned int GetTextureId() const { return fb_texture; }
 
 	void OptionsMenu();
 	void PerformanceMenu(const float delta);
@@ -54,6 +52,11 @@ public:
 	inline const GlVersion GetGlVersion() { return gl; }
 
 private:
+	void GenerateFrameBuffer();
+	void ResizeFrameBuffer(int heigth, int width);
+	void ManageResolution(ComponentCamera* camera);
+	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+
 	void CreateContext();
 	void SetGLOptions();
 	void RetrieveLibVersions();
@@ -62,6 +65,12 @@ private:
 	void* context;
 
 	RenderList render_list;
+
+	unsigned frame_buffer = 0;
+	unsigned depth_stencil_buffer = 0;
+	unsigned fb_texture = 0;	
+	unsigned fb_height = 0;
+	unsigned fb_width = 0;
 
 	float4 clear_color;
 
