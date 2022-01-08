@@ -2,13 +2,13 @@
 
 //TODO Improve using this https://github.com/systelab/cpp-rapidjson-json-adapter/blob/master/src/RapidJSONAdapter/JSONValue.h
 
-#include "rapidjson/document.h"
+//#include "rapidjson/document.h"
 
 #include <string>
 
 class JsonFormaterValue
 {
-	JsonFormaterValue(rapidjson::Document& document, rapidjson::Value& value);
+	/*JsonFormaterValue(rapidjson::Document& document, rapidjson::Value& value);
 
 	// Size of the array. Returns 0 if the value is not an array.
 	size_t Size() const;
@@ -39,5 +39,5 @@ class JsonFormaterValue
 
 private:
 	rapidjson::Document& document;
-	rapidjson::Value& value;
+	rapidjson::Value& value;*/
 };

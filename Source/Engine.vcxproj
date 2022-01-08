@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
