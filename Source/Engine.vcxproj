@@ -149,6 +149,8 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
+    <ClCompile Include="src\Quadtree.cpp" />
+    <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Utils\Logger.cpp" />
@@ -235,6 +237,8 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="src\Quadtree.h" />
+    <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Program.h" />
     <ClInclude Include="src\Utils\Logger.h" />
@@ -334,7 +338,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="src\Utils\Math.h" />
     <ClInclude Include="src\Modules\Module.h" />
     <ClInclude Include="src\Modules\ModuleCamera.h" />
     <ClInclude Include="src\Modules\ModuleDebugDraw.h" />

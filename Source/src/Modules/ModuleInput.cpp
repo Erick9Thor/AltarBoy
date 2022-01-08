@@ -13,11 +13,9 @@
 
 #include <string>
 
-ModuleInput::ModuleInput()
-{}
+ModuleInput::ModuleInput() {}
 
-ModuleInput::~ModuleInput()
-{}
+ModuleInput::~ModuleInput() {}
 
 // Called before render is available
 bool ModuleInput::Init()

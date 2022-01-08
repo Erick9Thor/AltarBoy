@@ -37,10 +37,7 @@ public:
 	void Bind(unsigned id, unsigned slot = GL_TEXTURE0);
 	void Unbind(unsigned slot = GL_TEXTURE0);
 
-	inline const short GetDevilVersion() const
-	{
-		return devil_version;
-	}
+	inline const short GetDevilVersion() const { return devil_version; }
 
 	void OptionsMenu();
 

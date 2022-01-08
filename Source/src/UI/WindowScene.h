@@ -4,7 +4,7 @@
 #include <ImGuizmo.h>
 
 #include "../Utils/Timer.h"
-#include "../Utils/Math.h"
+#include "MathGeoLib.h"
 
 class WindowScene : public Window
 {
@@ -15,8 +15,8 @@ public:
 	bool ToolbarButton(ImFont* font, const char* font_icon, bool active);
 
 private:
-	void GuizmoControl();
-	void SceneControl();
+	void GuizmoOptionsController();
+	void SceneController();
 	void DrawScene();
 
 	ImVec2 imguizmo_size = {100.0f, 100.0f};

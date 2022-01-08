@@ -9,13 +9,9 @@
 #include "wtypes.h"
 #include <imgui.h>
 
-ModuleWindow::ModuleWindow()
-{
-}
+ModuleWindow::ModuleWindow() {}
 
-ModuleWindow::~ModuleWindow()
-{
-}
+ModuleWindow::~ModuleWindow() {}
 
 bool ModuleWindow::Init()
 {

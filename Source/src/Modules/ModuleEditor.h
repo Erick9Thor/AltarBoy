@@ -20,13 +20,25 @@
 class ModuleEditor : public Module
 {
 public:
-
 	bool Init() override;
 	update_status PreUpdate(const float delta) override;
 	update_status Update(const float delta) override;
-	void RenderGui();
 	bool CleanUp() override;
 
+	//Edit actions
+	bool CanUndo() { return false; }
+	bool CanRedo() { return false; }
+	bool CanPaste() { return false; }
+
+	void SetSelectedGO(GameObject* go) { selected_go = go; }
+	GameObject* GetSelectedGO() { return selected_go; }
+	const GameObject* GetSelectedGO() const { return selected_go; }
+
+	ImFont* m_big_icon_font;
+	ImFont* m_small_icon_font;
+
+private:
+	void RenderGui();
 	void GenerateDockingSpace();
 
 	// Main menu bar
@@ -36,33 +48,8 @@ public:
 	void GoMenu();
 	void ViewMenu();
 
-	//Edit actions
-	bool canUndo()
-	{
-		return false;
-	}
-	bool canRedo()
-	{
-		return false;
-	}
-	bool canPaste()
-	{
-		return false;
-	}
-
-	void setSelectedGO(GameObject* go)
-	{
-		assert(go);
-		selected_go = go;
-	}
-	GameObject* getSelectedGO() const{ return selected_go; }
-
-	ImFont* m_big_icon_font;
-	ImFont* m_small_icon_font;
-
-private:
 	GameObject* selected_go = nullptr;
-	
+
 	std::vector<Window*> windows;
 
 	WindowHierarchy w_hierarchy;

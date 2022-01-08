@@ -2,13 +2,17 @@
 #include "Module.h"
 #include "../Globals.h"
 
-#include "../Utils/Math.h"
+#include "MathGeoLib.h"
+
+#include "../RenderList.h"
 
 #include <vector>
 
 struct SDL_Texture;
 struct SDL_Renderer;
 struct SDL_Rect;
+class ComponentCamera;
+class Scene;
 
 struct GpuData
 {
@@ -31,38 +35,42 @@ public:
 	~ModuleRender() override;
 
 	bool Init() override;
-	update_status PreUpdate(const float delta) override;
 	update_status Update(const float delta) override;
 	update_status PostUpdate(const float delta) override;
 	bool CleanUp() override;
 
-	void WindowResized(unsigned width, unsigned height);
+	inline unsigned int GetFrameBuffer() const { return frame_buffer; }
+	inline unsigned int GetTextureId() const { return fb_texture; }
 
 	void OptionsMenu();
 	void PerformanceMenu(const float delta);
 	void FpsGraph();
 	void AddFrame(const float delta);
 
-	inline void* GetGLContext() const
-	{
-		return context;
-	}
-	inline const GpuData GetGpuData() const
-	{
-		return gpu;
-	}
-	inline const GlVersion GetGlVersion()
-	{
-		return gl;
-	}
+	inline void* GetGLContext() const { return context; }
+	inline const GpuData GetGpuData() const { return gpu; }
+	inline const GlVersion GetGlVersion() { return gl; }
 
 private:
+	void GenerateFrameBuffer();
+	void ResizeFrameBuffer(int heigth, int width);
+	void ManageResolution(ComponentCamera* camera);
+	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+
 	void CreateContext();
 	void SetGLOptions();
 	void RetrieveLibVersions();
 	void RetrieveGpuInfo();
 
 	void* context;
+
+	RenderList render_list;
+
+	unsigned frame_buffer = 0;
+	unsigned depth_stencil_buffer = 0;
+	unsigned fb_texture = 0;	
+	unsigned fb_height = 0;
+	unsigned fb_width = 0;
 
 	float4 clear_color;
 

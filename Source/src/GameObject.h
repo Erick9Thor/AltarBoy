@@ -1,5 +1,6 @@
 #pragma once
-#include "Utils/Math.h"
+#include "MathGeoLib.h"
+
 #include "Components/Component.h"
 
 #include <vector>
@@ -12,16 +13,11 @@ class Scene;
 class GameObject
 {
 	friend class Component;
-
 public:
-	GameObject();
+	GameObject(const char* name = "Unnamed");
 	GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
 	GameObject(GameObject* parent, const char* name = "Unnamed", const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 	virtual ~GameObject();
-	inline bool IsEnabled()
-	{
-		return enabled;
-	}
 
 	void SetNewParent(GameObject* new_parent);
 	void AddComponent(Component* component);
@@ -30,38 +26,21 @@ public:
 
 	void Destroy();
 	void Update();
-	void DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes = false);
+	void DrawAll(ComponentCamera* camera);
 	void Draw(ComponentCamera* camera);
+
+	inline bool IsEnabled() { return enabled; }
 
 	void OnTransformUpdated();
 
-	// BOUNDING BOX
+	void DebugDrawAll();
+	void DebugDraw();
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
-	const OBB& GetOBB()
-	{
-		return obb;
-	};
-
-	const std::vector<Component*>& GetComponents() const
-	{
-		return components;
-	}
-
-	template<typename RetComponent>
-	const RetComponent* GetComponent() const
-	{
-		Component::Type type = RetComponent::GetType();
-		for (unsigned int i = 0; i < components.size(); i++)
-		{
-			if (components[i]->GetType() == type)
-			{
-				return ((RetComponent*) (components[i]));
-			}
-		}
-		return nullptr;
-	}
+	const OBB& GetOBB() const { return obb; }
+	const AABB& GetAABB() { return aabb; }
+	const std::vector<Component*>& GetComponents() const { return components; }
 
 	template<typename RetComponent>
 	RetComponent* GetComponent()
@@ -70,19 +49,16 @@ public:
 		for (unsigned int i = 0; i < components.size(); i++)
 		{
 			if (components[i]->GetType() == type)
-			{
 				return ((RetComponent*) (components[i]));
-			}
-		}
+		}			
 		return nullptr;
 	}
 
+	std::string name;
+	Scene* scene_owner = nullptr;
 	GameObject* parent = nullptr;
 	std::vector<GameObject*> childs;
-
-	Scene* scene_owner = nullptr;
-
-	std::string name;
+	
 	bool hierarchy_open = false;
 
 private:

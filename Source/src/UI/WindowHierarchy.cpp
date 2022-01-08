@@ -46,7 +46,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 	if (ImGui::IsItemHovered())
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT)) {
-			App->editor->setSelectedGO(game_object);
+			App->editor->SetSelectedGO(game_object);
 		}
 		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 		{

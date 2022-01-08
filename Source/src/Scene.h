@@ -12,6 +12,7 @@ class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
 class Skybox;
+class Quadtree;
 
 class Scene
 {
@@ -25,16 +26,21 @@ public:
 	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 	GameObject* LoadFBX(const std::string& path);
 
-	GameObject* CreateCamera();
-	const ComponentCamera* GetMainCamera() const;
+	GameObject* CreateDebugCamera();
 
 	void Update();
 
 	void Play();
 	void Stop();
-	void Draw(ComponentCamera* camera);
 
 	void OptionsMenu();
+
+	GameObject* GetRoot() const { return root; }
+	Skybox* GetSkybox() const { return skybox; }
+	Quadtree* GetQuadtree() const { return quadtree; }
+	ComponentCamera* GetDebugCamera() const { return debug_camera; }
+
+	bool draw_skybox = true;
 
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
@@ -44,9 +50,10 @@ private:
 	ModuleSceneManager* manager_owner = nullptr;
 
 	GameObject* root = nullptr;
-	ComponentCamera* main_camera = nullptr;
+	ComponentCamera* debug_camera = nullptr;
 
 	Skybox* skybox;
-	bool skybox_active = true;
+	Quadtree* quadtree = nullptr;
+
 	bool draw_all_bounding_boxes = false;
 };

@@ -5,16 +5,12 @@
 #include "MathGeoLib.h"
 #include "imgui.h"
 
-ModuleProgram::ModuleProgram()
-{
-}
+ModuleProgram::ModuleProgram() {}
 
-ModuleProgram::~ModuleProgram()
-{
-}
+ModuleProgram::~ModuleProgram() {}
 
 bool ModuleProgram::Init()
-{	
+{
 	CreateMainProgram();
 	CreateSkyboxProgram();
 	if (!main_program || !skybox_program)
@@ -84,7 +80,7 @@ Program* ModuleProgram::CreateProgram(const char* vtx_shader_path, const char* f
 
 	if (vertex_shader_id == 0 || fragment_shader_id == 0)
 		return nullptr;
-	
+
 	Program* program = new Program(vertex_shader_id, fragment_shader_id);
 
 	if (program->GetId() == 0)
@@ -116,7 +112,7 @@ Program* ModuleProgram::CreateMainProgram()
 	main_program->BindUniformFloat3("ligh_direction", (float*) &light.direction[0]);
 	main_program->BindUniformFloat3("light_position", (float*) &light.position[0]);
 	main_program->Deactivate();
-	return main_program;	
+	return main_program;
 }
 
 Program* ModuleProgram::CreateSkyboxProgram()
@@ -124,7 +120,6 @@ Program* ModuleProgram::CreateSkyboxProgram()
 	skybox_program = CreateProgram("vertex_skybox.glsl", "fragment_skybox.glsl");
 	return skybox_program;
 }
-
 
 bool ModuleProgram::CleanUp()
 {

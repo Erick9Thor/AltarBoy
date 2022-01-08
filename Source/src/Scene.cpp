@@ -15,6 +15,7 @@
 #include "Modules/ModuleProgram.h"
 
 #include "Skybox.h"
+#include "Quadtree.h"
 
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
@@ -22,20 +23,25 @@
 
 Scene::Scene()
 {
-	root = new GameObject(nullptr, float4x4::identity, "Root");
+	quadtree = new Quadtree();
 	skybox = new Skybox();
-	//GameObject* test_model = LoadFBX("BakerHouse.fbx"); // Need to call when opengl is running
+
+	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+	root = new GameObject(nullptr, float4x4::identity, "Root");
+	
+	CreateDebugCamera();
 }
 
 Scene::~Scene()
 {
 	delete root;
 	delete skybox;
-	delete main_camera;
+	delete quadtree;
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
+	// TODO: Implement
 }
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
@@ -67,7 +73,6 @@ GameObject* Scene::LoadFBX(const std::string& path)
 		LOG("Error loading file %s: %s", file_name.c_str(), aiGetErrorString());
 	}
 	importer.FreeScene();
-
 	return model;
 }
 
@@ -138,21 +143,18 @@ Texture Scene::LoadTexture(const aiMaterial* material, const std::string& model_
 	return texture;
 }
 
-GameObject* Scene::CreateCamera()
+GameObject* Scene::CreateDebugCamera()
 {
-	GameObject* camera = CreateNewGameObject("Camera", root);
-	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(10, 10, 0));
+	GameObject* camera = CreateNewGameObject("Debug Camera", root);
+	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(5, 5, 0));
 	camera->CreateComponent(Component::Type::Camera);
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
 
-	main_camera = camera->GetComponent<ComponentCamera>();
+	debug_camera = camera->GetComponent<ComponentCamera>();
+	debug_camera->SetFarPlane(100.0f);
+	debug_camera->draw_frustum = true;
 
 	return camera;
-}
-
-const ComponentCamera* Scene::GetMainCamera() const
-{
-	return main_camera;
 }
 
 void Scene::Play()
@@ -165,37 +167,12 @@ void Scene::Stop()
 
 void Scene::Update()
 {
-	// root->Update();
-}
-
-void Scene::Draw(ComponentCamera* camera)
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, camera->GetFrameBuffer());
-
-	unsigned res_x, res_y;
-	camera->GetResolution(res_x, res_y);
-	glViewport(0, 0, res_x, res_y);
-
-	// TODO: Change with skybox
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	if (skybox_active) {
-		skybox->Draw(camera);
-	}
-	
-	float4x4 view = camera->GetViewMatrix(false);
-	float4x4 proj = camera->GetProjectionMatrix(false);
-
-	App->debug_draw->Draw(view, proj, res_x, res_y);
-
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	root->DrawAll(camera, draw_all_bounding_boxes);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	root->Update();
 }
 
 void Scene::OptionsMenu() {
-	ImGui::Checkbox("Skybox", &skybox_active);
-	ImGui::Checkbox("Draw Bounding Boxes", &draw_all_bounding_boxes);
+	static bool debug_draw = true;
+	ImGui::Checkbox("Skybox", &draw_skybox);
+	if (ImGui::Checkbox("Debug Draw", &debug_draw))
+		App->debug_draw->SetDebugDraw(debug_draw);
 }

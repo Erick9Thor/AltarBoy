@@ -3,13 +3,9 @@
 #include "ilu.h"
 #include "imgui.h"
 
-ModuleTexture::ModuleTexture()
-{
-}
+ModuleTexture::ModuleTexture() {}
 
-ModuleTexture::~ModuleTexture()
-{
-}
+ModuleTexture::~ModuleTexture() {}
 
 bool ModuleTexture::Init()
 {
@@ -37,9 +33,7 @@ Texture ModuleTexture::Load(const char* path)
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), 
-			texture.width = ilGetInteger(IL_IMAGE_WIDTH), texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 
-			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
+		glTexImage2D(GL_TEXTURE_2D, 0, ilGetInteger(IL_IMAGE_BPP), texture.width = ilGetInteger(IL_IMAGE_WIDTH), texture.height = ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -58,18 +52,17 @@ TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
 
 	// Expected file order x, -x, y, -y, z, -z
-	for (int i = 0; i < 6; ++i) {
+	for (int i = 0; i < 6; ++i)
+	{
 		unsigned int img_id = LoadImg(paths[i]);
 		iluFlipImage();
-		if (img_id == 0) {
+		if (img_id == 0)
+		{
 			cube.loaded = false;
 			continue; // Try loading the other parts despite failing
 		}
 		// Take advantage of opengl enum with index
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), 
-			cube.widths[i] = ilGetInteger(IL_IMAGE_WIDTH), cube.heighths[i] = ilGetInteger(IL_IMAGE_HEIGHT), 
-			0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
-			
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, ilGetInteger(IL_IMAGE_BPP), cube.widths[i] = ilGetInteger(IL_IMAGE_WIDTH), cube.heighths[i] = ilGetInteger(IL_IMAGE_HEIGHT), 0, ilGetInteger(IL_IMAGE_FORMAT), GL_UNSIGNED_BYTE, ilGetData());
 	}
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

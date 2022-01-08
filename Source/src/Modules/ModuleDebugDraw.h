@@ -1,8 +1,6 @@
-#ifndef _MODULE_DEBUGDRAW_H_
-#define _MODULE_DEBUGDRAW_H_
+#pragma once
 
 #include "Module.h"
-
 #include "Math/float4x4.h"
 
 class DDRenderInterfaceCoreGL;
@@ -19,9 +17,9 @@ public:
 	bool CleanUp() override;
 
 	void Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
+	void SetDebugDraw(bool v) { debug_draw = v; }
 
 private:
 	static DDRenderInterfaceCoreGL* implementation;
+	bool debug_draw = true;
 };
-
-#endif /* _MODULE_DEBUGDRAW_H_ */

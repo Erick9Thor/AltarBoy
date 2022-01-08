@@ -22,14 +22,8 @@ public:
 
 	void OptionsMenu();
 
-	inline SDL_Surface* GetScreenSurface() const
-	{
-		return screen_surface;
-	}
-	inline SDL_Window* GetWindow() const
-	{
-		return window;
-	}
+	inline SDL_Surface* GetScreenSurface() const { return screen_surface; }
+	inline SDL_Window* GetWindow() const { return window; }
 
 private:
 	void GetMonitorResolution(int& width, int& height);

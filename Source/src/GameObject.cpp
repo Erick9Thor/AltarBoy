@@ -3,13 +3,19 @@
 #include "Globals.h"
 #include "Utils/Logger.h"
 
+#include "Application.h"
+#include "Scene.h"
+#include "Quadtree.h"
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+
 #include <debugdraw.h>
 
-GameObject::GameObject()
+
+GameObject::GameObject(const char* name)
+	: name(name)
 {
 	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
@@ -59,19 +65,19 @@ void GameObject::AddComponent(Component* component)
 {
 	switch (component->GetType())
 	{
-	case (Component::Type::Transform):
-	{
-		components.push_back(component);
-		transform = (ComponentTransform*) component;
-		component->SetGameObject(this);
-		break;
-	}
-	case (Component::Type::Camera):
-	{
-		components.push_back((Component*) component);
-		component->SetGameObject(this);
-		break;
-	}
+		case (Component::Type::Transform):
+		{
+			components.push_back(component);
+			transform = (ComponentTransform*) component;
+			component->SetGameObject(this);
+			break;
+		}
+		case (Component::Type::Camera):
+		{
+			components.push_back((Component*) component);
+			component->SetGameObject(this);
+			break;
+		}
 	}
 }
 
@@ -149,7 +155,7 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes)
+void GameObject::DrawAll(ComponentCamera* camera)
 {
 	// Draw yourself
 	Draw(camera);
@@ -157,9 +163,6 @@ void GameObject::DrawAll(ComponentCamera* camera, bool draw_all_bounding_boxes)
 	for (GameObject* child : childs)
 	{
 		child->DrawAll(camera);
-		if (draw_all_bounding_boxes) {
-			child->DrawBoundingBox();
-		}
 	}
 }
 
@@ -185,6 +188,26 @@ void GameObject::OnTransformUpdated()
 	UpdateBoundingBoxes();
 }
 
+void GameObject::DebugDrawAll()
+{
+	// Draw yourself
+	DebugDraw();
+	// Draw children recursively
+	for (GameObject* child : childs)
+	{
+		child->DebugDrawAll();
+	}
+}
+
+void GameObject::DebugDraw()
+{
+	DrawBoundingBox();
+	for (Component* component : components)
+	{
+		component->DebugDraw();
+	}
+}
+
 void GameObject::DrawBoundingBox()
 {
 	ddVec3 p[8];
@@ -192,7 +215,7 @@ void GameObject::DrawBoundingBox()
 	// Using center and points does not show the rotation
 	static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
 	for (int i = 0; i < 8; ++i)
-		p[i] = this->obb.CornerPoint(order[i]);
+		p[i] = obb.CornerPoint(order[i]);
 
 	dd::box(p, dd::colors::White);
 }
@@ -201,17 +224,26 @@ void GameObject::UpdateBoundingBoxes()
 {
 	constexpr float default_bounding_size = 1.0f;
 	ComponentMesh* mesh = GetComponent<ComponentMesh>();
-	if (mesh)
+	if (mesh != nullptr)
 	{
 		obb = mesh->GetAABB();
 		obb.Transform(transform->GetTransform());
-
 		// Enclose is accumulative, reset the box
 		aabb.SetNegativeInfinity();
 		aabb.Enclose(obb);
 	}
-	// If there is no mesh generate a default size
-	aabb.SetNegativeInfinity();
-	aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
-	obb = aabb;
+	else
+	{
+		// If there is no mesh generate a default size
+		aabb.SetNegativeInfinity();
+		aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+		obb = aabb;
+	}
+
+	// Without the check main camera crashes bcs there is no quadtree
+	if (scene_owner) {
+		Quadtree* quadtree = scene_owner->GetQuadtree();
+		quadtree->Remove(this);
+		quadtree->Insert(this);
+	}
 }
