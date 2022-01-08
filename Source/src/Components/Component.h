@@ -19,10 +19,7 @@ public:
 		Unknown
 	};
 
-	Component(Type type, GameObject* container)
-		: type(type)
-		, game_object(container) {}
-
+	Component(Type type, GameObject* container) : type(type) , game_object(container) {}
 	virtual ~Component() {};
 
 	virtual void Update() {};

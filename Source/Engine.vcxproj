@@ -96,11 +96,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,11 +129,10 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +149,8 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
-    <ClCompile Include="src\Components\Component.cpp" />
+    <ClCompile Include="src\Quadtree.cpp" />
+    <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Utils\Logger.cpp" />
@@ -230,8 +229,6 @@
     <ClCompile Include="src\UI\WindowInspector.cpp" />
     <ClCompile Include="src\UI\WindowScene.cpp" />
     <ClCompile Include="src\UI\WindowConsole.cpp" />
-    <ClCompile Include="src\UI\WindowProject.cpp" />
-    <ClCompile Include="src\Utils\UID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
@@ -240,6 +237,8 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="src\Quadtree.h" />
+    <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />
     <ClInclude Include="src\Program.h" />
     <ClInclude Include="src\Utils\Logger.h" />
@@ -339,7 +338,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="src\Utils\Math.h" />
     <ClInclude Include="src\Modules\Module.h" />
     <ClInclude Include="src\Modules\ModuleCamera.h" />
     <ClInclude Include="src\Modules\ModuleDebugDraw.h" />
@@ -359,8 +357,6 @@
     <ClInclude Include="src\UI\WindowInspector.h" />
     <ClInclude Include="src\UI\WindowScene.h" />
     <ClInclude Include="src\UI\WindowConsole.h" />
-    <ClInclude Include="src\UI\WindowProject.h" />
-    <ClInclude Include="src\Utils\UID.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

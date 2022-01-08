@@ -15,31 +15,19 @@ class ComponentMesh : public Component
 public:
 	ComponentMesh(GameObject* conatiner);
 	~ComponentMesh() override;
-	static inline Type GetType()
-	{
-		return Type::Mesh;
-	};
+	static inline Type GetType() { return Type::Mesh; };
 
 	void Load(const aiMesh* mesh);
-	void Draw(ComponentCamera* camera);
+	void Draw(ComponentCamera* camera) override;
 	void CleanUp();
 
-	inline unsigned GetNumVertices() const
-	{
-		return num_vertices;
-	}
-	inline unsigned GetNumIndexes() const
-	{
-		return num_indices;
-	}
-	AABB GetAABB() const
-	{
-		return bounding_box;
-	}
-	bool IsLoaded() const
-	{
-		return loaded;
-	}
+	inline bool IsLoaded() const { return loaded; }
+	bool IsVisible() const { return visible; }
+
+	inline unsigned GetNumVertices() const { return num_vertices; }
+	inline unsigned GetNumIndexes() const { return num_indices; }
+	AABB GetAABB() const { return bounding_box; }	
+
 	void DrawGui() override;
 
 private:
@@ -48,7 +36,8 @@ private:
 	void GenerateAABB();
 
 	AABB bounding_box;
-	bool loaded;
+	bool loaded = false;
+	bool visible = true;
 
 	unsigned num_indices;
 	unsigned num_vertices;

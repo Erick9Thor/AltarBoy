@@ -22,10 +22,7 @@ public:
 
 	bool Init() override;
 
-	inline hw_info GetInfo()
-	{
-		return info;
-	};
+	inline hw_info GetInfo() { return info; };
 
 private:
 	mutable hw_info info;

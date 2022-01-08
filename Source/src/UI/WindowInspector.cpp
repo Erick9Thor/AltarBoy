@@ -15,7 +15,7 @@ void WindowInspector::Update()
 {
 	if (ImGui::Begin(ICON_FA_EYE "Inspector", &active))
 	{
-		InspectorDrawGameObject(App->editor->getSelectedGO());
+		InspectorDrawGameObject(App->editor->GetSelectedGO());
 	}
 	ImGui::End();
 }

@@ -5,6 +5,7 @@
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleSceneManager.h"
 #include "../Modules/ModuleCamera.h"
+#include "../Components/ComponentCamera.h"
 
 #include <imgui.h>
 #include <IconsFontAwesome5.h>
@@ -26,7 +27,7 @@ void WindowConfiguration::Update()
 		}
 		if (ImGui::CollapsingHeader("Engine Camera"))
 		{
-			App->camera->DrawGui();
+			App->camera->GetMainCamera()->DrawGui();
 		}
 		/*if (ImGui::CollapsingHeader("FPS control"))
 		{

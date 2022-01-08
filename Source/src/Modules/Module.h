@@ -7,39 +7,14 @@ class Application;
 class Module
 {
 public:
-	Module()
-	{
-	}
-
+	Module(){}
 	virtual ~Module() {};
 
-	virtual bool Init()
-	{
-		return true;
-	}
+	virtual bool Init() { return true; }
 
-	virtual update_status PreUpdate(const float delta)
-	{
-		return UPDATE_CONTINUE;
-	}
+	virtual update_status PreUpdate(const float delta) { return UPDATE_CONTINUE; }
+	virtual update_status Update(const float delta) { return UPDATE_CONTINUE; }
+	virtual update_status PostUpdate(const float delta) { return UPDATE_CONTINUE; }
 
-	virtual update_status Update(const float delta)
-	{
-		return UPDATE_CONTINUE;
-	}
-
-	virtual update_status PostUpdate(const float delta)
-	{
-		return UPDATE_CONTINUE;
-	}
-
-	virtual bool CleanUp()
-	{
-		return true;
-	}
-
-	virtual void DrawDebug()
-	{}
-
-	virtual void DrawGui() {}
+	virtual bool CleanUp() { return true; }
 };

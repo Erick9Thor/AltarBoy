@@ -1,6 +1,10 @@
 #include "../Globals.h"
 #include "ModuleDebugDraw.h"
 
+#include "../Application.h"
+#include "ModuleSceneManager.h"
+#include "../Scene.h"
+#include "../GameObject.h"
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "DebugDraw.h" // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
 
@@ -599,6 +603,13 @@ bool ModuleDebugDraw::CleanUp()
 update_status ModuleDebugDraw::Update(const float delta)
 {
 	dd::xzSquareGrid(-30, 30, -0.1f, 1.0f, dd::colors::Gray);
+
+	if (debug_draw)
+	{
+		Scene* scene = App->scene_manager->GetActiveScene();
+		App->scene_manager->GetActiveScene()->GetRoot()->DebugDrawAll();
+	}
+
 	return UPDATE_CONTINUE;
 }
 

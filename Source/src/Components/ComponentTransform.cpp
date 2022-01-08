@@ -50,6 +50,19 @@ inline void ComponentTransform::SetLocalTransform(float3 position, Quat rotation
 	SetLocalTransform(new_transform);
 }
 
+inline void ComponentTransform::SetLocalPosition(float3 new_position)
+{
+	SetLocalTransform(new_position, local_rotation, local_scale);
+}
+inline void ComponentTransform::SetLocalScale(float3 new_scale)
+{
+	SetLocalTransform(local_position, local_rotation, new_scale);
+}
+inline void ComponentTransform::SetLocalRotation(Quat new_rotation)
+{
+	SetLocalTransform(local_position, new_rotation, local_scale);
+}
+
 void ComponentTransform::SetLocalRotation(float3 rotation_angles)
 {
 	float3 rotation = rotation_angles * to_rad;
@@ -62,7 +75,7 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 	local_transform.Decompose(local_position, local_rotation, local_scale);
 	local_rotation_euler = local_rotation.ToEulerXYZ() * to_deg;
 
-	UpdateGlobalTransforms();
+	UpdateGlobalTransformHierarchy();
 }
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
@@ -74,7 +87,7 @@ void ComponentTransform::SetGlobalTransform(float4x4 transform)
 		SetLocalTransform(transform);
 }
 
-void ComponentTransform::UpdateGlobalTransforms()
+void ComponentTransform::UpdateGlobalTransformHierarchy()
 {
 	// Updates current transform based on parent and calls to update the children
 	if (game_object->parent)
@@ -87,7 +100,7 @@ void ComponentTransform::UpdateGlobalTransforms()
 
 	// Update children
 	for (GameObject* child : game_object->childs)
-		child->GetComponent<ComponentTransform>()->UpdateGlobalTransforms();
+		child->GetComponent<ComponentTransform>()->UpdateGlobalTransformHierarchy();
 }
 
 void ComponentTransform::SetPosition(float3 new_transform)
