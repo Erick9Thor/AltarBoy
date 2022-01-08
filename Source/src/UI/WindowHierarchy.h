@@ -13,7 +13,6 @@ private:
 	void DrawHierarchyTree(GameObject* root);
 	void DrawGOChilds(GameObject* root);
 	void DrawGameObject(GameObject* go);
-	void ShowGameObject(GameObject* go);
 
 	GameObject* dragged_object;
 };

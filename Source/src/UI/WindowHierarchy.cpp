@@ -43,7 +43,23 @@ void WindowHierarchy::DrawGOChilds(GameObject* root)
 
 void WindowHierarchy::DrawGameObject(GameObject* game_object)
 {
-	ShowGameObject(game_object);
+	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+	flags |= ImGuiTreeNodeFlags_DefaultOpen;
+
+	if (game_object->childs.empty())
+		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
+
+	if (game_object == App->editor->GetSelectedGO())
+		flags |= ImGuiTreeNodeFlags_Selected;
+
+	ImVec4 node_color(1.0f, 1.0f, 1.0f, 1.0f);
+	if (!game_object->IsActive())
+		node_color = ImVec4(1.f, 0.f, 0.f, 1.f);
+
+	ImGui::PushStyleColor(ImGuiCol_Text, node_color);
+
+	bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
+	game_object->hierarchy_open = game_object->childs.empty() ? false : node_open;
 
 	if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
 	{
@@ -103,19 +119,5 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		DrawGOChilds(game_object);
 		ImGui::TreePop();
 	}
-}
-
-void WindowHierarchy::ShowGameObject(GameObject* game_object)
-{
-	ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-	flags |= ImGuiTreeNodeFlags_DefaultOpen;
-
-	if (game_object->childs.empty())
-		flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
-
-	if (game_object == App->editor->GetSelectedGO())
-		flags |= ImGuiTreeNodeFlags_Selected;
-
-	bool nodeOpen = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
-	game_object->hierarchy_open = game_object->childs.empty() ? false : nodeOpen;
+	ImGui::PopStyleColor();
 }

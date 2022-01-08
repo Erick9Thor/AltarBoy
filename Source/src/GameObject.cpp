@@ -132,19 +132,19 @@ void GameObject::Destroy()
 
 void GameObject::Update()
 {
-	if (transform->HasChanged())
-	{
-		OnTransformUpdated();
-	}
+		if (transform->HasChanged())
+		{
+			OnTransformUpdated();
+		}
 
-	for (Component* component : components)
-	{
-		component->Update();
-	}
+		for (Component* component : components)
+		{
+			component->Update();
+		}
 
 	for (GameObject* child : childs)
 	{
-		if (child->IsEnabled())
+		if (child->IsActive())	
 			child->Update();
 	}
 }

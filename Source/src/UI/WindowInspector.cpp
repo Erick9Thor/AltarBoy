@@ -15,12 +15,12 @@ void WindowInspector::Update()
 {
 	if (ImGui::Begin(ICON_FA_EYE "Inspector", &active))
 	{
-		InspectorDrawGameObject(App->editor->GetSelectedGO());
+		DrawGameObject(App->editor->GetSelectedGO());
 	}
 	ImGui::End();
 }
 
-void WindowInspector::InspectorDrawGameObject(GameObject* game_object)
+void WindowInspector::DrawGameObject(GameObject* game_object)
 {
 	if (game_object != nullptr)
 	{
@@ -29,6 +29,9 @@ void WindowInspector::InspectorDrawGameObject(GameObject* game_object)
 		ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
 		if (ImGui::InputText("###", go_name, 50, name_input_flags))
 			game_object->name = go_name;
+
+		ImGui::SameLine();
+		ImGui::Checkbox("Active", &game_object->active);
 
 		std::vector<Component*> go_components = game_object->GetComponents();
 		for (vector<Component*>::iterator it = go_components.begin(); it != go_components.end(); ++it)

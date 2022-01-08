@@ -13,6 +13,7 @@ class Scene;
 class GameObject
 {
 	friend class Component;
+
 public:
 	GameObject(const char* name = "Unnamed");
 	GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed");
@@ -29,7 +30,7 @@ public:
 	void DrawAll(ComponentCamera* camera);
 	void Draw(ComponentCamera* camera);
 
-	inline bool IsEnabled() { return enabled; }
+	inline bool IsActive() { return active; }
 
 	void OnTransformUpdated();
 
@@ -50,7 +51,7 @@ public:
 		{
 			if (components[i]->GetType() == type)
 				return ((RetComponent*) (components[i]));
-		}			
+		}
 		return nullptr;
 	}
 
@@ -58,11 +59,11 @@ public:
 	Scene* scene_owner = nullptr;
 	GameObject* parent = nullptr;
 	std::vector<GameObject*> childs;
-	
+
 	bool hierarchy_open = false;
+	bool active = true;
 
 private:
-	bool enabled = true;
 	std::vector<Component*> components;
 	ComponentTransform* transform = nullptr;
 
