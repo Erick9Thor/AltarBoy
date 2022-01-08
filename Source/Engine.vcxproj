@@ -338,7 +338,6 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="src\Utils\Math.h" />
     <ClInclude Include="src\Modules\Module.h" />
     <ClInclude Include="src\Modules\ModuleCamera.h" />
     <ClInclude Include="src\Modules\ModuleDebugDraw.h" />

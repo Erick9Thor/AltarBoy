@@ -1,5 +1,4 @@
-#ifndef __GLOBALS_H__
-#define __GLOBALS_H__
+#pragma once
 
 #include <windows.h>
 #include <stdio.h>
@@ -43,5 +42,3 @@ enum update_status
 #define ENGINE_VERSION "0.0.1"
 
 #define FPS_LOG_SIZE 100
-
-#endif // __GLOBALS_H__

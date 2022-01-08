@@ -22,9 +22,9 @@ bool ModuleHardware::Init()
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &info.vram_mb_budget);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &info.vram_mb_free);
 
-	info.vram_mb_budget = info.vram_mb_budget / 1024.0f;
+	info.vram_mb_budget = info.vram_mb_budget / 1024;
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &info.vram_mb_free);
-	info.vram_mb_free = info.vram_mb_free / 1024.0f;
+	info.vram_mb_free = info.vram_mb_free / 1024;
 
 	return true;
 }

@@ -111,11 +111,6 @@ void QuadtreeNode::RearangeChildren()
 	}
 }
 
-bool QuadtreeNode::IsLeaf() const
-{
-	return childs[0] == nullptr;
-}
-
 Quadtree::Quadtree()
 {
 }

@@ -65,19 +65,19 @@ void GameObject::AddComponent(Component* component)
 {
 	switch (component->GetType())
 	{
-	case (Component::Type::Transform):
-	{
-		components.push_back(component);
-		transform = (ComponentTransform*) component;
-		component->SetGameObject(this);
-		break;
-	}
-	case (Component::Type::Camera):
-	{
-		components.push_back((Component*) component);
-		component->SetGameObject(this);
-		break;
-	}
+		case (Component::Type::Transform):
+		{
+			components.push_back(component);
+			transform = (ComponentTransform*) component;
+			component->SetGameObject(this);
+			break;
+		}
+		case (Component::Type::Camera):
+		{
+			components.push_back((Component*) component);
+			component->SetGameObject(this);
+			break;
+		}
 	}
 }
 

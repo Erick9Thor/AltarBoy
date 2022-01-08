@@ -41,6 +41,7 @@ Scene::~Scene()
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
+	// TODO: Implement
 }
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)

@@ -1,10 +1,9 @@
 #pragma once
+
 #include "Globals.h"
 #include "MathGeoLib.h"
 
 #include <list>
-
-//#define NE 0
 
 #define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 10.0f
@@ -31,21 +30,10 @@ public:
 	void CreateChildren();
 	void RearangeChildren();
 
-	bool IsLeaf() const;
+	bool IsLeaf() const { return childs[0] == nullptr; }
 
-	const AABB& GetBox() const
-	{
-		return box;
-	
-	}
-
-	const std::list<GameObject*>& GetObjects() const {
-		return objects;
-	}
-
-	QuadtreeNode* GetChildren() const {
-		return childs[0];
-	}
+	const AABB& GetBox() const { return box; }
+	const std::list<GameObject*>& GetObjects() const { return objects; }
 
 	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
 
@@ -68,12 +56,8 @@ public:
 	void Insert(GameObject* game_object);
 	void Remove(GameObject* game_object);
 
-	inline QuadtreeNode* GetRoot()
-	{
-		return root;
-	}
+	inline QuadtreeNode* GetRoot() { return root; }
 		
-
 private:
 	QuadtreeNode* root = nullptr;
 };

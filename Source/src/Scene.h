@@ -35,26 +35,10 @@ public:
 
 	void OptionsMenu();
 
-	inline GameObject* GetRoot() const
-	{
-		return root;
-	}
-
-	inline Skybox* GetSkybox() const
-	{
-		return skybox;
-	}
-
-	inline Quadtree* GetQuadtree() const
-	{
-		return quadtree;
-	}
-
-	inline ComponentCamera* GetDebugCamera() const
-	{
-		return debug_camera;
-	}
-
+	GameObject* GetRoot() const { return root; }
+	Skybox* GetSkybox() const { return skybox; }
+	Quadtree* GetQuadtree() const { return quadtree; }
+	ComponentCamera* GetDebugCamera() const { return debug_camera; }
 
 	bool draw_skybox = true;
 
@@ -70,6 +54,6 @@ private:
 
 	Skybox* skybox;
 	Quadtree* quadtree = nullptr;
-	
+
 	bool draw_all_bounding_boxes = false;
 };
