@@ -247,3 +247,32 @@ void GameObject::UpdateBoundingBoxes()
 		quadtree->Insert(this);
 	}
 }
+
+void GameObject::Save(JsonFormaterValue jGameObject) const
+{
+	jGameObject["Uid"] = uid;
+	jGameObject["GOName"] = name.c_str();
+
+	JsonFormaterValue jComponents = jGameObject["Components"];
+	for (unsigned i = 0; i < components.size(); ++i)
+	{
+		JsonFormaterValue jComponent = jComponents[i];
+		Component* component = components[i];
+
+		jComponent["ComponentType"] = component->GetID();
+		// jComponent["ComponentID"] = component->GetType(); PARSE STRING
+		component->Save(jComponent);
+	}
+
+	JsonFormaterValue jChildren = jGameObject["GOChildrens"];
+	for (unsigned i = 0; i < childs.size(); ++i)
+	{
+		JsonFormaterValue jChild = jChildren[i];
+		GameObject* child = childs[i];
+		child->Save(jChild);
+	}
+}
+
+void GameObject::Load(JsonFormaterValue jGameObject)
+{
+}

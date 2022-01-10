@@ -145,3 +145,14 @@ void ComponentMesh::DrawGui()
 		ImGui::Checkbox("Visible", &visible);
 	}
 }
+
+void ComponentMesh::Save(JsonFormaterValue jComponent) const
+{
+	// jComponent["MeshId"] = mesh.id
+}
+
+void ComponentMesh::Load(JsonFormaterValue jComponent)
+{
+	// aiMesh* mesh = App->scene_manager->GetActiveScene().mMeshes[jComponent["MeshId"]];
+	// Load(mesh);
+}

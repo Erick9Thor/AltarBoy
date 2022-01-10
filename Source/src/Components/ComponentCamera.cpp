@@ -112,3 +112,43 @@ void ComponentCamera::DrawGui()
 			SetPlaneDistances(planes[0], planes[1]);
 	}
 }
+
+void ComponentCamera::Save(JsonFormaterValue jComponent) const
+{
+	JsonFormaterValue j_frustum = jComponent["Frustrum"];
+	j_frustum["NearDistance"] = frustum.NearPlaneDistance();
+	j_frustum["FarDistance"] = frustum.FarPlaneDistance();
+	j_frustum["Fov"] = horizontal_fov;
+
+	JsonFormaterValue j_pos = j_frustum["Pos"];
+	j_pos[0] = frustum.Pos().x;
+	j_pos[1] = frustum.Pos().y;
+	j_pos[2] = frustum.Pos().z;
+
+	JsonFormaterValue j_front = j_frustum["Front"];
+	j_front[0] = frustum.Front().x;
+	j_front[1] = frustum.Front().y;
+	j_front[2] = frustum.Front().z;
+
+	JsonFormaterValue j_up = j_frustum["Up"];
+	j_up[0] = frustum.Up().x;
+	j_up[1] = frustum.Up().y;
+	j_up[2] = frustum.Up().z;
+}
+
+void ComponentCamera::Load(JsonFormaterValue jComponent)
+{
+	JsonFormaterValue j_frustum = jComponent["Frustrum"];
+
+	SetNearPlane(j_frustum["NearDistance"]);
+	SetFarPlane(j_frustum["FarDistance"]);
+	SetFOV(j_frustum["Fov"]);
+
+	JsonFormaterValue j_pos = j_frustum["Pos"];
+	JsonFormaterValue j_front = j_frustum["Front"];
+	JsonFormaterValue j_up = j_frustum["Up"];
+
+	frustum.SetPos(float3(j_pos[0], j_pos[1], j_pos[2]));
+	frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
+	frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
+}

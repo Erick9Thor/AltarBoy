@@ -30,6 +30,9 @@ public:
 
 	void DrawGui() override;
 
+	void Save(JsonFormaterValue jComponent) const override;
+	void Load(JsonFormaterValue jComponent) override;
+
 private:
 	void Import(const aiMesh* mesh);
 	void GenerateBuffers();

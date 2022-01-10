@@ -54,10 +54,12 @@ inline void ComponentTransform::SetLocalPosition(float3 new_position)
 {
 	SetLocalTransform(new_position, local_rotation, local_scale);
 }
+
 inline void ComponentTransform::SetLocalScale(float3 new_scale)
 {
 	SetLocalTransform(local_position, local_rotation, new_scale);
 }
+
 inline void ComponentTransform::SetLocalRotation(Quat new_rotation)
 {
 	SetLocalTransform(local_position, new_rotation, local_scale);
@@ -121,4 +123,37 @@ void ComponentTransform::DrawGui()
 		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
 		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
 	}
+}
+
+void ComponentTransform::Save(JsonFormaterValue jComponent) const
+{
+	JsonFormaterValue j_position = jComponent["Position"];
+
+	j_position[0] = local_position.x;
+	j_position[1] = local_position.y;
+	j_position[2] = local_position.z;
+
+	JsonFormaterValue j_rotation = jComponent["Rotation"];
+
+	j_rotation[0] = local_rotation.x;
+	j_rotation[1] = local_rotation.y;
+	j_rotation[2] = local_rotation.z;
+
+	JsonFormaterValue j_scale = jComponent["Scale"];
+
+	j_scale[0] = local_scale.x;
+	j_scale[1] = local_scale.y;
+	j_scale[2] = local_scale.z;
+}
+
+void ComponentTransform::Load(JsonFormaterValue jComponent)
+{
+	JsonFormaterValue j_position = jComponent["Position"];
+	JsonFormaterValue j_rotation = jComponent["Rotation"];
+	JsonFormaterValue j_scale = jComponent["Scale"];
+
+	SetLocalTransform(
+		float3(j_position[0], j_position[1], j_position[2]),
+		Quat(j_rotation[0], j_rotation[1], j_rotation[2], 0.0f),
+		float3(j_scale[0], j_scale[1], j_scale[2]));
 }

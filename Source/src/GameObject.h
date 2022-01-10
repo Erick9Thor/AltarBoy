@@ -38,6 +38,9 @@ public:
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
+	void Save(JsonFormaterValue jGameObject) const;
+	void Load(JsonFormaterValue jGameObject);
+
 	const OBB& GetOBB() const { return obb; }
 	const AABB& GetAABB() { return aabb; }
 	const std::vector<Component*>& GetComponents() const { return components; }
@@ -68,4 +71,6 @@ private:
 
 	AABB aabb;
 	OBB obb;
+
+	UID uid = 0;
 };

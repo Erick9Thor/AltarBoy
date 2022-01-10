@@ -15,6 +15,9 @@ public:
 
 	void DrawGui() override;
 
+	void Save(JsonFormaterValue jComponent) const override;
+	void Load(JsonFormaterValue jComponent) override;
+
 private:
 	Texture texture;
 };

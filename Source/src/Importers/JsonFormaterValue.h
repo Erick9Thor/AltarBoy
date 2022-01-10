@@ -8,6 +8,7 @@
 
 class JsonFormaterValue
 {
+public:
 	JsonFormaterValue(rapidjson::Document& document, rapidjson::Value& value);
 
 	// Size of the array. Returns 0 if the value is not an array.
@@ -41,3 +42,19 @@ private:
 	rapidjson::Document& document;
 	rapidjson::Value& value;
 };
+
+template<typename T>
+inline JsonFormaterValue JsonFormaterValue::operator[](T* key) const
+{
+	if (!value.IsObject())
+	{
+		value.SetObject();
+	}
+
+	if (!value.HasMember(key))
+	{
+		value.AddMember(rapidjson::StringRef(key), rapidjson::Value(), document.GetAllocator());
+	}
+
+	return JsonFormaterValue(document, value[key]);
+}

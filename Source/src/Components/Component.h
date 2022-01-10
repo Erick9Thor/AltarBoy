@@ -22,6 +22,7 @@ public:
 	Component(Type type, GameObject* container)
 		: type(type)
 		, game_object(container) {}
+
 	virtual ~Component() {};
 
 	inline Type GetType() const { return type; };
@@ -39,8 +40,16 @@ public:
 
 	virtual void DrawGui() {};
 
+	virtual void Save(JsonFormaterValue jComponent) const {}; 
+	virtual void Load(JsonFormaterValue jComponent) {};
+
+	UID GetID() const { return uid; }
+
 protected:
 	GameObject* game_object = nullptr;
 	bool active = true;
 	Type type = Type::Unknown;
+
+private:
+	UID uid = 0; 
 };
