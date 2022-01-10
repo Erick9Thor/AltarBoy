@@ -113,9 +113,9 @@ void ComponentCamera::DrawGui()
 	}
 }
 
-void ComponentCamera::Save(JsonFormaterValue jComponent) const
+void ComponentCamera::Save(JsonFormaterValue j_component) const
 {
-	JsonFormaterValue j_frustum = jComponent["Frustrum"];
+	JsonFormaterValue j_frustum = j_component["Frustrum"];
 	j_frustum["NearDistance"] = frustum.NearPlaneDistance();
 	j_frustum["FarDistance"] = frustum.FarPlaneDistance();
 	j_frustum["Fov"] = horizontal_fov;
@@ -136,9 +136,9 @@ void ComponentCamera::Save(JsonFormaterValue jComponent) const
 	j_up[2] = frustum.Up().z;
 }
 
-void ComponentCamera::Load(JsonFormaterValue jComponent)
+void ComponentCamera::Load(JsonFormaterValue j_component)
 {
-	JsonFormaterValue j_frustum = jComponent["Frustrum"];
+	JsonFormaterValue j_frustum = j_component["Frustrum"];
 
 	SetNearPlane(j_frustum["NearDistance"]);
 	SetFarPlane(j_frustum["FarDistance"]);

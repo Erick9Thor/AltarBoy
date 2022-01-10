@@ -125,32 +125,32 @@ void ComponentTransform::DrawGui()
 	}
 }
 
-void ComponentTransform::Save(JsonFormaterValue jComponent) const
+void ComponentTransform::Save(JsonFormaterValue j_component) const
 {
-	JsonFormaterValue j_position = jComponent["Position"];
+	JsonFormaterValue j_position = j_component["Position"];
 
 	j_position[0] = local_position.x;
 	j_position[1] = local_position.y;
 	j_position[2] = local_position.z;
 
-	JsonFormaterValue j_rotation = jComponent["Rotation"];
+	JsonFormaterValue j_rotation = j_component["Rotation"];
 
 	j_rotation[0] = local_rotation.x;
 	j_rotation[1] = local_rotation.y;
 	j_rotation[2] = local_rotation.z;
 
-	JsonFormaterValue j_scale = jComponent["Scale"];
+	JsonFormaterValue j_scale = j_component["Scale"];
 
 	j_scale[0] = local_scale.x;
 	j_scale[1] = local_scale.y;
 	j_scale[2] = local_scale.z;
 }
 
-void ComponentTransform::Load(JsonFormaterValue jComponent)
+void ComponentTransform::Load(JsonFormaterValue j_component)
 {
-	JsonFormaterValue j_position = jComponent["Position"];
-	JsonFormaterValue j_rotation = jComponent["Rotation"];
-	JsonFormaterValue j_scale = jComponent["Scale"];
+	JsonFormaterValue j_position = j_component["Position"];
+	JsonFormaterValue j_rotation = j_component["Rotation"];
+	JsonFormaterValue j_scale = j_component["Scale"];
 
 	SetLocalTransform(
 		float3(j_position[0], j_position[1], j_position[2]),

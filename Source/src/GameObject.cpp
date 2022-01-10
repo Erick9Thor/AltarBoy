@@ -248,12 +248,12 @@ void GameObject::UpdateBoundingBoxes()
 	}
 }
 
-void GameObject::Save(JsonFormaterValue jGameObject) const
+void GameObject::Save(JsonFormaterValue j_gameObject) const
 {
-	jGameObject["Uid"] = uid;
-	jGameObject["GOName"] = name.c_str();
+	j_gameObject["Uid"] = uid;
+	j_gameObject["GOName"] = name.c_str();
 
-	JsonFormaterValue j_components = jGameObject["Components"];
+	JsonFormaterValue j_components = j_gameObject["Components"];
 	for (unsigned i = 0; i < components.size(); ++i)
 	{
 		JsonFormaterValue j_component = j_components[i];
@@ -264,7 +264,7 @@ void GameObject::Save(JsonFormaterValue jGameObject) const
 		component->Save(j_component);
 	}
 
-	JsonFormaterValue j_children = jGameObject["GOChildrens"];
+	JsonFormaterValue j_children = j_gameObject["GOChildrens"];
 	for (unsigned i = 0; i < childs.size(); ++i)
 	{
 		JsonFormaterValue j_child = j_children[i];
@@ -273,12 +273,12 @@ void GameObject::Save(JsonFormaterValue jGameObject) const
 	}
 }
 
-void GameObject::Load(JsonFormaterValue jGameObject)
+void GameObject::Load(JsonFormaterValue j_gameObject)
 {
-	uid = jGameObject["Uid"];
-	name = jGameObject["GOName"];
+	uid = j_gameObject["Uid"];
+	name = j_gameObject["GOName"];
 
-	JsonFormaterValue j_components = jGameObject["Components"];
+	JsonFormaterValue j_components = j_gameObject["Components"];
 	for (unsigned i = 0; i < j_components.Size(); ++i)
 	{
 		JsonFormaterValue j_component = j_components[i];
@@ -293,7 +293,7 @@ void GameObject::Load(JsonFormaterValue jGameObject)
 		component->Load(jComponent);*/
 	}
 
-	JsonFormaterValue j_childrens = jGameObject["GOChildrens"];
+	JsonFormaterValue j_childrens = j_gameObject["GOChildrens"];
 	for (unsigned i = 0; i < j_childrens.Size(); ++i)
 	{
 		JsonFormaterValue j_child = j_childrens[i];

@@ -30,15 +30,15 @@ public:
 
 	void Update();
 
-	void Play();
-	void Stop();
-
 	void OptionsMenu();
 
 	GameObject* GetRoot() const { return root; }
 	Skybox* GetSkybox() const { return skybox; }
 	Quadtree* GetQuadtree() const { return quadtree; }
 	ComponentCamera* GetDebugCamera() const { return debug_camera; }
+
+	void Save(JsonFormaterValue j_scene) const;
+	void Load(JsonFormaterValue j_scene);
 
 	bool draw_skybox = true;
 

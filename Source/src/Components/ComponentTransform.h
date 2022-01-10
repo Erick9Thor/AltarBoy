@@ -40,8 +40,8 @@ public:
 
 	void DrawGui() override;
 
-	void Save(JsonFormaterValue jComponent) const override;
-	void Load(JsonFormaterValue jComponent) override;
+	void Save(JsonFormaterValue j_component) const override;
+	void Load(JsonFormaterValue j_component) override;
 
 private:
 	bool changed = true;

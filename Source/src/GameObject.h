@@ -38,8 +38,8 @@ public:
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
-	void Save(JsonFormaterValue jGameObject) const;
-	void Load(JsonFormaterValue jGameObject);
+	void Save(JsonFormaterValue j_gameObject) const;
+	void Load(JsonFormaterValue j_gameObject);
 
 	const OBB& GetOBB() const { return obb; }
 	const AABB& GetAABB() { return aabb; }

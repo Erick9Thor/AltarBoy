@@ -146,12 +146,12 @@ void ComponentMesh::DrawGui()
 	}
 }
 
-void ComponentMesh::Save(JsonFormaterValue jComponent) const
+void ComponentMesh::Save(JsonFormaterValue j_component) const
 {
 	// jComponent["MeshId"] = mesh.id
 }
 
-void ComponentMesh::Load(JsonFormaterValue jComponent)
+void ComponentMesh::Load(JsonFormaterValue j_component)
 {
 	// aiMesh* mesh = App->scene_manager->GetActiveScene().mMeshes[jComponent["MeshId"]];
 	// Load(mesh);

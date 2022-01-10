@@ -32,8 +32,8 @@ public:
 
 	void DrawGui() override;
 
-	void Save(JsonFormaterValue jComponent) const override;
-	void Load(JsonFormaterValue jComponent) override;
+	void Save(JsonFormaterValue j_component) const override;
+	void Load(JsonFormaterValue j_component) override;
 
 	Plane planes[6];
 	float3 reference_point = float3::zero;

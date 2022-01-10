@@ -76,6 +76,15 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	return model;
 }
 
+void Scene::Save(JsonFormaterValue j_scene) const
+{
+
+}
+
+void Scene::Load(JsonFormaterValue j_scene)
+{
+}
+
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -155,14 +164,6 @@ GameObject* Scene::CreateDebugCamera()
 	debug_camera->draw_frustum = true;
 
 	return camera;
-}
-
-void Scene::Play()
-{
-}
-
-void Scene::Stop()
-{
 }
 
 void Scene::Update()

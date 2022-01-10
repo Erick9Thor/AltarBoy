@@ -24,13 +24,13 @@ void ComponentMaterial::DrawGui()
 	}
 }
 
-void ComponentMaterial::Save(JsonFormaterValue jComponent) const
+void ComponentMaterial::Save(JsonFormaterValue j_component) const
 {
-	jComponent["TextureId"] = texture.id;
+	j_component["TextureId"] = texture.id;
 }
 
-void ComponentMaterial::Load(JsonFormaterValue jComponent)
+void ComponentMaterial::Load(JsonFormaterValue j_component)
 {
-	unsigned int material_id = jComponent["TextureId"];
+	unsigned int material_id = j_component["TextureId"];
 	// texture = App->scene_manager->GetActiveScene().m_textures[material_id];
 }

@@ -40,8 +40,8 @@ public:
 
 	virtual void DrawGui() {};
 
-	virtual void Save(JsonFormaterValue jComponent) const {}; 
-	virtual void Load(JsonFormaterValue jComponent) {};
+	virtual void Save(JsonFormaterValue j_component) const {}; 
+	virtual void Load(JsonFormaterValue j_component) {};
 
 	UID GetID() const { return uid; }
 
