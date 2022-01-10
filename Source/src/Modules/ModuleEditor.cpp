@@ -1,5 +1,7 @@
 #include "../Globals.h"
 #include "../Application.h"
+#include "../Utils/Timer.h"
+
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
@@ -174,11 +176,11 @@ void ModuleEditor::FileMenu()
 	{
 		//TODO: Create a new scene
 	}
-	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, !App->scene_manager->IsSceneRuning()))
+	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer
 	{
 		//TODO: Save the current scene
 	}
-	if (ImGui::MenuItem("Save as", nullptr, false, !App->scene_manager->IsSceneRuning()))
+	if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
 	{
 		//TODO: Save as
 	}

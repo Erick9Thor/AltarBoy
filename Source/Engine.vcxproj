@@ -234,6 +234,7 @@
     <ClCompile Include="src\UI\WindowScene.cpp" />
     <ClCompile Include="src\UI\WindowConsole.cpp" />
     <ClCompile Include="src\UI\WindowResource.cpp" />
+    <ClCompile Include="src\Utils\UID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
@@ -365,6 +366,7 @@
     <ClInclude Include="src\UI\WindowScene.h" />
     <ClInclude Include="src\UI\WindowConsole.h" />
     <ClInclude Include="src\UI\WindowResource.h" />
+    <ClInclude Include="src\Utils\UID.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

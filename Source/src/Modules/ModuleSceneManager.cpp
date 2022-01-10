@@ -36,6 +36,8 @@ void ModuleSceneManager::LoadModel(const char* model_path)
 
 void ModuleSceneManager::CreateEmptyScene()
 {
+
+
 }
 
 void ModuleSceneManager::LoadScene(const char* file_path)
