@@ -13,19 +13,22 @@ public:
 	ModuleSceneManager();
 	~ModuleSceneManager() override;
 
+	// --- Life cycle --- //
 	bool Init() override;
 	update_status Update(const float delta) override;
 	bool CleanUp() override;
 
-	void LoadModel(const char* model_path);
+	// --- Scene management --- //
+	void LoadModel(const char* model_path); // TODO: delete Change to load scene and load al gameObjects for path
+	void CreateEmptyScene();
 
 	GameObject* GetRoot() { return main_scene->root; }
 	const GameObject* GetRoot() const { return main_scene->root; }
 	Scene* GetActiveScene() { return main_scene; }
 	const Scene* GetActiveScene() const { return main_scene; }
 
-	// TODO
-	bool IsSceneRuning() { return false; }
+	void LoadScene(const char* file_path);
+	void SaveScene(const char* file_path);
 
 private:
 	Scene* main_scene = nullptr;
