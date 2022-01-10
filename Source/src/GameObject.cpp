@@ -253,26 +253,59 @@ void GameObject::Save(JsonFormaterValue jGameObject) const
 	jGameObject["Uid"] = uid;
 	jGameObject["GOName"] = name.c_str();
 
-	JsonFormaterValue jComponents = jGameObject["Components"];
+	JsonFormaterValue j_components = jGameObject["Components"];
 	for (unsigned i = 0; i < components.size(); ++i)
 	{
-		JsonFormaterValue jComponent = jComponents[i];
+		JsonFormaterValue j_component = j_components[i];
 		Component* component = components[i];
 
-		jComponent["ComponentType"] = component->GetID();
-		// jComponent["ComponentID"] = component->GetType(); PARSE STRING
-		component->Save(jComponent);
+		j_component["ComponentID"] = component->GetID();
+		// jComponent["ComponentType"] = component->GetType(); PARSE STRING
+		component->Save(j_component);
 	}
 
-	JsonFormaterValue jChildren = jGameObject["GOChildrens"];
+	JsonFormaterValue j_children = jGameObject["GOChildrens"];
 	for (unsigned i = 0; i < childs.size(); ++i)
 	{
-		JsonFormaterValue jChild = jChildren[i];
+		JsonFormaterValue j_child = j_children[i];
 		GameObject* child = childs[i];
-		child->Save(jChild);
+		child->Save(j_child);
 	}
 }
 
 void GameObject::Load(JsonFormaterValue jGameObject)
 {
+	uid = jGameObject["Uid"];
+	name = jGameObject["GOName"];
+
+	JsonFormaterValue j_components = jGameObject["Components"];
+	for (unsigned i = 0; i < j_components.Size(); ++i)
+	{
+		JsonFormaterValue j_component = j_components[i];
+
+		UID c_uid = j_component["ComponentID"];
+		/*std::string type = j_component["ComponentType"];
+
+		ComponentType type = DO SOMETHING TO PARSE TYPE STRING
+		Component* component = CREATE A COMPONENT USING TYPE AND ID AND THIS GO
+
+		components.push_back(component);
+		component->Load(jComponent);*/
+	}
+
+	JsonFormaterValue j_childrens = jGameObject["GOChildrens"];
+	for (unsigned i = 0; i < j_childrens.Size(); ++i)
+	{
+		JsonFormaterValue j_child = j_childrens[i];
+		std::string name = j_child["GOName"];
+
+		/*
+			Load child to current GO:
+
+			1. Create child.
+			2. Assign father
+			child->Load(j_child);
+		
+		*/
+	}
 }
