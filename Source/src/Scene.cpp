@@ -78,11 +78,20 @@ GameObject* Scene::LoadFBX(const std::string& path)
 
 void Scene::Save(JsonFormaterValue j_scene) const
 {
+	// GameObjects
+	JsonFormaterValue j_root = j_scene["GORoot"];
+	root->Save(j_root);
 
+	// SAVE QUADTREE¿¿
+
+	// SAVE CAMERA¿¿
 }
 
 void Scene::Load(JsonFormaterValue j_scene)
 {
+	// Create root
+	JsonFormaterValue j_root = j_scene["GORoot"];
+	// root->Load(j_root);
 }
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)

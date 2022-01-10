@@ -22,31 +22,39 @@ public:
 	Scene();
 	~Scene();
 
-	void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
-	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
-	GameObject* LoadFBX(const std::string& path);
-
-	GameObject* CreateDebugCamera();
-
+	// --- Life cycle Scene --- //
 	void Update();
-
-	void OptionsMenu();
-
-	GameObject* GetRoot() const { return root; }
-	Skybox* GetSkybox() const { return skybox; }
-	Quadtree* GetQuadtree() const { return quadtree; }
-	ComponentCamera* GetDebugCamera() const { return debug_camera; }
 
 	void Save(JsonFormaterValue j_scene) const;
 	void Load(JsonFormaterValue j_scene);
 
+	// --- GameObject Management --- //
+	void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
+	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
+	GameObject* GetRoot() const { return root; }
+
+	// --- Quadtree --- //
+	Quadtree* GetQuadtree() const { return quadtree; }
+
+	// --- Debug --- //
+	GameObject* CreateDebugCamera();
+	ComponentCamera* GetDebugCamera() const { return debug_camera; }
+
+	// --- Skybox --- //
+	Skybox* GetSkybox() const { return skybox; }
 	bool draw_skybox = true;
 
+	// --- Scene ---// TODO: Move this into WindowConfiguration menu on Scene subsection
+	void OptionsMenu();
+
+	// --- Importer --- // TODO: Move to importer
+	GameObject* LoadFBX(const std::string& path);
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
 	std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
 	Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
 
+private:
 	ModuleSceneManager* manager_owner = nullptr;
 
 	GameObject* root = nullptr;
