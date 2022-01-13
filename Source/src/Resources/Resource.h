@@ -18,8 +18,12 @@ public:
 	Resource(UID id, ResourceType type);
 	virtual ~Resource();
 
-	ResourceType GetType() const;
-	UID getID() const;
+	ResourceType GetType() const
+	{
+		return type;
+	}
+
+	UID getID() const { return id; }
 
 	virtual void Load();
 	virtual void Unload();
