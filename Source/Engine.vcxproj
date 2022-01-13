@@ -151,7 +151,8 @@
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
-    <ClCompile Include="src\Importers\JsonFormaterValue.cpp" />
+    <ClCompile Include="src\Resources\Resource.cpp" />
+    <ClCompile Include="src\Utils\JsonFormaterValue.cpp" />
     <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
@@ -243,7 +244,8 @@
     <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="src\Importers\JsonFormaterValue.h" />
+    <ClInclude Include="src\Resources\Resource.h" />
+    <ClInclude Include="src\Utils\JsonFormaterValue.h" />
     <ClInclude Include="src\Quadtree.h" />
     <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />
