@@ -13,6 +13,16 @@ class ComponentCamera;
 class ComponentMesh : public Component
 {
 public:
+
+	enum Buffers
+	{
+		b_indices = 0,
+		b_vertices,
+		b_normals,
+		b_tex_coords,
+		n_buffers,
+	};
+
 	ComponentMesh(GameObject* conatiner);
 	~ComponentMesh() override;
 	static inline Type GetType() { return Type::Mesh; };
@@ -24,8 +34,6 @@ public:
 	inline bool IsLoaded() const { return loaded; }
 	bool IsVisible() const { return visible; }
 
-	inline unsigned GetNumVertices() const { return num_vertices; }
-	inline unsigned GetNumIndexes() const { return num_indices; }
 	AABB GetAABB() const { return bounding_box; }	
 
 	void DrawGui() override;
@@ -39,23 +47,13 @@ private:
 	bool loaded = false;
 	bool visible = true;
 
-	unsigned num_indices;
-	unsigned num_vertices;
-
-	// TODO: Improve structure
-	unsigned vbo, ebo;
 	// Store the ids of buffers in opengl
+	unsigned vbo, ebo;
 	unsigned vao;
-	unsigned indices_buffer;
-	unsigned vertices_buffer;
-	unsigned normals_buffer;
-	unsigned tex_coords_buffer;
+	unsigned buffer_ids[n_buffers];
 
 	// Track buffer sizes
-	unsigned indices_buffer_size;
-	unsigned vertices_buffer_size;
-	unsigned normals_buffer_size;
-	unsigned tex_coords_buffer_size;
+	unsigned buffer_sizes[n_buffers];
 
 	// In memory buffers
 	unsigned* indices;
