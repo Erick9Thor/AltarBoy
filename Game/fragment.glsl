@@ -1,4 +1,4 @@
-# version 330
+# version 440
 out vec4 color;
 
 in vec3 normal;

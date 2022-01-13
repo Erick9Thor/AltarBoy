@@ -5,9 +5,18 @@
 
 #include "MathGeoLib.h"
 
+class ComponentCamera;
+
 class ModuleProgram : public Module
 {
 public:
+
+	enum UBOPoints
+	{
+		p_camera = 0,
+		n_ubo_points,
+	};
+
 	ModuleProgram();
 	~ModuleProgram() override;
 
@@ -16,6 +25,8 @@ public:
 
 	Program* GetMainProgram() const { return main_program; }
 	Program* GetSkyboxProgram() const { return skybox_program; }
+
+	void UpdateCamera(ComponentCamera* camera);
 
 	void OptionsMenu();
 
@@ -30,6 +41,16 @@ private:
 
 	Program* main_program;
 	Program* skybox_program;
+
+	void CreateCameraUBO(); // Assume the shader already manages the binding point
+
+	struct Camera
+	{
+		float4x4 view = float4x4::identity;
+		float4x4 proj = float4x4::identity;
+	};
+
+	unsigned ubos[UBOPoints::n_ubo_points];
 
 	struct Light
 	{

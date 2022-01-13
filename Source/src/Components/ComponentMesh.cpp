@@ -101,8 +101,6 @@ void ComponentMesh::Draw(ComponentCamera* camera)
 	program->Activate();
 
 	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
-	program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-	program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
 	App->texture->Bind(game_object->GetComponent<ComponentMaterial>()->GetTextureId());
 	glBindVertexArray(vao);

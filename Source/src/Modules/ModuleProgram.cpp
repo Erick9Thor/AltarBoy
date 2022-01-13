@@ -1,5 +1,7 @@
 #include "ModuleProgram.h"
 
+#include "../Components/ComponentCamera.h"
+
 #include "../Utils/Logger.h"
 #include "glew.h"
 #include "MathGeoLib.h"
@@ -15,6 +17,8 @@ bool ModuleProgram::Init()
 	CreateSkyboxProgram();
 	if (!main_program || !skybox_program)
 		return false;
+
+	CreateCameraUBO();
 	return true;
 }
 
@@ -121,6 +125,15 @@ Program* ModuleProgram::CreateSkyboxProgram()
 	return skybox_program;
 }
 
+void ModuleProgram::CreateCameraUBO()
+{
+	glGenBuffers(1, &ubos[UBOPoints::p_camera]);
+	glBindBuffer(GL_UNIFORM_BUFFER, ubos[UBOPoints::p_camera]);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(Camera), NULL, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, UBOPoints::p_camera, ubos[UBOPoints::p_camera]);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 bool ModuleProgram::CleanUp()
 {
 	main_program->CleanUp();
@@ -128,6 +141,17 @@ bool ModuleProgram::CleanUp()
 	skybox_program->CleanUp();
 	delete skybox_program;
 	return true;
+}
+
+void ModuleProgram::UpdateCamera(ComponentCamera* camera)
+{
+	Camera camera_data;
+	camera_data.view = camera->GetViewMatrix();
+	camera_data.proj = camera->GetProjectionMatrix();
+
+	glBindBuffer(GL_UNIFORM_BUFFER, ubos[UBOPoints::p_camera]);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &camera_data);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void ModuleProgram::OptionsMenu()

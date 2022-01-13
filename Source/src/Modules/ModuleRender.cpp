@@ -141,6 +141,8 @@ update_status ModuleRender::Update(const float delta)
 	// TODO: Add debug camera
 	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
 
+	App->program->UpdateCamera(camera);
+
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
 }
@@ -162,8 +164,8 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 
-	float4x4 view = camera->GetViewMatrix(false);
-	float4x4 proj = camera->GetProjectionMatrix(false);
+	float4x4 view = camera->GetViewMatrix();
+	float4x4 proj = camera->GetProjectionMatrix();
 
 	App->debug_draw->Draw(view, proj, fb_height, fb_width);
 

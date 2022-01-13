@@ -1,11 +1,14 @@
-# version 330
+# version 440
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 in_normal;
 layout(location=2) in vec2 in_tex_coord;
 
+layout(std140, row_major, binding = 0) uniform Camera
+{
+    mat4 view;
+    mat4 proj;
+};
 uniform mat4 model;
-uniform mat4 view;
-uniform mat4 proj;
 
 out vec3 normal;
 out vec3 frag_world_position;
