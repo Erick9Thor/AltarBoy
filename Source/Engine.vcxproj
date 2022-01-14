@@ -99,14 +99,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib;Dependencies\optick\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
@@ -141,8 +141,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib;Dependencies\optick\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

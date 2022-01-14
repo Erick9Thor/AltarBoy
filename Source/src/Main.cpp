@@ -18,6 +18,8 @@
 #include <crtdbg.h>
 #endif
 
+#include "optick.h"
+
 void DumpLeaks(void)
 {
 	_CrtDumpMemoryLeaks(); // Show leaks with file and line where allocation was made
@@ -71,6 +73,7 @@ int main(int argc, char** argv)
 		case MAIN_UPDATE:
 		{
 			int update_return = App->Update();
+			OPTICK_FRAME("MainThread");
 
 			if (update_return == UPDATE_ERROR)
 			{
