@@ -9,7 +9,6 @@ enum class ResourceType
 	MATERIAL,
 	MESH,
 	SCENE,
-	TEXTURE
 };
 
 class Resource
