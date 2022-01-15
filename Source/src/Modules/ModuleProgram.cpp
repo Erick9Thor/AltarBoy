@@ -108,12 +108,8 @@ Program* ModuleProgram::CreateMainProgram()
 	light.position = float3(5.0f, 5.0f, 5.0f);
 	light.direction = float3(5.0f, 5.0f, 5.0f);
 	light.color = float3(1.0f, 1.0f, 1.0f);
-	light.ambient_strength = 0.15f;
-	light.directional = true;
 
 	main_program->Activate();
-	main_program->BindUniformBool("is_directional", light.directional);
-	main_program->BindUniformFloat("ambient_strength", &light.ambient_strength);
 	main_program->BindUniformFloat3("light_color", (float*) &light.color[0]);
 	main_program->Deactivate();
 	return main_program;
@@ -191,13 +187,8 @@ void ModuleProgram::UpdateLights()
 void ModuleProgram::OptionsMenu()
 {
 	main_program->Activate();
-	ImGui::SetNextItemWidth(50.0f);
-	ImGui::SliderFloat("Ambient Value", &light.ambient_strength, 0.0f, 1.0f);
-	ImGui::Checkbox("Directional", &light.directional);
-	if (light.directional)
-		ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f);
-	else
-		ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f);
+	ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f);
+	//ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f);
 
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::ColorPicker3("Light Color", &light.color[0], flag);

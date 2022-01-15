@@ -89,8 +89,6 @@ private:
 		float3 position;
 		float3 direction;
 		float3 color;
-		float ambient_strength;
-		bool directional;
 	};
 
 	Light light;
