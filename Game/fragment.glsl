@@ -49,23 +49,28 @@ in VertexData fragment;
 // Outputs
 out vec4 color;
 
-vec3 SchlickFresnel(const vec3 light_dir, const vec3 view_dir, const vec3 specular_color)
+vec3 SchlickFresnel(const vec3 f0, float cos_theta)
 {
-    vec3 halfway_dir = normalize(light_dir + view_dir);
-
-    float cos_theta = max(dot(-light_dir, halfway_dir), 0.0); 
-
-    return specular_color + (1 - specular_color) * pow(1.0 - cos_theta, 5.0);
+    return f0 + (vec3(1.0) - f0) * pow(1.0 - cos_theta, 5.0);
 }
 
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
          const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation)
 {
-    float NdL = max(dot(normal, light_dir), 0.000001);
-    float VdR =  max(dot(view_dir, reflect(light_dir, normal)), 0.000001);
-    vec3 fresnel = SchlickFresnel(light_dir, view_dir, specular_color);
+    float NdL = max(dot(normal, light_dir), 0.0);
+    float VdR =  max(dot(view_dir, reflect(light_dir, normal)), 0.0);
+
+    vec3 halfway_dir = normalize(light_dir + view_dir);
+    float cos_theta = max(dot(view_dir, halfway_dir), 0.0);
+
+    // NDL = cosLi;
+    //float cosLi = max(dot(normal, light_dir), 0.0);
+    //float cosLh = max(dot(normal, halfway_dir), 0.0);
+
+    vec3 fresnel = SchlickFresnel(specular_color, cos_theta);
     
-    return (diffuse_color * (1 - specular_color) / PI + (shininess+2)/(2*PI) * fresnel * pow(VdR, shininess)) * light_color * NdL * attenuation;
+    return (diffuse_color * (vec3(1.0) - specular_color) / PI + (shininess+2)/(2*PI) * fresnel * pow(VdR, shininess)) * light_color * NdL * attenuation;
+
 }
 
 // TODO: Implement and add shininess or smoothness
@@ -74,7 +79,8 @@ vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light
 {
     float shininess = 50.0;
     float attenuation = 1.0;
-    return PBR(normal, view_dir, -light.direction.xyz, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+    // Not sure if direction should be normalized
+    return PBR(normal, view_dir, normalize(-light.direction.xyz), light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
 void main()
