@@ -42,3 +42,29 @@ enum update_status
 #define ENGINE_VERSION "0.0.1"
 
 #define FPS_LOG_SIZE 100
+
+// File System config -----------
+#define VERSION "0.1"
+#define ASSETS_FOLDER "/Assets/"
+#define SETTINGS_FOLDER "/Settings/"
+#define LIBRARY_FOLDER "/Library/"
+#define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
+#define LIBRARY_MESH_FOLDER "/Library/Meshes/"
+#define LIBRARY_SCENE_FOLDER "/Library/Scenes/"
+#define LIBRARY_MATERIAL_FOLDER "/Library/Materials/"
+
+
+// Defering for file system https://stackoverflow.com/questions/32432450/what-is-standard-defer-finalizer-implementation-in-c
+#ifndef defer
+struct defer_dummy
+{};
+template<class F> struct deferrer
+{
+	F f;
+	~deferrer() { f(); }
+};
+template<class F> deferrer<F> operator*(defer_dummy, F f) { return {f}; }
+#define DEFER_(LINE) zz_defer##LINE
+#define DEFER(LINE) DEFER_(LINE)
+#define defer auto DEFER(__LINE__) = defer_dummy {}* [&]()
+#endif // defer
