@@ -11,6 +11,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include "Components/ComponentPointLight.h"
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
 
@@ -162,6 +163,9 @@ GameObject* Scene::CreateDebugCamera()
 	debug_camera = camera->GetComponent<ComponentCamera>();
 	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
+
+	// TODO: Temporary light to debug, remove
+	camera->CreateComponent(Component::Type::PointLight);
 
 	return camera;
 }

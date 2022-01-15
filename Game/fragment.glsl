@@ -57,30 +57,53 @@ vec3 SchlickFresnel(const vec3 f0, float cos_theta)
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
          const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation)
 {
-    float NdL = max(dot(normal, light_dir), 0.0);
-    float VdR =  max(dot(view_dir, reflect(light_dir, normal)), 0.0);
+    vec3 reflect_dir = reflect(-light_dir, normal);
+    // Should equal cos theta
+    float NdL = max(dot(normal, light_dir), 0.0001);
+    // Phong specular strength
+    float VdR =  max(dot(view_dir, reflect_dir), 0.0001);
 
-    vec3 halfway_dir = normalize(light_dir + view_dir);
-    float cos_theta = max(dot(view_dir, halfway_dir), 0.0);
+    //vec3 halfway_dir = normalize(light_dir + view_dir);
+    //float cos_theta = max(dot(view_dir, halfway_dir), 0.0);   
+    //vec3 fresnel = SchlickFresnel(specular_color, cos_theta);
 
-    // NDL = cosLi;
-    //float cosLi = max(dot(normal, light_dir), 0.0);
-    //float cosLh = max(dot(normal, halfway_dir), 0.0);
-
-    vec3 fresnel = SchlickFresnel(specular_color, cos_theta);
+    vec3 fresnel = SchlickFresnel(specular_color, NdL);
     
-    return (diffuse_color * (vec3(1.0) - specular_color) / PI + (shininess+2)/(2*PI) * fresnel * pow(VdR, shininess)) * light_color * NdL * attenuation;
+    vec3 part1 = (diffuse_color * (vec3(1.0) - specular_color)) / PI;
+    vec3 part2 = ((shininess + 2.0) / (2.0 * PI)) * fresnel * pow(VdR, shininess);
 
+    return light_color * (part1 + part2) * NdL * attenuation;
 }
 
 // TODO: Implement and add shininess or smoothness
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color)
+                    const vec3 diffuse_color, const vec3 specular_color, float shininess)
 {
-    float shininess = 50.0;
     float attenuation = 1.0;
-    // Not sure if direction should be normalized
+    // Input dir goes from light to fragment, swap it for calculations
     return PBR(normal, view_dir, normalize(-light.direction.xyz), light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+}
+
+float Attenuation(float distance)
+{
+    return 1.0/(1.0+0.3*distance+0.3*(distance*distance));
+}
+
+float EpicAttenuation(float distance)
+{
+    float radius = 50.0;
+    return max(pow(max(1 - pow(distance/radius, 4), 0.0), 2.0), 0.0) / (distance * distance + 1);
+}
+
+vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
+                   const vec3 diffuse_color, const vec3 specular_color, float shininess)
+{
+    vec3 light_direction = light.position.xyz - frag_pos;
+    float distance = length(light_direction);
+    light_direction = normalize(light_direction);
+
+    float attenuation = EpicAttenuation(distance);
+    return PBR(normal, view_dir, light_direction, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
 void main()
@@ -90,7 +113,11 @@ void main()
     vec3 texture_color = texture(diffuse, fragment.tex_coord).rgb;
 
     vec3 plastic_specular = vec3(0.03);
-    texture_color = DirectionalPBR(norm, view_dir, lights.directional, texture_color, plastic_specular);
+    vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
+    float shininess = 25.0;
+    texture_color = DirectionalPBR(norm, view_dir, lights.directional, texture_color, plastic_specular, shininess);
+
+    texture_color += PositionalPBR(fragment.pos, norm, view_dir, lights.point, texture_color, plastic_specular, shininess);
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
 
