@@ -10,6 +10,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include "Components/ComponentPointLight.h"
 
 #include <debugdraw.h>
 
@@ -100,7 +101,12 @@ Component* GameObject::CreateComponent(Component::Type type)
 	case (Component::Type::Material):
 		new_component = new ComponentMaterial(this);
 		break;
+	case (Component::Type::PointLight):
+		new_component = new ComponentPointLight(this);
+		if (scene_owner) scene_owner->point_lights.push_back((ComponentPointLight*) new_component);
+		break;
 	}
+
 	if (new_component != nullptr)
 		components.push_back(new_component);
 	else

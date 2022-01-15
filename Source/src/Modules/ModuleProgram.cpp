@@ -1,6 +1,7 @@
 #include "ModuleProgram.h"
 
 #include "../Components/ComponentCamera.h"
+#include "../Components/ComponentPointLight.h"
 
 #include "../Utils/Logger.h"
 #include "glew.h"
@@ -20,7 +21,6 @@ bool ModuleProgram::Init()
 
 	CreateCameraUBO();
 	CreateLightsUBO();
-	UpdateLights();
 	return true;
 }
 
@@ -169,7 +169,8 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 	UpdateUBO(UBOPoints::p_camera, sizeof(Camera), &camera_data);
 }
 
-void ModuleProgram::UpdateLights()
+
+void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights)
 {
 	Lights lights_data;
 	// Ambient
@@ -178,8 +179,8 @@ void ModuleProgram::UpdateLights()
 	lights_data.directional.direction = float4(light.direction, 0.0f);
 	lights_data.directional.color = float4(light.color, 1.0f);
 	// Spot (TODO: Make array)
-	lights_data.point.position = float4(light.position, 0.0f);
-	lights_data.point.color = float4(light.color, 1.0f);
+	lights_data.point.position = float4(point_lights[0]->GetPosition(), 0.0f);
+	lights_data.point.color = point_lights[0]->color;
 
 	UpdateUBO(UBOPoints::p_lights, sizeof(Lights), &lights_data);
 }
@@ -187,9 +188,8 @@ void ModuleProgram::UpdateLights()
 void ModuleProgram::OptionsMenu()
 {
 	main_program->Activate();
-	ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f);
-	//ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f);
+	ImGui::SliderFloat3("Sunlight Direction", &light.direction[0], -5.0f, 5.0f);
 
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-	ImGui::ColorPicker3("Light Color", &light.color[0], flag);
+	ImGui::ColorPicker3("Sunlight Color", &light.color[0], flag);
 }

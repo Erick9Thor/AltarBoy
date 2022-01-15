@@ -75,12 +75,23 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
 
 // TODO: Implement and add shininess or smoothness
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color)
+                    const vec3 diffuse_color, const vec3 specular_color, float shininess)
 {
-    float shininess = 50.0;
     float attenuation = 1.0;
     // Not sure if direction should be normalized
     return PBR(normal, view_dir, normalize(-light.direction.xyz), light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+}
+
+vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
+                   const vec3 diffuse_color, const vec3 specular_color, float shininess)
+{
+    vec3 light_direction = light.position.xyz - frag_pos;
+    float distance = length(light_direction);
+    light_direction = normalize(light_direction);
+
+    // TODO: Add attenuation
+    float attenuation = 0.5;
+    return PBR(normal, view_dir, light_direction, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
 void main()
@@ -90,7 +101,10 @@ void main()
     vec3 texture_color = texture(diffuse, fragment.tex_coord).rgb;
 
     vec3 plastic_specular = vec3(0.03);
-    texture_color = DirectionalPBR(norm, view_dir, lights.directional, texture_color, plastic_specular);
+    float shininess = 50.0;
+    texture_color = DirectionalPBR(norm, view_dir, lights.directional, texture_color, plastic_specular, shininess);
+
+    texture_color += PositionalPBR(fragment.pos, norm, view_dir, lights.point, texture_color, plastic_specular, shininess);
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
 
