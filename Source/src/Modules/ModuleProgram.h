@@ -48,6 +48,7 @@ private:
 	{
 		float4x4 view = float4x4::identity;
 		float4x4 proj = float4x4::identity;
+		float3 pos = float3::zero;
 	};
 
 	unsigned ubos[UBOPoints::n_ubo_points];

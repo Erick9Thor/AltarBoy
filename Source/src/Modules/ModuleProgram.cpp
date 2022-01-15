@@ -148,6 +148,8 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 	Camera camera_data;
 	camera_data.view = camera->GetViewMatrix();
 	camera_data.proj = camera->GetProjectionMatrix();
+	// TODO: Understand why camera_data.view.TranslatePart() does not give the position
+	camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
 	glBindBuffer(GL_UNIFORM_BUFFER, ubos[UBOPoints::p_camera]);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &camera_data);
