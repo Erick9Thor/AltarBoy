@@ -4,6 +4,7 @@
 #include "../Scene.h"
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleSceneManager.h"
+#include "../Modules/ModuleProgram.h"
 #include "../Modules/ModuleCamera.h"
 #include "../Components/ComponentCamera.h"
 
@@ -28,6 +29,10 @@ void WindowConfiguration::Update()
 		if (ImGui::CollapsingHeader("Engine Camera"))
 		{
 			App->camera->GetMainCamera()->DrawGui();
+		}
+		if (ImGui::CollapsingHeader("Sharder (Temporary)"))
+		{
+			App->program->OptionsMenu();
 		}
 		/*if (ImGui::CollapsingHeader("FPS control"))
 		{

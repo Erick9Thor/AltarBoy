@@ -14,6 +14,7 @@ public:
 	enum UBOPoints
 	{
 		p_camera = 0,
+		p_lights,
 		n_ubo_points,
 	};
 
@@ -27,6 +28,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(ComponentCamera* camera);
+	void UpdateLights();
 
 	void OptionsMenu();
 
@@ -42,7 +44,11 @@ private:
 	Program* main_program;
 	Program* skybox_program;
 
-	void CreateCameraUBO(); // Assume the shader already manages the binding point
+	// Assume the shader already manages its binding points
+	void CreateUBO(UBOPoints binding_point, unsigned size);
+	void UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0);
+	void CreateCameraUBO(); 
+	void CreateLightsUBO();
 
 	struct Camera
 	{
@@ -52,6 +58,31 @@ private:
 	};
 
 	unsigned ubos[UBOPoints::n_ubo_points];
+
+	// Use float4 to prevent padding
+	struct AmbientLight
+	{
+		float4 color = float4::zero;
+	};
+
+	struct DirLight
+	{
+		float4 direction = float4::zero;
+		float4 color = float4::zero;
+	};
+
+	struct PointLight
+	{
+		float4 position = float4::zero;
+		float4 color = float4::zero;
+	};
+
+	struct Lights
+	{
+		AmbientLight ambient;
+		DirLight directional;
+		PointLight point;
+	};
 
 	struct Light
 	{

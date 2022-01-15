@@ -1,0 +1,6 @@
+
+    // Positional
+    // diffuse_strength = max(dot(norm, normalize(light_position - fragment.pos)), 0.0);
+
+    // Directional
+    //diffuse_strength = max(dot(norm, normalize(lights.directional.dir.xyz)), 0.0);

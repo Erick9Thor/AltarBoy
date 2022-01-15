@@ -19,6 +19,8 @@ bool ModuleProgram::Init()
 		return false;
 
 	CreateCameraUBO();
+	CreateLightsUBO();
+	UpdateLights();
 	return true;
 }
 
@@ -113,8 +115,6 @@ Program* ModuleProgram::CreateMainProgram()
 	main_program->BindUniformBool("is_directional", light.directional);
 	main_program->BindUniformFloat("ambient_strength", &light.ambient_strength);
 	main_program->BindUniformFloat3("light_color", (float*) &light.color[0]);
-	main_program->BindUniformFloat3("ligh_direction", (float*) &light.direction[0]);
-	main_program->BindUniformFloat3("light_position", (float*) &light.position[0]);
 	main_program->Deactivate();
 	return main_program;
 }
@@ -125,13 +125,32 @@ Program* ModuleProgram::CreateSkyboxProgram()
 	return skybox_program;
 }
 
+
+
+void ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
+{
+	glGenBuffers(1, &ubos[binding_point]);
+	glBindBuffer(GL_UNIFORM_BUFFER, ubos[binding_point]);
+	glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, binding_point, ubos[binding_point]);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void ModuleProgram::UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset)
+{
+	glBindBuffer(GL_UNIFORM_BUFFER, ubos[binding_point]);
+	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
 void ModuleProgram::CreateCameraUBO()
 {
-	glGenBuffers(1, &ubos[UBOPoints::p_camera]);
-	glBindBuffer(GL_UNIFORM_BUFFER, ubos[UBOPoints::p_camera]);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(Camera), NULL, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_UNIFORM_BUFFER, UBOPoints::p_camera, ubos[UBOPoints::p_camera]);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	CreateUBO(UBOPoints::p_camera, sizeof(Camera));
+}
+
+void ModuleProgram::CreateLightsUBO()
+{
+	CreateUBO(UBOPoints::p_lights, sizeof(Lights));
 }
 
 bool ModuleProgram::CleanUp()
@@ -151,34 +170,35 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 	// TODO: Understand why camera_data.view.TranslatePart() does not give the position
 	camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
-	glBindBuffer(GL_UNIFORM_BUFFER, ubos[UBOPoints::p_camera]);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(Camera), &camera_data);
-	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+	UpdateUBO(UBOPoints::p_camera, sizeof(Camera), &camera_data);
+}
+
+void ModuleProgram::UpdateLights()
+{
+	Lights lights_data;
+	// Ambient
+	lights_data.ambient.color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	// Directional
+	lights_data.directional.direction = float4(light.direction, 0.0f);
+	lights_data.directional.color = float4(light.color, 1.0f);
+	// Spot (TODO: Make array)
+	lights_data.point.position = float4(light.position, 0.0f);
+	lights_data.point.color = float4(light.color, 1.0f);
+
+	UpdateUBO(UBOPoints::p_lights, sizeof(Lights), &lights_data);
 }
 
 void ModuleProgram::OptionsMenu()
 {
 	main_program->Activate();
 	ImGui::SetNextItemWidth(50.0f);
-	if (ImGui::SliderFloat("Ambient Value", &light.ambient_strength, 0.0f, 1.0f))
-		main_program->BindUniformFloat("ambient_strength", &light.ambient_strength);
-
-	if (ImGui::Checkbox("Directional", &light.directional))
-		main_program->BindUniformBool("is_directional", light.directional);
+	ImGui::SliderFloat("Ambient Value", &light.ambient_strength, 0.0f, 1.0f);
+	ImGui::Checkbox("Directional", &light.directional);
 	if (light.directional)
-	{
-		if (ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f))
-			main_program->BindUniformFloat3("ligh_direction", (float*) &light.direction[0]);
-	}
+		ImGui::SliderFloat3("Direction", &light.direction[0], -5.0f, 5.0f);
 	else
-	{
-		if (ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f))
-			main_program->BindUniformFloat3("light_position", (float*) &light.position[0]);
-	}
+		ImGui::SliderFloat3("Position", &light.position[0], -250.0f, 250.0f);
 
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-	if (ImGui::ColorPicker3("Light Color", &light.color[0], flag))
-		main_program->BindUniformFloat3("light_color", (float*) &light.color[0]);
-
-	main_program->Deactivate();
+	ImGui::ColorPicker3("Light Color", &light.color[0], flag);
 }

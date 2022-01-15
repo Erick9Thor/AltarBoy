@@ -138,10 +138,12 @@ void ModuleRender::SetGLOptions()
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
-	// TODO: Add debug camera
+	// Using debug camera to test culling
 	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
 
 	App->program->UpdateCamera(camera);
+	// TODO: Update with scene lights
+	App->program->UpdateLights();
 
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
