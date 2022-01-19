@@ -28,11 +28,17 @@ public:
 	const bool GetKeyMod(SDL_Keymod modifier) const { return (keymods & modifier); }
 	const bool GetMouseButton(int button) const { return (mouse & SDL_BUTTON(button)); }
 	int GetScrollDelta() const { return scroll_delta; }
-	const void GetMouseDelta(int& x, int& y) const
+	void GetMouseDelta(int& x, int& y) const
 	{
 		x = mouse_delta_x;
 		y = mouse_delta_y;
-	}	
+	}
+
+	void GetMousePosition(int& x, int& y) const
+	{
+		x = mouse_x;
+		y = mouse_y;
+	}
 
 private:
 	void UpdateInputMaps();

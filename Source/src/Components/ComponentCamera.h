@@ -32,6 +32,8 @@ public:
 
 	void DrawGui() override;
 
+	LineSegment RayCast(float x, float y);
+
 	Plane planes[6];
 	float3 reference_point = float3::zero;
 	bool draw_frustum = false;

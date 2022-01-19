@@ -31,7 +31,6 @@ private:
 	ImGuizmo::OPERATION guizmo_operation = ImGuizmo::TRANSLATE;
 	ImGuizmo::MODE guizmo_mode = ImGuizmo::WORLD;
 
-	ImVec2 gizmo_rect_origin = {0.0f, 0.0f};
-	ImVec2 texture_screen_pos = {0.0f, 0.0f};
+	ImVec2 guizmo_rect_origin = {0.0f, 0.0f};
 	float2 texture_size = {0.0f, 0.0f};
 };

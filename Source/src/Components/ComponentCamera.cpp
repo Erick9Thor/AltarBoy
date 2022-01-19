@@ -112,3 +112,8 @@ void ComponentCamera::DrawGui()
 			SetPlaneDistances(planes[0], planes[1]);
 	}
 }
+
+LineSegment ComponentCamera::RayCast(float x, float y)
+{
+	return frustum.UnProjectLineSegment(x, y);
+}
