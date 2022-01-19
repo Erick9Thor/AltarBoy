@@ -6,6 +6,8 @@
 #include "../Utils/Timer.h"
 #include "MathGeoLib.h"
 
+class GameObject;
+
 class WindowScene : public Window
 {
 public:
@@ -16,10 +18,13 @@ public:
 
 private:
 	void GuizmoOptionsController();
-	void SceneController();
+	void ToolbarMenu();
 	void DrawScene();
+	void Controller();
+	GameObject* SelectObject();
 
 	ImVec2 imguizmo_size = {100.0f, 100.0f};
+	bool using_guizmo = false;
 	
 	Timer* scene_timer = nullptr;
 

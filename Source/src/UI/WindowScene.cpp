@@ -24,9 +24,9 @@ void WindowScene::Update()
 {
 	if (!App->input->GetMouseButton(SDL_BUTTON_RIGHT))
 	{
-		if (App->input->GetKey(SDL_SCANCODE_W)) guizmo_operation = ImGuizmo::TRANSLATE;
-		if (App->input->GetKey(SDL_SCANCODE_E)) guizmo_operation = ImGuizmo::ROTATE;
-		if (App->input->GetKey(SDL_SCANCODE_R)) guizmo_operation = ImGuizmo::SCALE;
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) guizmo_operation = ImGuizmo::TRANSLATE;
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) guizmo_operation = ImGuizmo::ROTATE;
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) guizmo_operation = ImGuizmo::SCALE;
 	}
 	if (ImGui::Begin(ICON_FA_GLOBE "Scene", &active))
 	{
@@ -34,8 +34,9 @@ void WindowScene::Update()
 		ImGui::SameLine();
 		ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
 		ImGui::SameLine();
-		SceneController();
+		ToolbarMenu();
 		DrawScene();
+		Controller();
 		ImGui::End();
 	};
 }
@@ -54,7 +55,7 @@ void WindowScene::GuizmoOptionsController()
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD)) guizmo_mode = ImGuizmo::WORLD;
 }
 
-void WindowScene::SceneController()
+void WindowScene::ToolbarMenu()
 {
 	float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
 	ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
@@ -96,10 +97,8 @@ void WindowScene::DrawScene()
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
 	{
-		if (App->input->GetMouseButton(SDL_BUTTON_RIGHT) || App->input->GetKey(SDL_SCANCODE_LALT))
-			ImGuizmo::Enable(false);
-		else
-			ImGuizmo::Enable(true);
+		bool guizmo_enabled = !(App->input->GetMouseButton(SDL_BUTTON_RIGHT) || App->input->GetKey(SDL_SCANCODE_LALT));
+		ImGuizmo::Enable(guizmo_enabled);
 	}
 
 	constexpr bool transposed = true;
@@ -123,13 +122,31 @@ void WindowScene::DrawScene()
 		ImGuizmo::SetDrawlist();	
 
 		ImGuizmo::Manipulate((float*) &view, (float*) &projection, guizmo_operation, guizmo_mode, (float*) &model, (float*) &delta);
-		if (ImGuizmo::IsUsing() && !delta.IsIdentity())
+		
+		using_guizmo = ImGuizmo::IsUsing();		
+		if (using_guizmo && !delta.IsIdentity())
 		{
 			// Transpose back again to store in our format
 			model.Transpose();
 			selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(model);
 		}
 	}
+}
+
+void WindowScene::Controller()
+{
+	int delta_x, delta_y;
+	App->input->GetMouseDelta(delta_x, delta_y);
+	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		GameObject* picked = SelectObject();
+	}
+	
+}
+
+GameObject* WindowScene::SelectObject()
+{
+	return nullptr;
 }
 
 //TODO: Move to utils gui and add tooltips
