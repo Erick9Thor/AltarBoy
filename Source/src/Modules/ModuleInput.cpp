@@ -13,9 +13,16 @@
 
 #include <string>
 
-ModuleInput::ModuleInput() {}
+#define MAX_KEYS 300
 
-ModuleInput::~ModuleInput() {}
+ModuleInput::ModuleInput() {
+	keyboard = new KeyState[MAX_KEYS];
+	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
+}
+
+ModuleInput::~ModuleInput() {
+	RELEASE_ARRAY(keyboard);
+}
 
 // Called before render is available
 bool ModuleInput::Init()
@@ -71,7 +78,23 @@ update_status ModuleInput::PreUpdate(const float delta)
 
 void ModuleInput::UpdateInputMaps()
 {
-	keyboard = SDL_GetKeyboardState(NULL);
+	const Uint8* keys_state = SDL_GetKeyboardState(0);
+	for (int i = 0; i < MAX_KEYS; ++i) {
+		if (keys_state[i] == 1)
+		{
+			if (keyboard[i] == KEY_IDLE)
+				keyboard[i] = KEY_DOWN;
+			else if (keyboard[i] != KEY_REPEAT)
+				keyboard[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+				keyboard[i] = KEY_UP;
+			else
+				keyboard[i] = KEY_IDLE;
+		}
+	}
 	keymods = SDL_GetModState();
 	mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
 }

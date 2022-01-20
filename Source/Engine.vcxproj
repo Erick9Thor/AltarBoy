@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\ComponentPointLight.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\GraphEditor.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImCurveEdit.cpp" />
     <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
@@ -231,6 +232,7 @@
     <ClCompile Include="src\UI\WindowConsole.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\ComponentPointLight.h" />
     <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImCurveEdit.h" />
     <ClInclude Include="Dependencies\imGuizmo\ImGradient.h" />

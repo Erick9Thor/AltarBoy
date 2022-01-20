@@ -11,6 +11,7 @@
 class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
+class ComponentPointLight;
 class Skybox;
 class Quadtree;
 
@@ -42,6 +43,7 @@ public:
 	ComponentCamera* GetDebugCamera() const { return debug_camera; }
 
 	bool draw_skybox = true;
+	std::vector<ComponentPointLight*> point_lights;
 
 private:
 	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);

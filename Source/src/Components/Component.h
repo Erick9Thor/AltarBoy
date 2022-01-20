@@ -13,6 +13,7 @@ public:
 		Mesh,
 		Material,
 		Camera,
+		PointLight,
 		Unknown
 	};
 
