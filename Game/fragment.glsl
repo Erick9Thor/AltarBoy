@@ -91,7 +91,7 @@ float Attenuation(float distance)
 
 float EpicAttenuation(float distance)
 {
-    float radius = 50.0;
+    float radius = 1000.0;
     return max(pow(max(1 - pow(distance/radius, 4), 0.0), 2.0), 0.0) / (distance * distance + 1);
 }
 
@@ -102,7 +102,7 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
     float distance = length(light_direction);
     light_direction = normalize(light_direction);
 
-    float attenuation = EpicAttenuation(distance);
+    float attenuation = 1.0; //sEpicAttenuation(distance);
     return PBR(normal, view_dir, light_direction, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
@@ -110,17 +110,19 @@ void main()
 {
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
-    vec3 texture_color = texture(diffuse, fragment.tex_coord).rgb;
+    vec3 diffuse_color = pow(texture(diffuse, fragment.tex_coord).rgb, vec3(2.2));
 
     vec3 plastic_specular = vec3(0.03);
     vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
-    float shininess = 25.0;
-    texture_color = DirectionalPBR(norm, view_dir, lights.directional, texture_color, plastic_specular, shininess);
+    float shininess = 125.0;
+    vec3 texture_color = DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
 
-    texture_color += PositionalPBR(fragment.pos, norm, view_dir, lights.point, texture_color, plastic_specular, shininess);
+    texture_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.point, diffuse_color, plastic_specular, shininess);
+
+    texture_color += diffuse_color * 0.05;
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
 
     // Gamma correction
-    //color.rgb = pow(color.rgb, vec3(1.0/2.2));
+    color.rgb = pow(color.rgb, vec3(1.0/2.2));
 }

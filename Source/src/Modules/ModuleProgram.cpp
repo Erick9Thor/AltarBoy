@@ -106,7 +106,7 @@ Program* ModuleProgram::CreateMainProgram()
 	main_program = CreateProgram("vertex.glsl", "fragment.glsl");
 
 	light.position = float3(5.0f, 5.0f, 5.0f);
-	light.direction = float3(5.0f, 5.0f, 5.0f);
+	light.direction = float3(-1.0f, -1.0f, 1.0f);
 	light.color = float3(1.0f, 1.0f, 1.0f);
 
 	main_program->Activate();
