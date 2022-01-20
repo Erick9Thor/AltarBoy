@@ -4,10 +4,8 @@
 #include "../Program.h"
 
 #include "MathGeoLib.h"
-#include <vector>
 
 class ComponentCamera;
-class ComponentPointLight;
 
 class ModuleProgram : public Module
 {
@@ -30,7 +28,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(ComponentCamera* camera);
-	void UpdateLights(std::vector<ComponentPointLight*>& point_lights);
+	void UpdateLights();
 
 	void OptionsMenu();
 
