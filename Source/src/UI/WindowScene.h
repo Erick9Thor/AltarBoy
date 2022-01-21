@@ -7,6 +7,8 @@
 #include "MathGeoLib.h"
 
 class GameObject;
+class ComponentCamera;
+class Scene;
 
 class WindowScene : public Window
 {
@@ -21,7 +23,7 @@ private:
 	void ToolbarMenu();
 	void DrawScene();
 	void Controller();
-	GameObject* SelectObject();
+	GameObject* SelectObject(ComponentCamera* camera, Scene* scene);
 
 	ImVec2 imguizmo_size = {100.0f, 100.0f};
 	bool using_guizmo = false;
@@ -32,5 +34,6 @@ private:
 	ImGuizmo::MODE guizmo_mode = ImGuizmo::WORLD;
 
 	ImVec2 guizmo_rect_origin = {0.0f, 0.0f};
+	float2 texture_position = float2(0.0f);
 	float2 texture_size = {0.0f, 0.0f};
 };

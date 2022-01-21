@@ -22,6 +22,8 @@
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
 
+#include <map>
+
 Scene::Scene()
 {
 	quadtree = new Quadtree();
@@ -84,6 +86,50 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	}
 	importer.FreeScene();
 	return model;
+}
+
+GameObject* Scene::RayCast(const LineSegment& segment) const
+{
+	GameObject* selected = nullptr;
+	float closest_hit_distance = inf;
+
+	map<float, GameObject*> game_objects;
+	quadtree->GetRoot()->GetIntersections(game_objects, segment);
+
+	for (auto game_object_pair: game_objects)
+	{
+		GameObject* game_object = game_object_pair.second;
+		ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
+		if (mesh)
+		{	
+			// Transform ray to mesh space, more efficient
+			LineSegment local_segment(segment);
+			local_segment.Transform(game_object->GetComponent<ComponentTransform>()->GetTransform().Inverted());
+			
+			const float* vertices = mesh->GetVertices();
+			const unsigned* indices = mesh->GetIndices();
+			for (int i = 0; i < mesh->GetBufferSize(ComponentMesh::Buffers::b_indices); i += 3)
+			{
+				Triangle triangle;
+				triangle.a = vec(&vertices[indices[i] * 3]);
+				triangle.b = vec(&vertices[indices[i + 1] * 3]);
+				triangle.c = vec(&vertices[indices[i + 2] * 3]);
+
+				float hit_distance;
+				float3 hit_point;
+				if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
+				{
+					if (hit_distance < closest_hit_distance)
+					{
+						closest_hit_distance = hit_distance;
+						selected = game_object;
+					}
+				}
+				
+			}
+		}
+	}
+	return selected;
 }
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)

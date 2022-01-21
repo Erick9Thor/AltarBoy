@@ -34,7 +34,12 @@ public:
 	inline bool IsLoaded() const { return loaded; }
 	bool IsVisible() const { return visible; }
 
-	AABB GetAABB() const { return bounding_box; }	
+	AABB GetAABB() const { return bounding_box; }
+	inline unsigned GetBufferSize(Buffers buffer) const { return buffer_sizes[buffer]; }
+	inline unsigned GetBufferId(Buffers buffer) const { return buffer_ids[buffer]; }
+	const float* GetVertices() const { return vertices; }
+	const unsigned* GetIndices() const { return indices; }
+	
 
 	void DrawGui() override;
 

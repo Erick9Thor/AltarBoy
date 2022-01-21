@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "MathGeoLib.h"
 
+#include "GameObject.h"
+
 #include <list>
 #include <map>
 
@@ -17,8 +19,6 @@ enum Quadrants
 	SW,
 	NUM_QUADRANTS
 };
-
-class GameObject;
 
 class QuadtreeNode
 {
@@ -68,20 +68,23 @@ private:
 
 
 template<typename T>
-void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& objects, const T& primitive) const
+void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& intersected, const T& primitive) const
 {
 	if (primitive.Intersects(box))
 	{
 		float near_hit, far_hit;
-		for (GameObject* object : objects) {
+		for (GameObject* object : objects)
+		{
+			bool b = primitive.Intersects(object->GetAABB());
+			bool a = primitive.Intersects(object->GetOBB());
 			if (primitive.Intersects(object->GetOBB()))
-				objects[near_hit] = object;
+				intersected[near_hit] = object;
 		}
 
 		// If it has one child all exist
 		if (childs[0] != nullptr) {
 			for (int i = 0; i < 4; ++i)
-				childs[i]->GetIntersections(objects, primitive);
+				childs[i]->GetIntersections(intersected, primitive);
 		}
 	}
 }

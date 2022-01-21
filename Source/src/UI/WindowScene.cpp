@@ -7,6 +7,7 @@
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleCamera.h"
 #include "../Modules/ModuleRender.h"
+#include "../Modules/ModuleSceneManager.h"
 
 #include "../Components/ComponentCamera.h"
 #include "../Components/ComponentTransform.h"
@@ -89,8 +90,10 @@ void WindowScene::DrawScene()
 	
 	ComponentCamera* camera = App->camera->GetMainCamera();
 
-	// Has to be the top left corner of the image in imgui coords, top is y = 0
+	// Top left corner of the image in imgui coords, top is y = 0
 	guizmo_rect_origin = ImGui::GetCursorScreenPos();
+	// Bottom left corner in opengl coordinates, bottom is y = 0
+	texture_position = float2(guizmo_rect_origin.x, float(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 	
 	ImGui::Image((void*) (intptr_t) App->renderer->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
 
@@ -137,26 +140,31 @@ void WindowScene::Controller()
 {
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		GameObject* picked = SelectObject();
+		Scene* scene = App->scene_manager->GetActiveScene();
+		GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
+		if (picked)
+			App->editor->SetSelectedGO(picked);
 	}
 }
 
-GameObject* WindowScene::SelectObject()
+GameObject* WindowScene::SelectObject(ComponentCamera* camera, Scene* scene)
 {
-	// plane -> (1,1) top right , (-1, -1) bottom left
 	// sdl -> (0, 0) top left, (w, h) bottom right
-
-	// Get normalized mouse position within the plane range
-	int mouse_x, mouse_y;
-	App->input->GetMousePosition(mouse_x, mouse_y);
+	// // imgui -> (0,0) botton left
+	// plane -> (1,1) top right , (-1, -1) bottom left
+	
+	
+	ImVec2 mouse = ImGui::GetMousePos();
+	float2 mouse_viewport_pos = float2(mouse.x - guizmo_rect_origin.x, mouse.y - guizmo_rect_origin.y);
 
 	// Fit in range and coordinate direction
-	float x_normalized = -(1.0f - (float(mouse_x) * 2.0f) / App->window->GetWidth());
-	float y_normalized = 1.0f - (float(mouse_y) * 2.0f) / App->window->GetHeight();
+	float x_normalized = mouse_viewport_pos.x / texture_size.x * 2.f - 1.f;
+	float y_normalized = -(mouse_viewport_pos.y / texture_size.y * 2.f - 1.f);
 
-	LineSegment line = App->camera->GetMainCamera()->RayCast(x_normalized, y_normalized);
+	LineSegment line = camera->RayCast(x_normalized, y_normalized);
+	GameObject* selected = scene->RayCast(line);
 	
-	return nullptr;
+	return selected;
 }
 
 //TODO: Move to utils gui and add tooltips

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math.h"
+#include "Geometry/LineSegment.h"
 #include "Modules/ModuleTexture.h"
 #include "Components/Component.h"
 #include "assimp/scene.h"
@@ -37,10 +37,12 @@ public:
 
 	void OptionsMenu();
 
-	GameObject* GetRoot() const { return root; }
+	GameObject* GetRoot() const { return root; }	
 	Skybox* GetSkybox() const { return skybox; }
 	Quadtree* GetQuadtree() const { return quadtree; }
 	ComponentCamera* GetDebugCamera() const { return debug_camera; }
+
+	GameObject* RayCast(const LineSegment& segment) const;
 
 	bool draw_skybox = true;
 	std::vector<ComponentPointLight*> point_lights;
