@@ -10,6 +10,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include "Components/ComponentPointLight.h"
 
 #include <debugdraw.h>
 
@@ -53,7 +54,8 @@ void GameObject::SetNewParent(GameObject* new_parent)
 		return;
 
 	if (parent)
-		parent->childs.erase(std::remove(childs.begin(), childs.end(), this), childs.end());
+		parent->RemoveChild(this);
+	
 
 	if (new_parent)
 		new_parent->childs.push_back(this);
@@ -99,7 +101,12 @@ Component* GameObject::CreateComponent(Component::Type type)
 	case (Component::Type::Material):
 		new_component = new ComponentMaterial(this);
 		break;
+	case (Component::Type::PointLight):
+		new_component = new ComponentPointLight(this);
+		if (scene_owner) scene_owner->point_lights.push_back((ComponentPointLight*) new_component);
+		break;
 	}
+
 	if (new_component != nullptr)
 		components.push_back(new_component);
 	else
@@ -109,13 +116,7 @@ Component* GameObject::CreateComponent(Component::Type type)
 
 void GameObject::RemoveChild(GameObject* game_object)
 {
-	for (vector<GameObject*>::const_iterator it = game_object->childs.begin(); it != game_object->childs.end(); ++it)
-	{
-		if ((*it) == game_object)
-		{
-			childs.erase(it);
-		}
-	}
+	childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
 }
 
 void GameObject::Destroy()
@@ -127,8 +128,7 @@ void GameObject::Destroy()
 	}
 
 	if (scene_owner)
-		// TODO: Manage object destruction on scene
-		//scene_owner->OnDestroyGameObject(this);
+		scene_owner->DestroyGameObject(this);
 
 		for (unsigned int i = 0; i < childs.size(); ++i)
 		{
@@ -138,19 +138,19 @@ void GameObject::Destroy()
 
 void GameObject::Update()
 {
-	if (transform->HasChanged())
-	{
-		OnTransformUpdated();
-	}
+		if (transform->HasChanged())
+		{
+			OnTransformUpdated();
+		}
 
-	for (Component* component : components)
-	{
-		component->Update();
-	}
+		for (Component* component : components)
+		{
+			component->Update();
+		}
 
 	for (GameObject* child : childs)
 	{
-		if (child->IsEnabled())
+		if (child->IsActive())	
 			child->Update();
 	}
 }

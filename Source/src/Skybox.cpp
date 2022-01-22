@@ -80,8 +80,6 @@ void Skybox::Draw(ComponentCamera* camera)
     glDepthFunc(GL_ALWAYS);
 	Program* program = App->program->GetSkyboxProgram();
 	program->Activate();
-	program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-	program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 	// Draw skybox
 	glBindVertexArray(vao);
 	glActiveTexture(GL_TEXTURE0);

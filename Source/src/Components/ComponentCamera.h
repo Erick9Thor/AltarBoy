@@ -34,6 +34,7 @@ public:
 
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
+	LineSegment RayCast(float x, float y);
 
 	Plane planes[6];
 	float3 reference_point = float3::zero;

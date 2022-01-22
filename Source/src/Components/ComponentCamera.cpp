@@ -152,3 +152,8 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 	frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
 	frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
 }
+
+LineSegment ComponentCamera::RayCast(float x, float y)
+{
+	return frustum.UnProjectLineSegment(x, y);
+}

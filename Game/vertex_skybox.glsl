@@ -1,10 +1,13 @@
-# version 330
+# version 440
 layout (location=0) in vec3 position;
 
-out vec3 tex_coords;
+layout(std140, row_major, binding = 0) uniform Camera
+{
+    mat4 view;
+    mat4 proj;
+};
 
-uniform mat4 view;
-uniform mat4 proj;
+out vec3 tex_coords;
 
 void main ()
 {

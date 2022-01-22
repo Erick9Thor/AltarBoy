@@ -116,17 +116,17 @@ void ModuleCamera::MovementController(const float delta)
 	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
 	float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
 
-	if (App->input->GetKey(SDL_SCANCODE_W))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		deltaFwd += transform->GetFwd() * delta * effective_speed;
-	if (App->input->GetKey(SDL_SCANCODE_S))
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		deltaFwd -= transform->GetFwd() * delta * effective_speed;
-	if (App->input->GetKey(SDL_SCANCODE_A))
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		deltaRight += transform->GetRight() * delta * effective_speed;
-	if (App->input->GetKey(SDL_SCANCODE_D))
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		deltaRight -= transform->GetRight() * delta * effective_speed;
-	if (App->input->GetKey(SDL_SCANCODE_Q))
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
 		deltaUp += float3::unitY * delta * effective_speed;
-	if (App->input->GetKey(SDL_SCANCODE_E))
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
 		deltaUp -= float3::unitY * delta * effective_speed;
 
 	transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);

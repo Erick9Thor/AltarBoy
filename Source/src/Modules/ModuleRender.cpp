@@ -138,8 +138,12 @@ void ModuleRender::SetGLOptions()
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
-	// TODO: Add debug camera
+	// Using debug camera to test culling
 	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
+
+	App->program->UpdateCamera(camera);
+	// TODO: Update with scene lights
+	App->program->UpdateLights(App->scene_manager->GetActiveScene()->point_lights);
 
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
@@ -162,8 +166,8 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 
-	float4x4 view = camera->GetViewMatrix(false);
-	float4x4 proj = camera->GetProjectionMatrix(false);
+	float4x4 view = camera->GetViewMatrix();
+	float4x4 proj = camera->GetProjectionMatrix();
 
 	App->debug_draw->Draw(view, proj, fb_height, fb_width);
 

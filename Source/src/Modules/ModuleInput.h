@@ -6,6 +6,14 @@
 
 typedef unsigned __int8 Uint8;
 
+enum KeyState
+{
+	KEY_IDLE = 0,
+	KEY_DOWN,
+	KEY_REPEAT,
+	KEY_UP
+};
+
 class ModuleInput : public Module
 {
 public:
@@ -16,20 +24,26 @@ public:
 	update_status PreUpdate(const float delta) override;
 	bool CleanUp() override;
 
-	const unsigned GetKey(SDL_Scancode key) const { return keyboard[key]; }
+	KeyState GetKey(SDL_Scancode key) const { return keyboard[key]; }
 	const bool GetKeyMod(SDL_Keymod modifier) const { return (keymods & modifier); }
 	const bool GetMouseButton(int button) const { return (mouse & SDL_BUTTON(button)); }
 	int GetScrollDelta() const { return scroll_delta; }
-	const void GetMouseDelta(int& x, int& y) const
+	void GetMouseDelta(int& x, int& y) const
 	{
 		x = mouse_delta_x;
 		y = mouse_delta_y;
-	}	
+	}
+
+	void GetMousePosition(int& x, int& y) const
+	{
+		x = mouse_x;
+		y = mouse_y;
+	}
 
 private:
 	void UpdateInputMaps();
 
-	const Uint8* keyboard = NULL;
+	KeyState* keyboard = nullptr;
 	Uint32 mouse;
 	SDL_Keymod keymods;
 

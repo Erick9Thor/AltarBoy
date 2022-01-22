@@ -20,6 +20,9 @@ public:
 	void SetSize(int w, int h);
 	void SetVsync(bool vsync);
 
+	inline int GetWidth() const { return width; }
+	inline int GetHeight() const { return height; }
+
 	void OptionsMenu();
 
 	inline SDL_Surface* GetScreenSurface() const { return screen_surface; }
@@ -34,9 +37,9 @@ private:
 	bool fullscreen;
 	bool resizable;
 	int width;
-	int max_width;
-	int max_height;
 	int height;
+	int max_width;
+	int max_height;	
 	int refresh_rate;
 	bool vsync;
 };

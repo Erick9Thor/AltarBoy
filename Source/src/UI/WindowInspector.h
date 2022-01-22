@@ -10,5 +10,5 @@ public:
 	void Update() override;
 
 private:
-	void InspectorDrawGameObject(GameObject* go);
+	void DrawGameObject(GameObject* go);
 };

@@ -11,6 +11,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include "Components/ComponentPointLight.h"
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
 
@@ -20,6 +21,8 @@
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
+
+#include <map>
 
 Scene::Scene()
 {
@@ -39,13 +42,22 @@ Scene::~Scene()
 	delete quadtree;
 }
 
+void Scene::DestroyGameObject(GameObject* game_object)
+{
+	quadtree->Remove(game_object);
+	RELEASE(game_object);
+}
+
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
-	// TODO: Implement
+	GameObject* new_parent = parent ? parent : root;
+	new_parent->childs.push_back(new_object);
+	quadtree->Insert(new_object);
 }
 
 GameObject* Scene::CreateNewGameObject(const char* name, GameObject* parent)
 {
+	// It will insert itself into quadtree on first bounding box update
 	GameObject* foo = new GameObject(parent ? parent : root, name);
 	foo->scene_owner = this;
 	return foo;
@@ -82,9 +94,7 @@ void Scene::Save(JsonFormaterValue j_scene) const
 	JsonFormaterValue j_root = j_scene["GORoot"];
 	root->Save(j_root);
 
-	// SAVE QUADTREE¿¿
-
-	// SAVE CAMERA¿¿
+	// SAVE CAMERA//
 }
 
 void Scene::Load(JsonFormaterValue j_scene)
@@ -92,6 +102,50 @@ void Scene::Load(JsonFormaterValue j_scene)
 	// Create root
 	JsonFormaterValue j_root = j_scene["GORoot"];
 	// root->Load(j_root);
+}
+
+GameObject* Scene::RayCast(const LineSegment& segment) const
+{
+	GameObject* selected = nullptr;
+	float closest_hit_distance = inf;
+
+	map<float, GameObject*> game_objects;
+	quadtree->GetRoot()->GetIntersections(game_objects, segment);
+
+	for (auto game_object_pair: game_objects)
+	{
+		GameObject* game_object = game_object_pair.second;
+		ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
+		if (mesh)
+		{	
+			// Transform ray to mesh space, more efficient
+			LineSegment local_segment(segment);
+			local_segment.Transform(game_object->GetComponent<ComponentTransform>()->GetTransform().Inverted());
+			
+			const float* vertices = mesh->GetVertices();
+			const unsigned* indices = mesh->GetIndices();
+			for (int i = 0; i < mesh->GetBufferSize(ComponentMesh::Buffers::b_indices); i += 3)
+			{
+				Triangle triangle;
+				triangle.a = vec(&vertices[indices[i] * 3]);
+				triangle.b = vec(&vertices[indices[i + 1] * 3]);
+				triangle.c = vec(&vertices[indices[i + 2] * 3]);
+
+				float hit_distance;
+				float3 hit_point;
+				if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
+				{
+					if (hit_distance < closest_hit_distance)
+					{
+						closest_hit_distance = hit_distance;
+						selected = game_object;
+					}
+				}
+				
+			}
+		}
+	}
+	return selected;
 }
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)
@@ -171,6 +225,9 @@ GameObject* Scene::CreateDebugCamera()
 	debug_camera = camera->GetComponent<ComponentCamera>();
 	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
+
+	// TODO: Temporary light to debug, remove
+	camera->CreateComponent(Component::Type::PointLight);
 
 	return camera;
 }

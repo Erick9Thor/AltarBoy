@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math.h"
+#include "Geometry/LineSegment.h"
 #include "Modules/ModuleTexture.h"
 #include "Components/Component.h"
 #include "assimp/scene.h"
@@ -11,6 +11,7 @@
 class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
+class ComponentPointLight;
 class Skybox;
 class Quadtree;
 
@@ -24,12 +25,12 @@ public:
 
 	// --- Life cycle Scene --- //
 	void Update();
-
 	void Save(JsonFormaterValue j_scene) const;
 	void Load(JsonFormaterValue j_scene);
 
 	// --- GameObject Management --- //
 	void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
+	void DestroyGameObject(GameObject* game_object);
 	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 	GameObject* GetRoot() const { return root; }
 
@@ -42,7 +43,11 @@ public:
 
 	// --- Skybox --- //
 	Skybox* GetSkybox() const { return skybox; }
+	
+	GameObject* RayCast(const LineSegment& segment) const;
+
 	bool draw_skybox = true;
+	std::vector<ComponentPointLight*> point_lights;
 
 	// --- Scene ---// TODO: Move this into WindowConfiguration menu on Scene subsection
 	void OptionsMenu();

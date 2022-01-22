@@ -3,7 +3,10 @@
 #include "Globals.h"
 #include "MathGeoLib.h"
 
+#include "GameObject.h"
+
 #include <list>
+#include <map>
 
 #define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 10.0f
@@ -16,8 +19,6 @@ enum Quadrants
 	SW,
 	NUM_QUADRANTS
 };
-
-class GameObject;
 
 class QuadtreeNode
 {
@@ -34,6 +35,9 @@ public:
 
 	const AABB& GetBox() const { return box; }
 	const std::list<GameObject*>& GetObjects() const { return objects; }
+
+	template<typename T>
+	void GetIntersections(std::map<float, GameObject*>& objects, const T& primitive) const;
 
 	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
 
@@ -61,3 +65,26 @@ public:
 private:
 	QuadtreeNode* root = nullptr;
 };
+
+
+template<typename T>
+void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& intersected, const T& primitive) const
+{
+	if (primitive.Intersects(box))
+	{
+		float near_hit, far_hit;
+		for (GameObject* object : objects)
+		{
+			bool b = primitive.Intersects(object->GetAABB());
+			bool a = primitive.Intersects(object->GetOBB());
+			if (primitive.Intersects(object->GetOBB()))
+				intersected[near_hit] = object;
+		}
+
+		// If it has one child all exist
+		if (childs[0] != nullptr) {
+			for (int i = 0; i < 4; ++i)
+				childs[i]->GetIntersections(intersected, primitive);
+		}
+	}
+}
