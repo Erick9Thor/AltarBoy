@@ -11,6 +11,7 @@
 class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
+class ComponentDirLight;
 class ComponentPointLight;
 class ComponentSpotLight;
 class Skybox;
@@ -48,6 +49,9 @@ public:
 	GameObject* RayCast(const LineSegment& segment) const;
 
 	bool draw_skybox = true;
+
+	void CreateLights();
+	std::vector<ComponentDirLight*> dir_lights;
 	std::vector<ComponentPointLight*> point_lights;
 	std::vector<ComponentSpotLight*> spot_lights;
 

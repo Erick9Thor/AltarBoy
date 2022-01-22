@@ -10,6 +10,7 @@
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
+#include "Components/ComponentDirLight.h"
 #include "Components/ComponentPointLight.h"
 #include "Components/ComponentSpotLight.h"
 
@@ -100,6 +101,9 @@ Component* GameObject::CreateComponent(Component::Type type)
 		break;
 	case (Component::Type::Material):
 		new_component = new ComponentMaterial(this);
+		break;
+	case (Component::Type::DirLight):
+		new_component = new ComponentDirLight(this);
 		break;
 	case (Component::Type::PointLight):
 		new_component = new ComponentPointLight(this);

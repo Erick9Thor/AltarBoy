@@ -34,6 +34,7 @@ Scene::Scene()
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 	
 	CreateDebugCamera();
+	CreateLights();
 }
 
 Scene::~Scene()
@@ -147,6 +148,24 @@ GameObject* Scene::RayCast(const LineSegment& segment) const
 		}
 	}
 	return selected;
+}
+
+void Scene::CreateLights()
+{
+	GameObject* sun = CreateNewGameObject("Sun", root);
+	sun->GetComponent<ComponentTransform>()->SetLocalPosition(float3(1, 1, -1));
+	sun->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	sun->CreateComponent(Component::Type::DirLight);
+
+	GameObject* spot = CreateNewGameObject("Spot Light", root);
+	spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -11));
+	spot->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	spot->CreateComponent(Component::Type::SpotLight);
+
+	GameObject* point = CreateNewGameObject("Point Light", root);
+	point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -11));
+	point->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	point->CreateComponent(Component::Type::PointLight);
 }
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)

@@ -16,6 +16,7 @@ public:
 		Mesh,
 		Material,
 		Camera,
+		DirLight,
 		PointLight,
 		SpotLight,
 		Unknown

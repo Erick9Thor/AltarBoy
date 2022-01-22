@@ -10,6 +10,7 @@
 #define MAX_SPOT_LIGHTS 4
 
 class ComponentCamera;
+class ComponentDirLight;
 class ComponentPointLight;
 class ComponentSpotLight;
 
@@ -34,7 +35,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(ComponentCamera* camera);
-	void UpdateLights(std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights);
+	void UpdateLights(ComponentDirLight* dir_light, std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();
 
@@ -110,5 +111,6 @@ private:
 		float3 color;
 	};
 
-	Light light;
+	AmbientLight ambient_light;
+	float ambient_strength = 0.05f;
 };

@@ -177,7 +177,7 @@ void main()
         texture_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
         
     }   
-    texture_color += diffuse_color * lights.ambient.color.rgb * 0.05;
+    texture_color += diffuse_color * lights.ambient.color.rgb * ambient_strength;
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
 

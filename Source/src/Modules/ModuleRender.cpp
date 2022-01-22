@@ -144,7 +144,7 @@ update_status ModuleRender::Update(const float delta)
 	App->program->UpdateCamera(camera);
 	// TODO: Update with scene lights
 	Scene* active_scene = App->scene_manager->GetActiveScene();
-	App->program->UpdateLights(active_scene->point_lights, active_scene->spot_lights);
+	App->program->UpdateLights(active_scene->dir_lights[0], active_scene->point_lights, active_scene->spot_lights);
 
 	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;

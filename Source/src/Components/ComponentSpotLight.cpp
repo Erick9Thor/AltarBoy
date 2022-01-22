@@ -27,8 +27,11 @@ void ComponentSpotLight::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Spot Light"))
 	{
+		ImGui::Checkbox("S.Active", &active);
 		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 		ImGui::ColorPicker3("Spot Color", &color[0], flag);
+		ImGui::InputFloat("Inner", &inner);
+		ImGui::InputFloat("Outer", &outer);
 	}
 }
 

@@ -1,6 +1,7 @@
 #include "ModuleProgram.h"
 
 #include "../Components/ComponentCamera.h"
+#include "../Components/ComponentDirLight.h"
 #include "../Components/ComponentPointLight.h"
 #include "../Components/ComponentSpotLight.h"
 
@@ -105,13 +106,8 @@ Program* ModuleProgram::CreateProgram(const char* vtx_shader_path, const char* f
 Program* ModuleProgram::CreateMainProgram()
 {
 	main_program = CreateProgram("vertex.glsl", "fragment.glsl");
-
-	light.position = float3(5.0f, 5.0f, 5.0f);
-	light.direction = float3(-1.0f, -1.0f, 1.0f);
-	light.color = float3(1.0f, 1.0f, 1.0f);
-
 	main_program->Activate();
-	main_program->BindUniformFloat3("light_color", (float*) &light.color[0]);
+	main_program->BindUniformFloat("ambient_strength", &ambient_strength);
 	main_program->Deactivate();
 	return main_program;
 }
@@ -171,14 +167,14 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 }
 
 
-void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights)
+void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights)
 {
 	Lights lights_data;
 	// Ambient
-	lights_data.ambient.color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	lights_data.ambient = ambient_light;
 	// Directional
-	lights_data.directional.direction = float4(light.direction, 0.0f);
-	lights_data.directional.color = float4(light.color, 1.0f);
+	lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
+	lights_data.directional.color = dir_light->color;
 	// Point
 	lights_data.n_points = 0;
 	for (unsigned i = 0; i < point_lights.size(); ++i)
@@ -201,8 +197,8 @@ void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights
 			lights_data.spots[lights_data.n_spots].position = float4(spot_lights[i]->GetPosition(), 0.0f);
 			lights_data.spots[lights_data.n_spots].direction = float4(spot_lights[i]->GetDirection(), 0.0f);
 			lights_data.spots[lights_data.n_spots].color = spot_lights[i]->color;
-			lights_data.spots[lights_data.n_spots].inner = spot_lights[i]->inner;
-			lights_data.spots[lights_data.n_spots].outer = spot_lights[i]->outer;
+			lights_data.spots[lights_data.n_spots].inner = DegToRad(spot_lights[i]->inner);
+			lights_data.spots[lights_data.n_spots].outer = DegToRad(spot_lights[i]->outer);
 			++lights_data.n_spots;
 			if (lights_data.n_spots == MAX_SPOT_LIGHTS)
 				break;
@@ -214,9 +210,12 @@ void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights
 
 void ModuleProgram::OptionsMenu()
 {
-	main_program->Activate();
-	ImGui::SliderFloat3("Sunlight Direction", &light.direction[0], -5.0f, 5.0f);
-
+	if (ImGui::InputFloat("Ambient Strength", &ambient_strength))
+	{
+		main_program->Activate();
+		main_program->BindUniformFloat("ambient_strength", &ambient_strength);
+		main_program->Deactivate();
+	}
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-	ImGui::ColorPicker3("Sunlight Color", &light.color[0], flag);
+	ImGui::ColorPicker3("Ambient Color", &ambient_light.color[0], flag);
 }
