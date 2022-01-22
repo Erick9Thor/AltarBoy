@@ -27,6 +27,8 @@ void ComponentPointLight::DrawGui()
 	if (ImGui::CollapsingHeader("Point Light"))
 	{
 		ImGui::Checkbox("P.Active", &active);
+		ImGui::InputFloat("P.Intensity", &intensity);
+		ImGui::InputFloat("P.Radius", &radius);
 		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 		ImGui::ColorPicker3("Point Color", &color[0], flag);
 	}

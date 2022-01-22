@@ -19,6 +19,8 @@ public:
 	float3 GetPosition();
 
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	float intensity = 1.0f;
+	float radius = 250.0f;
 
 private:
 	bool active = true;

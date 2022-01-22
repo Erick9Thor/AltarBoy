@@ -22,6 +22,8 @@ public:
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float inner = 15.f;
 	float outer = 30.f;
+	float intensity = 1.0f;
+	float radius = 250.0f;
 
 private:
 	bool active = true;

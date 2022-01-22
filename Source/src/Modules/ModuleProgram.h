@@ -69,19 +69,26 @@ private:
 	// Use float4 to prevent padding
 	struct AmbientLight
 	{
-		float4 color = float4::zero;
+		float4 color = float4::one;
+		float intensity = 0.05f;
+		float padding[3];
 	};
 
 	struct DirLight
 	{
 		float4 direction = float4::zero;
 		float4 color = float4::zero;
+		float intensity;
+		float padding[3];
 	};
 
 	struct PointLight
 	{
 		float4 position = float4::zero;
 		float4 color = float4::zero;
+		float intensity;
+		float radius;
+		float padding[2];
 	};
 
 	struct SpotLight
@@ -91,7 +98,8 @@ private:
 		float4 color = float4::zero;
 		float inner;
 		float outer;
-		float padding[2] = {69.f, 69.f};
+		float intensity;
+		float radius;
 	};
 
 	struct Lights

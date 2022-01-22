@@ -8,18 +8,22 @@
 struct AmbientLight
 {
     vec4 color;
+    float intensity;
 };
 
 struct DirLight
 {
     vec4 direction;
     vec4 color;
+    float intensity;
 };
 
 struct PointLight
 {
     vec4 position;
     vec4 color;
+    float intensity;
+    float radius;
 };
 
 struct SpotLight
@@ -29,6 +33,8 @@ struct SpotLight
     vec4 color;
     float inner;
     float outer;
+    float intensity;
+    float radius;
 };
 
 layout(std140, row_major, binding = 0) uniform Camera
@@ -49,8 +55,6 @@ layout(std140, binding = 1) uniform Lights
 } lights;
 
 uniform sampler2D diffuse;
-
-uniform float ambient_strength;
 
 // Inputs
 struct VertexData
@@ -97,7 +101,7 @@ vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light
     
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
 }
 
 float Attenuation(float distance)
@@ -117,9 +121,9 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
     float light_distance = length(L);
     L = normalize(L);
 
-    float radius = 100.0;
-    float attenuation = EpicAttenuation(light_distance, radius);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+    float radius = 250.0;
+    float attenuation = EpicAttenuation(light_distance, light.radius);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
 }
 
 // TODO: Test more
@@ -147,11 +151,11 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
     // Not the same as spot light direction (L)
     vec3 L = light.position.xyz - frag_pos;
     L = normalize(L);
+    vec3 cone_direction = normalize(light.direction.xyz);
 
-    float radius = 50.0;
-    float attenuation = SpotAttenuation(L, normalize(light.direction.xyz), radius);
-    float cone = Cone(L, light.direction.xyz, light.inner, light.outer);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone);
+    float attenuation = SpotAttenuation(L, cone_direction, light.radius);
+    float cone = Cone(L, cone_direction, light.inner, light.outer);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone) * light.intensity;
 }
 
 void main()
@@ -163,24 +167,25 @@ void main()
     vec3 plastic_specular = vec3(0.03);
     vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
     float shininess = 125.0;
-    vec3 texture_color = vec3(0.0);
+    vec3 hdr_color = vec3(0.0);
 
-    texture_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        texture_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, plastic_specular, shininess);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, plastic_specular, shininess);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        texture_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
         
     }   
-    texture_color += diffuse_color * lights.ambient.color.rgb * ambient_strength;
+    hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
 
-    color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
+    // Reinhard tone mapping
+    vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
-    // Gamma correction
-    color.rgb = pow(color.rgb, vec3(1.0/2.2));
+    // Gamma correction & alpha from diffuse texture
+    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(diffuse, fragment.tex_coord).a);
 }

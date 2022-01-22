@@ -158,13 +158,12 @@ void Scene::CreateLights()
 	sun->CreateComponent(Component::Type::DirLight);
 
 	GameObject* spot = CreateNewGameObject("Spot Light", root);
-	spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -11));
-	spot->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -1));
+
 	spot->CreateComponent(Component::Type::SpotLight);
 
 	GameObject* point = CreateNewGameObject("Point Light", root);
-	point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -11));
-	point->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -1));
 	point->CreateComponent(Component::Type::PointLight);
 }
 
@@ -245,10 +244,6 @@ GameObject* Scene::CreateDebugCamera()
 	debug_camera = camera->GetComponent<ComponentCamera>();
 	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
-
-	// TODO: Temporary light to debug, remove
-	camera->CreateComponent(Component::Type::PointLight);
-	camera->CreateComponent(Component::Type::SpotLight);
 
 	return camera;
 }

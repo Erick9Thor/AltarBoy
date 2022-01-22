@@ -19,6 +19,7 @@ public:
 	float3 GetDirection();
 
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	float intensity = 1.0f;
 
 private:
 	bool active = true;

@@ -106,9 +106,6 @@ Program* ModuleProgram::CreateProgram(const char* vtx_shader_path, const char* f
 Program* ModuleProgram::CreateMainProgram()
 {
 	main_program = CreateProgram("vertex.glsl", "fragment.glsl");
-	main_program->Activate();
-	main_program->BindUniformFloat("ambient_strength", &ambient_strength);
-	main_program->Deactivate();
 	return main_program;
 }
 
@@ -173,8 +170,16 @@ void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<Compo
 	// Ambient
 	lights_data.ambient = ambient_light;
 	// Directional
-	lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
-	lights_data.directional.color = dir_light->color;
+	if (dir_light->IsActive()) {
+		lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
+		lights_data.directional.color = dir_light->color;
+		lights_data.directional.intensity = dir_light->intensity;
+	}
+	else
+	{
+		lights_data.directional.intensity = 0.0f;
+	}
+
 	// Point
 	lights_data.n_points = 0;
 	for (unsigned i = 0; i < point_lights.size(); ++i)
@@ -183,6 +188,8 @@ void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<Compo
 		{
 			lights_data.points[lights_data.n_points].position = float4(point_lights[i]->GetPosition(), 0.0f);
 			lights_data.points[lights_data.n_points].color = point_lights[i]->color;
+			lights_data.points[lights_data.n_points].intensity = point_lights[i]->intensity;
+			lights_data.points[lights_data.n_points].radius = point_lights[i]->radius;
 			++lights_data.n_points;
 			if (lights_data.n_points == MAX_POINT_LIGHTS)
 				break;
@@ -199,6 +206,8 @@ void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<Compo
 			lights_data.spots[lights_data.n_spots].color = spot_lights[i]->color;
 			lights_data.spots[lights_data.n_spots].inner = DegToRad(spot_lights[i]->inner);
 			lights_data.spots[lights_data.n_spots].outer = DegToRad(spot_lights[i]->outer);
+			lights_data.spots[lights_data.n_points].intensity = spot_lights[i]->intensity;
+			lights_data.spots[lights_data.n_points].radius = spot_lights[i]->radius;
 			++lights_data.n_spots;
 			if (lights_data.n_spots == MAX_SPOT_LIGHTS)
 				break;
@@ -210,12 +219,7 @@ void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<Compo
 
 void ModuleProgram::OptionsMenu()
 {
-	if (ImGui::InputFloat("Ambient Strength", &ambient_strength))
-	{
-		main_program->Activate();
-		main_program->BindUniformFloat("ambient_strength", &ambient_strength);
-		main_program->Deactivate();
-	}
+	ImGui::InputFloat("Ambient Intensity", &ambient_light.intensity);
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::ColorPicker3("Ambient Color", &ambient_light.color[0], flag);
 }

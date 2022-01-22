@@ -27,6 +27,7 @@ void ComponentDirLight::DrawGui()
 	if (ImGui::CollapsingHeader("Dir Light"))
 	{
 		ImGui::Checkbox("D.Active", &active);
+		ImGui::InputFloat("D.Intensity", &intensity);
 		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 		ImGui::ColorPicker3("Dir Color", &color[0], flag);
 	}
