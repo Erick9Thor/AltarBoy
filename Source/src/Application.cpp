@@ -12,12 +12,15 @@
 #include "Modules/ModuleHardware.h"
 #include "Modules/ModuleSceneManager.h"
 #include "Modules/ModuleDebugDraw.h"
+#include "Modules/ModuleFileSystem.h"
 
 using namespace std;
 
 Application::Application()
 {
 	modules.push_back(hw = new ModuleHardware());
+	modules.push_back(file_sys = new ModuleFileSystem());
+
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());
 	modules.push_back(texture = new ModuleTexture());

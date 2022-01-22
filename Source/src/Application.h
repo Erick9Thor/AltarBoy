@@ -21,6 +21,7 @@ class ModuleTexture;
 class ModuleSceneManager;
 class ModuleProgram;
 class ModuleHardware;
+class ModuleFileSystem;
 
 class Program;
 class AppLog;
@@ -38,6 +39,7 @@ public:
 	bool CleanUp();
 
 	void RequestBrowser(const char* url) const;
+
 public:
 	ModuleRender* renderer = nullptr;
 	ModuleWindow* window = nullptr;
@@ -49,6 +51,7 @@ public:
 	ModuleSceneManager* scene_manager = nullptr;
 	ModuleProgram* program = nullptr;
 	ModuleHardware* hw = nullptr;
+	ModuleFileSystem* file_sys = nullptr;
 
 private:
 	PerformanceTimer timer;
