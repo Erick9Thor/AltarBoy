@@ -43,8 +43,8 @@ layout(std140, binding = 1) uniform Lights
     AmbientLight ambient;
     DirLight directional;
     PointLight points[MAX_POINT_LIGHTS];
-    uint n_points;
     SpotLight spots[MAX_SPOT_LIGHTS];
+    uint n_points;
     uint n_spots;
 } lights;
 
@@ -105,9 +105,8 @@ float Attenuation(float distance)
     return 1.0/(1.0+0.3*distance+0.3*(distance*distance));
 }
 
-float EpicAttenuation(float distance)
+float EpicAttenuation(float distance, float radius)
 {
-    float radius = 1000.0;
     return max(pow(max(1 - pow(distance/radius, 4), 0.0), 2.0), 0.0) / (distance * distance + 1);
 }
 
@@ -118,15 +117,17 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
     float light_distance = length(L);
     L = normalize(L);
 
-    float attenuation = EpicAttenuation(light_distance);
+    float radius = 100.0;
+    float attenuation = EpicAttenuation(light_distance, radius);
     return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
-float SpotAttenuation(const vec3 L, const vec3 cone_direction)
+// TODO: Test more
+float SpotAttenuation(const vec3 L, const vec3 cone_direction, float radius)
 {
      // Light direction from light to outside
-    float distance = max(dot(-L, cone_direction), 0.0);
-    return EpicAttenuation(distance);
+    float distance = dot(-L, cone_direction);
+    return EpicAttenuation(distance, radius);
 }
 
 float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
@@ -147,11 +148,10 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
     vec3 L = light.position.xyz - frag_pos;
     L = normalize(L);
 
-    float attenuation = SpotAttenuation(L, light.direction.xyz);
-    //float attenuation = EpicAttenuation(length(L));
+    float radius = 50.0;
+    float attenuation = SpotAttenuation(L, normalize(light.direction.xyz), radius);
     float cone = Cone(L, light.direction.xyz, light.inner, light.outer);
     return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone);
-    //return vec3(attenuation);
 }
 
 void main()
@@ -170,13 +170,13 @@ void main()
     for(uint i=0; i<lights.n_points; ++i)
     {
         texture_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, plastic_specular, shininess);
-    } 
+    }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
         texture_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
+        
     }   
-
     texture_color += diffuse_color * lights.ambient.color.rgb * 0.05;
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);

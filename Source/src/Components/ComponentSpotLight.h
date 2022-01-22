@@ -20,8 +20,8 @@ public:
 	float3 GetDirection();
 
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	float inner = 1.f;
-	float outer = 1.2f;
+	float inner = 0.1f;
+	float outer = 0.35f;
 
 private:
 	bool active = true;

@@ -90,6 +90,7 @@ private:
 		float4 color = float4::zero;
 		float inner;
 		float outer;
+		float padding[2] = {69.f, 69.f};
 	};
 
 	struct Lights
@@ -97,9 +98,9 @@ private:
 		AmbientLight ambient;
 		DirLight directional;
 		PointLight points[MAX_POINT_LIGHTS];
-		unsigned n_points;
 		SpotLight spots[MAX_SPOT_LIGHTS];
-		unsigned n_spots;
+		unsigned int n_points;
+		unsigned int n_spots;
 	};
 
 	struct Light
