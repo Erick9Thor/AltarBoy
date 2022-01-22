@@ -6,8 +6,12 @@
 #include "MathGeoLib.h"
 #include <vector>
 
+#define MAX_POINT_LIGHTS 4
+#define MAX_SPOT_LIGHTS 4
+
 class ComponentCamera;
 class ComponentPointLight;
+class ComponentSpotLight;
 
 class ModuleProgram : public Module
 {
@@ -30,7 +34,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(ComponentCamera* camera);
-	void UpdateLights(std::vector<ComponentPointLight*>& point_lights);
+	void UpdateLights(std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();
 
@@ -79,11 +83,23 @@ private:
 		float4 color = float4::zero;
 	};
 
+	struct SpotLight
+	{
+		float4 position = float4::zero;
+		float4 direction = float4::zero;
+		float4 color = float4::zero;
+		float inner;
+		float outer;
+	};
+
 	struct Lights
 	{
 		AmbientLight ambient;
 		DirLight directional;
-		PointLight point;
+		PointLight points[MAX_POINT_LIGHTS];
+		unsigned n_points;
+		SpotLight spots[MAX_SPOT_LIGHTS];
+		unsigned n_spots;
 	};
 
 	struct Light

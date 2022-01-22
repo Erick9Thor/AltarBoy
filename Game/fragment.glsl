@@ -1,5 +1,8 @@
 # version 440
 
+#define MAX_POINT_LIGHTS 4
+#define MAX_SPOT_LIGHTS 4
+
 #define PI 3.141597
 
 struct AmbientLight
@@ -19,6 +22,15 @@ struct PointLight
     vec4 color;
 };
 
+struct SpotLight
+{
+    vec4 position;
+    vec4 direction;
+    vec4 color;
+    float inner;
+    float outer;
+};
+
 layout(std140, row_major, binding = 0) uniform Camera
 {
     mat4 view;
@@ -30,7 +42,10 @@ layout(std140, binding = 1) uniform Lights
 {
     AmbientLight ambient;
     DirLight directional;
-    PointLight point;
+    PointLight points[MAX_POINT_LIGHTS];
+    uint n_points;
+    SpotLight spots[MAX_SPOT_LIGHTS];
+    uint n_spots;
 } lights;
 
 uniform sampler2D diffuse;
@@ -75,13 +90,14 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
     return light_color * (part1 + part2) * NdL * attenuation;
 }
 
-// TODO: Implement and add shininess or smoothness
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
                     const vec3 diffuse_color, const vec3 specular_color, float shininess)
 {
+    vec3 L = normalize(-light.direction.xyz);
+    
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, normalize(-light.direction.xyz), light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
 }
 
 float Attenuation(float distance)
@@ -98,12 +114,44 @@ float EpicAttenuation(float distance)
 vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
                    const vec3 diffuse_color, const vec3 specular_color, float shininess)
 {
-    vec3 light_direction = light.position.xyz - frag_pos;
-    float distance = length(light_direction);
-    light_direction = normalize(light_direction);
+    vec3 L = light.position.xyz - frag_pos;
+    float light_distance = length(L);
+    L = normalize(L);
 
-    float attenuation = 1.0; //sEpicAttenuation(distance);
-    return PBR(normal, view_dir, light_direction, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+    float attenuation = EpicAttenuation(light_distance);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation);
+}
+
+float SpotAttenuation(const vec3 L, const vec3 cone_direction)
+{
+     // Light direction from light to outside
+    float distance = max(dot(-L, cone_direction), 0.0);
+    return EpicAttenuation(distance);
+}
+
+float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
+{
+    // Light direction from light to fragment (Reverse than pbr)
+    float C = dot(-L, cone_direction);
+    float c_inner = cos(inner);
+    if (C > c_inner) return 1.0;
+    float c_outer = cos(outer);
+    if (C > c_outer) return (C - c_outer)/(c_inner - c_outer);
+    return 0.0;
+}
+
+vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const SpotLight light, 
+             const vec3 diffuse_color, const vec3 specular_color, float shininess)
+{
+    // Not the same as spot light direction (L)
+    vec3 L = light.position.xyz - frag_pos;
+    L = normalize(L);
+
+    float attenuation = SpotAttenuation(L, light.direction.xyz);
+    //float attenuation = EpicAttenuation(length(L));
+    float cone = Cone(L, light.direction.xyz, light.inner, light.outer);
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone);
+    //return vec3(attenuation);
 }
 
 void main()
@@ -115,11 +163,21 @@ void main()
     vec3 plastic_specular = vec3(0.03);
     vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
     float shininess = 125.0;
-    vec3 texture_color = DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
+    vec3 texture_color = vec3(0.0);
 
-    texture_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.point, diffuse_color, plastic_specular, shininess);
+    texture_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
+    
+    for(uint i=0; i<lights.n_points; ++i)
+    {
+        texture_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, plastic_specular, shininess);
+    } 
 
-    texture_color += diffuse_color * 0.05;
+    for(uint i=0; i<lights.n_spots; ++i)
+    {
+        texture_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
+    }   
+
+    texture_color += diffuse_color * lights.ambient.color.rgb * 0.05;
 
     color = vec4(texture_color.rgb, texture(diffuse, fragment.tex_coord).a);
 

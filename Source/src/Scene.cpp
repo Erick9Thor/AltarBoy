@@ -12,6 +12,7 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 #include "Components/ComponentPointLight.h"
+#include "Components/ComponentSpotLight.h"
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
 
@@ -228,6 +229,7 @@ GameObject* Scene::CreateDebugCamera()
 
 	// TODO: Temporary light to debug, remove
 	camera->CreateComponent(Component::Type::PointLight);
+	camera->CreateComponent(Component::Type::SpotLight);
 
 	return camera;
 }

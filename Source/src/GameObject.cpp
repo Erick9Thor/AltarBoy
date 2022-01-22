@@ -11,6 +11,7 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 #include "Components/ComponentPointLight.h"
+#include "Components/ComponentSpotLight.h"
 
 #include <debugdraw.h>
 
@@ -93,7 +94,6 @@ Component* GameObject::CreateComponent(Component::Type type)
 		break;
 	case (Component::Type::Camera):
 		new_component = new ComponentCamera(this);
-		new_component->OnTransformUpdated();
 		break;
 	case (Component::Type::Mesh):
 		new_component = new ComponentMesh(this);
@@ -103,7 +103,9 @@ Component* GameObject::CreateComponent(Component::Type type)
 		break;
 	case (Component::Type::PointLight):
 		new_component = new ComponentPointLight(this);
-		if (scene_owner) scene_owner->point_lights.push_back((ComponentPointLight*) new_component);
+		break;
+	case (Component::Type::SpotLight):
+		new_component = new ComponentSpotLight(this);
 		break;
 	}
 

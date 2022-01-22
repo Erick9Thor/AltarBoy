@@ -12,6 +12,7 @@ class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
 class ComponentPointLight;
+class ComponentSpotLight;
 class Skybox;
 class Quadtree;
 
@@ -48,6 +49,7 @@ public:
 
 	bool draw_skybox = true;
 	std::vector<ComponentPointLight*> point_lights;
+	std::vector<ComponentSpotLight*> spot_lights;
 
 	// --- Scene ---// TODO: Move this into WindowConfiguration menu on Scene subsection
 	void OptionsMenu();

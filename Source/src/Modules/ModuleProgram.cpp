@@ -2,6 +2,7 @@
 
 #include "../Components/ComponentCamera.h"
 #include "../Components/ComponentPointLight.h"
+#include "../Components/ComponentSpotLight.h"
 
 #include "../Utils/Logger.h"
 #include "glew.h"
@@ -170,7 +171,7 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 }
 
 
-void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights)
+void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights)
 {
 	Lights lights_data;
 	// Ambient
@@ -178,9 +179,35 @@ void ModuleProgram::UpdateLights(std::vector<ComponentPointLight*>& point_lights
 	// Directional
 	lights_data.directional.direction = float4(light.direction, 0.0f);
 	lights_data.directional.color = float4(light.color, 1.0f);
-	// Spot (TODO: Make array)
-	lights_data.point.position = float4(point_lights[0]->GetPosition(), 0.0f);
-	lights_data.point.color = point_lights[0]->color;
+	// Point
+	lights_data.n_points = 0;
+	for (unsigned i = 0; i < point_lights.size(); ++i)
+	{
+		if (point_lights[i]->IsActive())
+		{
+			lights_data.points[lights_data.n_points].position = float4(point_lights[i]->GetPosition(), 0.0f);
+			lights_data.points[lights_data.n_points].color = point_lights[i]->color;
+			++lights_data.n_points;
+			if (lights_data.n_points == MAX_POINT_LIGHTS)
+				break;
+		}
+	}
+	// Spot
+	lights_data.n_spots = 0;
+	for (unsigned i = 0; i < spot_lights.size(); ++i)
+	{
+		if (spot_lights[i]->IsActive())
+		{
+			lights_data.spots[lights_data.n_spots].position = float4(spot_lights[i]->GetPosition(), 0.0f);
+			lights_data.spots[lights_data.n_spots].direction = float4(spot_lights[i]->GetDirection(), 0.0f);
+			lights_data.spots[lights_data.n_spots].color = spot_lights[i]->color;
+			lights_data.spots[lights_data.n_spots].inner = spot_lights[i]->inner;
+			lights_data.spots[lights_data.n_spots].outer = spot_lights[i]->outer;
+			++lights_data.n_spots;
+			if (lights_data.n_spots == MAX_SPOT_LIGHTS)
+				break;
+		}
+	}
 
 	UpdateUBO(UBOPoints::p_lights, sizeof(Lights), &lights_data);
 }

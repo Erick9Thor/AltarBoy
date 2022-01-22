@@ -9,6 +9,8 @@
 ComponentPointLight::ComponentPointLight(GameObject* conatiner)
 	: Component(Component::Type::PointLight, conatiner)
 {
+	if (game_object->scene_owner)
+		game_object->scene_owner->point_lights.push_back((ComponentPointLight*) this);
 }
 
 ComponentPointLight::~ComponentPointLight()
