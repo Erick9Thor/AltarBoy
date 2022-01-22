@@ -7,8 +7,11 @@ enum class ResourceType
 {
 	UNKNOWN,
 	MATERIAL,
+	TEXTURE,
+	MODEL,
 	MESH,
 	SCENE,
+	SHADER
 };
 
 class Resource

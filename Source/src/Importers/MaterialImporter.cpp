@@ -5,6 +5,7 @@
 
 void MaterialImporter::Material::Import(const char* filePath, JsonFormaterValue json_meta, ResourceMaterial* rMaterial)
 {
+
 }
 
 bool MaterialImporter::Material::Save(const ResourceMaterial* resource_material, char** buffer)
@@ -15,6 +16,7 @@ bool MaterialImporter::Material::Save(const ResourceMaterial* resource_material,
 void MaterialImporter::Material::Load(const char* buffer, ResourceMaterial* rMaterial)
 {
 }
+
 /*
 //	--- Texture importer --- //
 
