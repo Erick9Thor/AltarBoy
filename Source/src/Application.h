@@ -22,6 +22,7 @@ class ModuleSceneManager;
 class ModuleProgram;
 class ModuleHardware;
 class ModuleFileSystem;
+class ModuleResourceManager;
 
 class Program;
 class AppLog;
@@ -52,6 +53,7 @@ public:
 	ModuleProgram* program = nullptr;
 	ModuleHardware* hw = nullptr;
 	ModuleFileSystem* file_sys = nullptr;
+	ModuleResourceManager* resource_manager = nullptr;
 
 private:
 	PerformanceTimer timer;
