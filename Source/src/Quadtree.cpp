@@ -61,30 +61,30 @@ void QuadtreeNode::CreateChildren()
 	// Do not operate y, 2d
 	float3 child_size = float3(0.5f * size.x, size.y, 0.5f * size.z);
 	// Recalculate for each child
-	float3 child_center;
+	float3 child_center(center);
 	AABB child_box;
 
 	// NW
 	child_center.x = center.x - size.x * 0.25f;
-	child_center.x = center.z + size.z * 0.25f;
+	child_center.z = center.z + size.z * 0.25f;
 	child_box.SetFromCenterAndSize(child_center, child_size);
 	childs[Quadrants::NW] = new QuadtreeNode(child_box, this);
 
 	// NE
 	child_center.x = center.x + size.x * 0.25f;
-	child_center.x = center.z + size.z * 0.25f;
+	child_center.z = center.z + size.z * 0.25f;
 	child_box.SetFromCenterAndSize(child_center, child_size);
 	childs[Quadrants::NE] = new QuadtreeNode(child_box, this);
 
 	// SE
 	child_center.x = center.x + size.x * 0.25f;
-	child_center.x = center.z - size.z * 0.25f;
+	child_center.z = center.z - size.z * 0.25f;
 	child_box.SetFromCenterAndSize(child_center, child_size);
 	childs[Quadrants::SE] = new QuadtreeNode(child_box, this);
 
 	// SW
 	child_center.x = center.x - size.x * 0.25f;
-	child_center.x = center.z - size.z * 0.25f;
+	child_center.z = center.z - size.z * 0.25f;
 	child_box.SetFromCenterAndSize(child_center, child_size);
 	childs[Quadrants::SW] = new QuadtreeNode(child_box, this);
 }
@@ -100,15 +100,18 @@ void QuadtreeNode::RearangeChildren()
 
 		// If it intersects all there is no point in moving downwards
 		if (intersects[Quadrants::NW] && intersects[Quadrants::NE] && intersects[Quadrants::SE] && intersects[Quadrants::SW])
+		{
 			++it;
-		else {
-			for (int i = 0; i < Quadrants::NUM_QUADRANTS; ++i) {
-				if (intersects[i])
-					childs[i]->Insert(game_object);
-			}				
-			it = objects.erase(it);
-		}			
+			continue;
+		}
+
+		for (int i = 0; i < Quadrants::NUM_QUADRANTS; ++i) {
+			if (intersects[i])
+				childs[i]->Insert(game_object);
+		}				
+		it = objects.erase(it);		
 	}
+	auto a = 1;
 }
 
 Quadtree::Quadtree()

@@ -44,7 +44,12 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-layout(std140, binding = 1) uniform Lights
+/*layout(std140, binding = 1) uniform Material
+{
+
+} material;*/
+
+layout(std140, binding = 2) uniform Lights
 {
     AmbientLight ambient;
     DirLight directional;

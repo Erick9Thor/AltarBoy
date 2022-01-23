@@ -60,10 +60,16 @@ public:
 
 	// --- Importer --- // TODO: Move to importer
 	GameObject* LoadFBX(const std::string& path);
+	struct Material
+	{
+		Texture diffuse;
+		Texture specular;
+	};
+
 private:
-	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
-	std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
-	Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
+	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Material>& textures);
+	std::vector<Material> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
+	Material ImportMaterial(const aiMaterial* material, const std::string& model_path, const std::string& model_name);
 
 private:
 	ModuleSceneManager* manager_owner = nullptr;

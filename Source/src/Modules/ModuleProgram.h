@@ -21,6 +21,7 @@ public:
 	enum UBOPoints
 	{
 		p_camera = 0,
+		p_material,
 		p_lights,
 		n_ubo_points,
 	};
@@ -57,6 +58,8 @@ private:
 	void CreateCameraUBO(); 
 	void CreateLightsUBO();
 
+	unsigned ubos[UBOPoints::n_ubo_points];
+
 	struct Camera
 	{
 		float4x4 view = float4x4::identity;
@@ -64,7 +67,15 @@ private:
 		float3 pos = float3::zero;
 	};
 
-	unsigned ubos[UBOPoints::n_ubo_points];
+	struct MaterialData
+	{
+		float4 diffuse_color;
+		float4 specular_color;
+		unsigned diffuse_flag;
+		unsigned specular_flag;
+		float shininess;		
+	};
+	
 
 	// Use float4 to prevent padding
 	struct AmbientLight
@@ -111,14 +122,7 @@ private:
 		unsigned int n_points;
 		unsigned int n_spots;
 	};
-
-	struct Light
-	{
-		float3 position;
-		float3 direction;
-		float3 color;
-	};
-
+	
 	AmbientLight ambient_light;
 	float ambient_strength = 0.05f;
 };
