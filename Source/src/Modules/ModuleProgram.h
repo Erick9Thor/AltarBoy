@@ -6,8 +6,13 @@
 #include "MathGeoLib.h"
 #include <vector>
 
+#define MAX_POINT_LIGHTS 4
+#define MAX_SPOT_LIGHTS 4
+
 class ComponentCamera;
+class ComponentDirLight;
 class ComponentPointLight;
+class ComponentSpotLight;
 
 class ModuleProgram : public Module
 {
@@ -16,6 +21,7 @@ public:
 	enum UBOPoints
 	{
 		p_camera = 0,
+		p_material,
 		p_lights,
 		n_ubo_points,
 	};
@@ -30,7 +36,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(ComponentCamera* camera);
-	void UpdateLights(std::vector<ComponentPointLight*>& point_lights);
+	void UpdateLights(ComponentDirLight* dir_light, std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();
 
@@ -52,6 +58,8 @@ private:
 	void CreateCameraUBO(); 
 	void CreateLightsUBO();
 
+	unsigned ubos[UBOPoints::n_ubo_points];
+
 	struct Camera
 	{
 		float4x4 view = float4x4::identity;
@@ -59,39 +67,62 @@ private:
 		float3 pos = float3::zero;
 	};
 
-	unsigned ubos[UBOPoints::n_ubo_points];
+	struct MaterialData
+	{
+		float4 diffuse_color;
+		float4 specular_color;
+		unsigned diffuse_flag;
+		unsigned specular_flag;
+		float shininess;		
+	};
+	
 
 	// Use float4 to prevent padding
 	struct AmbientLight
 	{
-		float4 color = float4::zero;
+		float4 color = float4::one;
+		float intensity = 0.05f;
+		float padding[3];
 	};
 
 	struct DirLight
 	{
 		float4 direction = float4::zero;
 		float4 color = float4::zero;
+		float intensity;
+		float padding[3];
 	};
 
 	struct PointLight
 	{
 		float4 position = float4::zero;
 		float4 color = float4::zero;
+		float intensity;
+		float radius;
+		float padding[2];
+	};
+
+	struct SpotLight
+	{
+		float4 position = float4::zero;
+		float4 direction = float4::zero;
+		float4 color = float4::zero;
+		float inner;
+		float outer;
+		float intensity;
+		float radius;
 	};
 
 	struct Lights
 	{
 		AmbientLight ambient;
 		DirLight directional;
-		PointLight point;
+		PointLight points[MAX_POINT_LIGHTS];
+		SpotLight spots[MAX_SPOT_LIGHTS];
+		unsigned int n_points;
+		unsigned int n_spots;
 	};
-
-	struct Light
-	{
-		float3 position;
-		float3 direction;
-		float3 color;
-	};
-
-	Light light;
+	
+	AmbientLight ambient_light;
+	float ambient_strength = 0.05f;
 };

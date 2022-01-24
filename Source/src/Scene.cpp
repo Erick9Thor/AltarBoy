@@ -1,10 +1,11 @@
+#include "Scene.h"
+
 #include "Globals.h"
 
 #include "Utils/Logger.h"
 
 #include "Application.h"
 #include "Modules/ModuleDebugDraw.h"
-#include "Scene.h"
 #include "GameObject.h"
 #include "Components/Component.h"
 #include "Components/ComponentTransform.h"
@@ -12,8 +13,10 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 #include "Components/ComponentPointLight.h"
+#include "Components/ComponentSpotLight.h"
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
+#include "Resources/Resource.h"
 
 #include "Skybox.h"
 #include "Quadtree.h"
@@ -29,10 +32,11 @@ Scene::Scene()
 	quadtree = new Quadtree();
 	skybox = new Skybox();
 
-	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 30, 500)));
+	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 	
 	CreateDebugCamera();
+	CreateLights();
 }
 
 Scene::~Scene()
@@ -75,14 +79,14 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
 	if (scene)
 	{
-		std::vector<Texture> textures = LoadTextures(scene, model_path);
+		std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
 		model = CreateNewGameObject(name.c_str(), root);
-		LoadNode(scene, scene->mRootNode, model, textures);
-		textures.clear();
+		LoadNode(scene, scene->mRootNode, model, materials);
+		materials.clear();
 	}
 	else
 	{
-		LOG("Error loading file %s: %s", file_name.c_str(), aiGetErrorString());
+		LOG("Error loading file %s: %s", model_path.c_str(), aiGetErrorString());
 	}
 	importer.FreeScene();
 	return model;
@@ -124,7 +128,7 @@ GameObject* Scene::RayCast(const LineSegment& segment) const
 			
 			const float* vertices = mesh->GetVertices();
 			const unsigned* indices = mesh->GetIndices();
-			for (int i = 0; i < mesh->GetBufferSize(ComponentMesh::Buffers::b_indices); i += 3)
+			for (unsigned i = 0; i < mesh->GetBufferSize(ComponentMesh::Buffers::b_indices); i += 3)
 			{
 				Triangle triangle;
 				triangle.a = vec(&vertices[indices[i] * 3]);
@@ -148,7 +152,24 @@ GameObject* Scene::RayCast(const LineSegment& segment) const
 	return selected;
 }
 
-void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures)
+void Scene::CreateLights()
+{
+	GameObject* sun = CreateNewGameObject("Sun", root);
+	sun->GetComponent<ComponentTransform>()->SetLocalPosition(float3(1, 1, -1));
+	sun->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+	sun->CreateComponent(Component::Type::DirLight);
+
+	GameObject* spot = CreateNewGameObject("Spot Light", root);
+	spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -1));
+
+	spot->CreateComponent(Component::Type::SpotLight);
+
+	GameObject* point = CreateNewGameObject("Point Light", root);
+	point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -1));
+	point->CreateComponent(Component::Type::PointLight);
+}
+
+void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& materials)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -157,7 +178,7 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 		model_part->CreateComponent(Component::Type::Mesh);
 		model_part->GetComponent<ComponentMesh>()->Load(mesh);
 		model_part->CreateComponent(Component::Type::Material);
-		model_part->GetComponent<ComponentMaterial>()->SetTexture(textures[mesh->mMaterialIndex]);
+		model_part->GetComponent<ComponentMaterial>()->SetMaterial(materials[mesh->mMaterialIndex]);
 
 		aiVector3D aiTranslation, aiScale;
 		aiQuaternion aiRotation;
@@ -171,48 +192,23 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	// then do the same for each of its children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		LoadNode(scene, node->mChildren[i], parent, textures);
+		LoadNode(scene, node->mChildren[i], parent, materials);
 	}
 }
 
-std::vector<Texture> Scene::LoadTextures(const aiScene* scene, const std::string& model_path)
+std::vector<ResourceMaterial*> Scene::LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name)
 {
-	std::vector<Texture> textures;
-	textures.reserve(scene->mNumMaterials);
-	LOG("Loading %d textures", scene->mNumMaterials)
+	std::vector<ResourceMaterial*> materials;
+	materials.reserve(scene->mNumMaterials);
+	LOG("Loading %d materials", scene->mNumMaterials)
 	for (unsigned i = 0; i < scene->mNumMaterials; i++)
 	{
-		Texture texture = LoadTexture(scene->mMaterials[i], model_path);
-		textures.push_back(texture);
+		// Temporarily use i as uid
+		ResourceMaterial* material = new ResourceMaterial(i);
+		material->Import(scene->mMaterials[i], model_path, model_name);
+		materials.push_back(material);
 	}
-	return textures;
-}
-
-Texture Scene::LoadTexture(const aiMaterial* material, const std::string& model_path)
-{
-	static const int index = 0;
-	aiString file;
-	Texture texture;
-	texture.loaded = false;
-	if (material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
-	{
-		std::string model_texture_path(file.data);
-		std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-		std::string default_path("Textures\\");
-
-		texture = App->texture->Load(file.data);
-		if (texture.loaded)
-			return texture;
-
-		texture = App->texture->Load((model_path + texture_file).c_str());
-		if (texture.loaded)
-			return texture;
-
-		texture = App->texture->Load((default_path + texture_file).c_str());
-		if (!texture.loaded)
-			LOG("Error loading textures: %s", aiGetErrorString());
-	}
-	return texture;
+	return materials;
 }
 
 GameObject* Scene::CreateDebugCamera()
@@ -225,9 +221,6 @@ GameObject* Scene::CreateDebugCamera()
 	debug_camera = camera->GetComponent<ComponentCamera>();
 	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
-
-	// TODO: Temporary light to debug, remove
-	camera->CreateComponent(Component::Type::PointLight);
 
 	return camera;
 }

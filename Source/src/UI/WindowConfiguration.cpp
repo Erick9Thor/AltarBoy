@@ -25,14 +25,11 @@ void WindowConfiguration::Update()
 			App->renderer->OptionsMenu();
 			ImGui::Separator();
 			App->scene_manager->GetActiveScene()->OptionsMenu();
+			App->program->OptionsMenu();
 		}
 		if (ImGui::CollapsingHeader("Engine Camera"))
 		{
 			App->camera->GetMainCamera()->DrawGui();
-		}
-		if (ImGui::CollapsingHeader("Sharder (Temporary)"))
-		{
-			App->program->OptionsMenu();
 		}
 		/*if (ImGui::CollapsingHeader("FPS control"))
 		{

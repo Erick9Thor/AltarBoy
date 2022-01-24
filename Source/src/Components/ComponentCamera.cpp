@@ -24,6 +24,8 @@ ComponentCamera::ComponentCamera(GameObject* container)
 	frustum.SetUp(float3x3::identity.WorldY());
 
 	frustum.GetPlanes(planes);
+
+	OnTransformUpdated();
 }
 
 ComponentCamera::~ComponentCamera()

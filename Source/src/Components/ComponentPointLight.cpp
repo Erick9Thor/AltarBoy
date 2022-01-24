@@ -9,6 +9,8 @@
 ComponentPointLight::ComponentPointLight(GameObject* conatiner)
 	: Component(Component::Type::PointLight, conatiner)
 {
+	if (game_object->scene_owner)
+		game_object->scene_owner->point_lights.push_back((ComponentPointLight*) this);
 }
 
 ComponentPointLight::~ComponentPointLight()
@@ -24,8 +26,11 @@ void ComponentPointLight::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Point Light"))
 	{
+		ImGui::Checkbox("P.Active", &active);
+		ImGui::InputFloat("P.Intensity", &intensity);
+		ImGui::InputFloat("P.Radius", &radius);
 		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-		ImGui::ColorPicker3("Color", &color[0], flag);
+		ImGui::ColorPicker3("Point Color", &color[0], flag);
 	}
 }
 

@@ -31,6 +31,7 @@ void WindowScene::Update()
 	}
 	if (ImGui::Begin(ICON_FA_GLOBE "Scene", &active))
 	{
+		focused = ImGui::IsWindowFocused();
 		GuizmoOptionsController();
 		ImGui::SameLine();
 		ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
@@ -138,7 +139,7 @@ void WindowScene::DrawScene()
 
 void WindowScene::Controller()
 {
-	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (!using_guizmo && focused &&App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		Scene* scene = App->scene_manager->GetActiveScene();
 		GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);

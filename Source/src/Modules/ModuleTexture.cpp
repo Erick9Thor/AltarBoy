@@ -19,11 +19,11 @@ bool ModuleTexture::CleanUp()
 	return true;
 }
 
-Texture ModuleTexture::Load(const char* path)
+Texture ModuleTexture::Load(const char* path, bool flip)
 {
 	Texture texture;
 	texture.path = path;
-	unsigned int img_id = LoadImg(path);
+	unsigned int img_id = LoadImg(path, flip);
 
 	if (img_id != 0)
 	{
@@ -45,6 +45,7 @@ Texture ModuleTexture::Load(const char* path)
 
 TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
 {
+	constexpr bool flip = true;
 	TextureCube cube;
 	cube.loaded = true;
 
@@ -54,7 +55,7 @@ TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
 	// Expected file order x, -x, y, -y, z, -z
 	for (int i = 0; i < 6; ++i)
 	{
-		unsigned int img_id = LoadImg(paths[i]);
+		unsigned int img_id = LoadImg(paths[i], flip);
 		iluFlipImage();
 		if (img_id == 0)
 		{
@@ -106,7 +107,7 @@ void ModuleTexture::OptionsMenu()
 		SetOption(GL_TEXTURE_MIN_FILTER, values_min[min_filter]);
 }
 
-unsigned int ModuleTexture::LoadImg(const char* path)
+unsigned int ModuleTexture::LoadImg(const char* path, bool flip)
 {
 	ILuint img_id; // The image name to return.
 	ilGenImages(1, &img_id); // Grab a new image name.
@@ -114,7 +115,8 @@ unsigned int ModuleTexture::LoadImg(const char* path)
 	if (!ilLoadImage(path))
 		return 0;
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
-	iluFlipImage();
+	if (flip)
+		iluFlipImage();
 	return img_id;
 }
 

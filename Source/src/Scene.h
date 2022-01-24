@@ -3,6 +3,8 @@
 #include "Geometry/LineSegment.h"
 #include "Modules/ModuleTexture.h"
 #include "Components/Component.h"
+#include "Resources/ResourceMaterial.h"
+
 #include "assimp/scene.h"
 
 #include <string>
@@ -11,7 +13,9 @@
 class ModuleSceneManager;
 class GameObject;
 class ComponentCamera;
+class ComponentDirLight;
 class ComponentPointLight;
+class ComponentSpotLight;
 class Skybox;
 class Quadtree;
 
@@ -47,17 +51,23 @@ public:
 	GameObject* RayCast(const LineSegment& segment) const;
 
 	bool draw_skybox = true;
+
+	void CreateLights();
+	std::vector<ComponentDirLight*> dir_lights;
 	std::vector<ComponentPointLight*> point_lights;
+	std::vector<ComponentSpotLight*> spot_lights;
 
 	// --- Scene ---// TODO: Move this into WindowConfiguration menu on Scene subsection
 	void OptionsMenu();
 
 	// --- Importer --- // TODO: Move to importer
 	GameObject* LoadFBX(const std::string& path);
+	
+
 private:
-	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Texture>& textures);
-	std::vector<Texture> LoadTextures(const aiScene* scene, const std::string& model_path);
-	Texture LoadTexture(const aiMaterial* material, const std::string& model_path);
+	// TODO: Fix leaks from resource material pointers when doing import system
+	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& textures);
+	std::vector<ResourceMaterial*> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
 
 private:
 	ModuleSceneManager* manager_owner = nullptr;

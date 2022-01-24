@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "../Modules/ModuleTexture.h"
+#include "../Resources/ResourceMaterial.h"
 
 class ComponentMaterial : public Component
 {
@@ -10,8 +11,8 @@ public:
 	~ComponentMaterial() override;
 	static inline Type GetType() { return Type::Material; };
 
-	void SetTexture(Texture new_texture) { texture = new_texture; }
-	inline unsigned GetTextureId() const { return texture.id; }
+	void SetMaterial(ResourceMaterial* new_material) { material = new_material; }
+	inline unsigned GetTextureId() const { return material->diffuse.id; }
 
 	void DrawGui() override;
 
@@ -19,5 +20,5 @@ public:
 	void Load(JsonFormaterValue j_component) override;
 
 private:
-	Texture texture;
+	ResourceMaterial* material;
 };
