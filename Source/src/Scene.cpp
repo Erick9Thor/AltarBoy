@@ -16,6 +16,7 @@
 #include "Components/ComponentSpotLight.h"
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
+#include "Resources/Resource.h"
 
 #include "Skybox.h"
 #include "Quadtree.h"
@@ -78,7 +79,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
 	if (scene)
 	{
-		std::vector<Material> materials = LoadMaterials(scene, model_path, name);
+		std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
 		model = CreateNewGameObject(name.c_str(), root);
 		LoadNode(scene, scene->mRootNode, model, materials);
 		materials.clear();
@@ -168,7 +169,7 @@ void Scene::CreateLights()
 	point->CreateComponent(Component::Type::PointLight);
 }
 
-void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<Material>& materials)
+void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& materials)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -195,64 +196,19 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	}
 }
 
-std::vector<Scene::Material> Scene::LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name)
+std::vector<ResourceMaterial*> Scene::LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name)
 {
-	std::vector<Material> materials;
+	std::vector<ResourceMaterial*> materials;
 	materials.reserve(scene->mNumMaterials);
 	LOG("Loading %d materials", scene->mNumMaterials)
 	for (unsigned i = 0; i < scene->mNumMaterials; i++)
 	{
-		Material texture = ImportMaterial(scene->mMaterials[i], model_path, model_name);
-		materials.push_back(texture);
+		// Temporarily use i as uid
+		ResourceMaterial* material = new ResourceMaterial(i);
+		material->Import(scene->mMaterials[i], model_path, model_name);
+		materials.push_back(material);
 	}
 	return materials;
-}
-
-Scene::Material Scene::ImportMaterial(const aiMaterial* material, const std::string& model_path, const std::string& model_name)
-{
-	static const int index = 0;
-	aiString file;
-	Material texture;
-
-	std::string default_path("Textures\\");	
-	
-	std::vector<std::string> search_paths;
-	if (material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS) {
-		std::string model_texture_path(file.data);
-		std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-		search_paths.push_back(file.data);
-		search_paths.push_back(model_path + texture_file);
-		search_paths.push_back(default_path + texture_file);
-	}
-	search_paths.push_back(model_path + model_name + "Diffuse.png");
-	search_paths.push_back(default_path + model_name + "Diffuse.png");
-
-	for (std::string path : search_paths)
-	{
-		texture.diffuse = App->texture->Load(path.c_str());
-		if (texture.diffuse.loaded)
-			break;
-	}
-
-	search_paths.clear();
-	if (material->GetTexture(aiTextureType_SPECULAR, index, &file) == AI_SUCCESS)
-	{
-		std::string model_texture_path(file.data);
-		std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-		search_paths.push_back(file.data);
-		search_paths.push_back(model_path + texture_file);
-		search_paths.push_back(default_path + texture_file);
-	}
-	search_paths.push_back(model_path + model_name + "Specular.tif");
-	search_paths.push_back(default_path + model_name + "Specular.tif");
-
-	for (std::string path : search_paths)
-	{
-		texture.specular = App->texture->Load(path.c_str());
-		if (texture.specular.loaded)
-			break;
-	}
-	return texture;
 }
 
 GameObject* Scene::CreateDebugCamera()
