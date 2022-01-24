@@ -35,6 +35,8 @@ bool ResourceMaterial::Import(const aiMaterial* assimp_material, const std::stri
 		ColorCopy(color, specular_color);
 	}
 
+	assimp_material->Get(AI_MATKEY_SHININESS, shininess);
+
 	std::vector<std::string> search_paths;
 	if (assimp_material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
 	{

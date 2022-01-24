@@ -173,17 +173,19 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	App->debug_draw->Draw(view, proj, fb_height, fb_width);
 
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	GameObject* root = scene->GetRoot();
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
 
 	//Draw alternatives 0 optiomization, no quadtree
+	// GameObject* root = scene->GetRoot();
 	//root->DrawAll(camera);
 	//render_list.Update(culling, root);
 
 	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+	Program* program = App->program->GetMainProgram();
+	program->Activate();
 	for (RenderTarget& target : render_list.GetNodes())
 		target.game_object->Draw(camera);
+	program->Deactivate();
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -33,7 +33,7 @@ void ComponentDirLight::DrawGui()
 	}
 }
 
-float3 ComponentDirLight::GetDirection()
+float3 ComponentDirLight::GetDirection() const
 {
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
 	return transform->GetFwd();

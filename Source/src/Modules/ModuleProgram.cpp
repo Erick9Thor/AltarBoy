@@ -4,6 +4,7 @@
 #include "../Components/ComponentDirLight.h"
 #include "../Components/ComponentPointLight.h"
 #include "../Components/ComponentSpotLight.h"
+#include "../Resources/ResourceMaterial.h"
 
 #include "../Utils/Logger.h"
 #include "glew.h"
@@ -22,6 +23,7 @@ bool ModuleProgram::Init()
 		return false;
 
 	CreateCameraUBO();
+	CreateMaterialUBO();
 	CreateLightsUBO();
 	return true;
 }
@@ -138,6 +140,11 @@ void ModuleProgram::CreateCameraUBO()
 	CreateUBO(UBOPoints::p_camera, sizeof(Camera));
 }
 
+void ModuleProgram::CreateMaterialUBO()
+{
+	CreateUBO(UBOPoints::p_material, sizeof(MaterialData));
+}
+
 void ModuleProgram::CreateLightsUBO()
 {
 	CreateUBO(UBOPoints::p_lights, sizeof(Lights));
@@ -152,7 +159,7 @@ bool ModuleProgram::CleanUp()
 	return true;
 }
 
-void ModuleProgram::UpdateCamera(ComponentCamera* camera)
+void ModuleProgram::UpdateCamera(const ComponentCamera* camera)
 {
 	Camera camera_data;
 	camera_data.view = camera->GetViewMatrix();
@@ -163,8 +170,19 @@ void ModuleProgram::UpdateCamera(ComponentCamera* camera)
 	UpdateUBO(UBOPoints::p_camera, sizeof(Camera), &camera_data);
 }
 
+void ModuleProgram::UpdateMaterial(const ResourceMaterial* material)
+{
+	MaterialData material_data;
+	material_data.diffuse_color = material->diffuse_color;
+	material_data.diffuse_flag = material->diffuse.loaded;
+	material_data.specular_color = material->specular_color;
+	material_data.specular_flag = material->specular.loaded;
+	material_data.shininess = material->shininess;
 
-void ModuleProgram::UpdateLights(ComponentDirLight* dir_light, std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights)
+	UpdateUBO(UBOPoints::p_material, sizeof(MaterialData), &material_data);
+}
+
+void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights)
 {
 	Lights lights_data;
 	// Ambient

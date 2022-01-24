@@ -13,6 +13,7 @@ class ComponentCamera;
 class ComponentDirLight;
 class ComponentPointLight;
 class ComponentSpotLight;
+class ResourceMaterial;
 
 class ModuleProgram : public Module
 {
@@ -35,8 +36,9 @@ public:
 	Program* GetMainProgram() const { return main_program; }
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
-	void UpdateCamera(ComponentCamera* camera);
-	void UpdateLights(ComponentDirLight* dir_light, std::vector<ComponentPointLight*>& point_lights, std::vector<ComponentSpotLight*>& spot_lights);
+	void UpdateCamera(const ComponentCamera* camera);
+	void UpdateMaterial(const ResourceMaterial* material);
+	void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& const point_lights, const std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();
 
@@ -56,6 +58,7 @@ private:
 	void CreateUBO(UBOPoints binding_point, unsigned size);
 	void UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0);
 	void CreateCameraUBO(); 
+	void CreateMaterialUBO();
 	void CreateLightsUBO();
 
 	unsigned ubos[UBOPoints::n_ubo_points];

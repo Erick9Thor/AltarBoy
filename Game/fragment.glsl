@@ -44,10 +44,14 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-/*layout(std140, binding = 1) uniform Material
+layout(std140, binding = 1) uniform Material
 {
-
-} material;*/
+    vec4 diffuse_color;
+    vec4 specular_color;
+    uint diffuse_flag;
+    uint specular_flag;
+    float shininess;
+} material;
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -173,7 +177,7 @@ void main()
     vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
     float shininess = 125.0;
     vec3 hdr_color = vec3(0.0);
-
+    
     hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
     
     for(uint i=0; i<lights.n_points; ++i)
