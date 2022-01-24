@@ -13,6 +13,7 @@ public:
 	void BindUniformFloat3(const char* name, const float* data);
 	void BindUniformFloat(const char* name, const float* data);
 	void BindUniformBool(const char* name, bool value);	
+	void BindUniformInts(const char* name, unsigned size, const int* data);
 
 	inline int GetId() const{ return id; }
 

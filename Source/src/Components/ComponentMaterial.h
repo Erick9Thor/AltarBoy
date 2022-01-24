@@ -12,7 +12,6 @@ public:
 	static inline Type GetType() { return Type::Material; };
 
 	void SetMaterial(ResourceMaterial* new_material) { material = new_material; }
-	inline unsigned GetTextureId() const { return material->diffuse.id; }
 	const ResourceMaterial* GetMaterial() const { return material; }
 
 	void DrawGui() override;

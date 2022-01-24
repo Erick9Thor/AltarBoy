@@ -1,5 +1,6 @@
 #include "ModuleProgram.h"
 
+#include "../Application.h"
 #include "../Components/ComponentCamera.h"
 #include "../Components/ComponentDirLight.h"
 #include "../Components/ComponentPointLight.h"
@@ -172,12 +173,20 @@ void ModuleProgram::UpdateCamera(const ComponentCamera* camera)
 
 void ModuleProgram::UpdateMaterial(const ResourceMaterial* material)
 {
+	static int texture_slots[n_texture_slots] = {t_diffuse, t_specular};
+	main_program->BindUniformInts("textures", n_texture_slots, &texture_slots[0]);
+	
 	MaterialData material_data;
 	material_data.diffuse_color = material->diffuse_color;
 	material_data.diffuse_flag = material->diffuse.loaded;
 	material_data.specular_color = material->specular_color;
 	material_data.specular_flag = material->specular.loaded;
 	material_data.shininess = material->shininess;
+
+	if (material->diffuse.loaded)
+		App->texture->Bind(material->GetDiffuseId(), ModuleProgram::TextureSlots::t_diffuse);
+	if (material->specular.loaded)
+		App->texture->Bind(material->GetSpecularId(), ModuleProgram::TextureSlots::t_specular);
 
 	UpdateUBO(UBOPoints::p_material, sizeof(MaterialData), &material_data);
 }
@@ -187,7 +196,7 @@ void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::
 	Lights lights_data;
 	// Ambient
 	lights_data.ambient = ambient_light;
-	// Directional
+	// DirectionalS
 	if (dir_light->IsActive()) {
 		lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
 		lights_data.directional.color = dir_light->color;

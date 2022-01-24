@@ -101,11 +101,9 @@ void ComponentMesh::Draw(ComponentCamera* camera)
 
 	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
 	App->program->UpdateMaterial(material->GetMaterial());
-	App->texture->Bind(material->GetTextureId());
 
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, buffer_sizes[Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
-	App->texture->Unbind();
 }
 
 void ComponentMesh::CleanUp()

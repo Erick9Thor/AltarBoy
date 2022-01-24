@@ -9,10 +9,10 @@
 struct Texture
 {
 	bool loaded = false;
-	unsigned id;
+	unsigned id = 0;
 	std::string path;
-	unsigned width;
-	unsigned height;
+	unsigned width = 0;
+	unsigned height = 0;
 };
 
 struct TextureCube
@@ -28,9 +28,6 @@ class ModuleTexture : public Module
 {
 
 public:
-
-
-
 	ModuleTexture();
 	~ModuleTexture() override;
 
@@ -39,8 +36,8 @@ public:
 
 	Texture Load(const char* path, bool flip = true);
 	TextureCube LoadCubeMap(const char* paths[6]);
-	void Bind(unsigned id, unsigned slot = GL_TEXTURE0);
-	void Unbind(unsigned slot = GL_TEXTURE0);
+	void Bind(unsigned id, unsigned slot);
+	void Unbind(unsigned slot);
 
 	inline const short GetDevilVersion() const { return devil_version; }
 

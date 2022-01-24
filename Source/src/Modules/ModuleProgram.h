@@ -27,6 +27,13 @@ public:
 		n_ubo_points,
 	};
 
+	enum TextureSlots
+	{
+		t_diffuse = 0,
+		t_specular,
+		n_texture_slots,
+	};
+
 	ModuleProgram();
 	~ModuleProgram() override;
 
@@ -38,7 +45,7 @@ public:
 
 	void UpdateCamera(const ComponentCamera* camera);
 	void UpdateMaterial(const ResourceMaterial* material);
-	void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& const point_lights, const std::vector<ComponentSpotLight*>& spot_lights);
+	void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();
 
