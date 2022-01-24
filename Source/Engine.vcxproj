@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Resources\ResourceShader.cpp" />
+    <ClCompile Include="src\Importers\ShaderImporter.cpp" />
     <ClCompile Include="src\Resources\ResourceTexture.cpp" />
     <ClCompile Include="src\Importers\ModelImporter.cpp" />
     <ClCompile Include="src\Components\ComponentPointLight.cpp" />
@@ -270,6 +272,9 @@
     <ClCompile Include="src\Utils\UID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Resources\ResourceShader.h" />
+    <ClInclude Include="src\Importers\ShaderImporter.h" />
+    <ClInclude Include="src\UI\ImGuiUtils.h" />
     <ClInclude Include="src\Resources\ResourceTexture.h" />
     <ClInclude Include="src\Importers\ModelImporter.h" />
     <ClInclude Include="src\Components\ComponentPointLight.h" />
@@ -407,6 +412,7 @@
     <ClInclude Include="src\Modules\ModuleTexture.h" />
     <ClInclude Include="src\Modules\ModuleWindow.h" />
     <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Utils\PathNode.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\UI\Window.h" />
     <ClInclude Include="src\UI\WindowAbout.h" />
@@ -420,6 +426,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
+    <None Include="cpp.hint" />
     <None Include="Dependencies\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

@@ -1,10 +1,10 @@
 #pragma once
 #include "Resource.h"
 
-class ResourceMaterial : public Resource
+class ResourceShader : public Resource
 {
 public:
-	ResourceMaterial(UID id);
+	ResourceShader(UID id);
 
 	void Load() override;
 	void Unload() override;

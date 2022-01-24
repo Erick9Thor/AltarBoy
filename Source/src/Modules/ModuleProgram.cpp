@@ -4,6 +4,8 @@
 #include "../Components/ComponentPointLight.h"
 
 #include "../Utils/Logger.h"
+#include "../Globals.h"
+
 #include "glew.h"
 #include "MathGeoLib.h"
 #include "imgui.h"
@@ -120,8 +122,6 @@ Program* ModuleProgram::CreateSkyboxProgram()
 	skybox_program = CreateProgram("vertex_skybox.glsl", "fragment_skybox.glsl");
 	return skybox_program;
 }
-
-
 
 void ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {

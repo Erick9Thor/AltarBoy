@@ -27,6 +27,9 @@ public:
 
 	UID getID() const { return id; }
 
+	virtual void Load();
+	virtual void Unload();
+
 private:
 	UID id = 0;
 	ResourceType type = ResourceType::UNKNOWN;

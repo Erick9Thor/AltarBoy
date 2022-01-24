@@ -9,3 +9,11 @@ Resource::Resource(UID id, ResourceType type)
 Resource::~Resource()
 {
 }
+
+void Resource::Load()
+{
+}
+
+void Resource::Unload()
+{
+}

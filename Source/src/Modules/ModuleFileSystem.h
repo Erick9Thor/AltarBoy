@@ -1,6 +1,13 @@
 #pragma once
 #include "Module.h"
 
+#include "../Utils/PathNode.h"
+
+#include <string>
+#include <vector>
+
+using namespace std;
+
 class ModuleFileSystem : public Module
 {
 public:
@@ -17,8 +24,11 @@ public:
 	void Delete(const char* file_path);
 
 	// --- Utility functions -- //
-	bool Copy(const char* source_file_path, const char* destination_file_path);
-
+	void Copy(const char* source_file_path, const char* destination_file_path);
+	std::string NormalizePath(const char* full_path) const;
 	bool Exists(const char* file_path) const;
 	bool IsDirectory(const char* directory_path) const;
+	std::string GetFileNameAndExtension(const char* file_path) const;
+
+	PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext) const;
 };

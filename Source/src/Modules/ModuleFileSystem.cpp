@@ -24,6 +24,7 @@ ModuleFileSystem::ModuleFileSystem()
 		LIBRARY_MESH_FOLDER,
 		LIBRARY_MATERIAL_FOLDER,
 		LIBRARY_SCENE_FOLDER,
+		LIBRARY_SHADERS_FOLDER,
 		LIBRARY_TEXTURES_FOLDER,
 	};
 
@@ -133,10 +134,9 @@ void ModuleFileSystem::CreateDirectory(const char* directory_path) {
 	if (!PHYSFS_mkdir(directory_path)) LOG(PHYSFS_getLastError());
 }
 
-//TODO
-bool ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
+void ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
 {
-	return false;
+	CopyFile(source_file_path, destination_file_path, false);
 }
 
 void ModuleFileSystem::Delete(const char* file_path)
@@ -145,4 +145,40 @@ void ModuleFileSystem::Delete(const char* file_path)
 	{
 		LOG("Can't erase file %s. (%s)\n", file_path, PHYSFS_getLastError());
 	}
+}
+
+std::string ModuleFileSystem::NormalizePath(const char* full_path) const
+{
+	std::string newPath(full_path);
+	for (int i = 0; i < newPath.size(); ++i)
+	{
+		if (newPath[i] == '\\')
+			newPath[i] = '/';
+	}
+	return newPath;
+}
+
+std::string ModuleFileSystem::GetFileNameAndExtension(const char* file_path) const
+{
+	const char* last_slash = strrchr(file_path, '/');
+	const char* last_backslash = strrchr(file_path, '\\');
+	const char* last_separator = last_slash >= last_backslash ? last_slash : last_backslash;
+
+	if (last_separator == nullptr)
+	{
+		return file_path;
+	}
+
+	const char* name_extension = last_separator + 1;
+	return name_extension;
+}
+
+PathNode ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext) const
+{
+	PathNode root;
+	if (Exists(directory))
+	{
+		
+	}
+	return root;
 }

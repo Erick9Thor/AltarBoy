@@ -1,11 +1,15 @@
 #include "ResourceTexture.h"
 
-/*
-ResourceTexture::ResourceTexture()
+
+ResourceTexture::ResourceTexture(UID id)
+	: Resource(id, ResourceType::TEXTURE)
 {
 }
 
-ResourceTexture::~ResourceTexture()
+void ResourceTexture::Load()
 {
 }
-*/
+
+void ResourceTexture::Unload()
+{
+}

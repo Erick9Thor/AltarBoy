@@ -3,9 +3,9 @@
 #include "../Resources/ResourceMaterial.h"
 #include "../Resources/ResourceTexture.h"
 
-void MaterialImporter::Material::Import(const char* filePath, JsonFormaterValue json_meta, ResourceMaterial* rMaterial)
+void MaterialImporter::Material::Import(const char* filePath, JsonFormaterValue json_meta)
 {
-
+	
 }
 
 bool MaterialImporter::Material::Save(const ResourceMaterial* resource_material, char** buffer)
