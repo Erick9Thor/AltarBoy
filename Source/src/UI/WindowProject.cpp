@@ -22,7 +22,7 @@ void WindowProject::Update()
 		return;
 	}
 
-	ImGui::PushItemWidth(100);
+	/*ImGui::PushItemWidth(100);
 	if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter))) DoFilter();
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -33,10 +33,10 @@ void WindowProject::Update()
 	}
 
 	ImGui::SameLine();
-	CreateBreadCrumps();
+	// CreateBreadCrumps();
 	ImGui::Separator();
 
-	float content_w = ImGui::GetContentRegionAvail().x;
+	/*float content_w = ImGui::GetContentRegionAvail().x;
 	ImVec2 left_size(m_left_column_width, 0);
 	if (left_size.x < 10) left_size.x = 10;
 	if (left_size.x > content_w - 10) left_size.x = content_w - 10;

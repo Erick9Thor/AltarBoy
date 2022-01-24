@@ -11,10 +11,6 @@ public:
 	ResourceMaterial(UID uid);
 	~ResourceMaterial() override;
 
-
-	void Load() override;
-	void Unload() override;
-
 	bool Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
 
 

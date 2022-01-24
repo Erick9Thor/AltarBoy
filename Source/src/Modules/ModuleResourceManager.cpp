@@ -42,13 +42,26 @@ bool ModuleResourceManager::CleanUp()
 
 void ModuleResourceManager::LoadAllAssetsFolder()
 {
-	PathNode assets = App->file_sys->GetAllFiles(ASSETS_FOLDER, nullptr);
+	std::vector<std::string> ignore_ext;
+	ignore_ext.push_back("meta");
+
+	PathNode assets = App->file_sys->GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_ext);
 	LoadByNode(assets);
 }
 
 void ModuleResourceManager::LoadByNode(PathNode node)
 {
-	
+	bool importedAsNew = false;
+
+	std::string metaFile = node.path + ".meta";
+	if (App->file_sys->Exists(metaFile.c_str()))
+	{
+		char* buffer = App->file_sys->Load(metaFile.c_str());
+	}
+	else
+	{
+		ImportFileFromAssets(node.path.c_str());
+	}
 }
 
 void ModuleResourceManager::ImportExternalFile(char* file_path)
