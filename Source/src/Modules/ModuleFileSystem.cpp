@@ -190,7 +190,7 @@ PathNode ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::s
 		for (unsigned int i = 0; i < dir_list.size(); i++)
 		{
 			std::string str = directory;
-			str.append(dir_list[i]);
+			str.append("/").append(dir_list[i]);
 			root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
 		}
 		//Adding all child files

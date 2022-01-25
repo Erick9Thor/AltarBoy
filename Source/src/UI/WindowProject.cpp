@@ -3,6 +3,7 @@
 #include "../Application.h"
 #include "../Globals.h"
 #include "../Modules/ModuleFileSystem.h"
+#include "../Modules/ModuleResourceManager.h"
 
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
@@ -12,17 +13,21 @@ WindowProject::WindowProject()
 
 }
 
-void WindowProject::Update()
+void WindowProject::Init()
 {
 	GetAssets();
-	/*if (!ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
+}
+
+void WindowProject::Update()
+{
+	if (!ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
 	{
 		ImGui::End();
 		DetailsGUI();
 		return;
 	}
 
-	/*ImGui::PushItemWidth(100);
+	ImGui::PushItemWidth(100);
 	if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter))) DoFilter();
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
@@ -33,15 +38,15 @@ void WindowProject::Update()
 	}
 
 	ImGui::SameLine();
-	// CreateBreadCrumps();
+	CreateBreadCrumps();
 	ImGui::Separator();
 
-	/*float content_w = ImGui::GetContentRegionAvail().x;
+	float content_w = ImGui::GetContentRegionAvail().x;
 	ImVec2 left_size(m_left_column_width, 0);
 	if (left_size.x < 10) left_size.x = 10;
 	if (left_size.x > content_w - 10) left_size.x = content_w - 10;
 
-	ShowContentDir();
+	ShowContentDir(assets);
 
 	ImGui::SameLine();
 	ImGuiUtils::VSplitter("vsplit1", &left_size);
@@ -53,27 +58,14 @@ void WindowProject::Update()
 
 	ShowFilesOnFolder();
 
-	ImGui::End();*/
+	ImGui::End();
 }
 
 void WindowProject::DetailsGUI()
 {
 	if (ImGui::Begin(ICON_FA_IMAGE "Asset inspector##asset_inspector", &active, ImGuiWindowFlags_AlwaysVerticalScrollbar))
 	{
-		ImVec2 pos = ImGui::GetCursorScreenPos();
-		if (true) //TODO: Case size of folder is > 1
-		{
-			
-		}
-
-		if (false) // CAse resurce is empty
-		{
-			ImGui::End();
-			return;
-		}
-		if (false) // Case resource size is 1
-		{
-		}
+		ImGui::End();
 	}
 }
 
@@ -83,47 +75,68 @@ void WindowProject::DoFilter()
 
 }
 
-//TODO
 void WindowProject::CreateBreadCrumps()
 {
+	
 }
 
-void WindowProject::ShowContentDir()
+
+
+void WindowProject::ShowContentDir(PathNode& node)
 {
 	ImVec2 size(max(120.f, m_left_column_width), 0);
 	ImGui::BeginChild("left_col", size);
 	ImGui::PushItemWidth(120);
+
 	bool b = false;
-	/*if ((m_dir[0] != '.' || m_dir[1] != 0) && ImGui::Selectable("..", &b))
+	if ((node.path != ASSETS_FOLDER) && ImGui::Selectable("..", &b))
 	{
-		char dir[120];
-		copyString(Span(dir), Path::getDir(m_dir));
-		changeDir(dir);
+		// Set new dir
+		
 	}
 
-	for (auto& subdir : m_subdirs)
+	for (auto& subdir : node.children)
 	{
-		if (ImGui::Selectable(subdir, &b))
+		if (ImGui::Selectable(subdir.localPath.c_str(), &b))
 		{
-			StaticString<LUMIX_MAX_PATH> new_dir(m_dir, "/", subdir);
-			changeDir(new_dir);
+			// Chnge directory
+			assets = App->file_sys->GetAllFiles(node.localPath.c_str(), nullptr, nullptr);
 		}
 	}
 
 	ImGui::PopItemWidth();
-	ImGui::EndChild();*/
+	ImGui::EndChild();
 }
 
-//TODO
+void WindowProject::ChangeDir(char* folder_name)
+{
+}
+
 void WindowProject::ShowFilesOnFolder()
 {
+	ImGui::BeginChild("ExplorerFolder", ImVec2(0.0f, 0.0f), false, ImGuiWindowFlags_NoScrollbar);
+
+	// ImGui::Text(Engine->moduleEditor->GetCurrentExplorerDirectory());
+	ImGui::Separator();
+
+	ImGui::BeginChild("ImagesChild");
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(50, 30));
+
+	ImVec2 windowCursorPosition = ImGui::GetCursorPos();
+	unsigned int itemIndex = 0;
+
+	// print folders and shits
+
+	ImGui::PopStyleVar();
+	ImGui::EndChild();
+
+	ImGui::EndChild();
 }
 
 void WindowProject::GetAssets()
 {
 	std::vector<std::string> ignore_ext;
 	ignore_ext.push_back("meta");
-	// assets = App->file_sys->GetAllFilesInFolder(ASSETS_FOLDER);
-	// assets = App->file_sys->GetAllFilesInFolder("Assets", filter_value, ignored_files);
+	assets = App->file_sys->GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_ext);
 }
 

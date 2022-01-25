@@ -25,6 +25,17 @@
 #include <IconsFontAwesome5.h>
 #include <imgui_internal.h>
 
+ModuleEditor::ModuleEditor() {
+	windows.push_back(&w_configuration);
+	windows.push_back(&w_hierarchy);
+	windows.push_back(&w_scene);
+	windows.push_back(&w_inspector);
+	windows.push_back(&w_about);
+	windows.push_back(&w_console);
+	windows.push_back(&w_resource);
+	windows.push_back(&w_project);
+}
+
 bool ModuleEditor::Init()
 {
 	IMGUI_CHECKVERSION();
@@ -63,14 +74,11 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
-	windows.push_back(&w_configuration);
-	windows.push_back(&w_hierarchy);
-	windows.push_back(&w_scene);
-	windows.push_back(&w_inspector);
-	windows.push_back(&w_about);
-	windows.push_back(&w_console);
-	windows.push_back(&w_resource);
-	windows.push_back(&w_project);
+	for (Window* panel : windows)
+	{
+		if (panel->active)
+			panel->Init();
+	}
 
 	return true;
 }

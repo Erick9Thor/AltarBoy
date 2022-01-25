@@ -45,15 +45,15 @@ enum update_status
 
 // File System config -----------
 #define VERSION "0.1"
-#define ASSETS_FOLDER "/Assets/"
-#define SETTINGS_FOLDER "/Settings/"
-#define LIBRARY_FOLDER "/Library/"
-#define LIBRARY_TEXTURES_FOLDER "/Library/Textures/"
-#define LIBRARY_MESH_FOLDER "/Library/Meshes/"
-#define LIBRARY_SCENE_FOLDER "/Library/Scenes/"
-#define LIBRARY_MATERIAL_FOLDER "/Library/Materials/"
-#define LIBRARY_SHADERS_FOLDER "/Library/Shaders/"
-#define LIBRARY_FONTS_FOLDER "/Library/Fonts/"
+#define ASSETS_FOLDER "Assets"
+#define SETTINGS_FOLDER "Settings"
+#define LIBRARY_FOLDER "Library"
+#define LIBRARY_TEXTURES_FOLDER "Library/Textures"
+#define LIBRARY_MESH_FOLDER "Library/Meshes"
+#define LIBRARY_SCENE_FOLDER "Library/Scenes"
+#define LIBRARY_MATERIAL_FOLDER "Library/Materials"
+#define LIBRARY_SHADERS_FOLDER "Library/Shaders"
+#define LIBRARY_FONTS_FOLDER "Library/Fonts"
 
 // Defering for file system https://stackoverflow.com/questions/32432450/what-is-standard-defer-finalizer-implementation-in-c
 #ifndef defer

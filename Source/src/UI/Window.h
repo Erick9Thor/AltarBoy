@@ -6,6 +6,7 @@ class Window
 {
 public:
 	Window(const char* name, bool active);
+	virtual void Init() {};
 	virtual void Update() {};
 
 public:

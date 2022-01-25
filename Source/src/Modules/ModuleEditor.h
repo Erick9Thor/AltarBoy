@@ -22,6 +22,9 @@
 class ModuleEditor : public Module
 {
 public:
+
+	ModuleEditor();
+
 	bool Init() override;
 	update_status PreUpdate(const float delta) override;
 	update_status Update(const float delta) override;
