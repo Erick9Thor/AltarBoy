@@ -9,8 +9,8 @@
 #include <IconsFontAwesome5.h>
 
 WindowProject::WindowProject()
-	: Window("Project", true) {
-
+	: Window("Project", true)
+{
 }
 
 void WindowProject::Init()
@@ -70,26 +70,15 @@ void WindowProject::DetailsGUI()
 }
 
 //TODO
-void WindowProject::DoFilter() 
+void WindowProject::DoFilter()
 {
-
 }
 
 void WindowProject::CreateBreadCrumps()
 {
-	const char* c = current_root.path.c_str();
+	const char* c = all_assets.path.c_str();
 	char tmp[260];
-	if (current_root.path != ASSETS_FOLDER)
-	{
-		if (ImGui::Button("."))
-		{
-			ChangeDir(".");
-		}
-		ImGui::SameLine();
-		ImGui::TextUnformatted("/");
-		ImGui::SameLine();
-	}
-	
+
 	while (*c)
 	{
 		char* c_out = tmp;
@@ -143,18 +132,27 @@ void WindowProject::ShowDir(PathNode& node)
 	ImGui::BeginChild("left_col", size);
 	ImGui::PushItemWidth(120);
 
-	bool b = false;
-	if ((node.path != ASSETS_FOLDER) && ImGui::Selectable("..", &b))
+	PathNode current_root;
+	bool selected_item = false;
+	if ((node.path != ASSETS_FOLDER) && ImGui::Selectable("..", &selected_item))
 	{
-		// ChangeDir(previous_path);
+		current_root = node;
 	}
 
 	for (auto& subdir : node.children)
 	{
-		if (ImGui::Selectable(subdir.localPath.c_str(), &b))
+		if (!subdir.isFile)
 		{
-			// ChangeDir(subdir.path.c_str());
+			if (ImGui::Selectable(subdir.localPath.c_str(), &selected_item))
+			{
+				current_root = subdir;
+			}
 		}
+	}
+
+	if (selected_item)
+	{
+		all_assets = current_root;
 	}
 
 	ImGui::PopItemWidth();
@@ -172,7 +170,7 @@ void WindowProject::ShowFilesOnFolder()
 	float w = ImGui::GetContentRegionAvail().x;
 	int columns = (int) w / int(96 * 1.f);
 	columns = max(columns, 1);
-	// int tile_count = assets.childrens.empty() ? assets.childrens.size() : 50; 
+	// int tile_count = assets.childrens.empty() ? assets.childrens.size() : 50;
 	// int row_count = (tile_count + columns - 1) / columns;
 	int row_count = 50;
 
@@ -218,7 +216,7 @@ void WindowProject::ShowFilesOnFolder()
 	static char tmp[260] = "";
 	auto common_popup = [&]() {
 		const char* base_path = nullptr;
-				
+
 		if (ImGui::BeginMenu("Create directory"))
 		{
 			ImGui::InputTextWithHint("##dirname", "New directory name", tmp, sizeof(tmp));
@@ -305,6 +303,4 @@ void WindowProject::GetAssets()
 	std::vector<std::string> ignore_ext;
 	ignore_ext.push_back("meta");
 	all_assets = App->file_sys->GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_ext);
-	current_root = all_assets;
 }
-

@@ -6,7 +6,16 @@
 
 struct PathNode
 {
-	PathNode() : path("") {};
+	PathNode()
+		: path("") {};
+	PathNode(const PathNode& a)
+		: path(a.path)
+		, localPath(a.localPath)
+		, children(a.children)
+		, isLeaf(a.isLeaf)
+		, isFile(a.isFile)
+	{}
+
 	std::string path;
 	std::string localPath;
 
@@ -23,9 +32,22 @@ struct PathNode
 		return true;
 	}
 
-	bool operator ==(const PathNode node) const
+	bool operator==(const PathNode node) const
 	{
 		return path == node.path;
+	}
+
+	PathNode& operator=(const PathNode& a)
+	{
+		path = a.path;
+		localPath = a.localPath;
+
+		children = std::vector<PathNode>(a.children);
+
+		isLeaf = a.isLeaf;
+		isFile = a.isFile;
+
+		return *this;
 	}
 };
 

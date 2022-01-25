@@ -33,7 +33,6 @@ private:
 
 	float m_thumbnail_size = 1.f;
 
-
 	PathNode all_assets;
-	PathNode current_root;
+	
 };
