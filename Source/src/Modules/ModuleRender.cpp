@@ -215,7 +215,7 @@ void ModuleRender::OptionsMenu()
 		App->debug_draw->SetDebugDraw(debug_draw);
 	ImGui::Checkbox("Skybox", &draw_skybox);
 	if (!draw_skybox)
-		ImGui::ColorPicker3("Background Color", &clear_color[0], flag);
+		ImGuiUtils::CompactColorPicker("Background Color", &clear_color[0]);
 }
 
 void ModuleRender::PerformanceMenu(const float delta)

@@ -2,6 +2,7 @@
 
 #include "../Utils/UID.h"
 #include "../Utils/JsonFormaterValue.h"
+#include "../UI/ImGuiUtils.h"
 
 class GameObject;
 class ComponentCamera;

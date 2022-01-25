@@ -5,6 +5,7 @@
 
 #include "MathGeoLib.h"
 #include <vector>
+#include "../UI/ImGuiUtils.h"
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4

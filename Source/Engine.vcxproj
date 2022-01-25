@@ -188,6 +188,7 @@
     <ClCompile Include="src\Resources\ResourceMesh.cpp" />
     <ClCompile Include="src\Resources\ResourceMaterial.cpp" />
     <ClCompile Include="src\Resources\Resource.cpp" />
+    <ClCompile Include="src\UI\ImguiUtils.cpp" />
     <ClCompile Include="src\Utils\JsonFormaterValue.cpp" />
     <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />

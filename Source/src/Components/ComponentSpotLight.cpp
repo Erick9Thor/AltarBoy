@@ -4,7 +4,6 @@
 #include "../Scene.h"
 
 #include "imgui.h"
-
 #include <algorithm>
 
 ComponentSpotLight::ComponentSpotLight(GameObject* conatiner)
@@ -27,13 +26,14 @@ void ComponentSpotLight::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Spot Light"))
 	{
+		ImGui::PushItemWidth(100.0f);
 		ImGui::Checkbox("S.Active", &active);
 		ImGui::InputFloat("S.Intensity", &intensity);
 		ImGui::InputFloat("S.Radius", &radius);
 		ImGui::InputFloat("Inner Angle", &inner);
 		ImGui::InputFloat("Outer Angle", &outer);
-		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-		ImGui::ColorPicker3("Spot Color", &color[0], flag);
+		ImGui::PopItemWidth();
+		ImGuiUtils::CompactColorPicker("Spot Color", &color[0]);
 	}
 }
 

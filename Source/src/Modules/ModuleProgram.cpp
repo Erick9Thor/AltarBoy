@@ -252,7 +252,6 @@ void ModuleProgram::OptionsMenu()
 	ImGui::PushItemWidth(100.0f);
 	ImGui::Text("Ambient Light");
 	ImGui::InputFloat("Intensity", &ambient_light.intensity);
-	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-	ImGui::ColorPicker3("Color", &ambient_light.color[0], flag);
+	ImGuiUtils::CompactColorPicker("Color", &ambient_light.color[0]);
 	ImGui::PopItemWidth();
 }
