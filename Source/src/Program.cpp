@@ -63,3 +63,8 @@ void Program::BindUniformBool(const char* name, bool value)
 {
 	glUniform1i(glGetUniformLocation(id, name), value);
 }
+
+void Program::BindUniformInts(const char* name, unsigned size, const int* data)
+{
+	glUniform1iv(glGetUniformLocation(id, name), size, data);
+}

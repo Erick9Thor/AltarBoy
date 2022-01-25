@@ -18,7 +18,7 @@ ComponentSpotLight::~ComponentSpotLight()
 {
 	if (game_object->scene_owner)
 	{
-		auto lights = game_object->scene_owner->spot_lights;
+		auto& lights = game_object->scene_owner->spot_lights;
 		lights.erase(std::remove(lights.begin(), lights.end(), this), lights.end());
 	}
 }

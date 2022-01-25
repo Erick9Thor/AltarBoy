@@ -78,13 +78,14 @@ TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
 void ModuleTexture::Bind(unsigned id, unsigned slot)
 {
 	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(slot);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, id);
 }
 
 void ModuleTexture::Unbind(unsigned slot)
 {
-	glDisable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0 + slot);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void SetOption(unsigned option, unsigned value)

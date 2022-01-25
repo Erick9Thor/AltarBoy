@@ -50,15 +50,10 @@ public:
 	
 	GameObject* RayCast(const LineSegment& segment) const;
 
-	bool draw_skybox = true;
-
 	void CreateLights();
 	std::vector<ComponentDirLight*> dir_lights;
 	std::vector<ComponentPointLight*> point_lights;
 	std::vector<ComponentSpotLight*> spot_lights;
-
-	// --- Scene ---// TODO: Move this into WindowConfiguration menu on Scene subsection
-	void OptionsMenu();
 
 	// --- Importer --- // TODO: Move to importer
 	GameObject* LoadFBX(const std::string& path);

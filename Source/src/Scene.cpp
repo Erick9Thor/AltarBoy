@@ -229,10 +229,3 @@ void Scene::Update()
 {
 	root->Update();
 }
-
-void Scene::OptionsMenu() {
-	static bool debug_draw = true;
-	ImGui::Checkbox("Skybox", &draw_skybox);
-	if (ImGui::Checkbox("Debug Draw", &debug_draw))
-		App->debug_draw->SetDebugDraw(debug_draw);
-}

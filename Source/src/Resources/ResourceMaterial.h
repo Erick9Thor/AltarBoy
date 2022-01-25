@@ -12,10 +12,13 @@ public:
 	~ResourceMaterial() override;
 
 	bool Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
+	inline unsigned GetDiffuseId() const { return diffuse.id; }
+	inline unsigned GetSpecularId() const { return specular.id; }
 
 
 	Texture diffuse;
 	Texture specular;
-	float4 diffuse_color = float4::zero;
-	float4 specular_color = float4::zero;
+	float4 diffuse_color = float4::one;
+	float4 specular_color = float4::one / 10.0f;
+	float shininess = 50.0f;
 };

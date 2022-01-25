@@ -73,6 +73,8 @@ private:
 	unsigned fb_width = 0;
 
 	float4 clear_color;
+	bool debug_draw = true;
+	bool draw_skybox = true;
 
 	GpuData gpu;
 	GlVersion gl;

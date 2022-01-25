@@ -75,8 +75,6 @@ void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& intersected, c
 		float near_hit, far_hit;
 		for (GameObject* object : objects)
 		{
-			bool b = primitive.Intersects(object->GetAABB());
-			bool a = primitive.Intersects(object->GetOBB());
 			if (primitive.Intersects(object->GetOBB()))
 				intersected[near_hit] = object;
 		}

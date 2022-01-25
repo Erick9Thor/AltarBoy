@@ -16,7 +16,7 @@ public:
 
 	void DrawGui() override;
 
-	float3 GetDirection();
+	float3 GetDirection() const;
 
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float intensity = 1.0f;

@@ -1,5 +1,9 @@
 # version 440
 
+#define DIFFUSE_SAMPLER 0
+#define SPECULAR_SAMPLER 1
+#define N_2D_SAMPLERS 2
+
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
 
@@ -44,10 +48,14 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-/*layout(std140, binding = 1) uniform Material
+layout(std140, binding = 1) uniform Material
 {
-
-} material;*/
+    vec4 diffuse_color;
+    vec4 specular_color;
+    uint diffuse_flag;
+    uint specular_flag;
+    float shininess;
+} material;
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -59,7 +67,7 @@ layout(std140, binding = 2) uniform Lights
     uint n_spots;
 } lights;
 
-uniform sampler2D diffuse;
+uniform sampler2D textures[N_2D_SAMPLERS];
 
 // Inputs
 struct VertexData
@@ -167,23 +175,37 @@ void main()
 {
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
-    vec3 diffuse_color = pow(texture(diffuse, fragment.tex_coord).rgb, vec3(2.2));
+    
+    vec3 diffuse_color = material.diffuse_color.rgb;
+    if (material.diffuse_flag > 0)
+    {
+        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+    }
 
-    vec3 plastic_specular = vec3(0.03);
-    vec3 aluminum_specular = vec3(0.91, 0.92, 0.92);
-    float shininess = 125.0;
+    float shininess = material.shininess;
+    vec3 specular_color = material.specular_color.rgb;
+    if (material.specular_flag > 0)
+    {
+        // Should we gaMma correct specular?
+        // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+        specular_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
+        // Use alpha as shininess?
+        //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
+    }
+
+    
     vec3 hdr_color = vec3(0.0);
 
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, plastic_specular, shininess);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, specular_color, shininess);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, plastic_specular, shininess);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, specular_color, shininess);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, plastic_specular, shininess);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, specular_color, shininess);
         
     }   
     hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
@@ -192,5 +214,5 @@ void main()
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
     // Gamma correction & alpha from diffuse texture
-    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(diffuse, fragment.tex_coord).a);
+    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
 }

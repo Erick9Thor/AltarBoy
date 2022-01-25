@@ -17,7 +17,7 @@ ComponentDirLight::~ComponentDirLight()
 {
 	if (game_object->scene_owner)
 	{
-		auto lights = game_object->scene_owner->dir_lights;
+		auto& lights = game_object->scene_owner->dir_lights;
 		lights.erase(std::remove(lights.begin(), lights.end(), this), lights.end());
 	}
 }
@@ -33,7 +33,7 @@ void ComponentDirLight::DrawGui()
 	}
 }
 
-float3 ComponentDirLight::GetDirection()
+float3 ComponentDirLight::GetDirection() const
 {
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
 	return transform->GetFwd();
