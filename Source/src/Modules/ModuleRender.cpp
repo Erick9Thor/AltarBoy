@@ -156,7 +156,7 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 
 	ManageResolution(camera);
 
-	if (scene->draw_skybox)
+	if (draw_skybox)
 	{
 		scene->GetSkybox()->Draw(camera);
 		glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -211,9 +211,11 @@ void ModuleRender::OptionsMenu()
 {
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
-	ImGui::Text("Background Color");
-	ImGui::PushItemWidth(150.0f);
-	ImGui::ColorPicker3("Clear Color", &clear_color[0], flag);
+	if (ImGui::Checkbox("Debug Draw", &debug_draw))
+		App->debug_draw->SetDebugDraw(debug_draw);
+	ImGui::Checkbox("Skybox", &draw_skybox);
+	if (!draw_skybox)
+		ImGui::ColorPicker3("Background Color", &clear_color[0], flag);
 }
 
 void ModuleRender::PerformanceMenu(const float delta)

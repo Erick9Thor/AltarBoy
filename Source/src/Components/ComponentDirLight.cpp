@@ -17,7 +17,7 @@ ComponentDirLight::~ComponentDirLight()
 {
 	if (game_object->scene_owner)
 	{
-		auto lights = game_object->scene_owner->dir_lights;
+		auto& lights = game_object->scene_owner->dir_lights;
 		lights.erase(std::remove(lights.begin(), lights.end(), this), lights.end());
 	}
 }

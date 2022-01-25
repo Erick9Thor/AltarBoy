@@ -100,7 +100,7 @@ void ComponentMesh::Draw(ComponentCamera* camera)
 	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
 	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-	App->program->UpdateMaterial(material->GetMaterial());
+	App->program->UpdateMaterial(material);
 
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, buffer_sizes[Buffers::b_indices], GL_UNSIGNED_INT, nullptr);

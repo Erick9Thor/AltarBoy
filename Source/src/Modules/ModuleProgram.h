@@ -13,7 +13,7 @@ class ComponentCamera;
 class ComponentDirLight;
 class ComponentPointLight;
 class ComponentSpotLight;
-class ResourceMaterial;
+class ComponentMaterial;
 
 class ModuleProgram : public Module
 {
@@ -44,7 +44,7 @@ public:
 	Program* GetSkyboxProgram() const { return skybox_program; }
 
 	void UpdateCamera(const ComponentCamera* camera);
-	void UpdateMaterial(const ResourceMaterial* material);
+	void UpdateMaterial(const ComponentMaterial* material_comp);
 	void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights);
 
 	void OptionsMenu();

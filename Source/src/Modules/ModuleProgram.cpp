@@ -5,6 +5,7 @@
 #include "../Components/ComponentDirLight.h"
 #include "../Components/ComponentPointLight.h"
 #include "../Components/ComponentSpotLight.h"
+#include "../Components/ComponentMaterial.h"
 #include "../Resources/ResourceMaterial.h"
 
 #include "../Utils/Logger.h"
@@ -171,21 +172,23 @@ void ModuleProgram::UpdateCamera(const ComponentCamera* camera)
 	UpdateUBO(UBOPoints::p_camera, sizeof(Camera), &camera_data);
 }
 
-void ModuleProgram::UpdateMaterial(const ResourceMaterial* material)
+void ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp)
 {
 	static int texture_slots[n_texture_slots] = {t_diffuse, t_specular};
 	main_program->BindUniformInts("textures", n_texture_slots, &texture_slots[0]);
 	
+	const ResourceMaterial* material = material_comp->GetMaterial();
+
 	MaterialData material_data;
 	material_data.diffuse_color = material->diffuse_color;
-	material_data.diffuse_flag = material->diffuse.loaded;
+	material_data.diffuse_flag = material_comp->use_diffuse_texture;
 	material_data.specular_color = material->specular_color;
-	material_data.specular_flag = material->specular.loaded;
+	material_data.specular_flag = material_comp->use_specular_texture;
 	material_data.shininess = material->shininess;
 
-	if (material->diffuse.loaded)
+	if (material_comp->use_diffuse_texture)
 		App->texture->Bind(material->GetDiffuseId(), ModuleProgram::TextureSlots::t_diffuse);
-	if (material->specular.loaded)
+	if (material_comp->use_specular_texture)
 		App->texture->Bind(material->GetSpecularId(), ModuleProgram::TextureSlots::t_specular);
 
 	UpdateUBO(UBOPoints::p_material, sizeof(MaterialData), &material_data);
@@ -246,7 +249,10 @@ void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::
 
 void ModuleProgram::OptionsMenu()
 {
-	ImGui::InputFloat("Ambient Intensity", &ambient_light.intensity);
+	ImGui::PushItemWidth(100.0f);
+	ImGui::Text("Ambient Light");
+	ImGui::InputFloat("Intensity", &ambient_light.intensity);
 	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-	ImGui::ColorPicker3("Ambient Color", &ambient_light.color[0], flag);
+	ImGui::ColorPicker3("Color", &ambient_light.color[0], flag);
+	ImGui::PopItemWidth();
 }

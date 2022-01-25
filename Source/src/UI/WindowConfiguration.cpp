@@ -24,7 +24,7 @@ void WindowConfiguration::Update()
 		{
 			App->renderer->OptionsMenu();
 			ImGui::Separator();
-			App->scene_manager->GetActiveScene()->OptionsMenu();
+			ImGui::Text("Shader Options");
 			App->program->OptionsMenu();
 		}
 		if (ImGui::CollapsingHeader("Engine Camera"))
