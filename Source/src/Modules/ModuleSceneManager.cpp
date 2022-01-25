@@ -8,7 +8,7 @@ bool ModuleSceneManager::Init()
 {
 	main_scene = new Scene();
 	
-	LoadModel("BakerHouse.fbx"); //TODO: Remove this when importen will be created
+	LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
 	CreateEmptyScene();
 
