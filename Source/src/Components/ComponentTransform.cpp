@@ -75,7 +75,7 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 {
 	local_transform = new_transform;
 	local_transform.Decompose(local_position, local_rotation, local_scale);
-	local_rotation_euler = local_rotation.ToEulerXYZ() * to_deg;
+	local_rotation_euler = RadToDeg(local_rotation.ToEulerXYZ());
 
 	UpdateGlobalTransformHierarchy();
 }
