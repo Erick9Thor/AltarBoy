@@ -1,6 +1,7 @@
 #include "ComponentDirLight.h"
 #include "ComponentTransform.h"
 #include "../Scene.h"
+#include "debugdraw.h"
 
 #include "imgui.h"
 
@@ -22,11 +23,24 @@ ComponentDirLight::~ComponentDirLight()
 	}
 }
 
+void ComponentDirLight::DebugDraw()
+{
+	if (draw_direction)
+	{
+		ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
+		if (transform)
+		{
+			dd::arrow(transform->GetPosition(), transform->GetFwd().Mul(3.f) + transform->GetPosition(), dd::colors::Blue, 1.f);
+		}
+	}
+}
+
 void ComponentDirLight::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Dir Light"))
 	{
 		ImGui::Checkbox("D.Active", &active);
+		ImGui::Checkbox("Draw Direction", &draw_direction);
 		ImGui::PushItemWidth(100.0f);		
 		ImGui::InputFloat("D.Intensity", &intensity);
 		ImGui::PopItemWidth();
