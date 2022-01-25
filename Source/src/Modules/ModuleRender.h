@@ -44,7 +44,7 @@ public:
 	inline unsigned int GetTextureId() const { return fb_texture; }
 
 	void OptionsMenu();
-	void PerformanceMenu(const float delta);
+	void PerformanceMenu();
 	void FpsGraph();
 	void AddFrame(const float delta);
 

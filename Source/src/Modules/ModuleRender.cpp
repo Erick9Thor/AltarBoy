@@ -218,7 +218,7 @@ void ModuleRender::OptionsMenu()
 		ImGuiUtils::CompactColorPicker("Background Color", &clear_color[0]);
 }
 
-void ModuleRender::PerformanceMenu(const float delta)
+void ModuleRender::PerformanceMenu()
 {
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram_free);
 	float vram_free_mb = vram_free / 1024.0f;
