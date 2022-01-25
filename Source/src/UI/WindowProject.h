@@ -18,10 +18,11 @@ private:
 	void DetailsGUI();
 	void DoFilter();
 	void CreateBreadCrumps();
+	void Thumbnail(PathNode& node, float size, bool selected);
 
-	void ChangeDir(char* folder_name);
+	void ChangeDir(const char* folder_name);
 
-	void ShowContentDir(PathNode& node);
+	void ShowDir(PathNode& node);
 	void ShowFilesOnFolder();
 
 	void GetAssets();
@@ -30,6 +31,9 @@ private:
 	char m_filter[128];
 	float m_left_column_width = 120;
 
-	PathNode assets;
+	float m_thumbnail_size = 1.f;
 
+
+	PathNode all_assets;
+	PathNode current_root;
 };

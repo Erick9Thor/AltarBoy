@@ -130,7 +130,7 @@ bool ModuleFileSystem::IsDirectory(const char* directory_path) const
 	return PHYSFS_isDirectory(directory_path) != 0;
 }
 
-void ModuleFileSystem::CreateDirectory(const char* directory_path) {
+void ModuleFileSystem::CreateDir(const char* directory_path) {
 	if (!PHYSFS_mkdir(directory_path)) LOG(PHYSFS_getLastError());
 }
 

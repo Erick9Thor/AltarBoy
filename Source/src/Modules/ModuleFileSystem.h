@@ -18,7 +18,7 @@ public:
 	bool Init() override;
 
 	// --- CRUD --- //
-	void CreateDirectory(const char* directory_path);
+	void CreateDir(const char* directory_path);
 	char* Load(const char* file_path) const;
 	bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false) const;
 	void Delete(const char* file_path);
