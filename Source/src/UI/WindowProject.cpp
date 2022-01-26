@@ -23,7 +23,7 @@ void WindowProject::Update()
 	if (!ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
 	{
 		ImGui::End();
-		DetailsGUI();
+		// DetailsGUI();
 		return;
 	}
 
@@ -56,17 +56,9 @@ void WindowProject::Update()
 	}
 	ImGui::SameLine();
 
-	// ShowFilesOnFolder();
+	ShowFilesOnFolder();
 
 	ImGui::End();
-}
-
-void WindowProject::DetailsGUI()
-{
-	if (ImGui::Begin(ICON_FA_IMAGE "Asset inspector##asset_inspector", &active, ImGuiWindowFlags_AlwaysVerticalScrollbar))
-	{
-		ImGui::End();
-	}
 }
 
 //TODO
@@ -92,8 +84,9 @@ void WindowProject::CreateBreadCrumps()
 		if (*c == '/') ++c;
 		if (ImGui::Button(tmp))
 		{
-			//TODO
-			// changeDir(new_dir);
+			if (tmp != all_assets.localPath) {
+				all_assets = App->file_sys->GetAllFiles(tmp, nullptr, nullptr);
+			}
 		}
 		ImGui::SameLine();
 		ImGui::TextUnformatted("/");
@@ -132,11 +125,23 @@ void WindowProject::ShowDir(PathNode& node)
 	ImGui::BeginChild("left_col", size);
 	ImGui::PushItemWidth(120);
 
-	PathNode current_root;
+	PathNode new_root;
 	bool selected_item = false;
 	if ((node.path != ASSETS_FOLDER) && ImGui::Selectable("..", &selected_item))
 	{
-		current_root = node;
+		const char* tmp = node.path.c_str();
+		std::string previous_path;
+		std::string full(tmp);
+		size_t pos_last_separator = full.find_last_of("\\/");
+
+		previous_path = full.substr(0, pos_last_separator);
+
+		all_assets = App->file_sys->GetAllFiles(previous_path.c_str(), nullptr, nullptr);
+		
+		ImGui::PopItemWidth();
+		ImGui::EndChild();
+
+		return;
 	}
 
 	for (auto& subdir : node.children)
@@ -145,22 +150,18 @@ void WindowProject::ShowDir(PathNode& node)
 		{
 			if (ImGui::Selectable(subdir.localPath.c_str(), &selected_item))
 			{
-				current_root = subdir;
+				new_root = subdir;
 			}
 		}
 	}
 
 	if (selected_item)
 	{
-		all_assets = current_root;
+		all_assets = new_root;
 	}
 
 	ImGui::PopItemWidth();
 	ImGui::EndChild();
-}
-
-void WindowProject::ChangeDir(const char* folder_name)
-{
 }
 
 void WindowProject::ShowFilesOnFolder()
@@ -170,12 +171,11 @@ void WindowProject::ShowFilesOnFolder()
 	float w = ImGui::GetContentRegionAvail().x;
 	int columns = (int) w / int(96 * 1.f);
 	columns = max(columns, 1);
-	// int tile_count = assets.childrens.empty() ? assets.childrens.size() : 50;
-	// int row_count = (tile_count + columns - 1) / columns;
-	int row_count = 50;
+	int tile_count = all_assets.children.empty() ? all_assets.children.size() : 50;
+	int row_count = 1;
 
 	auto callbacks = [this](PathNode& node, int idx) {
-		if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", node.localPath.c_str());
+		if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s", node.path.c_str());
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
 			ImGui::Text("%s", (const char*) node.path.c_str());
@@ -197,75 +197,52 @@ void WindowProject::ShowFilesOnFolder()
 			for (int i = 0; i < columns; ++i)
 			{
 				if (i > 0) ImGui::SameLine();
-				int idx = j * columns + i;
+				int idx = GetThumbnailIndex(i, j, columns);
 				if (idx < 0)
 				{
 					ImGui::NewLine();
 					break;
 				}
 				PathNode& node = all_assets.children[idx];
-				// bool selected = m_selected_resources.find([&](Resource* res) { return res->getPath().getHash() == tile.file_path_hash; }) >= 0;
-				Thumbnail(node, m_thumbnail_size * 96, false);
-				callbacks(node, idx);
+				bool is_resource = node.children.size() == 0;
+				if (is_resource) {
+					// bool selected = m_selected_resources.find([&](Resource* res) { return res->getPath().getHash() == tile.file_path_hash; }) >= 0;
+					Thumbnail(node, m_thumbnail_size * 70, false);
+					callbacks(node, idx);
+				}
 			}
 		}
 	}
 
 	bool open_delete_popup = false;
-	// FileSystem& fs = m_app.getEngine().getFileSystem();
 	static char tmp[260] = "";
 	auto common_popup = [&]() {
 		const char* base_path = nullptr;
 
+		// TODO
 		if (ImGui::BeginMenu("Create directory"))
 		{
-			ImGui::InputTextWithHint("##dirname", "New directory name", tmp, sizeof(tmp));
+			/*ImGui::InputTextWithHint("##dirname", "New directory name", tmp, sizeof(tmp));
 			ImGui::SameLine();
 			if (ImGui::Button("Create"))
 			{
-				const char* new_dir = /* curent dir path + new dir path */ nullptr;
+				const char* new_dir = /* curent dir path + new dir path  nullptr;
 				App->file_sys->ModuleFileSystem::CreateDir(new_dir);
-				ChangeDir(new_dir);
 				ImGui::CloseCurrentPopup();
-			}
+			}*/
 			ImGui::EndMenu();
 		}
+		// TODO
 		if (ImGui::MenuItem("Select all"))
 		{
-			// TODO
-			/*m_selected_resources.clear();
-			m_selected_resources.reserve(m_file_infos.size());
-			if (m_filtered_file_infos.empty())
-			{
-				for (const FileInfo& fi : m_file_infos)
-				{
-					selectResource(Path(fi.filepath), false, true);
-				}
-			}
-			else
-			{
-				for (int i : m_filtered_file_infos)
-				{
-					selectResource(Path(m_file_infos[i].filepath), false, true);
-				}
-			}*/
+			
+			ImGui::EndMenu();
 		}
 	};
 	if (ImGui::BeginPopup("item_ctx"))
 	{
-		// ImGui::Text("%s", m_file_infos[m_context_resource].clamped_filename.data);
 		ImGui::Separator();
 
-		if (ImGui::BeginMenu("Rename"))
-		{
-			ImGui::InputTextWithHint("##New name", "New name", tmp, sizeof(tmp));
-			if (ImGui::Button("Rename", ImVec2(100, 0)))
-			{
-				//TODO
-				ImGui::CloseCurrentPopup();
-			}
-			ImGui::EndMenu();
-		}
 		open_delete_popup = ImGui::MenuItem("Delete");
 		ImGui::Separator();
 		common_popup();
@@ -304,3 +281,19 @@ void WindowProject::GetAssets()
 	ignore_ext.push_back("meta");
 	all_assets = App->file_sys->GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_ext);
 }
+
+int WindowProject::GetThumbnailIndex(int i, int j, int columns) const
+{
+	int idx = j * columns + i;
+	if (!all_assets.children.empty())
+	{
+		if (idx >= all_assets.children.size()) return -1;
+		return idx;
+	}
+	if (idx >= all_assets.children.size())
+	{
+		return -1;
+	}
+	return idx;
+}
+

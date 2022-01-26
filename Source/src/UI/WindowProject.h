@@ -11,16 +11,15 @@ class WindowProject : public Window
 {
 public:
 	WindowProject();
+	
 	void Init() override;
 	void Update() override;
 
 private:
-	void DetailsGUI();
 	void DoFilter();
 	void CreateBreadCrumps();
 	void Thumbnail(PathNode& node, float size, bool selected);
 
-	void ChangeDir(const char* folder_name);
 
 	void ShowDir(PathNode& node);
 	void ShowFilesOnFolder();
@@ -28,6 +27,9 @@ private:
 	void GetAssets();
 
 private:
+
+	int GetThumbnailIndex(int i, int j, int columns) const;
+
 	char m_filter[128];
 	float m_left_column_width = 120;
 
