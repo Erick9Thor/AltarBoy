@@ -11,6 +11,7 @@ class WindowProject : public Window
 {
 public:
 	WindowProject();
+	~WindowProject() override;
 	void Init() override;
 	void Update() override;
 

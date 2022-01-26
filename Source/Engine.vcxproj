@@ -273,6 +273,7 @@
     <ClCompile Include="src\UI\WindowConsole.cpp" />
     <ClCompile Include="src\UI\WindowResource.cpp" />
     <ClCompile Include="src\Utils\UID.cpp" />
+    <ClCompile Include="src\UI\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Resources\ResourceShader.h" />
@@ -428,6 +429,7 @@
     <ClInclude Include="src\UI\WindowConsole.h" />
     <ClInclude Include="src\UI\WindowResource.h" />
     <ClInclude Include="src\Utils\UID.h" />
+    <ClInclude Include="src\UI\WindowTimers.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

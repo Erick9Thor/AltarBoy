@@ -21,6 +21,10 @@ WindowScene::WindowScene()
 {
 }
 
+WindowScene::~WindowScene()
+{
+}
+
 void WindowScene::Update()
 {
 	if (!App->input->GetMouseButton(SDL_BUTTON_RIGHT))

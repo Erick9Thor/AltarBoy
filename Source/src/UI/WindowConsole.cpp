@@ -9,6 +9,10 @@ WindowConsole::WindowConsole()
 	: Window("Console", true)
 {}
 
+WindowConsole::~WindowConsole()
+{
+}
+
 void WindowConsole::Update()
 {
 	if (ImGui::Begin(name, &active))

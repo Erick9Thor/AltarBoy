@@ -8,6 +8,7 @@ class WindowConsole : public Window
 {
 public:
 	WindowConsole();
+	~WindowConsole() override;
 	void Update() override;
 	void Clear();
 

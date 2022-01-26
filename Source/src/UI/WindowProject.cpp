@@ -13,6 +13,10 @@ WindowProject::WindowProject()
 
 }
 
+WindowProject::~WindowProject()
+{
+}
+
 void WindowProject::Init()
 {
 	GetAssets();

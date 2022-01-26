@@ -16,6 +16,10 @@ WindowConfiguration::WindowConfiguration()
 {
 }
 
+WindowConfiguration::~WindowConfiguration()
+{
+}
+
 void WindowConfiguration::Update()
 {
 	if (ImGui::Begin(ICON_FA_COG "Configuration", &active))

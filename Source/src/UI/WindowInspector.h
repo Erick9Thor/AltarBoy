@@ -7,6 +7,7 @@ class WindowInspector : public Window
 {
 public:
 	WindowInspector();
+	~WindowInspector() override;
 	void Update() override;
 
 private:

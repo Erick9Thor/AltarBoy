@@ -13,6 +13,10 @@ WindowAbout::WindowAbout()
 {
 }
 
+WindowAbout::~WindowAbout()
+{
+}
+
 void WindowAbout::Update()
 {
 	if (ImGui::Begin(name, &active, ImGuiWindowFlags_AlwaysAutoResize))

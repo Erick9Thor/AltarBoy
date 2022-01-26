@@ -14,6 +14,7 @@ class WindowScene : public Window
 {
 public:
 	WindowScene();
+	~WindowScene() override;
 	void Update() override;
 
 	bool ToolbarButton(ImFont* font, const char* font_icon, bool active);
