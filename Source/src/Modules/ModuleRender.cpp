@@ -210,8 +210,9 @@ void GLOptionCheck(GLenum option, bool enable)
 void ModuleRender::OptionsMenu()
 {
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
-	if (ImGui::Checkbox("Debug Draw", &debug_draw))
-		App->debug_draw->SetDebugDraw(debug_draw);
+	ImGui::Checkbox("Debug Draw", &App->debug_draw->debug_draw);
+	ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
+
 	ImGui::Checkbox("Skybox", &draw_skybox);
 	if (!draw_skybox)
 		ImGuiUtils::CompactColorPicker("Background Color", &clear_color[0]);

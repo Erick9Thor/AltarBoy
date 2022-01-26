@@ -41,6 +41,8 @@ public:
 
 	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
 
+	void DebugDraw();
+
 private:
 	AABB box;
 	QuadtreeNode* parent;	
@@ -61,6 +63,8 @@ public:
 	void Remove(GameObject* game_object);
 
 	inline QuadtreeNode* GetRoot() { return root; }
+
+	void DebugDraw();
 		
 private:
 	QuadtreeNode* root = nullptr;

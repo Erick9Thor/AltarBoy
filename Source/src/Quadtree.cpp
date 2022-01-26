@@ -1,6 +1,7 @@
 #include "Quadtree.h"
 
 #include "GameObject.h"
+#include "debugdraw.h"
 
 QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent)
 	: box(box)
@@ -114,6 +115,24 @@ void QuadtreeNode::RearangeChildren()
 	auto a = 1;
 }
 
+void QuadtreeNode::DebugDraw()
+{	
+	static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+	if (IsLeaf())
+	{
+		ddVec3 p[8];
+		
+		for (int i = 0; i < 8; ++i)
+			p[i] = box.CornerPoint(order[i]);
+
+		dd::box(p, dd::colors::LawnGreen);
+		return;
+	}
+	
+	for (QuadtreeNode* child : childs)
+		child->DebugDraw();		
+}
+
 Quadtree::Quadtree()
 {
 }
@@ -142,4 +161,9 @@ void Quadtree::Insert(GameObject* game_object)
 void Quadtree::Remove(GameObject* game_object)
 {
 	if (root) root->Remove(game_object);
+}
+
+void Quadtree::DebugDraw()
+{
+	if (root) root->DebugDraw();
 }
