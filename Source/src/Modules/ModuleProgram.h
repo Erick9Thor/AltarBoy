@@ -43,6 +43,7 @@ public:
 
 	Program* GetMainProgram() const { return main_program; }
 	Program* GetSkyboxProgram() const { return skybox_program; }
+	Program* GetStencilProgram() const { return stencil_program; }
 
 	void UpdateCamera(const ComponentCamera* camera);
 	void UpdateMaterial(const ComponentMaterial* material_comp);
@@ -58,9 +59,11 @@ private:
 
 	Program* CreateMainProgram();
 	Program* CreateSkyboxProgram();
+	Program* CreateStencilProgram();
 
 	Program* main_program;
 	Program* skybox_program;
+	Program* stencil_program;
 
 	// Assume the shader already manages its binding points
 	void CreateUBO(UBOPoints binding_point, unsigned size);

@@ -6,6 +6,7 @@
 
 class GameObject;
 class ComponentCamera;
+class Program;
 
 class Component
 {
@@ -31,7 +32,7 @@ public:
 
 	inline Type GetType() const { return type; };
 
-	virtual void Draw(ComponentCamera* camera) {};
+	virtual void Draw(ComponentCamera* camera, Program* program) {};
 	virtual void DebugDraw() {};
 
 	void SetGameObject(GameObject* container) { game_object = container; }

@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "Scene.h"
 #include "Quadtree.h"
+#include "Program.h"
 #include "Components/ComponentTransform.h"
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
@@ -161,23 +162,23 @@ void GameObject::Update()
 	}
 }
 
-void GameObject::DrawAll(ComponentCamera* camera)
+void GameObject::DrawAll(ComponentCamera* camera, Program* program)
 {
 	// Draw yourself
-	Draw(camera);
+	Draw(camera, program);
 	// Draw children recursively
 	for (GameObject* child : childs)
 	{
-		child->DrawAll(camera);
+		child->DrawAll(camera, program);
 	}
 }
 
-void GameObject::Draw(ComponentCamera* camera)
+void GameObject::Draw(ComponentCamera* camera, Program* program)
 {
 	// Call draw on all components
 	for (Component* component : components)
 	{
-		component->Draw(camera);
+		component->Draw(camera, program);
 	}
 }
 

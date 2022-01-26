@@ -8,6 +8,7 @@
 #include "ModuleCamera.h"
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
+#include "ModuleEditor.h"
 #include "../Scene.h"
 #include "../Skybox.h"
 #include "../Quadtree.h"
@@ -133,6 +134,8 @@ void ModuleRender::SetGLOptions()
 	glEnable(GL_DEPTH_TEST); // Enable depth test
 	glEnable(GL_CULL_FACE); // Enable cull backward faces
 	glFrontFace(GL_CCW); // Front faces will be counter clockwise
+	glEnable(GL_STENCIL_TEST); // Enable stencil test
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); // Only replace stencil value if stencil and depth tests pass
 }
 
 update_status ModuleRender::Update(const float delta)
@@ -155,20 +158,19 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
 	ManageResolution(camera);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glStencilFunc(GL_ALWAYS, 1, 0XFF);
+	glStencilMask(0x00); // Prevent background from filling stencil
 
 	if (draw_skybox)
-	{
 		scene->GetSkybox()->Draw(camera);
-		glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	}
 	else
-	{
 		glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	}
-
+	
 	float4x4 view = camera->GetViewMatrix();
 	float4x4 proj = camera->GetProjectionMatrix();
+
+	glStencilMask(0XFF);
 
 	App->debug_draw->Draw(view, proj, fb_height, fb_width);
 
@@ -179,13 +181,41 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	// GameObject* root = scene->GetRoot();
 	//root->DrawAll(camera);
 	//render_list.Update(culling, root);
+	
 
 	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
 	Program* program = App->program->GetMainProgram();
 	program->Activate();
+
+	GameObject* selected_go = App->editor->GetSelectedGO();
+	RenderTarget* outline_target = nullptr;
 	for (RenderTarget& target : render_list.GetNodes())
-		target.game_object->Draw(camera);
+	{
+		target.game_object->Draw(camera, program);
+		if (selected_go && target.game_object == selected_go)
+		{
+			outline_target = &target;
+		}
+	}		
 	program->Deactivate();
+
+	if (outline_selection && outline_target)
+	{
+		glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
+		glStencilMask(0X00);
+		glDisable(GL_DEPTH_TEST);		
+
+		// TODO: Scale model a bit (maybe easier on render)
+		Program* outline_program = App->program->GetStencilProgram();
+		outline_program->Activate();
+		outline_target->game_object->Draw(camera, outline_program);
+		outline_program->Deactivate();
+
+		glStencilMask(0XFF);
+		glStencilFunc(GL_ALWAYS, 0, 0xFF);
+		glEnable(GL_DEPTH_TEST);
+	}
+	
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
