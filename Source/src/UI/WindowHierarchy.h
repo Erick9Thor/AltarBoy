@@ -7,6 +7,7 @@ class WindowHierarchy : public Window
 {
 public:
 	WindowHierarchy();
+	~WindowHierarchy() override;
 	void Update() override;
 
 	void CleanUp() override;

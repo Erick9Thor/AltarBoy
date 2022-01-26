@@ -5,6 +5,7 @@
 #include "ModuleSceneManager.h"
 #include "../Scene.h"
 #include "../GameObject.h"
+#include "../Quadtree.h"
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "DebugDraw.h" // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
 
@@ -607,7 +608,12 @@ update_status ModuleDebugDraw::Update(const float delta)
 	if (debug_draw)
 	{
 		Scene* scene = App->scene_manager->GetActiveScene();
-		App->scene_manager->GetActiveScene()->GetRoot()->DebugDrawAll();
+		if (scene)
+		{
+			scene->GetRoot()->DebugDrawAll();
+			if (draw_quadtree)
+				scene->GetQuadtree()->DebugDraw();
+		}		
 	}
 
 	return UPDATE_CONTINUE;

@@ -10,12 +10,12 @@
 Skybox::Skybox()
 {
 	const char* paths[6] = {
-		"Skybox/right.jpg",
-		"Skybox/left.jpg",
-		"Skybox/top.jpg",
-		"Skybox/bottom.jpg",			
-		"Skybox/front.jpg",
-		"Skybox/back.jpg"
+		"Assets/Skybox/right.jpg",
+		"Assets/Skybox/left.jpg",
+		"Assets/Skybox/top.jpg",
+		"Assets/Skybox/bottom.jpg",			
+		"Assets/Skybox/front.jpg",
+		"Assets/Skybox/back.jpg"
 	};
 	texture = App->texture->LoadCubeMap(paths);
 

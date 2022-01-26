@@ -118,18 +118,8 @@ void ModuleWindow::OptionsMenu()
 
 	if (!fullscreen)
 	{
-		ImGui::Separator();
 		if (ImGui::Checkbox("Resizable", &resizable))
 			SetResizable(resizable);
-
-		if (ImGui::SliderInt("Width", &width, 0, max_width))
-		{
-			SetSize(width, height);
-		}
-		if (ImGui::SliderInt("Height", &height, 0, max_height))
-		{
-			SetSize(width, height);
-		}
 	}
 	ImGui::Text("Monitor Refresh Rate: %d", refresh_rate);
 }

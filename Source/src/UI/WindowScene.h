@@ -14,6 +14,7 @@ class WindowScene : public Window
 {
 public:
 	WindowScene();
+	~WindowScene() override;
 	void Update() override;
 
 	void CleanUp() override;

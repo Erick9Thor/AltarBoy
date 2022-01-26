@@ -21,7 +21,7 @@ void ColorCopy(const aiColor4D& assimp_color, float4& color)
 bool ResourceMaterial::Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
 {
 	static const int index = 0;
-	static const std::string default_path("Textures\\");
+	static const std::string default_path(ASSETS_FOLDER "\\Textures\\");
 	aiString file;
 
 	aiColor4D color;

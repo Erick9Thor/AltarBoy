@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "../Globals.h"
+#include "../UI/ImGuiUtils.h"
 
 #include "MathGeoLib.h"
 
@@ -43,7 +44,7 @@ public:
 	inline unsigned int GetTextureId() const { return fb_texture; }
 
 	void OptionsMenu();
-	void PerformanceMenu(const float delta);
+	void PerformanceMenu();
 	void FpsGraph();
 	void AddFrame(const float delta);
 
@@ -73,7 +74,6 @@ private:
 	unsigned fb_width = 0;
 
 	float4 clear_color;
-	bool debug_draw = true;
 	bool draw_skybox = true;
 
 	GpuData gpu;

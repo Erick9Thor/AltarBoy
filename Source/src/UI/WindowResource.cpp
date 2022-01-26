@@ -6,6 +6,10 @@
 WindowResource::WindowResource()
 	: Window("Resources", true) {}
 
+WindowResource::~WindowResource()
+{
+}
+
 
 void WindowResource::Update()
 {

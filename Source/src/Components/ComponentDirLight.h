@@ -11,6 +11,9 @@ public:
 	ComponentDirLight(GameObject* conatiner);
 	~ComponentDirLight() override;
 	static inline Type GetType() { return Type::DirLight; };
+
+	void DebugDraw() override;
+
 	bool IsActive() const { return active; }
 	void SetActive(bool v) { active = v; }
 
@@ -23,4 +26,5 @@ public:
 
 private:
 	bool active = true;
+	bool draw_direction = false;
 };

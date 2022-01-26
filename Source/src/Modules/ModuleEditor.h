@@ -13,6 +13,7 @@
 #include "../UI/WindowResource.h"
 #include "../UI/WindowProject.h"
 #include "../UI/WindowConsole.h"
+#include "../UI/WindowTimers.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -65,4 +66,5 @@ private:
 	WindowConsole w_console;
 	WindowResource w_resource;
 	WindowProject w_project;
+	WindowTimers w_timers;
 };

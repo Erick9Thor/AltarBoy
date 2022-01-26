@@ -8,6 +8,10 @@ ModuleSceneManager::~ModuleSceneManager() {}
 
 bool ModuleSceneManager::Init()
 {
+	main_scene = new Scene();
+	
+	LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
+
 	CreateEmptyScene();
 	// LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 	return true;

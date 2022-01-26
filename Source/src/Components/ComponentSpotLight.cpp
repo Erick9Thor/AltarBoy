@@ -2,9 +2,9 @@
 
 #include "ComponentTransform.h"
 #include "../Scene.h"
+#include "debugdraw.h"
 
 #include "imgui.h"
-
 #include <algorithm>
 
 ComponentSpotLight::ComponentSpotLight(GameObject* conatiner)
@@ -23,17 +23,32 @@ ComponentSpotLight::~ComponentSpotLight()
 	}
 }
 
+void ComponentSpotLight::DebugDraw()
+{
+	if (draw_cone)
+	{
+		ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
+		if (transform)
+		{
+			dd::cone(transform->GetPosition(), transform->GetFwd().Mul(radius), dd::colors::Blue, inner, 0.f);
+			dd::cone(transform->GetPosition(), transform->GetFwd().Mul(radius), dd::colors::Green, outer, 0.f);
+		}
+	}
+}
+
 void ComponentSpotLight::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Spot Light"))
 	{
+		ImGui::PushItemWidth(100.0f);
 		ImGui::Checkbox("S.Active", &active);
+		ImGui::Checkbox("Draw Cone", &draw_cone);
 		ImGui::InputFloat("S.Intensity", &intensity);
 		ImGui::InputFloat("S.Radius", &radius);
 		ImGui::InputFloat("Inner Angle", &inner);
 		ImGui::InputFloat("Outer Angle", &outer);
-		ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
-		ImGui::ColorPicker3("Spot Color", &color[0], flag);
+		ImGui::PopItemWidth();
+		ImGuiUtils::CompactColorPicker("Spot Color", &color[0]);
 	}
 }
 

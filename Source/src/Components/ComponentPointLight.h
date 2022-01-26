@@ -11,6 +11,9 @@ public:
 	ComponentPointLight(GameObject* conatiner);
 	~ComponentPointLight() override;
 	static inline Type GetType() { return Type::PointLight; };
+
+	void DebugDraw() override;
+
 	bool IsActive() const { return active; }
 	void SetActive(bool v) { active = v; }
 
@@ -24,4 +27,5 @@ public:
 
 private:
 	bool active = true;
+	bool draw_sphere = false;
 };

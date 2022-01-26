@@ -25,7 +25,6 @@ void ComponentMaterial::SetMaterial(ResourceMaterial* new_material)
 
 void ComponentMaterial::DrawGui()
 {
-	constexpr ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (material) {
@@ -40,7 +39,7 @@ void ComponentMaterial::DrawGui()
 				}
 			}
 			if (!use_diffuse_texture)
-				ImGui::ColorPicker3("Diffuse Color", &material->diffuse_color[0], flag);
+				ImGuiUtils::CompactColorPicker("Diffuse Color", &material->diffuse_color[0]);
 
 			Texture& specular = material->specular;
 			ImGui::InputFloat("Shininess", &material->shininess);
@@ -54,7 +53,7 @@ void ComponentMaterial::DrawGui()
 				}
 			}
 			if (!use_specular_texture)
-				ImGui::ColorPicker3("Specular Color", &material->specular_color[0], flag);
+				ImGuiUtils::CompactColorPicker("Specular Color", &material->specular_color[0]);
 		}
 		else
 		{

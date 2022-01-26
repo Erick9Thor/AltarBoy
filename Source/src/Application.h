@@ -30,13 +30,12 @@ class AppLog;
 class Application
 {
 public:
-
 	Application();
 	~Application();
 
 	bool Init();
 	update_status Update();
-
+	
 	bool CleanUp();
 
 	void RequestBrowser(const char* url) const;

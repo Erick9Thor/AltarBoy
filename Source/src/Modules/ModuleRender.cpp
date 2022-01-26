@@ -209,16 +209,16 @@ void GLOptionCheck(GLenum option, bool enable)
 
 void ModuleRender::OptionsMenu()
 {
-	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
-	if (ImGui::Checkbox("Debug Draw", &debug_draw))
-		App->debug_draw->SetDebugDraw(debug_draw);
+	ImGui::Checkbox("Debug Draw", &App->debug_draw->debug_draw);
+	ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
+
 	ImGui::Checkbox("Skybox", &draw_skybox);
 	if (!draw_skybox)
-		ImGui::ColorPicker3("Background Color", &clear_color[0], flag);
+		ImGuiUtils::CompactColorPicker("Background Color", &clear_color[0]);
 }
 
-void ModuleRender::PerformanceMenu(const float delta)
+void ModuleRender::PerformanceMenu()
 {
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram_free);
 	float vram_free_mb = vram_free / 1024.0f;

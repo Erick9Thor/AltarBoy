@@ -19,7 +19,9 @@ public:
 	void Draw(const float4x4& view, const float4x4& proj, unsigned width, unsigned height);
 	void SetDebugDraw(bool v) { debug_draw = v; }
 
+	bool debug_draw = true;
+	bool draw_quadtree = false;
+
 private:
 	static DDRenderInterfaceCoreGL* implementation;
-	bool debug_draw = true;
 };

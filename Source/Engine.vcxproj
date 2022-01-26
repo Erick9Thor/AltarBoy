@@ -189,6 +189,7 @@
     <ClCompile Include="src\Resources\ResourceMesh.cpp" />
     <ClCompile Include="src\Resources\ResourceMaterial.cpp" />
     <ClCompile Include="src\Resources\Resource.cpp" />
+    <ClCompile Include="src\UI\ImguiUtils.cpp" />
     <ClCompile Include="src\Utils\JsonFormaterValue.cpp" />
     <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="src\UI\WindowConsole.cpp" />
     <ClCompile Include="src\UI\WindowResource.cpp" />
     <ClCompile Include="src\Utils\UID.cpp" />
+    <ClCompile Include="src\UI\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
@@ -433,6 +435,7 @@
     <ClInclude Include="src\UI\WindowConsole.h" />
     <ClInclude Include="src\UI\WindowResource.h" />
     <ClInclude Include="src\Utils\UID.h" />
+    <ClInclude Include="src\UI\WindowTimers.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />

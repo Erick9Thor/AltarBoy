@@ -13,6 +13,10 @@ WindowProject::WindowProject()
 {
 }
 
+WindowProject::~WindowProject()
+{
+}
+
 void WindowProject::Init()
 {
 	m_filter[0] = '\0';

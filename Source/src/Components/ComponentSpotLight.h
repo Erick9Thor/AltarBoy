@@ -11,6 +11,9 @@ public:
 	ComponentSpotLight(GameObject* conatiner);
 	~ComponentSpotLight() override;
 	static inline Type GetType() { return Type::SpotLight; };
+
+	void DebugDraw() override;
+
 	bool IsActive() const { return active; }
 	void SetActive(bool v) { active = v; }
 
@@ -27,4 +30,5 @@ public:
 
 private:
 	bool active = true;
+	bool draw_cone = false;
 };

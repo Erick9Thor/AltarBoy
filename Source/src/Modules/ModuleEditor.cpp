@@ -40,6 +40,7 @@ ModuleEditor::ModuleEditor() {
 	windows.push_back(&w_console);
 	windows.push_back(&w_resource);
 	windows.push_back(&w_project);
+	windows.push_back(&w_timers);
 }
 
 bool ModuleEditor::Init()
@@ -251,6 +252,7 @@ void ModuleEditor::ViewMenu()
 		ImGui::MenuItem(w_about.name, "", &w_about.active);
 		ImGui::MenuItem(w_resource.name, "", &w_resource.active);
 		ImGui::MenuItem(w_project.name, "", &w_project.active);
+		ImGui::MenuItem(w_timers.name, "", &w_timers.active);
 		ImGui::EndMenu();
 	}
 }

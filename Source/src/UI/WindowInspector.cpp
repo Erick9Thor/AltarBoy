@@ -11,6 +11,10 @@
 WindowInspector::WindowInspector()
 	: Window("Inspector", true) {}
 
+WindowInspector::~WindowInspector()
+{
+}
+
 void WindowInspector::Update()
 {
 	if (ImGui::Begin(ICON_FA_EYE "Inspector", &active))

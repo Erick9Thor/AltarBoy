@@ -16,6 +16,10 @@ WindowHierarchy::WindowHierarchy()
 {
 }
 
+WindowHierarchy::~WindowHierarchy()
+{
+}
+
 void WindowHierarchy::Update()
 {
 	if (ImGui::Begin(ICON_FA_SITEMAP "Hierarchy", &active))

@@ -16,6 +16,10 @@ WindowConfiguration::WindowConfiguration()
 {
 }
 
+WindowConfiguration::~WindowConfiguration()
+{
+}
+
 void WindowConfiguration::Update()
 {
 	if (ImGui::Begin(ICON_FA_COG "Configuration", &active))
@@ -27,14 +31,15 @@ void WindowConfiguration::Update()
 			ImGui::Text("Shader Options");
 			App->program->OptionsMenu();
 		}
-		if (ImGui::CollapsingHeader("Engine Camera"))
+		if (ImGui::CollapsingHeader("Camera"))
 		{
 			App->camera->GetMainCamera()->DrawGui();
 		}
-		/*if (ImGui::CollapsingHeader("FPS control"))
+		if (ImGui::CollapsingHeader("Engine"))
 		{
-			App->renderer->FpsGraph();
-		}*/
+			App->window->OptionsMenu();
+			App->renderer->PerformanceMenu();
+		}
 	}
 	ImGui::End();
 }
