@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Application.h"
+#include "Utils/Timer.h"
 
 #include "Modules/ModuleWindow.h"
 #include "Modules/ModuleRender.h"
@@ -47,18 +48,15 @@ bool Application::Init()
 	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
 		ret = (*it)->Init();
 
-	delta = 0;
-	timer = PerformanceTimer();
-	timer.Start();
-	prev_tick_time = timer.Read();
+	delta = 0.f;
+	GameTimer::Start();
 	return ret;
 }
 
 update_status Application::Update()
 {
-	double tick_time = timer.Read();
-	delta = (tick_time - prev_tick_time) / 1000.0;
-	prev_tick_time = tick_time;
+
+	delta = GameTimer::Update();
 	update_status ret = UPDATE_CONTINUE;
 
 	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)

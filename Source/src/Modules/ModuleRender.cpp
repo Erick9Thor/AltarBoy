@@ -209,7 +209,6 @@ void GLOptionCheck(GLenum option, bool enable)
 
 void ModuleRender::OptionsMenu()
 {
-	ImGuiColorEditFlags flag = ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_NoSidePreview | ImGuiColorEditFlags_NoLabel;
 	ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
 	if (ImGui::Checkbox("Debug Draw", &debug_draw))
 		App->debug_draw->SetDebugDraw(debug_draw);

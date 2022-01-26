@@ -1,6 +1,7 @@
 #include "WindowScene.h"
 
 #include "../Application.h"
+#include "../Utils/Timer.h"
 #include "../GameObject.h"
 
 #include "../Modules/ModuleInput.h"
@@ -18,7 +19,6 @@
 WindowScene::WindowScene()
 	: Window("Scene", true)
 {
-	scene_timer = new Timer();
 }
 
 void WindowScene::Update()
@@ -61,20 +61,29 @@ void WindowScene::ToolbarMenu()
 {
 	float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
 	ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
-
-	if (scene_timer->HasGameStarted())
+	
+	bool playing = !GameTimer::paused && GameTimer::running;
+	
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running))
 	{
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !scene_timer->IsGameRunning()))scene_timer->StopGame();
-
-		if (scene_timer->IsGameRunning())
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, !scene_timer->IsGameRunning())) scene_timer->PauseGame();
-		else
-			if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->ResumeGame();
+		if (!GameTimer::paused)
+			GameTimer::Pause();
 	}
-	else
-		if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, scene_timer->IsGameRunning())) scene_timer->StartGame();
+	
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running))
+	{
+		if (!GameTimer::running)
+			GameTimer::Start();
+		else if (GameTimer::paused)
+			GameTimer::Resume();
+	}
+	
+	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running))
+	{
+		if (GameTimer::running)
+			GameTimer::Stop();
+	}
 
-	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STEP_FORWARD, scene_timer->IsGameRunning())) scene_timer->StepGame();
 	ImGui::Separator();
 }
 

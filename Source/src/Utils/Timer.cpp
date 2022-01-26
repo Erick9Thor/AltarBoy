@@ -21,46 +21,8 @@ double Timer::Read()
 double Timer::Stop()
 {
 	return Read();
-	running = false;
 }
 
-void Timer::StartGame()
-{
-	if (game_started) return;
-	game_started = true;
-	game_running = true;
-}
-
-void Timer::StopGame()
-{
-	if (!game_started) return;
-	game_started = false;
-	game_running = false;
-}
-
-void Timer::PauseGame()
-{
-	if (!game_started) return;
-	if (!game_running) return;
-
-	game_running = false;
-}
-
-void Timer::ResumeGame()
-{
-	if (!game_started) return;
-	if (game_running) return;
-
-	game_running = true;
-}
-
-void Timer::StepGame()
-{
-	if (!game_started) StartGame();
-	if (game_running) PauseGame();
-
-	game_step_once = true;
-}
 
 void PerformanceTimer::Start()
 {
@@ -68,19 +30,81 @@ void PerformanceTimer::Start()
 	start_time = SDL_GetPerformanceCounter();
 }
 
+void PerformanceTimer::Resume()
+{
+	if (!running)
+	{
+		running = true;
+		start_time = SDL_GetPerformanceCounter() - (stop_time - start_time);
+	}
+}
+
 double PerformanceTimer::Read()
 {
 	static const double frequency = (double) SDL_GetPerformanceFrequency();
+
+	unsigned long long now;
 	if (running)
-	{
-		unsigned long long now = SDL_GetPerformanceCounter();
-		current_time = (double) ((now - start_time) * 1000.0 / frequency);
-	}
+		now = SDL_GetPerformanceCounter();
+	else
+		now = stop_time;
+
+	current_time = (double) ((now - start_time) * 1000.0 / frequency);
 	return current_time;
 }
 
 double PerformanceTimer::Stop()
 {
-	return Read();
 	running = false;
+	stop_time = SDL_GetPerformanceCounter();
+	return Read();	
+}
+
+double GameTimer::delta_time = 0.;
+double GameTimer::total_time = 0.;
+double GameTimer::prev_tick_time = 0.;
+bool GameTimer::running = false;
+bool GameTimer::paused = false;
+PerformanceTimer GameTimer::engine_timer;
+
+void GameTimer::Start()
+{
+	total_time = 0.;
+	running = true;
+	paused = false;
+	engine_timer.Start();
+	prev_tick_time = engine_timer.Read();
+}
+
+double GameTimer::Update()
+{
+	double tick_time = engine_timer.Read();
+	delta_time = (tick_time - prev_tick_time) / 1000.0;
+	prev_tick_time = tick_time;
+	if (running)
+		total_time = engine_timer.Read();
+	return delta_time;
+}
+
+void GameTimer::Play()
+{
+	running = true;
+}
+
+void GameTimer::Pause()
+{
+	paused = true;
+	engine_timer.Stop();
+}
+
+void GameTimer::Resume()
+{
+	paused = false;
+	engine_timer.Resume();
+}
+
+void GameTimer::Stop()
+{
+	running = false;
+	engine_timer.Stop();
 }
