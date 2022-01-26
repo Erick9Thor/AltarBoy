@@ -26,6 +26,10 @@
 #include "imgui_impl_opengl3.h"
 #include <IconsFontAwesome5.h>
 #include <imgui_internal.h>
+#include "../Utils/Logger.h"
+
+#include "ImGuiFileDialog.h"
+
 
 ModuleEditor::ModuleEditor() {
 	windows.push_back(&w_configuration);
@@ -101,6 +105,20 @@ update_status ModuleEditor::Update(const float delta)
 	ImGui::CaptureKeyboardFromApp(true);
 
 	update_status retval = MainMenuBar();
+
+	if (ImGuiFileDialog::Instance()->Display("LoadScene"))
+	{
+		if (ImGuiFileDialog::Instance()->IsOk())
+		{
+			std::string file_path_name = ImGuiFileDialog::Instance()->GetFilePathName();
+			std::string file_path = ImGuiFileDialog::Instance()->GetCurrentPath();
+
+			LOG("Loading scene: %s", file_path_name.c_str());
+			App->scene_manager->LoadScene(file_path.c_str());
+		}
+
+		ImGuiFileDialog::Instance()->Close();
+	}
 
 	GenerateDockingSpace();
 
@@ -187,14 +205,20 @@ void ModuleEditor::FileMenu()
 	{
 		App->scene_manager->CreateEmptyScene();
 	}
-	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true))
+	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
 	{
-		App->scene_manager->LoadScene();
+		App->scene_manager->SaveScene();
 	}
 	if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
 	{
 		ImGui::OpenPopup("Save scene");
 	}
+	ImGui::Separator();
+	if (ImGui::MenuItem("Load"))
+	{
+		ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ".");
+	}
+
 	ImGui::EndMenu();
 
 	char file_name_buffer[32] = {'\0'};
@@ -281,6 +305,12 @@ void ModuleEditor::RenderGui()
 
 bool ModuleEditor::CleanUp()
 {
+	for (Window* panel : windows)
+	{
+		if (panel->active)
+			panel->CleanUp();
+	}
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();

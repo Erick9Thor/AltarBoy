@@ -99,7 +99,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -133,7 +133,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp" />
     <ClCompile Include="src\Resources\ResourceShader.cpp" />
     <ClCompile Include="src\Importers\ShaderImporter.cpp" />
     <ClCompile Include="src\Resources\ResourceTexture.cpp" />
@@ -274,6 +275,11 @@
     <ClCompile Include="src\Utils\UID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h" />
     <ClInclude Include="src\Resources\ResourceShader.h" />
     <ClInclude Include="src\Importers\ShaderImporter.h" />
     <ClInclude Include="src\UI\ImGuiUtils.h" />

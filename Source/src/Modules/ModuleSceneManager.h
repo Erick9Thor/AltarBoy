@@ -28,8 +28,8 @@ public:
 
 	void CreateEmptyScene();
 
-	void LoadScene(const char* file_path = "untitled");
-	void SaveScene(const char* file_path);
+	void LoadScene(const char* file_path);
+	void SaveScene(const char* file_path = "untitled");
 
 private:
 	Scene* main_scene = nullptr;

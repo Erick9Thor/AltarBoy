@@ -25,6 +25,12 @@ void WindowHierarchy::Update()
 	ImGui::End();
 }
 
+void WindowHierarchy::CleanUp()
+{
+	dragged_object = nullptr;
+	delete dragged_object;
+}
+
 
 void WindowHierarchy::DrawHierarchyTree(GameObject* root)
 {
@@ -87,37 +93,39 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		}
 	}
 
-	// TODO: Make robust to repeted game object names
-	if (ImGui::BeginPopup(game_object->name.c_str()))
-	{
-		// Alternativs: ImGui::Selectable, ImGuiHelper::ValueSelection
-		// TODO: Open options to create/destroy new object or move up down in the list of childs
-		if (ImGui::MenuItem("Add Gameojbect"))
+	if (game_object) {
+		// TODO: Make robust to repeted game object names
+		if (ImGui::BeginPopup(game_object->name.c_str()))
 		{
-			App->scene_manager->GetActiveScene()->CreateNewGameObject("Test", game_object);
-			ImGui::CloseCurrentPopup();
+			// Alternativs: ImGui::Selectable, ImGuiHelper::ValueSelection
+			// TODO: Open options to create/destroy new object or move up down in the list of childs
+			if (ImGui::MenuItem("Add Gameojbect"))
+			{
+				App->scene_manager->GetActiveScene()->CreateNewGameObject("Test", game_object);
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Delete Gameojbect"))
+			{
+				// TODO: Make it work
+				game_object->Destroy();
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Move Up"))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Move Down"))
+			{
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
 		}
-		if (ImGui::MenuItem("Delete Gameojbect"))
-		{
-			// TODO: Make it work
-			game_object->Destroy();
-			ImGui::CloseCurrentPopup();
-		}
-		if (ImGui::MenuItem("Move Up"))
-		{
-			ImGui::CloseCurrentPopup();
-		}
-		if (ImGui::MenuItem("Move Down"))
-		{
-			ImGui::CloseCurrentPopup();
-		}
-		ImGui::EndPopup();
-	}
 
-	if (game_object->hierarchy_open == true)
-	{
-		DrawGOChilds(game_object);
-		ImGui::TreePop();
+		if (game_object->hierarchy_open == true)
+		{
+			DrawGOChilds(game_object);
+			ImGui::TreePop();
+		}
 	}
 	ImGui::PopStyleColor();
 }

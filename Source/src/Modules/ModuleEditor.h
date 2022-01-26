@@ -39,8 +39,8 @@ public:
 	GameObject* GetSelectedGO() { return selected_go; }
 	const GameObject* GetSelectedGO() const { return selected_go; }
 
-	ImFont* m_big_icon_font;
-	ImFont* m_small_icon_font;
+	ImFont* m_big_icon_font = nullptr;
+	ImFont* m_small_icon_font = nullptr;
 
 private:
 	void RenderGui();

@@ -82,3 +82,9 @@ void WindowConsole::Clear()
 	line_offsets.clear();
 	line_offsets.push_back(0);
 }
+
+void WindowConsole::CleanUp()
+{
+	Clear();
+	filter.Clear();
+}

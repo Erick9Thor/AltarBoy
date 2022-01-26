@@ -43,6 +43,10 @@ void WindowScene::Update()
 	};
 }
 
+void WindowScene::CleanUp()
+{
+}
+
 void WindowScene::GuizmoOptionsController()
 {
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE)) guizmo_operation = ImGuizmo::TRANSLATE;

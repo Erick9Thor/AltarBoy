@@ -15,50 +15,53 @@ WindowProject::WindowProject()
 
 void WindowProject::Init()
 {
+	m_filter[0] = '\0';
 	GetAssets();
 }
 
 void WindowProject::Update()
 {
-	if (!ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
+	if (ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
 	{
+		
+		ImGui::PushItemWidth(100);
+		if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter))) DoFilter();
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+		if (ImGuiUtils::IconButton(ICON_FA_TIMES, "Reset filter"))
+		{
+			m_filter[0] = '\0';
+			DoFilter();
+		}
+
+		ImGui::SameLine();
+		CreateBreadCrumps();
+		ImGui::Separator();
+
+		float content_w = ImGui::GetContentRegionAvail().x;
+		ImVec2 left_size(m_left_column_width, 0);
+		if (left_size.x < 10) left_size.x = 10;
+		if (left_size.x > content_w - 10) left_size.x = content_w - 10;
+
+		ShowDir(all_assets);
+
+		ImGui::SameLine();
+		ImGuiUtils::VSplitter("vsplit1", &left_size);
+		if (left_size.x >= 120)
+		{
+			m_left_column_width = left_size.x;
+		}
+		ImGui::SameLine();
+
+		ShowFilesOnFolder();
+
 		ImGui::End();
-		// DetailsGUI(); TODO
-		return;
 	}
+}
 
-	ImGui::PushItemWidth(100);
-	if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter))) DoFilter();
-	ImGui::PopItemWidth();
-	ImGui::SameLine();
-	if (ImGuiUtils::IconButton(ICON_FA_TIMES, "Reset filter"))
-	{
-		m_filter[0] = '\0';
-		DoFilter();
-	}
-
-	ImGui::SameLine();
-	CreateBreadCrumps();
-	ImGui::Separator();
-
-	float content_w = ImGui::GetContentRegionAvail().x;
-	ImVec2 left_size(m_left_column_width, 0);
-	if (left_size.x < 10) left_size.x = 10;
-	if (left_size.x > content_w - 10) left_size.x = content_w - 10;
-
-	ShowDir(all_assets);
-
-	ImGui::SameLine();
-	ImGuiUtils::VSplitter("vsplit1", &left_size);
-	if (left_size.x >= 120)
-	{
-		m_left_column_width = left_size.x;
-	}
-	ImGui::SameLine();
-
-	ShowFilesOnFolder();
-
-	ImGui::End();
+void WindowProject::CleanUp()
+{
+	delete m_filter;
 }
 
 //TODO

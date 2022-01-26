@@ -11,7 +11,9 @@ public:
 	void Update() override;
 	void Clear();
 
+	void CleanUp() override;
+
 private:
-	ImGuiTextFilter filter;
+	ImGuiTextFilter filter = nullptr;
 	bool autoscroll = true;
 };

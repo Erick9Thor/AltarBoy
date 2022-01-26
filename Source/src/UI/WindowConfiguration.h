@@ -5,5 +5,6 @@ class WindowConfiguration : public Window
 {
 public:
 	WindowConfiguration();
+
 	void Update() override;
 };

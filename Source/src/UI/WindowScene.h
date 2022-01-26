@@ -16,6 +16,8 @@ public:
 	WindowScene();
 	void Update() override;
 
+	void CleanUp() override;
+
 	bool ToolbarButton(ImFont* font, const char* font_icon, bool active);
 
 private:
@@ -23,6 +25,7 @@ private:
 	void ToolbarMenu();
 	void DrawScene();
 	void Controller();
+
 	GameObject* SelectObject(ComponentCamera* camera, Scene* scene);
 
 	ImVec2 imguizmo_size = {100.0f, 100.0f};

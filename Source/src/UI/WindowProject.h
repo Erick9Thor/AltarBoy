@@ -15,11 +15,12 @@ public:
 	void Init() override;
 	void Update() override;
 
+	void CleanUp() override;
+
 private:
 	void DoFilter();
 	void CreateBreadCrumps();
 	void Thumbnail(PathNode& node, float size, bool selected);
-
 
 	void ShowDir(PathNode& node);
 	void ShowFilesOnFolder();
@@ -36,5 +37,4 @@ private:
 	float m_thumbnail_size = 1.f;
 
 	PathNode all_assets;
-	
 };
