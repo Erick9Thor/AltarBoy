@@ -39,6 +39,7 @@ public:
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
+	UID getUID() { return uid; }
 	void Save(JsonFormaterValue j_gameObject) const;
 	void Load(JsonFormaterValue j_gameObject);
 

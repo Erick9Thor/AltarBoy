@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include "physfs.h"
 #include "../Utils/Logger.h"
+#include <algorithm>
 
 ModuleFileSystem::ModuleFileSystem()
 {
@@ -172,6 +173,21 @@ std::string ModuleFileSystem::GetFileNameAndExtension(const char* file_path) con
 	const char* name_extension = last_separator + 1;
 	return name_extension;
 }
+
+std::string ModuleFileSystem::GetFileExtension(const char* file_path) const
+{
+	const char* last_slash = strrchr(file_path, '/');
+	const char* last_backslash = strrchr(file_path, '\\');
+	const char* last_separator = last_slash >= last_backslash ? last_slash : last_backslash;
+
+	const char* lastDot = strrchr(file_path, '.');
+
+	std::string extension = std::string(lastDot);
+	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+	
+	return extension;
+}
+
 
 PathNode ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
 {

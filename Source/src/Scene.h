@@ -27,6 +27,8 @@ public:
 	Scene();
 	~Scene();
 
+	void CleanScene();
+
 	// --- Life cycle Scene --- //
 	void Update();
 	void Save(JsonFormaterValue j_scene) const;
@@ -57,7 +59,6 @@ public:
 
 	// --- Importer --- // TODO: Move to importer
 	GameObject* LoadFBX(const std::string& path);
-	
 
 private:
 	// TODO: Fix leaks from resource material pointers when doing import system

@@ -23,7 +23,7 @@ void WindowProject::Update()
 	if (!ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
 	{
 		ImGui::End();
-		// DetailsGUI();
+		// DetailsGUI(); TODO
 		return;
 	}
 

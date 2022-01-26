@@ -96,11 +96,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
       <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -130,11 +130,11 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
       <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp14</LanguageStandard>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

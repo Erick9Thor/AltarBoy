@@ -51,18 +51,87 @@ void ModuleResourceManager::LoadAllAssetsFolder()
 
 void ModuleResourceManager::LoadByNode(PathNode node)
 {
-	bool importedAsNew = false;
-
-	std::string metaFile = node.path + ".meta";
+	std::string metaFile = node.path + META_EXTENSION;
 	if (App->file_sys->Exists(metaFile.c_str()))
 	{
-		char* buffer = App->file_sys->Load(metaFile.c_str());
+		rapidjson::Document document;
+		JsonFormaterValue jMeta(document, document);
+
+		const char* buffer = App->file_sys->Load(metaFile.c_str());
+		ReadJSON(buffer, document);
+	
+		ImportAssetByExtension(jMeta, node.path.c_str());
 	}
 	else
 	{
 		ImportFileFromAssets(node.path.c_str());
 	}
+
+	if (!node.isFile && !node.isLeaf)
+	{
+		/*ResourceHandle<Resource> hFolder(assetID);
+		std::vector<uint64> newChildren;
+		for (uint i = 0; i < node.children.size(); i++)
+		{
+			uint64 childID = 0;
+			LoadAssetBase(node.children[i], childID);
+			if (!hFolder.Get()->HasContainedResource(childID))
+				newChildren.push_back(childID);
+		}
+		if (newChildren.size() > 0) //New resources from this folder have been imported. Update folder content
+		{
+			for (uint i = 0; i < newChildren.size(); ++i)
+				hFolder.Get()->AddContainedResource(newChildren[i]);
+			SaveResource(hFolder.Get());
+		}*/
+	}
 }
+
+void ModuleResourceManager::ImportAssetByExtension(JsonFormaterValue jMeta, const char* file_path)
+{
+	std::string extension = App->file_sys->GetFileExtension(file_path);
+
+	const char* buffer = App->file_sys->Load(file_path);
+	if (sizeof(buffer) == 0)
+	{
+		LOG("Error loading scene %s", file_path);
+		return;
+	}
+
+	Resource* resource = nullptr;
+	if (extension == SCENE_EXTENSION)
+	{
+		SceneImporter::ImportScene(buffer, jMeta);
+	}
+	/*else if (extension == MATERIAL_EXTENSION)
+	{
+		// Material files
+		// MaterialImporter::ImportMaterial(filePath, jMeta);
+	}
+	else if (extension == FRAGMENT_SHADER_EXTENSION || extension == VERTEX_SHADER_EXTENSION || extension == DEFAULT_SHADER_EXTENSION)
+	{
+		// Shader files
+		// ShaderImporter::ImportShader(filePath, jMeta);
+	}
+	else if (extension == MODEL_EXTENSION)
+	{
+		// Model files
+		// ModelImporter::ImportModel(filePath, jMeta);
+	}
+	else if (extension == SKYBOX_EXTENSION)
+	{
+		// Skybox files
+		// SkyboxImporter::ImportSkybox(filePath, jMeta);
+	}
+	else if (extension == JPG_TEXTURE_EXTENSION || extension == PNG_TEXTURE_EXTENSION)
+	{
+		// Texture files
+		// TextureImporter::ImportTexture(filePath, jMeta);
+	}
+	else if (extension == PREFAB_EXTENSION)*/
+
+}
+
 
 void ModuleResourceManager::ImportExternalFile(char* file_path)
 {
@@ -174,3 +243,12 @@ void ModuleResourceManager::UnloadResource(UID ID)
 	}
 }
 
+void ModuleResourceManager::ReadJSON(const char* buffer, rapidjson::Document& document)
+{
+	// Parse document from file
+	document.Parse<rapidjson::kParseNanAndInfFlag>(buffer);
+	if (document.HasParseError())
+	{
+		LOG("Error parsing JSON");
+	}
+}

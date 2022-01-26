@@ -16,6 +16,8 @@
 #include "../Scene.h"
 #include "../Components/ComponentCamera.h"
 
+#include "../Importers/SceneImporter.h"
+
 #include "ImGuizmo.h"
 
 #include "glew.h"
@@ -178,21 +180,40 @@ void ModuleEditor::GenerateDockingSpace()
 void ModuleEditor::FileMenu()
 {
 	// TODO: shortcuts
+	Scene* current_scene = App->scene_manager->GetActiveScene();
 
 	if (!ImGui::BeginMenu("File")) return;
 	if (ImGui::MenuItem(ICON_FA_PLUS "New"))
 	{
-		//TODO: Create a new scene
+		App->scene_manager->CreateEmptyScene();
 	}
-	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer
+	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true))
 	{
-		//TODO: Save the current scene
+		App->scene_manager->LoadScene();
 	}
 	if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
 	{
-		//TODO: Save as
+		ImGui::OpenPopup("Save scene");
 	}
 	ImGui::EndMenu();
+
+	char file_name_buffer[32] = {'\0'};
+	if (ImGui::BeginPopupModal("Save scene"))
+	{
+		ImGui::SetItemDefaultFocus();
+		ImGui::InputText("File name", file_name_buffer, sizeof(file_name_buffer));
+		if (ImGui::Button("Save"))
+		{
+			App->scene_manager->LoadScene(file_name_buffer);
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+		{
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
 }
 
 void ModuleEditor::ViewMenu()

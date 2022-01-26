@@ -55,6 +55,22 @@ enum update_status
 #define LIBRARY_SHADERS_FOLDER "Library/Shaders"
 #define LIBRARY_FONTS_FOLDER "Library/Fonts"
 
+#define JPG_TEXTURE_EXTENSION ".jpg"
+#define PNG_TEXTURE_EXTENSION ".png"
+
+#define MATERIAL_EXTENSION ".mat"
+#define SCENE_EXTENSION ".scene"
+#define PREFAB_EXTENSION ".prefab"
+#define META_EXTENSION ".meta"
+
+#define FRAGMENT_SHADER_EXTENSION ".frag"
+#define VERTEX_SHADER_EXTENSION ".vert"
+#define DEFAULT_SHADER_EXTENSION ".glsl"
+
+#define MODEL_EXTENSION ".fbx"
+
+#define SKYBOX_EXTENSION ".hdr"
+
 // Defering for file system https://stackoverflow.com/questions/32432450/what-is-standard-defer-finalizer-implementation-in-c
 #ifndef defer
 struct defer_dummy

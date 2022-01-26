@@ -1,17 +1,15 @@
 #include "ModuleSceneManager.h"
 
+#include "../Importers/SceneImporter.h"
+
 ModuleSceneManager::ModuleSceneManager() {}
 
 ModuleSceneManager::~ModuleSceneManager() {}
 
 bool ModuleSceneManager::Init()
 {
-	main_scene = new Scene();
-	
-	LoadModel("BakerHouse.fbx"); //TODO: Remove this when importen will be created
-
 	CreateEmptyScene();
-
+	// LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 	return true;
 }
 
@@ -36,14 +34,17 @@ void ModuleSceneManager::LoadModel(const char* model_path)
 
 void ModuleSceneManager::CreateEmptyScene()
 {
-
-
+	delete main_scene;
+	main_scene = new Scene();
 }
 
 void ModuleSceneManager::LoadScene(const char* file_path)
 {
+	delete main_scene;
+	main_scene = SceneImporter::LoadScene(file_path);
 }
 
 void ModuleSceneManager::SaveScene(const char* file_path)
 {
+	SceneImporter::SaveScene(main_scene, file_path);
 }

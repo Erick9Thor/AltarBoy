@@ -6,6 +6,7 @@
 
 #include "Application.h"
 #include "Modules/ModuleDebugDraw.h"
+
 #include "GameObject.h"
 #include "Components/Component.h"
 #include "Components/ComponentTransform.h"
@@ -14,9 +15,12 @@
 #include "Components/ComponentMaterial.h"
 #include "Components/ComponentPointLight.h"
 #include "Components/ComponentSpotLight.h"
+
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
+
 #include "Resources/Resource.h"
+#include "Importers/SceneImporter.h"
 
 #include "Skybox.h"
 #include "Quadtree.h"
@@ -34,14 +38,19 @@ Scene::Scene()
 
 	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 	root = new GameObject(nullptr, float4x4::identity, "Root");
-	
+		
 	CreateDebugCamera();
 	CreateLights();
 }
 
 Scene::~Scene()
 {
-	delete root;
+	CleanScene();
+}
+
+void Scene::CleanScene()
+{
+	root->Destroy();
 	delete skybox;
 	delete quadtree;
 }
@@ -103,9 +112,13 @@ void Scene::Save(JsonFormaterValue j_scene) const
 
 void Scene::Load(JsonFormaterValue j_scene)
 {
-	// Create root
-	JsonFormaterValue j_root = j_scene["GORoot"];
-	// root->Load(j_root);
+	CleanScene(); 
+
+	// Load GameObjects
+	JsonFormaterValue jRoot = j_scene["GORoot"];
+	root = new GameObject(nullptr, float4x4::identity, "Root");
+	root->scene_owner = this;
+	root->Load(jRoot);
 }
 
 GameObject* Scene::RayCast(const LineSegment& segment) const

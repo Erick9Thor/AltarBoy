@@ -20,14 +20,15 @@ public:
 
 	// --- Scene management --- //
 	void LoadModel(const char* model_path); // TODO: delete Change to load scene and load al gameObjects for path
-	void CreateEmptyScene();
 
 	GameObject* GetRoot() { return main_scene->root; }
 	const GameObject* GetRoot() const { return main_scene->root; }
 	Scene* GetActiveScene() { return main_scene; }
 	const Scene* GetActiveScene() const { return main_scene; }
 
-	void LoadScene(const char* file_path);
+	void CreateEmptyScene();
+
+	void LoadScene(const char* file_path = "untitled");
 	void SaveScene(const char* file_path);
 
 private:
