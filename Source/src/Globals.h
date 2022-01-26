@@ -46,6 +46,8 @@ enum update_status
 // File System config -----------
 #define VERSION "0.1"
 #define ASSETS_FOLDER "Assets"
+#define ASSETS_FOLDER_SCENES "Assets/Scenes"
+
 #define SETTINGS_FOLDER "Settings"
 #define LIBRARY_FOLDER "Library"
 #define LIBRARY_TEXTURES_FOLDER "Library/Textures"

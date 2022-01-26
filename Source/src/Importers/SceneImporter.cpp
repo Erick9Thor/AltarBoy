@@ -12,6 +12,8 @@
 
 #include "../Utils/Logger.h"
 
+#include <string>
+
 bool SceneImporter::ImportScene(const char* file_path, JsonFormaterValue j_meta)
 {
 	return false;
