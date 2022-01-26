@@ -107,7 +107,7 @@ void Scene::Save(JsonFormaterValue j_scene) const
 	JsonFormaterValue j_root = j_scene["GORoot"];
 	root->Save(j_root);
 
-	// SAVE CAMERA//
+	//TODO: Save camera position
 }
 
 void Scene::Load(JsonFormaterValue j_scene)

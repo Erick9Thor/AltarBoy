@@ -32,7 +32,7 @@ void ImGuiUtils::VSplitter(const char* str_id, ImVec2* size)
 	}
 }
 
-void Rect(float w, float h, ImU32 color)
+void ImGuiUtils::Rect(float w, float h, ImU32 color)
 {
 	ImGuiWindow* win = GetCurrentWindow();
 	ImVec2 screen_pos = GetCursorScreenPos();

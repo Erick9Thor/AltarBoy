@@ -208,7 +208,7 @@ void ModuleEditor::FileMenu()
 	}
 	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
 	{
-		App->scene_manager->SaveScene();
+		App->scene_manager->SaveScene("untitled");
 	}
 	if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
 	{
@@ -229,7 +229,7 @@ void ModuleEditor::FileMenu()
 		ImGui::InputText("File name", file_name_buffer, sizeof(file_name_buffer));
 		if (ImGui::Button("Save"))
 		{
-			App->scene_manager->LoadScene(file_name_buffer);
+			App->scene_manager->SaveScene(file_name_buffer);
 			ImGui::CloseCurrentPopup();
 		}
 		ImGui::SameLine();

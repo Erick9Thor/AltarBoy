@@ -258,6 +258,7 @@ void GameObject::Save(JsonFormaterValue j_gameObject) const
 {
 	j_gameObject["Uid"] = uid;
 	j_gameObject["GOName"] = name.c_str();
+	j_gameObject["Active"] = active;
 
 	JsonFormaterValue j_components = j_gameObject["Components"];
 	for (unsigned i = 0; i < components.size(); ++i)
@@ -266,7 +267,7 @@ void GameObject::Save(JsonFormaterValue j_gameObject) const
 		Component* component = components[i];
 
 		j_component["ComponentID"] = component->GetID();
-		// jComponent["ComponentType"] = component->GetType(); PARSE STRING
+		j_component["ComponentType"] = component->GetType();
 		component->Save(j_component);
 	}
 
