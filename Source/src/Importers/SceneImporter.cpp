@@ -16,7 +16,41 @@
 
 bool SceneImporter::ImportScene(const char* file_path, JsonFormaterValue j_meta)
 {
-	return false;
+	const char* buffer = App->file_sys->Load(file_path);
+
+	if (sizeof(buffer) == 0)
+	{
+		return nullptr;
+	}
+
+	rapidjson::Document document;
+	document.Parse(buffer);
+	if (document.HasParseError())
+	{
+		LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
+		return nullptr;
+	}
+
+	// Write document to buffer
+	rapidjson::StringBuffer string_buffer;
+	rapidjson::PrettyWriter<
+		/*typename OutputStream  */ rapidjson::StringBuffer,
+		/*typename SourceEncoding*/ rapidjson::UTF8<>,
+		/*typename TargetEncoding*/ rapidjson::UTF8<>,
+		/*typename StackAllocator*/ rapidjson::CrtAllocator,
+		0>
+	writer(string_buffer);
+	document.Accept(writer);
+
+	// Create scene resource
+	
+	// Save resource meta file
+
+	// Save to file
+	
+	// Send resource creation event
+
+	return true;
 }
 
 Scene* SceneImporter::LoadScene(const char* file_path)

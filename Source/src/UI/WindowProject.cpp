@@ -211,7 +211,7 @@ void WindowProject::ShowFilesOnFolder()
 					break;
 				}
 				PathNode& node = all_assets.children[idx];
-				bool is_resource = node.children.size() == 0;
+				bool is_resource = node.children.size() == 0 && all_assets.isFile;
 				if (is_resource) {
 					// bool selected = m_selected_resources.find([&](Resource* res) { return res->getPath().getHash() == tile.file_path_hash; }) >= 0;
 					Thumbnail(node, m_thumbnail_size * 70, false);
