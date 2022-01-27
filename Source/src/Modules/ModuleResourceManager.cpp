@@ -163,7 +163,7 @@ UID ModuleResourceManager::ImportFileFromAssets(const char* file_path)
 	if (type == ResourceType::UNKNOWN) return 0;
 
 	Resource* resource = CreateNewResourceByType(file_path, type);
-	UID resource_uid = resource->getID();
+	UID resource_uid = resource->GetID();
 
 	char* file_buffer = App->file_sys->Load(file_path);
 

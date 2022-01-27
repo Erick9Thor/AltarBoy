@@ -25,11 +25,12 @@ public:
 		return type;
 	}
 
-	UID getID() const { return id; }
+	UID GetID() const { return id; }
 
 	virtual void Load();
 	virtual void Unload();
 
+	unsigned int instances = 0;
 private:
 	UID id = 0;
 	ResourceType type = ResourceType::UNKNOWN;
