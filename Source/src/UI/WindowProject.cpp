@@ -107,7 +107,6 @@ void WindowProject::Thumbnail(PathNode& node, float size, bool selected)
 {
 	ImGui::BeginGroup();
 	ImVec2 img_size(size, size);
-	// RenderInterface* ri = m_app.getRenderInterface();
 
 	ImGuiUtils::Rect(img_size.x, img_size.y, 0xffffFFFF);
 	/* TODO */
@@ -191,7 +190,18 @@ void WindowProject::ShowFilesOnFolder()
 		}
 		else if (ImGui::IsItemHovered())
 		{
-			ImGui::OpenPopup("item_ctx");
+			if (ImGui::IsMouseReleased(0))
+			{
+				// selected_resource = find on list resource module resource
+			}
+			else if (ImGui::IsMouseReleased(1))
+			{
+				ImGui::OpenPopup("item_ctx");
+			}
+			else if (ImGui::IsMouseDoubleClicked(0))
+			{
+				// instanciate on current level;
+			}
 		}
 	};
 
@@ -211,9 +221,9 @@ void WindowProject::ShowFilesOnFolder()
 					break;
 				}
 				PathNode& node = all_assets.children[idx];
-				bool is_resource = node.children.size() == 0 && all_assets.isFile;
+				bool is_resource = node.children.size() == 0 && App->file_sys->HasExtension(node.path.c_str());
 				if (is_resource) {
-					// bool selected = m_selected_resources.find([&](Resource* res) { return res->getPath().getHash() == tile.file_path_hash; }) >= 0;
+					// bool selected = find on resource and search match
 					Thumbnail(node, m_thumbnail_size * 70, false);
 					callbacks(node, idx);
 				}
@@ -227,7 +237,7 @@ void WindowProject::ShowFilesOnFolder()
 		const char* base_path = nullptr;
 
 		// TODO
-		if (ImGui::BeginMenu("Create directory"))
+		/*if (ImGui::BeginMenu("Create directory"))
 		{
 			/*ImGui::InputTextWithHint("##dirname", "New directory name", tmp, sizeof(tmp));
 			ImGui::SameLine();
@@ -236,7 +246,7 @@ void WindowProject::ShowFilesOnFolder()
 				const char* new_dir = /* curent dir path + new dir path  nullptr;
 				App->file_sys->ModuleFileSystem::CreateDir(new_dir);
 				ImGui::CloseCurrentPopup();
-			}*/
+			}
 			ImGui::EndMenu();
 		}
 		// TODO
@@ -244,7 +254,7 @@ void WindowProject::ShowFilesOnFolder()
 		{
 			
 			ImGui::EndMenu();
-		}
+		}*/
 	};
 	if (ImGui::BeginPopup("item_ctx"))
 	{

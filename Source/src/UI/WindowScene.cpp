@@ -4,6 +4,7 @@
 #include "../Utils/Timer.h"
 #include "../GameObject.h"
 
+#include "../Modules/ModuleResourceManager.h"
 #include "../Modules/ModuleInput.h"
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleCamera.h"
@@ -114,6 +115,17 @@ void WindowScene::DrawScene()
 	texture_position = float2(guizmo_rect_origin.x, float(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 	
 	ImGui::Image((void*) (intptr_t) App->renderer->GetTextureId(), size, ImVec2 {0, 1}, ImVec2 {1, 0});
+
+	// TODO: Move to other section to take the input
+	if (ImGui::BeginDragDropTarget())
+	{
+		if (auto* payload = ImGui::AcceptDragDropPayload("path"))
+		{
+			const char* path = (const char*) payload->Data;
+			App->resource_manager->ImportFileFromAssets(path);
+		}
+		ImGui::EndDragDropTarget();
+	}
 
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
