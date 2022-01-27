@@ -23,7 +23,8 @@ bool ModuleProgram::Init()
 {
 	CreateMainProgram();
 	CreateSkyboxProgram();
-	if (!main_program || !skybox_program)
+	CreateStencilProgram();
+	if (!main_program || !skybox_program || !stencil_program)
 		return false;
 
 	CreateCameraUBO();
@@ -121,6 +122,12 @@ Program* ModuleProgram::CreateSkyboxProgram()
 	return skybox_program;
 }
 
+Program* ModuleProgram::CreateStencilProgram()
+{
+	stencil_program = CreateProgram("vertex_stencil.glsl", "fragment_stencil.glsl");
+	return stencil_program;
+}
+
 void ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {
 	glGenBuffers(1, &ubos[binding_point]);
@@ -158,6 +165,8 @@ bool ModuleProgram::CleanUp()
 	delete main_program;
 	skybox_program->CleanUp();
 	delete skybox_program;
+	stencil_program->CleanUp();
+	delete stencil_program;
 	return true;
 }
 

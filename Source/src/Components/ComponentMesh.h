@@ -9,6 +9,7 @@
 
 class GameObject;
 class ComponentCamera;
+class Program;
 
 class ComponentMesh : public Component
 {
@@ -28,7 +29,7 @@ public:
 	static inline Type GetType() { return Type::Mesh; };
 
 	void Load(const aiMesh* mesh);
-	void Draw(ComponentCamera* camera) override;
+	void Draw(ComponentCamera* camera, Program* program) override;
 	void CleanUp();
 
 	inline bool IsLoaded() const { return loaded; }

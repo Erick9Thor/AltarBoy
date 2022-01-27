@@ -91,12 +91,9 @@ void ComponentMesh::GenerateAABB()
 	bounding_box.SetFrom((float3*) vertices, buffer_sizes[Buffers::b_vertices] / 3);
 }
 
-void ComponentMesh::Draw(ComponentCamera* camera)
+void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
 	assert(loaded == true);
-	// TODO: Get material and transform components to draw sadge
-
-	Program* program = App->program->GetMainProgram();
 	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
 	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();

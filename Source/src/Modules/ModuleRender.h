@@ -75,6 +75,7 @@ private:
 
 	float4 clear_color;
 	bool draw_skybox = true;
+	bool outline_selection = true;
 
 	GpuData gpu;
 	GlVersion gl;

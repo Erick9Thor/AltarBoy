@@ -8,6 +8,7 @@ using namespace std;
 
 class ComponentTransform;
 class ComponentCamera;
+class Program;
 class Scene;
 
 class GameObject
@@ -27,8 +28,8 @@ public:
 
 	void Destroy();
 	void Update();
-	void DrawAll(ComponentCamera* camera);
-	void Draw(ComponentCamera* camera);
+	void DrawAll(ComponentCamera* camera, Program* program);
+	void Draw(ComponentCamera* camera, Program* program);
 
 	inline bool IsActive() { return active; }
 
