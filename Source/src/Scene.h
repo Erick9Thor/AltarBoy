@@ -12,6 +12,7 @@
 
 class ModuleSceneManager;
 class GameObject;
+class ComponentTransform;
 class ComponentCamera;
 class ComponentDirLight;
 class ComponentPointLight;
