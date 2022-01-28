@@ -59,7 +59,7 @@ void WindowProject::Update()
 		}
 		ImGui::SameLine();
 
-		// ShowFilesOnFolder();
+		ShowFilesOnFolder();
 
 		ImGui::End();
 	}
