@@ -147,9 +147,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp" />
+    <ClCompile Include="src\Importers\MeshImporter.cpp" />
     <ClCompile Include="src\Resources\ResourceHandle.cpp" />
     <ClCompile Include="src\Resources\ResourceTexture.cpp" />
-    <ClCompile Include="src\Importers\ModelImporter.cpp" />
     <ClCompile Include="src\Components\ComponentDirLight.cpp" />
     <ClCompile Include="src\Components\ComponentSpotLight.cpp" />
     <ClCompile Include="src\Components\ComponentPointLight.cpp" />
@@ -281,11 +281,11 @@
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image.h" />
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h" />
+    <ClInclude Include="src\Importers\MeshImporter.h" />
     <ClInclude Include="src\Resources\ResourceBase.h" />
     <ClInclude Include="src\Resources\ResourceHandle.h" />
     <ClInclude Include="src\UI\ImGuiUtils.h" />
     <ClInclude Include="src\Resources\ResourceTexture.h" />
-    <ClInclude Include="src\Importers\ModelImporter.h" />
     <ClInclude Include="src\Components\ComponentDirLight.h" />
     <ClInclude Include="src\Components\ComponentSpotLight.h" />
     <ClInclude Include="src\Components\ComponentPointLight.h" />

@@ -63,7 +63,7 @@ Scene* SceneImporter::LoadScene(const char* file_path)
 
 	// Parse document from file
 	rapidjson::Document document;
-	document.Parse(buffer);
+	document.Parse<rapidjson::kParseStopWhenDoneFlag>(buffer);
 	if (document.HasParseError())
 	{
 		LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());

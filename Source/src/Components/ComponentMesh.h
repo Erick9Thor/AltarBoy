@@ -28,8 +28,9 @@ public:
 	~ComponentMesh() override;
 	static inline Type GetType() { return Type::Mesh; };
 
-	void Load(const aiMesh* mesh);
 	void Draw(ComponentCamera* camera, Program* program) override;
+
+	void Load(const aiMesh* mesh);
 	void CleanUp();
 
 	inline bool IsLoaded() const { return loaded; }
@@ -47,6 +48,9 @@ public:
 	void Load(JsonFormaterValue j_component) override;
 
 private:
+
+	aiMesh* mesh = nullptr;
+
 	void Import(const aiMesh* mesh);
 	void GenerateBuffers();
 	void GenerateAABB();

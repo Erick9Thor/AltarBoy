@@ -9,6 +9,8 @@
 #include "../Modules/ModuleCamera.h"
 #include "../Program.h"
 
+#include "../Importers/MaterialImporter.h"
+
 #include "glew.h"
 #include <imgui.h>
 
@@ -137,11 +139,12 @@ void ComponentMesh::DrawGui()
 
 void ComponentMesh::Save(JsonFormaterValue j_component) const
 {
-	// jComponent["MeshId"] = mesh.id
+	// j_component["FileName"] = mesh->file_name.c_str();
+	// j_component["MaterialIndex"] = mesh->material_index;
 }
 
 void ComponentMesh::Load(JsonFormaterValue j_component)
 {
-	// aiMesh* mesh = App->scene_manager->GetActiveScene().mMeshes[jComponent["MeshId"]];
-	// Load(mesh);
+	std::string file_name = j_component["FileName"];
+	// MeshImporter::LoadMesh(mesh);
 }

@@ -74,4 +74,5 @@ void ComponentMaterial::Load(JsonFormaterValue j_component)
 {
 	unsigned int material_id = j_component["TextureId"];
 	// texture = App->scene_manager->GetActiveScene().m_textures[material_id];
+	//Importer::MaterialImporter::Textures Load(???)
 }
