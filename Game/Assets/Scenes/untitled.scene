@@ -1,0 +1,308 @@
+{
+    "GORoot": {
+        "Uid": 0,
+        "GOName": "Root",
+        "Active": true,
+        "Components": [
+            {
+                "ComponentID": 0,
+                "ComponentType": 1,
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        ],
+        "GOChildrens": [
+            {
+                "Uid": 0,
+                "GOName": "Debug Camera",
+                "Active": true,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            5.0,
+                            5.0,
+                            0.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            -0.7071068286895752,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 4,
+                        "Frustrum": {
+                            "NearDistance": 0.10000000149011612,
+                            "FarDistance": 100.0,
+                            "Fov": 65.0,
+                            "Pos": [
+                                5.0,
+                                5.0,
+                                0.0
+                            ],
+                            "Front": [
+                                -1.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Up": [
+                                0.0,
+                                1.0,
+                                0.0
+                            ]
+                        }
+                    }
+                ],
+                "GOChildrens": null
+            },
+            {
+                "Uid": 0,
+                "GOName": "Sun",
+                "Active": true,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            1.0,
+                            1.0,
+                            -1.0
+                        ],
+                        "Rotation": [
+                            0.2798481285572052,
+                            -0.36470523476600649,
+                            0.1159168928861618
+                        ],
+                        "Scale": [
+                            0.9999999403953552,
+                            1.0000001192092896,
+                            0.9999999403953552
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 5,
+                        "LightType": 5,
+                        "Color": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "intensity": 1.0,
+                        "active": true,
+                        "drawDirection": false
+                    }
+                ],
+                "GOChildrens": null
+            },
+            {
+                "Uid": 0,
+                "GOName": "Spot Light",
+                "Active": true,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            -1.0,
+                            1.0,
+                            -1.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 7,
+                        "LightType": 7,
+                        "Color": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "inner": 15.0,
+                        "outer": 30.0,
+                        "intensity": 1.0,
+                        "radius": 250.0,
+                        "active": true,
+                        "drawCone": false
+                    }
+                ],
+                "GOChildrens": null
+            },
+            {
+                "Uid": 0,
+                "GOName": "Point Light",
+                "Active": true,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            0.0,
+                            1.0,
+                            -1.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 6,
+                        "LightType": 6,
+                        "Color": [
+                            1.0,
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "intensity": 1.0,
+                        "radius": 250.0,
+                        "active": true,
+                        "drawSphere": false
+                    }
+                ],
+                "GOChildrens": null
+            },
+            {
+                "Uid": 0,
+                "GOName": "BakerHouse",
+                "Active": true,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                ],
+                "GOChildrens": [
+                    {
+                        "Uid": 0,
+                        "GOName": "Chimney",
+                        "Active": true,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    -0.7071068286895752,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Scale": [
+                                    100.0,
+                                    99.99999237060547,
+                                    99.99999237060547
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "TextureId": 3
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 0,
+                        "GOName": "Baker_house",
+                        "Active": true,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    -195.05599975585938,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    -0.7071068286895752,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Scale": [
+                                    100.0,
+                                    99.99999237060547,
+                                    99.99999237060547
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "TextureId": 3
+                            }
+                        ],
+                        "GOChildrens": null
+                    }
+                ]
+            }
+        ]
+    }
+}

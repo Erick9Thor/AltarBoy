@@ -112,7 +112,8 @@ void Scene::Save(JsonFormaterValue j_scene) const
 
 void Scene::Load(JsonFormaterValue j_scene)
 {
-	CleanScene(); 
+	// CleanScene(); 
+	root->Destroy();
 
 	// Load GameObjects
 	JsonFormaterValue jRoot = j_scene["GORoot"];
@@ -141,7 +142,7 @@ GameObject* Scene::RayCast(const LineSegment& segment) const
 			
 			const float* vertices = mesh->GetVertices();
 			const unsigned* indices = mesh->GetIndices();
-			for (unsigned i = 0; i < mesh->GetBufferSize(ComponentMesh::Buffers::b_indices); i += 3)
+			for (unsigned i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::b_indices); i += 3)
 			{
 				Triangle triangle;
 				triangle.a = vec(&vertices[indices[i] * 3]);

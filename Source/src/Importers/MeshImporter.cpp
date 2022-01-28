@@ -26,12 +26,14 @@ ResourceMesh* MeshImporter::Import(const aiMesh* ai_mesh)
 	for (unsigned i = 0; i < ai_mesh->mNumFaces; ++i)
 		memcpy(&r_mesh->indices[i * 3], ai_mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
 	
+	// Save resource
 
 	return r_mesh;
 }
 
 void MeshImporter::Save(ResourceMesh* r_mesh, char* file_path)
 {
+
 }
 
 ResourceMesh* MeshImporter::LoadMesh(const char* file_path)

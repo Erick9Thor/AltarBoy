@@ -137,10 +137,10 @@ void GameObject::Destroy()
 	if (scene_owner)
 		scene_owner->DestroyGameObject(this);
 
-		for (unsigned int i = 0; i < childs.size(); ++i)
-		{
-			childs[i]->Destroy();
-		}
+	for (unsigned int i = 0; i < childs.size(); ++i)
+	{
+		childs[i]->Destroy();
+	}
 }
 
 void GameObject::Update()

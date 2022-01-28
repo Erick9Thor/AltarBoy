@@ -16,16 +16,6 @@ class Program;
 class ComponentMesh : public Component
 {
 public:
-
-	enum Buffers
-	{
-		b_indices = 0,
-		b_vertices,
-		b_normals,
-		b_tex_coords,
-		n_buffers,
-	};
-
 	ComponentMesh(GameObject* conatiner);
 	~ComponentMesh() override;
 
@@ -39,8 +29,8 @@ public:
 	bool IsVisible() const { return visible; }
 
 	AABB GetAABB() const { return resource->bounding_box; }
-	inline unsigned GetBufferSize(Buffers buffer) const { return resource->buffer_sizes[buffer]; }
-	inline unsigned GetBufferId(Buffers buffer) const { return resource->buffer_ids[buffer]; }
+	inline unsigned GetBufferSize(ResourceMesh::Buffers buffer) const { return resource->buffer_sizes[buffer]; }
+	inline unsigned GetBufferId(ResourceMesh::Buffers buffer) const { return resource->buffer_ids[buffer]; }
 	const float* GetVertices() const { return resource->vertices; }
 	const unsigned* GetIndices() const { return resource->indices; }
 
@@ -52,9 +42,6 @@ public:
 	void DrawGui() override;
 
 private:
-	aiMesh* mesh = nullptr;
-	
 	bool visible = true;
-
 	ResourceMesh* resource = nullptr;
 };

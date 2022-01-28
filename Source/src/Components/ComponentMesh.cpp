@@ -40,7 +40,7 @@ void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 	App->program->UpdateMaterial(material);
 
 	glBindVertexArray(resource->vao);
-	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
+	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[ResourceMesh::Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
 }
 
 void ComponentMesh::Save(JsonFormaterValue j_component) const
@@ -51,7 +51,6 @@ void ComponentMesh::Save(JsonFormaterValue j_component) const
 
 void ComponentMesh::Load(JsonFormaterValue j_component)
 {
-	resource->CleanUp();
 	std::string file_name = j_component["FileName"];
 	resource = MeshImporter::LoadMesh(file_name.c_str());
 }
@@ -60,7 +59,7 @@ void ComponentMesh::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text("%d Triangles\n%d vertices\n%d indices", resource->buffer_sizes[Buffers::b_indices] / 3, resource->buffer_sizes[Buffers::b_vertices] / 3, resource->buffer_sizes[Buffers::b_indices]);
+		ImGui::Text("%d Triangles\n%d vertices\n%d indices", resource->buffer_sizes[ResourceMesh::Buffers::b_indices] / 3, resource->buffer_sizes[ResourceMesh::Buffers::b_vertices] / 3, resource->buffer_sizes[ResourceMesh::Buffers::b_indices]);
 		ImGui::Checkbox("Visible", &visible);
 	}
 }

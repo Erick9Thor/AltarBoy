@@ -27,13 +27,14 @@ void ComponentMaterial::Save(JsonFormaterValue j_component) const
 {
 	//TODO Save the path of the library model
 	j_component["TextureId"] = material->diffuse.id;
+	j_component["FileName"] = material->file_name.c_str();
 }
 
 void ComponentMaterial::Load(JsonFormaterValue j_component)
 {
 	unsigned int material_id = j_component["TextureId"];
-	// texture = App->scene_manager->GetActiveScene().m_textures[material_id];
-	//Importer::MaterialImporter::Textures Load(???)
+	std::string file_name = j_component["FileName"];
+	//Importer::MaterialImporter::Textures Load(file_name)
 }
 
 void ComponentMaterial::DrawGui()
