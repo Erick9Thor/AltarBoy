@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 class ModuleFileSystem : public Module
 {
 public:
@@ -16,6 +14,8 @@ public:
 	~ModuleFileSystem();
 
 	bool Init() override;
+
+	void CreateContext();
 
 	// --- CRUD --- //
 	void CreateDir(const char* directory_path);
@@ -39,4 +39,9 @@ public:
 	// --- Path utils --- //
 	PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const;
 	void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list) const;
+
+	std::string GetWorkingDirectory() { return working_directory; }
+
+private:
+	std::string working_directory = "";
 };

@@ -55,4 +55,31 @@ float3 ComponentPointLight::GetPosition()
 	return transform->GetPosition();
 }
 
+void ComponentPointLight::Save(JsonFormaterValue j_component) const
+{
+	j_component["LightType"] = (int) Component::Type::PointLight;
+
+	JsonFormaterValue j_color = j_component["Color"];
+	j_color[0] = color.x;
+	j_color[1] = color.y;
+	j_color[2] = color.z;
+	j_color[3] = color.w;
+
+	j_component["intensity"] = intensity;
+	j_component["radius"] = radius;
+	j_component["active"] = active;
+	j_component["drawSphere"] = draw_sphere;
+}
+
+void ComponentPointLight::Load(JsonFormaterValue j_component)
+{
+	JsonFormaterValue j_color = j_component["Color"];
+	color = float4(j_color[1], j_color[2], j_color[3], j_color[4]);
+
+	intensity = j_component["intensity"];
+	radius = j_component["radius"];
+	active = j_component["active"];
+	draw_sphere = j_component["drawSphere"];
+}
+
 

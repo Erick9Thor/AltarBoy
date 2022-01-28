@@ -66,6 +66,7 @@ void ComponentMaterial::DrawGui()
 
 void ComponentMaterial::Save(JsonFormaterValue j_component) const
 {
+	//TODO Save the path of the library model
 	j_component["TextureId"] = material->diffuse.id;
 }
 

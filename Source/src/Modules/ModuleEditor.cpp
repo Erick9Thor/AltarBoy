@@ -3,6 +3,7 @@
 #include "../Utils/Timer.h"
 
 #include "ModuleEditor.h"
+#include "ModuleFileSystem.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleCamera.h"
@@ -112,7 +113,11 @@ update_status ModuleEditor::Update(const float delta)
 		if (ImGuiFileDialog::Instance()->IsOk())
 		{
 			std::string file_path_name = ImGuiFileDialog::Instance()->GetFilePathName();
-			std::string file_path = ImGuiFileDialog::Instance()->GetCurrentPath();
+
+			//TODO: Make a function inside file sys to get relative path Assets/Scenes/X.scene
+			std::string file_name_extension = App->file_sys->GetFileNameAndExtension(file_path_name.c_str());
+
+			std::string file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_extension;
 
 			LOG("Loading scene: %s", file_path_name.c_str());
 			App->scene_manager->LoadScene(file_path.c_str());
@@ -208,7 +213,7 @@ void ModuleEditor::FileMenu()
 	}
 	if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
 	{
-		std::string temp_scene_file_path = std::string(LIBRARY_SCENE_FOLDER) + "/" + "untitled" + SCENE_EXTENSION;
+		std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + "untitled" + SCENE_EXTENSION;
 		App->scene_manager->SaveScene(temp_scene_file_path.c_str());
 	}
 	if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
@@ -230,7 +235,7 @@ void ModuleEditor::FileMenu()
 		ImGui::InputText("File name", file_name_buffer, sizeof(file_name_buffer));
 		if (ImGui::Button("Save"))
 		{
-			std::string temp_scene_file_path = std::string(LIBRARY_SCENE_FOLDER) + "/" + file_name_buffer + SCENE_EXTENSION;
+			std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_buffer + SCENE_EXTENSION;
 			App->scene_manager->SaveScene(temp_scene_file_path.c_str());
 			ImGui::CloseCurrentPopup();
 		}

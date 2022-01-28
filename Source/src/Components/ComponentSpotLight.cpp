@@ -63,3 +63,38 @@ float3 ComponentSpotLight::GetDirection()
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
 	return transform->GetFwd();
 }
+
+void ComponentSpotLight::Save(JsonFormaterValue j_component) const
+{
+	j_component["LightType"] = (int) Component::Type::SpotLight;
+
+	JsonFormaterValue j_color = j_component["Color"];
+	j_color[0] = color.x;
+	j_color[1] = color.y;
+	j_color[2] = color.z;
+	j_color[3] = color.w;
+
+	j_component["inner"] = inner;
+	j_component["outer"] = outer;
+
+	j_component["intensity"] = intensity;
+	j_component["radius"] = radius;
+
+	j_component["active"] = active;
+	j_component["drawCone"] = draw_cone;
+}
+
+void ComponentSpotLight::Load(JsonFormaterValue j_component)
+{
+	JsonFormaterValue j_color = j_component["Color"];
+	color = float4(j_color[1], j_color[2], j_color[3], j_color[4]);
+
+	inner = j_component["inner"];
+	outer = j_component["outer"];
+
+	intensity = j_component["intensity"];
+	radius = j_component["radius"];
+
+	active = j_component["active"];
+	draw_cone = j_component["drawSphere"];
+}

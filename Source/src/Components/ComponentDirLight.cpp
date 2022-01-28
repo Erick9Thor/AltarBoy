@@ -53,3 +53,28 @@ float3 ComponentDirLight::GetDirection() const
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
 	return transform->GetFwd();
 }
+
+void ComponentDirLight::Save(JsonFormaterValue j_component) const
+{
+	j_component["LightType"] = (int) Component::Type::DirLight;
+
+	JsonFormaterValue j_color = j_component["Color"];
+	j_color[0] = color.x;
+	j_color[1] = color.y;
+	j_color[2] = color.z;
+	j_color[3] = color.w;
+
+	j_component["intensity"] = intensity;
+	j_component["active"] = active;
+	j_component["drawDirection"] = draw_direction;
+}
+
+void ComponentDirLight::Load(JsonFormaterValue j_component)
+{
+	// 
+	JsonFormaterValue j_color = j_component["Color"];
+	color = float4(j_color[1], j_color[2], j_color[3], j_color[4]);
+
+	intensity = j_component["intensity"];
+	draw_direction = j_component["drawDirection"];
+}

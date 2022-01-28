@@ -22,6 +22,9 @@ public:
 	float3 GetPosition();
 	float3 GetDirection();
 
+	void Save(JsonFormaterValue j_component) const override;
+	void Load(JsonFormaterValue j_component) override;
+
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float inner = 15.f;
 	float outer = 30.f;

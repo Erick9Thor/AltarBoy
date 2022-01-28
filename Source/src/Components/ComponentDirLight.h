@@ -21,6 +21,9 @@ public:
 
 	float3 GetDirection() const;
 
+	void Save(JsonFormaterValue j_component) const override;
+	void Load(JsonFormaterValue j_component) override;
+
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float intensity = 1.0f;
 

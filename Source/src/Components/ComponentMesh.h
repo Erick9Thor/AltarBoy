@@ -40,7 +40,6 @@ public:
 	inline unsigned GetBufferId(Buffers buffer) const { return buffer_ids[buffer]; }
 	const float* GetVertices() const { return vertices; }
 	const unsigned* GetIndices() const { return indices; }
-	
 
 	void DrawGui() override;
 

@@ -1,9 +1,13 @@
 #include "ModuleFileSystem.h"
+
 #include "../Globals.h"
+#include "../Utils/Logger.h"
 
 #include <SDL.h>
 #include "physfs.h"
-#include "../Utils/Logger.h"
+#include <string.h>
+#include <fstream>
+#include <filesystem>
 #include <algorithm>
 
 ModuleFileSystem::ModuleFileSystem()
@@ -43,10 +47,19 @@ ModuleFileSystem::~ModuleFileSystem()
 
 bool ModuleFileSystem::Init()
 {
+	CreateContext(); 
+
 	char* write_path = SDL_GetPrefPath("AltarCO", "AltarBoy");
 	SDL_free(write_path);
 
 	return true;
+}
+
+void ModuleFileSystem::CreateContext()
+{
+	char engine_path[MAX_PATH];
+	GetCurrentDirectory(MAX_PATH, engine_path);
+	working_directory = engine_path;
 }
 
 char* ModuleFileSystem::Load(const char* file_path) const
