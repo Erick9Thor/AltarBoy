@@ -209,7 +209,8 @@ void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::
 	// Ambient
 	lights_data.ambient = ambient_light;
 	// DirectionalS
-	if (dir_light->IsActive()) {
+	if (dir_light && dir_light->IsActive())
+	{
 		lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
 		lights_data.directional.color = dir_light->color;
 		lights_data.directional.intensity = dir_light->intensity;

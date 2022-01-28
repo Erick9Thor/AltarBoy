@@ -40,7 +40,7 @@ Scene::Scene()
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 		
 	CreateDebugCamera();
-	CreateLights();
+	//CreateLights();
 }
 
 Scene::~Scene()
@@ -112,7 +112,7 @@ void Scene::Save(JsonFormaterValue j_scene) const
 
 void Scene::Load(JsonFormaterValue j_scene)
 {
-	// CleanScene(); 
+	//CleanScene(); 
 	root->Destroy();
 
 	// Load GameObjects
@@ -120,6 +120,7 @@ void Scene::Load(JsonFormaterValue j_scene)
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 	root->scene_owner = this;
 	root->Load(jRoot);
+	CreateDebugCamera();
 }
 
 GameObject* Scene::RayCast(const LineSegment& segment) const

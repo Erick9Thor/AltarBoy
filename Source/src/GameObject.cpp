@@ -309,9 +309,8 @@ void GameObject::Load(JsonFormaterValue j_gameObject)
 		JsonFormaterValue j_child = j_childrens[i];
 
 		std::string name = j_child["GOName"];
-		GameObject* child = new GameObject(name.c_str());
+		GameObject* child = new GameObject(this, name.c_str());
 		child->scene_owner = scene_owner;
-		child->parent = this;
 		child->Load(j_child);
 
 	}

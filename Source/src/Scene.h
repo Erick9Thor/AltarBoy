@@ -67,8 +67,6 @@ private:
 	std::vector<ResourceMaterial*> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
 
 private:
-	ModuleSceneManager* manager_owner = nullptr;
-
 	GameObject* root = nullptr;
 	ComponentCamera* debug_camera = nullptr;
 
