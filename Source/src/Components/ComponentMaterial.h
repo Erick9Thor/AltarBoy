@@ -9,7 +9,7 @@ class ComponentMaterial : public Component
 public:
 	ComponentMaterial(GameObject* conatiner);
 	~ComponentMaterial() override;
-	static inline Type GetType() { return Type::Material; };
+	static inline Type GetType() { return Type::MATERIAL; };
 
 	void SetMaterial(ResourceMaterial* new_material);
 	const ResourceMaterial* GetMaterial() const { return material; }

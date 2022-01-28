@@ -8,7 +8,7 @@
 #include <algorithm>
 
 ComponentSpotLight::ComponentSpotLight(GameObject* conatiner)
-	: Component(Component::Type::SpotLight, conatiner)
+	: Component(Component::Type::SPOTLIGHT, conatiner)
 {
 	if (game_object->scene_owner)
 		game_object->scene_owner->spot_lights.push_back((ComponentSpotLight*) this);
@@ -36,22 +36,6 @@ void ComponentSpotLight::DebugDraw()
 	}
 }
 
-void ComponentSpotLight::DrawGui()
-{
-	if (ImGui::CollapsingHeader("Spot Light"))
-	{
-		ImGui::PushItemWidth(100.0f);
-		ImGui::Checkbox("S.Active", &active);
-		ImGui::Checkbox("Draw Cone", &draw_cone);
-		ImGui::InputFloat("S.Intensity", &intensity);
-		ImGui::InputFloat("S.Radius", &radius);
-		ImGui::InputFloat("Inner Angle", &inner);
-		ImGui::InputFloat("Outer Angle", &outer);
-		ImGui::PopItemWidth();
-		ImGuiUtils::CompactColorPicker("Spot Color", &color[0]);
-	}
-}
-
 float3 ComponentSpotLight::GetPosition()
 {
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
@@ -66,7 +50,7 @@ float3 ComponentSpotLight::GetDirection()
 
 void ComponentSpotLight::Save(JsonFormaterValue j_component) const
 {
-	j_component["LightType"] = (int) Component::Type::SpotLight;
+	j_component["LightType"] = (int) Component::Type::SPOTLIGHT;
 
 	JsonFormaterValue j_color = j_component["Color"];
 	j_color[0] = color.x;
@@ -97,4 +81,20 @@ void ComponentSpotLight::Load(JsonFormaterValue j_component)
 
 	active = j_component["active"];
 	draw_cone = j_component["drawSphere"];
+}
+
+void ComponentSpotLight::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Spot Light"))
+	{
+		ImGui::PushItemWidth(100.0f);
+		ImGui::Checkbox("S.Active", &active);
+		ImGui::Checkbox("Draw Cone", &draw_cone);
+		ImGui::InputFloat("S.Intensity", &intensity);
+		ImGui::InputFloat("S.Radius", &radius);
+		ImGui::InputFloat("Inner Angle", &inner);
+		ImGui::InputFloat("Outer Angle", &outer);
+		ImGui::PopItemWidth();
+		ImGuiUtils::CompactColorPicker("Spot Color", &color[0]);
+	}
 }

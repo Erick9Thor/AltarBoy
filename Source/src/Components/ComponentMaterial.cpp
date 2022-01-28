@@ -8,7 +8,7 @@
 #include <imgui.h>
 
 ComponentMaterial::ComponentMaterial(GameObject* conatiner)
-	: Component(Component::Type::Material, conatiner)
+	: Component(Component::Type::MATERIAL, conatiner)
 {
 }
 
@@ -23,11 +23,25 @@ void ComponentMaterial::SetMaterial(ResourceMaterial* new_material)
 	use_specular_texture = material->specular.loaded;
 }
 
+void ComponentMaterial::Save(JsonFormaterValue j_component) const
+{
+	//TODO Save the path of the library model
+	j_component["TextureId"] = material->diffuse.id;
+}
+
+void ComponentMaterial::Load(JsonFormaterValue j_component)
+{
+	unsigned int material_id = j_component["TextureId"];
+	// texture = App->scene_manager->GetActiveScene().m_textures[material_id];
+	//Importer::MaterialImporter::Textures Load(???)
+}
+
 void ComponentMaterial::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		if (material) {
+		if (material)
+		{
 			Texture& diffuse = material->diffuse;
 			if (diffuse.loaded)
 			{
@@ -35,7 +49,7 @@ void ComponentMaterial::DrawGui()
 				if (use_diffuse_texture)
 				{
 					ImGui::Text("Diffuse: %dx%d %s", diffuse.width, diffuse.height, diffuse.path.c_str());
-					ImGui::Image((void*) (intptr_t) diffuse.id, ImVec2(150, 150));	
+					ImGui::Image((void*) (intptr_t) diffuse.id, ImVec2(150, 150));
 				}
 			}
 			if (!use_diffuse_texture)
@@ -59,20 +73,5 @@ void ComponentMaterial::DrawGui()
 		{
 			ImGui::Text("No material resource");
 		}
-		
 	}
-			
-}
-
-void ComponentMaterial::Save(JsonFormaterValue j_component) const
-{
-	//TODO Save the path of the library model
-	j_component["TextureId"] = material->diffuse.id;
-}
-
-void ComponentMaterial::Load(JsonFormaterValue j_component)
-{
-	unsigned int material_id = j_component["TextureId"];
-	// texture = App->scene_manager->GetActiveScene().m_textures[material_id];
-	//Importer::MaterialImporter::Textures Load(???)
 }

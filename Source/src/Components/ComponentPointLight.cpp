@@ -8,7 +8,7 @@
 #include <algorithm>
 
 ComponentPointLight::ComponentPointLight(GameObject* conatiner)
-	: Component(Component::Type::PointLight, conatiner)
+	: Component(Component::Type::POINTLIGHT, conatiner)
 {
 	if (game_object->scene_owner)
 		game_object->scene_owner->point_lights.push_back((ComponentPointLight*) this);
@@ -35,20 +35,6 @@ void ComponentPointLight::DebugDraw()
 	}
 }
 
-void ComponentPointLight::DrawGui()
-{
-	if (ImGui::CollapsingHeader("Point Light"))
-	{
-		ImGui::Checkbox("P.Active", &active);
-		ImGui::Checkbox("Draw Sphere", &draw_sphere);
-		ImGui::PushItemWidth(100.0f);		
-		ImGui::InputFloat("P.Intensity", &intensity);
-		ImGui::InputFloat("P.Radius", &radius);
-		ImGui::PopItemWidth();
-		ImGuiUtils::CompactColorPicker("Point Color", &color[0]);
-	}
-}
-
 float3 ComponentPointLight::GetPosition()
 {
 	ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
@@ -57,7 +43,7 @@ float3 ComponentPointLight::GetPosition()
 
 void ComponentPointLight::Save(JsonFormaterValue j_component) const
 {
-	j_component["LightType"] = (int) Component::Type::PointLight;
+	j_component["LightType"] = (int) Component::Type::POINTLIGHT;
 
 	JsonFormaterValue j_color = j_component["Color"];
 	j_color[0] = color.x;
@@ -82,4 +68,17 @@ void ComponentPointLight::Load(JsonFormaterValue j_component)
 	draw_sphere = j_component["drawSphere"];
 }
 
+void ComponentPointLight::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Point Light"))
+	{
+		ImGui::Checkbox("P.Active", &active);
+		ImGui::Checkbox("Draw Sphere", &draw_sphere);
+		ImGui::PushItemWidth(100.0f);
+		ImGui::InputFloat("P.Intensity", &intensity);
+		ImGui::InputFloat("P.Radius", &radius);
+		ImGui::PopItemWidth();
+		ImGuiUtils::CompactColorPicker("Point Color", &color[0]);
+	}
+}
 

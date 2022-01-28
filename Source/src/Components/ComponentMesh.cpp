@@ -15,7 +15,7 @@
 #include <imgui.h>
 
 ComponentMesh::ComponentMesh(GameObject* conatiner)
-	: Component(Component::Type::Mesh, conatiner)
+	: Component(Component::Type::MESH, conatiner)
 {
 }
 
@@ -127,16 +127,6 @@ void ComponentMesh::CleanUp()
 	loaded = false;
 }
 
-void ComponentMesh::DrawGui()
-{
-	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::Text("%d Triangles\n%d vertices\n%d indices", buffer_sizes[Buffers::b_indices] / 3, 
-			buffer_sizes[Buffers::b_vertices] / 3, buffer_sizes[Buffers::b_indices]);
-		ImGui::Checkbox("Visible", &visible);
-	}
-}
-
 void ComponentMesh::Save(JsonFormaterValue j_component) const
 {
 	// j_component["FileName"] = mesh->file_name.c_str();
@@ -147,4 +137,13 @@ void ComponentMesh::Load(JsonFormaterValue j_component)
 {
 	std::string file_name = j_component["FileName"];
 	// MeshImporter::LoadMesh(mesh);
+}
+
+void ComponentMesh::DrawGui()
+{
+	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text("%d Triangles\n%d vertices\n%d indices", buffer_sizes[Buffers::b_indices] / 3, buffer_sizes[Buffers::b_vertices] / 3, buffer_sizes[Buffers::b_indices]);
+		ImGui::Checkbox("Visible", &visible);
+	}
 }

@@ -12,7 +12,7 @@ public:
 	ComponentTransform(GameObject* new_object, float3 position = float3::zero, Quat rotation = Quat::identity, float3 scale = float3::one);
 	ComponentTransform(GameObject* new_object, const float4x4& transform = float4x4::identity);
 	~ComponentTransform();
-	static inline Type GetType() { return Type::Transform; };
+	static inline Type GetType() { return Type::TRANSFORM; };
 
 	void SetPosition(float3 new_position);
 	void SetRotationAxis(float3 x, float3 y, float3 z);
@@ -38,10 +38,10 @@ public:
 	inline float3 GetUp() const { return transform.WorldY(); }
 	inline float3 GetRight() const { return transform.WorldX(); }
 
-	void DrawGui() override;
-
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
+
+	void DrawGui() override;
 
 private:
 	bool changed = true;

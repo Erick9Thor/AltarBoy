@@ -11,7 +11,7 @@
 #include <imgui.h>
 
 ComponentCamera::ComponentCamera(GameObject* container)
-	: Component(Component::Type::Camera, container)
+	: Component(Component::Type::CAMERA, container)
 {
 	frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
 	frustum.SetViewPlaneDistances(0.1f, 1000.0f);
@@ -103,12 +103,17 @@ void ComponentCamera::GetResolution(unsigned& width, unsigned& height) const
 	height = resolution_y;
 }
 
+LineSegment ComponentCamera::RayCast(float x, float y)
+{
+	return frustum.UnProjectLineSegment(x, y);
+}
+
 void ComponentCamera::DrawGui()
 {
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Checkbox("Draw Frustum", &draw_frustum);
-		
+
 		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
 		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
 			SetPlaneDistances(planes[0], planes[1]);
@@ -153,9 +158,4 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 	frustum.SetPos(float3(j_pos[0], j_pos[1], j_pos[2]));
 	frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
 	frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
-}
-
-LineSegment ComponentCamera::RayCast(float x, float y)
-{
-	return frustum.UnProjectLineSegment(x, y);
 }

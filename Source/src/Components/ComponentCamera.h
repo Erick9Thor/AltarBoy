@@ -12,9 +12,13 @@ class ComponentCamera : public Component
 public:
 	ComponentCamera(GameObject* conatiner);
 	~ComponentCamera() override;
-	static inline Type GetType() { return Type::Camera; };
+	
+	void OnTransformUpdated() override;
 
-	void DebugDraw() override;
+	static inline Type GetType() { return Type::CAMERA; };
+	
+	float4x4 GetViewMatrix(const bool transpose = false) const;
+	float4x4 GetProjectionMatrix(const bool transpose = false) const;
 
 	inline const Frustum& GetFrustum() const { return frustum; }
 
@@ -23,18 +27,15 @@ public:
 	void SetPlaneDistances(const float near_distance, const float far_distance);
 	void SetFOV(float fov);
 
-	float4x4 GetViewMatrix(const bool transpose = false) const;
-	float4x4 GetProjectionMatrix(const bool transpose = false) const;
-
-	void OnTransformUpdated() override;
-
 	void SetResolution(unsigned width, unsigned height);
 	void GetResolution(unsigned& width, unsigned& height) const;
+	
+	void Save(JsonFormaterValue j_component) const override;
+	void Load(JsonFormaterValue j_component) override;
 
 	void DrawGui() override;
 
-	void Save(JsonFormaterValue j_component) const override;
-	void Load(JsonFormaterValue j_component) override;
+	void DebugDraw() override;
 
 	LineSegment RayCast(float x, float y);
 

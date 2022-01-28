@@ -170,16 +170,16 @@ void Scene::CreateLights()
 	GameObject* sun = CreateNewGameObject("Sun", root);
 	sun->GetComponent<ComponentTransform>()->SetLocalPosition(float3(1, 1, -1));
 	sun->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
-	sun->CreateComponent(Component::Type::DirLight);
+	sun->CreateComponent(Component::Type::DIRLIGHT);
 
 	GameObject* spot = CreateNewGameObject("Spot Light", root);
 	spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -1));
 
-	spot->CreateComponent(Component::Type::SpotLight);
+	spot->CreateComponent(Component::Type::SPOTLIGHT);
 
 	GameObject* point = CreateNewGameObject("Point Light", root);
 	point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -1));
-	point->CreateComponent(Component::Type::PointLight);
+	point->CreateComponent(Component::Type::POINTLIGHT);
 }
 
 void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& materials)
@@ -188,9 +188,9 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		GameObject* model_part = CreateNewGameObject(node->mName.C_Str(), parent);
-		model_part->CreateComponent(Component::Type::Mesh);
+		model_part->CreateComponent(Component::Type::MESH);
 		model_part->GetComponent<ComponentMesh>()->Load(mesh);
-		model_part->CreateComponent(Component::Type::Material);
+		model_part->CreateComponent(Component::Type::MATERIAL);
 		model_part->GetComponent<ComponentMaterial>()->SetMaterial(materials[mesh->mMaterialIndex]);
 
 		aiVector3D aiTranslation, aiScale;
@@ -228,7 +228,7 @@ GameObject* Scene::CreateDebugCamera()
 {
 	GameObject* camera = CreateNewGameObject("Debug Camera", root);
 	camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(5, 5, 0));
-	camera->CreateComponent(Component::Type::Camera);
+	camera->CreateComponent(Component::Type::CAMERA);
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
 
 	debug_camera = camera->GetComponent<ComponentCamera>();

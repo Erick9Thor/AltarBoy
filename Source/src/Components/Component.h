@@ -13,15 +13,15 @@ class Component
 public:
 	enum Type
 	{
-		None,
-		Transform,
-		Mesh,
-		Material,
-		Camera,
-		DirLight,
-		PointLight,
-		SpotLight,
-		Unknown
+		NONE,
+		TRANSFORM,
+		MESH,
+		MATERIAL,
+		CAMERA,
+		DIRLIGHT,
+		POINTLIGHT,
+		SPOTLIGHT,
+		UNKNOWN
 	};
 
 	Component(Type type, GameObject* container)
@@ -30,30 +30,29 @@ public:
 
 	virtual ~Component() {};
 
+	virtual void Update() {};
+	virtual void OnTransformUpdated() {};
+
 	inline Type GetType() const { return type; };
-
-	virtual void Draw(ComponentCamera* camera, Program* program) {};
-	virtual void DebugDraw() {};
-
-	void SetGameObject(GameObject* container) { game_object = container; }
+	UID GetID() const { return uid; }
 
 	const GameObject* GetGameObject() const { return game_object; }
 	GameObject* GetGameObject() { return game_object; }
 
-	virtual void Update() {};
-	virtual void OnTransformUpdated() {};
+	void SetGameObject(GameObject* container) { game_object = container; }
 
 	virtual void DrawGui() {};
+
+	virtual void Draw(ComponentCamera* camera, Program* program) {};
+	virtual void DebugDraw() {};
 
 	virtual void Save(JsonFormaterValue j_component) const {}; 
 	virtual void Load(JsonFormaterValue j_component) {};
 
-	UID GetID() const { return uid; }
-
 protected:
 	GameObject* game_object = nullptr;
 	bool active = true;
-	Type type = Type::Unknown;
+	Type type = Type::UNKNOWN;
 
 private:
 	UID uid = 0; 

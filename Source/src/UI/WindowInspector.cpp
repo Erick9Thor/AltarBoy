@@ -51,17 +51,17 @@ void WindowInspector::DrawGameObject(GameObject* game_object)
 		{
 			if (ImGui::MenuItem("Mesh"))
 			{
-				game_object->CreateComponent(Component::Type::Mesh);
+				game_object->CreateComponent(Component::Type::MESH);
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::MenuItem("Material"))
 			{
-				game_object->CreateComponent(Component::Type::Material);
+				game_object->CreateComponent(Component::Type::MATERIAL);
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::MenuItem("Camera"))
 			{
-				game_object->CreateComponent(Component::Type::Camera);
+				game_object->CreateComponent(Component::Type::CAMERA);
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();

@@ -6,7 +6,7 @@
 #include <imgui.h>
 
 ComponentTransform::ComponentTransform(GameObject* new_object, float3 position, Quat rotation, float3 scale)
-	: Component(Component::Type::Transform, new_object)
+	: Component(Component::Type::TRANSFORM, new_object)
 	, local_position(position)
 	, local_rotation(rotation)
 	, local_scale(scale)
@@ -15,7 +15,7 @@ ComponentTransform::ComponentTransform(GameObject* new_object, float3 position, 
 }
 
 ComponentTransform::ComponentTransform(GameObject* new_object, const float4x4& new_transform)
-	: Component(Component::Type::Transform, new_object)
+	: Component(Component::Type::TRANSFORM, new_object)
 {
 	SetLocalTransform(new_transform);
 }
@@ -111,20 +111,6 @@ void ComponentTransform::SetPosition(float3 new_transform)
 	SetGlobalTransform(transform);
 }
 
-void ComponentTransform::DrawGui()
-{
-	static bool locked_scale = true;
-	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		float3 position = local_position;
-		float3 scale = local_scale;
-		float3 rotation = local_rotation_euler;		
-		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
-		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
-		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
-	}
-}
-
 void ComponentTransform::Save(JsonFormaterValue j_component) const
 {
 	JsonFormaterValue j_position = j_component["Position"];
@@ -156,4 +142,18 @@ void ComponentTransform::Load(JsonFormaterValue j_component)
 		float3(j_position[0], j_position[1], j_position[2]),
 		Quat(j_rotation[0], j_rotation[1], j_rotation[2], 0.0f),
 		float3(j_scale[0], j_scale[1], j_scale[2]));
+}
+
+void ComponentTransform::DrawGui()
+{
+	static bool locked_scale = true;
+	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		float3 position = local_position;
+		float3 scale = local_scale;
+		float3 rotation = local_rotation_euler;
+		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
+		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
+		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
+	}
 }

@@ -70,14 +70,14 @@ void GameObject::AddComponent(Component* component)
 {
 	switch (component->GetType())
 	{
-		case (Component::Type::Transform):
+		case (Component::Type::TRANSFORM):
 		{
 			components.push_back(component);
 			transform = (ComponentTransform*) component;
 			component->SetGameObject(this);
 			break;
 		}
-		case (Component::Type::Camera):
+		case (Component::Type::CAMERA):
 		{
 			components.push_back((Component*) component);
 			component->SetGameObject(this);
@@ -91,25 +91,25 @@ Component* GameObject::CreateComponent(Component::Type type)
 	Component* new_component = nullptr;
 	switch (type)
 	{
-	case (Component::Type::Transform):
+	case (Component::Type::TRANSFORM):
 		return transform;
 		break;
-	case (Component::Type::Camera):
+	case (Component::Type::CAMERA):
 		new_component = new ComponentCamera(this);
 		break;
-	case (Component::Type::Mesh):
+	case (Component::Type::MESH):
 		new_component = new ComponentMesh(this);
 		break;
-	case (Component::Type::Material):
+	case (Component::Type::MATERIAL):
 		new_component = new ComponentMaterial(this);
 		break;
-	case (Component::Type::DirLight):
+	case (Component::Type::DIRLIGHT):
 		new_component = new ComponentDirLight(this);
 		break;
-	case (Component::Type::PointLight):
+	case (Component::Type::POINTLIGHT):
 		new_component = new ComponentPointLight(this);
 		break;
-	case (Component::Type::SpotLight):
+	case (Component::Type::SPOTLIGHT):
 		new_component = new ComponentSpotLight(this);
 		break;
 	}

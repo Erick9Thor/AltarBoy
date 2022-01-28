@@ -10,19 +10,19 @@ public:
 	// TODO: add more light types
 	ComponentPointLight(GameObject* conatiner);
 	~ComponentPointLight() override;
-	static inline Type GetType() { return Type::PointLight; };
+	static inline Type GetType() { return Type::POINTLIGHT; };
 
 	void DebugDraw() override;
 
 	bool IsActive() const { return active; }
-	void SetActive(bool v) { active = v; }
-
-	void DrawGui() override;
+	void SetActive(bool is_active) { active = is_active; }
 
 	float3 GetPosition();
 
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
+
+	void DrawGui() override;
 
 	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	float intensity = 1.0f;

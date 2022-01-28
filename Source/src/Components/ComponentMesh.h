@@ -26,10 +26,11 @@ public:
 
 	ComponentMesh(GameObject* conatiner);
 	~ComponentMesh() override;
-	static inline Type GetType() { return Type::Mesh; };
 
 	void Draw(ComponentCamera* camera, Program* program) override;
 
+	static inline Type GetType() { return Type::MESH; };
+	
 	void Load(const aiMesh* mesh);
 	void CleanUp();
 
@@ -42,10 +43,10 @@ public:
 	const float* GetVertices() const { return vertices; }
 	const unsigned* GetIndices() const { return indices; }
 
-	void DrawGui() override;
-
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
+
+	void DrawGui() override;
 
 private:
 
