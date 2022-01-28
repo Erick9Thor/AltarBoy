@@ -42,3 +42,18 @@ bool MaterialImporter::Textures::Save(const ResourceTexture* rTexture, char** bu
 void MaterialImporter::Textures::Load(const char* buffer, ResourceTexture* texture)
 {
 }*/
+
+ResourceTexture* MaterialImporter::Textures::Import(const char* buffer)
+{
+	return nullptr;
+}
+
+bool MaterialImporter::Textures::Save(const ResourceTexture* rTexture, char* file_path)
+{
+	return false;
+}
+
+ResourceTexture* MaterialImporter::Textures::Load(const char* file_path)
+{
+	return nullptr;
+}

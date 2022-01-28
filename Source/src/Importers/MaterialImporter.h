@@ -13,13 +13,11 @@ namespace MaterialImporter
 		bool Save(const ResourceMaterial* resource_material, char** buffer);
 		void Load(const char* buffer, ResourceMaterial* rMaterial);
 	} // namespace Material
-	/*
+	
 	namespace Textures
 	{
-		void Init();
-		bool Import(const char* buffer, ResourceTexture* rTexture);
-		bool Save(const ResourceTexture* rTexture, char** buffer);
-		void Load(const char* buffer, ResourceTexture* texture);
+		ResourceTexture* Import(const char* buffer);
+		bool Save(const ResourceTexture* rTexture, char* file_path);
+		ResourceTexture* Load(const char* file_path);
 	}
-	*/
 }

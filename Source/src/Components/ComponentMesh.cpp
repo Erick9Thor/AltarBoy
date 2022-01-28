@@ -23,6 +23,18 @@ ComponentMesh::~ComponentMesh()
 {
 }
 
+void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
+{
+	assert(loaded == true);
+	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+
+	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
+	App->program->UpdateMaterial(material);
+
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, buffer_sizes[Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
+}
+
 void ComponentMesh::Load(const aiMesh* mesh)
 {
 	Import(mesh);
@@ -91,18 +103,6 @@ void ComponentMesh::GenerateBuffers()
 void ComponentMesh::GenerateAABB()
 {
 	bounding_box.SetFrom((float3*) vertices, buffer_sizes[Buffers::b_vertices] / 3);
-}
-
-void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
-{
-	assert(loaded == true);
-	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
-
-	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-	App->program->UpdateMaterial(material);
-
-	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, buffer_sizes[Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
 }
 
 void ComponentMesh::CleanUp()
