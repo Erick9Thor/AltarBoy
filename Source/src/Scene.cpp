@@ -116,10 +116,10 @@ void Scene::Load(JsonFormaterValue j_scene)
 	root->Destroy();
 
 	// Load GameObjects
-	JsonFormaterValue jRoot = j_scene["GORoot"];
-	root = new GameObject(nullptr, float4x4::identity, "Root");
+	JsonFormaterValue j_root = j_scene["GORoot"];
+	root = new GameObject(nullptr, "Root", j_root["Uid"]);
 	root->scene_owner = this;
-	root->Load(jRoot);
+	root->Load(j_root);
 	CreateDebugCamera();
 }
 

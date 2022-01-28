@@ -24,15 +24,17 @@ GameObject::GameObject(const char* name)
 	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
 
-GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name)
+GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid)
 	: name(name)
+	, uid(uid)
 {
 	SetNewParent(parent);
 	AddComponent(new ComponentTransform(this, transform));
 }
 
-GameObject::GameObject(GameObject* parent, const char* name, const float3& translation, const Quat& rotation, const float3& scale)
+GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale)
 	: name(name)
+	, uid(uid)
 {
 	SetNewParent(parent);
 	AddComponent(new ComponentTransform(this, translation, rotation, scale));
@@ -284,9 +286,6 @@ void GameObject::Save(JsonFormaterValue j_gameObject) const
 
 void GameObject::Load(JsonFormaterValue j_gameObject)
 {
-	uid = j_gameObject["Uid"];
-	name = j_gameObject["GOName"];
-
 	JsonFormaterValue j_components = j_gameObject["Components"];
 	for (unsigned i = 0; i < j_components.Size(); ++i)
 	{
@@ -308,8 +307,8 @@ void GameObject::Load(JsonFormaterValue j_gameObject)
 	{
 		JsonFormaterValue j_child = j_childrens[i];
 
-		std::string name = j_child["GOName"];
-		GameObject* child = new GameObject(this, name.c_str());
+		std::string child_name = j_child["GOName"];
+		GameObject* child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
 		child->scene_owner = scene_owner;
 		child->Load(j_child);
 

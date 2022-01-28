@@ -10,7 +10,7 @@ bool ModuleSceneManager::Init()
 {
 	main_scene = new Scene();
 	
-	LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
+	//LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
 	// CreateEmptyScene();
 	// LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
@@ -32,7 +32,6 @@ bool ModuleSceneManager::CleanUp()
 void ModuleSceneManager::LoadModel(const char* model_path)
 {
 	// delete scene_model;
-	// TODO: Need to refactor model class to convert a game object
 	main_scene->LoadFBX(model_path);
 }
 
