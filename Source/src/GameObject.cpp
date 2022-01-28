@@ -260,6 +260,7 @@ void GameObject::Save(JsonFormaterValue j_gameObject) const
 	j_gameObject["Uid"] = uid;
 	j_gameObject["GOName"] = name.c_str();
 	j_gameObject["Active"] = active;
+	j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
 
 	JsonFormaterValue j_components = j_gameObject["Components"];
 	for (unsigned i = 0; i < components.size(); ++i)
@@ -292,28 +293,26 @@ void GameObject::Load(JsonFormaterValue j_gameObject)
 		JsonFormaterValue j_component = j_components[i];
 
 		UID c_uid = j_component["ComponentID"];
-		/*std::string type = j_component["ComponentType"];
+		int enum_type = j_component["ComponentType"];
+		bool active = j_component["Active"];
 
-		ComponentType type = DO SOMETHING TO PARSE TYPE STRING
-		Component* component = CREATE A COMPONENT USING TYPE AND ID AND THIS GO
+		Component::Type type = Component::Type(enum_type);
 
-		components.push_back(component);
-		component->Load(jComponent);*/
+		Component* component = CreateComponent(type);
+
+		component->Load(j_component);
 	}
 
 	JsonFormaterValue j_childrens = j_gameObject["GOChildrens"];
 	for (unsigned i = 0; i < j_childrens.Size(); ++i)
 	{
 		JsonFormaterValue j_child = j_childrens[i];
+
 		std::string name = j_child["GOName"];
+		GameObject* child = new GameObject(name.c_str());
+		child->scene_owner = scene_owner;
+		child->parent = this;
+		child->Load(j_child);
 
-		/*
-			Load child to current GO:
-
-			1. Create child.
-			2. Assign father
-			child->Load(j_child);
-		
-		*/
 	}
 }

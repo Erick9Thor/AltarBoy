@@ -223,7 +223,7 @@ void ModuleEditor::FileMenu()
 	ImGui::Separator();
 	if (ImGui::MenuItem("Load"))
 	{
-		ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ".");
+		ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ASSETS_FOLDER_SCENES);
 	}
 
 	ImGui::EndMenu();
