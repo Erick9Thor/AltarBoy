@@ -138,7 +138,7 @@ void WindowScene::DrawScene()
 	float4x4 view = camera->GetViewMatrix(transposed);
 
 	//TODO ADD look at when manipulating cube
-	ImGuizmo::ViewManipulate((float*) &view, 4, ImVec2(guizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
+	ImGuizmo::ViewManipulate(view.ptr(), 4, ImVec2(guizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
 		guizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
 
 	GameObject* selected_object = App->editor->GetSelectedGO();
@@ -150,11 +150,10 @@ void WindowScene::DrawScene()
 		float4x4 model = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
 		float4x4 delta;
 
-		//TODO: Fix
-		ImGuizmo::SetRect(guizmo_rect_origin.x, guizmo_rect_origin.y, (float) size.x, (float) size.y);
-		ImGuizmo::SetDrawlist();	
+		ImGuizmo::SetRect(guizmo_rect_origin.x, guizmo_rect_origin.y, texture_size.x, texture_size.y);
+		ImGuizmo::SetDrawlist();
 
-		ImGuizmo::Manipulate((float*) &view, (float*) &projection, guizmo_operation, guizmo_mode, (float*) &model, (float*) &delta);
+		ImGuizmo::Manipulate(view.ptr(), projection.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
 		
 		using_guizmo = ImGuizmo::IsUsing();		
 		if (using_guizmo && !delta.IsIdentity())

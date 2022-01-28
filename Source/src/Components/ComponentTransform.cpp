@@ -67,10 +67,9 @@ inline void ComponentTransform::SetLocalRotation(Quat new_rotation)
 
 void ComponentTransform::SetLocalRotation(float3 rotation_angles)
 {
-	float3 rotation = rotation_angles * to_rad;
+	float3 rotation = DegToRad(rotation_angles);
 	SetLocalTransform(local_position, Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), local_scale);
 }
-
 void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 {
 	local_transform = new_transform;
@@ -82,9 +81,14 @@ void ComponentTransform::SetLocalTransform(float4x4 new_transform)
 
 void ComponentTransform::SetGlobalTransform(float4x4 transform)
 {
-	// Use parent global transform to get local transform
+	// Use parent global transform to get local transform	
+	
 	if (game_object->parent)
-		SetLocalTransform(game_object->parent->GetComponent<ComponentTransform>()->GetTransform().Transposed() * transform);
+	{
+		float4x4 parent_transform = game_object->parent->GetComponent<ComponentTransform>()->GetTransform();
+		parent_transform.Inverse();
+		SetLocalTransform(parent_transform * transform);
+	}		
 	else
 		SetLocalTransform(transform);
 }
@@ -155,5 +159,41 @@ void ComponentTransform::DrawGui()
 		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
 		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
 		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
+	}
+}
+
+void ComponentTransform::DrawGui()
+{
+	static bool locked_scale = true;
+	static bool debug_transforms = false;
+	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		float3 position = local_position;
+		float3 scale = local_scale;
+		float3 rotation = local_rotation_euler;		
+		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
+		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
+		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
+
+		ImGui::Checkbox("Debug Transforms", &debug_transforms);
+		if (debug_transforms)
+		{
+			ImGui::Separator();
+			ImGui::Text("Local");
+			for (int r = 0; r < 4; ++r)
+			{
+				auto row = local_transform.Row(r);
+				ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+			}
+
+			ImGui::Separator();
+			ImGui::Text("Global");
+			for (int r = 0; r < 4; ++r)
+			{
+				auto row = transform.Row(r);
+				ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+			}
+		}
+		
 	}
 }
