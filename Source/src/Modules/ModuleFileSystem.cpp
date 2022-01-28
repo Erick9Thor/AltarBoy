@@ -7,7 +7,6 @@
 #include "physfs.h"
 #include <string.h>
 #include <fstream>
-#include <filesystem>
 #include <algorithm>
 
 ModuleFileSystem::ModuleFileSystem()

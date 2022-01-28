@@ -151,20 +151,6 @@ void ComponentTransform::Load(JsonFormaterValue j_component)
 void ComponentTransform::DrawGui()
 {
 	static bool locked_scale = true;
-	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		float3 position = local_position;
-		float3 scale = local_scale;
-		float3 rotation = local_rotation_euler;
-		if (ImGui::InputFloat3("position", &position[0])) SetLocalPosition(position);
-		if (ImGui::InputFloat3("scale", &scale[0])) SetLocalScale(scale);
-		if (ImGui::InputFloat3("rotation", &rotation[0])) SetLocalRotation(rotation);
-	}
-}
-
-void ComponentTransform::DrawGui()
-{
-	static bool locked_scale = true;
 	static bool debug_transforms = false;
 	if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
 	{
