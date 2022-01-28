@@ -43,6 +43,13 @@ public:
 	ImFont* m_big_icon_font = nullptr;
 	ImFont* m_small_icon_font = nullptr;
 
+	// TODO: Save the info imgui.ini
+	unsigned dock_up_id = 0;
+	unsigned dock_main_id = 0;
+	unsigned dock_left_id = 0;
+	unsigned dock_right_id = 0;
+	unsigned dock_down_id = 0;
+
 private:
 	void RenderGui();
 	void GenerateDockingSpace();

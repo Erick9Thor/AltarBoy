@@ -22,7 +22,8 @@ WindowHierarchy::~WindowHierarchy()
 
 void WindowHierarchy::Update()
 {
-	if (ImGui::Begin(ICON_FA_SITEMAP "Hierarchy", &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_left_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_SITEMAP " ") + name).c_str(), &active))
 	{
 		DrawHierarchyTree(App->scene_manager->GetRoot());
 	}

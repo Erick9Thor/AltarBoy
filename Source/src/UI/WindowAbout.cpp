@@ -3,6 +3,7 @@
 #include "../Application.h"
 #include "../Modules/ModuleHardware.h"
 
+#include <IconsFontAwesome5.h>
 
 #include "imgui.h"
 #include "../Globals.h"
@@ -19,6 +20,7 @@ WindowAbout::~WindowAbout()
 
 void WindowAbout::Update()
 {
+	ImGui::SetNextWindowSize(ImVec2(400.0f, 200.0f), ImGuiCond_FirstUseEver);
 	if (ImGui::Begin(name, &active, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::Text("Engine name: %s", TITLE);

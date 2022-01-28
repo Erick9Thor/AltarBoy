@@ -39,7 +39,7 @@ ModuleEditor::ModuleEditor() {
 	windows.push_back(&w_inspector);
 	windows.push_back(&w_about);
 	windows.push_back(&w_console);
-	windows.push_back(&w_resource);
+	// windows.push_back(&w_resource);
 	windows.push_back(&w_project);
 	windows.push_back(&w_timers);
 }
@@ -197,6 +197,20 @@ void ModuleEditor::GenerateDockingSpace()
 	ImGui::PopStyleVar(3);
 
 	ImGuiID dockspace_id = ImGui::GetID("DockSpace");
+
+	if (!ImGui::DockBuilderGetNode(dockspace_id))
+	{
+		ImGui::DockBuilderAddNode(dockspace_id);
+		ImGui::DockBuilderSetNodeSize(dockspace_id, viewport->WorkSize);
+
+		dock_main_id = dockspace_id;
+		dock_up_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Up, 0.2f, nullptr, &dock_main_id);
+		ImGui::DockBuilderSetNodeSize(dock_up_id, ImVec2(viewport->WorkSize.x, 40));
+		dock_right_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Right, 0.2f, nullptr, &dock_main_id);
+		dock_down_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Down, 0.3f, nullptr, &dock_main_id);
+		dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.25f, nullptr, &dock_main_id);
+	}
+
 	ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags, nullptr);
 	ImGui::End();
 }

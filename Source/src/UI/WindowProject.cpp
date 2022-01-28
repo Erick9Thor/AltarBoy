@@ -4,6 +4,7 @@
 #include "../Globals.h"
 #include "../Modules/ModuleFileSystem.h"
 #include "../Modules/ModuleResourceManager.h"
+#include "../Modules/ModuleEditor.h"
 
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
@@ -25,7 +26,8 @@ void WindowProject::Init()
 
 void WindowProject::Update()
 {
-	if (ImGui::Begin(ICON_FA_IMAGES "Assets##assets", &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_down_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_IMAGES " ") + name).c_str(), &active))
 	{
 		
 		ImGui::PushItemWidth(100);
@@ -57,7 +59,7 @@ void WindowProject::Update()
 		}
 		ImGui::SameLine();
 
-		ShowFilesOnFolder();
+		// ShowFilesOnFolder();
 
 		ImGui::End();
 	}

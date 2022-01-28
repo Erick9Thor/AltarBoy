@@ -1,5 +1,10 @@
 #include "WindowConsole.h"
 
+#include "../Application.h"
+
+#include "../Modules/ModuleEditor.h"
+#include <IconsFontAwesome5.h>
+
 #include "../Utils/Logger.h"
 
 #include "imgui.h"
@@ -15,7 +20,8 @@ WindowConsole::~WindowConsole()
 
 void WindowConsole::Update()
 {
-	if (ImGui::Begin(name, &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_down_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_TERMINAL " ") + name).c_str(), &active))
 	{
 		if (ImGui::BeginPopup("Options"))
 		{

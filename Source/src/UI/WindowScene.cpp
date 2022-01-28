@@ -34,7 +34,8 @@ void WindowScene::Update()
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) guizmo_operation = ImGuizmo::ROTATE;
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) guizmo_operation = ImGuizmo::SCALE;
 	}
-	if (ImGui::Begin(ICON_FA_GLOBE "Scene", &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_main_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_GLOBE " ") + name).c_str(), &active))
 	{
 		focused = ImGui::IsWindowFocused();
 		GuizmoOptionsController();
@@ -46,6 +47,7 @@ void WindowScene::Update()
 		Controller();
 		ImGui::End();
 	};
+
 }
 
 void WindowScene::CleanUp()

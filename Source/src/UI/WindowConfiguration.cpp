@@ -22,7 +22,8 @@ WindowConfiguration::~WindowConfiguration()
 
 void WindowConfiguration::Update()
 {
-	if (ImGui::Begin(ICON_FA_COG "Configuration", &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_COG " ") + name).c_str(), &active))
 	{
 		if (ImGui::CollapsingHeader("Scene"))
 		{

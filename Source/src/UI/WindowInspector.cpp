@@ -17,7 +17,8 @@ WindowInspector::~WindowInspector()
 
 void WindowInspector::Update()
 {
-	if (ImGui::Begin(ICON_FA_EYE "Inspector", &active))
+	ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
+	if (ImGui::Begin((std::string(ICON_FA_EYE " ") + name).c_str(), &active))
 	{
 		DrawGameObject(App->editor->GetSelectedGO());
 	}
