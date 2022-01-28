@@ -6,7 +6,6 @@
 #include "../Modules/ModuleFileSystem.h"
 
 #include "../Importers/MaterialImporter.h"
-#include "../Importers/ModelImporter.h"
 #include "../Importers/SceneImporter.h"
 #include "../Utils/Logger.h"
 

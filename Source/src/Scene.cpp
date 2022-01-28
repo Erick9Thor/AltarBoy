@@ -189,7 +189,7 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		GameObject* model_part = CreateNewGameObject(node->mName.C_Str(), parent);
 		model_part->CreateComponent(Component::Type::MESH);
-		model_part->GetComponent<ComponentMesh>()->Load(mesh);
+		model_part->GetComponent<ComponentMesh>()->ImportMesh(mesh);
 		model_part->CreateComponent(Component::Type::MATERIAL);
 		model_part->GetComponent<ComponentMaterial>()->SetMaterial(materials[mesh->mMaterialIndex]);
 

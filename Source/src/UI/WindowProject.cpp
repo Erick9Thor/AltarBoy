@@ -64,9 +64,7 @@ void WindowProject::Update()
 }
 
 void WindowProject::CleanUp()
-{
-	delete m_filter;
-}
+{}
 
 //TODO
 void WindowProject::DoFilter()

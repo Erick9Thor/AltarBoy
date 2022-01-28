@@ -2,6 +2,8 @@
 #include "Component.h"
 #include "../Modules/ModuleTexture.h"
 
+#include "../Resources/ResourceMesh.h"
+
 #include "assimp/scene.h"
 #include "MathGeoLib.h"
 
@@ -31,46 +33,28 @@ public:
 
 	static inline Type GetType() { return Type::MESH; };
 	
-	void Load(const aiMesh* mesh);
 	void CleanUp();
 
-	inline bool IsLoaded() const { return loaded; }
+	inline bool IsLoaded() const { return resource->loaded; }
 	bool IsVisible() const { return visible; }
 
-	AABB GetAABB() const { return bounding_box; }
-	inline unsigned GetBufferSize(Buffers buffer) const { return buffer_sizes[buffer]; }
-	inline unsigned GetBufferId(Buffers buffer) const { return buffer_ids[buffer]; }
-	const float* GetVertices() const { return vertices; }
-	const unsigned* GetIndices() const { return indices; }
+	AABB GetAABB() const { return resource->bounding_box; }
+	inline unsigned GetBufferSize(Buffers buffer) const { return resource->buffer_sizes[buffer]; }
+	inline unsigned GetBufferId(Buffers buffer) const { return resource->buffer_ids[buffer]; }
+	const float* GetVertices() const { return resource->vertices; }
+	const unsigned* GetIndices() const { return resource->indices; }
 
+	void ImportMesh(const aiMesh* mesh);
+	
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
 
 	void DrawGui() override;
 
 private:
-
 	aiMesh* mesh = nullptr;
-
-	void Import(const aiMesh* mesh);
-	void GenerateBuffers();
-	void GenerateAABB();
-
-	AABB bounding_box;
-	bool loaded = false;
+	
 	bool visible = true;
 
-	// Store the ids of buffers in opengl
-	unsigned vbo, ebo;
-	unsigned vao;
-	unsigned buffer_ids[n_buffers];
-
-	// Track buffer sizes
-	unsigned buffer_sizes[n_buffers];
-
-	// In memory buffers
-	unsigned* indices;
-	float* vertices;
-	float* normals;
-	float* tex_coords;
+	ResourceMesh* resource = nullptr;
 };

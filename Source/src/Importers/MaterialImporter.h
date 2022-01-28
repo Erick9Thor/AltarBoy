@@ -12,7 +12,7 @@ namespace MaterialImporter
 		void Import(const char* filePath, JsonFormaterValue json_meta);
 		bool Save(const ResourceMaterial* resource_material, char** buffer);
 		void Load(const char* buffer, ResourceMaterial* rMaterial);
-	} // namespace Material
+	}
 	
 	namespace Textures
 	{
