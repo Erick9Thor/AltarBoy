@@ -4,8 +4,7 @@
 
 ModuleSceneManager::ModuleSceneManager() {}
 
-ModuleSceneManager::~ModuleSceneManager() {
-}
+ModuleSceneManager::~ModuleSceneManager() {}
 
 bool ModuleSceneManager::Init()
 {

@@ -52,7 +52,7 @@ Scene::~Scene()
 void Scene::CleanScene()
 {
 	App->editor->SetSelectedGO(nullptr);
-	root->Destroy();
+	delete root;
 	delete skybox;
 	delete quadtree;
 }
@@ -60,7 +60,6 @@ void Scene::CleanScene()
 void Scene::DestroyGameObject(GameObject* game_object)
 {
 	quadtree->Remove(game_object);
-	RELEASE(game_object);
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
@@ -115,7 +114,7 @@ void Scene::Save(JsonFormaterValue j_scene) const
 void Scene::Load(JsonFormaterValue j_scene)
 {
 	//CleanScene(); 
-	root->Destroy();
+	delete root;
 
 	// Load GameObjects
 	JsonFormaterValue j_root = j_scene["GORoot"];

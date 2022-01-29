@@ -111,8 +111,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 			}
 			if (ImGui::MenuItem("Delete Gameojbect"))
 			{
-				// TODO: Make it work
-				game_object->Destroy();
+				delete game_object;
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::MenuItem("Move Up"))

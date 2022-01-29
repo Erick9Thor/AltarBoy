@@ -42,15 +42,27 @@ GameObject::GameObject(GameObject* parent, const char* name, UID uid, const floa
 
 GameObject::~GameObject()
 {
-	for (unsigned int i = 0; i < childs.size(); i++)
+	if (parent)
+		parent->RemoveChild(this);
+
+	if (scene_owner)
+		scene_owner->DestroyGameObject(this);
+	
+	for (GameObject* child : childs)
 	{
-		RELEASE(childs[i]);
+		child->SetNewParent(nullptr);
+		RELEASE(child);
 	}
-	for (unsigned int i = 0; i < components.size(); i++)
+
+	for (Component* component : components)
 	{
-		RELEASE(components[i]);
+		RELEASE(component);
 	}
-	childs.clear();
+}
+
+void GameObject::RemoveChild(GameObject* game_object)
+{
+	childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
 }
 
 void GameObject::SetNewParent(GameObject* new_parent)
@@ -121,28 +133,6 @@ Component* GameObject::CreateComponent(Component::Type type)
 	else
 		LOG("Falied to create component");
 	return new_component;
-}
-
-void GameObject::RemoveChild(GameObject* game_object)
-{
-	childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
-}
-
-void GameObject::Destroy()
-{
-	if (parent)
-	{
-		parent->RemoveChild(this);
-		parent = nullptr;
-	}
-
-	if (scene_owner)
-		scene_owner->DestroyGameObject(this);
-
-	for (unsigned int i = 0; i < childs.size(); ++i)
-	{
-		childs[i]->Destroy();
-	}
 }
 
 void GameObject::Update()
