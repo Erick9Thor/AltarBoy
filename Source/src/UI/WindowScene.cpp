@@ -124,7 +124,8 @@ void WindowScene::DrawScene()
 		if (auto* payload = ImGui::AcceptDragDropPayload("path"))
 		{
 			const char* path = (const char*) payload->Data;
-			App->resource_manager->ImportFileFromAssets(path);
+			// App->resource_manager->ImportFileFromAssets(path);
+			App->scene_manager->LoadModel(path);
 		}
 		ImGui::EndDragDropTarget();
 	}
