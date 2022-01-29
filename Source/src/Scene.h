@@ -46,7 +46,6 @@ public:
 
 	// --- Debug --- //
 	GameObject* CreateDebugCamera();
-	ComponentCamera* GetDebugCamera() const { return debug_camera; }
 
 	// --- Skybox --- //
 	Skybox* GetSkybox() const { return skybox; }
@@ -68,7 +67,6 @@ private:
 
 private:
 	GameObject* root = nullptr;
-	ComponentCamera* debug_camera = nullptr;
 
 	Skybox* skybox;
 	Quadtree* quadtree = nullptr;
