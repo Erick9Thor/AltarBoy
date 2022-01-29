@@ -50,19 +50,25 @@ void WindowInspector::DrawGameObject(GameObject* game_object)
 
 		if (ImGui::BeginPopup("Add Component Popup"))
 		{
-			if (ImGui::MenuItem("Mesh"))
-			{
-				game_object->CreateComponent(Component::Type::MESH);
-				ImGui::CloseCurrentPopup();
-			}
-			if (ImGui::MenuItem("Material"))
-			{
-				game_object->CreateComponent(Component::Type::MATERIAL);
-				ImGui::CloseCurrentPopup();
-			}
+			
 			if (ImGui::MenuItem("Camera"))
 			{
 				game_object->CreateComponent(Component::Type::CAMERA);
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Point Light"))
+			{
+				game_object->CreateComponent(Component::Type::POINTLIGHT);
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Spot Light"))
+			{
+				game_object->CreateComponent(Component::Type::SPOTLIGHT);
+				ImGui::CloseCurrentPopup();
+			}
+			if (ImGui::MenuItem("Dir Light"))
+			{
+				game_object->CreateComponent(Component::Type::DIRLIGHT);
 				ImGui::CloseCurrentPopup();
 			}
 			ImGui::EndPopup();

@@ -1,5 +1,9 @@
 #include "ComponentDirLight.h"
+
+#include "../UI/ImGuiUtils.h"
+
 #include "ComponentTransform.h"
+
 #include "../Scene.h"
 #include "debugdraw.h"
 
@@ -67,8 +71,7 @@ void ComponentDirLight::Load(JsonFormaterValue j_component)
 
 void ComponentDirLight::DrawGui()
 {
-	if (ImGui::CollapsingHeader("Dir Light"))
-	{
+	if (ImGuiUtils::CollapsingHeader(game_object, this, "Dir Light")) {
 		ImGui::Checkbox("D.Active", &active);
 		ImGui::Checkbox("Draw Direction", &draw_direction);
 		ImGui::PushItemWidth(100.0f);
@@ -76,4 +79,5 @@ void ComponentDirLight::DrawGui()
 		ImGui::PopItemWidth();
 		ImGuiUtils::CompactColorPicker("Dir Color", &color[0]);
 	}
+
 }

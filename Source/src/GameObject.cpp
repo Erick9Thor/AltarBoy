@@ -257,6 +257,12 @@ void GameObject::UpdateBoundingBoxes()
 	}
 }
 
+void GameObject::RemoveComponent(Component* component)
+{
+	//TODO: Should I delete the component?
+	components.erase(std::remove(components.begin(), components.end(), component));
+}
+
 void GameObject::Save(JsonFormaterValue j_gameObject) const
 {
 	j_gameObject["Uid"] = uid;
@@ -314,3 +320,5 @@ void GameObject::Load(JsonFormaterValue j_gameObject)
 
 	}
 }
+
+

@@ -313,6 +313,11 @@ void ModuleEditor::GoMenu()
 {
 	if (!ImGui::BeginMenu("GameObject")) return;
 
+	if (ImGui::MenuItem("Add GameObject"))
+	{
+		App->scene_manager->GetActiveScene()->CreateNewGameObject("GameObject", App->scene_manager->GetActiveScene()->GetRoot());
+	}
+	
 	ImGui::EndMenu();
 }
 

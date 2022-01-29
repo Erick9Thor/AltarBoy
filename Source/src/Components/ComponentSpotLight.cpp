@@ -1,5 +1,7 @@
 #include "ComponentSpotLight.h"
 
+#include "../UI/ImGuiUtils.h"
+
 #include "ComponentTransform.h"
 #include "../Scene.h"
 #include "debugdraw.h"
@@ -85,7 +87,7 @@ void ComponentSpotLight::Load(JsonFormaterValue j_component)
 
 void ComponentSpotLight::DrawGui()
 {
-	if (ImGui::CollapsingHeader("Spot Light"))
+	if (ImGuiUtils::CollapsingHeader(game_object, this, "Spot Light"))
 	{
 		ImGui::PushItemWidth(100.0f);
 		ImGui::Checkbox("S.Active", &active);

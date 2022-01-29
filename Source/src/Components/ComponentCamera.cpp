@@ -1,4 +1,7 @@
 #include "../Application.h"
+
+#include "../UI/ImGuiUtils.h"
+
 #include "../Modules/ModuleWindow.h"
 #include "../Modules/ModuleRender.h"
 #include "../Utils/Logger.h"
@@ -108,18 +111,6 @@ LineSegment ComponentCamera::RayCast(float x, float y)
 	return frustum.UnProjectLineSegment(x, y);
 }
 
-void ComponentCamera::DrawGui()
-{
-	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::Checkbox("Draw Frustum", &draw_frustum);
-
-		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
-		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
-			SetPlaneDistances(planes[0], planes[1]);
-	}
-}
-
 void ComponentCamera::Save(JsonFormaterValue j_component) const
 {
 	JsonFormaterValue j_frustum = j_component["Frustrum"];
@@ -158,4 +149,15 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 	frustum.SetPos(float3(j_pos[0], j_pos[1], j_pos[2]));
 	frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
 	frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
+}
+
+void ComponentCamera::DrawGui()
+{
+	if (ImGuiUtils::CollapsingHeader(game_object, this, "Camera")) {
+		ImGui::Checkbox("Draw Frustum", &draw_frustum);
+
+		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
+		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
+			SetPlaneDistances(planes[0], planes[1]);
+	}
 }

@@ -23,7 +23,10 @@ public:
 	virtual ~GameObject();
 
 	void SetNewParent(GameObject* new_parent);
+	
 	void AddComponent(Component* component);
+	void RemoveComponent(Component* component);
+
 	Component* CreateComponent(Component::Type type);
 	void RemoveChild(GameObject* gameObject);
 
@@ -47,6 +50,8 @@ public:
 
 	const OBB& GetOBB() const { return obb; }
 	const AABB& GetAABB() { return aabb; }
+
+
 	const std::vector<Component*>& GetComponents() const { return components; }
 
 	template<typename RetComponent>

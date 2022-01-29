@@ -1,7 +1,12 @@
 #include "ComponentPointLight.h"
+
+#include "../UI/ImGuiUtils.h"
+
 #include "ComponentTransform.h"
 #include "../Scene.h"
 #include "debugdraw.h"
+
+#include <IconsFontAwesome5.h>
 
 #include "imgui.h"
 
@@ -70,8 +75,7 @@ void ComponentPointLight::Load(JsonFormaterValue j_component)
 
 void ComponentPointLight::DrawGui()
 {
-	if (ImGui::CollapsingHeader("Point Light"))
-	{
+	if (ImGuiUtils::CollapsingHeader(game_object, this, "Point Light")) {
 		ImGui::Checkbox("P.Active", &active);
 		ImGui::Checkbox("Draw Sphere", &draw_sphere);
 		ImGui::PushItemWidth(100.0f);
@@ -80,5 +84,6 @@ void ComponentPointLight::DrawGui()
 		ImGui::PopItemWidth();
 		ImGuiUtils::CompactColorPicker("Point Color", &color[0]);
 	}
+
 }
 

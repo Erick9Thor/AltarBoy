@@ -1,7 +1,11 @@
 #include "ImGuiUtils.h"
+#include <IconsFontAwesome5.h>
 
+#include "../GameObject.h"
+#include "../Components/Component.h"
 
 using namespace ImGui;
+using namespace std;
 
 bool ImGuiUtils::IconButton(const char* icon, const char* tooltip)
 {
@@ -51,3 +55,23 @@ bool ImGuiUtils::CompactColorPicker(const char* name, float* color)
 	PopItemWidth();
 	return ret;
 }
+
+bool ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* component, const char* header_name)
+{
+	bool open = ImGui::CollapsingHeader(header_name, ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen);
+
+	ImGui::SameLine();
+	if (ImGui::GetWindowWidth() > 170) ImGui::Indent(ImGui::GetWindowWidth() - 43);
+	if (ImGui::Button(std::string(ICON_FA_TIMES).c_str())) ImGui::OpenPopup("delete_component");
+	if (ImGui::GetWindowWidth() > 170) ImGui::Unindent(ImGui::GetWindowWidth() - 43);
+
+	if (ImGui::BeginPopup("delete_component"))
+	{
+		game_object->RemoveComponent(component);
+		ImGui::EndPopup();
+	}
+
+	return open;
+}
+
+

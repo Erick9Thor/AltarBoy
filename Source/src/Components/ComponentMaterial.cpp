@@ -1,5 +1,7 @@
 #include "ComponentMaterial.h"
 
+#include "../UI/ImGuiUtils.h"
+
 #include "../Application.h"
 #include "../Scene.h"
 #include "../Modules/ModuleTexture.h"
@@ -42,8 +44,7 @@ void ComponentMaterial::Load(JsonFormaterValue j_component)
 
 void ComponentMaterial::DrawGui()
 {
-	if (ImGui::CollapsingHeader("Material", ImGuiTreeNodeFlags_DefaultOpen))
-	{
+	if (ImGuiUtils::CollapsingHeader(game_object, this, "Material")) {
 		if (material)
 		{
 			Texture& diffuse = material->diffuse;
