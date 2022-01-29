@@ -49,14 +49,16 @@ bool Application::Init()
 		ret = (*it)->Init();
 
 	delta = 0.f;
-	GameTimer::Start();
+	EngineTimer::Start();
 	return ret;
 }
 
 update_status Application::Update()
 {
 
-	delta = GameTimer::Update();
+	delta = EngineTimer::Update();
+	GameTimer::Update();
+
 	update_status ret = UPDATE_CONTINUE;
 
 	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)

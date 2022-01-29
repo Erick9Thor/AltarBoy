@@ -78,13 +78,18 @@ void WindowScene::ToolbarMenu()
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running))
 	{
 		if (!GameTimer::paused)
+		{
 			GameTimer::Pause();
+		}	
 	}
 	
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running))
 	{
 		if (!GameTimer::running)
+		{
+			App->scene_manager->SaveScene("tmp_scene.scene");
 			GameTimer::Start();
+		}			
 		else if (GameTimer::paused)
 			GameTimer::Resume();
 	}
@@ -92,7 +97,11 @@ void WindowScene::ToolbarMenu()
 	if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running))
 	{
 		if (GameTimer::running)
+		{
 			GameTimer::Stop();
+			App->scene_manager->LoadScene("tmp_scene.scene");
+		}
+			
 	}
 
 	ImGui::Separator();
