@@ -4,6 +4,8 @@
 #include "../Modules/ModuleTexture.h"
 #include "../Resources/ResourceMaterial.h"
 
+#include "assimp/scene.h"
+
 class ComponentMaterial : public Component
 {
 public:
@@ -11,11 +13,11 @@ public:
 	~ComponentMaterial() override;
 	static inline Type GetType() { return Type::MATERIAL; };
 
-	void SetMaterial(ResourceMaterial* new_material);
 	const ResourceMaterial* GetMaterial() const { return material; }
 
 	void DrawGui() override;
 
+	void Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;
 

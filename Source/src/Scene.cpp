@@ -88,10 +88,10 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
 	if (scene)
 	{
-		std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
+		//std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
 		model = CreateNewGameObject(name.c_str(), root);
-		LoadNode(scene, scene->mRootNode, model, materials);
-		materials.clear();
+		LoadNode(scene, scene->mRootNode, model, model_path);
+		//materials.clear();
 	}
 	else
 	{
@@ -184,16 +184,16 @@ void Scene::CreateLights()
 	point->CreateComponent(Component::Type::POINTLIGHT);
 }
 
-void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& materials)
+void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, const std::string& model_path)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		GameObject* model_part = CreateNewGameObject(node->mName.C_Str(), parent);
 		model_part->CreateComponent(Component::Type::MESH);
-		model_part->GetComponent<ComponentMesh>()->ImportMesh(mesh);
+		model_part->GetComponent<ComponentMesh>()->Import(mesh);
 		model_part->CreateComponent(Component::Type::MATERIAL);
-		model_part->GetComponent<ComponentMaterial>()->SetMaterial(materials[mesh->mMaterialIndex]);
+		model_part->GetComponent<ComponentMaterial>()->Import(scene->mMaterials[mesh->mMaterialIndex], model_path, node->mName.C_Str());
 
 		aiVector3D aiTranslation, aiScale;
 		aiQuaternion aiRotation;
@@ -207,10 +207,10 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 	// then do the same for each of its children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		LoadNode(scene, node->mChildren[i], parent, materials);
+		LoadNode(scene, node->mChildren[i], parent, model_path);
 	}
 }
-
+/*
 std::vector<ResourceMaterial*> Scene::LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name)
 {
 	std::vector<ResourceMaterial*> materials;
@@ -224,7 +224,7 @@ std::vector<ResourceMaterial*> Scene::LoadMaterials(const aiScene* scene, const 
 		materials.push_back(material);
 	}
 	return materials;
-}
+}*/
 
 GameObject* Scene::CreateDebugCamera()
 {

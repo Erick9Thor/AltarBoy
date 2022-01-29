@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../Utils/JsonFormaterValue.h"
+#include "../Utils/UID.h"
+
+#include "assimp/scene.h"
 
 class ResourceMaterial;
 class ResourceTexture;
@@ -9,9 +12,9 @@ namespace MaterialImporter
 {
 	namespace Material
 	{
-		void Import(const char* filePath, JsonFormaterValue json_meta);
-		bool Save(const ResourceMaterial* resource_material, char** buffer);
-		void Load(const char* buffer, ResourceMaterial* rMaterial);
+		ResourceMaterial* Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
+		bool Save(const ResourceMaterial* material, JsonFormaterValue j_material);
+		ResourceMaterial* Load(JsonFormaterValue j_material);
 	}
 	
 	namespace Textures

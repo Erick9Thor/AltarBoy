@@ -63,8 +63,8 @@ public:
 
 private:
 	// TODO: Fix leaks from resource material pointers when doing import system
-	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, std::vector<ResourceMaterial*>& textures);
-	std::vector<ResourceMaterial*> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
+	void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, const std::string& model_path);
+	//std::vector<ResourceMaterial*> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
 
 private:
 	GameObject* root = nullptr;
