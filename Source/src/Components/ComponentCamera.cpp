@@ -111,32 +111,6 @@ LineSegment ComponentCamera::RayCast(float x, float y)
 	return frustum.UnProjectLineSegment(x, y);
 }
 
-void ComponentCamera::DrawGui()
-{
-	static bool debug_data = false;
-	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::Checkbox("Draw Frustum", &draw_frustum);
-
-		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
-		if (ImGui::InputFloat2("N & F", &planes[0]))
-			SetPlaneDistances(planes[0], planes[1]);
-		if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 180.f))
-			SetHorizontalFov(horizontal_fov);
-
-		ImGui::Checkbox("Debug", &debug_data);
-		if (debug_data)
-		{
-			ImGui::Separator();
-			ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
-			ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
-		}
-
-	}
-
-	
-}
-
 void ComponentCamera::Save(JsonFormaterValue j_component) const
 {
 	JsonFormaterValue j_frustum = j_component["Frustrum"];
@@ -180,12 +154,24 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 void ComponentCamera::DrawGui()
 {
 	ImGui::PushID(this);
+	static bool debug_data = false;
+
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Camera")) {
 		ImGui::Checkbox("Draw Frustum", &draw_frustum);
 
 		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
-		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
+		if (ImGui::InputFloat2("N & F", &planes[0]))
 			SetPlaneDistances(planes[0], planes[1]);
+		if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 180.f))
+			SetHorizontalFov(horizontal_fov);
+
+		ImGui::Checkbox("Debug", &debug_data);
+		if (debug_data)
+		{
+			ImGui::Separator();
+			ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
+			ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
+		}
 	}
 	ImGui::PopID();
 }
