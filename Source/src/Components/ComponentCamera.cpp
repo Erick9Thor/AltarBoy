@@ -58,9 +58,9 @@ void ComponentCamera::SetPlaneDistances(const float near_distance, const float f
 	frustum.GetPlanes(planes);
 }
 
-void ComponentCamera::SetFOV(float fov)
+void ComponentCamera::SetHorizontalFov(float fov_deg)
 {
-	horizontal_fov = fov;
+	horizontal_fov = fov_deg;
 	frustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontal_fov), frustum.AspectRatio());
 	frustum.GetPlanes(planes);
 }
@@ -110,14 +110,28 @@ LineSegment ComponentCamera::RayCast(float x, float y)
 
 void ComponentCamera::DrawGui()
 {
+	static bool debug_data = false;
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Checkbox("Draw Frustum", &draw_frustum);
 
 		float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
-		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
+		if (ImGui::InputFloat2("N & F", &planes[0]))
 			SetPlaneDistances(planes[0], planes[1]);
+		if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 180.f))
+			SetHorizontalFov(horizontal_fov);
+
+		ImGui::Checkbox("Debug", &debug_data);
+		if (debug_data)
+		{
+			ImGui::Separator();
+			ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
+			ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
+		}
+
 	}
+
+	
 }
 
 void ComponentCamera::Save(JsonFormaterValue j_component) const
@@ -149,7 +163,7 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 
 	SetNearPlane(j_frustum["NearDistance"]);
 	SetFarPlane(j_frustum["FarDistance"]);
-	SetFOV(j_frustum["Fov"]);
+	SetHorizontalFov(j_frustum["Fov"]);
 
 	JsonFormaterValue j_pos = j_frustum["Pos"];
 	JsonFormaterValue j_front = j_frustum["Front"];

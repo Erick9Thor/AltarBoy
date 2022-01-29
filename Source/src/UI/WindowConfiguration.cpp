@@ -32,10 +32,10 @@ void WindowConfiguration::Update()
 			ImGui::Text("Shader Options");
 			App->program->OptionsMenu();
 		}
-		if (ImGui::CollapsingHeader("Camera"))
-		{
-			App->camera->GetMainCamera()->DrawGui();
-		}
+
+		//It is already a collapsing header
+		App->camera->GetMainCamera()->DrawGui();
+
 		if (ImGui::CollapsingHeader("Engine"))
 		{
 			App->window->OptionsMenu();
