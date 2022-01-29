@@ -67,7 +67,8 @@ update_status ModuleInput::PreUpdate(const float delta)
 			break;
 		case SDL_DROPFILE:
 			LOG("[M_INPUT] Dropped file: %s", event.drop.file);
-			App->resource_manager->ImportExternalFile(event.drop.file);
+			//App->resource_manager->ImportExternalFile(event.drop.file);
+			App->scene_manager->LoadModel(event.drop.file);
 			SDL_free(event.drop.file);
 			break;
 		}

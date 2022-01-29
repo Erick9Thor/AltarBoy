@@ -34,7 +34,7 @@ public:
 	const float* GetVertices() const { return resource->vertices; }
 	const unsigned* GetIndices() const { return resource->indices; }
 
-	void ImportMesh(const aiMesh* mesh);
+	void Import(const aiMesh* mesh);
 	
 	void Save(JsonFormaterValue j_component) const override;
 	void Load(JsonFormaterValue j_component) override;

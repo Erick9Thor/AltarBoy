@@ -141,10 +141,10 @@ void ComponentTransform::Load(JsonFormaterValue j_component)
 	JsonFormaterValue j_position = j_component["Position"];
 	JsonFormaterValue j_rotation = j_component["Rotation"];
 	JsonFormaterValue j_scale = j_component["Scale"];
-
+	
 	SetLocalTransform(
 		float3(j_position[0], j_position[1], j_position[2]),
-		Quat(j_rotation[0], j_rotation[1], j_rotation[2], 0.0f),
+		Quat::FromEulerXYZ(j_rotation[0], j_rotation[1], j_rotation[2]),
 		float3(j_scale[0], j_scale[1], j_scale[2]));
 }
 

@@ -1,9 +1,13 @@
 #include "ComponentMaterial.h"
 
 #include "../Application.h"
+#include "../Scene.h"
 #include "../Modules/ModuleTexture.h"
 #include "../Modules/ModuleSceneManager.h"
-#include "../Scene.h"
+
+#include "../GameObject.h"
+
+#include "../Importers/MaterialImporter.h"
 
 #include <imgui.h>
 
@@ -14,27 +18,26 @@ ComponentMaterial::ComponentMaterial(GameObject* conatiner)
 
 ComponentMaterial::~ComponentMaterial()
 {
+	RELEASE(material);
 }
 
-void ComponentMaterial::SetMaterial(ResourceMaterial* new_material)
+void ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
 {
-	material = new_material;
+	material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);
 	use_diffuse_texture = material->diffuse.loaded;
 	use_specular_texture = material->specular.loaded;
 }
 
 void ComponentMaterial::Save(JsonFormaterValue j_component) const
 {
-	//TODO Save the path of the library model
-	j_component["TextureId"] = material->diffuse.id;
-	j_component["FileName"] = material->file_name.c_str();
+	MaterialImporter::Material::Save(material, j_component);
 }
 
 void ComponentMaterial::Load(JsonFormaterValue j_component)
 {
-	unsigned int material_id = j_component["TextureId"];
-	std::string file_name = j_component["FileName"];
-	//Importer::MaterialImporter::Textures Load(file_name)
+	material = MaterialImporter::Material::Load(j_component);
+	use_diffuse_texture = material->diffuse.loaded;
+	use_specular_texture = material->specular.loaded;
 }
 
 void ComponentMaterial::DrawGui()

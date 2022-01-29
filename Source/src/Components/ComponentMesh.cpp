@@ -23,12 +23,9 @@ ComponentMesh::~ComponentMesh()
 {
 }
 
-void ComponentMesh::ImportMesh(const aiMesh* mesh)
+void ComponentMesh::Import(const aiMesh* mesh)
 {
 	resource = MeshImporter::Import(mesh);
-	resource->GenerateBuffers();
-	resource->GenerateAABB();
-	resource->loaded = true;
 }
 
 void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
@@ -45,14 +42,12 @@ void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 
 void ComponentMesh::Save(JsonFormaterValue j_component) const
 {
-	j_component["FileName"] = resource->file_name.c_str();
-	// j_component["MaterialIndex"] = mesh->material_index;
+	MeshImporter::Save(resource, game_object->getUID());
 }
 
 void ComponentMesh::Load(JsonFormaterValue j_component)
 {
-	std::string file_name = j_component["FileName"];
-	resource = MeshImporter::LoadMesh(file_name.c_str());
+	resource = MeshImporter::Load(game_object->getUID());
 }
 
 void ComponentMesh::DrawGui()

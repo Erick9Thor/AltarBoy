@@ -100,5 +100,4 @@ bool SceneImporter::SaveScene(Scene* scene, const char* file_path)
 
 	// Save to file
 	return App->file_sys->Save(file_path, string_buffer.GetString(), string_buffer.GetSize());
-	return false;
 }

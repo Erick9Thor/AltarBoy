@@ -10,8 +10,7 @@ class ResourceMaterial : public Resource
 public:
 	ResourceMaterial(UID uid);
 	~ResourceMaterial() override;
-
-	bool Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
+	
 	inline unsigned GetDiffuseId() const { return diffuse.id; }
 	inline unsigned GetSpecularId() const { return specular.id; }
 
