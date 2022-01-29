@@ -44,6 +44,7 @@ void ComponentMaterial::Load(JsonFormaterValue j_component)
 
 void ComponentMaterial::DrawGui()
 {
+	ImGui::PushID(this);
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Material")) {
 		if (material)
 		{
@@ -79,4 +80,5 @@ void ComponentMaterial::DrawGui()
 			ImGui::Text("No material resource");
 		}
 	}
+	ImGui::PopID();
 }

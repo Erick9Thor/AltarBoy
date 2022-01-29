@@ -153,6 +153,7 @@ void ComponentCamera::Load(JsonFormaterValue j_component)
 
 void ComponentCamera::DrawGui()
 {
+	ImGui::PushID(this);
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Camera")) {
 		ImGui::Checkbox("Draw Frustum", &draw_frustum);
 
@@ -160,4 +161,5 @@ void ComponentCamera::DrawGui()
 		if (ImGui::SliderFloat2("N & F", &planes[0], 0.1f, 500.0f))
 			SetPlaneDistances(planes[0], planes[1]);
 	}
+	ImGui::PopID();
 }

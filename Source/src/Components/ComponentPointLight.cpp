@@ -75,6 +75,7 @@ void ComponentPointLight::Load(JsonFormaterValue j_component)
 
 void ComponentPointLight::DrawGui()
 {
+	ImGui::PushID(this);
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Point Light")) {
 		ImGui::Checkbox("P.Active", &active);
 		ImGui::Checkbox("Draw Sphere", &draw_sphere);
@@ -84,6 +85,6 @@ void ComponentPointLight::DrawGui()
 		ImGui::PopItemWidth();
 		ImGuiUtils::CompactColorPicker("Point Color", &color[0]);
 	}
-
+	ImGui::PopID();
 }
 

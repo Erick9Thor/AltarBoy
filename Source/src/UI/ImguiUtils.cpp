@@ -62,10 +62,10 @@ bool ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* component,
 
 	ImGui::SameLine();
 	if (ImGui::GetWindowWidth() > 170) ImGui::Indent(ImGui::GetWindowWidth() - 43);
-	if (ImGui::Button(std::string(ICON_FA_TIMES).c_str())) ImGui::OpenPopup("delete_component");
+	if (ImGui::Button(std::string(ICON_FA_TIMES).c_str())) ImGui::OpenPopup(header_name);
 	if (ImGui::GetWindowWidth() > 170) ImGui::Unindent(ImGui::GetWindowWidth() - 43);
 
-	if (ImGui::BeginPopup("delete_component"))
+	if (ImGui::BeginPopup(header_name))
 	{
 		game_object->RemoveComponent(component);
 		ImGui::EndPopup();

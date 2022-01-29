@@ -71,6 +71,7 @@ void ComponentDirLight::Load(JsonFormaterValue j_component)
 
 void ComponentDirLight::DrawGui()
 {
+	ImGui::PushID(this);
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Dir Light")) {
 		ImGui::Checkbox("D.Active", &active);
 		ImGui::Checkbox("Draw Direction", &draw_direction);
@@ -79,5 +80,5 @@ void ComponentDirLight::DrawGui()
 		ImGui::PopItemWidth();
 		ImGuiUtils::CompactColorPicker("Dir Color", &color[0]);
 	}
-
+	ImGui::PopID();
 }

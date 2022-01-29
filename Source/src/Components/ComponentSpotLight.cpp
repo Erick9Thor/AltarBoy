@@ -87,6 +87,7 @@ void ComponentSpotLight::Load(JsonFormaterValue j_component)
 
 void ComponentSpotLight::DrawGui()
 {
+	ImGui::PushID(this);
 	if (ImGuiUtils::CollapsingHeader(game_object, this, "Spot Light"))
 	{
 		ImGui::PushItemWidth(100.0f);
@@ -99,4 +100,5 @@ void ComponentSpotLight::DrawGui()
 		ImGui::PopItemWidth();
 		ImGuiUtils::CompactColorPicker("Spot Color", &color[0]);
 	}
+	ImGui::PopID();
 }
