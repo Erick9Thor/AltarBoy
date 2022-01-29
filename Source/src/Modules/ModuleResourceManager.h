@@ -24,11 +24,9 @@ public:
 	void LoadAllAssetsFolder();
 	void LoadByNode(PathNode node);
 
-
 	void ImportExternalFile(char* file_path);
 	UID ImportFileFromAssets(const char* file_path);
-	void ImportAssetByExtension(JsonFormaterValue jMeta, const char* file_path);
-	ResourceType GetTypeFromFileExtension(const char* file_path) const;
+	Resource* ImportAssetByExtension(const char* file_path);
 
 	// --- Resource DB mange --- //
 	Resource* RequestResource(UID ID);
@@ -40,6 +38,5 @@ public:
 	void ReadJSON(const char* buffer, rapidjson::Document& document);
 
 private:
-	Resource* CreateNewResourceByType(const char* assetsFile, ResourceType type);
 	std::map<UID, Resource*> resources;
 };

@@ -31,7 +31,6 @@
 
 #include "ImGuiFileDialog.h"
 
-
 ModuleEditor::ModuleEditor() {
 	windows.push_back(&w_configuration);
 	windows.push_back(&w_hierarchy);

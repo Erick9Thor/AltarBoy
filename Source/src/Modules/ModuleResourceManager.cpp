@@ -5,9 +5,10 @@
 #include "../Application.h"
 #include "../Modules/ModuleFileSystem.h"
 
+#include "../Utils/Logger.h"
+
 #include "../Importers/MaterialImporter.h"
 #include "../Importers/SceneImporter.h"
-#include "../Utils/Logger.h"
 
 #include "../Resources/ResourceMaterial.h"
 #include <ilu.h>
@@ -51,42 +52,22 @@ void ModuleResourceManager::LoadAllAssetsFolder()
 void ModuleResourceManager::LoadByNode(PathNode node)
 {
 	std::string metaFile = node.path + META_EXTENSION;
-	if (App->file_sys->Exists(metaFile.c_str()))
+	/*if (App->file_sys->Exists(metaFile.c_str()))
 	{
-		rapidjson::Document document;
-		JsonFormaterValue jMeta(document, document);
-
-		const char* buffer = App->file_sys->Load(metaFile.c_str());
-		ReadJSON(buffer, document);
-	
-		ImportAssetByExtension(jMeta, node.path.c_str());
+		//TODO
 	}
 	else
 	{
 		ImportFileFromAssets(node.path.c_str());
 	}
 
-	if (!node.isFile && !node.isLeaf)
+	if (!node.isFile && !node.isLeaf) // Case we are loading a folder
 	{
-		/*ResourceHandle<Resource> hFolder(assetID);
-		std::vector<uint64> newChildren;
-		for (uint i = 0; i < node.children.size(); i++)
-		{
-			uint64 childID = 0;
-			LoadAssetBase(node.children[i], childID);
-			if (!hFolder.Get()->HasContainedResource(childID))
-				newChildren.push_back(childID);
-		}
-		if (newChildren.size() > 0) //New resources from this folder have been imported. Update folder content
-		{
-			for (uint i = 0; i < newChildren.size(); ++i)
-				hFolder.Get()->AddContainedResource(newChildren[i]);
-			SaveResource(hFolder.Get());
-		}*/
-	}
+		//TODO
+	}*/
 }
 
-void ModuleResourceManager::ImportAssetByExtension(JsonFormaterValue jMeta, const char* file_path)
+Resource* ModuleResourceManager::ImportAssetByExtension(const char* file_path)
 {
 	std::string extension = App->file_sys->GetFileExtension(file_path);
 
@@ -94,41 +75,28 @@ void ModuleResourceManager::ImportAssetByExtension(JsonFormaterValue jMeta, cons
 	if (sizeof(buffer) == 0)
 	{
 		LOG("Error loading scene %s", file_path);
-		return;
+		return nullptr;
 	}
 
 	Resource* resource = nullptr;
-	if (extension == SCENE_EXTENSION)
+	if (extension == SCENE_EXTENSION) //JSON file
 	{
-		SceneImporter::ImportScene(buffer, jMeta);
+		resource = SceneImporter::ImportScene(buffer);
 	}
-	/*else if (extension == MATERIAL_EXTENSION)
+	else if (extension == MATERIAL_EXTENSION) // Binary file
 	{
-		// Material files
-		// MaterialImporter::ImportMaterial(filePath, jMeta);
+		// resource = MaterialImporter::Material::Import(???);
 	}
-	else if (extension == FRAGMENT_SHADER_EXTENSION || extension == VERTEX_SHADER_EXTENSION || extension == DEFAULT_SHADER_EXTENSION)
+	else if (extension == MODEL_EXTENSION) // Combo of resources
 	{
-		// Shader files
-		// ShaderImporter::ImportShader(filePath, jMeta);
-	}
-	else if (extension == MODEL_EXTENSION)
-	{
-		// Model files
-		// ModelImporter::ImportModel(filePath, jMeta);
-	}
-	else if (extension == SKYBOX_EXTENSION)
-	{
-		// Skybox files
-		// SkyboxImporter::ImportSkybox(filePath, jMeta);
+		// resource = ModelImporter::ImportModel(filePath, jMeta);
 	}
 	else if (extension == JPG_TEXTURE_EXTENSION || extension == PNG_TEXTURE_EXTENSION)
 	{
-		// Texture files
-		// TextureImporter::ImportTexture(filePath, jMeta);
+		// resource = MaterialImporter::Textures::Import(buffer);
 	}
-	else if (extension == PREFAB_EXTENSION)*/
 
+	return nullptr;
 }
 
 
@@ -136,14 +104,15 @@ void ModuleResourceManager::ImportExternalFile(char* file_path)
 {
 	std::string normalized_droped_path = App->file_sys->NormalizePath(file_path);
 	std::string new_file_path = std::string(ASSETS_FOLDER) + App->file_sys->GetFileNameAndExtension(normalized_droped_path.c_str());
-	
-	App->file_sys->Copy(file_path, new_file_path.c_str()); //TODO: Check if duplicated file
 
-
-	/*
-		1. Create new resource
-		2. Set this new resource into the correct folder
-	*/
+	if (App->file_sys->Exists(new_file_path.c_str()))
+	{
+		//TODO: Get the resource existing from the importet and check if is changed if is changed reimport data or just reimport all :D
+	}
+	else
+	{
+		App->file_sys->Copy(file_path, new_file_path.c_str()); 
+	}
 
 	UID resource_id = ImportFileFromAssets(new_file_path.c_str());
 
@@ -158,10 +127,7 @@ void ModuleResourceManager::ImportExternalFile(char* file_path)
 
 UID ModuleResourceManager::ImportFileFromAssets(const char* file_path)
 {
-	ResourceType type = GetTypeFromFileExtension(file_path);
-	if (type == ResourceType::UNKNOWN) return 0;
-
-	Resource* resource = CreateNewResourceByType(file_path, type);
+	Resource* resource = ImportAssetByExtension(file_path);
 	UID resource_uid = resource->GetID();
 
 	char* file_buffer = App->file_sys->Load(file_path);
@@ -172,41 +138,6 @@ UID ModuleResourceManager::ImportFileFromAssets(const char* file_path)
 	UnloadResource(resource_uid);
 
 	return resource_uid;
-}
-
-Resource* ModuleResourceManager::CreateNewResourceByType(const char* file_path, ResourceType type)
-{
-	std::string resourceFilePath = GenerateResourcePath(GenerateUID());
-	Resource* resource = nullptr;
-	/*switch (type)
-	{
-		case ResourceType::MATERIAL:
-			resource = new ResourceMaterial(resourceName, assetFilePath, resourceFilePath.c_str());
-			break;
-		case ResourceType::MESH:
-			resource = new ResourceMesh(id, resourceName, assetFilePath, resourceFilePath.c_str());
-			break;
-		case ResourceType::PREFAB:
-			resource = new ResourcePrefab(id, resourceName, assetFilePath, resourceFilePath.c_str());
-			break;
-		case ResourceType::SCENE:
-			resource = new ResourceScene(id, resourceName, assetFilePath, resourceFilePath.c_str());
-			break;
-		case ResourceType::TEXTURE:
-			resource = new ResourceTexture(id, resourceName, assetFilePath, resourceFilePath.c_str());
-			break;
-		default:
-			LOG("Resource of type %i hasn't been registered in ModuleResources::CreateResourceByType.", (unsigned) type);
-			assert(false); // ERROR: Resource type not registered
-			return nullptr;
-	}*/
-	return resource;
-}
-
-
-ResourceType ModuleResourceManager::GetTypeFromFileExtension(const char* file_path) const
-{
-	return ResourceType();
 }
 
 Resource* ModuleResourceManager::RequestResource(UID ID)

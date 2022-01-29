@@ -14,7 +14,7 @@
 
 #include <string>
 
-bool SceneImporter::ImportScene(const char* file_path, JsonFormaterValue j_meta)
+ResourceScene* SceneImporter::ImportScene(const char* file_path)
 {
 	const char* buffer = App->file_sys->Load(file_path);
 
@@ -50,7 +50,7 @@ bool SceneImporter::ImportScene(const char* file_path, JsonFormaterValue j_meta)
 	
 	// Send resource creation event
 
-	return true;
+	return nullptr;
 }
 
 Scene* SceneImporter::LoadScene(const char* file_path)
