@@ -25,7 +25,7 @@ public:
 	void SetNearPlane(float distance);
 	void SetFarPlane(float distance);
 	void SetPlaneDistances(const float near_distance, const float far_distance);
-	void SetFOV(float fov);
+	void SetHorizontalFov(float fov_deg);
 
 	void SetResolution(unsigned width, unsigned height);
 	void GetResolution(unsigned& width, unsigned& height) const;

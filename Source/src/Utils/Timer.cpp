@@ -8,18 +8,31 @@ void Timer::Start()
 	start_time = SDL_GetTicks();
 }
 
+void Timer::Resume()
+{
+	if (!running)
+	{
+		running = true;
+		start_time = SDL_GetTicks() - (stop_time - start_time);
+	}
+}
+
 double Timer::Read()
 {
+	unsigned int now;
 	if (running)
-	{
-		unsigned int now = SDL_GetTicks();
-		current_time = (double) (now - start_time); // ms
-	}
+		now = SDL_GetTicks();
+	else
+		now = stop_time;
+		
+	current_time = (double) (now - start_time); // ms
 	return current_time;
 }
 
 double Timer::Stop()
 {
+	running = false;
+	stop_time = SDL_GetTicks();
 	return Read();
 }
 
@@ -65,24 +78,24 @@ double GameTimer::total_time = 0.;
 double GameTimer::prev_tick_time = 0.;
 bool GameTimer::running = false;
 bool GameTimer::paused = false;
-PerformanceTimer GameTimer::engine_timer;
+PerformanceTimer GameTimer::timer;
 
 void GameTimer::Start()
 {
 	total_time = 0.;
 	running = true;
 	paused = false;
-	engine_timer.Start();
-	prev_tick_time = engine_timer.Read();
+	timer.Start();
+	prev_tick_time = timer.Read();
 }
 
 double GameTimer::Update()
 {
-	double tick_time = engine_timer.Read();
+	double tick_time = timer.Read();
 	delta_time = (tick_time - prev_tick_time) / 1000.0;
 	prev_tick_time = tick_time;
 	if (running)
-		total_time = engine_timer.Read();
+		total_time = timer.Read();
 	return delta_time;
 }
 
@@ -94,17 +107,42 @@ void GameTimer::Play()
 void GameTimer::Pause()
 {
 	paused = true;
-	engine_timer.Stop();
+	timer.Stop();
 }
 
 void GameTimer::Resume()
 {
 	paused = false;
-	engine_timer.Resume();
+	timer.Resume();
 }
 
 void GameTimer::Stop()
 {
 	running = false;
-	engine_timer.Stop();
+	timer.Stop();
+}
+
+PerformanceTimer  EngineTimer::timer;
+double EngineTimer::delta_time = 0.;
+double EngineTimer::total_time = 0.;
+double EngineTimer::prev_tick_time = 0.;
+bool EngineTimer::running = false;
+
+
+void EngineTimer::Start()
+{
+	total_time = 0.;
+	running = true;
+	timer.Start();
+	prev_tick_time = timer.Read();
+}
+
+double EngineTimer::Update()
+{
+	double tick_time = timer.Read();
+	delta_time = (tick_time - prev_tick_time) / 1000.0;
+	prev_tick_time = tick_time;
+	if (running)
+		total_time = timer.Read();
+	return delta_time;
 }

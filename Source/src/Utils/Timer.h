@@ -4,17 +4,16 @@ class Timer
 {
 public:
 	void Start();
+	void Resume();
 	double Read();
 	double Stop();
-	
+	bool IsRunning() const { return running; }
+
 private:
 	bool running = false;
-	unsigned int start_time;
+	unsigned long long start_time;
+	unsigned long long stop_time;
 	double current_time;
-
-	bool game_started = false;
-	bool game_running = false;
-	bool game_step_once = false;
 };
 
 class PerformanceTimer
@@ -24,6 +23,7 @@ public:
 	void Resume();
 	double Read();
 	double Stop();
+	bool IsRunning() const { return running; }
 
 private:
 	bool running = false;
@@ -45,7 +45,7 @@ public:
 	static void Resume();
 	static void Stop();
 
-	static PerformanceTimer engine_timer;
+	static PerformanceTimer timer;
 
 	static double delta_time;
 	static double total_time;
@@ -53,4 +53,17 @@ public:
 
 	static bool running;
 	static bool paused;
+};
+
+class EngineTimer
+{
+public:
+	static void Start();
+	static double Update();
+	
+	static PerformanceTimer timer;
+	static double delta_time;
+	static double total_time;
+	static double prev_tick_time;
+	static bool running;
 };

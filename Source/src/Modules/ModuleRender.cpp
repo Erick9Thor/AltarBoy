@@ -141,8 +141,9 @@ void ModuleRender::SetGLOptions()
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
+
 	// Using debug camera to test culling
-	ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
+	//ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
 
 	App->program->UpdateCamera(camera);
 	// TODO: Update with scene lights
@@ -154,7 +155,7 @@ update_status ModuleRender::Update(const float delta)
 
 	App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
 
-	Draw(App->scene_manager->GetActiveScene(), camera, culling);
+	Draw(App->scene_manager->GetActiveScene(), camera, camera);
 	return UPDATE_CONTINUE;
 }
 

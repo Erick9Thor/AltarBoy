@@ -30,7 +30,7 @@ public:
 	Component* CreateComponent(Component::Type type);
 	void RemoveChild(GameObject* gameObject);
 
-	void Destroy();
+	//void Destroy();
 	void Update();
 	void DrawAll(ComponentCamera* camera, Program* program);
 	void Draw(ComponentCamera* camera, Program* program);

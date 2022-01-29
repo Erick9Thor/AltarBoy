@@ -18,6 +18,7 @@
 
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
+#include "Modules/ModuleEditor.h"
 
 #include "Resources/Resource.h"
 #include "Importers/SceneImporter.h"
@@ -39,7 +40,7 @@ Scene::Scene()
 	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 		
-	CreateDebugCamera();
+	//CreateDebugCamera();
 	//CreateLights();
 }
 
@@ -50,7 +51,8 @@ Scene::~Scene()
 
 void Scene::CleanScene()
 {
-	root->Destroy();
+	App->editor->SetSelectedGO(nullptr);
+	delete root;
 	delete skybox;
 	delete quadtree;
 }
@@ -58,7 +60,6 @@ void Scene::CleanScene()
 void Scene::DestroyGameObject(GameObject* game_object)
 {
 	quadtree->Remove(game_object);
-	RELEASE(game_object);
 }
 
 void Scene::AddGameObject(GameObject* new_object, GameObject* parent)
@@ -113,14 +114,14 @@ void Scene::Save(JsonFormaterValue j_scene) const
 void Scene::Load(JsonFormaterValue j_scene)
 {
 	//CleanScene(); 
-	root->Destroy();
+	delete root;
 
 	// Load GameObjects
 	JsonFormaterValue j_root = j_scene["GORoot"];
 	root = new GameObject(nullptr, "Root", j_root["Uid"]);
 	root->scene_owner = this;
 	root->Load(j_root);
-	CreateDebugCamera();
+	//CreateDebugCamera();
 }
 
 GameObject* Scene::RayCast(const LineSegment& segment) const
@@ -210,21 +211,6 @@ void Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* paren
 		LoadNode(scene, node->mChildren[i], parent, model_path);
 	}
 }
-/*
-std::vector<ResourceMaterial*> Scene::LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name)
-{
-	std::vector<ResourceMaterial*> materials;
-	materials.reserve(scene->mNumMaterials);
-	LOG("Loading %d materials", scene->mNumMaterials)
-	for (unsigned i = 0; i < scene->mNumMaterials; i++)
-	{
-		// Temporarily use i as uid
-		ResourceMaterial* material = new ResourceMaterial(i);
-		material->Import(scene->mMaterials[i], model_path, model_name);
-		materials.push_back(material);
-	}
-	return materials;
-}*/
 
 GameObject* Scene::CreateDebugCamera()
 {
@@ -233,7 +219,7 @@ GameObject* Scene::CreateDebugCamera()
 	camera->CreateComponent(Component::Type::CAMERA);
 	camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
 
-	debug_camera = camera->GetComponent<ComponentCamera>();
+	ComponentCamera* debug_camera = camera->GetComponent<ComponentCamera>();
 	debug_camera->SetFarPlane(100.0f);
 	debug_camera->draw_frustum = true;
 
