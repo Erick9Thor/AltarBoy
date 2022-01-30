@@ -31,9 +31,13 @@ double Timer::Read()
 
 double Timer::Stop()
 {
-	running = false;
-	stop_time = SDL_GetTicks();
-	return Read();
+	if (running)
+	{
+		running = false;
+		stop_time = SDL_GetTicks();
+		return Read();
+	}
+	return (double) stop_time;	
 }
 
 
@@ -68,9 +72,13 @@ double PerformanceTimer::Read()
 
 double PerformanceTimer::Stop()
 {
-	running = false;
-	stop_time = SDL_GetPerformanceCounter();
-	return Read();	
+	if (running)
+	{
+		running = false;
+		stop_time = SDL_GetPerformanceCounter();
+		return Read();	
+	}
+	return (double) stop_time;
 }
 
 double GameTimer::delta_time = 0.;
