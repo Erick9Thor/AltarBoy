@@ -45,7 +45,7 @@ Based on the second assignment requirements
 - Scene serialization (loading & saving)
 - Quadtree frustum culling
 - Editable scene with guizmos
-- Editable matrials that support diffuse and specular maps
+- Editable materials that support diffuse and specular maps
 - PBR Phong shader with support for a directional light and multiple point & spot lights
 - Unity like play stop pause controls, scene returns to its original state on stop
 
@@ -60,10 +60,11 @@ Based on the second assignment requirements
         - Quadtree debug draw
         - Bounding boxes drawing
         - Light components debug draw (Needs to be tunned)
-- Configurable Comopnents
+- Configurable Components
     - Lights parameters
     - Materials properties
     - Camera configuration
+        - Any camera can be set as culling camera
 - Timers window
 
 ![stencil](Screenshots/stencil.PNG)

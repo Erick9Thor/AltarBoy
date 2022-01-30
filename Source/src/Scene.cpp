@@ -122,7 +122,6 @@ void Scene::Load(JsonFormaterValue j_scene)
 	root = new GameObject(nullptr, "Root", j_root["Uid"]);
 	root->scene_owner = this;
 	root->Load(j_root);
-	//CreateDebugCamera();
 }
 
 GameObject* Scene::RayCast(const LineSegment& segment) const

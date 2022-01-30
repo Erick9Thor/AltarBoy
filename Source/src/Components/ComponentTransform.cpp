@@ -128,6 +128,7 @@ void ComponentTransform::Save(JsonFormaterValue j_component) const
 	j_rotation[0] = local_rotation.x;
 	j_rotation[1] = local_rotation.y;
 	j_rotation[2] = local_rotation.z;
+	j_rotation[3] = local_rotation.w;
 
 	JsonFormaterValue j_scale = j_component["Scale"];
 
@@ -141,11 +142,12 @@ void ComponentTransform::Load(JsonFormaterValue j_component)
 	JsonFormaterValue j_position = j_component["Position"];
 	JsonFormaterValue j_rotation = j_component["Rotation"];
 	JsonFormaterValue j_scale = j_component["Scale"];
-	
-	SetLocalTransform(
-		float3(j_position[0], j_position[1], j_position[2]),
-		Quat::FromEulerXYZ(j_rotation[0], j_rotation[1], j_rotation[2]),
-		float3(j_scale[0], j_scale[1], j_scale[2]));
+
+	local_position = float3(j_position[0], j_position[1], j_position[2]);
+	local_rotation = Quat(j_rotation[0], j_rotation[1], j_rotation[2], j_rotation[3]);
+	local_scale = float3(j_scale[0], j_scale[1], j_scale[2]);
+
+	SetLocalTransform(local_position, local_rotation, local_scale);
 }
 
 void ComponentTransform::DrawGui()
