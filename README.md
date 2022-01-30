@@ -1,40 +1,89 @@
 # Altar Boy
+Altar Boy is a custom built C++ Game Engine done for the Videogame Development Master at UPC School.
 
-Project for mastes degree, UPC Advancing programming AAA. A Game engine implemented with C++.
+![engine screnshot](Screenshots/example.PNG)
 
-## Get Ready 🚀
+## Developers 💻
 
-Move to develop and change the path directory project to \..\Game (if you want to debug)
+* **Eric Torres** - [Erick9Thor](https://github.com/Erick9Thor)
+* **Bernat Martínez** - [Bernatmago](https://github.com/Bernatmago)
 
-### How works 🔧
+## How to use 🔧
 
-Is just unity, you have the same controls of the camera, are provided to two models to test drag an drop, so you can:
+### Using a scene
+To start seeing a model you can drop any file from ```Game/Assets/Models``` into the screen. Alternatively you can load a scene going to ``` File -> Load -> Scene ``` and choosing the ```.scene``` file you want to use.
 
-* Move the camera as fps game using W, A, S, D
+![load menu](Screenshots/load_menu.PNG)
+
+
+### Navigation
+Scene navigation controls resemble the ones from unity:
+* Move the camera as fps game using right click + W, A, S, D
 * Orbit the model using Alt + mouse motion
 * Pres F to focus on model
 
-Theare are diferents GUIs to show configurations of the current model.
+### Game Objects & Components
+The engine is based arround hierarchies of game objects that have a set of components asociated to them. All game objects will have at least a transform.
 
-## Build with 🛠️
+You can edit the game objects distribution via the **scene hierarchy** by dragging them or using the contextual menu that pops up with right click. You can also select objects by clicking them on the scene (As long as they have a mesh).
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
+![scene hierarchy](Screenshots/hierarchy.PNG)
+
+To tweak components or create them you can select the desired game object and go to the **inspector**, Each compoentn has its own set of options.
+
+![inspector](Screenshots/inspector.PNG)
+
+Alternatively you can modify the transform using the **guizmo**, to change its current mode use the buttons at top left of the scene or the W, E, R keys.
+
+![guimzo](Screenshots/guizmo.PNG)
+
+## Features
+Based on the second assignment requirements
+- Unity like camera controls
+- Previous menus (Altar Boy + UPC-Engine) and new ones for the new features
+- ** Pending ** Engine loads with survival shooter scene
+- Scene serialization (loading & saving)
+- Quadtree frustum culling
+- Editable scene with guizmos
+- Editable matrials that support diffuse and specular maps
+- PBR Phong shader with support for a directional light and multiple point & spot lights
+- Unity like play stop pause controls, scene returns to its original state on stop
+
+### Extra features
+- Raycast selection
+- Stencil of the selected object
+- Scene configuration
+    - Ambient light
+    - Toggleable skybox & background color
+    - Toggleable Debug Draw & gui information
+        - Transform & Camera debug information
+        - Quadtree debug draw
+        - Bounding boxes drawing
+        - Light components debug draw (Needs to be tunned)
+- Configurable Comopnents
+    - Lights parameters
+    - Materials properties
+    - Camera configuration
+- Timers window
+
+![stencil](Screenshots/stencil.PNG)
+![scene configuration](Screenshots/scene_config.PNG)
+![timers](Screenshots/timers.PNG)
+
+
+## Built with 🛠️
 
 * [OpenGL](https://www.opengl.org//) - A cross-language, cross-platform application programming interface (API) for rendering 2D and 3D vector graphics.
-* [DevIL](http://openil.sourceforge.net/about.php) - A programmer's library to develop applications with very powerful image loading capabilities,
+* [SDL](https://www.libsdl.org/) - Simple DirectMedia Layer to interact with hardware via OpenGL.
+* [DevIL](http://openil.sourceforge.net/about.php) - A programmer's library to develop applications with very powerful image loading capabilities.
 * [Assimp](https://www.assimp.org/) - portable Open-Source library to import various well-known 3D model formats in a uniform manner.
 * [ImGui](https://github.com/ocornut/imgui) - A bloat-free graphical user interface library for C++.
-
-## Wiki 📖
-
-You can find out much more about how to use this project in our  https://github.com/Erick9Thor/Engine3D
-
-## Authors ✒️
-
-* **Eric Torres** - *main worker/owner* - [Erick9Thor](https://github.com/Erick9Thor)
-
-You can also look at the list of all the [contributors](https://github.com/your/project/contributors).
+* [MathGeoLib](https://github.com/juj/MathGeoLib) - A library for linear algebra and geometry manipulation for computer graphics.
+* [PhysicsFS](https://github.com/icculus/physfs) - A portable, flexible file i/o abstraction.
+* [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) - Colletion of useful ImGui widgets.
+* [ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog) - File selection dialog built in ImGui.
+* [RapidJSON](https://github.com/Tencent/rapidjson/) - A fast JSON parser/generator for C++.
+* [Optik Profiler](https://github.com/bombomby/optick) - A super-lightweight C++ profiler for Games.
 
 ## License 📄
-
-This project is under the License [LICENSE.md](LICENSE.md).
+This project is under the MIT License [LICENSE](LICENSE).

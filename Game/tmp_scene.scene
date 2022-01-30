@@ -1,6 +1,6 @@
 {
     "GORoot": {
-        "Uid": 18183265984916258422,
+        "Uid": 6425625485718990738,
         "GOName": "Root",
         "Active": true,
         "ParentId": 0,
@@ -25,59 +25,6 @@
                 ]
             }
         ],
-        "GOChildrens": [
-            {
-                "Uid": 807858790025652124,
-                "GOName": "Debug Camera",
-                "Active": true,
-                "ParentId": 18183265984916258422,
-                "Components": [
-                    {
-                        "ComponentID": 0,
-                        "ComponentType": 1,
-                        "Position": [
-                            5.0,
-                            5.0,
-                            0.0
-                        ],
-                        "Rotation": [
-                            0.0,
-                            -0.7071068286895752,
-                            0.0
-                        ],
-                        "Scale": [
-                            1.0,
-                            1.0,
-                            1.0
-                        ]
-                    },
-                    {
-                        "ComponentID": 0,
-                        "ComponentType": 4,
-                        "Frustrum": {
-                            "NearDistance": 0.10000000149011612,
-                            "FarDistance": 100.0,
-                            "Fov": 65.0,
-                            "Pos": [
-                                5.0,
-                                5.0,
-                                0.0
-                            ],
-                            "Front": [
-                                -1.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Up": [
-                                0.0,
-                                1.0,
-                                0.0
-                            ]
-                        }
-                    }
-                ],
-                "GOChildrens": null
-            }
-        ]
+        "GOChildrens": null
     }
 }
