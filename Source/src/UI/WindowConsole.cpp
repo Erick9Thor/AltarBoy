@@ -41,7 +41,7 @@ void WindowConsole::Update()
 
 		ImGui::Separator();
 		ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-
+		
 		if (clear)
 			Clear();
 		if (copy)
@@ -76,6 +76,7 @@ void WindowConsole::Update()
 			}
 			clipper.End();
 		}
+		
 		ImGui::PopStyleVar();
 
 		if (autoscroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())

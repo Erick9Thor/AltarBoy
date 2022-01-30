@@ -29,7 +29,6 @@ void WindowProject::Update()
 	ImGui::SetNextWindowDockID(App->editor->dock_down_id, ImGuiCond_FirstUseEver);
 	if (ImGui::Begin((std::string(ICON_FA_IMAGES " ") + name).c_str(), &active))
 	{
-		
 		ImGui::PushItemWidth(100);
 		if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter))) DoFilter();
 		ImGui::PopItemWidth();
@@ -60,9 +59,8 @@ void WindowProject::Update()
 		ImGui::SameLine();
 
 		ShowFilesOnFolder();
-
-		ImGui::End();
 	}
+	ImGui::End();
 }
 
 void WindowProject::CleanUp()
