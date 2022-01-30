@@ -1,8 +1,9 @@
 #pragma once
 #include "Resource.h"
 
-#include "MathGeoLib.h"
+#include "../Globals.h"
 
+#include "MathGeoLib.h"
 
 class ResourceMesh : public Resource
 {

@@ -27,12 +27,11 @@ public:
 
 	UID GetID() const { return id; }
 
-	virtual void Load();
-	virtual void Unload();
-
+	std::string file_name = "";
 	unsigned int instances = 0;
 
-	std::string file_name = "";
+	const char* library_path = "";
+
 private:
 	UID id = 0;
 	ResourceType type = ResourceType::UNKNOWN;

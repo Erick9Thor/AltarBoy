@@ -90,10 +90,8 @@ GameObject* Scene::LoadFBX(const std::string& path)
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale);
 	if (scene)
 	{
-		//std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
 		model = CreateNewGameObject(name.c_str(), root);
 		LoadNode(scene, scene->mRootNode, model, model_path);
-		//materials.clear();
 	}
 	else
 	{

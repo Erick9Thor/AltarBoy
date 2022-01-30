@@ -4,12 +4,5 @@
 ResourceTexture::ResourceTexture(UID id)
 	: Resource(id, ResourceType::TEXTURE)
 {
-}
-
-void ResourceTexture::Load()
-{
-}
-
-void ResourceTexture::Unload()
-{
+	library_path = LIBRARY_TEXTURES_FOLDER;
 }

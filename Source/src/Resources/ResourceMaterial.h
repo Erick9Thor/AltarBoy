@@ -1,6 +1,8 @@
 #pragma once
 #include "Resource.h"
 
+#include "../Globals.h"
+
 #include "../Modules/ModuleTexture.h"
 #include "MathGeoLib.h"
 #include "assimp/scene.h"

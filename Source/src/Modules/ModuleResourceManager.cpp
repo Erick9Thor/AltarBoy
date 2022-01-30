@@ -8,6 +8,7 @@
 #include "../Utils/Logger.h"
 
 #include "../Importers/MaterialImporter.h"
+#include "../Importers/ModelImporter.h"
 #include "../Importers/SceneImporter.h"
 
 #include "../Resources/ResourceMaterial.h"
@@ -87,16 +88,20 @@ Resource* ModuleResourceManager::ImportAssetByExtension(const char* file_path)
 	{
 		// resource = MaterialImporter::Material::Import(???);
 	}
-	else if (extension == MODEL_EXTENSION) // Combo of resources
+	else if (extension == MODEL_EXTENSION)
 	{
-		// resource = ModelImporter::ImportModel(filePath, jMeta);
+		resource = ModelImporter::ImportModel(file_path);
 	}
 	else if (extension == JPG_TEXTURE_EXTENSION || extension == PNG_TEXTURE_EXTENSION)
 	{
 		// resource = MaterialImporter::Textures::Import(buffer);
 	}
+	else
+	{
+		return nullptr;
+	}
 
-	return nullptr;
+	return resource;
 }
 
 
@@ -128,12 +133,15 @@ void ModuleResourceManager::ImportExternalFile(char* file_path)
 UID ModuleResourceManager::ImportFileFromAssets(const char* file_path)
 {
 	Resource* resource = ImportAssetByExtension(file_path);
+
+	if (!resource) {
+		return 0;
+	}
+
 	UID resource_uid = resource->GetID();
 
-	char* file_buffer = App->file_sys->Load(file_path);
-
 	SaveResource(resource);
-	RELEASE_ARRAY(file_buffer);
+	// RELEASE_ARRAY(file_buffer);
 
 	UnloadResource(resource_uid);
 
@@ -163,15 +171,7 @@ void ModuleResourceManager::SaveResource(Resource * resource)
 }
 
 void ModuleResourceManager::UnloadResource(UID ID)
-{
-	std::map<UID, Resource*>::iterator it = resources.find(ID);
-	if (it != resources.end())
-	{
-		it->second->Unload();
-		RELEASE(it->second);
-		resources.erase(it);
-	}
-}
+{}
 
 void ModuleResourceManager::ReadJSON(const char* buffer, rapidjson::Document& document)
 {

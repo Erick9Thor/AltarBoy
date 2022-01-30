@@ -4,6 +4,7 @@
 ResourceMaterial::ResourceMaterial(UID uid)
 	: Resource(uid, ResourceType::MATERIAL)
 {
+	library_path = LIBRARY_MATERIAL_FOLDER;
 }
 
 ResourceMaterial::~ResourceMaterial()

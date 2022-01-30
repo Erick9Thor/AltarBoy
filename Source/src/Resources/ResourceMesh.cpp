@@ -6,6 +6,7 @@
 ResourceMesh::ResourceMesh(UID id)
 	: Resource(id, ResourceType::MESH)
 {
+	library_path = LIBRARY_MESH_FOLDER;
 }
 
 void ResourceMesh::GenerateBuffers()
