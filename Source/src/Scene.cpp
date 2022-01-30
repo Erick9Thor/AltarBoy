@@ -19,6 +19,7 @@
 #include "Modules/ModuleTexture.h"
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleEditor.h"
+#include "Modules/ModuleCamera.h"
 
 #include "Resources/Resource.h"
 #include "Importers/SceneImporter.h"
@@ -39,6 +40,7 @@ Scene::Scene()
 
 	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 	root = new GameObject(nullptr, float4x4::identity, "Root");
+	culling_camera = App->camera->GetMainCamera();
 		
 	//CreateDebugCamera();
 	//CreateLights();
@@ -88,7 +90,7 @@ GameObject* Scene::LoadFBX(const std::string& path)
 
 	GameObject* model = nullptr;
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale);
 	if (scene)
 	{
 		//std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);

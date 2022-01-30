@@ -40,6 +40,8 @@ public:
 	void DestroyGameObject(GameObject* game_object);
 	GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
 	GameObject* GetRoot() const { return root; }
+	ComponentCamera* GetCullingCamera() const { return culling_camera; }
+	void SetCullingCamera(ComponentCamera* v) { culling_camera =v; }
 
 	// --- Quadtree --- //
 	Quadtree* GetQuadtree() const { return quadtree; }
@@ -67,6 +69,7 @@ private:
 
 private:
 	GameObject* root = nullptr;
+	ComponentCamera* culling_camera = nullptr;
 
 	Skybox* skybox;
 	Quadtree* quadtree = nullptr;

@@ -4,11 +4,15 @@
 
 #include "../Modules/ModuleWindow.h"
 #include "../Modules/ModuleRender.h"
+#include "../Modules/ModuleSceneManager.h"
+#include "../Modules/ModuleCamera.h"
 #include "../Utils/Logger.h"
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "debugdraw.h"
+
+#include "../Scene.h"
 
 #include <glew.h>
 #include <imgui.h>
@@ -33,6 +37,9 @@ ComponentCamera::ComponentCamera(GameObject* container)
 
 ComponentCamera::~ComponentCamera()
 {
+	Scene* scene = App->scene_manager->GetActiveScene();
+	if (scene->GetCullingCamera() == this)
+		scene->SetCullingCamera(App->camera->GetMainCamera());
 }
 
 void ComponentCamera::DebugDraw()
@@ -164,6 +171,9 @@ void ComponentCamera::DrawGui()
 			SetPlaneDistances(planes[0], planes[1]);
 		if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 180.f))
 			SetHorizontalFov(horizontal_fov);
+
+		if (ImGui::Button("Culling Camera"))
+			App->scene_manager->GetActiveScene()->SetCullingCamera(this);
 
 		ImGui::Checkbox("Debug", &debug_data);
 		if (debug_data)

@@ -158,6 +158,7 @@ void WindowScene::DrawScene()
 	
 	if (selected_object) {
 		// Using GL format which means transposing them
+		view = camera->GetViewMatrix(transposed);
 		float4x4 projection = camera->GetProjectionMatrix(transposed);
 		float4x4 model = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
 		float4x4 delta;

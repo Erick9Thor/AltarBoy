@@ -141,13 +141,13 @@ void ModuleRender::SetGLOptions()
 update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
+	
 
 	// Using debug camera to test culling
-	//ComponentCamera* culling = App->scene_manager->GetActiveScene()->GetDebugCamera();
 
 	App->program->UpdateCamera(camera);
-	// TODO: Update with scene lights
 	Scene* active_scene = App->scene_manager->GetActiveScene();
+	ComponentCamera* culling = active_scene->GetCullingCamera();
 
 	ComponentDirLight* dir_light = nullptr;
 	if (active_scene->dir_lights.size() > 0)
@@ -155,7 +155,7 @@ update_status ModuleRender::Update(const float delta)
 
 	App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
 
-	Draw(App->scene_manager->GetActiveScene(), camera, camera);
+	Draw(App->scene_manager->GetActiveScene(), camera, culling);
 	return UPDATE_CONTINUE;
 }
 
