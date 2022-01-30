@@ -44,7 +44,7 @@ GameObject::~GameObject()
 {
 	if (parent)
 		parent->RemoveChild(this);
-
+	
 	if (scene_owner)
 		scene_owner->DestroyGameObject(this);
 	for (GameObject* child : childs)

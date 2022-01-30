@@ -59,6 +59,8 @@ void Scene::CleanScene()
 
 void Scene::DestroyGameObject(GameObject* game_object)
 {
+	if (App->editor->GetSelectedGO() == game_object)
+		App->editor->SetSelectedGO(nullptr);
 	quadtree->Remove(game_object);
 }
 
