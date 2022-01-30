@@ -17,12 +17,16 @@
 
 #include "ImGuizmo.h"
 
+#include "../Utils/Logger.h"
+
 ModuleCamera::ModuleCamera() {}
 
 ModuleCamera::~ModuleCamera() {}
 
 bool ModuleCamera::Init()
 {
+	LOG("Creating main camera");
+
 	GameObject* cameraGameObject = new GameObject("Main Camera");
 	main_camera = (ComponentCamera*) cameraGameObject->CreateComponent(Component::CAMERA);
 

@@ -39,6 +39,8 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 
 bool ModuleRender::Init()
 {
+	LOG("Init Module render");
+
 	CreateContext();
 
 	RetrieveGpuInfo();
@@ -82,7 +84,7 @@ void ModuleRender::GenerateFrameBuffer()
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		LOG("[M_Render] Error creating frame buffer");
+		LOG("Error creating frame buffer");
 	}
 
 	glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -114,7 +116,8 @@ void ModuleRender::ManageResolution(ComponentCamera* camera)
 
 void ModuleRender::CreateContext()
 {
-	//LOG("Creating Renderer context");
+	LOG("Creating Renderer context");
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -142,7 +145,6 @@ update_status ModuleRender::Update(const float delta)
 {
 	ComponentCamera* camera = App->camera->GetMainCamera();
 	
-
 	// Using debug camera to test culling
 
 	App->program->UpdateCamera(camera);
@@ -188,7 +190,6 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 	//root->DrawAll(camera);
 	//render_list.Update(culling, root);
 	
-
 	render_list.Update(culling, scene->GetQuadtree()->GetRoot());
 	Program* program = App->program->GetMainProgram();
 	program->Activate();
@@ -221,7 +222,6 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 		glStencilFunc(GL_ALWAYS, 0, 0xFF);
 		glEnable(GL_DEPTH_TEST);
 	}
-	
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -402,11 +402,10 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 		tmp_severity = "medium";
 		break;
 	case GL_DEBUG_SEVERITY_LOW:
-		tmp_severity = "low";
-		break;
+		return;
 		// case GL_DEBUG_SEVERITY_NOTIFICATION: tmp_severity = "notification"; break;
 	default:
 		return;
 	};
-	//LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
+	LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }

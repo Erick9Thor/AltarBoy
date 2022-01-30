@@ -1,6 +1,7 @@
 #include "ModuleSceneManager.h"
 
 #include "../Importers/SceneImporter.h"
+#include "../Utils/Logger.h"
 
 ModuleSceneManager::ModuleSceneManager() {}
 
@@ -8,6 +9,8 @@ ModuleSceneManager::~ModuleSceneManager() {}
 
 bool ModuleSceneManager::Init()
 {
+	LOG("Creating Empty scene");
+
 	main_scene = new Scene();
 	
 	//LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created

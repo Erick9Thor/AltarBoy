@@ -32,6 +32,8 @@
 #include "ImGuiFileDialog.h"
 
 ModuleEditor::ModuleEditor() {
+	LOG("Creating windows");
+
 	windows.push_back(&w_configuration);
 	windows.push_back(&w_hierarchy);
 	windows.push_back(&w_scene);
@@ -81,6 +83,7 @@ bool ModuleEditor::Init()
 	ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
 	ImGui_ImplOpenGL3_Init();
 
+	LOG("Init windows");
 	for (Window* panel : windows)
 	{
 		if (panel->active)
@@ -248,6 +251,7 @@ void ModuleEditor::FileMenu()
 		ImGui::InputText("File name", file_name_buffer, sizeof(file_name_buffer));
 		if (ImGui::Button("Save"))
 		{
+			LOG("Saving Scene");
 			std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_buffer + SCENE_EXTENSION;
 			App->scene_manager->SaveScene(temp_scene_file_path.c_str());
 			ImGui::CloseCurrentPopup();
@@ -332,6 +336,8 @@ void ModuleEditor::RenderGui()
 
 bool ModuleEditor::CleanUp()
 {
+	LOG("Cleaning windows");
+
 	for (Window* panel : windows)
 	{
 		if (panel->active)

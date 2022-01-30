@@ -11,6 +11,7 @@
 
 ModuleFileSystem::ModuleFileSystem()
 {
+	LOG("Creating virtual file system");
 	// Create base path to be ready for other modules
 	char* base_path = SDL_GetBasePath();
 	PHYSFS_init(base_path);
@@ -46,6 +47,8 @@ ModuleFileSystem::~ModuleFileSystem()
 
 bool ModuleFileSystem::Init()
 {
+	LOG("Init virtual file system");
+
 	CreateContext(); 
 
 	char* write_path = SDL_GetPrefPath("AltarCO", "AltarBoy");
@@ -59,6 +62,8 @@ void ModuleFileSystem::CreateContext()
 	char engine_path[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, engine_path);
 	working_directory = engine_path;
+
+	LOG("Engine context: %s", working_directory.c_str());
 }
 
 char* ModuleFileSystem::Load(const char* file_path) const

@@ -15,10 +15,9 @@ void log(const char file[], int line, const char* format, ...)
 	va_start(args, format);
 	vsprintf_s(tmp_string, 4096, format, args);
 	va_end(args);
-	sprintf_s(tmp_string3, 4096, "\n%s", tmp_string);
 	sprintf_s(tmp_string2, 4096, "\n%s(%d) : %s", file, line, tmp_string);
 
-	buff.append(tmp_string3);
+	buff.append(tmp_string2);
 
 	for (int new_size = buff.size(); old_size < new_size; old_size++)
 		if (buff[old_size] == '\n')
