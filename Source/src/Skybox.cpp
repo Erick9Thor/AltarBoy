@@ -73,6 +73,14 @@ Skybox::Skybox()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*) 0);
 }
 
+Skybox::~Skybox()
+{
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &vao);
+	glDeleteTextures(1, &texture.id);
+	texture.loaded = false;
+}
+
 void Skybox::Draw(ComponentCamera* camera)
 {
 	// Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);

@@ -43,6 +43,16 @@ Texture ModuleTexture::Load(const char* path, bool flip)
 	return texture;
 }
 
+void ModuleTexture::Unload(Texture& texture)
+{
+	if (texture.loaded)
+	{
+		glDeleteTextures(1, &texture.id);
+		texture.loaded = false;
+	}
+		
+}
+
 TextureCube ModuleTexture::LoadCubeMap(const char* paths[6])
 {
 	constexpr bool flip = true;

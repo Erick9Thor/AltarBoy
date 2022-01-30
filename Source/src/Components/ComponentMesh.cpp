@@ -21,6 +21,7 @@ ComponentMesh::ComponentMesh(GameObject* conatiner)
 
 ComponentMesh::~ComponentMesh()
 {
+	RELEASE(resource);
 }
 
 void ComponentMesh::Import(const aiMesh* mesh)

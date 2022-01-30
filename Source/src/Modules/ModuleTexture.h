@@ -35,6 +35,7 @@ public:
 	bool CleanUp() override;
 
 	Texture Load(const char* path, bool flip = true);
+	void Unload(Texture& texture);
 	TextureCube LoadCubeMap(const char* paths[6]);
 	void Bind(unsigned id, unsigned slot);
 	void Unbind(unsigned slot);

@@ -8,4 +8,6 @@ ResourceMaterial::ResourceMaterial(UID uid)
 
 ResourceMaterial::~ResourceMaterial()
 {
+	App->texture->Unload(diffuse);
+	App->texture->Unload(specular);
 }

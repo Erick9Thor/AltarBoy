@@ -41,9 +41,6 @@ Scene::Scene()
 	quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 	root = new GameObject(nullptr, float4x4::identity, "Root");
 	culling_camera = App->camera->GetMainCamera();
-		
-	//CreateDebugCamera();
-	//CreateLights();
 }
 
 Scene::~Scene()
