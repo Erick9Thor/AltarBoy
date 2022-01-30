@@ -48,7 +48,9 @@ void WindowHierarchy::DrawGOChilds(GameObject* root)
 {
 	for (GameObject* game_object : root->childs)
 	{
+		ImGui::PushID(game_object);
 		DrawGameObject(game_object);
+		ImGui::PopID();
 	}
 }
 
@@ -98,7 +100,8 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		}
 	}
 
-	if (game_object) {
+	if (game_object)
+	{
 		// TODO: Make robust to repeted game object names
 		if (ImGui::BeginPopup(game_object->name.c_str()))
 		{
@@ -114,14 +117,14 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 				delete game_object;
 				ImGui::CloseCurrentPopup();
 			}
-			if (ImGui::MenuItem("Move Up"))
+			/* if (ImGui::MenuItem("Move Up"))
 			{
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::MenuItem("Move Down"))
 			{
 				ImGui::CloseCurrentPopup();
-			}
+			}*/
 			ImGui::EndPopup();
 		}
 
