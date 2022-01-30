@@ -112,6 +112,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 			if (ImGui::MenuItem("Delete Gameojbect"))
 			{
 				delete game_object;
+				game_object = nullptr;
 				ImGui::CloseCurrentPopup();
 			}
 			if (ImGui::MenuItem("Move Up"))
@@ -125,7 +126,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 			ImGui::EndPopup();
 		}
 
-		if (game_object->hierarchy_open == true)
+		if (game_object && game_object->hierarchy_open == true)
 		{
 			DrawGOChilds(game_object);
 			ImGui::TreePop();

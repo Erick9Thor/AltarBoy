@@ -43,9 +43,11 @@ void WindowInspector::DrawGameObject(GameObject* game_object)
 			(*it)->DrawGui();
 
 		ImGui::Separator();
-		if (ImGui::Button("Add Component"))
+		const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize((std::string(ICON_FA_PLUS " ") + "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
+		ImGui::SetCursorPosX(x);
+		if (ImGui::Button((std::string(ICON_FA_PLUS " ") + "Add component").c_str()))
 		{
-			ImGui::OpenPopup("Add Component Popup");
+			ImGui::OpenPopup("AddComponentPopup");
 		}
 
 		if (ImGui::BeginPopup("Add Component Popup"))
