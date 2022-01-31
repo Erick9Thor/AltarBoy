@@ -50,7 +50,7 @@ void WindowInspector::DrawGameObject(GameObject* game_object)
 			ImGui::OpenPopup("AddComponentPopup");
 		}
 
-		if (ImGui::BeginPopup("Add Component Popup"))
+		if (ImGui::BeginPopup("AddComponentPopup"))
 		{
 			
 			if (ImGui::MenuItem("Camera"))
