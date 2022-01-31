@@ -20,7 +20,10 @@ public:
 	float4x4 GetViewMatrix(const bool transpose = false) const;
 	float4x4 GetProjectionMatrix(const bool transpose = false) const;
 
-	inline const Frustum& GetFrustum() const { return frustum; }
+	Frustum* ComponentCamera::GetFrustum()
+	{
+		return &frustum;
+	}
 
 	void SetNearPlane(float distance);
 	void SetFarPlane(float distance);

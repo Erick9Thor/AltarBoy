@@ -153,6 +153,12 @@ void WindowScene::DrawScene()
 	ImGuizmo::ViewManipulate(view.ptr(), 4, ImVec2(guizmo_rect_origin.x + texture_size.x - imguizmo_size.x, 
 		guizmo_rect_origin.y + texture_size.y - imguizmo_size.x), imguizmo_size, 0x10101010);
 
+	if (ImGui::IsWindowFocused())
+	{
+		float4x4 new_camera_view = view.InverseTransposed();
+		App->camera->GetMainCamera()->GetFrustum()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
+	}
+
 	GameObject* selected_object = App->editor->GetSelectedGO();
 	if (!selected_object) return;
 	
