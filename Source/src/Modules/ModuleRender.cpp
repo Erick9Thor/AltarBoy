@@ -212,10 +212,9 @@ void ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* 
 		glStencilMask(0X00);
 		glDisable(GL_DEPTH_TEST);		
 
-		// TODO: Scale model a bit (maybe easier on render)
 		Program* outline_program = App->program->GetStencilProgram();
 		outline_program->Activate();
-		outline_target->game_object->Draw(camera, outline_program);
+		outline_target->game_object->DrawStencil(camera, outline_program);
 		outline_program->Deactivate();
 
 		glStencilMask(0XFF);

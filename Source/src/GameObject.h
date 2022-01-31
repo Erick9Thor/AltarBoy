@@ -34,6 +34,7 @@ public:
 	void Update();
 	void DrawAll(ComponentCamera* camera, Program* program);
 	void Draw(ComponentCamera* camera, Program* program);
+	void DrawStencil(ComponentCamera* camera, Program* program);
 
 	inline bool IsActive() { return active; }
 

@@ -41,6 +41,15 @@ void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[ResourceMesh::Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
 }
 
+void ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program)
+{
+	assert(resource->loaded == true);
+	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+
+	glBindVertexArray(resource->vao);
+	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[ResourceMesh::Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
+}
+
 void ComponentMesh::Save(JsonFormaterValue j_component) const
 {
 	MeshImporter::Save(resource, game_object->getUID());

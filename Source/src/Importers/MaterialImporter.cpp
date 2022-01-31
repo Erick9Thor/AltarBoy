@@ -111,7 +111,7 @@ ResourceMaterial* MaterialImporter::Material::Load(JsonFormaterValue j_material)
 	std::string diffuse_path = j_material["DiffusePath"];
 	material->diffuse = App->texture->Load(diffuse_path.c_str());
 	std::string specular_path = j_material["SpecularPath"];
-	material->specular = App->texture->Load(diffuse_path.c_str());
+	material->specular = App->texture->Load(specular_path.c_str());
 	material->shininess = j_material["Shininess"];
 	return material;
 }

@@ -20,6 +20,7 @@ public:
 	~ComponentMesh() override;
 
 	void Draw(ComponentCamera* camera, Program* program) override;
+	void DrawStencil(ComponentCamera* camera, Program* program);
 
 	static inline Type GetType() { return Type::MESH; };
 	

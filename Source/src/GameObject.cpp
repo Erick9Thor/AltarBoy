@@ -174,6 +174,13 @@ void GameObject::Draw(ComponentCamera* camera, Program* program)
 	}
 }
 
+void GameObject::DrawStencil(ComponentCamera* camera, Program* program)
+{
+	ComponentMesh* mesh = GetComponent<ComponentMesh>();
+	if (mesh)
+		mesh->DrawStencil(camera, program);
+}
+
 void GameObject::OnTransformUpdated()
 {
 	// Update components
