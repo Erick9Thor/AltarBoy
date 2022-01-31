@@ -43,16 +43,18 @@ GameObject::GameObject(GameObject* parent, const char* name, UID uid, const floa
 GameObject::~GameObject()
 {
 	if (parent)
-		parent->RemoveChild(this);
-	
-	if (scene_owner)
-		scene_owner->DestroyGameObject(this);
-	for (GameObject* child : childs)
 	{
-		child->SetNewParent(nullptr);
-		RELEASE(child);
+		parent->RemoveChild(this);
 	}
 
+	if (scene_owner)
+		scene_owner->DestroyGameObject(this);
+	
+	for (GameObject* child : childs)
+	{
+		child->parent = nullptr;
+		RELEASE(child);
+	}
 	for (Component* component : components)
 	{
 		RELEASE(component);
@@ -70,8 +72,7 @@ void GameObject::SetNewParent(GameObject* new_parent)
 		return;
 
 	if (parent)
-		parent->RemoveChild(this);
-	
+		parent->RemoveChild(this);	
 
 	if (new_parent)
 		new_parent->childs.push_back(this);

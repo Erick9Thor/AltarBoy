@@ -65,7 +65,7 @@ void ComponentPointLight::Save(JsonFormaterValue j_component) const
 void ComponentPointLight::Load(JsonFormaterValue j_component)
 {
 	JsonFormaterValue j_color = j_component["Color"];
-	color = float4(j_color[1], j_color[2], j_color[3], j_color[4]);
+	color = float4(j_color[0], j_color[1], j_color[2], j_color[3]);
 
 	intensity = j_component["intensity"];
 	radius = j_component["radius"];

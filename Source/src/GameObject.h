@@ -70,7 +70,6 @@ public:
 	GameObject* parent = nullptr;
 	std::vector<GameObject*> childs;
 
-	bool hierarchy_open = false;
 	bool active = true;
 
 private:
