@@ -246,8 +246,8 @@ void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::
 			lights_data.spots[lights_data.n_spots].color = spot_lights[i]->color;
 			lights_data.spots[lights_data.n_spots].inner = DegToRad(spot_lights[i]->inner);
 			lights_data.spots[lights_data.n_spots].outer = DegToRad(spot_lights[i]->outer);
-			lights_data.spots[lights_data.n_points].intensity = spot_lights[i]->intensity;
-			lights_data.spots[lights_data.n_points].radius = spot_lights[i]->radius;
+			lights_data.spots[lights_data.n_spots].intensity = spot_lights[i]->intensity;
+			lights_data.spots[lights_data.n_spots].radius = spot_lights[i]->radius;
 			++lights_data.n_spots;
 			if (lights_data.n_spots == MAX_SPOT_LIGHTS)
 				break;
