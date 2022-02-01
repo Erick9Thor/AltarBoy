@@ -4,7 +4,6 @@
 #include "../Utils/Timer.h"
 #include "../GameObject.h"
 
-#include "../Modules/ModuleResourceManager.h"
 #include "../Modules/ModuleInput.h"
 #include "../Modules/ModuleEditor.h"
 #include "../Modules/ModuleCamera.h"
@@ -133,7 +132,6 @@ void WindowScene::DrawScene()
 		if (auto* payload = ImGui::AcceptDragDropPayload("path"))
 		{
 			const char* path = (const char*) payload->Data;
-			// App->resource_manager->ImportFileFromAssets(path);
 			App->scene_manager->LoadModel(path);
 		}
 		ImGui::EndDragDropTarget();

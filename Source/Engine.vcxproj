@@ -148,8 +148,6 @@
   <ItemGroup>
     <ClCompile Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp" />
     <ClCompile Include="src\Importers\MeshImporter.cpp" />
-    <ClCompile Include="src\Resources\ResourceHandle.cpp" />
-    <ClCompile Include="src\Resources\ResourceTexture.cpp" />
     <ClCompile Include="src\Components\ComponentDirLight.cpp" />
     <ClCompile Include="src\Components\ComponentSpotLight.cpp" />
     <ClCompile Include="src\Components\ComponentPointLight.cpp" />
@@ -182,9 +180,7 @@
     <ClCompile Include="Dependencies\PhysicsFS\physfs_unicode.c" />
     <ClCompile Include="src\Importers\MaterialImporter.cpp" />
     <ClCompile Include="src\Importers\SceneImporter.cpp" />
-    <ClCompile Include="src\Modules\ModuleResourceManager.cpp" />
     <ClCompile Include="src\Modules\ModuleFileSystem.cpp" />
-    <ClCompile Include="src\Resources\ResourceScene.cpp" />
     <ClCompile Include="src\Resources\ResourceMesh.cpp" />
     <ClCompile Include="src\Resources\ResourceMaterial.cpp" />
     <ClCompile Include="src\Resources\Resource.cpp" />
@@ -282,10 +278,7 @@
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image.h" />
     <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h" />
     <ClInclude Include="src\Importers\MeshImporter.h" />
-    <ClInclude Include="src\Resources\ResourceBase.h" />
-    <ClInclude Include="src\Resources\ResourceHandle.h" />
     <ClInclude Include="src\UI\ImGuiUtils.h" />
-    <ClInclude Include="src\Resources\ResourceTexture.h" />
     <ClInclude Include="src\Components\ComponentDirLight.h" />
     <ClInclude Include="src\Components\ComponentSpotLight.h" />
     <ClInclude Include="src\Components\ComponentPointLight.h" />
@@ -303,9 +296,7 @@
     <ClInclude Include="Dependencies\PhysicsFS\physfs_platforms.h" />
     <ClInclude Include="src\Importers\MaterialImporter.h" />
     <ClInclude Include="src\Importers\SceneImporter.h" />
-    <ClInclude Include="src\Modules\ModuleResourceManager.h" />
     <ClInclude Include="src\Modules\ModuleFileSystem.h" />
-    <ClInclude Include="src\Resources\ResourceScene.h" />
     <ClInclude Include="src\Resources\ResourceMesh.h" />
     <ClInclude Include="src\Resources\ResourceMaterial.h" />
     <ClInclude Include="src\Resources\Resource.h" />

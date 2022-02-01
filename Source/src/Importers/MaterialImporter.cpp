@@ -3,7 +3,6 @@
 #include "../Application.h"
 #include "../Modules/ModuleTexture.h"
 #include "../Resources/ResourceMaterial.h"
-#include "../Resources/ResourceTexture.h"
 
 void ColorCopy(const aiColor4D& assimp_color, float4& color)
 {
@@ -114,19 +113,4 @@ ResourceMaterial* MaterialImporter::Material::Load(JsonFormaterValue j_material)
 	material->specular = App->texture->Load(specular_path.c_str());
 	material->shininess = j_material["Shininess"];
 	return material;
-}
-
-ResourceTexture* MaterialImporter::Textures::Import(const char* buffer)
-{
-	return nullptr;
-}
-
-bool MaterialImporter::Textures::Save(const ResourceTexture* rTexture, char* file_path)
-{
-	return false;
-}
-
-ResourceTexture* MaterialImporter::Textures::Load(const char* file_path)
-{
-	return nullptr;
 }

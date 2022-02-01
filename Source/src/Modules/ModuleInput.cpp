@@ -8,7 +8,6 @@
 #include "ModuleRender.h"
 #include "ModuleCamera.h"
 #include "ModuleSceneManager.h"
-#include "ModuleResourceManager.h"
 
 #include "imgui_impl_sdl.h"
 
@@ -67,7 +66,6 @@ update_status ModuleInput::PreUpdate(const float delta)
 			break;
 		case SDL_DROPFILE:
 			LOG("Dropped file: %s", event.drop.file);
-			// App->resource_manager->ImportExternalFile(event.drop.file);
 			App->scene_manager->LoadModel(event.drop.file);
 			SDL_free(event.drop.file);
 			break;
