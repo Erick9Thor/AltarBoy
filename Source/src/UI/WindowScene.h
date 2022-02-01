@@ -20,6 +20,7 @@ public:
 	void CleanUp() override;
 
 	bool ToolbarButton(ImFont* font, const char* font_icon, bool active);
+	bool IsHovering() const { return hovering; }
 
 private:
 	void GuizmoOptionsController();
@@ -32,6 +33,7 @@ private:
 	ImVec2 imguizmo_size = {100.0f, 100.0f};
 	bool using_guizmo = false;
 	bool focused = false;
+	bool hovering = false;
 	
 	Timer* scene_timer = nullptr;
 

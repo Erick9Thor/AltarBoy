@@ -12,6 +12,8 @@
 #include "../Components/ComponentTransform.h"
 #include "../Components/ComponentCamera.h"
 
+#include "../UI/WindowScene.h"
+
 #include "glew.h"
 #include "Math/MathConstants.h"
 
@@ -54,6 +56,9 @@ void ModuleCamera::Controller(const float delta)
 {
 	static const float zoom_speed = 3.0f;
 	static const float rot_speed = 2.0f;
+
+	if (!App->editor->GetSceneWindow()->IsHovering())
+		return;
 
 	// Keyboard movement ---------------
 	if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
