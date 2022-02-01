@@ -11,7 +11,9 @@ bool ModuleSceneManager::Init()
 {
 	LOG("Creating Empty scene");
 
-	main_scene = new Scene();
+	// main_scene = new Scene();
+
+	main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
 	
 	//LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
