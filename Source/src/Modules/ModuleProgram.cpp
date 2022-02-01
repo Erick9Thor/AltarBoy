@@ -253,7 +253,6 @@ void ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::
 				break;
 		}
 	}
-
 	UpdateUBO(UBOPoints::p_lights, sizeof(Lights), &lights_data);
 }
 

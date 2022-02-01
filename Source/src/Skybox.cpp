@@ -76,7 +76,6 @@ Skybox::Skybox()
 Skybox::~Skybox()
 {
 	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &vao);
 	glDeleteTextures(1, &texture.id);
 	texture.loaded = false;
 }
