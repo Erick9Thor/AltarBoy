@@ -112,19 +112,19 @@ Program* ModuleProgram::CreateProgram(const char* vtx_shader_path, const char* f
 
 Program* ModuleProgram::CreateMainProgram()
 {
-	main_program = CreateProgram("vertex.glsl", "fragment.glsl");
+	main_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment.glsl");
 	return main_program;
 }
 
 Program* ModuleProgram::CreateSkyboxProgram()
 {
-	skybox_program = CreateProgram("vertex_skybox.glsl", "fragment_skybox.glsl");
+	skybox_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_skybox.glsl", ASSETS_FOLDER "/Shaders/fragment_skybox.glsl");
 	return skybox_program;
 }
 
 Program* ModuleProgram::CreateStencilProgram()
 {
-	stencil_program = CreateProgram("vertex_stencil.glsl", "fragment_stencil.glsl");
+	stencil_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_stencil.glsl", ASSETS_FOLDER "/Shaders/fragment_stencil.glsl");
 	return stencil_program;
 }
 

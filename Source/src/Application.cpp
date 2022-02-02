@@ -14,7 +14,6 @@
 #include "Modules/ModuleSceneManager.h"
 #include "Modules/ModuleDebugDraw.h"
 #include "Modules/ModuleFileSystem.h"
-#include "Modules/ModuleResourceManager.h"
 
 using namespace std;
 
@@ -22,7 +21,6 @@ Application::Application()
 {
 	modules.push_back(hw = new ModuleHardware());
 	modules.push_back(file_sys = new ModuleFileSystem());
-	modules.push_back(resource_manager = new ModuleResourceManager());
 
 	modules.push_back(window = new ModuleWindow());
 	modules.push_back(input = new ModuleInput());

@@ -41,7 +41,7 @@ Alternatively you can modify the transform using the **guizmo**, to change its c
 Based on the second assignment requirements
 - Unity like camera controls
 - Previous menus (Altar Boy + UPC-Engine) and new ones for the new features
-- ** Pending ** Engine loads with survival shooter scene
+- Engine loads with survival shooter scene
 - Scene serialization (loading & saving)
 - Quadtree frustum culling
 - Editable scene with guizmos

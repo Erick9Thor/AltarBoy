@@ -40,6 +40,8 @@ public:
 	GameObject* GetSelectedGO() { return selected_go; }
 	const GameObject* GetSelectedGO() const { return selected_go; }
 
+	const WindowScene* GetSceneWindow() const { return &w_scene; }
+
 	ImFont* m_big_icon_font = nullptr;
 	ImFont* m_small_icon_font = nullptr;
 

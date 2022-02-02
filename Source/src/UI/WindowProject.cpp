@@ -3,7 +3,6 @@
 #include "../Application.h"
 #include "../Globals.h"
 #include "../Modules/ModuleFileSystem.h"
-#include "../Modules/ModuleResourceManager.h"
 #include "../Modules/ModuleEditor.h"
 
 #include "ImGuiUtils.h"
