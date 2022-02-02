@@ -45,7 +45,7 @@
                             -9.099628641706659e-7,
                             1.0,
                             -9.099628641706659e-7,
-                            -4.371223738530716e-8
+                            -4.371224093802084e-8
                         ],
                         "Scale": [
                             0.9999993443489075,
@@ -91,7 +91,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -145,7 +145,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -199,7 +199,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -283,7 +283,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\WallDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\WallDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\WallSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -337,7 +337,7 @@
                                 "HasDiffuse": false,
                                 "HasSpecular": false,
                                 "DiffusePath": "Assets\\Textures\\StarsDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\StarsDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\StarsSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     0.8352941870689392,
@@ -421,7 +421,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\DrawersDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\DrawersDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\DrawersSpecular.tif",
                                 "Shininess": 7.999998092651367,
                                 "DiffuseColor": [
                                     1.0,
@@ -505,7 +505,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\GunDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\GunDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\GunSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -559,7 +559,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\PlayerDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\PlayerDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlayerSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -648,14 +648,14 @@
                         ],
                         "Rotation": [
                             0.0,
-                            0.9590731263160706,
+                            0.9590730667114258,
                             0.0,
-                            0.2831588089466095
+                            0.2831587493419647
                         ],
                         "Scale": [
-                            1.0000007152557374,
+                            1.000001072883606,
                             1.0,
-                            1.0000007152557374
+                            1.000001072883606
                         ]
                     }
                 ],
@@ -696,7 +696,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\DollhouseDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\DollhouseDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\DollhouseSpecular.tif",
                                 "Shininess": 3.999999523162842,
                                 "DiffuseColor": [
                                     0.5882353186607361,
@@ -780,7 +780,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\RobotDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\RobotDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\RobotSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     0.5882353186607361,
@@ -864,7 +864,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\ZombunnyDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\ZombunnyDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\ZombunnySpecular.tif",
                                 "Shininess": 7.999998092651367,
                                 "DiffuseColor": [
                                     0.22352942824363709,
@@ -918,7 +918,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\ZombunnyDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\ZombunnyDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\ZombunnySpecular.tif",
                                 "Shininess": 15.999996185302735,
                                 "DiffuseColor": [
                                     0.8823530077934265,
@@ -1002,7 +1002,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\FiretruckDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\FiretruckDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\FiretruckSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     1.0,
@@ -1086,7 +1086,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\HearseDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\HearseDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\HearseSpecular.tif",
                                 "Shininess": 7.999998092651367,
                                 "DiffuseColor": [
                                     1.0,
@@ -1127,9 +1127,9 @@
                             0.06319599598646164
                         ],
                         "Scale": [
-                            1.0000003576278687,
+                            1.0000005960464478,
                             1.0,
-                            1.0000003576278687
+                            1.0000005960464478
                         ]
                     }
                 ],
@@ -1170,7 +1170,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\ClockDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\ClockDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\ClockSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     0.5882353186607361,
@@ -1224,7 +1224,7 @@
                                 "HasDiffuse": true,
                                 "HasSpecular": true,
                                 "DiffusePath": "Assets\\Textures\\ClockDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\ClockDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\ClockSpecular.tif",
                                 "Shininess": 2.0,
                                 "DiffuseColor": [
                                     0.5882353186607361,
@@ -1265,7 +1265,7 @@
                             0.3252648115158081
                         ],
                         "Scale": [
-                            1.6299993991851807,
+                            1.6299992799758912,
                             1.6301684379577637,
                             1.6301679611206055
                         ]
@@ -1294,8 +1294,8 @@
                                 ],
                                 "Scale": [
                                     100.0,
-                                    99.9999771118164,
-                                    99.9999771118164
+                                    99.99996948242188,
+                                    99.99996948242188
                                 ]
                             },
                             {
@@ -1306,9 +1306,9 @@
                                 "ComponentID": 0,
                                 "ComponentType": 3,
                                 "HasDiffuse": true,
-                                "HasSpecular": true,
+                                "HasSpecular": false,
                                 "DiffusePath": "Assets\\Textures\\Baker_house.png",
-                                "SpecularPath": "Assets\\Textures\\Baker_house.png",
+                                "SpecularPath": "Assets\\Textures\\ChimneySpecular.tif",
                                 "Shininess": 8.0,
                                 "DiffuseColor": [
                                     0.47040000557899477,
@@ -1348,8 +1348,8 @@
                                 ],
                                 "Scale": [
                                     100.0,
-                                    99.9999771118164,
-                                    99.9999771118164
+                                    99.99996948242188,
+                                    99.99996948242188
                                 ]
                             },
                             {
@@ -1360,9 +1360,9 @@
                                 "ComponentID": 0,
                                 "ComponentType": 3,
                                 "HasDiffuse": true,
-                                "HasSpecular": true,
+                                "HasSpecular": false,
                                 "DiffusePath": "Assets\\Textures\\Baker_house.png",
-                                "SpecularPath": "Assets\\Textures\\Baker_house.png",
+                                "SpecularPath": "Assets\\Textures\\ChimneySpecular.tif",
                                 "Shininess": 8.0,
                                 "DiffuseColor": [
                                     0.47040000557899477,
@@ -1397,14 +1397,14 @@
                             0.0
                         ],
                         "Rotation": [
-                            0.9177637696266174,
-                            -0.025832749903202058,
-                            -0.038700222969055179,
-                            0.3943914473056793
+                            0.917763888835907,
+                            -0.025832753628492357,
+                            -0.038700226694345477,
+                            0.3943914771080017
                         ],
                         "Scale": [
                             0.9999996423721314,
-                            0.9999997019767761,
+                            0.9999996423721314,
                             0.9999997615814209
                         ]
                     },
@@ -1443,12 +1443,12 @@
                             0.6893669962882996,
                             0.0,
                             0.0,
-                            0.7244123220443726
+                            0.7244122624397278
                         ],
                         "Scale": [
                             0.9999999403953552,
-                            0.9999988675117493,
-                            0.9999988675117493
+                            0.999998927116394,
+                            0.999998927116394
                         ]
                     },
                     {
@@ -1574,10 +1574,10 @@
                             0.0
                         ],
                         "Rotation": [
-                            0.2571210563182831,
+                            0.2571210265159607,
                             0.5694409608840942,
-                            0.3871491253376007,
-                            0.6780422329902649
+                            0.38714906573295596,
+                            0.6780422925949097
                         ],
                         "Scale": [
                             0.9999997615814209,
