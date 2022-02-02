@@ -137,6 +137,8 @@ void WindowScene::DrawScene()
 		ImGui::EndDragDropTarget();
 	}
 
+	hovering = ImGui::IsWindowHovered();
+
 	// TO AVOID Camera orbit
 	if (ImGui::IsWindowFocused())
 	{
