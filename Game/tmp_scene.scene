@@ -1,0 +1,30 @@
+{
+    "GORoot": {
+        "Uid": 1051564592040348040,
+        "GOName": "Root",
+        "Active": true,
+        "ParentId": 0,
+        "Components": [
+            {
+                "ComponentID": 0,
+                "ComponentType": 1,
+                "Position": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "Scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            }
+        ],
+        "GOChildrens": null
+    }
+}

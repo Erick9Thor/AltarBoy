@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -96,16 +96,17 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc142-mtd.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib;Dependencies\optick\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -129,23 +130,73 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include</AdditionalIncludeDirectories>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
+      <ConformanceMode>Default</ConformanceMode>
+      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>assimp-vc142-mtd.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Dependencies\glew-2.1.0\lib;Dependencies\DevIL\lib;Dependencies\SDL\lib;Dependencies\assimp\lib;Dependencies\optick\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc141-mt.lib;DevIL.lib;ILU.lib;ILUT.lib;glew32.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp" />
+    <ClCompile Include="src\Importers\MeshImporter.cpp" />
+    <ClCompile Include="src\Components\ComponentDirLight.cpp" />
+    <ClCompile Include="src\Components\ComponentSpotLight.cpp" />
+    <ClCompile Include="src\Components\ComponentPointLight.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\GraphEditor.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImCurveEdit.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp" />
+    <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_7z.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_dir.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_grp.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_hog.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_iso9660.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_mvl.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_qpak.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_slb.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_unpacked.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_vdf.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_wad.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_zip.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_byteorder.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_haiku.cpp" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_os2.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_posix.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_qnx.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_unix.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_windows.c" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_winrt.cpp" />
+    <ClCompile Include="Dependencies\PhysicsFS\physfs_unicode.c" />
+    <ClCompile Include="src\Importers\MaterialImporter.cpp" />
+    <ClCompile Include="src\Importers\SceneImporter.cpp" />
+    <ClCompile Include="src\Modules\ModuleFileSystem.cpp" />
+    <ClCompile Include="src\Resources\ResourceMesh.cpp" />
+    <ClCompile Include="src\Resources\ResourceMaterial.cpp" />
+    <ClCompile Include="src\Resources\Resource.cpp" />
+    <ClCompile Include="src\UI\ImguiUtils.cpp" />
+    <ClCompile Include="src\Utils\JsonFormaterValue.cpp" />
+    <ClCompile Include="src\Quadtree.cpp" />
+    <ClCompile Include="src\RenderList.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
+    <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\UI\WindowProject.cpp" />
+    <ClCompile Include="src\Utils\Logger.cpp" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Components\ComponentCamera.cpp" />
+    <ClCompile Include="src\Components\ComponentMaterial.cpp" />
+    <ClCompile Include="src\Components\ComponentMesh.cpp" />
+    <ClCompile Include="src\Components\ComponentTransform.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
@@ -172,9 +223,9 @@
     <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="ModuleScene.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Modules\ModuleSceneManager.cpp" />
+    <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK2D.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\Random\LCG.cpp" />
@@ -198,25 +249,73 @@
     <ClCompile Include="Dependencies\MathGeoLib\Geometry\Triangle2D.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Geometry\TriangleMesh.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Time\Clock.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="ModuleCamera.cpp" />
-    <ClCompile Include="ModuleDebugDraw.cpp" />
-    <ClCompile Include="ModuleEditor.cpp" />
-    <ClCompile Include="ModuleHardware.cpp" />
-    <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModuleRender.cpp" />
-    <ClCompile Include="ModuleProgram.cpp" />
-    <ClCompile Include="ModuleTexture.cpp" />
-    <ClCompile Include="ModuleWindow.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="src\Modules\ModuleCamera.cpp" />
+    <ClCompile Include="src\Modules\ModuleDebugDraw.cpp" />
+    <ClCompile Include="src\Modules\ModuleEditor.cpp" />
+    <ClCompile Include="src\Modules\ModuleHardware.cpp" />
+    <ClCompile Include="src\Modules\ModuleInput.cpp" />
+    <ClCompile Include="src\Modules\ModuleRender.cpp" />
+    <ClCompile Include="src\Modules\ModuleProgram.cpp" />
+    <ClCompile Include="src\Modules\ModuleTexture.cpp" />
+    <ClCompile Include="src\Modules\ModuleWindow.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Utils\Timer.cpp" />
+    <ClCompile Include="src\UI\Window.cpp" />
+    <ClCompile Include="src\UI\WindowAbout.cpp" />
+    <ClCompile Include="src\UI\WindowConfiguration.cpp" />
+    <ClCompile Include="src\UI\WindowHierarchy.cpp" />
+    <ClCompile Include="src\UI\WindowInspector.cpp" />
+    <ClCompile Include="src\UI\WindowScene.cpp" />
+    <ClCompile Include="src\UI\WindowConsole.cpp" />
+    <ClCompile Include="src\UI\WindowResource.cpp" />
+    <ClCompile Include="src\Utils\UID.cpp" />
+    <ClCompile Include="src\UI\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image.h" />
+    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h" />
+    <ClInclude Include="src\Importers\MeshImporter.h" />
+    <ClInclude Include="src\UI\ImGuiUtils.h" />
+    <ClInclude Include="src\Components\ComponentDirLight.h" />
+    <ClInclude Include="src\Components\ComponentSpotLight.h" />
+    <ClInclude Include="src\Components\ComponentPointLight.h" />
+    <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImCurveEdit.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImGradient.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h" />
+    <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs_casefolding.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs_internal.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs_lzmasdk.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs_miniz.h" />
+    <ClInclude Include="Dependencies\PhysicsFS\physfs_platforms.h" />
+    <ClInclude Include="src\Importers\MaterialImporter.h" />
+    <ClInclude Include="src\Importers\SceneImporter.h" />
+    <ClInclude Include="src\Modules\ModuleFileSystem.h" />
+    <ClInclude Include="src\Resources\ResourceMesh.h" />
+    <ClInclude Include="src\Resources\ResourceMaterial.h" />
+    <ClInclude Include="src\Resources\Resource.h" />
+    <ClInclude Include="src\Utils\JsonFormaterValue.h" />
+    <ClInclude Include="src\Quadtree.h" />
+    <ClInclude Include="src\RenderList.h" />
+    <ClInclude Include="src\Skybox.h" />
+    <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\UI\WindowProject.h" />
+    <ClInclude Include="src\Utils\Logger.h" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Components\Component.h" />
+    <ClInclude Include="src\Components\ComponentCamera.h" />
+    <ClInclude Include="src\Components\ComponentMaterial.h" />
+    <ClInclude Include="src\Components\ComponentMesh.h" />
+    <ClInclude Include="src\Components\ComponentTransform.h" />
     <ClInclude Include="Dependencies\DebugDraw\debugdraw.h" />
     <ClInclude Include="Dependencies\DebugDraw\debug_draw.hpp" />
+    <ClInclude Include="Dependencies\imgui\IconsFontAwesome5.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\BitOps.h" />
@@ -258,9 +357,9 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="ModuleScene.h" />
-    <ClInclude Include="Globals.h" />
+    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\Modules\ModuleSceneManager.h" />
+    <ClInclude Include="src\Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
     <ClInclude Include="Dependencies\imgui\imgui.h" />
     <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h" />
@@ -304,24 +403,32 @@
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h" />
     <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h" />
-    <ClInclude Include="ImGuiComponents\AppLog.h" />
-    <ClInclude Include="Math.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Module.h" />
-    <ClInclude Include="ModuleCamera.h" />
-    <ClInclude Include="ModuleDebugDraw.h" />
-    <ClInclude Include="ModuleEditor.h" />
-    <ClInclude Include="ModuleHardware.h" />
-    <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModuleRender.h" />
-    <ClInclude Include="ModuleProgram.h" />
-    <ClInclude Include="ModuleTexture.h" />
-    <ClInclude Include="ModuleWindow.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="src\Modules\Module.h" />
+    <ClInclude Include="src\Modules\ModuleCamera.h" />
+    <ClInclude Include="src\Modules\ModuleDebugDraw.h" />
+    <ClInclude Include="src\Modules\ModuleEditor.h" />
+    <ClInclude Include="src\Modules\ModuleHardware.h" />
+    <ClInclude Include="src\Modules\ModuleInput.h" />
+    <ClInclude Include="src\Modules\ModuleRender.h" />
+    <ClInclude Include="src\Modules\ModuleProgram.h" />
+    <ClInclude Include="src\Modules\ModuleTexture.h" />
+    <ClInclude Include="src\Modules\ModuleWindow.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Utils\PathNode.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
+    <ClInclude Include="src\UI\Window.h" />
+    <ClInclude Include="src\UI\WindowAbout.h" />
+    <ClInclude Include="src\UI\WindowConfiguration.h" />
+    <ClInclude Include="src\UI\WindowHierarchy.h" />
+    <ClInclude Include="src\UI\WindowInspector.h" />
+    <ClInclude Include="src\UI\WindowScene.h" />
+    <ClInclude Include="src\UI\WindowConsole.h" />
+    <ClInclude Include="src\UI\WindowResource.h" />
+    <ClInclude Include="src\Utils\UID.h" />
+    <ClInclude Include="src\UI\WindowTimers.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include="Dependencies\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />
