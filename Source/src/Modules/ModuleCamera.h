@@ -14,6 +14,7 @@ public:
 
 	bool Init() override;
 	update_status Update(const float delta) override;
+	bool CleanUp() override;
 
 	void OnResize(unsigned int screen_width, unsigned int screen_height);
 
@@ -29,5 +30,6 @@ public:
 	void Rotate(float motion_x, float motion_y);
 
 private:
+	GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
 	ComponentCamera* main_camera = nullptr;
 };
