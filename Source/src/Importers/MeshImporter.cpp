@@ -131,5 +131,7 @@ ResourceMesh* MeshImporter::Load(UID uid)
 	r_mesh->GenerateAABB();
 	r_mesh->loaded = true;
 
+	delete[] file_buffer;
+
 	return r_mesh;
 }
