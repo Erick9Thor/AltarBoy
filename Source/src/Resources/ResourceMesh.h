@@ -18,6 +18,7 @@ public:
 	};
 
 	ResourceMesh(UID id);
+	~ResourceMesh() override;
 	void GenerateBuffers();
 	void GenerateAABB();
 
