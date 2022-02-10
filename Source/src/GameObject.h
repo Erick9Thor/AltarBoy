@@ -5,7 +5,6 @@
 #include "Components/Component.h"
 
 #include <vector>
-using namespace std;
 
 class ComponentTransform;
 class ComponentCamera;

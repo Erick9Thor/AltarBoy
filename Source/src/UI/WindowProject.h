@@ -3,10 +3,6 @@
 
 #include "../Utils/PathNode.h"
 
-#include <vector>
-
-using namespace std;
-
 class WindowProject : public Window
 {
 public:
