@@ -3,6 +3,10 @@
 #include <windows.h>
 #include <stdio.h>
 
+#include "Utils/Logger.h"
+
+#define LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
+
 #define M_PI 3.14159265358979323846
 constexpr float to_rad = (float) M_PI / 180.0f;
 constexpr float to_deg = 180.0f / (float) M_PI;
