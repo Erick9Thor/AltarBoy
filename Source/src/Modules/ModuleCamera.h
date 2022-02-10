@@ -28,6 +28,7 @@ public:
 	void Orbit(float motion_x, float motion_y);
 	void FocusOnModel(const float3& target, float distance);
 	void Rotate(float motion_x, float motion_y);
+	void PerpendicularMovement(float motion_x, float motion_y);
 
 private:
 	GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.

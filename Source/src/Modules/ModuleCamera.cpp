@@ -63,6 +63,7 @@ void ModuleCamera::Controller(const float delta)
 {
 	static const float zoom_speed = 3.0f;
 	static const float rot_speed = 2.0f;
+	static const float perpendicular_movement_speed = 2.0f;
 
 	if (!App->editor->GetSceneWindow()->IsHovering())
 		return;
@@ -93,6 +94,13 @@ void ModuleCamera::Controller(const float delta)
 		float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
 		GameObject* go = App->editor->GetSelectedGO();
 		FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
+	}
+	if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
+	{
+		int moved_x, moved_y;
+		App->input->GetMouseDelta(moved_x, moved_y);
+
+		PerpendicularMovement((float) moved_x * delta * perpendicular_movement_speed, (float) moved_y * delta * perpendicular_movement_speed);
 	}
 }
 
@@ -177,4 +185,16 @@ void ModuleCamera::Rotate(float motion_x, float motion_y)
 
 	float distancetoReference = (main_camera->reference_point - transform->GetPosition()).Length();
 	main_camera->reference_point = transform->GetPosition() + newFwd * distancetoReference;
+}
+
+void ModuleCamera::PerpendicularMovement(float motion_x, float motion_y)
+{
+	static const float move_speed = 15.0f;
+
+	ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+	float3 deltaMovement = transform->GetRight() * move_speed * motion_x + transform->GetUp() * move_speed * motion_y;
+
+	transform->SetPosition(transform->GetPosition() + deltaMovement);
+	main_camera->GetGameObject()->Update();
+	main_camera->reference_point += deltaMovement;
 }

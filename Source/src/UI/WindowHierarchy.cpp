@@ -114,6 +114,10 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		}
 		if (ImGui::MenuItem("Delete Gameojbect"))
 		{
+			GameObject* selectedGameObject = App->editor->GetSelectedGO();
+			if (selectedGameObject == game_object)
+				App->editor->SetSelectedGO(nullptr);
+
 			RELEASE(game_object);
 			dragged_object = nullptr;
 			ImGui::CloseCurrentPopup();
