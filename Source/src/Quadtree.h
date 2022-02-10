@@ -37,7 +37,7 @@ public:
 	const std::list<GameObject*>& GetObjects() const { return objects; }
 
 	template<typename T>
-	void GetIntersections(std::map<float, GameObject*>& objects, const T& primitive) const;
+	void GetIntersections(std::vector<GameObject*> &objects, const T& primitive) const;
 
 	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
 
@@ -72,15 +72,15 @@ private:
 
 
 template<typename T>
-void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& intersected, const T& primitive) const
+void QuadtreeNode::GetIntersections(std::vector<GameObject*>& intersected, const T& primitive) const
 {
 	if (primitive.Intersects(box))
 	{
 		float near_hit, far_hit;
 		for (GameObject* object : objects)
 		{
-			if (primitive.Intersects(object->GetOBB()))
-				intersected[near_hit] = object;
+			if (primitive.Intersects(object->GetOBB(), near_hit, far_hit))
+				intersected.push_back(object);
 		}
 
 		// If it has one child all exist

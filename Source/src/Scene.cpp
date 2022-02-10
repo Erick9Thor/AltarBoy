@@ -129,12 +129,11 @@ GameObject* Scene::RayCast(const LineSegment& segment) const
 	GameObject* selected = nullptr;
 	float closest_hit_distance = inf;
 
-	map<float, GameObject*> game_objects;
+	vector<GameObject*> game_objects;
 	quadtree->GetRoot()->GetIntersections(game_objects, segment);
 
-	for (auto game_object_pair: game_objects)
+	for (GameObject* game_object : game_objects)
 	{
-		GameObject* game_object = game_object_pair.second;
 		ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
 		if (mesh)
 		{	
