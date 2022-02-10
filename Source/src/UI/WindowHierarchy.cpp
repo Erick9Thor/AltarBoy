@@ -99,7 +99,7 @@ void WindowHierarchy::DrawGameObject(GameObject* game_object)
 		}
 	}
 
-	if (!game_object->childs.empty())
+	if (node_open && !game_object->childs.empty())
 		DrawGOChilds(game_object);
 
 	// TODO: Make robust to repeted game object names
