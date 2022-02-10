@@ -37,9 +37,11 @@ ComponentCamera::ComponentCamera(GameObject* container)
 
 ComponentCamera::~ComponentCamera()
 {
-	Scene* scene = App->scene_manager->GetActiveScene();
-	if (scene->GetCullingCamera() == this)
-		scene->SetCullingCamera(App->camera->GetMainCamera());
+	if (game_object->scene_owner)
+	{
+		if (game_object->scene_owner->GetCullingCamera() == this)
+			game_object->scene_owner->SetCullingCamera(App->camera->GetMainCamera());
+	}
 }
 
 void ComponentCamera::DebugDraw()

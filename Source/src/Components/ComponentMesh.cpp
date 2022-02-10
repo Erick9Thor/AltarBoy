@@ -26,6 +26,15 @@ ComponentMesh::~ComponentMesh()
 
 void ComponentMesh::Import(const aiMesh* mesh)
 {
+	// TODO: This is ugly. Maybe we should find a better approach,
+	// for example MeshImporter::Import can take resource as ref
+	// and do this check internally.
+
+	if (resource != nullptr && resource->loaded)
+	{
+		resource->CleanUp();
+	}
+
 	resource = MeshImporter::Import(mesh);
 }
 
@@ -57,6 +66,15 @@ void ComponentMesh::Save(JsonFormaterValue j_component) const
 
 void ComponentMesh::Load(JsonFormaterValue j_component)
 {
+	// TODO: This is ugly. Maybe we should find a better approach,
+	// for example MeshImporter::Import can take resource as ref
+	// and do this check internally.
+
+	if (resource != nullptr && resource->loaded)
+	{
+		resource->CleanUp();
+	}
+
 	resource = MeshImporter::Load(game_object->getUID());
 }
 

@@ -29,12 +29,12 @@ bool ModuleCamera::Init()
 {
 	LOG("Creating main camera");
 
-	GameObject* cameraGameObject = new GameObject("Main Camera");
-	main_camera = (ComponentCamera*) cameraGameObject->CreateComponent(Component::CAMERA);
+	main_camera_game_object = new GameObject("Main Camera");
+	main_camera = (ComponentCamera*) main_camera_game_object->CreateComponent(Component::CAMERA);
 
-	cameraGameObject->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
-	cameraGameObject->GetComponent<ComponentTransform>()->LookAt(float3::zero);
-	cameraGameObject->Update();
+	main_camera_game_object->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
+	main_camera_game_object->GetComponent<ComponentTransform>()->LookAt(float3::zero);
+	main_camera_game_object->Update();
 
 	ImGuizmo::Enable(true);
 
@@ -45,6 +45,13 @@ update_status ModuleCamera::Update(const float delta)
 {
 	Controller(delta);
 	return UPDATE_CONTINUE;
+}
+
+bool ModuleCamera::CleanUp()
+{
+	delete main_camera_game_object;
+
+	return true;
 }
 
 void ModuleCamera::OnResize(unsigned int screen_width, unsigned int screen_height)

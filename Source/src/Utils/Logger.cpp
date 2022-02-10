@@ -4,7 +4,15 @@
 #include <windows.h>
 #include <stdio.h>
 
-void log(const char file[], int line, const char* format, ...)
+Logger::Logger()
+{
+}
+
+Logger::~Logger()
+{
+}
+
+void Logger::log(const char file[], int line, const char* format, ...)
 {
 	static char tmp_string[4096];
 	static char tmp_string2[4096];
@@ -24,6 +32,3 @@ void log(const char file[], int line, const char* format, ...)
 			line_offsets.push_back(old_size + 1);
 	OutputDebugString(tmp_string2);
 }
-
-ImVector<int> line_offsets;
-ImGuiTextBuffer buff;

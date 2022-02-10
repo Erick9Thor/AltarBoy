@@ -35,10 +35,12 @@ enum main_states
 };
 
 Application* App = NULL;
+Logger* Logging = NULL;
 
 int main(int argc, char** argv)
 {
 	atexit(DumpLeaks);
+	Logging = new Logger();
 
 	int main_return = EXIT_FAILURE;
 	main_states state = MAIN_CREATION;
@@ -104,5 +106,6 @@ int main(int argc, char** argv)
 
 	delete App;
 	LOG("Bye :)\n");
+	delete Logging;
 	return main_return;
 }

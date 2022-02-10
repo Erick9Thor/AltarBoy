@@ -48,15 +48,16 @@ void WindowConsole::Update()
 			ImGui::LogToClipboard();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
-		const char* buf_start = buff.begin();
-		const char* buf_end = buff.end();
+		
+		const char* buf_start = Logging->buff.begin();
+		const char* buf_end = Logging->buff.end();
 
 		if (filter.IsActive())
 		{
-			for (int line_no = 0; line_no < line_offsets.Size; line_no++)
+			for (int line_no = 0; line_no < Logging->line_offsets.Size; line_no++)
 			{
-				const char* line_start = buf_start + line_offsets[line_no];
-				const char* line_end = (line_no + 1 < line_offsets.Size) ? (buf_start + line_offsets[line_no + 1] - 1) : buf_end;
+				const char* line_start = buf_start + Logging->line_offsets[line_no];
+				const char* line_end = (line_no + 1 < Logging->line_offsets.Size) ? (buf_start + Logging->line_offsets[line_no + 1] - 1) : buf_end;
 				if (filter.PassFilter(line_start, line_end))
 					ImGui::TextUnformatted(line_start, line_end);
 			}
@@ -64,13 +65,13 @@ void WindowConsole::Update()
 		else
 		{
 			ImGuiListClipper clipper;
-			clipper.Begin(line_offsets.Size);
+			clipper.Begin(Logging->line_offsets.Size);
 			while (clipper.Step())
 			{
 				for (int line_no = clipper.DisplayStart; line_no < clipper.DisplayEnd; line_no++)
 				{
-					const char* line_start = buf_start + line_offsets[line_no];
-					const char* line_end = (line_no + 1 < line_offsets.Size) ? (buf_start + line_offsets[line_no + 1] - 1) : buf_end;
+					const char* line_start = buf_start + Logging->line_offsets[line_no];
+					const char* line_end = (line_no + 1 < Logging->line_offsets.Size) ? (buf_start + Logging->line_offsets[line_no + 1] - 1) : buf_end;
 					ImGui::TextUnformatted(line_start, line_end);
 				}
 			}
@@ -89,9 +90,9 @@ void WindowConsole::Update()
 
 void WindowConsole::Clear()
 {
-	buff.clear();
-	line_offsets.clear();
-	line_offsets.push_back(0);
+	Logging->buff.clear();
+	Logging->line_offsets.clear();
+	Logging->line_offsets.push_back(0);
 }
 
 void WindowConsole::CleanUp()

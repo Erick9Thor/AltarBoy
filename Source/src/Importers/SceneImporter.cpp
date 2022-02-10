@@ -35,6 +35,9 @@ Scene* SceneImporter::LoadScene(const char* file_path)
 
 	Scene* scene = new Scene();
 	scene->Load(j_scene);
+
+	delete[] buffer;
+
 	return scene;
 }
 

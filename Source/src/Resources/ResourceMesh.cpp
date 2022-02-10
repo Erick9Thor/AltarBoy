@@ -8,6 +8,11 @@ ResourceMesh::ResourceMesh(UID id)
 {
 }
 
+ResourceMesh::~ResourceMesh()
+{
+	CleanUp();
+}
+
 void ResourceMesh::GenerateBuffers()
 {
 	glGenVertexArrays(1, &vao);
