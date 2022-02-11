@@ -1,18 +1,15 @@
-#include "../Application.h"
+#include "Application.h"
 
-#include "../UI/ImGuiUtils.h"
+#include "UI/ImGuiUtils.h"
 
-#include "../Modules/ModuleWindow.h"
-#include "../Modules/ModuleRender.h"
-#include "../Modules/ModuleSceneManager.h"
-#include "../Modules/ModuleCamera.h"
-#include "../Utils/Logger.h"
+#include "Modules/ModuleSceneManager.h"
+#include "Modules/ModuleCamera.h"
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "debugdraw.h"
 
-#include "../Scene.h"
+#include "Core/Scene.h"
 
 #include <glew.h>
 #include <imgui.h>

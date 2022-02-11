@@ -1,11 +1,11 @@
 #pragma once
 #include "Module.h"
-#include "../Globals.h"
-#include "../UI/ImGuiUtils.h"
+#include "Globals.h"
+#include "UI/ImGuiUtils.h"
 
 #include "MathGeoLib.h"
 
-#include "../RenderList.h"
+#include "RenderList.h"
 
 #include <vector>
 

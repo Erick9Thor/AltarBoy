@@ -1,10 +1,10 @@
 #include "ComponentDirLight.h"
 
-#include "../UI/ImGuiUtils.h"
+#include "UI/ImGuiUtils.h"
 
 #include "ComponentTransform.h"
 
-#include "../Scene.h"
+#include "Core/Scene.h"
 #include "debugdraw.h"
 
 #include "imgui.h"

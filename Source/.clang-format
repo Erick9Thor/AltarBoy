@@ -1,41 +1,27 @@
 # Formatting file. Use [Ctrl + K -> Ctrl + D] to format a file
 # Using Clang Format version 10.0
 
+---
+Language: Cpp
 BasedOnStyle: LLVM
-
 AccessModifierOffset: -4
-
-AlignAfterOpenBracket: AlwaysBreak
-AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
-AlignConsecutiveMacros: false
 AlignEscapedNewlines: Left
 AlignOperands: true
 AlignTrailingComments: false
-
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
-
-AllowShortBlocksOnASingleLine: Empty
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: All
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: WithoutElse
-AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: true
-
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: No
-
+AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: false
 BinPackParameters: false
-
-BreakBeforeBraces: Custom
-BraceWrapping:
+BraceWrapping: 
   AfterCaseLabel: true
   AfterClass: true
-  AfterControlStatement: Always
+  AfterControlStatement: true
   AfterEnum: true
   AfterFunction: true
   AfterNamespace: true
@@ -44,61 +30,38 @@ BraceWrapping:
   AfterExternBlock: true
   BeforeCatch: true
   BeforeElse: true
-  IndentBraces: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
-
 BreakBeforeBinaryOperators: All
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializers: BeforeComma
+BreakBeforeBraces: Custom
+BreakConstructorInitializers: AfterColon
 BreakInheritanceList: BeforeComma
-BreakStringLiterals: true
-
-ColumnLimit: 0
-CompactNamespaces: false
+ColumnLimit: 200
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
-ConstructorInitializerIndentWidth: 4
-ContinuationIndentWidth: 4
-Cpp11BracedListStyle: true
-
-IndentCaseLabels: false
+IncludeCategories: 
+  - Regex: '^<.*'
+    Priority: 1
+  - Regex: '^".*'
+    Priority: 2
+  - Regex: '.*'
+    Priority: 3
+IncludeIsMainRegex: '([-_](test|unittest))?$'
+IndentCaseBlocks: true
 IndentGotoLabels: false
-IndentPPDirectives: None
 IndentWidth: 4
-IndentWrappedFunctionNames: true
-
 KeepEmptyLinesAtTheStartOfBlocks: false
-Language: Cpp
-MaxEmptyLinesToKeep: 1
+MacroBlockBegin: ''
+MacroBlockEnd: ''
 NamespaceIndentation: All
 PointerAlignment: Left
 ReflowComments: false
-
 SortIncludes: false
 SortUsingDeclarations: false
-
-SpaceAfterCStyleCast: true
-SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false
-SpaceBeforeAssignmentOperators: true
 SpaceBeforeCpp11BracedList: true
-SpaceBeforeCtorInitializerColon: true
-SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
-SpaceBeforeSquareBrackets: false
-SpaceInEmptyBlock: false
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles: false
-SpacesInCStyleCastParentheses: false
-SpacesInConditionalStatement: false
 SpacesInContainerLiterals: false
-SpacesInParentheses: false
-SpacesInSquareBrackets: false
-
-Standard: Latest
 TabWidth: 4
-UseCRLF: false
-UseTab: Always
+...

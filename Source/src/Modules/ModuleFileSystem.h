@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 
-#include "../Utils/PathNode.h"
+#include "Utils/PathNode.h"
 
 #include <string>
 #include <vector>

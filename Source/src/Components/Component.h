@@ -1,8 +1,7 @@
 #pragma once
 
-#include "../Utils/UID.h"
-#include "../Utils/JsonFormaterValue.h"
-#include "../UI/ImGuiUtils.h"
+#include "Utils/UUID.h"
+#include "Utils/JsonFormaterValue.h"
 
 class GameObject;
 class ComponentCamera;
@@ -34,7 +33,7 @@ public:
 	virtual void OnTransformUpdated() {};
 
 	inline Type GetType() const { return type; };
-	UID GetID() const { return uid; }
+    Hachiko::UID GetID() const { return uid; }
 
 	const GameObject* GetGameObject() const { return game_object; }
 	GameObject* GetGameObject() { return game_object; }
@@ -55,5 +54,5 @@ protected:
 	Type type = Type::UNKNOWN;
 
 private:
-	UID uid = 0; 
+    Hachiko::UID uid = 0; 
 };

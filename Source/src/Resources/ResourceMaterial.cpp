@@ -1,7 +1,7 @@
 #include "ResourceMaterial.h"
-#include "../Application.h"
+#include "Application.h"
 
-ResourceMaterial::ResourceMaterial(UID uid)
+ResourceMaterial::ResourceMaterial(Hachiko::UID uid)
 	: Resource(uid, ResourceType::MATERIAL)
 {
 }

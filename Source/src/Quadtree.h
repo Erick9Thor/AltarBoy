@@ -3,7 +3,7 @@
 #include "Globals.h"
 #include "MathGeoLib.h"
 
-#include "GameObject.h"
+#include "Core/GameObject.h"
 
 #include <list>
 #include <map>

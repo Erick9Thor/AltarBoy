@@ -1,17 +1,17 @@
 #include "WindowScene.h"
 
-#include "../Application.h"
-#include "../Utils/Timer.h"
-#include "../GameObject.h"
+#include "Application.h"
+#include "Utils/Timer.h"
+#include "Core/GameObject.h"
 
-#include "../Modules/ModuleInput.h"
-#include "../Modules/ModuleEditor.h"
-#include "../Modules/ModuleCamera.h"
-#include "../Modules/ModuleRender.h"
-#include "../Modules/ModuleSceneManager.h"
+#include "Modules/ModuleInput.h"
+#include "Modules/ModuleEditor.h"
+#include "Modules/ModuleCamera.h"
+#include "Modules/ModuleRender.h"
+#include "Modules/ModuleSceneManager.h"
 
-#include "../Components/ComponentCamera.h"
-#include "../Components/ComponentTransform.h"
+#include "Components/ComponentCamera.h"
+#include "Components/ComponentTransform.h"
 
 #include <IconsFontAwesome5.h>
 #include <imgui_internal.h>

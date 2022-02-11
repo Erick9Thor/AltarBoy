@@ -1,5 +1,5 @@
-#include "../GameObject.h"
-#include "../Application.h"
+#include "Core/GameObject.h"
+#include "Application.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
@@ -9,17 +9,17 @@
 #include "ModuleEditor.h"
 #include "ModuleSceneManager.h"
 
-#include "../Components/ComponentTransform.h"
-#include "../Components/ComponentCamera.h"
+#include "Components/ComponentTransform.h"
+#include "Components/ComponentCamera.h"
 
-#include "../UI/WindowScene.h"
+#include "UI/WindowScene.h"
 
 #include "glew.h"
 #include "Math/MathConstants.h"
 
 #include "ImGuizmo.h"
 
-#include "../Utils/Logger.h"
+#include "Utils/Logger.h"
 
 ModuleCamera::ModuleCamera() {}
 

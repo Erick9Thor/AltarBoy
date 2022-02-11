@@ -1,7 +1,7 @@
 #include "ModuleFileSystem.h"
 
-#include "../Globals.h"
-#include "../Utils/Logger.h"
+#include "Globals.h"
+#include "Utils/Logger.h"
 
 #include <SDL.h>
 #include "physfs.h"

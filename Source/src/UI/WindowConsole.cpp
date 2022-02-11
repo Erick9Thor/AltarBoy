@@ -1,11 +1,11 @@
 #include "WindowConsole.h"
 
-#include "../Application.h"
+#include "Application.h"
 
-#include "../Modules/ModuleEditor.h"
+#include "Modules/ModuleEditor.h"
 #include <IconsFontAwesome5.h>
 
-#include "../Utils/Logger.h"
+#include "Utils/Logger.h"
 
 #include "imgui.h"
 

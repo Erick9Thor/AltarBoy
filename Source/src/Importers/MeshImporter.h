@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Utils/UID.h"
+#include "Utils/UUID.h"
 
 class ResourceMesh;
 struct aiMesh;
@@ -8,6 +8,6 @@ struct aiMesh;
 namespace MeshImporter
 {
 	ResourceMesh* Import(const aiMesh* ai_mesh);
-	void Save(ResourceMesh* r_mesh, UID uid);
-	ResourceMesh* Load(UID uid);
+	void Save(ResourceMesh* r_mesh, Hachiko::UID uid);
+	ResourceMesh* Load(Hachiko::UID uid);
 };

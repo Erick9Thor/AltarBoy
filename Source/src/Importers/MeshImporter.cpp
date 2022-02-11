@@ -1,15 +1,15 @@
 #include "MeshImporter.h"
-#include "../Utils/UID.h"
+#include "Utils/UUID.h"
 
-#include "../Application.h"
-#include "../Modules/ModuleFileSystem.h"
+#include "Application.h"
+#include "Modules/ModuleFileSystem.h"
 
-#include "../Resources/ResourceMesh.h"
+#include "Resources/ResourceMesh.h"
 #include "assimp/scene.h"
 
 ResourceMesh* MeshImporter::Import(const aiMesh* ai_mesh)
 {
-	ResourceMesh* r_mesh = new ResourceMesh(GenerateUID());
+	ResourceMesh* r_mesh = new ResourceMesh(Hachiko::UUID::GenerateUID());
 	r_mesh->buffer_sizes[ResourceMesh::Buffers::b_vertices] = ai_mesh->mNumVertices * 3;
 	r_mesh->vertices = new float[r_mesh->buffer_sizes[ResourceMesh::Buffers::b_vertices]];
 	memcpy(r_mesh->vertices, ai_mesh->mVertices, r_mesh->buffer_sizes[ResourceMesh::Buffers::b_vertices] * sizeof(float));
@@ -38,7 +38,7 @@ ResourceMesh* MeshImporter::Import(const aiMesh* ai_mesh)
 	return r_mesh;
 }
 
-void MeshImporter::Save(ResourceMesh* r_mesh, UID uid)
+void MeshImporter::Save(ResourceMesh* r_mesh, Hachiko::UID uid)
 {	
 	std::string file_path = std::string(LIBRARY_MESH_FOLDER "/") + std::to_string(uid) + ".mesh";
 
@@ -86,7 +86,7 @@ void MeshImporter::Save(ResourceMesh* r_mesh, UID uid)
 	delete[] file_buffer;
 }
 
-ResourceMesh* MeshImporter::Load(UID uid)
+ResourceMesh* MeshImporter::Load(Hachiko::UID uid)
 {
 	std::string file_path = std::string(LIBRARY_MESH_FOLDER "/") + std::to_string(uid) + ".mesh";	
 	char* file_buffer = App->file_sys->Load(file_path.c_str());

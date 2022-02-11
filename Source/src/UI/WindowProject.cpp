@@ -1,9 +1,9 @@
 #include "WindowProject.h"
 
-#include "../Application.h"
-#include "../Globals.h"
-#include "../Modules/ModuleFileSystem.h"
-#include "../Modules/ModuleEditor.h"
+#include "Application.h"
+#include "Globals.h"
+#include "Modules/ModuleFileSystem.h"
+#include "Modules/ModuleEditor.h"
 
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>

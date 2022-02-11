@@ -1,12 +1,12 @@
 #include "WindowConfiguration.h"
 
-#include "../Application.h"
-#include "../Scene.h"
-#include "../Modules/ModuleEditor.h"
-#include "../Modules/ModuleSceneManager.h"
-#include "../Modules/ModuleProgram.h"
-#include "../Modules/ModuleCamera.h"
-#include "../Components/ComponentCamera.h"
+#include "Application.h"
+#include "Core/Scene.h"
+#include "Modules/ModuleEditor.h"
+#include "Modules/ModuleSceneManager.h"
+#include "Modules/ModuleProgram.h"
+#include "Modules/ModuleCamera.h"
+#include "Components/ComponentCamera.h"
 
 #include <imgui.h>
 #include <IconsFontAwesome5.h>

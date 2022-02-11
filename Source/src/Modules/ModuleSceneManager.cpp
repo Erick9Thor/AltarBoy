@@ -1,7 +1,7 @@
 #include "ModuleSceneManager.h"
 
-#include "../Importers/SceneImporter.h"
-#include "../Utils/Logger.h"
+#include "Importers/SceneImporter.h"
+#include "Utils/Logger.h"
 
 ModuleSceneManager::ModuleSceneManager() {}
 

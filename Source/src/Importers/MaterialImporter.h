@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Utils/JsonFormaterValue.h"
-#include "../Utils/UID.h"
+#include "Utils/JsonFormaterValue.h"
+#include "Utils/UUID.h"
 
 #include "assimp/scene.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Window.h"
 
-#include "../Utils/PathNode.h"
+#include "Utils/PathNode.h"
 
 class WindowProject : public Window
 {

@@ -1,12 +1,12 @@
 #include "WindowAbout.h"
 
-#include "../Application.h"
-#include "../Modules/ModuleHardware.h"
+#include "Application.h"
+#include "Modules/ModuleHardware.h"
 
 #include <IconsFontAwesome5.h>
 
 #include "imgui.h"
-#include "../Globals.h"
+#include "Globals.h"
 #include <ilu.h>
 
 WindowAbout::WindowAbout()

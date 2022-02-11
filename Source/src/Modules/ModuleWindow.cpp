@@ -1,6 +1,6 @@
-#include "../Globals.h"
-#include "../Application.h"
-#include "../Utils/Logger.h"
+#include "Globals.h"
+#include "Application.h"
+#include "Utils/Logger.h"
 
 #include "ModuleWindow.h"
 #include "ModuleRender.h"

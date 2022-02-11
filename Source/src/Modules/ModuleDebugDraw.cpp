@@ -1,11 +1,11 @@
-#include "../Globals.h"
+#include "Globals.h"
 #include "ModuleDebugDraw.h"
 
-#include "../Application.h"
+#include "Application.h"
 #include "ModuleSceneManager.h"
-#include "../Scene.h"
-#include "../GameObject.h"
-#include "../Quadtree.h"
+#include "Core/Scene.h"
+#include "Core/GameObject.h"
+#include "Quadtree.h"
 #define DEBUG_DRAW_IMPLEMENTATION
 #include "DebugDraw.h" // Debug Draw API. Notice that we need the DEBUG_DRAW_IMPLEMENTATION macro here!
 

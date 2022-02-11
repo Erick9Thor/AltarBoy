@@ -1,16 +1,16 @@
 #include "SceneImporter.h"
 
-#include "../GameObject.h"
-#include "../Application.h"
-#include "../Scene.h"
+#include "Core/GameObject.h"
+#include "Application.h"
+#include "Core/Scene.h"
 
-#include "../Modules/ModuleFileSystem.h"
+#include "Modules/ModuleFileSystem.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/error/en.h"
 
-#include "../Utils/Logger.h"
+#include "Utils/Logger.h"
 
 #include <string>
 

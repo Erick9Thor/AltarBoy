@@ -1,11 +1,11 @@
 #pragma once
 #include "MathGeoLib.h"
 
-#include "Utils/UID.h"
+#include <vector>
+#include "Utils/UUID.h"
 #include "Components/Component.h"
 
-#include <vector>
-
+class JsonFormaterValue;
 class ComponentTransform;
 class ComponentCamera;
 class Program;
@@ -17,8 +17,8 @@ class GameObject
 
 public:
 	GameObject(const char* name = "Unnamed");
-	GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = GenerateUID());
-	GameObject(GameObject* parent, const char* name = "Unnamed", UID uid = GenerateUID(), const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
+    GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", Hachiko::UID uid = Hachiko::UUID::GenerateUID());
+	GameObject(GameObject* parent, const char* name = "Unnamed", Hachiko::UID uid = Hachiko::UUID::GenerateUID(), const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
 	virtual ~GameObject();
 
 	void SetNewParent(GameObject* new_parent);
@@ -44,7 +44,7 @@ public:
 	void DrawBoundingBox();
 	void UpdateBoundingBoxes();
 
-	UID getUID() { return uid; }
+    Hachiko::UID getUID() { return uid; }
 	void Save(JsonFormaterValue j_gameObject) const;
 	void Load(JsonFormaterValue j_gameObject);
 
@@ -79,5 +79,5 @@ private:
 	AABB aabb;
 	OBB obb;
 
-	UID uid = 0;
+    Hachiko::UID uid = 0;
 };

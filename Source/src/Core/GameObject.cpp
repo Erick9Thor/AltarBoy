@@ -24,7 +24,7 @@ GameObject::GameObject(const char* name)
 	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
 
-GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid)
+GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, Hachiko::UID uid)
 	: name(name)
 	, uid(uid)
 {
@@ -32,7 +32,7 @@ GameObject::GameObject(GameObject* parent, const float4x4& transform, const char
 	AddComponent(new ComponentTransform(this, transform));
 }
 
-GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale)
+GameObject::GameObject(GameObject* parent, const char* name, Hachiko::UID uid, const float3& translation, const Quat& rotation, const float3& scale)
 	: name(name)
 	, uid(uid)
 {
@@ -294,7 +294,7 @@ void GameObject::Load(JsonFormaterValue j_gameObject)
 	{
 		JsonFormaterValue j_component = j_components[i];
 
-		UID c_uid = j_component["ComponentID"];
+		Hachiko::UID c_uid = j_component["ComponentID"];
 		int enum_type = j_component["ComponentType"];
 		bool active = j_component["Active"];
 

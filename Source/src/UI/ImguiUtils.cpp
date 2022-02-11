@@ -1,8 +1,8 @@
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
 
-#include "../GameObject.h"
-#include "../Components/Component.h"
+#include "Core/GameObject.h"
+#include "Components/Component.h"
 
 bool ImGuiUtils::IconButton(const char* icon, const char* tooltip)
 {

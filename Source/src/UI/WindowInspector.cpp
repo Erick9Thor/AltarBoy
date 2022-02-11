@@ -1,9 +1,9 @@
 #include "WindowInspector.h"
 
-#include "../Application.h"
-#include "../GameObject.h"
+#include "Application.h"
+#include "Core/GameObject.h"
 
-#include "../Modules/ModuleEditor.h"
+#include "Modules/ModuleEditor.h"
 
 #include "imgui.h"
 #include <IconsFontAwesome5.h>

@@ -104,7 +104,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;Dependencies\SDL\include;Dependencies\glew-2.1.0\include\GL;Dependencies\imgui;Dependencies\MathGeoLib;Dependencies\DevIL\include\IL;Dependencies\DebugDraw;Dependencies\assimp\include;Dependencies\ImGuiFileDialog-0.6.3;Dependencies\ImGuizmo;Dependencies\rapidjson\include;Dependencies\optick\include;Dependencies\PhysicsFS</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -203,7 +203,6 @@
     <ClCompile Include="src\Components\ComponentMesh.cpp" />
     <ClCompile Include="src\Components\ComponentTransform.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui.cpp" />
-    <ClCompile Include="Dependencies\imgui\imgui_demo.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_draw.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="Dependencies\imgui\imgui_impl_sdl.cpp" />
@@ -228,7 +227,7 @@
     <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp" />
@@ -263,7 +262,7 @@
     <ClCompile Include="src\Modules\ModuleProgram.cpp" />
     <ClCompile Include="src\Modules\ModuleTexture.cpp" />
     <ClCompile Include="src\Modules\ModuleWindow.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Utils\Timer.cpp" />
     <ClCompile Include="src\UI\Window.cpp" />
     <ClCompile Include="src\UI\WindowAbout.cpp" />
@@ -273,7 +272,7 @@
     <ClCompile Include="src\UI\WindowScene.cpp" />
     <ClCompile Include="src\UI\WindowConsole.cpp" />
     <ClCompile Include="src\UI\WindowResource.cpp" />
-    <ClCompile Include="src\Utils\UID.cpp" />
+    <ClCompile Include="src\Utils\UUID.cpp" />
     <ClCompile Include="src\UI\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +361,7 @@
     <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h" />
-    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\Core\GameObject.h" />
     <ClInclude Include="src\Modules\ModuleSceneManager.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="Dependencies\imgui\imconfig.h" />
@@ -418,7 +417,7 @@
     <ClInclude Include="src\Modules\ModuleProgram.h" />
     <ClInclude Include="src\Modules\ModuleTexture.h" />
     <ClInclude Include="src\Modules\ModuleWindow.h" />
-    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Core\Scene.h" />
     <ClInclude Include="src\Utils\PathNode.h" />
     <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\UI\Window.h" />
@@ -429,7 +428,7 @@
     <ClInclude Include="src\UI\WindowScene.h" />
     <ClInclude Include="src\UI\WindowConsole.h" />
     <ClInclude Include="src\UI\WindowResource.h" />
-    <ClInclude Include="src\Utils\UID.h" />
+    <ClInclude Include="src\Utils\UUID.h" />
     <ClInclude Include="src\UI\WindowTimers.h" />
   </ItemGroup>
   <ItemGroup>

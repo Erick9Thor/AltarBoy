@@ -1,9 +1,9 @@
 #include "ModuleInput.h"
 
-#include "../Globals.h"
-#include "../Utils/Logger.h"
+#include "Globals.h"
+#include "Utils/Logger.h"
 
-#include "../Application.h"
+#include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleCamera.h"
