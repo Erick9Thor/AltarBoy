@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include "../Modules/ModuleTexture.h"
-#include "../Resources/ResourceMaterial.h"
+#include "Resources/ResourceMaterial.h"
 
 #include "assimp/scene.h"
 

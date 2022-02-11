@@ -1,8 +1,7 @@
 #pragma once
 #include "Component.h"
-#include "../Modules/ModuleTexture.h"
 
-#include "../Resources/ResourceMesh.h"
+#include "Resources/ResourceMesh.h"
 
 #include "assimp/scene.h"
 #include "MathGeoLib.h"

@@ -2,15 +2,15 @@
 #include <imgui.h>
 #include <IconsFontAwesome5.h>
 
-#include "../Modules/ModuleSceneManager.h"
-#include "../Modules/ModuleInput.h"
-#include "../Modules/ModuleEditor.h"
+#include "Modules/ModuleSceneManager.h"
+#include "Modules/ModuleInput.h"
+#include "Modules/ModuleEditor.h"
 
-#include "../Application.h"
-#include "../GameObject.h"
-#include "../Scene.h"
+#include "Application.h"
+#include "Core/GameObject.h"
+#include "Core/Scene.h"
 
-#include "../Utils/Logger.h"
+#include "Utils/Logger.h"
 
 WindowHierarchy::WindowHierarchy()
 	: Window("Hierarchy", true)

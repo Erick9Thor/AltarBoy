@@ -1,6 +1,6 @@
 #include "RenderList.h"
 
-#include "GameObject.h"
+#include "Core/GameObject.h"
 #include "Components/ComponentCamera.h"
 #include "Components/ComponentMesh.h"
 #include "Quadtree.h"

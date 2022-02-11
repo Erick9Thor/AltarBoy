@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Math.h"
 
-#include "../Scene.h"
+#include "Core/Scene.h"
 
 class GameObject;
 class ComponentCamera;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "../Utils/Timer.h"
+#include "Utils/Timer.h"
 
 class WindowTimers : public Window
 {

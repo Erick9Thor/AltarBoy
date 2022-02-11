@@ -1,9 +1,9 @@
 #include "ComponentPointLight.h"
 
-#include "../UI/ImGuiUtils.h"
+#include "UI/ImGuiUtils.h"
 
 #include "ComponentTransform.h"
-#include "../Scene.h"
+#include "Core/Scene.h"
 #include "debugdraw.h"
 
 #include <IconsFontAwesome5.h>

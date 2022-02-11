@@ -3,7 +3,7 @@
 #include "glew.h"
 
 
-ResourceMesh::ResourceMesh(UID id)
+ResourceMesh::ResourceMesh(Hachiko::UID id)
 	: Resource(id, ResourceType::MESH)
 {
 }

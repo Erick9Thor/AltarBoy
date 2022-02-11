@@ -1,5 +1,4 @@
-#ifndef __PATHNODE_H__
-#define __PATHNODE_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -50,5 +49,3 @@ struct PathNode
 		return *this;
 	}
 };
-
-#endif

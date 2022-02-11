@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Utils/UID.h"
+#include "Utils/UUID.h"
 
 
 enum class ResourceType
@@ -17,7 +17,7 @@ enum class ResourceType
 class Resource
 {
 public:
-	Resource(UID id, ResourceType type);
+	Resource(Hachiko::UID id, ResourceType type);
 	virtual ~Resource();
 
 	ResourceType GetType() const
@@ -25,11 +25,11 @@ public:
 		return type;
 	}
 
-	UID GetID() const { return id; }
+    Hachiko::UID GetID() const { return id; }
 
 	unsigned int instances = 0;
 
 private:
-	UID id = 0;
+    Hachiko::UID id = 0;
 	ResourceType type = ResourceType::UNKNOWN;
 };

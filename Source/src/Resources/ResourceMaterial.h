@@ -1,14 +1,14 @@
 #pragma once
 #include "Resource.h"
 
-#include "../Modules/ModuleTexture.h"
+#include "Modules/ModuleTexture.h"
 #include "MathGeoLib.h"
 #include "assimp/scene.h"
 
 class ResourceMaterial : public Resource
 {
 public:
-	ResourceMaterial(UID uid);
+	ResourceMaterial(Hachiko::UID uid);
 	~ResourceMaterial() override;
 	
 	inline unsigned GetDiffuseId() const { return diffuse.id; }

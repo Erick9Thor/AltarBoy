@@ -17,7 +17,7 @@ public:
 		n_buffers,
 	};
 
-	ResourceMesh(UID id);
+	ResourceMesh(Hachiko::UID id);
 	~ResourceMesh() override;
 	void GenerateBuffers();
 	void GenerateAABB();

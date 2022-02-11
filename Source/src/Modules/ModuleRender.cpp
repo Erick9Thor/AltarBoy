@@ -1,6 +1,6 @@
-#include "../Globals.h"
-#include "../Application.h"
-#include "../Utils/Logger.h"
+#include "Globals.h"
+#include "Application.h"
+#include "Utils/Logger.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -9,12 +9,12 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
-#include "../Scene.h"
-#include "../Skybox.h"
-#include "../Quadtree.h"
-#include "../GameObject.h"
+#include "Core/Scene.h"
+#include "Skybox.h"
+#include "Quadtree.h"
+#include "Core/GameObject.h"
 
-#include "../Components/ComponentCamera.h"
+#include "Components/ComponentCamera.h"
 
 #include "SDL.h"
 #include "glew.h"

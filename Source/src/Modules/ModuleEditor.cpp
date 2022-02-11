@@ -1,6 +1,5 @@
-#include "../Globals.h"
-#include "../Application.h"
-#include "../Utils/Timer.h"
+#include "Globals.h"
+#include "Application.h"
 
 #include "ModuleEditor.h"
 #include "ModuleFileSystem.h"
@@ -13,11 +12,8 @@
 #include "ModuleSceneManager.h"
 #include "SDL.h"
 
-#include "../GameObject.h"
-#include "../Scene.h"
-#include "../Components/ComponentCamera.h"
-
-#include "../Importers/SceneImporter.h"
+#include "Core/GameObject.h"
+#include "Core/Scene.h"
 
 #include "ImGuizmo.h"
 
@@ -27,7 +23,7 @@
 #include "imgui_impl_opengl3.h"
 #include <IconsFontAwesome5.h>
 #include <imgui_internal.h>
-#include "../Utils/Logger.h"
+#include "Utils/Logger.h"
 
 #include "ImGuiFileDialog.h"
 

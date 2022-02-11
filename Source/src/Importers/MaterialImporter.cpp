@@ -1,8 +1,8 @@
 #include "MaterialImporter.h"
 
-#include "../Application.h"
-#include "../Modules/ModuleTexture.h"
-#include "../Resources/ResourceMaterial.h"
+#include "Application.h"
+#include "Modules/ModuleTexture.h"
+#include "Resources/ResourceMaterial.h"
 
 void ColorCopy(const aiColor4D& assimp_color, float4& color)
 {

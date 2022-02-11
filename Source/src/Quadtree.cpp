@@ -1,6 +1,6 @@
 #include "Quadtree.h"
 
-#include "GameObject.h"
+#include "Core/GameObject.h"
 #include "debugdraw.h"
 
 QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent)

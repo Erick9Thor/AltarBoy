@@ -3,13 +3,12 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 
-#include "../Application.h"
-#include "../Modules/ModuleProgram.h"
-#include "../Modules/ModuleRender.h"
-#include "../Modules/ModuleCamera.h"
-#include "../Program.h"
+#include "Application.h"
+#include "Modules/ModuleProgram.h"
+#include "Modules/ModuleRender.h"
+#include "Program.h"
 
-#include "../Importers/MeshImporter.h"
+#include "Importers/MeshImporter.h"
 
 #include "glew.h"
 #include <imgui.h>

@@ -5,10 +5,7 @@
 #include "Modules/ModuleRender.h"
 
 #include "glew.h"
-#include <stdlib.h>
 #include "SDL.h"
-#pragma comment(lib, "SDL2.lib")
-#pragma comment(lib, "SDL2main.lib")
 
 #ifdef _DEBUG
 #define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)
