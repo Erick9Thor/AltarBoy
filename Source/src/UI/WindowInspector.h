@@ -1,15 +1,18 @@
 #pragma once
 #include "Window.h"
 
-class GameObject;
-
-class WindowInspector : public Window
+namespace Hachiko
 {
-public:
-	WindowInspector();
-	~WindowInspector() override;
-	void Update() override;
+    class GameObject;
 
-private:
-	void DrawGameObject(GameObject* go);
-};
+    class WindowInspector final : public Window
+    {
+    public:
+        WindowInspector();
+        ~WindowInspector() override;
+        void Update() override;
+
+    private:
+        void DrawGameObject(GameObject* go) const;
+    };
+}

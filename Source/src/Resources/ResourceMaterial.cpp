@@ -1,13 +1,11 @@
 #include "ResourceMaterial.h"
 #include "Application.h"
 
-ResourceMaterial::ResourceMaterial(Hachiko::UID uid)
-	: Resource(uid, ResourceType::MATERIAL)
-{
-}
+Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
+    Resource(uid, Type::MATERIAL) {}
 
-ResourceMaterial::~ResourceMaterial()
+Hachiko::ResourceMaterial::~ResourceMaterial()
 {
-	App->texture->Unload(diffuse);
-	App->texture->Unload(specular);
+    App->texture->Unload(diffuse);
+    App->texture->Unload(specular);
 }

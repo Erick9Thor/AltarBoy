@@ -3,7 +3,6 @@
 #include "Globals.h"
 #include "Utils/Logger.h"
 
-#include "Application.h"
 #include "Scene.h"
 #include "Quadtree.h"
 #include "Program.h"
@@ -17,305 +16,320 @@
 
 #include <debugdraw.h>
 
-
-GameObject::GameObject(const char* name)
-	: name(name)
+Hachiko::GameObject::GameObject(const char* name) :
+    name(name)
 {
-	AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
+    AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
 
-GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, Hachiko::UID uid)
-	: name(name)
-	, uid(uid)
+Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid) :
+    name(name),
+    uid(uid)
 {
-	SetNewParent(parent);
-	AddComponent(new ComponentTransform(this, transform));
+    SetNewParent(parent);
+    AddComponent(new ComponentTransform(this, transform));
 }
 
-GameObject::GameObject(GameObject* parent, const char* name, Hachiko::UID uid, const float3& translation, const Quat& rotation, const float3& scale)
-	: name(name)
-	, uid(uid)
+Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) :
+    name(name),
+    uid(uid)
 {
-	SetNewParent(parent);
-	AddComponent(new ComponentTransform(this, translation, rotation, scale));
+    SetNewParent(parent);
+    AddComponent(new ComponentTransform(this, translation, rotation, scale));
 }
 
-GameObject::~GameObject()
+Hachiko::GameObject::~GameObject()
 {
-	if (parent)
-	{
-		parent->RemoveChild(this);
-	}
+    if (parent)
+    {
+        parent->RemoveChild(this);
+    }
 
-	if (scene_owner)
-		scene_owner->DestroyGameObject(this);
-	
-	for (GameObject* child : childs)
-	{
-		child->parent = nullptr;
-		RELEASE(child);
-	}
-	for (Component* component : components)
-	{
-		RELEASE(component);
-	}
+    if (scene_owner)
+        scene_owner->DestroyGameObject(this);
+
+    for (GameObject* child : childs)
+    {
+        child->parent = nullptr;
+        RELEASE(child);
+    }
+    for (Component* component : components)
+    {
+        RELEASE(component);
+    }
 }
 
-void GameObject::RemoveChild(GameObject* game_object)
+void Hachiko::GameObject::RemoveChild(GameObject* game_object)
 {
-	childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
+    childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
 }
 
-void GameObject::SetNewParent(GameObject* new_parent)
+void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
 {
-	if (new_parent == parent)
-		return;
+    if (new_parent == parent)
+    {
+        return;
+    }
 
-	if (parent)
-		parent->RemoveChild(this);	
+    if (parent)
+    {
+        parent->RemoveChild(this);
+    }
 
-	if (new_parent)
-		new_parent->childs.push_back(this);
-
-	parent = new_parent;
+    if (new_parent)
+    {
+        new_parent->childs.push_back(this);
+    }
+    parent = new_parent;
 }
 
-void GameObject::AddComponent(Component* component)
+void Hachiko::GameObject::AddComponent(Component* component)
 {
-	switch (component->GetType())
-	{
-		case (Component::Type::TRANSFORM):
-		{
-			components.push_back(component);
-			transform = (ComponentTransform*) component;
-			component->SetGameObject(this);
-			break;
-		}
-		case (Component::Type::CAMERA):
-		{
-			components.push_back((Component*) component);
-			component->SetGameObject(this);
-			break;
-		}
-	}
+    switch (component->GetType())
+    {
+    case (Component::Type::TRANSFORM):
+    {
+        components.push_back(component);
+        transform = static_cast<ComponentTransform*>(component);
+        component->SetGameObject(this);
+        break;
+    }
+    case (Component::Type::CAMERA):
+    {
+        components.push_back(component);
+        component->SetGameObject(this);
+        break;
+    }
+    }
 }
 
-Component* GameObject::CreateComponent(Component::Type type)
+Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 {
-	Component* new_component = nullptr;
-	switch (type)
-	{
-	case (Component::Type::TRANSFORM):
-		return transform;
-		break;
-	case (Component::Type::CAMERA):
-		new_component = new ComponentCamera(this);
-		break;
-	case (Component::Type::MESH):
-		new_component = new ComponentMesh(this);
-		break;
-	case (Component::Type::MATERIAL):
-		new_component = new ComponentMaterial(this);
-		break;
-	case (Component::Type::DIRLIGHT):
-		new_component = new ComponentDirLight(this);
-		break;
-	case (Component::Type::POINTLIGHT):
-		new_component = new ComponentPointLight(this);
-		break;
-	case (Component::Type::SPOTLIGHT):
-		new_component = new ComponentSpotLight(this);
-		break;
-	}
+    Component* new_component = nullptr;
+    switch (type)
+    {
+    case (Component::Type::TRANSFORM):
+        return transform;
+        break;
+    case (Component::Type::CAMERA):
+        new_component = new ComponentCamera(this);
+        break;
+    case (Component::Type::MESH):
+        new_component = new ComponentMesh(this);
+        break;
+    case (Component::Type::MATERIAL):
+        new_component = new ComponentMaterial(this);
+        break;
+    case (Component::Type::DIRLIGHT):
+        new_component = new ComponentDirLight(this);
+        break;
+    case (Component::Type::POINTLIGHT):
+        new_component = new ComponentPointLight(this);
+        break;
+    case (Component::Type::SPOTLIGHT):
+        new_component = new ComponentSpotLight(this);
+        break;
+    }
 
-	if (new_component != nullptr)
-		components.push_back(new_component);
-	else
-		LOG("Falied to create component");
-	return new_component;
+    if (new_component != nullptr)
+    {
+        components.push_back(new_component);
+    }
+    else
+    {
+        LOG("Falied to create component");
+    }
+    return new_component;
 }
 
-void GameObject::Update()
+void Hachiko::GameObject::Update()
 {
-		if (transform->HasChanged())
-		{
-			OnTransformUpdated();
-		}
+    if (transform->HasChanged())
+    {
+        OnTransformUpdated();
+    }
 
-		for (Component* component : components)
-		{
-			component->Update();
-		}
+    for (Component* component : components)
+    {
+        component->Update();
+    }
 
-	for (GameObject* child : childs)
-	{
-		if (child->IsActive())	
-			child->Update();
-	}
+    for (GameObject* child : childs)
+    {
+        if (child->IsActive())
+        {
+            child->Update();
+        }
+    }
 }
 
-void GameObject::DrawAll(ComponentCamera* camera, Program* program)
+void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) const
 {
-	// Draw yourself
-	Draw(camera, program);
-	// Draw children recursively
-	for (GameObject* child : childs)
-	{
-		child->DrawAll(camera, program);
-	}
+    // Draw yourself
+    Draw(camera, program);
+    // Draw children recursively
+    for (const GameObject* child : childs)
+    {
+        child->DrawAll(camera, program);
+    }
 }
 
-void GameObject::Draw(ComponentCamera* camera, Program* program)
+void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 {
-	// Call draw on all components
-	for (Component* component : components)
-	{
-		component->Draw(camera, program);
-	}
+    // Call draw on all components
+    for (Component* component : components)
+    {
+        component->Draw(camera, program);
+    }
 }
 
-void GameObject::DrawStencil(ComponentCamera* camera, Program* program)
+void Hachiko::GameObject::DrawStencil(ComponentCamera* camera, Program* program)
 {
-	ComponentMesh* mesh = GetComponent<ComponentMesh>();
-	if (mesh)
-		mesh->DrawStencil(camera, program);
+    auto* mesh = GetComponent<ComponentMesh>();
+    if (mesh)
+    {
+        mesh->DrawStencil(camera, program);
+    }
 }
 
-void GameObject::OnTransformUpdated()
+void Hachiko::GameObject::OnTransformUpdated()
 {
-	// Update components
-	for (Component* component : components)
-		component->OnTransformUpdated();
+    // Update components
+    for (Component* component : components)
+    {
+        component->OnTransformUpdated();
+    }
 
-	// Update children
-	for (GameObject* child : childs)
-		child->OnTransformUpdated();
+    // Update children
+    for (GameObject* child : childs)
+    {
+        child->OnTransformUpdated();
+    }
 
-	UpdateBoundingBoxes();
+    UpdateBoundingBoxes();
 }
 
-void GameObject::DebugDrawAll()
+void Hachiko::GameObject::DebugDrawAll()
 {
-	// Draw yourself
-	DebugDraw();
-	// Draw children recursively
-	for (GameObject* child : childs)
-	{
-		child->DebugDrawAll();
-	}
+    // Draw yourself
+    DebugDraw();
+    // Draw children recursively
+    for (GameObject* child : childs)
+    {
+        child->DebugDrawAll();
+    }
 }
 
-void GameObject::DebugDraw()
+void Hachiko::GameObject::DebugDraw()
 {
-	DrawBoundingBox();
-	for (Component* component : components)
-	{
-		component->DebugDraw();
-	}
+    DrawBoundingBox();
+    for (Component* component : components)
+    {
+        component->DebugDraw();
+    }
 }
 
-void GameObject::DrawBoundingBox()
+void Hachiko::GameObject::DrawBoundingBox() const
 {
-	ddVec3 p[8];
-	// This order was pure trial and error, i dont know how to really do it
-	// Using center and points does not show the rotation
-	static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
-	for (int i = 0; i < 8; ++i)
-		p[i] = obb.CornerPoint(order[i]);
-
-	dd::box(p, dd::colors::White);
+    ddVec3 p[8];
+    // This order was pure trial and error, i dont know how to really do it
+    // Using center and points does not show the rotation
+    static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+    for (int i = 0; i < 8; ++i)
+    {
+        p[i] = obb.CornerPoint(order[i]);
+    }
+    dd::box(p, dd::colors::White);
 }
 
-void GameObject::UpdateBoundingBoxes()
+void Hachiko::GameObject::UpdateBoundingBoxes()
 {
-	constexpr float default_bounding_size = 1.0f;
-	ComponentMesh* mesh = GetComponent<ComponentMesh>();
-	if (mesh != nullptr)
-	{
-		obb = mesh->GetAABB();
-		obb.Transform(transform->GetTransform());
-		// Enclose is accumulative, reset the box
-		aabb.SetNegativeInfinity();
-		aabb.Enclose(obb);
-	}
-	else
-	{
-		// If there is no mesh generate a default size
-		aabb.SetNegativeInfinity();
-		aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
-		obb = aabb;
-	}
+    auto* mesh = GetComponent<ComponentMesh>();
+    if (mesh != nullptr)
+    {
+        obb = mesh->GetAABB();
+        obb.Transform(transform->GetTransform());
+        // Enclose is accumulative, reset the box
+        aabb.SetNegativeInfinity();
+        aabb.Enclose(obb);
+    }
+    else
+    {
+        constexpr float default_bounding_size = 1.0f;
+        // If there is no mesh generate a default size
+        aabb.SetNegativeInfinity();
+        aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+        obb = aabb;
+    }
 
-	// Without the check main camera crashes bcs there is no quadtree
-	if (scene_owner) {
-		Quadtree* quadtree = scene_owner->GetQuadtree();
-		quadtree->Remove(this);
-		quadtree->Insert(this);
-	}
+    // Without the check main camera crashes bcs there is no quadtree
+    if (scene_owner)
+    {
+        const Quadtree* quadtree = scene_owner->GetQuadtree();
+        quadtree->Remove(this);
+        quadtree->Insert(this);
+    }
 }
 
-void GameObject::RemoveComponent(Component* component)
+void Hachiko::GameObject::RemoveComponent(Component* component)
 {
-	//TODO: Should I delete the component?
-	components.erase(std::remove(components.begin(), components.end(), component));
+    //TODO: Should I delete the component?
+    components.erase(std::remove(components.begin(), components.end(), component));
 }
 
-void GameObject::Save(JsonFormaterValue j_gameObject) const
+void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
 {
-	j_gameObject["Uid"] = uid;
-	j_gameObject["GOName"] = name.c_str();
-	j_gameObject["Active"] = active;
-	j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
+    j_gameObject["Uid"] = uid;
+    j_gameObject["GOName"] = name.c_str();
+    j_gameObject["Active"] = active;
+    j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
 
-	JsonFormaterValue j_components = j_gameObject["Components"];
-	for (unsigned i = 0; i < components.size(); ++i)
-	{
-		JsonFormaterValue j_component = j_components[i];
-		Component* component = components[i];
+    const JsonFormatterValue j_components = j_gameObject["Components"];
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        JsonFormatterValue j_component = j_components[i];
+        const Component* component = components[i];
 
-		j_component["ComponentID"] = component->GetID();
-		j_component["ComponentType"] = component->GetType();
-		component->Save(j_component);
-	}
+        j_component["ComponentID"] = component->GetID();
+        j_component["ComponentType"] = static_cast<int>(component->GetType());
+        component->Save(j_component);
+    }
 
-	JsonFormaterValue j_children = j_gameObject["GOChildrens"];
-	for (unsigned i = 0; i < childs.size(); ++i)
-	{
-		JsonFormaterValue j_child = j_children[i];
-		GameObject* child = childs[i];
-		child->Save(j_child);
-	}
+    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
+    for (unsigned i = 0; i < childs.size(); ++i)
+    {
+        const JsonFormatterValue j_child = j_children[i];
+        const GameObject* child = childs[i];
+        child->Save(j_child);
+    }
 }
 
-void GameObject::Load(JsonFormaterValue j_gameObject)
+void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
 {
-	JsonFormaterValue j_components = j_gameObject["Components"];
-	for (unsigned i = 0; i < j_components.Size(); ++i)
-	{
-		JsonFormaterValue j_component = j_components[i];
+    const JsonFormatterValue j_components = j_gameObject["Components"];
+    for (unsigned i = 0; i < j_components.Size(); ++i)
+    {
+        JsonFormatterValue j_component = j_components[i];
 
-		Hachiko::UID c_uid = j_component["ComponentID"];
-		int enum_type = j_component["ComponentType"];
-		bool active = j_component["Active"];
+        UID c_uid = j_component["ComponentID"];
+        int enum_type = j_component["ComponentType"];
+        bool active = j_component["Active"];
 
-		Component::Type type = Component::Type(enum_type);
+        const auto type = static_cast<Component::Type>(enum_type);
 
-		Component* component = CreateComponent(type);
+        Component* component = CreateComponent(type);
 
-		component->Load(j_component);
-	}
+        component->Load(j_component);
+    }
 
-	JsonFormaterValue j_childrens = j_gameObject["GOChildrens"];
-	for (unsigned i = 0; i < j_childrens.Size(); ++i)
-	{
-		JsonFormaterValue j_child = j_childrens[i];
+    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
+    for (unsigned i = 0; i < j_children.Size(); ++i)
+    {
+        JsonFormatterValue j_child = j_children[i];
 
-		std::string child_name = j_child["GOName"];
-		GameObject* child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
-		child->scene_owner = scene_owner;
-		child->Load(j_child);
-
-	}
+        std::string child_name = j_child["GOName"];
+        const auto child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
+        child->scene_owner = scene_owner;
+        child->Load(j_child);
+    }
 }
-
-

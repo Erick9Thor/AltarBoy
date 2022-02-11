@@ -1,7 +1,6 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "UI/ImGuiUtils.h"
 
 #include "MathGeoLib.h"
 
@@ -9,81 +8,99 @@
 
 #include <vector>
 
-struct SDL_Texture;
-struct SDL_Renderer;
-struct SDL_Rect;
-class ComponentCamera;
-class Scene;
-
-struct GpuData
+namespace Hachiko
 {
-	unsigned char* name;
-	unsigned char* brand;
-	float vram_budget_mb;
-};
+    class ComponentCamera;
+    class Scene;
 
-struct GlVersion
-{
-	unsigned char* glew;
-	unsigned char* opengl;
-	unsigned char* glsl;
-};
+    struct GpuData
+    {
+        unsigned char* name;
+        unsigned char* brand;
+        float vram_budget_mb;
+    };
 
-class ModuleRender : public Module
-{
-public:
-	ModuleRender();
-	~ModuleRender() override;
+    struct GlVersion
+    {
+        unsigned char* glew;
+        unsigned char* opengl;
+        unsigned char* glsl;
+    };
 
-	bool Init() override;
-	update_status Update(const float delta) override;
-	update_status PostUpdate(const float delta) override;
-	bool CleanUp() override;
+    class ModuleRender : public Module
+    {
+    public:
+        ModuleRender();
+        ~ModuleRender() override;
 
-	inline unsigned int GetFrameBuffer() const { return frame_buffer; }
-	inline unsigned int GetTextureId() const { return fb_texture; }
+        bool Init() override;
+        UpdateStatus Update(float delta) override;
+        UpdateStatus PostUpdate(float delta) override;
+        bool CleanUp() override;
 
-	void OptionsMenu();
-	void PerformanceMenu();
-	void FpsGraph();
-	void AddFrame(const float delta);
+        [[nodiscard]] unsigned int GetFrameBuffer() const
+        {
+            return frame_buffer;
+        }
 
-	inline void* GetGLContext() const { return context; }
-	inline const GpuData GetGpuData() const { return gpu; }
-	inline const GlVersion GetGlVersion() { return gl; }
+        [[nodiscard]] unsigned int GetTextureId() const
+        {
+            return fb_texture;
+        }
 
-private:
-	void GenerateFrameBuffer();
-	void ResizeFrameBuffer(int heigth, int width);
-	void ManageResolution(ComponentCamera* camera);
-	void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+        void OptionsMenu();
+        void PerformanceMenu();
+        void FpsGraph() const;
+        void AddFrame(float delta);
 
-	void CreateContext();
-	void SetGLOptions();
-	void RetrieveLibVersions();
-	void RetrieveGpuInfo();
+        [[nodiscard]] void* GetGLContext() const
+        {
+            return context;
+        }
 
-	void* context;
+        [[nodiscard]] const GpuData GetGpuData() const
+        {
+            return gpu;
+        }
 
-	RenderList render_list;
+        [[nodiscard]] const GlVersion GetGlVersion() const
+        {
+            return gl;
+        }
 
-	unsigned frame_buffer = 0;
-	unsigned depth_stencil_buffer = 0;
-	unsigned fb_texture = 0;	
-	unsigned fb_height = 0;
-	unsigned fb_width = 0;
+    private:
+        void GenerateFrameBuffer();
+        void ResizeFrameBuffer(int heigth, int width) const;
+        void ManageResolution(ComponentCamera* camera);
+        void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
 
-	float4 clear_color;
-	bool draw_skybox = true;
-	bool outline_selection = true;
+        void CreateContext();
+        static void SetGLOptions();
+        void RetrieveLibVersions();
+        void RetrieveGpuInfo();
 
-	GpuData gpu;
-	GlVersion gl;
-	int vram_free;
+        void* context{};
 
-	static const unsigned n_bins = 50;
-	std::vector<float> fps_log;
-	std::vector<float> ms_log;
-	float current_fps = 0.0f;
-	float current_ms = 0.0f;
-};
+        RenderList render_list;
+
+        unsigned frame_buffer = 0;
+        unsigned depth_stencil_buffer = 0;
+        unsigned fb_texture = 0;
+        unsigned fb_height = 0;
+        unsigned fb_width = 0;
+
+        float4 clear_color;
+        bool draw_skybox = true;
+        bool outline_selection = true;
+
+        GpuData gpu{};
+        GlVersion gl{};
+        int vram_free{};
+
+        static const unsigned n_bins = 50;
+        std::vector<float> fps_log;
+        std::vector<float> ms_log;
+        float current_fps = 0.0f;
+        float current_ms = 0.0f;
+    };
+}

@@ -5,83 +5,84 @@
 
 #include "Application.h"
 #include "Modules/ModuleProgram.h"
-#include "Modules/ModuleRender.h"
 #include "Program.h"
 
 #include "Importers/MeshImporter.h"
 
 #include "glew.h"
 #include <imgui.h>
+#include "Core/GameObject.h"
 
-ComponentMesh::ComponentMesh(GameObject* conatiner)
-	: Component(Component::Type::MESH, conatiner)
+Hachiko::ComponentMesh::ComponentMesh(GameObject* container) :
+    Component(Type::MESH, container) {}
+
+Hachiko::ComponentMesh::~ComponentMesh()
 {
+    RELEASE(resource);
 }
 
-ComponentMesh::~ComponentMesh()
+void Hachiko::ComponentMesh::Import(const aiMesh* mesh)
 {
-	RELEASE(resource);
+    // TODO: This is ugly. Maybe we should find a better approach,
+    // for example MeshImporter::Import can take resource as ref
+    // and do this check internally.
+
+    if (resource != nullptr && resource->loaded)
+    {
+        resource->CleanUp();
+    }
+
+    resource = MeshImporter::Import(mesh);
 }
 
-void ComponentMesh::Import(const aiMesh* mesh)
+void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
-	// TODO: This is ugly. Maybe we should find a better approach,
-	// for example MeshImporter::Import can take resource as ref
-	// and do this check internally.
+    assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
-	if (resource != nullptr && resource->loaded)
-	{
-		resource->CleanUp();
-	}
+    const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
+    App->program->UpdateMaterial(material);
 
-	resource = MeshImporter::Import(mesh);
+    glBindVertexArray(resource->vao);
+    glDrawElements(GL_TRIANGLES, resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
-void ComponentMesh::Draw(ComponentCamera* camera, Program* program)
+void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program) const
 {
-	assert(resource->loaded == true);
-	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+    assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
-	ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-	App->program->UpdateMaterial(material);
-
-	glBindVertexArray(resource->vao);
-	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[ResourceMesh::Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(resource->vao);
+    glDrawElements(GL_TRIANGLES, resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
-void ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program)
+void Hachiko::ComponentMesh::Save(JsonFormatterValue j_component) const
 {
-	assert(resource->loaded == true);
-	program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
-
-	glBindVertexArray(resource->vao);
-	glDrawElements(GL_TRIANGLES, resource->buffer_sizes[ResourceMesh::Buffers::b_indices], GL_UNSIGNED_INT, nullptr);
+    MeshImporter::Save(resource, game_object->getUID());
 }
 
-void ComponentMesh::Save(JsonFormaterValue j_component) const
+void Hachiko::ComponentMesh::Load(JsonFormatterValue j_component)
 {
-	MeshImporter::Save(resource, game_object->getUID());
+    // TODO: This is ugly. Maybe we should find a better approach,
+    // for example MeshImporter::Import can take resource as ref
+    // and do this check internally.
+
+    if (resource != nullptr && resource->loaded)
+    {
+        resource->CleanUp();
+    }
+
+    resource = MeshImporter::Load(game_object->getUID());
 }
 
-void ComponentMesh::Load(JsonFormaterValue j_component)
+void Hachiko::ComponentMesh::DrawGui()
 {
-	// TODO: This is ugly. Maybe we should find a better approach,
-	// for example MeshImporter::Import can take resource as ref
-	// and do this check internally.
-
-	if (resource != nullptr && resource->loaded)
-	{
-		resource->CleanUp();
-	}
-
-	resource = MeshImporter::Load(game_object->getUID());
-}
-
-void ComponentMesh::DrawGui()
-{
-	if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		ImGui::Text("%d Triangles\n%d vertices\n%d indices", resource->buffer_sizes[ResourceMesh::Buffers::b_indices] / 3, resource->buffer_sizes[ResourceMesh::Buffers::b_vertices] / 3, resource->buffer_sizes[ResourceMesh::Buffers::b_indices]);
-		ImGui::Checkbox("Visible", &visible);
-	}
+    if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        ImGui::Text("%d Triangles\n%d vertices\n%d indices",
+                    resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
+                    resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3,
+                    resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
+        ImGui::Checkbox("Visible", &visible);
+    }
 }

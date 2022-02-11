@@ -363,7 +363,7 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\JsonFormaterValue.cpp">
+    <ClCompile Include="src\Utils\JsonFormatterValue.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -823,7 +823,7 @@
     <ClInclude Include="src\Skybox.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\JsonFormaterValue.h">
+    <ClInclude Include="src\Utils\JsonFormatterValue.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
   </ItemGroup>

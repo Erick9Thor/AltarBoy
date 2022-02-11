@@ -5,79 +5,104 @@
 #include "Utils/UUID.h"
 #include "Components/Component.h"
 
-class JsonFormaterValue;
-class ComponentTransform;
-class ComponentCamera;
-class Program;
-class Scene;
-
-class GameObject
+namespace Hachiko
 {
-	friend class Component;
+    class JsonFormatterValue;
+    class ComponentTransform;
+    class ComponentCamera;
+    class Program;
+    class Scene;
 
-public:
-	GameObject(const char* name = "Unnamed");
-    GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", Hachiko::UID uid = Hachiko::UUID::GenerateUID());
-	GameObject(GameObject* parent, const char* name = "Unnamed", Hachiko::UID uid = Hachiko::UUID::GenerateUID(), const float3& translation = float3::zero, const Quat& rotation = Quat::identity, const float3& scale = float3::one);
-	virtual ~GameObject();
+    class GameObject final
+    {
+        friend class Component;
 
-	void SetNewParent(GameObject* new_parent);
-	
-	void AddComponent(Component* component);
-	void RemoveComponent(Component* component);
+    public:
+        GameObject(const char* name = "Unnamed");
+        GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
+        GameObject(GameObject* parent,
+                   const char* name = "Unnamed",
+                   UID uid = UUID::GenerateUID(),
+                   const float3& translation = float3::zero,
+                   const Quat& rotation = Quat::identity,
+                   const float3& scale = float3::one);
+        virtual ~GameObject();
 
-	Component* CreateComponent(Component::Type type);
-	void RemoveChild(GameObject* gameObject);
+        void SetNewParent(GameObject* new_parent);
 
-	//void Destroy();
-	void Update();
-	void DrawAll(ComponentCamera* camera, Program* program);
-	void Draw(ComponentCamera* camera, Program* program);
-	void DrawStencil(ComponentCamera* camera, Program* program);
+        void AddComponent(Component* component);
+        void RemoveComponent(Component* component);
 
-	inline bool IsActive() { return active; }
+        Component* CreateComponent(Component::Type type);
+        void RemoveChild(GameObject* gameObject);
 
-	void OnTransformUpdated();
+        //void Destroy();
+        void Update();
+        void DrawAll(ComponentCamera* camera, Program* program) const;
+        void Draw(ComponentCamera* camera, Program* program) const;
+        void DrawStencil(ComponentCamera* camera, Program* program);
 
-	void DebugDrawAll();
-	void DebugDraw();
-	void DrawBoundingBox();
-	void UpdateBoundingBoxes();
+        bool IsActive() const
+        {
+            return active;
+        }
 
-    Hachiko::UID getUID() { return uid; }
-	void Save(JsonFormaterValue j_gameObject) const;
-	void Load(JsonFormaterValue j_gameObject);
+        void OnTransformUpdated();
 
-	const OBB& GetOBB() const { return obb; }
-	const AABB& GetAABB() { return aabb; }
+        void DebugDrawAll();
+        void DebugDraw();
+        void DrawBoundingBox() const;
+        void UpdateBoundingBoxes();
 
-	const std::vector<Component*>& GetComponents() const { return components; }
+        UID getUID() const
+        {
+            return uid;
+        }
 
-	template<typename RetComponent>
-	RetComponent* GetComponent()
-	{
-		Component::Type type = RetComponent::GetType();
-		for (unsigned int i = 0; i < components.size(); i++)
-		{
-			if (components[i]->GetType() == type)
-				return ((RetComponent*) (components[i]));
-		}
-		return nullptr;
-	}
+        void Save(JsonFormatterValue j_gameObject) const;
+        void Load(JsonFormatterValue j_gameObject);
 
-	std::string name;
-	Scene* scene_owner = nullptr;
-	GameObject* parent = nullptr;
-	std::vector<GameObject*> childs;
+        [[nodiscard]] const OBB& GetOBB() const
+        {
+            return obb;
+        }
 
-	bool active = true;
+        const AABB& GetAABB()
+        {
+            return aabb;
+        }
 
-private:
-	std::vector<Component*> components;
-	ComponentTransform* transform = nullptr;
+        [[nodiscard]] const std::vector<Component*>& GetComponents() const
+        {
+            return components;
+        }
 
-	AABB aabb;
-	OBB obb;
+        template<typename RetComponent>
+        RetComponent* GetComponent()
+        {
+            const Component::Type type = RetComponent::GetType();
+            for (auto& component : components)
+            {
+                if (component->GetType() == type)
+                    return static_cast<RetComponent*>(component);
+            }
+            return nullptr;
+        }
 
-    Hachiko::UID uid = 0;
-};
+        std::string name;
+        Scene* scene_owner = nullptr;
+        GameObject* parent = nullptr;
+        std::vector<GameObject*> childs;
+
+        bool active = true;
+
+    private:
+        std::vector<Component*> components;
+        ComponentTransform* transform = nullptr;
+
+        AABB aabb;
+        OBB obb;
+
+        UID uid = 0;
+    };
+}

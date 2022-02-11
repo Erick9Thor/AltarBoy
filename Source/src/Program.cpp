@@ -2,69 +2,69 @@
 
 #include "glew.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 
-Program::Program(unsigned vtx_shader, unsigned frg_shader)
+Hachiko::Program::Program(unsigned vtx_shader, unsigned frg_shader) :
+    id(glCreateProgram())
 {
-	id = glCreateProgram();
-	glAttachShader(id, vtx_shader);
-	glAttachShader(id, frg_shader);
-	glLinkProgram(id);
-	int res;
-	glGetProgramiv(id, GL_LINK_STATUS, &res);
-	if (res == GL_FALSE)
-	{
-		int len = 0;
-		glGetProgramiv(id, GL_INFO_LOG_LENGTH, &len);
-		if (len > 0)
-		{
-			int written = 0;
-			char* info = (char*) malloc(len);
-			glGetProgramInfoLog(id, len, &written, info);
-			// LOG("Program Log Info: %s", info);
-			free(info);
-		}
-		// Set id to 0 to indicate that it failed
-		id = 0;
-	}
+    glAttachShader(id, vtx_shader);
+    glAttachShader(id, frg_shader);
+    glLinkProgram(id);
+    int res;
+    glGetProgramiv(id, GL_LINK_STATUS, &res);
+    if (res == GL_FALSE)
+    {
+        int len = 0;
+        glGetProgramiv(id, GL_INFO_LOG_LENGTH, &len);
+        if (len > 0)
+        {
+            int written = 0;
+            const auto info = static_cast<char*>(malloc(len));
+            glGetProgramInfoLog(id, len, &written, info);
+            // LOG("Program Log Info: %s", info);
+            free(info);
+        }
+        // Set id to 0 to indicate that it failed
+        id = 0;
+    }
 }
 
-void Program::Activate()
+void Hachiko::Program::Activate() const
 {
-	glUseProgram(id);
+    glUseProgram(id);
 }
 
-void Program::Deactivate()
+void Hachiko::Program::Deactivate()
 {
-	glUseProgram(0);
+    glUseProgram(0);
 }
 
-void Program::CleanUp()
+void Hachiko::Program::CleanUp() const
 {
-	glDeleteProgram(id);
+    glDeleteProgram(id);
 }
 
-void Program::BindUniformFloat4x4(const char* name, const float* data, bool transpose)
+void Hachiko::Program::BindUniformFloat4x4(const char* name, const float* data, bool transpose) const
 {
-	glUniformMatrix4fv(glGetUniformLocation(id, name), 1, transpose, data);
+    glUniformMatrix4fv(glGetUniformLocation(id, name), 1, transpose, data);
 }
 
-void Program::BindUniformFloat3(const char* name, const float* data)
+void Hachiko::Program::BindUniformFloat3(const char* name, const float* data) const
 {
-	glUniform3fv(glGetUniformLocation(id, name), 1, data);
+    glUniform3fv(glGetUniformLocation(id, name), 1, data);
 }
 
-void Program::BindUniformFloat(const char* name, const float* data)
+void Hachiko::Program::BindUniformFloat(const char* name, const float* data) const
 {
-	glUniform1fv(glGetUniformLocation(id, name), 1, data);
+    glUniform1fv(glGetUniformLocation(id, name), 1, data);
 }
 
-void Program::BindUniformBool(const char* name, bool value)
+void Hachiko::Program::BindUniformBool(const char* name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(id, name), value);
+    glUniform1i(glGetUniformLocation(id, name), value);
 }
 
-void Program::BindUniformInts(const char* name, unsigned size, const int* data)
+void Hachiko::Program::BindUniformInts(const char* name, unsigned size, const int* data) const
 {
-	glUniform1iv(glGetUniformLocation(id, name), size, data);
+    glUniform1iv(glGetUniformLocation(id, name), size, data);
 }

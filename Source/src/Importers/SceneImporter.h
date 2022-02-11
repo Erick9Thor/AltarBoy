@@ -1,9 +1,12 @@
 #pragma once
 
-class Scene;
-
-namespace SceneImporter
+namespace Hachiko
 {
-	Scene* LoadScene(const char* file_path);
-	bool SaveScene(Scene* scene, const char* file_path);
+    class Scene;
+
+    namespace SceneImporter
+    {
+        Scene* LoadScene(const char* file_path);
+        bool SaveScene(Scene* scene, const char* file_path);
+    } // namespace SceneImporter
 }

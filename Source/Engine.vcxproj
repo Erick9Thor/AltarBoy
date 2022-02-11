@@ -190,7 +190,7 @@
     <ClCompile Include="src\Resources\ResourceMaterial.cpp" />
     <ClCompile Include="src\Resources\Resource.cpp" />
     <ClCompile Include="src\UI\ImguiUtils.cpp" />
-    <ClCompile Include="src\Utils\JsonFormaterValue.cpp" />
+    <ClCompile Include="src\Utils\JsonFormatterValue.cpp" />
     <ClCompile Include="src\Quadtree.cpp" />
     <ClCompile Include="src\RenderList.cpp" />
     <ClCompile Include="src\Skybox.cpp" />
@@ -304,7 +304,7 @@
     <ClInclude Include="src\Resources\ResourceMesh.h" />
     <ClInclude Include="src\Resources\ResourceMaterial.h" />
     <ClInclude Include="src\Resources\Resource.h" />
-    <ClInclude Include="src\Utils\JsonFormaterValue.h" />
+    <ClInclude Include="src\Utils\JsonFormatterValue.h" />
     <ClInclude Include="src\Quadtree.h" />
     <ClInclude Include="src\RenderList.h" />
     <ClInclude Include="src\Skybox.h" />

@@ -3,18 +3,13 @@
 #include "imgui.h"
 #include <IconsFontAwesome5.h>
 
-WindowResource::WindowResource()
-	: Window("Resources", true) {}
+Hachiko::WindowResource::WindowResource() :
+    Window("Resources", true) {}
 
-WindowResource::~WindowResource()
+Hachiko::WindowResource::~WindowResource() = default;
+
+void Hachiko::WindowResource::Update()
 {
-}
-
-
-void WindowResource::Update()
-{
-	if (ImGui::Begin(ICON_FA_FILE "Resource", &active))
-	{
-	}
-	ImGui::End();
+    if (ImGui::Begin(ICON_FA_FILE "Resource", &active)) { }
+    ImGui::End();
 }

@@ -4,60 +4,60 @@
 #include "Modules/Module.h"
 #include "Utils/Timer.h"
 
-#include<list>
 #include <vector>
 
-using namespace std;
-
-class ModuleRender;
-class ModuleWindow;
-class ModuleTextures;
-class ModuleInput;
-class ModuleRenderExercise;
-class ModuleEditor;
-class ModuleDebugDraw;
-class ModuleCamera;
-class ModuleTexture;
-class ModuleSceneManager;
-class ModuleProgram;
-class ModuleHardware;
-class ModuleFileSystem;
-
-class Program;
-class AppLog;
-
-class Application
+namespace Hachiko
 {
-public:
-	Application();
-	~Application();
+    class ModuleRender;
+    class ModuleWindow;
+    class ModuleTextures;
+    class ModuleInput;
+    class ModuleRenderExercise;
+    class ModuleEditor;
+    class ModuleDebugDraw;
+    class ModuleCamera;
+    class ModuleTexture;
+    class ModuleSceneManager;
+    class ModuleProgram;
+    class ModuleHardware;
+    class ModuleFileSystem;
 
-	bool Init();
-	update_status Update();
-	
-	bool CleanUp();
+    class Program;
+    class AppLog;
 
-	void RequestBrowser(const char* url) const;
+    class Application
+    {
+    public:
+        Application();
+        ~Application();
 
-public:
-	ModuleRender* renderer = nullptr;
-	ModuleWindow* window = nullptr;
-	ModuleInput* input = nullptr;
-	ModuleEditor* editor = nullptr;
-	ModuleDebugDraw* debug_draw = nullptr;
-	ModuleCamera* camera = nullptr;
-	ModuleTexture* texture = nullptr;
-	ModuleSceneManager* scene_manager = nullptr;
-	ModuleProgram* program = nullptr;
-	ModuleHardware* hw = nullptr;
-	ModuleFileSystem* file_sys = nullptr;
+        bool Init();
+        UpdateStatus Update();
 
-private:
-	PerformanceTimer timer;
+        bool CleanUp();
 
-	double  delta = 0;
-	double  prev_tick_time = 0;
-	std::vector<Module*> modules;
-};
+        static void RequestBrowser(const char* url);
 
-extern Application* App;
+    public:
+        ModuleRender* renderer = nullptr;
+        ModuleWindow* window = nullptr;
+        ModuleInput* input = nullptr;
+        ModuleEditor* editor = nullptr;
+        ModuleDebugDraw* debug_draw = nullptr;
+        ModuleCamera* camera = nullptr;
+        ModuleTexture* texture = nullptr;
+        ModuleSceneManager* scene_manager = nullptr;
+        ModuleProgram* program = nullptr;
+        ModuleHardware* hw = nullptr;
+        ModuleFileSystem* file_sys = nullptr;
+
+    private:
+        PerformanceTimer timer;
+
+        double delta = 0;
+        double prev_tick_time = 0;
+        std::vector<Module*> modules;
+    };
+}
+
+extern Hachiko::Application* App;

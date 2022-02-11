@@ -4,17 +4,17 @@
 
 #define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
-class Logger
+namespace Hachiko
 {
-public:
-	Logger();
-	~Logger();
-	void log(const char file[], int line, const char* format, ...);
-	ImVector<int> line_offsets;
-	ImGuiTextBuffer buff;
-};
+    class Logger
+    {
+    public:
+        Logger();
+        ~Logger();
+        void log(const char file[], int line, const char* format, ...);
+        ImVector<int> line_offsets;
+        ImGuiTextBuffer buff;
+    };
+}
 
-
-extern Logger* Logging;
-
-
+extern Hachiko::Logger* Logging;

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Globals.h"
-#include "Application.h"
 #include "Core/GameObject.h"
 
 #include "UI/Window.h"
@@ -16,64 +15,89 @@
 #include "UI/WindowTimers.h"
 
 #include "ModuleRender.h"
-#include "ModuleWindow.h"
 #include "SDL.h"
-#include "glew.h"
 
-class ModuleEditor : public Module
+namespace Hachiko
 {
-public:
+    class ModuleEditor : public Module
+    {
+    public:
+        ModuleEditor();
 
-	ModuleEditor();
+        bool Init() override;
+        UpdateStatus PreUpdate(float delta) override;
+        UpdateStatus Update(float delta) override;
+        bool CleanUp() override;
 
-	bool Init() override;
-	update_status PreUpdate(const float delta) override;
-	update_status Update(const float delta) override;
-	bool CleanUp() override;
+        //Edit actions
+        static bool CanUndo()
+        {
+            return false;
+        }
 
-	//Edit actions
-	bool CanUndo() { return false; }
-	bool CanRedo() { return false; }
-	bool CanPaste() { return false; }
+        static bool CanRedo()
+        {
+            return false;
+        }
 
-	void SetSelectedGO(GameObject* go) { selected_go = go; }
-	GameObject* GetSelectedGO() { return selected_go; }
-	const GameObject* GetSelectedGO() const { return selected_go; }
+        static bool CanPaste()
+        {
+            return false;
+        }
 
-	const WindowScene* GetSceneWindow() const { return &w_scene; }
+        void SetSelectedGO(GameObject* go)
+        {
+            selected_go = go;
+        }
 
-	ImFont* m_big_icon_font = nullptr;
-	ImFont* m_small_icon_font = nullptr;
+        GameObject* GetSelectedGO()
+        {
+            return selected_go;
+        }
 
-	// TODO: Save the info imgui.ini
-	unsigned dock_up_id = 0;
-	unsigned dock_main_id = 0;
-	unsigned dock_left_id = 0;
-	unsigned dock_right_id = 0;
-	unsigned dock_down_id = 0;
+        [[nodiscard]] const GameObject* GetSelectedGO() const
+        {
+            return selected_go;
+        }
 
-private:
-	void RenderGui();
-	void GenerateDockingSpace();
+        [[nodiscard]] const WindowScene* GetSceneWindow() const
+        {
+            return &w_scene;
+        }
 
-	// Main menu bar
-	update_status MainMenuBar();
-	void FileMenu();
-	void EditMenu();
-	void GoMenu();
-	void ViewMenu();
+        ImFont* m_big_icon_font = nullptr;
+        ImFont* m_small_icon_font = nullptr;
 
-	GameObject* selected_go = nullptr;
+        // TODO: Save the info imgui.ini
+        unsigned dock_up_id = 0;
+        unsigned dock_main_id = 0;
+        unsigned dock_left_id = 0;
+        unsigned dock_right_id = 0;
+        unsigned dock_down_id = 0;
 
-	std::vector<Window*> windows;
+    private:
+        static void RenderGui();
+        void GenerateDockingSpace();
 
-	WindowHierarchy w_hierarchy;
-	WindowScene w_scene;
-	WindowInspector w_inspector;
-	WindowConfiguration w_configuration;
-	WindowAbout w_about;
-	WindowConsole w_console;
-	WindowResource w_resource;
-	WindowProject w_project;
-	WindowTimers w_timers;
-};
+        // Main menu bar
+        UpdateStatus MainMenuBar();
+        void FileMenu() const;
+        void EditMenu();
+        void GoMenu() const;
+        void ViewMenu();
+
+        GameObject* selected_go = nullptr;
+
+        std::vector<Window*> windows;
+
+        WindowHierarchy w_hierarchy;
+        WindowScene w_scene;
+        WindowInspector w_inspector;
+        WindowConfiguration w_configuration;
+        WindowAbout w_about;
+        WindowConsole w_console;
+        WindowResource w_resource;
+        WindowProject w_project;
+        WindowTimers w_timers;
+    };
+}

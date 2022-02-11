@@ -2,11 +2,14 @@
 
 #include "Window.h"
 
-class WindowAbout : public Window
+namespace Hachiko
 {
-public:
-	WindowAbout();
+    class WindowAbout final : public Window
+    {
+    public:
+        WindowAbout();
 
-	~WindowAbout() override;
-	void Update() override;
-};
+        ~WindowAbout() override;
+        void Update() override;
+    };
+}
