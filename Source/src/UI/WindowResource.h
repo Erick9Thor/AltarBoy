@@ -1,10 +1,13 @@
 #pragma once
 #include "Window.h"
 
-class WindowResource : public Window
+namespace Hachiko
 {
-public:
-	WindowResource();
-	~WindowResource() override; 
-	void Update() override;
-};
+    class WindowResource final : public Window
+    {
+    public:
+        WindowResource();
+        ~WindowResource() override;
+        void Update() override;
+    };
+}

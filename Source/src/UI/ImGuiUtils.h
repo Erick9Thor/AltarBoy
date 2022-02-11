@@ -1,20 +1,22 @@
 #pragma once
 
 #include "imgui.h"
-#include "imgui_internal.h"
 
-class GameObject;
-class Component;
-
-namespace ImGuiUtils
+namespace Hachiko
 {
-	bool IconButton(const char* icon, const char* tooltip);
+    class GameObject;
+    class Component;
 
-	void VSplitter(const char* str_id, ImVec2* size);
+    namespace ImGuiUtils
+    {
+        bool IconButton(const char* icon, const char* tooltip);
 
-	void Rect(float w, float h, ImU32 color);
+        void VSplitter(const char* str_id, ImVec2* size);
 
-	bool CompactColorPicker(const char* name, float* color);
+        void Rect(float w, float h, ImU32 color);
 
-	bool CollapsingHeader(GameObject* game_object, Component* component, const char* header_name);
-};
+        bool CompactColorPicker(const char* name, float* color);
+
+        bool CollapsingHeader(GameObject* game_object, Component* component, const char* header_name);
+    }; // namespace ImGuiUtils
+}

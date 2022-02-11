@@ -43,4 +43,4 @@ namespace Hachiko
         }
         return ss.str();
     }
-} // namespace Hachiko
+}

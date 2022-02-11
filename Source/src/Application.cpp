@@ -17,71 +17,82 @@
 
 using namespace std;
 
-Application::Application()
+Hachiko::Application::Application()
 {
-	modules.push_back(hw = new ModuleHardware());
-	modules.push_back(file_sys = new ModuleFileSystem());
+    modules.push_back(hw = new ModuleHardware());
+    modules.push_back(file_sys = new ModuleFileSystem());
 
-	modules.push_back(window = new ModuleWindow());
-	modules.push_back(input = new ModuleInput());
-	modules.push_back(texture = new ModuleTexture());
-	modules.push_back(renderer = new ModuleRender());
-	modules.push_back(camera = new ModuleCamera());
-	modules.push_back(scene_manager = new ModuleSceneManager());
-	modules.push_back(program = new ModuleProgram());
-	modules.push_back(debug_draw = new ModuleDebugDraw());
-	modules.push_back(editor = new ModuleEditor());
+    modules.push_back(window = new ModuleWindow());
+    modules.push_back(input = new ModuleInput());
+    modules.push_back(texture = new ModuleTexture());
+    modules.push_back(renderer = new ModuleRender());
+    modules.push_back(camera = new ModuleCamera());
+    modules.push_back(scene_manager = new ModuleSceneManager());
+    modules.push_back(program = new ModuleProgram());
+    modules.push_back(debug_draw = new ModuleDebugDraw());
+    modules.push_back(editor = new ModuleEditor());
 }
 
-Application::~Application()
+Hachiko::Application::~Application()
 {
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end(); ++it)
-		delete *it;
+    for (auto it = modules.begin(); it != modules.end(); ++it)
+    {
+        delete *it;
+    }
 }
 
-bool Application::Init()
+bool Hachiko::Application::Init()
 {
-	bool ret = true;
+    bool ret = true;
 
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret; ++it)
-		ret = (*it)->Init();
+    for (auto it = modules.begin(); it != modules.end() && ret; ++it)
+    {
+        ret = (*it)->Init();
+    }
 
-	delta = 0.f;
-	EngineTimer::Start();
-	return ret;
+    delta = 0;
+    EngineTimer::Start();
+    return ret;
 }
 
-update_status Application::Update()
+UpdateStatus Hachiko::Application::Update()
 {
+    delta = EngineTimer::Update();
+    GameTimer::Update();
 
-	delta = EngineTimer::Update();
-	GameTimer::Update();
+    auto ret = UpdateStatus::UPDATE_CONTINUE;
 
-	update_status ret = UPDATE_CONTINUE;
+    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+    {
+        ret = (*it)->PreUpdate(static_cast<float>(delta));
+    }
 
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PreUpdate((float) delta);
+    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+    {
+        ret = (*it)->Update(static_cast<float>(delta));
+    }
 
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->Update((float) delta);
+    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+    {
+        ret = (*it)->PostUpdate(static_cast<float>(delta));
+    }
 
-	for (vector<Module*>::iterator it = modules.begin(); it != modules.end() && ret == UPDATE_CONTINUE; ++it)
-		ret = (*it)->PostUpdate((float) delta);
-
-	return ret;
+    return ret;
 }
 
-bool Application::CleanUp()
+bool Hachiko::Application::CleanUp()
 {
-	bool ret = true;
+    bool ret = true;
 
-	for (vector<Module*>::reverse_iterator it = modules.rbegin(); it != modules.rend() && ret; ++it)
-		ret = (*it)->CleanUp();
+    for (auto it = modules.rbegin(); it != modules.rend() && ret; ++it)
+    {
+        ret = (*it)->CleanUp();
+    }
 
-	return ret;
+    return ret;
 }
 
-void Application::RequestBrowser(const char* url) const
+void Hachiko::Application::RequestBrowser(const char* url)
 {
-	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
+    ShellExecuteA(nullptr, "open", url, nullptr, nullptr, SW_SHOWNORMAL);
 }

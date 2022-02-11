@@ -2,34 +2,39 @@
 
 #include "Utils/UUID.h"
 
-
-enum class ResourceType
+namespace Hachiko
 {
-	UNKNOWN,
-	MATERIAL,
-	TEXTURE,
-	MODEL,
-	MESH,
-	SCENE,
-	SHADER
-};
+    class Resource
+    {
+    public:
+        enum class Type
+        {
+            UNKNOWN,
+            MATERIAL,
+            TEXTURE,
+            MODEL,
+            MESH,
+            SCENE,
+            SHADER
+        };
 
-class Resource
-{
-public:
-	Resource(Hachiko::UID id, ResourceType type);
-	virtual ~Resource();
+        Resource(UID id, Type type);
+        virtual ~Resource();
 
-	ResourceType GetType() const
-	{
-		return type;
-	}
+        [[nodiscard]] Type GetType() const
+        {
+            return type;
+        }
 
-    Hachiko::UID GetID() const { return id; }
+        [[nodiscard]] UID GetID() const
+        {
+            return id;
+        }
 
-	unsigned int instances = 0;
+        unsigned int instances = 0;
 
-private:
-    Hachiko::UID id = 0;
-	ResourceType type = ResourceType::UNKNOWN;
-};
+    private:
+        UID id = 0;
+        Type type = Type::UNKNOWN;
+    };
+}

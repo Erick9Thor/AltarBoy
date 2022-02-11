@@ -35,4 +35,4 @@ namespace Hachiko
 
         static std::string GenerateUUIDv4();
     };
-} // namespace Hachiko
+}
