@@ -1,7 +1,7 @@
+#include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
-#include "Importers/SceneImporter.h"
-#include "Utils/Logger.h"
+#include "importers/SceneImporter.h"
 
 Hachiko::ModuleSceneManager::ModuleSceneManager() = default;
 
@@ -9,7 +9,7 @@ Hachiko::ModuleSceneManager::~ModuleSceneManager() = default;
 
 bool Hachiko::ModuleSceneManager::Init()
 {
-    LOG("Creating Empty scene");
+    HE_LOG("Creating Empty scene");
 
     // main_scene = new Scene();
 

@@ -1,6 +1,6 @@
-#include "Resource.h"
+#include "core/hepch.h"
 
-Hachiko::Resource::Resource(UID id, Type type) :
+Hachiko::Resource::Resource(const UID id, const Type type) :
     id(id),
     type(type) {}
 

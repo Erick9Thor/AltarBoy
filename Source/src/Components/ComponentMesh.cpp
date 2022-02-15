@@ -1,17 +1,12 @@
+#include "core/hepch.h"
+
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 
-#include "Application.h"
-#include "Modules/ModuleProgram.h"
-#include "Program.h"
-
-#include "Importers/MeshImporter.h"
-
-#include "glew.h"
-#include <imgui.h>
-#include "Core/GameObject.h"
+#include "modules/ModuleProgram.h"
+#include "importers/MeshImporter.h"
 
 Hachiko::ComponentMesh::ComponentMesh(GameObject* container) :
     Component(Type::MESH, container) {}

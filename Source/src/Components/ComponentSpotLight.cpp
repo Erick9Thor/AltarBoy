@@ -1,13 +1,7 @@
+#include "core/hepch.h"
 #include "ComponentSpotLight.h"
-
-#include "UI/ImGuiUtils.h"
-
 #include "ComponentTransform.h"
-#include "Core/Scene.h"
 
-#include "imgui.h"
-#include <algorithm>
-#include "Core/GameObject.h"
 #include <debugdraw.h>
 
 Hachiko::ComponentSpotLight::ComponentSpotLight(GameObject* conatiner) :

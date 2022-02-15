@@ -3,8 +3,7 @@
 #include <imgui.h>
 #include <ImGuizmo.h>
 
-#include "Utils/Timer.h"
-#include "MathGeoLib.h"
+#include "utils/Timer.h"
 
 namespace Hachiko
 {

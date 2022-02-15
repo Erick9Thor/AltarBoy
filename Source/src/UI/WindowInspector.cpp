@@ -1,12 +1,7 @@
+#include "core/hepch.h"
 #include "WindowInspector.h"
 
-#include "Application.h"
-#include "Core/GameObject.h"
-
-#include "Modules/ModuleEditor.h"
-
-#include "imgui.h"
-#include <IconsFontAwesome5.h>
+#include "modules/ModuleEditor.h"
 
 Hachiko::WindowInspector::WindowInspector() :
     Window("Inspector", true) {}
@@ -18,7 +13,7 @@ void Hachiko::WindowInspector::Update()
     ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
     if (ImGui::Begin((std::string(ICON_FA_EYE " ") + name).c_str(), &active))
     {
-        DrawGameObject(App->editor->GetSelectedGO());
+        DrawGameObject(App->editor->GetSelectedGameObject());
     }
     ImGui::End();
 }

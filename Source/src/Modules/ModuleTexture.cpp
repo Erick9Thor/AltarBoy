@@ -1,9 +1,5 @@
+#include "core/hepch.h"
 #include "ModuleTexture.h"
-
-#include <glew.h>
-
-#include "ilu.h"
-#include "imgui.h"
 
 Hachiko::ModuleTexture::ModuleTexture() = default;
 

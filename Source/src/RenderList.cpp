@@ -1,9 +1,8 @@
+#include "core/hepch.h"
 #include "RenderList.h"
 
-#include "Core/GameObject.h"
-#include "Components/ComponentCamera.h"
-#include "Components/ComponentMesh.h"
-#include "Quadtree.h"
+#include "components/ComponentCamera.h"
+#include "components/ComponentMesh.h"
 
 void Hachiko::RenderList::Update(ComponentCamera* camera, GameObject* game_object)
 {
@@ -29,7 +28,7 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
         CollectMesh(camera_pos, game_object);
     }
 
-    for (GameObject* child : game_object->childs)
+    for (GameObject* child : game_object->children)
         CollectObjects(camera, camera_pos, child);
 }
 
@@ -50,7 +49,7 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
                 CollectMesh(camera_pos, game_object);
             }
         }
-        // Call for all childs (What to do if it is duplicated when collecting)?
+        // Call for all children (What to do if it is duplicated when collecting)?
         if (!quadtree->IsLeaf())
         {
             for (QuadtreeNode* child : quadtree->childs)

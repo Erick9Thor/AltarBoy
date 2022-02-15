@@ -1,354 +1,354 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Dependencies\imgui\imgui_impl_opengl3.cpp">
+    <ClCompile Include="vendors\imgui\imgui_impl_opengl3.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_impl_sdl.cpp">
+    <ClCompile Include="vendors\imgui\imgui_impl_sdl.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui.cpp">
+    <ClCompile Include="vendors\imgui\imgui.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_draw.cpp">
+    <ClCompile Include="vendors\imgui\imgui_draw.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_tables.cpp">
+    <ClCompile Include="vendors\imgui\imgui_tables.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imgui\imgui_widgets.cpp">
+    <ClCompile Include="vendors\imgui\imgui_widgets.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\BitOps.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\BitOps.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\Callstack.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\Callstack.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float2.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float2.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float3.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float3.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float3x3.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float3x3.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float3x4.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float3x4.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float4.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float4.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float4d.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float4d.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\float4x4.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\float4x4.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\grisu3_cpp.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\grisu3_cpp.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\MathFunc.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\MathFunc.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\MathLog.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\MathLog.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\MathOps.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\MathOps.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\MiniFloat.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\MiniFloat.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\Polynomial.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\Polynomial.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\Quat.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\Quat.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\SSEMath.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\SSEMath.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\TransformOps.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Math\TransformOps.cpp">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\AABB.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\AABB.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Capsule.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Capsule.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Circle.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Circle.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Circle2D.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Circle2D.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Frustum.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Frustum.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Line.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Line.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\LineSegment.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\LineSegment.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\LineSegment2D.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\LineSegment2D.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\OBB.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\OBB.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\PBVolume.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\PBVolume.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Plane.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Plane.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Polygon.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Polygon.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Polyhedron.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Polyhedron.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Ray.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Ray.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Sphere.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Sphere.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Triangle.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Triangle.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\Triangle2D.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Triangle2D.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Geometry\TriangleMesh.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Geometry\TriangleMesh.cpp">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK.cpp">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Algorithm\GJK2D.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK2D.cpp">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Algorithm\SAT.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\SAT.cpp">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Algorithm\Random\LCG.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\Random\LCG.cpp">
       <Filter>Vendors\MathGeoLib\Algorithm\Random</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Time\Clock.cpp">
+    <ClCompile Include="vendors\MathGeoLib\Time\Clock.cpp">
       <Filter>Vendors\MathGeoLib\Time</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\MathGeoLib\Math\grisu3.c">
+    <ClCompile Include="vendors\MathGeoLib\Math\grisu3.c">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imGuizmo\GraphEditor.cpp">
+    <ClCompile Include="vendors\imGuizmo\GraphEditor.cpp">
       <Filter>Vendors\imGuizmo</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imGuizmo\ImCurveEdit.cpp">
+    <ClCompile Include="vendors\imGuizmo\ImCurveEdit.cpp">
       <Filter>Vendors\imGuizmo</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imGuizmo\ImGradient.cpp">
+    <ClCompile Include="vendors\imGuizmo\ImGradient.cpp">
       <Filter>Vendors\imGuizmo</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imGuizmo\ImGuizmo.cpp">
+    <ClCompile Include="vendors\imGuizmo\ImGuizmo.cpp">
       <Filter>Vendors\imGuizmo</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\imGuizmo\ImSequencer.cpp">
+    <ClCompile Include="vendors\imGuizmo\ImSequencer.cpp">
       <Filter>Vendors\imGuizmo</Filter>
     </ClCompile>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="Dependencies\PhysicsFS\physfs.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_7z.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_7z.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_dir.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_dir.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_grp.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_grp.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_hog.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_hog.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_iso9660.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_iso9660.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_mvl.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_mvl.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_qpak.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_qpak.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_slb.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_slb.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_unpacked.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_unpacked.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_vdf.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_vdf.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_wad.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_wad.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_archiver_zip.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_zip.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_byteorder.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_byteorder.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_haiku.cpp">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_haiku.cpp">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_os2.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_os2.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_posix.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_posix.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_qnx.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_qnx.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_unix.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_unix.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_windows.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_windows.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_platform_winrt.cpp">
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_winrt.cpp">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\PhysicsFS\physfs_unicode.c">
+    <ClCompile Include="vendors\PhysicsFS\physfs_unicode.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleCamera.cpp">
+    <ClCompile Include="src\modules\ModuleCamera.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleDebugDraw.cpp">
+    <ClCompile Include="src\modules\ModuleDebugDraw.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleEditor.cpp">
+    <ClCompile Include="src\modules\ModuleEditor.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleFileSystem.cpp">
+    <ClCompile Include="src\modules\ModuleFileSystem.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleHardware.cpp">
+    <ClCompile Include="src\modules\ModuleHardware.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleInput.cpp">
+    <ClCompile Include="src\modules\ModuleInput.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleProgram.cpp">
+    <ClCompile Include="src\modules\ModuleProgram.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleRender.cpp">
+    <ClCompile Include="src\modules\ModuleRender.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleSceneManager.cpp">
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleTexture.cpp">
+    <ClCompile Include="src\modules\ModuleTexture.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleWindow.cpp">
+    <ClCompile Include="src\modules\ModuleWindow.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\Window.cpp">
+    <ClCompile Include="src\ui\Window.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowAbout.cpp">
+    <ClCompile Include="src\ui\WindowAbout.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowConfiguration.cpp">
+    <ClCompile Include="src\ui\WindowConfiguration.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowConsole.cpp">
+    <ClCompile Include="src\ui\WindowConsole.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowHierarchy.cpp">
+    <ClCompile Include="src\ui\WindowHierarchy.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowInspector.cpp">
+    <ClCompile Include="src\ui\WindowInspector.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowProject.cpp">
+    <ClCompile Include="src\ui\WindowProject.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowResource.cpp">
+    <ClCompile Include="src\ui\WindowResource.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowScene.cpp">
+    <ClCompile Include="src\ui\WindowScene.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\WindowTimers.cpp">
+    <ClCompile Include="src\ui\WindowTimers.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentCamera.cpp">
+    <ClCompile Include="src\components\ComponentCamera.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentDirLight.cpp">
+    <ClCompile Include="src\components\ComponentDirLight.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentMaterial.cpp">
+    <ClCompile Include="src\components\ComponentMaterial.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentMesh.cpp">
+    <ClCompile Include="src\components\ComponentMesh.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentPointLight.cpp">
+    <ClCompile Include="src\components\ComponentPointLight.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentSpotLight.cpp">
+    <ClCompile Include="src\components\ComponentSpotLight.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\ComponentTransform.cpp">
+    <ClCompile Include="src\components\ComponentTransform.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\UUID.cpp">
+    <ClCompile Include="src\utils\UUID.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\Importers\MaterialImporter.cpp">
+    <ClCompile Include="src\importers\MaterialImporter.cpp">
       <Filter>Importers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Importers\MeshImporter.cpp">
+    <ClCompile Include="src\importers\MeshImporter.cpp">
       <Filter>Importers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Importers\SceneImporter.cpp">
+    <ClCompile Include="src\importers\SceneImporter.cpp">
       <Filter>Importers</Filter>
     </ClCompile>
-    <ClCompile Include="src\UI\ImguiUtils.cpp">
+    <ClCompile Include="src\ui\ImguiUtils.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
+    <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <Filter>Vendors\ImGuiFileDialog</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resources\Resource.cpp">
+    <ClCompile Include="src\resources\Resource.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resources\ResourceMaterial.cpp">
+    <ClCompile Include="src\resources\ResourceMaterial.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resources\ResourceMesh.cpp">
+    <ClCompile Include="src\resources\ResourceMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Scene.cpp">
+    <ClCompile Include="src\core\Scene.cpp">
       <Filter>Core\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\Timer.cpp">
+    <ClCompile Include="src\utils\Timer.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GameObject.cpp">
+    <ClCompile Include="src\core\GameObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\Logger.cpp">
+    <ClCompile Include="src\utils\Logger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
     <ClCompile Include="src\Quadtree.cpp">
@@ -363,452 +363,461 @@
     <ClCompile Include="src\Skybox.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\JsonFormatterValue.cpp">
+    <ClCompile Include="src\utils\JsonFormatterValue.cpp">
       <Filter>Core\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleEvent.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_stdlib.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\hepch.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3.h">
+    <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_opengl3_loader.h">
+    <ClInclude Include="vendors\imgui\imgui_impl_opengl3_loader.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_impl_sdl.h">
+    <ClInclude Include="vendors\imgui\imgui_impl_sdl.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imconfig.h">
+    <ClInclude Include="vendors\imgui\imconfig.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui.h">
+    <ClInclude Include="vendors\imgui\imgui.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imgui_internal.h">
+    <ClInclude Include="vendors\imgui\imgui_internal.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_rectpack.h">
+    <ClInclude Include="vendors\imgui\imstb_rectpack.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_textedit.h">
+    <ClInclude Include="vendors\imgui\imstb_textedit.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\imstb_truetype.h">
+    <ClInclude Include="vendors\imgui\imstb_truetype.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\MathBuildConfig.h">
+    <ClInclude Include="vendors\MathGeoLib\MathBuildConfig.h">
       <Filter>Vendors\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\MathGeoLib.h">
+    <ClInclude Include="vendors\MathGeoLib\MathGeoLib.h">
       <Filter>Vendors\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\MathGeoLibFwd.h">
+    <ClInclude Include="vendors\MathGeoLib\MathGeoLibFwd.h">
       <Filter>Vendors\MathGeoLib</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\assume.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\assume.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\BitFuncs.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\BitFuncs.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\BitOps.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\BitOps.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Callstack.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Callstack.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\FixedPoint.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\FixedPoint.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float2.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float2.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float3.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float3.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float3x3.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float3x3.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float3x4.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float3x4.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4_neon.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4_neon.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4_sse.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4_sse.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4d.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4d.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4x4.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4x4_neon.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4_neon.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\float4x4_sse.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4_sse.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\FloatCmp.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\FloatCmp.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\grisu3.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\grisu3.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\InclWindows.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\InclWindows.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Interpolate.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Interpolate.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathAll.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathAll.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathConstants.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathConstants.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathFunc.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathFunc.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathLog.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathLog.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathNamespace.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathNamespace.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MathTypes.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MathTypes.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MatrixProxy.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MatrixProxy.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MiniFloat.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MiniFloat.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\MultiLineMacro.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\MultiLineMacro.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\myassert.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\myassert.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Polynomial.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Polynomial.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Quat.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Quat.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\quat_simd.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\quat_simd.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Rect.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Rect.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Reinterpret.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Reinterpret.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\simd.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\simd.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\sse_mathfun.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\sse_mathfun.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\SSEMath.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\SSEMath.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\Swap.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\Swap.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\TransformOps.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\TransformOps.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Math\vec2d.h">
+    <ClInclude Include="vendors\MathGeoLib\Math\vec2d.h">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\AABB.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\AABB.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\AABB2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\AABB2D.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Capsule.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Capsule.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Circle.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Circle.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Circle2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Circle2D.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Frustum.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Frustum.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\GeometryAll.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\GeometryAll.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\GeomType.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\GeomType.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\HitInfo.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\HitInfo.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\KDTree.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\KDTree.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Line.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Line.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\LineSegment.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\LineSegment.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\LineSegment2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\LineSegment2D.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\OBB.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\OBB.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\OBB2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\OBB2D.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\PBVolume.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\PBVolume.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Plane.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Plane.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Polygon.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polygon.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Polygon2DRef.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polygon2DRef.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Polyhedron.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polyhedron.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\QuadTree.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\QuadTree.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Ray.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Ray.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Sphere.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Sphere.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Triangle.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Triangle.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\Triangle2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Triangle2D.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Geometry\TriangleMesh.h">
+    <ClInclude Include="vendors\MathGeoLib\Geometry\TriangleMesh.h">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Algorithm\GJK.h">
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\GJK.h">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Algorithm\GJK2D.h">
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\GJK2D.h">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Algorithm\SAT.h">
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\SAT.h">
       <Filter>Vendors\MathGeoLib\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Algorithm\Random\LCG.h">
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\Random\LCG.h">
       <Filter>Vendors\MathGeoLib\Algorithm\Random</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\MathGeoLib\Time\Clock.h">
+    <ClInclude Include="vendors\MathGeoLib\Time\Clock.h">
       <Filter>Vendors\MathGeoLib\Time</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\debugdraw\debug_draw.hpp">
+    <ClInclude Include="vendors\DebugDraw\debug_draw.hpp">
       <Filter>Vendors\DebugDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\debugdraw\debugdraw.h">
+    <ClInclude Include="vendors\DebugDraw\debugdraw.h">
       <Filter>Vendors\DebugDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\ImZoomSlider.h">
+    <ClInclude Include="vendors\imGuizmo\ImZoomSlider.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\GraphEditor.h">
+    <ClInclude Include="vendors\imGuizmo\GraphEditor.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\ImCurveEdit.h">
+    <ClInclude Include="vendors\imGuizmo\ImCurveEdit.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\ImGradient.h">
+    <ClInclude Include="vendors\imGuizmo\ImGradient.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\ImGuizmo.h">
+    <ClInclude Include="vendors\imGuizmo\ImGuizmo.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imGuizmo\ImSequencer.h">
+    <ClInclude Include="vendors\imGuizmo\ImSequencer.h">
       <Filter>Vendors\imGuizmo</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h">
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h">
       <Filter>Vendors\ImGuiFileDialog</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h">
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h">
       <Filter>Vendors\ImGuiFileDialog</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\dirent\dirent.h">
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h">
       <Filter>Vendors\ImGuiFileDialog\dirent</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image.h">
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image.h">
       <Filter>Vendors\ImGuiFileDialog\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h">
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h">
       <Filter>Vendors\ImGuiFileDialog\stb</Filter>
     </ClInclude>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Globals.h" />
-    <ClInclude Include="Dependencies\PhysicsFS\physfs.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\PhysicsFS\physfs_casefolding.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs_casefolding.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\PhysicsFS\physfs_internal.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs_internal.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\PhysicsFS\physfs_lzmasdk.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs_lzmasdk.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\PhysicsFS\physfs_miniz.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs_miniz.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\PhysicsFS\physfs_platforms.h">
+    <ClInclude Include="vendors\PhysicsFS\physfs_platforms.h">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\Module.h">
+    <ClInclude Include="src\modules\Module.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleCamera.h">
+    <ClInclude Include="src\modules\ModuleCamera.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleDebugDraw.h">
+    <ClInclude Include="src\modules\ModuleDebugDraw.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleEditor.h">
+    <ClInclude Include="src\modules\ModuleEditor.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleFileSystem.h">
+    <ClInclude Include="src\modules\ModuleFileSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleHardware.h">
+    <ClInclude Include="src\modules\ModuleHardware.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleInput.h">
+    <ClInclude Include="src\modules\ModuleInput.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleProgram.h">
+    <ClInclude Include="src\modules\ModuleProgram.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleRender.h">
+    <ClInclude Include="src\modules\ModuleRender.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleSceneManager.h">
+    <ClInclude Include="src\modules\ModuleSceneManager.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleTexture.h">
+    <ClInclude Include="src\modules\ModuleTexture.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleWindow.h">
+    <ClInclude Include="src\modules\ModuleWindow.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\Window.h">
+    <ClInclude Include="src\ui\Window.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowAbout.h">
+    <ClInclude Include="src\ui\WindowAbout.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowConfiguration.h">
+    <ClInclude Include="src\ui\WindowConfiguration.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowConsole.h">
+    <ClInclude Include="src\ui\WindowConsole.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowHierarchy.h">
+    <ClInclude Include="src\ui\WindowHierarchy.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowInspector.h">
+    <ClInclude Include="src\ui\WindowInspector.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowProject.h">
+    <ClInclude Include="src\ui\WindowProject.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowResource.h">
+    <ClInclude Include="src\ui\WindowResource.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowScene.h">
+    <ClInclude Include="src\ui\WindowScene.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\WindowTimers.h">
+    <ClInclude Include="src\ui\WindowTimers.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Component.h">
+    <ClInclude Include="src\components\Component.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentCamera.h">
+    <ClInclude Include="src\components\ComponentCamera.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentDirLight.h">
+    <ClInclude Include="src\components\ComponentDirLight.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentMaterial.h">
+    <ClInclude Include="src\components\ComponentMaterial.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentMesh.h">
+    <ClInclude Include="src\components\ComponentMesh.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentPointLight.h">
+    <ClInclude Include="src\components\ComponentPointLight.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentSpotLight.h">
+    <ClInclude Include="src\components\ComponentSpotLight.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\ComponentTransform.h">
+    <ClInclude Include="src\components\ComponentTransform.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\UUID.h">
+    <ClInclude Include="src\utils\UUID.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Importers\MaterialImporter.h">
+    <ClInclude Include="src\importers\MaterialImporter.h">
       <Filter>Importers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Importers\MeshImporter.h">
+    <ClInclude Include="src\importers\MeshImporter.h">
       <Filter>Importers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Importers\SceneImporter.h">
+    <ClInclude Include="src\importers\SceneImporter.h">
       <Filter>Importers</Filter>
     </ClInclude>
-    <ClInclude Include="src\UI\ImGuiUtils.h">
+    <ClInclude Include="src\ui\ImGuiUtils.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\imgui\IconsFontAwesome5.h">
+    <ClInclude Include="vendors\imgui\IconsFontAwesome5.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\Resource.h">
+    <ClInclude Include="src\resources\Resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\ResourceMaterial.h">
+    <ClInclude Include="src\resources\ResourceMaterial.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\ResourceMesh.h">
+    <ClInclude Include="src\resources\ResourceMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Scene.h">
+    <ClInclude Include="src\core\Scene.h">
       <Filter>Core\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\Timer.h">
+    <ClInclude Include="src\utils\Timer.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\GameObject.h">
+    <ClInclude Include="src\core\GameObject.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\Logger.h">
+    <ClInclude Include="src\utils\Logger.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\PathNode.h">
+    <ClInclude Include="src\utils\PathNode.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Quadtree.h">
@@ -823,8 +832,35 @@
     <ClInclude Include="src\Skybox.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\JsonFormatterValue.h">
+    <ClInclude Include="src\utils\JsonFormatterValue.h">
       <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\hepch.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_stdlib.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleEvent.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\StringUtils.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\Event.h">
+      <Filter>Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\SelectionChangedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\FileAddedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\AssetsAddedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\editor\Theme.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -921,25 +957,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
-    <None Include="Dependencies\MathGeoLib\Math\float2.inl">
+    <None Include="vendors\MathGeoLib\Math\float2.inl">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Math\Matrix.inl">
+    <None Include="vendors\MathGeoLib\Math\Matrix.inl">
       <Filter>Vendors\MathGeoLib\Math</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Geometry\KDTree.inl">
+    <None Include="vendors\MathGeoLib\Geometry\KDTree.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Geometry\QuadTree.inl">
+    <None Include="vendors\MathGeoLib\Geometry\QuadTree.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl">
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl">
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
-    <None Include="Dependencies\MathGeoLib\Geometry\TriangleMesh_IntersectRay_CPP.inl">
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_CPP.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
   </ItemGroup>

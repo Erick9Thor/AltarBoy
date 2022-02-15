@@ -15,9 +15,9 @@ namespace Hachiko
         void CleanUp() override;
 
     private:
-        void DrawHierarchyTree(GameObject* root);
-        void DrawGOChilds(GameObject* root);
-        void DrawGameObject(GameObject* go);
+        void DrawHierarchyTree(const GameObject* game_object);
+        void DrawChildren(const GameObject* game_object);
+        void DrawGameObject(GameObject* game_object);
 
         GameObject* dragged_object = nullptr;
     };

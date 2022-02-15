@@ -1,17 +1,13 @@
+#include "core/hepch.h"
 #include "Skybox.h"
 
-#include <glew.h>
-
-#include "Application.h"
-#include "Program.h"
-
-#include "Modules/ModuleProgram.h"
-#include "Components/ComponentCamera.h"
+#include "modules/ModuleProgram.h"
+#include "components/ComponentCamera.h"
 
 Hachiko::Skybox::Skybox()
 {
     const char* paths[6] = {"Assets/Skybox/right.jpg", "Assets/Skybox/left.jpg", "Assets/Skybox/top.jpg", "Assets/Skybox/bottom.jpg", "Assets/Skybox/front.jpg", "Assets/Skybox/back.jpg"};
-    texture = App->texture->LoadCubeMap(paths);
+    texture = ModuleTexture::LoadCubeMap(paths);
 
     constexpr float vertices[] = {
         // positions          
@@ -49,6 +45,6 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
-    program->Deactivate();
+    Program::Deactivate();
     glDepthFunc(GL_LESS);
 }

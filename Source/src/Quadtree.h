@@ -2,7 +2,7 @@
 
 #include "MathGeoLib.h"
 
-#include "Core/GameObject.h"
+#include "core/GameObject.h"
 
 #include <list>
 

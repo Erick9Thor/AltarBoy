@@ -1,13 +1,6 @@
+#include "core/hepch.h"
 #include "WindowConsole.h"
-
-#include "Application.h"
-
-#include "Modules/ModuleEditor.h"
-#include <IconsFontAwesome5.h>
-
-#include "Utils/Logger.h"
-
-#include "imgui.h"
+#include "modules/ModuleEditor.h"
 
 Hachiko::WindowConsole::WindowConsole() :
     Window("Console", true) {}

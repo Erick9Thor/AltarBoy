@@ -1,11 +1,4 @@
-#include "Globals.h"
-#include "Utils/Logger.h"
-
-#include "Application.h"
-#include "Modules/ModuleRender.h"
-
-#include "glew.h"
-#include "SDL.h"
+#include "core/hepch.h"
 
 #ifdef _DEBUG
 #define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)
@@ -14,8 +7,6 @@
 #include <cstdlib>
 #include <crtdbg.h>
 #endif
-
-#include "optick.h"
 
 void DumpLeaks(void)
 {
@@ -46,21 +37,21 @@ int main(int argc, char** argv)
     {
         switch (state)
         {
-        case MainStates::MAIN_CREATION: LOG("Application Creation --------------");
+        case MainStates::MAIN_CREATION: HE_LOG("Application Creation --------------");
             App = new Hachiko::Application();
             state = MainStates::MAIN_START;
             break;
 
-        case MainStates::MAIN_START: LOG("Application Init --------------");
+        case MainStates::MAIN_START: HE_LOG("Application Init --------------");
             if (App->Init() == false)
             {
-                LOG("Application Init exits with error -----");
+                HE_LOG("Application Init exits with error -----");
                 state = MainStates::MAIN_EXIT;
             }
             else
             {
                 state = MainStates::MAIN_UPDATE;
-                LOG("Application Update --------------");
+                HE_LOG("Application Update --------------");
             }
 
             break;
@@ -72,7 +63,7 @@ int main(int argc, char** argv)
 
             if (update_return == UpdateStatus::UPDATE_ERROR)
             {
-                LOG("Application Update exits with error -----");
+                HE_LOG("Application Update exits with error -----");
                 state = MainStates::MAIN_EXIT;
             }
 
@@ -81,10 +72,10 @@ int main(int argc, char** argv)
         }
         break;
 
-        case MainStates::MAIN_FINISH: LOG("Application CleanUp --------------");
+        case MainStates::MAIN_FINISH: HE_LOG("Application CleanUp --------------");
             if (App->CleanUp() == false)
             {
-                LOG("Application CleanUp exits with error -----");
+                HE_LOG("Application CleanUp exits with error -----");
             }
             else
                 main_return = EXIT_SUCCESS;
@@ -96,7 +87,7 @@ int main(int argc, char** argv)
     }
 
     delete App;
-    LOG("Bye :)\n");
+    HE_LOG("Bye :)\n");
     delete Logging;
     return main_return;
 }

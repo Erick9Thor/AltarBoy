@@ -1,10 +1,9 @@
+#include "core/hepch.h"
+
 #include "MeshImporter.h"
-#include "Utils/UUID.h"
 
-#include "Application.h"
-#include "Modules/ModuleFileSystem.h"
-
-#include "Resources/ResourceMesh.h"
+#include "modules/ModuleFileSystem.h"
+#include "resources/ResourceMesh.h"
 
 Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh)
 {

@@ -1,6 +1,5 @@
+#include "core/hepch.h"
 #include "Timer.h"
-
-#include "SDL.h"
 
 void Hachiko::Timer::Start()
 {

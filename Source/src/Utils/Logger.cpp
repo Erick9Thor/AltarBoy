@@ -1,8 +1,5 @@
+#include "core/hepch.h"
 #include "Logger.h"
-
-#include <sstream>
-#include <Windows.h>
-#include <cstdio>
 
 Hachiko::Logger::Logger() = default;
 

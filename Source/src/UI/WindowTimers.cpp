@@ -1,6 +1,5 @@
+#include "core/hepch.h"
 #include "WindowTimers.h"
-
-#include "imgui.h"
 
 Hachiko::WindowTimers::WindowTimers() :
     Window("Timers", false)

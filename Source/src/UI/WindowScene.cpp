@@ -1,22 +1,16 @@
+#include "core/hepch.h"
 #include "WindowScene.h"
 
-#include "Application.h"
-#include "Utils/Timer.h"
-#include "Core/GameObject.h"
+#include "modules/ModuleInput.h"
+#include "modules/ModuleEditor.h"
+#include "modules/ModuleCamera.h"
+#include "modules/ModuleRender.h"
+#include "modules/ModuleSceneManager.h"
 
-#include "Modules/ModuleInput.h"
-#include "Modules/ModuleEditor.h"
-#include "Modules/ModuleCamera.h"
-#include "Modules/ModuleRender.h"
-#include "Modules/ModuleSceneManager.h"
+#include "components/ComponentCamera.h"
+#include "components/ComponentTransform.h"
 
-#include "Components/ComponentCamera.h"
-#include "Components/ComponentTransform.h"
-
-#include <IconsFontAwesome5.h>
-#include <imgui_internal.h>
-
-#include "Modules/ModuleWindow.h"
+#include "modules/ModuleWindow.h"
 
 Hachiko::WindowScene::WindowScene() :
     Window("Scene", true) {}
@@ -54,20 +48,30 @@ void Hachiko::WindowScene::CleanUp() {}
 void Hachiko::WindowScene::GuizmoOptionsController()
 {
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE))
+    {
         guizmo_operation = ImGuizmo::TRANSLATE;
+    }
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE))
+    {
         guizmo_operation = ImGuizmo::ROTATE;
+    }
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE))
+    {
         guizmo_operation = ImGuizmo::SCALE;
+    }
 
     ImGui::SameLine();
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
     ImGui::SameLine();
 
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL))
+    {
         guizmo_mode = ImGuizmo::LOCAL;
+    }
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD))
+    {
         guizmo_mode = ImGuizmo::WORLD;
+    }
 }
 
 void Hachiko::WindowScene::ToolbarMenu()
@@ -93,7 +97,9 @@ void Hachiko::WindowScene::ToolbarMenu()
             GameTimer::Start();
         }
         else if (GameTimer::paused)
+        {
             GameTimer::Resume();
+        }
     }
 
     if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running))
@@ -158,7 +164,7 @@ void Hachiko::WindowScene::DrawScene()
         App->camera->GetMainCamera()->GetFrustum()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
     }
 
-    GameObject* selected_object = App->editor->GetSelectedGO();
+    GameObject* selected_object = App->editor->GetSelectedGameObject();
     if (!selected_object)
         return;
 

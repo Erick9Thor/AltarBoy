@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Modules/ModuleTexture.h"
+#include "modules/ModuleTexture.h"
 
 namespace Hachiko
 {

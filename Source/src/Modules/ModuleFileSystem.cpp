@@ -1,17 +1,9 @@
+#include "core/hepch.h"
 #include "ModuleFileSystem.h"
-
-#include "Globals.h"
-#include "Utils/Logger.h"
-
-#include <SDL.h>
-#include "physfs.h"
-#include <string>
-#include <fstream>
-#include <algorithm>
 
 Hachiko::ModuleFileSystem::ModuleFileSystem()
 {
-    LOG("Creating virtual file system");
+    HE_LOG("Creating virtual file system");
     // Create base path to be ready for other modules
     char* base_path = SDL_GetBasePath();
     PHYSFS_init(base_path);
@@ -40,7 +32,7 @@ Hachiko::ModuleFileSystem::~ModuleFileSystem()
 
 bool Hachiko::ModuleFileSystem::Init()
 {
-    LOG("Init virtual file system");
+    HE_LOG("Init virtual file system");
 
     CreateContext();
 
@@ -56,7 +48,7 @@ void Hachiko::ModuleFileSystem::CreateContext()
     GetCurrentDirectory(MAX_PATH, engine_path);
     working_directory = engine_path;
 
-    LOG("Engine context: %s", working_directory.c_str());
+    HE_LOG("Engine context: %s", working_directory.c_str());
 }
 
 char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
@@ -67,7 +59,7 @@ char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
 
     if (!fs_file)
     {
-        LOG("Error opening file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error opening file %s (%s).\n", fs_file, PHYSFS_getLastError());
         return buffer;
     }
     defer {
@@ -78,7 +70,7 @@ char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
 
     if (size < 0)
     {
-        LOG("File size couldn't be determined for %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("File size couldn't be determined for %s (%s).\n", fs_file, PHYSFS_getLastError());
         return buffer;
     }
 
@@ -87,7 +79,7 @@ char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
 
     if (read < size)
     {
-        LOG("Error reading file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error reading file %s (%s).\n", fs_file, PHYSFS_getLastError());
         return buffer;
     }
 
@@ -101,7 +93,7 @@ bool Hachiko::ModuleFileSystem::Save(const char* file_path, const void* buffer, 
 
     if (!file)
     {
-        LOG("Error saving file %s (%s).\n", file_path, strerror(errno));
+        HE_LOG("Error saving file %s (%s).\n", file_path, strerror(errno));
         return false;
     }
     defer {
@@ -111,16 +103,16 @@ bool Hachiko::ModuleFileSystem::Save(const char* file_path, const void* buffer, 
     const PHYSFS_sint64 written = PHYSFS_write(file, buffer, 1, size);
     if (written != size)
     {
-        LOG("File System error while writing to file %s: %s", file, PHYSFS_getLastError());
+        HE_LOG("File System error while writing to file %s: %s", file, PHYSFS_getLastError());
         return false;
     }
     if (append == true)
     {
-        LOG("Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
+        HE_LOG("Added %u data to [%s%s]", size, PHYSFS_getWriteDir(), file);
     }
     else if (overwrite == false)
     {
-        LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+        HE_LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
     }
     return true;
 }
@@ -138,7 +130,7 @@ bool Hachiko::ModuleFileSystem::IsDirectory(const char* directory_path)
 void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
 {
     if (!PHYSFS_mkdir(directory_path))
-        LOG(PHYSFS_getLastError());
+        HE_LOG(PHYSFS_getLastError());
 }
 
 void Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
@@ -150,7 +142,7 @@ void Hachiko::ModuleFileSystem::Delete(const char* file_path) const
 {
     if (!PHYSFS_delete(file_path))
     {
-        LOG("Can't erase file %s. (%s)\n", file_path, PHYSFS_getLastError());
+        HE_LOG("Can't erase file %s. (%s)\n", file_path, PHYSFS_getLastError());
     }
 }
 

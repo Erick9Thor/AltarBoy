@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Utils/UUID.h"
+#include "utils/UUID.h"
 #include "assimp/scene.h"
 
 namespace Hachiko

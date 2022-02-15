@@ -2,8 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "MathGeoLib.h"
-#include "Core/GameObject.h"
+#include "core/GameObject.h"
 
 namespace Hachiko
 {

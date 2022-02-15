@@ -1,7 +1,5 @@
+#include "core/hepch.h"
 #include "WindowResource.h"
-
-#include "imgui.h"
-#include <IconsFontAwesome5.h>
 
 Hachiko::WindowResource::WindowResource() :
     Window("Resources", true) {}

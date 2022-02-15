@@ -1,31 +1,19 @@
+#include "core/hepch.h"
 #include "Scene.h"
 
-#include "Globals.h"
+#include "components/ComponentTransform.h"
+#include "components/ComponentCamera.h"
+#include "components/ComponentMesh.h"
+#include "components/ComponentMaterial.h"
 
-#include "Utils/Logger.h"
-
-#include "Application.h"
-#include "Modules/ModuleDebugDraw.h"
-
-#include "GameObject.h"
-#include "Components/Component.h"
-#include "Components/ComponentTransform.h"
-#include "Components/ComponentCamera.h"
-#include "Components/ComponentMesh.h"
-#include "Components/ComponentMaterial.h"
-
-#include "Modules/ModuleTexture.h"
-#include "Modules/ModuleEditor.h"
-#include "Modules/ModuleCamera.h"
-
-#include "Skybox.h"
-#include "Quadtree.h"
+#include "modules/ModuleTexture.h"
+#include "modules/ModuleEditor.h"
+#include "modules/ModuleCamera.h"
+#include "modules/ModuleDebugDraw.h"
 
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
-
-#include <map>
 
 Hachiko::Scene::Scene():
     root(new GameObject(nullptr, float4x4::identity, "Root")),
@@ -51,7 +39,7 @@ void Hachiko::Scene::CleanScene() const
 
 void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 {
-    if (App->editor->GetSelectedGO() == game_object)
+    if (App->editor->GetSelectedGameObject() == game_object)
     {
         App->editor->SetSelectedGO(nullptr);
     }
@@ -61,16 +49,16 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
 {
     GameObject* new_parent = parent ? parent : root;
-    new_parent->childs.push_back(new_object);
+    new_parent->children.push_back(new_object);
     quadtree->Insert(new_object);
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(const char* name, GameObject* parent)
 {
     // It will insert itself into quadtree on first bounding box update
-    const auto foo = new GameObject(parent ? parent : root, name);
-    foo->scene_owner = this;
-    return foo;
+    const auto game_object = new GameObject(parent ? parent : root, name);
+    game_object->scene_owner = this;
+    return game_object;
 }
 
 Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
@@ -92,7 +80,7 @@ Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
     }
     else
     {
-        LOG("Error loading file %s: %s", model_path.c_str(), aiGetErrorString());
+        HE_LOG("Error loading file %s: %s", model_path.c_str(), aiGetErrorString());
     }
     importer.FreeScene();
     return model;

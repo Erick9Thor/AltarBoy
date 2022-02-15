@@ -1,17 +1,12 @@
-#include "Globals.h"
-#include "ModuleDebugDraw.h"
+#include "core/hepch.h"
 
-#include "Application.h"
+#include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
-#include "Core/Scene.h"
-#include "Core/GameObject.h"
-#include "Quadtree.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION
 #define DEBUG_DRAW_CXX11_SUPPORTED 1
 
 #include <debugdraw.h>
-#include "glew.h"
 
 class Hachiko::DDRenderInterfaceCoreGL final : public dd::RenderInterface
 {

@@ -2,8 +2,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "MathGeoLib.h"
-
 #include "RenderList.h"
 
 #include <vector>
@@ -58,12 +56,12 @@ namespace Hachiko
             return context;
         }
 
-        [[nodiscard]] const GpuData GetGpuData() const
+        [[nodiscard]] GpuData GetGpuData() const
         {
             return gpu;
         }
 
-        [[nodiscard]] const GlVersion GetGlVersion() const
+        [[nodiscard]] GlVersion GetGlVersion() const
         {
             return gl;
         }
@@ -89,7 +87,7 @@ namespace Hachiko
         unsigned fb_height = 0;
         unsigned fb_width = 0;
 
-        float4 clear_color;
+        // float4 clear_color;
         bool draw_skybox = true;
         bool outline_selection = true;
 

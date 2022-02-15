@@ -1,12 +1,7 @@
+#include "core/hepch.h"
 #include "WindowProject.h"
-
-#include "Application.h"
-#include "Globals.h"
-#include "Modules/ModuleFileSystem.h"
-#include "Modules/ModuleEditor.h"
-
-#include "ImGuiUtils.h"
-#include <IconsFontAwesome5.h>
+#include "modules/ModuleFileSystem.h"
+#include "modules/ModuleEditor.h"
 
 Hachiko::WindowProject::WindowProject() :
     Window("Project", true) {}
@@ -220,7 +215,7 @@ void Hachiko::WindowProject::ShowFilesOnFolder()
                     break;
                 }
                 PathNode& node = all_assets.children[idx];
-                const bool is_resource = node.children.empty() && App->file_sys->HasExtension(node.path.c_str());
+                const bool is_resource = node.children.empty() && ModuleFileSystem::HasExtension(node.path.c_str());
                 if (is_resource)
                 {
                     // bool selected = find on resource and search match

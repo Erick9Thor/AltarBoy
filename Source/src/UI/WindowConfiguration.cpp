@@ -1,15 +1,12 @@
+#include "core/hepch.h"
 #include "WindowConfiguration.h"
 
-#include "Application.h"
-#include "Modules/ModuleEditor.h"
-#include "Modules/ModuleProgram.h"
-#include "Modules/ModuleCamera.h"
-#include "Components/ComponentCamera.h"
+#include "modules/ModuleEditor.h"
+#include "modules/ModuleProgram.h"
+#include "modules/ModuleCamera.h"
+#include "modules/ModuleWindow.h"
 
-#include <imgui.h>
-#include <IconsFontAwesome5.h>
-
-#include "Modules/ModuleWindow.h"
+#include "components/ComponentCamera.h"
 
 Hachiko::WindowConfiguration::WindowConfiguration() :
     Window("Configuration", true) {}

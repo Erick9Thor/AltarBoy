@@ -1,8 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-#include "Modules/ModuleTexture.h"
-#include "MathGeoLib.h"
+#include "modules/ModuleTexture.h"
 
 namespace Hachiko
 {
