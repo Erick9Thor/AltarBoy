@@ -1,8 +1,8 @@
+#include "core/hepch.h"
 #include "MaterialImporter.h"
 
-#include "Application.h"
-#include "Modules/ModuleTexture.h"
-#include "Resources/ResourceMaterial.h"
+#include "modules/ModuleTexture.h"
+#include "resources/ResourceMaterial.h"
 
 void ColorCopy(const aiColor4D& assimp_color, float4& color)
 {
@@ -46,7 +46,7 @@ Hachiko::ResourceMaterial* Hachiko::MaterialImporter::Material::Import(const aiM
 
     for (std::string path : search_paths)
     {
-        r_material->diffuse = App->texture->Load(path.c_str());
+        r_material->diffuse = ModuleTexture::Load(path.c_str());
         if (r_material->diffuse.loaded)
         {
             break;
@@ -69,7 +69,7 @@ Hachiko::ResourceMaterial* Hachiko::MaterialImporter::Material::Import(const aiM
     {
         // Not flip specular because devil seems to auto flip tif images already
         constexpr bool flip = false;
-        r_material->specular = App->texture->Load(path.c_str(), flip);
+        r_material->specular = ModuleTexture::Load(path.c_str(), flip);
         if (r_material->specular.loaded)
         {
             break;
@@ -112,9 +112,9 @@ Hachiko::ResourceMaterial* Hachiko::MaterialImporter::Material::Load(JsonFormatt
     //r_material->diffuse = App->texture->Load(path.c_str())
     constexpr bool flip = true;
     const std::string diffuse_path = j_material["DiffusePath"];
-    material->diffuse = App->texture->Load(diffuse_path.c_str());
+    material->diffuse = ModuleTexture::Load(diffuse_path.c_str());
     const std::string specular_path = j_material["SpecularPath"];
-    material->specular = App->texture->Load(specular_path.c_str(), !flip);
+    material->specular = ModuleTexture::Load(specular_path.c_str(), !flip);
     material->shininess = j_material["Shininess"];
     return material;
 }

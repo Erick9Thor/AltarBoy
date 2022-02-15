@@ -1,8 +1,6 @@
+#include "core/hepch.h"
 #include "Quadtree.h"
-
-#include "Core/GameObject.h"
 #include "debugdraw.h"
-#include "Globals.h"
 
 Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) :
     box(box),
@@ -33,7 +31,7 @@ void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
         objects.push_back(game_object);
         return;
     }
-    // Rearrange childs
+    // Rearrange children
     if (IsLeaf())
     {
         CreateChildren();

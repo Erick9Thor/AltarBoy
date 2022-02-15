@@ -1,21 +1,21 @@
 #pragma once
 
-#include "Globals.h"
-#include "Core/GameObject.h"
+#include "core/GameObject.h"
 
-#include "UI/Window.h"
-#include "UI/WindowAbout.h"
-#include "UI/WindowConfiguration.h"
-#include "UI/WindowHierarchy.h"
-#include "UI/WindowInspector.h"
-#include "UI/WindowScene.h"
-#include "UI/WindowResource.h"
-#include "UI/WindowProject.h"
-#include "UI/WindowConsole.h"
-#include "UI/WindowTimers.h"
+#include "ui/Window.h"
+#include "ui/WindowAbout.h"
+#include "ui/WindowConfiguration.h"
+#include "ui/WindowHierarchy.h"
+#include "ui/WindowInspector.h"
+#include "ui/WindowScene.h"
+#include "ui/WindowResource.h"
+#include "ui/WindowProject.h"
+#include "ui/WindowConsole.h"
+#include "ui/WindowTimers.h"
 
 #include "ModuleRender.h"
-#include "SDL.h"
+
+#include "ui/editor/Theme.h"
 
 namespace Hachiko
 {
@@ -28,6 +28,8 @@ namespace Hachiko
         UpdateStatus PreUpdate(float delta) override;
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
+
+        void UpdateTheme() const;
 
         //Edit actions
         static bool CanUndo()
@@ -45,24 +47,29 @@ namespace Hachiko
             return false;
         }
 
-        void SetSelectedGO(GameObject* go)
-        {
-            selected_go = go;
-        }
-
-        GameObject* GetSelectedGO()
+        [[nodiscard]] GameObject* GetSelectedGameObject() const
         {
             return selected_go;
         }
 
-        [[nodiscard]] const GameObject* GetSelectedGO() const
+        void SetSelectedGO(GameObject* const selected_game_object)
         {
-            return selected_go;
+            this->selected_go = selected_game_object;
         }
 
         [[nodiscard]] const WindowScene* GetSceneWindow() const
         {
             return &w_scene;
+        }
+
+        [[nodiscard]] Editor::Theme::Type GetTheme() const
+        {
+            return theme;
+        }
+
+        void SetTheme(const Editor::Theme::Type theme)
+        {
+            this->theme = theme;
         }
 
         ImFont* m_big_icon_font = nullptr;
@@ -75,6 +82,8 @@ namespace Hachiko
         unsigned dock_right_id = 0;
         unsigned dock_down_id = 0;
 
+        mutable float4 scene_background{0.1f, 0.1f, 0.1f, 0.1f};
+
     private:
         static void RenderGui();
         void GenerateDockingSpace();
@@ -85,6 +94,7 @@ namespace Hachiko
         void EditMenu();
         void GoMenu() const;
         void ViewMenu();
+        void ThemeMenu() const;
 
         GameObject* selected_go = nullptr;
 
@@ -99,5 +109,7 @@ namespace Hachiko
         WindowResource w_resource;
         WindowProject w_project;
         WindowTimers w_timers;
+
+        Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };
 }

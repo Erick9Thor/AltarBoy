@@ -1,17 +1,10 @@
-#include "Application.h"
+#include "core/hepch.h"
 
-#include "UI/ImGuiUtils.h"
-
-#include "Modules/ModuleSceneManager.h"
-#include "Modules/ModuleCamera.h"
+#include "modules/ModuleSceneManager.h"
+#include "modules/ModuleCamera.h"
 
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
-
-#include "Core/Scene.h"
-
-#include <imgui.h>
-#include "Core/GameObject.h"
 
 #include <debugdraw.h>
 

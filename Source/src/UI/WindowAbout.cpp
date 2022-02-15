@@ -1,11 +1,7 @@
+#include "core/hepch.h"
 #include "WindowAbout.h"
 
-#include "Application.h"
-#include "Modules/ModuleHardware.h"
-
-#include "imgui.h"
-#include "Globals.h"
-#include <ilu.h>
+#include "modules/ModuleHardware.h"
 
 Hachiko::WindowAbout::WindowAbout() :
     Window("About", false) {}

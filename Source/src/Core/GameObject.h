@@ -2,8 +2,8 @@
 #include "MathGeoLib.h"
 
 #include <vector>
-#include "Utils/UUID.h"
-#include "Components/Component.h"
+#include "utils/UUID.h"
+#include "components/Component.h"
 
 namespace Hachiko
 {
@@ -92,7 +92,7 @@ namespace Hachiko
         std::string name;
         Scene* scene_owner = nullptr;
         GameObject* parent = nullptr;
-        std::vector<GameObject*> childs;
+        std::vector<GameObject*> children;
 
         bool active = true;
 

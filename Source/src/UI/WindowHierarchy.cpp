@@ -1,14 +1,9 @@
+#include "core/hepch.h"
 #include "WindowHierarchy.h"
-#include <imgui.h>
-#include <IconsFontAwesome5.h>
 
-#include "Modules/ModuleSceneManager.h"
-#include "Modules/ModuleInput.h"
-#include "Modules/ModuleEditor.h"
-
-#include "Application.h"
-#include "Core/GameObject.h"
-#include "Core/Scene.h"
+#include "modules/ModuleSceneManager.h"
+#include "modules/ModuleInput.h"
+#include "modules/ModuleEditor.h"
 
 Hachiko::WindowHierarchy::WindowHierarchy() :
     Window("Hierarchy", true) {}
@@ -31,37 +26,44 @@ void Hachiko::WindowHierarchy::CleanUp()
     delete dragged_object;
 }
 
-void Hachiko::WindowHierarchy::DrawHierarchyTree(GameObject* root)
+void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
 {
-    DrawGOChilds(root);
+    DrawChildren(game_object);
     if (!App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    {
         dragged_object = nullptr;
+    }
 }
 
-void Hachiko::WindowHierarchy::DrawGOChilds(GameObject* root)
+void Hachiko::WindowHierarchy::DrawChildren(const GameObject* game_object)
 {
-    for (GameObject* game_object : root->childs)
+    for (const auto go : game_object->children)
     {
-        ImGui::PushID(game_object);
-        DrawGameObject(game_object);
+        ImGui::PushID(go);
+        DrawGameObject(go);
         ImGui::PopID();
     }
 }
 
 void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 {
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
-    flags |= ImGuiTreeNodeFlags_DefaultOpen;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 
-    if (game_object->childs.empty())
+    if (game_object->children.empty())
+    {
         flags |= ImGuiTreeNodeFlags_Leaf;
+    }
 
-    if (game_object == App->editor->GetSelectedGO())
+    if (game_object == App->editor->GetSelectedGameObject())
+    {
         flags |= ImGuiTreeNodeFlags_Selected;
+    }
 
-    ImVec4 node_color(1.0f, 1.0f, 1.0f, 1.0f);
+    ImVec4 node_color = ImGui::GetStyle().Colors[ImGuiCol_Text];
     if (!game_object->IsActive())
+    {
         node_color = ImVec4(1.f, 0.f, 0.f, 1.f);
+    }
 
     ImGui::PushStyleColor(ImGuiCol_Text, node_color);
 
@@ -93,20 +95,22 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
         }
     }
 
-    if (!game_object->childs.empty())
-        DrawGOChilds(game_object);
+    if (!game_object->children.empty())
+    {
+        DrawChildren(game_object);
+    }
 
     // TODO: Make robust to repeted game object names
     if (ImGui::BeginPopup(game_object->name.c_str()))
     {
         // Alternativs: ImGui::Selectable, ImGuiHelper::ValueSelection
-        // TODO: Open options to create/destroy new object or move up down in the list of childs
-        if (ImGui::MenuItem("Add Gameojbect"))
+        // TODO: Open options to create/destroy new object or move up down in the list of children
+        if (ImGui::MenuItem("Add Game Object"))
         {
-            App->scene_manager->GetActiveScene()->CreateNewGameObject("Test", game_object);
+            App->scene_manager->GetActiveScene()->CreateNewGameObject("New Game Object", game_object);
             ImGui::CloseCurrentPopup();
         }
-        if (ImGui::MenuItem("Delete Gameojbect"))
+        if (ImGui::MenuItem("Delete Game Object"))
         {
             RELEASE(game_object);
             dragged_object = nullptr;
@@ -116,7 +120,9 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     }
 
     if (node_open)
+    {
         ImGui::TreePop();
+    }
 
     ImGui::PopStyleColor();
 }

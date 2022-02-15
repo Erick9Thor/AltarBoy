@@ -1,8 +1,5 @@
+#include "core/hepch.h"
 #include "Program.h"
-
-#include "glew.h"
-
-#include <cstdlib>
 
 Hachiko::Program::Program(unsigned vtx_shader, unsigned frg_shader) :
     id(glCreateProgram())
@@ -21,7 +18,7 @@ Hachiko::Program::Program(unsigned vtx_shader, unsigned frg_shader) :
             int written = 0;
             const auto info = static_cast<char*>(malloc(len));
             glGetProgramInfoLog(id, len, &written, info);
-            // LOG("Program Log Info: %s", info);
+            // HE_LOG("Program Log Info: %s", info);
             free(info);
         }
         // Set id to 0 to indicate that it failed

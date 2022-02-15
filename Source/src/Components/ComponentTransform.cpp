@@ -1,8 +1,5 @@
+#include "core/hepch.h"
 #include "ComponentTransform.h"
-#include "Component.h"
-
-#include "Core/GameObject.h"
-#include <imgui.h>
 
 Hachiko::ComponentTransform::ComponentTransform(GameObject* new_object, float3 position, Quat rotation, float3 scale) :
     Component(Type::TRANSFORM, new_object),
@@ -107,7 +104,7 @@ void Hachiko::ComponentTransform::UpdateGlobalTransformHierarchy()
     changed = true;
 
     // Update children
-    for (GameObject* child : game_object->childs)
+    for (GameObject* child : game_object->children)
     {
         child->GetComponent<ComponentTransform>()->UpdateGlobalTransformHierarchy();
     }

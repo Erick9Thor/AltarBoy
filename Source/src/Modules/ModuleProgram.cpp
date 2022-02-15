@@ -1,19 +1,12 @@
+#include "core/hepch.h"
 #include "ModuleProgram.h"
 
-#include "Application.h"
-#include "Components/ComponentCamera.h"
-#include "Components/ComponentDirLight.h"
-#include "Components/ComponentPointLight.h"
-#include "Components/ComponentSpotLight.h"
-#include "Components/ComponentMaterial.h"
-#include "Resources/ResourceMaterial.h"
-
-#include "Utils/Logger.h"
-#include "Globals.h"
-
-#include "glew.h"
-#include "MathGeoLib.h"
-#include "imgui.h"
+#include "components/ComponentCamera.h"
+#include "components/ComponentDirLight.h"
+#include "components/ComponentPointLight.h"
+#include "components/ComponentSpotLight.h"
+#include "components/ComponentMaterial.h"
+#include "resources/ResourceMaterial.h"
 
 Hachiko::ModuleProgram::ModuleProgram() = default;
 
@@ -25,7 +18,9 @@ bool Hachiko::ModuleProgram::Init()
     CreateSkyboxProgram();
     CreateStencilProgram();
     if (!main_program || !skybox_program || !stencil_program)
+    {
         return false;
+    }
 
     CreateCameraUBO();
     CreateMaterialUBO();
@@ -67,7 +62,7 @@ unsigned int Hachiko::ModuleProgram::CompileShader(unsigned type, const char* so
             int written = 0;
             const auto info = static_cast<char*>(malloc(len));
             glGetShaderInfoLog(shader_id, len, &written, info);
-            LOG("Log Info: %s", info);
+            HE_LOG("Log Info: %s", info);
             free(info);
         }
         return 0;
@@ -197,11 +192,11 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
 
     if (material_comp->use_diffuse_texture)
     {
-        App->texture->Bind(material->GetDiffuseId(), static_cast<int>(TextureSlots::DIFFUSE));
+        ModuleTexture::Bind(material->GetDiffuseId(), static_cast<int>(TextureSlots::DIFFUSE));
     }
     if (material_comp->use_specular_texture)
     {
-        App->texture->Bind(material->GetSpecularId(), static_cast<int>(TextureSlots::SPECULAR));
+        ModuleTexture::Bind(material->GetSpecularId(), static_cast<int>(TextureSlots::SPECULAR));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);

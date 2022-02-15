@@ -1,5 +1,5 @@
+#include "core/hepch.h"
 #include "UUID.h"
-#include <sstream>
 
 namespace Hachiko
 {

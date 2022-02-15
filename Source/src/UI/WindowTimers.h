@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "Utils/Timer.h"
+#include "utils/Timer.h"
 
 namespace Hachiko
 {

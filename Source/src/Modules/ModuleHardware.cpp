@@ -1,8 +1,5 @@
-#include "Globals.h"
+#include "core/hepch.h"
 #include "ModuleHardware.h"
-#include "SDL.h"
-
-#include "glew.h"
 
 Hachiko::ModuleHardware::ModuleHardware() = default;
 

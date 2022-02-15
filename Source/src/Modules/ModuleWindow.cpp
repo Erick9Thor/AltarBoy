@@ -1,12 +1,7 @@
-#include "Globals.h"
-#include "Application.h"
-#include "Utils/Logger.h"
+#include "core/hepch.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
-
-#include "wtypes.h"
-#include <imgui.h>
 
 Hachiko::ModuleWindow::ModuleWindow() = default;
 
@@ -22,28 +17,32 @@ bool Hachiko::ModuleWindow::Init()
     resizable = RESIZABLE;
     vsync = true;
 
-    LOG("Init SDL window & surface");
+    HE_LOG("Init SDL window & surface");
     bool ret = true;
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
-        LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
+        HE_LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
         ret = false;
     }
     else
     {
-        Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL;
+        Uint32 flags = SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MAXIMIZED;
 
         if (fullscreen)
+        {
             flags |= SDL_WINDOW_FULLSCREEN;
+        }
         if (resizable)
+        {
             flags |= SDL_WINDOW_RESIZABLE;
+        }
 
         window = SDL_CreateWindow(TITLE, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
         if (window == nullptr)
         {
-            LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+            HE_LOG("Window could not be created! SDL_Error: %s\n", SDL_GetError());
             ret = false;
         }
         else
@@ -62,7 +61,7 @@ bool Hachiko::ModuleWindow::Init()
 // Called before quitting
 bool Hachiko::ModuleWindow::CleanUp()
 {
-    LOG("Destroying SDL window and quitting all SDL systems");
+    HE_LOG("Destroying SDL window and quitting all SDL systems");
 
     //Destroy window
     if (window != nullptr)
@@ -86,9 +85,13 @@ void Hachiko::ModuleWindow::SetFullScreen(bool fullscreen) const
 {
     // Method returns negative error code on failure
     if (fullscreen)
+    {
         SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    }
     else
+    {
         SDL_SetWindowFullscreen(window, 0);
+    }
 }
 
 void Hachiko::ModuleWindow::SetResizable(bool resizable) const
@@ -109,16 +112,22 @@ void Hachiko::ModuleWindow::SetVsync(bool vsync)
 void Hachiko::ModuleWindow::OptionsMenu()
 {
     if (ImGui::Checkbox("Fullscreen", &fullscreen))
+    {
         App->window->SetFullScreen(fullscreen);
+    }
 
     ImGui::SameLine();
     if (ImGui::Checkbox("Vsync", &vsync))
+    {
         SetVsync(vsync);
+    }
 
     if (!fullscreen)
     {
         if (ImGui::Checkbox("Resizable", &resizable))
+        {
             SetResizable(resizable);
+        }
     }
     ImGui::Text("Monitor Refresh Rate: %d", refresh_rate);
 }

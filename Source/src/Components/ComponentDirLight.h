@@ -2,8 +2,6 @@
 
 #include "Component.h"
 
-#include "MathGeoLib.h"
-
 namespace Hachiko
 {
     class ComponentDirLight : public Component

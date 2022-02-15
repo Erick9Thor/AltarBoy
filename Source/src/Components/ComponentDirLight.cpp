@@ -1,15 +1,7 @@
+#include "core/hepch.h"
+
 #include "ComponentDirLight.h"
-
-#include "UI/ImGuiUtils.h"
-
 #include "ComponentTransform.h"
-
-#include "Core/Scene.h"
-
-#include "imgui.h"
-#include <algorithm>
-
-#include "Core/GameObject.h"
 
 #include <debugdraw.h>
 

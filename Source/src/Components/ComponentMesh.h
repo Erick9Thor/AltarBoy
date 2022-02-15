@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-#include "Resources/ResourceMesh.h"
+#include "resources/ResourceMesh.h"
 
 #include "assimp/scene.h"
 #include "MathGeoLib.h"

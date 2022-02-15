@@ -1,15 +1,8 @@
+#include "core/hepch.h"
 #include "ModuleInput.h"
 
-#include "Globals.h"
-#include "Utils/Logger.h"
-
-#include "Application.h"
 #include "ModuleWindow.h"
-#include "ModuleRender.h"
-#include "ModuleCamera.h"
 #include "ModuleSceneManager.h"
-
-#include "imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
 
@@ -27,13 +20,13 @@ Hachiko::ModuleInput::~ModuleInput()
 // Called before render is available
 bool Hachiko::ModuleInput::Init()
 {
-    LOG("Init SDL input event system");
+    HE_LOG("Init SDL input event system");
     bool ret = true;
     SDL_Init(0);
 
     if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
     {
-        LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
+        HE_LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
         ret = false;
     }
 
@@ -64,7 +57,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
         case SDL_MOUSEWHEEL:
             scroll_delta = event.wheel.y;
             break;
-        case SDL_DROPFILE: LOG("Dropped file: %s", event.drop.file);
+        case SDL_DROPFILE: HE_LOG("Dropped file: %s", event.drop.file);
             App->scene_manager->LoadModel(event.drop.file);
             SDL_free(event.drop.file);
             break;
@@ -109,7 +102,7 @@ void Hachiko::ModuleInput::UpdateInputMaps()
 
 bool Hachiko::ModuleInput::CleanUp()
 {
-    LOG("Quitting SDL input event subsystem");
+    HE_LOG("Quitting SDL input event subsystem");
     SDL_QuitSubSystem(SDL_INIT_EVENTS);
     return true;
 }

@@ -1,3 +1,4 @@
+#include "core/hepch.h"
 #include "JsonFormatterValue.h"
 
 Hachiko::JsonFormatterValue::JsonFormatterValue(rapidjson::Document& document_, rapidjson::Value& value_) :

@@ -63,7 +63,7 @@ namespace Hachiko
 
         KeyState* keyboard = nullptr;
         Uint32 mouse{};
-        SDL_Keymod keymods;
+        SDL_Keymod keymods{};
 
         int mouse_x{}, mouse_y{};
         int mouse_delta_x{}, mouse_delta_y{};

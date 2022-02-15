@@ -1,19 +1,18 @@
-#pragma once
+#include "core/hepch.h"
 
 #include "Application.h"
-#include "Utils/Timer.h"
 
-#include "Modules/ModuleWindow.h"
-#include "Modules/ModuleRender.h"
-#include "Modules/ModuleInput.h"
-#include "Modules/ModuleEditor.h"
-#include "Modules/ModuleCamera.h"
-#include "Modules/ModuleTexture.h"
-#include "Modules/ModuleProgram.h"
-#include "Modules/ModuleHardware.h"
-#include "Modules/ModuleSceneManager.h"
-#include "Modules/ModuleDebugDraw.h"
-#include "Modules/ModuleFileSystem.h"
+#include "modules/ModuleWindow.h"
+#include "modules/ModuleRender.h"
+#include "modules/ModuleInput.h"
+#include "modules/ModuleEditor.h"
+#include "modules/ModuleCamera.h"
+#include "modules/ModuleTexture.h"
+#include "modules/ModuleProgram.h"
+#include "modules/ModuleHardware.h"
+#include "modules/ModuleSceneManager.h"
+#include "modules/ModuleDebugDraw.h"
+#include "modules/ModuleFileSystem.h"
 
 using namespace std;
 

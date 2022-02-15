@@ -1,6 +1,5 @@
+#include "core/hepch.h"
 #include "ResourceMesh.h"
-
-#include "glew.h"
 
 Hachiko::ResourceMesh::ResourceMesh(UID id) :
     Resource(id, Type::MESH) {}

@@ -1,6 +1,4 @@
-#include "Globals.h"
-#include "Application.h"
-#include "Utils/Logger.h"
+#include "core/hepch.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -9,19 +7,8 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
-#include "Core/Scene.h"
-#include "Skybox.h"
-#include "Quadtree.h"
-#include "Core/GameObject.h"
 
-#include "Components/ComponentCamera.h"
-
-#include "SDL.h"
-#include "glew.h"
-
-#include "MathGeoLib.h"
-
-#include "imgui.h"
+#include "components/ComponentCamera.h"
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -31,7 +18,7 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
 
 bool Hachiko::ModuleRender::Init()
 {
-    LOG("Init Module render");
+    HE_LOG("Init Module render");
 
     CreateContext();
 
@@ -76,7 +63,7 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
     {
-        LOG("Error creating frame buffer");
+        HE_LOG("Error creating frame buffer");
     }
 
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -109,7 +96,7 @@ void Hachiko::ModuleRender::ManageResolution(ComponentCamera* camera)
 
 void Hachiko::ModuleRender::CreateContext()
 {
-    LOG("Creating Renderer context");
+    HE_LOG("Creating Renderer context");
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
@@ -121,8 +108,6 @@ void Hachiko::ModuleRender::CreateContext()
 
     context = SDL_GL_CreateContext(App->window->GetWindow());
     GLenum err = glewInit();
-
-    clear_color = float4(0.1f, 0.1f, 0.1f, 1.0f);
 }
 
 void Hachiko::ModuleRender::SetGLOptions()
@@ -164,16 +149,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glStencilMask(0x00); // Prevent background from filling stencil
 
     if (draw_skybox)
+    {
         scene->GetSkybox()->Draw(camera);
+    }
     else
-        glClearColor(clear_color[0], clear_color[1], clear_color[2], clear_color[3]);
+    {
+        const auto& clear_color = App->editor->scene_background;
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+    }
 
     const float4x4 view = camera->GetViewMatrix();
     const float4x4 proj = camera->GetProjectionMatrix();
 
     glStencilMask(0XFF);
 
-    App->debug_draw->Draw(view, proj, fb_height, fb_width);
+    ModuleDebugDraw::Draw(view, proj, fb_height, fb_width);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -187,7 +177,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     Program* program = App->program->GetMainProgram();
     program->Activate();
 
-    GameObject* selected_go = App->editor->GetSelectedGO();
+    GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
     for (RenderTarget& target : render_list.GetNodes())
     {
@@ -197,7 +187,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
             outline_target = &target;
         }
     }
-    program->Deactivate();
+    Program::Deactivate();
 
     if (outline_selection && outline_target)
     {
@@ -208,7 +198,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         Program* outline_program = App->program->GetStencilProgram();
         outline_program->Activate();
         outline_target->game_object->DrawStencil(camera, outline_program);
-        outline_program->Deactivate();
+        Program::Deactivate();
 
         glStencilMask(0XFF);
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
@@ -229,9 +219,13 @@ UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
 void GLOptionCheck(GLenum option, bool enable)
 {
     if (enable)
+    {
         glEnable(option);
+    }
     else
+    {
         glDisable(option);
+    }
 }
 
 void Hachiko::ModuleRender::OptionsMenu()
@@ -242,7 +236,9 @@ void Hachiko::ModuleRender::OptionsMenu()
 
     ImGui::Checkbox("Skybox", &draw_skybox);
     if (!draw_skybox)
-        ImGuiUtils::CompactColorPicker("Background Color", &clear_color[0]);
+    {
+        ImGuiUtils::CompactColorPicker("Background Color", App->editor->scene_background.ptr());
+    }
 }
 
 void Hachiko::ModuleRender::PerformanceMenu()
@@ -270,7 +266,7 @@ void Hachiko::ModuleRender::FpsGraph() const
 
 void Hachiko::ModuleRender::AddFrame(const float delta)
 {
-    static const float update_frequency_seconds = 0.5f;
+    static constexpr float update_frequency_seconds = 0.5f;
     static int filled_bins = 0;
     static int frames = 0;
     static float time = 0;
@@ -307,9 +303,9 @@ void Hachiko::ModuleRender::RetrieveLibVersions()
     gl.opengl = (unsigned char*)glGetString(GL_VERSION);
     gl.glsl = (unsigned char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 
-    LOG("Using Glew %s", gl.glew);
-    LOG("OpenGL version supported %s", gl.opengl);
-    LOG("GLSL: %s", gl.glsl);
+    HE_LOG("Using Glew %s", gl.glew);
+    HE_LOG("OpenGL version supported %s", gl.opengl);
+    HE_LOG("GLSL: %s", gl.glsl);
 }
 
 void Hachiko::ModuleRender::RetrieveGpuInfo()
@@ -324,7 +320,7 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
 
 bool Hachiko::ModuleRender::CleanUp()
 {
-    //LOG("Destroying renderer");
+    //HE_LOG("Destroying renderer");
     SDL_GL_DeleteContext(context);
 
     return true;
@@ -398,5 +394,5 @@ void __stdcall OurOpenGLErrorFunction(GLenum source, GLenum type, GLuint id, GLe
     default:
         return;
     }
-    LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
+    HE_LOG("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>\n", tmp_source, tmp_type, tmp_severity, id, message);
 }

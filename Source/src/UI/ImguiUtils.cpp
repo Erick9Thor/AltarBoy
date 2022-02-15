@@ -1,10 +1,11 @@
+#include "core/hepch.h"
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
 
 #include "imgui_internal.h"
 
-#include "Core/GameObject.h"
-#include "Components/Component.h"
+#include "core/GameObject.h"
+#include "components/Component.h"
 
 bool Hachiko::ImGuiUtils::IconButton(const char* icon, const char* tooltip)
 {

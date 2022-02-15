@@ -1,16 +1,7 @@
+#include "core/hepch.h"
 #include "SceneImporter.h"
 
-#include "Core/GameObject.h"
-#include "Application.h"
-#include "Core/Scene.h"
-
-#include "Modules/ModuleFileSystem.h"
-
-#include "rapidjson/document.h"
-#include "rapidjson/prettywriter.h"
-#include "rapidjson/error/en.h"
-
-#include "Utils/Logger.h"
+#include "modules/ModuleFileSystem.h"
 
 Hachiko::Scene* Hachiko::SceneImporter::LoadScene(const char* file_path)
 {
@@ -26,7 +17,7 @@ Hachiko::Scene* Hachiko::SceneImporter::LoadScene(const char* file_path)
     document.Parse<rapidjson::kParseStopWhenDoneFlag>(buffer);
     if (document.HasParseError())
     {
-        LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
+        HE_LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
         return nullptr;
     }
 

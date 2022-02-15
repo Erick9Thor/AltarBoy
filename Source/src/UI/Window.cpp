@@ -1,6 +1,6 @@
-#include "Window.h"
+#include "core/hepch.h"
 
-Hachiko::Window::Window(const char* name, bool active) :
+Hachiko::Window::Window(const char* name, const bool active) :
     name(name),
     active(active) {}
 

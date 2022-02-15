@@ -1,18 +1,12 @@
-#include "GameObject.h"
+#include "core/hepch.h"
 
-#include "Globals.h"
-#include "Utils/Logger.h"
-
-#include "Scene.h"
-#include "Quadtree.h"
-#include "Program.h"
-#include "Components/ComponentTransform.h"
-#include "Components/ComponentCamera.h"
-#include "Components/ComponentMesh.h"
-#include "Components/ComponentMaterial.h"
-#include "Components/ComponentDirLight.h"
-#include "Components/ComponentPointLight.h"
-#include "Components/ComponentSpotLight.h"
+#include "components/ComponentTransform.h"
+#include "components/ComponentCamera.h"
+#include "components/ComponentMesh.h"
+#include "components/ComponentMaterial.h"
+#include "components/ComponentDirLight.h"
+#include "components/ComponentPointLight.h"
+#include "components/ComponentSpotLight.h"
 
 #include <debugdraw.h>
 
@@ -48,7 +42,7 @@ Hachiko::GameObject::~GameObject()
     if (scene_owner)
         scene_owner->DestroyGameObject(this);
 
-    for (GameObject* child : childs)
+    for (GameObject* child : children)
     {
         child->parent = nullptr;
         RELEASE(child);
@@ -61,7 +55,7 @@ Hachiko::GameObject::~GameObject()
 
 void Hachiko::GameObject::RemoveChild(GameObject* game_object)
 {
-    childs.erase(std::remove(childs.begin(), childs.end(), game_object), childs.end());
+    children.erase(std::remove(children.begin(), children.end(), game_object), children.end());
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
@@ -78,7 +72,7 @@ void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
 
     if (new_parent)
     {
-        new_parent->childs.push_back(this);
+        new_parent->children.push_back(this);
     }
     parent = new_parent;
 }
@@ -137,7 +131,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     }
     else
     {
-        LOG("Falied to create component");
+        HE_LOG("Falied to create component");
     }
     return new_component;
 }
@@ -154,7 +148,7 @@ void Hachiko::GameObject::Update()
         component->Update();
     }
 
-    for (GameObject* child : childs)
+    for (GameObject* child : children)
     {
         if (child->IsActive())
         {
@@ -168,7 +162,7 @@ void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) con
     // Draw yourself
     Draw(camera, program);
     // Draw children recursively
-    for (const GameObject* child : childs)
+    for (const GameObject* child : children)
     {
         child->DrawAll(camera, program);
     }
@@ -201,7 +195,7 @@ void Hachiko::GameObject::OnTransformUpdated()
     }
 
     // Update children
-    for (GameObject* child : childs)
+    for (GameObject* child : children)
     {
         child->OnTransformUpdated();
     }
@@ -214,7 +208,7 @@ void Hachiko::GameObject::DebugDrawAll()
     // Draw yourself
     DebugDraw();
     // Draw children recursively
-    for (GameObject* child : childs)
+    for (GameObject* child : children)
     {
         child->DebugDrawAll();
     }
@@ -296,10 +290,10 @@ void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
     }
 
     const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
-    for (unsigned i = 0; i < childs.size(); ++i)
+    for (unsigned i = 0; i < children.size(); ++i)
     {
         const JsonFormatterValue j_child = j_children[i];
-        const GameObject* child = childs[i];
+        const GameObject* child = children[i];
         child->Save(j_child);
     }
 }

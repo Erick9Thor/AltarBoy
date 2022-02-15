@@ -1,16 +1,9 @@
+#include "core/hepch.h"
+
 #include "ComponentMaterial.h"
 
-#include "UI/ImGuiUtils.h"
-
-#include "Application.h"
-#include "Core/Scene.h"
-#include "Modules/ModuleTexture.h"
-
-#include "Core/GameObject.h"
-
-#include "Importers/MaterialImporter.h"
-
-#include <imgui.h>
+#include "modules/ModuleTexture.h"
+#include "importers/MaterialImporter.h"
 
 Hachiko::ComponentMaterial::ComponentMaterial(GameObject* conatiner) :
     Component(Type::MATERIAL, conatiner) {}

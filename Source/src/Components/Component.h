@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Utils/UUID.h"
-#include "Utils/JsonFormatterValue.h"
+#include "utils/UUID.h"
+#include "utils/JsonFormatterValue.h"
 
 namespace Hachiko
 {

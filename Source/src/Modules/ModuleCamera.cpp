@@ -1,22 +1,14 @@
-#include "Core/GameObject.h"
-#include "Application.h"
+#include "core/hepch.h"
 
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
-#include "ModuleSceneManager.h"
 
-#include "Components/ComponentTransform.h"
-#include "Components/ComponentCamera.h"
+#include "components/ComponentTransform.h"
+#include "components/ComponentCamera.h"
 
-#include "UI/WindowScene.h"
-
-#include "glew.h"
-
-#include "ImGuizmo.h"
-
-#include "Utils/Logger.h"
+#include "ui/WindowScene.h"
 
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
@@ -24,7 +16,7 @@ Hachiko::ModuleCamera::~ModuleCamera() = default;
 
 bool Hachiko::ModuleCamera::Init()
 {
-    LOG("Creating main camera");
+    HE_LOG("Creating main camera");
 
     main_camera_game_object = new GameObject("Main Camera");
     main_camera = static_cast<ComponentCamera*>(main_camera_game_object->CreateComponent(Component::Type::CAMERA));
@@ -88,7 +80,7 @@ void Hachiko::ModuleCamera::Controller(const float delta)
     if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
     {
         const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
-        GameObject* go = App->editor->GetSelectedGO();
+        GameObject* go = App->editor->GetSelectedGameObject();
         FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
     }
 }

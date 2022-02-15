@@ -1,8 +1,6 @@
 #pragma once
 #include "Component.h"
 
-#include "MathGeoLib.h"
-
 namespace Hachiko
 {
     class GameObject;

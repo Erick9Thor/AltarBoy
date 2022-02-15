@@ -1,14 +1,12 @@
 #pragma once
 
-#include <Windows.h>
+#include "utils/Logger.h"
 
-#include "Utils/Logger.h"
-
-#define LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
+#define HE_LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
 
 #define M_PI 3.14159265358979323846
-constexpr float to_rad = static_cast<float>(M_PI) / 180.0f;
-constexpr float to_deg = 180.0f / static_cast<float>(M_PI);
+constexpr float TO_RAD = static_cast<float>(M_PI) / 180.0f;
+constexpr float TO_DEG = 180.0f / static_cast<float>(M_PI);
 
 enum class UpdateStatus
 {

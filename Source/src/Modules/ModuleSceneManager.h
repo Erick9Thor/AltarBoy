@@ -1,7 +1,7 @@
 #pragma once
 #include "Module.h"
 
-#include "Core/Scene.h"
+#include "core/Scene.h"
 
 namespace Hachiko
 {
