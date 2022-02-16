@@ -862,6 +862,120 @@
     <ClInclude Include="src\ui\editor\Theme.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\binary.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\depthguard.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\dll.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitfromevents.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitter.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitterdef.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emittermanip.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitterstyle.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\eventhandler.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\exceptions.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\mark.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\noexcept.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\null.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\ostream_wrapper.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\parser.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\stlemitter.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\traits.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\yaml.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\convert.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\emit.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\impl.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\node.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\parse.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\ptr.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\type.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\impl.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\iterator_fwd.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\memory.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_data.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_ref.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\anchordict.h">
+      <Filter>Vendors\Yaml-cpp\Contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
+      <Filter>Vendors\Yaml-cpp\Contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -953,6 +1067,21 @@
     </Filter>
     <Filter Include="Core\Rendering">
       <UniqueIdentifier>{7409b5d4-6974-4e84-98ad-92f9b3a2646a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp">
+      <UniqueIdentifier>{acd11675-92e1-4338-b1c3-ffddd1a751e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node">
+      <UniqueIdentifier>{5b2af024-ea13-4901-8e9e-bc897b15e07d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node\Detail">
+      <UniqueIdentifier>{1fd2b157-d6ec-45a2-bc35-8fbd95371442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Contrib">
+      <UniqueIdentifier>{ad1dfb76-501d-4b6e-ad51-b209e946a5f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Serialization">
+      <UniqueIdentifier>{9ea70c61-018b-4598-bef9-93e1ecfc6f15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
