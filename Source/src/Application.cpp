@@ -12,6 +12,7 @@
 #include "modules/ModuleHardware.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleDebugDraw.h"
+#include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 
 using namespace std;
@@ -30,6 +31,7 @@ Hachiko::Application::Application()
     modules.push_back(program = new ModuleProgram());
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
+    modules.push_back(event = new ModuleEvent());
 }
 
 Hachiko::Application::~Application()
