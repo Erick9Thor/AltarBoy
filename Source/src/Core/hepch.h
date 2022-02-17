@@ -63,6 +63,7 @@
 #include "core/GameObject.h"
 #include "core/Scene.h"
 #include "core/serialization/TypeConverter.h"
+#include "core/serialization/Definitions.h"
 
 #include "utils/JsonFormatterValue.h"
 #include "utils/PathNode.h"

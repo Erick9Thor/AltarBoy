@@ -159,6 +159,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\preferences\editor\CameraPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\editor\EditorPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\editor\GlobalPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\editor\RenderPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\editor\ResourcesPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\Modules\ModuleResources.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -518,7 +525,16 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\preferences\editor\CameraPreferences.h" />
+    <ClInclude Include="src\Core\preferences\editor\EditorPreferences.h" />
+    <ClInclude Include="src\Core\preferences\editor\GlobalPreferences.h" />
+    <ClInclude Include="src\Core\preferences\editor\RenderPreferences.h" />
+    <ClInclude Include="src\Core\preferences\editor\ResourcesPreferences.h" />
+    <ClInclude Include="src\Core\preferences\PreferenceManager.h" />
+    <ClInclude Include="src\Core\preferences\Preferences.h" />
+    <ClInclude Include="src\Core\serialization\Definitions.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\Modules\ModuleResources.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />

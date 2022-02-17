@@ -1,8 +1,11 @@
 #include "core/hepch.h"
 #include "ModuleInput.h"
 
+#include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleSceneManager.h"
+#include "ModuleEvent.h"
+#include "events/Event.h"
 
 #define MAX_KEYS 300
 
@@ -57,9 +60,14 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
         case SDL_MOUSEWHEEL:
             scroll_delta = event.wheel.y;
             break;
-        case SDL_DROPFILE: HE_LOG("Dropped file: %s", event.drop.file);
-            App->scene_manager->LoadModel(event.drop.file);
-            SDL_free(event.drop.file);
+        case SDL_DROPFILE: 
+            {
+                HE_LOG("Dropped file: %s", event.drop.file);
+                Hachiko::Event fileDropped(Hachiko::Event::Type::FILE_ADDED);
+                fileDropped.SetEventData<Hachiko::FileAddedEventPayload>(event.drop.file);
+                App->event->Publish(fileDropped);
+                SDL_free(event.drop.file);
+            }
             break;
         }
     }
