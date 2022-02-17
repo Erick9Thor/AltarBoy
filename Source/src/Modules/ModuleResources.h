@@ -6,7 +6,7 @@
 
 #include "Module.h"
 #include "Resources/Resource.h"
-//#include "core/preferences/editor/ResourcesPreferences.h"
+#include "core/preferences/editor/ResourcesPreferences.h"
 
 namespace Hachiko
 {
