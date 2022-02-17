@@ -1,142 +1,150 @@
 #pragma once
 #include "Module.h"
 
-#include "../Program.h"
-
-#include "MathGeoLib.h"
 #include <vector>
-#include "../UI/ImGuiUtils.h"
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
 
-class ComponentCamera;
-class ComponentDirLight;
-class ComponentPointLight;
-class ComponentSpotLight;
-class ComponentMaterial;
-
-class ModuleProgram : public Module
+namespace Hachiko
 {
-public:
+    class ComponentCamera;
+    class ComponentDirLight;
+    class ComponentPointLight;
+    class ComponentSpotLight;
+    class ComponentMaterial;
 
-	enum UBOPoints
-	{
-		p_camera = 0,
-		p_material,
-		p_lights,
-		n_ubo_points,
-	};
+    class ModuleProgram : public Module
+    {
+    public:
+        enum class UBOPoints
+        {
+            CAMERA = 0,
+            MATERIAL,
+            LIGHTS,
+            COUNT,
+        };
 
-	enum TextureSlots
-	{
-		t_diffuse = 0,
-		t_specular,
-		n_texture_slots,
-	};
+        enum class TextureSlots
+        {
+            DIFFUSE = 0,
+            SPECULAR,
+            COUNT,
+        };
 
-	ModuleProgram();
-	~ModuleProgram() override;
+        ModuleProgram();
+        ~ModuleProgram() override;
 
-	bool Init() override;
-	bool CleanUp() override;
+        bool Init() override;
+        bool CleanUp() override;
 
-	Program* GetMainProgram() const { return main_program; }
-	Program* GetSkyboxProgram() const { return skybox_program; }
-	Program* GetStencilProgram() const { return stencil_program; }
+        [[nodiscard]] Program* GetMainProgram() const
+        {
+            return main_program;
+        }
 
-	void UpdateCamera(const ComponentCamera* camera);
-	void UpdateMaterial(const ComponentMaterial* material_comp);
-	void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights);
+        [[nodiscard]] Program* GetSkyboxProgram() const
+        {
+            return skybox_program;
+        }
 
-	void OptionsMenu();
+        [[nodiscard]] Program* GetStencilProgram() const
+        {
+            return stencil_program;
+        }
 
-private:
-	char* LoadShaderSource(const char* shader_file_name);
-	unsigned int CompileShader(unsigned type, const char* source);
-	void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader);
-	Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
+        void UpdateCamera(const ComponentCamera* camera) const;
+        void UpdateMaterial(const ComponentMaterial* material_comp) const;
+        void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
-	Program* CreateMainProgram();
-	Program* CreateSkyboxProgram();
-	Program* CreateStencilProgram();
+        void OptionsMenu();
 
-	Program* main_program;
-	Program* skybox_program;
-	Program* stencil_program;
+    private:
+        static char* LoadShaderSource(const char* shader_file_name);
+        unsigned int CompileShader(unsigned type, const char* source) const;
+        void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader);
+        Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
 
-	// Assume the shader already manages its binding points
-	void CreateUBO(UBOPoints binding_point, unsigned size);
-	void UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0);
-	void CreateCameraUBO(); 
-	void CreateMaterialUBO();
-	void CreateLightsUBO();
+        Program* CreateMainProgram();
+        Program* CreateSkyboxProgram();
+        Program* CreateStencilProgram();
 
-	unsigned ubos[UBOPoints::n_ubo_points];
+        Program* main_program{};
+        Program* skybox_program{};
+        Program* stencil_program{};
 
-	struct Camera
-	{
-		float4x4 view = float4x4::identity;
-		float4x4 proj = float4x4::identity;
-		float3 pos = float3::zero;
-	};
+        // Assume the shader already manages its binding points
+        void CreateUBO(UBOPoints binding_point, unsigned size);
+        void UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0) const;
+        void CreateCameraUBO();
+        void CreateMaterialUBO();
+        void CreateLightsUBO();
 
-	struct MaterialData
-	{
-		float4 diffuse_color;
-		float4 specular_color;
-		unsigned diffuse_flag;
-		unsigned specular_flag;
-		float shininess;		
-	};
-	
+        unsigned ubos[static_cast<int>(UBOPoints::COUNT)]{};
 
-	// Use float4 to prevent padding
-	struct AmbientLight
-	{
-		float4 color = float4::one;
-		float intensity = 0.05f;
-		float padding[3];
-	};
+        struct Camera
+        {
+            float4x4 view = float4x4::identity;
+            float4x4 proj = float4x4::identity;
+            float3 pos = float3::zero;
+        };
 
-	struct DirLight
-	{
-		float4 direction = float4::zero;
-		float4 color = float4::zero;
-		float intensity;
-		float padding[3];
-	};
+        struct MaterialData
+        {
+            float4 diffuse_color;
+            float4 specular_color;
+            unsigned diffuse_flag{};
+            unsigned specular_flag{};
+            float shininess{};
+        };
 
-	struct PointLight
-	{
-		float4 position = float4::zero;
-		float4 color = float4::zero;
-		float intensity;
-		float radius;
-		float padding[2];
-	};
+        // Use float4 to prevent padding
+        struct AmbientLight
+        {
+            float4 color = float4::one;
+            float intensity = 0.05f;
+            float padding[3]{};
+        };
 
-	struct SpotLight
-	{
-		float4 position = float4::zero;
-		float4 direction = float4::zero;
-		float4 color = float4::zero;
-		float inner;
-		float outer;
-		float intensity;
-		float radius;
-	};
+        struct DirLight
+        {
+            float4 direction = float4::zero;
+            float4 color = float4::zero;
+            float intensity{};
+            float padding[3]{};
+        };
 
-	struct Lights
-	{
-		AmbientLight ambient;
-		DirLight directional;
-		PointLight points[MAX_POINT_LIGHTS];
-		SpotLight spots[MAX_SPOT_LIGHTS];
-		unsigned int n_points;
-		unsigned int n_spots;
-	};
-	
-	AmbientLight ambient_light;
-	float ambient_strength = 0.05f;
-};
+        struct PointLight
+        {
+            float4 position = float4::zero;
+            float4 color = float4::zero;
+            float intensity{};
+            float radius{};
+            float padding[2]{};
+        };
+
+        struct SpotLight
+        {
+            float4 position = float4::zero;
+            float4 direction = float4::zero;
+            float4 color = float4::zero;
+            float inner{};
+            float outer{};
+            float intensity{};
+            float radius{};
+        };
+
+        struct Lights
+        {
+            AmbientLight ambient;
+            DirLight directional;
+            PointLight points[MAX_POINT_LIGHTS];
+            SpotLight spots[MAX_SPOT_LIGHTS];
+            unsigned int n_points{};
+            unsigned int n_spots{};
+        };
+
+        AmbientLight ambient_light;
+        float ambient_strength = 0.05f;
+    };
+}

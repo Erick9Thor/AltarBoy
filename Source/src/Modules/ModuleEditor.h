@@ -1,79 +1,115 @@
 #pragma once
 
-#include "../Globals.h"
-#include "../Application.h"
-#include "../GameObject.h"
+#include "core/GameObject.h"
 
-#include "../UI/Window.h"
-#include "../UI/WindowAbout.h"
-#include "../UI/WindowConfiguration.h"
-#include "../UI/WindowHierarchy.h"
-#include "../UI/WindowInspector.h"
-#include "../UI/WindowScene.h"
-#include "../UI/WindowResource.h"
-#include "../UI/WindowProject.h"
-#include "../UI/WindowConsole.h"
-#include "../UI/WindowTimers.h"
+#include "ui/Window.h"
+#include "ui/WindowAbout.h"
+#include "ui/WindowConfiguration.h"
+#include "ui/WindowHierarchy.h"
+#include "ui/WindowInspector.h"
+#include "ui/WindowScene.h"
+#include "ui/WindowResource.h"
+#include "ui/WindowProject.h"
+#include "ui/WindowConsole.h"
+#include "ui/WindowTimers.h"
 
 #include "ModuleRender.h"
-#include "ModuleWindow.h"
-#include "SDL.h"
-#include "glew.h"
 
-class ModuleEditor : public Module
+#include "ui/editor/Theme.h"
+
+namespace Hachiko
 {
-public:
+    class ModuleEditor : public Module
+    {
+    public:
+        ModuleEditor();
 
-	ModuleEditor();
+        bool Init() override;
+        UpdateStatus PreUpdate(float delta) override;
+        UpdateStatus Update(float delta) override;
+        bool CleanUp() override;
 
-	bool Init() override;
-	update_status PreUpdate(const float delta) override;
-	update_status Update(const float delta) override;
-	bool CleanUp() override;
+        void UpdateTheme() const;
 
-	//Edit actions
-	bool CanUndo() { return false; }
-	bool CanRedo() { return false; }
-	bool CanPaste() { return false; }
+        //Edit actions
+        static bool CanUndo()
+        {
+            return false;
+        }
 
-	void SetSelectedGO(GameObject* go) { selected_go = go; }
-	GameObject* GetSelectedGO() { return selected_go; }
-	const GameObject* GetSelectedGO() const { return selected_go; }
+        static bool CanRedo()
+        {
+            return false;
+        }
 
-	const WindowScene* GetSceneWindow() const { return &w_scene; }
+        static bool CanPaste()
+        {
+            return false;
+        }
 
-	ImFont* m_big_icon_font = nullptr;
-	ImFont* m_small_icon_font = nullptr;
+        [[nodiscard]] GameObject* GetSelectedGameObject() const
+        {
+            return selected_go;
+        }
 
-	// TODO: Save the info imgui.ini
-	unsigned dock_up_id = 0;
-	unsigned dock_main_id = 0;
-	unsigned dock_left_id = 0;
-	unsigned dock_right_id = 0;
-	unsigned dock_down_id = 0;
+        void SetSelectedGO(GameObject* const selected_game_object)
+        {
+            this->selected_go = selected_game_object;
+        }
 
-private:
-	void RenderGui();
-	void GenerateDockingSpace();
+        [[nodiscard]] const WindowScene* GetSceneWindow() const
+        {
+            return &w_scene;
+        }
 
-	// Main menu bar
-	update_status MainMenuBar();
-	void FileMenu();
-	void EditMenu();
-	void GoMenu();
-	void ViewMenu();
+        [[nodiscard]] Editor::Theme::Type GetTheme() const
+        {
+            return theme;
+        }
 
-	GameObject* selected_go = nullptr;
+        void SetTheme(const Editor::Theme::Type theme)
+        {
+            this->theme = theme;
+        }
 
-	std::vector<Window*> windows;
+        ImFont* m_big_icon_font = nullptr;
+        ImFont* m_small_icon_font = nullptr;
 
-	WindowHierarchy w_hierarchy;
-	WindowScene w_scene;
-	WindowInspector w_inspector;
-	WindowConfiguration w_configuration;
-	WindowAbout w_about;
-	WindowConsole w_console;
-	WindowResource w_resource;
-	WindowProject w_project;
-	WindowTimers w_timers;
-};
+        // TODO: Save the info imgui.ini
+        unsigned dock_up_id = 0;
+        unsigned dock_main_id = 0;
+        unsigned dock_left_id = 0;
+        unsigned dock_right_id = 0;
+        unsigned dock_down_id = 0;
+
+        mutable float4 scene_background{0.1f, 0.1f, 0.1f, 0.1f};
+
+    private:
+        static void RenderGui();
+        void GenerateDockingSpace();
+
+        // Main menu bar
+        UpdateStatus MainMenuBar();
+        void FileMenu() const;
+        void EditMenu();
+        void GoMenu() const;
+        void ViewMenu();
+        void ThemeMenu() const;
+
+        GameObject* selected_go = nullptr;
+
+        std::vector<Window*> windows;
+
+        WindowHierarchy w_hierarchy;
+        WindowScene w_scene;
+        WindowInspector w_inspector;
+        WindowConfiguration w_configuration;
+        WindowAbout w_about;
+        WindowConsole w_console;
+        WindowResource w_resource;
+        WindowProject w_project;
+        WindowTimers w_timers;
+
+        Editor::Theme::Type theme = Editor::Theme::Type::DARK;
+    };
+}

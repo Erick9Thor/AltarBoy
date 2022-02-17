@@ -1,59 +1,81 @@
 #pragma once
 
-#include "../Utils/UID.h"
-#include "../Utils/JsonFormaterValue.h"
-#include "../UI/ImGuiUtils.h"
+#include "utils/UUID.h"
+#include "utils/JsonFormatterValue.h"
 
-class GameObject;
-class ComponentCamera;
-class Program;
-
-class Component
+namespace Hachiko
 {
-public:
-	enum Type
-	{
-		NONE,
-		TRANSFORM,
-		MESH,
-		MATERIAL,
-		CAMERA,
-		DIRLIGHT,
-		POINTLIGHT,
-		SPOTLIGHT,
-		UNKNOWN
-	};
+    class GameObject;
+    class ComponentCamera;
+    class Program;
 
-	Component(Type type, GameObject* container)
-		: type(type)
-		, game_object(container) {}
+    class Component
+    {
+    public:
+        enum class Type
+        {
+            NONE,
+            TRANSFORM,
+            MESH,
+            MATERIAL,
+            CAMERA,
+            DIRLIGHT,
+            POINTLIGHT,
+            SPOTLIGHT,
+            UNKNOWN
+        };
 
-	virtual ~Component() {};
+        Component(const Type type, GameObject* container) :
+            game_object(container),
+            type(type) {}
 
-	virtual void Update() {};
-	virtual void OnTransformUpdated() {};
+        virtual ~Component() = default;
 
-	inline Type GetType() const { return type; };
-	UID GetID() const { return uid; }
+        virtual void Update() { }
 
-	const GameObject* GetGameObject() const { return game_object; }
-	GameObject* GetGameObject() { return game_object; }
+        virtual void OnTransformUpdated() {}
 
-	void SetGameObject(GameObject* container) { game_object = container; }
+        [[nodiscard]] Type GetType() const
+        {
+            return type;
+        }
 
-	virtual void DrawGui() {};
+        [[nodiscard]] UID GetID() const
+        {
+            return uid;
+        }
 
-	virtual void Draw(ComponentCamera* camera, Program* program) {};
-	virtual void DebugDraw() {};
+        [[nodiscard]] const GameObject* GetGameObject() const
+        {
+            return game_object;
+        }
 
-	virtual void Save(JsonFormaterValue j_component) const {}; 
-	virtual void Load(JsonFormaterValue j_component) {};
+        GameObject* GetGameObject()
+        {
+            return game_object;
+        }
 
-protected:
-	GameObject* game_object = nullptr;
-	bool active = true;
-	Type type = Type::UNKNOWN;
+        void SetGameObject(GameObject* container)
+        {
+            game_object = container;
+        }
 
-private:
-	UID uid = 0; 
-};
+        virtual void DrawGui() {}
+
+        virtual void Draw(ComponentCamera* camera, Program* program) {}
+
+        virtual void DebugDraw() {}
+
+        virtual void Save(JsonFormatterValue j_component) const {}
+
+        virtual void Load(JsonFormatterValue j_component) {}
+
+    protected:
+        GameObject* game_object = nullptr;
+        bool active = true;
+        Type type = Type::UNKNOWN;
+
+    private:
+        UID uid = 0;
+    };
+}

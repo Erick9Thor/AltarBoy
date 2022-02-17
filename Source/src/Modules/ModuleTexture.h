@@ -2,50 +2,53 @@
 #include "Module.h"
 
 #include "il.h"
-#include "glew.h"
 
 #include <string>
 
-struct Texture
+namespace Hachiko
 {
-	bool loaded = false;
-	unsigned id = 0;
-	std::string path;
-	unsigned width = 0;
-	unsigned height = 0;
-};
+    struct Texture
+    {
+        bool loaded = false;
+        unsigned id = 0;
+        std::string path;
+        unsigned width = 0;
+        unsigned height = 0;
+    };
 
-struct TextureCube
-{
-	bool loaded = false;
-	unsigned id;
-	unsigned widths[6];
-	unsigned heighths[6];
-};
+    struct TextureCube
+    {
+        bool loaded = false;
+        unsigned id{};
+        unsigned widths[6]{};
+        unsigned heighths[6]{};
+    };
 
+    class ModuleTexture final : public Module
+    {
+    public:
+        ModuleTexture();
+        ~ModuleTexture() override;
 
-class ModuleTexture : public Module
-{
+        bool Init() override;
+        bool CleanUp() override;
 
-public:
-	ModuleTexture();
-	~ModuleTexture() override;
+        static Texture Load(const char* path, bool flip = true);
+        static void Unload(Texture& texture);
+        static TextureCube LoadCubeMap(const char* paths[6]);
+        static void Bind(unsigned id, unsigned slot);
+        static void Unbind(unsigned slot);
 
-	bool Init() override;
-	bool CleanUp() override;
+        [[nodiscard]] short GetDevilVersion() const
+        {
+            return devil_version;
+        }
 
-	Texture Load(const char* path, bool flip = true);
-	void Unload(Texture& texture);
-	TextureCube LoadCubeMap(const char* paths[6]);
-	void Bind(unsigned id, unsigned slot);
-	void Unbind(unsigned slot);
+        void OptionsMenu() const;
 
-	inline const short GetDevilVersion() const { return devil_version; }
-
-	void OptionsMenu();
-
-private:
-	const short devil_version = IL_VERSION;
-	unsigned int LoadImg(const char* path, bool flip = true);
-	void DeleteImg(unsigned& img_id);
-};
+    private:
+        const short devil_version = IL_VERSION;
+        static unsigned int LoadImg(const char* path, bool flip = true);
+        static void DeleteImg(unsigned& img_id);
+    };
+}

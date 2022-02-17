@@ -1,21 +1,24 @@
 #pragma once
 #include "Window.h"
 
-class GameObject;
-
-class WindowHierarchy : public Window
+namespace Hachiko
 {
-public:
-	WindowHierarchy();
-	~WindowHierarchy() override;
-	void Update() override;
+    class GameObject;
 
-	void CleanUp() override;
+    class WindowHierarchy final : public Window
+    {
+    public:
+        WindowHierarchy();
+        ~WindowHierarchy() override;
+        void Update() override;
 
-private:
-	void DrawHierarchyTree(GameObject* root);
-	void DrawGOChilds(GameObject* root);
-	void DrawGameObject(GameObject* go);
+        void CleanUp() override;
 
-	GameObject* dragged_object = nullptr;
-};
+    private:
+        void DrawHierarchyTree(const GameObject* game_object);
+        void DrawChildren(const GameObject* game_object);
+        void DrawGameObject(GameObject* game_object);
+
+        GameObject* dragged_object = nullptr;
+    };
+}

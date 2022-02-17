@@ -1,0 +1,1111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="vendors\imgui\imgui_impl_opengl3.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_impl_sdl.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_draw.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_tables.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_widgets.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\BitOps.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\Callstack.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float2.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float3.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float3x3.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float3x4.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float4.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float4d.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\float4x4.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\grisu3_cpp.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\MathFunc.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\MathLog.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\MathOps.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\MiniFloat.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\Polynomial.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\Quat.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\SSEMath.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\TransformOps.cpp">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\AABB.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Capsule.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Circle.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Circle2D.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Frustum.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Line.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\LineSegment.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\LineSegment2D.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\OBB.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\PBVolume.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Plane.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Polygon.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Polyhedron.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Ray.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Sphere.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Triangle.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\Triangle2D.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Geometry\TriangleMesh.cpp">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK.cpp">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK2D.cpp">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\SAT.cpp">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Algorithm\Random\LCG.cpp">
+      <Filter>Vendors\MathGeoLib\Algorithm\Random</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Time\Clock.cpp">
+      <Filter>Vendors\MathGeoLib\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\MathGeoLib\Math\grisu3.c">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imGuizmo\GraphEditor.cpp">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imGuizmo\ImCurveEdit.cpp">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imGuizmo\ImGradient.cpp">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imGuizmo\ImGuizmo.cpp">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imGuizmo\ImSequencer.cpp">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="vendors\PhysicsFS\physfs.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_7z.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_dir.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_grp.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_hog.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_iso9660.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_mvl.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_qpak.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_slb.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_unpacked.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_vdf.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_wad.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_archiver_zip.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_byteorder.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_haiku.cpp">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_os2.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_posix.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_qnx.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_unix.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_windows.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_platform_winrt.cpp">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\PhysicsFS\physfs_unicode.c">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleCamera.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleDebugDraw.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleEditor.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleFileSystem.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleHardware.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleInput.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleProgram.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleRender.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleTexture.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleWindow.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\Window.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowAbout.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowConfiguration.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowConsole.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowHierarchy.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowInspector.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowProject.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowResource.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowScene.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowTimers.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentCamera.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentDirLight.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentMaterial.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentMesh.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentPointLight.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentSpotLight.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentTransform.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\UUID.cpp">
+      <Filter>Core\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\MaterialImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\MeshImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\SceneImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\ImguiUtils.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
+      <Filter>Vendors\ImGuiFileDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\Resource.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceMaterial.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\Scene.cpp">
+      <Filter>Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Timer.cpp">
+      <Filter>Core\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\GameObject.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Logger.cpp">
+      <Filter>Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quadtree.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderList.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Program.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Skybox.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\JsonFormatterValue.cpp">
+      <Filter>Core\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleEvent.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_stdlib.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\hepch.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_impl_opengl3_loader.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_impl_sdl.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imconfig.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_internal.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imstb_rectpack.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imstb_textedit.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imstb_truetype.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\MathBuildConfig.h">
+      <Filter>Vendors\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\MathGeoLib.h">
+      <Filter>Vendors\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\MathGeoLibFwd.h">
+      <Filter>Vendors\MathGeoLib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\assume.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\BitFuncs.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\BitOps.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Callstack.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\FixedPoint.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float2.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float3.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float3x3.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float3x4.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4_neon.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4_sse.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4d.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4_neon.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\float4x4_sse.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\FloatCmp.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\grisu3.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\InclWindows.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Interpolate.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathAll.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathConstants.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathFunc.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathLog.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathNamespace.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MathTypes.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MatrixProxy.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MiniFloat.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\MultiLineMacro.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\myassert.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Polynomial.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Quat.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\quat_simd.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Rect.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Reinterpret.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\simd.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\sse_mathfun.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\SSEMath.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\Swap.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\TransformOps.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Math\vec2d.h">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\AABB.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\AABB2D.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Capsule.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Circle.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Circle2D.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Frustum.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\GeometryAll.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\GeomType.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\HitInfo.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\KDTree.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Line.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\LineSegment.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\LineSegment2D.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\OBB.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\OBB2D.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\PBVolume.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Plane.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polygon.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polygon2DRef.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Polyhedron.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\QuadTree.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Ray.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Sphere.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Triangle.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\Triangle2D.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Geometry\TriangleMesh.h">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\GJK.h">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\GJK2D.h">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\SAT.h">
+      <Filter>Vendors\MathGeoLib\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Algorithm\Random\LCG.h">
+      <Filter>Vendors\MathGeoLib\Algorithm\Random</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\MathGeoLib\Time\Clock.h">
+      <Filter>Vendors\MathGeoLib\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\DebugDraw\debug_draw.hpp">
+      <Filter>Vendors\DebugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\DebugDraw\debugdraw.h">
+      <Filter>Vendors\DebugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\ImZoomSlider.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\GraphEditor.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\ImCurveEdit.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\ImGradient.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\ImGuizmo.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imGuizmo\ImSequencer.h">
+      <Filter>Vendors\imGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h">
+      <Filter>Vendors\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h">
+      <Filter>Vendors\ImGuiFileDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h">
+      <Filter>Vendors\ImGuiFileDialog\dirent</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image.h">
+      <Filter>Vendors\ImGuiFileDialog\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h">
+      <Filter>Vendors\ImGuiFileDialog\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="vendors\PhysicsFS\physfs.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\PhysicsFS\physfs_casefolding.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\PhysicsFS\physfs_internal.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\PhysicsFS\physfs_lzmasdk.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\PhysicsFS\physfs_miniz.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\PhysicsFS\physfs_platforms.h">
+      <Filter>Vendors\PhysicsFS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\Module.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleCamera.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleDebugDraw.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleEditor.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleFileSystem.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleHardware.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleInput.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleProgram.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleRender.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleSceneManager.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleTexture.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleWindow.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\Window.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowAbout.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowConfiguration.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowConsole.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowHierarchy.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowInspector.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowProject.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowResource.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowScene.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowTimers.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\Component.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentCamera.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentDirLight.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentMaterial.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentMesh.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentPointLight.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentSpotLight.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentTransform.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\UUID.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\MaterialImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\MeshImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\SceneImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\ImGuiUtils.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\IconsFontAwesome5.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceMaterial.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\Scene.h">
+      <Filter>Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Timer.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\GameObject.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Logger.h">
+      <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\PathNode.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quadtree.h">
+      <Filter>Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderList.h">
+      <Filter>Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Program.h">
+      <Filter>Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Skybox.h">
+      <Filter>Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\JsonFormatterValue.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\hepch.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_stdlib.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleEvent.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\StringUtils.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\Event.h">
+      <Filter>Core\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\SelectionChangedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\FileAddedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\AssetsAddedEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\editor\Theme.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\binary.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\depthguard.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\dll.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitfromevents.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitter.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitterdef.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emittermanip.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\emitterstyle.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\eventhandler.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\exceptions.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\mark.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\noexcept.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\null.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\ostream_wrapper.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\parser.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\stlemitter.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\traits.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\yaml.h">
+      <Filter>Vendors\Yaml-cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\convert.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\emit.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\impl.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\node.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\parse.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\ptr.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\type.h">
+      <Filter>Vendors\Yaml-cpp\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\impl.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\iterator_fwd.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\memory.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_data.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_iterator.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\node\detail\node_ref.h">
+      <Filter>Vendors\Yaml-cpp\Node\Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\anchordict.h">
+      <Filter>Vendors\Yaml-cpp\Contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
+      <Filter>Vendors\Yaml-cpp\Contrib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{c98c3398-cea2-4a8b-9073-0ea272f2dbad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Instrumentation">
+      <UniqueIdentifier>{1804d9ac-2391-4b39-97c1-e40bf9734fa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c0abde9a-4e76-4bd9-9a0b-f138ea04ab0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{39f34f71-b9a7-4b39-899b-beaad649842f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Util">
+      <UniqueIdentifier>{afdc2dc0-2acd-44c7-86d4-eae02e7077e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Util">
+      <UniqueIdentifier>{afdc2dc0-2acd-44c7-86d4-eae02e7077e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Widgets">
+      <UniqueIdentifier>{8e620f12-250d-4a24-a78c-3ca347d86922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Components">
+      <UniqueIdentifier>{ee0be01f-2242-4634-a963-8b1770b69d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Events">
+      <UniqueIdentifier>{d8b151ba-fd85-4d76-a379-3891fb912e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Importers">
+      <UniqueIdentifier>{ded1989f-1adc-41cc-b7ed-9e68998a5845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene">
+      <UniqueIdentifier>{df58e4e2-1548-4024-8b2c-6bafd2d4ef86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Window">
+      <UniqueIdentifier>{8a267a5f-5060-4ee5-b50c-e70d4cf31796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{db03d328-ad7e-47d9-8436-96589801cef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Events\Payload">
+      <UniqueIdentifier>{fbd8a183-190f-4912-b689-6b924f8d1ead}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logging">
+      <UniqueIdentifier>{9de9c6eb-4538-40c1-89c4-d98a50c238a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors">
+      <UniqueIdentifier>{7245133f-7871-47b7-912a-f9d8eec3ce74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGui">
+      <UniqueIdentifier>{97b3f8ec-a216-4bb2-8c83-b026284f8c3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib">
+      <UniqueIdentifier>{83455d11-84b9-4c0b-993c-9fbe64a0c026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Math">
+      <UniqueIdentifier>{e3230658-f62a-434f-9a1c-b392f5486d29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Time">
+      <UniqueIdentifier>{9331a2a7-0b5f-4bb0-94d3-60afc1549294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Geometry">
+      <UniqueIdentifier>{bcc0dfcd-af47-4a26-b9ba-49d7c26e0ee5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Algorithm">
+      <UniqueIdentifier>{b9679e4f-2a68-4ce5-bb63-f15b9261437a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Algorithm\Random">
+      <UniqueIdentifier>{f340fb0f-fa55-4172-89a9-2cbc34f3e16b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\DebugDraw">
+      <UniqueIdentifier>{800e839f-592b-4ee8-bc11-22b66149f852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\imGuizmo">
+      <UniqueIdentifier>{ba46aa72-4c92-4bd3-9622-a0cabd7130bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog">
+      <UniqueIdentifier>{1664ba0f-8529-4dc2-b825-07ed720014fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog\stb">
+      <UniqueIdentifier>{b4c77d4f-074f-4c4d-8dc7-903e3681a86c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog\dirent">
+      <UniqueIdentifier>{e9c92902-9ee4-4cdb-b9e8-481d875b7993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\PhysicsFS">
+      <UniqueIdentifier>{dd10347f-977c-446e-9908-86d1586ca45e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Rendering">
+      <UniqueIdentifier>{7409b5d4-6974-4e84-98ad-92f9b3a2646a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp">
+      <UniqueIdentifier>{acd11675-92e1-4338-b1c3-ffddd1a751e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node">
+      <UniqueIdentifier>{5b2af024-ea13-4901-8e9e-bc897b15e07d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node\Detail">
+      <UniqueIdentifier>{1fd2b157-d6ec-45a2-bc35-8fbd95371442}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Contrib">
+      <UniqueIdentifier>{ad1dfb76-501d-4b6e-ad51-b209e946a5f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Serialization">
+      <UniqueIdentifier>{9ea70c61-018b-4598-bef9-93e1ecfc6f15}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".clang-format" />
+    <None Include="vendors\MathGeoLib\Math\float2.inl">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Math\Matrix.inl">
+      <Filter>Vendors\MathGeoLib\Math</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Geometry\KDTree.inl">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Geometry\QuadTree.inl">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </None>
+    <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_CPP.inl">
+      <Filter>Vendors\MathGeoLib\Geometry</Filter>
+    </None>
+  </ItemGroup>
+</Project>

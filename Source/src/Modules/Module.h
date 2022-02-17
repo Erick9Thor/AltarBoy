@@ -1,20 +1,41 @@
 #pragma once
 
-#include "../Globals.h"
+#include "Globals.h"
 
-class Application;
-
-class Module
+namespace Hachiko
 {
-public:
-	Module(){}
-	virtual ~Module() {};
+    class Application;
 
-	virtual bool Init() { return true; }
+    class Module
+    {
+    public:
+        Module() = default;
 
-	virtual update_status PreUpdate(const float delta) { return UPDATE_CONTINUE; }
-	virtual update_status Update(const float delta) { return UPDATE_CONTINUE; }
-	virtual update_status PostUpdate(const float delta) { return UPDATE_CONTINUE; }
+        virtual ~Module() = default;
 
-	virtual bool CleanUp() { return true; }
-};
+        virtual bool Init()
+        {
+            return true;
+        }
+
+        virtual UpdateStatus PreUpdate(const float delta)
+        {
+            return UpdateStatus::UPDATE_CONTINUE;
+        }
+
+        virtual UpdateStatus Update(const float delta)
+        {
+            return UpdateStatus::UPDATE_CONTINUE;
+        }
+
+        virtual UpdateStatus PostUpdate(const float delta)
+        {
+            return UpdateStatus::UPDATE_CONTINUE;
+        }
+
+        virtual bool CleanUp()
+        {
+            return true;
+        }
+    };
+}

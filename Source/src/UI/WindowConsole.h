@@ -3,18 +3,20 @@
 
 #include <imgui.h>
 
-
-class WindowConsole : public Window
+namespace Hachiko
 {
-public:
-	WindowConsole();
-	~WindowConsole() override;
-	void Update() override;
-	void Clear();
+    class WindowConsole final : public Window
+    {
+    public:
+        WindowConsole();
+        ~WindowConsole() override;
+        void Update() override;
+        static void Clear();
 
-	void CleanUp() override;
+        void CleanUp() override;
 
-private:
-	ImGuiTextFilter filter = nullptr;
-	bool autoscroll = true;
-};
+    private:
+        ImGuiTextFilter filter = nullptr;
+        bool autoscroll = true;
+    };
+}
