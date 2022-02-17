@@ -50,7 +50,7 @@ namespace Hachiko
         void OnTransformUpdated();
 
         void DebugDrawAll();
-        void DebugDraw();
+        void DebugDraw() const;
         void DrawBoundingBox() const;
         void UpdateBoundingBoxes();
 

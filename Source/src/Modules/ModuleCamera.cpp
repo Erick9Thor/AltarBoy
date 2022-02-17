@@ -48,7 +48,7 @@ void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int scr
     main_camera->SetResolution(screen_width, screen_height);
 }
 
-void Hachiko::ModuleCamera::Controller(const float delta)
+void Hachiko::ModuleCamera::Controller(const float delta) const
 {
     static const float zoom_speed = 3.0f;
     static const float rot_speed = 2.0f;

@@ -97,7 +97,7 @@ bool Hachiko::ModuleEditor::Init()
     ImGui::StyleColorsDark();
 
     ImGui_ImplSDL2_InitForOpenGL(App->window->GetWindow(), App->renderer->GetGLContext());
-    ImGui_ImplOpenGL3_Init();
+    ImGui_ImplOpenGL3_Init(GLSL_VERSION);
 
     HE_LOG("Init windows");
     for (Window* panel : windows)
@@ -114,7 +114,7 @@ bool Hachiko::ModuleEditor::Init()
 UpdateStatus Hachiko::ModuleEditor::PreUpdate(const float delta)
 {
     ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL2_NewFrame(App->window->GetWindow());
+    ImGui_ImplSDL2_NewFrame();
     ImGui::NewFrame();
     ImGuizmo::BeginFrame();
 
@@ -302,7 +302,7 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
 }
 
-void Hachiko::ModuleEditor::ViewMenu()
+void Hachiko::ModuleEditor::ViewMenu() const
 {
     if (ImGui::BeginMenu("View"))
     {
@@ -348,7 +348,7 @@ void Hachiko::ModuleEditor::ThemeMenu() const
     }
 }
 
-void Hachiko::ModuleEditor::EditMenu()
+void Hachiko::ModuleEditor::EditMenu() const
 {
     // TODO: shortcuts
     const bool is_go_selected = GetSelectedGameObject() != nullptr;

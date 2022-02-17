@@ -21,7 +21,9 @@ void Hachiko::WindowProject::Update()
     {
         ImGui::PushItemWidth(100);
         if (ImGui::InputTextWithHint("##filter", "Filter", m_filter, sizeof(m_filter)))
+        {
             DoFilter();
+        }
         ImGui::PopItemWidth();
         ImGui::SameLine();
         if (ImGuiUtils::IconButton(ICON_FA_TIMES, "Reset filter"))
@@ -37,9 +39,13 @@ void Hachiko::WindowProject::Update()
         const float content_w = ImGui::GetContentRegionAvail().x;
         ImVec2 left_size(m_left_column_width, 0);
         if (left_size.x < 10)
+        {
             left_size.x = 10;
+        }
         if (left_size.x > content_w - 10)
+        {
             left_size.x = content_w - 10;
+        }
 
         ShowDir(all_assets);
 
@@ -77,7 +83,9 @@ void Hachiko::WindowProject::CreateBreadCrumps()
         }
         *c_out = '\0';
         if (*c == '/')
+        {
             ++c;
+        }
         if (ImGui::Button(tmp))
         {
             if (tmp != all_assets.localPath)
@@ -162,77 +170,80 @@ void Hachiko::WindowProject::ShowDir(PathNode& node)
 
 void Hachiko::WindowProject::ShowFilesOnFolder()
 {
-    ImGui::BeginChild("main_col");
-
-    const float w = ImGui::GetContentRegionAvail().x;
-    int columns = static_cast<int>(w) / static_cast<int>(96 * 1.f);
-    columns = std::max(columns, 1);
-    int tile_count = all_assets.children.empty() ? all_assets.children.size() : 50;
-    const int row_count = 1;
-
-    auto callbacks = [this](PathNode& node, int idx) {
-        if (ImGui::IsItemHovered())
-            ImGui::SetTooltip("%s", node.path.c_str());
-        if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
-        {
-            ImGui::Text("%s", node.path.c_str());
-            ImGui::SetDragDropPayload("path", node.path.c_str(), strlen(node.path.c_str()) + 1, ImGuiCond_Once);
-            ImGui::EndDragDropSource();
-        }
-        else if (ImGui::IsItemHovered())
-        {
-            if (ImGui::IsMouseReleased(0))
-            {
-                // selected_resource = find on list resource module resource
-            }
-            else if (ImGui::IsMouseReleased(1))
-            {
-                ImGui::OpenPopup("item_ctx");
-            }
-            else if (ImGui::IsMouseDoubleClicked(0))
-            {
-                // instanciate on current level;
-            }
-        }
-    };
-
-    ImGuiListClipper clipper;
-    clipper.Begin(row_count);
-    while (clipper.Step())
+    if (ImGui::BeginChild("main_col"))
     {
-        for (int j = clipper.DisplayStart; j < clipper.DisplayEnd; ++j)
-        {
-            for (int i = 0; i < columns; ++i)
+        const float w = ImGui::GetContentRegionAvail().x;
+        int columns = static_cast<int>(w) / static_cast<int>(96 * 1.f);
+        columns = std::max(columns, 1);
+        int tile_count = all_assets.children.empty() ? all_assets.children.size() : 50;
+        constexpr int row_count = 1;
+
+        auto callbacks = [this](PathNode& node, int idx) {
+            if (ImGui::IsItemHovered())
             {
-                if (i > 0)
+                ImGui::SetTooltip("%s", node.path.c_str());
+            }
+            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+            {
+                ImGui::Text("%s", node.path.c_str());
+                ImGui::SetDragDropPayload("path", node.path.c_str(), strlen(node.path.c_str()) + 1, ImGuiCond_Once);
+                ImGui::EndDragDropSource();
+            }
+            else if (ImGui::IsItemHovered())
+            {
+                if (ImGui::IsMouseReleased(0))
                 {
-                    ImGui::SameLine();
+                    // selected_resource = find on list resource module resource
                 }
-                const int idx = GetThumbnailIndex(i, j, columns);
-                if (idx < 0)
+                else if (ImGui::IsMouseReleased(1))
                 {
-                    ImGui::NewLine();
-                    break;
+                    ImGui::OpenPopup("item_ctx");
                 }
-                PathNode& node = all_assets.children[idx];
-                const bool is_resource = node.children.empty() && ModuleFileSystem::HasExtension(node.path.c_str());
-                if (is_resource)
+                else if (ImGui::IsMouseDoubleClicked(0))
                 {
-                    // bool selected = find on resource and search match
-                    Thumbnail(node, m_thumbnail_size * 70, false);
-                    callbacks(node, idx);
+                    // instanciate on current level;
+                }
+            }
+        };
+
+        ImGuiListClipper clipper;
+        clipper.Begin(row_count);
+        while (clipper.Step())
+        {
+            for (int j = clipper.DisplayStart; j < clipper.DisplayEnd; ++j)
+            {
+                for (int i = 0; i < columns; ++i)
+                {
+                    if (i > 0)
+                    {
+                        ImGui::SameLine();
+                    }
+                    const int idx = GetThumbnailIndex(i, j, columns);
+                    if (idx < 0)
+                    {
+                        ImGui::NewLine();
+                        break;
+                    }
+                    PathNode& node = all_assets.children[idx];
+                    const bool is_resource = node.children.empty() && ModuleFileSystem::HasExtension(node.path.c_str());
+                    if (is_resource)
+                    {
+                        // bool selected = find on resource and search match
+                        Thumbnail(node, m_thumbnail_size * 70, false);
+                        callbacks(node, idx);
+                    }
                 }
             }
         }
-    }
+        clipper.End();
 
-    bool open_delete_popup = false;
-    static char tmp[260] = "";
-    auto common_popup = [&]() {
-        const char* base_path = nullptr;
+        bool open_delete_popup = false;
+        static char tmp[260] = "";
+        auto common_popup = [&]() {
+            const char* base_path = nullptr;
 
-        // TODO
-        /*if (ImGui::BeginMenu("Create directory"))
+            // TODO
+            /*if (ImGui::BeginMenu("Create directory"))
         {
             /*ImGui::InputTextWithHint("##dirname", "New directory name", tmp, sizeof(tmp));
             ImGui::SameLine();
@@ -250,42 +261,45 @@ void Hachiko::WindowProject::ShowFilesOnFolder()
             
             ImGui::EndMenu();
         }*/
-    };
-    if (ImGui::BeginPopup("item_ctx"))
-    {
-        ImGui::Separator();
-
-        open_delete_popup = ImGui::MenuItem("Delete");
-        ImGui::Separator();
-        common_popup();
-        ImGui::EndPopup();
-    }
-    else if (ImGui::BeginPopupContextWindow("context"))
-    {
-        common_popup();
-        ImGui::EndPopup();
-    }
-
-    if (open_delete_popup)
-        ImGui::OpenPopup("Delete file");
-
-    if (ImGui::BeginPopupModal("Delete file", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("Are you sure? This can not be undone.");
-        if (ImGui::Button("Yes, delete", ImVec2(100, 0)))
+        };
+        if (ImGui::BeginPopup("item_ctx"))
         {
-            //TODO Delete resource no fucking idea how but i guess we need to destroy from library first
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::SameLine(ImGui::GetWindowWidth() - 100 - ImGui::GetStyle().WindowPadding.x);
-        if (ImGui::Button("Cancel", ImVec2(100, 0)))
-        {
-            ImGui::CloseCurrentPopup();
-        }
-        ImGui::EndPopup();
-    }
+            ImGui::Separator();
 
-    ImGui::EndChild();
+            open_delete_popup = ImGui::MenuItem("Delete");
+            ImGui::Separator();
+            common_popup();
+            ImGui::EndPopup();
+        }
+        else if (ImGui::BeginPopupContextWindow("context"))
+        {
+            common_popup();
+            ImGui::EndPopup();
+        }
+
+        if (open_delete_popup)
+        {
+            ImGui::OpenPopup("Delete file");
+        }
+
+        if (ImGui::BeginPopupModal("Delete file", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Are you sure? This can not be undone.");
+            if (ImGui::Button("Yes, delete", ImVec2(100, 0)))
+            {
+                //TODO Delete resource no fucking idea how but i guess we need to destroy from library first
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine(ImGui::GetWindowWidth() - 100 - ImGui::GetStyle().WindowPadding.x);
+            if (ImGui::Button("Cancel", ImVec2(100, 0)))
+            {
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+
+        ImGui::EndChild();
+    }
 }
 
 void Hachiko::WindowProject::GetAssets()

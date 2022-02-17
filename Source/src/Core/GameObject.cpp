@@ -214,7 +214,7 @@ void Hachiko::GameObject::DebugDrawAll()
     }
 }
 
-void Hachiko::GameObject::DebugDraw()
+void Hachiko::GameObject::DebugDraw() const
 {
     DrawBoundingBox();
     for (Component* component : components)

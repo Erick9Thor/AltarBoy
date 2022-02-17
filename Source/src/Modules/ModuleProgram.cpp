@@ -70,7 +70,7 @@ unsigned int Hachiko::ModuleProgram::CompileShader(unsigned type, const char* so
     return shader_id;
 }
 
-void Hachiko::ModuleProgram::CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader)
+void Hachiko::ModuleProgram::CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader) const
 {
     const char* vertex_source = LoadShaderSource(vtx_shader_path);
     const char* fragment_source = LoadShaderSource(frg_shader_path);

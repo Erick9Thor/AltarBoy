@@ -74,7 +74,7 @@ void Hachiko::WindowScene::GuizmoOptionsController()
     }
 }
 
-void Hachiko::WindowScene::ToolbarMenu()
+void Hachiko::WindowScene::ToolbarMenu() const
 {
     const float w = (ImGui::GetWindowContentRegionMax().x - ImGui::GetWindowContentRegionMin().x) * 0.5f - 30 - ImGui::GetCursorPosX();
     ImGui::Dummy(ImVec2(w, ImGui::GetTextLineHeight()));
