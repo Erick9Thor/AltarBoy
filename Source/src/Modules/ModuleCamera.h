@@ -1,33 +1,41 @@
 #pragma once
 #include "Module.h"
-#include "../Globals.h"
+#include "Globals.h"
 
-#include "MathGeoLib.h"
+#include "core/GameObject.h"
 
-class ComponentCamera;
-
-class ModuleCamera : public Module
+namespace Hachiko
 {
-public:
-	ModuleCamera();
-	~ModuleCamera() override;
+    class ComponentCamera;
 
-	bool Init() override;
-	update_status Update(const float delta) override;
+    class ModuleCamera : public Module
+    {
+    public:
+        ModuleCamera();
+        ~ModuleCamera() override;
 
-	void OnResize(unsigned int screen_width, unsigned int screen_height);
+        bool Init() override;
+        UpdateStatus Update(float delta) override;
+        bool CleanUp() override;
 
-	void Controller(const float delta);
-	void MovementController(const float delta);
+        void OnResize(unsigned int screen_width, unsigned int screen_height) const;
 
-	ComponentCamera* GetMainCamera() { return main_camera; }
+        void Controller(float delta);
+        void MovementController(float delta) const;
 
-	// Camera actions
-	void Zoom(float zoom);
-	void Orbit(float motion_x, float motion_y);
-	void FocusOnModel(const float3& target, float distance);
-	void Rotate(float motion_x, float motion_y);
+        [[nodiscard]] ComponentCamera* GetMainCamera() const
+        {
+            return main_camera;
+        }
 
-private:
-	ComponentCamera* main_camera = nullptr;
-};
+        // Camera actions
+        void Zoom(float zoom) const;
+        void Orbit(float motion_x, float motion_y) const;
+        void FocusOnModel(const float3& target, float distance) const;
+        void Rotate(float motion_x, float motion_y) const;
+
+    private:
+        GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
+        ComponentCamera* main_camera = nullptr;
+    };
+}

@@ -1,11 +1,7 @@
-#include "Resource.h"
+#include "core/hepch.h"
 
-Resource::Resource(UID id, ResourceType type)
-	: id(id)
-	, type(type)
-{
-}
+Hachiko::Resource::Resource(const UID id, const Type type) :
+    id(id),
+    type(type) {}
 
-Resource::~Resource()
-{
-}
+Hachiko::Resource::~Resource() = default;

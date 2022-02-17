@@ -1,16 +1,19 @@
 #pragma once
 
 #include "Window.h"
-#include "../Utils/Timer.h"
+#include "utils/Timer.h"
 
-class WindowTimers : public Window
+namespace Hachiko
 {
-public:
-	WindowTimers();
-	~WindowTimers() override;
+    class WindowTimers final : public Window
+    {
+    public:
+        WindowTimers();
+        ~WindowTimers() override;
 
-	void Update() override;
+        void Update() override;
 
-private:
-	Timer timer;
-};
+    private:
+        Timer timer;
+    };
+}

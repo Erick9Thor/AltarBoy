@@ -1,47 +1,75 @@
 #pragma once
 #include "Component.h"
-#include "../Modules/ModuleTexture.h"
 
-#include "../Resources/ResourceMesh.h"
+#include "resources/ResourceMesh.h"
 
 #include "assimp/scene.h"
 #include "MathGeoLib.h"
 
-#include <vector>
-
-class GameObject;
-class ComponentCamera;
-class Program;
-
-class ComponentMesh : public Component
+namespace Hachiko
 {
-public:
-	ComponentMesh(GameObject* conatiner);
-	~ComponentMesh() override;
+    class GameObject;
+    class ComponentCamera;
+    class Program;
 
-	void Draw(ComponentCamera* camera, Program* program) override;
+    class ComponentMesh : public Component
+    {
+    public:
+        ComponentMesh(GameObject* container);
+        ~ComponentMesh() override;
 
-	static inline Type GetType() { return Type::MESH; };
-	
-	void CleanUp();
+        void Draw(ComponentCamera* camera, Program* program) override;
+        void DrawStencil(ComponentCamera* camera, Program* program) const;
 
-	inline bool IsLoaded() const { return resource->loaded; }
-	bool IsVisible() const { return visible; }
+        static Type GetType()
+        {
+            return Type::MESH;
+        }
 
-	AABB GetAABB() const { return resource->bounding_box; }
-	inline unsigned GetBufferSize(ResourceMesh::Buffers buffer) const { return resource->buffer_sizes[buffer]; }
-	inline unsigned GetBufferId(ResourceMesh::Buffers buffer) const { return resource->buffer_ids[buffer]; }
-	const float* GetVertices() const { return resource->vertices; }
-	const unsigned* GetIndices() const { return resource->indices; }
+        [[nodiscard]] bool IsLoaded() const
+        {
+            return resource->loaded;
+        }
 
-	void Import(const aiMesh* mesh);
-	
-	void Save(JsonFormaterValue j_component) const override;
-	void Load(JsonFormaterValue j_component) override;
+        [[nodiscard]] bool IsVisible() const
+        {
+            return visible;
+        }
 
-	void DrawGui() override;
+        [[nodiscard]] AABB GetAABB() const
+        {
+            return resource->bounding_box;
+        }
 
-private:
-	bool visible = true;
-	ResourceMesh* resource = nullptr;
-};
+        [[nodiscard]] unsigned GetBufferSize(ResourceMesh::Buffers buffer) const
+        {
+            return resource->buffer_sizes[static_cast<int>(buffer)];
+        }
+
+        [[nodiscard]] unsigned GetBufferId(ResourceMesh::Buffers buffer) const
+        {
+            return resource->buffer_ids[static_cast<int>(buffer)];
+        }
+
+        [[nodiscard]] const float* GetVertices() const
+        {
+            return resource->vertices;
+        }
+
+        [[nodiscard]] const unsigned* GetIndices() const
+        {
+            return resource->indices;
+        }
+
+        void Import(const aiMesh* mesh);
+
+        void Save(JsonFormatterValue j_component) const override;
+        void Load(JsonFormatterValue j_component) override;
+
+        void DrawGui() override;
+
+    private:
+        bool visible = true;
+        ResourceMesh* resource = nullptr;
+    };
+}

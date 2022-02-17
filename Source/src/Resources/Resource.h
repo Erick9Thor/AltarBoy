@@ -1,38 +1,40 @@
 #pragma once
 
-#include "../Utils/UID.h"
+#include "utils/UUID.h"
 
-
-enum class ResourceType
+namespace Hachiko
 {
-	UNKNOWN,
-	MATERIAL,
-	TEXTURE,
-	MODEL,
-	MESH,
-	SCENE,
-	SHADER
-};
+    class Resource
+    {
+    public:
+        enum class Type
+        {
+            UNKNOWN,
+            MATERIAL,
+            TEXTURE,
+            MODEL,
+            MESH,
+            SCENE,
+            SHADER
+        };
 
-class Resource
-{
-public:
-	Resource(UID id, ResourceType type);
-	virtual ~Resource();
+        Resource(UID id, Type type);
+        virtual ~Resource();
 
-	ResourceType GetType() const
-	{
-		return type;
-	}
+        [[nodiscard]] Type GetType() const
+        {
+            return type;
+        }
 
-	UID GetID() const { return id; }
+        [[nodiscard]] UID GetID() const
+        {
+            return id;
+        }
 
-	std::string file_name = "";
-	unsigned int instances = 0;
+        unsigned int instances = 0;
 
-	const char* library_path = "";
-
-private:
-	UID id = 0;
-	ResourceType type = ResourceType::UNKNOWN;
-};
+    private:
+        UID id = 0;
+        Type type = Type::UNKNOWN;
+    };
+}

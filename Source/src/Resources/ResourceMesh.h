@@ -3,42 +3,43 @@
 
 #include "../Globals.h"
 
-#include "MathGeoLib.h"
-
-class ResourceMesh : public Resource
+namespace Hachiko
 {
-public:
+    class ResourceMesh : public Resource
+    {
+    public:
+        enum class Buffers
+        {
+            INDICES = 0,
+            VERTICES,
+            NORMALS,
+            TEX_COORDS,
+            COUNT,
+        };
 
-	enum Buffers
-	{
-		b_indices = 0,
-		b_vertices,
-		b_normals,
-		b_tex_coords,
-		n_buffers,
-	};
+        ResourceMesh(UID id);
+        ~ResourceMesh() override;
+        void GenerateBuffers();
+        void GenerateAABB();
 
-	ResourceMesh(UID id);
-	void GenerateBuffers();
-	void GenerateAABB();
+        void CleanUp();
 
-	void CleanUp();
+        bool loaded = false;
 
-	bool loaded = false;
+        AABB bounding_box;
 
-	AABB bounding_box;
+        // Store the ids of buffers in opengl
+        unsigned vbo{}, ebo{};
+        unsigned vao{};
+        unsigned buffer_ids[static_cast<int>(Buffers::COUNT)]{};
 
-	// Store the ids of buffers in opengl
-	unsigned vbo, ebo;
-	unsigned vao;
-	unsigned buffer_ids[n_buffers];
+        // Track buffer sizes
+        unsigned buffer_sizes[static_cast<int>(Buffers::COUNT)]{};
 
-	// Track buffer sizes
-	unsigned buffer_sizes[n_buffers];
-
-	// In memory buffers
-	unsigned* indices;
-	float* vertices;
-	float* normals;
-	float* tex_coords;
-};
+        // In memory buffers
+        unsigned* indices{};
+        float* vertices{};
+        float* normals{};
+        float* tex_coords{};
+    };
+}

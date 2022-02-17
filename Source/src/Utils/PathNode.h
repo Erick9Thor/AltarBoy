@@ -1,54 +1,52 @@
-#ifndef __PATHNODE_H__
-#define __PATHNODE_H__
+#pragma once
 
 #include <string>
 #include <vector>
 
-struct PathNode
+namespace Hachiko
 {
-	PathNode()
-		: path("") {};
-	PathNode(const PathNode& a)
-		: path(a.path)
-		, localPath(a.localPath)
-		, children(a.children)
-		, isLeaf(a.isLeaf)
-		, isFile(a.isFile)
-	{}
+    struct PathNode
+    {
+        PathNode() = default;
 
-	std::string path;
-	std::string localPath;
+        PathNode(const PathNode& a) = default;
 
-	std::vector<PathNode> children;
+        std::string path;
+        std::string localPath;
 
-	bool isLeaf = true;
-	bool isFile = true;
+        std::vector<PathNode> children;
 
-	bool IsLastFolder() const
-	{
-		for (unsigned int i = 0; i < children.size(); i++)
-			if (children[i].isFile == false)
-				return false;
-		return true;
-	}
+        bool isLeaf = true;
+        bool isFile = true;
 
-	bool operator==(const PathNode node) const
-	{
-		return path == node.path;
-	}
+        [[nodiscard]] bool IsLastFolder() const
+        {
+            for (const auto& i : children)
+            {
+                if (i.isFile == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-	PathNode& operator=(const PathNode& a)
-	{
-		path = a.path;
-		localPath = a.localPath;
+        bool operator==(const PathNode node) const
+        {
+            return path == node.path;
+        }
 
-		children = std::vector<PathNode>(a.children);
+        PathNode& operator=(const PathNode& a)
+        {
+            path = a.path;
+            localPath = a.localPath;
 
-		isLeaf = a.isLeaf;
-		isFile = a.isFile;
+            children = std::vector(a.children);
 
-		return *this;
-	}
-};
+            isLeaf = a.isLeaf;
+            isFile = a.isFile;
 
-#endif
+            return *this;
+        }
+    };
+}

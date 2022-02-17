@@ -1,41 +1,39 @@
 #pragma once
 #include "Window.h"
 
-#include "../Utils/PathNode.h"
+#include "utils/PathNode.h"
 
-#include <vector>
-
-using namespace std;
-
-class WindowProject : public Window
+namespace Hachiko
 {
-public:
-	WindowProject();
-	~WindowProject() override;
-	
-	void Init() override;
-	void Update() override;
+    class WindowProject final : public Window
+    {
+    public:
+        WindowProject();
+        ~WindowProject() override;
 
-	void CleanUp() override;
+        void Init() override;
+        void Update() override;
 
-private:
-	void DoFilter();
-	void CreateBreadCrumps();
-	void Thumbnail(PathNode& node, float size, bool selected);
+        void CleanUp() override;
 
-	void ShowDir(PathNode& node);
-	void ShowFilesOnFolder();
+    private:
+        static void DoFilter();
+        void CreateBreadCrumps();
+        static void Thumbnail(PathNode& node, float size, bool selected);
 
-	void GetAssets();
+        void ShowDir(PathNode& node);
+        void ShowFilesOnFolder();
 
-private:
+        void GetAssets();
 
-	int GetThumbnailIndex(int i, int j, int columns) const;
+    private:
+        [[nodiscard]] int GetThumbnailIndex(int i, int j, int columns) const;
 
-	char m_filter[128];
-	float m_left_column_width = 120;
+        char m_filter[128]{};
+        float m_left_column_width = 120;
 
-	float m_thumbnail_size = 1.f;
+        float m_thumbnail_size = 1.f;
 
-	PathNode all_assets;
-};
+        PathNode all_assets;
+    };
+}

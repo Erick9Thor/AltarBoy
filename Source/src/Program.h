@@ -1,22 +1,27 @@
 #pragma once
-
-class Program
+namespace Hachiko
 {
-public:
-	Program(unsigned vtx_shader, unsigned frg_shader);
+    class Program
+    {
+    public:
+        Program(unsigned vtx_shader, unsigned frg_shader);
 
-	void Activate();
-	void Deactivate();
-	void CleanUp();
+        void Activate() const;
+        static void Deactivate();
+        void CleanUp() const;
 
-	void BindUniformFloat4x4(const char* name, const float* data, bool transpose = true);
-	void BindUniformFloat3(const char* name, const float* data);
-	void BindUniformFloat(const char* name, const float* data);
-	void BindUniformBool(const char* name, bool value);	
-	void BindUniformInts(const char* name, unsigned size, const int* data);
+        void BindUniformFloat4x4(const char* name, const float* data, bool transpose = true) const;
+        void BindUniformFloat3(const char* name, const float* data) const;
+        void BindUniformFloat(const char* name, const float* data) const;
+        void BindUniformBool(const char* name, bool value) const;
+        void BindUniformInts(const char* name, unsigned size, const int* data) const;
 
-	inline int GetId() const{ return id; }
+        [[nodiscard]] unsigned GetId() const
+        {
+            return id;
+        }
 
-private:
-	unsigned id = 0;
-};
+    private:
+        unsigned id = 0;
+    };
+}

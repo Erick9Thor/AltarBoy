@@ -5,48 +5,57 @@
 #define DEFAULT_CAMERA_WIDTH 1920
 #define DEFAULT_CAMERA_HEIGHT 1080
 
-class GameObject;
-
-class ComponentCamera : public Component
+namespace Hachiko
 {
-public:
-	ComponentCamera(GameObject* conatiner);
-	~ComponentCamera() override;
-	
-	void OnTransformUpdated() override;
+    class GameObject;
 
-	static inline Type GetType() { return Type::CAMERA; };
-	
-	float4x4 GetViewMatrix(const bool transpose = false) const;
-	float4x4 GetProjectionMatrix(const bool transpose = false) const;
+    class ComponentCamera : public Component
+    {
+    public:
+        ComponentCamera(GameObject* conatiner);
+        ~ComponentCamera() override;
 
-	inline const Frustum& GetFrustum() const { return frustum; }
+        void OnTransformUpdated() override;
 
-	void SetNearPlane(float distance);
-	void SetFarPlane(float distance);
-	void SetPlaneDistances(const float near_distance, const float far_distance);
-	void SetHorizontalFov(float fov_deg);
+        static Type GetType()
+        {
+            return Type::CAMERA;
+        }
 
-	void SetResolution(unsigned width, unsigned height);
-	void GetResolution(unsigned& width, unsigned& height) const;
-	
-	void Save(JsonFormaterValue j_component) const override;
-	void Load(JsonFormaterValue j_component) override;
+        [[nodiscard]] float4x4 GetViewMatrix(bool transpose = false) const;
+        [[nodiscard]] float4x4 GetProjectionMatrix(bool transpose = false) const;
 
-	void DrawGui() override;
+        Frustum* ComponentCamera::GetFrustum()
+        {
+            return &frustum;
+        }
 
-	void DebugDraw() override;
+        void SetNearPlane(float distance);
+        void SetFarPlane(float distance);
+        void SetPlaneDistances(float near_distance, float far_distance);
+        void SetHorizontalFov(float fov_deg);
 
-	LineSegment RayCast(float x, float y);
+        void SetResolution(unsigned width, unsigned height);
+        void GetResolution(unsigned& width, unsigned& height) const;
 
-	Plane planes[6];
-	float3 reference_point = float3::zero;
-	bool draw_frustum = false;
+        void Save(JsonFormatterValue j_component) const override;
+        void Load(JsonFormatterValue j_component) override;
 
-private:
-	float horizontal_fov;
-	Frustum frustum;
+        void DrawGui() override;
 
-	unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
-	unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;
-};
+        void DebugDraw() override;
+
+        LineSegment RayCast(float x, float y) const;
+
+        Plane planes[6];
+        float3 reference_point = float3::zero;
+        bool draw_frustum = false;
+
+    private:
+        float horizontal_fov;
+        Frustum frustum;
+
+        unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
+        unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;
+    };
+}

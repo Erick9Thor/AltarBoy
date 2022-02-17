@@ -2,33 +2,45 @@
 
 #include "Component.h"
 
-#include "MathGeoLib.h"
-
-class ComponentPointLight : public Component
+namespace Hachiko
 {
-public:
-	// TODO: add more light types
-	ComponentPointLight(GameObject* conatiner);
-	~ComponentPointLight() override;
-	static inline Type GetType() { return Type::POINTLIGHT; };
+    class ComponentPointLight : public Component
+    {
+    public:
+        // TODO: add more light types
+        ComponentPointLight(GameObject* conatiner);
+        ~ComponentPointLight() override;
 
-	void DebugDraw() override;
+        static Type GetType()
+        {
+            return Type::POINTLIGHT;
+        }
 
-	bool IsActive() const { return active; }
-	void SetActive(bool is_active) { active = is_active; }
+        void DebugDraw() override;
 
-	float3 GetPosition();
+        [[nodiscard]] bool IsActive() const
+        {
+            return active;
+        }
 
-	void Save(JsonFormaterValue j_component) const override;
-	void Load(JsonFormaterValue j_component) override;
+        void SetActive(bool is_active)
+        {
+            active = is_active;
+        }
 
-	void DrawGui() override;
+        float3 GetPosition() const;
 
-	float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	float intensity = 1.0f;
-	float radius = 250.0f;
+        void Save(JsonFormatterValue j_component) const override;
+        void Load(JsonFormatterValue j_component) override;
 
-private:
-	bool active = true;
-	bool draw_sphere = false;
-};
+        void DrawGui() override;
+
+        float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+        float intensity = 1.0f;
+        float radius = 250.0f;
+
+    private:
+        bool active = true;
+        bool draw_sphere = false;
+    };
+}

@@ -1,156 +1,153 @@
+#include "core/hepch.h"
 #include "Timer.h"
 
-#include "SDL.h"
-
-void Timer::Start()
+void Hachiko::Timer::Start()
 {
-	running = true;
-	start_time = SDL_GetTicks();
+    running = true;
+    start_time = SDL_GetTicks();
 }
 
-void Timer::Resume()
+void Hachiko::Timer::Resume()
 {
-	if (!running)
-	{
-		running = true;
-		start_time = SDL_GetTicks() - (stop_time - start_time);
-	}
+    if (!running)
+    {
+        running = true;
+        start_time = SDL_GetTicks() - (stop_time - start_time);
+    }
 }
 
-double Timer::Read()
+double Hachiko::Timer::Read()
 {
-	unsigned int now;
-	if (running)
-		now = SDL_GetTicks();
-	else
-		now = stop_time;
-		
-	current_time = (double) (now - start_time); // ms
-	return current_time;
+    unsigned int now;
+    if (running)
+        now = SDL_GetTicks();
+    else
+        now = stop_time;
+
+    current_time = static_cast<double>(now - start_time); // ms
+    return current_time;
 }
 
-double Timer::Stop()
+double Hachiko::Timer::Stop()
 {
-	if (running)
-	{
-		running = false;
-		stop_time = SDL_GetTicks();
-		return Read();
-	}
-	return (double) stop_time;	
+    if (running)
+    {
+        running = false;
+        stop_time = SDL_GetTicks();
+        return Read();
+    }
+    return static_cast<double>(stop_time);
 }
 
-
-void PerformanceTimer::Start()
+void Hachiko::PerformanceTimer::Start()
 {
-	running = true;
-	start_time = SDL_GetPerformanceCounter();
+    running = true;
+    start_time = SDL_GetPerformanceCounter();
 }
 
-void PerformanceTimer::Resume()
+void Hachiko::PerformanceTimer::Resume()
 {
-	if (!running)
-	{
-		running = true;
-		start_time = SDL_GetPerformanceCounter() - (stop_time - start_time);
-	}
+    if (!running)
+    {
+        running = true;
+        start_time = SDL_GetPerformanceCounter() - (stop_time - start_time);
+    }
 }
 
-double PerformanceTimer::Read()
+double Hachiko::PerformanceTimer::Read()
 {
-	static const double frequency = (double) SDL_GetPerformanceFrequency();
+    static const auto frequency = static_cast<double>(SDL_GetPerformanceFrequency());
 
-	unsigned long long now;
-	if (running)
-		now = SDL_GetPerformanceCounter();
-	else
-		now = stop_time;
+    unsigned long long now;
+    if (running)
+        now = SDL_GetPerformanceCounter();
+    else
+        now = stop_time;
 
-	current_time = (double) ((now - start_time) * 1000.0 / frequency);
-	return current_time;
+    current_time = (now - start_time) * 1000.0 / frequency;
+    return current_time;
 }
 
-double PerformanceTimer::Stop()
+double Hachiko::PerformanceTimer::Stop()
 {
-	if (running)
-	{
-		running = false;
-		stop_time = SDL_GetPerformanceCounter();
-		return Read();	
-	}
-	return (double) stop_time;
+    if (running)
+    {
+        running = false;
+        stop_time = SDL_GetPerformanceCounter();
+        return Read();
+    }
+    return static_cast<double>(stop_time);
 }
 
-double GameTimer::delta_time = 0.;
-double GameTimer::total_time = 0.;
-double GameTimer::prev_tick_time = 0.;
-bool GameTimer::running = false;
-bool GameTimer::paused = false;
-PerformanceTimer GameTimer::timer;
+double Hachiko::GameTimer::delta_time = 0.;
+double Hachiko::GameTimer::total_time = 0.;
+double Hachiko::GameTimer::prev_tick_time = 0.;
+bool Hachiko::GameTimer::running = false;
+bool Hachiko::GameTimer::paused = false;
+Hachiko::PerformanceTimer Hachiko::GameTimer::timer;
 
-void GameTimer::Start()
+void Hachiko::GameTimer::Start()
 {
-	total_time = 0.;
-	running = true;
-	paused = false;
-	timer.Start();
-	prev_tick_time = timer.Read();
+    total_time = 0.;
+    running = true;
+    paused = false;
+    timer.Start();
+    prev_tick_time = timer.Read();
 }
 
-double GameTimer::Update()
+double Hachiko::GameTimer::Update()
 {
-	double tick_time = timer.Read();
-	delta_time = (tick_time - prev_tick_time) / 1000.0;
-	prev_tick_time = tick_time;
-	if (running)
-		total_time = timer.Read();
-	return delta_time;
+    const double tick_time = timer.Read();
+    delta_time = (tick_time - prev_tick_time) / 1000.0;
+    prev_tick_time = tick_time;
+    if (running)
+        total_time = timer.Read();
+    return delta_time;
 }
 
-void GameTimer::Play()
+void Hachiko::GameTimer::Play()
 {
-	running = true;
+    running = true;
 }
 
-void GameTimer::Pause()
+void Hachiko::GameTimer::Pause()
 {
-	paused = true;
-	timer.Stop();
+    paused = true;
+    timer.Stop();
 }
 
-void GameTimer::Resume()
+void Hachiko::GameTimer::Resume()
 {
-	paused = false;
-	timer.Resume();
+    paused = false;
+    timer.Resume();
 }
 
-void GameTimer::Stop()
+void Hachiko::GameTimer::Stop()
 {
-	running = false;
-	timer.Stop();
+    running = false;
+    timer.Stop();
 }
 
-PerformanceTimer  EngineTimer::timer;
-double EngineTimer::delta_time = 0.;
-double EngineTimer::total_time = 0.;
-double EngineTimer::prev_tick_time = 0.;
-bool EngineTimer::running = false;
+Hachiko::PerformanceTimer Hachiko::EngineTimer::timer;
+double Hachiko::EngineTimer::delta_time = 0.;
+double Hachiko::EngineTimer::total_time = 0.;
+double Hachiko::EngineTimer::prev_tick_time = 0.;
+bool Hachiko::EngineTimer::running = false;
 
-
-void EngineTimer::Start()
+void Hachiko::EngineTimer::Start()
 {
-	total_time = 0.;
-	running = true;
-	timer.Start();
-	prev_tick_time = timer.Read();
+    total_time = 0.;
+    running = true;
+    timer.Start();
+    prev_tick_time = timer.Read();
 }
 
-double EngineTimer::Update()
+double Hachiko::EngineTimer::Update()
 {
-	double tick_time = timer.Read();
-	delta_time = (tick_time - prev_tick_time) / 1000.0;
-	prev_tick_time = tick_time;
-	if (running)
-		total_time = timer.Read();
-	return delta_time;
+    const double tick_time = timer.Read();
+    delta_time = (tick_time - prev_tick_time) / 1000.0;
+    prev_tick_time = tick_time;
+    if (running)
+        total_time = timer.Read();
+    return delta_time;
 }

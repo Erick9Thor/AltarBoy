@@ -359,3 +359,6 @@ MigrationBackup/
 FodyWeavers.xsd
 
 imgui.ini
+
+Source/VTune Profiler Results/
+Source/.idea/

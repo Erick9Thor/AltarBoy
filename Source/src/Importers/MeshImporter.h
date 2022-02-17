@@ -1,13 +1,16 @@
 #pragma once
 
-#include "../Utils/UID.h"
+#include "utils/UUID.h"
+#include "assimp/scene.h"
 
-class ResourceMesh;
-struct aiMesh;
-
-namespace MeshImporter
+namespace Hachiko
 {
-	ResourceMesh* Import(const aiMesh* ai_mesh);
-	void Save(ResourceMesh* r_mesh, UID uid);
-	ResourceMesh* Load(UID uid);
-};
+    class ResourceMesh;
+
+    namespace MeshImporter
+    {
+        ResourceMesh* Import(const aiMesh* ai_mesh);
+        void Save(ResourceMesh* r_mesh, UID uid);
+        ResourceMesh* Load(UID uid);
+    }; // namespace MeshImporter
+}

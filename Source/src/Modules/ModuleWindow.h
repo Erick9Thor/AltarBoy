@@ -3,43 +3,60 @@
 #include "Module.h"
 #include "SDL.h"
 
-class Application;
-
-class ModuleWindow : public Module
+namespace Hachiko
 {
-public:
-	ModuleWindow();
-	~ModuleWindow() override;
+    class Application;
 
-	bool Init() override;
-	bool CleanUp() override;
+    class ModuleWindow : public Module
+    {
+    public:
+        ModuleWindow();
+        ~ModuleWindow() override;
 
-	void WindowResized();
-	void SetFullScreen(bool fullscreen);
-	void SetResizable(bool resizable);
-	void SetSize(int w, int h);
-	void SetVsync(bool vsync);
+        bool Init() override;
+        [[nodiscard]] bool CleanUp() override;
 
-	inline int GetWidth() const { return width; }
-	inline int GetHeight() const { return height; }
+        void WindowResized();
+        void SetFullScreen(bool fullscreen) const;
+        void SetResizable(bool resizable) const;
+        void SetSize(int w, int h) const;
+        static void SetVsync(bool vsync);
 
-	void OptionsMenu();
+        [[nodiscard]] int GetWidth() const
+        {
+            return width;
+        }
 
-	inline SDL_Surface* GetScreenSurface() const { return screen_surface; }
-	inline SDL_Window* GetWindow() const { return window; }
+        [[nodiscard]] int GetHeight() const
+        {
+            return height;
+        }
 
-private:
-	void GetMonitorResolution(int& width, int& height);
+        void OptionsMenu();
 
-	SDL_Window* window = NULL;
-	SDL_Surface* screen_surface = NULL;
+        [[nodiscard]] SDL_Surface* GetScreenSurface() const
+        {
+            return screen_surface;
+        }
 
-	bool fullscreen;
-	bool resizable;
-	int width;
-	int height;
-	int max_width;
-	int max_height;	
-	int refresh_rate;
-	bool vsync;
-};
+        [[nodiscard]] SDL_Window* GetWindow() const
+        {
+            return window;
+        }
+
+    private:
+        static void GetMonitorResolution(int& width, int& height);
+
+        SDL_Window* window = nullptr;
+        SDL_Surface* screen_surface = nullptr;
+
+        bool fullscreen{};
+        bool resizable{};
+        int width{};
+        int height{};
+        int max_width{};
+        int max_height{};
+        int refresh_rate{};
+        bool vsync{};
+    };
+}

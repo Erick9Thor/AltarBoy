@@ -1,14 +1,12 @@
 #pragma once
 
-#include "../Resources/ResourceScene.h"
-
-#include "../Utils/JsonFormaterValue.h"
-
-class Scene;
-
-namespace SceneImporter
+namespace Hachiko
 {
-	ResourceScene* ImportScene(const char* file_path);
-	Scene* LoadScene(const char* file_path);
-	bool SaveScene(Scene* scene, const char* file_path);
+    class Scene;
+
+    namespace SceneImporter
+    {
+        Scene* LoadScene(const char* file_path);
+        bool SaveScene(Scene* scene, const char* file_path);
+    } // namespace SceneImporter
 }

@@ -1,19 +1,21 @@
 #pragma once
-#include <string>
-using namespace std;
-
-class Window
+namespace Hachiko
 {
-public:
-	Window(const char* name, bool active);
-	virtual ~Window();
+    class Window
+    {
+    public:
+        Window(const char* name, bool active);
+        virtual ~Window();
 
-	// --- Life cycle --- //
-	virtual void Init() {};
-	virtual void Update() {};
-	virtual void CleanUp() {};
+        // --- Life cycle --- //
+        virtual void Init() {}
 
-public:
-	const char* name;
-	bool active = true;
-};
+        virtual void Update() {}
+
+        virtual void CleanUp() {}
+
+    public:
+        const char* name;
+        bool active = true;
+    };
+}

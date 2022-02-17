@@ -1,10 +1,7 @@
-#include "Window.h"
+#include "core/hepch.h"
 
-Window::Window(const char* name, bool active)
-	: name(name), active(active)
-{
-}
+Hachiko::Window::Window(const char* name, const bool active) :
+    name(name),
+    active(active) {}
 
-Window::~Window()
-{
-}
+Hachiko::Window::~Window() = default;

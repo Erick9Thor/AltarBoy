@@ -1,12 +1,22 @@
-# Altar Boy
-Altar Boy is a custom built C++ Game Engine done for the Videogame Development Master at UPC School.
+# Hachiko Engine 🐕
+Hachiko is a custom built C++ Game Engine developed by Akita Interactive.
 
 ![engine screnshot](Screenshots/example.PNG)
 
-## Developers 💻
-
-* **Eric Torres** - [Erick9Thor](https://github.com/Erick9Thor)
-* **Bernat Martínez** - [Bernatmago](https://github.com/Bernatmago)
+## Team 💻
+* **Alvaro** - [alvarosoppelsa](https://github.com/alvarosoppelsa)
+* **Armando** - [armandojaga](https://github.com/armandojaga)
+* **Baran** - [baransrc](https://github.com/baransrc)
+* **Bernat G** - [bernatgb](https://github.com/bernatgb)
+* **Bernat M** - [Bernatmago](https://github.com/Bernatmago)
+* **Edward** - [EdwardRegasDuncan](https://github.com/EdwardRegasDuncan)
+* **Eric** - [Erick9Thor](https://github.com/Erick9Thor)
+* **Joel** - [Izenz](https://github.com/Izenz)
+* **Kike** - [OGKoko](https://github.com/OGKoko)
+* **Marius** - [ermario](https://github.com/ermario)
+* **Miquel** - [miquelmiro3](https://github.com/miquelmiro3)
+* **Mónica** - [monikamnc](https://github.com/monikamnc)
+* **Vicenç** - [VBoschMatas](https://github.com/VBoschMatas)
 
 ## How to use 🔧
 
@@ -41,7 +51,7 @@ Alternatively you can modify the transform using the **guizmo**, to change its c
 Based on the second assignment requirements
 - Unity like camera controls
 - Previous menus (Altar Boy + UPC-Engine) and new ones for the new features
-- ** Pending ** Engine loads with survival shooter scene
+- Engine loads with survival shooter scene
 - Scene serialization (loading & saving)
 - Quadtree frustum culling
 - Editable scene with guizmos

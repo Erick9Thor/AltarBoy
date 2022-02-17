@@ -1,103 +1,55 @@
+#include "core/hepch.h"
 #include "SceneImporter.h"
 
-#include "../GameObject.h"
-#include "../Application.h"
-#include "../Scene.h"
+#include "modules/ModuleFileSystem.h"
 
-#include "../Modules/ModuleFileSystem.h"
-
-#include "rapidjson/document.h"
-#include "rapidjson/prettywriter.h"
-#include "rapidjson/error/en.h"
-
-#include "../Utils/Logger.h"
-
-#include <string>
-
-ResourceScene* SceneImporter::ImportScene(const char* file_path)
+Hachiko::Scene* Hachiko::SceneImporter::LoadScene(const char* file_path)
 {
-	const char* buffer = App->file_sys->Load(file_path);
+    const char* buffer = App->file_sys->Load(file_path);
 
-	if (sizeof(buffer) == 0)
-	{
-		return nullptr;
-	}
+    if constexpr (sizeof(buffer) == 0)
+    {
+        return nullptr;
+    }
 
-	rapidjson::Document document;
-	document.Parse(buffer);
-	if (document.HasParseError())
-	{
-		LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
-		return nullptr;
-	}
+    // Parse document from file
+    rapidjson::Document document;
+    document.Parse<rapidjson::kParseStopWhenDoneFlag>(buffer);
+    if (document.HasParseError())
+    {
+        HE_LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
+        return nullptr;
+    }
 
-	// Write document to buffer
-	rapidjson::StringBuffer string_buffer;
-	rapidjson::PrettyWriter<
-		/*typename OutputStream  */ rapidjson::StringBuffer,
-		/*typename SourceEncoding*/ rapidjson::UTF8<>,
-		/*typename TargetEncoding*/ rapidjson::UTF8<>,
-		/*typename StackAllocator*/ rapidjson::CrtAllocator,
-		0>
-	writer(string_buffer);
-	document.Accept(writer);
+    const JsonFormatterValue j_scene(document, document);
 
-	// Create scene resource
-	
-	// Save resource meta file
+    const auto scene = new Scene();
+    scene->Load(j_scene);
 
-	// Save to file
-	
-	// Send resource creation event
+    delete[] buffer;
 
-	return nullptr;
+    return scene;
 }
 
-Scene* SceneImporter::LoadScene(const char* file_path)
+bool Hachiko::SceneImporter::SaveScene(Scene* scene, const char* file_path)
 {
-	const char* buffer = App->file_sys->Load(file_path);
+    rapidjson::Document document;
+    document.SetObject();
+    const JsonFormatterValue j_Scene(document, document);
 
-	if (sizeof(buffer) == 0) { 
-		return nullptr; 
-	}
+    scene->Save(j_Scene);
 
-	// Parse document from file
-	rapidjson::Document document;
-	document.Parse<rapidjson::kParseStopWhenDoneFlag>(buffer);
-	if (document.HasParseError())
-	{
-		LOG("Error parsing JSON: %s (offset: %u)", rapidjson::GetParseError_En(document.GetParseError()), document.GetErrorOffset());
-		return nullptr;
-	}
-	
-	JsonFormaterValue j_scene(document, document);
+    // Write document to buffer
+    rapidjson::StringBuffer string_buffer;
 
-	Scene* scene = new Scene();
-	scene->Load(j_scene);
-	return scene;
-}
+    rapidjson::PrettyWriter<
+        /*typename OutputStream  */ rapidjson::StringBuffer,
+                                    /*typename SourceEncoding*/ rapidjson::UTF8<>,
+                                    /*typename TargetEncoding*/ rapidjson::UTF8<>,
+                                    /*typename StackAllocator*/ rapidjson::CrtAllocator, 0> writer(string_buffer);
 
-bool SceneImporter::SaveScene(Scene* scene, const char* file_path)
-{
-	rapidjson::Document document;
-	document.SetObject();
-	JsonFormaterValue j_Scene(document, document);
+    document.Accept(writer);
 
-	scene->Save(j_Scene);
-
-	// Write document to buffer
-	rapidjson::StringBuffer string_buffer;
-	
-	rapidjson::PrettyWriter<
-		/*typename OutputStream  */ rapidjson::StringBuffer,
-		/*typename SourceEncoding*/ rapidjson::UTF8<>,
-		/*typename TargetEncoding*/ rapidjson::UTF8<>,
-		/*typename StackAllocator*/ rapidjson::CrtAllocator,
-		0
-	> writer(string_buffer);
-
-	document.Accept(writer);
-
-	// Save to file
-	return App->file_sys->Save(file_path, string_buffer.GetString(), string_buffer.GetSize());
+    // Save to file
+    return App->file_sys->Save(file_path, string_buffer.GetString(), string_buffer.GetSize());
 }
