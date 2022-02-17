@@ -8,6 +8,7 @@
 
 namespace Hachiko
 {
+    class ModuleEvent;
     class ModuleRender;
     class ModuleWindow;
     class ModuleTextures;
@@ -50,6 +51,7 @@ namespace Hachiko
         ModuleProgram* program = nullptr;
         ModuleHardware* hw = nullptr;
         ModuleFileSystem* file_sys = nullptr;
+        ModuleEvent* event = nullptr;
 
     private:
         PerformanceTimer timer;
