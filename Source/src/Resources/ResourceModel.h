@@ -1,11 +1,16 @@
 #pragma once
+
 #include "Resource.h"
+#include "Globals.h"
 
-#include "../Globals.h"
-
-class ResourceModel : public Resource
+namespace Hachiko
 {
-public:
-	ResourceModel(UID uid);
-	~ResourceModel() override;
-};
+    class ResourceModel : public Resource
+    {
+    public:
+        ResourceModel(UID uid);
+        ~ResourceModel() override;
+    };
+}
+
+

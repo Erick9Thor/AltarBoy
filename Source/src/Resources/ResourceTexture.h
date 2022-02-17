@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Resource.h"
+#include "Globals.h"
 
-#include "../Globals.h"
-
-class ResourceTexture : public Resource
+namespace Hachiko
 {
-public:
-	ResourceTexture(UID id);
-};
+    class ResourceTexture : public Resource
+    {
+    public:
+        ResourceTexture(UID id);
+    };
+}

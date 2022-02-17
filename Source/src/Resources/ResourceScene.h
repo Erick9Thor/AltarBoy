@@ -1,10 +1,14 @@
 #pragma once
+
 #include "Resource.h"
+#include "Globals.h"
 
-#include "../Globals.h"
-
-class ResourceScene : public Resource
+namespace Hachiko
 {
-public:
-	ResourceScene(UID id);
-};
+    class ResourceScene : public Resource
+    {
+    public:
+        ResourceScene(UID id);
+    };
+}
+

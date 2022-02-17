@@ -1,8 +1,8 @@
+#include "Core/hepch.h"
 #include "ResourceTexture.h"
 
 
-ResourceTexture::ResourceTexture(UID id)
-	: Resource(id, ResourceType::TEXTURE)
+Hachiko::ResourceTexture::ResourceTexture(UID id)
+	: Resource(id, Type::TEXTURE)
 {
-	library_path = LIBRARY_TEXTURES_FOLDER;
 }

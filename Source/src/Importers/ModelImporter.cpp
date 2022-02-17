@@ -1,3 +1,4 @@
+#include "Core/hepch.h"
 #include "ModelImporter.h"
 
 #include "../Utils/Logger.h"
@@ -6,9 +7,9 @@
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
 
-ResourceModel* ModelImporter::ImportModel(const char* file_path)
+Hachiko::ResourceModel* ModelImporter::ImportModel(const char* file_path)
 {
-	ResourceModel* resource = nullptr;
+    Hachiko::ResourceModel* resource = nullptr;
 
 	// Parse path?¿?¿?
 

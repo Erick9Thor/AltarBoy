@@ -1,7 +1,7 @@
+#include "Core/hepch.h"
 #include "ResourceScene.h"
 
-ResourceScene::ResourceScene(UID id)
-	: Resource(id, ResourceType::SCENE)
+Hachiko::ResourceScene::ResourceScene(UID id)
+	: Resource(id, Type::SCENE)
 {
-	library_path = LIBRARY_SCENE_FOLDER;
 }
