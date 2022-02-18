@@ -120,49 +120,49 @@ void ResourcesPreferences::GetConfigurationData(YAML::Node& node)
     node[group_name][SCRIPTS_LIBRARY] = script_library;
 }
 
-const char* ResourcesPreferences::GetAssetsPath(ResourceType type)
+const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
 {
     switch (type)
     {
-    case ResourceType::SCENE:
+    case Resource::Type::SCENE:
         return scene_assets.c_str();
-    case ResourceType::MODEL:
+    case Resource::Type::MODEL:
         return models_assets.c_str();
-    case ResourceType::MESH:
+    case Resource::Type::MESH:
         return meshes_assets.c_str();
-    case ResourceType::TEXTURE:
+    case Resource::Type::TEXTURE:
         return textures_assets.c_str();
-    case ResourceType::AUDIO:
+    case Resource::Type::AUDIO:
         return audio_assets.c_str();
-    case ResourceType::VIDEO:
+    case Resource::Type::ANIMATION:
         return video_assets.c_str();
-    case ResourceType::SCRIPT:
+    case Resource::Type::SCRIPT:
         return script_assets.c_str();
-    case ResourceType::UNKNOWN:
+    case Resource::Type::UNKNOWN:
     default:
         assert(false);
     }
 }
 
-const char* ResourcesPreferences::GetLibraryPath(ResourceType type) const
+const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
 {
     switch (type)
     {
-    case ResourceType::SCENE:
+    case Resource::Type::SCENE:
         return scene_library.c_str();
-    case ResourceType::MODEL:
+    case Resource::Type::MODEL:
         return models_library.c_str();
-    case ResourceType::MESH:
+    case Resource::Type::MESH:
         return meshes_library.c_str();
-    case ResourceType::TEXTURE:
+    case Resource::Type::TEXTURE:
         return textures_library.c_str();
-    case ResourceType::AUDIO:
+    case Resource::Type::AUDIO:
         return audio_library.c_str();
-    case ResourceType::VIDEO:
+    case Resource::Type::ANIMATION:
         return video_library.c_str();
-    case ResourceType::SCRIPT:
+    case Resource::Type::SCRIPT:
         return script_library.c_str();
-    case ResourceType::UNKNOWN:
+    case Resource::Type::UNKNOWN:
     default:
         assert(false);
     }

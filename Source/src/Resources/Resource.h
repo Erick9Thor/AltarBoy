@@ -15,7 +15,10 @@ namespace Hachiko
             MODEL,
             MESH,
             SCENE,
-            SHADER
+            SHADER,
+            AUDIO,
+            ANIMATION,
+            SCRIPT
         };
 
         Resource(UID id, Type type);

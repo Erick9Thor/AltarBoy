@@ -1,11 +1,14 @@
+#include "Core/hepch.h"
 #include "PreferenceManager.h"
 
 #include "Globals.h"
-#include "editor/CameraPreferences.h"
-#include "editor/EditorPreferences.h"
-#include "editor/GlobalPreferences.h"
-#include "editor/RenderPreferences.h"
-#include "editor/ResourcesPreferences.h"
+#include "src/CameraPreferences.h"
+#include "src/EditorPreferences.h"
+#include "src/GlobalPreferences.h"
+#include "src/RenderPreferences.h"
+#include "src/ResourcesPreferences.h"
+
+#include "Modules/ModuleFileSystem.h"
 
 using namespace Hachiko;
 
@@ -24,7 +27,7 @@ PreferenceManager::PreferenceManager()
     preferences.emplace_back(camera);
     preferences.emplace_back(resources);
 
-    if (file_manager.CreateFileIfNew(SETTINGS_FOLDER))
+    if (App->file_sys->Exists(SETTINGS_FOLDER))
     {
         nodes_vec = YAML::LoadAllFromFile(SETTINGS_FOLDER);
         LoadConfigurationFile();
@@ -62,7 +65,7 @@ void PreferenceManager::SaveConfigurationFile() const
     {
         it->GetConfigurationData(output);
     }
-    std::ofstream fout(CONFIG_PATH);
+    std::ofstream fout(SETTINGS_FOLDER);
     fout << output;
 }
 

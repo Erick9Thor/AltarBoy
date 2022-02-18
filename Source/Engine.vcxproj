@@ -159,11 +159,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\preferences\editor\CameraPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\EditorPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\GlobalPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\RenderPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\ResourcesPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\CameraPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\EditorPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\GlobalPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp" />
     <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
     <ClCompile Include="src\Modules\ModuleResources.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
@@ -525,11 +525,11 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\preferences\editor\CameraPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\EditorPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\GlobalPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\RenderPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\ResourcesPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\CameraPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\EditorPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\GlobalPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\RenderPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\ResourcesPreferences.h" />
     <ClInclude Include="src\Core\preferences\PreferenceManager.h" />
     <ClInclude Include="src\Core\preferences\Preferences.h" />
     <ClInclude Include="src\Core\serialization\Definitions.h" />

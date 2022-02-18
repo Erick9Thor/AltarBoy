@@ -15,6 +15,8 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 
+#include "Core/preferences/PreferenceManager.h"
+
 using namespace std;
 
 Hachiko::Application::Application()
@@ -32,6 +34,8 @@ Hachiko::Application::Application()
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
+
+    preferences = new PreferenceManager();
 }
 
 Hachiko::Application::~Application()
@@ -40,6 +44,7 @@ Hachiko::Application::~Application()
     {
         delete *it;
     }
+    delete preferences;
 }
 
 bool Hachiko::Application::Init()

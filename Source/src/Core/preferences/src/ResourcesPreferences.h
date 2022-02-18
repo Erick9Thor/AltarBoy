@@ -22,8 +22,8 @@ namespace Hachiko
         ~ResourcesPreferences() override = default;
         void SetConfigurationData(const YAML::Node& node) override;
         void GetConfigurationData(YAML::Node& node) override;
-        [[nodiscard]] const char* GetAssetsPath(ResourceType type);
-        [[nodiscard]] const char* GetLibraryPath(ResourceType type) const;
+        [[nodiscard]] const char* GetAssetsPath(Resource::Type type);
+        [[nodiscard]] const char* GetLibraryPath(Resource::Type type) const;
 
     private:
         std::string scene_assets = "./assets/scene/";

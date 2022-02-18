@@ -5,6 +5,8 @@
 #include "ModuleRender.h"
 #include "ModuleEvent.h"
 
+#include "Core/preferences/src/ResourcesPreferences.h"
+
 using namespace Hachiko;
 
 bool ModuleResources::Init()

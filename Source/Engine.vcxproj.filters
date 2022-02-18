@@ -375,13 +375,27 @@
     <ClCompile Include="src\modules\ModuleWindow.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleResources.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\CameraPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\EditorPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\GlobalPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\RenderPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\editor\ResourcesPreferences.cpp" />
-    <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\Core\preferences\PreferenceManager.cpp">
+      <Filter>Core\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\CameraPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\EditorPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\GlobalPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleResources.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -983,15 +997,31 @@
     <ClInclude Include="src\modules\ModuleWindow.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleResources.h" />
-    <ClInclude Include="src\Core\preferences\editor\CameraPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\EditorPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\GlobalPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\RenderPreferences.h" />
-    <ClInclude Include="src\Core\preferences\editor\ResourcesPreferences.h" />
-    <ClInclude Include="src\Core\preferences\PreferenceManager.h" />
-    <ClInclude Include="src\Core\preferences\Preferences.h" />
     <ClInclude Include="src\Core\serialization\Definitions.h" />
+    <ClInclude Include="src\Core\preferences\Preferences.h">
+      <Filter>Core\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\PreferenceManager.h">
+      <Filter>Core\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\CameraPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\EditorPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\GlobalPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\RenderPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\ResourcesPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modules\ModuleResources.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -1104,6 +1134,12 @@
     </Filter>
     <Filter Include="Modules\Headers">
       <UniqueIdentifier>{1dc25ef2-9258-4059-a47b-0f248b5fa5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Preferences">
+      <UniqueIdentifier>{43e2ebb8-d52a-4206-965b-e005da0cadd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Preferences\Source">
+      <UniqueIdentifier>{6a048cf4-659f-4f54-8848-fb3bbf97538b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,7 @@ namespace Hachiko
     class ModuleHardware;
     class ModuleFileSystem;
 
+    class PreferenceManager;
     class Program;
     class AppLog;
 
@@ -53,6 +54,7 @@ namespace Hachiko
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
 
+        PreferenceManager* preferences = nullptr;
     private:
         PerformanceTimer timer;
 
