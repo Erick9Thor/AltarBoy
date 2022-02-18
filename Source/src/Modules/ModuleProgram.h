@@ -62,7 +62,7 @@ namespace Hachiko
     private:
         static char* LoadShaderSource(const char* shader_file_name);
         unsigned int CompileShader(unsigned type, const char* source) const;
-        void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader);
+        void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader) const;
         Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
 
         Program* CreateMainProgram();

@@ -18,5 +18,7 @@ namespace Hachiko
         bool CompactColorPicker(const char* name, float* color);
 
         bool CollapsingHeader(GameObject* game_object, Component* component, const char* header_name);
+
+        ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
     }; // namespace ImGuiUtils
 }
