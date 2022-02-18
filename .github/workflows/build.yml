@@ -27,8 +27,8 @@ jobs:
           java-version: 11
       - name: Set up msbuild
         uses: microsoft/setup-msbuild@v1.0.2
-        with:
-          vs-version: "[16.9)"
+        # with:
+        #   vs-version: "[16.9)"
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -52,7 +52,7 @@ jobs:
           echo "$HOME\.sonar\build-wrapper-win-x86" | Out-File -Append -FilePath $env:GITHUB_PATH -Encoding utf8
       - name: Run build-wrapper
         run: |
-          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} msbuild Source\Engine.vcxproj
+          build-wrapper-win-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} msbuild .\Source\Engine.sln
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
