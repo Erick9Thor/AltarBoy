@@ -109,7 +109,9 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
         {
             GameObject* selectedGameObject = App->editor->GetSelectedGameObject();
             if (selectedGameObject == game_object)
+            {
                 App->editor->SetSelectedGO(nullptr);
+            }
 
             App->scene_manager->GetActiveScene()->CreateNewGameObject("New Game Object", game_object);
             ImGui::CloseCurrentPopup();
