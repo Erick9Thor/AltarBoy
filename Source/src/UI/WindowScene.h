@@ -29,7 +29,7 @@ namespace Hachiko
 
     private:
         void GuizmoOptionsController();
-        void ToolbarMenu();
+        void ToolbarMenu() const;
         void DrawScene();
         void Controller() const;
 

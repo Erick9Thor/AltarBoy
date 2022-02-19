@@ -41,6 +41,7 @@ enum class UpdateStatus
 #define RESIZABLE true
 #define TITLE "Hachiko"
 #define ENGINE_VERSION "0.1"
+#define GLSL_VERSION "#version 460"
 
 #define FPS_LOG_SIZE 100
 

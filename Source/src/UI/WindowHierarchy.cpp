@@ -95,7 +95,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
         }
     }
 
-    if (!game_object->children.empty())
+    if (node_open && !game_object->children.empty())
     {
         DrawChildren(game_object);
     }
@@ -107,6 +107,12 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
         // TODO: Open options to create/destroy new object or move up down in the list of children
         if (ImGui::MenuItem("Add Game Object"))
         {
+            GameObject* selectedGameObject = App->editor->GetSelectedGameObject();
+            if (selectedGameObject == game_object)
+            {
+                App->editor->SetSelectedGO(nullptr);
+            }
+
             App->scene_manager->GetActiveScene()->CreateNewGameObject("New Game Object", game_object);
             ImGui::CloseCurrentPopup();
         }

@@ -20,7 +20,7 @@ namespace Hachiko
 
         void OnResize(unsigned int screen_width, unsigned int screen_height) const;
 
-        void Controller(float delta);
+        void Controller(float delta) const;
         void MovementController(float delta) const;
 
         [[nodiscard]] ComponentCamera* GetMainCamera() const
@@ -33,6 +33,7 @@ namespace Hachiko
         void Orbit(float motion_x, float motion_y) const;
         void FocusOnModel(const float3& target, float distance) const;
         void Rotate(float motion_x, float motion_y) const;
+        void PerpendicularMovement(float motion_x, float motion_y) const;
 
     private:
         GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.

@@ -23,7 +23,7 @@ bool Hachiko::ImGuiUtils::IconButton(const char* icon, const char* tooltip)
 
 void Hachiko::ImGuiUtils::VSplitter(const char* str_id, ImVec2* size)
 {
-    ImVec2 screen_pos = ImGui::GetCursorScreenPos();
+    const ImVec2 screen_pos = ImGui::GetCursorScreenPos();
     ImGui::InvisibleButton(str_id, ImVec2(3, -1));
     const ImVec2 end_pos = screen_pos + ImGui::GetItemRectSize();
     const ImGuiWindow* win = ImGui::GetCurrentWindow();
@@ -39,12 +39,14 @@ void Hachiko::ImGuiUtils::VSplitter(const char* str_id, ImVec2* size)
 void Hachiko::ImGuiUtils::Rect(float w, float h, ImU32 color)
 {
     const ImGuiWindow* win = ImGui::GetCurrentWindow();
-    ImVec2 screen_pos = ImGui::GetCursorScreenPos();
+    const ImVec2 screen_pos = ImGui::GetCursorScreenPos();
     const ImVec2 end_pos = screen_pos + ImVec2(w, h);
     const ImRect total_bb(screen_pos, end_pos);
     ImGui::ItemSize(total_bb);
     if (!ImGui::ItemAdd(total_bb, 0))
+    {
         return;
+    }
     win->DrawList->AddRectFilled(screen_pos, end_pos, color);
 }
 
@@ -63,11 +65,17 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
 
     ImGui::SameLine();
     if (ImGui::GetWindowWidth() > 170)
+    {
         ImGui::Indent(ImGui::GetWindowWidth() - 43);
+    }
     if (ImGui::Button(std::string(ICON_FA_TIMES).c_str()))
+    {
         ImGui::OpenPopup(header_name);
+    }
     if (ImGui::GetWindowWidth() > 170)
+    {
         ImGui::Unindent(ImGui::GetWindowWidth() - 43);
+    }
 
     if (ImGui::BeginPopup(header_name))
     {
@@ -76,4 +84,9 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
     }
 
     return open;
+}
+
+ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
+{
+    return {lhs.x + rhs.x, lhs.y + rhs.y};
 }

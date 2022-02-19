@@ -91,9 +91,9 @@ namespace Hachiko
         // Main menu bar
         UpdateStatus MainMenuBar();
         void FileMenu() const;
-        void EditMenu();
+        void EditMenu() const;
         void GoMenu() const;
-        void ViewMenu();
+        void ViewMenu() const;
         void ThemeMenu() const;
 
         GameObject* selected_go = nullptr;
