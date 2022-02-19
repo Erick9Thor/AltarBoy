@@ -69,3 +69,8 @@ void Hachiko::ResourceMesh::CleanUp()
     }
     loaded = false;
 }
+
+bool Hachiko::operator==(const ResourceMesh::Layout& l, const ResourceMesh::Layout& r)
+{
+    return (l.normals == r.normals && l.text_coords == r.text_coords);
+}

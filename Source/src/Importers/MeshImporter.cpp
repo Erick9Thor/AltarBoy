@@ -16,6 +16,7 @@ Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh)
     r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = ai_mesh->mNumVertices * 3;
     r_mesh->normals = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
     memcpy(r_mesh->normals, ai_mesh->mNormals, r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] * sizeof(float));
+    r_mesh->layout.normals = true;
 
     r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = ai_mesh->mNumVertices * 2;
     r_mesh->tex_coords = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
@@ -23,6 +24,7 @@ Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh)
     {
         memcpy(&r_mesh->tex_coords[i * 2], &ai_mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
     }
+    r_mesh->layout.text_coords = true;
 
     r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] = ai_mesh->mNumFaces * 3;
     r_mesh->indices = new unsigned[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];

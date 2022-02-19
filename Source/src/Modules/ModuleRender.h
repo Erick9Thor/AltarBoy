@@ -3,6 +3,7 @@
 #include "Globals.h"
 
 #include "RenderList.h"
+#include "Batching/BatchManager.h"
 
 #include <vector>
 
@@ -80,6 +81,7 @@ namespace Hachiko
         void* context{};
 
         RenderList render_list;
+        BatchManager batch_manager;
 
         unsigned frame_buffer = 0;
         unsigned depth_stencil_buffer = 0;

@@ -375,6 +375,9 @@
     <ClCompile Include="src\core\hepch.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Batching\BatchManager.cpp" />
+    <ClCompile Include="src\Batching\GeometryBatch.cpp" />
+    <ClCompile Include="src\Batching\TextureBatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -976,6 +979,9 @@
     <ClInclude Include="src\core\serialization\TypeConverter.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\Batching\BatchManager.h" />
+    <ClInclude Include="src\Batching\GeometryBatch.h" />
+    <ClInclude Include="src\Batching\TextureBatch.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
