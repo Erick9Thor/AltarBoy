@@ -17,6 +17,12 @@ namespace Hachiko
             COUNT,
         };
 
+        struct Layout
+        {
+            bool normals = false;
+            bool text_coords = false;
+        };
+
         ResourceMesh(UID id);
         ~ResourceMesh() override;
         void GenerateBuffers();
@@ -26,6 +32,7 @@ namespace Hachiko
 
         bool loaded = false;
 
+        Layout layout;
         AABB bounding_box;
 
         // Store the ids of buffers in opengl
@@ -42,4 +49,6 @@ namespace Hachiko
         float* normals{};
         float* tex_coords{};
     };
+
+    bool operator==(const ResourceMesh::Layout& l, const ResourceMesh::Layout& r);
 }

@@ -36,6 +36,11 @@ namespace Hachiko
             return visible;
         }
 
+        [[nodiscard]] const ResourceMesh* GetResource() const
+        {
+            return resource;
+        }
+
         [[nodiscard]] AABB GetAABB() const
         {
             return resource->bounding_box;
