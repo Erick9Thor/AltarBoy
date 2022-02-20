@@ -33,13 +33,11 @@ namespace Hachiko
         std::map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
                 
         // We can use resource mesh to contain a concatenation of all original meshes
-        // vbo, ebo, vao & layout can be retrieved from batch
         ResourceMesh* batch = nullptr;
+        unsigned instance_indices_vbo;
         std::vector<DrawCommand> commands;
-        
-        unsigned index_to_fill = 0;
-        unsigned vertex_offset = 0;
-        unsigned index_offset = 0;    
+
+        bool loaded = false;  
     };
 
 } // namespace Hachiko
