@@ -33,7 +33,7 @@ void Hachiko::BatchManager::BuildBatches()
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
         geometry_batch->GenerateBatch();
-        // geometry_batch->GenerateBuffers();
+        geometry_batch->GenerateBuffers();
     }
 }
 

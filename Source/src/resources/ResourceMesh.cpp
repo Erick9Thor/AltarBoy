@@ -41,6 +41,7 @@ void Hachiko::ResourceMesh::GenerateBuffers()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::INDICES)] * sizeof(unsigned), indices, GL_STATIC_DRAW);
 
     glBindVertexArray(0);
+    loaded = true;
 }
 
 void Hachiko::ResourceMesh::GenerateAABB()
