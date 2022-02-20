@@ -521,6 +521,7 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Batching\DrawCommand.h" />
     <ClInclude Include="src\Batching\GeometryBatch.h" />
     <ClInclude Include="src\Batching\BatchManager.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />

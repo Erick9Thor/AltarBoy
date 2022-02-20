@@ -17,11 +17,12 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
     components.push_back(mesh);
 
     const ResourceMesh* resource = mesh->GetResource();
-    auto it = resources_index.find(resource);
+    auto it = resources.find(resource);
 
-    if (it == resources_index.end())
+    if (it == resources.end())
     {
-        resources_index[resource] = 0;
+        // It will be formatted when generating batches
+        resources[resource] = new DrawCommand();
     }
 }
 
@@ -35,19 +36,17 @@ void Hachiko::GeometryBatch::GenerateBatch() {
         static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)};
 
     // Index all resources and compute total size to generate batch buffers;
-    for (auto& resource : resources_index)
+    for (auto& resource : resources)
     {
         const ResourceMesh* r = resource.first;
-        resource.second = resource_index;
-        ++resource_index;
-
+                
         for (int buffer_type : buffer_types)
         {
             batch->buffer_sizes[buffer_type] += r->buffer_sizes[buffer_type];
         }
             
     }
-
+    
     batch->indices = new unsigned[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
     batch->vertices = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     batch->normals = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
@@ -58,11 +57,16 @@ void Hachiko::GeometryBatch::GenerateBatch() {
     unsigned normals_offset = 0;
     unsigned tex_coords_offset = 0;
 
-    for (auto& resource : resources_index)
+    for (auto& resource : resources)
     {
         const ResourceMesh* r = resource.first;
+        DrawCommand* command = resource.second;
 
-        unsigned size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];
+        command->count = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];
+        command->first_index = indices_offset;
+        command->base_vertex = static_cast<int>(vertices_offset / 3);
+
+        unsigned size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];        
         unsigned size_bytes = sizeof(unsigned) * size;
         memcpy(&batch->indices[indices_offset], r->indices, size_bytes);
         indices_offset += size;
@@ -82,8 +86,25 @@ void Hachiko::GeometryBatch::GenerateBatch() {
         memcpy(&batch->tex_coords[tex_coords_offset], r->tex_coords, size_bytes);
         tex_coords_offset += size;        
     }
+
+
+    GenerateCommands();
 }
 
 void Hachiko::GeometryBatch::GenerateBuffers() {
     batch->GenerateBuffers();
+}
+
+void Hachiko::GeometryBatch::GenerateCommands() {
+    commands.reserve(components.size());
+    
+    unsigned instance = 0;
+    for (const ComponentMesh* component : components)
+    {
+        const ResourceMesh* r = component->GetResource();
+        DrawCommand command = (*resources[r]);
+        command.base_instance = instance;
+        commands.emplace_back(command);
+        ++instance;
+    }
 }

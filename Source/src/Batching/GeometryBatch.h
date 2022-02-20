@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
 #include "../Resources/ResourceMesh.h"
+#include "DrawCommand.h"
+
+#include <vector>
 
 namespace Hachiko
 {
@@ -19,20 +21,25 @@ namespace Hachiko
 
         void GenerateBatch();
         void GenerateBuffers();
+        void GenerateCommands();
+
+        const std::vector<DrawCommand>& GetCommands() const
+        {
+            return commands;
+        }
         
         std::vector<const ComponentMesh*> components; // contains all ComponentMeshes in the batch
-        std::map<const ResourceMesh*, unsigned> resources_index; // contains unique ResourceMeshes and their position in the buffer
-
-        
+        // Commands will be used as templates for the final command list
+        std::map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
+                
         // We can use resource mesh to contain a concatenation of all original meshes
         // vbo, ebo, vao & layout can be retrieved from batch
         ResourceMesh* batch = nullptr;
+        std::vector<DrawCommand> commands;
         
         unsigned index_to_fill = 0;
         unsigned vertex_offset = 0;
-        unsigned index_offset = 0;
-
-    
+        unsigned index_offset = 0;    
     };
 
 } // namespace Hachiko
