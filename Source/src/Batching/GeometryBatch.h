@@ -22,6 +22,7 @@ namespace Hachiko
         void GenerateBatch();
         void GenerateBuffers();
         void GenerateCommands();
+        void Bind();
 
         const std::vector<DrawCommand>& GetCommands() const
         {

@@ -159,3 +159,8 @@ void Hachiko::GeometryBatch::GenerateCommands() {
         ++instance;
     }
 }
+
+void Hachiko::GeometryBatch::Bind()
+{
+    glBindVertexArray(batch->vao);
+}
