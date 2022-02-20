@@ -37,6 +37,19 @@ void Hachiko::BatchManager::BuildBatches()
     }
 }
 
+void Hachiko::BatchManager::DrawBatches()
+{
+    for (GeometryBatch* geometry_batch : geometry_batches)
+    {
+        geometry_batch->Bind();
+        // texture_batch->Bind();
+        // bind transforms array
+        // bind materials array
+        auto& commands = geometry_batch->GetCommands();
+        glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);
+    }
+}
+
 void Hachiko::BatchManager::CleanUp()
 {
     for (GeometryBatch* geometry_batch : geometry_batches)

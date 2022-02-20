@@ -17,6 +17,7 @@ namespace Hachiko
         void AddMesh(const ComponentMesh* mesh);
 
         void BuildBatches();
+        void DrawBatches();
 
         void CleanUp();
         // One GeometryBatch per attribute layout
