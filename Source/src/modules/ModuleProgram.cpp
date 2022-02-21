@@ -25,6 +25,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateCameraUBO();
     CreateMaterialUBO();
     CreateLightsUBO();
+    CreateTransformSSBO();
     return true;
 }
 
@@ -125,18 +126,34 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {
-    glGenBuffers(1, &ubos[static_cast<int>(binding_point)]);
-    glBindBuffer(GL_UNIFORM_BUFFER, ubos[static_cast<int>(binding_point)]);
+    glGenBuffers(1, &buffers[static_cast<int>(binding_point)]);
+    glBindBuffer(GL_UNIFORM_BUFFER, buffers[static_cast<int>(binding_point)]);
     glBufferData(GL_UNIFORM_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_UNIFORM_BUFFER, static_cast<int>(binding_point), ubos[static_cast<int>(binding_point)]);
+    glBindBufferBase(GL_UNIFORM_BUFFER, static_cast<int>(binding_point), buffers[static_cast<int>(binding_point)]);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
 void Hachiko::ModuleProgram::UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset) const
 {
-    glBindBuffer(GL_UNIFORM_BUFFER, ubos[static_cast<int>(binding_point)]);
+    glBindBuffer(GL_UNIFORM_BUFFER, buffers[static_cast<int>(binding_point)]);
     glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
+}
+
+void Hachiko::ModuleProgram::CreateSSBO(UBOPoints binding_point, unsigned size)
+{
+    glGenBuffers(1, &buffers[static_cast<int>(binding_point)]);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffers[static_cast<int>(binding_point)]);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, static_cast<int>(binding_point), buffers[static_cast<int>(binding_point)]);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset) const
+{
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffers[static_cast<int>(binding_point)]);
+    glBufferSubData(GL_SHADER_STORAGE_BUFFER, offset, size, data);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 void Hachiko::ModuleProgram::CreateCameraUBO()
@@ -152,6 +169,11 @@ void Hachiko::ModuleProgram::CreateMaterialUBO()
 void Hachiko::ModuleProgram::CreateLightsUBO()
 {
     CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
+}
+
+void Hachiko::ModuleProgram::CreateTransformSSBO()
+{
+    CreateUBO(UBOPoints::TRANSFORMS, 0);
 }
 
 bool Hachiko::ModuleProgram::CleanUp()
@@ -258,6 +280,8 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     }
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
 }
+
+void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const {}
 
 void Hachiko::ModuleProgram::OptionsMenu()
 {
