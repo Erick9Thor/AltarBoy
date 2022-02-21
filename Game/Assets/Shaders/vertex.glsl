@@ -11,6 +11,11 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
+readonly layout(std430, row_major, binding = 3) buffer Transforms
+{
+ mat4 models[];
+};
+
 uniform mat4 model;
 
 // Outputs

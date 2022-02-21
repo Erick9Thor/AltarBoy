@@ -41,9 +41,8 @@ void Hachiko::BatchManager::DrawBatches()
 {
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
+        // Binds meshes and transforms
         geometry_batch->Bind();
-        // texture_batch->Bind();
-        // bind transforms array
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);

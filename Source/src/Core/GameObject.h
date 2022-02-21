@@ -3,7 +3,8 @@
 
 #include <vector>
 #include "utils/UUID.h"
-#include "components/Component.h"
+#include "Components/Component.h"
+#include "Components/ComponentTransform.h"
 
 namespace Hachiko
 {
@@ -87,6 +88,16 @@ namespace Hachiko
                     return static_cast<RetComponent*>(component);
             }
             return nullptr;
+        }
+
+        const ComponentTransform* GetComponentTransform() const
+        {
+            return transform;
+        }
+
+        const float4x4& GetTransform() const
+        {
+            return transform->GetTransform();
         }
 
         std::string name;

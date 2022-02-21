@@ -20,8 +20,12 @@ namespace Hachiko
         void AddMesh(const ComponentMesh* mesh);
 
         void GenerateBatch();
+        void BatchMeshes();
+        void BatchTransforms();
+
         void GenerateBuffers();
-        void GenerateCommands();
+        void BindTransforms(unsigned ssbo_id);
+        void GenerateCommands();        
         void Bind();
 
         const std::vector<DrawCommand>& GetCommands() const
@@ -36,6 +40,7 @@ namespace Hachiko
         // We can use resource mesh to contain a concatenation of all original meshes
         ResourceMesh* batch = nullptr;
         unsigned instance_indices_vbo;
+        std::vector<float4x4> transforms;
         std::vector<DrawCommand> commands;
 
         bool loaded = false;  
