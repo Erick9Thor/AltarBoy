@@ -1,17 +1,5 @@
 #include "core/hepch.h"
-
-#ifdef _DEBUG
-#define DEBUG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)
-#define new DEBUG_NEW
-#define _CRTDBG_MAP_ALLOC
-#include <cstdlib>
-#include <crtdbg.h>
-#endif
-
-void DumpLeaks(void)
-{
-    _CrtDumpMemoryLeaks(); // Show leaks with file and line where allocation was made
-}
+#include "instrumentation/MemoryLeaks.h"
 
 enum class MainStates
 {
@@ -27,7 +15,7 @@ Hachiko::Logger* Logging = nullptr;
 
 int main(int argc, char** argv)
 {
-    atexit(DumpLeaks);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     Logging = new Hachiko::Logger();
 
     int main_return = EXIT_FAILURE;
