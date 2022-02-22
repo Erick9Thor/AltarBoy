@@ -13,7 +13,7 @@ namespace Hachiko
         void GetConfigurationData(YAML::Node& node) override;
 
     private:
-        std::string title = "Boxer Engine";
-        std::string version = "v1.0";
+        std::string title = "Hachiko Engine";
+        std::string version = "v1.0.0";
     };
 }

@@ -39,7 +39,7 @@
 #define EDITOR_NODE "editor"
 #define DISPLAY_CAMERA_SETTINGS "display_camera_settings"
 #define DISPLAY_DEBUG_DRAW "display_debug_draw"
-#define FULLSCREEN "fullscreen"
+#define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
 #define THEME_LIGHT "light"

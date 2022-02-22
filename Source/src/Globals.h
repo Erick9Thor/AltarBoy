@@ -50,7 +50,8 @@ enum class UpdateStatus
 #define ASSETS_FOLDER "Assets"
 #define ASSETS_FOLDER_SCENES "Assets/Scenes"
 
-#define SETTINGS_FOLDER "Settings/he.cfg"
+#define SETTINGS_FOLDER "Settings"
+#define SETTINGS_FILE_PATH "Settings/he.cfg"
 #define LIBRARY_FOLDER "Library"
 #define LIBRARY_TEXTURES_FOLDER "Library/Textures"
 #define LIBRARY_MESH_FOLDER "Library/Meshes"

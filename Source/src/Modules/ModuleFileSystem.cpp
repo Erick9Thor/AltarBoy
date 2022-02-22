@@ -195,46 +195,48 @@ Hachiko::PathNode Hachiko::ModuleFileSystem::GetAllFiles(const char* directory, 
     PathNode root;
     if (Exists(directory))
     {
-        root.path = directory;
-        SplitFilePath(directory, nullptr, &root.localPath);
-        if (root.localPath.empty())
+        return root;
+    }
+
+    root.path = directory;
+    SplitFilePath(directory, nullptr, &root.localPath);
+    if (root.localPath.empty())
+    {
+        root.localPath = directory;
+    }
+
+    std::vector<std::string> file_list, dir_list;
+    DiscoverFiles(directory, file_list, dir_list);
+
+    //Adding all child directories
+    for (auto& i : dir_list)
+    {
+        std::string str = directory;
+        str.append("/").append(i);
+        root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
+    }
+    //Adding all child files
+    for (auto& i : file_list)
+    {
+        //Filtering extensions
+        bool filter = true, discard = false;
+        if (filter_ext != nullptr)
         {
-            root.localPath = directory;
+            filter = HasExtension(i.c_str(), *filter_ext);
         }
-
-        std::vector<std::string> file_list, dir_list;
-        DiscoverFiles(directory, file_list, dir_list);
-
-        //Adding all child directories
-        for (auto& i : dir_list)
+        if (ignore_ext != nullptr)
+        {
+            discard = HasExtension(i.c_str(), *ignore_ext);
+        }
+        if (filter == true && discard == false)
         {
             std::string str = directory;
             str.append("/").append(i);
             root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
         }
-        //Adding all child files
-        for (auto& i : file_list)
-        {
-            //Filtering extensions
-            bool filter = true, discard = false;
-            if (filter_ext != nullptr)
-            {
-                filter = HasExtension(i.c_str(), *filter_ext);
-            }
-            if (ignore_ext != nullptr)
-            {
-                discard = HasExtension(i.c_str(), *ignore_ext);
-            }
-            if (filter == true && discard == false)
-            {
-                std::string str = directory;
-                str.append("/").append(i);
-                root.children.push_back(GetAllFiles(str.c_str(), filter_ext, ignore_ext));
-            }
-        }
-        root.isFile = HasExtension(root.path.c_str());
-        root.isLeaf = root.children.empty() == true;
     }
+    root.isFile = HasExtension(root.path.c_str());
+    root.isLeaf = root.children.empty() == true;
     return root;
 }
 
@@ -242,7 +244,6 @@ void Hachiko::ModuleFileSystem::SplitFilePath(const char* full_path, std::string
 {
     if (full_path == nullptr || path == nullptr || file == nullptr || extension == nullptr)
     {
-        HE_LOG("ModuleFileSystem::SplitFilePath() - invalid parameters");
         return;
     }
 
@@ -309,7 +310,10 @@ bool Hachiko::ModuleFileSystem::HasExtension(const char* path, std::vector<std::
     std::string ext;
     SplitFilePath(path, nullptr, nullptr, &ext);
     if (ext.empty())
+    {
         return true;
+    }
+    
     for (auto& extension : extensions)
     {
         if (extension == ext)

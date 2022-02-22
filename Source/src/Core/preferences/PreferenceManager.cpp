@@ -12,12 +12,13 @@
 
 using namespace Hachiko;
 
-PreferenceManager::PreferenceManager()
-      : globals(new GlobalPreferences())
-      , editor(new EditorPreferences())
-      , render(new RenderPreferences())
-      , camera(new CameraPreferences())
-      , resources(new ResourcesPreferences())
+PreferenceManager::PreferenceManager(const char* cfg) :
+    globals(new GlobalPreferences()),
+    editor(new EditorPreferences()),
+    render(new RenderPreferences()),
+    camera(new CameraPreferences()),
+    resources(new ResourcesPreferences()),
+    config_file(cfg)
 {
     preferences.reserve(static_cast<size_t>(Preferences::Type::COUNT));
 
@@ -27,9 +28,9 @@ PreferenceManager::PreferenceManager()
     preferences.emplace_back(camera);
     preferences.emplace_back(resources);
 
-    if (App->file_sys->Exists(SETTINGS_FOLDER))
+    if (App->file_sys->Exists(config_file.c_str()))
     {
-        nodes_vec = YAML::LoadAllFromFile(SETTINGS_FOLDER);
+        nodes_vec = YAML::LoadAllFromFile(config_file);
         LoadConfigurationFile();
     }
 }
@@ -65,7 +66,7 @@ void PreferenceManager::SaveConfigurationFile() const
     {
         it->GetConfigurationData(output);
     }
-    std::ofstream fout(SETTINGS_FOLDER);
+    std::ofstream fout(config_file);
     fout << output;
 }
 

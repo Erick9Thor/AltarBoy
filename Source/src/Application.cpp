@@ -35,7 +35,7 @@ Hachiko::Application::Application()
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
 
-    preferences = new PreferenceManager();
+    preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }
 
 Hachiko::Application::~Application()
@@ -95,6 +95,7 @@ bool Hachiko::Application::CleanUp()
         ret = (*it)->CleanUp();
     }
 
+    preferences->SaveConfigurationFile();
     return ret;
 }
 

@@ -20,7 +20,7 @@ void EditorPreferences::SetConfigurationData(const YAML::Node& node)
             continue;
         }
 
-        if (it->first.as<std::string>()._Equal(FULLSCREEN))
+        if (it->first.as<std::string>()._Equal(FULLSCREEN_NODE))
         {
             fullscreen = it->second.as<bool>();
             continue;
@@ -54,7 +54,7 @@ void EditorPreferences::SetConfigurationData(const YAML::Node& node)
 void EditorPreferences::GetConfigurationData(YAML::Node& node)
 {
     node[group_name][DISPLAY_CAMERA_SETTINGS] = display_camera_settings;
-    node[group_name][FULLSCREEN] = fullscreen;
+    node[group_name][FULLSCREEN_NODE] = fullscreen;
     node[group_name][DISPLAY_DEBUG_DRAW] = display_debug_draw;
     node[group_name][THEME] = Editor::Theme::ToString(theme);
     node[group_name][VSYNC] = vsync;

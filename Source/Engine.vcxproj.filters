@@ -997,7 +997,6 @@
     <ClInclude Include="src\modules\ModuleWindow.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\serialization\Definitions.h" />
     <ClInclude Include="src\Core\preferences\Preferences.h">
       <Filter>Core\Preferences</Filter>
     </ClInclude>
@@ -1023,6 +1022,9 @@
       <Filter>Modules\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\Core\serialization\Definitions.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

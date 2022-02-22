@@ -14,7 +14,7 @@ namespace Hachiko
     class PreferenceManager
     {
     public:
-        PreferenceManager();
+        PreferenceManager(const char* cfg);
         ~PreferenceManager();
         void LoadConfigurationFile() const;
         void SaveConfigurationFile() const;
@@ -24,7 +24,7 @@ namespace Hachiko
     private:
         std::vector<Preferences*> preferences{};
         std::vector<YAML::Node> nodes_vec{};
-        //FileManager file_manager{};
+        std::string config_file;
 
         GlobalPreferences* globals = nullptr;
         EditorPreferences* editor = nullptr;
