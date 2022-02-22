@@ -9,7 +9,6 @@ namespace Hachiko
     public:
         enum class Type
         {
-            UNKNOWN,
             MATERIAL,
             TEXTURE,
             MODEL,
@@ -18,7 +17,8 @@ namespace Hachiko
             SHADER,
             AUDIO,
             ANIMATION,
-            SCRIPT
+            SCRIPT,
+            UNKNOWN
         };
 
         Resource(UID id, Type type);

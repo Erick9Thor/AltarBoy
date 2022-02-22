@@ -2,8 +2,8 @@
 
 #include "ModuleResources.h"
 #include "Application.h"
-#include "ModuleRender.h"
 #include "ModuleEvent.h"
+#include "ModuleFileSystem.h"
 
 #include "Core/preferences/src/ResourcesPreferences.h"
 
@@ -17,8 +17,8 @@ bool ModuleResources::Init()
     // create assets & library directory tree
     for (int i = 0; i < static_cast<int>(Resource::Type::UNKNOWN); ++i)
     {
-        //file_manager.CreatePathIfNew(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        //file_manager.CreatePathIfNew(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
+        App->file_sys->CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
+        App->file_sys->CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
     std::function handleAddedFile = [&](Event& evt)
@@ -53,10 +53,11 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
     }
     std::filesystem::path destination = preferences->GetAssetsPath(type);
 
-    //if (file_manager.CopyNew(path, destination.append(path.filename().c_str())))
-    //{
-    //    last_resource_path = path; // We may need this to import more assets from this path
-    //}
+    if(App->file_sys->Copy(path.string().c_str(),
+        destination.append(path.filename().c_str()).string().c_str(), true))
+    {
+        last_resource_path = path; // We may need this to import more assets from this path
+    }
 
     HandleAssetsChanged(destination, type);
     HE_LOG("File destination: %s", destination.string().c_str());

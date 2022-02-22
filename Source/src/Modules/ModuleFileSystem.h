@@ -25,7 +25,7 @@ namespace Hachiko
         void Delete(const char* file_path) const;
 
         // --- Folder utils --- //
-        static void Copy(const char* source_file_path, const char* destination_file_path);
+        static bool Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist = false);
         static std::string NormalizePath(const char* full_path);
         static bool Exists(const char* file_path);
         static bool IsDirectory(const char* directory_path);

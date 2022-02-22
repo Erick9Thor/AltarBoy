@@ -14,6 +14,7 @@
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
+#include "Modules/ModuleResources.h"
 
 #include "Core/preferences/PreferenceManager.h"
 
@@ -34,6 +35,7 @@ Hachiko::Application::Application()
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
+    modules.push_back(resources = new ModuleResources());
 
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }

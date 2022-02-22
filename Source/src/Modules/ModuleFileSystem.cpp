@@ -13,16 +13,26 @@ Hachiko::ModuleFileSystem::ModuleFileSystem()
 
     PHYSFS_setWriteDir(".");
 
-    // Make sure standard paths exist
-    const char* dirs[] = {SETTINGS_FOLDER, ASSETS_FOLDER, LIBRARY_FOLDER, LIBRARY_MESH_FOLDER, LIBRARY_MATERIAL_FOLDER, LIBRARY_SCENE_FOLDER, LIBRARY_SHADERS_FOLDER, LIBRARY_TEXTURES_FOLDER,};
+    //// Make sure standard paths exist
+    //const char* dirs[] =
+    //{
+    //    SETTINGS_FOLDER,
+    //    ASSETS_FOLDER,
+    //    LIBRARY_FOLDER,
+    //    LIBRARY_MESH_FOLDER,
+    //    LIBRARY_MATERIAL_FOLDER,
+    //    LIBRARY_SCENE_FOLDER,
+    //    LIBRARY_SHADERS_FOLDER,
+    //    LIBRARY_TEXTURES_FOLDER
+    //};
 
-    for (auto& dir : dirs)
-    {
-        if (PHYSFS_exists(dir) == 0)
-        {
-            PHYSFS_mkdir(dir);
-        }
-    }
+    //for (auto& dir : dirs)
+    //{
+    //    if (PHYSFS_exists(dir) == 0)
+    //    {
+    //        PHYSFS_mkdir(dir);
+    //    }
+    //}
 }
 
 Hachiko::ModuleFileSystem::~ModuleFileSystem()
@@ -129,15 +139,15 @@ bool Hachiko::ModuleFileSystem::IsDirectory(const char* directory_path)
 
 void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
 {
-    if (!PHYSFS_mkdir(directory_path))
+    if (!Exists(directory_path) && !PHYSFS_mkdir(directory_path))
     {
         HE_LOG(PHYSFS_getLastError());
     }
 }
 
-void Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
+bool Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist)
 {
-    CopyFile(source_file_path, destination_file_path, false);
+    return CopyFile(source_file_path, destination_file_path, fail_if_exist);
 }
 
 void Hachiko::ModuleFileSystem::Delete(const char* file_path) const

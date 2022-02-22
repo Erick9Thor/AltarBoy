@@ -3,17 +3,13 @@
 
 #include "importers/SceneImporter.h"
 
-Hachiko::ModuleSceneManager::ModuleSceneManager() = default;
-
-Hachiko::ModuleSceneManager::~ModuleSceneManager() = default;
-
 bool Hachiko::ModuleSceneManager::Init()
 {
     HE_LOG("Creating Empty scene");
 
     // main_scene = new Scene();
 
-    main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
+    //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
 
     //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 

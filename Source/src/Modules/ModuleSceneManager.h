@@ -11,8 +11,8 @@ namespace Hachiko
     class ModuleSceneManager final : public Module
     {
     public:
-        ModuleSceneManager();
-        ~ModuleSceneManager() override;
+        ModuleSceneManager() = default;
+        ~ModuleSceneManager() override = default;
 
         // --- Life cycle --- //
         bool Init() override;
