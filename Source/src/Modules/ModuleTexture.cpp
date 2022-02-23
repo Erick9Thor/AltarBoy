@@ -25,6 +25,8 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
 
     if (img_id != 0)
     {
+        texture.format = ilGetInteger(IL_IMAGE_FORMAT);
+
         glGenTextures(1, &texture.id);
         glBindTexture(GL_TEXTURE_2D, texture.id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
