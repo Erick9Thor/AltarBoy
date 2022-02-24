@@ -180,7 +180,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
 
-    batch_manager.CleanUp();
 
     for (RenderTarget& target : render_list.GetNodes())
     {
@@ -194,6 +193,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     batch_manager.BuildBatches();
     batch_manager.DrawBatches();
+    batch_manager.CleanUp();
 
     Program::Deactivate();
 

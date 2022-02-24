@@ -1,8 +1,12 @@
 #include "core/hepch.h"
 #include "BatchManager.h"
 
+#include "Application.h"
+#include "../Core/GameObject.h"
+#include "../Components/ComponentTransform.h"
 #include "../Components/ComponentMesh.h"
 #include "../Resources/ResourceMesh.h"
+#include "../Modules/ModuleProgram.h"
 
 Hachiko::BatchManager::~BatchManager() {
     CleanUp();
@@ -33,7 +37,7 @@ void Hachiko::BatchManager::BuildBatches()
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
         geometry_batch->GenerateBatch();
-        geometry_batch->GenerateBuffers();
+        geometry_batch->UpdateBuffers();
     }
 }
 
@@ -43,6 +47,8 @@ void Hachiko::BatchManager::DrawBatches()
     {
         // Binds meshes and transforms
         geometry_batch->Bind();
+        const ComponentTransform* placeholder_transform = geometry_batch->components[0]->GetGameObject()->GetComponent<ComponentTransform>();
+        App->program->GetMainProgram()->BindUniformFloat4x4("model", placeholder_transform->GetTransform().ptr());
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);
