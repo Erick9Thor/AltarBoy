@@ -49,6 +49,7 @@ void Hachiko::BatchManager::DrawBatches()
         // Binds meshes and transforms
         geometry_batch->Bind();
         App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
+        const ComponentTransform* placeholder_transform = geometry_batch->components[0]->GetGameObject()->GetComponent<ComponentTransform>();
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);
