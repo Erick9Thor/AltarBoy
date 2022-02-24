@@ -90,6 +90,18 @@ namespace Hachiko
             return nullptr;
         }
 
+        template<typename RetComponent>
+        const RetComponent* GetComponent() const
+        {
+            const Component::Type type = RetComponent::GetType();
+            for (auto& component : components)
+            {
+                if (component->GetType() == type)
+                    return static_cast<RetComponent*>(component);
+            }
+            return nullptr;
+        }
+
         const ComponentTransform* GetComponentTransform() const
         {
             return transform;
