@@ -70,8 +70,25 @@ void Hachiko::TextureBatch::GenerateBatch()
                 resource.second->texIndex = textureArray->id;
                 resource.second->layerIndex = depth;
 
-                // TODO extract type and texture_data from Texture
-                //glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, depth, textureArray->width, textureArray->height, 1, textureArray->format, type, texture_data);
+                byte* new_array = new byte[resource.first->width * resource.first->height * resource.first->bpp];
+
+                glGetTexImage(GL_TEXTURE_2D, 0, textureArray->format, GL_UNSIGNED_BYTE, (void*)(new_array));
+
+                glTexSubImage3D(
+                    GL_TEXTURE_2D_ARRAY, // target
+                    0, // level
+                    0, // xoffset
+                    0, // yoffset
+                    depth, // zoffset
+                    textureArray->width, // width
+                    textureArray->height, // height
+                    1, // depth
+                    textureArray->format, // format
+                    GL_UNSIGNED_BYTE, // type
+                    new_array // texture_data
+                );
+
+                delete[] new_array;
                 ++depth;
             }
         }

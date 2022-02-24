@@ -25,7 +25,7 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
 
     if (img_id != 0)
     {
-        texture.format = ilGetInteger(IL_IMAGE_FORMAT);
+        texture.bpp = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
 
         glGenTextures(1, &texture.id);
         glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -39,7 +39,7 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
                      texture.width = ilGetInteger(IL_IMAGE_WIDTH),
                      texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
                      0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
+                     texture.format = ilGetInteger(IL_IMAGE_FORMAT),
                      GL_UNSIGNED_BYTE,
                      ilGetData());
         glGenerateMipmap(GL_TEXTURE_2D);

@@ -15,6 +15,7 @@ namespace Hachiko
         unsigned width = 0;
         unsigned height = 0;
         unsigned format = 0;
+        unsigned bpp = 0;
     };
 
     struct TextureCube
