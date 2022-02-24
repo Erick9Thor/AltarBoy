@@ -34,6 +34,7 @@ void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
+    static ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
     {
@@ -45,12 +46,20 @@ void Hachiko::ComponentMaterial::DrawGui()
                 ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
                 if (use_diffuse_texture)
                 {
-                    ImGui::Text("Diffuse: %dx%d %s", diffuse.width, diffuse.height, diffuse.path.c_str());
-                    ImGui::Image(reinterpret_cast<void*>(diffuse.id), ImVec2(150, 150));
+                    if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
+                    {
+                        ImGui::Image(reinterpret_cast<void*>(diffuse.id), ImVec2(80, 80));
+                        ImGui::SameLine();
+                        ImGui::BeginGroup();
+                        ImGui::Text("%dx%d", diffuse.width, diffuse.height);
+                        ImGui::Text("Path: %s", diffuse.path.c_str());
+                        ImGui::EndGroup();
+                        ImGui::TreePop();
+                    }
                 }
             }
             if (!use_diffuse_texture)
-                ImGuiUtils::CompactColorPicker("Diffuse Color", &material->diffuse_color[0]);
+                ImGui::ColorEdit4("Diffuse Color", &material->diffuse_color[0]);
 
             const Texture& specular = material->specular;
             ImGui::InputFloat("Shininess", &material->shininess);
@@ -64,7 +73,7 @@ void Hachiko::ComponentMaterial::DrawGui()
                 }
             }
             if (!use_specular_texture)
-                ImGuiUtils::CompactColorPicker("Specular Color", &material->specular_color[0]);
+                ImGui::ColorEdit4("Specular Color", &material->specular_color[0]);
         }
         else
         {
