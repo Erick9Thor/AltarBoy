@@ -24,6 +24,7 @@ namespace Hachiko
         void BatchTransforms();
 
         void GenerateBuffers();
+        void UpdateBuffers();
         void BindTransforms(unsigned ssbo_id);
         void GenerateCommands();        
         void Bind();
