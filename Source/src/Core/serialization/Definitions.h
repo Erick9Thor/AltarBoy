@@ -56,6 +56,10 @@
 #define AUDIO_ASSETS "audio_assets"
 #define VIDEO_ASSETS "vide_assets"
 #define SCRIPTS_ASSETS "scripts_assets"
+#define MATERIALS_ASSETS "materials_assets"
+#define SHADERS_ASSETS "shaders_assets"
+#define ANIMATIONS_ASSETS "animations_assets"
+#define SKYBOX_ASSETS "skybox_assets"
 // Library
 #define SCENE_LIBRARY "scene_library"
 #define MODELS_LIBRARY "models_library"
@@ -64,6 +68,10 @@
 #define AUDIO_LIBRARY "audio_library"
 #define VIDEO_LIBRARY "vide_library"
 #define SCRIPTS_LIBRARY "scripts_library"
+#define MATERIALS_LIBRARY "materials_library"
+#define SHADERS_LIBRARY "shaders_library"
+#define ANIMATIONS_LIBRARY "animations_library"
+#define SKYBOX_LIBRARY "skybox_library"
 
 // Render
 #define RENDER_NODE "render"

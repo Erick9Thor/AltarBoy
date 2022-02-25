@@ -396,6 +396,7 @@
     <ClCompile Include="src\Modules\ModuleResources.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Modules\ModuleImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1025,6 +1026,7 @@
     <ClInclude Include="src\Core\serialization\Definitions.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\Modules\ModuleImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

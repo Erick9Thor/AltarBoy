@@ -18,6 +18,8 @@ namespace Hachiko
             AUDIO,
             ANIMATION,
             SCRIPT,
+            VIDEO,
+            SKYBOX,
             UNKNOWN
         };
 

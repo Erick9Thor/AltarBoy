@@ -17,7 +17,7 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
         // Assets path
         if (it->first.as<std::string>()._Equal(SCENE_ASSETS))
         {
-            scene_assets = std::move(it->second.as<std::string>());
+            scenes_assets = std::move(it->second.as<std::string>());
             continue;
         }
 
@@ -103,21 +103,29 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
 
 void ResourcesPreferences::GetConfigurationData(YAML::Node& node)
 {
-    node[group_name][SCENE_ASSETS] = scene_assets;
+    node[group_name][SCENE_ASSETS] = scenes_assets;
     node[group_name][MODELS_ASSETS] = models_assets;
     node[group_name][MESHES_ASSETS] = meshes_assets;
     node[group_name][TEXTURES_ASSETS] = textures_assets;
     node[group_name][AUDIO_ASSETS] = audio_assets;
     node[group_name][VIDEO_ASSETS] = video_assets;
     node[group_name][SCRIPTS_ASSETS] = script_assets;
+    node[group_name][MATERIALS_ASSETS] = materials_assets;
+    node[group_name][SHADERS_ASSETS] = shaders_assets;
+    node[group_name][ANIMATIONS_ASSETS] = animations_assets;
+    node[group_name][SKYBOX_ASSETS] = skybox_assets;
 
-    node[group_name][SCENE_LIBRARY] = scene_library;
+    node[group_name][SCENE_LIBRARY] = scenes_library;
     node[group_name][MODELS_LIBRARY] = models_library;
     node[group_name][MESHES_LIBRARY] = meshes_library;
     node[group_name][TEXTURES_LIBRARY] = textures_library;
     node[group_name][AUDIO_LIBRARY] = audio_library;
     node[group_name][VIDEO_LIBRARY] = video_library;
     node[group_name][SCRIPTS_LIBRARY] = script_library;
+    node[group_name][MATERIALS_LIBRARY] = materials_library;
+    node[group_name][SHADERS_LIBRARY] = shaders_library;
+    node[group_name][ANIMATIONS_LIBRARY] = animations_library;
+    node[group_name][SKYBOX_LIBRARY] = skybox_library;
 }
 
 const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
@@ -125,7 +133,7 @@ const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
     switch (type)
     {
     case Resource::Type::SCENE:
-        return scene_assets.c_str();
+        return scenes_assets.c_str();
     case Resource::Type::MODEL:
         return models_assets.c_str();
     case Resource::Type::MESH:
@@ -134,10 +142,18 @@ const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
         return textures_assets.c_str();
     case Resource::Type::AUDIO:
         return audio_assets.c_str();
-    case Resource::Type::ANIMATION:
+    case Resource::Type::VIDEO:
         return video_assets.c_str();
     case Resource::Type::SCRIPT:
         return script_assets.c_str();
+    case Resource::Type::MATERIAL:
+        return materials_assets.c_str();
+    case Resource::Type::SHADER:
+        return shaders_assets.c_str();
+    case Resource::Type::ANIMATION:
+        return animations_assets.c_str();
+    case Resource::Type::SKYBOX:
+        return skybox_assets.c_str();
     case Resource::Type::UNKNOWN:
     default:
         assert(false);
@@ -149,7 +165,7 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
     switch (type)
     {
     case Resource::Type::SCENE:
-        return scene_library.c_str();
+        return scenes_library.c_str();
     case Resource::Type::MODEL:
         return models_library.c_str();
     case Resource::Type::MESH:
@@ -158,10 +174,18 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
         return textures_library.c_str();
     case Resource::Type::AUDIO:
         return audio_library.c_str();
-    case Resource::Type::ANIMATION:
+    case Resource::Type::VIDEO:
         return video_library.c_str();
     case Resource::Type::SCRIPT:
         return script_library.c_str();
+    case Resource::Type::MATERIAL:
+        return materials_library.c_str();
+    case Resource::Type::SHADER:
+        return shaders_library.c_str();
+    case Resource::Type::ANIMATION:
+        return animations_library.c_str();
+    case Resource::Type::SKYBOX:
+        return skybox_library.c_str();
     case Resource::Type::UNKNOWN:
     default:
         assert(false);
