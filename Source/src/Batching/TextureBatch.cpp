@@ -11,6 +11,14 @@ Hachiko::TextureBatch::~TextureBatch()
     {
         delete resource.second;
     }
+    resources.clear();
+
+    for (TextureArray* textureArray : textureArrays)
+    {
+        glDeleteTextures(textureArray->depth, &textureArray->id);
+        delete textureArray;
+    }
+    textureArrays.clear();
 }
 
 void Hachiko::TextureBatch::AddTexture(const Texture* texture) 
@@ -55,13 +63,31 @@ void Hachiko::TextureBatch::GenerateBatch()
 {
     // TODO: improve performance (for inside for)
 
+    int maxLayers; // maximum number of array texture layers 
+    int maxUnits; // maximum number of texture units
+    glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &maxLayers);
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
+
+    // TODO: security checks with these maximums
+
     unsigned index = 0;
     for (TextureArray* textureArray : textureArrays)
     {
         glGenTextures(1, &textureArray->id);
         glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray->id);
-        // TODO: INTRODUCE MIPMAPS
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
+
+        // Array texture parameters
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BASE_LEVEL, 0);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAX_LEVEL, 2);
+        glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
+
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        // Generate texture array
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
         unsigned depth = 0;
         for (auto& resource : resources)
         {
@@ -93,6 +119,11 @@ void Hachiko::TextureBatch::GenerateBatch()
             }
         }
     }
+}
+
+void Hachiko::TextureBatch::Bind() 
+{
+    // TODO: binding
 }
 
 bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texuteLayout, const Texture& texture)

@@ -1,16 +1,10 @@
 #pragma once
 
-/* TODO: CHECK THE MAXIMUMS
-GLint maxUnits;
-GLint maxLayers;
-glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &maxLayers);
-glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
-*/
-
 namespace Hachiko
 {
     class TextureBatch
     {
+    public:
         struct TexAddress
         {
             unsigned texIndex = 0; // contains the array where is located
@@ -33,16 +27,13 @@ namespace Hachiko
 
         void GenerateBatch();
 
-        //void GenerateBuffers();
-        //void BindTransforms(unsigned ssbo_id);
-        //void GenerateCommands();
-        //void Bind();
+        void Bind();
 
         bool EqualLayout(const TextureArray& texuteLayout, const Texture& texture);
 
         // TODO: make private
-
         // TODO: consider creating a ResourceTexture
+
         std::map<const Texture*, TexAddress*> resources; // contains all the Texture resources and their address
         std::vector<TextureArray*> textureArrays; // contains all the texture arrays
 
