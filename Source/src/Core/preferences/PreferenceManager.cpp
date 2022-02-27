@@ -70,7 +70,7 @@ void PreferenceManager::SaveConfigurationFile() const
     fout << output;
 }
 
-Preferences* PreferenceManager::GetPreferenceDataByType(const Preferences::Type type) const
+Preferences* PreferenceManager::GetPreference(const Preferences::Type type) const
 {
     for (const auto it : preferences)
     {
@@ -80,9 +80,4 @@ Preferences* PreferenceManager::GetPreferenceDataByType(const Preferences::Type 
         }
     }
     return nullptr;
-}
-
-Preferences* PreferenceManager::GetEditorPreferences() const
-{
-    return editor;
 }

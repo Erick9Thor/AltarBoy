@@ -76,6 +76,7 @@
 #include "utils/StringUtils.h"
 
 #include "components/Component.h"
+#include "importers/Importer.h"
 
 #include "ui/Window.h"
 #include "ui/ImGuiUtils.h"

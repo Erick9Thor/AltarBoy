@@ -18,7 +18,7 @@ Hachiko::ResourceMaterial* Hachiko::MaterialImporter::Material::Import(const aiM
     static const std::string default_path(ASSETS_FOLDER "\\Textures\\");
     aiString file;
 
-    const auto r_material = new ResourceMaterial(0);
+    const auto r_material = new ResourceMaterial(0); // WARNING: This class is delegating the responsability to delete this allocation to the client.
 
     aiColor4D color;
     if (assimp_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)

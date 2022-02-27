@@ -396,7 +396,15 @@
     <ClCompile Include="src\Modules\ModuleResources.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleImporter.cpp" />
+    <ClCompile Include="src\Importers\ModelImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\TextureImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleImporter.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1026,7 +1034,18 @@
     <ClInclude Include="src\Core\serialization\Definitions.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="src\Modules\ModuleImporter.h" />
+    <ClInclude Include="src\Importers\ModelImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Importers\TextureImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Importers\Importer.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modules\ModuleImporter.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

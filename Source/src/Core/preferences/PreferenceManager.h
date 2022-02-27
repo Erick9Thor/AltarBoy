@@ -18,8 +18,7 @@ namespace Hachiko
         ~PreferenceManager();
         void LoadConfigurationFile() const;
         void SaveConfigurationFile() const;
-        [[nodiscard]] Preferences* GetPreferenceDataByType(Preferences::Type type) const;
-        [[nodiscard]] Preferences* GetEditorPreferences() const;
+        [[nodiscard]] Preferences* GetPreference(Preferences::Type type) const;
 
     private:
         std::vector<Preferences*> preferences{};

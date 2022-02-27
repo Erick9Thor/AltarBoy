@@ -165,8 +165,10 @@
     <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp" />
     <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp" />
     <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\Importers\ModelImporter.cpp" />
     <ClCompile Include="src\Modules\ModuleImporter.cpp" />
     <ClCompile Include="src\Modules\ModuleResources.cpp" />
+    <ClCompile Include="src\Importers\TextureImporter.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -535,11 +537,14 @@
     <ClInclude Include="src\Core\preferences\Preferences.h" />
     <ClInclude Include="src\Core\serialization\Definitions.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\Importers\Importer.h" />
+    <ClInclude Include="src\Importers\ModelImporter.h" />
     <ClInclude Include="src\Modules\ModuleImporter.h" />
     <ClInclude Include="src\Modules\ModuleResources.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
+    <ClInclude Include="src\Importers\TextureImporter.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />

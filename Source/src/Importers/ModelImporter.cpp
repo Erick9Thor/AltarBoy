@@ -1,58 +1,55 @@
 #include "Core/hepch.h"
 #include "ModelImporter.h"
+#include "MeshImporter.h"
 
-#include "../Utils/Logger.h"
+#include "Modules/ModuleFileSystem.h"
 
-#include "assimp/cimport.h"
-#include "assimp/postprocess.h"
-#include "assimp/Importer.hpp"
+#include <assimp/cimport.h>
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
 
-Hachiko::ResourceModel* ModelImporter::ImportModel(const char* file_path)
+Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL) {}
+
+void Hachiko::ModelImporter::Import(const char* path)
 {
-    Hachiko::ResourceModel* resource = nullptr;
+    HE_LOG("Entering ModelImporter: %s", path);
+    Assimp::Importer import;
+    const aiScene* scene = nullptr;
+    const std::string model_path(path);
 
-	// Parse path?¿?¿?
+    scene = import.ReadFile(model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(file_path, aiProcess_Triangulate | aiProcess_GlobalScale);
+    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+    {
+        HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
+        return;
+    }
 
-	if (scene)
-	{
-		LoadAssimpNode(scene, scene->mRootNode);
-	}
-	else
-	{
-		// LOG("Error loading file %s: %s", model_path.c_str(), aiGetErrorString());
-	}
+    YAML::Node model_node;
+    model_node[MODEL_ID] = UUID::GenerateUID();
+    model_node[MODEL_FILE_PATH] = model_path;
 
-	importer.FreeScene();
+    ImportModel(scene, model_node);
+    // Import model textures
 
-
-	return resource;
+    App->file_sys->Save(model_node, model_path);
 }
 
-void ModelImporter::LoadAssimpNode(const aiScene* scene, const aiNode* node)
+void Hachiko::ModelImporter::Load(UID id) {}
+
+void Hachiko::ModelImporter::Save()
 {
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
-	{
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		/*GameObject* model_part = CreateNewGameObject(node->mName.C_Str(), parent);
-		model_part->CreateComponent(Component::Type::MESH);
-		model_part->GetComponent<ComponentMesh>()->Import(mesh);
-		model_part->CreateComponent(Component::Type::MATERIAL);
-		model_part->GetComponent<ComponentMaterial>()->Import(scene->mMaterials[mesh->mMaterialIndex], model_path, node->mName.C_Str());
+}
 
-		aiVector3D aiTranslation, aiScale;
-		aiQuaternion aiRotation;
-		node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
-		model_part->GetComponent<ComponentTransform>()->SetLocalTransform(
-			float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
-			Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w),
-			float3(aiScale.x, aiScale.y, aiScale.z));*/
-	}
+void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
+{
+    Hachiko::UID mesh_id;
 
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
-	{
-		LoadAssimpNode(scene, node->mChildren[i]);
-	}
+    for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+    {
+        aiMesh* mesh = scene->mMeshes[i];
+        mesh_id = Hachiko::UUID::GenerateUID();
+        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
+        Hachiko::MeshImporter::Import(mesh, mesh_id);
+    }
 }

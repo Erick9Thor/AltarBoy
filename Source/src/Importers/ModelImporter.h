@@ -4,9 +4,21 @@
 
 #include <assimp/scene.h>
 
-namespace ModelImporter
+namespace Hachiko
 {
-	Hachiko::ResourceModel* ImportModel(const char* file_path);
+    class Importer;
 
-	void LoadAssimpNode(const aiScene* scene, const aiNode* node);
-};
+    class ModelImporter final : public Importer
+    {
+    public:
+        ModelImporter();
+        ~ModelImporter() override = default;
+        void Import(const char* path) override;
+        void Load(UID id) override;
+        void Save() override;
+
+    private:
+        void ImportModel(const aiScene* scene, YAML::Node& ticket);
+    };
+}
+

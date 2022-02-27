@@ -7,7 +7,42 @@
 
 Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh)
 {
-    const auto r_mesh = new ResourceMesh(UUID::GenerateUID());
+    const auto r_mesh = new ResourceMesh(UUID::GenerateUID()); // WARNING: This class is delegating the responsability to delete this allocation to the client.
+    r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
+    r_mesh->vertices = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
+    memcpy(r_mesh->vertices, ai_mesh->mVertices, r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
+
+    // TODO: use mesh->HasFaces(), mesh->HasNormals() and mesh->HasTextureCoords() to load if exists
+    r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = ai_mesh->mNumVertices * 3;
+    r_mesh->normals = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
+    memcpy(r_mesh->normals, ai_mesh->mNormals, r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] * sizeof(float));
+
+    r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = ai_mesh->mNumVertices * 2;
+    r_mesh->tex_coords = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
+    for (unsigned i = 0; i < ai_mesh->mNumVertices; i++)
+    {
+        memcpy(&r_mesh->tex_coords[i * 2], &ai_mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
+    }
+
+    r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] = ai_mesh->mNumFaces * 3;
+    r_mesh->indices = new unsigned[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
+    for (unsigned i = 0; i < ai_mesh->mNumFaces; ++i)
+    {
+        memcpy(&r_mesh->indices[i * 3], ai_mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
+    }
+
+    r_mesh->GenerateBuffers();
+    r_mesh->GenerateAABB();
+    r_mesh->loaded = true;
+
+    // Save resource
+
+    return r_mesh;
+}
+
+Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID id)
+{
+    const auto r_mesh = new ResourceMesh(id); // WARNING: This class is delegating the responsability to delete this allocation to the client.
     r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
     r_mesh->vertices = new float[r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     memcpy(r_mesh->vertices, ai_mesh->mVertices, r_mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
