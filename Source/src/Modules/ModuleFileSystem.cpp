@@ -127,6 +127,13 @@ bool Hachiko::ModuleFileSystem::Save(const char* file_path, const void* buffer, 
     return true;
 }
 
+bool Hachiko::ModuleFileSystem::Save(const char* path, const YAML::Node& node) const
+{
+    std::ofstream output(path);
+    output << node;
+    return true;
+}
+
 bool Hachiko::ModuleFileSystem::Exists(const char* file_path)
 {
     return PHYSFS_exists(file_path) != 0;

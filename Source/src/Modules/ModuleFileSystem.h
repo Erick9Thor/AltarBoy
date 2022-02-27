@@ -22,6 +22,7 @@ namespace Hachiko
         void CreateDir(const char* directory_path) const;
         char* Load(const char* file_path) const;
         bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false) const;
+        bool Save(const char* path, const YAML::Node& node) const;
         void Delete(const char* file_path) const;
 
         // --- Folder utils --- //

@@ -29,10 +29,9 @@ bool ModuleImporter::Init()
     std::function handleNewAsset = [&](Event& evt)
     {
         const auto& e = evt.GetEventData<AssetsAddedEventPayload>();
-        HE_LOG("Handling asset: %s, of type: %d", e.GetPath().string(), e.GetType());
+        HE_LOG("Handling asset: %s, of type: %d", e.GetPath().string().c_str(), e.GetType());
         //Running import in a thread
-        //std::thread import_thread(&ModuleImporter::ImportAsset, this, std::ref(file), e.GetType());
-        std::thread import_thread([&]() { ImportAsset(e.GetPath().string(), e.GetType()); });
+        std::thread import_thread([=]() { ImportAsset(e.GetPath().string(), e.GetType()); });
         import_thread.detach();
     };
     App->event->Subscribe(Event::Type::ASSETS_CHANGED, handleNewAsset);
@@ -90,7 +89,7 @@ Importer::Type ModuleImporter::ToImporterType(const Resource::Type type)
     case Resource::Type::VIDEO:
     case Resource::Type::SCRIPT:
     case Resource::Type::UNKNOWN:
-        assert(false);
+        assert(false, "Unhandled resource type");
     }
 
     return iType;

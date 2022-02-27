@@ -3,21 +3,31 @@
 #include "MeshImporter.h"
 
 #include "Modules/ModuleFileSystem.h"
+#include "Core/preferences/src/ResourcesPreferences.h"
 
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
-Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL) {}
+Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL)
+{
+}
 
 void Hachiko::ModelImporter::Import(const char* path)
 {
     HE_LOG("Entering ModelImporter: %s", path);
+
+    if (preferences == nullptr)
+    {
+        preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    }
+
     Assimp::Importer import;
     const aiScene* scene = nullptr;
-    const std::string model_path(path);
-
-    scene = import.ReadFile(model_path, aiProcess_Triangulate | aiProcess_FlipUVs);
+    const std::filesystem::path model_path(path);
+    const std::string model_name = model_path.filename().replace_extension().string();
+    const std::string model_library_path = preferences->GetLibraryPath(Resource::Type::MODEL) + model_name;
+    scene = import.ReadFile(model_path.string(), aiProcess_Triangulate | aiProcess_FlipUVs);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -27,12 +37,12 @@ void Hachiko::ModelImporter::Import(const char* path)
 
     YAML::Node model_node;
     model_node[MODEL_ID] = UUID::GenerateUID();
-    model_node[MODEL_FILE_PATH] = model_path;
+    model_node[MODEL_FILE_PATH] = model_path.string();
 
     ImportModel(scene, model_node);
     // Import model textures
 
-    App->file_sys->Save(model_node, model_path);
+    App->file_sys->Save(model_library_path.c_str(), model_node);
 }
 
 void Hachiko::ModelImporter::Load(UID id) {}
@@ -50,6 +60,6 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         aiMesh* mesh = scene->mMeshes[i];
         mesh_id = Hachiko::UUID::GenerateUID();
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
-        Hachiko::MeshImporter::Import(mesh, mesh_id);
+        Hachiko::MeshImporter::Save(Hachiko::MeshImporter::Import(mesh, mesh_id), mesh_id);
     }
 }
