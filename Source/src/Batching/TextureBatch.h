@@ -2,6 +2,9 @@
 
 namespace Hachiko
 {
+    class ComponentMesh;
+    class ComponentMaterial;
+
     class TextureBatch
     {
     public:
@@ -20,14 +23,33 @@ namespace Hachiko
             unsigned format = 0;
         };
 
+        struct Material
+        {
+            float4 diffuseColor;
+            float4 specularColor;
+            float shininess; // float smoothness;
+            int hasDiffuseMap;
+            int hasSpecularMap;
+            int hasNormalMap;
+            TexAddress diffuseMap;
+            TexAddress specularMap;
+            TexAddress normalMap;
+            int padding0;
+            int padding1;
+        };
+
         TextureBatch();
         ~TextureBatch();
 
         void AddTexture(const Texture* texture);
+        void AddMaterial(const ComponentMaterial* material);
 
         void GenerateBatch();
 
-        void Bind();
+        void GenerateMaterials(const std::vector<const ComponentMesh*>& components);
+
+        void BindTextureBatch();
+        void BindMaterials(unsigned ssbo_id);
 
         bool EqualLayout(const TextureArray& texuteLayout, const Texture& texture);
 
@@ -36,6 +58,8 @@ namespace Hachiko
 
         std::map<const Texture*, TexAddress*> resources; // contains all the Texture resources and their address
         std::vector<TextureArray*> textureArrays; // contains all the texture arrays
+
+        std::vector<Material> materials;
 
         bool loaded = false;
     };

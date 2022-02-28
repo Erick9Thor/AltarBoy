@@ -5,9 +5,13 @@
 #include "../Components/ComponentMesh.h"
 #include "../Components/ComponentTransform.h"
 
+#include "Batching/TextureBatch.h"
+
 Hachiko::GeometryBatch::GeometryBatch(ResourceMesh::Layout batch_layout) {
     batch = new ResourceMesh(0);
     batch->layout = batch_layout;
+
+    textureBatch = new TextureBatch();
 
     GenerateBuffers();
 }
@@ -24,6 +28,7 @@ Hachiko::GeometryBatch::~GeometryBatch() {
     }
 
     RELEASE(batch);
+    RELEASE(textureBatch);
 }
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
@@ -38,6 +43,9 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
         // It will be formatted when generating batches
         resources[resource] = new DrawCommand();
     }
+
+    //const ComponentMaterial* material = mesh->GetGameObject()->GetComponent<ComponentMaterial>();
+    //textureBatch->AddMaterial(material);
 }
 
 void Hachiko::GeometryBatch::GenerateBatch() {
@@ -45,6 +53,9 @@ void Hachiko::GeometryBatch::GenerateBatch() {
     BatchMeshes();
     BatchTransforms();
     GenerateCommands();
+
+    textureBatch->GenerateBatch();
+    textureBatch->GenerateMaterials(components);
 }
 
 void Hachiko::GeometryBatch::BatchMeshes()

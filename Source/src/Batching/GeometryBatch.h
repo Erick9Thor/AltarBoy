@@ -8,6 +8,9 @@
 namespace Hachiko
 {
     class ComponentMesh;
+    class TextureBatch;
+
+    struct Material;
     
     class GeometryBatch
     {
@@ -43,6 +46,8 @@ namespace Hachiko
         unsigned instance_indices_vbo;
         std::vector<float4x4> transforms;
         std::vector<DrawCommand> commands;
+
+        TextureBatch* textureBatch = nullptr;
 
         bool loaded = false;  
     };

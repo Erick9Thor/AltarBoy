@@ -1,6 +1,10 @@
 #include "core/hepch.h"
 #include "TextureBatch.h"
 
+#include "Core/GameObject.h"
+#include "Components/ComponentMesh.h"
+#include "Components/ComponentMaterial.h"
+
 Hachiko::TextureBatch::TextureBatch() 
 {
 }
@@ -56,6 +60,20 @@ void Hachiko::TextureBatch::AddTexture(const Texture* texture)
 
         // Set the flag as not all textures are loaded
         loaded = false;
+    }
+}
+
+void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material) 
+{
+    const ResourceMaterial* resource_material = material->GetMaterial();
+
+    if (material->use_diffuse_texture)
+    {
+        AddTexture(&resource_material->diffuse);
+    }
+    if (material->use_specular_texture)
+    {
+        AddTexture(&resource_material->specular);
     }
 }
 
@@ -121,10 +139,45 @@ void Hachiko::TextureBatch::GenerateBatch()
     }
 }
 
-void Hachiko::TextureBatch::Bind() 
+void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMesh*>& components)
 {
-    // TODO: binding
+    materials.reserve(components.size());
+
+    for (const ComponentMesh* component : components)
+    {
+        const ComponentMaterial* material_comp = component->GetGameObject()->GetComponent<ComponentMaterial>();
+
+        const ResourceMaterial* material = material_comp->GetMaterial();
+
+        Material material_data;
+        material_data.diffuseColor = material->diffuse_color;
+        material_data.specularColor = material->diffuse_color;
+        material_data.shininess = material->shininess;
+        material_data.hasDiffuseMap = material_comp->use_diffuse_texture;
+        material_data.hasSpecularMap = material_comp->use_specular_texture;
+        material_data.hasNormalMap = 0;
+        material_data.diffuseMap = (*resources[&material->diffuse]);
+        material_data.specularMap = (*resources[&material->specular]);
+        material_data.normalMap;
+        //material_data.padding0;
+        //material_data.padding1;
+
+        materials.emplace_back(material_data);
+    }
 }
+
+void Hachiko::TextureBatch::BindTextureBatch() 
+{
+
+}
+
+void Hachiko::TextureBatch::BindMaterials(unsigned ssbo_id) 
+{
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(materials), &materials[0], GL_DYNAMIC_DRAW);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
 
 bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texuteLayout, const Texture& texture)
 {
