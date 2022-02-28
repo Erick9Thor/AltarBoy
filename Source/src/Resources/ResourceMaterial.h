@@ -27,5 +27,13 @@ namespace Hachiko
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
         float shininess = 50.0f;
+
+        float3 ambientValue;
+        float3 diffuseValue;
+        float3 specularValue;
+
+        float metallicValue;
+        float albedoValue;
+        float smoothnessValue;
     };
 }

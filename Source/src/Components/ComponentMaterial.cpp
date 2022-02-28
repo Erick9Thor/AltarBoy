@@ -40,6 +40,17 @@ void Hachiko::ComponentMaterial::DrawGui()
     {
         if (material)
         {
+            ImGui::InputText("Name", &material->name[0], 64);
+            ImGui::Text("");
+            ImGui::DragFloat3("Ambient", (float*)&material->ambientValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+            ImGui::DragFloat3("Diffuse", (float*)&material->diffuseValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+            ImGui::DragFloat3("Specular", (float*)&material->specularValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+            ImGui::Text("");
+            ImGui::SliderFloat("Albedo", &material->albedoValue, 0.0f, 1.0, "%.3f", 1.0f);
+            ImGui::SliderFloat("Metallic", &material->metallicValue, 0.0f, 1.0, "%.3f", 1.0f);
+            ImGui::SliderFloat("Smoothness", &material->smoothnessValue, 0.0f, 1.0, "%.3f", 1.0f);
+            ImGui::Text("");
+
             const Texture& diffuse = material->diffuse;
             if (diffuse.loaded)
             {
