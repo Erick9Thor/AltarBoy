@@ -91,9 +91,9 @@ float4x4 Hachiko::ComponentCamera::GetProjectionMatrix(const bool transpose) con
 
 void Hachiko::ComponentCamera::OnTransformUpdated()
 {
-    const ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
+    const ComponentTransform* transform = game_object->GetTransform();
 
-    frustum.SetFrame(transform->GetPosition(), transform->GetFwd(), transform->GetUp());
+    frustum.SetFrame(transform->GetPosition(), transform->GetFront(), transform->GetUp());
     frustum.GetPlanes(planes);
 }
 

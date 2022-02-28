@@ -21,8 +21,8 @@ bool Hachiko::ModuleCamera::Init()
     main_camera_game_object = new GameObject("Main Camera");
     main_camera = static_cast<ComponentCamera*>(main_camera_game_object->CreateComponent(Component::Type::CAMERA));
 
-    main_camera_game_object->GetComponent<ComponentTransform>()->SetPosition(float3(0.0f, 8.0f, 10.0f));
-    main_camera_game_object->GetComponent<ComponentTransform>()->LookAt(float3::zero);
+    main_camera_game_object->GetTransform()->SetPosition(float3(0.0f, 8.0f, 10.0f));
+    main_camera_game_object->GetTransform()->LookAtTarget(float3::zero);
     main_camera_game_object->Update();
 
     ImGuizmo::Enable(true);
@@ -80,9 +80,9 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     }
     if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
     {
-        const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetComponent<ComponentTransform>()->GetPosition()).Length();
+        const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetTransform()->GetPosition()).Length();
         GameObject* go = App->editor->GetSelectedGameObject();
-        FocusOnModel(go->GetComponent<ComponentTransform>()->GetPosition(), distance);
+        FocusOnModel(go->GetTransform()->GetPosition(), distance);
     }
     if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
     {
@@ -95,9 +95,9 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const
 {
-    auto* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+    auto* transform = main_camera->GetGameObject()->GetTransform();
     const float distance = main_camera->reference_point.Distance(transform->GetPosition());
-    const vec newPos = transform->GetPosition() + zoom * transform->GetFwd() * distance * 0.05f;
+    const vec newPos = transform->GetPosition() + zoom * transform->GetFront() * distance * 0.05f;
 
     transform->SetPosition(newPos);
     main_camera->GetGameObject()->Update();
@@ -105,7 +105,7 @@ void Hachiko::ModuleCamera::Zoom(float zoom) const
 
 void Hachiko::ModuleCamera::Orbit(float motion_x, float motion_y) const
 {
-    auto* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+    auto* transform = main_camera->GetGameObject()->GetTransform();
     float3 vector = transform->GetPosition() - main_camera->reference_point;
 
     vector = Quat(transform->GetUp(), motion_x * 0.003f).Transform(vector);
@@ -113,7 +113,7 @@ void Hachiko::ModuleCamera::Orbit(float motion_x, float motion_y) const
 
     transform->SetPosition(vector + main_camera->reference_point);
 
-    main_camera->GetGameObject()->GetComponent<ComponentTransform>()->LookAt(main_camera->reference_point);
+    transform->LookAtTarget(main_camera->reference_point);
     main_camera->GetGameObject()->Update();
 }
 
@@ -126,13 +126,13 @@ void Hachiko::ModuleCamera::MovementController(const float delta) const
     if (App->input->GetKeyMod(KMOD_SHIFT))
         effective_speed *= speed_modifier;
 
-    auto* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+    auto* transform = main_camera->GetGameObject()->GetTransform();
     float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
 
     if (App->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT)
-        deltaFwd += transform->GetFwd() * delta * effective_speed;
+        deltaFwd += transform->GetFront() * delta * effective_speed;
     if (App->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT)
-        deltaFwd -= transform->GetFwd() * delta * effective_speed;
+        deltaFwd -= transform->GetFront() * delta * effective_speed;
     if (App->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT)
         deltaRight += transform->GetRight() * delta * effective_speed;
     if (App->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT)
@@ -149,8 +149,8 @@ void Hachiko::ModuleCamera::MovementController(const float delta) const
 
 void Hachiko::ModuleCamera::FocusOnModel(const float3& target, float distance) const
 {
-    auto* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
-    const float3 v = transform->GetFwd().Neg();
+    auto* transform = main_camera->GetGameObject()->GetTransform();
+    const float3 v = transform->GetFront().Neg();
 
     transform->SetPosition(target + (v * distance));
     main_camera->GetGameObject()->Update();
@@ -160,14 +160,14 @@ void Hachiko::ModuleCamera::FocusOnModel(const float3& target, float distance) c
 
 void Hachiko::ModuleCamera::Rotate(float motion_x, float motion_y) const
 {
-    auto* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+    auto* transform = main_camera_game_object->GetTransform();
 
     const Quat yaw_quat = Quat::RotateY(motion_x);
     const float3 newRight = yaw_quat * transform->GetRight();
 
     const Quat pitch_quat = Quat::RotateAxisAngle(newRight, motion_y);
     const float3 newUp = pitch_quat * yaw_quat * transform->GetUp();
-    const float3 newFwd = pitch_quat * yaw_quat * transform->GetFwd();
+    const float3 newFwd = pitch_quat * yaw_quat * transform->GetFront();
 
     transform->SetRotationAxis(newRight, newUp, newFwd);
     main_camera->GetGameObject()->Update();
@@ -180,7 +180,7 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
 {
     static const float move_speed = 15.0f;
 
-    ComponentTransform* transform = main_camera->GetGameObject()->GetComponent<ComponentTransform>();
+    ComponentTransform* transform = main_camera->GetGameObject()->GetTransform();
     float3 deltaMovement = transform->GetRight() * move_speed * motion_x + transform->GetUp() * move_speed * motion_y;
 
     transform->SetPosition(transform->GetPosition() + deltaMovement);

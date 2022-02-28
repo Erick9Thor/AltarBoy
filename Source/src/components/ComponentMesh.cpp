@@ -33,7 +33,7 @@ void Hachiko::ComponentMesh::Import(const aiMesh* mesh)
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
     assert(resource->loaded == true);
-    program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
 
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
     App->program->UpdateMaterial(material);
@@ -45,7 +45,7 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program) const
 {
     assert(resource->loaded == true);
-    program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
 
     glBindVertexArray(resource->vao);
     glDrawElements(GL_TRIANGLES, resource->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);

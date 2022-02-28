@@ -27,18 +27,18 @@ void Hachiko::ComponentDirLight::DebugDraw()
 {
     if (draw_direction)
     {
-        auto* transform = game_object->GetComponent<ComponentTransform>();
+        auto* transform = game_object->GetTransform();
         if (transform)
         {
-            dd::arrow(transform->GetPosition(), transform->GetFwd().Mul(3.f) + transform->GetPosition(), dd::colors::Blue, 1.f);
+            dd::arrow(transform->GetPosition(), transform->GetFront().Mul(3.f) + transform->GetPosition(), dd::colors::Blue, 1.f);
         }
     }
 }
 
 float3 Hachiko::ComponentDirLight::GetDirection() const
 {
-    const ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
-    return transform->GetFwd();
+    const ComponentTransform* transform = game_object->GetTransform();
+    return transform->GetFront();
 }
 
 void Hachiko::ComponentDirLight::Save(JsonFormatterValue j_component) const

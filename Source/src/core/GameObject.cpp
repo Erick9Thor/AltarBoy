@@ -242,7 +242,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     if (mesh != nullptr)
     {
         obb = mesh->GetAABB();
-        obb.Transform(transform->GetTransform());
+        obb.Transform(transform->GetMatrix());
         // Enclose is accumulative, reset the box
         aabb.SetNegativeInfinity();
         aabb.Enclose(obb);

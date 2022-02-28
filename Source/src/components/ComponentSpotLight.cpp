@@ -26,25 +26,25 @@ void Hachiko::ComponentSpotLight::DebugDraw()
 {
     if (draw_cone)
     {
-        auto* transform = game_object->GetComponent<ComponentTransform>();
+        auto* transform = game_object->GetTransform();
         if (transform)
         {
-            dd::cone(transform->GetPosition(), transform->GetFwd().Mul(radius), dd::colors::Blue, inner, 0.f);
-            dd::cone(transform->GetPosition(), transform->GetFwd().Mul(radius), dd::colors::Green, outer, 0.f);
+            dd::cone(transform->GetPosition(), transform->GetFront().Mul(radius), dd::colors::Blue, inner, 0.f);
+            dd::cone(transform->GetPosition(), transform->GetFront().Mul(radius), dd::colors::Green, outer, 0.f);
         }
     }
 }
 
 float3 Hachiko::ComponentSpotLight::GetPosition() const
 {
-    const ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
+    const ComponentTransform* transform = game_object->GetTransform();
     return transform->GetPosition();
 }
 
 float3 Hachiko::ComponentSpotLight::GetDirection() const
 {
-    const ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
-    return transform->GetFwd();
+    const ComponentTransform* transform = game_object->GetTransform();
+    return transform->GetFront();
 }
 
 void Hachiko::ComponentSpotLight::Save(JsonFormatterValue j_component) const
