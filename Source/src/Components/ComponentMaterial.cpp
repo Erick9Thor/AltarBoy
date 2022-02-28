@@ -41,50 +41,70 @@ void Hachiko::ComponentMaterial::DrawGui()
         if (material)
         {
             ImGui::InputText("Name", &material->name[0], 64);
-            ImGui::Text("");
-            ImGui::DragFloat3("Ambient", (float*)&material->ambientValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
-            ImGui::DragFloat3("Diffuse", (float*)&material->diffuseValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
-            ImGui::DragFloat3("Specular", (float*)&material->specularValue, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
-            ImGui::Text("");
-            ImGui::SliderFloat("Albedo", &material->albedoValue, 0.0f, 1.0, "%.3f", 1.0f);
-            ImGui::SliderFloat("Metallic", &material->metallicValue, 0.0f, 1.0, "%.3f", 1.0f);
-            ImGui::SliderFloat("Smoothness", &material->smoothnessValue, 0.0f, 1.0, "%.3f", 1.0f);
-            ImGui::Text("");
 
             const Texture& diffuse = material->diffuse;
-            if (diffuse.loaded)
+
+            if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
             {
-                ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
-                if (use_diffuse_texture)
+                if (diffuse.loaded)
                 {
-                    if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
+                    ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
+                    if (use_diffuse_texture)
                     {
                         ImGui::Image(reinterpret_cast<void*>(diffuse.id), ImVec2(80, 80));
                         ImGui::SameLine();
                         ImGui::BeginGroup();
                         ImGui::Text("%dx%d", diffuse.width, diffuse.height);
                         ImGui::Text("Path: %s", diffuse.path.c_str());
+                        ImGui::Button("Change Texture");
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        ImGui::Button("Deattach Texture");
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
                         ImGui::EndGroup();
-                        ImGui::TreePop();
                     }
                 }
+
+                if (!use_diffuse_texture)
+                {
+                    ImGui::DragFloat4("Diffuse", (float*)&material->diffuse_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                }
+                ImGui::TreePop();
             }
-            if (!use_diffuse_texture)
-                ImGui::ColorEdit4("Diffuse Color", &material->diffuse_color[0]);
 
             const Texture& specular = material->specular;
-            ImGui::InputFloat("Shininess", &material->shininess);
-            if (specular.loaded)
+            if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
             {
-                ImGui::Checkbox("Spec Texture", &use_specular_texture);
-                if (use_specular_texture)
+                if (specular.loaded)
                 {
-                    ImGui::Text("Specular: %dx%d %s", specular.width, specular.height, specular.path.c_str());
-                    ImGui::Image(reinterpret_cast<void*>(specular.id), ImVec2(150, 150));
+                    ImGui::Checkbox("Spec Texture", &use_specular_texture);
+                    if (use_specular_texture)
+                    {
+                        ImGui::Image(reinterpret_cast<void*>(specular.id), ImVec2(80, 80));
+                        ImGui::SameLine();
+                        ImGui::BeginGroup();
+                        ImGui::Text("%dx%d", specular.width, specular.height);
+                        ImGui::Text("Path: %s", specular.path.c_str());
+                        ImGui::Button("Change Texture");
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        ImGui::Button("Deattach Texture");
+                        if (ImGui::IsItemHovered())
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        ImGui::EndGroup();
+                    }
                 }
+
+                if (!use_specular_texture)
+                {
+                    ImGui::DragFloat4("Specular", (float*)&material->specular_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                }
+                ImGui::TreePop();
             }
-            if (!use_specular_texture)
-                ImGui::ColorEdit4("Specular Color", &material->specular_color[0]);
+            
+            ImGui::DragFloat("Shininess", &material->shininess, 0.05, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+            ImGui::Text("");
         }
         else
         {
