@@ -26,7 +26,7 @@ void Hachiko::ComponentPointLight::DebugDraw()
 {
     if (draw_sphere)
     {
-        auto* transform = game_object->GetComponent<ComponentTransform>();
+        auto* transform = game_object->GetTransform();
         if (transform)
         {
             dd::sphere(transform->GetPosition(), dd::colors::Blue, radius);
@@ -36,7 +36,7 @@ void Hachiko::ComponentPointLight::DebugDraw()
 
 float3 Hachiko::ComponentPointLight::GetPosition() const
 {
-    const ComponentTransform* transform = game_object->GetComponent<ComponentTransform>();
+    const ComponentTransform* transform = game_object->GetTransform();
     return transform->GetPosition();
 }
 
