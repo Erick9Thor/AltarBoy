@@ -7,13 +7,13 @@ bool Hachiko::ModuleSceneManager::Init()
 {
     HE_LOG("Creating Empty scene");
 
-    main_scene = new Scene();
+
 
     //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/scenes/lights_delivery.scene");
 
     //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
-    // CreateEmptyScene();
+    CreateEmptyScene();
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
     return true;
 }

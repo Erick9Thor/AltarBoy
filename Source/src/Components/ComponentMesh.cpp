@@ -8,8 +8,13 @@
 #include "modules/ModuleProgram.h"
 #include "importers/MeshImporter.h"
 
-Hachiko::ComponentMesh::ComponentMesh(GameObject* container) :
-    Component(Type::MESH, container) {}
+Hachiko::ComponentMesh::ComponentMesh(GameObject* container) : Component(Type::MESH, container) {}
+
+Hachiko::ComponentMesh::ComponentMesh(GameObject* container, ResourceMesh* res) 
+    : Component(Type::MESH, container)
+    , resource(res) 
+{
+}
 
 Hachiko::ComponentMesh::~ComponentMesh()
 {
