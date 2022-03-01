@@ -2,7 +2,10 @@
 #include "GeometryBatch.h"
 
 #include "../Modules/ModuleProgram.h"
+
+#include "Core/GameObject.h"
 #include "../Components/ComponentMesh.h"
+#include "Components/ComponentMaterial.h"
 #include "../Components/ComponentTransform.h"
 
 #include "Batching/TextureBatch.h"
@@ -44,8 +47,8 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
         resources[resource] = new DrawCommand();
     }
 
-    //const ComponentMaterial* material = mesh->GetGameObject()->GetComponent<ComponentMaterial>();
-    //textureBatch->AddMaterial(material);
+    const ComponentMaterial* material_comp = mesh->GetGameObject()->GetComponent<ComponentMaterial>();
+    textureBatch->AddMaterial(material_comp);
 }
 
 void Hachiko::GeometryBatch::GenerateBatch() {

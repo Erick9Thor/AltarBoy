@@ -5,6 +5,8 @@
 #include "Components/ComponentMesh.h"
 #include "Components/ComponentMaterial.h"
 
+#include "Modules/ModuleProgram.h"
+
 Hachiko::TextureBatch::TextureBatch() 
 {
 }
@@ -156,8 +158,14 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
         material_data.hasDiffuseMap = material_comp->use_diffuse_texture;
         material_data.hasSpecularMap = material_comp->use_specular_texture;
         material_data.hasNormalMap = 0;
-        material_data.diffuseMap = (*resources[&material->diffuse]);
-        material_data.specularMap = (*resources[&material->specular]);
+        if (material_data.hasDiffuseMap)
+        {
+            material_data.diffuseMap = (*resources[&material->diffuse]);
+        }
+        if (material_data.hasSpecularMap)
+        {
+            material_data.specularMap = (*resources[&material->specular]);
+        }
         material_data.normalMap;
         //material_data.padding0;
         //material_data.padding1;
@@ -166,16 +174,56 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
     }
 }
 
-void Hachiko::TextureBatch::BindTextureBatch() 
+void Hachiko::TextureBatch::UpdateTextureBatch() 
 {
-
+    for (unsigned i = 0; i < textureArrays.size(); ++i)
+    {
+        //glEnable(GL_TEXTURE_2D);
+        glActiveTexture(GL_TEXTURE0 + i);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
+    }
+    
+    Program* main_program = App->program->GetMainProgram();
+    main_program->BindUniformBool("textures", 0);
 }
 
-void Hachiko::TextureBatch::BindMaterials(unsigned ssbo_id) 
+void Hachiko::TextureBatch::UpdateMaterials(unsigned ssbo_id)
 {
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
     glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(materials), &materials[0], GL_DYNAMIC_DRAW);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void Hachiko::TextureBatch::ImGuiWindow()
+{
+    if (ImGui::Begin("TextureBatch"))
+    {
+        for (unsigned i = 0; i < textureArrays.size(); ++i)
+        {
+            ImGui::BulletText("TextureArray ");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(i).c_str());
+
+            ImGui::Text("Depth (number of textures): ");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(textureArrays[i]->depth).c_str());
+
+            ImGui::Text("Width: ");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(textureArrays[i]->width).c_str());
+
+            ImGui::Text("Height: ");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(textureArrays[i]->height).c_str());
+
+            ImGui::Text("Format: ");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(textureArrays[i]->format).c_str());
+
+            ImGui::Image(&textureArrays[i]->id, ImVec2(100, 100));
+        }
+    }
+    ImGui::End();
 }
 
 

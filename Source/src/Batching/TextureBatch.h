@@ -48,8 +48,10 @@ namespace Hachiko
 
         void GenerateMaterials(const std::vector<const ComponentMesh*>& components);
 
-        void BindTextureBatch();
-        void BindMaterials(unsigned ssbo_id);
+        void UpdateTextureBatch();
+        void UpdateMaterials(unsigned ssbo_id);
+
+        void ImGuiWindow(); // Debug window
 
         bool EqualLayout(const TextureArray& texuteLayout, const Texture& texture);
 
