@@ -111,7 +111,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
 void Hachiko::GeometryBatch::BatchTransforms()
 {
     transforms.reserve(components.size());
-    for (auto& component : components)
+    for (const ComponentMesh* component : components)
     {
         transforms.push_back(component->GetGameObject()->GetTransform()->GetMatrix());
     }

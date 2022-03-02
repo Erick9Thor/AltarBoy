@@ -31,11 +31,10 @@ out flat uint instance;
 
 void main()
 {
-    uint a = instance_idx;
-    gl_Position = camera.proj * camera.view *  models[a] * vec4(position, 1.0);
+    instance = gl_BaseInstance;
+    gl_Position = camera.proj * camera.view *  models[instance] * vec4(position, 1.0);
 
-    fragment.normal = transpose(inverse(mat3(models[a]))) * in_normal;
-    fragment.pos = vec3(models[a] * vec4(position, 1.0));
+    fragment.normal = transpose(inverse(mat3(models[instance]))) * in_normal;
+    fragment.pos = vec3(models[instance] * vec4(position, 1.0));
     fragment.tex_coord = in_tex_coord;
-    instance = instance_idx;
 }

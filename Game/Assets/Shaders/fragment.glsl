@@ -216,4 +216,5 @@ void main()
 
     // Gamma correction & alpha from diffuse texture
     color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    color = vec4(vec3(float(instance)/30.0), 1.0);
 }
