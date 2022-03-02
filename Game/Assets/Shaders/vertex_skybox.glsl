@@ -1,4 +1,4 @@
-# version 440
+# version 460
 layout (location=0) in vec3 position;
 
 layout(std140, row_major, binding = 0) uniform Camera

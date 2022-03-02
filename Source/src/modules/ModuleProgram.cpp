@@ -152,7 +152,7 @@ void Hachiko::ModuleProgram::CreateSSBO(UBOPoints binding_point, unsigned size)
 void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset) const
 {
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, buffers[static_cast<int>(binding_point)]);
-    glBufferSubData(GL_SHADER_STORAGE_BUFFER, offset, size, data);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, size, data, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
@@ -173,7 +173,7 @@ void Hachiko::ModuleProgram::CreateLightsUBO()
 
 void Hachiko::ModuleProgram::CreateTransformSSBO()
 {
-    CreateUBO(UBOPoints::TRANSFORMS, 0);
+    CreateSSBO(UBOPoints::TRANSFORMS, 0);
 }
 
 bool Hachiko::ModuleProgram::CleanUp()
@@ -281,7 +281,10 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
 }
 
-void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const {}
+void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const
+{
+    UpdateSSBO(UBOPoints::TRANSFORMS, transforms.size() * sizeof(float) * 16, (void*)transforms.data());
+}
 
 void Hachiko::ModuleProgram::OptionsMenu()
 {

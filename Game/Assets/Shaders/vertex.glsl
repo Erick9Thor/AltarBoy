@@ -1,8 +1,9 @@
-# version 440
+# version 460
 
 layout(location=0) in vec3 position;
 layout(location=1) in vec3 in_normal;
 layout(location=2) in vec2 in_tex_coord;
+layout(location=3) in uint instance_idx;
 
 layout(std140, row_major, binding = 0) uniform Camera
 {
@@ -26,12 +27,15 @@ struct VertexData
     vec2 tex_coord;
 };
 out VertexData fragment;
+out flat uint instance;
 
 void main()
 {
-    gl_Position = camera.proj * camera.view *  model * vec4(position, 1.0);
+    uint a = instance_idx;
+    gl_Position = camera.proj * camera.view *  models[a] * vec4(position, 1.0);
 
-    fragment.normal = transpose(inverse(mat3(model))) * in_normal;
-    fragment.pos = vec3(model * vec4(position, 1.0));
-    fragment.tex_coord = in_tex_coord;   
+    fragment.normal = transpose(inverse(mat3(models[a]))) * in_normal;
+    fragment.pos = vec3(models[a] * vec4(position, 1.0));
+    fragment.tex_coord = in_tex_coord;
+    instance = instance_idx;
 }

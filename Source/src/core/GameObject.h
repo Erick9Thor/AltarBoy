@@ -112,11 +112,6 @@ namespace Hachiko
             return transform;
         }
 
-        const float4x4& GetTransform() const
-        {
-            return transform->GetTransform();
-        }
-
         std::string name;
         Scene* scene_owner = nullptr;
         GameObject* parent = nullptr;
