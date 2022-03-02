@@ -19,6 +19,11 @@ namespace Hachiko
 
         bool CollapsingHeader(GameObject* game_object, Component* component, const char* header_name);
 
+        bool ToolbarButton(ImFont* font, const char* font_icon, bool active, const char* tooltip_desc);
+
+        static void DisplayTooltip(const char* desc);
+
         ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
+
     }; // namespace ImGuiUtils
 }

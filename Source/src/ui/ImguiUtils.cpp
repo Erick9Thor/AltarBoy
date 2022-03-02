@@ -86,6 +86,44 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
     return open;
 }
 
+bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* font, const char* font_icon, bool active, const char* tooltip_desc)
+{
+    const ImVec4 col_active = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
+    const ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
+
+    ImGui::SameLine();
+    const auto frame_padding = ImGui::GetStyle().FramePadding;
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Text, bg_color);
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, ImGui::GetStyle().FramePadding.y));
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, frame_padding);
+    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
+
+    ImGui::PushFont(font);
+    active = ImGui::Button(font_icon);
+    ImGui::SameLine(); DisplayTooltip(tooltip_desc);
+
+    ImGui::PopFont();
+    ImGui::PopStyleColor(4);
+    ImGui::PopStyleVar(3);
+
+    return active;
+}
+
+void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
+{
+    if (ImGui::IsItemHovered())
+    {
+        ImGui::BeginTooltip();
+        ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+        ImGui::TextUnformatted(desc);
+        ImGui::PopTextWrapPos();
+        ImGui::EndTooltip();
+    }
+}
+
 ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
 {
     return {lhs.x + rhs.x, lhs.y + rhs.y};
