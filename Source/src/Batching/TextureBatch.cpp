@@ -96,18 +96,9 @@ void Hachiko::TextureBatch::GenerateBatch()
         glGenTextures(1, &textureArray->id);
         glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray->id);
 
-        // Array texture parameters
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BASE_LEVEL, 0);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAX_LEVEL, 2);
-        glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
-
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
         // Generate texture array
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
+        //glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
         unsigned depth = 0;
         for (auto& resource : resources)
         {
@@ -138,6 +129,19 @@ void Hachiko::TextureBatch::GenerateBatch()
                 ++depth;
             }
         }
+
+        // Array texture parameters
+        //glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BASE_LEVEL, 0);
+        //glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAX_LEVEL, 2);
+        //glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
+
+        //glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
 }
 
@@ -176,15 +180,18 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
 void Hachiko::TextureBatch::UpdateTextureBatch() 
 {
+    std::vector<int> texture_slots;
+
     for (unsigned i = 0; i < textureArrays.size(); ++i)
     {
         //glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
+        texture_slots.push_back(i);
     }
     
     Program* main_program = App->program->GetMainProgram();
-    main_program->BindUniformBool("textures", 0);
+    main_program->BindUniformInts("allMyTextures", texture_slots.size(), &texture_slots[0]);
 }
 
 void Hachiko::TextureBatch::UpdateMaterials(unsigned ssbo_id)
@@ -220,7 +227,13 @@ void Hachiko::TextureBatch::ImGuiWindow()
             ImGui::SameLine();
             ImGui::Text(std::to_string(textureArrays[i]->format).c_str());
 
-            ImGui::Image(&textureArrays[i]->id, ImVec2(100, 100));
+            for (auto& resource : resources)
+            {
+                if (EqualLayout(*textureArrays[i], *resource.first))
+                {
+                    ImGui::Text(resource.first->path.c_str());
+                }
+            }
         }
     }
     ImGui::End();

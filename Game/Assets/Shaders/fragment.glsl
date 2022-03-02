@@ -48,14 +48,14 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-layout(std140, binding = 1) uniform Material
+/*layout(std140, binding = 1) uniform Material
 {
     vec4 diffuse_color;
     vec4 specular_color;
     uint diffuse_flag;
     uint specular_flag;
     float shininess;
-} material;
+} material;*/
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -68,6 +68,33 @@ layout(std140, binding = 2) uniform Lights
 } lights;
 
 uniform sampler2D textures[N_2D_SAMPLERS];
+
+// Texture Batching
+
+uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
+
+struct TexAddress {
+    int texIndex;
+    int layerIndex;
+};
+
+struct Material {
+    vec4 diffuseColor;
+    vec4 specularColor;
+    float shininess;
+    int hasDiffuseMap;
+    int hasSpecularMap;
+    int hasNormalMap;
+    TexAddress diffuseMap;
+    TexAddress specularMap;
+    TexAddress normalMap;
+    int padding0;
+    int padding1;
+};
+
+readonly layout(std430, binding = 1) buffer Materials {
+    Material materials[];
+} materialsBuffer;
 
 // Inputs
 struct VertexData
@@ -176,22 +203,30 @@ void main()
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-    vec3 diffuse_color = material.diffuse_color.rgb;
-    if (material.diffuse_flag > 0)
+    /*Material material = materialsBuffer.materials[0];
+
+    vec3 diffuse_color = material.diffuseColor.rgb;
+    if (material.hasDiffuseMap > 0)
     {
-        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+        //diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+        diffuse_color = pow(texture(allMyTextures[material.diffuseMap.texIndex], vec3(fragment.tex_coord, material.diffuseMap.layerIndex)).rgb, vec3(2.2));
     }
 
     float shininess = material.shininess;
-    vec3 specular_color = material.specular_color.rgb;
-    if (material.specular_flag > 0)
+    vec3 specular_color = material.specularColor.rgb;
+    if (material.hasSpecularMap > 0)
     {
         // Should we gaMma correct specular?
         // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        specular_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
+        specular_color = texture(allMyTextures[material.specularMap.texIndex], vec3(fragment.tex_coord, material.specularMap.layerIndex)).rgb;
         // Use alpha as shininess?
         //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
-    }
+    }*/
+
+    vec3 diffuse_color = pow(texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb, vec3(2.2));
+
+    float shininess = 100.0;
+    vec3 specular_color = texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb;
 
     
     vec3 hdr_color = vec3(0.0);
