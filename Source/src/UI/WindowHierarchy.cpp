@@ -67,14 +67,14 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 
     ImGui::PushStyleColor(ImGuiCol_Text, node_color);
 
-    const bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
+    const bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->GetName().c_str());
 
     if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
     {
         if (dragged_object && dragged_object != game_object)
         {
             ImGui::BeginTooltip();
-            ImGui::Text("% s->% s ", dragged_object->name.c_str(), game_object->name.c_str());
+            ImGui::Text("% s->% s ", dragged_object->GetName().c_str(), game_object->GetName().c_str());
             ImGui::EndTooltip();
         }
 
@@ -85,7 +85,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
         }
         if (ImGui::IsMouseClicked(1))
         {
-            ImGui::OpenPopup(game_object->name.c_str());
+            ImGui::OpenPopup(game_object->GetName().c_str());
         }
 
         if (dragged_object && ImGui::IsMouseReleased(0) && dragged_object != game_object)
@@ -101,7 +101,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     }
 
     // TODO: Make robust to repeted game object names
-    if (ImGui::BeginPopup(game_object->name.c_str()))
+    if (ImGui::BeginPopup(game_object->GetName().c_str()))
     {
         // Alternativs: ImGui::Selectable, ImGuiHelper::ValueSelection
         // TODO: Open options to create/destroy new object or move up down in the list of children

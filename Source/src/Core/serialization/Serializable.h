@@ -2,7 +2,7 @@
 
 #include "yaml-cpp/yaml.h"
 
-namespace BoxerEngine
+namespace Hachiko
 {
     class Serializable
     {

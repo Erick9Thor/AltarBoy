@@ -165,6 +165,7 @@
     <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp" />
     <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp" />
     <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp" />
     <ClCompile Include="src\Importers\ModelImporter.cpp" />
     <ClCompile Include="src\Modules\ModuleImporter.cpp" />
     <ClCompile Include="src\Modules\ModuleResources.cpp" />
@@ -536,6 +537,8 @@
     <ClInclude Include="src\Core\preferences\PreferenceManager.h" />
     <ClInclude Include="src\Core\preferences\Preferences.h" />
     <ClInclude Include="src\Core\serialization\Definitions.h" />
+    <ClInclude Include="src\Core\serialization\SceneSerializer.h" />
+    <ClInclude Include="src\Core\serialization\Serializable.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\Importers\Importer.h" />
     <ClInclude Include="src\Importers\ModelImporter.h" />

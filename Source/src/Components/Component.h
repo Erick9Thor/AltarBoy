@@ -45,6 +45,26 @@ namespace Hachiko
             return uid;
         }
 
+        void SetID(const UID new_uid)
+        {
+            uid = new_uid;
+        }
+
+        void Enable()
+        {
+            active = true;
+        }
+
+        void Disable()
+        {
+            active = false;
+        }
+
+        bool IsActive()
+        {
+            return active;
+        }
+
         [[nodiscard]] const GameObject* GetGameObject() const
         {
             return game_object;
@@ -65,6 +85,7 @@ namespace Hachiko
         virtual void Draw(ComponentCamera* camera, Program* program) {}
 
         virtual void DebugDraw() {}
+
 
         virtual void Save(JsonFormatterValue j_component) const {}
 

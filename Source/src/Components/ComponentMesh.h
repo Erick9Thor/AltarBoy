@@ -62,7 +62,12 @@ namespace Hachiko
             return resource->indices;
         }
 
-        void Import(const aiMesh* mesh);
+        [[nodiscard]] const std::string& GetResourcePath() const
+        {
+            return resource_path;
+        }
+
+        void Import(const aiMesh* mesh); // TODO: nobody besides importers should know assimp
 
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
@@ -71,6 +76,7 @@ namespace Hachiko
 
     private:
         bool visible = true;
+        std::string resource_path;
         ResourceMesh* resource = nullptr;
     };
 }

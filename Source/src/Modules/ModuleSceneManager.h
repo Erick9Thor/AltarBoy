@@ -2,6 +2,7 @@
 #include "Module.h"
 
 #include "core/Scene.h"
+#include "Core/serialization/SceneSerializer.h"
 
 namespace Hachiko
 {
@@ -49,5 +50,6 @@ namespace Hachiko
 
     private:
         Scene* main_scene = nullptr;
+        SceneSerializer serializer;
     };
 }

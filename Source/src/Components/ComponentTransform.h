@@ -67,6 +67,16 @@ namespace Hachiko
             return transform.WorldX();
         }
 
+        [[nodiscard]] float3 GetScale() const
+        {
+            return local_scale;
+        }
+
+        [[nodiscard]] Quat GetRotation() const
+        {
+            return local_rotation;
+        }
+
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
 

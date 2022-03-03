@@ -54,7 +54,7 @@ namespace Hachiko
         void DrawBoundingBox() const;
         void UpdateBoundingBoxes();
 
-        UID getUID() const
+        UID GetID() const
         {
             return uid;
         }
@@ -89,14 +89,30 @@ namespace Hachiko
             return nullptr;
         }
 
-        std::string name;
+        const std::string& GetName() const
+        {
+            return name;
+        }
+
+        void SetName(const std::string& new_name)
+        {
+            name = new_name;
+        }
+
+        bool IsActive()
+        {
+            return active;
+        }
+
         Scene* scene_owner = nullptr;
         GameObject* parent = nullptr;
         std::vector<GameObject*> children;
 
-        bool active = true;
+       
 
     private:
+        bool active = true;
+        std::string name;
         std::vector<Component*> components;
         ComponentTransform* transform = nullptr;
 

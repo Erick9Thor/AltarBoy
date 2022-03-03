@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 // system includes
 #include <iostream>
