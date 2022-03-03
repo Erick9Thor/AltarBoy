@@ -134,6 +134,8 @@ void Hachiko::WindowScene::DrawScene()
     texture_position = float2(guizmo_rect_origin.x, static_cast<float>(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 
     ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2{0, 1}, ImVec2{1, 0});
+    // Checking hover on image for more intuitive controls
+    hovering = ImGui::IsItemHovered(); 
 
     // TODO: Move to other section to take the input
     if (ImGui::BeginDragDropTarget())
@@ -145,8 +147,6 @@ void Hachiko::WindowScene::DrawScene()
         }
         ImGui::EndDragDropTarget();
     }
-
-    hovering = ImGui::IsWindowHovered();
 
     // TO AVOID Camera orbit
     if (ImGui::IsWindowFocused())
@@ -196,7 +196,7 @@ void Hachiko::WindowScene::DrawScene()
 
 void Hachiko::WindowScene::Controller() const
 {
-    if (!using_guizmo && focused && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (!using_guizmo && focused && hovering && App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
