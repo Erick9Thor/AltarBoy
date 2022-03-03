@@ -147,34 +147,31 @@ void Hachiko::TextureBatch::GenerateBatch()
 
 void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMesh*>& components)
 {
-    materials.reserve(components.size());
+    materials.resize(components.size());
 
-    for (const ComponentMesh* component : components)
+    for (unsigned i = 0; i < components.size(); ++i)
     {
-        const ComponentMaterial* material_comp = component->GetGameObject()->GetComponent<ComponentMaterial>();
+        const ComponentMaterial* material_comp = components[i]->GetGameObject()->GetComponent<ComponentMaterial>();
 
         const ResourceMaterial* material = material_comp->GetMaterial();
 
-        Material material_data;
-        material_data.diffuseColor = material->diffuse_color;
-        material_data.specularColor = material->diffuse_color;
-        material_data.shininess = material->shininess;
-        material_data.hasDiffuseMap = material_comp->use_diffuse_texture;
-        material_data.hasSpecularMap = material_comp->use_specular_texture;
-        material_data.hasNormalMap = 0;
-        if (material_data.hasDiffuseMap)
+        materials[i].diffuseColor = material->diffuse_color;
+        materials[i].specularColor = material->diffuse_color;
+        materials[i].shininess = material->shininess;
+        materials[i].hasDiffuseMap = material_comp->use_diffuse_texture;
+        materials[i].hasSpecularMap = material_comp->use_specular_texture;
+        materials[i].hasNormalMap = 0;
+        if (materials[i].hasDiffuseMap)
         {
-            material_data.diffuseMap = (*resources[&material->diffuse]);
+            materials[i].diffuseMap = (*resources[&material->diffuse]);
         }
-        if (material_data.hasSpecularMap)
+        if (materials[i].hasSpecularMap)
         {
-            material_data.specularMap = (*resources[&material->specular]);
+            materials[i].specularMap = (*resources[&material->specular]);
         }
-        material_data.normalMap;
-        //material_data.padding0;
-        //material_data.padding1;
-
-        materials.emplace_back(material_data);
+        materials[i].normalMap;
+        //materials[i].padding0;
+        //materials[i].padding1;
     }
 }
 

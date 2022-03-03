@@ -10,7 +10,7 @@ namespace Hachiko
     public:
         struct TexAddress
         {
-            unsigned texIndex = 0; // contains the array where is located
+            int texIndex = 0; // contains the array where is located
             int layerIndex = 0; // contains the depth in the array where is located
         };
 

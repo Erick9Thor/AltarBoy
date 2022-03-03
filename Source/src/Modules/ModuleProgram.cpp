@@ -163,7 +163,7 @@ void Hachiko::ModuleProgram::CreateCameraUBO()
 
 void Hachiko::ModuleProgram::CreateMaterialUBO()
 {
-    CreateUBO(UBOPoints::MATERIAL, sizeof(MaterialData));
+    //CreateUBO(UBOPoints::MATERIAL, sizeof(MaterialData));
 }
 
 void Hachiko::ModuleProgram::CreateLightsUBO()

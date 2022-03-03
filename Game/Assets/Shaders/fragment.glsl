@@ -67,11 +67,11 @@ layout(std140, binding = 2) uniform Lights
     uint n_spots;
 } lights;
 
-uniform sampler2D textures[N_2D_SAMPLERS];
+//uniform sampler2D textures[N_2D_SAMPLERS];
 
 // Texture Batching
 
-uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
+//layout(binding = 1) uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
 
 struct TexAddress {
     int texIndex;
@@ -223,10 +223,15 @@ void main()
         //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
     }*/
 
-    vec3 diffuse_color = pow(texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb, vec3(2.2));
+    /*vec3 diffuse_color = pow(texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb, vec3(2.2));
 
     float shininess = 100.0;
-    vec3 specular_color = texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb;
+    vec3 specular_color = texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb;*/
+
+    vec3 diffuse_color = materialsBuffer.materials[0].diffuseColor.rgb; // vec3(0.0, 0.0, 1.0);
+
+    float shininess = 100.0;
+    vec3 specular_color = materialsBuffer.materials[0].specularColor.rgb; // vec3(0.0, 0.0, 1.0);
 
     
     vec3 hdr_color = vec3(0.0);
@@ -249,5 +254,6 @@ void main()
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
     // Gamma correction & alpha from diffuse texture
-    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    //color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), 1.0);
 }

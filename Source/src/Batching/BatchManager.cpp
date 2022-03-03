@@ -59,9 +59,9 @@ void Hachiko::BatchManager::DrawBatches()
         geometry_batch->Bind();
         App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
         // Binds materials
-        geometry_batch->textureBatch->ImGuiWindow();
-        geometry_batch->textureBatch->UpdateTextureBatch();
-        //geometry_batch->textureBatch->UpdateMaterials(material_ssbo);
+        //geometry_batch->textureBatch->ImGuiWindow();
+        //geometry_batch->textureBatch->UpdateTextureBatch();
+        geometry_batch->textureBatch->UpdateMaterials(material_ssbo);
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);
