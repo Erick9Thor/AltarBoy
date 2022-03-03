@@ -44,6 +44,8 @@ namespace Hachiko
         std::vector<float4x4> transforms;
         std::vector<DrawCommand> commands;
 
+        unsigned indirect_buffer_id;
+
         bool loaded = false;  
     };
 
