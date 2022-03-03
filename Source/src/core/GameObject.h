@@ -78,6 +78,11 @@ namespace Hachiko
             return components;
         }
 
+        [[nodiscard]] ComponentTransform* GetTransform() const 
+        {
+            return transform;
+        }
+
         template<typename RetComponent>
         RetComponent* GetComponent()
         {
@@ -105,11 +110,6 @@ namespace Hachiko
         const ComponentTransform* GetComponentTransform() const
         {
             return transform;
-        }
-
-        const float4x4& GetTransform() const
-        {
-            return transform->GetTransform();
         }
 
         std::string name;

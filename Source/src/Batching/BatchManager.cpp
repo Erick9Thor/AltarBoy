@@ -46,7 +46,6 @@ void Hachiko::BatchManager::BuildBatches()
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
         geometry_batch->GenerateBatch();
-        geometry_batch->UpdateBuffers();
     }
 }
 
@@ -58,13 +57,9 @@ void Hachiko::BatchManager::DrawBatches()
         // Binds meshes and transforms
         geometry_batch->Bind();
         App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
-        // Binds materials
-        //geometry_batch->textureBatch->ImGuiWindow();
-        //geometry_batch->textureBatch->UpdateTextureBatch();
-        geometry_batch->textureBatch->UpdateMaterials(material_ssbo);
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
-        glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, commands.data(), commands.size(), 0);
+        glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
     }
 }
 

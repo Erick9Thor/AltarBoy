@@ -173,7 +173,7 @@ void Hachiko::WindowScene::DrawScene()
         // Using GL format which means transposing them
         view = camera->GetViewMatrix(transposed);
         float4x4 projection = camera->GetProjectionMatrix(transposed);
-        float4x4 model = selected_object->GetComponent<ComponentTransform>()->GetTransform().Transposed();
+        float4x4 model = selected_object->GetTransform()->GetMatrix().Transposed();
         float4x4 delta;
 
         ImGuizmo::SetRect(guizmo_rect_origin.x, guizmo_rect_origin.y, texture_size.x, texture_size.y);
@@ -186,7 +186,7 @@ void Hachiko::WindowScene::DrawScene()
         {
             // Transpose back again to store in our format
             model.Transpose();
-            selected_object->GetComponent<ComponentTransform>()->SetGlobalTransform(model);
+            selected_object->GetTransform()->SetGlobalTransform(model);
         }
     }
 }

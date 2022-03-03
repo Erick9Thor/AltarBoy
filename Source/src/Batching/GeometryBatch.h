@@ -48,6 +48,7 @@ namespace Hachiko
         std::vector<DrawCommand> commands;
 
         TextureBatch* textureBatch = nullptr;
+        unsigned indirect_buffer_id;
 
         bool loaded = false;  
     };

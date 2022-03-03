@@ -122,7 +122,7 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
-            local_segment.Transform(game_object->GetComponent<ComponentTransform>()->GetTransform().Inverted());
+            local_segment.Transform(game_object->GetTransform()->GetMatrix().Inverted());
 
             const float* vertices = mesh->GetVertices();
             const unsigned* indices = mesh->GetIndices();
@@ -152,17 +152,17 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 void Hachiko::Scene::CreateLights()
 {
     GameObject* sun = CreateNewGameObject("Sun", root);
-    sun->GetComponent<ComponentTransform>()->SetLocalPosition(float3(1, 1, -1));
-    sun->GetComponent<ComponentTransform>()->LookAt(float3(0, 0, 0));
+    sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
+    sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
     sun->CreateComponent(Component::Type::DIRLIGHT);
 
     GameObject* spot = CreateNewGameObject("Spot Light", root);
-    spot->GetComponent<ComponentTransform>()->SetLocalPosition(float3(-1, 1, -1));
+    spot->GetTransform()->SetLocalPosition(float3(-1, 1, -1));
 
     spot->CreateComponent(Component::Type::SPOTLIGHT);
 
     GameObject* point = CreateNewGameObject("Point Light", root);
-    point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -1));
+    point->GetTransform()->SetLocalPosition(float3(0, 1, -1));
     point->CreateComponent(Component::Type::POINTLIGHT);
 }
 
@@ -180,7 +180,7 @@ void Hachiko::Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObje
         aiVector3D aiTranslation, aiScale;
         aiQuaternion aiRotation;
         node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
-        model_part->GetComponent<ComponentTransform>()->SetLocalTransform(float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
+        model_part->GetTransform()->SetLocalTransform(float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
                                                                           Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w),
                                                                           float3(aiScale.x, aiScale.y, aiScale.z));
     }
@@ -195,9 +195,9 @@ void Hachiko::Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObje
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
 {
     GameObject* camera = CreateNewGameObject("Debug Camera", root);
-    camera->GetComponent<ComponentTransform>()->SetLocalPosition(float3(5, 5, 0));
+    camera->GetTransform()->SetLocalPosition(float3(5, 5, 0));
     camera->CreateComponent(Component::Type::CAMERA);
-    camera->GetComponent<ComponentTransform>()->LookAt(float3(0, 5, 0));
+    camera->GetTransform()->LookAtTarget(float3(0, 5, 0));
 
     auto* debug_camera = camera->GetComponent<ComponentCamera>();
     debug_camera->SetFarPlane(100.0f);

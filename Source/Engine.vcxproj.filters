@@ -979,6 +979,7 @@
     <ClInclude Include="src\core\serialization\TypeConverter.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\Batching\BatchManager.h" />
     <ClInclude Include="src\Batching\GeometryBatch.h" />
     <ClInclude Include="src\Batching\TextureBatch.h" />

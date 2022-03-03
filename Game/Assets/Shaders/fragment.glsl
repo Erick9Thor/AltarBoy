@@ -1,4 +1,4 @@
-# version 440
+# version 460
 
 #define DIFFUSE_SAMPLER 0
 #define SPECULAR_SAMPLER 1
@@ -104,6 +104,7 @@ struct VertexData
     vec2 tex_coord;
 };
 in VertexData fragment;
+in flat uint instance;
 
 // Outputs
 out vec4 color;
