@@ -21,6 +21,7 @@ namespace Hachiko
             return specular.id;
         }
 
+        std::string name;
         Texture diffuse;
         Texture specular;
         float4 diffuse_color = float4::one;

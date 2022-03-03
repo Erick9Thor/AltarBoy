@@ -34,37 +34,87 @@ void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
+    static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
     {
         if (material)
         {
+            ImGui::InputText("Name", &material->name[0], 64);
+
             const Texture& diffuse = material->diffuse;
-            if (diffuse.loaded)
+
+            if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
             {
-                ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
-                if (use_diffuse_texture)
+                if (diffuse.loaded)
                 {
-                    ImGui::Text("Diffuse: %dx%d %s", diffuse.width, diffuse.height, diffuse.path.c_str());
-                    ImGui::Image(reinterpret_cast<void*>(diffuse.id), ImVec2(150, 150));
+                    ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
+                    if (use_diffuse_texture)
+                    {
+                        ImGui::Image(reinterpret_cast<void*>(diffuse.id), ImVec2(80, 80));
+                        ImGui::SameLine();
+                        ImGui::BeginGroup();
+                        ImGui::Text("%dx%d", diffuse.width, diffuse.height);
+                        ImGui::Text("Path: %s", diffuse.path.c_str());
+
+                        ImGui::Button("Change Texture");
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
+
+                        ImGui::Button("Detach Texture");
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
+                        ImGui::EndGroup();
+                    }
                 }
+
+                if (!use_diffuse_texture)
+                {
+                    ImGui::DragFloat4("Diffuse", (float*)&material->diffuse_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                }
+                ImGui::TreePop();
             }
-            if (!use_diffuse_texture)
-                ImGuiUtils::CompactColorPicker("Diffuse Color", &material->diffuse_color[0]);
 
             const Texture& specular = material->specular;
-            ImGui::InputFloat("Shininess", &material->shininess);
-            if (specular.loaded)
+            if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
             {
-                ImGui::Checkbox("Spec Texture", &use_specular_texture);
-                if (use_specular_texture)
+                if (specular.loaded)
                 {
-                    ImGui::Text("Specular: %dx%d %s", specular.width, specular.height, specular.path.c_str());
-                    ImGui::Image(reinterpret_cast<void*>(specular.id), ImVec2(150, 150));
+                    ImGui::Checkbox("Spec Texture", &use_specular_texture);
+                    if (use_specular_texture)
+                    {
+                        ImGui::Image(reinterpret_cast<void*>(specular.id), ImVec2(80, 80));
+                        ImGui::SameLine();
+                        ImGui::BeginGroup();
+                        ImGui::Text("%dx%d", specular.width, specular.height);
+                        ImGui::Text("Path: %s", specular.path.c_str());
+                        ImGui::Button("Change Texture");
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
+                        ImGui::Button("Detach Texture");
+                        if (ImGui::IsItemHovered())
+                        {
+                            ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
+                        ImGui::EndGroup();
+                    }
                 }
+
+                if (!use_specular_texture)
+                {
+                    ImGui::DragFloat4("Specular", (float*)&material->specular_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                }
+                ImGui::TreePop();
             }
-            if (!use_specular_texture)
-                ImGuiUtils::CompactColorPicker("Specular Color", &material->specular_color[0]);
+            
+            ImGui::DragFloat("Shininess", &material->shininess, 0.05, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+            ImGui::Text("");
         }
         else
         {
