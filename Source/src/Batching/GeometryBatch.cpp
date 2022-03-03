@@ -183,6 +183,9 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] * sizeof(unsigned), batch->indices, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
+
+    GenerateCommands();
+
 }
 
 void Hachiko::GeometryBatch::BindTransforms(unsigned ssbo_id)
