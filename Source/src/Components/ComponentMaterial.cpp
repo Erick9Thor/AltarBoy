@@ -56,12 +56,18 @@ void Hachiko::ComponentMaterial::DrawGui()
                         ImGui::BeginGroup();
                         ImGui::Text("%dx%d", diffuse.width, diffuse.height);
                         ImGui::Text("Path: %s", diffuse.path.c_str());
+
                         ImGui::Button("Change Texture");
                         if (ImGui::IsItemHovered())
+                        {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
-                        ImGui::Button("Deattach Texture");
+                        }
+
+                        ImGui::Button("Detach Texture");
                         if (ImGui::IsItemHovered())
+                        {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
                         ImGui::EndGroup();
                     }
                 }
@@ -88,10 +94,14 @@ void Hachiko::ComponentMaterial::DrawGui()
                         ImGui::Text("Path: %s", specular.path.c_str());
                         ImGui::Button("Change Texture");
                         if (ImGui::IsItemHovered())
+                        {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
-                        ImGui::Button("Deattach Texture");
+                        }
+                        ImGui::Button("Detach Texture");
                         if (ImGui::IsItemHovered())
+                        {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
+                        }
                         ImGui::EndGroup();
                     }
                 }
