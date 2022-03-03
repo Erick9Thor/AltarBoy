@@ -34,7 +34,7 @@ void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
-    static ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+    static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
     {
