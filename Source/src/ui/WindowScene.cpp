@@ -196,7 +196,7 @@ void Hachiko::WindowScene::DrawScene()
 
 void Hachiko::WindowScene::Controller() const
 {
-    if (!using_guizmo && focused && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (!using_guizmo && focused && hovering && App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
