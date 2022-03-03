@@ -519,6 +519,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
