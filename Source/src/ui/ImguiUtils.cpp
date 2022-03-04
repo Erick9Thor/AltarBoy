@@ -92,7 +92,7 @@ bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_ico
     ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
     ImGui::SameLine();
     const auto frame_padding = ImGui::GetStyle().FramePadding;
-
+    // If the button is not enabled we lower its alpha channel and disable the widget
     if (!enabled)
     {
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
