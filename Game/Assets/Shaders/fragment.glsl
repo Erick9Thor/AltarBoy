@@ -71,7 +71,7 @@ layout(std140, binding = 2) uniform Lights
 
 // Texture Batching
 
-//layout(binding = 1) uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
+layout(binding = 1) uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
 
 struct TexAddress {
     int texIndex;
@@ -204,7 +204,7 @@ void main()
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-    /*Material material = materialsBuffer.materials[0];
+    Material material = materialsBuffer.materials[0];
 
     vec3 diffuse_color = material.diffuseColor.rgb;
     if (material.hasDiffuseMap > 0)
@@ -222,17 +222,23 @@ void main()
         specular_color = texture(allMyTextures[material.specularMap.texIndex], vec3(fragment.tex_coord, material.specularMap.layerIndex)).rgb;
         // Use alpha as shininess?
         //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
-    }*/
+    }
 
-    /*vec3 diffuse_color = pow(texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb, vec3(2.2));
+    /*
+    vec3 diffuse_color = pow(texture(allMyTextures[0], vec3(fragment.tex_coord, 0)).rgb, vec3(2.2));
 
     float shininess = 100.0;
-    vec3 specular_color = texture(allMyTextures[1], vec3(fragment.tex_coord, 0)).rgb;*/
+    vec3 specular_color = texture(allMyTextures[0], vec3(fragment.tex_coord, 0)).rgb;
+    */
 
+    
+    /*
     vec3 diffuse_color = materialsBuffer.materials[0].diffuseColor.rgb; // vec3(0.0, 0.0, 1.0);
 
     float shininess = 100.0;
     vec3 specular_color = materialsBuffer.materials[0].specularColor.rgb; // vec3(0.0, 0.0, 1.0);
+    */
+    
 
     
     vec3 hdr_color = vec3(0.0);

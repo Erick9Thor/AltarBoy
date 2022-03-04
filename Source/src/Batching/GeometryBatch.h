@@ -32,6 +32,8 @@ namespace Hachiko
         void GenerateCommands();        
         void Bind();
 
+        void ImGuiWindow();
+
         const std::vector<DrawCommand>& GetCommands() const
         {
             return commands;

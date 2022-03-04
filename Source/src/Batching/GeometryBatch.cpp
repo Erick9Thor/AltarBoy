@@ -229,3 +229,12 @@ void Hachiko::GeometryBatch::Bind()
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
     App->program->UpdateTransforms(transforms);
 }
+
+void Hachiko::GeometryBatch::ImGuiWindow() 
+{
+    if (ImGui::Begin("Texture"))
+    {
+        textureBatch->ImGuiWindow();
+    }
+    ImGui::End();
+}
