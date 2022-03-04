@@ -8,11 +8,23 @@
 #include "modules/ModuleProgram.h"
 #include "importers/MeshImporter.h"
 
+#include "core/Scene.h"
+
 Hachiko::ComponentMesh::ComponentMesh(GameObject* container) :
-    Component(Type::MESH, container) {}
+    Component(Type::MESH, container)
+{
+    if (container->scene_owner)
+    {
+        container->scene_owner->OnMeshesChanged();
+    }
+}
 
 Hachiko::ComponentMesh::~ComponentMesh()
 {
+    if (game_object->scene_owner)
+    {
+        game_object->scene_owner->OnMeshesChanged();
+    }
     RELEASE(resource);
 }
 

@@ -81,7 +81,6 @@ namespace Hachiko
         void* context{};
 
         RenderList render_list;
-        BatchManager batch_manager;
 
         unsigned frame_buffer = 0;
         unsigned depth_stencil_buffer = 0;

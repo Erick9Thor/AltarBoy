@@ -28,8 +28,6 @@ Hachiko::GeometryBatch::~GeometryBatch() {
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
 {
-    components.push_back(mesh);
-
     const ResourceMesh* resource = mesh->GetResource();
     auto it = resources.find(resource);
 
@@ -40,12 +38,15 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
     }
 }
 
-void Hachiko::GeometryBatch::GenerateBatch() {
+void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMesh* mesh)
+{
+    components.push_back(mesh);
+}
+
+void Hachiko::GeometryBatch::BuildBatch() {
 
     BatchMeshes();
-    BatchTransforms();
     UpdateBuffers();
-    GenerateCommands();
 }
 
 void Hachiko::GeometryBatch::BatchMeshes()
@@ -109,6 +110,16 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
+void Hachiko::GeometryBatch::Draw()
+{
+    BatchTransforms();
+    GenerateCommands();
+
+    glBindVertexArray(batch->vao);
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
+    App->program->UpdateTransforms(transforms);
+}
+
 void Hachiko::GeometryBatch::BatchTransforms()
 {
     transforms.reserve(components.size());
@@ -118,6 +129,32 @@ void Hachiko::GeometryBatch::BatchTransforms()
     }
 }
 
+void Hachiko::GeometryBatch::GenerateCommands()
+{
+    commands.reserve(components.size());
+
+    unsigned instance = 0;
+    for (const ComponentMesh* component : components)
+    {
+        const ResourceMesh* r = component->GetResource();
+        DrawCommand command = (*resources[r]);
+        command.base_instance = instance;
+        commands.emplace_back(command);
+        ++instance;
+    }
+
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
+    glBufferData(GL_DRAW_INDIRECT_BUFFER, commands.size() * sizeof(DrawCommand), commands.data(), GL_DYNAMIC_DRAW);
+}
+
+
+
+void Hachiko::GeometryBatch::ClearDrawList()
+{
+    commands.clear();
+    components.clear();
+    transforms.clear();    
+}
 
 void Hachiko::GeometryBatch::GenerateBuffers()
 {
@@ -183,35 +220,4 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] * sizeof(unsigned), batch->indices, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
-}
-
-void Hachiko::GeometryBatch::BindTransforms(unsigned ssbo_id)
-{
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, transforms.size() * sizeof(float) * 16, &transforms[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-void Hachiko::GeometryBatch::GenerateCommands() {
-    commands.reserve(components.size());
-    
-    unsigned instance = 0;
-    for (const ComponentMesh* component : components)
-    {
-        const ResourceMesh* r = component->GetResource();
-        DrawCommand command = (*resources[r]);
-        command.base_instance = instance;
-        commands.emplace_back(command);
-        ++instance;
-    }
-
-    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
-    glBufferData(GL_DRAW_INDIRECT_BUFFER, commands.size() * sizeof(DrawCommand), commands.data(), GL_DYNAMIC_DRAW);
-}
-
-void Hachiko::GeometryBatch::Bind()
-{
-    glBindVertexArray(batch->vao);
-    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
-    App->program->UpdateTransforms(transforms);
 }

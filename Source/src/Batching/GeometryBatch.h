@@ -19,15 +19,19 @@ namespace Hachiko
         // TODO: Store all geometry data from several meshes
         void AddMesh(const ComponentMesh* mesh);
 
-        void GenerateBatch();
+        void AddDrawComponent(const ComponentMesh* mesh);
+
+        void BuildBatch();
         void BatchMeshes();
         void BatchTransforms();
 
+        void Draw();
+
+        void ClearDrawList();
+
         void GenerateBuffers();
         void UpdateBuffers();
-        void BindTransforms(unsigned ssbo_id);
         void GenerateCommands();        
-        void Bind();
 
         const std::vector<DrawCommand>& GetCommands() const
         {
@@ -36,7 +40,7 @@ namespace Hachiko
         
         std::vector<const ComponentMesh*> components; // contains all ComponentMeshes in the batch
         // Commands will be used as templates for the final command list
-        std::map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
+        std::unordered_map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
                 
         // We can use resource mesh to contain a concatenation of all original meshes
         ResourceMesh* batch = nullptr;
