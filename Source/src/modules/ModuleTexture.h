@@ -41,6 +41,7 @@ namespace Hachiko
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);
 
+
         [[nodiscard]] short GetDevilVersion() const
         {
             return devil_version;
@@ -48,9 +49,12 @@ namespace Hachiko
 
         void OptionsMenu() const;
 
+        // privates
+        static unsigned int LoadImg(const char* path, bool flip = true);
+        static byte* GetData(); // new
+        static void DeleteImg(unsigned& img_id);
+
     private:
         const short devil_version = IL_VERSION;
-        static unsigned int LoadImg(const char* path, bool flip = true);
-        static void DeleteImg(unsigned& img_id);
     };
 }

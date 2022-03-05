@@ -25,8 +25,6 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
 
     if (img_id != 0)
     {
-        texture.bpp = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
-
         glGenTextures(1, &texture.id);
         glBindTexture(GL_TEXTURE_2D, texture.id);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -35,7 +33,7 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
 
         glTexImage2D(GL_TEXTURE_2D,
                      0,
-                     ilGetInteger(IL_IMAGE_BPP),
+                     texture.bpp = ilGetInteger(IL_IMAGE_BPP),
                      texture.width = ilGetInteger(IL_IMAGE_WIDTH),
                      texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
                      0,
@@ -150,4 +148,9 @@ unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
 void Hachiko::ModuleTexture::DeleteImg(unsigned& img_id)
 {
     ilDeleteImages(1, &img_id);
+}
+
+byte* Hachiko::ModuleTexture::GetData()
+{
+    return ilGetData();
 }

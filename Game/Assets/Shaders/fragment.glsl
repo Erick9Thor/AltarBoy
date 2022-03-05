@@ -204,13 +204,13 @@ void main()
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-    Material material = materialsBuffer.materials[0];
+    Material material = materialsBuffer.materials[instance];
 
     vec3 diffuse_color = material.diffuseColor.rgb;
     if (material.hasDiffuseMap > 0)
     {
         //diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        diffuse_color = pow(texture(allMyTextures[material.diffuseMap.texIndex], vec3(fragment.tex_coord, material.diffuseMap.layerIndex)).rgb, vec3(2.2));
+        diffuse_color = pow(texture(allMyTextures[material.diffuseMap.texIndex+1], vec3(fragment.tex_coord, material.diffuseMap.layerIndex)).rgb, vec3(2.2));
     }
 
     float shininess = material.shininess;
@@ -219,7 +219,7 @@ void main()
     {
         // Should we gaMma correct specular?
         // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        specular_color = texture(allMyTextures[material.specularMap.texIndex], vec3(fragment.tex_coord, material.specularMap.layerIndex)).rgb;
+        specular_color = texture(allMyTextures[material.specularMap.texIndex+1], vec3(fragment.tex_coord, material.specularMap.layerIndex)).rgb;
         // Use alpha as shininess?
         //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
     }

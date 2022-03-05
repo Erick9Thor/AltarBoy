@@ -6,6 +6,7 @@
 #include "Components/ComponentMaterial.h"
 
 #include "Modules/ModuleProgram.h"
+#include "Modules/ModuleTexture.h"
 
 Hachiko::TextureBatch::TextureBatch() 
 {
@@ -91,43 +92,46 @@ void Hachiko::TextureBatch::GenerateBatch()
     // TODO: security checks with these maximums
 
     unsigned index = 0;
-    for (TextureArray* textureArray : textureArrays)
+    for (unsigned i = 0; i < textureArrays.size(); ++i)
     {
-        glGenTextures(1, &textureArray->id);
-        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArray->id);
+        glGenTextures(1, &textureArrays[i]->id);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
 
         // Generate texture array
         unsigned sizedFormat = GL_RGBA8;
-        if (textureArray->format == GL_RGBA)
+        if (textureArrays[i]->format == GL_RGBA)
         {
             sizedFormat = GL_RGBA8;
         }
-        else if (textureArray->format == GL_RGB)
+        else if (textureArrays[i]->format == GL_RGB)
         {
             sizedFormat = GL_RGB8;
         }
 
         //glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, textureArray->format, textureArray->width, textureArray->height, textureArray->depth);
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, sizedFormat, textureArray->width, textureArray->height, textureArray->depth);
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, sizedFormat, textureArrays[i]->width, textureArrays[i]->height, textureArrays[i]->depth);
         unsigned depth = 0;
         for (auto& resource : resources)
         {
-            if (EqualLayout(*textureArray, *resource.first))
+            if (EqualLayout(*textureArrays[i], *resource.first))
             {
-                resource.second->texIndex = textureArray->id;
+                resource.second->texIndex = i;
                 resource.second->layerIndex = depth;
 
-                byte* new_array = new byte[resource.first->width * resource.first->height * resource.first->bpp];
+                //unsigned size = resource.first->width * resource.first->height * resource.first->bpp;
+                //byte* new_array = new byte[size];
 
                 //glEnable(GL_TEXTURE_2D);
                 //glBindTexture(GL_TEXTURE_2D, resource.first->id);
                 //glGetTexImage(GL_TEXTURE_2D, 0, textureArray->format, GL_UNSIGNED_BYTE, (void*)(new_array));
                 //glBindTexture(GL_TEXTURE_2D, 0);
 
-                glGetTextureImage(resource.first->id, 0, textureArray->format, GL_UNSIGNED_BYTE, resource.first->width * resource.first->height * resource.first->bpp, new_array);
+                //glGetTextureImage(resource.first->id, 0, textureArray->format, GL_UNSIGNED_BYTE, size, new_array);
 
                 //ImGui::Image(&new_array[0], ImVec2(100, 100));
-                ImGui::Image((void*)resource.first->id, ImVec2(100, 100));
+                //ImGui::Image((void*)resource.first->id, ImVec2(100, 100));
+
+                unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str());
 
                 glTexSubImage3D(
                     GL_TEXTURE_2D_ARRAY, // target
@@ -135,15 +139,16 @@ void Hachiko::TextureBatch::GenerateBatch()
                     0, // xoffset
                     0, // yoffset
                     depth, // zoffset
-                    textureArray->width, // width
-                    textureArray->height, // height
+                    textureArrays[i]->width, // width
+                    textureArrays[i]->height, // height
                     1, // depth
-                    textureArray->format, // format
+                    textureArrays[i]->format, // format
                     GL_UNSIGNED_BYTE, // type
-                    new_array // texture_data
+                    ModuleTexture::GetData() // texture_data
                 );
 
-                delete[] new_array;
+                ModuleTexture::DeleteImg(imgId);
+                //delete[] new_array;
                 ++depth;
             }
         }
