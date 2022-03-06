@@ -405,7 +405,9 @@
     <ClCompile Include="src\Modules\ModuleImporter.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp" />
+    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
+      <Filter>Core\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1047,8 +1049,12 @@
     <ClInclude Include="src\Modules\ModuleImporter.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\serialization\SceneSerializer.h" />
-    <ClInclude Include="src\Core\serialization\Serializable.h" />
+    <ClInclude Include="src\Core\serialization\SceneSerializer.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\serialization\Serializable.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

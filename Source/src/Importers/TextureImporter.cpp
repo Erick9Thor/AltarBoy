@@ -24,10 +24,10 @@ void Hachiko::TextureImporter::Import(const char* path)
     }
 }
 
-void Hachiko::TextureImporter::Load(UID id)
+Hachiko::Resource* Hachiko::TextureImporter::Load(const UID id)
 {
 }
 
-void Hachiko::TextureImporter::Save()
+void Hachiko::TextureImporter::Save(const Hachiko::Resource* resource)
 {
 }

@@ -35,7 +35,7 @@ namespace Hachiko
         // --- GameObject Management --- //
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
-        GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
+        GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
         [[nodiscard]] GameObject* GetRoot() const
         {

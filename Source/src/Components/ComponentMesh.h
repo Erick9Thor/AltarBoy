@@ -3,7 +3,6 @@
 
 #include "resources/ResourceMesh.h"
 
-#include "assimp/scene.h"
 #include "MathGeoLib.h"
 
 namespace Hachiko
@@ -29,7 +28,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsLoaded() const
         {
-            return resource->loaded;
+            return !meshes.empty();
         }
 
         [[nodiscard]] bool IsVisible() const
@@ -37,29 +36,29 @@ namespace Hachiko
             return visible;
         }
 
-        [[nodiscard]] AABB GetAABB() const
+        [[nodiscard]] AABB GetAABB(const int index) const
         {
-            return resource->bounding_box;
+            return meshes[index]->bounding_box;
         }
 
-        [[nodiscard]] unsigned GetBufferSize(ResourceMesh::Buffers buffer) const
+        [[nodiscard]] unsigned GetBufferSize(const int index, ResourceMesh::Buffers buffer) const
         {
-            return resource->buffer_sizes[static_cast<int>(buffer)];
+            return meshes[index]->buffer_sizes[static_cast<int>(buffer)];
         }
 
-        [[nodiscard]] unsigned GetBufferId(ResourceMesh::Buffers buffer) const
+        [[nodiscard]] unsigned GetBufferId(const int index, ResourceMesh::Buffers buffer) const
         {
-            return resource->buffer_ids[static_cast<int>(buffer)];
+            return meshes[index]->buffer_ids[static_cast<int>(buffer)];
         }
 
-        [[nodiscard]] const float* GetVertices() const
+        [[nodiscard]] const float* GetVertices(const int index) const
         {
-            return resource->vertices;
+            return meshes[index]->vertices;
         }
 
-        [[nodiscard]] const unsigned* GetIndices() const
+        [[nodiscard]] const unsigned* GetIndices(const int index) const
         {
-            return resource->indices;
+            return meshes[index]->indices;
         }
 
         [[nodiscard]] const std::string& GetResourcePath() const
@@ -67,16 +66,23 @@ namespace Hachiko
             return resource_path;
         }
 
-        void Import(const aiMesh* mesh); // TODO: nobody besides importers should know assimp
+        [[nodiscard]] size_t GetMeshesCount() const
+        {
+            return meshes.size();
+        }
 
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void LoadModel(const char* model_path);
+        //void Import(const aiMesh* mesh); // TODO: nobody besides importers should know assimp
+
+        //void Save(JsonFormatterValue j_component) const override;
+        //void Load(JsonFormatterValue j_component) override;
 
         void DrawGui() override;
 
     private:
         bool visible = true;
         std::string resource_path;
-        ResourceMesh* resource = nullptr;
+
+        std::vector<ResourceMesh*> meshes = {};
     };
 }

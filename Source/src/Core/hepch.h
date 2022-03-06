@@ -52,6 +52,9 @@
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
+#include <assimp/scene.h>
+#include <assimp/Importer.hpp>
+
 //project includes
 #include "Globals.h"
 #include "Application.h"

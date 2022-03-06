@@ -29,7 +29,8 @@ namespace Hachiko
         AABB bounding_box;
 
         // Store the ids of buffers in opengl
-        unsigned vbo{}, ebo{};
+        unsigned vbo{};
+        unsigned ebo{};
         unsigned vao{};
         unsigned buffer_ids[static_cast<int>(Buffers::COUNT)]{};
 

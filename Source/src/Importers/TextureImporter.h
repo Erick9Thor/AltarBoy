@@ -1,8 +1,9 @@
 #pragma once
 
+#include "importers/Importer.h"
+
 namespace Hachiko
 {
-    class Importer;
 
     class TextureImporter final : public Importer
     {
@@ -10,7 +11,7 @@ namespace Hachiko
         TextureImporter();
         ~TextureImporter() override = default;
         void Import(const char* path) override;
-        void Load(UID id) override;
-        void Save() override;
+        Resource* Load(const UID id) override;
+        void Save(const Resource* resource) override;
     };
 }

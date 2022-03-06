@@ -59,6 +59,11 @@ namespace Hachiko
             return uid;
         }
 
+        void SetID(const UID new_id) 
+        {
+            uid = new_id;
+        }
+
         void Save(JsonFormatterValue j_gameObject) const;
         void Load(JsonFormatterValue j_gameObject);
 

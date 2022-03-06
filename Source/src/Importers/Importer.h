@@ -1,9 +1,10 @@
 #pragma once
 
-#include "utils/UUID.h"
-
 namespace Hachiko
 {
+    class Resource;
+    class ResourcesPreferences;
+
     class Importer
     {
     public:
@@ -28,8 +29,8 @@ namespace Hachiko
         }
 
         virtual void Import(const char* path) = 0;
-        virtual void Save() = 0;
-        virtual void Load(UID id) = 0;
+        virtual void Save(const Resource* resource) = 0;
+        virtual Resource* Load(const UID id) = 0;
 
     protected:
         ResourcesPreferences* preferences = nullptr;

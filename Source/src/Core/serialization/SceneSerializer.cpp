@@ -113,13 +113,13 @@ YAML::Node Hachiko::SceneSerializer::SaveComponent(const Component* component) c
 
             for (int i = 0; i < mc->GetMeshesCount(); ++i)
             {
-                component_node[MESH_NODE][i][MESH_ENABLED] = mc->IsMeshEnabled(i);
+                //component_node[MESH_NODE][i][MESH_ENABLED] = mc->IsMeshEnabled(i);
 
-                if (mc->IsMeshTextureLoaded(i))
-                {
-                    component_node[MESH_NODE][i][MESH_TEXTURE] = mc->GetMeshTextureName(i);
-                    component_node[MESH_NODE][i][MESH_TEXTURE_TYPE] = mc->GetMeshTextureType(i);
-                }
+                //if (mc->IsMeshTextureLoaded(i))
+                //{
+                //    component_node[MESH_NODE][i][MESH_TEXTURE] = mc->GetMeshTextureName(i);
+                //    component_node[MESH_NODE][i][MESH_TEXTURE_TYPE] = mc->GetMeshTextureType(i);
+                //}
             }
 
             break;
@@ -146,14 +146,9 @@ YAML::Node Hachiko::SceneSerializer::SaveComponent(const Component* component) c
 
 const Hachiko::GameObject* Hachiko::SceneSerializer::LoadEntity(YAML::Node gameObject_node, Scene* scene, GameObject* parent)
 {
-    GameObject* game_object = scene->CreateEntity();
+    GameObject* game_object = scene->CreateNewGameObject(parent);
     game_object->SetName(gameObject_node[ENTITY_NAME].as<std::string>());
-    game_object->SetId(gameObject_node[ENTITY_ID].as<size_t>());
-
-    if (parent)
-    {
-        game_object->SetParent(parent);
-    }
+    game_object->SetID(gameObject_node[ENTITY_ID].as<size_t>());
 
     if (gameObject_node[COMPONENT_NODE].IsDefined())
     {
@@ -205,7 +200,8 @@ void Hachiko::SceneSerializer::LoadComponent(YAML::Node component, GameObject* g
 
             for (int i = 0; i < static_cast<int>(component[COMPONENT_DATA][MESH_NODE].size()); ++i)
             {
-                component[COMPONENT_DATA][MESH_NODE][i][MESH_ENABLED].as<bool>() ? component_mesh->EnableMesh(i) : component_mesh->DisableMesh(i);
+                // TODO: Components cant be (dis)enable yet
+                //component[COMPONENT_DATA][MESH_NODE][i][MESH_ENABLED].as<bool>() ? component_mesh->EnableMesh(i) : component_mesh->DisableMesh(i);
 
                 if (component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE].IsDefined())
                 {
@@ -214,9 +210,9 @@ void Hachiko::SceneSerializer::LoadComponent(YAML::Node component, GameObject* g
                         ImportFromAssets(component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE].as<std::string>().c_str(), Resource::Type::TEXTURE);
                     }
 
-                    component_mesh->LoadTexture(
-                        component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE].as<std::string>().c_str(), i,
-                        component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE_TYPE].as<int>());
+                    //component_mesh->LoadTexture(
+                    //    component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE].as<std::string>().c_str(), i,
+                    //    component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE_TYPE].as<int>());
                 }
             }
 
@@ -231,12 +227,10 @@ void Hachiko::SceneSerializer::LoadComponent(YAML::Node component, GameObject* g
         }
     case Component::Type::POINTLIGHT:
         {
-            ComponentPointLight* component_camera = static_cast<ComponentCamera*>(game_object->CreateComponent(Component::Type::CAMERA));
+            ComponentPointLight* component_point_light = static_cast<ComponentPointLight*>(game_object->CreateComponent(Component::Type::POINTLIGHT));
 
-            game_object->CreateComponent<LightComponent>();
-            game_object->GetComponent<LightComponent>()->SetId(component[COMPONENT_ID].as<size_t>());
-            game_object->GetComponent<LightComponent>()->SetType(Component::Type::MESH);
-            component[COMPONENT_ENABLED].as<bool>() ? game_object->GetComponent<LightComponent>()->Enable() : game_object->GetComponent<LightComponent>()->Disable();
+            component_point_light->SetID(component[COMPONENT_ID].as<size_t>());
+            component[COMPONENT_ENABLED].as<bool>() ? component_point_light->Enable() : component_point_light->Disable();
             break;
         }
     }

@@ -54,7 +54,7 @@ void Hachiko::ModelImporter::Save()
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
     Hachiko::UID mesh_id;
-
+    Hachiko::MeshImporter mesh_importer;
     for (unsigned int i = 0; i < scene->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[i];
