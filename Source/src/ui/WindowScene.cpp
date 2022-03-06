@@ -66,12 +66,12 @@ void Hachiko::WindowScene::GuizmoOptionsController()
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
     ImGui::SameLine();
 
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL, "Switches to Local Gizmos mode."))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL, "Switches to Local Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::LOCAL;
     }
     
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD, "Switches to Global Gizmos mode."))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD, "Switches to Global Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::WORLD;
     }
@@ -182,7 +182,9 @@ void Hachiko::WindowScene::DrawScene()
         ImGuizmo::SetRect(guizmo_rect_origin.x, guizmo_rect_origin.y, texture_size.x, texture_size.y);
         ImGuizmo::SetDrawlist();
 
-        Manipulate(view.ptr(), projection.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
+        // Scale will always be on local regarding on ImGuizmo MODE, check is done here to keep user's selected MODE
+        const bool is_scaling = guizmo_operation == ImGuizmo::SCALE;
+        Manipulate(view.ptr(), projection.ptr(), guizmo_operation, is_scaling ? ImGuizmo::LOCAL : guizmo_mode, model.ptr(), delta.ptr());
 
         using_guizmo = ImGuizmo::IsUsing();
         if (using_guizmo && !delta.IsIdentity())

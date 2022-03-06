@@ -86,13 +86,18 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
     return open;
 }
 
-bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_icon, bool active, const char* tooltip_desc)
+bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_icon, bool active, const char* tooltip_desc, const bool enabled)
 {
     const ImVec4 col_active = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
-    const ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
-
+    ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
     ImGui::SameLine();
     const auto frame_padding = ImGui::GetStyle().FramePadding;
+    // If the button is not enabled we lower its alpha channel and disable the widget
+    if (!enabled)
+    {
+        ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+        bg_color.w = 0.5f;
+    }
     ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
     ImGui::PushStyleColor(ImGuiCol_Text, bg_color);
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -103,13 +108,19 @@ bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_ico
 
     ImGui::PushFont(font);
     active = ImGui::Button(font_icon);
-
-    ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 1, 1, 1));
-    ImGui::SameLine(); DisplayTooltip(tooltip_desc);
-
     ImGui::PopFont();
-    ImGui::PopStyleColor(5);
+    ImGui::PopStyleColor(4);
     ImGui::PopStyleVar(3);
+
+    if (!enabled)
+    {
+        ImGui::PopItemFlag();
+    }
+    else
+    {
+        ImGui::SameLine();
+        DisplayTooltip(tooltip_desc);
+    }
 
     return active;
 }
