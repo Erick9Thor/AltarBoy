@@ -8,12 +8,28 @@
 #include "../Resources/ResourceMesh.h"
 #include "../Modules/ModuleProgram.h"
 
-Hachiko::BatchManager::~BatchManager() {
+Hachiko::BatchManager::~BatchManager()
+{
     CleanUp();
 }
 
-void Hachiko::BatchManager::AddMesh(const ComponentMesh* mesh)
+void Hachiko::BatchManager::CollectMeshes(const GameObject* game_object)
 {
+    CollectMesh(game_object);
+
+    for (GameObject* child : game_object->children)
+    {
+        CollectMeshes(child);
+    }    
+}
+
+void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
+{
+    auto* mesh = game_object->GetComponent<ComponentMesh>();
+    if (mesh == nullptr)
+    {
+        return;
+    }
     const ResourceMesh* resource = mesh->GetResource();
 
     // Find matching batch to include the mesh
@@ -41,11 +57,26 @@ void Hachiko::BatchManager::GenerateDynamicBuffers()
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
+void Hachiko::BatchManager::AddDrawComponent(const ComponentMesh* mesh)
+{
+    const ResourceMesh* resource = mesh->GetResource();
+
+    for (GeometryBatch* geometry_batch : geometry_batches)
+    {
+        if (geometry_batch->batch->layout == resource->layout)
+        {
+            // We assume that the resource is already contained in the batch
+            geometry_batch->AddDrawComponent(mesh);
+            return;
+        }
+    }
+}
+
 void Hachiko::BatchManager::BuildBatches()
 {
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
-        geometry_batch->GenerateBatch();
+        geometry_batch->BuildBatch();
     }
 }
 
@@ -57,7 +88,7 @@ void Hachiko::BatchManager::DrawBatches()
         geometry_batch->ImGuiWindow(); // DEBUG
 
         // Binds meshes and transforms
-        geometry_batch->Bind();
+        geometry_batch->Draw();
         App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
         // Bind texture batch
         geometry_batch->textureBatch->UpdateTextureBatch();
@@ -65,6 +96,14 @@ void Hachiko::BatchManager::DrawBatches()
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
+    }
+}
+
+void Hachiko::BatchManager::ClearBatchesDrawList()
+{
+    for (GeometryBatch* geometry_batch : geometry_batches)
+    {
+        geometry_batch->ClearDrawList();
     }
 }
 

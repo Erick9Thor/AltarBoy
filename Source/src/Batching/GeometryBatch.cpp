@@ -36,8 +36,6 @@ Hachiko::GeometryBatch::~GeometryBatch() {
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
 {
-    components.push_back(mesh);
-
     const ResourceMesh* resource = mesh->GetResource();
     auto it = resources.find(resource);
 
@@ -51,11 +49,17 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
     textureBatch->AddMaterial(material_comp);
 }
 
-void Hachiko::GeometryBatch::GenerateBatch() {
+void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMesh* mesh)
+{
+    components.push_back(mesh);
+}
+
+void Hachiko::GeometryBatch::BuildBatch() {
 
     BatchMeshes();
-    BatchTransforms();
     UpdateBuffers();
+
+// THIS WASNT HERE
     GenerateCommands();
 
     textureBatch->GenerateBatch();
@@ -123,6 +127,16 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
+void Hachiko::GeometryBatch::Draw()
+{
+    BatchTransforms();
+    GenerateCommands();
+
+    glBindVertexArray(batch->vao);
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
+    App->program->UpdateTransforms(transforms);
+}
+
 void Hachiko::GeometryBatch::BatchTransforms()
 {
     transforms.reserve(components.size());
@@ -132,6 +146,32 @@ void Hachiko::GeometryBatch::BatchTransforms()
     }
 }
 
+void Hachiko::GeometryBatch::GenerateCommands()
+{
+    commands.reserve(components.size());
+
+    unsigned instance = 0;
+    for (const ComponentMesh* component : components)
+    {
+        const ResourceMesh* r = component->GetResource();
+        DrawCommand command = (*resources[r]);
+        command.base_instance = instance;
+        commands.emplace_back(command);
+        ++instance;
+    }
+
+    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
+    glBufferData(GL_DRAW_INDIRECT_BUFFER, commands.size() * sizeof(DrawCommand), commands.data(), GL_DYNAMIC_DRAW);
+}
+
+
+
+void Hachiko::GeometryBatch::ClearDrawList()
+{
+    commands.clear();
+    components.clear();
+    transforms.clear();    
+}
 
 void Hachiko::GeometryBatch::GenerateBuffers()
 {
@@ -198,7 +238,7 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
 
     glBindVertexArray(0);
 }
-
+/*
 void Hachiko::GeometryBatch::BindTransforms(unsigned ssbo_id)
 {
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
@@ -229,7 +269,7 @@ void Hachiko::GeometryBatch::Bind()
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
     App->program->UpdateTransforms(transforms);
 }
-
+*/
 void Hachiko::GeometryBatch::ImGuiWindow() 
 {
     if (ImGui::Begin("Texture"))

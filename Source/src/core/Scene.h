@@ -16,6 +16,7 @@ namespace Hachiko
     class ComponentSpotLight;
     class Skybox;
     class Quadtree;
+    class BatchManager;
 
     class Scene
     {
@@ -28,14 +29,16 @@ namespace Hachiko
         void CleanScene() const;
 
         // --- Life cycle Scene --- //
-        void Update() const;
+        void Update();
         void Save(JsonFormatterValue j_scene) const;
         void Load(JsonFormatterValue j_scene);
-
+        
         // --- GameObject Management --- //
-        void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
-        void DestroyGameObject(GameObject* game_object) const;
+        void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
+        void DestroyGameObject(GameObject* game_object);
         GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
+
+        void OnMeshesChanged();
 
         [[nodiscard]] GameObject* GetRoot() const
         {
@@ -67,6 +70,11 @@ namespace Hachiko
             return skybox;
         }
 
+        [[nodiscard]] BatchManager* GetBatchManager() const
+        {
+            return batch_manager;
+        }
+
         [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
 
         void CreateLights();
@@ -88,6 +96,9 @@ namespace Hachiko
 
         Skybox* skybox;
         Quadtree* quadtree = nullptr;
+
+        bool rebuild_batch = true;
+        BatchManager* batch_manager = nullptr;
 
         bool draw_all_bounding_boxes = false;
     };

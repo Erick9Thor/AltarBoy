@@ -178,10 +178,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
 
+    BatchManager* batch_manager = scene->GetBatchManager();
 
     for (RenderTarget& target : render_list.GetNodes())
     {
-        batch_manager.AddMesh(target.mesh);
+        batch_manager->AddDrawComponent(target.mesh);
         // target.game_object->Draw(camera, program);
         if (selected_go && target.game_object == selected_go)
         {
@@ -189,9 +190,10 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         }
     }
 
-    batch_manager.BuildBatches();
-    batch_manager.DrawBatches();
-    batch_manager.CleanUp();
+    //batch_manager->BuildBatches();
+    batch_manager->DrawBatches();
+    batch_manager->ClearBatchesDrawList();
+    //batch_manager->CleanUp();
 
     Program::Deactivate();
 

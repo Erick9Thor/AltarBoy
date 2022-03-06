@@ -11,6 +11,8 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 
+#include "Batching/BatchManager.h"
+
 #include "assimp/cimport.h"
 #include "assimp/postprocess.h"
 #include "assimp/Importer.hpp"
@@ -19,7 +21,8 @@ Hachiko::Scene::Scene():
     root(new GameObject(nullptr, float4x4::identity, "Root")),
     culling_camera(App->camera->GetMainCamera()),
     skybox(new Skybox()),
-    quadtree(new Quadtree())
+    quadtree(new Quadtree()),
+    batch_manager(new BatchManager())
 {
     quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 }
@@ -35,22 +38,25 @@ void Hachiko::Scene::CleanScene() const
     delete root;
     delete skybox;
     delete quadtree;
+    delete batch_manager;
 }
 
-void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
+void Hachiko::Scene::DestroyGameObject(GameObject* game_object)
 {
     if (App->editor->GetSelectedGameObject() == game_object)
     {
         App->editor->SetSelectedGO(nullptr);
     }
     quadtree->Remove(game_object);
+    OnMeshesChanged();
 }
 
-void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
+void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
     GameObject* new_parent = parent ? parent : root;
     new_parent->children.push_back(new_object);
     quadtree->Insert(new_object);
+    OnMeshesChanged();
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(const char* name, GameObject* parent)
@@ -59,6 +65,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(const char* name, GameO
     const auto game_object = new GameObject(parent ? parent : root, name);
     game_object->scene_owner = this;
     return game_object;
+}
+
+void Hachiko::Scene::OnMeshesChanged()
+{
+    rebuild_batch = true;
 }
 
 Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
@@ -206,7 +217,14 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     return camera;
 }
 
-void Hachiko::Scene::Update() const
+void Hachiko::Scene::Update()
 {
     root->Update();
+    if (rebuild_batch)
+    {
+        batch_manager->CleanUp();
+        batch_manager->CollectMeshes(root);
+        batch_manager->BuildBatches();
+        rebuild_batch = false;
+    }
 }
