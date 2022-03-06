@@ -26,6 +26,7 @@ void Hachiko::TextureImporter::Import(const char* path)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const UID id)
 {
+    return nullptr;
 }
 
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* resource)

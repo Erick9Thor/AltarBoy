@@ -54,17 +54,6 @@ inline void Hachiko::ComponentTransform::SetLocalScale(float3 new_scale)
     SetLocalTransform(local_position, local_rotation, new_scale);
 }
 
-inline void Hachiko::ComponentTransform::SetLocalRotation(Quat new_rotation)
-{
-    SetLocalTransform(local_position, new_rotation, local_scale);
-}
-
-void Hachiko::ComponentTransform::SetLocalRotation(float3 rotation_angles)
-{
-    const float3 rotation = DegToRad(rotation_angles);
-    SetLocalTransform(local_position, Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), local_scale);
-}
-
 void Hachiko::ComponentTransform::SetLocalTransform(float4x4 new_transform)
 {
     local_transform = new_transform;

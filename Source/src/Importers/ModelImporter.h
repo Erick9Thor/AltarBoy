@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../Resources/ResourceModel.h"
-
-#include <assimp/scene.h>
+class aiScene;
 
 namespace Hachiko
 {
@@ -14,8 +12,8 @@ namespace Hachiko
         ModelImporter();
         ~ModelImporter() override = default;
         void Import(const char* path) override;
-        void Load(UID id) override;
-        void Save() override;
+        Resource* Load(const UID id) override;
+        void Save(const Resource* resource) override;
 
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);

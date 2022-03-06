@@ -109,6 +109,16 @@ namespace Hachiko
             return active;
         }
 
+        void Enable()
+        {
+            active = true;
+        }
+
+        void Disable()
+        {
+            active = false;
+        }
+
         Scene* scene_owner = nullptr;
         GameObject* parent = nullptr;
         std::vector<GameObject*> children;

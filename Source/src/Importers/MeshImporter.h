@@ -5,15 +5,17 @@ class aiMesh;
 namespace Hachiko
 {
     class ResourceMesh;
-    class UID;
 
     class MeshImporter : public Importer
     {
+        friend class ModelImporter;
     public:
         MeshImporter();
-        ResourceMesh* Import(const aiMesh* ai_mesh);
-        ResourceMesh* Import(const aiMesh* ai_mesh, const UID id);
+        void Import(const char* path) override;
         void Save(const Resource* mesh) override;
         Resource* Load(const UID uid) override;
+
+    private:
+        void Import(const aiMesh* ai_mesh, const UID& id = 0);
     };
 }

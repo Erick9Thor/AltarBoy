@@ -10,79 +10,13 @@ Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
     preferences = static_cast<Hachiko::ResourcesPreferences*>(App->preferences->GetPreference(Hachiko::Preferences::Type::RESOURCES));
 }
 
-Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh)
+void Hachiko::MeshImporter::Import(const char* path)
 {
-    const auto mesh = new ResourceMesh(UUID::GenerateUID()); // WARNING: This class is delegating the responsability to delete this allocation to the client.
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
-    mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
-    memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
-
-    // TODO: use mesh->HasFaces(), mesh->HasNormals() and mesh->HasTextureCoords() to load if exists
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = ai_mesh->mNumVertices * 3;
-    mesh->normals = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
-    memcpy(mesh->normals, ai_mesh->mNormals, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] * sizeof(float));
-
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = ai_mesh->mNumVertices * 2;
-    mesh->tex_coords = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
-    for (unsigned i = 0; i < ai_mesh->mNumVertices; i++)
-    {
-        memcpy(&mesh->tex_coords[i * 2], &ai_mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
-    }
-
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] = ai_mesh->mNumFaces * 3;
-    mesh->indices = new unsigned[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
-    for (unsigned i = 0; i < ai_mesh->mNumFaces; ++i)
-    {
-        memcpy(&mesh->indices[i * 3], ai_mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
-    }
-
-    mesh->GenerateBuffers();
-    mesh->GenerateAABB();
-    mesh->loaded = true;
-
-    // Save resource
-
-    return mesh;
-}
-
-Hachiko::ResourceMesh* Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID id)
-{
-    const auto mesh = new ResourceMesh(id); // WARNING: This class is delegating the responsability to delete this allocation to the client.
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
-    mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
-    memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
-
-    // TODO: use mesh->HasFaces(), mesh->HasNormals() and mesh->HasTextureCoords() to load if exists
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = ai_mesh->mNumVertices * 3;
-    mesh->normals = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
-    memcpy(mesh->normals, ai_mesh->mNormals, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] * sizeof(float));
-
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = ai_mesh->mNumVertices * 2;
-    mesh->tex_coords = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
-    for (unsigned i = 0; i < ai_mesh->mNumVertices; i++)
-    {
-        memcpy(&mesh->tex_coords[i * 2], &ai_mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
-    }
-
-    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] = ai_mesh->mNumFaces * 3;
-    mesh->indices = new unsigned[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
-    for (unsigned i = 0; i < ai_mesh->mNumFaces; ++i)
-    {
-        memcpy(&mesh->indices[i * 3], ai_mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
-    }
-
-    mesh->GenerateBuffers();
-    mesh->GenerateAABB();
-    mesh->loaded = true;
-
-    // Save resource
-
-    return mesh;
 }
 
 void Hachiko::MeshImporter::Save(const Resource* res)
 {
-    ResourceMesh* mesh = static_cast<ResourceMesh*>(res);
+    const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);
     const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(mesh->GetID());
 
     const unsigned* sizes = mesh->buffer_sizes;
@@ -177,4 +111,42 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
     delete[] file_buffer;
 
     return mesh;
+}
+
+void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
+{
+    if (!id)
+    {
+        const_cast<UID&>(id) = UUID::GenerateUID();
+    }
+
+    const auto mesh = new ResourceMesh(id); // WARNING: This class is delegating the responsability to delete this allocation to the client.
+    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
+    mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
+    memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
+
+    // TODO: use mesh->HasFaces(), mesh->HasNormals() and mesh->HasTextureCoords() to load if exists
+    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = ai_mesh->mNumVertices * 3;
+    mesh->normals = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
+    memcpy(mesh->normals, ai_mesh->mNormals, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] * sizeof(float));
+
+    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = ai_mesh->mNumVertices * 2;
+    mesh->tex_coords = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
+    for (unsigned i = 0; i < ai_mesh->mNumVertices; i++)
+    {
+        memcpy(&mesh->tex_coords[i * 2], &ai_mesh->mTextureCoords[0][i], 2 * sizeof(unsigned));
+    }
+
+    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] = ai_mesh->mNumFaces * 3;
+    mesh->indices = new unsigned[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
+    for (unsigned i = 0; i < ai_mesh->mNumFaces; ++i)
+    {
+        memcpy(&mesh->indices[i * 3], ai_mesh->mFaces[i].mIndices, 3 * sizeof(unsigned));
+    }
+
+    mesh->GenerateBuffers();
+    mesh->GenerateAABB();
+    mesh->loaded = true;
+
+    Save(mesh);
 }

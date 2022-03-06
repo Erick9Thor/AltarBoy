@@ -71,12 +71,12 @@ namespace Hachiko
             return meshes.size();
         }
 
+        [[nodiscard]] ResourceMesh* GetMeshesByIndex(const int index) const
+        {
+            return meshes[index];
+        }
+
         void LoadModel(const char* model_path);
-        //void Import(const aiMesh* mesh); // TODO: nobody besides importers should know assimp
-
-        //void Save(JsonFormatterValue j_component) const override;
-        //void Load(JsonFormatterValue j_component) override;
-
         void DrawGui() override;
 
     private:

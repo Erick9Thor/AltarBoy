@@ -1,6 +1,4 @@
 #include "core/hepch.h"
-
-#include "core/Scene.h"
 #include "SceneSerializer.h"
 
 #include "components/ComponentCamera.h"

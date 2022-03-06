@@ -45,11 +45,12 @@ void Hachiko::ModelImporter::Import(const char* path)
     App->file_sys->Save(model_library_path.c_str(), model_node);
 }
 
-void Hachiko::ModelImporter::Load(UID id) {}
-
-void Hachiko::ModelImporter::Save()
+Hachiko::Resource* Hachiko::ModelImporter::Load(const UID id)
 {
+    return nullptr;
 }
+
+void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
@@ -60,6 +61,6 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         aiMesh* mesh = scene->mMeshes[i];
         mesh_id = Hachiko::UUID::GenerateUID();
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
-        Hachiko::MeshImporter::Save(Hachiko::MeshImporter::Import(mesh, mesh_id), mesh_id);
+        mesh_importer.Import(mesh, mesh_id);
     }
 }

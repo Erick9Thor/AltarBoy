@@ -113,7 +113,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
                 App->editor->SetSelectedGO(nullptr);
             }
 
-            App->scene_manager->GetActiveScene()->CreateNewGameObject("New Game Object", game_object);
+            App->scene_manager->GetActiveScene()->CreateNewGameObject(game_object, "New Game Object");
             ImGui::CloseCurrentPopup();
         }
         if (ImGui::MenuItem("Delete Game Object"))

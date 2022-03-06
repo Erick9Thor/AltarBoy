@@ -26,8 +26,16 @@ namespace Hachiko
 
         inline void SetLocalPosition(float3 new_position);
         inline void SetLocalScale(float3 new_scale);
-        inline void SetLocalRotation(Quat new_rotation);
-        inline void SetLocalRotation(float3 rotation_angles);
+        void SetLocalRotation(const Quat& new_rotation)
+        {
+            SetLocalTransform(local_position, new_rotation, local_scale);
+        }
+
+        inline void SetLocalRotation(const float3 rotation_angles)
+        {
+            const float3 rotation = DegToRad(rotation_angles);
+            SetLocalTransform(local_position, Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), local_scale);
+        }
 
         void SetGlobalTransform(float4x4 transform);
         void UpdateGlobalTransformHierarchy();

@@ -240,14 +240,17 @@ void Hachiko::GameObject::DrawBoundingBox() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
-    auto* mesh = GetComponent<ComponentMesh>();
-    if (mesh != nullptr)
+    ComponentMesh* component_mesh = GetComponent<ComponentMesh>();
+    if (component_mesh != nullptr)
     {
-        obb = mesh->GetAABB();
-        obb.Transform(transform->GetTransform());
-        // Enclose is accumulative, reset the box
-        aabb.SetNegativeInfinity();
-        aabb.Enclose(obb);
+        for (int i = 0; i < component_mesh->GetMeshesCount(); ++i)
+        {
+            obb = component_mesh->GetAABB(i);
+            obb.Transform(transform->GetTransform());
+            // Enclose is accumulative, reset the box
+            aabb.SetNegativeInfinity();
+            aabb.Enclose(obb);
+        }
     }
     else
     {
