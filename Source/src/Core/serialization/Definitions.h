@@ -61,7 +61,6 @@
 #define ANIMATIONS_ASSETS "animations_assets"
 #define SKYBOX_ASSETS "skybox_assets"
 // Library
-#define SCENE_LIBRARY "scene_library"
 #define MODELS_LIBRARY "models_library"
 #define MESHES_LIBRARY "meshes_library"
 #define TEXTURES_LIBRARY "textures_library"
@@ -99,6 +98,7 @@
 
 #define SCENE_ID "scene_id"
 #define SCENE_NAME "scene_name"
+#define UNNAMED_SCENE "Unnamed Scene"
 
 // Entity
 #define ENTITY_ROOT "root"

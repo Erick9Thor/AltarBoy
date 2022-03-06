@@ -8,6 +8,7 @@ namespace Hachiko
 {
     class GameObject;
     class ComponentCamera;
+    class ResourcesPreferences;
 
     class ModuleSceneManager final : public Module
     {
@@ -46,10 +47,11 @@ namespace Hachiko
         void CreateEmptyScene();
 
         void LoadScene(const char* file_path);
-        void SaveScene(const char* file_path) const;
+        void SaveScene(const char* file_path);
 
     private:
         Scene* main_scene = nullptr;
         SceneSerializer serializer;
+        ResourcesPreferences* preferences = nullptr;
     };
 }

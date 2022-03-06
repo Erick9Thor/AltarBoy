@@ -41,7 +41,7 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     return sceneOutput;
 }
 
-bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* name, const char* path)
+bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* name)
 {
     YAML::Node scene_data;
     //scene_data[SCENE_ID] = scene->GetSceneId(); // Scenes don't have ID yet
@@ -52,12 +52,8 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* name, const 
         scene_data[CHILD_NODE][i] = SaveEntity(scene->GetRoot()->children[i]);
     }
 
-    const auto resourcesPreferences = dynamic_cast<ResourcesPreferences*>
-        (App->preferences->GetPreference(Preferences::Type::RESOURCES));
-
-    std::string scene_path = path != nullptr ? path : resourcesPreferences->GetAssetsPath(Resource::Type::SCENE);
-    scene_path.append(name);
-    std::ofstream fout(scene_path);
+    ResourcesPreferences* resources_preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), name));
     fout << scene_data;
     return true;
 }

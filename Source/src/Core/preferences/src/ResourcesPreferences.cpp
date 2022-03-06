@@ -14,6 +14,19 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
+        // Scene
+        if (it->first.as<std::string>()._Equal(SCENE_NAME))
+        {
+            scene_name = std::move(it->second.as<std::string>());
+            continue;
+        }
+
+        if (it->first.as<std::string>()._Equal(SCENE_ID))
+        {
+            scene_id = std::move(it->second.as<std::string>());
+            continue;
+        }
+
         // Assets path
         if (it->first.as<std::string>()._Equal(SCENE_ASSETS))
         {
@@ -58,12 +71,6 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
         }
 
         // Library path
-        if (it->first.as<std::string>()._Equal(SCENE_LIBRARY))
-        {
-            meshes_library = std::move(it->second.as<std::string>());
-            continue;
-        }
-
         if (it->first.as<std::string>()._Equal(MODELS_LIBRARY))
         {
             models_library = std::move(it->second.as<std::string>());
@@ -103,6 +110,8 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
 
 void ResourcesPreferences::GetConfigurationData(YAML::Node& node)
 {
+    node[group_name][SCENE_NAME] = scene_name;
+    node[group_name][SCENE_ID] = scene_id;
     node[group_name][SCENE_ASSETS] = scenes_assets;
     node[group_name][MODELS_ASSETS] = models_assets;
     node[group_name][MESHES_ASSETS] = meshes_assets;
@@ -115,7 +124,6 @@ void ResourcesPreferences::GetConfigurationData(YAML::Node& node)
     node[group_name][ANIMATIONS_ASSETS] = animations_assets;
     node[group_name][SKYBOX_ASSETS] = skybox_assets;
 
-    node[group_name][SCENE_LIBRARY] = scenes_library;
     node[group_name][MODELS_LIBRARY] = models_library;
     node[group_name][MESHES_LIBRARY] = meshes_library;
     node[group_name][TEXTURES_LIBRARY] = textures_library;
@@ -165,7 +173,7 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
     switch (type)
     {
     case Resource::Type::SCENE:
-        return scenes_library.c_str();
+        break;
     case Resource::Type::MODEL:
         return models_library.c_str();
     case Resource::Type::MESH:

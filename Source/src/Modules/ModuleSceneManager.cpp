@@ -1,20 +1,20 @@
 #include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
-#include "importers/SceneImporter.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 bool Hachiko::ModuleSceneManager::Init()
 {
-    HE_LOG("Creating Empty scene");
-
-
-
-    //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/scenes/lights_delivery.scene");
-
-    //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
-
-    CreateEmptyScene();
-    // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
+    preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
+    if (std::filesystem::exists(scene_path))
+    {
+        LoadScene(scene_path.c_str());
+    }
+    else
+    {
+        CreateEmptyScene();
+    }
     return true;
 }
 
@@ -26,10 +26,12 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 
 bool Hachiko::ModuleSceneManager::CleanUp()
 {
+    SaveScene(preferences->GetAssetsPath(Resource::Type::SCENE));
     RELEASE(main_scene);
     return true;
 }
 
+// TODO: This doesn't belong here
 void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
 {
     // delete scene_model;
@@ -45,10 +47,10 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
     delete main_scene;
-    main_scene = SceneImporter::LoadScene(file_path);
+    main_scene = serializer.Load(file_path);
 }
 
-void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
+void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    SceneImporter::SaveScene(main_scene, file_path);
+    serializer.Save(main_scene, file_path);
 }
