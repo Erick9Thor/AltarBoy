@@ -8,6 +8,11 @@
 #include "../Resources/ResourceMesh.h"
 #include "../Modules/ModuleProgram.h"
 
+Hachiko::BatchManager::BatchManager() 
+{
+    GenerateDynamicBuffers();
+}
+
 Hachiko::BatchManager::~BatchManager()
 {
     CleanUp();
@@ -48,15 +53,6 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
     geometry_batches.push_back(new_batch);
 }
 
-void Hachiko::BatchManager::GenerateDynamicBuffers() 
-{
-    glGenBuffers(1, &material_ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, material_ssbo);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, material_ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
 void Hachiko::BatchManager::AddDrawComponent(const ComponentMesh* mesh)
 {
     const ResourceMesh* resource = mesh->GetResource();
@@ -70,6 +66,15 @@ void Hachiko::BatchManager::AddDrawComponent(const ComponentMesh* mesh)
             return;
         }
     }
+}
+
+void Hachiko::BatchManager::GenerateDynamicBuffers() 
+{
+    glGenBuffers(1, &material_ssbo);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, material_ssbo);
+    glBufferData(GL_SHADER_STORAGE_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, material_ssbo);
+    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
 void Hachiko::BatchManager::BuildBatches()
@@ -115,9 +120,5 @@ void Hachiko::BatchManager::CleanUp()
     }
     geometry_batches.clear();
 
-    for (TextureBatch* texture_batch : texture_batches)
-    {
-        delete texture_batch;
-    }
-    texture_batches.clear();
+    //glDeleteBuffers(1, &material_ssbo);
 }

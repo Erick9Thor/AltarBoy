@@ -11,7 +11,8 @@ namespace Hachiko
     
     class BatchManager
     {
-    public: 
+    public:
+        BatchManager();
         ~BatchManager();
 
         void CollectMeshes(const GameObject* game_object);
@@ -20,6 +21,7 @@ namespace Hachiko
 
         void AddDrawComponent(const ComponentMesh* mesh);
 
+        void GenerateDynamicBuffers();
         void BuildBatches();
         void DrawBatches();
         void ClearBatchesDrawList();
@@ -30,6 +32,5 @@ namespace Hachiko
         unsigned material_ssbo;
         // One GeometryBatch per attribute layout
         std::vector<GeometryBatch*> geometry_batches;
-        std::vector<TextureBatch*> texture_batches;  
     };
 } // namespace Hachiko

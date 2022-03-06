@@ -215,9 +215,18 @@ void Hachiko::TextureBatch::UpdateTextureBatch()
 
 void Hachiko::TextureBatch::UpdateMaterials(unsigned ssbo_id)
 {
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(Material) * materials.size(), &materials[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    if (materials.size() <= 0)
+    {
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    }
+    else
+    {
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
+        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(Material) * materials.size(), &materials[0], GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+    }
 }
 
 void Hachiko::TextureBatch::ImGuiWindow()

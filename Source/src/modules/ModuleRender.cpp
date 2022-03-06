@@ -38,8 +38,6 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
-    batch_manager.GenerateDynamicBuffers();
-
     return true;
 }
 
