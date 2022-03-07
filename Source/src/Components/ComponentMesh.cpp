@@ -40,7 +40,10 @@ Hachiko::ComponentMesh::~ComponentMesh()
 
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
-    assert(!meshes.empty());
+    if (meshes.empty())
+    {
+        return;
+    }
     // TODO: Why we take care of other components?
     program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
@@ -56,7 +59,10 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 
 void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program) const
 {
-    assert(!meshes.empty());
+    if (meshes.empty())
+    {
+        return;
+    }
     program->BindUniformFloat4x4("model", &game_object->GetComponent<ComponentTransform>()->GetTransform()[0][0]);
 
     for (auto mesh : meshes)
@@ -92,13 +98,15 @@ void Hachiko::ComponentMesh::LoadModel(const char* model_path)
 
 void Hachiko::ComponentMesh::DrawGui()
 {
-    // TODO: Only drawing for the first mesh
     if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        ImGui::Text("%d Triangles\n%d vertices\n%d indices",
-                    meshes[0]->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
-                    meshes[0]->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3,
-                    meshes[0]->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
-        ImGui::Checkbox("Visible", &visible);
+        for (auto mesh : meshes)
+        {
+            ImGui::Text("%d Triangles\n%d vertices\n%d indices",
+                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
+                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3,
+                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
+            ImGui::Checkbox("Visible", &visible);
+        }
     }
 }

@@ -26,17 +26,17 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 
 bool Hachiko::ModuleSceneManager::CleanUp()
 {
-    SaveScene(preferences->GetAssetsPath(Resource::Type::SCENE));
+    SaveScene();
     RELEASE(main_scene);
     return true;
 }
 
-// TODO: This doesn't belong here
-void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
-{
-    // delete scene_model;
-    main_scene->LoadFBX(model_path);
-}
+//// TODO: This doesn't belong here
+//void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
+//{
+//    // delete scene_model;
+//    main_scene->LoadFBX(model_path);
+//}
 
 void Hachiko::ModuleSceneManager::CreateEmptyScene()
 {
@@ -50,7 +50,12 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
     main_scene = serializer.Load(file_path);
 }
 
-void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
+void Hachiko::ModuleSceneManager::SaveScene()
 {
-    serializer.Save(main_scene, file_path);
+    serializer.Save(main_scene);
+}
+
+void Hachiko::ModuleSceneManager::SaveScene(const char* path)
+{
+    serializer.Save(main_scene); // TODO: Take into account temporal scenes
 }

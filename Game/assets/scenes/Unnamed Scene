@@ -1,0 +1,43 @@
+scene_name: Unnamed Scene
+child:
+  - name: Object1
+    enabled: true
+    id: 18386285982563545678
+    component:
+      - enabled: true
+        id: 0
+        type: 1
+        data:
+          position: [4.3046422, 3.83860779, 0]
+          rotation: [-0.357330501, 0.608358026, 0.613841653, -0.354138255]
+          scale: [1.00000012, 5.00000095, 2]
+      - enabled: true
+        id: 0
+        type: 6
+        data: ~
+  - name: Point Light
+    enabled: true
+    id: 4617629050585797525
+    component:
+      - enabled: true
+        id: 0
+        type: 1
+        data:
+          position: [6.74244118, 0, 0]
+          rotation: [0, 0, 0, 1]
+          scale: [1, 1, 1]
+      - enabled: true
+        id: 0
+        type: 6
+        data: ~
+  - name: Spot Light
+    enabled: true
+    id: 13859348161720248565
+    component:
+      - enabled: true
+        id: 0
+        type: 1
+        data:
+          position: [0, 0, -8.51394653]
+          rotation: [0, 0, 0, 1]
+          scale: [1, 1, 1]

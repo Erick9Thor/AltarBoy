@@ -22,7 +22,7 @@ namespace Hachiko
         bool CleanUp() override;
 
         // --- Scene management --- //
-        void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
+        //void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
 
         GameObject* GetRoot()
         {
@@ -47,7 +47,8 @@ namespace Hachiko
         void CreateEmptyScene();
 
         void LoadScene(const char* file_path);
-        void SaveScene(const char* file_path);
+        void SaveScene();
+        void SaveScene(const char* path);
 
     private:
         Scene* main_scene = nullptr;

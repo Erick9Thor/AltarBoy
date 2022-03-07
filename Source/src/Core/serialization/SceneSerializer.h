@@ -14,7 +14,7 @@ namespace Hachiko
         SceneSerializer() = default;
         ~SceneSerializer() = default;
 
-        bool Save(const Scene* scene, const char* name);
+        bool Save(const Scene* scene);
     private:
         // Load is private to ensure only ModuleScene can call it 
         // as we retrieve ownership of scene object pointer

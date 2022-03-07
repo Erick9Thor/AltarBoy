@@ -75,6 +75,11 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             game_object->CreateComponent(Component::Type::DIRLIGHT);
             ImGui::CloseCurrentPopup();
         }
+        if (ImGui::MenuItem("Mesh"))
+        {
+            game_object->CreateComponent(Component::Type::MESH);
+            ImGui::CloseCurrentPopup();
+        }
         ImGui::EndPopup();
     }
 }

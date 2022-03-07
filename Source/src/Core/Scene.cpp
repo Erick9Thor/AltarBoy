@@ -11,15 +11,12 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 
-#include "assimp/cimport.h"
-#include "assimp/postprocess.h"
-#include "assimp/Importer.hpp"
-
 Hachiko::Scene::Scene():
     root(new GameObject(nullptr, float4x4::identity, "Root")),
     culling_camera(App->camera->GetMainCamera()),
     skybox(new Skybox()),
-    quadtree(new Quadtree())
+    quadtree(new Quadtree()),
+    name(UNNAMED_SCENE)
 {
     quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 }
@@ -61,52 +58,6 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
     return game_object;
 }
 
-Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
-{
-    // TODO: Set name from filename
-    const auto model_path = path.substr(0, path.find_last_of("/\\") + 1);
-    const auto file_name = path.substr(path.find_last_of("/\\") + 1);
-    const auto name = file_name.substr(0, file_name.find_last_of('.'));
-
-    GameObject* model = nullptr;
-    Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale);
-    if (scene)
-    {
-        //std::vector<ResourceMaterial*> materials = LoadMaterials(scene, model_path, name);
-        model = CreateNewGameObject(root, name.c_str());
-        LoadNode(scene, scene->mRootNode, model, model_path);
-        //materials.clear();
-    }
-    else
-    {
-        HE_LOG("Error loading file %s: %s", model_path.c_str(), aiGetErrorString());
-    }
-    importer.FreeScene();
-    return model;
-}
-
-void Hachiko::Scene::Save(JsonFormatterValue j_scene) const
-{
-    // GameObjects
-    const JsonFormatterValue j_root = j_scene["GORoot"];
-    root->Save(j_root);
-
-    //TODO: Save camera position
-}
-
-void Hachiko::Scene::Load(JsonFormatterValue j_scene)
-{
-    //CleanScene(); 
-    delete root;
-
-    // Load GameObjects
-    const JsonFormatterValue j_root = j_scene["GORoot"];
-    root = new GameObject(nullptr, "Root", j_root["Uid"]);
-    root->scene_owner = this;
-    root->Load(j_root);
-}
-
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
@@ -127,6 +78,7 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
         local_segment.Transform(game_object->GetComponent<ComponentTransform>()->GetTransform().Inverted());
 
         // TODO: This check is only for the first mesh in the model.
+        // Check if the model has meshes loaded
         const float* vertices = mesh->GetVertices(0);
         const unsigned* indices = mesh->GetIndices(0);
         for (unsigned i = 0; i < mesh->GetBufferSize(0, ResourceMesh::Buffers::INDICES); i += 3)
@@ -166,32 +118,6 @@ void Hachiko::Scene::CreateLights()
     GameObject* point = CreateNewGameObject(root, "Point Light");
     point->GetComponent<ComponentTransform>()->SetLocalPosition(float3(0, 1, -1));
     point->CreateComponent(Component::Type::POINTLIGHT);
-}
-
-void Hachiko::Scene::LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, const std::string& model_path)
-{
-    //for (unsigned int i = 0; i < node->mNumMeshes; i++)
-    //{
-    //    const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-    //    GameObject* model_part = CreateNewGameObject(parent, node->mName.C_Str());
-    //    model_part->CreateComponent(Component::Type::MESH);
-    //    model_part->GetComponent<ComponentMesh>()->Import(mesh);
-    //    model_part->CreateComponent(Component::Type::MATERIAL);
-    //    model_part->GetComponent<ComponentMaterial>()->Import(scene->mMaterials[mesh->mMaterialIndex], model_path, node->mName.C_Str());
-
-    //    aiVector3D aiTranslation, aiScale;
-    //    aiQuaternion aiRotation;
-    //    node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
-    //    model_part->GetComponent<ComponentTransform>()->SetLocalTransform(float3(aiTranslation.x, aiTranslation.y, aiTranslation.z),
-    //                                                                      Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w),
-    //                                                                      float3(aiScale.x, aiScale.y, aiScale.z));
-    //}
-
-    //// then do the same for each of its children
-    //for (unsigned int i = 0; i < node->mNumChildren; i++)
-    //{
-    //    LoadNode(scene, node->mChildren[i], parent, model_path);
-    //}
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()

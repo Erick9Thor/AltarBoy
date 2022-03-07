@@ -138,7 +138,7 @@ void Hachiko::WindowScene::DrawScene()
         if (auto* payload = ImGui::AcceptDragDropPayload("path"))
         {
             auto path = static_cast<const char*>(payload->Data);
-            App->scene_manager->LoadModel(path);
+            //App->scene_manager->LoadModel(path);
         }
         ImGui::EndDragDropTarget();
     }

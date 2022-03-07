@@ -21,7 +21,7 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     YAML::Node sceneNode = YAML::LoadFile(path);
 
     // Validate scene header
-    if (!sceneNode[SCENE_ID].IsDefined() || !sceneNode[SCENE_NAME].IsDefined())
+    if (!sceneNode[SCENE_NAME].IsDefined())
     {
         return nullptr;
     }
@@ -41,11 +41,11 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     return sceneOutput;
 }
 
-bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* name)
+bool Hachiko::SceneSerializer::Save(const Scene* scene)
 {
     YAML::Node scene_data;
     //scene_data[SCENE_ID] = scene->GetSceneId(); // Scenes don't have ID yet
-    scene_data[SCENE_NAME] = scene->GetRoot()->GetName();
+    scene_data[SCENE_NAME] = scene->GetName();
 
     for (int i = 0; i < scene->GetRoot()->children.size(); ++i)
     {
@@ -53,7 +53,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* name)
     }
 
     ResourcesPreferences* resources_preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
-    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), name));
+    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName()));
     fout << scene_data;
     return true;
 }
@@ -140,15 +140,14 @@ YAML::Node Hachiko::SceneSerializer::SaveComponent(const Component* component) c
 
 const Hachiko::GameObject* Hachiko::SceneSerializer::LoadEntity(YAML::Node gameObject_node, Scene* scene, GameObject* parent)
 {
-    GameObject* game_object = scene->CreateNewGameObject(parent);
-    game_object->SetName(gameObject_node[ENTITY_NAME].as<std::string>());
+    // TODO: Entities could be load async
+    GameObject* game_object = scene->CreateNewGameObject(parent, gameObject_node[ENTITY_NAME].as<std::string>().c_str());
     game_object->SetID(gameObject_node[ENTITY_ID].as<size_t>());
 
     if (gameObject_node[COMPONENT_NODE].IsDefined())
     {
         for (size_t i = 0; i < gameObject_node[COMPONENT_NODE].size(); ++i)
         {
-            // std::async(std::launch::async, LoadComponent, entityNode[COMPONENT_NODE][i], entity);
             LoadComponent(gameObject_node[COMPONENT_NODE][i], game_object);
         }
     }

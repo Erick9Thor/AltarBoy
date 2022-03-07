@@ -1,7 +1,5 @@
 #pragma once
 
-#include "assimp/scene.h"
-
 #include <string>
 #include <vector>
 
@@ -24,19 +22,14 @@ namespace Hachiko
     public:
         Scene();
         ~Scene();
-
         void CleanScene() const;
-
-        // --- Life cycle Scene --- //
         void Update() const;
-        void Save(JsonFormatterValue j_scene) const;
-        void Load(JsonFormatterValue j_scene);
 
         // --- GameObject Management --- //
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
-
+        [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
         [[nodiscard]] GameObject* GetRoot() const
         {
             return root;
@@ -67,28 +60,28 @@ namespace Hachiko
             return skybox;
         }
 
-        [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
+        [[nodiscard]] const char* GetName() const 
+        {
+            return name.c_str();
+        }
 
+        void SetName(const char* new_name)
+        {
+            name = new_name;
+        }
+
+        // TODO: This hardcoded components can be set in preferences
         void CreateLights();
         std::vector<ComponentDirLight*> dir_lights;
         std::vector<ComponentPointLight*> point_lights;
         std::vector<ComponentSpotLight*> spot_lights;
 
-        // --- Importer --- // TODO: Move to importer
-        GameObject* LoadFBX(const std::string& path);
-
     private:
-        // TODO: Fix leaks from resource material pointers when doing import system
-        void LoadNode(const aiScene* scene, const aiNode* node, GameObject* parent, const std::string& model_path);
-        //std::vector<ResourceMaterial*> LoadMaterials(const aiScene* scene, const std::string& model_path, const std::string& model_name);
-
-    private:
+        bool draw_all_bounding_boxes = false;
+        std::string name;
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
-
         Skybox* skybox;
         Quadtree* quadtree = nullptr;
-
-        bool draw_all_bounding_boxes = false;
     };
 }
