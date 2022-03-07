@@ -28,6 +28,20 @@ Hachiko::TextureBatch::~TextureBatch()
     textureArrays.clear();
 }
 
+void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material)
+{
+    const ResourceMaterial* resource_material = material->GetMaterial();
+
+    if (material->use_diffuse_texture)
+    {
+        AddTexture(&resource_material->diffuse);
+    }
+    if (material->use_specular_texture)
+    {
+        AddTexture(&resource_material->specular);
+    }
+}
+
 void Hachiko::TextureBatch::AddTexture(const Texture* texture) 
 {
     auto it = resources.find(texture);
@@ -66,20 +80,6 @@ void Hachiko::TextureBatch::AddTexture(const Texture* texture)
     }
 }
 
-void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material) 
-{
-    const ResourceMaterial* resource_material = material->GetMaterial();
-
-    if (material->use_diffuse_texture)
-    {
-        AddTexture(&resource_material->diffuse);
-    }
-    if (material->use_specular_texture)
-    {
-        AddTexture(&resource_material->specular);
-    }
-}
-
 void Hachiko::TextureBatch::GenerateBatch() 
 {
     // TODO: improve performance (for inside for)
@@ -89,11 +89,21 @@ void Hachiko::TextureBatch::GenerateBatch()
     glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &maxLayers);
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
 
-    // TODO: security checks with these maximums
+    // Security check, amount of texture units
+    if (textureArrays.size() > maxUnits - 8)
+    {
+        HE_LOG("[Error] TextureBatch: there are more texture units than the maximum.");
+    }
 
     unsigned index = 0;
     for (unsigned i = 0; i < textureArrays.size(); ++i)
     {
+        // Security check, amount of layers in a texture array
+        if (textureArrays[i]->depth > maxLayers)
+        {
+            HE_LOG("[Error] TextureBatch: there are layers in a texture array than the maximum.");
+        }
+
         glGenTextures(1, &textureArrays[i]->id);
         glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
 
@@ -131,7 +141,8 @@ void Hachiko::TextureBatch::GenerateBatch()
                 //ImGui::Image(&new_array[0], ImVec2(100, 100));
                 //ImGui::Image((void*)resource.first->id, ImVec2(100, 100));
 
-                unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str());
+                std::string extension = resource.first->path.substr(resource.first->path.find_last_of(".") + 1);
+                unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str(), extension != "tif");
 
                 glTexSubImage3D(
                     GL_TEXTURE_2D_ARRAY, // target
@@ -179,22 +190,22 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
         const ResourceMaterial* material = material_comp->GetMaterial();
 
         materials[i].diffuseColor = material->diffuse_color;
-        materials[i].specularColor = material->diffuse_color;
+        materials[i].specularColor = material->specular_color;
         materials[i].shininess = material->shininess;
         materials[i].hasDiffuseMap = material_comp->use_diffuse_texture;
         materials[i].hasSpecularMap = material_comp->use_specular_texture;
         materials[i].hasNormalMap = 0;
         if (materials[i].hasDiffuseMap)
         {
-            //materials[i].diffuseMap = (*resources[&material->diffuse]);
-            materials[i].diffuseMap.texIndex = resources[&material->diffuse]->texIndex;
-            materials[i].diffuseMap.layerIndex = resources[&material->diffuse]->layerIndex;
+            materials[i].diffuseMap = (*resources[&material->diffuse]);
+            //materials[i].diffuseMap.texIndex = resources[&material->diffuse]->texIndex;
+            //materials[i].diffuseMap.layerIndex = resources[&material->diffuse]->layerIndex;
         }
         if (materials[i].hasSpecularMap)
         {
-            //materials[i].specularMap = (*resources[&material->specular]);
-            materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
-            materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
+            materials[i].specularMap = (*resources[&material->specular]);
+            //materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
+            //materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
         }
         materials[i].normalMap;
         //materials[i].padding0;
@@ -209,7 +220,7 @@ void Hachiko::TextureBatch::UpdateTextureBatch()
         //glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
-        glUniform1i(i+1, i);
+        glUniform1i(1 + i, i);
     }
 }
 

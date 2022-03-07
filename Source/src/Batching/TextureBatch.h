@@ -41,8 +41,8 @@ namespace Hachiko
         TextureBatch();
         ~TextureBatch();
 
-        void AddTexture(const Texture* texture);
         void AddMaterial(const ComponentMaterial* material);
+        void AddTexture(const Texture* texture);
 
         void GenerateBatch();
 

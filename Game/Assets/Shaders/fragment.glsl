@@ -81,7 +81,7 @@ struct TexAddress {
 struct Material {
     vec4 diffuseColor;
     vec4 specularColor;
-    float shininess;
+    float shininess; // smoothness
     int hasDiffuseMap;
     int hasSpecularMap;
     int hasNormalMap;
