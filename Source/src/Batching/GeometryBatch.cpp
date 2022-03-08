@@ -255,6 +255,10 @@ void Hachiko::GeometryBatch::ImGuiWindow()
 {
     if (ImGui::Begin("GeometryBatch"))
     {
+        for (unsigned i = 0; i < components.size(); ++i)
+        {
+            ImGui::Text(components[i]->GetGameObject()->name.c_str());
+        }
         textureBatch->ImGuiWindow();
     }
     ImGui::End();
