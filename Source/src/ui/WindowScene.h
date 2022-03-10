@@ -20,8 +20,6 @@ namespace Hachiko
 
         void CleanUp() override;
 
-        bool ToolbarButton(ImFont* font, const char* font_icon, bool active) const;
-
         [[nodiscard]] bool IsHovering() const
         {
             return hovering;

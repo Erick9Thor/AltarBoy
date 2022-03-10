@@ -82,6 +82,11 @@ namespace Hachiko
             return components;
         }
 
+        [[nodiscard]] ComponentTransform* GetTransform() const 
+        {
+            return transform;
+        }
+
         template<typename RetComponent>
         RetComponent* GetComponent()
         {
