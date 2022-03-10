@@ -8,6 +8,15 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 
+// UI
+#include "components/ComponentCanvas.h"
+#include "components/ComponentCanvasRenderer.h"
+#include "components/ComponentTransform2D.h"
+#include "components/ComponentImage.h"
+#include "components/ComponentButton.h"
+
+
+
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name) :
@@ -122,6 +131,21 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         break;
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);
+        break;
+    case (Component::Type::CANVAS):
+        new_component = new ComponentCanvas(this);
+        break;
+    case (Component::Type::CANVAS_RENDERER):
+        new_component = new ComponentCanvasRenderer(this);
+        break;
+    case (Component::Type::TRANSFORM_2D):
+        new_component = new ComponentTransform2D(this);
+        break;
+    case (Component::Type::IMAGE):
+        new_component = new ComponentImage(this);
+        break;
+    case (Component::Type::BUTTON):
+        new_component = new ComponentButton(this);
         break;
     }
 
@@ -265,10 +289,15 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     }
 }
 
-void Hachiko::GameObject::RemoveComponent(Component* component)
+bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
 {
     //TODO: Should I delete the component?
-    components.erase(std::remove(components.begin(), components.end(), component));
+    if (component->CanBeRemoved())
+    {
+        components.erase(std::remove(components.begin(), components.end(), component));
+        return true;
+    }
+    return false;
 }
 
 void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const

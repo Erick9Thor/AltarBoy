@@ -169,6 +169,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\preferences\src\CameraPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\EditorPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\GlobalPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp" />
+    <ClCompile Include="src\Core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp" />
+    <ClCompile Include="src\Importers\ModelImporter.cpp" />
+    <ClCompile Include="src\importers\ImporterManager.cpp" />
+    <ClCompile Include="src\Modules\ModuleResources.cpp" />
+    <ClCompile Include="src\Importers\TextureImporter.cpp" />
+    <ClCompile Include="src\Resources\ResourceTexture.cpp" />
+    <ClCompile Include="src\resources\ResourceModel.cpp" />
+    <ClCompile Include="src\ui\WindowResource.cpp" />
+    <ClCompile Include="src\components\Component.cpp" />
+    <ClCompile Include="src\components\ComponentButton.cpp" />
+    <ClCompile Include="src\components\ComponentCanvas.cpp" />
+    <ClCompile Include="src\components\ComponentCanvasRenderer.cpp" />
+    <ClCompile Include="src\components\ComponentImage.cpp" />
+    <ClCompile Include="src\components\ComponentProgressBar.cpp" />
+    <ClCompile Include="src\components\ComponentTransform2D.cpp" />
+    <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -531,6 +553,23 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\preferences\src\CameraPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\EditorPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\GlobalPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\RenderPreferences.h" />
+    <ClInclude Include="src\Core\preferences\src\ResourcesPreferences.h" />
+    <ClInclude Include="src\Core\preferences\PreferenceManager.h" />
+    <ClInclude Include="src\Core\preferences\Preferences.h" />
+    <ClInclude Include="src\Core\serialization\Definitions.h" />
+    <ClInclude Include="src\Core\serialization\SceneSerializer.h" />
+    <ClInclude Include="src\Core\serialization\Serializable.h" />
+    <ClInclude Include="src\components\ComponentButton.h" />
+    <ClInclude Include="src\components\ComponentCanvas.h" />
+    <ClInclude Include="src\components\ComponentCanvasRenderer.h" />
+    <ClInclude Include="src\components\ComponentImage.h" />
+    <ClInclude Include="src\components\ComponentProgressBar.h" />
+    <ClInclude Include="src\components\ComponentTransform2D.h" />
+    <ClInclude Include="src\modules\ModuleUserInterface.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />

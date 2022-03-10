@@ -7,6 +7,7 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
+#include "ModuleUserInterface.h"
 
 #include "components/ComponentCamera.h"
 
@@ -120,13 +121,26 @@ void Hachiko::ModuleRender::SetGLOptions()
 }
 
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
-{
+{    
     ComponentCamera* camera = App->camera->GetMainCamera();
+    const Scene* active_scene = App->scene_manager->GetActiveScene();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+    ManageResolution(camera);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
+
+    const Scene* active_scene = App->scene_manager->GetActiveScene();
+    if (active_scene == nullptr)
+    {
+        return UpdateStatus::UPDATE_CONTINUE;
+    }  
 
     // Using debug camera to test culling
+    App->ui->DrawUI(active_scene);
 
     App->program->UpdateCamera(camera);
-    const Scene* active_scene = App->scene_manager->GetActiveScene();
+    const Scene* active_scene = App->scene_manager->GetActiveScene();    
+
     ComponentCamera* culling = active_scene->GetCullingCamera();
 
     const ComponentDirLight* dir_light = nullptr;
@@ -141,13 +155,9 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
 void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-
-    ManageResolution(camera);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
-
+    
     if (draw_skybox)
     {
         scene->GetSkybox()->Draw(camera);
