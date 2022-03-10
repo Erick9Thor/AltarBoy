@@ -74,7 +74,7 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
 
 void Hachiko::ComponentMesh::LoadModel(const char* model_path)
 {
-
+    HE_LOG(model_path);
 }
 
 //void Hachiko::ComponentMesh::Save(JsonFormatterValue j_component) const
@@ -100,6 +100,12 @@ void Hachiko::ComponentMesh::DrawGui()
 {
     if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
     {
+        if (meshes.empty())
+        {
+            DisplayNotLoadedUI();
+            return;
+        }
+
         for (auto mesh : meshes)
         {
             ImGui::Text("%d Triangles\n%d vertices\n%d indices",
@@ -108,5 +114,29 @@ void Hachiko::ComponentMesh::DrawGui()
                         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
             ImGui::Checkbox("Visible", &visible);
         }
+    }
+}
+
+void Hachiko::ComponentMesh::DisplayNotLoadedUI()
+{
+    if (ImGui::Button("Add Mesh"))
+    {
+        ImGuiFileDialog::Instance()->OpenDialog("Select Mesh", "Select Mesh", ".*", "./library/models/", 1, nullptr,
+            ImGuiFileDialogFlags_DontShowHiddenFiles | 
+            ImGuiFileDialogFlags_HideColumnType | 
+            ImGuiFileDialogFlags_DisableCreateDirectoryButton |
+            ImGuiFileDialogFlags_HideColumnDate);
+    }
+
+    if (ImGuiFileDialog::Instance()->Display("Select Mesh"))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            // TODO: If filepath is not asset. Import mesh
+            //onst std::filesystem::path file_path = ImGuiFileDialog::Instance()->GetFilePathName();
+            LoadModel(ImGuiFileDialog::Instance()->GetFilePathName().c_str());
+        }
+
+        ImGuiFileDialog::Instance()->Close();
     }
 }

@@ -82,7 +82,8 @@ namespace Hachiko
     private:
         bool visible = true;
         std::string resource_path;
-
         std::vector<ResourceMesh*> meshes = {};
+        
+        void DisplayNotLoadedUI();
     };
 }
