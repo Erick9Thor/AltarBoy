@@ -12,6 +12,8 @@
 
 #include "modules/ModuleWindow.h"
 
+#include "ui/ImGuiUtils.h"
+
 Hachiko::WindowScene::WindowScene() :
     Window("Scene", true) {}
 
@@ -47,15 +49,15 @@ void Hachiko::WindowScene::CleanUp() {}
 
 void Hachiko::WindowScene::GuizmoOptionsController()
 {
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE, "Move Tool"))
     {
         guizmo_operation = ImGuizmo::TRANSLATE;
     }
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE, "Rotate Tool"))
     {
         guizmo_operation = ImGuizmo::ROTATE;
     }
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE, "Scale Tool"))
     {
         guizmo_operation = ImGuizmo::SCALE;
     }
@@ -64,11 +66,12 @@ void Hachiko::WindowScene::GuizmoOptionsController()
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
     ImGui::SameLine();
 
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL, "Switches to Local Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::LOCAL;
     }
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD))
+    
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD, "Switches to Global Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::WORLD;
     }
@@ -81,7 +84,7 @@ void Hachiko::WindowScene::ToolbarMenu() const
 
     bool playing = !GameTimer::paused && GameTimer::running;
 
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running, "Pause"))
     {
         if (!GameTimer::paused)
         {
@@ -89,7 +92,7 @@ void Hachiko::WindowScene::ToolbarMenu() const
         }
     }
 
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running, "Play"))
     {
         if (!GameTimer::running)
         {
@@ -102,7 +105,7 @@ void Hachiko::WindowScene::ToolbarMenu() const
         }
     }
 
-    if (ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running, "Stop"))
     {
         if (GameTimer::running)
         {
@@ -131,6 +134,8 @@ void Hachiko::WindowScene::DrawScene()
     texture_position = float2(guizmo_rect_origin.x, static_cast<float>(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 
     ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2{0, 1}, ImVec2{1, 0});
+    // Checking hover on image for more intuitive controls
+    hovering = ImGui::IsItemHovered(); 
 
     // TODO: Move to other section to take the input
     if (ImGui::BeginDragDropTarget())
@@ -142,8 +147,6 @@ void Hachiko::WindowScene::DrawScene()
         }
         ImGui::EndDragDropTarget();
     }
-
-    hovering = ImGui::IsWindowHovered();
 
     // TO AVOID Camera orbit
     if (ImGui::IsWindowFocused())
@@ -179,7 +182,9 @@ void Hachiko::WindowScene::DrawScene()
         ImGuizmo::SetRect(guizmo_rect_origin.x, guizmo_rect_origin.y, texture_size.x, texture_size.y);
         ImGuizmo::SetDrawlist();
 
-        Manipulate(view.ptr(), projection.ptr(), guizmo_operation, guizmo_mode, model.ptr(), delta.ptr());
+        // Scale will always be on local regarding on ImGuizmo MODE, check is done here to keep user's selected MODE
+        const bool is_scaling = guizmo_operation == ImGuizmo::SCALE;
+        Manipulate(view.ptr(), projection.ptr(), guizmo_operation, is_scaling ? ImGuizmo::LOCAL : guizmo_mode, model.ptr(), delta.ptr());
 
         using_guizmo = ImGuizmo::IsUsing();
         if (using_guizmo && !delta.IsIdentity())
@@ -193,7 +198,7 @@ void Hachiko::WindowScene::DrawScene()
 
 void Hachiko::WindowScene::Controller() const
 {
-    if (!using_guizmo && focused && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (!using_guizmo && focused && hovering && App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
@@ -219,30 +224,4 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera,
     GameObject* selected = scene->RayCast(line);
 
     return selected;
-}
-
-//TODO: Move to utils gui and add tooltips
-bool Hachiko::WindowScene::ToolbarButton(ImFont* font, const char* font_icon, bool active) const
-{
-    const ImVec4 col_active = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
-    const ImVec4 bg_color = active ? col_active : ImGui::GetStyle().Colors[ImGuiCol_Text];
-
-    ImGui::SameLine();
-    const auto frame_padding = ImGui::GetStyle().FramePadding;
-    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_Text, bg_color);
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, ImGui::GetStyle().FramePadding.y));
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, frame_padding);
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
-
-    ImGui::PushFont(font);
-    active = ImGui::Button(font_icon);
-
-    ImGui::PopFont();
-    ImGui::PopStyleColor(4);
-    ImGui::PopStyleVar(3);
-
-    return active;
 }
