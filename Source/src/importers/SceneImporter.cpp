@@ -24,7 +24,7 @@ Hachiko::Scene* Hachiko::SceneImporter::LoadScene(const char* file_path)
     const JsonFormatterValue j_scene(document, document);
 
     const auto scene = new Scene();
-    scene->Load(j_scene);
+    //scene->Load(j_scene);
 
     delete[] buffer;
 
@@ -37,7 +37,7 @@ bool Hachiko::SceneImporter::SaveScene(Scene* scene, const char* file_path)
     document.SetObject();
     const JsonFormatterValue j_Scene(document, document);
 
-    scene->Save(j_Scene);
+    //scene->Save(j_Scene);
 
     // Write document to buffer
     rapidjson::StringBuffer string_buffer;

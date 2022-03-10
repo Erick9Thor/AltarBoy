@@ -128,8 +128,6 @@ namespace Hachiko
         GameObject* parent = nullptr;
         std::vector<GameObject*> children;
 
-       
-
     private:
         bool active = true;
         std::string name;

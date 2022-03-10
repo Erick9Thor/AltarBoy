@@ -246,7 +246,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         for (int i = 0; i < component_mesh->GetMeshesCount(); ++i)
         {
             obb = component_mesh->GetAABB(i);
-            obb.Transform(transform->GetTransform());
+            obb.Transform(transform->GetMatrix());
             // Enclose is accumulative, reset the box
             aabb.SetNegativeInfinity();
             aabb.Enclose(obb);

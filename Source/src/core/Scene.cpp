@@ -68,8 +68,8 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 
     for (GameObject* game_object : game_objects)
     {
-        ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
-        if (!mesh)
+        auto* mesh = game_object->GetComponent<ComponentMesh>();
+        if (mesh)
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
@@ -77,12 +77,22 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 
             const float* vertices = mesh->GetVertices(0);
             const unsigned* indices = mesh->GetIndices(0);
-            for (unsigned i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
+            for (unsigned i = 0; i < mesh->GetBufferSize(i, ResourceMesh::Buffers::INDICES); i += 3)
             {
-                if (hit_distance < closest_hit_distance)
+                Triangle triangle;
+                triangle.a = vec(&vertices[indices[i] * 3]);
+                triangle.b = vec(&vertices[indices[i + 1] * 3]);
+                triangle.c = vec(&vertices[indices[i + 2] * 3]);
+
+                float hit_distance;
+                float3 hit_point;
+                if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
                 {
-                    closest_hit_distance = hit_distance;
-                    selected = game_object;
+                    if (hit_distance < closest_hit_distance)
+                    {
+                        closest_hit_distance = hit_distance;
+                        selected = game_object;
+                    }
                 }
             }
         }
@@ -94,7 +104,7 @@ void Hachiko::Scene::CreateLights()
 {
     GameObject* sun = CreateNewGameObject(root , "Sun");
     sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
-    sun->GetTransform()->LookAt(float3(0, 0, 0));
+    sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
     sun->CreateComponent(Component::Type::DIRLIGHT);
 
     GameObject* spot = CreateNewGameObject(root, "Spot Light");
@@ -110,7 +120,7 @@ void Hachiko::Scene::CreateLights()
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
 {
     GameObject* camera = CreateNewGameObject(root, "Debug Camera");
-    sun->GetTransform()->SetLocalPosition(float3(5, 5, 0));
+    camera->GetTransform()->SetLocalPosition(float3(5, 5, 0));
     camera->CreateComponent(Component::Type::CAMERA);
     camera->GetTransform()->LookAtTarget(float3(0, 5, 0));
 
