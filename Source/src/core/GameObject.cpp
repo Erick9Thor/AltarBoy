@@ -138,7 +138,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 
 void Hachiko::GameObject::Update()
 {
-    if (transform->HasChanged())
+    if (transform->IsDirty())
     {
         OnTransformUpdated();
     }

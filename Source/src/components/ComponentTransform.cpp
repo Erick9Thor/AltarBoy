@@ -1,9 +1,12 @@
 #include "core/hepch.h"
 #include "ComponentTransform.h"
 
+
+/**     CONSTRUCTORS    **/
+
 Hachiko::ComponentTransform::ComponentTransform(GameObject* container) 
     : Component(Type::TRANSFORM, container) 
-    , changed(false)
+    , dirty(false)
     , matrix(float4x4::identity)
     , matrix_local(float4x4::identity)
     , position(float3::zero)
@@ -34,13 +37,12 @@ Hachiko::ComponentTransform::ComponentTransform(GameObject* container, const flo
 
 void Hachiko::ComponentTransform::OnTransformUpdated()
 {
-    changed = false;
+    dirty = false;
 }
 
 inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 {
     float3 right_temp = float3::unitY.Cross(direction).Normalized();
-
     float3 up_temp = direction.Cross(right_temp).Normalized();
 
     Quat orientation = Quat::LookAt(-float3::unitZ, direction, float3::unitY, float3::unitY);
@@ -60,26 +62,28 @@ void Hachiko::ComponentTransform::LookAtDirection(const float3& direction)
     SetRotation(SimulateLookAt(direction));
 }
 
+/**     SETTERS     **/
+
 void Hachiko::ComponentTransform::SetGlobalTransform(const float4x4& new_matrix)
 {
     new_matrix.Decompose(position, rotation, scale);
     rotation_euler = RadToDeg(rotation.ToEulerXYZ());
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetPosition(const float3& new_position) 
 {
     position = new_position;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetScale(const float3& new_scale) 
 {
     scale = new_scale;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetRotationAxis(const float3& new_right, const float3& new_up, const float3& new_front)
@@ -90,7 +94,7 @@ void Hachiko::ComponentTransform::SetRotationAxis(const float3& new_right, const
 
     matrix.Decompose(position, rotation, scale);
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetRotation(const Quat& new_rotation)
@@ -98,7 +102,7 @@ void Hachiko::ComponentTransform::SetRotation(const Quat& new_rotation)
     rotation = new_rotation.Normalized();
     rotation_euler = RadToDeg(rotation.ToEulerXYZ());
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetRotationInEulerAngles(const float3& new_rotation_euler) 
@@ -109,15 +113,17 @@ void Hachiko::ComponentTransform::SetRotationInEulerAngles(const float3& new_rot
     rotation = rotation_amount * (rotation);
     rotation_euler = new_rotation_euler;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float4x4& new_transform_local)
 {
+    //  Update local values
     new_transform_local.Decompose(position_local, rotation_local, scale_local);
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    // Set as dirty but do NOT update global values
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float3& new_position_local, const Quat& new_rotation_local, const float3& new_scale_local)
@@ -129,14 +135,14 @@ void Hachiko::ComponentTransform::SetLocalPosition(const float3& new_position_lo
 {
     position_local = new_position_local;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalScale(const float3& new_scale_local) 
 {
     scale_local = new_scale_local;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_local) 
@@ -144,7 +150,7 @@ void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_loca
     rotation_local = new_rotation_local;
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& new_rotation_euler_local)
@@ -155,8 +161,58 @@ void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& ne
     rotation_local = rotation_amount * (rotation_local);
     rotation_euler_local = new_rotation_euler_local;
 
-    UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
+
+void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calculation_mode) 
+{
+    GameObject* parent_of_owner = game_object->parent;
+
+    switch (calculation_mode)
+    {
+        case MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL:
+        {
+            matrix = float4x4::FromTRS(position, rotation, scale);
+
+            matrix_local = parent_of_owner == nullptr ? matrix : parent_of_owner->GetTransform()->GetMatrix().Inverted() * matrix;
+            matrix_local.Decompose(position_local, rotation_local, scale_local);
+
+            rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
+        }
+        break;
+
+        case MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL:
+        {
+            matrix_local = float4x4::FromTRS(position_local, rotation_local, scale_local);
+
+            matrix = parent_of_owner == nullptr ? matrix_local : parent_of_owner->GetTransform()->GetMatrix() * matrix_local;
+            matrix.Decompose(position, rotation, scale);
+
+            rotation_euler = RadToDeg(rotation.ToEulerXYZ());
+        }
+        break;
+    }
+
+    right = matrix.WorldX();
+    up = matrix.WorldY();
+    front = matrix.WorldZ();
+}
+
+void Hachiko::ComponentTransform::UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode)
+{
+    const std::vector<GameObject*>& children = game_object->children;
+
+    dirty = true;
+
+    CalculateTransform(matrix_calculation_mode);
+
+    for (GameObject* owner_child : children)
+    {
+        owner_child->GetTransform()->UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    }
+}
+
+/**     SERIALIZATION    **/
 
 void Hachiko::ComponentTransform::Save(JsonFormatterValue j_component) const
 {
@@ -193,11 +249,13 @@ void Hachiko::ComponentTransform::Load(JsonFormatterValue j_component)
     SetLocalTransform(position_local, rotation_local, scale_local);
 }
 
+/**     GUI     **/
+
 void Hachiko::ComponentTransform::DrawGui()
 {
     static bool locked_scale = true;
     static bool debug_transforms = false;
-    
+
     if (ImGui::CollapsingHeader("Local Transform", ImGuiTreeNodeFlags_DefaultOpen))
     {
         float3 position_local_editor = position_local;
@@ -253,57 +311,5 @@ void Hachiko::ComponentTransform::DrawGui()
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
             }
         }
-    }
-}
-
-void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calculation_mode) 
-{
-    GameObject* owners_parent = game_object->parent;
-
-    switch (calculation_mode)
-    {
-        case MatrixCalculationMode::LOCAL_FROM_GLOBAL:
-        {
-            matrix = float4x4::FromTRS(position, rotation, scale);
-
-            matrix_local = owners_parent == nullptr ? matrix : owners_parent->GetTransform()->GetMatrix().Inverted() * matrix;
-
-            matrix_local.Decompose(position_local, rotation_local, scale_local);
-
-            rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
-        }
-        break;
-
-        case MatrixCalculationMode::GLOBAL_FROM_LOCAL:
-        {
-            matrix_local = float4x4::FromTRS(position_local, rotation_local, scale_local);
-
-            matrix = owners_parent == nullptr ? matrix_local : owners_parent->GetTransform()->GetMatrix() * matrix_local;
-
-            matrix.Decompose(position, rotation, scale);
-
-            rotation_euler = RadToDeg(rotation.ToEulerXYZ());
-        }
-        break;
-    }
-
-    right = matrix.WorldX();
-    up = matrix.WorldY();
-    front = matrix.WorldZ();
-}
-
-void Hachiko::ComponentTransform::UpdateTransformOfHierarchy(MatrixCalculationMode matrix_calculation_mode)
-{
-    CalculateTransform(matrix_calculation_mode);
-
-    changed = true;
-
-    const std::vector<GameObject*>& owner_children = game_object->children;
-
-    // As their parent transform is changed only, only updating
-    // the global transform matrix of children will suffice.
-    for (GameObject* owner_child : owner_children)
-    {
-        owner_child->GetTransform()->UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 }

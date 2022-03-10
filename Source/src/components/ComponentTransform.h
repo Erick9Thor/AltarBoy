@@ -9,8 +9,8 @@ namespace Hachiko
     {
         enum class MatrixCalculationMode
         {
-            LOCAL_FROM_GLOBAL,
-            GLOBAL_FROM_LOCAL
+            USE_GLOBAL_TO_CALC_LOCAL,
+            USE_LOCAL_TO_CALC_GLOBAL
         };
 
     public:
@@ -20,7 +20,7 @@ namespace Hachiko
         ~ComponentTransform() override = default;
 
         void OnTransformUpdated() override;
-        
+
         static Quat SimulateLookAt(const math::float3& direction);
         void LookAtTarget(const float3& target);
         void LookAtDirection(const float3& direction);
@@ -38,22 +38,24 @@ namespace Hachiko
         void SetLocalRotation(const Quat& new_rotation_local);
         void SetLocalRotationInEulerAngles(const float3& new_rotation_euler_local);
 
-        static Type GetType();
-        [[nodiscard]] bool HasChanged() const;
-        [[nodiscard]] const float3& GetPosition() const;
-        [[nodiscard]] const float3& GetLocalPosition() const;
-        [[nodiscard]] const float3& GetScale() const;
-        [[nodiscard]] const float3& GetLocalScale() const;
-        [[nodiscard]] const Quat& GetRotation() const;
-        [[nodiscard]] const Quat& GetLocalRotation() const;
-        [[nodiscard]] const float3& GetRotationInEulerAngles() const;
-        [[nodiscard]] const float3& GetLocalRotationInEulerAngles() const;
-        [[nodiscard]] const float3& GetFront() const;
-        [[nodiscard]] const float3& GetUp() const;
-        [[nodiscard]] const float3& GetRight() const;
-        [[nodiscard]] const float4x4& GetMatrix() const;
-        [[nodiscard]] const float4x4& GetLocalMatrix() const;
-       
+        static Type GetType() { return Type::TRANSFORM; };
+        inline [[nodiscard]] bool IsDirty() const { return dirty; }; 
+        inline [[nodiscard]] const float3& GetLocalPosition() const { return position_local; };
+        inline [[nodiscard]] const float3& GetLocalScale() const { return scale_local; };
+        inline [[nodiscard]] const Quat& GetLocalRotation() const { return rotation_local; };
+        inline [[nodiscard]] const float3& GetLocalRotationInEulerAngles() const { return rotation_euler_local; };
+        inline [[nodiscard]] const float4x4& GetLocalMatrix() const { return matrix_local; };
+
+        [[nodiscard]] const float3& GetPosition() const { return position; };
+        [[nodiscard]] const float3& GetScale() const { return scale; };
+        [[nodiscard]] const Quat& GetRotation() const { return rotation; };
+        [[nodiscard]] const float3& GetRotationInEulerAngles() const { return rotation_euler; };
+        [[nodiscard]] const float3& GetFront() const { return front; };
+        [[nodiscard]] const float3& GetUp() const { return up; };
+        [[nodiscard]] const float3& GetRight() const { return right; };
+        [[nodiscard]] const float4x4& GetMatrix() const { return matrix; };
+
+
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
 
@@ -61,97 +63,22 @@ namespace Hachiko
 
     private:
         void CalculateTransform(MatrixCalculationMode calculation_mode);
-        void UpdateTransformOfHierarchy(MatrixCalculationMode matrix_calculation_mode);
+        void UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode);
 
     private:
-        bool        changed = true;
-        float4x4    matrix;
-        float4x4    matrix_local;
-        float3      position;
-        float3      position_local;
-        float3      scale;
-        float3      scale_local;
-        Quat        rotation;
-        Quat        rotation_local;
-        float3      rotation_euler;
-        float3      rotation_euler_local;
-        float3      right;
-        float3      up;
-        float3      front;
+        bool dirty = true; // Symbolizes whether the GLOBAL transform needs to be re calculated or not .
+        float4x4 matrix;
+        float4x4 matrix_local;
+        float3 position;
+        float3 position_local;
+        float3 scale;
+        float3 scale_local;
+        Quat rotation;
+        Quat rotation_local;
+        float3 rotation_euler;
+        float3 rotation_euler_local;
+        float3 right;
+        float3 up;
+        float3 front;
     };
-}
-
-inline Hachiko::Component::Type Hachiko::ComponentTransform::GetType()
-{
-    return Type::TRANSFORM;
-}
-
-inline bool Hachiko::ComponentTransform::HasChanged() const
-{
-    return changed;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetPosition() const
-{
-    return position;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetLocalPosition() const
-{
-    return position_local;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetScale() const
-{
-    return scale;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetLocalScale() const
-{
-    return scale_local;
-}
-
-inline const Quat& Hachiko::ComponentTransform::GetRotation() const
-{
-    return rotation;
-}
-
-inline const Quat& Hachiko::ComponentTransform::GetLocalRotation() const
-{
-    return rotation_local;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetRotationInEulerAngles() const
-{
-    return rotation_euler;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetLocalRotationInEulerAngles() const
-{
-    return rotation_euler_local;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetFront() const
-{
-    return front;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetUp() const
-{
-    return up;
-}
-
-inline const float3& Hachiko::ComponentTransform::GetRight() const
-{
-    return right;
-}
-
-inline const float4x4& Hachiko::ComponentTransform::GetMatrix() const
-{
-    return matrix;
-}
-
-inline const float4x4& Hachiko::ComponentTransform::GetLocalMatrix() const
-{
-    return matrix_local;
-}
+} // namespace Hachiko
