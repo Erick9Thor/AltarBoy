@@ -1,20 +1,21 @@
 #pragma once
 
-#include "Modules/ModuleTexture.h"
+#include "modules/ModuleTexture.h"
 
-#include "MathGeoLib.h"
-
-class ComponentCamera;
-
-class Skybox
+namespace Hachiko
 {
-public:
-	Skybox();
-	~Skybox();
-	void Draw(ComponentCamera* camera);
+    class ComponentCamera;
 
-private:
-	TextureCube texture;
-	unsigned vao;
-	unsigned vbo;
-};
+    class Skybox
+    {
+    public:
+        Skybox();
+        ~Skybox();
+        void Draw(ComponentCamera* camera) const;
+
+    private:
+        TextureCube texture;
+        unsigned vao{};
+        unsigned vbo{};
+    };
+}

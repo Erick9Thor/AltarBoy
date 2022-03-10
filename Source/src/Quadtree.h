@@ -1,92 +1,109 @@
 #pragma once
 
-#include "Globals.h"
 #include "MathGeoLib.h"
 
-#include "GameObject.h"
+#include "core/GameObject.h"
 
 #include <list>
-#include <map>
 
 #define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 10.0f
 
-enum Quadrants
+namespace Hachiko
 {
-	NW = 0,
-	NE,
-	SE,
-	SW,
-	NUM_QUADRANTS
-};
+    enum class Quadrants
+    {
+        NW = 0,
+        NE,
+        SE,
+        SW,
+        COUNT
+    };
 
-class QuadtreeNode
-{
-public:
-	QuadtreeNode(const AABB& box, QuadtreeNode* parent);
-	~QuadtreeNode();
+    class QuadtreeNode
+    {
+    public:
+        QuadtreeNode(const AABB& box, QuadtreeNode* parent);
+        ~QuadtreeNode();
 
-	void Insert(GameObject* game_object);
-	void Remove(GameObject* game_object);
-	void CreateChildren();
-	void RearangeChildren();
+        void Insert(GameObject* game_object);
+        void Remove(GameObject* game_object);
+        void CreateChildren();
+        void RearangeChildren();
 
-	bool IsLeaf() const { return childs[0] == nullptr; }
+        [[nodiscard]] bool IsLeaf() const
+        {
+            return childs[0] == nullptr;
+        }
 
-	const AABB& GetBox() const { return box; }
-	const std::list<GameObject*>& GetObjects() const { return objects; }
+        [[nodiscard]] const AABB& GetBox() const
+        {
+            return box;
+        }
 
-	template<typename T>
-	void GetIntersections(std::map<float, GameObject*>& objects, const T& primitive) const;
+        [[nodiscard]] const std::list<GameObject*>& GetObjects() const
+        {
+            return objects;
+        }
 
-	QuadtreeNode* childs[Quadrants::NUM_QUADRANTS];
+        template<typename T>
+        void GetIntersections(std::vector<GameObject*>& objects, const T& primitive) const;
 
-	void DebugDraw();
+        QuadtreeNode* childs[static_cast<int>(Quadrants::COUNT)]{};
 
-private:
-	AABB box;
-	QuadtreeNode* parent;	
-	std::list<GameObject*> objects;
-	
-};
+        void DebugDraw();
 
-class Quadtree
-{
-public:
-	Quadtree();
-	~Quadtree();
+    private:
+        AABB box;
+        QuadtreeNode* parent;
+        std::list<GameObject*> objects;
+    };
 
-	void Clear();
-	void SetBox(const AABB& box);
+    class Quadtree
+    {
+    public:
+        Quadtree();
+        ~Quadtree();
 
-	void Insert(GameObject* game_object);
-	void Remove(GameObject* game_object);
+        void Clear();
+        void SetBox(const AABB& box);
 
-	inline QuadtreeNode* GetRoot() { return root; }
+        void Insert(GameObject* game_object) const;
+        void Remove(GameObject* game_object) const;
 
-	void DebugDraw();
-		
-private:
-	QuadtreeNode* root = nullptr;
-};
+        QuadtreeNode* GetRoot() const
+        {
+            return root;
+        }
 
+        void DebugDraw() const;
 
-template<typename T>
-void QuadtreeNode::GetIntersections(std::map<float, GameObject*>& intersected, const T& primitive) const
-{
-	if (primitive.Intersects(box))
-	{
-		float near_hit, far_hit;
-		for (GameObject* object : objects)
-		{
-			if (primitive.Intersects(object->GetOBB()))
-				intersected[near_hit] = object;
-		}
+    private:
+        QuadtreeNode* root = nullptr;
+    };
 
-		// If it has one child all exist
-		if (childs[0] != nullptr) {
-			for (int i = 0; i < 4; ++i)
-				childs[i]->GetIntersections(intersected, primitive);
-		}
-	}
+    template<typename T>
+    void QuadtreeNode::GetIntersections(std::vector<GameObject*>& intersected, const T& primitive) const
+    {
+        if (primitive.Intersects(box))
+        {
+            float near_hit, far_hit;
+            for (GameObject* object : objects)
+            {
+                if (primitive.Intersects(object->GetOBB(), near_hit, far_hit))
+                {
+                    intersected.push_back(object);
+                }
+            }
+
+            // If it has one child all exist
+            if (childs[0] != nullptr)
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    childs[i]->GetIntersections(intersected, primitive);
+                }
+            }
+        }
+    }
 }

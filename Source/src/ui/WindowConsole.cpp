@@ -1,0 +1,101 @@
+#include "core/hepch.h"
+#include "WindowConsole.h"
+#include "modules/ModuleEditor.h"
+
+Hachiko::WindowConsole::WindowConsole() :
+    Window("Console", true) {}
+
+Hachiko::WindowConsole::~WindowConsole() = default;
+
+void Hachiko::WindowConsole::Update()
+{
+    ImGui::SetNextWindowDockID(App->editor->dock_down_id, ImGuiCond_FirstUseEver);
+    if (ImGui::Begin((std::string(ICON_FA_TERMINAL " ") + name).c_str(), &active))
+    {
+        if (ImGui::BeginPopup("Options"))
+        {
+            ImGui::Checkbox("Auto-scroll", &autoscroll);
+            ImGui::EndPopup();
+        }
+
+        if (ImGui::Button("Options"))
+        {
+            ImGui::OpenPopup("Options");
+        }
+
+        ImGui::SameLine();
+        const bool clear = ImGui::Button("Clear");
+        ImGui::SameLine();
+        const bool copy = ImGui::Button("Copy");
+        ImGui::SameLine();
+        filter.Draw("Filter", -100.0f);
+
+        ImGui::Separator();
+        ImGui::BeginChild("scrolling", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+
+        if (clear)
+        {
+            Clear();
+        }
+        if (copy)
+        {
+            ImGui::LogToClipboard();
+        }
+
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+        const char* buf_start = Logging->buff.begin();
+        const char* buf_end = Logging->buff.end();
+
+        if (filter.IsActive())
+        {
+            for (int line_no = 0; line_no < Logging->line_offsets.Size; line_no++)
+            {
+                const char* line_start = buf_start + Logging->line_offsets[line_no];
+                const char* line_end = (line_no + 1 < Logging->line_offsets.Size) ? (buf_start + Logging->line_offsets[line_no + 1] - 1) : buf_end;
+                if (filter.PassFilter(line_start, line_end))
+                {
+                    ImGui::TextUnformatted(line_start, line_end);
+                }
+            }
+        }
+        else
+        {
+            ImGuiListClipper clipper;
+            clipper.Begin(Logging->line_offsets.Size);
+            while (clipper.Step())
+            {
+                for (int line_no = clipper.DisplayStart; line_no < clipper.DisplayEnd; line_no++)
+                {
+                    const char* line_start = buf_start + Logging->line_offsets[line_no];
+                    const char* line_end = (line_no + 1 < Logging->line_offsets.Size) ? (buf_start + Logging->line_offsets[line_no + 1] - 1) : buf_end;
+                    ImGui::TextUnformatted(line_start, line_end);
+                }
+            }
+            clipper.End();
+        }
+
+        ImGui::PopStyleVar();
+
+        if (autoscroll && ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
+        {
+            ImGui::SetScrollHereY(1.0f);
+        }
+
+        ImGui::EndChild();
+    }
+    ImGui::End();
+}
+
+void Hachiko::WindowConsole::Clear()
+{
+    Logging->buff.clear();
+    Logging->line_offsets.clear();
+    Logging->line_offsets.push_back(0);
+}
+
+void Hachiko::WindowConsole::CleanUp()
+{
+    Clear();
+    filter.Clear();
+}

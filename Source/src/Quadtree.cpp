@@ -1,169 +1,189 @@
+#include "core/hepch.h"
 #include "Quadtree.h"
-
-#include "GameObject.h"
 #include "debugdraw.h"
 
-QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent)
-	: box(box)
-	, parent(parent)
+Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) :
+    box(box),
+    parent(parent)
 {
-	childs[Quadrants::NW] = childs[Quadrants::NE] = childs[Quadrants::SE] = childs[Quadrants::SW] = nullptr;
+    childs[static_cast<int>(Quadrants::NW)] = childs[static_cast<int>(Quadrants::NE)] = childs[static_cast<int>(Quadrants::SE)] = childs[static_cast<int>(Quadrants::SW)] = nullptr;
 }
 
-QuadtreeNode::~QuadtreeNode()
+Hachiko::QuadtreeNode::~QuadtreeNode()
 {
-	RELEASE(childs[Quadrants::NW]);
-	RELEASE(childs[Quadrants::NE]);
-	RELEASE(childs[Quadrants::SE]);
-	RELEASE(childs[Quadrants::SW]);
+    RELEASE(childs[(int)Quadrants::NW]);
+    RELEASE(childs[(int)Quadrants::NE]);
+    RELEASE(childs[(int)Quadrants::SE]);
+    RELEASE(childs[(int)Quadrants::SW]);
 }
 
-void QuadtreeNode::Insert(GameObject* game_object)
+void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
 {
-	// No split due to not enough objects
-	if (IsLeaf() && objects.size() < QUADTREE_MAX_ITEMS)
-	{
-		objects.push_back(game_object);
-		return;
-	}
-	// No split due to minimum size
-	if (box.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE)
-	{
-		objects.push_back(game_object);
-		return;
-	}
-	// Rearrange childs
-	if (IsLeaf())
-		CreateChildren();
-	
-	objects.push_back(game_object);
-	RearangeChildren();
+    // No split due to not enough objects
+    if (IsLeaf() && objects.size() < QUADTREE_MAX_ITEMS)
+    {
+        objects.push_back(game_object);
+        return;
+    }
+    // No split due to minimum size
+    if (box.HalfSize().LengthSq() <= QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE)
+    {
+        objects.push_back(game_object);
+        return;
+    }
+    // Rearrange children
+    if (IsLeaf())
+    {
+        CreateChildren();
+    }
 
+    objects.push_back(game_object);
+    RearangeChildren();
 }
 
-void QuadtreeNode::Remove(GameObject* game_object)
+void Hachiko::QuadtreeNode::Remove(GameObject* game_object)
 {
-	// TODO: Reduce size when no longer necessary?
-	std::list<GameObject*>::iterator find_iter = std::find(objects.begin(), objects.end(), game_object);
-	if (find_iter != objects.end())
-		objects.erase(find_iter);
+    // TODO: Reduce size when no longer necessary?
+    const auto find_iter = std::find(objects.begin(), objects.end(), game_object);
+    if (find_iter != objects.end())
+    {
+        objects.erase(find_iter);
+    }
 
-	if (!IsLeaf()) {
-		for (int i = 0; i < Quadrants::NUM_QUADRANTS; ++i)
-			childs[i]->Remove(game_object);
-	}
+    if (!IsLeaf())
+    {
+        for (const auto& child : childs)
+        {
+            child->Remove(game_object);
+        }
+    }
 }
 
-void QuadtreeNode::CreateChildren()
+void Hachiko::QuadtreeNode::CreateChildren()
 {
-	// Subdivide current box
-	float3 size = float3(box.Size());
-	float3 center = box.CenterPoint();
-	// Do not operate y, 2d
-	float3 child_size = float3(0.5f * size.x, size.y, 0.5f * size.z);
-	// Recalculate for each child
-	float3 child_center(center);
-	AABB child_box;
+    // Subdivide current box
+    const auto size = float3(box.Size());
+    const float3 center = box.CenterPoint();
+    // Do not operate y, 2d
+    const auto child_size = float3(0.5f * size.x, size.y, 0.5f * size.z);
+    // Recalculate for each child
+    float3 child_center(center);
+    AABB child_box;
 
-	// NW
-	child_center.x = center.x - size.x * 0.25f;
-	child_center.z = center.z + size.z * 0.25f;
-	child_box.SetFromCenterAndSize(child_center, child_size);
-	childs[Quadrants::NW] = new QuadtreeNode(child_box, this);
+    // NW
+    child_center.x = center.x - size.x * 0.25f;
+    child_center.z = center.z + size.z * 0.25f;
+    child_box.SetFromCenterAndSize(child_center, child_size);
+    childs[static_cast<int>(Quadrants::NW)] = new QuadtreeNode(child_box, this);
 
-	// NE
-	child_center.x = center.x + size.x * 0.25f;
-	child_center.z = center.z + size.z * 0.25f;
-	child_box.SetFromCenterAndSize(child_center, child_size);
-	childs[Quadrants::NE] = new QuadtreeNode(child_box, this);
+    // NE
+    child_center.x = center.x + size.x * 0.25f;
+    child_center.z = center.z + size.z * 0.25f;
+    child_box.SetFromCenterAndSize(child_center, child_size);
+    childs[static_cast<int>(Quadrants::NE)] = new QuadtreeNode(child_box, this);
 
-	// SE
-	child_center.x = center.x + size.x * 0.25f;
-	child_center.z = center.z - size.z * 0.25f;
-	child_box.SetFromCenterAndSize(child_center, child_size);
-	childs[Quadrants::SE] = new QuadtreeNode(child_box, this);
+    // SE
+    child_center.x = center.x + size.x * 0.25f;
+    child_center.z = center.z - size.z * 0.25f;
+    child_box.SetFromCenterAndSize(child_center, child_size);
+    childs[static_cast<int>(Quadrants::SE)] = new QuadtreeNode(child_box, this);
 
-	// SW
-	child_center.x = center.x - size.x * 0.25f;
-	child_center.z = center.z - size.z * 0.25f;
-	child_box.SetFromCenterAndSize(child_center, child_size);
-	childs[Quadrants::SW] = new QuadtreeNode(child_box, this);
+    // SW
+    child_center.x = center.x - size.x * 0.25f;
+    child_center.z = center.z - size.z * 0.25f;
+    child_box.SetFromCenterAndSize(child_center, child_size);
+    childs[static_cast<int>(Quadrants::SW)] = new QuadtreeNode(child_box, this);
 }
 
-void QuadtreeNode::RearangeChildren()
+void Hachiko::QuadtreeNode::RearangeChildren()
 {
-	for (std::list<GameObject*>::iterator it = objects.begin(); it != objects.end();)
-	{
-		GameObject* game_object = *it;
-		bool intersects[Quadrants::NUM_QUADRANTS];
-		for (int i = 0; i < Quadrants::NUM_QUADRANTS; ++i)
-			intersects[i] = childs[i]->box.Intersects(game_object->GetAABB());
+    for (auto it = objects.begin(); it != objects.end();)
+    {
+        GameObject* game_object = *it;
+        bool intersects[static_cast<int>(Quadrants::COUNT)];
+        for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
+        {
+            intersects[i] = childs[i]->box.Intersects(game_object->GetAABB());
+        }
 
-		// If it intersects all there is no point in moving downwards
-		if (intersects[Quadrants::NW] && intersects[Quadrants::NE] && intersects[Quadrants::SE] && intersects[Quadrants::SW])
-		{
-			++it;
-			continue;
-		}
+        // If it intersects all there is no point in moving downwards
+        if (intersects[static_cast<int>(Quadrants::NW)] && intersects[static_cast<int>(Quadrants::NE)] && intersects[static_cast<int>(Quadrants::SE)] && intersects[static_cast<int>(Quadrants::SW)])
+        {
+            ++it;
+            continue;
+        }
 
-		for (int i = 0; i < Quadrants::NUM_QUADRANTS; ++i) {
-			if (intersects[i])
-				childs[i]->Insert(game_object);
-		}				
-		it = objects.erase(it);		
-	}
-	auto a = 1;
+        for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
+        {
+            if (intersects[i])
+            {
+                childs[i]->Insert(game_object);
+            }
+        }
+        it = objects.erase(it);
+    }
 }
 
-void QuadtreeNode::DebugDraw()
-{	
-	static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
-	if (IsLeaf())
-	{
-		ddVec3 p[8];
-		
-		for (int i = 0; i < 8; ++i)
-			p[i] = box.CornerPoint(order[i]);
+void Hachiko::QuadtreeNode::DebugDraw()
+{
+    static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+    if (IsLeaf())
+    {
+        ddVec3 p[8];
 
-		dd::box(p, dd::colors::LawnGreen);
-		return;
-	}
-	
-	for (QuadtreeNode* child : childs)
-		child->DebugDraw();		
+        for (int i = 0; i < 8; ++i)
+        {
+            p[i] = box.CornerPoint(order[i]);
+        }
+
+        dd::box(p, dd::colors::LawnGreen);
+        return;
+    }
+
+    for (QuadtreeNode* child : childs)
+    {
+        child->DebugDraw();
+    }
 }
 
-Quadtree::Quadtree()
+Hachiko::Quadtree::Quadtree() = default;
+
+Hachiko::Quadtree::~Quadtree()
 {
+    Clear();
 }
 
-Quadtree::~Quadtree()
+void Hachiko::Quadtree::Clear()
 {
-	Clear();
+    RELEASE(root);
 }
 
-void Quadtree::Clear()
+void Hachiko::Quadtree::SetBox(const AABB& box)
 {
-	RELEASE(root);
+    Clear();
+    root = new QuadtreeNode(box, nullptr);
 }
 
-void Quadtree::SetBox(const AABB& box)
+void Hachiko::Quadtree::Insert(GameObject* game_object) const
 {
-	Clear();
-	root = new QuadtreeNode(box, nullptr);
+    if (root)
+    {
+        root->Insert(game_object);
+    }
 }
 
-void Quadtree::Insert(GameObject* game_object)
+void Hachiko::Quadtree::Remove(GameObject* game_object) const
 {
-	if (root) root->Insert(game_object);
+    if (root)
+    {
+        root->Remove(game_object);
+    }
 }
 
-void Quadtree::Remove(GameObject* game_object)
+void Hachiko::Quadtree::DebugDraw() const
 {
-	if (root) root->Remove(game_object);
-}
-
-void Quadtree::DebugDraw()
-{
-	if (root) root->DebugDraw();
+    if (root)
+    {
+        root->DebugDraw();
+    }
 }
