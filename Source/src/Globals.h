@@ -59,6 +59,7 @@ enum class UpdateStatus
 #define LIBRARY_MESH_FOLDER "Library/Meshes/"
 #define LIBRARY_SCENE_FOLDER "Library/Scenes/"
 #define LIBRARY_MATERIAL_FOLDER "Library/Materials/"
+#define LIBRARY_MODEL_FOLDER "Library/Models/"
 #define LIBRARY_SHADERS_FOLDER "Library/Shaders/"
 #define LIBRARY_FONTS_FOLDER "Library/Fonts/"
 

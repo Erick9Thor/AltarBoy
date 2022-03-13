@@ -7,6 +7,11 @@
 
 #include "Core/preferences/src/ResourcesPreferences.h"
 
+#include "importers/MeshImporter.h"
+#include "importers/TextureImporter.h"
+#include "importers/MaterialImporter.h"
+#include "importers/ModelImporter.h"
+
 using namespace Hachiko;
 
 bool ModuleResources::Init()
@@ -29,12 +34,37 @@ bool ModuleResources::Init()
     };
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
 
-    // TODO: iterate over the 
+    // Load all resources in library 
+    std::vector<std::string> files;
+    std::vector<std::string> directories;
 
-    // load meshes
-    // load textures
-    // load materials
-    // load models
+    // Load meshes
+    ModuleFileSystem::DiscoverFiles(LIBRARY_MESH_FOLDER, files, directories);
+    MeshImporter mesh_importer;
+    // TODO: LOAD MESH
+    files.clear();
+    directories.clear();
+
+    // Load textures
+    ModuleFileSystem::DiscoverFiles(LIBRARY_TEXTURES_FOLDER, files, directories);
+    TextureImporter texture_importer;
+    // TODO: LOAD TEXTURE
+    files.clear();
+    directories.clear();
+
+    // Load materials
+    ModuleFileSystem::DiscoverFiles(LIBRARY_MATERIAL_FOLDER, files, directories);
+    MaterialImporter material_importer;
+    // TODO: LOAD MATERIAL
+    files.clear();
+    directories.clear();
+    
+    // Load models
+    ModuleFileSystem::DiscoverFiles(LIBRARY_MODEL_FOLDER, files, directories);
+    ModelImporter model_importer;
+    // TODO: LOAD MODEL
+    files.clear();
+    directories.clear();
 
     return true;
 }
