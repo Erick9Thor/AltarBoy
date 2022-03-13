@@ -1,17 +1,22 @@
 #pragma once
 
-#include "utils/JsonFormatterValue.h"
-
-#include "assimp/scene.h"
+class aiMesh;
 
 namespace Hachiko
 {
     class ResourceMaterial;
 
-    namespace MaterialImporter::Material
+    class MaterialImporter : public Importer
     {
-        ResourceMaterial* Import(const aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
-        bool Save(const ResourceMaterial* material, JsonFormatterValue j_material);
-        ResourceMaterial* Load(JsonFormatterValue j_material);
-    } // namespace MaterialImporter::Material
-}
+        friend class ModelImporter;
+
+    public:
+        MaterialImporter();
+        void Import(const char* path) override;
+        void Save(const Resource* material) override;
+        Resource* Load(const UID uid) override;
+
+    private:
+        void Import(const aiMaterial* ai_material, const UID& id = 0);
+    };
+} // namespace Hachiko

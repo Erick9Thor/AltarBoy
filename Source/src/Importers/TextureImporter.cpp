@@ -1,6 +1,11 @@
 #include "core/hepch.h"
 #include "TextureImporter.h"
+
 #include "Core/preferences/src/ResourcesPreferences.h"
+
+#include "resources/ResourceTexture.h"
+#include "modules/ModuleTexture.h"
+#include "modules/ModuleResources.h"
 
 Hachiko::TextureImporter::TextureImporter() 
 	: Importer(Importer::Type::TEXTURE)
@@ -10,7 +15,7 @@ Hachiko::TextureImporter::TextureImporter()
 
 void Hachiko::TextureImporter::Import(const char* path)
 {
-    ILuint size;
+    /* ILuint size;
     ILubyte* data;
     ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use
     size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
@@ -21,6 +26,16 @@ void Hachiko::TextureImporter::Import(const char* path)
         {
             char* fileBuffer = (char*)data;
         }
+    }*/
+
+    Hachiko::UID uid = Hachiko::UUID::GenerateUID();
+    ResourceTexture* texture = App->texture->LoadResource(uid, path);
+
+    if (texture != nullptr)
+    {
+        App->resources->textures[uid] = texture;
+
+        Save(texture);
     }
 }
 

@@ -15,6 +15,8 @@
 #define MODEL_FILE_PATH "file_path"
 #define MODEL_MESH_ID "id"
 #define MODEL_MESH_NODE "mesh"
+#define MODEL_MATERIAL_ID "id"
+#define MODEL_MATERIAL_NODE "material"
 
 // Mesh
 #define MESH_ID "mesh_id"
@@ -25,9 +27,20 @@
 #define INDICES_NODE "indices"
 #define TEXTURE_COORDS_NODE "texture_coords"
 
+// Material
+#define MATERIAL_ID "id"
+#define MATERIAL_NAME "name"
+#define MATERIAL_DIFFUSE "diffuse_id"
+#define MATERIAL_SPECULAR "specular_id"
+#define MATERIAL_NORMALS "normals_id"
+#define MATERIAL_DIFFUSE_COLOR "diffuse_color"
+#define MATERIAL_SPECULAR_COLOR "specular_color"
+#define MATERIAL_SHININESS "shininess"
+
 // Generic
 #define GENERIC_ID "id"
 #define GENERIC_FILE_PATH "file_path"
+#define GENERIC_TYPE "type"
 
 //////////////////////////
 //						//

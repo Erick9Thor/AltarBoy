@@ -6,6 +6,4 @@ Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
 
 Hachiko::ResourceMaterial::~ResourceMaterial()
 {
-    ModuleTexture::Unload(diffuse);
-    ModuleTexture::Unload(specular);
 }

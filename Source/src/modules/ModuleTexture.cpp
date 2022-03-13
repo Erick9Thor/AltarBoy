@@ -1,6 +1,9 @@
 #include "core/hepch.h"
 #include "ModuleTexture.h"
 
+#include "resources/ResourceTexture.h"
+#include "modules/ModuleResources.h"
+
 Hachiko::ModuleTexture::ModuleTexture() = default;
 
 Hachiko::ModuleTexture::~ModuleTexture() = default;
@@ -15,6 +18,44 @@ bool Hachiko::ModuleTexture::CleanUp()
 {
     ilShutDown();
     return true;
+}
+
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const char* path, bool flip)
+{
+    unsigned int img_id = LoadImg(path, flip);
+
+    if (img_id != 0)
+    {
+        ResourceTexture* texture = new ResourceTexture(uid);
+        texture->path = path;
+        texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+        texture->mag_filter = GL_LINEAR;
+        texture->wrap = GL_CLAMP;
+
+        glGenTextures(1, &texture->id);
+        glBindTexture(GL_TEXTURE_2D, texture->id);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texture->min_filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texture->mag_filter);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture->wrap);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texture->wrap);
+
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     texture->bpp = ilGetInteger(IL_IMAGE_BPP),
+                     texture->width = ilGetInteger(IL_IMAGE_WIDTH),
+                     texture->height = ilGetInteger(IL_IMAGE_HEIGHT),
+                     0,
+                     texture->format = ilGetInteger(IL_IMAGE_FORMAT),
+                     GL_UNSIGNED_BYTE,
+                     ilGetData());
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glBindTexture(GL_TEXTURE_2D, 0);
+        DeleteImg(img_id);
+
+        return texture;
+    }
+    return nullptr;
 }
 
 Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)

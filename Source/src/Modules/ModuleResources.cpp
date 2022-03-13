@@ -29,11 +29,30 @@ bool ModuleResources::Init()
     };
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
 
+    // TODO: iterate over the 
+
+    // load meshes
+    // load textures
+    // load materials
+    // load models
+
     return true;
 }
 
 bool ModuleResources::CleanUp()
 {
+    for (auto it = meshes.begin(); it != meshes.end(); ++it)
+        delete it->second;
+
+    for (auto it = textures.begin(); it != textures.end(); ++it)
+        delete it->second;
+
+    for (auto it = materials.begin(); it != materials.end(); ++it)
+        delete it->second;
+
+    for (auto it = models.begin(); it != models.end(); ++it)
+        delete it->second;
+
     return Module::CleanUp();
 }
 
@@ -56,10 +75,9 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         destination.append(path.filename().c_str()).string().c_str(), true))
     {
         last_resource_path = path; // We may need this to import more assets from this path
+        HandleAssetsChanged(destination, type);
+        HE_LOG("File destination: %s", destination.string().c_str());
     }
-
-    HandleAssetsChanged(destination, type);
-    HE_LOG("File destination: %s", destination.string().c_str());
 }
 
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)

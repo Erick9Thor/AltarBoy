@@ -14,6 +14,7 @@ namespace Hachiko
             VERTICES,
             NORMALS,
             TEX_COORDS,
+            TANGENTS,
             COUNT,
         };
 
@@ -29,7 +30,7 @@ namespace Hachiko
         AABB bounding_box;
 
         // Store the ids of buffers in opengl
-        unsigned vbo{};
+        unsigned vbo{}; // TODO: remove this
         unsigned ebo{};
         unsigned vao{};
         unsigned buffer_ids[static_cast<int>(Buffers::COUNT)]{};
@@ -42,5 +43,6 @@ namespace Hachiko
         float* vertices{};
         float* normals{};
         float* tex_coords{};
+        float* tangents{};
     };
 }

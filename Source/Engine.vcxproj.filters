@@ -408,6 +408,7 @@
     <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
       <Filter>Core\Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\ResourceTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1055,6 +1056,7 @@
     <ClInclude Include="src\Core\serialization\Serializable.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\Resources\ResourceTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

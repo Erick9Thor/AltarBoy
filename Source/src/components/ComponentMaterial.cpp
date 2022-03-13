@@ -15,25 +15,26 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
 
 void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
 {
-    material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);
-    use_diffuse_texture = material->diffuse.loaded;
-    use_specular_texture = material->specular.loaded;
+    //material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);
+    //use_diffuse_texture = material->diffuse.loaded;
+    //use_specular_texture = material->specular.loaded;
 }
 
 void Hachiko::ComponentMaterial::Save(JsonFormatterValue j_component) const
 {
-    MaterialImporter::Material::Save(material, j_component);
+    //MaterialImporter::Material::Save(material, j_component);
 }
 
 void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
 {
-    material = MaterialImporter::Material::Load(j_component);
-    use_diffuse_texture = material->diffuse.loaded;
-    use_specular_texture = material->specular.loaded;
+    //material = MaterialImporter::Material::Load(j_component);
+    //use_diffuse_texture = material->diffuse.loaded;
+    //use_specular_texture = material->specular.loaded;
 }
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
+    /*
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
@@ -122,4 +123,5 @@ void Hachiko::ComponentMaterial::DrawGui()
         }
     }
     ImGui::PopID();
+    */
 }

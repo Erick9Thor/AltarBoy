@@ -1,6 +1,7 @@
 #include "Core/hepch.h"
 #include "ModelImporter.h"
 #include "MeshImporter.h"
+#include "MaterialImporter.h"
 
 #include "Modules/ModuleFileSystem.h"
 #include "Core/preferences/src/ResourcesPreferences.h"
@@ -23,11 +24,12 @@ void Hachiko::ModelImporter::Import(const char* path)
     }
 
     Assimp::Importer import;
+    //import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
     const aiScene* scene = nullptr;
     const std::filesystem::path model_path(path);
     const std::string model_name = model_path.filename().replace_extension().string();
     const std::string model_library_path = preferences->GetLibraryPath(Resource::Type::MODEL) + model_name;
-    scene = import.ReadFile(model_path.string(), aiProcess_Triangulate | aiProcess_FlipUVs);
+    scene = import.ReadFile(model_path.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -54,13 +56,24 @@ void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
-    Hachiko::UID mesh_id;
+    Hachiko::UID uid;
     Hachiko::MeshImporter mesh_importer;
+    Hachiko::MaterialImporter material_importer;
     for (unsigned int i = 0; i < scene->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[i];
-        mesh_id = Hachiko::UUID::GenerateUID();
-        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
-        mesh_importer.Import(mesh, mesh_id);
+        uid = Hachiko::UUID::GenerateUID();
+        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = uid;
+        mesh_importer.Import(mesh, uid);
+    }
+
+    /// WORK IN PROGRESS
+    aiString file;
+    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+    {
+        aiMaterial* material = scene->mMaterials[i];
+        uid = Hachiko::UUID::GenerateUID();
+        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = uid;
+        material_importer.Import(material, uid);
     }
 }

@@ -24,6 +24,8 @@ namespace Hachiko
         unsigned heighths[6]{};
     };
 
+    class ResourceTexture;
+
     class ModuleTexture final : public Module
     {
     public:
@@ -32,6 +34,8 @@ namespace Hachiko
 
         bool Init() override;
         bool CleanUp() override;
+
+        static ResourceTexture* LoadResource(UID uid, const char* path, bool flip = true);
 
         static Texture Load(const char* path, bool flip = true);
         static void Unload(Texture& texture);
