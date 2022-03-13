@@ -23,6 +23,7 @@ namespace Hachiko
             UNKNOWN
         };
 
+        Resource(Type type);
         Resource(UID id, Type type);
         virtual ~Resource();
 

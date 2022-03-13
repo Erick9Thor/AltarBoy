@@ -52,28 +52,56 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const UID id)
     return nullptr;
 }
 
+Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
+{
+    if (!App->file_sys->Exists(model_path))
+    {
+        return nullptr;
+    }
+    YAML::Node model_node = YAML::LoadFile(model_path);
+    //Hachiko::Resource* model_output = new Resource(model_node[MODEL_ID].as<long long>(), Resource::Type::MODEL);
+
+    return nullptr;
+}
+
 void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
     Hachiko::UID uid;
     Hachiko::MeshImporter mesh_importer;
-    Hachiko::MaterialImporter material_importer;
+
+    ImportNode(scene->mRootNode, node[NODE_ROOT]);
+
     for (unsigned int i = 0; i < scene->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[i];
-        uid = Hachiko::UUID::GenerateUID();
-        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = uid;
-        mesh_importer.Import(mesh, uid);
+        mesh_id = node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>();
+        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
+        mesh_importer.Import(mesh, mesh_id);
     }
 
-    /// WORK IN PROGRESS
     aiString file;
+    Hachiko::MaterialImporter material_importer;
     for (unsigned i = 0; i < scene->mNumMaterials; ++i)
     {
         aiMaterial* material = scene->mMaterials[i];
         uid = Hachiko::UUID::GenerateUID();
         node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = uid;
         material_importer.Import(material, uid);
+    }
+}
+
+void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node)
+{
+    node[NODE_NAME] = assimp_node->mName.C_Str();
+    node[NODE_TRANSFORM] = assimp_node->mTransformation;
+    node[NODE_MESH_ID] = Hachiko::UUID::GenerateUID();
+
+    auto child_node = assimp_node->mChildren;
+    for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
+    {
+        ImportNode(*child_node, node[NODE_CHILD][i]);
+        ++child_node;
     }
 }

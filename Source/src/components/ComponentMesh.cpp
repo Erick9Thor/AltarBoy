@@ -7,6 +7,7 @@
 
 #include "modules/ModuleProgram.h"
 #include "importers/MeshImporter.h"
+#include "resources/ResourceMesh.h"
 
 Hachiko::ComponentMesh::ComponentMesh(GameObject* container) : Component(Type::MESH, container) {}
 
@@ -23,20 +24,6 @@ Hachiko::ComponentMesh::~ComponentMesh()
         RELEASE(mesh);
     }
 }
-
-//void Hachiko::ComponentMesh::Import(const aiMesh* mesh)
-//{
-//    // TODO: This is ugly. Maybe we should find a better approach,
-//    // for example MeshImporter::Import can take resource as ref
-//    // and do this check internally.
-//
-//    if (resource != nullptr && resource->loaded)
-//    {
-//        resource->CleanUp();
-//    }
-//
-//    resource = MeshImporter::Import(mesh);
-//}
 
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
@@ -72,29 +59,17 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
     }
 }
 
-void Hachiko::ComponentMesh::LoadModel(const char* model_path)
+void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 {
-    HE_LOG(model_path);
+    MeshImporter mesh_importer;
+    meshes.push_back(static_cast<ResourceMesh*>(mesh_importer.Load(Hachiko::UUID::GenerateUID())));
 }
 
-//void Hachiko::ComponentMesh::Save(JsonFormatterValue j_component) const
-//{
-//    MeshImporter::Save(resource, game_object->getUID());
-//}
-//
-//void Hachiko::ComponentMesh::Load(JsonFormatterValue j_component)
-//{
-//    // TODO: This is ugly. Maybe we should find a better approach,
-//    // for example MeshImporter::Import can take resource as ref
-//    // and do this check internally.
-//
-//    if (resource != nullptr && resource->loaded)
-//    {
-//        resource->CleanUp();
-//    }
-//
-//    resource = MeshImporter::Load(game_object->getUID());
-//}
+void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
+{
+    MeshImporter mesh_importer;
+    meshes.push_back(static_cast<ResourceMesh*>(mesh_importer.Load(mesh_id)));
+}
 
 void Hachiko::ComponentMesh::DrawGui()
 {
@@ -133,8 +108,7 @@ void Hachiko::ComponentMesh::DisplayNotLoadedUI()
         if (ImGuiFileDialog::Instance()->IsOk())
         {
             // TODO: If filepath is not asset. Import mesh
-            //onst std::filesystem::path file_path = ImGuiFileDialog::Instance()->GetFilePathName();
-            LoadModel(ImGuiFileDialog::Instance()->GetFilePathName().c_str());
+            LoadMesh(ImGuiFileDialog::Instance()->GetFilePathName().c_str());
         }
 
         ImGuiFileDialog::Instance()->Close();

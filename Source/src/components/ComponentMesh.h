@@ -76,7 +76,8 @@ namespace Hachiko
             return meshes[index];
         }
 
-        void LoadModel(const char* model_path);
+        void LoadMesh(const char* mesh_path);
+        void LoadMesh(UID mesh_id);
         void DrawGui() override;
 
     private:

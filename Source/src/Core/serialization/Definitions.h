@@ -18,6 +18,13 @@
 #define MODEL_MATERIAL_ID "id"
 #define MODEL_MATERIAL_NODE "material"
 
+// Node
+#define NODE_NAME "node_name"
+#define NODE_ROOT "node_root"
+#define NODE_CHILD "node_child"
+#define NODE_TRANSFORM "node_transform"
+#define NODE_MESH_ID "mesh"
+
 // Mesh
 #define MESH_ID "mesh_id"
 #define MIN_POINT "min_point"

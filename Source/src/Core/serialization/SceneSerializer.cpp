@@ -107,7 +107,7 @@ YAML::Node Hachiko::SceneSerializer::SaveComponent(const Component* component) c
 
             for (int i = 0; i < mc->GetMeshesCount(); ++i)
             {
-                //component_node[MESH_NODE][i][MESH_ENABLED] = mc->IsMeshEnabled(i);
+                component_node[MESH_NODE][i][MESH_ID] = mc->GetID();
 
                 //if (mc->IsMeshTextureLoaded(i))
                 //{
@@ -189,11 +189,11 @@ void Hachiko::SceneSerializer::LoadComponent(YAML::Node component, GameObject* g
                 ImportFromAssets(component[COMPONENT_DATA][MODEL_PATH].as<std::string>().c_str(), Resource::Type::MODEL);
             }
 
-            component_mesh->LoadModel(component[COMPONENT_DATA][MODEL_PATH].as<std::string>().c_str());
+            //component_mesh->LoadMesh(component[COMPONENT_DATA][MESH_ID].as<UID>());
 
             for (int i = 0; i < static_cast<int>(component[COMPONENT_DATA][MESH_NODE].size()); ++i)
             {
-                // TODO: Components cant be (dis)enable yet
+                // TODO: Components cant be enable/disable yet
                 //component[COMPONENT_DATA][MESH_NODE][i][MESH_ENABLED].as<bool>() ? component_mesh->EnableMesh(i) : component_mesh->DisableMesh(i);
 
                 if (component[COMPONENT_DATA][MESH_NODE][i][MESH_TEXTURE].IsDefined())

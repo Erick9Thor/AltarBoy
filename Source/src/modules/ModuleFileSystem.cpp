@@ -136,7 +136,7 @@ bool Hachiko::ModuleFileSystem::Save(const char* path, const YAML::Node& node) c
 
 bool Hachiko::ModuleFileSystem::Exists(const char* file_path)
 {
-    return PHYSFS_exists(file_path) != 0;
+    return PHYSFS_exists(file_path) != 0 && !std::string(file_path).empty();
 }
 
 bool Hachiko::ModuleFileSystem::IsDirectory(const char* directory_path)

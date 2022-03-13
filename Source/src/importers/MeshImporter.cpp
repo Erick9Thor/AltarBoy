@@ -81,7 +81,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
     unsigned size_bytes = 0;
 
     // TODO: Manage uid properly
-    const auto mesh = new ResourceMesh(1);
+    const auto mesh = new ResourceMesh(uid);
 
     unsigned header[static_cast<int>(ResourceMesh::Buffers::COUNT)];
     size_bytes = sizeof(header);

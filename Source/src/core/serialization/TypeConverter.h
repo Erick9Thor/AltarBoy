@@ -7,6 +7,7 @@
 #include <Math/float4x4.h>
 
 #include "assimp/vector3.h"
+#include "utils/UUID.h"
 
 namespace YAML
 {
@@ -205,6 +206,67 @@ namespace YAML
             rhs.x = node[0].as<float>();
             rhs.y = node[1].as<float>();
             rhs.z = node[2].as<float>();
+            return true;
+        }
+    };
+
+    template<>
+    struct convert<aiMatrix4x4>
+    {
+        static Node encode(const aiMatrix4x4& rhs)
+        {
+            Node node;
+            node[0].push_back(static_cast<float>(rhs.a1));
+            node[0].push_back(static_cast<float>(rhs.a2));
+            node[0].push_back(static_cast<float>(rhs.a3));
+            node[0].push_back(static_cast<float>(rhs.a4));
+            
+            node[1].push_back(static_cast<float>(rhs.b1));
+            node[1].push_back(static_cast<float>(rhs.b2));
+            node[1].push_back(static_cast<float>(rhs.b3));
+            node[1].push_back(static_cast<float>(rhs.b4));
+            
+            node[2].push_back(static_cast<float>(rhs.c1));
+            node[2].push_back(static_cast<float>(rhs.c2));
+            node[2].push_back(static_cast<float>(rhs.c3));
+            node[2].push_back(static_cast<float>(rhs.c4));
+            
+            node[3].push_back(static_cast<float>(rhs.d1));
+            node[3].push_back(static_cast<float>(rhs.d2));
+            node[3].push_back(static_cast<float>(rhs.d3));
+            node[3].push_back(static_cast<float>(rhs.d4));
+            
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, aiMatrix4x4& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 3)
+            {
+                return false;
+            }
+
+            rhs.a1 = node[0][0].as<float>();
+            rhs.a2 = node[0][1].as<float>();
+            rhs.a3 = node[0][2].as<float>();
+            rhs.a4 = node[0][3].as<float>();
+
+            rhs.b1 = node[1][0].as<float>();
+            rhs.b2 = node[1][1].as<float>();
+            rhs.b3 = node[1][2].as<float>();
+            rhs.b4 = node[1][3].as<float>();
+
+            rhs.c1 = node[2][0].as<float>();
+            rhs.c2 = node[2][1].as<float>();
+            rhs.c3 = node[2][2].as<float>();
+            rhs.c4 = node[2][3].as<float>();
+
+            rhs.d1 = node[3][0].as<float>();
+            rhs.d2 = node[3][1].as<float>();
+            rhs.d3 = node[3][2].as<float>();
+            rhs.d4 = node[3][3].as<float>();
+
             return true;
         }
     };

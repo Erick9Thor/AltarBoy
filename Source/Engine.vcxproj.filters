@@ -408,7 +408,12 @@
     <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
       <Filter>Core\Serialization</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resources\ResourceTexture.cpp" />
+    <ClCompile Include="src\Resources\ResourceTexture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceModel.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1056,7 +1061,12 @@
     <ClInclude Include="src\Core\serialization\Serializable.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\ResourceTexture.h" />
+    <ClInclude Include="src\Resources\ResourceTexture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceModel.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
