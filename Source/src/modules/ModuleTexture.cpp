@@ -32,25 +32,18 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
         texture->mag_filter = GL_LINEAR;
         texture->wrap = GL_CLAMP;
 
-        glGenTextures(1, &texture->id);
-        glBindTexture(GL_TEXTURE_2D, texture->id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texture->min_filter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texture->mag_filter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture->wrap);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texture->wrap);
+        texture->bpp = ilGetInteger(IL_IMAGE_BPP);
+        texture->width = ilGetInteger(IL_IMAGE_WIDTH);
+        texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
+        texture->format = ilGetInteger(IL_IMAGE_FORMAT);
 
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     texture->bpp = ilGetInteger(IL_IMAGE_BPP),
-                     texture->width = ilGetInteger(IL_IMAGE_WIDTH),
-                     texture->height = ilGetInteger(IL_IMAGE_HEIGHT),
-                     0,
-                     texture->format = ilGetInteger(IL_IMAGE_FORMAT),
-                     GL_UNSIGNED_BYTE,
-                     ilGetData());
-        glGenerateMipmap(GL_TEXTURE_2D);
+        byte* data = ilGetData();
+        texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+        texture->data = new byte[texture->data_size];
+        memcpy(texture->data, data, texture->data_size);
 
-        glBindTexture(GL_TEXTURE_2D, 0);
+        texture->GenerateBuffer();
+
         DeleteImg(img_id);
 
         return texture;

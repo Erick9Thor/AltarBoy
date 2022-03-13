@@ -136,7 +136,11 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         uid = Hachiko::UUID::GenerateUID();
         for (std::string path : search_paths)
         {
-            material->diffuse = ModuleTexture::LoadResource(uid, path.c_str());
+            // if the texture is in assets
+            //  load it
+            // else
+            //  copy it & import it
+            material->diffuse = ModuleTexture::LoadResource(uid, path.c_str()); // TODO: replace it with the imports
             if (material->diffuse != nullptr)
             {
                 break;
@@ -159,7 +163,8 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         {
             // Not flip specular because devil seems to auto flip tif images already
             constexpr bool flip = false;
-            material->specular = ModuleTexture::LoadResource(uid, path.c_str(), flip);
+            material->specular = ModuleTexture::LoadResource(uid, path.c_str(), flip); // TODO: replace it with the imports
+
             if (material->specular != nullptr)
             {
                 break;
@@ -179,7 +184,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         uid = Hachiko::UUID::GenerateUID();
         for (std::string path : search_paths)
         {
-            material->normals = ModuleTexture::LoadResource(uid, path.c_str());
+            material->normals = ModuleTexture::LoadResource(uid, path.c_str()); // TODO: replace it with the imports
             if (material->normals != nullptr)
             {
                 break;

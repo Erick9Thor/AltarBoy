@@ -11,6 +11,8 @@ namespace Hachiko
         ResourceTexture(UID uid);
         ~ResourceTexture() override;
 
+        void GenerateBuffer();
+
         [[nodiscard]] unsigned GetId() const
         {
             return id;
@@ -26,5 +28,8 @@ namespace Hachiko
         unsigned min_filter = 0x2703;
         unsigned mag_filter = 0x2601;
         unsigned wrap = 0x2900;
+
+        byte* data{};
+        unsigned data_size = 0;
     };
 } // namespace Hachiko
