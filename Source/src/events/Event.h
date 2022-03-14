@@ -6,11 +6,12 @@
 #include "SelectionChangedEventPayload.h"
 #include "FileAddedEventPayload.h"
 #include "AssetsAddedEventPayload.h"
+#include "TransformChangedEventPayload.h"
 
 namespace Hachiko
 {
     //std::monostate is added just so we can have an empty std::variant
-    using EventData = std::variant<std::monostate, SelectionChangedEventPayload, FileAddedEventPayload, AssetsAddedEventPayload>;
+    using EventData = std::variant<std::monostate, SelectionChangedEventPayload, FileAddedEventPayload, AssetsAddedEventPayload, TransformChangedEventPayload>;
 
     class Event
     {
