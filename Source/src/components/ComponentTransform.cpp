@@ -1,6 +1,6 @@
 #include "core/hepch.h"
 #include "ComponentTransform.h"
-
+#include "modules/ModuleEvent.h"
 
 /**     CONSTRUCTORS    **/
 
@@ -164,6 +164,11 @@ void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& ne
     UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
 }
 
+/***    GETTERS     ***/
+
+
+/***    OPERATION METHODS   ***/
+
 void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calculation_mode) 
 {
     GameObject* parent_of_owner = game_object->parent;
@@ -201,6 +206,11 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
 void Hachiko::ComponentTransform::UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode)
 {
     const std::vector<GameObject*>& children = game_object->children;
+
+    /* Event to notify that transform has changed */
+    Event transform_changed(Event::Type::TRANSFORM_CHANGED);
+    transform_changed.SetEventData<TransformChangedEventPayload>(this, game_object);
+    App->event->Publish(transform_changed);
 
     dirty = true;
 

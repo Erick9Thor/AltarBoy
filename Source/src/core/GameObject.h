@@ -5,6 +5,9 @@
 #include "utils/UUID.h"
 #include "components/Component.h"
 
+#include "modules/ModuleEvent.h"
+#include "events/Event.h"
+
 namespace Hachiko
 {
     class JsonFormatterValue;
@@ -27,6 +30,8 @@ namespace Hachiko
                    const Quat& rotation = Quat::identity,
                    const float3& scale = float3::one);
         virtual ~GameObject();
+
+        void Init();
 
         void SetNewParent(GameObject* new_parent);
 
