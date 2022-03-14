@@ -13,24 +13,25 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
     RELEASE(material);
 }
 
+// TODO: Move to importers
 void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
 {
     //material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);
     //use_diffuse_texture = material->diffuse.loaded;
     //use_specular_texture = material->specular.loaded;
 }
-
-void Hachiko::ComponentMaterial::Save(JsonFormatterValue j_component) const
-{
-    //MaterialImporter::Material::Save(material, j_component);
-}
-
-void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
-{
-    //material = MaterialImporter::Material::Load(j_component);
-    //use_diffuse_texture = material->diffuse.loaded;
-    //use_specular_texture = material->specular.loaded;
-}
+// TODO: Move to serializers
+//void Hachiko::ComponentMaterial::Save(JsonFormatterValue j_component) const
+//{
+//    //MaterialImporter::Material::Save(material, j_component);
+//}
+//
+//void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
+//{
+//    //material = MaterialImporter::Material::Load(j_component);
+//    //use_diffuse_texture = material->diffuse.loaded;
+//    //use_specular_texture = material->specular.loaded;
+//}
 
 void Hachiko::ComponentMaterial::DrawGui()
 {

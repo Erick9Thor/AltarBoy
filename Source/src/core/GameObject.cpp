@@ -275,60 +275,60 @@ void Hachiko::GameObject::RemoveComponent(Component* component)
     //TODO: Should I delete the component?
     components.erase(std::remove(components.begin(), components.end(), component));
 }
-
-void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
-{
-    j_gameObject["Uid"] = uid;
-    j_gameObject["GOName"] = name.c_str();
-    j_gameObject["Active"] = active;
-    j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
-
-    const JsonFormatterValue j_components = j_gameObject["Components"];
-    for (unsigned i = 0; i < components.size(); ++i)
-    {
-        JsonFormatterValue j_component = j_components[i];
-        const Component* component = components[i];
-
-        j_component["ComponentID"] = component->GetID();
-        j_component["ComponentType"] = static_cast<int>(component->GetType());
-        component->Save(j_component);
-    }
-
-    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
-    for (unsigned i = 0; i < children.size(); ++i)
-    {
-        const JsonFormatterValue j_child = j_children[i];
-        const GameObject* child = children[i];
-        child->Save(j_child);
-    }
-}
-
-void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
-{
-    const JsonFormatterValue j_components = j_gameObject["Components"];
-    for (unsigned i = 0; i < j_components.Size(); ++i)
-    {
-        JsonFormatterValue j_component = j_components[i];
-
-        UID c_uid = j_component["ComponentID"];
-        int enum_type = j_component["ComponentType"];
-        bool active = j_component["Active"];
-
-        const auto type = static_cast<Component::Type>(enum_type);
-
-        Component* component = CreateComponent(type);
-
-        component->Load(j_component);
-    }
-
-    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
-    for (unsigned i = 0; i < j_children.Size(); ++i)
-    {
-        JsonFormatterValue j_child = j_children[i];
-
-        std::string child_name = j_child["GOName"];
-        const auto child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
-        child->scene_owner = scene_owner;
-        child->Load(j_child);
-    }
-}
+//
+//void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
+//{
+//    j_gameObject["Uid"] = uid;
+//    j_gameObject["GOName"] = name.c_str();
+//    j_gameObject["Active"] = active;
+//    j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
+//
+//    const JsonFormatterValue j_components = j_gameObject["Components"];
+//    for (unsigned i = 0; i < components.size(); ++i)
+//    {
+//        JsonFormatterValue j_component = j_components[i];
+//        const Component* component = components[i];
+//
+//        j_component["ComponentID"] = component->GetID();
+//        j_component["ComponentType"] = static_cast<int>(component->GetType());
+//        component->Save(j_component);
+//    }
+//
+//    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
+//    for (unsigned i = 0; i < children.size(); ++i)
+//    {
+//        const JsonFormatterValue j_child = j_children[i];
+//        const GameObject* child = children[i];
+//        child->Save(j_child);
+//    }
+//}
+//
+//void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
+//{
+//    const JsonFormatterValue j_components = j_gameObject["Components"];
+//    for (unsigned i = 0; i < j_components.Size(); ++i)
+//    {
+//        JsonFormatterValue j_component = j_components[i];
+//
+//        UID c_uid = j_component["ComponentID"];
+//        int enum_type = j_component["ComponentType"];
+//        bool active = j_component["Active"];
+//
+//        const auto type = static_cast<Component::Type>(enum_type);
+//
+//        Component* component = CreateComponent(type);
+//
+//        component->Load(j_component);
+//    }
+//
+//    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
+//    for (unsigned i = 0; i < j_children.Size(); ++i)
+//    {
+//        JsonFormatterValue j_child = j_children[i];
+//
+//        std::string child_name = j_child["GOName"];
+//        const auto child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
+//        child->scene_owner = scene_owner;
+//        child->Load(j_child);
+//    }
+//}

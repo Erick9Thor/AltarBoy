@@ -40,30 +40,30 @@ float3 Hachiko::ComponentDirLight::GetDirection() const
     const ComponentTransform* transform = game_object->GetTransform();
     return transform->GetFront();
 }
-
-void Hachiko::ComponentDirLight::Save(JsonFormatterValue j_component) const
-{
-    j_component["LightType"] = static_cast<int>(Type::DIRLIGHT);
-
-    const JsonFormatterValue j_color = j_component["Color"];
-    j_color[0] = color.x;
-    j_color[1] = color.y;
-    j_color[2] = color.z;
-    j_color[3] = color.w;
-
-    j_component["intensity"] = intensity;
-    j_component["active"] = active;
-    j_component["drawDirection"] = draw_direction;
-}
-
-void Hachiko::ComponentDirLight::Load(JsonFormatterValue j_component)
-{
-    const JsonFormatterValue j_color = j_component["Color"];
-    color = float4(j_color[0], j_color[1], j_color[2], j_color[3]);
-
-    intensity = j_component["intensity"];
-    draw_direction = j_component["drawDirection"];
-}
+// TODO: Move to serializers
+//void Hachiko::ComponentDirLight::Save(JsonFormatterValue j_component) const
+//{
+//    j_component["LightType"] = static_cast<int>(Type::DIRLIGHT);
+//
+//    const JsonFormatterValue j_color = j_component["Color"];
+//    j_color[0] = color.x;
+//    j_color[1] = color.y;
+//    j_color[2] = color.z;
+//    j_color[3] = color.w;
+//
+//    j_component["intensity"] = intensity;
+//    j_component["active"] = active;
+//    j_component["drawDirection"] = draw_direction;
+//}
+//
+//void Hachiko::ComponentDirLight::Load(JsonFormatterValue j_component)
+//{
+//    const JsonFormatterValue j_color = j_component["Color"];
+//    color = float4(j_color[0], j_color[1], j_color[2], j_color[3]);
+//
+//    intensity = j_component["intensity"];
+//    draw_direction = j_component["drawDirection"];
+//}
 
 void Hachiko::ComponentDirLight::DrawGui()
 {

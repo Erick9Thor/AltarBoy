@@ -26,8 +26,8 @@ namespace Hachiko
         void DrawGui() override;
 
         void Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        //void Save(JsonFormatterValue j_component) const override;
+        //void Load(JsonFormatterValue j_component) override;
 
         bool use_diffuse_texture = false;
         bool use_specular_texture = false;

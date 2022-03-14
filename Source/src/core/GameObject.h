@@ -7,7 +7,6 @@
 
 namespace Hachiko
 {
-    class JsonFormatterValue;
     class ComponentTransform;
     class ComponentCamera;
     class Program;
@@ -19,7 +18,10 @@ namespace Hachiko
 
     public:
         GameObject(const char* name = "Unnamed");
-        GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
+        GameObject(GameObject* parent,
+                   const float4x4& transform, 
+                   const char* name = "Unnamed", 
+                   UID uid = UUID::GenerateUID());
         GameObject(GameObject* parent,
                    const char* name = "Unnamed",
                    UID uid = UUID::GenerateUID(),
@@ -64,8 +66,8 @@ namespace Hachiko
             uid = new_id;
         }
 
-        void Save(JsonFormatterValue j_gameObject) const;
-        void Load(JsonFormatterValue j_gameObject);
+        //void Save(JsonFormatterValue j_gameObject) const;
+        //void Load(JsonFormatterValue j_gameObject);
 
         [[nodiscard]] const OBB& GetOBB() const
         {

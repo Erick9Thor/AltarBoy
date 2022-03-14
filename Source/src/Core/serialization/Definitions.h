@@ -148,3 +148,18 @@
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
+
+// Component Point Light
+#define LIGHT_TYPE "light_type"
+#define LIGHT_COLOR "color"
+#define LIGHT_INTENSITY "intensity"
+#define LIGHT_RADIUS "radius"
+#define LIGHT_DRAW_SPHERE "draw_sphere"
+
+// Component Camera
+#define FRUSTUM "frustum"
+#define NEAR_DISTANCE "near_distance"
+#define FAR_DISTANCE "far_distance"
+#define CAMERA_POSITION "position"
+#define CAMERA_FRONT "front"
+#define CAMERA_UP "up"
