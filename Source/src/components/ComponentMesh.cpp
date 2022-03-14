@@ -62,7 +62,8 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
 void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 {
     MeshImporter mesh_importer;
-    meshes.push_back(static_cast<ResourceMesh*>(mesh_importer.Load(Hachiko::UUID::GenerateUID())));
+    std::filesystem::path m_path(mesh_path);
+    LoadMesh(Hachiko::UUID::StringToUID(m_path.filename().replace_extension().string()));
 }
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)

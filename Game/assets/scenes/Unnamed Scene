@@ -10,11 +10,18 @@ child:
         data:
           position: [4.3046422, 3.83860779, 0]
           rotation: [-0.357330501, 0.608358026, 0.613841653, -0.354138255]
-          scale: [1.00000012, 5.00000095, 2]
+          scale: [1.00000012, 5.00000143, 2]
       - enabled: true
         id: 0
         type: 6
         data: ~
+      - enabled: true
+        id: 0
+        type: 2
+        data:
+          model_path: ""
+          mesh:
+            - mesh_id: 0
   - name: Point Light
     enabled: true
     id: 4617629050585797525
@@ -30,6 +37,13 @@ child:
         id: 0
         type: 6
         data: ~
+      - enabled: true
+        id: 0
+        type: 2
+        data:
+          model_path: ""
+          mesh:
+            - mesh_id: 0
   - name: Spot Light
     enabled: true
     id: 13859348161720248565

@@ -76,7 +76,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
     for (unsigned int i = 0; i < scene->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[i];
-        mesh_id = node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>();
+        Hachiko::UID mesh_id = node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>();
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
         mesh_importer.Import(mesh, mesh_id);
     }

@@ -68,20 +68,20 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     delete[] file_buffer;
 }
 
-Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
+Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
 {
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
-    if (!std::filesystem::exists(file_path.c_str()))
+    if (!std::filesystem::exists(file_path))
     {
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.c_str());
+    char* file_buffer = App->file_sys->Load(file_path);
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    // TODO: Manage uid properly
-    const auto mesh = new ResourceMesh(uid);
+    std::string mesh_id = App->file_sys->GetFileNameAndExtension(file_path);
+
+    const auto mesh = new ResourceMesh(UUID::StringToUID(mesh_id));
 
     unsigned header[static_cast<int>(ResourceMesh::Buffers::COUNT)];
     size_bytes = sizeof(header);
@@ -148,6 +148,16 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
     delete[] file_buffer;
 
     return mesh;
+}
+
+Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
+{
+    const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    if (!std::filesystem::exists(file_path.c_str()))
+    {
+        return nullptr;
+    }
+    return Load(file_path.c_str());
 }
 
 void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
