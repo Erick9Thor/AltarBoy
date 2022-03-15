@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include "core/serialization/Serializable.h"
 
 namespace Hachiko
 {
@@ -15,7 +14,7 @@ namespace Hachiko
     class Skybox;
     class Quadtree;
 
-    class Scene
+    class Scene : public Serializable
     {
         friend class ModuleSceneManager;
 
@@ -70,7 +69,9 @@ namespace Hachiko
             name = new_name;
         }
 
-        // TODO: This hardcoded components can be set in preferences
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
+        
         void CreateLights();
         std::vector<ComponentDirLight*> dir_lights;
         std::vector<ComponentPointLight*> point_lights;

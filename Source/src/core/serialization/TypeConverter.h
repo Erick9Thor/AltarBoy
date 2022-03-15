@@ -64,31 +64,6 @@ namespace YAML
     };
 
     template<>
-    struct convert<vec>
-    {
-        static Node enconde(const vec& rhs) 
-        {
-            Node node;
-            node.push_back(rhs.x);
-            node.push_back(rhs.y);
-            node.push_back(rhs.z);
-            node.SetStyle(EmitterStyle::Flow);
-        }
-
-        static bool decode(const Node& node, float4& rhs) 
-        {
-            if (!node.IsSequence() || node.size() != 3)
-            {
-                return false;
-            }
-            rhs.x = node[0].as<float>();
-            rhs.y = node[1].as<float>();
-            rhs.z = node[2].as<float>();
-            return true;
-        }
-    };
-
-    template<>
     struct convert<float4>
     {
         static Node encode(const float4& rhs)
@@ -104,7 +79,7 @@ namespace YAML
 
         static bool decode(const Node& node, float4& rhs)
         {
-            if (!node.IsSequence() || node.size() != 3)
+            if (!node.IsSequence() || node.size() != 4)
             {
                 return false;
             }

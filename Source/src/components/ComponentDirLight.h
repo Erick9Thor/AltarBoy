@@ -30,8 +30,8 @@ namespace Hachiko
 
         [[nodiscard]] float3 GetDirection() const;
 
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
         void DrawGui() override;
 

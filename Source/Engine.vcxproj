@@ -110,6 +110,7 @@
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +149,7 @@
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>
       </ForcedIncludeFiles>
+      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

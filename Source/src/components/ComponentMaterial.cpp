@@ -13,7 +13,6 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
     RELEASE(material);
 }
 
-// TODO: Move to importers
 void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
 {
     //material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);

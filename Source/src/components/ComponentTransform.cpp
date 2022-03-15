@@ -157,41 +157,20 @@ void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& ne
 
     UpdateTransformOfHierarchy(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
 }
-// TODO: Move to serializers
-//void Hachiko::ComponentTransform::Save(JsonFormatterValue j_component) const
-//{
-//    const JsonFormatterValue j_position = j_component["Position"];
-//
-//    j_position[0] = position_local.x;
-//    j_position[1] = position_local.y;
-//    j_position[2] = position_local.z;
-//
-//    const JsonFormatterValue j_rotation = j_component["Rotation"];
-//
-//    j_rotation[0] = rotation_local.x;
-//    j_rotation[1] = rotation_local.y;
-//    j_rotation[2] = rotation_local.z;
-//    j_rotation[3] = rotation_local.w;
-//
-//    const JsonFormatterValue j_scale = j_component["Scale"];
-//
-//    j_scale[0] = scale_local.x;
-//    j_scale[1] = scale_local.y;
-//    j_scale[2] = scale_local.z;
-//}
-//
-//void Hachiko::ComponentTransform::Load(JsonFormatterValue j_component)
-//{
-//    const JsonFormatterValue j_position = j_component["Position"];
-//    const JsonFormatterValue j_rotation = j_component["Rotation"];
-//    const JsonFormatterValue j_scale = j_component["Scale"];
-//
-//    position_local = float3(j_position[0], j_position[1], j_position[2]);
-//    rotation_local = Quat(j_rotation[0], j_rotation[1], j_rotation[2], j_rotation[3]);
-//    scale_local = float3(j_scale[0], j_scale[1], j_scale[2]);
-//
-//    SetLocalTransform(position_local, rotation_local, scale_local);
-//}
+
+void Hachiko::ComponentTransform::Save(YAML::Node& node) const
+{
+    node[TRANSFORM_POSITION] = position;
+    node[TRANSFORM_ROTATION] = rotation;
+    node[TRANSFORM_SCALE] = scale_local;
+}
+
+void Hachiko::ComponentTransform::Load(const YAML::Node& node)
+{
+    SetPosition(node[TRANSFORM_POSITION].as<float3>());
+    SetLocalRotation(node[TRANSFORM_ROTATION].as<Quat>());
+    SetLocalScale(node[TRANSFORM_SCALE].as<float3>());
+}
 
 void Hachiko::ComponentTransform::DrawGui()
 {

@@ -100,6 +100,28 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
     return selected;
 }
 
+void Hachiko::Scene::Save(YAML::Node& node) const
+{
+    node[SCENE_NAME] = GetName();
+    for (int i = 0; i < GetRoot()->children.size(); ++i)
+    {
+        GetRoot()->children[i]->Save(node[CHILD_NODE][i]);
+    }
+}
+
+void Hachiko::Scene::Load(const YAML::Node& node)
+{
+    const YAML::Node childs_node = node[CHILD_NODE];
+    for (unsigned i = 0; i < childs_node.size(); ++i)
+    {
+        std::string child_name = childs_node[i][GAME_OBJECT_NAME].as<std::string>();
+        UID child_uid = childs_node[i][GAME_OBJECT_ID].as<unsigned long long>();
+        const auto child = new GameObject(root, child_name.c_str(), child_uid);
+        child->scene_owner = this;
+        child->Load(childs_node[i]);
+    }
+}
+
 void Hachiko::Scene::CreateLights()
 {
     GameObject* sun = CreateNewGameObject(root , "Sun");

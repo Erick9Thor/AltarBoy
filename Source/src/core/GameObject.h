@@ -1,8 +1,7 @@
 #pragma once
-#include "MathGeoLib.h"
 
-#include <vector>
 #include "utils/UUID.h"
+#include "core/serialization/Serializable.h"
 #include "components/Component.h"
 
 namespace Hachiko
@@ -12,7 +11,7 @@ namespace Hachiko
     class Program;
     class Scene;
 
-    class GameObject final
+    class GameObject final : public Serializable
     {
         friend class Component;
 
@@ -66,8 +65,8 @@ namespace Hachiko
             uid = new_id;
         }
 
-        //void Save(JsonFormatterValue j_gameObject) const;
-        //void Load(JsonFormatterValue j_gameObject);
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
         [[nodiscard]] const OBB& GetOBB() const
         {

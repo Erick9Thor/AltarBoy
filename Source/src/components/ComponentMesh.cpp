@@ -97,11 +97,16 @@ void Hachiko::ComponentMesh::DisplayNotLoadedUI()
 {
     if (ImGui::Button("Add Mesh"))
     {
-        ImGuiFileDialog::Instance()->OpenDialog("Select Mesh", "Select Mesh", ".*", "./library/models/", 1, nullptr,
-            ImGuiFileDialogFlags_DontShowHiddenFiles | 
-            ImGuiFileDialogFlags_HideColumnType | 
-            ImGuiFileDialogFlags_DisableCreateDirectoryButton |
-            ImGuiFileDialogFlags_HideColumnDate);
+        ImGuiFileDialog::Instance()->OpenDialog("Select Mesh",
+            "Select Mesh",
+            ".*",
+            "./library/models/",
+            1,
+            nullptr,
+            ImGuiFileDialogFlags_DontShowHiddenFiles 
+            | ImGuiFileDialogFlags_HideColumnType 
+            | ImGuiFileDialogFlags_DisableCreateDirectoryButton
+            | ImGuiFileDialogFlags_HideColumnDate);
     }
 
     if (ImGuiFileDialog::Instance()->Display("Select Mesh"))
@@ -113,5 +118,25 @@ void Hachiko::ComponentMesh::DisplayNotLoadedUI()
         }
 
         ImGuiFileDialog::Instance()->Close();
+    }
+}
+
+void Hachiko::ComponentMesh::Save(YAML::Node& node) const
+{
+    node[MODEL_PATH] = GetResourcePath();
+    for (int i = 0; i < GetMeshesCount(); ++i)
+    {
+        node[MESH_NODE][i][MESH_ID] = meshes[i]->GetID();
+        node[MESH_NODE][i][MESH_TEXTURE] = "";
+        node[MESH_NODE][i][MESH_TEXTURE_TYPE] = "";
+    }
+}
+
+void Hachiko::ComponentMesh::Load(const YAML::Node& node)
+{
+    resource_path = node[MODEL_PATH].as<std::string>();
+    for (int i = 0; i < node[MESH_NODE].size(); ++i)
+    {
+        // LOAD MESHES
     }
 }

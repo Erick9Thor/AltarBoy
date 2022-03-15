@@ -40,30 +40,22 @@ float3 Hachiko::ComponentDirLight::GetDirection() const
     const ComponentTransform* transform = game_object->GetTransform();
     return transform->GetFront();
 }
-// TODO: Move to serializers
-//void Hachiko::ComponentDirLight::Save(JsonFormatterValue j_component) const
-//{
-//    j_component["LightType"] = static_cast<int>(Type::DIRLIGHT);
-//
-//    const JsonFormatterValue j_color = j_component["Color"];
-//    j_color[0] = color.x;
-//    j_color[1] = color.y;
-//    j_color[2] = color.z;
-//    j_color[3] = color.w;
-//
-//    j_component["intensity"] = intensity;
-//    j_component["active"] = active;
-//    j_component["drawDirection"] = draw_direction;
-//}
-//
-//void Hachiko::ComponentDirLight::Load(JsonFormatterValue j_component)
-//{
-//    const JsonFormatterValue j_color = j_component["Color"];
-//    color = float4(j_color[0], j_color[1], j_color[2], j_color[3]);
-//
-//    intensity = j_component["intensity"];
-//    draw_direction = j_component["drawDirection"];
-//}
+
+void Hachiko::ComponentDirLight::Save(YAML::Node& node) const
+{
+    node[LIGHT_TYPE] = static_cast<int>(Type::DIRLIGHT);
+    node[LIGHT_COLOR] = color;
+    node[LIGHT_INTENSITY] = intensity;
+    node[COMPONENT_ENABLED] = active;
+    node[LIGHT_DRAW_DIRECTION] = draw_direction;
+}
+
+void Hachiko::ComponentDirLight::Load(const YAML::Node& node)
+{
+    color = node[LIGHT_COLOR].as<float4>();
+    intensity = node[LIGHT_INTENSITY].as<float>();
+    draw_direction = node[LIGHT_DRAW_DIRECTION].as<bool>();
+}
 
 void Hachiko::ComponentDirLight::DrawGui()
 {

@@ -47,41 +47,28 @@ float3 Hachiko::ComponentSpotLight::GetDirection() const
     return transform->GetFront();
 }
 
-// TODO: Move to serializers
-//void Hachiko::ComponentSpotLight::Save(JsonFormatterValue j_component) const
-//{
-//    j_component["LightType"] = static_cast<int>(Type::SPOTLIGHT);
-//
-//    const JsonFormatterValue j_color = j_component["Color"];
-//    j_color[0] = color.x;
-//    j_color[1] = color.y;
-//    j_color[2] = color.z;
-//    j_color[3] = color.w;
-//
-//    j_component["inner"] = inner;
-//    j_component["outer"] = outer;
-//
-//    j_component["intensity"] = intensity;
-//    j_component["radius"] = radius;
-//
-//    j_component["active"] = active;
-//    j_component["drawCone"] = draw_cone;
-//}
-//
-//void Hachiko::ComponentSpotLight::Load(JsonFormatterValue j_component)
-//{
-//    const JsonFormatterValue j_color = j_component["Color"];
-//    color = float4(j_color[0], j_color[1], j_color[2], j_color[3]);
-//
-//    inner = j_component["inner"];
-//    outer = j_component["outer"];
-//
-//    intensity = j_component["intensity"];
-//    radius = j_component["radius"];
-//
-//    active = j_component["active"];
-//    draw_cone = j_component["drawSphere"];
-//}
+void Hachiko::ComponentSpotLight::Save(YAML::Node& node) const
+{
+    node[LIGHT_TYPE] = static_cast<int>(Type::SPOTLIGHT);
+    node[LIGHT_COLOR] = color;
+    node[LIGHT_INNER] = inner;
+    node[LIGHT_OUTER] = outer;
+    node[LIGHT_INTENSITY] = intensity;
+    node[LIGHT_RADIUS] = radius;
+    node[COMPONENT_ENABLED] = active;
+    node[LIGHT_DRAW_CONE] = draw_cone;
+}
+
+void Hachiko::ComponentSpotLight::Load(const YAML::Node& node)
+{
+    color = node[LIGHT_COLOR].as<float4>();
+    inner = node[LIGHT_INNER].as<float>();
+    outer = node[LIGHT_OUTER].as<float>();
+    intensity = node[LIGHT_INTENSITY].as<float>();
+    radius = node[LIGHT_RADIUS].as<float>();
+    active = node[COMPONENT_ENABLED].as<bool>();
+    draw_cone = node[LIGHT_DRAW_CONE].as<bool>();
+}
 
 void Hachiko::ComponentSpotLight::DrawGui()
 {
