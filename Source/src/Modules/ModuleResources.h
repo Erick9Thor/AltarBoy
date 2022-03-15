@@ -82,12 +82,12 @@ namespace Hachiko
             }
             return nullptr;
         };
-
+        
         std::map<std::string, ResourceModel*> models;
         std::map<UID, ResourceMesh*> meshes;
         std::map<UID, ResourceMaterial*> materials;
         std::map<UID, ResourceTexture*> textures;
-
+       
         /* ModelImporter model_importer;
         MeshImporter mesh_importer;
         MaterialImporter material_importer;

@@ -79,7 +79,7 @@ namespace YAML
 
         static bool decode(const Node& node, float4& rhs)
         {
-            if (!node.IsSequence() || node.size() != 3)
+            if (!node.IsSequence() || node.size() != 4)
             {
                 return false;
             }

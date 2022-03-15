@@ -120,11 +120,12 @@
 #define SCENE_NAME "scene_name"
 #define UNNAMED_SCENE "Unnamed Scene"
 
-// Entity
-#define ENTITY_ROOT "root"
-#define ENTITY_NAME "name"
-#define ENTITY_ENABLED "enabled"
-#define ENTITY_ID "id"
+// Game Object
+#define GAME_OBJECT_ROOT "root"
+#define GAME_OBJECT_NAME "name"
+#define GAME_OBJECT_ENABLED "enabled"
+#define GAME_OBJECT_ID "id"
+#define GAME_OBJECT_PARENT_ID "parent_id"
 
 // Component
 #define COMPONENT_NODE "component"
@@ -138,9 +139,9 @@
 #define CHILD_NODE "child"
 
 // Component Transform
-#define POSITION_NODE "position"
-#define ROTATION_NODE "rotation"
-#define SCALE_NODE "scale"
+#define TRANSFORM_POSITION "position"
+#define TRANSFORM_ROTATION "rotation"
+#define TRANSFORM_SCALE "scale"
 
 // Component Mesh
 #define MESH_NODE "mesh"
@@ -148,3 +149,22 @@
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
+
+// Component Lights
+#define LIGHT_TYPE "light_type"
+#define LIGHT_COLOR "color"
+#define LIGHT_INTENSITY "intensity"
+#define LIGHT_RADIUS "radius"
+#define LIGHT_DRAW_SPHERE "draw_sphere"
+#define LIGHT_DRAW_DIRECTION "draw_direction"
+#define LIGHT_DRAW_CONE "draw_cone"
+#define LIGHT_INNER "inner"
+#define LIGHT_OUTER "outer"
+
+// Component Camera
+#define FRUSTUM "frustum"
+#define NEAR_DISTANCE "near_distance"
+#define FAR_DISTANCE "far_distance"
+#define CAMERA_POSITION "position"
+#define CAMERA_FRONT "front"
+#define CAMERA_UP "up"

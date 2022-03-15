@@ -1,25 +1,26 @@
 #pragma once
-#include "MathGeoLib.h"
 
-#include <vector>
 #include "utils/UUID.h"
+#include "core/serialization/Serializable.h"
 #include "components/Component.h"
 
 namespace Hachiko
 {
-    class JsonFormatterValue;
     class ComponentTransform;
     class ComponentCamera;
     class Program;
     class Scene;
 
-    class GameObject final
+    class GameObject final : public Serializable
     {
         friend class Component;
 
     public:
         GameObject(const char* name = "Unnamed");
-        GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
+        GameObject(GameObject* parent,
+                   const float4x4& transform, 
+                   const char* name = "Unnamed", 
+                   UID uid = UUID::GenerateUID());
         GameObject(GameObject* parent,
                    const char* name = "Unnamed",
                    UID uid = UUID::GenerateUID(),
@@ -64,8 +65,8 @@ namespace Hachiko
             uid = new_id;
         }
 
-        void Save(JsonFormatterValue j_gameObject) const;
-        void Load(JsonFormatterValue j_gameObject);
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
         [[nodiscard]] const OBB& GetOBB() const
         {

@@ -54,8 +54,8 @@ namespace Hachiko
         [[nodiscard]] const float4x4& GetMatrix() const;
         [[nodiscard]] const float4x4& GetLocalMatrix() const;
        
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
         void DrawGui() override;
 

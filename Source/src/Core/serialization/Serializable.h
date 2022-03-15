@@ -8,7 +8,7 @@ namespace Hachiko
     {
     public:
         virtual ~Serializable() = default;
-        virtual void Save(YAML::Node) = 0;
-        virtual void Load(YAML::Node) = 0;
+        virtual void Save(YAML::Node&) const = 0;
+        virtual void Load(const YAML::Node&) = 0;
     };
 }

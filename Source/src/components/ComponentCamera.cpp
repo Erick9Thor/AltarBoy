@@ -118,44 +118,27 @@ LineSegment Hachiko::ComponentCamera::RayCast(float x, float y) const
     return frustum.UnProjectLineSegment(x, y);
 }
 
-void Hachiko::ComponentCamera::Save(JsonFormatterValue j_component) const
+void Hachiko::ComponentCamera::Save(YAML::Node& node) const
 {
-    const JsonFormatterValue j_frustum = j_component["Frustrum"];
-    j_frustum["NearDistance"] = frustum.NearPlaneDistance();
-    j_frustum["FarDistance"] = frustum.FarPlaneDistance();
-    j_frustum["Fov"] = horizontal_fov;
-
-    const JsonFormatterValue j_pos = j_frustum["Pos"];
-    j_pos[0] = frustum.Pos().x;
-    j_pos[1] = frustum.Pos().y;
-    j_pos[2] = frustum.Pos().z;
-
-    const JsonFormatterValue j_front = j_frustum["Front"];
-    j_front[0] = frustum.Front().x;
-    j_front[1] = frustum.Front().y;
-    j_front[2] = frustum.Front().z;
-
-    const JsonFormatterValue j_up = j_frustum["Up"];
-    j_up[0] = frustum.Up().x;
-    j_up[1] = frustum.Up().y;
-    j_up[2] = frustum.Up().z;
+    YAML::Node node_frustum = node[FRUSTUM];
+    node_frustum[NEAR_DISTANCE] = frustum.NearPlaneDistance();
+    node_frustum[FAR_DISTANCE] = frustum.FarPlaneDistance();
+    node_frustum[FOV] = horizontal_fov;
+    node_frustum[CAMERA_POSITION] = frustum.Pos();
+    node_frustum[CAMERA_FRONT] = frustum.Front();
+    node_frustum[CAMERA_UP] = frustum.Up();
 }
 
-void Hachiko::ComponentCamera::Load(JsonFormatterValue j_component)
+void Hachiko::ComponentCamera::Load(const YAML::Node& node)
 {
-    const JsonFormatterValue j_frustum = j_component["Frustrum"];
+    const YAML::Node frustum_node = node[FRUSTUM];
 
-    SetNearPlane(j_frustum["NearDistance"]);
-    SetFarPlane(j_frustum["FarDistance"]);
-    SetHorizontalFov(j_frustum["Fov"]);
-
-    const JsonFormatterValue j_pos = j_frustum["Pos"];
-    const JsonFormatterValue j_front = j_frustum["Front"];
-    const JsonFormatterValue j_up = j_frustum["Up"];
-
-    frustum.SetPos(float3(j_pos[0], j_pos[1], j_pos[2]));
-    frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
-    frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
+    SetNearPlane(frustum_node[NEAR_DISTANCE].as<float>());
+    SetFarPlane(frustum_node[FAR_DISTANCE].as<float>());
+    SetHorizontalFov(frustum_node[FOV].as<float>());
+    frustum.SetPos(frustum_node[CAMERA_POSITION].as<vec>());
+    frustum.SetFront(frustum_node[CAMERA_FRONT].as<vec>());
+    frustum.SetUp(frustum_node[CAMERA_UP].as<vec>());
 }
 
 void Hachiko::ComponentCamera::DrawGui()

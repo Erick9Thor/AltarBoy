@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/serialization/Serializable.h"
 #include "utils/UUID.h"
-#include "utils/JsonFormatterValue.h"
 
 namespace Hachiko
 {
@@ -9,7 +9,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class Component
+    class Component : public Serializable
     {
     public:
         enum class Type
@@ -87,9 +87,9 @@ namespace Hachiko
         virtual void DebugDraw() {}
 
 
-        virtual void Save(JsonFormatterValue j_component) const {}
+        virtual void Save(YAML::Node& node) const {}
 
-        virtual void Load(JsonFormatterValue j_component) {}
+        virtual void Load(const YAML::Node& node) {}
 
     protected:
         GameObject* game_object = nullptr;
