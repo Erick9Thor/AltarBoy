@@ -249,9 +249,6 @@
     <ClCompile Include="src\ui\WindowProject.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\WindowResource.cpp">
-      <Filter>UI\Window</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\WindowScene.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
@@ -414,6 +411,7 @@
     <ClCompile Include="src\resources\ResourceModel.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\WindowResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -751,9 +749,6 @@
     <ClInclude Include="src\ui\WindowProject.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui\WindowResource.h">
-      <Filter>UI\Window</Filter>
-    </ClInclude>
     <ClInclude Include="src\ui\WindowScene.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
@@ -1067,6 +1062,7 @@
     <ClInclude Include="src\resources\ResourceModel.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="src\ui\WindowResource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

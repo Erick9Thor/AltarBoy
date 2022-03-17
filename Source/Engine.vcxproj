@@ -174,6 +174,7 @@
     <ClCompile Include="src\Importers\TextureImporter.cpp" />
     <ClCompile Include="src\Resources\ResourceTexture.cpp" />
     <ClCompile Include="src\resources\ResourceModel.cpp" />
+    <ClCompile Include="src\ui\WindowResource.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -531,7 +532,6 @@
     <ClCompile Include="src\ui\WindowInspector.cpp" />
     <ClCompile Include="src\ui\WindowScene.cpp" />
     <ClCompile Include="src\ui\WindowConsole.cpp" />
-    <ClCompile Include="src\ui\WindowResource.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
@@ -555,6 +555,7 @@
     <ClInclude Include="src\Resources\ResourceTexture.h" />
     <ClInclude Include="src\resources\ResourceModel.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
+    <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="src\Importers\TextureImporter.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
@@ -715,7 +716,6 @@
     <ClInclude Include="src\ui\WindowInspector.h" />
     <ClInclude Include="src\ui\WindowScene.h" />
     <ClInclude Include="src\ui\WindowConsole.h" />
-    <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\utils\UUID.h" />
     <ClInclude Include="src\ui\WindowTimers.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h" />

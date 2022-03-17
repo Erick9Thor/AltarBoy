@@ -28,7 +28,7 @@ namespace Hachiko
             {Hachiko::Resource::Type::TEXTURE, ".png"},
             {Hachiko::Resource::Type::TEXTURE, ".tif"},
             {Hachiko::Resource::Type::MODEL, ".fbx"},
-            {Hachiko::Resource::Type::SCENE, ".be"}
+            {Hachiko::Resource::Type::SCENE, ".he"}
         };
         Hachiko::ResourcesPreferences* preferences = nullptr;
         std::filesystem::path last_resource_path; // TODO: This will track every resource, his type and path loaded
@@ -83,6 +83,8 @@ namespace Hachiko
             return nullptr;
         };
         
+        void LoadResourceIntoScene(const char* path);
+
         std::map<std::string, ResourceModel*> models;
         std::map<UID, ResourceMesh*> meshes;
         std::map<UID, ResourceMaterial*> materials;

@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "ModuleEvent.h"
 #include "ModuleFileSystem.h"
+#include "ModuleSceneManager.h"
 
 #include "Core/preferences/src/ResourcesPreferences.h"
 
@@ -131,6 +132,16 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
         return it->first;
     }
     return Resource::Type::UNKNOWN;
+}
+
+void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
+{
+    // TODO: This has to check if the resource is loaded and send it to the scene manager
+    // TODO: If we call many times/places this function, consideran handling by an event
+    std::filesystem::path resource_path(path);
+    Resource::Type type = GetType(path);
+    // TODO: This is bad, really really bad
+    App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
 }
 
 void ModuleResources::HandleAssetsChanged(const std::filesystem::path& asset_path, const Resource::Type asset_type)
