@@ -18,6 +18,7 @@ Hachiko::Scene::Scene():
     quadtree(new Quadtree()),
     name(UNNAMED_SCENE)
 {
+    // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
 }
 
@@ -103,6 +104,7 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 void Hachiko::Scene::Save(YAML::Node& node) const
 {
     node[SCENE_NAME] = GetName();
+    node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
         GetRoot()->children[i]->Save(node[CHILD_NODE][i]);
@@ -111,6 +113,8 @@ void Hachiko::Scene::Save(YAML::Node& node) const
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
+    SetName(node[SCENE_NAME].as<std::string>().c_str());
+    root->SetID(node[ROOT_ID].as<UID>());
     const YAML::Node childs_node = node[CHILD_NODE];
     for (unsigned i = 0; i < childs_node.size(); ++i)
     {
