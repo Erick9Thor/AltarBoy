@@ -29,7 +29,12 @@ namespace Hachiko
             game_object(container),
             type(type),
             uid(id)
-        {}
+        {
+            if (!uid)
+            {
+                uid = UUID::GenerateUID();
+            }
+        }
 
         virtual ~Component() = default;
 
