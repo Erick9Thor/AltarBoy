@@ -25,9 +25,11 @@ namespace Hachiko
             UNKNOWN
         };
 
-        Component(const Type type, GameObject* container) :
+        Component(const Type type, GameObject* container, UID id = 0) :
             game_object(container),
-            type(type) {}
+            type(type),
+            uid(id)
+        {}
 
         virtual ~Component() = default;
 

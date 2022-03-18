@@ -12,6 +12,7 @@
 #include "importers/TextureImporter.h"
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
+#include "components/ComponentMesh.h"
 
 using namespace Hachiko;
 
@@ -140,8 +141,18 @@ void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
     // TODO: If we call many times/places this function, consideran handling by an event
     std::filesystem::path resource_path(path);
     Resource::Type type = GetType(path);
-    // TODO: This is bad, really really bad
-    App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
+
+    // Do this for models
+    GameObject* root_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
+
+    YAML::Node model_node = YAML::LoadFile(path);
+    for (int i = 0; i < model_node[NODE_ROOT][NODE_CHILD].size(); ++i)
+    {
+        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(root_game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
+        ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
+        component->SetID(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+        component->LoadMesh(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+    }
 }
 
 void ModuleResources::HandleAssetsChanged(const std::filesystem::path& asset_path, const Resource::Type asset_type)

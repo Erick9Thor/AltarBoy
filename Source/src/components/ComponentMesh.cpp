@@ -9,12 +9,13 @@
 #include "importers/MeshImporter.h"
 #include "resources/ResourceMesh.h"
 
-Hachiko::ComponentMesh::ComponentMesh(GameObject* container) : Component(Type::MESH, container) {}
-
-Hachiko::ComponentMesh::ComponentMesh(GameObject* container, ResourceMesh* res) 
+Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH, container)
 {
-    meshes.push_back(res);
+    if (res != nullptr)
+    {
+        meshes.push_back(res);
+    }
 }
 
 Hachiko::ComponentMesh::~ComponentMesh()
@@ -34,8 +35,8 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
     
     // TODO: Why we take care of other components?
-    const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-    App->program->UpdateMaterial(material);
+    //const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
+    //App->program->UpdateMaterial(material);
 
     for (auto mesh : meshes)
     {
@@ -124,19 +125,13 @@ void Hachiko::ComponentMesh::DisplayNotLoadedUI()
 void Hachiko::ComponentMesh::Save(YAML::Node& node) const
 {
     node[MODEL_PATH] = GetResourcePath();
-    for (int i = 0; i < GetMeshesCount(); ++i)
-    {
-        node[MESH_NODE][i][MESH_ID] = meshes[i]->GetID();
-        node[MESH_NODE][i][MESH_TEXTURE] = "";
-        node[MESH_NODE][i][MESH_TEXTURE_TYPE] = "";
-    }
+    node[MESH_TEXTURE] = "";
+    node[MESH_TEXTURE_TYPE] = "";
 }
 
 void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 {
     resource_path = node[MODEL_PATH].as<std::string>();
-    for (int i = 0; i < node[MESH_NODE].size(); ++i)
-    {
-        // LOAD MESHES
-    }
+    SetID(node[COMPONENT_ID].as<UID>());
+    LoadMesh(node[COMPONENT_ID].as<UID>());
 }

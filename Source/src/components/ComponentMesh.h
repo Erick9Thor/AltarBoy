@@ -14,8 +14,7 @@ namespace Hachiko
     class ComponentMesh : public Component
     {
     public:
-        ComponentMesh(GameObject* container);
-        ComponentMesh(GameObject* container, ResourceMesh* res);
+        ComponentMesh(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
         ~ComponentMesh() override;
 
         void Draw(ComponentCamera* camera, Program* program) override;

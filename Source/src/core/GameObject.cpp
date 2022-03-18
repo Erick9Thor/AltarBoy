@@ -309,6 +309,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
 
         Component* component = CreateComponent(type);
+        component->SetID(c_uid);
         component->Load(components_node[i]);
     }
 
