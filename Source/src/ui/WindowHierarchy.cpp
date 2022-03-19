@@ -80,7 +80,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 
         if (ImGui::IsMouseClicked(0))
         {
-            App->editor->SetSelectedGO(game_object);
+            App->editor->SetSelectedGameObject(game_object);
             dragged_object = game_object;
         }
         if (ImGui::IsMouseClicked(1))
@@ -110,7 +110,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
             GameObject* selectedGameObject = App->editor->GetSelectedGameObject();
             if (selectedGameObject == game_object)
             {
-                App->editor->SetSelectedGO(nullptr);
+                App->editor->SetSelectedGameObject(nullptr);
             }
 
             App->scene_manager->GetActiveScene()->CreateNewGameObject(game_object, "New Game Object");

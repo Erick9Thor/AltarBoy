@@ -52,7 +52,7 @@ namespace Hachiko
             return selected_go;
         }
 
-        void SetSelectedGO(GameObject* const selected_game_object)
+        void SetSelectedGameObject(GameObject* const selected_game_object)
         {
             this->selected_go = selected_game_object;
         }

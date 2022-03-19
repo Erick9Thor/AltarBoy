@@ -31,13 +31,6 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     return true;
 }
 
-//// TODO: This doesn't belong here
-//void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
-//{
-//    // delete scene_model;
-//    main_scene->LoadFBX(model_path);
-//}
-
 void Hachiko::ModuleSceneManager::CreateEmptyScene()
 {
     delete main_scene;

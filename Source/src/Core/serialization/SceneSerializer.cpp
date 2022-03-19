@@ -39,7 +39,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene)
     YAML::Node scene_data;
     scene->Save(scene_data);
     ResourcesPreferences* resources_preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
-    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName()));
+    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
     fout << scene_data;
     return true;
 }

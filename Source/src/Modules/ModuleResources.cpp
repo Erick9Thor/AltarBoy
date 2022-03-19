@@ -5,6 +5,7 @@
 #include "ModuleEvent.h"
 #include "ModuleFileSystem.h"
 #include "ModuleSceneManager.h"
+#include "ModuleEditor.h"
 
 #include "Core/preferences/src/ResourcesPreferences.h"
 
@@ -112,6 +113,27 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
     }
 }
 
+void Hachiko::ModuleResources::LoadModelIntoScene(const char* path)
+{
+    std::filesystem::path resource_path(path);
+    // TODO: Check if there is a GameObject selected
+
+    GameObject* root_game_object = App->editor->GetSelectedGameObject();
+    if (root_game_object == nullptr)
+    {
+        root_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
+    }
+
+    YAML::Node model_node = YAML::LoadFile(path);
+    for (int i = 0; i < model_node[NODE_ROOT][NODE_CHILD].size(); ++i)
+    {
+        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(root_game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
+        ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
+        component->SetID(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+        component->LoadMesh(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+    }
+}
+
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
 {
     if (!path.has_extension())
@@ -139,19 +161,13 @@ void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
 {
     // TODO: This has to check if the resource is loaded and send it to the scene manager
     // TODO: If we call many times/places this function, consideran handling by an event
-    std::filesystem::path resource_path(path);
+    
     Resource::Type type = GetType(path);
-
-    // Do this for models
-    GameObject* root_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
-
-    YAML::Node model_node = YAML::LoadFile(path);
-    for (int i = 0; i < model_node[NODE_ROOT][NODE_CHILD].size(); ++i)
+    switch (type)
     {
-        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(root_game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
-        ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
-        component->SetID(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
-        component->LoadMesh(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+    case Resource::Type::MODEL:
+        LoadModelIntoScene(path);
+        break;
     }
 }
 

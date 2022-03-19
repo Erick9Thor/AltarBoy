@@ -203,7 +203,7 @@ void Hachiko::WindowScene::Controller() const
         Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
         if (picked)
-            App->editor->SetSelectedGO(picked);
+            App->editor->SetSelectedGameObject(picked);
     }
 }
 

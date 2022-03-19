@@ -15,11 +15,7 @@ namespace Hachiko
     class ResourceMesh;
     class ResourceMaterial;
     class ResourceTexture;
-
-    /* class ModelImporter;
-    class MeshImporter;
-    class MaterialImporter;
-    class TextureImporter;*/
+    class GameObject;
 
     class ModuleResources : public Module
     {
@@ -28,13 +24,16 @@ namespace Hachiko
             {Hachiko::Resource::Type::TEXTURE, ".png"},
             {Hachiko::Resource::Type::TEXTURE, ".tif"},
             {Hachiko::Resource::Type::MODEL, ".fbx"},
-            {Hachiko::Resource::Type::SCENE, ".he"}
+            {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
+            // Imported Resources
+            {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION}
         };
         Hachiko::ResourcesPreferences* preferences = nullptr;
         std::filesystem::path last_resource_path; // TODO: This will track every resource, his type and path loaded
 
         void HandleAssetsChanged(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
+        void LoadModelIntoScene(const char* path);
 
     public:
         bool Init() override;

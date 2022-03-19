@@ -29,7 +29,7 @@ Hachiko::Scene::~Scene()
 
 void Hachiko::Scene::CleanScene() const
 {
-    App->editor->SetSelectedGO(nullptr);
+    App->editor->SetSelectedGameObject(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
@@ -39,7 +39,7 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 {
     if (App->editor->GetSelectedGameObject() == game_object)
     {
-        App->editor->SetSelectedGO(nullptr);
+        App->editor->SetSelectedGameObject(nullptr);
     }
     quadtree->Remove(game_object);
 }
@@ -78,7 +78,7 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 
             const float* vertices = mesh->GetVertices(0);
             const unsigned* indices = mesh->GetIndices(0);
-            for (unsigned i = 0; i < mesh->GetBufferSize(i, ResourceMesh::Buffers::INDICES); i += 3)
+            for (unsigned i = 0; i < mesh->GetBufferSize(0, ResourceMesh::Buffers::INDICES); i += 3)
             {
                 Triangle triangle;
                 triangle.a = vec(&vertices[indices[i] * 3]);
