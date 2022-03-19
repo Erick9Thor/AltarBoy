@@ -80,6 +80,10 @@ void Hachiko::ComponentTransform2D::DrawGui(){
                 auto row = global_transform.Row(r);
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
             }
+
+            ImGui::Separator();
+            ImGui::Text("Bounding 2D");
+            ImGui::Text("%.2f %.2f, %.2f %.2f", aabb.minPoint[0], aabb.minPoint[1], aabb.maxPoint[0], aabb.maxPoint[0]);
         }
 
     }
@@ -240,6 +244,11 @@ bool Hachiko::ComponentTransform2D::HasDependentComponents(GameObject* game_obje
     return found;
 }
 
+bool Hachiko::ComponentTransform2D::Intersects(const float2& mouse_pos) const
+{
+    return aabb.Contains(mouse_pos);
+}
+
 void Hachiko::ComponentTransform2D::UpdateTransforms()
 {
     // Move center (pivot) relative to parent and anchors
@@ -259,9 +268,18 @@ void Hachiko::ComponentTransform2D::UpdateTransforms()
         global_transform = local_transform;
     }
 
-    // TODO: Add transform updated refresh to ui components if necessary
+    UpdateBoundingBox();
+    UpdateUIComponents();    
 }
 
 void Hachiko::ComponentTransform2D::UpdateUIComponents()
 {
+}
+
+void Hachiko::ComponentTransform2D::UpdateBoundingBox()
+{
+    aabb.SetNegativeInfinity();
+    aabb.minPoint.Set(-(size.x / 2.f), -(size.y / 2.f));
+    aabb.maxPoint.Set((size.x / 2.f), (size.y / 2.f));
+    aabb.TransformAsAABB(global_transform);
 }

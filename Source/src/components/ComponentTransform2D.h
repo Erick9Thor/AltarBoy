@@ -41,10 +41,12 @@ namespace Hachiko
         void UpdateHierarchy();
 
         bool HasDependentComponents(GameObject* game_object) const override;
+        bool Intersects(const float2& mouse_pos) const;
 
     private:
         void UpdateTransforms(); // Only does oeprations triggers class is dirty
         void UpdateUIComponents(); // Called when the transforms change
+        void UpdateBoundingBox();
 
 
     private:
@@ -65,7 +67,10 @@ namespace Hachiko
         float4x4 local_transform = float4x4::identity;
         float4x4 global_transform = float4x4::identity;
 
+        // Canvas that controls the transform, used to lock parameters and change display color
         ComponentCanvas* canvas = nullptr;
+
+        AABB2D aabb = {{0, 0}, {0, 0}};
     };
 }
 

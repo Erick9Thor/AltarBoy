@@ -25,13 +25,20 @@ namespace Hachiko
             return hovering;
         }
 
+        [[nodiscard]] bool IsFocused() const
+        {
+            return focused;
+        }
+
+        float2 GetInterfaceClickPos() const;
+
     private:
         void GuizmoOptionsController();
         void ToolbarMenu() const;
         void DrawScene();
         void Controller() const;
 
-        GameObject* SelectObject(ComponentCamera* camera, Scene* scene) const;
+        GameObject* SelectObject(ComponentCamera* camera, Scene* scene) const;        
 
         ImVec2 imguizmo_size = {100.0f, 100.0f};
         bool using_guizmo = false;

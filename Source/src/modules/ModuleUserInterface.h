@@ -2,6 +2,8 @@
 #include "Module.h"
 #include "MathGeoLib.h"
 
+#include "ui/WindowScene.h"
+
 namespace Hachiko
 {
     class ModuleUserInterface : public Module
@@ -16,6 +18,7 @@ namespace Hachiko
 
         void DrawUI(const Scene* scene);
         void RecursiveDrawUI(const GameObject* game_object, Program* program);
+        void RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos);
 
         void CreateSquare();
         void BindSquare();

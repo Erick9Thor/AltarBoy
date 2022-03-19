@@ -3,14 +3,16 @@
 #include "ModuleSceneManager.h"
 #include "ModuleProgram.h"
 #include "ModuleCamera.h"
+#include "ModuleEditor.h"
+#include "ModuleInput.h"
 
 #include "core/Scene.h"
 #include "core/GameObject.h"
 #include "components/ComponentCanvasRenderer.h"
 #include "components/ComponentCamera.h"
+#include "components/ComponentTransform2D.h"
 
-
-
+#include "ui/WindowScene.h"
 
 
 Hachiko::ModuleUserInterface::ModuleUserInterface() = default;
@@ -25,6 +27,12 @@ bool Hachiko::ModuleUserInterface::Init()
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
+    const WindowScene* w_scene = App->editor->GetSceneWindow();
+    if (w_scene->IsHovering() && w_scene->IsFocused() && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    {
+        float2 click_pos = w_scene->GetInterfaceClickPos();
+        RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos);
+    }
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -72,6 +80,22 @@ void Hachiko::ModuleUserInterface::RecursiveDrawUI(const GameObject* game_object
     }
 }
 
+void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos)
+{
+    ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
+    if (transform)
+    {
+        if (transform->Intersects(mouse_pos))
+        {
+            HE_LOG("Intersects %s", transform->GetGameObject()->name.c_str());
+        }
+    }
+    for (const GameObject* child : game_object->children)
+    {
+        RecursiveCheckMousePos(child, mouse_pos);
+    }
+}
+
 void Hachiko::ModuleUserInterface::CreateSquare()
 {
     float positions[] = {
@@ -103,7 +127,7 @@ void Hachiko::ModuleUserInterface::CreateSquare()
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);    
     
-    HE_LOG("QUAD VAO %d %d %d", vao, vbo, ebo);
+    //HE_LOG("QUAD VAO %d %d %d", vao, vbo, ebo);
     glBindVertexArray(0);
 }
 
