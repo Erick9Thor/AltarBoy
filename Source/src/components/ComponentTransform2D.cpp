@@ -10,11 +10,13 @@
 Hachiko::ComponentTransform2D::ComponentTransform2D(GameObject* container) 
     : Component(Type::TRANSFORM_2D, container)
 {
-    //UpdateHierarchy();
+    UpdateHierarchy();
 }
 
 void Hachiko::ComponentTransform2D::DrawGui(){
-	// TODO: Draw panel for the inspector and update transform
+    static bool debug_transforms = false;
+
+    // TODO: Draw panel for the inspector and update transform
     ImGui::PushID(this);
 
     if (ImGui::CollapsingHeader("2D Transform", ImGuiTreeNodeFlags_DefaultOpen))
@@ -57,6 +59,27 @@ void Hachiko::ComponentTransform2D::DrawGui(){
         if (ImGui::DragFloat2("Pivot (Pefcent)", ed_piv.ptr(), 0.05f))
         {
             SetPivot(ed_piv);
+        }
+
+        ImGui::Checkbox("Debug Transforms", &debug_transforms);
+        if (debug_transforms)
+        {
+
+            ImGui::Separator();
+            ImGui::Text("Local");
+            for (int r = 0; r < 4; ++r)
+            {
+                auto row = local_transform.Row(r);
+                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+            }
+
+            ImGui::Separator();
+            ImGui::Text("Global");
+            for (int r = 0; r < 4; ++r)
+            {
+                auto row = global_transform.Row(r);
+                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+            }
         }
 
     }
@@ -116,7 +139,7 @@ void Hachiko::ComponentTransform2D::SetRotation(float3 new_rotation)
 
 void Hachiko::ComponentTransform2D::SetPivot(float2 new_pivot_position)
 {
-    float2 pivot_delta = pivot_pct_position - new_pivot_position;
+    float2 pivot_delta = new_pivot_position - pivot_pct_position;
 
     pivot_pct_position = new_pivot_position;
 
@@ -141,7 +164,6 @@ void Hachiko::ComponentTransform2D::SetCanvas(ComponentCanvas* owner_canvas)
 float3 Hachiko::ComponentTransform2D::GetPivotOffsetFromParent() const
 {
 
-    //HE_LOG("c");
     float3 effective_position = position;
     GameObject* parent = game_object->parent;
 
@@ -181,8 +203,8 @@ float3 Hachiko::ComponentTransform2D::GetPivotScreenPosition() const
 
 float4x4 Hachiko::ComponentTransform2D::GetGlobalScaledTransform() const
 {
-    float4x4 scaled_transform = global_transform.Scale(size.x, size.y, 1.f);
-    return scaled_transform.Transposed();
+    float4x4 scaled_transform = global_transform * float4x4::Scale(size.x, size.y, 1.f);
+    return scaled_transform;
 }
 
 void Hachiko::ComponentTransform2D::UpdateHierarchy()
@@ -224,8 +246,8 @@ void Hachiko::ComponentTransform2D::UpdateTransforms()
     local_transform = float4x4::FromTRS(GetPivotOffsetFromParent(), rotation, scale);
     
     // Offset based on pivot
-    float2 offset = (pivot_pct_position - float2(0.5f)).Mul(size);
-    local_transform = local_transform.Translate(float3(offset, 0.0f));
+    float2 offset = (-pivot_pct_position + float2(0.5f)).Mul(size);
+    local_transform = local_transform * float4x4::Translate(float3(offset, 0.0f));
 
     if (game_object->parent && game_object->parent->GetComponent<ComponentTransform2D>())
     {
