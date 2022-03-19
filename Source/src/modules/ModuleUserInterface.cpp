@@ -38,9 +38,6 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 {
     Program* program = App->program->GetUserInterfaceProgram();
     program->Activate();
-
-    glDisable(GL_DEPTH_TEST);
-
     glDepthFunc(GL_ALWAYS);    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -58,8 +55,6 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
     RecursiveDrawUI(scene->GetRoot(), program);
     UnbindSuare();
     glDepthFunc(GL_LESS);
-
-    glEnable(GL_DEPTH_TEST);
 }
 
 void Hachiko::ModuleUserInterface::RecursiveDrawUI(const GameObject* game_object, Program* program)
@@ -86,7 +81,7 @@ void Hachiko::ModuleUserInterface::CreateSquare()
         -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left 
     };
 
-    unsigned int indices[] = {0, 1, 2, 2, 3, 0};
+    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
