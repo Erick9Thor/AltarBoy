@@ -70,31 +70,34 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
     for (GameObject* game_object : game_objects)
     {
         auto* mesh = game_object->GetComponent<ComponentMesh>();
-        if (mesh)
+        if (!mesh)
         {
-            // Transform ray to mesh space, more efficient
-            LineSegment local_segment(segment);
-            local_segment.Transform(game_object->GetTransform()->GetMatrix().Inverted());
+            continue;
+        }
+        // Transform ray to mesh space, more efficient
+        LineSegment local_segment(segment);
+        local_segment.Transform(game_object->GetTransform()->GetMatrix().Inverted());
 
-            const float* vertices = mesh->GetVertices(0);
-            const unsigned* indices = mesh->GetIndices(0);
-            for (unsigned i = 0; i < mesh->GetBufferSize(0, ResourceMesh::Buffers::INDICES); i += 3)
+        // This is done always for the first mesh in ComponentMesh
+        const float* vertices = mesh->GetVertices(0);
+        const unsigned* indices = mesh->GetIndices(0);
+        for (unsigned i = 0; i < mesh->GetBufferSize(0, ResourceMesh::Buffers::INDICES); i += 3)
+        {
+            Triangle triangle;
+            triangle.a = vec(&vertices[indices[i] * 3]);
+            triangle.b = vec(&vertices[indices[i + 1] * 3]);
+            triangle.c = vec(&vertices[indices[i + 2] * 3]);
+
+            float hit_distance;
+            float3 hit_point;
+            if (!local_segment.Intersects(triangle, &hit_distance, &hit_point))
             {
-                Triangle triangle;
-                triangle.a = vec(&vertices[indices[i] * 3]);
-                triangle.b = vec(&vertices[indices[i + 1] * 3]);
-                triangle.c = vec(&vertices[indices[i + 2] * 3]);
-
-                float hit_distance;
-                float3 hit_point;
-                if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
-                {
-                    if (hit_distance < closest_hit_distance)
-                    {
-                        closest_hit_distance = hit_distance;
-                        selected = game_object;
-                    }
-                }
+                continue;
+            }
+            if (hit_distance < closest_hit_distance)
+            {
+                closest_hit_distance = hit_distance;
+                selected = game_object;
             }
         }
     }
