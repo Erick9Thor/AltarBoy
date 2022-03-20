@@ -21,7 +21,6 @@ void ColorCopy(const aiColor4D& assimp_color, float4& color)
 
 Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MESH)
 {
-    preferences = static_cast<Hachiko::ResourcesPreferences*>(App->preferences->GetPreference(Hachiko::Preferences::Type::RESOURCES));
 }
 
 void Hachiko::MaterialImporter::Import(const char* path)
@@ -31,7 +30,7 @@ void Hachiko::MaterialImporter::Import(const char* path)
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-    const std::string material_library_path = preferences->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(material->GetID());
+    const std::string material_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(material->GetID());
 
     YAML::Node material_node;
     material_node[MATERIAL_ID] = material->GetID();
@@ -49,7 +48,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
 {
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
     if (!std::filesystem::exists(file_path.c_str()))
     {
         return nullptr;

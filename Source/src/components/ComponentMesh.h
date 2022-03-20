@@ -75,6 +75,11 @@ namespace Hachiko
             return meshes[index];
         }
 
+        void AddResourceMesh(ResourceMesh* res)
+        {
+            meshes.push_back(res);
+        }
+
         void LoadMesh(const char* mesh_path);
         void LoadMesh(UID mesh_id);
         void DrawGui() override;

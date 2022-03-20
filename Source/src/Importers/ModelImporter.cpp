@@ -17,18 +17,12 @@ Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL)
 void Hachiko::ModelImporter::Import(const char* path)
 {
     HE_LOG("Entering ModelImporter: %s", path);
-
-    if (preferences == nullptr)
-    {
-        preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
-    }
-
     Assimp::Importer import;
     //import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
     const aiScene* scene = nullptr;
     const std::filesystem::path model_path(path);
     const std::string model_name = model_path.filename().replace_extension().string();
-    const std::string model_library_path = preferences->GetLibraryPath(Resource::Type::MODEL) + model_name + MODEL_EXTENSION;
+    const std::string model_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL) + model_name + MODEL_EXTENSION;
     scene = import.ReadFile(model_path.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)

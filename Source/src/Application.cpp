@@ -15,7 +15,6 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 #include "Modules/ModuleResources.h"
-#include "Modules/ModuleImporter.h"
 
 #include "Core/preferences/PreferenceManager.h"
 
@@ -37,7 +36,6 @@ Hachiko::Application::Application()
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
     modules.push_back(resources = new ModuleResources());
-    modules.push_back(importer = new ModuleImporter());
 
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }

@@ -36,55 +36,25 @@ bool ModuleResources::Init()
         HandleResource(file);
     };
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
-
-    // Load all resources in library 
-    std::vector<std::string> files;
-    std::vector<std::string> directories;
-
-    // Load meshes
-    ModuleFileSystem::DiscoverFiles(LIBRARY_MESH_FOLDER, files, directories);
-    MeshImporter mesh_importer;
-    // TODO: LOAD MESH
-    files.clear();
-    directories.clear();
-
-    // Load textures
-    ModuleFileSystem::DiscoverFiles(LIBRARY_TEXTURES_FOLDER, files, directories);
-    TextureImporter texture_importer;
-    // TODO: LOAD TEXTURE
-    files.clear();
-    directories.clear();
-
-    // Load materials
-    ModuleFileSystem::DiscoverFiles(LIBRARY_MATERIAL_FOLDER, files, directories);
-    MaterialImporter material_importer;
-    // TODO: LOAD MATERIAL
-    files.clear();
-    directories.clear();
-    
-    // Load models
-    ModuleFileSystem::DiscoverFiles(LIBRARY_MODEL_FOLDER, files, directories);
-    ModelImporter model_importer;
-    // TODO: LOAD MODEL
-    files.clear();
-    directories.clear();
-
     return true;
 }
 
 bool ModuleResources::CleanUp()
 {
     for (auto it = meshes.begin(); it != meshes.end(); ++it)
+    {
         delete it->second;
+    }
 
     for (auto it = textures.begin(); it != textures.end(); ++it)
+    {
         delete it->second;
+    }
 
     for (auto it = materials.begin(); it != materials.end(); ++it)
+    {
         delete it->second;
-
-    for (auto it = models.begin(); it != models.end(); ++it)
-        delete it->second;
+    }
 
     return Module::CleanUp();
 }
@@ -108,29 +78,33 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         destination.append(path.filename().c_str()).string().c_str(), true))
     {
         last_resource_path = path; // We may need this to import more assets from this path
-        HandleAssetsChanged(destination, type);
+        ImportResource(destination, type);
         HE_LOG("File destination: %s", destination.string().c_str());
     }
 }
 
-void Hachiko::ModuleResources::LoadModelIntoScene(const char* path)
+void Hachiko::ModuleResources::LoadModelIntoGameObject(const char* path, GameObject* game_object)
 {
-    std::filesystem::path resource_path(path);
-    // TODO: Check if there is a GameObject selected
-
-    GameObject* root_game_object = App->editor->GetSelectedGameObject();
-    if (root_game_object == nullptr)
-    {
-        root_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().string().c_str());
-    }
-
     YAML::Node model_node = YAML::LoadFile(path);
     for (int i = 0; i < model_node[NODE_ROOT][NODE_CHILD].size(); ++i)
     {
-        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(root_game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
+        UID mesh_id = model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>(); // TODO: Add recursivity
+        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
         ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
-        component->SetID(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
-        component->LoadMesh(model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>());
+        component->SetID(mesh_id);
+
+        auto res = GetMesh(mesh_id);
+        if (res == nullptr)
+        {
+            HE_LOG("Loading resource mesh - id: %ulld", mesh_id);
+            res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, mesh_id));
+            meshes.emplace(mesh_id, res);
+        }
+        // TODO: If res is nullptr here we need to import model again
+        component->AddResourceMesh(res);
+
+        // if material
+        LoadMaterialIntoGameObject(path, mesh_game_object);
     }
 }
 
@@ -159,21 +133,38 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
 
 void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
 {
-    // TODO: This has to check if the resource is loaded and send it to the scene manager
     // TODO: If we call many times/places this function, consideran handling by an event
-    
+    GameObject* game_object = App->editor->GetSelectedGameObject();
+    if (game_object == nullptr)
+    {
+        std::filesystem::path resource_path(path);
+        game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().replace_extension().string().c_str());
+    }
+
     Resource::Type type = GetType(path);
     switch (type)
     {
     case Resource::Type::MODEL:
-        LoadModelIntoScene(path);
+        LoadModelIntoGameObject(path, game_object);
+        break;
+    case Resource::Type::MATERIAL:
+        LoadMaterialIntoGameObject(path, game_object);
         break;
     }
 }
 
-void ModuleResources::HandleAssetsChanged(const std::filesystem::path& asset_path, const Resource::Type asset_type)
+Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID resource_id)
 {
-    Event assetChanged(Event::Type::ASSETS_CHANGED);
-    assetChanged.SetEventData<AssetsAddedEventPayload>(asset_path, asset_type);
-    App->event->Publish(assetChanged);
+    switch (type)
+    {
+    case Resource::Type::MESH:
+        return importer_manager.Load(type, resource_id);
+    default:
+        return nullptr;
+    }
+}
+
+void ModuleResources::ImportResource(const std::filesystem::path& asset_path, const Resource::Type asset_type)
+{
+    importer_manager.Import(asset_path.string(), asset_type);
 }

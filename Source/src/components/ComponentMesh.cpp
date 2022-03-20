@@ -1,13 +1,14 @@
 #include "core/hepch.h"
 
+#include "modules/ModuleProgram.h"
+#include "modules/ModuleResources.h"
+
+#include "resources/ResourceMesh.h"
+
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
-
-#include "modules/ModuleProgram.h"
-#include "importers/MeshImporter.h"
-#include "resources/ResourceMesh.h"
 
 Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH, container)
@@ -20,10 +21,7 @@ Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMes
 
 Hachiko::ComponentMesh::~ComponentMesh()
 {
-    for (auto mesh : meshes)
-    {
-        RELEASE(mesh);
-    }
+    // ResourceMesh is deleted in ModuleResource clean up
 }
 
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
@@ -62,15 +60,13 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
 
 void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 {
-    MeshImporter mesh_importer;
     std::filesystem::path m_path(mesh_path);
     LoadMesh(Hachiko::UUID::StringToUID(m_path.filename().replace_extension().string()));
 }
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 {
-    MeshImporter mesh_importer;
-    meshes.push_back(static_cast<ResourceMesh*>(mesh_importer.Load(mesh_id)));
+    meshes.push_back(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMesh::DrawGui()

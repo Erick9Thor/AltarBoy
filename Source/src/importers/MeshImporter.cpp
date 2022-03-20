@@ -7,7 +7,6 @@
 
 Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
 {
-    preferences = static_cast<Hachiko::ResourcesPreferences*>(App->preferences->GetPreference(Hachiko::Preferences::Type::RESOURCES));
 }
 
 void Hachiko::MeshImporter::Import(const char* path)
@@ -17,7 +16,7 @@ void Hachiko::MeshImporter::Import(const char* path)
 void Hachiko::MeshImporter::Save(const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(mesh->GetID());
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(mesh->GetID());
 
     const unsigned* sizes = mesh->buffer_sizes;
     unsigned header[static_cast<int>(ResourceMesh::Buffers::COUNT)] = {
@@ -152,7 +151,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
 
 Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
 {
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
     if (!std::filesystem::exists(file_path.c_str()))
     {
         return nullptr;

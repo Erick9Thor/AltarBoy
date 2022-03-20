@@ -56,7 +56,6 @@ namespace Hachiko
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
         ModuleResources* resources = nullptr;
-        ModuleImporter* importer = nullptr;
 
         PreferenceManager* preferences = nullptr;
     private:

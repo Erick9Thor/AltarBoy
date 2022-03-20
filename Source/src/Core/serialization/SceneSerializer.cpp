@@ -1,15 +1,7 @@
 #include "core/hepch.h"
 #include "SceneSerializer.h"
 
-#include "components/ComponentCamera.h"
-#include "components/ComponentDirLight.h"
-#include "components/ComponentMaterial.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentPointLight.h"
-#include "components/ComponentSpotLight.h"
-#include "components/ComponentTransform.h"
-
-#include "modules/ModuleImporter.h"
+#include "Core/preferences/src/ResourcesPreferences.h"
 
 Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
 {
@@ -42,11 +34,6 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene)
     std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
     fout << scene_data;
     return true;
-}
-
-void Hachiko::SceneSerializer::ImportFromAssets(const char* path, const Resource::Type type)
-{
-    App->importer->ImportAsset(path, type);
 }
 
 bool Hachiko::SceneSerializer::CheckIfImported(const char* path) const

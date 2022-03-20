@@ -1,20 +1,9 @@
 #pragma once
 #include "core/preferences/Preferences.h"
+#include "resources/Resource.h"
 
 namespace Hachiko
 {
-    enum class ResourceType
-    {
-        SCENE = 0,
-        MODEL,
-        MESH,
-        TEXTURE,
-        AUDIO,
-        VIDEO,
-        SCRIPT,
-        UNKNOWN,
-    };
-
     class ResourcesPreferences final : public Preferences
     {
     public:

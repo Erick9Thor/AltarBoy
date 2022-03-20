@@ -1,12 +1,7 @@
 #pragma once
 
-#include <filesystem>
-#include <string>
-#include <vector>
-#include <map>
-
-#include "Module.h"
 #include "Resources/Resource.h"
+#include "importers/ImporterManager.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
 namespace Hachiko
@@ -26,15 +21,17 @@ namespace Hachiko
             {Hachiko::Resource::Type::MODEL, ".fbx"},
             {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
             // Imported Resources
-            {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION}
+            {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION},
+            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION}
         };
         Hachiko::ResourcesPreferences* preferences = nullptr;
+        Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path; // TODO: This will track every resource, his type and path loaded
 
-        void HandleAssetsChanged(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
+        void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
-        void LoadModelIntoScene(const char* path);
-
+        void LoadModelIntoGameObject(const char* path, GameObject* game_object);
+    
     public:
         bool Init() override;
         bool CleanUp() override;
@@ -45,15 +42,15 @@ namespace Hachiko
         // TEMPORAL
         
         // Getters
-        ResourceModel* GetModel(std::string name) const
-        {
-            auto it = models.find(name);
-            if (it != models.end())
-            {
-                return it->second;
-            }
-            return nullptr;
-        };
+        //ResourceModel* GetModel(std::string name) const
+        //{
+        //    auto it = models.find(name);
+        //    if (it != models.end())
+        //    {
+        //        return it->second;
+        //    }
+        //    return nullptr;
+        //};
         ResourceMesh* GetMesh(UID uid) const
         {
             auto it = meshes.find(uid);
@@ -83,15 +80,12 @@ namespace Hachiko
         };
         
         void LoadResourceIntoScene(const char* path);
+        Resource* GetResource(Resource::Type type, UID resource_id);
 
-        std::map<std::string, ResourceModel*> models;
+        //std::map<std::string, ResourceModel*> models;
         std::map<UID, ResourceMesh*> meshes;
         std::map<UID, ResourceMaterial*> materials;
         std::map<UID, ResourceTexture*> textures;
        
-        /* ModelImporter model_importer;
-        MeshImporter mesh_importer;
-        MaterialImporter material_importer;
-        TextureImporter texture_importer; */
     };
 }

@@ -11,7 +11,6 @@
 Hachiko::TextureImporter::TextureImporter() 
 	: Importer(Importer::Type::TEXTURE)
 {
-    preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
 }
 
 void Hachiko::TextureImporter::Import(const char* path)
@@ -47,7 +46,7 @@ Hachiko::Resource* Hachiko::TextureImporter::ImportResource(const char* path)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const UID id)
 {
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::TEXTURE) + std::to_string(id);
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE) + std::to_string(id);
     
     return Load(file_path.c_str(), id);
 }
@@ -105,7 +104,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* file_path, const U
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
-    const std::string file_path = preferences->GetLibraryPath(Resource::Type::TEXTURE) + std::to_string(texture->GetID());
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE) + std::to_string(texture->GetID());
 
     unsigned header[9] = {
         texture->path.length(),

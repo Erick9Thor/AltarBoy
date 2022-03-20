@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Core/preferences/src/ResourcesPreferences.h"
+
 namespace Hachiko
 {
     class Resource;
-    class ResourcesPreferences;
 
     class Importer
     {
@@ -33,7 +34,18 @@ namespace Hachiko
         virtual Resource* Load(const UID id) = 0;
 
     protected:
-        ResourcesPreferences* preferences = nullptr;
         Type type;
+        [[nodiscard]] ResourcesPreferences* GetResourcesPreferences()
+        {
+            if (preferences == nullptr)
+            {
+                preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+            }
+
+            return preferences;
+        }
+
+     private:
+        ResourcesPreferences* preferences = nullptr;
     };
 }
