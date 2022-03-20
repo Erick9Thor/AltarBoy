@@ -102,9 +102,6 @@ void Hachiko::ModuleResources::LoadModelIntoGameObject(const char* path, GameObj
         }
         // TODO: If res is nullptr here we need to import model again
         component->AddResourceMesh(res);
-
-        // if material
-        LoadMaterialIntoGameObject(path, mesh_game_object);
     }
 }
 
@@ -131,6 +128,20 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
     return Resource::Type::UNKNOWN;
 }
 
+ResourceMesh* Hachiko::ModuleResources::GetMesh(UID uid)
+{
+    auto it = meshes.find(uid);
+    if (it != meshes.end())
+    {
+        return it->second;
+    }
+
+    auto res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, uid));
+    meshes.emplace(uid, res);
+    
+    return res;
+}
+
 void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
 {
     // TODO: If we call many times/places this function, consideran handling by an event
@@ -148,7 +159,6 @@ void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
         LoadModelIntoGameObject(path, game_object);
         break;
     case Resource::Type::MATERIAL:
-        LoadMaterialIntoGameObject(path, game_object);
         break;
     }
 }
@@ -158,7 +168,9 @@ Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID resourc
     switch (type)
     {
     case Resource::Type::MESH:
-        return importer_manager.Load(type, resource_id);
+        {
+            return GetMesh(resource_id); 
+        }
     default:
         return nullptr;
     }

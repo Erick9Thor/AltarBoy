@@ -51,15 +51,9 @@ namespace Hachiko
         //    }
         //    return nullptr;
         //};
-        ResourceMesh* GetMesh(UID uid) const
-        {
-            auto it = meshes.find(uid);
-            if (it != meshes.end())
-            {
-                return it->second;
-            }
-            return nullptr;
-        };
+
+        ResourceMesh* GetMesh(UID uid);
+
         ResourceMaterial* GetMaterial(UID uid) const
         {
             auto it = materials.find(uid);
