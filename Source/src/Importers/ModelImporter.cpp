@@ -3,6 +3,7 @@
 #include "MeshImporter.h"
 #include "MaterialImporter.h"
 
+#include "resources/ResourceModel.h"
 #include "Modules/ModuleFileSystem.h"
 #include "Core/preferences/src/ResourcesPreferences.h"
 
@@ -53,9 +54,10 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
         return nullptr;
     }
     YAML::Node model_node = YAML::LoadFile(model_path);
-    //Hachiko::Resource* model_output = new Resource(model_node[MODEL_ID].as<long long>(), Resource::Type::MODEL);
-
-    return nullptr;
+    Hachiko::ResourceModel* model_output = new ResourceModel(model_node[MODEL_ID].as<UID>());
+    model_output->model_path = model_node[MODEL_FILE_PATH].as<std::string>();
+    LoadChilds(model_node[NODE_ROOT][NODE_CHILD], model_output->nodes);
+    return model_output;
 }
 
 void Hachiko::ModelImporter::Save(const Resource* resource) {}
@@ -97,5 +99,19 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     {
         ImportNode(*child_node, node[NODE_CHILD][i]);
         ++child_node;
+    }
+}
+
+void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, std::vector<ResourceNode*>& childs)
+{
+    childs.reserve(node.size());
+    for (int i = 0; i < node.size(); ++i)
+    {
+        ResourceNode* resource_node = new ResourceNode();
+        resource_node->mesh_id = node[i][NODE_MESH_ID].as<UID>();
+        resource_node->node_name = node[i][NODE_NAME].as<std::string>();
+        resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
+        LoadChilds(node[i][NODE_CHILD], resource_node->childs);
+        childs.emplace_back(resource_node);
     }
 }

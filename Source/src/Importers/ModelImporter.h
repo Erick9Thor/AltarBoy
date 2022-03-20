@@ -5,6 +5,7 @@ class aiScene;
 namespace Hachiko
 {
     class Importer;
+    struct ResourceNode;
 
     class ModelImporter final : public Importer
     {
@@ -19,6 +20,6 @@ namespace Hachiko
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);
         void ImportNode(const aiNode* assimp_node, YAML::Node& node);
+        void LoadChilds(YAML::Node& node, std::vector<ResourceNode*>& childs);
     };
 }
-

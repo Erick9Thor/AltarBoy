@@ -1,21 +1,26 @@
 #pragma once
 
 #include "Resource.h"
-#include "Globals.h"
 
 namespace Hachiko
 {
-    class ResourceMesh;
+    struct ResourceNode
+    {
+        std::string node_name;
+        float4x4 node_transform;
+        UID mesh_id;
+        std::vector<ResourceNode*> childs;
+    };
 
     class ResourceModel final : public Resource
     {
     public:
         ResourceModel() : Resource(Resource::Type::MODEL){};
         ResourceModel(UID uid);
-        ~ResourceModel() override = default;
+        ~ResourceModel() override;
 
-    private:
-        std::vector<ResourceMesh*> meshes;
+        std::vector<ResourceNode*> nodes;
+        std::string model_path;
     };
 }
 

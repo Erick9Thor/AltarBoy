@@ -42,6 +42,20 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID resource_id)
     return GetImporter(type)->Load(resource_id);
 }
 
+Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
+{
+    // There are resources like Models, that can't be found in filesystem by id
+    switch (type)
+    {
+    case Resource::Type::MODEL:
+        return static_cast<ModelImporter*>(GetImporter(Resource::Type::MODEL))->Load(path);
+    case Resource::Type::MATERIAL:
+        // return static_cast<MaterialImporter>(GetImporter(Resource::Type::MATERIAL))->Load(path);
+    default:
+        assert(false, "Invalid parameters. Can't load that kind of resource by path. Use UID instead.");
+    }
+}
+
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type)
 {
     auto it = std::find_if(importers.begin(), importers.end(), [&](const std::pair<Importer::Type, Importer*>& element)

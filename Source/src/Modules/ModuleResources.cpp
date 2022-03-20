@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 
 #include "ModuleResources.h"
-#include "Application.h"
 #include "ModuleEvent.h"
 #include "ModuleFileSystem.h"
 #include "ModuleSceneManager.h"
@@ -13,7 +12,9 @@
 #include "importers/TextureImporter.h"
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
+
 #include "components/ComponentMesh.h"
+#include "resources/ResourceModel.h"
 
 using namespace Hachiko;
 
@@ -41,22 +42,22 @@ bool ModuleResources::Init()
 
 bool ModuleResources::CleanUp()
 {
-    for (auto it = meshes.begin(); it != meshes.end(); ++it)
+    for (auto& it : meshes)
     {
-        delete it->second;
+        delete it.second;
     }
 
-    for (auto it = textures.begin(); it != textures.end(); ++it)
+    for (auto& it : textures)
     {
-        delete it->second;
+        delete it.second;
     }
 
-    for (auto it = materials.begin(); it != materials.end(); ++it)
+    for (auto& it : materials)
     {
-        delete it->second;
+        delete it.second;
     }
 
-    return Module::CleanUp();
+    return true;
 }
 
 std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
@@ -92,19 +93,18 @@ void Hachiko::ModuleResources::LoadModelIntoGameObject(const char* path, GameObj
         GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
         ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
         component->SetID(mesh_id);
-
-        auto res = GetMesh(mesh_id);
-        if (res == nullptr)
-        {
-            HE_LOG("Loading resource mesh - id: %ulld", mesh_id);
-            res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, mesh_id));
-            meshes.emplace(mesh_id, res);
-        }
-        // TODO: If res is nullptr here we need to import model again
-        component->AddResourceMesh(res);
+        component->AddResourceMesh(GetMesh(mesh_id));
+        // We are storing materials by id, we need to change by name so we can call this function from here
+        //LoadMaterialIntoGameObject(model_node[MODEL_MATERIAL_NODE], mesh_game_object);
     }
 }
 
+void Hachiko::ModuleResources::LoadMaterialIntoGameObject(const char* path, GameObject* game_object)
+{
+    // GetMaterial(path); // This should retrieve ResourceMaterial* - I've modified getters so they import the resource if is not loaded into map yet. Check GetMesh & GetModel functions
+    // ComponentMaterial* component = game_object->CreateComponent(Component::Type::MATERIAL)
+    // Set component data...
+}
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
 {
     if (!path.has_extension())
@@ -128,7 +128,21 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
     return Resource::Type::UNKNOWN;
 }
 
-ResourceMesh* Hachiko::ModuleResources::GetMesh(UID uid)
+ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
+{
+    auto it = models.find(name);
+    if (it != models.end())
+    {
+        return it->second;
+    }
+
+    auto res = static_cast<ResourceModel*>(importer_manager.Load(Resource::Type::MODEL, name.c_str()));
+    models.emplace(name, res);
+
+    return res;
+}
+
+ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid)
 {
     auto it = meshes.find(uid);
     if (it != meshes.end())
@@ -142,9 +156,24 @@ ResourceMesh* Hachiko::ModuleResources::GetMesh(UID uid)
     return res;
 }
 
+ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid)
+{
+    // We need to change this map to get it by name
+    auto it = materials.find(uid);
+    if (it != materials.end())
+    {
+        return it->second;
+    }
+
+    // auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, path)); // I've overload Load function in ImporterManager to admit loading by name for specific types
+    // material.emplace(name, res);
+    // return res;
+    return nullptr;
+}
+
 void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
 {
-    // TODO: If we call many times/places this function, consideran handling by an event
+    // TODO: If we call many times/places this function, consider handling by an event
     GameObject* game_object = App->editor->GetSelectedGameObject();
     if (game_object == nullptr)
     {
@@ -159,6 +188,7 @@ void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
         LoadModelIntoGameObject(path, game_object);
         break;
     case Resource::Type::MATERIAL:
+        LoadMaterialIntoGameObject(path, game_object);
         break;
     }
 }

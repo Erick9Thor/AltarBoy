@@ -21,7 +21,7 @@ Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMes
 
 Hachiko::ComponentMesh::~ComponentMesh()
 {
-    // ResourceMesh is deleted in ModuleResource clean up
+    // ResourceMesh's are deleted in ModuleResources only
 }
 
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
