@@ -165,10 +165,24 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid)
         return it->second;
     }
 
-    // auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, path)); // I've overload Load function in ImporterManager to admit loading by name for specific types
-    // material.emplace(name, res);
-    // return res;
-    return nullptr;
+    auto res = (ResourceMaterial*)(importer_manager.Load(Resource::Type::MATERIAL, uid)); // I've overload Load function in ImporterManager to admit loading by name for specific types
+    materials.emplace(uid, res);
+
+    return res;
+}
+
+ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid)
+{
+    auto it = textures.find(uid);
+    if (it != textures.end())
+    {
+        return it->second;
+    }
+
+    auto res = (ResourceTexture*)(importer_manager.Load(Resource::Type::TEXTURE, uid));
+    textures.emplace(uid, res);
+
+    return res;
 }
 
 void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)

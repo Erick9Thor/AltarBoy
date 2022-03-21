@@ -8,8 +8,8 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/serialization/TypeConverter.h"
 
-
 #include "modules/ModuleTexture.h"
+#include "importers/TextureImporter.h"
 
 void ColorCopy(const aiColor4D& assimp_color, float4& color)
 {
@@ -19,7 +19,7 @@ void ColorCopy(const aiColor4D& assimp_color, float4& color)
     color.w = assimp_color.a;
 }
 
-Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MESH)
+Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIAL)
 {
 }
 
@@ -74,17 +74,14 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
     if (diffuse_uid)
     {
         material->diffuse = App->resources->GetTexture(diffuse_uid);
-        // TODO: If nullptr load resources (this case should not happen if we always load texture first)
     }
     if (specular_uid)
     {
         material->specular = App->resources->GetTexture(specular_uid);
-        // TODO: If nullptr load resources (this case should not happen if we always load texture first)
     }
     if (normals_uid)
     {
         material->normals = App->resources->GetTexture(normals_uid);
-        // TODO: If nullptr load resources (this case should not happen if we always load texture first)
     }
 
     // Save it in module resources
@@ -119,9 +116,10 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     static const int index = 0;
     const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string();
 
-    Hachiko::UID uid;
     aiString file;
     std::vector<std::string> search_paths;
+
+    Hachiko::TextureImporter texture_importer;
 
     // Load diffuse
     if (ai_material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
@@ -132,14 +130,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         search_paths.push_back(model_path + texture_file);
         search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
 
-        uid = Hachiko::UUID::GenerateUID();
         for (std::string path : search_paths)
         {
-            // if the texture is in assets
-            //  load it
-            // else
-            //  copy it & import it
-            material->diffuse = ModuleTexture::LoadResource(uid, path.c_str()); // TODO: replace it with the imports
+            material->diffuse = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
             if (material->diffuse != nullptr)
             {
                 break;
@@ -157,12 +150,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         search_paths.push_back(model_path + texture_file);
         search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
         
-        uid = Hachiko::UUID::GenerateUID();
         for (std::string path : search_paths)
         {
-            // Not flip specular because devil seems to auto flip tif images already
-            constexpr bool flip = false;
-            material->specular = ModuleTexture::LoadResource(uid, path.c_str(), flip); // TODO: replace it with the imports
+            material->specular = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
 
             if (material->specular != nullptr)
             {
@@ -180,10 +170,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         search_paths.push_back(model_path + texture_file);
         search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
 
-        uid = Hachiko::UUID::GenerateUID();
         for (std::string path : search_paths)
         {
-            material->normals = ModuleTexture::LoadResource(uid, path.c_str()); // TODO: replace it with the imports
+            material->normals = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
             if (material->normals != nullptr)
             {
                 break;
@@ -191,8 +180,10 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         }
     }
 
-    // Save it in module resources
-    App->resources->materials[id] = material;
-
     Save(material);
+
+    delete material->diffuse;
+    delete material->specular;
+    delete material->normals;
+    delete material;
 }

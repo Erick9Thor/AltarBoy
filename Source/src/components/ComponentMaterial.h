@@ -23,6 +23,11 @@ namespace Hachiko
             return material;
         }
 
+        void SetResourceMaterial(ResourceMaterial* res)
+        {
+            material = res;
+        }
+
         void DrawGui() override;
 
         void Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);

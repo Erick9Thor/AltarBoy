@@ -27,12 +27,17 @@ void Hachiko::TextureImporter::Import(const char* path)
             char* fileBuffer = (char*)data;
         }
     }*/
+
+    auto resource = ImportResource(path);
+    delete resource;
 }
 
 Hachiko::Resource* Hachiko::TextureImporter::ImportResource(const char* path)
 {
     Hachiko::UID uid = Hachiko::UUID::GenerateUID();
-    ResourceTexture* texture = App->texture->LoadResource(uid, path);
+    std::string stringPath = path;
+    std::string extension = stringPath.substr(stringPath.find_last_of(".") + 1);
+    ResourceTexture* texture = App->texture->LoadResource(uid, path, extension != "tif");
 
     if (texture != nullptr)
     {

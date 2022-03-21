@@ -26,15 +26,7 @@ namespace Hachiko
         ResourceMesh* GetMesh(const UID uid);
 
         ResourceMaterial* GetMaterial(UID uid);
-        ResourceTexture* GetTexture(UID uid) const
-        {
-            auto it = textures.find(uid);
-            if (it != textures.end())
-            {
-                return it->second;
-            }
-            return nullptr;
-        };
+        ResourceTexture* GetTexture(UID uid);
         
         void LoadResourceIntoScene(const char* path);
         Resource* GetResource(Resource::Type type, UID resource_id);
