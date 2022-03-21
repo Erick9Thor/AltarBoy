@@ -93,6 +93,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
 {
     node[NODE_NAME] = assimp_node->mName.C_Str();
     node[NODE_TRANSFORM] = assimp_node->mTransformation;
+    node[NODE_MESH_ID] = UUID::GenerateUID();
 
     auto child_node = assimp_node->mChildren;
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
