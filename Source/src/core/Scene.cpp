@@ -10,6 +10,10 @@
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
+#include "modules/ModuleResources.h"
+
+#include "resources/ResourceModel.h"
+#include "resources/ResourceMaterial.h"
 
 Hachiko::Scene::Scene():
     root(new GameObject(nullptr, float4x4::identity, "Root")),
@@ -57,6 +61,35 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
     const auto game_object = new GameObject(parent ? parent : root, name);
     game_object->scene_owner = this;
     return game_object;
+}
+
+void Hachiko::Scene::HandleInputModel(ResourceModel* model)
+{
+    GameObject* game_object = App->editor->GetSelectedGameObject();
+    if (game_object == nullptr)
+    {
+        game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
+    }
+
+    std::function<void(const std::vector<ResourceNode*>&)> createChilds = [&](const std::vector<ResourceNode*>& childs)
+    {
+        for (auto child : childs)
+        {
+            UID mesh_id = child->mesh_id;
+            GameObject* mesh_game_object = CreateNewGameObject(game_object, child->node_name.c_str());
+            ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
+            component->SetID(mesh_id);
+            component->AddResourceMesh(App->resources->GetMesh(mesh_id));
+            createChilds(child->childs);
+            // GetMaterials
+        }
+    };
+
+    createChilds(model->child_nodes);
+}
+
+void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
+{
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const

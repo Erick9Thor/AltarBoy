@@ -1,7 +1,7 @@
 #include "core/hepch.h"
 
 Hachiko::Resource::Resource(Type type)
-    : id(0)
+    : id(Hachiko::UUID::GenerateUID())
     , type(type)
 {
 }

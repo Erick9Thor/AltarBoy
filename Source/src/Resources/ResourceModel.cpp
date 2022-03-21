@@ -8,8 +8,8 @@ Hachiko::ResourceModel::ResourceModel(UID uid)
 
 Hachiko::ResourceModel::~ResourceModel()
 {
-    for (auto node : nodes)
+    for (auto child : child_nodes)
     {
-        delete node;
+        delete child;
     }
 }

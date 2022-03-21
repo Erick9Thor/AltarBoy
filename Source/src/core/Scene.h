@@ -13,6 +13,8 @@ namespace Hachiko
     class ComponentSpotLight;
     class Skybox;
     class Quadtree;
+    class ResourceModel;
+    class ResourceMaterial;
 
     class Scene : public Serializable
     {
@@ -28,6 +30,10 @@ namespace Hachiko
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
+
+        void HandleInputModel(ResourceModel* model);
+        void HandleInputMaterial(ResourceMaterial* material);
+
         [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
         [[nodiscard]] GameObject* GetRoot() const
         {

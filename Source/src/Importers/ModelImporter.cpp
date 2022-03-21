@@ -56,7 +56,9 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     YAML::Node model_node = YAML::LoadFile(model_path);
     Hachiko::ResourceModel* model_output = new ResourceModel(model_node[MODEL_ID].as<UID>());
     model_output->model_path = model_node[MODEL_FILE_PATH].as<std::string>();
-    LoadChilds(model_node[NODE_ROOT][NODE_CHILD], model_output->nodes);
+    std::filesystem::path mp = model_node[MODEL_FILE_PATH].as<std::string>();
+    model_output->model_name = mp.filename().replace_extension().string();
+    LoadChilds(model_node[NODE_ROOT][NODE_CHILD], model_output->child_nodes);
     return model_output;
 }
 
@@ -77,7 +79,6 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         mesh_importer.Import(mesh, mesh_id);
     }
 
-    aiString file;
     Hachiko::MaterialImporter material_importer;
     for (unsigned i = 0; i < scene->mNumMaterials; ++i)
     {
@@ -92,7 +93,6 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
 {
     node[NODE_NAME] = assimp_node->mName.C_Str();
     node[NODE_TRANSFORM] = assimp_node->mTransformation;
-    node[NODE_MESH_ID] = Hachiko::UUID::GenerateUID();
 
     auto child_node = assimp_node->mChildren;
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)

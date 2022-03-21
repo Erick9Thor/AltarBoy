@@ -9,7 +9,7 @@ namespace Hachiko
         std::string node_name;
         float4x4 node_transform;
         UID mesh_id;
-        std::vector<ResourceNode*> childs;
+        std::vector<ResourceNode*> childs {};
     };
 
     class ResourceModel final : public Resource
@@ -19,9 +19,8 @@ namespace Hachiko
         ResourceModel(UID uid);
         ~ResourceModel() override;
 
-        std::vector<ResourceNode*> nodes;
+        std::vector<ResourceNode*> child_nodes;
         std::string model_path;
+        std::string model_name;
     };
 }
-
-

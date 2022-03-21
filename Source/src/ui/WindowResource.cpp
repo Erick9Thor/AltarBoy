@@ -2,6 +2,7 @@
 #include "WindowResource.h"
 #include "events/Event.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
 
 Hachiko::WindowResource::WindowResource() : 
@@ -57,5 +58,17 @@ void Hachiko::WindowResource::Update()
 
 void Hachiko::WindowResource::LoadResource(const std::string& path)
 {
+    Scene* scene = App->scene_manager->GetActiveScene();
+    Resource::Type type = App->resources->GetType(path);
+    
+    switch (type)
+    {
+    case Resource::Type::MODEL:
+        scene->HandleInputModel(App->resources->GetModel(path));
+        break;
+    case Resource::Type::MATERIAL:
+        //scene->HandleInputMaterial(App->resources->GetMaterial(path));
+        return;
+    }
     App->resources->LoadResourceIntoScene(path.c_str());
 }
