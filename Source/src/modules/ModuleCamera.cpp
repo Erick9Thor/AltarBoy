@@ -97,7 +97,7 @@ void Hachiko::ModuleCamera::Zoom(float zoom) const
 {
     auto* transform = main_camera->GetGameObject()->GetTransform();
     const float distance = main_camera->reference_point.Distance(transform->GetPosition());
-    const vec newPos = transform->GetPosition() + zoom * transform->GetFront() * distance * 0.05f;
+    const vec newPos = transform->GetPosition() - zoom * transform->GetFront() * distance * 0.05f;
 
     transform->SetPosition(newPos);
     main_camera->GetGameObject()->Update();

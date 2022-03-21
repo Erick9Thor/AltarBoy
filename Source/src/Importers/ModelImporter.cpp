@@ -111,7 +111,11 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, std::vector<ResourceNo
         resource_node->mesh_id = node[i][NODE_MESH_ID].as<UID>();
         resource_node->node_name = node[i][NODE_NAME].as<std::string>();
         resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
-        LoadChilds(node[i][NODE_CHILD], resource_node->childs);
+        if (node[i][NODE_CHILD].IsDefined())
+        {
+            LoadChilds(node[i][NODE_CHILD], resource_node->childs);
+        }
+
         childs.emplace_back(resource_node);
     }
 }
