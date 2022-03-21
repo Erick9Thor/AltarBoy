@@ -60,7 +60,7 @@ namespace Hachiko
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
-        void LoadModelIntoGameObject(const char* path, GameObject* game_object);
-        void LoadMaterialIntoGameObject(const char* path, GameObject* game_object);
+        void LoadModelIntoGameObject(const char* path, GameObject* game_object); // This function will desapear
+        void LoadMaterialIntoGameObject(const char* path, GameObject* game_object); // This function will desapear
     };
 }
