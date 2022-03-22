@@ -70,5 +70,4 @@ void Hachiko::WindowResource::LoadResource(const std::string& path)
         //scene->HandleInputMaterial(App->resources->GetMaterial(path));
         return;
     }
-    App->resources->LoadResourceIntoScene(path.c_str());
 }

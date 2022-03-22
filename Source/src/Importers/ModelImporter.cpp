@@ -49,7 +49,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const UID id)
 
 Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
 {
-    if (!App->file_sys->Exists(model_path))
+    if (!std::filesystem::exists(model_path))
     {
         return nullptr;
     }

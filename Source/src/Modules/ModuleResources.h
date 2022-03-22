@@ -28,7 +28,6 @@ namespace Hachiko
         ResourceMaterial* GetMaterial(UID uid);
         ResourceTexture* GetTexture(UID uid);
         
-        void LoadResourceIntoScene(const char* path);
         Resource* GetResource(Resource::Type type, UID resource_id);
 
         std::map<std::string, ResourceModel*> models;
@@ -52,7 +51,5 @@ namespace Hachiko
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
-        void LoadModelIntoGameObject(const char* path, GameObject* game_object); // This function will desapear
-        void LoadMaterialIntoGameObject(const char* path, GameObject* game_object); // This function will desapear
     };
 }

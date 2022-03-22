@@ -84,27 +84,6 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
     }
 }
 
-void Hachiko::ModuleResources::LoadModelIntoGameObject(const char* path, GameObject* game_object)
-{
-    YAML::Node model_node = YAML::LoadFile(path);
-    for (int i = 0; i < model_node[NODE_ROOT][NODE_CHILD].size(); ++i)
-    {
-        UID mesh_id = model_node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>(); // TODO: Add recursivity
-        GameObject* mesh_game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(game_object, model_node[NODE_ROOT][NODE_CHILD][i][NODE_NAME].as<std::string>().c_str());
-        ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
-        component->SetID(mesh_id);
-        component->AddResourceMesh(GetMesh(mesh_id));
-        // We are storing materials by id, we need to change by name so we can call this function from here
-        //LoadMaterialIntoGameObject(model_node[MODEL_MATERIAL_NODE], mesh_game_object);
-    }
-}
-
-void Hachiko::ModuleResources::LoadMaterialIntoGameObject(const char* path, GameObject* game_object)
-{
-    // GetMaterial(path); // This should retrieve ResourceMaterial* - I've modified getters so they import the resource if is not loaded into map yet. Check GetMesh & GetModel functions
-    // ComponentMaterial* component = game_object->CreateComponent(Component::Type::MATERIAL)
-    // Set component data...
-}
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
 {
     if (!path.has_extension())
@@ -183,28 +162,6 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid)
     textures.emplace(uid, res);
 
     return res;
-}
-
-void Hachiko::ModuleResources::LoadResourceIntoScene(const char* path)
-{
-    // TODO: If we call many times/places this function, consider handling by an event
-    GameObject* game_object = App->editor->GetSelectedGameObject();
-    if (game_object == nullptr)
-    {
-        std::filesystem::path resource_path(path);
-        game_object = App->scene_manager->GetActiveScene()->CreateNewGameObject(nullptr, resource_path.filename().replace_extension().string().c_str());
-    }
-
-    Resource::Type type = GetType(path);
-    switch (type)
-    {
-    case Resource::Type::MODEL:
-        LoadModelIntoGameObject(path, game_object);
-        break;
-    case Resource::Type::MATERIAL:
-        LoadMaterialIntoGameObject(path, game_object);
-        break;
-    }
 }
 
 Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID resource_id)
