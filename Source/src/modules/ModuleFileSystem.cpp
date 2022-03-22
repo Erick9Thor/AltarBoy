@@ -131,6 +131,7 @@ bool Hachiko::ModuleFileSystem::Save(const char* path, const YAML::Node& node) c
 {
     std::ofstream output(path);
     output << node;
+    output.close();
     return true;
 }
 

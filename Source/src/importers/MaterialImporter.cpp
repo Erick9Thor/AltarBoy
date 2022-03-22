@@ -66,8 +66,8 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
     UID diffuse_uid = node[MATERIAL_DIFFUSE].as<UID>();
     UID specular_uid = node[MATERIAL_SPECULAR].as<UID>();
     UID normals_uid = node[MATERIAL_NORMALS].as<UID>();
-    YAML::convert<float4>::decode(node[MATERIAL_DIFFUSE_COLOR], material->diffuse_color);
-    YAML::convert<float4>::decode(node[MATERIAL_SPECULAR_COLOR], material->specular_color);
+    material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
+    material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
     material->shininess = node[MATERIAL_SHININESS].as<float>();
 
     // Load texutes

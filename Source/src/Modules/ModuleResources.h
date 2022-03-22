@@ -19,15 +19,14 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
+        void ResoreLibrary() {} // WIP
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
         
         ResourceModel* GetModel(const std::string& name);
         ResourceMesh* GetMesh(const UID uid);
-
         ResourceMaterial* GetMaterial(UID uid);
         ResourceTexture* GetTexture(UID uid);
-        
         Resource* GetResource(Resource::Type type, UID resource_id);
 
         std::map<std::string, ResourceModel*> models;
