@@ -58,7 +58,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     model_output->model_path = model_node[MODEL_FILE_PATH].as<std::string>();
     std::filesystem::path mp = model_node[MODEL_FILE_PATH].as<std::string>();
     model_output->model_name = mp.filename().replace_extension().string();
-    LoadChilds(model_node[NODE_ROOT][NODE_CHILD], model_output->child_nodes);
+    LoadChilds(model_node[NODE_CHILD], model_output->child_nodes);
     return model_output;
 }
 
@@ -66,39 +66,40 @@ void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
-    Hachiko::UID uid;
     Hachiko::MeshImporter mesh_importer;
-
-    ImportNode(scene->mRootNode, node[NODE_ROOT]);
+    Hachiko::MaterialImporter material_importer;
+    
+    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+    {
+        aiMaterial* material = scene->mMaterials[i];
+        Hachiko::UID material_id = UUID::GenerateUID();
+        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
+        material_importer.Import(material, material_id);
+    }
 
     for (unsigned int i = 0; i < scene->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[i];
-        Hachiko::UID mesh_id = node[NODE_ROOT][NODE_CHILD][i][NODE_MESH_ID].as<UID>();
+        Hachiko::UID mesh_id = UUID::GenerateUID();
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
         mesh_importer.Import(mesh, mesh_id);
     }
 
-    Hachiko::MaterialImporter material_importer;
-    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
-    {
-        aiMaterial* material = scene->mMaterials[i];
-        uid = Hachiko::UUID::GenerateUID();
-        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = uid;
-        material_importer.Import(material, uid);
-    }
+    ImportNode(scene->mRootNode, node);
 }
 
 void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node)
 {
     node[NODE_NAME] = assimp_node->mName.C_Str();
     node[NODE_TRANSFORM] = assimp_node->mTransformation;
-    node[NODE_MESH_ID] = UUID::GenerateUID();
-
+    
     auto child_node = assimp_node->mChildren;
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         ImportNode(*child_node, node[NODE_CHILD][i]);
+        node[NODE_CHILD][i][NODE_MESH_ID] = node[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>();
+        // Applies the same material to all
+        node[NODE_CHILD][i][NODE_MATERIAL_ID] = node[MODEL_MATERIAL_NODE][0][MODEL_MATERIAL_ID].as<UID>(); 
         ++child_node;
     }
 }

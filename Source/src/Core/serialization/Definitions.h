@@ -19,11 +19,12 @@
 #define MODEL_MATERIAL_NODE "material"
 
 // Node
-#define NODE_NAME "node_name"
-#define NODE_ROOT "node_root"
-#define NODE_CHILD "node_child"
-#define NODE_TRANSFORM "node_transform"
+#define NODE_NAME "name"
+#define NODE_ROOT "root"
+#define NODE_CHILD "child"
+#define NODE_TRANSFORM "transform"
 #define NODE_MESH_ID "mesh"
+#define NODE_MATERIAL_ID "material"
 
 // Mesh
 #define MESH_ID "mesh_id"

@@ -1,0 +1,49 @@
+scene_name: Unnamed Scene
+root_id: 4956444956375947099
+child:
+  - id: 7547236022544789610
+    name: BakerHouse
+    enabled: true
+    parent_id: 4956444956375947099
+    component:
+      - id: 18094652636757742344
+        type: 1
+        enabled: true
+        position: [-4.63299942, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 9388350669363049453
+        name: Chimney
+        enabled: true
+        parent_id: 7547236022544789610
+        component:
+          - id: 1182638107478309479
+            type: 1
+            enabled: true
+            position: [-4.63299942, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 15378478073087176361
+            type: 2
+            enabled: true
+            model_path: ""
+            texture_file_name: ""
+            texture_type: ""
+      - id: 4321556144344568208
+        name: Baker_house
+        enabled: true
+        parent_id: 7547236022544789610
+        component:
+          - id: 15013267855667999865
+            type: 1
+            enabled: true
+            position: [-4.63299942, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 2718596348681500135
+            type: 2
+            enabled: true
+            model_path: ""
+            texture_file_name: ""
+            texture_type: ""
