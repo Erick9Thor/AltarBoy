@@ -87,6 +87,10 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type)
         iType = Importer::Type::TEXTURE;
         break;
 
+    case Resource::Type::MATERIAL:
+        iType = Importer::Type::MATERIAL;
+        break;
+
     case Resource::Type::SCENE:
         iType = Importer::Type::SCENE;
         break;

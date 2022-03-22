@@ -48,7 +48,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
 {
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(uid);
     if (!std::filesystem::exists(file_path.c_str()))
     {
         return nullptr;
