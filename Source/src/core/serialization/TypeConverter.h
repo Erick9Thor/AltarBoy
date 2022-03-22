@@ -154,30 +154,34 @@ namespace YAML
 
         static bool decode(const Node& node, float4x4& rhs)
         {
-            if (!node.IsSequence() || node.size() != 16)
+            if (!node.IsSequence() || 
+                (node[0].size() != 4 && 
+                 node[1].size() != 4 &&
+                 node[2].size() != 4 &&
+                 node[3].size() != 4))
             {
                 return false;
             }
 
-            rhs.scaleX = node[0].as<float>();
-            rhs.shearXy = node[1].as<float>();
-            rhs.shearXz = node[2].as<float>();
-            rhs.x = node[3].as<float>();
+            rhs.scaleX  = node[0][0].as<float>();
+            rhs.shearXy = node[0][1].as<float>();
+            rhs.shearXz = node[0][2].as<float>();
+            rhs.x       = node[0][3].as<float>();
 
-            rhs.shearYx = node[4].as<float>();
-            rhs.scaleY = node[5].as<float>();
-            rhs.shearYz = node[6].as<float>();
-            rhs.y = node[7].as<float>();
+            rhs.shearYx = node[1][0].as<float>();
+            rhs.scaleY  = node[1][1].as<float>();
+            rhs.shearYz = node[1][2].as<float>();
+            rhs.y       = node[1][3].as<float>();
 
-            rhs.shearZx = node[8].as<float>();
-            rhs.shearZy = node[9].as<float>();
-            rhs.scaleZ = node[10].as<float>();
-            rhs.z = node[11].as<float>();
+            rhs.shearZx = node[2][0].as<float>();
+            rhs.shearZy = node[2][1].as<float>();
+            rhs.scaleZ  = node[2][2].as<float>();
+            rhs.z       = node[2][3].as<float>();
 
-            rhs.shearWx = node[12].as<float>();
-            rhs.shearWy = node[13].as<float>();
-            rhs.shearWz = node[14].as<float>();
-            rhs.w = node[15].as<float>();
+            rhs.shearWx = node[3][0].as<float>();
+            rhs.shearWy = node[3][1].as<float>();
+            rhs.shearWz = node[3][2].as<float>();
+            rhs.w       = node[3][3].as<float>();
 
             return true;
         }
