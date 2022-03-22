@@ -40,20 +40,21 @@ namespace Hachiko
 
         static Type GetType() { return Type::TRANSFORM; };
         inline [[nodiscard]] bool IsDirty() const { return dirty; }; 
+        inline [[nodiscard]] bool HasChanged() const { return changed; };
         inline [[nodiscard]] const float3& GetLocalPosition() const { return position_local; };
         inline [[nodiscard]] const float3& GetLocalScale() const { return scale_local; };
         inline [[nodiscard]] const Quat& GetLocalRotation() const { return rotation_local; };
         inline [[nodiscard]] const float3& GetLocalRotationInEulerAngles() const { return rotation_euler_local; };
         inline [[nodiscard]] const float4x4& GetLocalMatrix() const { return matrix_local; };
 
-        [[nodiscard]] const float3& GetPosition() const { return position; };
-        [[nodiscard]] const float3& GetScale() const { return scale; };
-        [[nodiscard]] const Quat& GetRotation() const { return rotation; };
-        [[nodiscard]] const float3& GetRotationInEulerAngles() const { return rotation_euler; };
-        [[nodiscard]] const float3& GetFront() const { return front; };
-        [[nodiscard]] const float3& GetUp() const { return up; };
-        [[nodiscard]] const float3& GetRight() const { return right; };
-        [[nodiscard]] const float4x4& GetMatrix() const { return matrix; };
+        [[nodiscard]] const float3& GetPosition();
+        [[nodiscard]] const float3& GetScale();
+        [[nodiscard]] const Quat& GetRotation();
+        [[nodiscard]] const float3& GetRotationInEulerAngles();
+        [[nodiscard]] const float3& GetFront();
+        [[nodiscard]] const float3& GetUp();
+        [[nodiscard]] const float3& GetRight();
+        [[nodiscard]] const float4x4& GetMatrix();
 
 
         void Save(JsonFormatterValue j_component) const override;
@@ -66,9 +67,12 @@ namespace Hachiko
         void UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode);
 
     private:
-        bool dirty = true; // Symbolizes whether the GLOBAL transform needs to be re calculated or not .
+        bool dirty = true;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.
+        bool changed = false;       // Symbolizes whether the transform has been changed this cycle. Serves as flag to GameObject's Update.
+
         float4x4 matrix;
         float4x4 matrix_local;
+
         float3 position;
         float3 position_local;
         float3 scale;
@@ -77,6 +81,7 @@ namespace Hachiko
         Quat rotation_local;
         float3 rotation_euler;
         float3 rotation_euler_local;
+
         float3 right;
         float3 up;
         float3 front;

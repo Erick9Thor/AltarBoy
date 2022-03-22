@@ -31,8 +31,6 @@ namespace Hachiko
                    const float3& scale = float3::one);
         virtual ~GameObject();
 
-        void Init();
-
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);

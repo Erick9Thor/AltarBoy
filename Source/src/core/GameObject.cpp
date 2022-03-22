@@ -14,7 +14,6 @@ Hachiko::GameObject::GameObject(const char* name) :
     name(name)
 {
     AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
-    Init();
 }
 
 Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid) :
@@ -23,8 +22,6 @@ Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, c
 {
     SetNewParent(parent);
     AddComponent(new ComponentTransform(this, transform));
-
-    Init();
 }
 
 Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) :
@@ -33,8 +30,6 @@ Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, c
 {
     SetNewParent(parent);
     AddComponent(new ComponentTransform(this, translation, rotation, scale));
-
-    Init();
 }
 
 Hachiko::GameObject::~GameObject()
@@ -56,15 +51,6 @@ Hachiko::GameObject::~GameObject()
     {
         RELEASE(component);
     }
-}
-
-void Hachiko::GameObject::Init()
-{
-    std::function OnTransformChanged = [&](Event& evt)
-    {
-        OnTransformUpdated();
-    };
-    App->event->Subscribe(Event::Type::TRANSFORM_CHANGED, OnTransformChanged);
 }
 
 void Hachiko::GameObject::RemoveChild(GameObject* game_object)
@@ -152,12 +138,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 
 void Hachiko::GameObject::Update()
 {
-    // Use Event system
-    /*
-    if (transform->IsDirty())
+    if (transform->HasChanged())
     {
         OnTransformUpdated();
-    }*/
+    }
 
     for (Component* component : components)
     {
