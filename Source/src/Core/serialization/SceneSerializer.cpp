@@ -33,6 +33,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene)
     ResourcesPreferences* resources_preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
     std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
     fout << scene_data;
+    fout.close();
     return true;
 }
 

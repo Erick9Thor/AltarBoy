@@ -20,7 +20,6 @@
 
 // Node
 #define NODE_NAME "name"
-#define NODE_ROOT "root"
 #define NODE_CHILD "child"
 #define NODE_TRANSFORM "transform"
 #define NODE_MESH_ID "mesh"

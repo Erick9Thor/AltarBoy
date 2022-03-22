@@ -19,7 +19,7 @@ namespace Hachiko
         // Load is private to ensure only ModuleScene can call it 
         // as we retrieve ownership of scene object pointer
         Scene* Load(const char* path);
-        bool CheckIfImported(const char* path) const;
+        bool CheckIfImported(const char* path) const; // TODO: Move to ImportManager
         ResourcesPreferences* preferences;
     };
 }
