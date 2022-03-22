@@ -7,7 +7,8 @@ Hachiko::ResourceTexture::ResourceTexture(UID id)
 
 Hachiko::ResourceTexture::~ResourceTexture() 
 {
-    glDeleteTextures(1, &id);
+    if (id != 0)
+        glDeleteTextures(1, &id);
     delete[] data;
 }
 
@@ -28,7 +29,7 @@ void Hachiko::ResourceTexture::GenerateBuffer()
 void Hachiko::ResourceTexture::DrawGui() 
 {
     ImGui::Text(path.c_str());
-    ImGui::Image(data, ImVec2(100, 100));
+    ImGui::Image(reinterpret_cast<void*>(id), ImVec2(100, 100));
 
     ImGui::Text("Width: ");
     ImGui::SameLine();

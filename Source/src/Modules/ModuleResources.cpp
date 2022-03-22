@@ -52,12 +52,12 @@ bool ModuleResources::CleanUp()
         delete it.second;
     }
 
-    for (auto& it : textures)
+    for (auto& it : materials)
     {
         delete it.second;
     }
 
-    for (auto& it : materials)
+    for (auto& it : textures)
     {
         delete it.second;
     }

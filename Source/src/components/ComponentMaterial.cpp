@@ -10,7 +10,6 @@ Hachiko::ComponentMaterial::ComponentMaterial(GameObject* conatiner) :
 
 Hachiko::ComponentMaterial::~ComponentMaterial()
 {
-    RELEASE(material);
 }
 
 void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)

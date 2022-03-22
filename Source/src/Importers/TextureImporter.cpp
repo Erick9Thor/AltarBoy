@@ -67,7 +67,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* file_path, const U
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    const auto texture = new ResourceTexture(id);
+    auto texture = new ResourceTexture(id);
 
     unsigned header[9];
     size_bytes = sizeof(header);
@@ -84,24 +84,20 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* file_path, const U
     texture->wrap = header[7];
     texture->data_size = header[8];
 
-    char* path = new char[path_size + 1];
     size_bytes = path_size;
-    memcpy(path, cursor, size_bytes);
+    texture->path = "";
+    for (unsigned i = 0; i < size_bytes; ++i)
+        texture->path += cursor[i];
     cursor += size_bytes;
-    path[path_size] = '\n';
-    texture->path = path;
-    delete[] path;
 
-    texture->data = new byte[texture->data_size];
     size_bytes = texture->data_size;
+    texture->data = new byte[size_bytes];
     memcpy(texture->data, cursor, size_bytes);
     cursor += size_bytes;
 
     texture->GenerateBuffer();
 
     delete[] file_buffer;
-
-    App->resources->textures[id] = texture;
 
     return texture;
 }
