@@ -569,6 +569,8 @@
     <ClInclude Include="src\components\ComponentImage.h" />
     <ClInclude Include="src\components\ComponentProgressBar.h" />
     <ClInclude Include="src\components\ComponentTransform2D.h" />
+    <ClInclude Include="src\components\ISelectable.h" />
+    <ClInclude Include="src\events\InputEventPayload.h" />
     <ClInclude Include="src\events\MouseEventPayload.h" />
     <ClInclude Include="src\modules\ModuleUserInterface.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />

@@ -12,6 +12,7 @@
 #include "components/ComponentCanvasRenderer.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform2D.h"
+#include "components/ComponentButton.h"
 
 #include "ui/WindowScene.h"
 
@@ -32,8 +33,8 @@ bool Hachiko::ModuleUserInterface::Init()
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
-    
-
+    ImVec2 mouse_pos = ImGui::GetMousePos();
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), float2(mouse_pos.x, mouse_pos.y), false);
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -81,25 +82,37 @@ void Hachiko::ModuleUserInterface::RecursiveDrawUI(const GameObject* game_object
     }
 }
 
-void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos)
+void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos, bool is_click)
 {
+    // If it is not click it is considered a hover
     ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
-    if (transform)
-    {
+    // Find selectables TODO: Improve how this is handled
+    ComponentButton* selectable = game_object->GetComponent<ComponentButton>();
+    if (transform && selectable)
+    {   
         if (transform->Intersects(mouse_pos))
         {
-            HE_LOG("Intersects %s", transform->GetGameObject()->name.c_str());
+            //HE_LOG("Intersects %s", transform->GetGameObject()->name.c_str());
+            selectable->OnPointerEnter();
+            if (is_click)
+            {
+                HE_LOG("Clicks %s", transform->GetGameObject()->name.c_str());
+                selectable->Activate();
+            }
+        }
+        else
+        {
+            selectable->OnPointerExit();
         }
     }
     for (const GameObject* child : game_object->children)
     {
-        RecursiveCheckMousePos(child, mouse_pos);
+        RecursiveCheckMousePos(child, mouse_pos, is_click);
     }
 }
 
 void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
 {
-    
     const auto& payload = evt.GetEventData<MouseEventPayload>();
     MouseEventPayload::Action action = payload.GetAction();
     float2 coords = payload.GetCoords();
@@ -107,8 +120,9 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     const WindowScene* w_scene = App->editor->GetSceneWindow();    
     float2 click_pos = w_scene->ImguiToScreenPos(coords);
 
-    HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
-    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos);
+    //HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
+    constexpr bool is_click = true;
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, is_click);
 }
 
 

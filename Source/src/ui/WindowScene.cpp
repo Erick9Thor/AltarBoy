@@ -231,7 +231,6 @@ float2 Hachiko::WindowScene::ImguiToScreenPos(const float2& mouse_pos) const
     float2 mouse_viewport_pos = float2(mouse_pos.x - guizmo_rect_origin.x, mouse_pos.y - guizmo_rect_origin.y);
     float2 center = texture_size / 2;
     float2 mouse_ui_pos = float2(mouse_viewport_pos.x - center.x, (-mouse_viewport_pos.y) + center.y);
-    HE_LOG("Test %.2f, %.2f", mouse_ui_pos.x, mouse_ui_pos.y);
     return mouse_ui_pos;
 }
 

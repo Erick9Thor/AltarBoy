@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "Globals.h"
+#include "ISelectable.h"
 
 namespace Hachiko
 {
@@ -9,11 +10,13 @@ namespace Hachiko
 
     class ComponentTransform2D;
 
-    class ComponentButton : public Component
+    class ComponentButton : public Component, public ISelectable
     {
     public:
         ComponentButton(GameObject* container);
         ~ComponentButton() override = default;
+        
+        void Activate() override {}
 
         static Type GetType();
 

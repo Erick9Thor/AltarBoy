@@ -1149,6 +1149,8 @@
     <ClInclude Include="src\events\MouseEventPayload.h">
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
+    <ClInclude Include="src\events\InputEventPayload.h" />
+    <ClInclude Include="src\components\ISelectable.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
