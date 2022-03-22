@@ -20,7 +20,7 @@ using namespace Hachiko;
 
 bool ModuleResources::Init()
 {
-    preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
     for (int i = 0; i < static_cast<int>(Resource::Type::UNKNOWN); ++i)

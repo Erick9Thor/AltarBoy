@@ -19,6 +19,20 @@ namespace Hachiko
         void LoadConfigurationFile() const;
         void SaveConfigurationFile() const;
         [[nodiscard]] Preferences* GetPreference(Preferences::Type type) const;
+        [[nodiscard]] ResourcesPreferences* GetResourcesPreference() const
+        {
+            return resources;
+        }
+
+        [[nodiscard]] EditorPreferences* GetEditorPreference() const
+        {
+            return editor;
+        }
+
+        [[nodiscard]] CameraPreferences* GetCameraPreference() const
+        {
+            return camera;
+        }
 
     private:
         std::vector<Preferences*> preferences{};

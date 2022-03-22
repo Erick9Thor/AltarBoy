@@ -12,7 +12,7 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     {
         return nullptr;
     }
-    preferences = dynamic_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    preferences = App->preferences->GetResourcesPreference();
     const auto scene_output = new Scene();
     
 
@@ -30,19 +30,8 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene)
 {
     YAML::Node scene_data;
     scene->Save(scene_data);
-    ResourcesPreferences* resources_preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
-    std::ofstream fout(StringUtils::Concat(resources_preferences->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
+    std::ofstream fout(StringUtils::Concat(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
     fout << scene_data;
     fout.close();
     return true;
-}
-
-bool Hachiko::SceneSerializer::CheckIfImported(const char* path) const
-{
-    std::filesystem::path model_name(path);
-    model_name = model_name.filename().replace_extension();
-    std::string fullPath = preferences->GetLibraryPath(Resource::Type::MODEL);
-    fullPath.append(model_name.string());
-
-    return std::filesystem::exists(fullPath);
 }

@@ -5,7 +5,7 @@
 
 bool Hachiko::ModuleSceneManager::Init()
 {
-    preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+    preferences = App->preferences->GetResourcesPreference();
     std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
     if (std::filesystem::exists(scene_path))
     {

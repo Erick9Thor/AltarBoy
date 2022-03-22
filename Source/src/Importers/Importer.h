@@ -40,7 +40,7 @@ namespace Hachiko
         {
             if (preferences == nullptr)
             {
-                preferences = static_cast<ResourcesPreferences*>(App->preferences->GetPreference(Preferences::Type::RESOURCES));
+                preferences = App->preferences->GetResourcesPreference();
             }
 
             return preferences;
