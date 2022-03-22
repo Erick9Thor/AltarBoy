@@ -42,6 +42,11 @@ bool ModuleResources::Init()
 
 bool ModuleResources::CleanUp()
 {
+    for (auto& it : models)
+    {
+        delete it.second;
+    }
+
     for (auto& it : meshes)
     {
         delete it.second;

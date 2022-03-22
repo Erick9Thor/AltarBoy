@@ -24,3 +24,35 @@ void Hachiko::ResourceTexture::GenerateBuffer()
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void Hachiko::ResourceTexture::DrawGui() 
+{
+    ImGui::Text(path.c_str());
+    ImGui::Image(data, ImVec2(100, 100));
+
+    ImGui::Text("Width: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(width).c_str());
+    ImGui::Text("Height: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(height).c_str());
+    ImGui::Text("Format: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(format).c_str());
+    ImGui::Text("BPP: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(bpp).c_str());
+
+    // TODO: select config
+    ImGui::Text("Min filter: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(min_filter).c_str());
+    // TODO: select config
+    ImGui::Text("Mag filter: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(mag_filter).c_str());
+    // TODO: select config
+    ImGui::Text("BPP: ");
+    ImGui::SameLine();
+    ImGui::Text(std::to_string(bpp).c_str());
+}

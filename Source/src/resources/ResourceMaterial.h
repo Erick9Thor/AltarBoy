@@ -12,6 +12,23 @@ namespace Hachiko
         ResourceMaterial(UID uid);
         ~ResourceMaterial() override;
 
+        void DrawGui();
+
+        [[nodiscard]] bool HasDiffuse() const
+        {
+            return diffuse != nullptr;
+        }
+
+        [[nodiscard]] bool HasSpecular() const
+        {
+            return specular != nullptr;
+        }
+
+        [[nodiscard]] bool HasNormals() const
+        {
+            return normals != nullptr;
+        }
+
         [[nodiscard]] unsigned GetDiffuseId() const
         {
             if (diffuse != nullptr)

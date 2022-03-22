@@ -80,6 +80,11 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             game_object->CreateComponent(Component::Type::MESH);
             ImGui::CloseCurrentPopup();
         }
+        if (ImGui::MenuItem("Material"))
+        {
+            game_object->CreateComponent(Component::Type::MATERIAL);
+            ImGui::CloseCurrentPopup();
+        }
         ImGui::EndPopup();
     }
 }

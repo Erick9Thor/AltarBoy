@@ -34,9 +34,6 @@ namespace Hachiko
         void Save(YAML::Node& node) const override {};
         void Load(const YAML::Node& node) override {};
 
-        bool use_diffuse_texture = false;
-        bool use_specular_texture = false;
-
     private:
         ResourceMaterial* material{};
     };
