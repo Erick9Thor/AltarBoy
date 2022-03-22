@@ -166,7 +166,7 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
         const_cast<UID&>(id) = UUID::GenerateUID();
     }
 
-    const auto mesh = new ResourceMesh(id); // WARNING: This class is delegating the responsability to delete this allocation to the client.
+    const auto mesh = new ResourceMesh(id);
     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
     mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
@@ -223,4 +223,6 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
     mesh->loaded = true;
 
     Save(mesh);
+
+    delete mesh;
 }

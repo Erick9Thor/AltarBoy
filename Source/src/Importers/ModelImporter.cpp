@@ -62,6 +62,25 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     return model_output;
 }
 
+void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, std::vector<ResourceNode*>& childs)
+{
+    childs.reserve(node.size());
+    for (int i = 0; i < node.size(); ++i)
+    {
+        ResourceNode* resource_node = new ResourceNode();
+        resource_node->mesh_id = node[i][NODE_MESH_ID].as<UID>();
+        resource_node->material_id = node[i][NODE_MATERIAL_ID].as<UID>();
+        resource_node->node_name = node[i][NODE_NAME].as<std::string>();
+        resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
+        if (node[i][NODE_CHILD].IsDefined())
+        {
+            LoadChilds(node[i][NODE_CHILD], resource_node->childs);
+        }
+
+        childs.emplace_back(resource_node);
+    }
+}
+
 void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
@@ -101,24 +120,5 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
         // Applies the same material to all
         node[NODE_CHILD][i][NODE_MATERIAL_ID] = node[MODEL_MATERIAL_NODE][0][MODEL_MATERIAL_ID].as<UID>(); 
         ++child_node;
-    }
-}
-
-void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, std::vector<ResourceNode*>& childs)
-{
-    childs.reserve(node.size());
-    for (int i = 0; i < node.size(); ++i)
-    {
-        ResourceNode* resource_node = new ResourceNode();
-        resource_node->mesh_id = node[i][NODE_MESH_ID].as<UID>();
-        resource_node->material_id = node[i][NODE_MATERIAL_ID].as<UID>();
-        resource_node->node_name = node[i][NODE_NAME].as<std::string>();
-        resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
-        if (node[i][NODE_CHILD].IsDefined())
-        {
-            LoadChilds(node[i][NODE_CHILD], resource_node->childs);
-        }
-
-        childs.emplace_back(resource_node);
     }
 }
