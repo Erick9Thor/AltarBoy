@@ -5,6 +5,7 @@
 #include "ModuleCamera.h"
 #include "ModuleEditor.h"
 #include "ModuleInput.h"
+#include "ModuleEvent.h"
 
 #include "core/Scene.h"
 #include "core/GameObject.h"
@@ -22,17 +23,17 @@ Hachiko::ModuleUserInterface::~ModuleUserInterface() = default;
 bool Hachiko::ModuleUserInterface::Init()
 {
     CreateSquare();
+    std::function handle_mouse_action = [&](Event& evt) { 
+        HandleMouseAction(evt);
+    };
+    App->event->Subscribe(Event::Type::MOUSE_ACTION, handle_mouse_action);
     return true;
 }
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
-    const WindowScene* w_scene = App->editor->GetSceneWindow();
-    if (w_scene->IsHovering() && w_scene->IsFocused() && App->input->GetMouseButton(SDL_BUTTON_LEFT))
-    {
-        float2 click_pos = w_scene->GetInterfaceClickPos();
-        RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos);
-    }
+    
+
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -95,6 +96,21 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game
         RecursiveCheckMousePos(child, mouse_pos);
     }
 }
+
+void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
+{
+    
+    const auto& payload = evt.GetEventData<MouseEventPayload>();
+    MouseEventPayload::Action action = payload.GetAction();
+    float2 coords = payload.GetCoords();
+
+    const WindowScene* w_scene = App->editor->GetSceneWindow();    
+    float2 click_pos = w_scene->ImguiToScreenPos(coords);
+
+    HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos);
+}
+
 
 void Hachiko::ModuleUserInterface::CreateSquare()
 {

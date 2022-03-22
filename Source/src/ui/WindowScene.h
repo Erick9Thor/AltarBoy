@@ -30,6 +30,7 @@ namespace Hachiko
             return focused;
         }
 
+        float2 ImguiToScreenPos(const float2& mouse_pos) const;
         float2 GetInterfaceClickPos() const;
 
     private:

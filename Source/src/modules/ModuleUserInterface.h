@@ -1,11 +1,14 @@
 #pragma once
 #include "Module.h"
+#include "Globals.h"
 #include "MathGeoLib.h"
 
 #include "ui/WindowScene.h"
 
 namespace Hachiko
 {
+    class Event;
+
     class ModuleUserInterface : public Module
     {
     public:
@@ -19,6 +22,8 @@ namespace Hachiko
         void DrawUI(const Scene* scene);
         void RecursiveDrawUI(const GameObject* game_object, Program* program);
         void RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos);
+        
+        void HandleMouseAction(Event& evt);
 
         void CreateSquare();
         void BindSquare();

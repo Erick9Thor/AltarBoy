@@ -1146,6 +1146,9 @@
     <ClInclude Include="src\components\ComponentCanvasRenderer.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\events\MouseEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
