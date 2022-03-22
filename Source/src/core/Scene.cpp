@@ -71,23 +71,24 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
         game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
     }
 
-    std::function<void(const std::vector<ResourceNode*>&)> createChilds = [&](const std::vector<ResourceNode*>& childs)
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChilds = [&](GameObject* parent, const std::vector<ResourceNode*>& childs)
     {
         for (auto child : childs)
         {
             UID mesh_id = child->mesh_id;
-            GameObject* mesh_game_object = CreateNewGameObject(game_object, child->node_name.c_str());
+            GameObject* mesh_game_object = CreateNewGameObject(parent, child->node_name.c_str());
             ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
-            component->SetID(mesh_id);
+            component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
             component->AddResourceMesh(App->resources->GetMesh(mesh_id));
-            createChilds(child->childs);
-            // GetMaterials
+            
             ComponentMaterial* component_material = static_cast<ComponentMaterial*>(mesh_game_object->CreateComponent(Component::Type::MATERIAL));
-            component_material->SetResourceMaterial(App->resources->GetMaterial(mesh_id));
+            //component_material->SetResourceMaterial(App->resources->GetMaterial(mesh_id));
+
+            createChilds(mesh_game_object, child->childs);
         }
     };
 
-    createChilds(model->child_nodes);
+    createChilds(game_object, model->child_nodes);
 }
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)

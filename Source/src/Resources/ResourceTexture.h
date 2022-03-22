@@ -13,6 +13,8 @@ namespace Hachiko
 
         void GenerateBuffer();
 
+        void DrawGui();
+
         [[nodiscard]] unsigned GetId() const
         {
             return id;
@@ -25,6 +27,7 @@ namespace Hachiko
         unsigned format = 0;
         unsigned bpp = 0;
 
+        // TODO: Config will be lost in batching
         unsigned min_filter = 0x2703;
         unsigned mag_filter = 0x2601;
         unsigned wrap = 0x2900;

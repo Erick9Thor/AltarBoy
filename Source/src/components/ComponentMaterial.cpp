@@ -34,6 +34,21 @@ void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
+    ImGui::PushID(this);
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
+    {
+        if (material != nullptr)
+        {
+            material->DrawGui();
+        }
+        else
+        {
+            ImGui::Text("No material resource");
+            // TODO: material selection option
+        }
+    }
+    ImGui::PopID();
+
     /*
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
