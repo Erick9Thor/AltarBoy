@@ -4,11 +4,21 @@
 
 namespace Hachiko
 {
-    struct ResourceNode
+    class ResourceNode
     {
+    public:
+        ~ResourceNode() 
+        {
+            for (auto child : childs)
+            {
+                delete child;
+            }
+        }
+
         std::string node_name;
         float4x4 node_transform;
         UID mesh_id;
+        UID material_id;
         std::vector<ResourceNode*> childs {};
     };
 
