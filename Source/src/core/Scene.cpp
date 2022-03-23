@@ -11,9 +11,9 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 
-#include "assimp/cimport.h"
-#include "assimp/postprocess.h"
-#include "assimp/Importer.hpp"
+#include <assimp/cimport.h>
+#include <assimp/postprocess.h>
+#include <assimp/Importer.hpp>
 
 Hachiko::Scene::Scene():
     root(new GameObject(nullptr, float4x4::identity, "Root")),

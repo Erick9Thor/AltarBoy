@@ -25,7 +25,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "ImGuiFileDialog.h"
+#pragma warning(push, 0)
+
+#include <ImGuiFileDialog.h>
 
 #ifdef __cplusplus
 
@@ -55,7 +57,7 @@ SOFTWARE.
 	#ifdef USE_STD_FILESYSTEM
 		#include <Windows.h>
 	#else
-		#include "dirent/dirent.h" // directly open the dirent file attached to this lib
+		#include <dirent/dirent.h> // directly open the dirent file attached to this lib
 	#endif // USE_STD_FILESYSTEM
 	#define PATH_SEP '\\'
 	#ifndef PATH_MAX
@@ -5051,3 +5053,5 @@ IMGUIFILEDIALOG_API void ManageGPUThumbnails(ImGuiFileDialog* vContext)
 	}
 }
 #endif // USE_THUMBNAILS
+
+#pragma warning(pop)

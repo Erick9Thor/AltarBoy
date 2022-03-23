@@ -2,7 +2,7 @@
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
 
-#include "imgui_internal.h"
+#include <imgui_internal.h>
 
 #include "core/GameObject.h"
 #include "components/Component.h"
