@@ -39,8 +39,8 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_DIFFUSE] = (material->diffuse != nullptr) ? material->diffuse->GetID() : 0;
     material_node[MATERIAL_SPECULAR] = (material->specular != nullptr) ? material->specular->GetID() : 0;
     material_node[MATERIAL_NORMALS] = (material->normals != nullptr) ? material->normals->GetID() : 0;
-    material_node[MATERIAL_DIFFUSE_COLOR] = YAML::convert<float4>::encode(material->diffuse_color);
-    material_node[MATERIAL_SPECULAR_COLOR] = YAML::convert<float4>::encode(material->specular_color);
+    material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
+    material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
 
     App->file_sys->Save(material_library_path.c_str(), material_node);
@@ -54,10 +54,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.c_str());
-    YAML::Node node = YAML::Load(file_buffer);
-    delete[] file_buffer;
-
+    YAML::Node node = YAML::LoadFile(file_path.c_str());
     const auto material = new ResourceMaterial(uid);
 
     //node[MATERIAL_ID]
