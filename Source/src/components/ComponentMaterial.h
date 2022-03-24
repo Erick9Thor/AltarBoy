@@ -31,8 +31,8 @@ namespace Hachiko
         void DrawGui() override;
 
         void Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
-        void Save(YAML::Node& node) const override {};
-        void Load(const YAML::Node& node) override {};
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
     private:
         ResourceMaterial* material{};

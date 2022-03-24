@@ -80,7 +80,9 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
             component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
             component->AddResourceMesh(App->resources->GetMesh(mesh_id));
-            
+            component->SetResourcePath(model->model_path);
+            component->SetModelName(model->model_name);
+
             ComponentMaterial* component_material = static_cast<ComponentMaterial*>(mesh_game_object->CreateComponent(Component::Type::MATERIAL));
             component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_id));
 

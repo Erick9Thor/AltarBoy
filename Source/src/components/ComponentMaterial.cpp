@@ -18,18 +18,14 @@ void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::
     //use_diffuse_texture = material->diffuse.loaded;
     //use_specular_texture = material->specular.loaded;
 }
-// TODO: Move to serializers
-//void Hachiko::ComponentMaterial::Save(JsonFormatterValue j_component) const
-//{
-//    //MaterialImporter::Material::Save(material, j_component);
-//}
-//
-//void Hachiko::ComponentMaterial::Load(JsonFormatterValue j_component)
-//{
-//    //material = MaterialImporter::Material::Load(j_component);
-//    //use_diffuse_texture = material->diffuse.loaded;
-//    //use_specular_texture = material->specular.loaded;
-//}
+
+void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
+{
+}
+
+void Hachiko::ComponentMaterial::Load(const YAML::Node& node)
+{
+}
 
 void Hachiko::ComponentMaterial::DrawGui()
 {

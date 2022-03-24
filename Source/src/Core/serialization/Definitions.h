@@ -12,7 +12,8 @@
 
 // Model
 #define MODEL_ID "id"
-#define MODEL_FILE_PATH "file_path"
+#define MODEL_NAME "model_name"
+#define MODEL_FILE_PATH "model_file_path"
 #define MODEL_MESH_ID "id"
 #define MODEL_MESH_NODE "mesh"
 #define MODEL_MATERIAL_ID "id"
@@ -157,7 +158,6 @@
 
 // Component Mesh
 #define MESH_NODE "mesh"
-#define MODEL_PATH "model_path"
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"

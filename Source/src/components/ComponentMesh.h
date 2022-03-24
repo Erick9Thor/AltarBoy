@@ -62,7 +62,22 @@ namespace Hachiko
 
         [[nodiscard]] const std::string& GetResourcePath() const
         {
-            return resource_path;
+            return asset_path;
+        }
+
+        void SetResourcePath(const std::string& path)
+        {
+            asset_path = path;
+        }
+
+        [[nodiscard]] const std::string& GetModelName() const
+        {
+            return model_name;
+        }
+
+        void SetModelName(const std::string& name)
+        {
+            model_name = name;
         }
 
         [[nodiscard]] size_t GetMeshesCount() const
@@ -86,11 +101,11 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
+
     private:
         bool visible = true;
-        std::string resource_path;
+        std::string asset_path;
+        std::string model_name;
         std::vector<ResourceMesh*> meshes = {};
-        
-        void DisplayNotLoadedUI();
     };
 }

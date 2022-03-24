@@ -152,7 +152,7 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid)
         return it->second;
     }
 
-    auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, uid)); // I've overload Load function in ImporterManager to admit loading by name for specific types
+    auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, uid));
     materials.emplace(uid, res);
 
     return res;

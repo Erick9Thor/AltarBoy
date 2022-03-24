@@ -66,7 +66,7 @@ void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 {
-    meshes.push_back(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_id)));
+    meshes.push_back(App->resources->GetMesh(mesh_id));
 }
 
 void Hachiko::ComponentMesh::DrawGui()
@@ -75,7 +75,6 @@ void Hachiko::ComponentMesh::DrawGui()
     {
         if (meshes.empty())
         {
-            DisplayNotLoadedUI();
             return;
         }
 
@@ -90,44 +89,18 @@ void Hachiko::ComponentMesh::DrawGui()
     }
 }
 
-void Hachiko::ComponentMesh::DisplayNotLoadedUI()
-{
-    if (ImGui::Button("Add Mesh"))
-    {
-        ImGuiFileDialog::Instance()->OpenDialog("Select Mesh",
-            "Select Mesh",
-            ".*",
-            "./library/models/",
-            1,
-            nullptr,
-            ImGuiFileDialogFlags_DontShowHiddenFiles 
-            | ImGuiFileDialogFlags_HideColumnType 
-            | ImGuiFileDialogFlags_DisableCreateDirectoryButton
-            | ImGuiFileDialogFlags_HideColumnDate);
-    }
-
-    if (ImGuiFileDialog::Instance()->Display("Select Mesh"))
-    {
-        if (ImGuiFileDialog::Instance()->IsOk())
-        {
-            // TODO: If filepath is not asset. Import mesh
-            LoadMesh(ImGuiFileDialog::Instance()->GetFilePathName().c_str());
-        }
-
-        ImGuiFileDialog::Instance()->Close();
-    }
-}
-
 void Hachiko::ComponentMesh::Save(YAML::Node& node) const
 {
-    node[MODEL_PATH] = GetResourcePath();
+    node[MODEL_FILE_PATH] = asset_path;
+    node[MODEL_NAME] = model_name;
     node[MESH_TEXTURE] = "";
     node[MESH_TEXTURE_TYPE] = "";
 }
 
 void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 {
-    resource_path = node[MODEL_PATH].as<std::string>();
+    asset_path = node[MODEL_FILE_PATH].as<std::string>();
+    model_name = node[MODEL_NAME].as<std::string>();
     SetID(node[COMPONENT_ID].as<UID>());
     LoadMesh(node[COMPONENT_ID].as<UID>());
 }
