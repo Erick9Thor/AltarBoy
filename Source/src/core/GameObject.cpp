@@ -271,6 +271,16 @@ void Hachiko::GameObject::RemoveComponent(Component* component)
     components.erase(std::remove(components.begin(), components.end(), component));
 }
 
+void Hachiko::GameObject::MoveLocalTransform()
+{
+    float3 random_value = float3(rand(), rand(), rand());
+    transform->SetLocalPosition(random_value);
+
+    for (GameObject* child : children) {
+        child->MoveLocalTransform();
+    }
+}
+
 void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
 {
     j_gameObject["Uid"] = uid;

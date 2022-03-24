@@ -40,6 +40,7 @@ namespace Hachiko
         void RemoveChild(GameObject* gameObject);
 
         //void Destroy();
+        void MoveLocalTransform();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;

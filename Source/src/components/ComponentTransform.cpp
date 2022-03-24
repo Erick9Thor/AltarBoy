@@ -119,13 +119,11 @@ void Hachiko::ComponentTransform::SetRotationInEulerAngles(const float3& new_rot
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float4x4& new_transform_local)
 {
-    //  Update local values
     new_transform_local.Decompose(position_local, rotation_local, scale_local);
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    // Set as dirty but do NOT update global values
-    dirty = true;
-    //UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    //dirty = true;
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float3& new_position_local, const Quat& new_rotation_local, const float3& new_scale_local)
@@ -137,16 +135,16 @@ void Hachiko::ComponentTransform::SetLocalPosition(const float3& new_position_lo
 {
     position_local = new_position_local;
 
-    dirty = true;
-    //UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    //dirty = true;
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalScale(const float3& new_scale_local) 
 {
     scale_local = new_scale_local;
 
-    dirty = true;
-    //UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    //dirty = true;
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_local) 
@@ -154,8 +152,8 @@ void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_loca
     rotation_local = new_rotation_local;
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    dirty = true;
-    //UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    //dirty = true;
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& new_rotation_euler_local)
@@ -166,8 +164,8 @@ void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& ne
     rotation_local = rotation_amount * (rotation_local);
     rotation_euler_local = new_rotation_euler_local;
 
-    dirty = true;
-    //UpdateTransformOfChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+    //dirty = true;
+    UpdateTransformOfChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
 }
 
 /***    GETTERS     ***/
@@ -257,7 +255,7 @@ const float4x4& Hachiko::ComponentTransform::GetMatrix()
 void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calculation_mode) 
 {
     GameObject* parent_of_owner = game_object->parent;
-
+    App->functioncounter++;
     switch (calculation_mode)
     {
         case MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL:
@@ -292,8 +290,8 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
 
 void Hachiko::ComponentTransform::UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode)
 {
-    OPTICK_CATEGORY("ComponentTransform::UpdateTransformOfChildren", Optick::Category::Rendering);
     OPTICK_EVENT();
+    OPTICK_CATEGORY("ComponentTransform::UpdateTransformOfChildren", Optick::Category::Rendering);
 
     const std::vector<GameObject*>& children = game_object->children;
 
@@ -358,6 +356,7 @@ void Hachiko::ComponentTransform::DrawGui()
         float3 rotation_local_editor = rotation_euler_local;
         if (ImGui::DragFloat3("Local Position", position_local_editor.ptr(), 0.1f, -inf, inf))
         {
+
             SetLocalPosition(position_local_editor);
         }
         if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, 0.0f, 360.f))
@@ -404,6 +403,12 @@ void Hachiko::ComponentTransform::DrawGui()
             {
                 auto row = matrix.Row(r);
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+            }
+
+            //
+            ImGui::Text("Transform matrices have been calculated %i times", App->functioncounter);
+            if (ImGui::Button("Test dirty flag")) {
+                game_object->MoveLocalTransform();
             }
         }
     }
