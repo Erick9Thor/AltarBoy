@@ -292,6 +292,9 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
 
 void Hachiko::ComponentTransform::UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode)
 {
+    OPTICK_CATEGORY("ComponentTransform::UpdateTransformOfChildren", Optick::Category::Rendering);
+    OPTICK_EVENT();
+
     const std::vector<GameObject*>& children = game_object->children;
 
     CalculateTransform(matrix_calculation_mode);
