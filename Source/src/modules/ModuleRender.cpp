@@ -136,7 +136,6 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     }    
 
     App->program->UpdateCamera(camera);
-    const Scene* active_scene = App->scene_manager->GetActiveScene();    
 
     ComponentCamera* culling = active_scene->GetCullingCamera();
 

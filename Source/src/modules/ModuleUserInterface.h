@@ -20,8 +20,8 @@ namespace Hachiko
         bool CleanUp() override;
 
         void DrawUI(const Scene* scene);
-        void RecursiveDrawUI(const GameObject* game_object, Program* program);
-        void RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos, bool is_click = false);
+        void RecursiveDrawUI(GameObject* game_object, Program* program);
+        void RecursiveCheckMousePos(GameObject* game_object, const float2& mouse_pos, bool is_click = false);
         
         void HandleMouseAction(Event& evt);
 

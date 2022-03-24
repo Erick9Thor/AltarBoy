@@ -67,7 +67,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
     glDepthFunc(GL_LESS);
 }
 
-void Hachiko::ModuleUserInterface::RecursiveDrawUI(const GameObject* game_object, Program* program)
+void Hachiko::ModuleUserInterface::RecursiveDrawUI(GameObject* game_object, Program* program)
 {
     ComponentCanvasRenderer* renderer = game_object->GetComponent<ComponentCanvasRenderer>();    
 
@@ -76,13 +76,13 @@ void Hachiko::ModuleUserInterface::RecursiveDrawUI(const GameObject* game_object
         renderer->Render(program);
     }
 
-    for (const GameObject* child : game_object->children)
+    for (GameObject* child : game_object->children)
     {
         RecursiveDrawUI(child, program);
     }
 }
 
-void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game_object, const float2& mouse_pos, bool is_click)
+void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(GameObject* game_object, const float2& mouse_pos, bool is_click)
 {
     // If it is not click it is considered a hover
     ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
@@ -96,7 +96,7 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game
             selectable->OnPointerEnter();
             if (is_click)
             {
-                HE_LOG("Clicks %s", transform->GetGameObject()->name.c_str());
+                HE_LOG("Clicks %s", transform->GetGameObject()->GetName().c_str());
                 selectable->Activate();
             }
         }
@@ -105,7 +105,7 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(const GameObject* game
             selectable->OnPointerExit();
         }
     }
-    for (const GameObject* child : game_object->children)
+    for (GameObject* child : game_object->children)
     {
         RecursiveCheckMousePos(child, mouse_pos, is_click);
     }

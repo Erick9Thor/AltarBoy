@@ -20,7 +20,6 @@ namespace Hachiko
 
         void DrawGui() override;
 
-        bool HasDependentComponents(GameObject* game_object) const override;
 
         ComponentCanvas* FindClosestParentCanvas() const;
         void Render(Program* program) const;

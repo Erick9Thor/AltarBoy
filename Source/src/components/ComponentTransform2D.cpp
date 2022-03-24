@@ -4,6 +4,7 @@
 #include "ComponentButton.h"
 #include "ComponentImage.h"
 #include "ComponentCanvasRenderer.h"
+#include "ComponentProgressBar.h"
 
 #include "debugdraw.h"
 
@@ -15,6 +16,7 @@ Hachiko::ComponentTransform2D::ComponentTransform2D(GameObject* container)
 
 void Hachiko::ComponentTransform2D::DrawGui(){
     static bool debug_transforms = false;
+    has_canvas = static_cast<bool>(game_object->GetComponent<ComponentCanvas>());
 
     // TODO: Draw panel for the inspector and update transform
     ImGui::PushID(this);
@@ -28,7 +30,7 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             SetPosition(ed_pos);
         }
 
-        if (!canvas)
+        if (!has_canvas)
         {
             float2 ed_siz = size;
             if (ImGui::DragFloat2("Size", ed_siz.ptr(), 0.05f))
@@ -99,7 +101,7 @@ void Hachiko::ComponentTransform2D::DebugDraw()
 
     ddVec3 rect_color = dd::colors::Blue;
 
-    if (canvas)
+    if (has_canvas)
     {
         rect_color = dd::colors::LightPink;
     }
@@ -160,11 +162,6 @@ void Hachiko::ComponentTransform2D::SetAnchor(float2 new_anchor_position)
     UpdateHierarchy();
 }
 
-void Hachiko::ComponentTransform2D::SetCanvas(ComponentCanvas* owner_canvas)
-{
-    canvas = owner_canvas;
-}
-
 float3 Hachiko::ComponentTransform2D::GetPivotOffsetFromParent() const
 {
 
@@ -200,7 +197,7 @@ float3 Hachiko::ComponentTransform2D::GetPivotScreenPosition() const
             break;
         }
         screen_position += parent_transform->GetPivotOffsetFromParent();
-        parent = game_object->parent->parent;
+        parent = parent->parent;
     }
     return screen_position;
 }
@@ -232,6 +229,7 @@ bool Hachiko::ComponentTransform2D::HasDependentComponents(GameObject* game_obje
     
     found = found || game_object->GetComponent<ComponentImage>();  
     found = found || game_object->GetComponent<ComponentButton>();
+    found = found || game_object->GetComponent<ComponentProgressBar>();
 
     for (GameObject* child : game_object->children)
     {

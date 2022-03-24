@@ -31,8 +31,16 @@ namespace Hachiko
         void SetPivot(float2 pivot_position);
         void SetAnchor(float2 anchor_position);
 
-        void SetCanvas(ComponentCanvas* canvas);
+        [[nodiscard]] float3 GetPosition() const
+        {
+            return position;
+        }
 
+        [[nodiscard]] float2 GetSize() const
+        {
+            return size;
+        }
+        
         [[nodiscard]] float3 GetPivotOffsetFromParent() const;
         [[nodiscard]] float3 GetPivotScreenPosition() const;
 
@@ -66,11 +74,11 @@ namespace Hachiko
         // Check if needed (GO already has his own)
         float4x4 local_transform = float4x4::identity;
         float4x4 global_transform = float4x4::identity;
-
-        // Canvas that controls the transform, used to lock parameters and change display color
-        ComponentCanvas* canvas = nullptr;
-
+        
+        // Used to check click intersections
         AABB2D aabb = {{0, 0}, {0, 0}};
+
+        bool has_canvas = false;
     };
 }
 

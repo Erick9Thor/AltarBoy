@@ -16,7 +16,7 @@ namespace Hachiko
             LEFT_TO_RIGHT,
             RIGHT_TO_LEFT,
             BOTTOM_TO_TOP,
-            TOP_TO_BOTTOM
+            TOP_TO_BOTTOM,
         };
 
         ComponentProgressBar(GameObject* container);
@@ -37,14 +37,14 @@ namespace Hachiko
             return max;
         }
         
-        float GetFilled() 
+        float GetFilledValue() 
         {
-            return filled;
+            return filled_value;
         }
         
         FillingDirection GetDirection() 
         {
-            return direction;
+            return fill_direction;
         }
         
         void SetMin(float new_min) 
@@ -59,31 +59,23 @@ namespace Hachiko
         
         void SetFilledValue(float new_filled_value)
         {
-            filled = new_filled_value;
+            filled_value = new_filled_value;
         }
         
         void SetDirection(FillingDirection new_direction)
         {
-            direction = new_direction;
+            fill_direction = new_direction;
         }
 
     private:
-        ComponentTransform2D* transform2D = nullptr;
-
         GameObject* background = nullptr;
-        GameObject* foreground = nullptr;
-
-        UID backgroundID = 0;
-        UID foregroundID = 0;
-
-        ComponentTransform2D* background_transform2D = nullptr;
-        ComponentTransform2D* foreground_transform2D = nullptr;
+        GameObject* fill = nullptr;
 
         float min = 0.0f;
         float max = 1.0f;
-        float filled = 0.0f;
+        float filled_value = 0.0f;
 
-        FillingDirection direction = FillingDirection::LEFT_TO_RIGHT;
+        FillingDirection fill_direction = FillingDirection::LEFT_TO_RIGHT;
         int direction_index = 0;
         inline static const char* filling_directions[] {"Left to right", "Right to Left", "Bottom to top", "Top to bottom"};
     };

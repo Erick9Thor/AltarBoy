@@ -262,37 +262,34 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\Window.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowAbout.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowConfiguration.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowConsole.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowHierarchy.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowInspector.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowProject.cpp">
-      <Filter>EditorUI\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\WindowResource.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowResource.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowScene.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowTimers.cpp">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentCamera.cpp">
       <Filter>Core\Components</Filter>
@@ -328,7 +325,7 @@
       <Filter>Importers</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\ImguiUtils.cpp">
-      <Filter>EditorUI</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <Filter>Vendors\ImGuiFileDialog</Filter>
@@ -461,16 +458,14 @@
     </ClCompile>
     <ClCompile Include="src\ui\WindowResource.cpp">
       <Filter>UI\Window</Filter>
-    <ClCompile Include="src\modules\ModuleUserInterface.cpp">
-      <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentTransform2D.cpp">
+    <ClCompile Include="src\components\ComponentButton.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentCanvas.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentButton.cpp">
+    <ClCompile Include="src\components\ComponentCanvasRenderer.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentImage.cpp">
@@ -479,11 +474,14 @@
     <ClCompile Include="src\components\ComponentProgressBar.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\ComponentTransform2D.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\components\Component.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentCanvasRenderer.cpp">
-      <Filter>Core\Components</Filter>
+    <ClCompile Include="src\modules\ModuleUserInterface.cpp">
+      <Filter>Modules\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -835,37 +833,34 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\Window.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowAbout.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowConfiguration.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowConsole.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowHierarchy.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowInspector.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowProject.h">
-      <Filter>EditorUI\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\WindowResource.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowResource.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowScene.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowTimers.h">
-      <Filter>EditorUI\Window</Filter>
+      <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\components\Component.h">
       <Filter>Core\Components</Filter>
@@ -904,7 +899,7 @@
       <Filter>Importers</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\ImGuiUtils.h">
-      <Filter>EditorUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="vendors\imgui\IconsFontAwesome5.h">
       <Filter>Vendors\ImGui</Filter>
@@ -931,7 +926,7 @@
       <Filter>Logging</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\PathNode.h">
-      <Filter>EditorUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Quadtree.h">
       <Filter>Core\Rendering</Filter>
@@ -973,7 +968,7 @@
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\editor\Theme.h">
-      <Filter>EditorUI</Filter>
+      <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h">
       <Filter>Vendors\Yaml-cpp</Filter>
@@ -1125,16 +1120,14 @@
     </ClInclude>
     <ClInclude Include="src\ui\WindowResource.h">
       <Filter>UI\Window</Filter>
-    <ClInclude Include="src\modules\ModuleUserInterface.h">
-      <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentTransform2D.h">
+    <ClInclude Include="src\components\ComponentButton.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ComponentCanvas.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentButton.h">
+    <ClInclude Include="src\components\ComponentCanvasRenderer.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ComponentImage.h">
@@ -1143,14 +1136,21 @@
     <ClInclude Include="src\components\ComponentProgressBar.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentCanvasRenderer.h">
+    <ClInclude Include="src\components\ComponentTransform2D.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ISelectable.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\events\MouseEventPayload.h">
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
-    <ClInclude Include="src\events\InputEventPayload.h" />
-    <ClInclude Include="src\components\ISelectable.h" />
+    <ClInclude Include="src\events\InputEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleUserInterface.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -1162,11 +1162,17 @@
     <Filter Include="Core">
       <UniqueIdentifier>{c0abde9a-4e76-4bd9-9a0b-f138ea04ab0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{39f34f71-b9a7-4b39-899b-beaad649842f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Core\Util">
       <UniqueIdentifier>{afdc2dc0-2acd-44c7-86d4-eae02e7077e4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Util">
       <UniqueIdentifier>{afdc2dc0-2acd-44c7-86d4-eae02e7077e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Widgets">
+      <UniqueIdentifier>{8e620f12-250d-4a24-a78c-3ca347d86922}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Components">
       <UniqueIdentifier>{ee0be01f-2242-4634-a963-8b1770b69d05}</UniqueIdentifier>
@@ -1179,6 +1185,9 @@
     </Filter>
     <Filter Include="Core\Scene">
       <UniqueIdentifier>{df58e4e2-1548-4024-8b2c-6bafd2d4ef86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Window">
+      <UniqueIdentifier>{8a267a5f-5060-4ee5-b50c-e70d4cf31796}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{db03d328-ad7e-47d9-8436-96589801cef5}</UniqueIdentifier>
@@ -1263,14 +1272,6 @@
     </Filter>
     <Filter Include="Importers\Source">
       <UniqueIdentifier>{bbd110d9-ae9b-4357-815d-ebfdb99fdb40}</UniqueIdentifier>
-    <Filter Include="EditorUI">
-      <UniqueIdentifier>{39f34f71-b9a7-4b39-899b-beaad649842f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EditorUI\Widgets">
-      <UniqueIdentifier>{8e620f12-250d-4a24-a78c-3ca347d86922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EditorUI\Window">
-      <UniqueIdentifier>{8a267a5f-5060-4ee5-b50c-e70d4cf31796}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

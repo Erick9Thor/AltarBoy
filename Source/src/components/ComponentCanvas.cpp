@@ -13,11 +13,6 @@ Hachiko::ComponentCanvas::ComponentCanvas(GameObject* container)
 
 Hachiko::ComponentCanvas::~ComponentCanvas()
 {
-    ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
-    if (transform)
-    {
-        transform->SetCanvas(nullptr);
-    }    
 }
 
 void Hachiko::ComponentCanvas::Update()
@@ -49,7 +44,6 @@ void Hachiko::ComponentCanvas::UpdateSize(bool force)
         ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
         if (transform)
         {
-            transform->SetCanvas(this);
             transform->SetSize(float2(width, height));
             size_x = width;
             size_y = height;

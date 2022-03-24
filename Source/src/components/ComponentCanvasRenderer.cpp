@@ -17,13 +17,6 @@ void Hachiko::ComponentCanvasRenderer::DrawGui()
     }
 }
 
-bool Hachiko::ComponentCanvasRenderer::HasDependentComponents(GameObject* game_object) const
-{
-    // TODO: Add all UI components that depend on renderer
-    bool any_ui_element = game_object->GetComponent<ComponentImage>() || game_object->GetComponent<ComponentButton>();
-    return any_ui_element;
-}
-
 Hachiko::ComponentCanvas* Hachiko::ComponentCanvasRenderer::FindClosestParentCanvas() const
 {
     ComponentCanvas* canvas = nullptr;

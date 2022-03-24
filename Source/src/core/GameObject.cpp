@@ -14,6 +14,7 @@
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentImage.h"
 #include "components/ComponentButton.h"
+#include "Components/ComponentProgressBar.h"
 
 
 
@@ -133,19 +134,28 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         new_component = new ComponentSpotLight(this);
         break;
     case (Component::Type::CANVAS):
-        new_component = new ComponentCanvas(this);
+        if (!GetComponent<ComponentCanvas>())
+            new_component = new ComponentCanvas(this);
         break;
     case (Component::Type::CANVAS_RENDERER):
-        new_component = new ComponentCanvasRenderer(this);
+        if (!GetComponent<ComponentCanvasRenderer>())
+            new_component = new ComponentCanvasRenderer(this);
         break;
     case (Component::Type::TRANSFORM_2D):
-        new_component = new ComponentTransform2D(this);
+        if (!GetComponent<ComponentTransform2D>())
+            new_component = new ComponentTransform2D(this);
         break;
     case (Component::Type::IMAGE):
-        new_component = new ComponentImage(this);
+        if (!GetComponent<ComponentImage>())
+            new_component = new ComponentImage(this);
         break;
     case (Component::Type::BUTTON):
-        new_component = new ComponentButton(this);
+        if (!GetComponent<ComponentButton>())
+            new_component = new ComponentButton(this);
+        break;
+    case (Component::Type::PROGRESS_BAR):
+        if (!GetComponent<ComponentProgressBar>())
+            new_component = new ComponentProgressBar(this);
         break;
     }
 
