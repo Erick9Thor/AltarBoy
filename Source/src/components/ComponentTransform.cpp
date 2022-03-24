@@ -286,6 +286,8 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
     right = matrix.WorldX();
     up = matrix.WorldY();
     front = matrix.WorldZ();
+
+    dirty = false;
 }
 
 void Hachiko::ComponentTransform::UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode)
