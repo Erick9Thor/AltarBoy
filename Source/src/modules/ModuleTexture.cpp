@@ -24,31 +24,32 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
 {
     unsigned int img_id = LoadImg(path, flip);
 
-    if (img_id != 0)
+    if (img_id == 0)
     {
-        ResourceTexture* texture = new ResourceTexture(uid);
-        texture->path = path;
-        texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
-        texture->mag_filter = GL_LINEAR;
-        texture->wrap = GL_CLAMP;
-
-        texture->bpp = ilGetInteger(IL_IMAGE_BPP);
-        texture->width = ilGetInteger(IL_IMAGE_WIDTH);
-        texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
-        texture->format = ilGetInteger(IL_IMAGE_FORMAT);
-
-        byte* data = ilGetData();
-        texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
-        texture->data = new byte[texture->data_size];
-        memcpy(texture->data, data, texture->data_size);
-
-        texture->GenerateBuffer();
-
-        DeleteImg(img_id);
-
-        return texture;
+        return nullptr;
     }
-    return nullptr;
+ 
+    ResourceTexture* texture = new ResourceTexture(uid);
+    texture->path = path;
+    texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+    texture->mag_filter = GL_LINEAR;
+    texture->wrap = GL_CLAMP;
+
+    texture->bpp = ilGetInteger(IL_IMAGE_BPP);
+    texture->width = ilGetInteger(IL_IMAGE_WIDTH);
+    texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
+    texture->format = ilGetInteger(IL_IMAGE_FORMAT);
+
+    byte* data = ilGetData();
+    texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+    texture->data = new byte[texture->data_size];
+    memcpy(texture->data, data, texture->data_size);
+
+    texture->GenerateBuffer();
+
+    DeleteImg(img_id);
+
+    return texture;    
 }
 
 Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)

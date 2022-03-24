@@ -37,12 +37,11 @@ Hachiko::Resource* Hachiko::TextureImporter::ImportResource(const char* path)
     Hachiko::UID uid = Hachiko::UUID::GenerateUID();
     std::string stringPath = path;
     std::string extension = stringPath.substr(stringPath.find_last_of(".") + 1);
-    ResourceTexture* texture = App->texture->LoadResource(uid, path, extension != "tif");
+    //ResourceTexture* texture = App->texture->LoadResource(uid, path, extension != "tif");
+    ResourceTexture* texture = App->texture->LoadResource(uid, path, false);
 
     if (texture != nullptr)
     {
-        App->resources->textures[uid] = texture;
-
         Save(texture);
     }
     
