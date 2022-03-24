@@ -14,7 +14,8 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 {
     frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     frustum.SetViewPlaneDistances(0.1f, 1000.0f);
-
+    SetCameraType(CameraType::NONE);
+    HE_LOG("TEST LOG: INIT COMPONENT CAMERA");
     frustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontal_fov), static_cast<float>(DEFAULT_CAMERA_WIDTH) / static_cast<float>(DEFAULT_CAMERA_HEIGHT));
 
     frustum.SetPos(float3(0.0f, 0.0f, 0.0f));
@@ -45,6 +46,41 @@ void Hachiko::ComponentCamera::DebugDraw()
         float4x4 matrix = GetProjectionMatrix() * GetViewMatrix();
         matrix.Inverse();
         dd::frustum(matrix, dd::colors::Yellow);
+    }
+}
+
+void Hachiko::ComponentCamera::SetCameraType(CameraType cam_type) 
+{
+    camera_type = cam_type;
+}
+
+void Hachiko::ComponentCamera::GetCameraType(CameraType& cam_type) const 
+{
+    cam_type = camera_type;
+}
+
+std::string Hachiko::ComponentCamera::GetCameraTypeString(CameraType cam_type)
+{
+    switch (cam_type)
+    {
+    case CameraType::NONE:
+        return std::string("NONE");
+        break;
+    case CameraType::STATIC:
+        return std::string("STATIC");
+        break;
+    case CameraType::DYNAMIC:
+        return std::string("DYNAMIC");
+        break;
+    case CameraType::GOD:
+        return std::string("GOD");
+        break;
+    case CameraType::PLAYER:
+        return std::string("PLAYER");
+        break;
+
+    default:
+        return std::string("UNKNOWN");
     }
 }
 
@@ -180,12 +216,39 @@ void Hachiko::ComponentCamera::DrawGui()
         {
             App->scene_manager->GetActiveScene()->SetCullingCamera(this);
         }
+
+        int cam_type_selector = static_cast<int>(camera_type);
+        if (ImGui::RadioButton("Static", &cam_type_selector, 1))
+        {
+            SetCameraType(CameraType::STATIC);
+            HE_LOG("STATIC");
+        };
+        ImGui::SameLine();
+        if (ImGui::RadioButton("Dynamic", &cam_type_selector, 2))
+        {
+            SetCameraType(CameraType::DYNAMIC);
+            HE_LOG("DYNAMIC");
+        };
+        ImGui::SameLine();
+        if (ImGui::RadioButton("God", &cam_type_selector, 3))
+        {
+            SetCameraType(CameraType::GOD);
+            HE_LOG("GOD");
+        };
+        ImGui::SameLine();
+        if (ImGui::RadioButton("Player", &cam_type_selector, 4))
+        {
+            SetCameraType(CameraType::PLAYER);
+            HE_LOG("PLAYER");
+        };
+
         ImGui::Checkbox("Debug", &debug_data);
         if (debug_data)
         {
             ImGui::Separator();
             ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
             ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
+            ImGui::Text("Camera Type: %s", GetCameraTypeString(camera_type).c_str());
         }
     }
     ImGui::PopID();
