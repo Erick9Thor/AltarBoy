@@ -54,9 +54,9 @@ void Hachiko::ComponentCamera::SetCameraType(CameraType cam_type)
     camera_type = cam_type;
 }
 
-void Hachiko::ComponentCamera::GetCameraType(CameraType& cam_type) const 
+Hachiko::ComponentCamera::CameraType Hachiko::ComponentCamera::GetCameraType() const 
 {
-    cam_type = camera_type;
+    return camera_type;
 }
 
 std::string Hachiko::ComponentCamera::GetCameraTypeString(CameraType cam_type)
@@ -221,25 +221,21 @@ void Hachiko::ComponentCamera::DrawGui()
         if (ImGui::RadioButton("Static", &cam_type_selector, 1))
         {
             SetCameraType(CameraType::STATIC);
-            HE_LOG("STATIC");
         };
         ImGui::SameLine();
         if (ImGui::RadioButton("Dynamic", &cam_type_selector, 2))
         {
             SetCameraType(CameraType::DYNAMIC);
-            HE_LOG("DYNAMIC");
         };
         ImGui::SameLine();
         if (ImGui::RadioButton("God", &cam_type_selector, 3))
         {
             SetCameraType(CameraType::GOD);
-            HE_LOG("GOD");
         };
         ImGui::SameLine();
         if (ImGui::RadioButton("Player", &cam_type_selector, 4))
         {
             SetCameraType(CameraType::PLAYER);
-            HE_LOG("PLAYER");
         };
 
         ImGui::Checkbox("Debug", &debug_data);

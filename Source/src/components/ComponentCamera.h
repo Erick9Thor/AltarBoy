@@ -41,7 +41,7 @@ namespace Hachiko
         }
 
         void SetCameraType(CameraType cam_type);
-        void GetCameraType(CameraType& cam_type) const;
+        CameraType GetCameraType() const;
         std::string GetCameraTypeString(CameraType cam_type);
 
         void SetNearPlane(float distance);
