@@ -3,8 +3,8 @@
 
 #include "resources/ResourceMesh.h"
 
-#include "assimp/scene.h"
-#include "MathGeoLib.h"
+#include <assimp/scene.h>
+#include <MathGeoLib.h>
 
 namespace Hachiko
 {

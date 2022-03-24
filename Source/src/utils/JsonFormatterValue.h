@@ -2,8 +2,7 @@
 
 //TODO Improve using this https://github.com/systelab/cpp-rapidjson-json-adapter/blob/master/src/RapidJSONAdapter/JSONValue.h
 
-#include "rapidjson/document.h"
-
+#include <rapidjson/document.h>
 #include <string>
 
 namespace Hachiko

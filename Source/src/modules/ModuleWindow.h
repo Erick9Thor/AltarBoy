@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Module.h"
-#include "SDL.h"
+#include <SDL.h>
 
 namespace Hachiko
 {

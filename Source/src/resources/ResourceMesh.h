@@ -1,7 +1,7 @@
 #pragma once
 #include "Resource.h"
 
-#include "MathGeoLib.h"
+#include <MathGeoLib.h>
 
 namespace Hachiko
 {

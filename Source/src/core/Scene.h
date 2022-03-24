@@ -1,7 +1,6 @@
 #pragma once
 
-#include "assimp/scene.h"
-
+#include <assimp/scene.h>
 #include <string>
 #include <vector>
 
