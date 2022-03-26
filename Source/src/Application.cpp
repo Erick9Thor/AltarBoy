@@ -15,8 +15,6 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 
-using namespace std;
-
 Hachiko::Application::Application()
 {
     modules.push_back(hw = new ModuleHardware());
