@@ -14,12 +14,12 @@
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
+#include "modules/ModuleScriptingSystem.h"
 
 Hachiko::Application::Application()
 {
     modules.push_back(hw = new ModuleHardware());
     modules.push_back(file_sys = new ModuleFileSystem());
-
     modules.push_back(window = new ModuleWindow());
     modules.push_back(input = new ModuleInput());
     modules.push_back(texture = new ModuleTexture());
@@ -30,6 +30,7 @@ Hachiko::Application::Application()
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
+    modules.push_back(scripting_system = new ModuleScriptingSystem());
 }
 
 Hachiko::Application::~Application()
