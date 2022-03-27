@@ -29,14 +29,6 @@ namespace Hachiko
         ResourceModel(UID uid);
         ~ResourceModel() override;
 
-        [[nodiscard]] unsigned GetMeshIndex(UID id) const
-        {
-            for (auto child : child_nodes)
-            {
-
-            }
-        }
-
         std::vector<ResourceNode*> child_nodes;
         std::string model_path;
         std::string material_path;

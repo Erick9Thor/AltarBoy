@@ -111,7 +111,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     ai_material->Get(AI_MATKEY_SHININESS, material->shininess);
 
     static const int index = 0;
-    const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string();
+    const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string() ;
 
     aiString file;
     std::vector<std::string> search_paths;
@@ -123,9 +123,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     {
         const std::string model_texture_path(file.data);
         const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
+        search_paths.emplace_back(model_path + "\\" + texture_file);
         search_paths.emplace_back(file.data);
-        search_paths.push_back(model_path + texture_file);
-        search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
 
         for (std::string path : search_paths)
         {
@@ -143,9 +143,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     {
         const std::string model_texture_path(file.data);
         const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
+        search_paths.emplace_back(model_path + texture_file);
         search_paths.emplace_back(file.data);
-        search_paths.push_back(model_path + texture_file);
-        search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
         
         for (std::string path : search_paths)
         {
@@ -163,9 +163,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     {
         const std::string model_texture_path(file.data);
         const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
+        search_paths.emplace_back(model_path + texture_file);
         search_paths.emplace_back(file.data);
-        search_paths.push_back(model_path + texture_file);
-        search_paths.push_back(ASSETS_FOLDER_TEXTURES + texture_file);
 
         for (std::string path : search_paths)
         {

@@ -70,7 +70,7 @@ bool ModuleResources::CleanUp()
 
 std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
 {
-    return last_resource_path;
+    return last_resource_path.parent_path();
 }
 
 void ModuleResources::HandleResource(const std::filesystem::path& path)
