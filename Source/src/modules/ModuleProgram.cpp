@@ -183,6 +183,11 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
 
     const ResourceMaterial* material = material_comp->GetMaterial();
 
+    if (material == nullptr)
+    {
+        return;
+    }
+
     MaterialData material_data;
     material_data.diffuse_color = material->diffuse_color;
     material_data.diffuse_flag = material->HasDiffuse();

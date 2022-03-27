@@ -77,14 +77,18 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
         {
             UID mesh_id = child->mesh_id;
             GameObject* mesh_game_object = CreateNewGameObject(parent, child->node_name.c_str());
+            
             ComponentMesh* component = static_cast<ComponentMesh*>(mesh_game_object->CreateComponent(Component::Type::MESH));
             component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
-            component->AddResourceMesh(App->resources->GetMesh(mesh_id));
             component->SetResourcePath(model->model_path);
             component->SetModelName(model->model_name);
-
+            component->SetMeshIndex(child->meshes_index[0]); // the component mesh support one mesh so we take the first of the node
+            component->AddResourceMesh(App->resources->GetMesh(mesh_id));
+            
             ComponentMaterial* component_material = static_cast<ComponentMaterial*>(mesh_game_object->CreateComponent(Component::Type::MATERIAL));
+            component_material->SetID(child->material_id);
             component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_id));
+            // TODO: Set material file path, model name, in model meta
 
             createChilds(mesh_game_object, child->childs);
         }
@@ -95,6 +99,18 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
+    GameObject* game_object = App->editor->GetSelectedGameObject();
+    if (game_object == nullptr)
+    {
+        HE_LOG("No game object selected to apply material on");
+        return;
+    }
+
+    ComponentMaterial* component_material = game_object->GetComponent<ComponentMaterial>();
+    if (component_material != nullptr)
+    {
+        component_material->SetResourceMaterial(material);
+    }
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const

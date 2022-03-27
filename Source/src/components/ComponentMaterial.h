@@ -25,16 +25,40 @@ namespace Hachiko
 
         void SetResourceMaterial(ResourceMaterial* res)
         {
+            delete material;
             material = res;
         }
 
-        void DrawGui() override;
+        
+        [[nodiscard]] const std::string& GetResourcePath() const
+        {
+            return asset_path;
+        }
 
-        void Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name);
+        void SetResourcePath(const std::string& path)
+        {
+            asset_path = path;
+        }
+
+        [[nodiscard]] const std::string& GetModelName() const
+        {
+            return model_name;
+        }
+
+        void SetModelName(const std::string& name)
+        {
+            model_name = name;
+        }
+
+        void DrawGui() override;
+        void LoadMaterial(UID mesh_id);
+
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
     private:
         ResourceMaterial* material{};
+        std::string asset_path;
+        std::string model_name;
     };
 }

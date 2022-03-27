@@ -66,7 +66,7 @@ void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 {
-    meshes.push_back(App->resources->GetMesh(mesh_id));
+    meshes.push_back(App->resources->GetMesh(mesh_id, asset_path, mesh_index));
 }
 
 void Hachiko::ComponentMesh::DrawGui()
@@ -93,14 +93,14 @@ void Hachiko::ComponentMesh::Save(YAML::Node& node) const
 {
     node[MODEL_FILE_PATH] = asset_path;
     node[MODEL_NAME] = model_name;
-    node[MESH_TEXTURE] = "";
-    node[MESH_TEXTURE_TYPE] = "";
+    node[NODE_MESH_INDEX] = mesh_index;
 }
 
 void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 {
     asset_path = node[MODEL_FILE_PATH].as<std::string>();
     model_name = node[MODEL_NAME].as<std::string>();
+    mesh_index = node[NODE_MESH_INDEX].as<int>();
     SetID(node[COMPONENT_ID].as<UID>());
     LoadMesh(node[COMPONENT_ID].as<UID>());
 }

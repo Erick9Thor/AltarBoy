@@ -129,23 +129,32 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     return res;
 }
 
-ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid)
+ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string& model_path, int mesh_index)
 {
+    // 1 - Find locally
     auto it = meshes.find(uid);
     if (it != meshes.end())
     {
         return it->second;
     }
 
+    // 2 - Import from disk
     auto res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, uid));
+    
+    // 3 - Cherry Import
+    if (res == nullptr && !model_path.empty() && mesh_index > -1)
+    {
+        ModelImporter* mod_importer = static_cast<ModelImporter*>(importer_manager.GetImporter(Resource::Type::MODEL));
+        res = static_cast<ResourceMesh*>(mod_importer->CherryImport(mesh_index, uid, model_path.c_str()));
+    }
+
     meshes.emplace(uid, res);
     
     return res;
 }
 
-ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid)
+ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid, const std::string& model_path)
 {
-    // We need to change this map to get it by name
     auto it = materials.find(uid);
     if (it != materials.end())
     {
@@ -153,6 +162,12 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid)
     }
 
     auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, uid));
+    
+    if (res == nullptr && !model_path.empty())
+    {
+        // Cherry Import
+    }
+
     materials.emplace(uid, res);
 
     return res;

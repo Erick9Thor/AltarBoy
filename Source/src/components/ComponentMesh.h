@@ -90,6 +90,16 @@ namespace Hachiko
             return meshes[index];
         }
 
+        [[nodiscard]] int GetMeshIndex() const
+        {
+            return mesh_index;
+        }
+
+        void SetMeshIndex(int index)
+        {
+            mesh_index = index;
+        }
+
         void AddResourceMesh(ResourceMesh* res)
         {
             meshes.push_back(res);
@@ -104,6 +114,7 @@ namespace Hachiko
 
     private:
         bool visible = true;
+        int mesh_index;
         std::string asset_path;
         std::string model_name;
         std::vector<ResourceMesh*> meshes = {};

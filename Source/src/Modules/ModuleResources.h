@@ -24,11 +24,12 @@ namespace Hachiko
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
         
         ResourceModel* GetModel(const std::string& name);
-        ResourceMesh* GetMesh(const UID uid);
-        ResourceMaterial* GetMaterial(UID uid);
+        ResourceMesh* GetMesh(const UID uid, const std::string& model_path = std::string(), int mesh_index = -1);
+        ResourceMaterial* GetMaterial(UID uid, const std::string& model_path = std::string());
         ResourceTexture* GetTexture(UID uid);
         Resource* GetResource(Resource::Type type, UID resource_id);
 
+        // TODO: This containers should be private
         std::map<std::string, ResourceModel*> models;
         std::map<UID, ResourceMesh*> meshes;
         std::map<UID, ResourceMaterial*> materials;

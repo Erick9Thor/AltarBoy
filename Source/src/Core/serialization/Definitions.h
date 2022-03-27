@@ -23,8 +23,8 @@
 #define NODE_NAME "name"
 #define NODE_CHILD "child"
 #define NODE_TRANSFORM "transform"
-#define NODE_MESH_ID "mesh"
-#define NODE_MATERIAL_ID "material"
+#define NODE_MESH_INDEX "mesh_index"
+#define NODE_MATERIAL_INDEX "material_index"
 
 // Mesh
 #define MESH_ID "mesh_id"

@@ -3,6 +3,7 @@
 #include "ComponentMaterial.h"
 
 #include "modules/ModuleTexture.h"
+#include "modules/ModuleResources.h"
 #include "importers/MaterialImporter.h"
 
 Hachiko::ComponentMaterial::ComponentMaterial(GameObject* conatiner) :
@@ -12,19 +13,19 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
 {
 }
 
-void Hachiko::ComponentMaterial::Import(aiMaterial* assimp_material, const std::string& model_path, const std::string& model_name)
-{
-    //material = MaterialImporter::Material::Import(assimp_material, model_path, model_name);
-    //use_diffuse_texture = material->diffuse.loaded;
-    //use_specular_texture = material->specular.loaded;
-}
-
 void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
 {
+    node[MESH_TEXTURE] = asset_path;
+    node[MESH_TEXTURE_TYPE] = "";
+    node[MODEL_NAME] = model_name;
 }
 
 void Hachiko::ComponentMaterial::Load(const YAML::Node& node)
 {
+    asset_path = node[MESH_TEXTURE].as<std::string>();
+    model_name = node[MODEL_NAME].as<std::string>();
+    SetID(node[COMPONENT_ID].as<UID>());
+    LoadMaterial(node[COMPONENT_ID].as<UID>());
 }
 
 void Hachiko::ComponentMaterial::DrawGui()
@@ -134,4 +135,9 @@ void Hachiko::ComponentMaterial::DrawGui()
     }
     ImGui::PopID();
     */
+}
+
+void Hachiko::ComponentMaterial::LoadMaterial(UID mesh_id)
+{
+    material = App->resources->GetMaterial(mesh_id, asset_path);
 }

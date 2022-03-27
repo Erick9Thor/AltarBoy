@@ -7,6 +7,7 @@ namespace Hachiko
 {
     class ImporterManager
     {
+        friend class ModuleResources;
     public:
         ImporterManager();
         ~ImporterManager();
@@ -14,7 +15,7 @@ namespace Hachiko
         Resource* Load(Resource::Type type, UID resource_id);
         Resource* Load(Resource::Type type, const char* path);
         bool CheckIfImported(const char* path) const;
-
+       
     private:
         std::vector<std::pair<Importer::Type, Importer*>> importers;
         Importer* GetImporter(Resource::Type type);
