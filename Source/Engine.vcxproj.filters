@@ -378,6 +378,9 @@
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="src\scripting\Script.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp">
       <Filter>Scripting\Serialization</Filter>
     </ClCompile>
@@ -988,6 +991,9 @@
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\modules\ModuleScriptingSystem.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\Script.h">
+      <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\scripting\ScriptingMacros.h">
       <Filter>Scripting</Filter>
