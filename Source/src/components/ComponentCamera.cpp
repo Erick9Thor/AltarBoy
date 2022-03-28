@@ -23,8 +23,8 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
     frustum.SetUp(float3x3::identity.WorldY());
 
     frustum.GetPlanes(planes);
-
     ComponentCamera::OnTransformUpdated();
+    App->camera->AddCameraComponent(this);
 }
 
 Hachiko::ComponentCamera::~ComponentCamera()

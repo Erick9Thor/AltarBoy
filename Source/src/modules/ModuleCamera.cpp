@@ -33,6 +33,27 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
+    if (App->input->GetKey(SDL_SCANCODE_C) == KeyState::KEY_DOWN)
+    {
+        HE_LOG("CHANGE CAMERA");
+        bool last = true;
+        int buffer_size = camera_buffer.size();
+        if (last_it < buffer_size)
+        {
+            main_camera = static_cast<ComponentCamera*>(camera_buffer[last_it]);
+            main_camera_game_object = camera_buffer[last_it]->GetGameObject();
+            last_it++;
+        }
+        else
+            last_it = 0;
+        /*
+        for (auto it = camera_buffer.begin(); it != camera_buffer.end() && last; ++it)
+        {
+            HE_LOG("ONE CAMERA");
+            if (it == last_it)
+        }
+        */
+    }
     Controller(delta);
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -99,6 +120,11 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
             PerpendicularMovement((float)moved_x * delta * perpendicular_movement_speed, (float)moved_y * delta * perpendicular_movement_speed);
         }
     }
+}
+
+void Hachiko::ModuleCamera::AddCameraComponent(Component* camera)
+{
+    camera_buffer.push_back(camera);
 }
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const

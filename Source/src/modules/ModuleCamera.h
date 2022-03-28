@@ -27,6 +27,7 @@ namespace Hachiko
         {
             return main_camera;
         }
+        void AddCameraComponent(Component* camera);
 
         // Camera actions
         void Zoom(float zoom) const;
@@ -36,7 +37,9 @@ namespace Hachiko
         void PerpendicularMovement(float motion_x, float motion_y) const;
 
     private:
+        std::vector<Component*> camera_buffer;
         GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
         ComponentCamera* main_camera = nullptr;
+        unsigned int last_it = 0;
     };
 }
