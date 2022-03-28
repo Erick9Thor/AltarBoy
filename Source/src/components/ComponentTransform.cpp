@@ -1,6 +1,5 @@
 #include "core/hepch.h"
 #include "ComponentTransform.h"
-#include "modules/ModuleEvent.h"
 
 /**     CONSTRUCTORS    **/
 
@@ -44,6 +43,7 @@ void Hachiko::ComponentTransform::OnTransformUpdated()
 inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 {
     float3 right_temp = float3::unitY.Cross(direction).Normalized();
+
     float3 up_temp = direction.Cross(right_temp).Normalized();
 
     Quat orientation = Quat::LookAt(-float3::unitZ, direction, float3::unitY, float3::unitY);
