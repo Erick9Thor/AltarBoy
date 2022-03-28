@@ -53,8 +53,6 @@ namespace Hachiko
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
 
-        int functioncounter = 0;
-
     private:
         PerformanceTimer timer;
 
