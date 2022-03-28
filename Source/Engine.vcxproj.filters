@@ -984,6 +984,12 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="src\scripting\ScriptingMacros.h" />
+    <ClInclude Include="src\scripting\ScriptingMacros.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\serialization\SerializedField.h">
+      <Filter>Scripting\Serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -1090,6 +1096,12 @@
     </Filter>
     <Filter Include="Core\Serialization">
       <UniqueIdentifier>{9ea70c61-018b-4598-bef9-93e1ecfc6f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{d9c98055-6ee9-4501-bc54-9e471ffb12a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting\Serialization">
+      <UniqueIdentifier>{bef47d92-9f4b-415b-b1c9-b9c3568c02d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

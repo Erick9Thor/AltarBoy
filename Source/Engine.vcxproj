@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -532,6 +533,7 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
     <ClInclude Include="src\modules\ModuleScriptingSystem.h" />
