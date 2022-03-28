@@ -2,6 +2,10 @@
 
 #include "utils/Logger.h"
 
+// Exposes a method/function/class to other modules in .lib
+// so that they can be used:
+#define HACHIKO_API __declspec(dllexport) 
+
 #define HE_LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
 
 #define HACHIKO_PI 3.14159265358979323846
@@ -10,9 +14,9 @@ constexpr float TO_DEG = 180.0f / static_cast<float>(HACHIKO_PI);
 
 enum class UpdateStatus
 {
-    UPDATE_CONTINUE = 1,
-    UPDATE_STOP,
-    UPDATE_ERROR,
+	UPDATE_CONTINUE = 1,
+	UPDATE_STOP,
+	UPDATE_ERROR,
 };
 
 // Deletes a buffer
@@ -82,18 +86,18 @@ struct DeferDummy {};
 template<class F>
 struct Deferrer
 {
-    F f;
+	F f;
 
-    ~Deferrer()
-    {
-        f();
-    }
+	~Deferrer()
+	{
+		f();
+	}
 };
 
 template<class F>
 Deferrer<F> operator*(DeferDummy, F f)
 {
-    return {f};
+	return {f};
 }
 
 #define DEFER_(LINE) zz_defer##LINE
