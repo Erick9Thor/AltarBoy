@@ -983,6 +983,7 @@
     <ClInclude Include="src\modules\ModuleScriptingSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="src\scripting\ScriptingMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
