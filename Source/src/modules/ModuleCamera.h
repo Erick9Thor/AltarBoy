@@ -28,6 +28,9 @@ namespace Hachiko
             return main_camera;
         }
         void AddCameraComponent(Component* camera);
+        void RemoveCameraComponent(Component* camera);
+        void SetMainCamera(Component* camera);
+        void RestoreOriginCamera();
 
         // Camera actions
         void Zoom(float zoom) const;

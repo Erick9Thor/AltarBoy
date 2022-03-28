@@ -29,6 +29,8 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 
 Hachiko::ComponentCamera::~ComponentCamera()
 {
+    App->camera->RemoveCameraComponent(this);
+    App->camera->RestoreOriginCamera();
     if (game_object->scene_owner)
     {
         if (game_object->scene_owner->GetCullingCamera() == this)
@@ -202,6 +204,14 @@ void Hachiko::ComponentCamera::DrawGui()
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Camera"))
     {
         ImGui::Checkbox("Draw Frustum", &draw_frustum);
+        ImGui::SameLine();
+        ImGui::Checkbox("Preview Camera", &preview_cam);
+        if (preview_cam)
+        {
+            App->camera->SetMainCamera(this);
+        }
+        else
+            App->camera->RestoreOriginCamera();
 
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))
@@ -246,6 +256,7 @@ void Hachiko::ComponentCamera::DrawGui()
             ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
             ImGui::Text("Camera Type: %s", GetCameraTypeString(camera_type).c_str());
         }
+        
     }
     ImGui::PopID();
 }

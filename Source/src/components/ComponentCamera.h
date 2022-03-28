@@ -65,6 +65,7 @@ namespace Hachiko
         Plane planes[6];
         float3 reference_point = float3::zero;
         bool draw_frustum = false;
+        bool preview_cam = false;
 
     private:
         float horizontal_fov;
