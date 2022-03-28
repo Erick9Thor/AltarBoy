@@ -4,10 +4,14 @@
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleResources.h"
+
+#include "resources/ResourceMaterial.h"
 #include "importers/MaterialImporter.h"
 
-Hachiko::ComponentMaterial::ComponentMaterial(GameObject* conatiner) :
-    Component(Type::MATERIAL, conatiner) {}
+Hachiko::ComponentMaterial::ComponentMaterial(GameObject* container) 
+    : Component(Type::MATERIAL, container) 
+{
+}
 
 Hachiko::ComponentMaterial::~ComponentMaterial()
 {
@@ -45,7 +49,7 @@ void Hachiko::ComponentMaterial::DrawGui()
     }
     ImGui::PopID();
 
-    /*
+    /* TODO: Delete this comented code fi not necessary
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))

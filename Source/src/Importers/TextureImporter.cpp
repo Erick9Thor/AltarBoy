@@ -15,54 +15,20 @@ Hachiko::TextureImporter::TextureImporter()
 
 void Hachiko::TextureImporter::Import(const char* path)
 {
-    /* ILuint size;
-    ILubyte* data;
-    ilSetInteger(IL_DXTC_FORMAT, IL_DXT5); // To pick a specific DXT compression use
-    size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
-    if (size > 0)
-    {
-        data = new ILubyte[size]; // allocate data buffer
-        if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveL function
-        {
-            char* fileBuffer = (char*)data;
-        }
-    }*/
-
-    auto resource = ImportResource(path);
-    delete resource;
-}
-
-Hachiko::Resource* Hachiko::TextureImporter::ImportResource(const char* path)
-{
     Hachiko::UID uid = Hachiko::UUID::GenerateUID();
-    std::string stringPath = path;
-    std::string extension = stringPath.substr(stringPath.find_last_of(".") + 1);
-    //ResourceTexture* texture = App->texture->LoadResource(uid, path, extension != "tif");
-    ResourceTexture* texture = App->texture->LoadResource(uid, path, false);
-
-    if (texture != nullptr)
-    {
-        Save(texture);
-    }
-    
-    return texture;
+    Resource* texture = ImportTexture(path, uid);
+    delete texture;
 }
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const UID id)
 {
     const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE) + std::to_string(id);
-    
-    return Load(file_path.c_str(), id);
-}
-
-Hachiko::Resource* Hachiko::TextureImporter::Load(const char* file_path, const UID& id)
-{
     if (!std::filesystem::exists(file_path))
     {
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path);
+    char* file_buffer = App->file_sys->Load(file_path.c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -141,4 +107,22 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 
     App->file_sys->Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
+}
+
+Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID id)
+{
+    Hachiko::UID uid = id;
+    if (!id)
+    {
+        uid = Hachiko::UUID::GenerateUID();
+    }
+
+    ResourceTexture* texture = App->texture->LoadResource(uid, path, false); // TODO: could we extract ModuleTexture functionality to this importer?
+
+    if (texture != nullptr)
+    {
+        Save(texture);
+    }
+
+    return texture;
 }

@@ -15,11 +15,7 @@ namespace Hachiko
         void Import(const char* path) override;
         void Save(const Resource* material) override;
         Resource* Load(const UID uid) override;
-        // Resource* Load(path)
-        // {
-        //      Find uid in material YAML file
-        //      return Load(UID uid);
-        // }
+        Resource* CherryImport(UID uid, const char* material_path);
     private:
         void Import(const aiMaterial* ai_material, const UID& id = 0);
     };

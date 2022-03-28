@@ -1,16 +1,15 @@
 #pragma once
 
 #include "Component.h"
-#include "resources/ResourceMaterial.h"
-
-#include "assimp/scene.h"
 
 namespace Hachiko
 {
+    class ResourceMaterial;
+
     class ComponentMaterial : public Component
     {
     public:
-        ComponentMaterial(GameObject* conatiner);
+        ComponentMaterial(GameObject* container);
         ~ComponentMaterial() override;
 
         static Type GetType()

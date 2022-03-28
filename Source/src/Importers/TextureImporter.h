@@ -7,13 +7,16 @@ namespace Hachiko
 
     class TextureImporter final : public Importer
     {
+        friend class MaterialImporter;
+
     public:
         TextureImporter();
         ~TextureImporter() override = default;
         void Import(const char* path) override;
-        Resource* ImportResource(const char* path);
         Resource* Load(const UID id) override;
-        Resource* Load(const char* file_path, const UID& id);
         void Save(const Resource* resource) override;
+
+    private:
+        Resource* ImportTexture(const char* path, UID id = 0);
     };
 }

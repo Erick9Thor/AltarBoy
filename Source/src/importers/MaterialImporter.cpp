@@ -81,10 +81,12 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
         material->normals = App->resources->GetTexture(normals_uid);
     }
 
-    // Save it in module resources
-    App->resources->materials[uid] = material;
-
     return material;
+}
+
+Hachiko::Resource* Hachiko::MaterialImporter::CherryImport(UID uid, const char* material_path)
+{
+    return nullptr;
 }
 
 void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID& id) 
@@ -131,7 +133,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
 
         for (std::string path : search_paths)
         {
-            material->diffuse = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
+            material->diffuse = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
             if (material->diffuse != nullptr)
             {
                 copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
@@ -151,7 +153,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
         
         for (std::string path : search_paths)
         {
-            material->specular = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
+            material->specular = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
 
             if (material->specular != nullptr)
             {
@@ -172,7 +174,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
 
         for (std::string path : search_paths)
         {
-            material->normals = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
+            material->normals = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
             if (material->normals != nullptr)
             {
                 copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));

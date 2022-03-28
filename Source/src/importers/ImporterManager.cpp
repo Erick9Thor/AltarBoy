@@ -52,8 +52,6 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
     {
     case Resource::Type::MODEL:
         return static_cast<ModelImporter*>(GetImporter(Resource::Type::MODEL))->Load(path);
-    case Resource::Type::MATERIAL:
-        // return static_cast<MaterialImporter>(GetImporter(Resource::Type::MATERIAL))->Load(path);
     default:
         assert(false, "Invalid parameters. Can't load that kind of resource by path. Use UID instead.");
     }
