@@ -1,9 +1,8 @@
 #pragma once
 
-#include "MathGeoLib.h"
-
 #include "core/GameObject.h"
 
+#include <MathGeoLib.h>
 #include <list>
 
 #define QUADTREE_MAX_ITEMS 8

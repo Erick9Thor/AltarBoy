@@ -1,12 +1,12 @@
 #pragma once
-#include "yaml-cpp/yaml.h"
+
+#include <yaml-cpp/yaml.h>
 #include <Math/float2.h>
 #include <Math/float3.h>
 #include <Math/float4.h>
 #include <Math/Quat.h>
 #include <Math/float4x4.h>
-
-#include "assimp/vector3.h"
+#include <assimp/vector3.h>
 #include "utils/UUID.h"
 
 namespace YAML
