@@ -112,9 +112,11 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
 
     static const int index = 0;
     const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string() ;
+    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
 
     aiString file;
     std::vector<std::string> search_paths;
+    std::vector<std::pair<std::string, std::string>> copy_to_assets;
 
     Hachiko::TextureImporter texture_importer;
 
@@ -122,9 +124,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     if (ai_material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
     {
         const std::string model_texture_path(file.data);
-        const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
-        search_paths.emplace_back(model_path + "\\" + texture_file);
+        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(asset_path + filename);
+        search_paths.emplace_back(model_path + "\\" + filename);
         search_paths.emplace_back(file.data);
 
         for (std::string path : search_paths)
@@ -132,19 +134,19 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
             material->diffuse = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
             if (material->diffuse != nullptr)
             {
+                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
                 break;
             }
         }
-        search_paths.clear();
     }
 
     // Load specular
     if (ai_material->GetTexture(aiTextureType_SPECULAR, index, &file) == AI_SUCCESS)
     {
         const std::string model_texture_path(file.data);
-        const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
-        search_paths.emplace_back(model_path + texture_file);
+        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(asset_path + filename);
+        search_paths.emplace_back(model_path + filename);
         search_paths.emplace_back(file.data);
         
         for (std::string path : search_paths)
@@ -153,6 +155,7 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
 
             if (material->specular != nullptr)
             {
+                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
                 break;
             }
         }
@@ -162,9 +165,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     if (ai_material->GetTexture(aiTextureType_NORMALS, index, &file) == AI_SUCCESS)
     {
         const std::string model_texture_path(file.data);
-        const std::string texture_file = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE) + texture_file);
-        search_paths.emplace_back(model_path + texture_file);
+        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+        search_paths.emplace_back(asset_path + filename);
+        search_paths.emplace_back(model_path + filename);
         search_paths.emplace_back(file.data);
 
         for (std::string path : search_paths)
@@ -172,9 +175,16 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
             material->normals = static_cast<ResourceTexture*>(texture_importer.ImportResource(path.c_str()));
             if (material->normals != nullptr)
             {
+                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
                 break;
             }
         }
+    }
+
+    // Copy imported textures to assets foldes
+    for (auto& file : copy_to_assets)
+    {
+        std::filesystem::copy_file(file.second, StringUtils::Concat(asset_path, file.first));
     }
 
     Save(material);
