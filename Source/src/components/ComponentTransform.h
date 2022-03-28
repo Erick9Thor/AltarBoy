@@ -64,7 +64,7 @@ namespace Hachiko
 
     private:
         void CalculateTransform(MatrixCalculationMode calculation_mode);
-        void UpdateTransformOfChildren(MatrixCalculationMode matrix_calculation_mode);
+        void UpdateTransformAndChildren(MatrixCalculationMode matrix_calculation_mode);
 
     private:
         bool dirty = false;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.

@@ -6,9 +6,6 @@
 #include "utils/UUID.h"
 #include "components/Component.h"
 
-#include "modules/ModuleEvent.h"
-#include "events/Event.h"
-
 namespace Hachiko
 {
     class JsonFormatterValue;
