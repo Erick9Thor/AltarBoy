@@ -5,7 +5,7 @@
 
 Hachiko::ComponentTransform::ComponentTransform(GameObject* container) 
     : Component(Type::TRANSFORM, container) 
-    , dirty(false)
+    , dirty(true)
     , changed(false)
     , matrix(float4x4::identity)
     , matrix_local(float4x4::identity)

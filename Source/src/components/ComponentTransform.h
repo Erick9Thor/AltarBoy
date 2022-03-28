@@ -68,7 +68,7 @@ namespace Hachiko
         void Invalidate();
 
     private:
-        bool dirty = false;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.
+        bool dirty = true;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.
         bool changed = false;       // Symbolizes whether the transform has been changed this cycle. Serves as flag to GameObject's Update.
 
         float4x4 matrix;
