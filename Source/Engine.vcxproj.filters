@@ -378,6 +378,12 @@
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="src\scripting\serialization\SerializedField.cpp">
+      <Filter>Scripting\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripting\serialization\ISerializable.cpp">
+      <Filter>Scripting\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -983,11 +989,13 @@
     <ClInclude Include="src\modules\ModuleScriptingSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\scripting\ScriptingMacros.h" />
     <ClInclude Include="src\scripting\ScriptingMacros.h">
       <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\scripting\serialization\SerializedField.h">
+      <Filter>Scripting\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\serialization\ISerializable.h">
       <Filter>Scripting\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
