@@ -30,12 +30,13 @@ Hachiko::Application::Application()
     modules.push_back(texture = new ModuleTexture());
     modules.push_back(renderer = new ModuleRender());
     modules.push_back(camera = new ModuleCamera());
+    modules.push_back(resources = new ModuleResources());
     modules.push_back(scene_manager = new ModuleSceneManager());
     modules.push_back(program = new ModuleProgram());
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
-    modules.push_back(resources = new ModuleResources());
+    
 
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }

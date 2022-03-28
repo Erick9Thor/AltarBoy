@@ -171,7 +171,8 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid, const std::stri
         res = static_cast<ResourceMaterial*>(mat_importer->CherryImport(uid, material_path.c_str()));
     }
 
-    assert(res != nullptr, "Unable to return a valid material resource");
+    //assert(res != nullptr, "Unable to return a valid material resource");
+    if (res != nullptr)
     materials.emplace(uid, res);
 
     return res;

@@ -93,7 +93,6 @@ namespace Hachiko
 
         virtual void DebugDraw() {}
 
-
         virtual void Save(YAML::Node& node) const {}
 
         virtual void Load(const YAML::Node& node) {}
