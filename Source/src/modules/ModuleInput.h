@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "SDL.h"
+#include <SDL.h>
 
 namespace Hachiko
 {

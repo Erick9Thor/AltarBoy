@@ -1,6 +1,6 @@
 #pragma once
 
-#include "imgui.h"
+#include <imgui.h>
 
 namespace Hachiko
 {
@@ -21,7 +21,7 @@ namespace Hachiko
 
         bool CollapsingHeader(GameObject* game_object, Component* component, const char* header_name);
 
-        bool ToolbarButton(ImFont* const font, const char* font_icon, bool active, const char* tooltip_desc);
+        bool ToolbarButton(ImFont* const font, const char* font_icon, bool active, const char* tooltip_desc, const bool enabled = true);
 
         static void DisplayTooltip(const char* desc);
 
