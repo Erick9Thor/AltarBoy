@@ -112,82 +112,9 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
 
     ai_material->Get(AI_MATKEY_SHININESS, material->shininess);
 
-    static const int index = 0;
-    const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string() ;
-    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
-
-    aiString file;
-    std::vector<std::string> search_paths;
-    std::vector<std::pair<std::string, std::string>> copy_to_assets;
-
-    Hachiko::TextureImporter texture_importer;
-
-    // Load diffuse
-    if (ai_material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
-    {
-        const std::string model_texture_path(file.data);
-        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(asset_path + filename);
-        search_paths.emplace_back(model_path + "\\" + filename);
-        search_paths.emplace_back(file.data);
-
-        for (std::string path : search_paths)
-        {
-            material->diffuse = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
-            if (material->diffuse != nullptr)
-            {
-                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
-                break;
-            }
-        }
-    }
-
-    // Load specular
-    if (ai_material->GetTexture(aiTextureType_SPECULAR, index, &file) == AI_SUCCESS)
-    {
-        const std::string model_texture_path(file.data);
-        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(asset_path + filename);
-        search_paths.emplace_back(model_path + filename);
-        search_paths.emplace_back(file.data);
-        
-        for (std::string path : search_paths)
-        {
-            material->specular = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
-
-            if (material->specular != nullptr)
-            {
-                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
-                break;
-            }
-        }
-    }
-
-    // Load normals
-    if (ai_material->GetTexture(aiTextureType_NORMALS, index, &file) == AI_SUCCESS)
-    {
-        const std::string model_texture_path(file.data);
-        const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-        search_paths.emplace_back(asset_path + filename);
-        search_paths.emplace_back(model_path + filename);
-        search_paths.emplace_back(file.data);
-
-        for (std::string path : search_paths)
-        {
-            material->normals = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
-            if (material->normals != nullptr)
-            {
-                copy_to_assets.emplace_back(std::make_pair(filename.c_str(), path.c_str()));
-                break;
-            }
-        }
-    }
-
-    // Copy imported textures to assets foldes
-    for (auto& file : copy_to_assets)
-    {
-        std::filesystem::copy_file(file.second, StringUtils::Concat(asset_path, file.first));
-    }
+    material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
+    material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
+    material->normals = ImportTexture(ai_material, aiTextureType_NORMALS);
 
     Save(material);
 
@@ -195,4 +122,46 @@ void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID&
     delete material->specular;
     delete material->normals;
     delete material;
+}
+
+Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMaterial* ai_material, aiTextureType type)
+{
+    static const int index = 0;
+    aiString file;
+    aiReturn ai_ret = ai_material->GetTexture(type, index, &file); 
+    if ( ai_ret == AI_FAILURE || ai_ret == AI_OUTOFMEMORY)
+    {
+        return nullptr;
+    }
+
+    ResourceTexture* output_texture = nullptr;
+    Hachiko::TextureImporter texture_importer;
+    const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string();
+    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
+    std::vector<std::string> search_paths;
+    const std::string model_texture_path(file.data);
+    const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+    
+    search_paths.emplace_back(asset_path + filename);
+    search_paths.emplace_back(model_path + "\\" + filename);
+    search_paths.emplace_back(file.data);
+
+    for (std::string& path : search_paths)
+    {
+        output_texture = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
+        if (output_texture == nullptr)
+        {
+            continue;
+        }
+            
+        if (path != (asset_path + filename))
+        {
+            std::filesystem::copy_file(path.c_str(), (asset_path + filename),
+                std::filesystem::copy_options::skip_existing);
+        }
+
+        break;
+    }
+
+    return output_texture;
 }
