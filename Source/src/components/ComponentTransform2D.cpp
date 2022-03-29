@@ -11,7 +11,7 @@
 Hachiko::ComponentTransform2D::ComponentTransform2D(GameObject* container) 
     : Component(Type::TRANSFORM_2D, container)
 {
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::DrawGui(){
@@ -113,26 +113,26 @@ void Hachiko::ComponentTransform2D::DebugDraw()
 void Hachiko::ComponentTransform2D::SetPosition(float3 new_position)
 {
     position = new_position;
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetSize(float2 new_size)
 {
     size = new_size;
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetScale(float2 new_scale)
 {
     scale = float3(new_scale, 1.0f);
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetRotation(Quat new_rotation)
 {
     rotation = new_rotation;
     rotation_euler = RadToDeg(rotation.ToEulerXYZ());
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetRotation(float3 new_rotation)
@@ -140,7 +140,7 @@ void Hachiko::ComponentTransform2D::SetRotation(float3 new_rotation)
     rotation_euler = new_rotation;
     new_rotation = DegToRad(new_rotation);
     rotation = Quat::FromEulerXYZ(new_rotation.x, new_rotation.y, new_rotation.z);
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetPivot(float2 new_pivot_position)
@@ -153,13 +153,13 @@ void Hachiko::ComponentTransform2D::SetPivot(float2 new_pivot_position)
     position.x += pivot_delta.x * size.x;
     position.y += pivot_delta.y * size.y;
     
-    UpdateHierarchy();
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform2D::SetAnchor(float2 new_anchor_position)
 {
     anchor_pct_position = new_anchor_position;
-    UpdateHierarchy();
+    Invalidate();
 }
 
 float3 Hachiko::ComponentTransform2D::GetPivotOffsetFromParent() const
@@ -202,24 +202,17 @@ float3 Hachiko::ComponentTransform2D::GetPivotScreenPosition() const
     return screen_position;
 }
 
-float4x4 Hachiko::ComponentTransform2D::GetGlobalScaledTransform() const
-{
-    float4x4 scaled_transform = global_transform * float4x4::Scale(size.x, size.y, 1.f);
-    return scaled_transform;
-}
-
-void Hachiko::ComponentTransform2D::UpdateHierarchy()
+float4x4 Hachiko::ComponentTransform2D::GetGlobalTransform()
 {
     UpdateTransforms();
+    return global_transform;
+}
 
-    for (GameObject* child : game_object->children)
-    {
-        ComponentTransform2D* transform_2d = child->GetComponent<ComponentTransform2D>();
-        if (transform_2d)
-        {
-            transform_2d->UpdateHierarchy();
-        }
-    }
+float4x4 Hachiko::ComponentTransform2D::GetGlobalScaledTransform()
+{
+    UpdateTransforms();
+    float4x4 scaled_transform = global_transform * float4x4::Scale(size.x, size.y, 1.f);
+    return scaled_transform;
 }
 
 bool Hachiko::ComponentTransform2D::HasDependentComponents(GameObject* game_object) const
@@ -247,47 +240,95 @@ bool Hachiko::ComponentTransform2D::Intersects(const float2& mouse_pos) const
     return aabb.Contains(mouse_pos);
 }
 
-void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
+void Hachiko::ComponentTransform2D::Save(JsonFormatterValue j_component) const
 {
-    node[TRANSFORM2D_POSITION] = position;
-    node[TRANSFORM2D_SIZE] = size;
-    node[TRANSFORM2D_SCALE] = scale.xy();
-    node[TRANSFORM2D_ROTATION] = rotation;
-    node[TRANSFORM2D_PIVOT] = pivot_pct_position;
-    node[TRANSFORM2D_ANCHOR] = anchor_pct_position;
+    const JsonFormatterValue j_position = j_component["Position"];
+    const JsonFormatterValue j_size = j_component["Size"];
+    const JsonFormatterValue j_scale = j_component["Scale"];
+    const JsonFormatterValue j_rotation = j_component["Rotation"];
+    const JsonFormatterValue j_pivot = j_component["Pivot"];
+    const JsonFormatterValue j_anchor = j_component["Anchor"];
+    
+    j_position[0] = position.x;
+    j_position[1] = position.y;
+    j_position[2] = position.z;
+
+    j_size[0] = size.x;
+    j_size[1] = size.y;
+
+    j_scale[0] = scale.x;
+    j_scale[1] = scale.y;
+
+    j_rotation[0] = rotation.x;
+    j_rotation[1] = rotation.y;
+    j_rotation[2] = rotation.z;
+    j_rotation[3] = rotation.w;
+
+    j_pivot[0] = pivot_pct_position.x;
+    j_pivot[1] = pivot_pct_position.y;
+
+    j_anchor[0] = anchor_pct_position.x;
+    j_anchor[1] = anchor_pct_position.y;
 }
 
-void Hachiko::ComponentTransform2D::Load(const YAML::Node& node)
+void Hachiko::ComponentTransform2D::Load(JsonFormatterValue j_component)
 {
-    SetAnchor(node[TRANSFORM2D_ANCHOR].as<float2>());
-    SetPivot(node[TRANSFORM2D_PIVOT].as<float2>());
-    SetRotation(node[TRANSFORM2D_ROTATION].as<Quat>());
-    SetScale(node[TRANSFORM2D_SCALE].as<float2>());
-    SetSize(node[TRANSFORM2D_SIZE].as<float2>());
-    SetPosition(node[TRANSFORM2D_POSITION].as<float3>());
+    const JsonFormatterValue j_position = j_component["Position"];
+    const JsonFormatterValue j_size = j_component["Size"];
+    const JsonFormatterValue j_scale = j_component["Scale"];
+    const JsonFormatterValue j_rotation = j_component["Rotation"];
+    const JsonFormatterValue j_pivot = j_component["Pivot"];
+    const JsonFormatterValue j_anchor = j_component["Anchor"];
+    
+    SetAnchor(float2(j_anchor[0], j_anchor[1]));
+    SetPivot(float2(j_pivot[0], j_pivot[1]));
+    SetRotation(Quat(j_rotation[0], j_rotation[1], j_rotation[2], j_rotation[3]));
+    SetScale(float2(j_scale[0], j_scale[1]));
+    SetSize(float2(j_size[0], j_size[1]));
+    SetPosition(float3(j_position[0], j_position[1], j_position[2]));
+}
+
+void Hachiko::ComponentTransform2D::Invalidate()
+{
+    dirty = true;
+
+    for (GameObject* child : game_object->children)
+    {
+        ComponentTransform2D* transform = child->GetComponent<ComponentTransform2D>();
+        if (transform)
+        {
+            transform->Invalidate();
+        }
+    }
 }
 
 void Hachiko::ComponentTransform2D::UpdateTransforms()
 {
-    // Move center (pivot) relative to parent and anchors
-    local_transform = float4x4::FromTRS(GetPivotOffsetFromParent(), rotation, scale);
-    
-    // Offset based on pivot
-    float2 offset = (-pivot_pct_position + float2(0.5f)).Mul(size);
-    local_transform = local_transform * float4x4::Translate(float3(offset, 0.0f));
-
-    if (game_object->parent && game_object->parent->GetComponent<ComponentTransform2D>())
+    if (dirty)
     {
-        ComponentTransform2D* parent_transform = game_object->parent->GetComponent<ComponentTransform2D>();
-        global_transform = parent_transform->global_transform * local_transform;
-    }
-    else
-    {
-        global_transform = local_transform;
-    }
+        // Move center (pivot) relative to parent and anchors
+        local_transform = float4x4::FromTRS(GetPivotOffsetFromParent(), rotation, scale);
 
-    UpdateBoundingBox();
-    UpdateUIComponents();    
+        // Offset based on pivot
+        float2 offset = (-pivot_pct_position + float2(0.5f)).Mul(size);
+        local_transform = local_transform * float4x4::Translate(float3(offset, 0.0f));
+
+        if (game_object->parent && game_object->parent->GetComponent<ComponentTransform2D>())
+        {
+            ComponentTransform2D* parent_transform = game_object->parent->GetComponent<ComponentTransform2D>();
+            parent_transform->UpdateTransforms();
+            global_transform = parent_transform->global_transform * local_transform;
+        }
+        else
+        {
+            global_transform = local_transform;
+        }
+
+        UpdateBoundingBox();
+        UpdateUIComponents();
+
+        dirty = false;
+    }
 }
 
 void Hachiko::ComponentTransform2D::UpdateUIComponents()

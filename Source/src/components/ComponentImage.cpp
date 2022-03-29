@@ -28,6 +28,6 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
-void Hachiko::ComponentImage::Save(YAML::Node& node) const {}
+void Hachiko::ComponentImage::Save(JsonFormatterValue j_component) const {}
 
-void Hachiko::ComponentImage::Load(const YAML::Node& node) {}
+void Hachiko::ComponentImage::Load(JsonFormatterValue j_component) {}

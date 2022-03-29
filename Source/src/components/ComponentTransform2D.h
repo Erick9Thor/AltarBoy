@@ -44,17 +44,19 @@ namespace Hachiko
         [[nodiscard]] float3 GetPivotOffsetFromParent() const;
         [[nodiscard]] float3 GetPivotScreenPosition() const;
 
-        [[nodiscard]] float4x4 GetGlobalScaledTransform() const;
+        [[nodiscard]] float4x4 GetGlobalTransform();
+        [[nodiscard]] float4x4 GetGlobalScaledTransform();
 
         void UpdateHierarchy();
 
         bool HasDependentComponents(GameObject* game_object) const override;
         bool Intersects(const float2& mouse_pos) const;
 
-        void Save(YAML::Node& node) const override;
-        void Load(const YAML::Node& node) override;
+        void Save(JsonFormatterValue j_component) const override;
+        void Load(JsonFormatterValue j_component) override;
 
     private:
+        void Invalidate(); // Set this and childs to dirty
         void UpdateTransforms(); // Only does oeprations triggers class is dirty
         void UpdateUIComponents(); // Called when the transforms change
         void UpdateBoundingBox();
@@ -82,6 +84,9 @@ namespace Hachiko
         AABB2D aabb = {{0, 0}, {0, 0}};
 
         bool has_canvas = false;
+
+        // Dirty flag pattern
+        bool dirty = true;
     };
 }
 

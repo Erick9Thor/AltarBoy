@@ -129,7 +129,6 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     ManageResolution(camera);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
 
-    const Scene* active_scene = App->scene_manager->GetActiveScene();
     if (active_scene == nullptr)
     {
         return UpdateStatus::UPDATE_CONTINUE;

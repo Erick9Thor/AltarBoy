@@ -3,6 +3,7 @@
 
 #include "ModuleWindow.h"
 #include "ModuleSceneManager.h"
+#include "ModuleEvent.h"
 
 #define MAX_KEYS 300
 

@@ -96,7 +96,7 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(GameObject* game_objec
             selectable->OnPointerEnter();
             if (is_click)
             {
-                HE_LOG("Clicks %s", transform->GetGameObject()->GetName().c_str());
+                HE_LOG("Clicks %s", transform->GetGameObject()->name.c_str());
                 selectable->Activate();
             }
         }
