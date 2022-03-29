@@ -155,18 +155,18 @@ ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string
     return res;
 }
 
-ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& material_path)
+ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& material_name)
 {
-    auto it = materials.find(material_path);
+    auto it = materials.find(material_name);
     if (it != materials.end())
     {
         return it->second;
     }
-
+    std::string material_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::MATERIAL) + material_name;
     auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, material_path.c_str()));
     
     assert(res != nullptr, "Unable to return a valid material resource");
-    materials.emplace(material_path, res);
+    materials.emplace(material_name, res);
 
     return res;
 }

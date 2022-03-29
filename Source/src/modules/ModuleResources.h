@@ -25,7 +25,7 @@ namespace Hachiko
         
         ResourceModel* GetModel(const std::string& name);
         ResourceMesh* GetMesh(const UID uid, const std::string& model_path = std::string(), int mesh_index = -1);
-        ResourceMaterial* GetMaterial(const std::string& model_path);
+        ResourceMaterial* GetMaterial(const std::string& material_name);
         ResourceTexture* GetTexture(UID uid, const std::string& asset_path = std::string());
         Resource* GetResource(Resource::Type type, UID resource_id);
 

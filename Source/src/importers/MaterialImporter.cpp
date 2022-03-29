@@ -130,16 +130,15 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     return material_output;
 }
 
-void Hachiko::MaterialImporter::Import(const aiMaterial* ai_material, const UID& id) 
+void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id) 
 {
     if (!id)
     {
         const_cast<UID&>(id) = UUID::GenerateUID();
     }
-
+    
     const auto material = new ResourceMaterial(id);
-
-    material->SetName("NewMaterial");
+    material->SetName(ai_material->GetName().C_Str());
     
     aiColor4D color;
     if (ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)

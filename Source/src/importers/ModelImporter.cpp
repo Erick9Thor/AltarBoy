@@ -50,7 +50,8 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
     {
         aiMaterial* material = scene->mMaterials[i];
         Hachiko::UID material_id = UUID::GenerateUID();
-        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
+        node[MODEL_MATERIAL_NODE][i][MATERIAL_ID] = material_id;
+        node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = scene->mMaterials[i]->GetName().C_Str();
         material_importer.Import(material, material_id);
     }
 
@@ -117,7 +118,7 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
 
         // We only take the first element
         int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
-        int material_idx = node[i][NODE_MATERIAL_INDEX][0].as<int>();
+        resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
         resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
 
         for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
