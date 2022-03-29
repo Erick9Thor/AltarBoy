@@ -207,6 +207,18 @@ Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID resourc
     }
 }
 
+void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::string& name) const
+{
+    switch (type)
+    {
+    case Resource::Type::MATERIAL:
+        {
+            MaterialImporter material_importer;
+            material_importer.CreateMaterial(name);
+        }
+    }
+}
+
 void ModuleResources::ImportResource(const std::filesystem::path& asset_path, const Resource::Type asset_type)
 {
     importer_manager.Import(asset_path.string(), asset_type);

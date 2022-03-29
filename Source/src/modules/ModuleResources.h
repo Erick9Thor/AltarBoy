@@ -29,6 +29,8 @@ namespace Hachiko
         ResourceTexture* GetTexture(UID uid, const std::string& asset_path = std::string());
         Resource* GetResource(Resource::Type type, UID resource_id);
 
+        void CreateResource(Resource::Type type, const std::string& name) const;
+
         // TODO: This containers should be private
         std::map<std::string, ResourceModel*> models;
         std::map<std::string, ResourceMaterial*> materials;

@@ -9,13 +9,16 @@ Hachiko::ResourceMaterial::~ResourceMaterial()
 
 void Hachiko::ResourceMaterial::DrawGui() 
 {
-    ImGui::InputText("Name", &name[0], 64);
+    //ImGui::InputText("Name", &name[0], 64);
+    ImGui::Text(name.c_str());
 
     ImGui::DragFloat("Shininess", &shininess);
 
     // Diffuse
 
     // TODO: texture selection
+    ImGui::Text("Diffuse: ");
+    ImGui::SameLine();
     ImGui::Text((diffuse != nullptr) ? diffuse->path.c_str() : "None");
     if (diffuse != nullptr)
     {
@@ -29,6 +32,8 @@ void Hachiko::ResourceMaterial::DrawGui()
     // Specular
 
     // TODO: texture selection
+    ImGui::Text("Specular: ");
+    ImGui::SameLine();
     ImGui::Text((specular != nullptr) ? specular->path.c_str() : "None");
     if (specular != nullptr)
     {
@@ -42,6 +47,8 @@ void Hachiko::ResourceMaterial::DrawGui()
     // Normals
 
     // TODO: texture selection
+    ImGui::Text("Normals: ");
+    ImGui::SameLine();
     ImGui::Text((normals != nullptr) ? normals->path.c_str() : "None");
     if (normals != nullptr)
     {
