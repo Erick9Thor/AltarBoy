@@ -48,7 +48,7 @@ void Hachiko::ModuleSceneManager::SaveScene()
     serializer.Save(main_scene);
 }
 
-void Hachiko::ModuleSceneManager::SaveScene(const char* path)
+void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer.Save(main_scene); // TODO: Take into account temporal scenes
+    serializer.Save(main_scene, file_path); // TODO: Take into account temporal scenes
 }
