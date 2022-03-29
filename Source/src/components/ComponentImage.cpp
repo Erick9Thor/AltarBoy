@@ -27,3 +27,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 	// Bind Texture	
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
+
+void Hachiko::ComponentImage::Save(YAML::Node& node) const {}
+
+void Hachiko::ComponentImage::Load(const YAML::Node& node) {}

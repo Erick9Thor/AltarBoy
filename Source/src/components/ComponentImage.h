@@ -20,6 +20,9 @@ namespace Hachiko
 
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program) const;
+
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
     };
 } // namespace Hachiko
 

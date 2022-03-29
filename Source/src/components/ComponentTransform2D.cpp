@@ -247,6 +247,26 @@ bool Hachiko::ComponentTransform2D::Intersects(const float2& mouse_pos) const
     return aabb.Contains(mouse_pos);
 }
 
+void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
+{
+    node[TRANSFORM2D_POSITION] = position;
+    node[TRANSFORM2D_SIZE] = size;
+    node[TRANSFORM2D_SCALE] = scale.xy();
+    node[TRANSFORM2D_ROTATION] = rotation;
+    node[TRANSFORM2D_PIVOT] = pivot_pct_position;
+    node[TRANSFORM2D_ANCHOR] = anchor_pct_position;
+}
+
+void Hachiko::ComponentTransform2D::Load(const YAML::Node& node)
+{
+    SetAnchor(node[TRANSFORM2D_ANCHOR].as<float2>());
+    SetPivot(node[TRANSFORM2D_PIVOT].as<float2>());
+    SetRotation(node[TRANSFORM2D_ROTATION].as<Quat>());
+    SetScale(node[TRANSFORM2D_SCALE].as<float2>());
+    SetSize(node[TRANSFORM2D_SIZE].as<float2>());
+    SetPosition(node[TRANSFORM2D_POSITION].as<float3>());
+}
+
 void Hachiko::ComponentTransform2D::UpdateTransforms()
 {
     // Move center (pivot) relative to parent and anchors

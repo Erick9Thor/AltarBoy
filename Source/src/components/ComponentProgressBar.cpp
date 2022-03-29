@@ -71,3 +71,19 @@ void Hachiko::ComponentProgressBar::DrawGui()
         fill_direction = static_cast<FillingDirection>(direction_index);
     }
 }
+
+void Hachiko::ComponentProgressBar::Save(YAML::Node& node) const
+{
+    node[PROGRESSBAR_MIN] = min;
+    node[PROGRESSBAR_MAX] = max;
+    node[PROGRESSBAR_FILLED_VALUE] = filled_value;
+    node[PROGRESSBAR_DIRECTION] = static_cast<int>(fill_direction);
+}
+
+void Hachiko::ComponentProgressBar::Load(const YAML::Node& node)
+{
+    SetMin(node[PROGRESSBAR_MIN].as<float>());
+    SetMax(node[PROGRESSBAR_MAX].as<float>());
+    SetFilledValue(node[PROGRESSBAR_FILLED_VALUE].as<float>());
+    SetDirection(static_cast<FillingDirection>(node[PROGRESSBAR_DIRECTION].as<int>()));
+}

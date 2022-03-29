@@ -51,6 +51,9 @@ namespace Hachiko
         bool HasDependentComponents(GameObject* game_object) const override;
         bool Intersects(const float2& mouse_pos) const;
 
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
+
     private:
         void UpdateTransforms(); // Only does oeprations triggers class is dirty
         void UpdateUIComponents(); // Called when the transforms change

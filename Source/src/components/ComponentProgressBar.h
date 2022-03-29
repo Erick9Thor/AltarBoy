@@ -67,6 +67,9 @@ namespace Hachiko
             fill_direction = new_direction;
         }
 
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
+
     private:
         GameObject* background = nullptr;
         GameObject* fill = nullptr;

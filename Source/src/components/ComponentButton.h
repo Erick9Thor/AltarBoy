@@ -21,6 +21,9 @@ namespace Hachiko
         static Type GetType();
 
         void DrawGui() override;
+
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
     };
 } // namespace Hachiko
 
