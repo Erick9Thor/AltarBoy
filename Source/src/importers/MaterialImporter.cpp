@@ -157,6 +157,16 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     return material_output;
 }
 
+void Hachiko::MaterialImporter::CreateMaterial(const std::string name) 
+{
+    ResourceMaterial* material = new ResourceMaterial(Hachiko::UUID::GenerateUID());
+    material->SetName(name);
+
+    Save(material);
+
+    delete material;
+}
+
 void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id) 
 {
     if (!id)

@@ -18,6 +18,26 @@ void Hachiko::WindowResource::Update()
         ImGui::End();
         return;
     }
+
+    // WIP: create material 
+    if (ImGui::Button("Create material (WIP)"))
+    {
+        ImGui::OpenPopup("CreateMaterialPopup");
+        auxiliar_name = "NewMaterial";
+    }
+
+    if (ImGui::BeginPopup("CreateMaterialPopup"))
+    {
+        ImGui::InputText("Name", &auxiliar_name[0], 64);
+        if (ImGui::Button("Create material"))
+        {
+            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliar_name);
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+    //
+
     std::filesystem::path library_path("./library");
 
     if (current_directory != library_path)
