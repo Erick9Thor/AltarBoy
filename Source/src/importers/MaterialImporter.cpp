@@ -126,7 +126,34 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
 
     YAML::Node material_node = YAML::LoadFile(material_path);
     Hachiko::ResourceMaterial* material_output = new ResourceMaterial(material_node[MATERIAL_ID].as<UID>());
-   // TODO: Set material data from yaml
+
+    material_output->SetName(material_node[MATERIAL_NAME].as<std::string>());
+    UID diffuse_uid = material_node[MATERIAL_DIFFUSE_ID].as<UID>();
+    UID specular_uid = material_node[MATERIAL_SPECULAR_ID].as<UID>();
+    UID normals_uid = material_node[MATERIAL_NORMALS_ID].as<UID>();
+
+    std::string diffuse_path = material_node[MATERIAL_DIFFUSE_PATH].as<std::string>();
+    std::string specular_path = material_node[MATERIAL_SPECULAR_PATH].as<std::string>();
+    std::string normals_path = material_node[MATERIAL_NORMALS_PATH].as<std::string>();
+
+    material_output->diffuse_color = material_node[MATERIAL_DIFFUSE_COLOR].as<float4>();
+    material_output->specular_color = material_node[MATERIAL_SPECULAR_COLOR].as<float4>();
+    material_output->shininess = material_node[MATERIAL_SHININESS].as<float>();
+
+    // Load texutes
+    if (diffuse_uid)
+    {
+        material_output->diffuse = App->resources->GetTexture(diffuse_uid, diffuse_path);
+    }
+    if (specular_uid)
+    {
+        material_output->specular = App->resources->GetTexture(specular_uid, specular_path);
+    }
+    if (normals_uid)
+    {
+        material_output->normals = App->resources->GetTexture(normals_uid, normals_path);
+    }
+
     return material_output;
 }
 
