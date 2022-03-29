@@ -5,7 +5,7 @@
 
 Hachiko::ComponentTransform::ComponentTransform(GameObject* container) 
     : Component(Type::TRANSFORM, container) 
-    , dirty(false)
+    , dirty(true)
     , changed(false)
     , matrix(float4x4::identity)
     , matrix_local(float4x4::identity)
@@ -70,14 +70,14 @@ void Hachiko::ComponentTransform::SetGlobalTransform(const float4x4& new_matrix)
     new_matrix.Decompose(position, rotation, scale);
     rotation_euler = RadToDeg(rotation.ToEulerXYZ());
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetPosition(const float3& new_position) 
 {
     position = new_position;
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 
 }
 
@@ -85,7 +85,7 @@ void Hachiko::ComponentTransform::SetScale(const float3& new_scale)
 {
     scale = new_scale;
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetRotationAxis(const float3& new_right, const float3& new_up, const float3& new_front)
@@ -96,7 +96,7 @@ void Hachiko::ComponentTransform::SetRotationAxis(const float3& new_right, const
 
     matrix.Decompose(position, rotation, scale);
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetRotation(const Quat& new_rotation)
@@ -104,7 +104,7 @@ void Hachiko::ComponentTransform::SetRotation(const Quat& new_rotation)
     rotation = new_rotation.Normalized();
     rotation_euler = RadToDeg(rotation.ToEulerXYZ());
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetRotationInEulerAngles(const float3& new_rotation_euler) 
@@ -115,7 +115,7 @@ void Hachiko::ComponentTransform::SetRotationInEulerAngles(const float3& new_rot
     rotation = rotation_amount * (rotation);
     rotation_euler = new_rotation_euler;
 
-    UpdateTransformAndChildren(MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL);
+    UpdateTransformAndChildren(MatrixCalculationMode::LOCAL_FROM_GLOBAL);
 }
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float4x4& new_transform_local)
@@ -123,7 +123,7 @@ void Hachiko::ComponentTransform::SetLocalTransform(const float4x4& new_transfor
     new_transform_local.Decompose(position_local, rotation_local, scale_local);
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    dirty = true;
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform::SetLocalTransform(const float3& new_position_local, const Quat& new_rotation_local, const float3& new_scale_local)
@@ -135,14 +135,14 @@ void Hachiko::ComponentTransform::SetLocalPosition(const float3& new_position_lo
 {
     position_local = new_position_local;
 
-    dirty = true;
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform::SetLocalScale(const float3& new_scale_local) 
 {
     scale_local = new_scale_local;
 
-    dirty = true;
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_local) 
@@ -150,7 +150,7 @@ void Hachiko::ComponentTransform::SetLocalRotation(const Quat& new_rotation_loca
     rotation_local = new_rotation_local;
     rotation_euler_local = RadToDeg(rotation_local.ToEulerXYZ());
 
-    dirty = true;
+    Invalidate();
 }
 
 void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& new_rotation_euler_local)
@@ -161,7 +161,7 @@ void Hachiko::ComponentTransform::SetLocalRotationInEulerAngles(const float3& ne
     rotation_local = rotation_amount * (rotation_local);
     rotation_euler_local = new_rotation_euler_local;
 
-    dirty = true;
+    Invalidate();
 }
 
 /***    GETTERS     ***/
@@ -170,7 +170,7 @@ const float3& Hachiko::ComponentTransform::GetPosition()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return position;
@@ -180,7 +180,7 @@ const float3& Hachiko::ComponentTransform::GetScale()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return scale;
@@ -190,7 +190,7 @@ const Quat& Hachiko::ComponentTransform::GetRotation()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return rotation;
@@ -200,7 +200,7 @@ const float3& Hachiko::ComponentTransform::GetRotationInEulerAngles()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return rotation_euler;
@@ -210,9 +210,8 @@ const float3& Hachiko::ComponentTransform::GetFront()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
-
     return front;
 }
 
@@ -220,7 +219,7 @@ const float3& Hachiko::ComponentTransform::GetUp()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return up;
@@ -230,7 +229,7 @@ const float3& Hachiko::ComponentTransform::GetRight()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return right;
@@ -240,7 +239,7 @@ const float4x4& Hachiko::ComponentTransform::GetMatrix()
 {
     if (dirty)
     {
-        UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
     }
 
     return matrix;
@@ -254,7 +253,7 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
 
     switch (calculation_mode)
     {
-        case MatrixCalculationMode::USE_GLOBAL_TO_CALC_LOCAL:
+        case MatrixCalculationMode::LOCAL_FROM_GLOBAL:
         {
             matrix = float4x4::FromTRS(position, rotation, scale);
 
@@ -265,7 +264,7 @@ void Hachiko::ComponentTransform::CalculateTransform(MatrixCalculationMode calcu
         }
         break;
 
-        case MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL:
+        case MatrixCalculationMode::GLOBAL_FROM_LOCAL:
         {
             matrix_local = float4x4::FromTRS(position_local, rotation_local, scale_local);
 
@@ -293,7 +292,18 @@ void Hachiko::ComponentTransform::UpdateTransformAndChildren(MatrixCalculationMo
     
     for (GameObject* child : children)
     {
-        child->GetTransform()->UpdateTransformAndChildren(MatrixCalculationMode::USE_LOCAL_TO_CALC_GLOBAL);
+        child->GetTransform()->UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
+    }
+}
+
+void Hachiko::ComponentTransform::Invalidate()
+{
+    const std::vector<GameObject*>& children = game_object->children;
+    
+    dirty = true;
+    for (GameObject* child : children)
+    {
+        child->GetTransform()->Invalidate();
     }
 }
 

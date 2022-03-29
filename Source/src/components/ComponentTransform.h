@@ -9,8 +9,8 @@ namespace Hachiko
     {
         enum class MatrixCalculationMode
         {
-            USE_GLOBAL_TO_CALC_LOCAL,
-            USE_LOCAL_TO_CALC_GLOBAL
+            LOCAL_FROM_GLOBAL,
+            GLOBAL_FROM_LOCAL
         };
 
     public:
@@ -39,13 +39,13 @@ namespace Hachiko
         void SetLocalRotationInEulerAngles(const float3& new_rotation_euler_local);
 
         static Type GetType() { return Type::TRANSFORM; };
-        inline [[nodiscard]] bool IsDirty() const { return dirty; }; 
-        inline [[nodiscard]] bool HasChanged() const { return changed; };
-        inline [[nodiscard]] const float3& GetLocalPosition() const { return position_local; };
-        inline [[nodiscard]] const float3& GetLocalScale() const { return scale_local; };
-        inline [[nodiscard]] const Quat& GetLocalRotation() const { return rotation_local; };
-        inline [[nodiscard]] const float3& GetLocalRotationInEulerAngles() const { return rotation_euler_local; };
-        inline [[nodiscard]] const float4x4& GetLocalMatrix() const { return matrix_local; };
+        [[nodiscard]] bool IsDirty() const { return dirty; }
+        [[nodiscard]] bool HasChanged() const { return changed; }
+        [[nodiscard]] const float3& GetLocalPosition() const { return position_local; }
+        [[nodiscard]] const float3& GetLocalScale() const { return scale_local; }
+        [[nodiscard]] const Quat& GetLocalRotation() const { return rotation_local; }
+        [[nodiscard]] const float3& GetLocalRotationInEulerAngles() const { return rotation_euler_local; }
+        [[nodiscard]] const float4x4& GetLocalMatrix() const { return matrix_local; }
 
         [[nodiscard]] const float3& GetPosition();
         [[nodiscard]] const float3& GetScale();
@@ -65,9 +65,10 @@ namespace Hachiko
     private:
         void CalculateTransform(MatrixCalculationMode calculation_mode);
         void UpdateTransformAndChildren(MatrixCalculationMode matrix_calculation_mode);
+        void Invalidate();
 
     private:
-        bool dirty = false;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.
+        bool dirty = true;          // Symbolizes whether the GLOBAL transform needs to be re calculated or not.
         bool changed = false;       // Symbolizes whether the transform has been changed this cycle. Serves as flag to GameObject's Update.
 
         float4x4 matrix;
