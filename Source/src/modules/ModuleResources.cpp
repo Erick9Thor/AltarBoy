@@ -83,11 +83,12 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
     }
     std::filesystem::path destination = preferences->GetAssetsPath(type);
 
-    if(App->file_sys->Copy(path.string().c_str(),
-        destination.append(path.filename().c_str()).string().c_str(), true))
+    if (!importer_manager.CheckIfImported(path.string().c_str(), type))
     {
         last_resource_path = path; // We may need this to import more assets from this path
-        ImportResource(destination, type);
+        ImportResource(path, type);
+        App->file_sys->Copy(path.string().c_str(),
+                            destination.append(path.filename().c_str()).string().c_str(), true);
         HE_LOG("File destination: %s", destination.string().c_str());
     }
 }

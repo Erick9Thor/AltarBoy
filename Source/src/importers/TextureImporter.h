@@ -16,6 +16,10 @@ namespace Hachiko
         void Import(const char* path) override;
         Resource* Load(const UID id) override;
         void Save(const Resource* resource) override;
+        bool CheckIfImported(const char* path) override
+        {
+            return false;
+        }
 
     private:
         Resource* ImportTexture(const char* path, UID id = 0);

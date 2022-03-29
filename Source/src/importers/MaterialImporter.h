@@ -16,6 +16,11 @@ namespace Hachiko
         void Import(const char* path) override;
         void Save(const Resource* material) override;
         Resource* Load(const UID uid) override;
+        bool CheckIfImported(const char* path) override
+        {
+            return false;
+        }
+        
         Resource* Load(const char* material_path);
     private:
         void Import(aiMaterial* ai_material, const UID& id = 0);

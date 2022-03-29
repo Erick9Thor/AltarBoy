@@ -59,8 +59,9 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
     }
 }
 
-bool Hachiko::ImporterManager::CheckIfImported(const char* path) const
+bool Hachiko::ImporterManager::CheckIfImported(const char* path, Resource::Type type) const
 {
+    return GetImporter(type)->CheckIfImported(path);
     std::filesystem::path model_name(path);
     model_name = model_name.filename().replace_extension();
     std::string fullPath = App->preferences->GetResourcesPreference()->GetLibraryPath(Resource::Type::MODEL);
@@ -69,7 +70,7 @@ bool Hachiko::ImporterManager::CheckIfImported(const char* path) const
     return std::filesystem::exists(fullPath);
 }
 
-Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type)
+Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
 {
     auto it = std::find_if(importers.begin(), importers.end(), [&](const std::pair<Importer::Type, Importer*>& element)
         { 
@@ -80,7 +81,7 @@ Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type)
     return it->second;
 }
 
-Importer::Type ImporterManager::ToImporterType(const Resource::Type type)
+Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
 {
     Importer::Type iType;
     switch (type)
