@@ -183,7 +183,8 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid, const std::string
     
     if (res == nullptr && !asset_path.empty())
     {
-        // Cherry import texture
+        Hachiko::TextureImporter texture_importer;
+        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str(), uid));
     }
     
     assert(res != nullptr, "Unable to return a valid texture resource");

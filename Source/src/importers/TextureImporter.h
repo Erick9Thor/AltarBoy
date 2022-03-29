@@ -8,6 +8,7 @@ namespace Hachiko
     class TextureImporter final : public Importer
     {
         friend class MaterialImporter;
+        friend class ModuleResources;
 
     public:
         TextureImporter();
