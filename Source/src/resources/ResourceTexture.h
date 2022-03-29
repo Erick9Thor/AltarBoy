@@ -20,8 +20,17 @@ namespace Hachiko
             return id;
         }
 
+        [[nodiscard]] std::string GetAssetPath() const
+        {
+            return asset_path;
+        }
+
+        void SetAssetPath(const std::string& new_path) 
+        {
+            asset_path = new_path;
+        }
+        
         unsigned id = 0;
-        std::string path;
         unsigned width = 0;
         unsigned height = 0;
         unsigned format = 0;
@@ -34,5 +43,8 @@ namespace Hachiko
 
         byte* data{};
         unsigned data_size = 0;
+
+    private:
+        std::string asset_path;
     };
 } // namespace Hachiko

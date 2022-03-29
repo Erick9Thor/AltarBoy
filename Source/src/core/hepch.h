@@ -54,6 +54,7 @@
 
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
+#include <assimp/include/assimp/postprocess.h>
 
 //project includes
 #include "Globals.h"

@@ -16,7 +16,7 @@ namespace Hachiko
         void Import(const char* path) override;
         void Save(const Resource* material) override;
         Resource* Load(const UID uid) override;
-        Resource* CherryImport(UID uid, const char* material_path);
+        Resource* Load(const char* material_path);
     private:
         void Import(const aiMaterial* ai_material, const UID& id = 0);
         ResourceTexture* ImportTexture(const aiMaterial* ai_material, aiTextureType type);

@@ -24,7 +24,7 @@ void Hachiko::ModelImporter::Import(const char* path)
     const std::filesystem::path model_path(path);
     const std::string model_name = model_path.filename().replace_extension().string();
     const std::string model_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL) + model_name + MODEL_EXTENSION;
-    scene = import.ReadFile(model_path.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -37,7 +37,6 @@ void Hachiko::ModelImporter::Import(const char* path)
     model_node[MODEL_FILE_PATH] = model_path.string();
 
     ImportModel(scene, model_node);
-    // Import model textures
 
     App->file_sys->Save(model_library_path.c_str(), model_node);
 }

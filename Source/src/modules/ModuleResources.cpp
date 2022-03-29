@@ -155,30 +155,23 @@ ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string
     return res;
 }
 
-ResourceMaterial* Hachiko::ModuleResources::GetMaterial(UID uid, const std::string& material_path)
+ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& material_path)
 {
-    auto it = materials.find(uid);
+    auto it = materials.find(material_path);
     if (it != materials.end())
     {
         return it->second;
     }
 
-    auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, uid));
+    auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, material_path.c_str()));
     
-    if (res == nullptr && !material_path.empty())
-    {
-        MaterialImporter* mat_importer = static_cast<MaterialImporter*>(importer_manager.GetImporter(Resource::Type::MATERIAL));
-        res = static_cast<ResourceMaterial*>(mat_importer->CherryImport(uid, material_path.c_str()));
-    }
-
-    //assert(res != nullptr, "Unable to return a valid material resource");
-    if (res != nullptr)
-    materials.emplace(uid, res);
+    assert(res != nullptr, "Unable to return a valid material resource");
+    materials.emplace(material_path, res);
 
     return res;
 }
 
-ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid)
+ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid, const std::string& asset_path)
 {
     auto it = textures.find(uid);
     if (it != textures.end())
@@ -187,6 +180,12 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid)
     }
 
     auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, uid));
+    
+    if (res == nullptr && !asset_path.empty())
+    {
+        // Cherry import texture
+    }
+    
     assert(res != nullptr, "Unable to return a valid texture resource");
     textures.emplace(uid, res);
 

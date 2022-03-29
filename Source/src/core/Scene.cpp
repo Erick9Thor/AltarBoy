@@ -86,8 +86,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             component->AddResourceMesh(App->resources->GetMesh(mesh_id));
             
             ComponentMaterial* component_material = static_cast<ComponentMaterial*>(mesh_game_object->CreateComponent(Component::Type::MATERIAL));
-            component_material->SetID(child->material_id);
-            component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_id));
+            component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));
             // TODO: Set material file path, model name, in model meta
 
             createChilds(mesh_game_object, child->childs);

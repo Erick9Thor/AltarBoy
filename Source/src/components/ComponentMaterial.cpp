@@ -19,17 +19,14 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
 
 void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
 {
-    node[MESH_TEXTURE] = asset_path;
-    node[MESH_TEXTURE_TYPE] = "";
-    node[MODEL_NAME] = model_name;
+    node[MATERIAL_NAME] = material->GetName();
 }
 
 void Hachiko::ComponentMaterial::Load(const YAML::Node& node)
 {
-    asset_path = node[MESH_TEXTURE].as<std::string>();
-    model_name = node[MODEL_NAME].as<std::string>();
     SetID(node[COMPONENT_ID].as<UID>());
-    LoadMaterial(node[COMPONENT_ID].as<UID>());
+    LoadMaterial(node[MATERIAL_NAME].as<std::string>());
+    material->SetName(node[MATERIAL_NAME].as<std::string>());
 }
 
 void Hachiko::ComponentMaterial::DrawGui()
@@ -141,7 +138,7 @@ void Hachiko::ComponentMaterial::DrawGui()
     */
 }
 
-void Hachiko::ComponentMaterial::LoadMaterial(UID mesh_id)
+void Hachiko::ComponentMaterial::LoadMaterial(const std::string& material_path)
 {
-    material = App->resources->GetMaterial(mesh_id, asset_path);
+    material = App->resources->GetMaterial(material_path);
 }

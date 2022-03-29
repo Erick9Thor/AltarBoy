@@ -15,7 +15,7 @@ namespace Hachiko
         }
 
         UID mesh_id;
-        UID material_id;
+        std::string material_name;
         std::string node_name;
         float4x4 node_transform;
         std::vector<int> meshes_index;

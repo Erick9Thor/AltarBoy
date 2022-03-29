@@ -56,12 +56,25 @@ namespace Hachiko
             return 0;
         }
 
-        std::string name;
+        [[nodiscard]] std::string GetName() const
+        {
+            return name;
+        }
+
+        void SetName(const std::string& new_name) 
+        {
+            name = new_name;
+        }
+
+        // TODO: Move this memebers to private
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
         ResourceTexture* normals = nullptr;
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
         float shininess = 50.0f;
+
+    private:
+        std::string name;
     };
 }
