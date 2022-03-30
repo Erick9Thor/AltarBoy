@@ -70,7 +70,7 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     // Mouse ----------------------------
     const int scrolled_y = App->input->GetScrollDelta();
     if (scrolled_y != 0)
-        Zoom(-static_cast<float>(scrolled_y) * zoom_speed);
+        Zoom(static_cast<float>(scrolled_y) * zoom_speed);
 
     if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN)
     {
