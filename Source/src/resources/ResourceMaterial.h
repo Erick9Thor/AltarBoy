@@ -5,7 +5,6 @@
 
 namespace Hachiko
 {
-
     class ResourceMaterial : public Resource
     {
     public:
@@ -64,6 +63,22 @@ namespace Hachiko
         void SetName(const std::string& new_name) 
         {
             name = new_name;
+        }
+
+        void SetTexture(ResourceTexture* res, ResourceTexture::Type type)
+        {
+            switch (type)
+            {
+            case ResourceTexture::Type::DIFFUSE:
+                diffuse = res;
+                break;            
+            case ResourceTexture::Type::SPECULAR:
+                specular = res;
+                break;            
+            case ResourceTexture::Type::NORMALS:
+                normals = res;
+                break;
+            }
         }
 
         // TODO: Move this memebers to private

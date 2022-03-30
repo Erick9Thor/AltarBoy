@@ -19,6 +19,11 @@ Hachiko::ComponentMaterial::~ComponentMaterial()
 
 void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
 {
+    if (material == nullptr)
+    {
+        return;
+    }
+
     node[MATERIAL_NAME] = material->GetName();
 }
 

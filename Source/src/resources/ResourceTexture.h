@@ -8,8 +8,15 @@ namespace Hachiko
     class ResourceTexture : public Resource
     {
     public:
-        ResourceTexture(UID uid);
+        ResourceTexture();
         ~ResourceTexture() override;
+
+        enum class Type
+        {
+            DIFFUSE = 0,
+            SPECULAR,
+            NORMALS
+        };
 
         void GenerateBuffer();
 
@@ -30,6 +37,16 @@ namespace Hachiko
             path = new_path;
         }
         
+        [[nodiscard]] std::string GetName() const
+        {
+            return name;
+        }
+
+        void SetName(const std::string& new_name)
+        {
+            name = new_name;
+        }
+
         unsigned id = 0;
         unsigned width = 0;
         unsigned height = 0;
@@ -45,5 +62,6 @@ namespace Hachiko
         unsigned data_size = 0;
 
         std::string path;
+        std::string name = std::string();
     };
 } // namespace Hachiko

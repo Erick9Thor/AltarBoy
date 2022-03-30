@@ -61,9 +61,9 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[GENERIC_TYPE] = (int)material->GetType();
     material_node[MATERIAL_NAME] = material->GetName();
 
-    material_node[MATERIAL_DIFFUSE_ID] = (material->diffuse != nullptr) ? material->diffuse->GetID() : 0;
-    material_node[MATERIAL_SPECULAR_ID] = (material->specular != nullptr) ? material->specular->GetID() : 0;
-    material_node[MATERIAL_NORMALS_ID] = (material->normals != nullptr) ? material->normals->GetID() : 0;
+    material_node[MATERIAL_DIFFUSE_NAME] = (material->diffuse != nullptr) ? material->diffuse->GetName() : std::string();
+    material_node[MATERIAL_SPECULAR_NAME] = (material->specular != nullptr) ? material->specular->GetName() : std::string();
+    material_node[MATERIAL_NORMALS_NAME] = (material->normals != nullptr) ? material->normals->GetName() : std::string();
 
     material_node[MATERIAL_DIFFUSE_PATH] = (material->diffuse != nullptr) ? material->diffuse->GetAssetPath() : std::string();
     material_node[MATERIAL_SPECULAR_PATH] = (material->specular != nullptr) ? material->specular->GetAssetPath() : std::string();
@@ -88,9 +88,9 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
     const auto material = new ResourceMaterial(uid);
 
     material->SetName(node[MATERIAL_NAME].as<std::string>());
-    UID diffuse_uid = node[MATERIAL_DIFFUSE_ID].as<UID>();
-    UID specular_uid = node[MATERIAL_SPECULAR_ID].as<UID>();
-    UID normals_uid = node[MATERIAL_NORMALS_ID].as<UID>();
+    material->diffuse->SetName(node[MATERIAL_DIFFUSE_NAME].as<std::string>());
+    material->specular->SetName(node[MATERIAL_SPECULAR_NAME].as<std::string>());
+    material->normals->SetName(node[MATERIAL_NORMALS_NAME].as<std::string>());
 
     std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
     std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
@@ -100,19 +100,9 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
     material->shininess = node[MATERIAL_SHININESS].as<float>();
 
-    // Load texutes
-    if (diffuse_uid)
-    {
-        material->diffuse = App->resources->GetTexture(diffuse_uid, diffuse_path);
-    }
-    if (specular_uid)
-    {
-        material->specular = App->resources->GetTexture(specular_uid, specular_path);
-    }
-    if (normals_uid)
-    {
-        material->normals = App->resources->GetTexture(normals_uid, normals_path);
-    }
+    material->diffuse = App->resources->GetTexture(material->diffuse->GetName(), diffuse_path);
+    material->specular = App->resources->GetTexture(material->specular->GetName(), specular_path);
+    material->normals = App->resources->GetTexture(material->normals->GetName(), normals_path);
 
     return material;
 }
@@ -124,37 +114,23 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
         return nullptr;
     }
 
-    YAML::Node material_node = YAML::LoadFile(material_path);
-    Hachiko::ResourceMaterial* material_output = new ResourceMaterial(material_node[MATERIAL_ID].as<UID>());
+    YAML::Node node = YAML::LoadFile(material_path);
+    Hachiko::ResourceMaterial* material = new ResourceMaterial(node[MATERIAL_ID].as<UID>());
 
-    material_output->SetName(material_node[MATERIAL_NAME].as<std::string>());
-    UID diffuse_uid = material_node[MATERIAL_DIFFUSE_ID].as<UID>();
-    UID specular_uid = material_node[MATERIAL_SPECULAR_ID].as<UID>();
-    UID normals_uid = material_node[MATERIAL_NORMALS_ID].as<UID>();
+    material->SetName(node[MATERIAL_NAME].as<std::string>());
+    material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
+    material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
+    material->shininess = node[MATERIAL_SHININESS].as<float>();
 
-    std::string diffuse_path = material_node[MATERIAL_DIFFUSE_PATH].as<std::string>();
-    std::string specular_path = material_node[MATERIAL_SPECULAR_PATH].as<std::string>();
-    std::string normals_path = material_node[MATERIAL_NORMALS_PATH].as<std::string>();
+    std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
+    std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
+    std::string normals_path = node[MATERIAL_NORMALS_PATH].as<std::string>();
+    
+    material->diffuse = App->resources->GetTexture(node[MATERIAL_DIFFUSE_NAME].as<std::string>(), diffuse_path);
+    material->specular = App->resources->GetTexture(node[MATERIAL_SPECULAR_NAME].as<std::string>(), specular_path);
+    material->normals = App->resources->GetTexture(node[MATERIAL_NORMALS_NAME].as<std::string>(), normals_path);
 
-    material_output->diffuse_color = material_node[MATERIAL_DIFFUSE_COLOR].as<float4>();
-    material_output->specular_color = material_node[MATERIAL_SPECULAR_COLOR].as<float4>();
-    material_output->shininess = material_node[MATERIAL_SHININESS].as<float>();
-
-    // Load texutes
-    if (diffuse_uid)
-    {
-        material_output->diffuse = App->resources->GetTexture(diffuse_uid, diffuse_path);
-    }
-    if (specular_uid)
-    {
-        material_output->specular = App->resources->GetTexture(specular_uid, specular_path);
-    }
-    if (normals_uid)
-    {
-        material_output->normals = App->resources->GetTexture(normals_uid, normals_path);
-    }
-
-    return material_output;
+    return material;
 }
 
 void Hachiko::MaterialImporter::CreateMaterial(const std::string name) 

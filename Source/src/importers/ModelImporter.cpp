@@ -82,7 +82,6 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         ImportNode(*child_node, node[NODE_CHILD][i]);
-        node[NODE_CHILD][i][NODE_MATERIAL_INDEX][0] = 0; // Apply the same material for all childs // TO REMOVE
         ++child_node;
     }
 }
@@ -119,6 +118,13 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
 
         // We only take the first element
         if (node[i][NODE_MESH_INDEX].IsDefined())
+        {
+            int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
+            resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
+            resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
+        }
+
+        for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
         {
             int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
             resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();

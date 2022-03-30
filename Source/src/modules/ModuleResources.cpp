@@ -176,25 +176,30 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& mater
     return res;
 }
 
-ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid, const std::string& asset_path)
+ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture_name, const std::string& asset_path)
 {
-    auto it = textures.find(uid);
+    if (texture_name.empty())
+    {
+        return nullptr;
+    }
+
+    auto it = textures.find(texture_name);
     if (it != textures.end())
     {
         return it->second;
     }
 
-    auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, uid));
+    auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_name.c_str()));
     
     if (res == nullptr && !asset_path.empty())
     {
         Hachiko::TextureImporter texture_importer;
-        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str(), uid));
+        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str()));
     }
     
     // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr && "Unable to return a valid texture resource");
-    textures.emplace(uid, res);
+    textures.emplace(texture_name, res);
 
     return res;
 }

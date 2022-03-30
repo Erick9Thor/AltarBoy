@@ -14,7 +14,11 @@ namespace Hachiko
         TextureImporter();
         ~TextureImporter() override = default;
         void Import(const char* path) override;
-        Resource* Load(const UID id) override;
+        Resource* Load(const UID id) override
+        {
+            return nullptr;
+        };
+        Resource* Load(const char* path);
         void Save(const Resource* resource) override;
         bool CheckIfImported(const char* path) override
         {

@@ -1,5 +1,6 @@
 #include "core/hepch.h"
 #include "ResourceMaterial.h"
+#include "modules/ModuleResources.h"
 
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}
@@ -27,6 +28,10 @@ void Hachiko::ResourceMaterial::DrawGui()
     else
     {
         ImGui::ColorEdit4("Diffuse color", &diffuse_color[0]);
+        if (ImGui::Button("Add Diffuse Texture"))
+        {
+            //SetTexture(App->resources->GetTexture(), ResourceTexture::Type::DIFFUSE);
+        }
     }
 
     // Specular
@@ -42,6 +47,10 @@ void Hachiko::ResourceMaterial::DrawGui()
     else
     {
         ImGui::ColorEdit4("Specular color", &specular_color[0]);
+        if (ImGui::Button("Add Diffuse Texture"))
+        {
+            //SetTexture(App->resources->GetTexture(), ResourceTexture::Type::SPECULAR);
+        }
     }
 
     // Normals
@@ -53,5 +62,12 @@ void Hachiko::ResourceMaterial::DrawGui()
     if (normals != nullptr)
     {
         normals->DrawGui();
+    }
+    else
+    {
+        if (ImGui::Button("Add Normals Texture"))
+        {
+            //SetTexture(App->resources->GetTexture(), ResourceTexture::Type::NORMALS);
+        }
     }
 }

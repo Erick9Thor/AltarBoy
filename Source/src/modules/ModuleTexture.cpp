@@ -22,6 +22,8 @@ bool Hachiko::ModuleTexture::CleanUp()
 
 Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const char* path, bool flip) // TODO: rename import
 {
+    std::filesystem::path texture_path = path;
+
     unsigned int img_id = LoadImg(path, flip);
 
     if (img_id == 0)
@@ -29,8 +31,9 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
         return nullptr;
     }
  
-    ResourceTexture* texture = new ResourceTexture(uid);
+    ResourceTexture* texture = new ResourceTexture();
     texture->path = path;
+    texture->SetName(texture_path.filename().replace_extension().string().c_str());
     texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
     texture->mag_filter = GL_LINEAR;
     texture->wrap = GL_CLAMP;
