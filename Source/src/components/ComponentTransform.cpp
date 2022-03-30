@@ -311,16 +311,17 @@ void Hachiko::ComponentTransform::Invalidate()
 
 void Hachiko::ComponentTransform::Save(YAML::Node& node) const
 {
-    node[TRANSFORM_POSITION] = position;
-    node[TRANSFORM_ROTATION] = rotation;
+    node[TRANSFORM_POSITION] = position_local;
+    node[TRANSFORM_ROTATION] = rotation_local;
     node[TRANSFORM_SCALE] = scale_local;
 }
 
 void Hachiko::ComponentTransform::Load(const YAML::Node& node)
 {
-    SetPosition(node[TRANSFORM_POSITION].as<float3>());
+    SetLocalPosition(node[TRANSFORM_POSITION].as<float3>());
     SetLocalRotation(node[TRANSFORM_ROTATION].as<Quat>());
     SetLocalScale(node[TRANSFORM_SCALE].as<float3>());
+    UpdateTransformAndChildren(MatrixCalculationMode::GLOBAL_FROM_LOCAL);
 }
 
 /**     GUI     **/
