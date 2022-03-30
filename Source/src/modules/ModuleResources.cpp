@@ -127,7 +127,7 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     auto res = static_cast<ResourceModel*>(importer_manager.Load(Resource::Type::MODEL, name.c_str()));
 
     // TODO: This is a hack. We need to implement our own assert with message
-    assert(res != nullptr, "Unable to return a valid model resource");
+    assert(res != nullptr && "Unable to return a valid model resource");
     models.emplace(name, res);
 
     return res;
