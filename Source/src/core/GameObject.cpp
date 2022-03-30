@@ -311,6 +311,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         Component* component = CreateComponent(type);
         component->SetID(c_uid);
         component->Load(components_node[i]);
+        active ? component->Enable() : component->Disable();
     }
 
     const YAML::Node childs_node = node[CHILD_NODE];

@@ -46,7 +46,6 @@ void Hachiko::ComponentPointLight::Save(YAML::Node& node) const
     node[LIGHT_COLOR] = color;
     node[LIGHT_INTENSITY] = intensity;
     node[LIGHT_RADIUS] = radius;
-    node[COMPONENT_ENABLED] = active;
     node[LIGHT_DRAW_SPHERE] = draw_sphere;
 }
 
@@ -55,7 +54,6 @@ void Hachiko::ComponentPointLight::Load(const YAML::Node& node)
     color = node[LIGHT_COLOR].as<float4>();
     intensity = node[LIGHT_INTENSITY].as<float>();
     radius = node[LIGHT_RADIUS].as<float>();
-    active = node[COMPONENT_ENABLED].as<bool>();
     draw_sphere = node[LIGHT_DRAW_SPHERE].as<bool>();
 }
 

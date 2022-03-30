@@ -55,7 +55,6 @@ void Hachiko::ComponentSpotLight::Save(YAML::Node& node) const
     node[LIGHT_OUTER] = outer;
     node[LIGHT_INTENSITY] = intensity;
     node[LIGHT_RADIUS] = radius;
-    node[COMPONENT_ENABLED] = active;
     node[LIGHT_DRAW_CONE] = draw_cone;
 }
 
@@ -66,7 +65,6 @@ void Hachiko::ComponentSpotLight::Load(const YAML::Node& node)
     outer = node[LIGHT_OUTER].as<float>();
     intensity = node[LIGHT_INTENSITY].as<float>();
     radius = node[LIGHT_RADIUS].as<float>();
-    active = node[COMPONENT_ENABLED].as<bool>();
     draw_cone = node[LIGHT_DRAW_CONE].as<bool>();
 }
 

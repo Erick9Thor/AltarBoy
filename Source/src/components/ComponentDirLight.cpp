@@ -46,7 +46,6 @@ void Hachiko::ComponentDirLight::Save(YAML::Node& node) const
     node[LIGHT_TYPE] = static_cast<int>(Type::DIRLIGHT);
     node[LIGHT_COLOR] = color;
     node[LIGHT_INTENSITY] = intensity;
-    node[COMPONENT_ENABLED] = active;
     node[LIGHT_DRAW_DIRECTION] = draw_direction;
 }
 
