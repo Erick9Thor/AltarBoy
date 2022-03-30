@@ -125,6 +125,8 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     }
 
     auto res = static_cast<ResourceModel*>(importer_manager.Load(Resource::Type::MODEL, name.c_str()));
+
+    // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr, "Unable to return a valid model resource");
     models.emplace(name, res);
 
@@ -150,7 +152,8 @@ ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string
         res = static_cast<ResourceMesh*>(mod_importer->CherryImport(mesh_index, uid, model_path.c_str()));
     }
 
-    assert(res != nullptr, "Unable to return a valid mesh resource");
+    // TODO: This is a hack. We need to implement our own assert with message
+    assert(res != nullptr && "Unable to return a valid mesh resource");
     meshes.emplace(uid, res);
     
     return res;
@@ -166,7 +169,8 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& mater
     std::string material_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::MATERIAL) + material_name;
     auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, material_path.c_str()));
     
-    assert(res != nullptr, "Unable to return a valid material resource");
+    // TODO: This is a hack. We need to implement our own assert with message
+    assert(res != nullptr && "Unable to return a valid material resource");
     materials.emplace(material_name, res);
 
     return res;
@@ -188,7 +192,8 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(UID uid, const std::string
         res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str(), uid));
     }
     
-    assert(res != nullptr, "Unable to return a valid texture resource");
+    // TODO: This is a hack. We need to implement our own assert with message
+    assert(res != nullptr && "Unable to return a valid texture resource");
     textures.emplace(uid, res);
 
     return res;

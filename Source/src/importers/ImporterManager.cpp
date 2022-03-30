@@ -36,7 +36,8 @@ ImporterManager::~ImporterManager()
 
 void ImporterManager::Import(const std::string& asset_path, const Resource::Type asset_type)
 {
-    assert(!asset_path.empty(), "Module Import abort - Given an empty asset path");
+    // TODO: This is a hack. We need to implement our own assert with message
+    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
     GetImporter(asset_type)->Import(asset_path.c_str());
 }
 
@@ -55,7 +56,8 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
     case Resource::Type::MATERIAL:
         return static_cast<MaterialImporter*>(GetImporter(Resource::Type::MATERIAL))->Load(path);
     default:
-        assert(false, "Invalid parameters. Can't load that kind of resource by path. Use UID instead.");
+        // TODO: This is a hack. We need to implement our own assert with message
+        assert(false && "Invalid parameters. Can't load that kind of resource by path. Use UID instead.");
     }
 }
 
@@ -83,7 +85,7 @@ Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
 
 Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
 {
-    Importer::Type iType;
+    Importer::Type iType = Importer::Type::COUNT;
     switch (type)
     {
     case Resource::Type::MODEL:
@@ -109,7 +111,8 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     case Resource::Type::VIDEO:
     case Resource::Type::SCRIPT:
     case Resource::Type::UNKNOWN:
-        assert(false, "Unhandled resource type");
+        // TODO: This is a hack. We need to implement our own assert with message
+        assert(false && "Unhandled resource type");
     }
 
     return iType;
