@@ -93,7 +93,7 @@ namespace Hachiko
         void FileMenu() const;
         void EditMenu() const;
         void GoMenu() const;
-        void ViewMenu() const;
+        void ViewMenu();
         void ThemeMenu() const;
 
         GameObject* selected_go = nullptr;
