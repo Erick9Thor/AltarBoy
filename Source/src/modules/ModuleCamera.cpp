@@ -58,7 +58,7 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 bool Hachiko::ModuleCamera::CleanUp()
 {
     delete main_camera_game_object;
-
+    camera_buffer.clear();
     return true;
 }
 

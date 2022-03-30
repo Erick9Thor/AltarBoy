@@ -14,7 +14,7 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 {
     frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     frustum.SetViewPlaneDistances(0.1f, 1000.0f);
-    SetCameraType(CameraType::NONE);
+    SetCameraType(CameraType::STATIC);
     HE_LOG("TEST LOG: INIT COMPONENT CAMERA");
     frustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontal_fov), static_cast<float>(DEFAULT_CAMERA_WIDTH) / static_cast<float>(DEFAULT_CAMERA_HEIGHT));
 
@@ -29,10 +29,11 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 
 Hachiko::ComponentCamera::~ComponentCamera()
 {
-    App->camera->RemoveCameraComponent(this);
-    App->camera->RestoreOriginCamera();
+    
     if (game_object->scene_owner)
     {
+        App->camera->RemoveCameraComponent(this);
+        App->camera->RestoreOriginCamera();
         if (game_object->scene_owner->GetCullingCamera() == this)
         {
             game_object->scene_owner->SetCullingCamera(App->camera->GetMainCamera());
