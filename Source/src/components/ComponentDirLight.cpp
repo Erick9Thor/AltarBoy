@@ -37,7 +37,7 @@ void Hachiko::ComponentDirLight::DebugDraw()
 
 float3 Hachiko::ComponentDirLight::GetDirection() const
 {
-    const ComponentTransform* transform = game_object->GetTransform();
+    ComponentTransform* transform = game_object->GetTransform();
     return transform->GetFront();
 }
 

@@ -36,7 +36,7 @@ void Hachiko::ComponentPointLight::DebugDraw()
 
 float3 Hachiko::ComponentPointLight::GetPosition() const
 {
-    const ComponentTransform* transform = game_object->GetTransform();
+    ComponentTransform* transform = game_object->GetTransform();
     return transform->GetPosition();
 }
 
