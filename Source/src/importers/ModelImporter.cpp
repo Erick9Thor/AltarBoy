@@ -60,6 +60,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         aiMesh* mesh = scene->mMeshes[i];
         Hachiko::UID mesh_id = UUID::GenerateUID();
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
+        node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX] = mesh->mMaterialIndex;
         mesh_importer.Import(mesh, mesh_id);
     }
 
@@ -81,7 +82,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         ImportNode(*child_node, node[NODE_CHILD][i]);
-        node[NODE_CHILD][i][NODE_MATERIAL_INDEX][0] = 0; // Apply the same material for all childs
+        node[NODE_CHILD][i][NODE_MATERIAL_INDEX][0] = 0; // Apply the same material for all childs // TO REMOVE
         ++child_node;
     }
 }
@@ -117,13 +118,16 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
         resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
 
         // We only take the first element
-        int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
-        resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
-        resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
-
-        for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
+        if (node[i][NODE_MESH_INDEX].IsDefined())
         {
-            resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
+            int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
+            resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
+            resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
+
+            for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
+            {
+                resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
+            }
         }
         
         if (node[i][NODE_CHILD].IsDefined())

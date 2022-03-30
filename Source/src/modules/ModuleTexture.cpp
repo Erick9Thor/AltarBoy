@@ -20,7 +20,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const char* path, bool flip)
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const char* path, bool flip) // TODO: rename import
 {
     unsigned int img_id = LoadImg(path, flip);
 
