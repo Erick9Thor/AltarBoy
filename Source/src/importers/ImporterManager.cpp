@@ -6,7 +6,6 @@
 #include "ModelImporter.h"
 #include "TextureImporter.h"
 #include "MaterialImporter.h"
-#include "SceneImporter.h"
 
 using namespace Hachiko;
 
@@ -16,14 +15,12 @@ ImporterManager::ImporterManager()
     const auto model = new ModelImporter();
     const auto texture = new TextureImporter();
     const auto material = new MaterialImporter();
-    //const auto scene = new SceneImporter();
 
     importers.reserve((size_t)Importer::Type::COUNT);
     importers.push_back(std::make_pair<Importer::Type, Importer*>(model->GetType(), model));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(mesh->GetType(), mesh));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(texture->GetType(), texture));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(material->GetType(), material));
-    //importers.push_back(std::make_pair<Importer::Type, Importer*>(scene->GetType(), scene));
 }
 
 ImporterManager::~ImporterManager()

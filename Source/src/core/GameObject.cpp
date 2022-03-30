@@ -83,19 +83,19 @@ void Hachiko::GameObject::AddComponent(Component* component)
 {
     switch (component->GetType())
     {
-        case (Component::Type::TRANSFORM):
-        {
-            components.push_back(component);
-            transform = static_cast<ComponentTransform*>(component);
-            component->SetGameObject(this);
-            break;
-        }
-        case (Component::Type::CAMERA):
-        {
-            components.push_back(component);
-            component->SetGameObject(this);
-            break;
-        }
+    case (Component::Type::TRANSFORM):
+    {
+        components.push_back(component);
+        transform = static_cast<ComponentTransform*>(component);
+        component->SetGameObject(this);
+        break;
+    }
+    case (Component::Type::CAMERA):
+    {
+        components.push_back(component);
+        component->SetGameObject(this);
+        break;
+    }
     }
 }
 

@@ -42,7 +42,7 @@ float3 Hachiko::ComponentPointLight::GetPosition() const
 
 void Hachiko::ComponentPointLight::Save(YAML::Node& node) const
 {
-    node[LIGHT_TYPE] = (int)Type::POINTLIGHT;
+    node[LIGHT_TYPE] = static_cast<int>(Type::POINTLIGHT);
     node[LIGHT_COLOR] = color;
     node[LIGHT_INTENSITY] = intensity;
     node[LIGHT_RADIUS] = radius;

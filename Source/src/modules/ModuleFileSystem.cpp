@@ -12,27 +12,6 @@ Hachiko::ModuleFileSystem::ModuleFileSystem()
     PHYSFS_mount(".", nullptr, 0);
 
     PHYSFS_setWriteDir(".");
-
-    //// Make sure standard paths exist
-    //const char* dirs[] =
-    //{
-    //    SETTINGS_FOLDER,
-    //    ASSETS_FOLDER,
-    //    LIBRARY_FOLDER,
-    //    LIBRARY_MESH_FOLDER,
-    //    LIBRARY_MATERIAL_FOLDER,
-    //    LIBRARY_SCENE_FOLDER,
-    //    LIBRARY_SHADERS_FOLDER,
-    //    LIBRARY_TEXTURES_FOLDER
-    //};
-
-    //for (auto& dir : dirs)
-    //{
-    //    if (PHYSFS_exists(dir) == 0)
-    //    {
-    //        PHYSFS_mkdir(dir);
-    //    }
-    //}
 }
 
 Hachiko::ModuleFileSystem::~ModuleFileSystem()
