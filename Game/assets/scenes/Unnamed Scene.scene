@@ -1,49 +1,111 @@
 scene_name: Unnamed Scene
-root_id: 4956444956375947099
+root_id: 10885083378429708050
 child:
-  - id: 7547236022544789610
-    name: BakerHouse
+  - id: 2525874631460796913
+    name: GameObject
     enabled: true
-    parent_id: 4956444956375947099
+    parent_id: 10885083378429708050
     component:
-      - id: 18094652636757742344
+      - id: 5691823702960448856
         type: 1
         enabled: true
-        position: [-4.63299942, 0, 0]
+        position: [-13.1081152, 0, -13.6329918]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
     child:
-      - id: 9388350669363049453
+      - id: 4314809727764168439
         name: Chimney
         enabled: true
-        parent_id: 7547236022544789610
+        parent_id: 2525874631460796913
         component:
-          - id: 1182638107478309479
+          - id: 17514342172407211842
             type: 1
             enabled: true
-            position: [-4.63299942, 0, 0]
+            position: [-13.1081152, 0, -13.6329918]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - id: 15378478073087176361
+          - id: 18145604525969885285
             type: 2
             enabled: true
-            model_path: ""
-            texture_file_name: ""
-            texture_type: ""
-      - id: 4321556144344568208
+            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 0
+          - id: 14350214789650552088
+            type: 3
+            enabled: true
+            name: Baker_house
+      - id: 7964434372030117756
         name: Baker_house
         enabled: true
-        parent_id: 7547236022544789610
+        parent_id: 2525874631460796913
         component:
-          - id: 15013267855667999865
+          - id: 12763574852267452094
             type: 1
             enabled: true
-            position: [-4.63299942, 0, 0]
+            position: [-13.1081152, 0, -13.6329918]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - id: 2718596348681500135
+          - id: 1598455535479779418
             type: 2
             enabled: true
-            model_path: ""
-            texture_file_name: ""
-            texture_type: ""
+            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 1
+          - id: 17685131292810391252
+            type: 3
+            enabled: true
+            name: Baker_house
+  - id: 5450778133803194194
+    name: GameObject
+    enabled: true
+    parent_id: 10885083378429708050
+    component:
+      - id: 1571232167554217481
+        type: 1
+        enabled: true
+        position: [11.7111387, 0, -10.6741848]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 15618442365577460835
+        name: Chimney
+        enabled: true
+        parent_id: 5450778133803194194
+        component:
+          - id: 9536647639630905824
+            type: 1
+            enabled: true
+            position: [11.7111387, 0, -10.6741848]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 18145604525969885285
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 0
+          - id: 11673871626678400187
+            type: 3
+            enabled: true
+            name: Baker_house
+      - id: 12706114034702490381
+        name: Baker_house
+        enabled: true
+        parent_id: 5450778133803194194
+        component:
+          - id: 4591221458251094586
+            type: 1
+            enabled: true
+            position: [11.7111387, 0, -10.6741848]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 1598455535479779418
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 1
+          - id: 18109059576656968100
+            type: 3
+            enabled: true
+            name: Baker_house
