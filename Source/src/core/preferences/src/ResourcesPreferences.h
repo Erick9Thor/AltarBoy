@@ -19,7 +19,7 @@ namespace Hachiko
         }
 
     private:
-        std::string scene_name        = UNNAMED_SCENE;
+        std::string scene_name        = "Unnamed Scene.scene";
         std::string scene_id;
         std::string scenes_assets     = "assets/scenes/";
         std::string models_assets     = "assets/models/";
