@@ -28,6 +28,8 @@ bool Hachiko::ModuleScriptingSystem::Init()
     _dll_change_check_frequency_in_secs = 2.0f;
     _dll_change_check_timer = _dll_change_check_frequency_in_secs;
 
+    _dummy_game_object = new GameObject("Dummy");
+
     HotReload(0.0f);
 
     // TODO: if loading is unsuccessful, log something like "Couldn't find the 
@@ -38,7 +40,15 @@ bool Hachiko::ModuleScriptingSystem::Init()
 
 bool Hachiko::ModuleScriptingSystem::CleanUp()
 {
+    if (_dummy_script != nullptr)
+    {
+        delete _dummy_script;
+    }
+
     FreeDll(_loaded_dll, _times_reloaded);
+
+    delete _dummy_game_object;
+
 
     return true;
 }
@@ -55,6 +65,13 @@ UpdateStatus Hachiko::ModuleScriptingSystem::PreUpdate(const float delta)
 UpdateStatus Hachiko::ModuleScriptingSystem::Update(const float delta)
 {
     HE_LOG("ModuleScriptingSystem::Update");
+
+    _dummy_game_object->Update();
+
+    if (_dummy_script != nullptr)
+    {
+        _dummy_script->Update();
+    }
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -83,15 +100,13 @@ void Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     HMODULE new_dll;
     LoadDll(&new_dll);
 
-    ScriptFactory new_factory = reinterpret_cast<ScriptFactory>(
-        GetProcAddress(new_dll, "InstantiateScript"));
+    Scripting::ScriptFactory new_factory = 
+        reinterpret_cast<Scripting::ScriptFactory>(
+            GetProcAddress(new_dll, "InstantiateScript"));
 
-    GameObject deneme = GameObject("Deneme");
-
-    new_factory(&deneme, "saodjcnfsdv");
+    _dummy_script = new_factory(_dummy_game_object, "PlayerController");
 
     // TODO: Deserialize to new dll.
-
 
     FreeDll(_loaded_dll, _times_reloaded - 1);
     _loaded_dll = new_dll;

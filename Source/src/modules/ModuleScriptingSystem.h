@@ -3,11 +3,13 @@
 
 namespace Hachiko
 {
-
-class Script;
 class GameObject;
 
+namespace Scripting
+{
+class Script;
 typedef Script*(__cdecl* ScriptFactory)(GameObject*, const std::string&);
+}
 
 class ModuleScriptingSystem : public Module
 {
@@ -39,6 +41,8 @@ private:
     // returns true if the timer is finished.
     float _dll_change_check_frequency_in_secs;
     float _dll_change_check_timer;
-    ScriptFactory _script_factory;
+    Scripting::ScriptFactory _script_factory;
+    GameObject* _dummy_game_object;
+    Scripting::Script* _dummy_script;
 };
 } // namespace Hachiko
