@@ -45,8 +45,12 @@ bool Hachiko::ModuleFileSystem::Init()
 void Hachiko::ModuleFileSystem::CreateContext()
 {
     char engine_path[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, engine_path);
+    wchar_t engine_path_w[MAX_PATH];
+    GetCurrentDirectoryA(MAX_PATH, engine_path);
+    GetCurrentDirectoryW(MAX_PATH, engine_path_w);
     working_directory = engine_path;
+    working_directory_w = engine_path_w;
+
 
     HE_LOG("Engine context: %s", working_directory.c_str());
 }

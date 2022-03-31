@@ -46,7 +46,13 @@ namespace Hachiko
             return working_directory;
         }
 
+        std::wstring GetWorkingDirectoryW()
+        {
+            return working_directory_w;
+        }
+
     private:
         std::string working_directory;
+        std::wstring working_directory_w;
     };
 }
