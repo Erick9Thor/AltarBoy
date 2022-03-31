@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="generated\Factory.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
   </ItemGroup>
@@ -183,6 +184,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
