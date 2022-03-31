@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\gameplayBin</OutDir>
+    <OutDir>$(SolutionDir)..\Game\gameplayBin</OutDir>
     <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\gameplayBin</OutDir>
+    <OutDir>$(SolutionDir)..\Game\gameplayBin</OutDir>
     <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -142,7 +142,7 @@
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)\Gameplay.dll" "$(OutDir)\..\" /Y</Command>
+      <Command>xcopy "$(OutDir)Gameplay.dll" "$(OutDir)..\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -171,7 +171,7 @@
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)\Gameplay.dll" "$(OutDir)\..\" /Y</Command>
+      <Command>xcopy "$(OutDir)Gameplay.dll" "$(OutDir)..\" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
