@@ -1,11 +1,12 @@
 #pragma once
 
+#include "HachikoApiDefine.h"
 #include <any>
 #include <string>
 
 namespace Hachiko::Scripting
 {
-class SerializedField
+class HACHIKO_API SerializedField
 {
 public:
     explicit SerializedField();

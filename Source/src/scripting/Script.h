@@ -1,8 +1,7 @@
 #pragma once
 
-#include "Globals.h"
-#include "ScriptingMacros.h"
-#include "scripting/serialization/SerializedField.h"
+#include "HachikoApiDefine.h"
+#include "scripting/ScriptingMacros.h"
 #include "scripting/serialization/ISerializable.h"
 #include "components/Component.h"
 

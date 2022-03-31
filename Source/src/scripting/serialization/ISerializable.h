@@ -1,10 +1,9 @@
-#include "Globals.h"
+#include "HachikoApiDefine.h"
 #include "scripting/serialization/SerializedField.h"
 #include <unordered_map>
+#include <string>
 
-namespace Hachiko
-{
-namespace Scripting
+namespace Hachiko::Scripting
 {
 class HACHIKO_API ISerializable
 {
@@ -19,5 +18,4 @@ public:
 
     virtual void ShowInEditor() {};
 };
-} // namespace Scripting
-} // namespace Hachiko
+} // namespace Hachiko::Scripting

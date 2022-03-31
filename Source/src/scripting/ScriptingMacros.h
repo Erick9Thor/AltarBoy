@@ -1,5 +1,9 @@
 #pragma once
 
+#include "scripting/serialization/SerializedField.h"
+#include <unordered_map>
+#include <string>
+
 #define SERIALIZE_FIELD(type, name) type name
 
 #define SERIALIZATION_METHODS_true                                            \

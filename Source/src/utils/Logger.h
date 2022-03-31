@@ -1,6 +1,7 @@
 #pragma once
 
 #include <imgui.h>
+#include "HachikoApiDefine.h"
 
 #define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
@@ -17,4 +18,4 @@ namespace Hachiko
     };
 }
 
-extern Hachiko::Logger* Logging;
+extern HACHIKO_API Hachiko::Logger* Logging;
