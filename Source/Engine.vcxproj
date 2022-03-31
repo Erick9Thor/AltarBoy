@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\LogFunction.cpp" />
     <ClCompile Include="src\scripting\serialization\ISerializable.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />

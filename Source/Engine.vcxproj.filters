@@ -388,6 +388,7 @@
       <Filter>Scripting\Serialization</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
+    <ClCompile Include="src\LogFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
