@@ -228,6 +228,7 @@ void Hachiko::ComponentCamera::DrawGui()
             App->scene_manager->GetActiveScene()->SetCullingCamera(this);
         }
 
+
         int cam_type_selector = static_cast<int>(camera_type);
         if (ImGui::RadioButton("Static", &cam_type_selector, 1))
         {
@@ -248,7 +249,13 @@ void Hachiko::ComponentCamera::DrawGui()
         {
             SetCameraType(CameraType::PLAYER);
         };
-
+        if (cam_type_selector == 2)
+        {
+            if (ImGui::Button("Set Initial Position"))
+            {
+                App->camera->SetCameraInitialPos();
+            }
+        }
         ImGui::Checkbox("Debug", &debug_data);
         if (debug_data)
         {

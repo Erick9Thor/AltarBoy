@@ -51,6 +51,7 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
             last_it++;
         }
     }
+    RunDynamicScript(delta);
     Controller(delta);
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -139,6 +140,11 @@ void Hachiko::ModuleCamera::RestoreOriginCamera()
 {
     main_camera = static_cast<ComponentCamera*>(camera_buffer[0]);
     main_camera_game_object = camera_buffer[0]->GetGameObject();
+}
+
+void Hachiko::ModuleCamera::SetCameraInitialPos()
+{
+    camera_initial_pos = main_camera->GetGameObject()->GetTransform()->GetPosition();
 }
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const
@@ -234,4 +240,23 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
     transform->SetPosition(transform->GetPosition() + deltaMovement);
     main_camera->GetGameObject()->Update();
     main_camera->reference_point += deltaMovement;
+}
+
+void Hachiko::ModuleCamera::RunDynamicScript(const float delta)
+{
+    if (main_camera->GetCameraType() == ComponentCamera::CameraType::DYNAMIC)
+    {
+        static const float move_speed = 10.0f;
+        static const float max_distance = 100.0f;
+        float effective_speed = move_speed;
+
+
+        auto* transform = main_camera->GetGameObject()->GetTransform();
+        float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
+
+        deltaFwd += transform->GetFront() * delta * effective_speed;
+        transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
+
+    }
+    
 }
