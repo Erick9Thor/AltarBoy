@@ -79,16 +79,19 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 
             if (!child->meshes_index.empty())
             {
-                UID mesh_id = child->mesh_id;
                 last_parent = CreateNewGameObject(parent, child->node_name.c_str());
 
-                ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
-                component->SetResourcePath(model->model_path);
-                component->SetModelName(model->model_name);
+                for (unsigned i = 0; i < child->meshes_index.size(); ++i)
+                {
+                    UID mesh_id = model->meshes[child->meshes_index[i]].mesh_id;
+                    ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
+                    component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
+                    component->SetResourcePath(model->model_path);
+                    component->SetModelName(model->model_name);
 
-                component->SetMeshIndex(child->meshes_index[0]); // the component mesh support one mesh so we take the first of the node
-                component->AddResourceMesh(App->resources->GetMesh(mesh_id));
+                    component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
+                    component->AddResourceMesh(App->resources->GetMesh(mesh_id));
+                }
 
                 ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
                 component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));

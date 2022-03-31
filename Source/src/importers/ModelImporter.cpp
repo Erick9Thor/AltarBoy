@@ -103,6 +103,24 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     model_output->model_path = model_node[MODEL_FILE_PATH].as<std::string>();
     std::filesystem::path mp = model_node[MODEL_FILE_PATH].as<std::string>();
     model_output->model_name = mp.filename().replace_extension().string();
+
+    model_output->meshes.reserve(model_node[MODEL_MESH_NODE].size());
+    for (unsigned i = 0; i < model_node[MODEL_MESH_NODE].size(); ++i)
+    {
+        MeshInfo mesh_info;
+        mesh_info.mesh_id = model_node[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>();
+        mesh_info.material_index = model_node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX].as<int>();
+        model_output->meshes.push_back(mesh_info);
+    }
+    model_output->materials.reserve(model_node[MODEL_MATERIAL_NODE].size());
+    for (unsigned i = 0; i < model_node[MODEL_MATERIAL_NODE].size(); ++i)
+    {
+        MaterialInfo material_info;
+        material_info.material_id = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_ID].as<UID>();
+        material_info.material_name = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME].as<std::string>();
+        model_output->materials.push_back(material_info);
+    }
+
     LoadChilds(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
     return model_output;
 }
@@ -130,10 +148,7 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
             resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
             resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
 
-            for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
-            {
-                resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
-            }
+            resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
         }
         
         if (node[i][NODE_CHILD].IsDefined())
