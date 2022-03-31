@@ -69,7 +69,7 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 
     const bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
 
-    if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly))
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_RectOnly) && !ImGui::IsItemToggledOpen())
     {
         if (dragged_object && dragged_object != game_object)
         {
