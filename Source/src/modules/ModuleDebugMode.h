@@ -3,14 +3,7 @@
 #include "core/hepch.h"
 
 #include "Application.h"
-#include "ModuleDebugMode.h"
-#include "modules/ModuleInput.h"
-
-constexpr bool ToggleKeysPressed()
-{
-	return App->input->GetKey(SDL_SCANCODE_LALT) == Hachiko::KeyState::KEY_DOWN &&
-		App->input->GetKey(SDL_SCANCODE_E) == Hachiko::KeyState::KEY_DOWN;
-}
+#include "ModuleInput.h"
 
 namespace Hachiko
 {
@@ -26,15 +19,13 @@ namespace Hachiko
 		UpdateStatus PostUpdate(const float delta) override;
 		bool CleanUp() override;
 
-		[[nodiscard]] bool IsActive() const { return isActive; }
-		void Toggle() { isActive = !isActive; }
+		[[nodiscard]] bool IsActive() const { return is_gui_active; }
+		void Toggle() { is_gui_active = !is_gui_active; }
 
 	private:
-		void GetActiveCamera();
 		void DrawGUI();
 	private:
-		bool isActive = false;
-		ModuleCamera** active_camera = nullptr;
+		bool is_gui_active;
 	};
 }
 

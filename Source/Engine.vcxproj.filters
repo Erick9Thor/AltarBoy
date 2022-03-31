@@ -375,6 +375,9 @@
     <ClCompile Include="src\core\hepch.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -977,6 +980,9 @@
       <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\modules\ModuleDebugMode.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

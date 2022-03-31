@@ -78,6 +78,7 @@
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
     <ExternalIncludePath>$(ProjectDir)vendors;$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -169,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -533,6 +535,7 @@
   <ItemGroup>
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\modules\ModuleDebugMode.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
