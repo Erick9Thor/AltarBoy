@@ -3,9 +3,9 @@ import re
 from datetime import datetime
 
 # Path to the folder that has scripts inside:
-path = os.curdir + '/../scripting_layer/'
+path = os.curdir + '/../resources/'
 # Path to scripting_layer.rc:
-scripting_layer_resource_path = path + 'scripting_layer.rc'
+scripting_layer_resource_path = path + 'Gameplay.rc'
 # Copy file content into file_content:
 file_content = open(scripting_layer_resource_path, 'r').read()
 

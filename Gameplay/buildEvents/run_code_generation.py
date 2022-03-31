@@ -1,23 +1,40 @@
 import os
 import re
 
+# Path to Gameplay directory:
+current_dir = os.curdir + '/../'
+# Path to the generated folder:
+generated_folder = 'generated/'
+generated_path = current_dir + generated_folder
+# Path to the util folder:
+util_folder = 'scriptingUtil/'
+util_path = current_dir + util_folder
 # Path to the folder that has scripts inside:
-path = os.curdir + '/../scripting_layer/'
+scripting_path = current_dir
 # Path to ScriptFactory.cpp:
-script_factory_cpp_path = path + 'ScriptFactory.cpp'
+script_factory_cpp_path = generated_path + 'Factory.cpp'
 # Path to GeneratedSerialization.cpp:
-serialization_cpp_path = path + 'GeneratedSerialization.cpp'
+serialization_cpp_path = generated_path + 'SerializationMethods.cpp'
 # Name of all the files that are inside the scripts folder:
-files_in_directory = os.listdir(path)
+files_in_directory = os.listdir(scripting_path)
 
+# Path to scripting folder in engine folder:
+engine_scripting_path = 'scripting/'
+engine_scripting_serialization_path = engine_scripting_path + 'serialization/'
 # Namespace that base Script class belongs to:
-scripting_namespace = 'Gameplay::'
+scripting_namespace = 'Hachiko::Scripting::'
 # Include statements for file serialization_cpp_path:
-generated_includes_serialization = '#include <vector>\n' + '#include <string>\n' + '#include <unordered_map>\n' + '#include \"scripting_pch.h\"\n' + '#include \"ISerializable.h\"\n' + '#include \"SerializedField.h\"\n'
+generated_includes_serialization = ('#include <vector>\n' + 
+    '#include <string>\n' + 
+    '#include <unordered_map>\n' + 
+    '#include \"'+util_folder+'gameplaypch.h\"\n' + 
+    '#include \"'+engine_scripting_serialization_path+'ISerializable.h\"\n' + 
+    '#include \"'+engine_scripting_serialization_path+'SerializedField.h\"\n')
 # Include statements for file script_factory_cpp_path:
-generated_includes_script_factory = '#include \"scripting_pch.h\"\n' + '#include \"ScriptFactory.h\"\n' 
+generated_includes_script_factory = ('#include \"'+util_folder+'gameplaypch.h\"\n' + 
+    '#include \"'+generated_folder+'Factory.h\"\n')
 # Body of the function InstantiateScript inside the file script_factory_cpp_path:
-generated_body_script_factory = scripting_namespace + 'Script* InstantiateScript(Gameplay::Entity* script_owner, const std::string& script_name)\n{'
+generated_body_script_factory = scripting_namespace + 'Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)\n{'
 # Body containing all the methods inside the file serialization_cpp_path:
 generated_body_serialization = ''
 
@@ -56,7 +73,7 @@ first_script = True
 for file_name in files_in_directory:
     # Only chech header files:
     if file_name[-2:] == '.h':
-        header_file = open(path+file_name)
+        header_file = open(scripting_path+file_name)
         header_file_as_string = header_file.read()
         # File content without spaces, tabs and new lines:
         header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
@@ -70,7 +87,7 @@ for file_name in files_in_directory:
             print("Script: " + file_name)
 
             # Include statement of the current script file from its file name:
-            current_include = '#include \"' + file_name + '\"\n'
+            current_include = '#include \"' + scripting_folder + file_name + '\"\n'
             # Generate include statements for GeneratedSerialization.cpp:
             generated_includes_serialization += current_include
             # Generate include statements for ScriptFactory.cpp:
