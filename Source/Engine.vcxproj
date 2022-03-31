@@ -536,6 +536,7 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HachikoApiDefine.h" />
     <ClInclude Include="src\scripting\serialization\ISerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\scripting\Script.h" />

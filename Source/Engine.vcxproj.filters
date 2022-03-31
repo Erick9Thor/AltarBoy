@@ -993,9 +993,6 @@
     <ClInclude Include="src\modules\ModuleScriptingSystem.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\scripting\Script.h">
-      <Filter>Scripting</Filter>
-    </ClInclude>
     <ClInclude Include="src\scripting\ScriptingMacros.h">
       <Filter>Scripting</Filter>
     </ClInclude>
@@ -1006,6 +1003,10 @@
       <Filter>Scripting\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\WindowsFileUtil.h" />
+    <ClInclude Include="src\scripting\Script.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HachikoApiDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

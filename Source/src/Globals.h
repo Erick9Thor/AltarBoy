@@ -2,10 +2,6 @@
 
 #include "utils/Logger.h"
 
-// Exposes a method/function/class to other modules in .lib
-// so that they can be used:
-#define HACHIKO_API __declspec(dllexport) 
-
 #define HE_LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
 
 #define HACHIKO_PI 3.14159265358979323846
