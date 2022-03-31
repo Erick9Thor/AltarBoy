@@ -5,6 +5,8 @@
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
+	, _integer_field(0)
+	, _string_field("")
 {}
 
 void Hachiko::Scripting::PlayerController::Start()
@@ -15,4 +17,10 @@ void Hachiko::Scripting::PlayerController::Start()
 void Hachiko::Scripting::PlayerController::Update()
 {
 	HE_LOG("PlayerController::This is experimentation no 0 for Update.");
+
+	++_integer_field;
+	_string_field = "This is string field";
+
+	HE_LOG("_integer_field: %i _string_field: %s", _integer_field,
+		_string_field.c_str());
 }
