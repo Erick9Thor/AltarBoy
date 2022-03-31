@@ -6,7 +6,7 @@
 #include "ModuleDebugMode.h"
 #include "modules/ModuleInput.h"
 
-constexpr bool ToggleDebugShortcut()
+constexpr bool ToggleKeysPressed()
 {
 	return App->input->GetKey(SDL_SCANCODE_LALT) == Hachiko::KeyState::KEY_DOWN &&
 		App->input->GetKey(SDL_SCANCODE_E) == Hachiko::KeyState::KEY_DOWN;
@@ -21,17 +21,20 @@ namespace Hachiko
 		~ModuleDebugMode();
 
 		bool Init() override;
+		UpdateStatus PreUpdate(const float delta) override;
 		UpdateStatus Update(const float delta) override;
+		UpdateStatus PostUpdate(const float delta) override;
+		bool CleanUp() override;
 
-		inline [[nodiscard]] bool IsActive() const { return isActive; };
-		inline void Toggle() { isActive = !isActive; };
+		[[nodiscard]] bool IsActive() const { return isActive; }
+		void Toggle() { isActive = !isActive; }
 
 	private:
-		void GetRenderTarget();
+		void GetActiveCamera();
 		void DrawGUI();
 	private:
 		bool isActive = false;
-		int target_fbo = 0;
+		ModuleCamera** active_camera = nullptr;
 	};
 }
 
