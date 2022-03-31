@@ -139,13 +139,13 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
         {
             int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
             resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
-            resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
+            resource_node->material_name = materials[mesh_idx][MATERIAL_NAME].as<std::string>();
         }
 
         for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
         {
             int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
-            resource_node->material_name = materials[0][MATERIAL_NAME].as<std::string>();
+            resource_node->material_name = materials[mesh_idx][MATERIAL_NAME].as<std::string>();
             resource_node->mesh_id = meshes[mesh_idx][MODEL_MESH_ID].as<UID>();
 
             resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
