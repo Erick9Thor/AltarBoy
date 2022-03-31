@@ -81,14 +81,19 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         HE_LOG("Unknown resource type recevied, nothing to be done");
         return;
     }
-    std::filesystem::path destination = preferences->GetAssetsPath(type);
 
+    // Copy to assets if it does not exist
+    std::filesystem::path destination = preferences->GetAssetsPath(type);
+    // Relative asset path
+    std::filesystem::path asset_path = destination.append(path.filename().c_str());
+    App->file_sys->Copy(path.string().c_str(), asset_path.string().c_str(), true);
+
+
+    // Attempt import from assets
     if (!importer_manager.CheckIfImported(path.string().c_str(), type))
     {
         last_resource_path = path; // We may need this to import more assets from this path
-        ImportResource(path, type);
-        App->file_sys->Copy(path.string().c_str(),
-                            destination.append(path.filename().c_str()).string().c_str(), true);
+        ImportResource(asset_path, type);
         HE_LOG("File destination: %s", destination.string().c_str());
     }
 }

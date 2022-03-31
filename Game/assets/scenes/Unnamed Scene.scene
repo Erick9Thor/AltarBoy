@@ -27,7 +27,7 @@ child:
           - id: 18145604525969885285
             type: 2
             enabled: true
-            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_file_path: assets\models\BakerHouse.fbx
             model_name: BakerHouse
             mesh_index: 0
           - id: 14350214789650552088
@@ -48,7 +48,7 @@ child:
           - id: 1598455535479779418
             type: 2
             enabled: true
-            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_file_path: assets\models\BakerHouse.fbx
             model_name: BakerHouse
             mesh_index: 1
           - id: 17685131292810391252
@@ -81,7 +81,7 @@ child:
           - id: 18145604525969885285
             type: 2
             enabled: true
-            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_file_path: assets\models\BakerHouse.fbx
             model_name: BakerHouse
             mesh_index: 0
           - id: 11673871626678400187
@@ -102,7 +102,7 @@ child:
           - id: 1598455535479779418
             type: 2
             enabled: true
-            model_file_path: C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_file_path: assets\models\BakerHouse.fbx
             model_name: BakerHouse
             mesh_index: 1
           - id: 18109059576656968100
