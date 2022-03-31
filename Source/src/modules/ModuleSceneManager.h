@@ -21,6 +21,7 @@ namespace Hachiko
 
         // --- Scene management --- //
         void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
+        void LoadImageObject(const char* model_path) const; // TODO: Remove after vs1
 
         GameObject* GetRoot()
         {

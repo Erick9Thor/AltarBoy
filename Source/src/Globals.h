@@ -49,6 +49,7 @@ enum class UpdateStatus
 #define VERSION "0.1"
 #define ASSETS_FOLDER "Assets"
 #define ASSETS_FOLDER_SCENES "Assets/Scenes"
+#define ASSETS_FOLDE_TEXTURES "Assets/Textures"
 
 #define SETTINGS_FOLDER "Settings"
 #define LIBRARY_FOLDER "Library"
