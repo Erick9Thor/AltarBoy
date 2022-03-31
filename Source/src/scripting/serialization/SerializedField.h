@@ -1,10 +1,9 @@
 #pragma once
 
 #include <any>
+#include <string>
 
-namespace Hachiko
-{
-namespace Scripting
+namespace Hachiko::Scripting
 {
 class SerializedField
 {
@@ -19,5 +18,4 @@ public:
     std::string type_name;
     std::any copy;
 };
-} // namespace Scripting
-} // namespace Hachiko
+} // namespace Hachiko::Scripting
