@@ -10,6 +10,7 @@ generated_path = current_dir + generated_folder
 util_folder = 'scriptingUtil/'
 util_path = current_dir + util_folder
 # Path to the folder that has scripts inside:
+scripting_folder = '' # Scripting folder is directly the same folder with current_dir.
 scripting_path = current_dir
 # Path to ScriptFactory.cpp:
 script_factory_cpp_path = generated_path + 'Factory.cpp'
