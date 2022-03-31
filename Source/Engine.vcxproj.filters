@@ -387,6 +387,7 @@
     <ClCompile Include="src\scripting\serialization\ISerializable.cpp">
       <Filter>Scripting\Serialization</Filter>
     </ClCompile>
+    <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1004,6 +1005,7 @@
     <ClInclude Include="src\scripting\serialization\ISerializable.h">
       <Filter>Scripting\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\WindowsFileUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

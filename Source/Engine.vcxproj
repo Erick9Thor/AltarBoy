@@ -173,6 +173,7 @@
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
+    <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -544,6 +545,7 @@
     <ClInclude Include="src\scripting\ScriptingMacros.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
+    <ClInclude Include="src\utils\WindowsFileUtil.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
