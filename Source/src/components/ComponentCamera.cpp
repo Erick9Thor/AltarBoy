@@ -56,7 +56,10 @@ void Hachiko::ComponentCamera::SetCameraType(CameraType cam_type)
 {
     camera_type = cam_type;
 }
-
+void Hachiko::ComponentCamera::SetCameraInitialPos()
+{
+    camera_pinned_pos = GetGameObject()->GetTransform()->GetPosition();
+}
 Hachiko::ComponentCamera::CameraType Hachiko::ComponentCamera::GetCameraType() const 
 {
     return camera_type;
@@ -109,6 +112,7 @@ void Hachiko::ComponentCamera::SetHorizontalFov(float fov_deg)
     frustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontal_fov), frustum.AspectRatio());
     frustum.GetPlanes(planes);
 }
+
 
 float4x4 Hachiko::ComponentCamera::GetViewMatrix(const bool transpose) const
 {
@@ -206,6 +210,7 @@ void Hachiko::ComponentCamera::DrawGui()
     {
         ImGui::Checkbox("Draw Frustum", &draw_frustum);
         ImGui::SameLine();
+        
         ImGui::Checkbox("Preview Camera", &preview_cam);
         if (preview_cam)
         {
@@ -213,7 +218,25 @@ void Hachiko::ComponentCamera::DrawGui()
         }
         else
             App->camera->RestoreOriginCamera();
-
+        
+        /*
+        if (!preview_cam)
+        {
+            if (ImGui::Button("Preview Camera"))
+            {
+                App->camera->SetMainCamera(this);
+                preview_cam = true;
+            }
+        }
+        else
+        {
+            if (ImGui::Button("Stop Previewing"))
+            {
+                App->camera->RestoreOriginCamera();
+                preview_cam = false;
+            }
+        }
+        */
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))
         {
@@ -249,13 +272,12 @@ void Hachiko::ComponentCamera::DrawGui()
         {
             SetCameraType(CameraType::PLAYER);
         };
-        if (cam_type_selector == 2)
+
+        if (ImGui::Button("Set Initial Position"))
         {
-            if (ImGui::Button("Set Initial Position"))
-            {
-                App->camera->SetCameraInitialPos();
-            }
+            SetCameraInitialPos();
         }
+
         ImGui::Checkbox("Debug", &debug_data);
         if (debug_data)
         {
@@ -263,6 +285,7 @@ void Hachiko::ComponentCamera::DrawGui()
             ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
             ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
             ImGui::Text("Camera Type: %s", GetCameraTypeString(camera_type).c_str());
+            ImGui::Text("Distance from initial point: %f", App->camera->GetMainCamera()->camera_pinned_pos.Distance(App->camera->GetMainCamera()->GetGameObject()->GetTransform()->GetPosition()));
         }
         
     }

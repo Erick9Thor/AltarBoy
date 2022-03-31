@@ -51,7 +51,7 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
             last_it++;
         }
     }
-    RunDynamicScript(delta);
+    RunDynamicScript(GameTimer::delta_time);
     Controller(delta);
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -138,13 +138,10 @@ void Hachiko::ModuleCamera::SetMainCamera(Component* camera)
 
 void Hachiko::ModuleCamera::RestoreOriginCamera() 
 {
+    if (main_camera->GetCameraType() == ComponentCamera::CameraType::DYNAMIC) //Return Dynamic camera to pinned position
+        main_camera->GetGameObject()->GetTransform()->SetPosition(main_camera->camera_pinned_pos);
     main_camera = static_cast<ComponentCamera*>(camera_buffer[0]);
     main_camera_game_object = camera_buffer[0]->GetGameObject();
-}
-
-void Hachiko::ModuleCamera::SetCameraInitialPos()
-{
-    camera_initial_pos = main_camera->GetGameObject()->GetTransform()->GetPosition();
 }
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const
@@ -247,15 +244,21 @@ void Hachiko::ModuleCamera::RunDynamicScript(const float delta)
     if (main_camera->GetCameraType() == ComponentCamera::CameraType::DYNAMIC)
     {
         static const float move_speed = 10.0f;
-        static const float max_distance = 100.0f;
+        static const float max_distance = 25.0f;
         float effective_speed = move_speed;
 
 
         auto* transform = main_camera->GetGameObject()->GetTransform();
         float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
+        const float distanceFromReference = main_camera->camera_pinned_pos.Distance(transform->GetPosition());
+        if (distanceFromReference < max_distance)
+        {
+            deltaFwd += transform->GetFront() * delta * effective_speed;
+            transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
+        }
+        else
+            transform->SetPosition(main_camera->camera_pinned_pos);
 
-        deltaFwd += transform->GetFront() * delta * effective_speed;
-        transform->SetPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
 
     }
     

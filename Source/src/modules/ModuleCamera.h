@@ -31,7 +31,7 @@ namespace Hachiko
         void RemoveCameraComponent(Component* camera);
         void SetMainCamera(Component* camera);
         void RestoreOriginCamera();
-        void SetCameraInitialPos();
+
 
         // Camera actions
         void Zoom(float zoom) const;
@@ -46,6 +46,5 @@ namespace Hachiko
         GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
         ComponentCamera* main_camera = nullptr;
         unsigned int last_it = 0;
-        float3 camera_initial_pos;
     };
 }

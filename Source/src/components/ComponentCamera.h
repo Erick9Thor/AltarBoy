@@ -41,6 +41,7 @@ namespace Hachiko
         }
 
         void SetCameraType(CameraType cam_type);
+        void SetCameraInitialPos();
         CameraType GetCameraType() const;
         std::string GetCameraTypeString(CameraType cam_type);
 
@@ -66,7 +67,8 @@ namespace Hachiko
         float3 reference_point = float3::zero;
         bool draw_frustum = false;
         bool preview_cam = false;
-
+        float3 camera_pinned_pos = float3::zero;
+        
     private:
         float horizontal_fov;
         Frustum frustum;
