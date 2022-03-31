@@ -26,11 +26,12 @@ engine_scripting_serialization_path = engine_scripting_path + 'serialization/'
 scripting_namespace = 'Hachiko::Scripting::'
 # Include statements for file serialization_cpp_path:
 generated_includes_serialization = ('#include <vector>\n' + 
-    '#include <string>\n' + 
-    '#include <unordered_map>\n' + 
-    '#include \"'+util_folder+'gameplaypch.h\"\n' + 
-    '#include \"'+engine_scripting_serialization_path+'ISerializable.h\"\n' + 
-    '#include \"'+engine_scripting_serialization_path+'SerializedField.h\"\n')
+    '#include <string>\n'
+    '#include <unordered_map>\n'
+    '#include \"'+util_folder+'gameplaypch.h\"\n' 
+    # '#include \"'+engine_scripting_serialization_path+'ISerializable.h\"\n' 
+    # '#include \"'+engine_scripting_serialization_path+'SerializedField.h\"\n'
+    )
 # Include statements for file script_factory_cpp_path:
 generated_includes_script_factory = ('#include \"'+util_folder+'gameplaypch.h\"\n' + 
     '#include \"'+generated_folder+'Factory.h\"\n')
