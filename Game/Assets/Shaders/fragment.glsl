@@ -54,6 +54,8 @@ layout(std140, binding = 1) uniform Material
     vec4 specular_color;
     uint diffuse_flag;
     uint specular_flag;
+    float smoothness;
+    float metalness;
     float shininess;
 } material;
 
@@ -81,13 +83,33 @@ in VertexData fragment;
 // Outputs
 out vec4 color;
 
-vec3 SchlickFresnel(const vec3 f0, float cos_theta)
+vec3 SchlickFresnel(const vec3 f0, float half_vector)
 {
-    return f0 + (vec3(1.0) - f0) * pow(1.0 - cos_theta, 5.0);
+    return f0 + (vec3(1.0) - f0) * pow(1.0 - half_vector, 5.0);
+}
+
+float GGX(const vec3 normal, const vec3 halfway_dir, float roughness)
+{
+    float a2 = pow(roughness, 2.0);
+    float NdotH = max(dot(normal, halfway_dir), 0.0);
+    float NdotH2 = pow(NdotH, 2.0);
+    
+    float denom = PI * pow((NdotH2 * (a2 - 1.0) + 1.0), 2.0);
+
+    return  a2 / denom;
+}
+
+float SmithVisibilityFunction(const vec3 normal, const vec3 view_dir, const vec3 light_dir, float roughness)
+{
+    float NdotV = max(dot(normal, view_dir), 0.0);
+    float NdotL = max(dot(normal, light_dir), 0.0);
+
+    float denom = NdotL * (NdotV * (1 - roughness) + roughness) + NdotV * (NdotL * (1 - roughness) + roughness);
+    return 0.5 / denom;
 }
 
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
-         const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation)
+         const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation, float smoothness)
 {
     vec3 reflect_dir = reflect(-light_dir, normal);
     // Should equal cos theta
@@ -95,14 +117,19 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
     // Phong specular strength
     float VdR =  max(dot(view_dir, reflect_dir), 0.0001);
 
-    //vec3 halfway_dir = normalize(light_dir + view_dir);
-    //float cos_theta = max(dot(view_dir, halfway_dir), 0.0);   
-    //vec3 fresnel = SchlickFresnel(specular_color, cos_theta);
+    float roughness = pow((1.0 - smoothness), 2.0);
 
-    vec3 fresnel = SchlickFresnel(specular_color, NdL);
+    vec3 halfway_dir = normalize(light_dir + view_dir);
+    float VdotH = max(dot(view_dir, halfway_dir), 0.0);
+
+    vec3 NDF =  GGX(normal, halfway_dir, roughness)
+    vec3 SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);
+    vec3 fresnel = SchlickFresnel(f0, VdotH);
     
-    vec3 part1 = (diffuse_color * (vec3(1.0) - specular_color)) / PI;
-    vec3 part2 = ((shininess + 2.0) / (2.0 * PI)) * fresnel * pow(VdR, shininess);
+    //vec3 part1 = (diffuse_color * (vec3(1.0) - specular_color)) / PI;
+    //vec3 part2 = ((shininess + 2.0) / (2.0 * PI)) * fresnel * pow(VdR, shininess);
+
+    
 
     return light_color * (part1 + part2) * NdL * attenuation;
 }
