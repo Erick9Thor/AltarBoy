@@ -2,6 +2,7 @@
 
 #include <MathGeoLib.h>
 #include <vector>
+#include <typeinfo>
 
 #include "utils/UUID.h"
 #include "components/Component.h"
@@ -86,12 +87,12 @@ namespace Hachiko
         template<typename RetComponent>
         RetComponent* GetComponent()
         {
-            const Component::Type type = RetComponent::GetType();
-            for (auto& component : components)
+            for (Component* component : components)
             {
-                if (component->GetType() == type)
+                if (typeid(*component) == typeid(RetComponent))
                     return static_cast<RetComponent*>(component);
             }
+
             return nullptr;
         }
 
