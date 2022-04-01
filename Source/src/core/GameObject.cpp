@@ -88,7 +88,7 @@ void Hachiko::GameObject::AddComponent(Component* component)
         component->SetGameObject(this);
         break;
     }
-    case (Component::Type::CAMERA):
+    default:
     {
         components.push_back(component);
         component->SetGameObject(this);
