@@ -22,6 +22,7 @@ namespace Hachiko
             DIRLIGHT,
             POINTLIGHT,
             SPOTLIGHT,
+            SCRIPT,
             UNKNOWN
         };
 
@@ -69,6 +70,12 @@ namespace Hachiko
         virtual void Save(JsonFormatterValue j_component) const {}
 
         virtual void Load(JsonFormatterValue j_component) {}
+
+    protected:
+        void OverrideUID(UID new_uid) 
+        {
+            uid = new_uid;
+        }
 
     protected:
         GameObject* game_object = nullptr;
