@@ -16,7 +16,6 @@
 
 #include "ui/WindowScene.h"
 
-
 Hachiko::ModuleUserInterface::ModuleUserInterface() = default;
 
 Hachiko::ModuleUserInterface::~ModuleUserInterface() = default;
@@ -24,17 +23,17 @@ Hachiko::ModuleUserInterface::~ModuleUserInterface() = default;
 bool Hachiko::ModuleUserInterface::Init()
 {
     CreateSquare();
-    std::function handle_mouse_action = [&](Event& evt) { 
-        HandleMouseAction(evt);
-    };
+    std::function handle_mouse_action = [&](Event& evt) { HandleMouseAction(evt); };
     App->event->Subscribe(Event::Type::MOUSE_ACTION, handle_mouse_action);
     return true;
 }
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
+    const WindowScene* w_scene = App->editor->GetSceneWindow();
     ImVec2 mouse_pos = ImGui::GetMousePos();
-    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), float2(mouse_pos.x, mouse_pos.y), false);
+    float2 click_pos = w_scene->ImguiToScreenPos(float2(mouse_pos.x, mouse_pos.y));
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, false);
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -48,7 +47,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 {
     Program* program = App->program->GetUserInterfaceProgram();
     program->Activate();
-    glDepthFunc(GL_ALWAYS);    
+    glDepthFunc(GL_ALWAYS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     unsigned width, height;
@@ -59,7 +58,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
     camera_data.pos = float3::zero;
     camera_data.view = float4x4::identity;
     camera_data.proj = float4x4::D3DOrthoProjLH(-1, 1, static_cast<float>(width), static_cast<float>(height));
-        
+
     App->program->UpdateCamera(camera_data);
     BindSquare();
     RecursiveDrawUI(scene->GetRoot(), program);
@@ -69,7 +68,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 
 void Hachiko::ModuleUserInterface::RecursiveDrawUI(GameObject* game_object, Program* program)
 {
-    ComponentCanvasRenderer* renderer = game_object->GetComponent<ComponentCanvasRenderer>();    
+    ComponentCanvasRenderer* renderer = game_object->GetComponent<ComponentCanvasRenderer>();
 
     if (renderer && game_object->IsActive() && renderer->IsActive())
     {
@@ -89,7 +88,7 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(GameObject* game_objec
     // Find selectables TODO: Improve how this is handled
     ComponentButton* selectable = game_object->GetComponent<ComponentButton>();
     if (transform && selectable)
-    {   
+    {
         if (transform->Intersects(mouse_pos))
         {
             //HE_LOG("Intersects %s", transform->GetGameObject()->name.c_str());
@@ -117,7 +116,7 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     MouseEventPayload::Action action = payload.GetAction();
     float2 coords = payload.GetCoords();
 
-    const WindowScene* w_scene = App->editor->GetSceneWindow();    
+    const WindowScene* w_scene = App->editor->GetSceneWindow();
     float2 click_pos = w_scene->ImguiToScreenPos(coords);
 
     //HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
@@ -125,14 +124,13 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, is_click);
 }
 
-
 void Hachiko::ModuleUserInterface::CreateSquare()
 {
     float positions[] = {
         0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
         0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
         -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left 
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
     };
 
     unsigned int indices[] = {2, 1, 0, 0, 3, 2};
@@ -142,7 +140,7 @@ void Hachiko::ModuleUserInterface::CreateSquare()
     glGenBuffers(1, &ebo);
 
     glBindVertexArray(vao);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
 
@@ -150,18 +148,16 @@ void Hachiko::ModuleUserInterface::CreateSquare()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Positions
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
     glEnableVertexAttribArray(0);
 
     // Texture coords
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);    
-    
+    glEnableVertexAttribArray(1);
+
     //HE_LOG("QUAD VAO %d %d %d", vao, vbo, ebo);
     glBindVertexArray(0);
 }
-
-
 
 void Hachiko::ModuleUserInterface::BindSquare()
 {
@@ -178,4 +174,3 @@ void Hachiko::ModuleUserInterface::RemoveSquare()
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
 }
-
