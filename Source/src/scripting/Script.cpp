@@ -41,6 +41,11 @@ void Hachiko::Scripting::Script::SerializeTo(std::unordered_map<std::string,
 void Hachiko::Scripting::Script::DeserializeFrom(
 	std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
+	if (serialized_fields.empty())
+	{
+        return;
+	}
+
 	// For field game_object : GameObject
     game_object = 
 		std::any_cast<GameObject*>(serialized_fields["game_object"].copy);
