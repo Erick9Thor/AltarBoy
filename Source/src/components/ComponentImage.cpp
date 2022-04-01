@@ -1,6 +1,8 @@
 #include "core/hepch.h"
 #include "ComponentImage.h"
 #include "ComponentTransform2D.h"
+#include "ComponentButton.h"
+
 #include "modules/ModuleProgram.h"
 
 #include "Program.h"
@@ -17,7 +19,8 @@ void Hachiko::ComponentImage::DrawGui()
     ImGui::PushID(this);
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        ImGui::Text("Image Loaded &d", image.loaded);
+        ImGui::Text("Image Loaded %d", image.loaded);
+        ImGui::Text("Hover Image Loaded %d", image.loaded);
         ImGui::Checkbox("Use Image", &use_image);
         ImGuiUtils::CompactColorPicker("Dir Color", &color[0]);
 	}
@@ -28,24 +31,60 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 {
 	// Bind matrix
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
-    // TODO    
-    program->BindUniformBool("diffuse_flag", image.loaded && use_image);
+    // TODO
+    const Texture* img_to_draw = &image;
+
+    ComponentButton* button = game_object->GetComponent<ComponentButton>();
+
+    if (button && button->IsHovered() & hover_image.loaded)
+    {
+        img_to_draw = &hover_image;
+    }
+
+    program->BindUniformBool("diffuse_flag", img_to_draw->loaded && use_image);
     program->BindUniformFloat4("img_color", color.ptr());
-    ModuleTexture::Bind(image.id, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    ModuleTexture::Bind(img_to_draw->id, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void Hachiko::ComponentImage::Save(JsonFormatterValue j_component) const
 {
     const JsonFormatterValue j_image_path = j_component["ImagePath"];
+    const JsonFormatterValue j_hover_image_path = j_component["HoverImagePath"];
+    //const JsonFormatterValue j_click_image_path = j_component["ClickImagePath"];
     j_image_path = image.path.c_str();
+    j_hover_image_path = hover_image.path.c_str();
+    //j_click_image_path = click_image.path.c_str();
 }
 
 void Hachiko::ComponentImage::Load(JsonFormatterValue j_component)
 {
     const JsonFormatterValue j_image_path = j_component["ImagePath"];
+    const JsonFormatterValue j_hover_image_path = j_component["HoverImagePath"];
+    // const JsonFormatterValue j_click_image_path = j_component["ClickImagePath"];
     const std::string image_path = j_image_path;
-    Import(image_path.c_str());
+    const std::string hover_image_path = j_hover_image_path;
+    // const std::string click_image_path = j_click_image_path;
+    if (!image_path.empty())
+    {
+        image = ModuleTexture::Load(image_path.c_str());
+        if (image.loaded)
+        {
+            use_image = true;
+        }
+    }
+
+    if (!hover_image_path.empty())
+    {
+        hover_image = ModuleTexture::Load(hover_image_path.c_str());
+    }
+
+    /*
+    if (!click_image_path.empty())
+    {
+        click_image = ModuleTexture::Load(click_image_path.c_str());
+    }
+    */
 }
 
 void Hachiko::ComponentImage::Import(const char* path)

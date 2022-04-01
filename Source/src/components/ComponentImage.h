@@ -28,7 +28,11 @@ namespace Hachiko
 
         void Import(const char* path);
 
+
         Texture image;
+        Texture hover_image;
+        Texture click_image;
+
         float4 color = float4::one;
         bool use_image = false;
     };
