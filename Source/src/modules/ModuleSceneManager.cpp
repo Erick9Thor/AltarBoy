@@ -44,7 +44,7 @@ void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
 void Hachiko::ModuleSceneManager::LoadImageObject(const char* model_path) const
 {
     std::string file = App->file_sys->GetFileNameAndExtension(model_path);
-    std::string destination = std::string(ASSETS_FOLDER_SCENES) + "/" + file;
+    std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + file;
     App->file_sys->Copy(model_path, destination.c_str());
     main_scene->LoadImageObject(destination);
 }

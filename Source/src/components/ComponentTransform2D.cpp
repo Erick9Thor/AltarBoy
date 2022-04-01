@@ -71,7 +71,7 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             ImGui::Text("Local");
             for (int r = 0; r < 4; ++r)
             {
-                auto row = local_transform.Row(r);
+                float4& row = local_transform.Row(r);
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
             }
 
@@ -79,7 +79,7 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             ImGui::Text("Global");
             for (int r = 0; r < 4; ++r)
             {
-                auto row = global_transform.Row(r);
+                float4& row = global_transform.Row(r);
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
             }
 
