@@ -23,4 +23,6 @@ void Hachiko::Scripting::PlayerController::Update()
 
 	HE_LOG("_integer_field: %i _string_field: %s", _integer_field,
 		_string_field.c_str());
+
+	HE_LOG("game_object name: %s", game_object->name.c_str());
 }

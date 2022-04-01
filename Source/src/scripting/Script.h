@@ -14,7 +14,7 @@ class GameObject;
 namespace Scripting
 {
 // TODO: Make Script inherit from Component as well.
-class HACHIKO_API Script : public ISerializable
+class HACHIKO_API Script : public Component, public ISerializable
 {
     SERIALIZATION_METHODS(true)
 public:
@@ -31,7 +31,7 @@ protected:
     explicit Script(GameObject* new_game_object, std::string new_name);
 
 protected:
-    GameObject* game_object;
+    //GameObject* game_object;
 
 private:
     std::string name;
