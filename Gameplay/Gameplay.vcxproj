@@ -181,7 +181,6 @@
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
     <ClCompile Include="PlayerController.cpp" />
