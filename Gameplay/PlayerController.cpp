@@ -25,4 +25,8 @@ void Hachiko::Scripting::PlayerController::Update()
 		_string_field.c_str());
 
 	HE_LOG("game_object name: %s", game_object->name.c_str());
+
+	PlayerController* player_controller_script = game_object->GetComponent<PlayerController>();
+
+	HE_LOG("With GetComponent: %s", player_controller_script->_string_field.c_str());
 }

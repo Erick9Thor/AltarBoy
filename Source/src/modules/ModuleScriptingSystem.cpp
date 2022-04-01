@@ -16,6 +16,8 @@ Hachiko::ModuleScriptingSystem::ModuleScriptingSystem()
     , _dll_change_check_timer(0.0f)
     , _dll_change_check_frequency_in_secs(0.0f)
     , _script_factory(nullptr)
+    , _dummy_game_object(nullptr)
+    , _dummy_script(nullptr)
 {
 }
 
@@ -95,7 +97,12 @@ void Hachiko::ModuleScriptingSystem::HotReload(const float delta)
         return;
     }
 
-    // TODO: Serialize old dll.
+    // Serialize all scripts:
+    std::unordered_map<std::string, Scripting::SerializedField> serialization;
+    if (_dummy_script != nullptr)
+    {
+        _dummy_script->SerializeTo(serialization);
+    }
     
     HMODULE new_dll;
     LoadDll(&new_dll);
@@ -104,9 +111,25 @@ void Hachiko::ModuleScriptingSystem::HotReload(const float delta)
         reinterpret_cast<Scripting::ScriptFactory>(
             GetProcAddress(new_dll, "InstantiateScript"));
 
-    _dummy_script = new_factory(_dummy_game_object, "PlayerController");
+    Scripting::Script* new_script = 
+        new_factory(_dummy_game_object, "PlayerController");
 
-    // TODO: Deserialize to new dll.
+    // Deserialize old scripts to new script:
+    new_script->DeserializeFrom(serialization);
+
+    serialization.clear();
+
+    // Remove all old scripts:
+    if (_dummy_script != nullptr)
+    {
+        _dummy_game_object->RemoveComponent(_dummy_script);
+        delete _dummy_script;
+    }
+
+    // Add new scripts back to the GameObjects:
+    _dummy_game_object->AddComponent(new_script);
+
+    _dummy_script = new_script;
 
     FreeDll(_loaded_dll, _times_reloaded - 1);
     _loaded_dll = new_dll;
