@@ -18,12 +18,13 @@ Hachiko::ModuleScriptingSystem::ModuleScriptingSystem()
     , _script_factory(nullptr)
     , _dummy_game_object(nullptr)
     , _dummy_script(nullptr)
+    , _scripts_paused(false)
 {
 }
 
 bool Hachiko::ModuleScriptingSystem::Init()
 {
-    HE_LOG("ModuleScriptingSystem::Init");
+    //HE_LOG("ModuleScriptingSystem::Init");
 
     bool loading_successful = true;
 
@@ -44,6 +45,7 @@ bool Hachiko::ModuleScriptingSystem::CleanUp()
 {
     if (_dummy_script != nullptr)
     {
+        _dummy_game_object->RemoveComponent(_dummy_script);
         delete _dummy_script;
     }
 
@@ -59,20 +61,35 @@ UpdateStatus Hachiko::ModuleScriptingSystem::PreUpdate(const float delta)
 {
     HotReload(delta);
 
-    HE_LOG("ModuleScriptingSystem::PreUpdate");
+    //HE_LOG("ModuleScriptingSystem::PreUpdate");
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
 UpdateStatus Hachiko::ModuleScriptingSystem::Update(const float delta)
 {
-    HE_LOG("ModuleScriptingSystem::Update");
+    //HE_LOG("ModuleScriptingSystem::Update");
 
-    _dummy_game_object->Update();
-
-    if (_dummy_script != nullptr)
+    if (!_scripts_paused)
     {
-        _dummy_script->Update();
+        //_EXCEPTION_POINTERS* exception_info;
+        __try
+        {
+            if (_dummy_script != nullptr)
+            {
+                _dummy_script->Update();
+            } 
+        }
+        __except (/*exception_info = GetExceptionInformation(),*/ 
+            EXCEPTION_EXECUTE_HANDLER)
+        {
+            HE_LOG("Exception occured on script '%s'", 
+                _dummy_script->GetName().c_str());
+        
+            _scripts_paused = true;
+
+            HE_LOG("Therefore, scripts are paused.");
+        }
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -80,7 +97,7 @@ UpdateStatus Hachiko::ModuleScriptingSystem::Update(const float delta)
 
 UpdateStatus Hachiko::ModuleScriptingSystem::PostUpdate(const float delta)
 {
-    HE_LOG("ModuleScriptingSystem::PostUpdate");
+    //HE_LOG("ModuleScriptingSystem::PostUpdate");
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -134,6 +151,8 @@ void Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     FreeDll(_loaded_dll, _times_reloaded - 1);
     _loaded_dll = new_dll;
     _script_factory = new_factory;
+
+    _scripts_paused = false;
 }
 
 bool Hachiko::ModuleScriptingSystem::ShouldCheckForChanges(const float delta)

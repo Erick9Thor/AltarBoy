@@ -44,5 +44,6 @@ private:
     Scripting::ScriptFactory _script_factory;
     GameObject* _dummy_game_object;
     Scripting::Script* _dummy_script;
+    bool _scripts_paused;
 };
 } // namespace Hachiko
