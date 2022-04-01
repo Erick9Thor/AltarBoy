@@ -10,6 +10,9 @@ Hachiko::ModuleEditor::ModuleEditor()
 {
     HE_LOG("Creating windows");
 
+#ifdef PLAY_BUILD
+    windows.push_back(&w_configuration);
+#else
     windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);
@@ -17,8 +20,9 @@ Hachiko::ModuleEditor::ModuleEditor()
     windows.push_back(&w_about);
     windows.push_back(&w_console);
     // windows.push_back(&w_resource);
-    windows.push_back(&w_project);
+    //windows.push_back(&w_project);
     windows.push_back(&w_timers);
+#endif
 }
 
 void Hachiko::ModuleEditor::UpdateTheme() const
@@ -126,6 +130,9 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     ImGui::CaptureMouseFromApp(true);
     ImGui::CaptureKeyboardFromApp(true);
 
+#ifdef PLAY_BUILD
+    const UpdateStatus retval = UpdateStatus::UPDATE_CONTINUE;
+#else
     const UpdateStatus retval = MainMenuBar();
 
     if (ImGuiFileDialog::Instance()->Display("LoadScene"))
@@ -147,6 +154,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     }
 
     GenerateDockingSpace();
+#endif
+
 
     for (Window* panel : windows)
     {

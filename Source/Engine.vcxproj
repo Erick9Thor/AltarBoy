@@ -104,7 +104,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);LOGGING_SUPPORT_DISABLED;PLAY_BUILD</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>

@@ -141,12 +141,21 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
 void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
 {
+#ifdef PLAY_BUILD
+    glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
+
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glStencilFunc(GL_ALWAYS, 1, 0XFF);
+    glStencilMask(0x00); // Prevent background from filling stencil
+#else
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
     ManageResolution(camera);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
+#endif
 
     if (draw_skybox)
     {
@@ -205,7 +214,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glEnable(GL_DEPTH_TEST);
     }
 
+#ifndef PLAY_BUILD
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)

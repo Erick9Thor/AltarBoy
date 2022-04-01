@@ -54,8 +54,10 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     static const float rot_speed = 2.0f;
     static const float perpendicular_movement_speed = 2.0f;
 
+#ifndef PLAY_BUILD
     if (!App->editor->GetSceneWindow()->IsHovering())
         return;
+#endif
 
     // Keyboard movement ---------------
     if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
