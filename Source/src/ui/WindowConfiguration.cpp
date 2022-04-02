@@ -26,6 +26,13 @@ void Hachiko::WindowConfiguration::Update()
             App->program->OptionsMenu();
         }
 
+        // TODO: REMOVE
+        if (ImGui::Button("Toggle editor camera"))
+        {
+            App->camera->ActivateEditorCamera();
+        }
+        //
+
         //It is already a collapsing header
         App->camera->GetMainCamera()->DrawGui();
 

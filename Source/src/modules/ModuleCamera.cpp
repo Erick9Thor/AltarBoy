@@ -93,7 +93,10 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     {
         const float distance = (editor_camera->reference_point - editor_camera->GetGameObject()->GetTransform()->GetPosition()).Length();
         GameObject* go = App->editor->GetSelectedGameObject();
-        FocusOnModel(go->GetTransform()->GetPosition(), distance);
+        if (go != nullptr)
+        {
+            FocusOnModel(go->GetTransform()->GetPosition(), distance);
+        }
     }
     if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
     {

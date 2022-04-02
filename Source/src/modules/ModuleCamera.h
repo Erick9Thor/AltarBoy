@@ -39,6 +39,10 @@ namespace Hachiko
                 editor_camera_enable = false;
             }
         }
+        void ActivateEditorCamera()
+        {
+            editor_camera_enable = !editor_camera_enable;
+        }
         void ActivateEditorCamera(bool activate) 
         {
             editor_camera_enable = activate;
