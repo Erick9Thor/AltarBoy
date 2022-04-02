@@ -148,7 +148,8 @@ ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string
     }
 
     // 2 - Import from disk
-    auto res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, uid));
+    std::string mesh_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    auto res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, mesh_path.c_str()));
     
     // 3 - Cherry Import
     if (res == nullptr && !model_path.empty() && mesh_index > -1)
@@ -207,19 +208,6 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     textures.emplace(texture_name, res);
 
     return res;
-}
-
-Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID resource_id)
-{
-    switch (type)
-    {
-    case Resource::Type::MESH:
-        {
-            return GetMesh(resource_id); 
-        }
-    default:
-        return nullptr;
-    }
 }
 
 void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::string& name) const

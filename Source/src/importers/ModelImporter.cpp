@@ -86,11 +86,6 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     }
 }
 
-Hachiko::Resource* Hachiko::ModelImporter::Load(const UID id)
-{
-    return nullptr;
-}
-
 Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
 {
     if (!std::filesystem::exists(model_path))
@@ -201,7 +196,8 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     // 4- If ok, save new model data
     App->file_sys->Save(model_library_path.c_str(), model_node);
 
-    return mesh_importer.Load(uid);
+    std::string mesh_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
+    return mesh_importer.Load(mesh_path.c_str());
 }
 
 bool Hachiko::ModelImporter::CheckIfImported(const char* path)

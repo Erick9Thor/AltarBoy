@@ -14,11 +14,9 @@ namespace Hachiko
         ~ModelImporter() override = default;
         
         void Import(const char* path) override;
-        Resource* Load(const UID id) override;
         void Save(const Resource* resource) override;
+        Resource* Load(const char* model_path) override;
         bool CheckIfImported(const char* path) override;
-
-        Resource* Load(const char* model_path);
         Resource* CherryImport(int mesh_index, const UID uid, const char* model_path);
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);

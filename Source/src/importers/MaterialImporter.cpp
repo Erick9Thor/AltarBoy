@@ -76,37 +76,6 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     App->file_sys->Save(material_library_path.c_str(), material_node);
 }
 
-Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
-{
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(uid);
-    if (!std::filesystem::exists(file_path.c_str()))
-    {
-        return nullptr;
-    }
-
-    YAML::Node node = YAML::LoadFile(file_path.c_str());
-    const auto material = new ResourceMaterial(uid);
-
-    material->SetName(node[MATERIAL_NAME].as<std::string>());
-    material->diffuse->SetName(node[MATERIAL_DIFFUSE_NAME].as<std::string>());
-    material->specular->SetName(node[MATERIAL_SPECULAR_NAME].as<std::string>());
-    material->normal->SetName(node[MATERIAL_NORMALS_NAME].as<std::string>());
-
-    std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
-    std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
-    std::string normals_path = node[MATERIAL_NORMALS_PATH].as<std::string>();
-
-    material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
-    material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
-    material->shininess = node[MATERIAL_SHININESS].as<float>();
-
-    material->diffuse = App->resources->GetTexture(material->diffuse->GetName(), diffuse_path);
-    material->specular = App->resources->GetTexture(material->specular->GetName(), specular_path);
-    material->normal = App->resources->GetTexture(material->normal->GetName(), normals_path);
-
-    return material;
-}
-
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
 {
     if (!std::filesystem::exists(material_path))
@@ -133,7 +102,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     return material;
 }
 
-void Hachiko::MaterialImporter::CreateMaterial(const std::string name) 
+void Hachiko::MaterialImporter::CreateMaterial(const std::string& name) 
 {
     ResourceMaterial* material = new ResourceMaterial(Hachiko::UUID::GenerateUID());
     material->SetName(name);

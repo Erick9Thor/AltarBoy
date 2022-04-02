@@ -22,7 +22,7 @@ void Hachiko::TextureImporter::Import(const char* path)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 {
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), path);
+    const std::string file_path(path);
     if (!std::filesystem::exists(file_path))
     {
         return nullptr;

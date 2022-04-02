@@ -13,16 +13,17 @@ namespace Hachiko
 
     public:
         MaterialImporter();
+
         void Import(const char* path) override;
         void Save(const Resource* material) override;
-        Resource* Load(const UID uid) override;
+        Resource* Load(const char* path) override;
+
         bool CheckIfImported(const char* path) override
         {
             return false;
         }
         
-        Resource* Load(const char* material_path);
-        void CreateMaterial(const std::string name);
+        void CreateMaterial(const std::string& name);
     private:
         void Import(aiMaterial* ai_material, const UID& id = 0);
         ResourceTexture* ImportTexture(const aiMaterial* ai_material, aiTextureType type);

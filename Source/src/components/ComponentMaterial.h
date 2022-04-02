@@ -28,17 +28,6 @@ namespace Hachiko
             material = res;
         }
 
-        
-        [[nodiscard]] const std::string& GetResourcePath() const
-        {
-            return asset_path;
-        }
-
-        void SetResourcePath(const std::string& path)
-        {
-            asset_path = path;
-        }
-
         [[nodiscard]] const std::string& GetModelName() const
         {
             return model_name;
@@ -57,7 +46,6 @@ namespace Hachiko
 
     private:
         ResourceMaterial* material{};
-        std::string asset_path;
         std::string model_name;
     };
 }

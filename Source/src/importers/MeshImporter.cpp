@@ -149,16 +149,6 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     return mesh;
 }
 
-Hachiko::Resource* Hachiko::MeshImporter::Load(const UID uid)
-{
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
-    if (!std::filesystem::exists(file_path.c_str()))
-    {
-        return nullptr;
-    }
-    return Load(file_path.c_str());
-}
-
 void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
 {
     if (!id)

@@ -34,7 +34,11 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     
     // TODO: Why we take care of other components?
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-    App->program->UpdateMaterial(material);
+    
+    if (material != nullptr)
+    {
+        App->program->UpdateMaterial(material);
+    }
 
     for (auto mesh : meshes)
     {
