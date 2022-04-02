@@ -27,6 +27,7 @@ namespace Hachiko
         void CleanScene() const;
 
         // --- Life cycle Scene --- //
+        void Start() const;
         void Update() const;
         void Save(JsonFormatterValue j_scene) const;
         void Load(JsonFormatterValue j_scene);

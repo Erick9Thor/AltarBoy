@@ -136,6 +136,24 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::Start() 
+{
+    transform->Start();
+
+    for (Component* component : components)
+    {
+        component->Start();
+    }
+
+    for (GameObject* child : children)
+    {
+        if (child->IsActive())
+        {
+            child->Start();
+        }
+    }
+}
+
 void Hachiko::GameObject::Update()
 {
     if (transform->HasChanged())

@@ -19,6 +19,11 @@ bool Hachiko::ModuleSceneManager::Init()
 
     // CreateEmptyScene();
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
+
+#ifdef PLAY_BUILD
+    main_scene->Start();
+#endif
+
     return true;
 }
 

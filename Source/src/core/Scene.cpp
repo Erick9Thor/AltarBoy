@@ -206,6 +206,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     return camera;
 }
 
+void Hachiko::Scene::Start() const 
+{
+    root->Start();
+}
+
 void Hachiko::Scene::Update() const
 {
     root->Update();
