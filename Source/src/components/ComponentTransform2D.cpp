@@ -85,7 +85,7 @@ void Hachiko::ComponentTransform2D::DrawGui(){
 
             ImGui::Separator();
             ImGui::Text("Bounding 2D");
-            ImGui::Text("%.2f %.2f, %.2f %.2f", aabb.minPoint[0], aabb.minPoint[1], aabb.maxPoint[0], aabb.maxPoint[0]);
+            ImGui::Text("%.2f %.2f, %.2f %.2f", aabb.minPoint.x, aabb.minPoint.y, aabb.maxPoint.x, aabb.maxPoint.y);
         }
 
     }
