@@ -2,9 +2,13 @@
 #include "WindowInspector.h"
 
 #include "modules/ModuleEditor.h"
+#include "modules/ModuleScriptingSystem.h"
+#include "scripting/Script.h"
 
-Hachiko::WindowInspector::WindowInspector() :
-    Window("Inspector", true) {}
+Hachiko::WindowInspector::WindowInspector() 
+    : Window("Inspector", true) 
+{
+}
 
 Hachiko::WindowInspector::~WindowInspector() = default;
 
@@ -22,6 +26,9 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
 {
     if (game_object != nullptr)
     {
+        std::string add_script_modal_name = "Add Script to " + 
+            game_object->name;
+
         char go_name[50];
         strcpy_s(go_name, 50, game_object->name.c_str());
         const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
@@ -47,6 +54,8 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             ImGui::OpenPopup("AddComponentPopup");
         }
 
+        static bool add_script = false;
+
         if (ImGui::BeginPopup("AddComponentPopup"))
         {
             if (ImGui::MenuItem("Camera"))
@@ -69,6 +78,54 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
                 game_object->CreateComponent(Component::Type::DIRLIGHT);
                 ImGui::CloseCurrentPopup();
             }
+            if (ImGui::MenuItem("Script"))
+            {
+                ImGui::CloseCurrentPopup();
+                add_script = true;
+            }
+           
+            ImGui::EndPopup();
+        }
+
+        // Open Add Script Modal.
+
+        if (add_script)
+        {
+            ImGui::OpenPopup(add_script_modal_name.c_str());
+        }
+
+        ImGui::SetNextWindowSize(ImVec2(300, 100));
+        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, 
+            ImVec2(0.5f, 0.5f));
+        if (ImGui::BeginPopupModal(add_script_modal_name.c_str(), 
+            NULL, ImGuiWindowFlags_NoCollapse))
+        {
+            char script_name_buffer[MAX_PATH] = "Script Name\0";
+
+            ImGui::SetItemDefaultFocus();
+            if (ImGui::InputText("Script Name", script_name_buffer, 
+                MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+            {
+                std::string script_name = script_name_buffer;
+                Scripting::Script* script = App->scripting_system->
+                    InstantiateScript(script_name, game_object);
+
+                if (script != nullptr)
+                {
+                    game_object->AddComponent(script);
+                }
+               
+                ImGui::CloseCurrentPopup();
+                add_script = false;
+            }
+
+            if (ImGui::Button("Close", ImVec2(120, 0)))
+            {
+                ImGui::CloseCurrentPopup();
+                add_script = false;
+            }
+
             ImGui::EndPopup();
         }
     }
