@@ -27,8 +27,8 @@ public:
     Scripting::Script* InstantiateScript(const std::string& script_name,
         GameObject* owner_game_object) const;
 
-    void UpdateScript(Scripting::Script* script);
     bool ShouldUpdateScripts() const;
+    void StopUpdatingScripts();
 
 private:
     void HotReload(const float delta);
@@ -55,7 +55,12 @@ private:
 
 inline bool Hachiko::ModuleScriptingSystem::ShouldUpdateScripts() const
 {
-    return _scripts_paused;
+    return !_scripts_paused;
+}
+
+inline void Hachiko::ModuleScriptingSystem::StopUpdatingScripts() 
+{
+    _scripts_paused = true;
 }
 
 } // namespace Hachiko

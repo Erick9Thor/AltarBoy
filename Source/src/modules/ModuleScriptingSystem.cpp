@@ -89,37 +89,6 @@ Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
     return _script_factory(owner_game_object, script_name);
 }
 
-void Hachiko::ModuleScriptingSystem::UpdateScript(Scripting::Script* script) 
-{
-    if (_scripts_paused)
-    {
-        return;
-    }
-
-    //_EXCEPTION_POINTERS* exception_info;
-    __try
-    {
-        if (script == nullptr)
-        {
-            HE_LOG("Argument 'script' is nullptr.");
-        }
-        else
-        {
-            script->Update();
-        }
-    }
-    __except (/*exception_info = GetExceptionInformation(),*/
-        EXCEPTION_EXECUTE_HANDLER)
-    {
-        HE_LOG("Exception occured on script '%s'", 
-            script->GetName().c_str());
-    
-        _scripts_paused = true;
-
-        HE_LOG("Therefore, scripts are paused.");
-    }
-}
-
 void Hachiko::ModuleScriptingSystem::HotReload(const float delta) 
 {
     if (!ShouldCheckForChanges(delta))

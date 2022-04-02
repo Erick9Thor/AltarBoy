@@ -7,8 +7,6 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
-#include "scripting/Script.h"
-#include "modules/ModuleScriptingSystem.h"
 
 #include <debugdraw.h>
 
@@ -147,15 +145,7 @@ void Hachiko::GameObject::Update()
 
     for (Component* component : components)
     {
-        if (component->GetType() != Component::Type::SCRIPT)
-        {
-            component->Update();
-            continue;
-        }
-
-        // If the component is a script, let scripting system do the update:
-        App->scripting_system->UpdateScript(
-            static_cast<Scripting::Script*>(component));
+        component->Update();
     }
 
     for (GameObject* child : children)

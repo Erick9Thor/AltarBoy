@@ -1,6 +1,8 @@
 #include "core/hepch.h"
 #include "scripting/Script.h"
 #include "core/GameObject.h"
+#include "Application.h"
+#include "modules/ModuleScriptingSystem.h"
 
 Hachiko::Scripting::Script::Script(GameObject* new_game_object, 
 	std::string new_name) 
@@ -11,7 +13,28 @@ Hachiko::Scripting::Script::Script(GameObject* new_game_object,
 	active = true;
 }
 
-void Hachiko::Scripting::Script::DrawGui() 
+void Hachiko::Scripting::Script::Update() 
+{
+    if (!App->scripting_system->ShouldUpdateScripts())
+    {
+        return;
+    }
+
+    __try
+    {
+        OnUpdate();
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+        HE_LOG("Exception occured on script '%s'", GetName().c_str());
+
+        App->scripting_system->StopUpdatingScripts();
+
+        HE_LOG("Therefore, scripts are paused.");
+    }
+}
+
+void Hachiko::Scripting::Script::DrawGui()
 {
     ImGui::PushID(this);
     
