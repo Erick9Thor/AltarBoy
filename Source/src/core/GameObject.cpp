@@ -327,3 +327,50 @@ void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
         child->Load(j_child);
     }
 }
+
+std::vector<Hachiko::Component*> 
+Hachiko::GameObject::GetComponents(Component::Type type) const
+{
+    std::vector<Component*> components_of_type;
+
+    components_of_type.reserve(components.size());
+
+    for (Component* component : components)
+    {
+        if (component->GetType() == type)
+        {
+            components_of_type.push_back(component);
+        }
+    }
+
+    return components_of_type;
+}
+
+std::vector<Hachiko::Component*> 
+Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
+{
+    std::vector<Component*> components_in_descendants;
+
+    for (GameObject* child : children)
+    {
+        std::vector<Component*> components_in_child = 
+            child->GetComponents(type);
+
+        for (Component* component_in_child : components_in_child)
+        {
+            components_in_descendants.push_back(component_in_child);
+        }
+
+        std::vector<Component*> components_in_childs_descendants = 
+            child->GetComponentsInDescendants(type);
+
+        for (Component* component_in_childs_descendants : 
+            components_in_childs_descendants)
+        {
+            components_in_descendants.push_back(
+                component_in_childs_descendants);
+        }
+    }
+
+    return components_in_descendants;
+}

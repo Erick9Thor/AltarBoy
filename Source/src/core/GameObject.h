@@ -149,6 +149,10 @@ public:
         return components_in_descendants;
     }
 
+    std::vector<Component*> GetComponents(Component::Type type) const;
+    std::vector<Component*> GetComponentsInDescendants(
+        Component::Type type) const;
+
 public:
     std::string name;
     Scene* scene_owner = nullptr;
