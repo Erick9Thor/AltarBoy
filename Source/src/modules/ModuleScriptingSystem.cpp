@@ -68,30 +68,6 @@ UpdateStatus Hachiko::ModuleScriptingSystem::PreUpdate(const float delta)
 
 UpdateStatus Hachiko::ModuleScriptingSystem::Update(const float delta)
 {
-    //HE_LOG("ModuleScriptingSystem::Update");
-
-    if (!_scripts_paused)
-    {
-        //_EXCEPTION_POINTERS* exception_info;
-        __try
-        {
-            if (_dummy_script != nullptr)
-            {
-                _dummy_script->Update();
-            } 
-        }
-        __except (/*exception_info = GetExceptionInformation(),*/ 
-            EXCEPTION_EXECUTE_HANDLER)
-        {
-            HE_LOG("Exception occured on script '%s'", 
-                _dummy_script->GetName().c_str());
-        
-            _scripts_paused = true;
-
-            HE_LOG("Therefore, scripts are paused.");
-        }
-    }
-
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -111,6 +87,37 @@ Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
     }
 
     return _script_factory(owner_game_object, script_name);
+}
+
+void Hachiko::ModuleScriptingSystem::UpdateScript(Scripting::Script* script) 
+{
+    if (_scripts_paused)
+    {
+        return;
+    }
+
+    //_EXCEPTION_POINTERS* exception_info;
+    __try
+    {
+        if (script == nullptr)
+        {
+            HE_LOG("Argument 'script' is nullptr.");
+        }
+        else
+        {
+            script->Update();
+        }
+    }
+    __except (/*exception_info = GetExceptionInformation(),*/
+        EXCEPTION_EXECUTE_HANDLER)
+    {
+        HE_LOG("Exception occured on script '%s'", 
+            script->GetName().c_str());
+    
+        _scripts_paused = true;
+
+        HE_LOG("Therefore, scripts are paused.");
+    }
 }
 
 void Hachiko::ModuleScriptingSystem::HotReload(const float delta) 
