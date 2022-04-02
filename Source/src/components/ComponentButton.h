@@ -25,9 +25,9 @@ namespace Hachiko
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
     };
+    
+    inline Component::Type Hachiko::ComponentButton::GetType()
+    {
+        return Type::BUTTON;
+    }
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentButton::GetType()
-{
-    return Type::BUTTON;
-}
