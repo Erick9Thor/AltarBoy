@@ -24,6 +24,9 @@ public:
     UpdateStatus Update(const float delta) override;
     UpdateStatus PostUpdate(const float delta) override;
 
+    Scripting::Script* InstantiateScript(const std::string& script_name,
+        GameObject* owner_game_object) const;
+
 private:
     void HotReload(const float delta);
     bool ShouldCheckForChanges(const float delta);

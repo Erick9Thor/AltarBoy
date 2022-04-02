@@ -102,6 +102,17 @@ UpdateStatus Hachiko::ModuleScriptingSystem::PostUpdate(const float delta)
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
+Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
+    const std::string& script_name, GameObject* owner_game_object) const
+{
+    if (_script_factory == nullptr)
+    {
+        return nullptr;
+    }
+
+    return _script_factory(owner_game_object, script_name);
+}
+
 void Hachiko::ModuleScriptingSystem::HotReload(const float delta) 
 {
     if (!ShouldCheckForChanges(delta))
