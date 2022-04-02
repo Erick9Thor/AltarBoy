@@ -58,10 +58,10 @@ void Hachiko::ResourceMaterial::DrawGui()
     // TODO: texture selection
     ImGui::Text("Normals: ");
     ImGui::SameLine();
-    ImGui::Text((normals != nullptr) ? normals->path.c_str() : "None");
-    if (normals != nullptr)
+    ImGui::Text((normal != nullptr) ? normal->path.c_str() : "None");
+    if (normal != nullptr)
     {
-        normals->DrawGui();
+        normal->DrawGui();
     }
     else
     {

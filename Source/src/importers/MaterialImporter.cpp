@@ -63,11 +63,11 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
     material_node[MATERIAL_DIFFUSE_NAME] = (material->diffuse != nullptr) ? material->diffuse->GetName() : std::string();
     material_node[MATERIAL_SPECULAR_NAME] = (material->specular != nullptr) ? material->specular->GetName() : std::string();
-    material_node[MATERIAL_NORMALS_NAME] = (material->normals != nullptr) ? material->normals->GetName() : std::string();
+    material_node[MATERIAL_NORMALS_NAME] = (material->normal != nullptr) ? material->normal->GetName() : std::string();
 
     material_node[MATERIAL_DIFFUSE_PATH] = (material->diffuse != nullptr) ? material->diffuse->GetAssetPath() : std::string();
     material_node[MATERIAL_SPECULAR_PATH] = (material->specular != nullptr) ? material->specular->GetAssetPath() : std::string();
-    material_node[MATERIAL_NORMALS_PATH] = (material->normals != nullptr) ? material->normals->GetAssetPath() : std::string();
+    material_node[MATERIAL_NORMALS_PATH] = (material->normal != nullptr) ? material->normal->GetAssetPath() : std::string();
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
@@ -90,7 +90,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
     material->SetName(node[MATERIAL_NAME].as<std::string>());
     material->diffuse->SetName(node[MATERIAL_DIFFUSE_NAME].as<std::string>());
     material->specular->SetName(node[MATERIAL_SPECULAR_NAME].as<std::string>());
-    material->normals->SetName(node[MATERIAL_NORMALS_NAME].as<std::string>());
+    material->normal->SetName(node[MATERIAL_NORMALS_NAME].as<std::string>());
 
     std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
     std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
@@ -102,7 +102,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const UID uid)
 
     material->diffuse = App->resources->GetTexture(material->diffuse->GetName(), diffuse_path);
     material->specular = App->resources->GetTexture(material->specular->GetName(), specular_path);
-    material->normals = App->resources->GetTexture(material->normals->GetName(), normals_path);
+    material->normal = App->resources->GetTexture(material->normal->GetName(), normals_path);
 
     return material;
 }
@@ -128,7 +128,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     
     material->diffuse = App->resources->GetTexture(node[MATERIAL_DIFFUSE_NAME].as<std::string>(), diffuse_path);
     material->specular = App->resources->GetTexture(node[MATERIAL_SPECULAR_NAME].as<std::string>(), specular_path);
-    material->normals = App->resources->GetTexture(node[MATERIAL_NORMALS_NAME].as<std::string>(), normals_path);
+    material->normal = App->resources->GetTexture(node[MATERIAL_NORMALS_NAME].as<std::string>(), normals_path);
 
     return material;
 }
@@ -167,13 +167,13 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id)
 
     material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
-    material->normals = ImportTexture(ai_material, aiTextureType_NORMALS);
+    material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
 
     Save(material);
 
     delete material->diffuse;
     delete material->specular;
-    delete material->normals;
+    delete material->normal;
     delete material;
 }
 

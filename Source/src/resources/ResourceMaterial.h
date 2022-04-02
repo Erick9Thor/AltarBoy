@@ -23,9 +23,9 @@ namespace Hachiko
             return specular != nullptr;
         }
 
-        [[nodiscard]] bool HasNormals() const
+        [[nodiscard]] bool HasNormal() const
         {
-            return normals != nullptr;
+            return normal != nullptr;
         }
 
         [[nodiscard]] unsigned GetDiffuseId() const
@@ -46,11 +46,11 @@ namespace Hachiko
             return 0;
         }
 
-        [[nodiscard]] unsigned GetNomalsId() const
+        [[nodiscard]] unsigned GetNomalId() const
         {
-            if (normals != nullptr)
+            if (normal != nullptr)
             {
-                return normals->GetId();
+                return normal->GetId();
             }
             return 0;
         }
@@ -76,7 +76,7 @@ namespace Hachiko
                 specular = res;
                 break;            
             case ResourceTexture::Type::NORMALS:
-                normals = res;
+                normal = res;
                 break;
             }
         }
@@ -84,7 +84,7 @@ namespace Hachiko
         // TODO: Move this memebers to private
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
-        ResourceTexture* normals = nullptr;
+        ResourceTexture* normal = nullptr;
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
         float shininess = 50.0f;

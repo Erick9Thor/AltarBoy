@@ -29,6 +29,7 @@ namespace Hachiko
         {
             DIFFUSE = 0,
             SPECULAR,
+            NORMAL,
             COUNT,
         };
 
@@ -95,6 +96,7 @@ namespace Hachiko
             float4 specular_color;
             unsigned diffuse_flag{};
             unsigned specular_flag{};
+            unsigned normal_flag{};
             float shininess{};
         };
 

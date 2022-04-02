@@ -82,7 +82,7 @@ void Hachiko::ComponentMesh::DrawGui()
         {
             ImGui::Text("%d Triangles\n%d vertices\n%d indices",
                         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
-                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3,
+                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
                         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
             ImGui::Checkbox("Visible", &visible);
         }

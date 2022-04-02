@@ -178,7 +178,7 @@ void Hachiko::ModuleProgram::UpdateCamera(const ComponentCamera* camera) const
 
 void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp) const
 {
-    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR)};
+    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
     const ResourceMaterial* material = material_comp->GetMaterial();
@@ -193,6 +193,7 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
     material_data.specular_flag = material->HasSpecular();
+    material_data.normal_flag = material->HasNormal();
     material_data.shininess = material->shininess;
 
     if (material_data.diffuse_flag)
@@ -202,6 +203,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     if (material_data.specular_flag)
     {
         ModuleTexture::Bind(material->GetSpecularId(), static_cast<int>(TextureSlots::SPECULAR));
+    }
+    if (material_data.normal_flag)
+    {
+        ModuleTexture::Bind(material->GetNomalId(), static_cast<int>(TextureSlots::NORMAL));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);
