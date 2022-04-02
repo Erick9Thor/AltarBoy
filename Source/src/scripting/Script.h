@@ -19,10 +19,12 @@ class HACHIKO_API Script : public Component, public ISerializable
 public:
     virtual ~Script() = default;
 
-    virtual void Start() {};
-    virtual void Update() {};
-    virtual void Disable() {};
-    virtual void Enable() {};
+    void Update() override;
+
+    virtual void OnStart() {};
+    virtual void OnUpdate() {};
+    virtual void OnDisable() {};
+    virtual void OnEnable() {};
     void DrawGui() override;
 
     const std::string& GetName() const;

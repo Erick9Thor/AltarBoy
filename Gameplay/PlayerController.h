@@ -15,8 +15,8 @@ public:
 	PlayerController(GameObject* game_object);
 	~PlayerController() override = default;
 
-	void Start() override;
-	void Update() override;
+	void OnStart() override;
+	void OnUpdate() override;
 
 private:
 	SERIALIZE_FIELD(int, _integer_field);
