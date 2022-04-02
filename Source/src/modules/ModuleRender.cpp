@@ -10,6 +10,10 @@
 
 #include "components/ComponentCamera.h"
 
+#ifdef PLAY_BUILD
+#include "ModuleInput.h"
+#endif
+
 Hachiko::ModuleRender::ModuleRender() = default;
 
 Hachiko::ModuleRender::~ModuleRender() = default;
@@ -142,7 +146,10 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
 {
 #ifdef PLAY_BUILD
-    glViewport(0, 0, App->window->GetWidth(), App->window->GetHeight());
+    int width, height;
+    App->window->GetWindowSize(width, height);
+    App->camera->OnResize(width, height);
+    glViewport(0, 0, width, height);
 
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
