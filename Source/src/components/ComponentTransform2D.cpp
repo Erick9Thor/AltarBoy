@@ -72,7 +72,7 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             for (int r = 0; r < 4; ++r)
             {
                 float4& row = local_transform.Row(r);
-                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row.x, row.y, row.z, row.w);
             }
 
             ImGui::Separator();
@@ -80,12 +80,12 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             for (int r = 0; r < 4; ++r)
             {
                 float4& row = global_transform.Row(r);
-                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row[0], row[1], row[2], row[3]);
+                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row.x, row.y, row.z, row.w);
             }
 
             ImGui::Separator();
             ImGui::Text("Bounding 2D");
-            ImGui::Text("%.2f %.2f, %.2f %.2f", aabb.minPoint[0], aabb.minPoint[1], aabb.maxPoint[0], aabb.maxPoint[0]);
+            ImGui::Text("%.2f %.2f, %.2f %.2f", aabb.minPoint.x, aabb.minPoint.y, aabb.maxPoint.x, aabb.maxPoint.y);
         }
 
     }
