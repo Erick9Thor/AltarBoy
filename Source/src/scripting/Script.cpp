@@ -11,7 +11,20 @@ Hachiko::Scripting::Script::Script(GameObject* new_game_object,
 	active = true;
 }
 
-const std::string& Hachiko::Scripting::Script::GetName() const 
+void Hachiko::Scripting::Script::DrawGui() 
+{
+    ImGui::PushID(this);
+    
+    if (ImGuiUtils::CollapsingHeader(game_object, this, name.c_str()))
+    {
+        ImGui::Text(name.c_str());
+        ImGui::SameLine();
+        ImGui::Text("TO BE IMPLEMENTED.");
+    }
+    ImGui::PopID();
+}
+
+const std::string& Hachiko::Scripting::Script::GetName() const
 {
 	return name;
 }
