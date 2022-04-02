@@ -46,6 +46,31 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     quadtree->Remove(game_object);
 }
 
+Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
+{
+    return SearchMainCamera(root);
+}
+
+Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
+{
+    ComponentCamera* component_camera = nullptr;
+    component_camera = game_object->GetComponent<ComponentCamera>();
+    if (component_camera != nullptr)
+    {
+        return component_camera;
+    }
+
+    for (GameObject* child : game_object->children)
+    {
+        component_camera = SearchMainCamera(child);
+        if (component_camera != nullptr)
+        {
+            return component_camera;
+        }
+    }
+    return nullptr;
+}
+
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
 {
     GameObject* new_parent = parent ? parent : root;

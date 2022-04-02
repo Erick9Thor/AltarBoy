@@ -1,6 +1,10 @@
 #include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
+#ifdef PLAY_BUILD
+#include "ModuleCamera.h"
+#endif
+
 #include "importers/SceneImporter.h"
 
 Hachiko::ModuleSceneManager::ModuleSceneManager() = default;
@@ -21,6 +25,7 @@ bool Hachiko::ModuleSceneManager::Init()
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 
 #ifdef PLAY_BUILD
+    //App->camera->SetMainCamera(main_scene->GetMainCamera()); // PLAY_BUILD UNCOMMENT
     main_scene->Start();
 #endif
 

@@ -33,6 +33,8 @@ namespace Hachiko
         void Load(JsonFormatterValue j_scene);
 
         // --- GameObject Management --- //
+        ComponentCamera* GetMainCamera() const;
+        ComponentCamera* SearchMainCamera(GameObject* game_object) const;
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
