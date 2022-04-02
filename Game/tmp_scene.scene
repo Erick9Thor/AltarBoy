@@ -1,6 +1,6 @@
 {
     "GORoot": {
-        "Uid": 1051564592040348040,
+        "Uid": 1975374349552486769,
         "GOName": "Root",
         "Active": true,
         "ParentId": 0,
@@ -16,7 +16,8 @@
                 "Rotation": [
                     0.0,
                     0.0,
-                    0.0
+                    0.0,
+                    1.0
                 ],
                 "Scale": [
                     1.0,
@@ -25,6 +26,287 @@
                 ]
             }
         ],
-        "GOChildrens": null
+        "GOChildrens": [
+            {
+                "Uid": 17690456860349501427,
+                "GOName": "GameObject",
+                "Active": true,
+                "ParentId": 1975374349552486769,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 10,
+                        "Position": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "Size": [
+                            1133.0,
+                            630.0
+                        ],
+                        "Scale": [
+                            1.0,
+                            1.0
+                        ],
+                        "Rotation": [
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
+                        ],
+                        "Pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "Anchor": [
+                            0.5,
+                            0.5
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 8
+                    }
+                ],
+                "GOChildrens": [
+                    {
+                        "Uid": 18327071507201516228,
+                        "GOName": "New Game Object",
+                        "Active": true,
+                        "ParentId": 17690456860349501427,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 10,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Pivot": [
+                                    0.5,
+                                    0.5
+                                ],
+                                "Anchor": [
+                                    0.5,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 9
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 11
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 13,
+                                "Params": {
+                                    "Min": 0.0,
+                                    "Max": 1.0,
+                                    "Filled": 0.0,
+                                    "Direction": 0
+                                }
+                            }
+                        ],
+                        "GOChildrens": [
+                            {
+                                "Uid": 17947017206923181780,
+                                "GOName": "Bar Background",
+                                "Active": true,
+                                "ParentId": 18327071507201516228,
+                                "Components": [
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 1,
+                                        "Position": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 10,
+                                        "Position": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Size": [
+                                            20.0,
+                                            20.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Pivot": [
+                                            0.5,
+                                            0.5
+                                        ],
+                                        "Anchor": [
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 9
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 11
+                                    }
+                                ],
+                                "GOChildrens": null
+                            },
+                            {
+                                "Uid": 1715948980641596874,
+                                "GOName": "Bar Fill",
+                                "Active": true,
+                                "ParentId": 18327071507201516228,
+                                "Components": [
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 1,
+                                        "Position": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 10,
+                                        "Position": [
+                                            -10.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Size": [
+                                            0.0,
+                                            20.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Pivot": [
+                                            0.5,
+                                            0.5
+                                        ],
+                                        "Anchor": [
+                                            0.5,
+                                            0.5
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 9
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 11
+                                    }
+                                ],
+                                "GOChildrens": null
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
     }
 }
