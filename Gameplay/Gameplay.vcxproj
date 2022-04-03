@@ -179,6 +179,7 @@
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
+    <ClInclude Include="SomeScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="generated\Factory.cpp" />
@@ -190,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SomeScript.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,10 +29,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	PlayerController* player_controller_script = 
 		game_object->GetComponent<PlayerController>();
 
-
-
-	PlayerController* deneme = nullptr;
-	deneme->game_object->name.c_str();
+	HE_LOG("HOW ARE YOU RUNNING?");
 
 	HE_LOG("With GetComponent: %s", 
 		player_controller_script->_string_field.c_str());
