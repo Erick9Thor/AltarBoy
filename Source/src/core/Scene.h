@@ -69,6 +69,7 @@ namespace Hachiko
             return skybox;
         }
 
+        [[nodiscard]] GameObject* RayCast(const float3& origin, const float3& destination) const;
         [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
 
         void CreateLights();

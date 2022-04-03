@@ -8,6 +8,11 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 
+// TODO: REMOVE
+#include "Application.h"
+#include "modules/ModuleSceneManager.h"
+//
+
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name) :
@@ -156,6 +161,21 @@ void Hachiko::GameObject::Start()
 
 void Hachiko::GameObject::Update()
 {
+    // TODO: REMOVE
+    if (name == "Gun")
+    {
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition());
+        if (go != nullptr)
+        {
+            ImGui::Text(go->name.c_str());
+        }
+        else
+        {
+            ImGui::Text("Nothing");
+        }
+    }
+    //
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();

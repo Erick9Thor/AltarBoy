@@ -132,6 +132,12 @@ void Hachiko::Scene::Load(JsonFormatterValue j_scene)
     root->Load(j_root);
 }
 
+Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+{
+    LineSegment line_seg(origin, destination);
+    return RayCast(line_seg);
+}
+
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
