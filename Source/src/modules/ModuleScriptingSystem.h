@@ -35,6 +35,7 @@ private:
     bool ShouldCheckForChanges(const float delta);
     void LoadDll(HMODULE* dll);
     void FreeDll(HMODULE dll, unsigned int load_index);
+    void DeleteAllScriptsOnCurrentScene() const; 
     bool IsDllVersionChanged();
 
 private:

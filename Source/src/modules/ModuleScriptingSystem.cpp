@@ -41,6 +41,8 @@ bool Hachiko::ModuleScriptingSystem::CleanUp()
 {
     if (_loaded_dll != NULL)
     {
+        DeleteAllScriptsOnCurrentScene();
+
         FreeDll(_loaded_dll, _times_reloaded);
     }
 
@@ -255,6 +257,28 @@ void Hachiko::ModuleScriptingSystem::FreeDll(HMODULE dll,
     // Free the dll, and delete it:
     FreeLibrary(dll);
     _wremove(previous_dll_name.c_str());
+}
+
+void Hachiko::ModuleScriptingSystem::DeleteAllScriptsOnCurrentScene() const 
+{
+    // Get all the scripts inside the current scene:
+    std::vector<Component*>& scripts = App->scene_manager->GetRoot()->
+        GetComponentsInDescendants(Component::Type::SCRIPT);
+
+    // TODO(Baran): Save all the scripts here also maybe?
+
+    // We are deleting the scripts here because, scripts belong to dll and must
+    // be deleted/freed before freeing the dll:
+    for (Component* script : scripts)
+    {
+        script->GetGameObject()->RemoveComponent(script);
+        
+        delete script;
+        
+        script = nullptr;
+    }
+
+    scripts.clear();
 }
 
 bool Hachiko::ModuleScriptingSystem::IsDllVersionChanged()
