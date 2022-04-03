@@ -19,6 +19,9 @@ void Hachiko::Scripting::Script::Update()
     {
         return;
     }
+	
+	// TODO(Baran): Add check for play mode/editor mode to run update of 
+	// script.
 
     __try
     {

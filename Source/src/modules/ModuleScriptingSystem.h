@@ -31,7 +31,7 @@ public:
     void StopUpdatingScripts();
 
 private:
-    void HotReload(const float delta);
+    bool HotReload(const float delta);
     bool ShouldCheckForChanges(const float delta);
     void LoadDll(HMODULE* dll);
     void FreeDll(HMODULE dll, unsigned int load_index);
@@ -39,17 +39,17 @@ private:
 
 private:
     HMODULE _loaded_dll;
+    Scripting::ScriptFactory _script_factory;
     unsigned int _times_reloaded;
     std::string _current_dll_timestamp;
     std::wstring _current_dll_name;
+    
     // TODO: Implement a timer class that basically has these two values
     // and has a method Tick, that takes delta and decreases the timer and
     // returns true if the timer is finished.
     float _dll_change_check_frequency_in_secs;
     float _dll_change_check_timer;
-    Scripting::ScriptFactory _script_factory;
-    GameObject* _dummy_game_object;
-    Scripting::Script* _dummy_script;
+    
     bool _scripts_paused;
 };
 
