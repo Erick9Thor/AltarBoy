@@ -219,24 +219,6 @@ void Hachiko::ComponentCamera::DrawGui()
         else
             App->camera->RestoreOriginCamera();
         
-        /*
-        if (!preview_cam)
-        {
-            if (ImGui::Button("Preview Camera"))
-            {
-                App->camera->SetMainCamera(this);
-                preview_cam = true;
-            }
-        }
-        else
-        {
-            if (ImGui::Button("Stop Previewing"))
-            {
-                App->camera->RestoreOriginCamera();
-                preview_cam = false;
-            }
-        }
-        */
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))
         {

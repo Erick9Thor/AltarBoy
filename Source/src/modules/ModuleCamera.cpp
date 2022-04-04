@@ -35,7 +35,6 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
     if (App->input->GetKey(SDL_SCANCODE_C) == KeyState::KEY_DOWN)
     {
-        HE_LOG("CHANGE CAMERA");
         int buffer_size = camera_buffer.size();
         if (last_it < buffer_size)
         {
@@ -51,7 +50,7 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
             last_it++;
         }
     }
-    RunDynamicScript(GameTimer::delta_time);
+    RunDynamicScript(GameTimer::delta_time); //Wokr around function until scripting operative
     Controller(delta);
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -77,7 +76,7 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     if (!App->editor->GetSceneWindow()->IsHovering())
         return;
     
-    if ((main_camera->GetCameraType() != ComponentCamera::CameraType::GOD) && (main_camera->GetCameraType() != ComponentCamera::CameraType::STATIC))
+    if (main_camera->GetCameraType() != ComponentCamera::CameraType::GOD)
         return;
 
     // Keyboard movement ---------------
@@ -87,36 +86,33 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
         App->input->GetMouseDelta(moved_x, moved_y);
 
         Rotate(-static_cast<float>(moved_x) * delta * rot_speed, static_cast<float>(moved_y) * delta * rot_speed);
-        if (main_camera->GetCameraType() == ComponentCamera::CameraType::GOD)
-            MovementController(delta);
+        MovementController(delta);
     }
 
     // Mouse ----------------------------
-    if (main_camera->GetCameraType() == ComponentCamera::CameraType::GOD)
+
+    const int scrolled_y = App->input->GetScrollDelta();
+    if (scrolled_y != 0)
+        Zoom(-static_cast<float>(scrolled_y) * zoom_speed);
+
+    if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN)
     {
-        const int scrolled_y = App->input->GetScrollDelta();
-        if (scrolled_y != 0)
-            Zoom(-static_cast<float>(scrolled_y) * zoom_speed);
+        int moved_x, moved_y;
+        App->input->GetMouseDelta(moved_x, moved_y);
+        Orbit(moved_x * 1.5f, moved_y * 1.5f);
+    }
+    if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
+    {
+        const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetTransform()->GetPosition()).Length();
+        GameObject* go = App->editor->GetSelectedGameObject();
+        FocusOnModel(go->GetTransform()->GetPosition(), distance);
+    }
+    if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
+    {
+        int moved_x, moved_y;
+        App->input->GetMouseDelta(moved_x, moved_y);
 
-        if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN)
-        {
-            int moved_x, moved_y;
-            App->input->GetMouseDelta(moved_x, moved_y);
-            Orbit(moved_x * 1.5f, moved_y * 1.5f);
-        }
-        if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
-        {
-            const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetTransform()->GetPosition()).Length();
-            GameObject* go = App->editor->GetSelectedGameObject();
-            FocusOnModel(go->GetTransform()->GetPosition(), distance);
-        }
-        if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
-        {
-            int moved_x, moved_y;
-            App->input->GetMouseDelta(moved_x, moved_y);
-
-            PerpendicularMovement((float)moved_x * delta * perpendicular_movement_speed, (float)moved_y * delta * perpendicular_movement_speed);
-        }
+        PerpendicularMovement((float)moved_x * delta * perpendicular_movement_speed, (float)moved_y * delta * perpendicular_movement_speed);
     }
 }
 
