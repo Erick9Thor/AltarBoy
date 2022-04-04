@@ -1,9 +1,7 @@
 #include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
-#ifdef PLAY_BUILD
-#include "ModuleCamera.h"
-#endif
+#include "modules/ModuleCamera.h"
 
 #include "importers/SceneImporter.h"
 #include "ModuleFileSystem.h"
@@ -76,6 +74,8 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
     delete main_scene;
     main_scene = SceneImporter::LoadScene(file_path);
+    App->camera->SetMainCamera(main_scene->GetMainCamera());
+    main_scene->Start();
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
@@ -83,7 +83,7 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
     SceneImporter::SaveScene(main_scene, file_path);
 }
 
-void Hachiko::ModuleSceneManager::LoadSceneNextFrame(const char* file_path) 
+void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
