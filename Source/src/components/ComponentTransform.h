@@ -1,11 +1,18 @@
 #pragma once
+
 #include "Component.h"
+
+#if defined(HACHIKO_API)
+// Do Nothing
+#elif defined(_MSC_VER)
+#define HACHIKO_API __declspec(dllexport)
+#endif
 
 namespace Hachiko
 {
     class GameObject;
 
-    class ComponentTransform : public Component
+    class HACHIKO_API ComponentTransform : public Component
     {
         enum class MatrixCalculationMode
         {
