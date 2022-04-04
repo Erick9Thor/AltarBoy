@@ -169,6 +169,8 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete skybox_program;
     stencil_program->CleanUp();
     delete stencil_program;
+    ui_program->CleanUp();
+    delete ui_program;
     return true;
 }
 
