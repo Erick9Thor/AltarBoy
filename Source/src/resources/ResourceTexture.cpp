@@ -3,12 +3,16 @@
 
 Hachiko::ResourceTexture::ResourceTexture()
 	: Resource(Resource::Type::TEXTURE)
-{}
+{
+}
 
 Hachiko::ResourceTexture::~ResourceTexture() 
 {
     if (id != 0)
+    {
         glDeleteTextures(1, &id);
+    }
+    
     delete[] data;
 }
 

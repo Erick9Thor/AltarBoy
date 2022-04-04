@@ -31,27 +31,23 @@ ImporterManager::~ImporterManager()
     }
 }
 
-void ImporterManager::Import(const std::string& asset_path, const Resource::Type asset_type)
+void ImporterManager::Import(const Resource::Type type, const std::string& path)
 {
     // TODO: This is a hack. We need to implement our own assert with message
-    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-    GetImporter(asset_type)->Import(asset_path.c_str());
+    assert(!path.empty() && "Import abort - Given an empty asset path");
+    GetImporter(type)->Import(path.c_str());
 }
 
 Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
 {
+    assert(!std::string(path).empty() && "Load abort - Given an empty asset path");
     return GetImporter(type)->Load(path);
 }
 
-bool Hachiko::ImporterManager::CheckIfImported(const char* path, Resource::Type type) const
+bool Hachiko::ImporterManager::CheckIfImported(Resource::Type type, const char* path) const
 {
+    assert(!std::string(path).empty() && "CheckIfImported abort - Given an empty asset path");
     return GetImporter(type)->CheckIfImported(path);
-    std::filesystem::path model_name(path);
-    model_name = model_name.filename().replace_extension();
-    std::string fullPath = App->preferences->GetResourcesPreference()->GetLibraryPath(Resource::Type::MODEL);
-    fullPath.append(model_name.string());
-
-    return std::filesystem::exists(fullPath);
 }
 
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const

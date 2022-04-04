@@ -84,13 +84,13 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
 
     // Copy to assets if it does not exist
     std::filesystem::path destination = preferences->GetAssetsPath(type);
+
     // Relative asset path
     std::filesystem::path asset_path = destination.append(path.filename().c_str());
     App->file_sys->Copy(path.string().c_str(), asset_path.string().c_str(), true);
 
-
     // Attempt import from assets
-    if (!importer_manager.CheckIfImported(path.string().c_str(), type))
+    if (!importer_manager.CheckIfImported(type, path.string().c_str()))
     {
         last_resource_path = path; // We may need this to import more assets from this path
         ImportResource(asset_path, type);
@@ -184,7 +184,7 @@ ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& mater
 
 ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture_name, const std::string& asset_path)
 {
-    if (texture_name.empty())
+    if (texture_name.empty() && asset_path.empty())
     {
         return nullptr;
     }
@@ -195,12 +195,13 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
         return it->second;
     }
 
-    auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_name.c_str()));
+    std::string texture_path = App->preferences->GetResourcesPreference()->GetLibraryPath(Resource::Type::TEXTURE) + texture_name;
+    auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_path.c_str()));
     
     if (res == nullptr && !asset_path.empty())
     {
-        Hachiko::TextureImporter texture_importer;
-        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str()));
+        importer_manager.Import(Resource::Type::TEXTURE, asset_path.c_str());
+        auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_path.c_str()));
     }
     
     // TODO: This is a hack. We need to implement our own assert with message
@@ -224,5 +225,5 @@ void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::st
 
 void ModuleResources::ImportResource(const std::filesystem::path& asset_path, const Resource::Type asset_type)
 {
-    importer_manager.Import(asset_path.string(), asset_type);
+    importer_manager.Import(asset_type, asset_path.string());
 }

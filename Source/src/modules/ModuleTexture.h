@@ -28,8 +28,8 @@ namespace Hachiko
     class ModuleTexture final : public Module
     {
     public:
-        ModuleTexture();
-        ~ModuleTexture() override;
+        ModuleTexture() = default;
+        ~ModuleTexture() override = default;
 
         bool Init() override;
         bool CleanUp() override;
@@ -49,7 +49,7 @@ namespace Hachiko
 
         void OptionsMenu() const;
 
-    private:
+    public:
         const short devil_version = IL_VERSION;
         static unsigned int LoadImg(const char* path, bool flip = true);
         static void DeleteImg(unsigned& img_id);

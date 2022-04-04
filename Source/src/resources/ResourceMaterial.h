@@ -79,8 +79,22 @@ namespace Hachiko
                 normal = res;
                 break;
             }
+
+            res = nullptr;
         }
 
+        std::string TypeToString(ResourceTexture::Type type)
+        {
+            switch (type)
+            {
+            case ResourceTexture::Type::DIFFUSE:
+                return "Difusse";
+            case ResourceTexture::Type::SPECULAR:
+                return "Specular";
+            case ResourceTexture::Type::NORMALS:
+                return "Normals";
+            }
+        }
         // TODO: Move this memebers to private
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
@@ -90,6 +104,8 @@ namespace Hachiko
         float shininess = 50.0f;
 
     private:
+        void AddTexture(ResourceTexture::Type type);
+        void RemoveTexture(ResourceTexture::Type type);
         std::string name;
     };
 }

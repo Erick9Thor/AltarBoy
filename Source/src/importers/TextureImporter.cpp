@@ -6,7 +6,6 @@
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleFileSystem.h"
 #include "modules/ModuleTexture.h"
-#include "modules/ModuleResources.h"
 
 Hachiko::TextureImporter::TextureImporter() 
 	: Importer(Importer::Type::TEXTURE)
@@ -22,13 +21,12 @@ void Hachiko::TextureImporter::Import(const char* path)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 {
-    const std::string file_path(path);
-    if (!std::filesystem::exists(file_path))
+    if (!std::filesystem::exists(path))
     {
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.c_str());
+    char* file_buffer = App->file_sys->Load(path);
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -48,13 +46,15 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
     texture->mag_filter = header[6];
     texture->wrap = header[7];
     texture->data_size = header[8];
-
+    texture->id = App->texture->LoadImg(path);
     size_bytes = path_size;
     texture->path = "";
     for (unsigned i = 0; i < size_bytes; ++i)
+    {
         texture->path += cursor[i];
-    cursor += size_bytes;
+    }
 
+    cursor += size_bytes;
     size_bytes = texture->data_size;
     texture->data = new byte[size_bytes];
     memcpy(texture->data, cursor, size_bytes);
@@ -117,7 +117,24 @@ Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID
         uid = Hachiko::UUID::GenerateUID();
     }
 
-    ResourceTexture* texture = App->texture->LoadResource(uid, path, false); // TODO: could we extract ModuleTexture functionality to this importer?
+    std::filesystem::path texture_path = path;
+    ResourceTexture* texture = new ResourceTexture();
+    texture->path = path;
+    texture->SetName(texture_path.filename().replace_extension().string().c_str());
+    texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+    texture->mag_filter = GL_LINEAR;
+    texture->wrap = GL_CLAMP;
+    texture->bpp = ilGetInteger(IL_IMAGE_BPP);
+    texture->width = ilGetInteger(IL_IMAGE_WIDTH);
+    texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
+    texture->format = ilGetInteger(IL_IMAGE_FORMAT);
+
+    byte* data = ilGetData();
+    texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+    texture->data = new byte[texture->data_size];
+    memcpy(texture->data, data, texture->data_size);
+
+    texture->GenerateBuffer();
 
     if (texture != nullptr)
     {

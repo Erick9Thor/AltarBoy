@@ -4,10 +4,6 @@
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleResources.h"
 
-Hachiko::ModuleTexture::ModuleTexture() = default;
-
-Hachiko::ModuleTexture::~ModuleTexture() = default;
-
 bool Hachiko::ModuleTexture::Init()
 {
     ilInit();
@@ -37,7 +33,7 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
     texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
     texture->mag_filter = GL_LINEAR;
     texture->wrap = GL_CLAMP;
-
+    texture->id = img_id;
     texture->bpp = ilGetInteger(IL_IMAGE_BPP);
     texture->width = ilGetInteger(IL_IMAGE_WIDTH);
     texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
@@ -61,29 +57,30 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
     texture.path = path;
     unsigned int img_id = LoadImg(path, flip);
 
-    if (img_id != 0)
+    if (!img_id)
     {
-        glGenTextures(1, &texture.id);
-        glBindTexture(GL_TEXTURE_2D, texture.id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     ilGetInteger(IL_IMAGE_BPP),
-                     texture.width = ilGetInteger(IL_IMAGE_WIDTH),
-                     texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
-                     0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
-                     GL_UNSIGNED_BYTE,
-                     ilGetData());
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-        DeleteImg(img_id);
-        texture.loaded = true; // False by default
+        return texture;
     }
+    glGenTextures(1, &texture.id);
+    glBindTexture(GL_TEXTURE_2D, texture.id);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+    glTexImage2D(GL_TEXTURE_2D,
+                    0,
+                    ilGetInteger(IL_IMAGE_BPP),
+                    texture.width = ilGetInteger(IL_IMAGE_WIDTH),
+                    texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
+                    0,
+                    ilGetInteger(IL_IMAGE_FORMAT),
+                    GL_UNSIGNED_BYTE,
+                    ilGetData());
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    DeleteImg(img_id);
+    texture.loaded = true; // False by default
     return texture;
 }
 
@@ -98,7 +95,6 @@ void Hachiko::ModuleTexture::Unload(Texture& texture)
 
 Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(const char* paths[6])
 {
-    constexpr bool flip = true;
     TextureCube cube;
     cube.loaded = true;
 
@@ -108,7 +104,7 @@ Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(const char* paths[6])
     // Expected file order x, -x, y, -y, z, -z
     for (int i = 0; i < 6; ++i)
     {
-        const unsigned int img_id = LoadImg(paths[i], flip);
+        const unsigned int img_id = LoadImg(paths[i], true);
         iluFlipImage();
         if (img_id == 0)
         {
@@ -165,9 +161,14 @@ void Hachiko::ModuleTexture::OptionsMenu() const
     static int min_filter = 3; // Default is GL_NEAREST_MIPMAP_LINEAR
 
     if (ImGui::Combo("Mag Filter", &mag_filter, labels_mag, IM_ARRAYSIZE(labels_mag)))
+    {
         SetOption(GL_TEXTURE_MAG_FILTER, values_mag[mag_filter]);
+    }
+
     if (ImGui::Combo("Min Filter", &min_filter, labels_min, IM_ARRAYSIZE(labels_min)))
+    {
         SetOption(GL_TEXTURE_MIN_FILTER, values_min[min_filter]);
+    }
 }
 
 unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
@@ -176,10 +177,16 @@ unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
     ilGenImages(1, &img_id); // Grab a new image name.
     ilBindImage(img_id);
     if (!ilLoadImage(path))
+    {
         return 0;
+    }
+    
     ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
     if (flip)
+    {
         iluFlipImage();
+    }
+
     return img_id;
 }
 
