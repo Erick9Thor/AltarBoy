@@ -1,4 +1,5 @@
 #pragma once
+
 #include <scripting/Script.h>
 
 namespace Hachiko
@@ -18,8 +19,9 @@ namespace Hachiko
 			void OnUpdate() override;
 
 		private:
-			SERIALIZE_FIELD(std::vector<int>, _int_vector);
-			SERIALIZE_FIELD(int, _counter);
+			SERIALIZE_FIELD(math::float3, _initial_position);
+			SERIALIZE_FIELD(math::float3, _position_offset);
+			SERIALIZE_FIELD(float, _lerp_position);
 		};
 	}
 }

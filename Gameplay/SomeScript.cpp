@@ -1,12 +1,13 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "SomeScript.h"
-#include <Globals.h>
+#include "components/ComponentTransform.h"
 
 Hachiko::Scripting::SomeScript::SomeScript(GameObject* game_object)
 	: Script(game_object, "SomeScript")
-	, _counter(0)
-	, _int_vector({})
 {
+	_initial_position = game_object->GetTransform()->GetPosition();
+	_position_offset = math::float3(3.0f, 0.0f, 0.0f);
+	_lerp_position = 0.0f;
 }
 
 void Hachiko::Scripting::SomeScript::OnStart()
@@ -15,14 +16,22 @@ void Hachiko::Scripting::SomeScript::OnStart()
 
 void Hachiko::Scripting::SomeScript::OnUpdate()
 {
-	HE_LOG("SomeScript::OnUpdate");
+	static const float duration = 1.5f;
 
-	_counter++;
+	_lerp_position += Time::DeltaTime() / duration;
+	_lerp_position = _lerp_position > 1.0f ? 1.0f : _lerp_position;
 
-	if (_counter % 5 == 0)
+	math::float3 current_position = math::float3::Lerp(_initial_position,
+		_initial_position + _position_offset, _lerp_position);
+
+	game_object->GetTransform()->SetPosition(current_position);
+
+	if (_lerp_position == 1.0f)
 	{
-		_int_vector.push_back(_counter);
+		_lerp_position = 0.0f;
 
-		HE_LOG("HELLO %i", _counter);
+		_initial_position = current_position;
+
+		_position_offset = -_position_offset;
 	}
 }

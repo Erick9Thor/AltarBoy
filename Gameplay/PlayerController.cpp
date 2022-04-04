@@ -1,7 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
-#include <core/GameObject.h>
-#include <Globals.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -11,12 +9,14 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnStart()
 {
-	HE_LOG("PlayerController::This is experimentation no 0 for OnStart.");
+	//HE_LOG("PlayerController::This is experimentation no 0 for OnStart.");
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	HE_LOG("PlayerController::This is experimentation no 0 for OnUpdate.");
+	HE_LOG("DeltaTime: %f", Time::DeltaTime());
+
+	/*HE_LOG("PlayerController::This is experimentation no 0 for OnUpdate.");
 
 	++_integer_field;
 	_string_field = "This is string field";
@@ -32,5 +32,5 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	HE_LOG("HOW ARE YOU RUNNING?");
 
 	HE_LOG("With GetComponent: %s", 
-		player_controller_script->_string_field.c_str());
+		player_controller_script->_string_field.c_str());*/
 }

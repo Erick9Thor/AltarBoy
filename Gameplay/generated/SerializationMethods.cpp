@@ -42,21 +42,30 @@ void Hachiko::Scripting::SomeScript::DeserializeFrom(std::unordered_map<std::str
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
-	if(serialized_fields.find("_int_vector") != serialized_fields.end())
+	if(serialized_fields.find("_initial_position") != serialized_fields.end())
 	{
-		const SerializedField& _int_vector_sf = serialized_fields["_int_vector"];
-		if (_int_vector_sf.type_name == "std::vector<int>")
+		const SerializedField& _initial_position_sf = serialized_fields["_initial_position"];
+		if (_initial_position_sf.type_name == "math::float3")
 		{
-			_int_vector = std::any_cast<std::vector<int>>(_int_vector_sf.copy);
+			_initial_position = std::any_cast<math::float3>(_initial_position_sf.copy);
 		}
 	}
 
-	if(serialized_fields.find("_counter") != serialized_fields.end())
+	if(serialized_fields.find("_position_offset") != serialized_fields.end())
 	{
-		const SerializedField& _counter_sf = serialized_fields["_counter"];
-		if (_counter_sf.type_name == "int")
+		const SerializedField& _position_offset_sf = serialized_fields["_position_offset"];
+		if (_position_offset_sf.type_name == "math::float3")
 		{
-			_counter = std::any_cast<int>(_counter_sf.copy);
+			_position_offset = std::any_cast<math::float3>(_position_offset_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_lerp_position") != serialized_fields.end())
+	{
+		const SerializedField& _lerp_position_sf = serialized_fields["_lerp_position"];
+		if (_lerp_position_sf.type_name == "float")
+		{
+			_lerp_position = std::any_cast<float>(_lerp_position_sf.copy);
 		}
 	}
 }
@@ -65,7 +74,9 @@ void Hachiko::Scripting::SomeScript::SerializeTo(std::unordered_map<std::string,
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
-	serialized_fields["_int_vector"] = SerializedField(std::string("_int_vector"), std::make_any<std::vector<int>>(_int_vector), std::string("std::vector<int>"));
+	serialized_fields["_initial_position"] = SerializedField(std::string("_initial_position"), std::make_any<math::float3>(_initial_position), std::string("math::float3"));
 
-	serialized_fields["_counter"] = SerializedField(std::string("_counter"), std::make_any<int>(_counter), std::string("int"));
+	serialized_fields["_position_offset"] = SerializedField(std::string("_position_offset"), std::make_any<math::float3>(_position_offset), std::string("math::float3"));
+
+	serialized_fields["_lerp_position"] = SerializedField(std::string("_lerp_position"), std::make_any<float>(_lerp_position), std::string("float"));
 }
