@@ -32,7 +32,7 @@ namespace Hachiko
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
-        void RemoveComponent(Component* component);
+        bool AttemptRemoveComponent(Component* component);
 
         Component* CreateComponent(Component::Type type);
         void RemoveChild(GameObject* gameObject);
@@ -97,7 +97,7 @@ namespace Hachiko
         }
 
         template<typename RetComponent>
-        RetComponent* GetComponent()
+        RetComponent* GetComponent() const
         {
             const Component::Type type = RetComponent::GetType();
             for (auto& component : components)

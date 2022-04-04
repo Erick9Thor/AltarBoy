@@ -225,3 +225,20 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera,
 
     return selected;
 }
+
+float2 Hachiko::WindowScene::ImguiToScreenPos(const float2& mouse_pos) const
+{
+    float2 mouse_viewport_pos = float2(mouse_pos.x - guizmo_rect_origin.x, mouse_pos.y - guizmo_rect_origin.y);
+    float2 center = texture_size / 2;
+    float2 mouse_ui_pos = float2(mouse_viewport_pos.x - center.x, (-mouse_viewport_pos.y) + center.y);
+    return mouse_ui_pos;
+}
+
+float2 Hachiko::WindowScene::GetInterfaceClickPos() const
+{
+    // sdl -> (0, 0) top left, (w, h) bottom right
+    // interface -> center 0,0 top right pos bot left neg
+    const ImVec2 mouse_pos = ImGui::GetMousePos();
+    return ImguiToScreenPos(float2(mouse_pos.x, mouse_pos.y));
+}
+

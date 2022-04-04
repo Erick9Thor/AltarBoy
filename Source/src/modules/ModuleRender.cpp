@@ -7,6 +7,7 @@
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
+#include "ModuleUserInterface.h"
 
 #include "components/ComponentCamera.h"
 
@@ -124,13 +125,21 @@ void Hachiko::ModuleRender::SetGLOptions()
 }
 
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
-{
+{    
     ComponentCamera* camera = App->camera->GetMainCamera();
+    const Scene* active_scene = App->scene_manager->GetActiveScene();   
 
-    // Using debug camera to test culling
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+    ManageResolution(camera);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
+
+    if (active_scene == nullptr)
+    {
+        return UpdateStatus::UPDATE_CONTINUE;
+    }    
 
     App->program->UpdateCamera(camera);
-    const Scene* active_scene = App->scene_manager->GetActiveScene();
+
     ComponentCamera* culling = active_scene->GetCullingCamera();
 
     const ComponentDirLight* dir_light = nullptr;
@@ -140,6 +149,10 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
 
     Draw(App->scene_manager->GetActiveScene(), camera, culling);
+    
+    App->ui->DrawUI(active_scene);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -220,7 +233,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }
-
 #ifndef PLAY_BUILD
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 #endif

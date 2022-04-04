@@ -79,6 +79,7 @@ namespace Hachiko
 
         // --- Importer --- // TODO: Move to importer
         GameObject* LoadFBX(const std::string& path);
+        GameObject* LoadImageObject(const std::string& path);
 
     private:
         // TODO: Fix leaks from resource material pointers when doing import system
