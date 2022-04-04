@@ -21,6 +21,7 @@ public:
 
     void Update() override;
 
+    virtual void OnAwake() {};
     virtual void OnStart() {};
     virtual void OnUpdate() {};
     virtual void OnDisable() {};
