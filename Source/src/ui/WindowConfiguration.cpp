@@ -8,6 +8,10 @@
 
 #include "components/ComponentCamera.h"
 
+// TODO: REMOVE
+#include "modules/ModuleSceneManager.h"
+//
+
 Hachiko::WindowConfiguration::WindowConfiguration() :
     Window("Configuration", true) {}
 
@@ -30,6 +34,14 @@ void Hachiko::WindowConfiguration::Update()
         if (ImGui::Button("Toggle editor camera"))
         {
             App->camera->ActivateEditorCamera();
+        }
+        if (ImGui::Button("Load scene: first_deliver_scene.scene"))
+        {
+            App->scene_manager->LoadSceneNextFrame(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
+        }
+        if (ImGui::Button("Load scene: untitled.scene"))
+        {
+            App->scene_manager->LoadSceneNextFrame(ASSETS_FOLDER "/Scenes/untitled.scene");
         }
         //
 

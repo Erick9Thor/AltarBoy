@@ -48,7 +48,12 @@ namespace Hachiko
         void LoadScene(const char* file_path);
         void SaveScene(const char* file_path) const;
 
+        void LoadSceneNextFrame(const char* file_path);
+
     private:
         Scene* main_scene = nullptr;
+
+        bool scene_ready_to_load = false;
+        std::string scene_to_load;
     };
 }

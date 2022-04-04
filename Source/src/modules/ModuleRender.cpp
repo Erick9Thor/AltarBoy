@@ -129,35 +129,6 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     ComponentCamera* camera = App->camera->GetMainCamera();
     const Scene* active_scene = App->scene_manager->GetActiveScene();   
 
-    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-    ManageResolution(camera);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
-
-    if (active_scene == nullptr)
-    {
-        return UpdateStatus::UPDATE_CONTINUE;
-    }    
-
-    App->program->UpdateCamera(camera);
-
-    ComponentCamera* culling = active_scene->GetCullingCamera();
-
-    const ComponentDirLight* dir_light = nullptr;
-    if (!active_scene->dir_lights.empty())
-        dir_light = active_scene->dir_lights[0];
-
-    App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
-
-    Draw(App->scene_manager->GetActiveScene(), camera, culling);
-    
-    App->ui->DrawUI(active_scene);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return UpdateStatus::UPDATE_CONTINUE;
-}
-
-void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
-{
 #ifdef PLAY_BUILD
     int width, height;
     App->window->GetWindowSize(width, height);
@@ -170,13 +141,46 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glStencilMask(0x00); // Prevent background from filling stencil
 #else
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-
     ManageResolution(camera);
+    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
 #endif
+    ManageResolution(camera);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
 
+    if (active_scene == nullptr)
+    {
+        return UpdateStatus::UPDATE_CONTINUE;
+    }    
+
+    App->program->UpdateCamera(camera);
+
+#ifdef PLAY_BUILD
+    ComponentCamera* culling = App->camera->GetMainCamera();
+#else
+    ComponentCamera* culling = active_scene->GetCullingCamera();
+#endif
+
+    const ComponentDirLight* dir_light = nullptr;
+    if (!active_scene->dir_lights.empty())
+        dir_light = active_scene->dir_lights[0];
+
+    App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
+
+    Draw(App->scene_manager->GetActiveScene(), camera, culling);
+    
+    App->ui->DrawUI(active_scene);
+
+#ifndef PLAY_BUILD
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#endif
+    return UpdateStatus::UPDATE_CONTINUE;
+}
+
+void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
+{
     if (draw_skybox)
     {
         scene->GetSkybox()->Draw(camera);
@@ -233,9 +237,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }
-#ifndef PLAY_BUILD
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-#endif
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)

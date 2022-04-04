@@ -19,7 +19,7 @@ bool Hachiko::ModuleSceneManager::Init()
     // main_scene = new Scene();
 
     //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
-    main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/untitled.scene");
+    main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
 
     //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
@@ -36,6 +36,12 @@ bool Hachiko::ModuleSceneManager::Init()
 
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
+    if (scene_ready_to_load)
+    {
+        scene_ready_to_load = false;
+        LoadScene(scene_to_load.c_str());
+    }
+
     main_scene->Update();
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -75,4 +81,10 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
 {
     SceneImporter::SaveScene(main_scene, file_path);
+}
+
+void Hachiko::ModuleSceneManager::LoadSceneNextFrame(const char* file_path) 
+{
+    scene_ready_to_load = true;
+    scene_to_load = file_path;
 }
