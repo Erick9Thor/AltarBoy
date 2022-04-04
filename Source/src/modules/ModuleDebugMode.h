@@ -3,7 +3,24 @@
 #include "core/hepch.h"
 
 #include "Application.h"
+#include "utils/Timer.h"
+
 #include "ModuleInput.h"
+#include "ModuleWindow.h"
+#include "ModuleRender.h"
+
+
+struct HardwareInfo {
+
+	unsigned char* system;
+	int cpu;
+	float ram;
+	unsigned char* gpu;
+	unsigned char* gpu_vendor;
+	int vram_capacity;
+	int vram_free;
+	SDL_version sdl_version;
+};
 
 namespace Hachiko
 {
@@ -24,8 +41,15 @@ namespace Hachiko
 
 	private:
 		void DrawGUI();
+		ImGuiWindowFlags SetupWindow();
+		void UpdateRenderValues();
 	private:
 		bool is_gui_active;
+		int fps, poly_on_screen, poly_total;
+		std::vector<float> fps_buffer;
+		float3 player_pos;
+		HardwareInfo hw_info;
+		ImGuiWindowFlags window_flags;
 	};
 }
 
