@@ -389,6 +389,7 @@
     </ClCompile>
     <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
     <ClCompile Include="src\LogFunction.cpp" />
+    <ClCompile Include="src\Gameplay.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1008,6 +1009,7 @@
       <Filter>Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\HachikoApiDefine.h" />
+    <ClInclude Include="src\Gameplay.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

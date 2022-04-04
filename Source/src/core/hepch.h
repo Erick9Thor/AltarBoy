@@ -53,6 +53,7 @@
 
 //project includes
 #include "Globals.h"
+#include "Gameplay.h"
 #include "Application.h"
 #include "modules/Module.h"
 #include "RenderList.h"

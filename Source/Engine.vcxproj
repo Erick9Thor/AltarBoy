@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Gameplay.cpp" />
     <ClCompile Include="src\LogFunction.cpp" />
     <ClCompile Include="src\scripting\serialization\ISerializable.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
@@ -537,6 +538,7 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Gameplay.h" />
     <ClInclude Include="src\HachikoApiDefine.h" />
     <ClInclude Include="src\scripting\serialization\ISerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
