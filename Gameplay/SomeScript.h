@@ -4,24 +4,25 @@
 
 namespace Hachiko
 {
-	class GameObject;
-	namespace Scripting
-	{
-		class SomeScript : public Script
-		{
-			SERIALIZATION_METHODS(false)
+class GameObject;
 
-		public:
-			SomeScript(GameObject* game_object);
-			~SomeScript() override = default;
+namespace Scripting
+{
+class SomeScript : public Script
+{
+	SERIALIZATION_METHODS(false)
 
-			void OnStart() override;
-			void OnUpdate() override;
+public:
+	SomeScript(GameObject* game_object);
+	~SomeScript() override = default;
 
-		private:
-			SERIALIZE_FIELD(math::float3, _initial_position);
-			SERIALIZE_FIELD(math::float3, _position_offset);
-			SERIALIZE_FIELD(float, _lerp_position);
-		};
-	}
+	void OnStart() override;
+	void OnUpdate() override;
+
+private:
+	SERIALIZE_FIELD(math::float3, _initial_position);
+	SERIALIZE_FIELD(math::float3, _position_offset);
+	SERIALIZE_FIELD(float, _lerp_position);
+};
+}
 }
