@@ -54,7 +54,7 @@ namespace Hachiko
 
         void SetSelectedGO(GameObject* const selected_game_object)
         {
-            this->selected_go = selected_game_object;
+            selected_go = selected_game_object;
         }
 
         [[nodiscard]] const WindowScene* GetSceneWindow() const
