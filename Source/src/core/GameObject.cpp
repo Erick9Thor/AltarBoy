@@ -16,7 +16,10 @@
 #include "components/ComponentButton.h"
 #include "Components/ComponentProgressBar.h"
 
-
+// TODO: REMOVE
+#include "Application.h"
+#include "modules/ModuleSceneManager.h"
+//
 
 #include <debugdraw.h>
 
@@ -170,8 +173,41 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::Start() 
+{
+    transform->Start();
+
+    for (Component* component : components)
+    {
+        component->Start();
+    }
+
+    for (GameObject* child : children)
+    {
+        if (child->IsActive())
+        {
+            child->Start();
+        }
+    }
+}
+
 void Hachiko::GameObject::Update()
 {
+    // TODO: REMOVE
+    if (name == "Gun")
+    {
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition());
+        if (go != nullptr)
+        {
+            ImGui::Text(go->name.c_str());
+        }
+        else
+        {
+            ImGui::Text("Nothing");
+        }
+    }
+    //
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();

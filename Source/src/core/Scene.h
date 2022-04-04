@@ -27,11 +27,14 @@ namespace Hachiko
         void CleanScene() const;
 
         // --- Life cycle Scene --- //
+        void Start() const;
         void Update() const;
         void Save(JsonFormatterValue j_scene) const;
         void Load(JsonFormatterValue j_scene);
 
         // --- GameObject Management --- //
+        ComponentCamera* GetMainCamera() const;
+        ComponentCamera* SearchMainCamera(GameObject* game_object) const;
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(const char* name, GameObject* parent = nullptr);
@@ -66,6 +69,7 @@ namespace Hachiko
             return skybox;
         }
 
+        [[nodiscard]] GameObject* RayCast(const float3& origin, const float3& destination) const;
         [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
 
         void CreateLights();

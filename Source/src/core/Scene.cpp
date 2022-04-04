@@ -47,6 +47,31 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     quadtree->Remove(game_object);
 }
 
+Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
+{
+    return SearchMainCamera(root);
+}
+
+Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
+{
+    ComponentCamera* component_camera = nullptr;
+    component_camera = game_object->GetComponent<ComponentCamera>();
+    if (component_camera != nullptr)
+    {
+        return component_camera;
+    }
+
+    for (GameObject* child : game_object->children)
+    {
+        component_camera = SearchMainCamera(child);
+        if (component_camera != nullptr)
+        {
+            return component_camera;
+        }
+    }
+    return nullptr;
+}
+
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
 {
     GameObject* new_parent = parent ? parent : root;
@@ -121,6 +146,12 @@ void Hachiko::Scene::Load(JsonFormatterValue j_scene)
     root = new GameObject(nullptr, "Root", j_root["Uid"]);
     root->scene_owner = this;
     root->Load(j_root);
+}
+
+Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+{
+    LineSegment line_seg(origin, destination);
+    return RayCast(line_seg);
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
@@ -220,6 +251,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
+}
+
+void Hachiko::Scene::Start() const 
+{
+    root->Start();
 }
 
 void Hachiko::Scene::Update() const

@@ -25,7 +25,32 @@ namespace Hachiko
 
         [[nodiscard]] ComponentCamera* GetMainCamera() const
         {
+            if (editor_camera_enable || main_camera == nullptr)
+            {
+                return editor_camera;
+            }
             return main_camera;
+        }
+        void SetMainCamera(ComponentCamera* camera) 
+        {
+            if (camera != nullptr)
+            {
+                main_camera = camera;
+                editor_camera_enable = false;
+            }
+            else
+            {
+                main_camera = nullptr;
+                editor_camera_enable = true;
+            }
+        }
+        void ActivateEditorCamera()
+        {
+            editor_camera_enable = !editor_camera_enable;
+        }
+        void ActivateEditorCamera(bool activate) 
+        {
+            editor_camera_enable = activate;
         }
 
         // Camera actions
@@ -36,7 +61,10 @@ namespace Hachiko
         void PerpendicularMovement(float motion_x, float motion_y) const;
 
     private:
-        GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
+        bool editor_camera_enable = true;
+        GameObject* editor_camera_game_object = nullptr;
+        ComponentCamera* editor_camera = nullptr;
+
         ComponentCamera* main_camera = nullptr;
     };
 }

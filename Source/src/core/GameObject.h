@@ -38,11 +38,24 @@ namespace Hachiko
         void RemoveChild(GameObject* gameObject);
 
         //void Destroy();
+        void Start();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
         void DrawStencil(ComponentCamera* camera, Program* program);
 
+        void SetActive(bool set_active) 
+        {
+            if (active == set_active)
+            {
+                return;
+            }
+            active = set_active;
+            if (active)
+            {
+                Start();
+            }
+        }
         bool IsActive() const
         {
             return active;
