@@ -9,5 +9,14 @@
 
 // add headers that you want to pre-compile here
 #include "framework.h"
+#include <string>
+#include <vector>
+#include <unordered_map>
+
+#include <Gameplay.h>
+#include <Globals.h>
+#include <core/GameObject.h>
+
+#include <MathGeoLib.h>
 
 #endif //GAMEPLAY_PCH_H
