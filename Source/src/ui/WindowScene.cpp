@@ -86,17 +86,32 @@ void Hachiko::WindowScene::ToolbarMenu() const
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running, "Pause"))
     {
-        App->scene_manager->AttemptScenePause();
+        if (!GameTimer::paused)
+        {
+            GameTimer::Pause();
+        }
     }
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running, "Play"))
     {
-        App->scene_manager->AttemptScenePlay();
+        if (!GameTimer::running)
+        {
+            App->scene_manager->SaveScene("tmp_scene.scene");
+            GameTimer::Start();
+        }
+        else if (GameTimer::paused)
+        {
+            GameTimer::Resume();
+        }
     }
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running, "Stop"))
     {
-        App->scene_manager->AttemptSceneStop();
+        if (GameTimer::running)
+        {
+            GameTimer::Stop();
+            App->scene_manager->LoadScene("tmp_scene.scene");
+        }
     }
 
     ImGui::Separator();
