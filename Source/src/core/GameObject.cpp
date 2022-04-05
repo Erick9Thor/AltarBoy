@@ -173,22 +173,37 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::SetActive(bool set_active)
+{
+    if (!active && set_active)
+    {
+        Start();
+    }
+    active = set_active;
+}
+
+
 void Hachiko::GameObject::Start() 
 {
-    transform->Start();
+    static bool already_called = false;
 
-    for (Component* component : components)
+    if (!already_called)
     {
-        component->Start();
-    }
-
-    for (GameObject* child : children)
-    {
-        if (child->IsActive())
+        transform->Start();
+        for (Component* component : components)
         {
-            child->Start();
+            component->Start();
         }
-    }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Start();
+            }
+        }
+        already_called = true;
+    }  
 }
 
 void Hachiko::GameObject::Update()

@@ -44,18 +44,8 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) const;
         void DrawStencil(ComponentCamera* camera, Program* program);
 
-        void SetActive(bool set_active) 
-        {
-            if (active == set_active)
-            {
-                return;
-            }
-            active = set_active;
-            if (active)
-            {
-                Start();
-            }
-        }
+        void SetActive(bool set_active);
+
         bool IsActive() const
         {
             return active;
