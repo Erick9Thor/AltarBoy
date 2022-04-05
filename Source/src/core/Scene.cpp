@@ -5,6 +5,7 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMesh.h"
 #include "components/ComponentMaterial.h"
+#include "components/ComponentImage.h"
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"
@@ -46,6 +47,31 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     quadtree->Remove(game_object);
 }
 
+Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
+{
+    return SearchMainCamera(root);
+}
+
+Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
+{
+    ComponentCamera* component_camera = nullptr;
+    component_camera = game_object->GetComponent<ComponentCamera>();
+    if (component_camera != nullptr)
+    {
+        return component_camera;
+    }
+
+    for (GameObject* child : game_object->children)
+    {
+        component_camera = SearchMainCamera(child);
+        if (component_camera != nullptr)
+        {
+            return component_camera;
+        }
+    }
+    return nullptr;
+}
+
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
 {
     GameObject* new_parent = parent ? parent : root;
@@ -63,7 +89,6 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(const char* name, GameO
 
 Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
 {
-    // TODO: Set name from filename
     const auto model_path = path.substr(0, path.find_last_of("/\\") + 1);
     const auto file_name = path.substr(path.find_last_of("/\\") + 1);
     const auto name = file_name.substr(0, file_name.find_last_of('.'));
@@ -86,6 +111,22 @@ Hachiko::GameObject* Hachiko::Scene::LoadFBX(const std::string& path)
     return model;
 }
 
+Hachiko::GameObject* Hachiko::Scene::LoadImageObject(const std::string& path)
+{
+    const auto file_name = path.substr(path.find_last_of("/\\") + 1);
+    const auto name = file_name.substr(0, file_name.find_last_of('.'));
+
+    GameObject* game_object = nullptr;
+    game_object = CreateNewGameObject(name.c_str(), root);
+    game_object->CreateComponent(Component::Type::TRANSFORM_2D);
+    game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
+    game_object->CreateComponent(Component::Type::IMAGE);
+    ComponentImage* image = game_object->GetComponent<ComponentImage>();
+    image->Import(path.c_str());
+
+    return game_object;
+}
+
 void Hachiko::Scene::Save(JsonFormatterValue j_scene) const
 {
     // GameObjects
@@ -105,6 +146,12 @@ void Hachiko::Scene::Load(JsonFormatterValue j_scene)
     root = new GameObject(nullptr, "Root", j_root["Uid"]);
     root->scene_owner = this;
     root->Load(j_root);
+}
+
+Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+{
+    LineSegment line_seg(origin, destination);
+    return RayCast(line_seg);
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
@@ -204,6 +251,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
+}
+
+void Hachiko::Scene::Start() const 
+{
+    root->Start();
 }
 
 void Hachiko::Scene::Update() const

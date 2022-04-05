@@ -18,7 +18,7 @@ class HACHIKO_API Script : public Component, public ISerializable
     SERIALIZATION_METHODS(true)
 public:
     virtual ~Script() = default;
-
+    
     void Update() override;
 
     virtual void OnAwake() {};

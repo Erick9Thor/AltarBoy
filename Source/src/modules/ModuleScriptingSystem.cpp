@@ -140,7 +140,8 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
         HE_LOG("\tCreated the new version.");
 
         // Remove the old script from it's owner:
-        game_object->RemoveComponent(component);
+        game_object->ForceRemoveComponent(component);
+        
         HE_LOG("\tRemoved the old version from components list.");
 
         if (new_script != nullptr)
@@ -271,7 +272,7 @@ void Hachiko::ModuleScriptingSystem::DeleteAllScriptsOnCurrentScene() const
     // be deleted/freed before freeing the dll:
     for (Component* script : scripts)
     {
-        script->GetGameObject()->RemoveComponent(script);
+        script->GetGameObject()->ForceRemoveComponent(script);
         
         delete script;
         

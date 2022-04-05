@@ -1,5 +1,6 @@
 #pragma once
-#include "Component.h"
+
+#include "components/Component.h"
 #include <MathGeoLib.h>
 
 #define DEFAULT_CAMERA_WIDTH 1920

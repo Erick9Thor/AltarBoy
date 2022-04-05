@@ -36,17 +36,37 @@ public:
     void SetNewParent(GameObject* new_parent);
 
     void AddComponent(Component* component);
-    void RemoveComponent(Component* component);
+    bool AttemptRemoveComponent(Component* component);
+    /// <summary>
+    /// Do not use this unless it's mandatory. Use AttemptRemoveComponent 
+    /// instead.
+    /// </summary>
+    /// <param name="component">Component to be removed.</param>
+    void ForceRemoveComponent(Component* component);
 
     Component* CreateComponent(Component::Type type);
     void RemoveChild(GameObject* gameObject);
 
     //void Destroy();
+    void Start();
     void Update();
     void DrawAll(ComponentCamera* camera, Program* program) const;
     void Draw(ComponentCamera* camera, Program* program) const;
     void DrawStencil(ComponentCamera* camera, Program* program);
 
+    void SetActive(bool set_active) 
+    {
+        if (active == set_active)
+        {
+            return;
+        }
+        active = set_active;
+        if (active)
+        {
+            Start();
+        }
+    }
+    
     bool IsActive() const
     {
         return active;
@@ -116,7 +136,7 @@ public:
                     push_back(static_cast<RetComponent*>(component));
             }
         }
-
+        
         return components_of_type;
     }
 

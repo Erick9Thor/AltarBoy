@@ -8,6 +8,19 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 
+// UI
+#include "components/ComponentCanvas.h"
+#include "components/ComponentCanvasRenderer.h"
+#include "components/ComponentTransform2D.h"
+#include "components/ComponentImage.h"
+#include "components/ComponentButton.h"
+#include "Components/ComponentProgressBar.h"
+
+// TODO: REMOVE
+#include "Application.h"
+#include "modules/ModuleSceneManager.h"
+//
+
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name) :
@@ -123,6 +136,30 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);
         break;
+    case (Component::Type::CANVAS):
+        if (!GetComponent<ComponentCanvas>())
+            new_component = new ComponentCanvas(this);
+        break;
+    case (Component::Type::CANVAS_RENDERER):
+        if (!GetComponent<ComponentCanvasRenderer>())
+            new_component = new ComponentCanvasRenderer(this);
+        break;
+    case (Component::Type::TRANSFORM_2D):
+        if (!GetComponent<ComponentTransform2D>())
+            new_component = new ComponentTransform2D(this);
+        break;
+    case (Component::Type::IMAGE):
+        if (!GetComponent<ComponentImage>())
+            new_component = new ComponentImage(this);
+        break;
+    case (Component::Type::BUTTON):
+        if (!GetComponent<ComponentButton>())
+            new_component = new ComponentButton(this);
+        break;
+    case (Component::Type::PROGRESS_BAR):
+        if (!GetComponent<ComponentProgressBar>())
+            new_component = new ComponentProgressBar(this);
+        break;
     }
 
     if (new_component != nullptr)
@@ -136,8 +173,41 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::Start() 
+{
+    transform->Start();
+
+    for (Component* component : components)
+    {
+        component->Start();
+    }
+
+    for (GameObject* child : children)
+    {
+        if (child->IsActive())
+        {
+            child->Start();
+        }
+    }
+}
+
 void Hachiko::GameObject::Update()
 {
+    // TODO: REMOVE
+    if (name == "Gun")
+    {
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition());
+        if (go != nullptr)
+        {
+            ImGui::Text(go->name.c_str());
+        }
+        else
+        {
+            ImGui::Text("Nothing");
+        }
+    }
+    //
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();
@@ -265,9 +335,20 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     }
 }
 
-void Hachiko::GameObject::RemoveComponent(Component* component)
+bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
 {
     //TODO: Should I delete the component?
+    if (component->CanBeRemoved())
+    {
+        components.erase(std::remove(components.begin(), components.end(), component));
+        return true;
+    }
+    
+    return false;
+}
+
+void Hachiko::GameObject::ForceRemoveComponent(Component* component)
+{
     components.erase(std::remove(components.begin(), components.end(), component));
 }
 

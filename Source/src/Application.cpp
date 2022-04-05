@@ -15,6 +15,7 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 #include "modules/ModuleScriptingSystem.h"
+#include "modules/ModuleUserInterface.h"
 
 Hachiko::Application::Application()
 {
@@ -30,6 +31,7 @@ Hachiko::Application::Application()
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
+    modules.push_back(ui = new ModuleUserInterface());
     modules.push_back(scripting_system = new ModuleScriptingSystem());
 }
 

@@ -1,8 +1,16 @@
 #pragma once
 
 #include "scriptingUtil/framework.h"
-#include "core/GameObject.h"
-#include "scripting/Script.h"
+
+namespace Hachiko
+{
+	class GameObject;
+
+	namespace Scripting
+	{
+		class Script;
+	}
+}
 
 extern "C" GAMEPLAY_API Hachiko::Scripting::Script* __cdecl 
 InstantiateScript(Hachiko::GameObject* game_object, 

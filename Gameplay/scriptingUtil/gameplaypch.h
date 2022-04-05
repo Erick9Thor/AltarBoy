@@ -15,7 +15,8 @@
 #include <MathGeoLib.h> // Order matters, this should be included before 
 					    // Gameplay.h
 
+#include <components/Component.h>
+#include <core/GameObject.h>
 #include <Gameplay.h>
 #include <Globals.h>
-#include <core/GameObject.h>
 #endif //GAMEPLAY_PCH_H

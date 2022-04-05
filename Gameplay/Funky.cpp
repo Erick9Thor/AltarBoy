@@ -30,7 +30,7 @@ void Hachiko::Scripting::Funky::OnStart()
 
 void Hachiko::Scripting::Funky::OnUpdate()
 {
-	static const float duration = 1.5f;
+	static const float duration = 0.5f;
 
 	_lerp_position += Time::DeltaTime() / duration;
 	_lerp_position = _lerp_position > 1.0f ? 1.0f : _lerp_position;

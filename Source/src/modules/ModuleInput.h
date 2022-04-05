@@ -1,11 +1,13 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "events/MouseEventPayload.h"
 
 #include <SDL.h>
 
+
 namespace Hachiko
-{
+{   
     using Uint8 = unsigned __int8;
 
     enum class KeyState
@@ -79,6 +81,7 @@ namespace Hachiko
         // TODO: Make ModuleWindow store window size instead of monitor
         // size. And get width and height from there.
         void UpdateWindowSizeInversedCaches(int width, int height);
+        void NotifyMouseAction(float2 position, MouseEventPayload::Action action);
 
     private:
         KeyState* keyboard = nullptr;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "components/Component.h"
 #include "resources/ResourceMaterial.h"
 
 #include <assimp/scene.h>
