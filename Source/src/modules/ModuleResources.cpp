@@ -195,7 +195,7 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
         return it->second;
     }
 
-    std::string texture_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::MATERIAL) + texture_name;
+    std::string texture_path = App->preferences->GetResourcesPreference()->GetLibraryPath(Resource::Type::TEXTURE) + texture_name;
     auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_path.c_str()));
     
     if (res == nullptr && !asset_path.empty())
