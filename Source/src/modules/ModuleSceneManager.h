@@ -16,8 +16,12 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        void AttemptScenePause();
+        void AttemptScenePlay();
+        void AttemptSceneStop();
+        bool IsScenePlaying();
         UpdateStatus Update(float delta) override;
-        bool CleanUp() override;
+        bool CleanUp() override;        
 
         // --- Scene management --- //
         void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
