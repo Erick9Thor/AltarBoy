@@ -200,8 +200,9 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     
     if (res == nullptr && !asset_path.empty())
     {
+        // TODO: If we start the engine without library/ textures will not be rendered as we do not GenerateBuffers on ImportTexture()
         Hachiko::TextureImporter texture_importer;
-        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str()));
+        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str())); 
     }
     
     // TODO: This is a hack. We need to implement our own assert with message
