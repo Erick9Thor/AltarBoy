@@ -18,6 +18,7 @@ Hachiko::ResourceTexture::~ResourceTexture()
 
 void Hachiko::ResourceTexture::GenerateBuffer() 
 {
+    glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag_filter);

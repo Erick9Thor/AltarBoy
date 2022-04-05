@@ -53,8 +53,8 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
     {
         texture->path += cursor[i];
     }
-
     cursor += size_bytes;
+
     size_bytes = texture->data_size;
     texture->data = new byte[size_bytes];
     memcpy(texture->data, cursor, size_bytes);

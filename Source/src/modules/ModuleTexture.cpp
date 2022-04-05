@@ -44,7 +44,7 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
     texture->data = new byte[texture->data_size];
     memcpy(texture->data, data, texture->data_size);
 
-    texture->GenerateBuffer();
+    //texture->GenerateBuffer();
 
     DeleteImg(img_id);
 
