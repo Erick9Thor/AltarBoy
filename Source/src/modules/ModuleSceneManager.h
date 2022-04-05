@@ -16,6 +16,10 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        void AttemptScenePause();
+        void AttemptScenePlay();
+        void AttemptSceneStop();
+        bool IsScenePlaying();
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
@@ -56,4 +60,4 @@ namespace Hachiko
         bool scene_ready_to_load = false;
         std::string scene_to_load;
     };
-}
+} // namespace Hachiko
