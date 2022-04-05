@@ -48,11 +48,20 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             return UpdateStatus::UPDATE_STOP;
         case SDL_WINDOWEVENT:
             if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+            {
                 App->window->WindowResized();
+                
+                // Update the cached inverses of window size so that we have a
+                // sensitive MousePositionDelta and MousePosition.
+                UpdateWindowSizeInversedCaches(event.window.data1, event.window.data2);
+            }
+            
             break;
         case SDL_MOUSEMOTION:
             mouse_delta_x = event.motion.xrel;
             mouse_delta_y = event.motion.yrel;
+            _mouse_delta_x_relative = mouse_delta_x * _window_width_inverse;
+            _mouse_delta_y_relative = mouse_delta_x * _window_height_inverse;
             break;
         case SDL_MOUSEWHEEL:
             scroll_delta = event.wheel.y;
@@ -98,6 +107,16 @@ void Hachiko::ModuleInput::UpdateInputMaps()
     }
     keymods = SDL_GetModState();
     mouse = SDL_GetMouseState(&mouse_x, &mouse_y);
+    
+    _mouse_x_relative = mouse_x * _window_width_inverse;
+    _mouse_y_relative = mouse_y * _window_height_inverse;
+}
+
+void Hachiko::ModuleInput::UpdateWindowSizeInversedCaches(int width, 
+    int height) 
+{
+    _window_width_inverse = 1.0f / width;
+    _window_height_inverse = 1.0f / height;
 }
 
 bool Hachiko::ModuleInput::CleanUp()
