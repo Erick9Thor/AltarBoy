@@ -32,9 +32,39 @@ bool Hachiko::ModuleSceneManager::Init()
     return true;
 }
 
-void Hachiko::ModuleSceneManager::StartScene()
+void Hachiko::ModuleSceneManager::AttemptScenePause()
 {
-    main_scene->Start();
+    if (!GameTimer::paused)
+    {
+        GameTimer::Pause();
+    }
+}
+
+void Hachiko::ModuleSceneManager::AttemptScenePlay()
+{
+    if (!GameTimer::running)
+    {
+        SaveScene("tmp_scene.scene");
+        GameTimer::Start();
+    }
+    else if (GameTimer::paused)
+    {
+        GameTimer::Resume();
+    }
+}
+
+void Hachiko::ModuleSceneManager::AttemptSceneStop()
+{
+    if (GameTimer::running)
+    {
+        GameTimer::Stop();
+        LoadScene("tmp_scene.scene");
+    }
+}
+
+bool Hachiko::ModuleSceneManager::IsScenePlaying()
+{
+    return GameTimer::running && !GameTimer::paused;
 }
 
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
