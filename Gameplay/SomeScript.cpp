@@ -16,7 +16,7 @@ void Hachiko::Scripting::SomeScript::OnStart()
 
 void Hachiko::Scripting::SomeScript::OnUpdate()
 {
-	static const float duration = 1.5f;
+	static const float duration = 0.5f;
 
 	_lerp_position += Time::DeltaTime() / duration;
 	_lerp_position = _lerp_position > 1.0f ? 1.0f : _lerp_position;
@@ -25,6 +25,7 @@ void Hachiko::Scripting::SomeScript::OnUpdate()
 		_initial_position + _position_offset, _lerp_position);
 
 	game_object->GetTransform()->SetPosition(current_position);
+
 
 	if (_lerp_position == 1.0f)
 	{

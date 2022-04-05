@@ -19,8 +19,13 @@ public:
 	void OnUpdate() override;
 
 private:
-	SERIALIZE_FIELD(int, _integer_field);
-	SERIALIZE_FIELD(std::string, _string_field);
+	SERIALIZE_FIELD(float, _movement_speed);
+	SERIALIZE_FIELD(float, _dash_duration);
+	SERIALIZE_FIELD(float, _dash_distance);
+	SERIALIZE_FIELD(bool, _is_dashing);
+	SERIALIZE_FIELD(float, _dash_progress);
+	SERIALIZE_FIELD(math::float3, _dash_start);
+	SERIALIZE_FIELD(float, _rotation_speed);
 };
 }
 }
