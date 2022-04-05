@@ -36,7 +36,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
-    if (button && button->IsHovered() & hover_image.loaded)
+    if (button && button->IsHovered() && hover_image.loaded)
     {
         img_to_draw = &hover_image;
     }
@@ -51,20 +51,17 @@ void Hachiko::ComponentImage::Save(JsonFormatterValue j_component) const
 {
     const JsonFormatterValue j_image_path = j_component["ImagePath"];
     const JsonFormatterValue j_hover_image_path = j_component["HoverImagePath"];
-    //const JsonFormatterValue j_click_image_path = j_component["ClickImagePath"];
     j_image_path = image.path.c_str();
     j_hover_image_path = hover_image.path.c_str();
-    //j_click_image_path = click_image.path.c_str();
 }
 
 void Hachiko::ComponentImage::Load(JsonFormatterValue j_component)
 {
     const JsonFormatterValue j_image_path = j_component["ImagePath"];
     const JsonFormatterValue j_hover_image_path = j_component["HoverImagePath"];
-    // const JsonFormatterValue j_click_image_path = j_component["ClickImagePath"];
     const std::string image_path = j_image_path;
     const std::string hover_image_path = j_hover_image_path;
-    // const std::string click_image_path = j_click_image_path;
+
     if (!image_path.empty())
     {
         image = ModuleTexture::Load(image_path.c_str());
@@ -78,13 +75,6 @@ void Hachiko::ComponentImage::Load(JsonFormatterValue j_component)
     {
         hover_image = ModuleTexture::Load(hover_image_path.c_str());
     }
-
-    /*
-    if (!click_image_path.empty())
-    {
-        click_image = ModuleTexture::Load(click_image_path.c_str());
-    }
-    */
 }
 
 void Hachiko::ComponentImage::Import(const char* path)
