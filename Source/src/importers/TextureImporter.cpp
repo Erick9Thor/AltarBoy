@@ -22,18 +22,18 @@ void Hachiko::TextureImporter::Import(const char* path)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 {
-    const std::string file_path(path);
+    const std::filesystem::path file_path(path);
     if (!std::filesystem::exists(file_path))
     {
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.c_str());
+    char* file_buffer = App->file_sys->Load(file_path.string().c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
     auto texture = new ResourceTexture();
-
+    texture->SetName(file_path.filename().string());
     unsigned header[9];
     size_bytes = sizeof(header);
     memcpy(header, cursor, size_bytes);

@@ -79,8 +79,6 @@ namespace Hachiko
                 normal = res;
                 break;
             }
-
-            res = nullptr;
         }
 
         std::string TypeToString(ResourceTexture::Type type)
@@ -106,6 +104,7 @@ namespace Hachiko
     private:
         void AddTexture(ResourceTexture::Type type);
         void RemoveTexture(ResourceTexture::Type type);
+        void UpdateMaterial();
         std::string name;
     };
 }

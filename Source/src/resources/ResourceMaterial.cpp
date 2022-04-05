@@ -1,6 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceMaterial.h"
 #include "modules/ModuleResources.h"
+#include <importers/MaterialImporter.h>
 
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}
@@ -64,9 +65,6 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
     const std::string title = StringUtils::Concat("Select texture ", TypeToString(type));
     ResourceTexture* res = nullptr;
-    //ImGui::PushID((int)type);
-    //const int index = TexturesTypesListBox();
-    //ImGui::PopID();
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
     {
@@ -94,8 +92,11 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 
         ImGuiFileDialog::Instance()->Close();
     }
-
-    SetTexture(res, type);
+    if (res != nullptr)
+    {
+        SetTexture(res, type);
+        UpdateMaterial();
+    }
 }
 
 void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
@@ -115,4 +116,10 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             break;
         }
     }
+}
+
+void Hachiko::ResourceMaterial::UpdateMaterial()
+{
+    MaterialImporter material_importer;
+    material_importer.Save(this);
 }
