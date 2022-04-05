@@ -21,51 +21,39 @@ class GameObject final
 
 public:
     GameObject(const char* name = "Unnamed");
-    GameObject(GameObject* parent, 
-        const float4x4& transform, 
-        const char* name = "Unnamed", 
-        UID uid = UUID::GenerateUID());
+    GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
     GameObject(GameObject* parent,
-        const char* name = "Unnamed",
-        UID uid = UUID::GenerateUID(),
-        const float3& translation = float3::zero,
-        const Quat& rotation = Quat::identity,
-        const float3& scale = float3::one);
+                const char* name = "Unnamed",
+                UID uid = UUID::GenerateUID(),
+                const float3& translation = float3::zero,
+                const Quat& rotation = Quat::identity,
+                const float3& scale = float3::one);
     virtual ~GameObject();
 
     void SetNewParent(GameObject* new_parent);
 
     void AddComponent(Component* component);
     bool AttemptRemoveComponent(Component* component);
+
+    Component* CreateComponent(Component::Type type);
     /// <summary>
     /// Do not use this unless it's mandatory. Use AttemptRemoveComponent 
     /// instead.
     /// </summary>
     /// <param name="component">Component to be removed.</param>
     void ForceRemoveComponent(Component* component);
-
-    Component* CreateComponent(Component::Type type);
     void RemoveChild(GameObject* gameObject);
 
     //void Destroy();
     void Start();
+    void Stop();
     void Update();
     void DrawAll(ComponentCamera* camera, Program* program) const;
     void Draw(ComponentCamera* camera, Program* program) const;
     void DrawStencil(ComponentCamera* camera, Program* program);
 
-    void SetActive(bool set_active) 
-    {
-        if (active == set_active)
-        {
-            return;
-        }
-        active = set_active;
-        if (active)
-        {
-            Start();
-        }
-    }
+    void SetActive(bool set_active);
+    
     
     bool IsActive() const
     {
@@ -182,6 +170,7 @@ public:
     bool active = true;
 
 private:
+    bool started = false;
     std::vector<Component*> components;
     ComponentTransform* transform = nullptr;
 
@@ -191,3 +180,4 @@ private:
     UID uid = 0;
 };
 }
+        
