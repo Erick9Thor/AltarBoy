@@ -16,6 +16,7 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        void StartScene();
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 

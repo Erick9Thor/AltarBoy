@@ -98,6 +98,7 @@ void Hachiko::WindowScene::ToolbarMenu() const
         {
             App->scene_manager->SaveScene("tmp_scene.scene");
             GameTimer::Start();
+            App->scene_manager->StartScene();
         }
         else if (GameTimer::paused)
         {
