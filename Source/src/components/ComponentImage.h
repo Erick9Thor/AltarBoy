@@ -33,7 +33,9 @@ namespace Hachiko
         Texture hover_image;
 
         float4 color = float4::one;
+        float4 hover_color = float4::one;
         bool use_image = false;
+        bool use_hover_image = false;
     };
 } // namespace Hachiko
 

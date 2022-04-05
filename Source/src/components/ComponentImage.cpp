@@ -18,11 +18,40 @@ void Hachiko::ComponentImage::DrawGui()
 {
     ImGui::PushID(this);
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        ImGui::Text("Image Loaded %d", image.loaded);
-        ImGui::Text("Hover Image Loaded %d", image.loaded);
+    {   
+
         ImGui::Checkbox("Use Image", &use_image);
-        ImGuiUtils::CompactColorPicker("Dir Color", &color[0]);
+
+        static char image_filename_buffer[MAX_PATH] = "Image Filename\0";
+        if (ImGui::InputText("Image File", image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            ModuleTexture::Unload(image);
+            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + image_filename_buffer;
+            image = ModuleTexture::Load(destination.c_str());
+        }
+
+        if (!use_image || !image.loaded)
+        {
+            ImGuiUtils::CompactColorPicker("Color", color.ptr());
+        }       
+
+        ImGui::Checkbox("Use Hover Image", &use_hover_image);
+
+        static char hover_image_filename_buffer[MAX_PATH] = "Hover Image Filename\0";
+        if (ImGui::InputText("Hover Image File", hover_image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            ModuleTexture::Unload(hover_image);
+            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + hover_image_filename_buffer;
+            hover_image = ModuleTexture::Load(destination.c_str());
+        }
+
+        if (!use_hover_image || !hover_image.loaded)
+        {
+            ImGuiUtils::CompactColorPicker("Hover Color", hover_color.ptr());
+        }
+
+        ImGui::Text("Image Loaded %d", image.loaded);
+        ImGui::Text("Hover Image Loaded %d", hover_image.loaded);
 	}
     ImGui::PopID();
 }
@@ -33,15 +62,17 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     // TODO
     const Texture* img_to_draw = &image;
+    bool render_img = use_image;
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
     if (button && button->IsHovered() && hover_image.loaded)
     {
         img_to_draw = &hover_image;
+        render_img = use_hover_image;
     }
 
-    program->BindUniformBool("diffuse_flag", img_to_draw->loaded && use_image);
+    program->BindUniformBool("diffuse_flag", img_to_draw->loaded && render_img);
     program->BindUniformFloat4("img_color", color.ptr());
     ModuleTexture::Bind(img_to_draw->id, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
