@@ -200,8 +200,9 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     
     if (res == nullptr && !asset_path.empty())
     {
-        importer_manager.Import(Resource::Type::TEXTURE, asset_path.c_str());
-        auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_path.c_str()));
+        // Cherry import texture
+        Hachiko::TextureImporter texture_importer;
+        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str(), 0));
     }
     
     // TODO: This is a hack. We need to implement our own assert with message
