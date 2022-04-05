@@ -39,6 +39,7 @@ namespace Hachiko
 
         //void Destroy();
         void Start();
+        void Stop();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
@@ -106,6 +107,7 @@ namespace Hachiko
         bool active = true;
 
     private:
+        bool started = false;
         std::vector<Component*> components;
         ComponentTransform* transform = nullptr;
 

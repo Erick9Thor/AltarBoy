@@ -185,9 +185,7 @@ void Hachiko::GameObject::SetActive(bool set_active)
 
 void Hachiko::GameObject::Start() 
 {
-    static bool already_called = false;
-
-    if (!already_called)
+    if (!started)
     {
         transform->Start();
         for (Component* component : components)
@@ -202,7 +200,7 @@ void Hachiko::GameObject::Start()
                 child->Start();
             }
         }
-        already_called = true;
+        started = true;
     }  
 }
 

@@ -32,6 +32,11 @@ bool Hachiko::ModuleSceneManager::Init()
     return true;
 }
 
+void Hachiko::ModuleSceneManager::StartScene()
+{
+    main_scene->Start();
+}
+
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
     if (scene_ready_to_load)
