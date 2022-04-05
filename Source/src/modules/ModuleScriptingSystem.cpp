@@ -74,7 +74,21 @@ Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
         return nullptr;
     }
 
-    return _script_factory(owner_game_object, script_name);
+    Scripting::Script* script = 
+        _script_factory(owner_game_object, script_name);
+
+    // TODO: Only do this when the game is running.
+    if (script != nullptr && !_scripts_paused)
+    {
+        script->Awake();
+
+        if (owner_game_object->IsActive())
+        {
+            script->Start();
+        }
+    }
+
+    return script;
 }
 
 bool Hachiko::ModuleScriptingSystem::HotReload(const float delta) 
@@ -88,6 +102,9 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     {
         return false;
     }
+
+    // Pause script updates:
+    _scripts_paused = true;
 
     HMODULE new_dll = NULL;
     LoadDll(&new_dll);
@@ -118,6 +135,9 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     // Get all the scripts inside the current scene:
     std::vector<Component*>& scripts = App->scene_manager->GetRoot()->
         GetComponentsInDescendants(Component::Type::SCRIPT);
+
+    std::vector<Scripting::Script*> new_scripts;
+    new_scripts.reserve(scripts.size());
     
     std::unordered_map<std::string, Scripting::SerializedField> serialization;    
 
@@ -153,6 +173,8 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
             // Add script to the game_object:
             game_object->AddComponent(new_script);
             HE_LOG("\tAdded the new version to components list.");
+
+            new_scripts.push_back(new_script);
         }
         else
         {
@@ -162,15 +184,13 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
 
         // Delete the old script:
         delete script;
+        script = nullptr;
         HE_LOG("\tDeleted the old script.");
-        
-        component = new_script;
+
 
         // Clear the serialization map:
         serialization.clear();
     }
-
-    // TODO: Call Awake of all the scripts if in game mode here.   
 
     FreeDll(_loaded_dll, _times_reloaded - 1);
 
@@ -178,7 +198,14 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     
     _script_factory = new_factory;
 
+    // Unpause script updates:
     _scripts_paused = false;
+
+    // TODO: Call Awake of all the scripts if in game mode here.
+    for (Scripting::Script* script : new_scripts)
+    {
+        script->Awake();
+    }
 
     return true;
 }

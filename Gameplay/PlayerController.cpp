@@ -13,6 +13,16 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_speed(0.0f)
 {}
 
+void Hachiko::Scripting::PlayerController::OnAwake()
+{
+	_dash_distance = 2.0f;
+	_dash_duration = 0.15f;
+	_movement_speed = 10.0f;
+	_rotation_speed = 2.5f;
+	
+	HE_LOG("OnAwake %f", _movement_speed);
+}
+
 void Hachiko::Scripting::PlayerController::OnStart()
 {
 
@@ -20,11 +30,6 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	_dash_distance = 2.0f;
-	_dash_duration = 0.15f;
-	_movement_speed = 5.0f;
-	_rotation_speed = 2.5f;
-
 	// Ignore the inputs if engine camera input is taken:
 	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
 	{

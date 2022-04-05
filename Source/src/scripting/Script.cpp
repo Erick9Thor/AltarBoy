@@ -20,7 +20,7 @@ void Hachiko::Scripting::Script::Update()
         return;
     }
 	
-	// TODO(Baran): Add check for play mode/editor mode to run update of 
+	// TODO(Baran): Add check for play mode/editor mode to run Update of 
 	// script.
 
     __try
@@ -29,7 +29,56 @@ void Hachiko::Scripting::Script::Update()
     }
     __except (EXCEPTION_EXECUTE_HANDLER)
     {
-        HE_LOG("Exception occured on script '%s'", GetName().c_str());
+        HE_LOG("Exception occured on script '%s::OnUpdate'", GetName().c_str());
+
+        App->scripting_system->StopUpdatingScripts();
+
+        HE_LOG("Therefore, scripts are paused.");
+    }
+}
+
+void Hachiko::Scripting::Script::Start() 
+{
+	if (!App->scripting_system->ShouldUpdateScripts())
+    {
+        return;
+    }
+
+    // TODO(Baran): Add check for play mode/editor mode to run Start of
+    // script.
+
+    __try
+    {
+        OnStart();
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+        HE_LOG("Exception occured on script '%s::OnStart'", GetName().c_str());
+
+        App->scripting_system->StopUpdatingScripts();
+
+        HE_LOG("Therefore, scripts are paused.");
+    }
+	
+}
+
+void Hachiko::Scripting::Script::Awake() 
+{
+    if (!App->scripting_system->ShouldUpdateScripts())
+    {
+        return;
+    }
+
+    // TODO(Baran): Add check for play mode/editor mode to run Awake of
+    // script.
+
+    __try
+    {
+        OnAwake();
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+        HE_LOG("Exception occured on script '%s::OnAwake'", GetName().c_str());
 
         App->scripting_system->StopUpdatingScripts();
 

@@ -16,7 +16,7 @@ public:
 	SomeScript(GameObject* game_object);
 	~SomeScript() override = default;
 
-	void OnStart() override;
+	void OnAwake() override;
 	void OnUpdate() override;
 
 private:

@@ -15,6 +15,7 @@ public:
 	PlayerController(GameObject* game_object);
 	~PlayerController() override = default;
 
+	void OnAwake() override;
 	void OnStart() override;
 	void OnUpdate() override;
 

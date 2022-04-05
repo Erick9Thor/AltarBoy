@@ -13,9 +13,11 @@ Hachiko::Scripting::Funky::Funky(GameObject* game_object)
 	// exception will cause a crash in the engine. This code is purely for
 	// testing purposes before the implementation of play-mode and OnAwake
 	// call.
+}
 
+void Hachiko::Scripting::Funky::OnAwake()
+{
 	_point_light = game_object->GetComponent<ComponentPointLight>();
-
 
 	if (_point_light != nullptr)
 	{

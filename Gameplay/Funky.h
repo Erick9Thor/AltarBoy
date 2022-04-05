@@ -17,6 +17,7 @@ public:
 	Funky(GameObject* game_object);
 	~Funky() override = default;
 
+	void OnAwake() override;
 	void OnStart() override;
 	void OnUpdate() override;
 

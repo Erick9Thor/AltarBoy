@@ -5,13 +5,14 @@
 Hachiko::Scripting::SomeScript::SomeScript(GameObject* game_object)
 	: Script(game_object, "SomeScript")
 {
+
+}
+
+void Hachiko::Scripting::SomeScript::OnAwake()
+{
 	_initial_position = game_object->GetTransform()->GetPosition();
 	_position_offset = math::float3(3.0f, 0.0f, 0.0f);
 	_lerp_position = 0.0f;
-}
-
-void Hachiko::Scripting::SomeScript::OnStart()
-{
 }
 
 void Hachiko::Scripting::SomeScript::OnUpdate()

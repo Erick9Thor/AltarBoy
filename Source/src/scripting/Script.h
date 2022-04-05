@@ -20,6 +20,8 @@ public:
     virtual ~Script() = default;
     
     void Update() override;
+    void Start() override;
+    void Awake();
 
     virtual void OnAwake() {};
     virtual void OnStart() {};
