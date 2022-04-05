@@ -16,10 +16,12 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        
         void AttemptScenePause();
         void AttemptScenePlay();
         void AttemptSceneStop();
         bool IsScenePlaying();
+        
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
