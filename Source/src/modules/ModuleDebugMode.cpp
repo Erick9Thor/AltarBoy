@@ -3,27 +3,12 @@
 #include "ModuleDebugMode.h"
 #include "core/GameObject.h"
 
-
-Hachiko::ModuleDebugMode::ModuleDebugMode()
-{
-	is_gui_active = false;
-	fps = 0;
-	poly_on_screen = 0;
-	poly_total = 0;
-	player = nullptr;
-}
-
-Hachiko::ModuleDebugMode::~ModuleDebugMode()
-{
-	
-}
-
 bool Hachiko::ModuleDebugMode::Init()
 {
 	
 	hw_info.system = (unsigned char*)SDL_GetPlatform();
 	hw_info.cpu = SDL_GetCPUCount();
-	hw_info.ram = SDL_GetSystemRAM() / 1024.0f;
+	hw_info.ram = (float)SDL_GetSystemRAM() / 1024.0f;
 	hw_info.gpu = (unsigned char*)glGetString(GL_RENDERER);
 	hw_info.gpu_vendor = (unsigned char*)glGetString(GL_VENDOR);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &hw_info.vram_capacity);
@@ -33,6 +18,7 @@ bool Hachiko::ModuleDebugMode::Init()
 	// Deprecated after VS1
 	player = FindPlayer();
 	
+	SetupWindow();
 
 	return true;
 }
@@ -60,7 +46,7 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
-void Hachiko::ModuleDebugMode::RenderGui()
+void Hachiko::ModuleDebugMode::RenderGui() const
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -82,7 +68,7 @@ bool Hachiko::ModuleDebugMode::CleanUp()
 
 ImGuiWindowFlags Hachiko::ModuleDebugMode::SetupWindow()
 {
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking |
+	window_flags = ImGuiWindowFlags_NoDocking |
 		ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar;
 	return window_flags;
 }
@@ -95,9 +81,9 @@ void Hachiko::ModuleDebugMode::UpdateRenderValues()
 	poly_total = render_list->GetPolycountTotal();
 }
 
-const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer()
+const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer() const
 {
-	for (Hachiko::GameObject* child : App->scene_manager->GetRoot()->children)
+	for (const Hachiko::GameObject* child : App->scene_manager->GetRoot()->children)
 	{
 		if (child->name == "Player")
 		{
@@ -108,14 +94,11 @@ const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer()
 
 void Hachiko::ModuleDebugMode::DrawGUI()
 {
-	static SDL_version version;
-	static const float vram_total = hw_info.vram_capacity / 1024.0f;
-	float vram_free = hw_info.vram_free / 1024.0f;
+	static const float vram_total = (float)hw_info.vram_capacity / 1024.0f;
+	float vram_free = (float)hw_info.vram_free / 1024.0f;
 	float vram_usage = vram_total - vram_free;
-	float frame_rate = 0.0f;
 	float3 player_pos_editor = player->GetTransform()->GetPosition();
 	
-	window_flags = SetupWindow();
 	UpdateRenderValues();
 
 	if (ImGui::Begin("InGame Window", &is_gui_active, window_flags))

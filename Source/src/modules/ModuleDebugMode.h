@@ -16,7 +16,6 @@
 
 
 struct HardwareInfo {
-
 	unsigned char* system;
 	int cpu;
 	float ram;
@@ -32,8 +31,9 @@ namespace Hachiko
 	class ModuleDebugMode : public Module
 	{
 	public:
-		ModuleDebugMode();
-		~ModuleDebugMode();
+		ModuleDebugMode() : is_gui_active(false), fps(0), poly_on_screen(0), poly_total(0), player_pos(0, 0, 0),
+							window_flags(ImGuiWindowFlags_None), hw_info(), player(nullptr) {};
+		~ModuleDebugMode() = default;
 
 		bool Init() override;
 		UpdateStatus PreUpdate(const float delta) override;
@@ -48,13 +48,15 @@ namespace Hachiko
 		void DrawGUI();
 		ImGuiWindowFlags SetupWindow();
 		void UpdateRenderValues();
-		const GameObject* FindPlayer();
+		const GameObject* FindPlayer() const;
 
 		//TODO: Remove ASAP
-		void RenderGui();
+		void RenderGui() const;
 	private:
 		bool is_gui_active;
-		int fps, poly_on_screen, poly_total;
+		int fps;
+		unsigned poly_on_screen;
+		unsigned poly_total;
 		std::vector<float> fps_buffer;
 		std::vector<float> ms_buffer;
 		float3 player_pos;
