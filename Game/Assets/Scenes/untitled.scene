@@ -28,6 +28,336 @@
         ],
         "GOChildrens": [
             {
+                "Uid": 13510238329507608277,
+                "GOName": "Floor",
+                "Active": true,
+                "ParentId": 7865191887523500989,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            25.0,
+                            1.0,
+                            -25.0
+                        ],
+                        "Rotation": [
+                            -9.099628641706659e-7,
+                            1.0,
+                            -9.099628641706659e-7,
+                            -4.371228001787131e-8
+                        ],
+                        "Scale": [
+                            0.9999993443489075,
+                            1.0,
+                            0.9999993443489075
+                        ]
+                    }
+                ],
+                "GOChildrens": [
+                    {
+                        "Uid": 13813034102765608926,
+                        "GOName": "Base",
+                        "Active": true,
+                        "ParentId": 13510238329507608277,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "HasDiffuse": true,
+                                "HasSpecular": true,
+                                "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
+                                "Shininess": 2.0,
+                                "DiffuseColor": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "SpecularColor": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ]
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 2243169657355825613,
+                        "GOName": "Sides",
+                        "Active": true,
+                        "ParentId": 13510238329507608277,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "HasDiffuse": true,
+                                "HasSpecular": true,
+                                "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
+                                "Shininess": 2.0,
+                                "DiffuseColor": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "SpecularColor": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ]
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 15589345809168240669,
+                        "GOName": "Planks",
+                        "Active": true,
+                        "ParentId": 13510238329507608277,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "HasDiffuse": true,
+                                "HasSpecular": true,
+                                "DiffusePath": "Assets\\Textures\\PlanksDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\PlanksSpecular.tif",
+                                "Shininess": 2.0,
+                                "DiffuseColor": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "SpecularColor": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ]
+                            }
+                        ],
+                        "GOChildrens": null
+                    }
+                ]
+            },
+            {
+                "Uid": 5777577542275192995,
+                "GOName": "Wall",
+                "Active": true,
+                "ParentId": 7865191887523500989,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            25.0,
+                            0.0,
+                            -25.0
+                        ],
+                        "Rotation": [
+                            9.099709359361441e-7,
+                            1.0,
+                            -0.00018306175479665399,
+                            -4.354480864776633e-8
+                        ],
+                        "Scale": [
+                            1.0000048875808716,
+                            0.9999999403953552,
+                            1.0
+                        ]
+                    }
+                ],
+                "GOChildrens": [
+                    {
+                        "Uid": 10235216291708969123,
+                        "GOName": "Wall",
+                        "Active": true,
+                        "ParentId": 5777577542275192995,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "HasDiffuse": true,
+                                "HasSpecular": true,
+                                "DiffusePath": "Assets\\Textures\\WallDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\WallSpecular.tif",
+                                "Shininess": 2.0,
+                                "DiffuseColor": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "SpecularColor": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ]
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 4213928734425214934,
+                        "GOName": "Stars",
+                        "Active": true,
+                        "ParentId": 5777577542275192995,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 2
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 3,
+                                "HasDiffuse": false,
+                                "HasSpecular": false,
+                                "DiffusePath": "Assets\\Textures\\StarsDiffuse.png",
+                                "SpecularPath": "Assets\\Textures\\StarsSpecular.tif",
+                                "Shininess": 2.0,
+                                "DiffuseColor": [
+                                    0.8352941870689392,
+                                    1.0,
+                                    0.5176470875740051,
+                                    1.0
+                                ],
+                                "SpecularColor": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ]
+                            }
+                        ],
+                        "GOChildrens": null
+                    }
+                ]
+            },
+            {
                 "Uid": 4044411750347881611,
                 "GOName": "Drawers",
                 "Active": true,
@@ -248,7 +578,7 @@
                         "GOChildrens": null
                     },
                     {
-                        "Uid": 17868595259755893693,
+                        "Uid": 3408715395981014726,
                         "GOName": "Camera",
                         "Active": true,
                         "ParentId": 17631367046667315039,
@@ -257,20 +587,20 @@
                                 "ComponentID": 0,
                                 "ComponentType": 1,
                                 "Position": [
-                                    0.0,
-                                    3.066143035888672,
-                                    -3.8625617027282717
+                                    -2.1827402114868166,
+                                    3.221189022064209,
+                                    -5.290846824645996
                                 ],
                                 "Rotation": [
-                                    0.21643958985805512,
-                                    0.0,
-                                    0.0,
-                                    0.9762960076332092
+                                    0.15245409309864045,
+                                    0.03420202434062958,
+                                    -0.005279426462948322,
+                                    0.9877044558525086
                                 ],
                                 "Scale": [
-                                    1.0,
-                                    1.0,
-                                    1.0
+                                    0.4694660007953644,
+                                    0.46947184205055239,
+                                    0.4694741368293762
                                 ]
                             },
                             {
@@ -278,22 +608,28 @@
                                 "ComponentType": 4,
                                 "Frustrum": {
                                     "NearDistance": 0.10000000149011612,
-                                    "FarDistance": 50.0,
-                                    "Fov": 42.2599983215332,
+                                    "FarDistance": 1000.0,
+                                    "Fov": 65.0,
+                                    "CameraType": 4,
                                     "Pos": [
-                                        0.0,
-                                        7.530885219573975,
-                                        -8.227256774902344
+                                        -4.649236679077148,
+                                        7.861133098602295,
+                                        -11.26950454711914
                                     ],
                                     "Front": [
-                                        0.0,
-                                        -0.9001768231391907,
-                                        1.9304357767105103
+                                        0.06595192104578018,
+                                        -0.30151429772377016,
+                                        0.9511568546295166
                                     ],
                                     "Up": [
+                                        0.020856980234384538,
+                                        0.953436017036438,
+                                        0.3007905185222626
+                                    ],
+                                    "PinnedCamera": [
                                         0.0,
-                                        1.9304357767105103,
-                                        0.9001768231391907
+                                        0.0,
+                                        0.0
                                     ]
                                 }
                             }
@@ -318,14 +654,14 @@
                         ],
                         "Rotation": [
                             0.0,
-                            0.9590731263160706,
+                            0.9590730667114258,
                             0.0,
-                            0.2831588089466095
+                            0.2831587493419647
                         ],
                         "Scale": [
-                            1.0000011920928956,
+                            1.0000026226043702,
                             1.0,
-                            1.0000011920928956
+                            1.0000026226043702
                         ]
                     }
                 ],
@@ -794,12 +1130,12 @@
                             0.0,
                             0.998001217842102,
                             0.0,
-                            0.06319598853588104
+                            0.06319594383239746
                         ],
                         "Scale": [
-                            1.0000011920928956,
+                            1.0000040531158448,
                             1.0,
-                            1.0000011920928956
+                            1.0000040531158448
                         ]
                     }
                 ],
@@ -1069,12 +1405,12 @@
                         "Rotation": [
                             0.9177638292312622,
                             -0.025832757353782655,
-                            -0.038700222969055179,
+                            -0.038700226694345477,
                             0.39439132809638979
                         ],
                         "Scale": [
                             0.9999996423721314,
-                            1.0,
+                            0.9999998807907105,
                             1.0000003576278687
                         ]
                     },
@@ -1113,12 +1449,12 @@
                             0.6893669962882996,
                             0.0,
                             0.0,
-                            0.7244122624397278
+                            0.7244123220443726
                         ],
                         "Scale": [
                             0.9999999403953552,
-                            0.999998927116394,
-                            0.999998927116394
+                            0.9999988675117493,
+                            0.9999988675117493
                         ]
                     },
                     {
@@ -1271,6 +1607,65 @@
                         "radius": 250.0,
                         "active": true,
                         "drawCone": false
+                    }
+                ],
+                "GOChildrens": null
+            },
+            {
+                "Uid": 479067133427543758,
+                "GOName": "DynamicCamera",
+                "Active": true,
+                "ParentId": 7865191887523500989,
+                "Components": [
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 1,
+                        "Position": [
+                            -9.944820404052735,
+                            3.952713966369629,
+                            23.025859832763673
+                        ],
+                        "Rotation": [
+                            0.009315839037299157,
+                            0.9782572984695435,
+                            -0.04506254941225052,
+                            0.202225923538208
+                        ],
+                        "Scale": [
+                            1.0000215768814088,
+                            0.9999647736549377,
+                            1.0001461505889893
+                        ]
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 4,
+                        "Frustrum": {
+                            "NearDistance": 0.10000000149011612,
+                            "FarDistance": 1000.0,
+                            "Fov": 65.0,
+                            "CameraType": 1,
+                            "Pos": [
+                                -9.944820404052735,
+                                3.952713966369629,
+                                23.025859832763673
+                            ],
+                            "Front": [
+                                0.39487606287002566,
+                                -0.09194678068161011,
+                                -0.9142817854881287
+                            ],
+                            "Up": [
+                                0.03645091876387596,
+                                0.9957301020622253,
+                                -0.08439475297927857
+                            ],
+                            "PinnedCamera": [
+                                -9.944820404052735,
+                                3.952713966369629,
+                                23.025859832763673
+                            ]
+                        }
                     }
                 ],
                 "GOChildrens": null

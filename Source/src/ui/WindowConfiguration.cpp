@@ -33,7 +33,7 @@ void Hachiko::WindowConfiguration::Update()
         // TODO: REMOVE
         if (ImGui::Button("Toggle editor camera"))
         {
-            App->camera->ActivateEditorCamera();
+            App->camera->RestoreOriginCamera();
         }
         if (ImGui::Button("Load scene: first_deliver_scene.scene"))
         {

@@ -207,17 +207,9 @@ void Hachiko::GameObject::Start()
 void Hachiko::GameObject::Update()
 {
     // TODO: REMOVE
-    if (name == "Gun")
+    if (name == "Gun")  // This is temporal, once scripting is finally merged, we should try to do the same there for the player 
     {
         GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition());
-        if (go != nullptr)
-        {
-            ImGui::Text(go->name.c_str());
-        }
-        else
-        {
-            ImGui::Text("Nothing");
-        }
     }
     //
 

@@ -23,35 +23,16 @@ namespace Hachiko
         void Controller(float delta) const;
         void MovementController(float delta) const;
 
-        [[nodiscard]] ComponentCamera* GetMainCamera() const
+        [[nodiscard]] ComponentCamera* GetMainCamera() 
         {
-            if (editor_camera_enable || main_camera == nullptr)
-            {
-                return editor_camera;
-            }
             return main_camera;
         }
-        void SetMainCamera(ComponentCamera* camera) 
-        {
-            if (camera != nullptr)
-            {
-                main_camera = camera;
-                editor_camera_enable = false;
-            }
-            else
-            {
-                main_camera = nullptr;
-                editor_camera_enable = true;
-            }
-        }
-        void ActivateEditorCamera()
-        {
-            editor_camera_enable = !editor_camera_enable;
-        }
-        void ActivateEditorCamera(bool activate) 
-        {
-            editor_camera_enable = activate;
-        }
+
+        void AddCameraComponent(ComponentCamera* camera);
+        void RemoveCameraComponent(ComponentCamera* camera);
+        void SetMainCamera(ComponentCamera* camera);
+        void RestoreOriginCamera();
+        void ReturnPlayerCamera();
 
         // Camera actions
         void Zoom(float zoom) const;
@@ -59,12 +40,14 @@ namespace Hachiko
         void FocusOnModel(const float3& target, float distance) const;
         void Rotate(float motion_x, float motion_y) const;
         void PerpendicularMovement(float motion_x, float motion_y) const;
+        void RunDynamicScript(const float delta);
 
     private:
-        bool editor_camera_enable = true;
-        GameObject* editor_camera_game_object = nullptr;
-        ComponentCamera* editor_camera = nullptr;
-
+        
+        GameObject* main_camera_game_object = nullptr;
         ComponentCamera* main_camera = nullptr;
+
+        std::vector<ComponentCamera*> camera_buffer;
+        unsigned int last_it = 0;
     };
 }

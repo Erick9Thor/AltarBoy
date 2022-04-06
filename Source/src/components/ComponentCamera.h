@@ -13,6 +13,14 @@ namespace Hachiko
     class ComponentCamera : public Component
     {
     public:
+        enum class CameraType
+        {   
+            STATIC,
+            DYNAMIC,
+            GOD,
+            PLAYER
+        };
+
         ComponentCamera(GameObject* conatiner);
         ~ComponentCamera() override;
 
@@ -23,6 +31,7 @@ namespace Hachiko
             return Type::CAMERA;
         }
 
+
         [[nodiscard]] float4x4 GetViewMatrix(bool transpose = false) const;
         [[nodiscard]] float4x4 GetProjectionMatrix(bool transpose = false) const;
 
@@ -31,6 +40,11 @@ namespace Hachiko
             return &frustum;
         }
 
+        void SetCameraType(CameraType cam_type);
+        void SetCameraInitialPos();
+        CameraType GetCameraType() const;
+        std::string GetCameraTypeString(CameraType cam_type);
+
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
         void SetPlaneDistances(float near_distance, float far_distance);
@@ -38,6 +52,7 @@ namespace Hachiko
 
         void SetResolution(unsigned width, unsigned height);
         void GetResolution(unsigned& width, unsigned& height) const;
+
 
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
@@ -51,11 +66,13 @@ namespace Hachiko
         Plane planes[6];
         float3 reference_point = float3::zero;
         bool draw_frustum = false;
-
+        bool preview_cam = false;
+        float3 camera_pinned_pos = float3::zero;
+        
     private:
         float horizontal_fov;
         Frustum frustum;
-
+        CameraType camera_type;
         unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
         unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;
     };
