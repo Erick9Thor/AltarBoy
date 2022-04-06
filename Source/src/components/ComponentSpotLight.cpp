@@ -29,8 +29,8 @@ void Hachiko::ComponentSpotLight::DebugDraw()
         auto* transform = game_object->GetTransform();
         if (transform)
         {
-            dd::cone(transform->GetLocalPosition(), transform->GetFront().Mul(radius), dd::colors::Blue, inner, 0.f);
-            dd::cone(transform->GetLocalPosition(), transform->GetFront().Mul(radius), dd::colors::Green, outer, 0.f);
+            dd::cone(transform->GetPosition(), transform->GetFront().Mul(radius), dd::colors::Blue, inner, 0.f);
+            dd::cone(transform->GetPosition(), transform->GetFront().Mul(radius), dd::colors::Green, outer, 0.f);
         }
     }
 }
@@ -38,7 +38,7 @@ void Hachiko::ComponentSpotLight::DebugDraw()
 float3 Hachiko::ComponentSpotLight::GetPosition() const
 {
     ComponentTransform* transform = game_object->GetTransform();
-    return transform->GetLocalPosition();
+    return transform->GetPosition();
 }
 
 float3 Hachiko::ComponentSpotLight::GetDirection() const

@@ -23,7 +23,7 @@ bool Hachiko::ModuleCamera::Init()
     main_camera = static_cast<ComponentCamera*>(main_camera_game_object->CreateComponent(Component::Type::CAMERA));
 
     main_camera->SetCameraType(ComponentCamera::CameraType::GOD);
-    main_camera_game_object->GetTransform()->SetLocalPosition(float3(0.0f, 8.0f, 10.0f));
+    main_camera_game_object->GetTransform()->SetGlobalPosition(float3(0.0f, 8.0f, 10.0f));
     main_camera_game_object->GetTransform()->LookAtTarget(float3::zero);
     main_camera_game_object->Update();
 
@@ -101,7 +101,7 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     if (scrolled_y != 0)
         Zoom(static_cast<float>(scrolled_y) * zoom_speed);
 
-    if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN)
+    if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_REPEAT)
     {
         int moved_x, moved_y;
         App->input->GetMouseDelta(moved_x, moved_y);
@@ -172,19 +172,19 @@ void Hachiko::ModuleCamera::Zoom(float zoom) const
     const float distance = main_camera->reference_point.Distance(transform->GetLocalPosition());
     const vec newPos = transform->GetLocalPosition() + zoom * transform->GetFront() * distance * 0.05f;
 
-    transform->SetLocalPosition(newPos);
+    transform->SetGlobalPosition(newPos);
     main_camera->GetGameObject()->Update();
 }
 
 void Hachiko::ModuleCamera::Orbit(float motion_x, float motion_y) const
 {
     auto* transform = main_camera->GetGameObject()->GetTransform();
-    float3 vector = transform->GetLocalPosition() - main_camera->reference_point;
+    float3 vector = transform->GetPosition() - main_camera->reference_point;
 
     vector = Quat(transform->GetUp(), motion_x * 0.003f).Transform(vector);
     vector = Quat(transform->GetRight().Neg(), motion_y * 0.003f).Transform(vector);
 
-    transform->SetLocalPosition(vector + main_camera->reference_point);
+    transform->SetGlobalPosition(vector + main_camera->reference_point);
 
     transform->LookAtTarget(main_camera->reference_point);
     main_camera->GetGameObject()->Update();
@@ -215,7 +215,7 @@ void Hachiko::ModuleCamera::MovementController(const float delta) const
     if (App->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT)
         deltaUp -= float3::unitY * delta * effective_speed;
 
-    transform->SetLocalPosition(transform->GetLocalPosition() + deltaFwd + deltaRight + deltaUp);
+    transform->SetGlobalPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
     main_camera->GetGameObject()->Update();
     main_camera->reference_point += deltaRight + deltaUp;
 }
@@ -225,7 +225,7 @@ void Hachiko::ModuleCamera::FocusOnModel(const float3& target, float distance) c
     auto* transform = main_camera->GetGameObject()->GetTransform();
     const float3 v = transform->GetFront().Neg();
 
-    transform->SetLocalPosition(target + (v * distance));
+    transform->SetGlobalPosition(target + (v * distance));
     main_camera->GetGameObject()->Update();
     main_camera->reference_point = target;
 }
@@ -245,7 +245,7 @@ void Hachiko::ModuleCamera::Rotate(float motion_x, float motion_y) const
     main_camera->GetGameObject()->Update();
 
     const float distancetoReference = (main_camera->reference_point - transform->GetLocalPosition()).Length();
-    main_camera->reference_point = transform->GetLocalPosition() + newFwd * distancetoReference;
+    main_camera->reference_point = transform->GetPosition() + newFwd * distancetoReference;
 }
 
 void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y) const
@@ -255,7 +255,7 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
     ComponentTransform* transform = main_camera->GetGameObject()->GetTransform();
     float3 deltaMovement = transform->GetRight() * move_speed * motion_x + transform->GetUp() * move_speed * motion_y;
 
-    transform->SetLocalPosition(transform->GetLocalPosition() + deltaMovement);
+    transform->SetGlobalPosition(transform->GetPosition() + deltaMovement);
     main_camera->GetGameObject()->Update();
     main_camera->reference_point += deltaMovement;
 }
@@ -275,7 +275,7 @@ void Hachiko::ModuleCamera::RunDynamicScript(const float delta)
         if (distanceFromReference < max_distance)
         {
             deltaFwd += transform->GetFront() * delta * effective_speed;
-            transform->SetLocalPosition(transform->GetLocalPosition() + deltaFwd + deltaRight + deltaUp);
+            transform->SetLocalPosition(transform->GetPosition() + deltaFwd + deltaRight + deltaUp);
         }
         else
             transform->SetLocalPosition(main_camera->camera_pinned_pos);

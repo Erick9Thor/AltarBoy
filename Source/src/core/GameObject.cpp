@@ -209,7 +209,7 @@ void Hachiko::GameObject::Update()
     // TODO: REMOVE
     if (name == "Gun")  // This is temporal, once scripting is finally merged, we should try to do the same there for the player 
     {
-        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetLocalPosition() - float3(0, 5, 0), transform->GetLocalPosition());
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition());
     }
     //
 
@@ -327,7 +327,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         constexpr float default_bounding_size = 1.0f;
         // If there is no mesh generate a default size
         aabb.SetNegativeInfinity();
-        aabb.SetFromCenterAndSize(transform->GetLocalPosition(), float3(default_bounding_size));
+        aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
         obb = aabb;
     }
 

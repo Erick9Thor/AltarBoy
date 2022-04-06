@@ -50,14 +50,14 @@ inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 
 void Hachiko::ComponentTransform::LookAtTarget(const float3& target)
 {
-    const float3 direction = (GetLocalPosition() - target).Normalized();
+    const float3 direction = (GetPosition() - target).Normalized();
 
-    SetLocalRotation(SimulateLookAt(direction));
+    SetGlobalRotation(SimulateLookAt(direction));
 }
 
 void Hachiko::ComponentTransform::LookAtDirection(const float3& direction) 
 {
-    SetLocalRotation(SimulateLookAt(direction));
+    SetGlobalRotation(SimulateLookAt(direction));
 }
 
 /**     SETTERS     **/
