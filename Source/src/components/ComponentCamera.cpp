@@ -242,22 +242,22 @@ void Hachiko::ComponentCamera::DrawGui()
 
         #ifndef PLAY_BUILD
             int cam_type_selector = static_cast<int>(camera_type);
-            if (ImGui::RadioButton("Static", &cam_type_selector, 1))
+            if (ImGui::RadioButton("Static", &cam_type_selector, static_cast<int>(CameraType::STATIC)))
             {
                 SetCameraType(CameraType::STATIC);
             };
             ImGui::SameLine();
-            if (ImGui::RadioButton("Dynamic", &cam_type_selector, 2))
+            if (ImGui::RadioButton("Dynamic", &cam_type_selector, static_cast<int>(CameraType::DYNAMIC)))
             {
                 SetCameraType(CameraType::DYNAMIC);
             };
             ImGui::SameLine();
-            if (ImGui::RadioButton("God", &cam_type_selector, 3))
+            if (ImGui::RadioButton("God", &cam_type_selector, static_cast<int>(CameraType::GOD)))
             {
                 SetCameraType(CameraType::GOD);
             };
             ImGui::SameLine();
-            if (ImGui::RadioButton("Player", &cam_type_selector, 4))
+            if (ImGui::RadioButton("Player", &cam_type_selector, static_cast<int>(CameraType::PLAYER)))
             {
                 SetCameraType(CameraType::PLAYER);
             };

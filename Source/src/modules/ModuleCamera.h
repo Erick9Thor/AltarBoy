@@ -28,9 +28,9 @@ namespace Hachiko
             return main_camera;
         }
 
-        void AddCameraComponent(Component* camera);
-        void RemoveCameraComponent(Component* camera);
-        void SetMainCamera(Component* camera);
+        void AddCameraComponent(ComponentCamera* camera);
+        void RemoveCameraComponent(ComponentCamera* camera);
+        void SetMainCamera(ComponentCamera* camera);
         void RestoreOriginCamera();
         void ReturnPlayerCamera();
 
@@ -46,9 +46,8 @@ namespace Hachiko
         
         GameObject* main_camera_game_object = nullptr;
         ComponentCamera* main_camera = nullptr;
-        ComponentCamera* player_camera = nullptr;
 
-        std::vector<Component*> camera_buffer;
+        std::vector<ComponentCamera*> camera_buffer;
         unsigned int last_it = 0;
     };
 }
