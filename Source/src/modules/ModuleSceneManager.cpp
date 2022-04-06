@@ -1,7 +1,8 @@
 #include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
-#include "modules/ModuleCamera.h"
+#include "ModuleCamera.h"
+#include "ModuleEvent.h"
 
 #include "importers/SceneImporter.h"
 #include "ModuleFileSystem.h"
@@ -36,6 +37,10 @@ void Hachiko::ModuleSceneManager::AttemptScenePause()
 {
     if (!GameTimer::paused)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::PAUSED);
+        App->event->Publish(game_state);
+
         GameTimer::Pause();
     }
 }
@@ -44,11 +49,22 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 {
     if (!GameTimer::running)
     {
-        SaveScene("tmp_scene.scene");
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
+        App->event->Publish(game_state);
+
+        SaveScene("tmp_scene.scene");       
+        
         GameTimer::Start();
     }
     else if (GameTimer::paused)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::RESUMED);
+        App->event->Publish(game_state);
+        
+        SaveScene("tmp_scene.scene");
+        
         GameTimer::Resume();
     }
 }
@@ -57,7 +73,12 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 {
     if (GameTimer::running)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
+        App->event->Publish(game_state);
+
         GameTimer::Stop();
+
         LoadScene("tmp_scene.scene");
     }
 }
