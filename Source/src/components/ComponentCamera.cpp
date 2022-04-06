@@ -69,9 +69,6 @@ std::string Hachiko::ComponentCamera::GetCameraTypeString(CameraType cam_type)
 {
     switch (cam_type)
     {
-    case CameraType::NONE:
-        return std::string("NONE");
-        break;
     case CameraType::STATIC:
         return std::string("STATIC");
         break;
@@ -168,6 +165,7 @@ void Hachiko::ComponentCamera::Save(JsonFormatterValue j_component) const
     j_frustum["FarDistance"] = frustum.FarPlaneDistance();
     j_frustum["Fov"] = horizontal_fov;
     j_frustum["CameraType"] = static_cast<int>(camera_type);
+    
 
     const JsonFormatterValue j_pos = j_frustum["Pos"];
     j_pos[0] = frustum.Pos().x;
@@ -183,6 +181,11 @@ void Hachiko::ComponentCamera::Save(JsonFormatterValue j_component) const
     j_up[0] = frustum.Up().x;
     j_up[1] = frustum.Up().y;
     j_up[2] = frustum.Up().z;
+
+    const JsonFormatterValue j_pinned_camera = j_frustum["PinnedCamera"];
+    j_pinned_camera[0] = camera_pinned_pos.x;
+    j_pinned_camera[1] = camera_pinned_pos.y;
+    j_pinned_camera[2] = camera_pinned_pos.z;
 }
 
 void Hachiko::ComponentCamera::Load(JsonFormatterValue j_component)
@@ -197,10 +200,12 @@ void Hachiko::ComponentCamera::Load(JsonFormatterValue j_component)
     const JsonFormatterValue j_pos = j_frustum["Pos"];
     const JsonFormatterValue j_front = j_frustum["Front"];
     const JsonFormatterValue j_up = j_frustum["Up"];
+    const JsonFormatterValue j_pinned_camera = j_frustum["PinnedCamera"];
 
     frustum.SetPos(float3(j_pos[0], j_pos[1], j_pos[2]));
     frustum.SetFront(float3(j_front[0], j_front[1], j_front[2]));
     frustum.SetUp(float3(j_up[0], j_up[1], j_up[2]));
+    camera_pinned_pos = float3(j_pinned_camera[0], j_pinned_camera[1], j_pinned_camera[2]);
 }
 
 void Hachiko::ComponentCamera::DrawGui()

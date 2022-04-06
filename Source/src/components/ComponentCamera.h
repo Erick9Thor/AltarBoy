@@ -13,8 +13,7 @@ namespace Hachiko
     {
     public:
         enum class CameraType
-        {
-            NONE,
+        {   
             STATIC,
             DYNAMIC,
             GOD,

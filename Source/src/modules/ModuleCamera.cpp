@@ -82,8 +82,9 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
         return;
 #endif  
     if (main_camera->GetCameraType() != ComponentCamera::CameraType::GOD)
+    {
         return;
-
+    }
     // Keyboard movement ---------------
     if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
     {
@@ -143,7 +144,9 @@ void Hachiko::ModuleCamera::SetMainCamera(Component* camera)
 void Hachiko::ModuleCamera::RestoreOriginCamera() 
 {
     if (main_camera->GetCameraType() == ComponentCamera::CameraType::DYNAMIC) //Return Dynamic camera to pinned position
+    {
         main_camera->GetGameObject()->GetTransform()->SetPosition(main_camera->camera_pinned_pos);
+    }
     main_camera = static_cast<ComponentCamera*>(camera_buffer[0]);
     main_camera_game_object = camera_buffer[0]->GetGameObject();
 }
