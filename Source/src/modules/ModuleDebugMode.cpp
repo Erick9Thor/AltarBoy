@@ -75,12 +75,12 @@ ImGuiWindowFlags Hachiko::ModuleDebugMode::SetupWindow()
 
 void Hachiko::ModuleDebugMode::UpdateRenderValues()
 {
-	fps = EngineTimer::fps;
 	const Hachiko::RenderList* render_list = App->renderer->GetRenderList();
 	poly_on_screen = render_list->GetPolycountRendered();
 	poly_total = render_list->GetPolycountTotal();
 }
 
+// Delete after VS1
 const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer() const
 {
 	for (const Hachiko::GameObject* child : App->scene_manager->GetRoot()->children)
@@ -97,7 +97,10 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 	static const float vram_total = (float)hw_info.vram_capacity / 1024.0f;
 	float vram_free = (float)hw_info.vram_free / 1024.0f;
 	float vram_usage = vram_total - vram_free;
+	// Do not try this at home, delete asap
+	player = FindPlayer();
 	float3 player_pos_editor = player->GetTransform()->GetPosition();
+	
 	
 	UpdateRenderValues();
 

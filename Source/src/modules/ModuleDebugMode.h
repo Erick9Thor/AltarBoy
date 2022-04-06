@@ -31,7 +31,7 @@ namespace Hachiko
 	class ModuleDebugMode : public Module
 	{
 	public:
-		ModuleDebugMode() : is_gui_active(false), fps(0), poly_on_screen(0), poly_total(0), player_pos(0, 0, 0),
+		ModuleDebugMode() : is_gui_active(false), poly_on_screen(0), poly_total(0), player_pos(0, 0, 0),
 							window_flags(ImGuiWindowFlags_None), hw_info(), player(nullptr) {};
 		~ModuleDebugMode() = default;
 
@@ -54,7 +54,6 @@ namespace Hachiko
 		void RenderGui() const;
 	private:
 		bool is_gui_active;
-		int fps;
 		unsigned poly_on_screen;
 		unsigned poly_total;
 		std::vector<float> fps_buffer;

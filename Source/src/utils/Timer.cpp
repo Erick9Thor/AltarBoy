@@ -132,17 +132,11 @@ Hachiko::PerformanceTimer Hachiko::EngineTimer::timer;
 double Hachiko::EngineTimer::delta_time = 0.;
 double Hachiko::EngineTimer::total_time = 0.;
 double Hachiko::EngineTimer::prev_tick_time = 0.;
-double Hachiko::EngineTimer::last_time_read = 0.;
 bool Hachiko::EngineTimer::running = false;
-unsigned Hachiko::EngineTimer::fps = 0;
-unsigned Hachiko::EngineTimer::fps_count = 0;
 
 void Hachiko::EngineTimer::Start()
 {
     total_time = 0.;
-    fps = 0;
-    fps_count = 0;
-    last_time_read = 0.;
     running = true;
     timer.Start();
     prev_tick_time = timer.Read();
@@ -155,17 +149,5 @@ double Hachiko::EngineTimer::Update()
     prev_tick_time = tick_time;
     if (running)
         total_time = timer.Read();
-    CountFPS();
     return delta_time;
-}
-
-void Hachiko::EngineTimer::CountFPS()
-{
-    ++fps_count;
-    if (timer.Read() >= ONE_SEC_IN_MS + last_time_read)
-    {
-        last_time_read = timer.Read();
-        fps = fps_count;
-        fps_count = 0;
-    }
 }

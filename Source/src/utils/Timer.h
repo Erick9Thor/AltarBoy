@@ -76,11 +76,5 @@ namespace Hachiko
         static double total_time;
         static double prev_tick_time;
         static bool running;
-
-        static unsigned fps;
-    private:
-        static double last_time_read;
-        static unsigned fps_count;
-        static void CountFPS();
     };
 }
