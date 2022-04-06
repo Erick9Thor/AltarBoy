@@ -2,11 +2,66 @@
 #include <string>
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
+#include "DynamicCamera.h"
 #include "Experiment.h"
 #include "Funky.h"
 #include "PlayerController.h"
 #include "SomeScript.h"
 
+
+void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_start_point") != serialized_fields.end())
+	{
+		const SerializedField& _start_point_sf = serialized_fields["_start_point"];
+		if (_start_point_sf.type_name == "math::float3")
+		{
+			_start_point = std::any_cast<math::float3>(_start_point_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_end_point") != serialized_fields.end())
+	{
+		const SerializedField& _end_point_sf = serialized_fields["_end_point"];
+		if (_end_point_sf.type_name == "math::float3")
+		{
+			_end_point = std::any_cast<math::float3>(_end_point_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_speed") != serialized_fields.end())
+	{
+		const SerializedField& _speed_sf = serialized_fields["_speed"];
+		if (_speed_sf.type_name == "float")
+		{
+			_speed = std::any_cast<float>(_speed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_lerp_position") != serialized_fields.end())
+	{
+		const SerializedField& _lerp_position_sf = serialized_fields["_lerp_position"];
+		if (_lerp_position_sf.type_name == "float")
+		{
+			_lerp_position = std::any_cast<float>(_lerp_position_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::DynamicCamera::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_start_point"] = SerializedField(std::string("_start_point"), std::make_any<math::float3>(_start_point), std::string("math::float3"));
+
+	serialized_fields["_end_point"] = SerializedField(std::string("_end_point"), std::make_any<math::float3>(_end_point), std::string("math::float3"));
+
+	serialized_fields["_speed"] = SerializedField(std::string("_speed"), std::make_any<float>(_speed), std::string("float"));
+
+	serialized_fields["_lerp_position"] = SerializedField(std::string("_lerp_position"), std::make_any<float>(_lerp_position), std::string("float"));
+}
 
 void Hachiko::Scripting::Experiment::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
@@ -138,6 +193,33 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 			_rotation_speed = std::any_cast<float>(_rotation_speed_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_is_falling") != serialized_fields.end())
+	{
+		const SerializedField& _is_falling_sf = serialized_fields["_is_falling"];
+		if (_is_falling_sf.type_name == "bool")
+		{
+			_is_falling = std::any_cast<bool>(_is_falling_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_original_y") != serialized_fields.end())
+	{
+		const SerializedField& _original_y_sf = serialized_fields["_original_y"];
+		if (_original_y_sf.type_name == "float")
+		{
+			_original_y = std::any_cast<float>(_original_y_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_speed_y") != serialized_fields.end())
+	{
+		const SerializedField& _speed_y_sf = serialized_fields["_speed_y"];
+		if (_speed_y_sf.type_name == "float")
+		{
+			_speed_y = std::any_cast<float>(_speed_y_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -157,6 +239,12 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_dash_start"] = SerializedField(std::string("_dash_start"), std::make_any<math::float3>(_dash_start), std::string("math::float3"));
 
 	serialized_fields["_rotation_speed"] = SerializedField(std::string("_rotation_speed"), std::make_any<float>(_rotation_speed), std::string("float"));
+
+	serialized_fields["_is_falling"] = SerializedField(std::string("_is_falling"), std::make_any<bool>(_is_falling), std::string("bool"));
+
+	serialized_fields["_original_y"] = SerializedField(std::string("_original_y"), std::make_any<float>(_original_y), std::string("float"));
+
+	serialized_fields["_speed_y"] = SerializedField(std::string("_speed_y"), std::make_any<float>(_speed_y), std::string("float"));
 }
 
 void Hachiko::Scripting::SomeScript::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
