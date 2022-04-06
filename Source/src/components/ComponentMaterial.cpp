@@ -46,8 +46,10 @@ void Hachiko::ComponentMaterial::DrawGui()
 
             if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
             {
+                
                 if (diffuse.loaded)
                 {
+                    
                     ImGui::Checkbox("Diff Texture", &use_diffuse_texture);
                     if (use_diffuse_texture)
                     {
@@ -55,9 +57,9 @@ void Hachiko::ComponentMaterial::DrawGui()
                         ImGui::SameLine();
                         ImGui::BeginGroup();
                         ImGui::Text("%dx%d", diffuse.width, diffuse.height);
-                        ImGui::Text("Path: %s", diffuse.path.c_str());
+                        ImGui::Text("Path: %s", diffuse.path.c_str());                        
 
-                        ImGui::Button("Change Texture");
+                        /* ImGui::Button("Change Texture");
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
@@ -67,14 +69,22 @@ void Hachiko::ComponentMaterial::DrawGui()
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
-                        }
+                        } */
                         ImGui::EndGroup();
                     }
                 }
 
-                if (!use_diffuse_texture)
+                
+                if (ImGui::InputText("Diffuse", diffuse_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
                 {
-                    ImGui::DragFloat4("Diffuse", (float*)&material->diffuse_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                    ModuleTexture::Unload(material->diffuse);
+                    std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + diffuse_filename_buffer;
+                    material->diffuse = ModuleTexture::Load(destination.c_str());
+                }
+
+                if (!use_diffuse_texture || !material->diffuse.loaded)
+                {
+                    ImGuiUtils::CompactColorPicker("Diffuse", (float*)&material->diffuse_color);
                 }
                 ImGui::TreePop();
             }
@@ -92,7 +102,8 @@ void Hachiko::ComponentMaterial::DrawGui()
                         ImGui::BeginGroup();
                         ImGui::Text("%dx%d", specular.width, specular.height);
                         ImGui::Text("Path: %s", specular.path.c_str());
-                        ImGui::Button("Change Texture");
+
+                        /* ImGui::Button("Change Texture");
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
@@ -101,14 +112,21 @@ void Hachiko::ComponentMaterial::DrawGui()
                         if (ImGui::IsItemHovered())
                         {
                             ImGui::SetTooltip("Currently not working, waiting for Texture Resource");
-                        }
+                        }*/
                         ImGui::EndGroup();
                     }
                 }
 
-                if (!use_specular_texture)
+                if (ImGui::InputText("Specular", specular_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
                 {
-                    ImGui::DragFloat4("Specular", (float*)&material->specular_color, 0.005f, 0.0f, +FLT_MAX, "%.3f", 1.0f);
+                    ModuleTexture::Unload(material->specular);
+                    std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + specular_filename_buffer;
+                    material->specular = ModuleTexture::Load(destination.c_str());
+                }
+
+                if (!use_specular_texture || !material->specular.loaded)
+                {
+                    ImGuiUtils::CompactColorPicker("Specular", (float*)&material->specular_color);
                 }
                 ImGui::TreePop();
             }

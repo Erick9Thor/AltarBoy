@@ -199,9 +199,9 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
 
     MaterialData material_data;
     material_data.diffuse_color = material->diffuse_color;
-    material_data.diffuse_flag = material_comp->use_diffuse_texture;
+    material_data.diffuse_flag = material_comp->use_diffuse_texture && material->diffuse.loaded;
     material_data.specular_color = material->specular_color;
-    material_data.specular_flag = material_comp->use_specular_texture;
+    material_data.specular_flag = material_comp->use_specular_texture && material->specular.loaded;
     material_data.shininess = material->shininess;
 
     if (material_comp->use_diffuse_texture)

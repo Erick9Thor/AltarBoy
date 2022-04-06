@@ -29,6 +29,9 @@ namespace Hachiko
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
 
+        char diffuse_filename_buffer[MAX_PATH] = "Diffuse Filename\0";
+        char specular_filename_buffer[MAX_PATH] = "Specular Filename\0";
+
         bool use_diffuse_texture = false;
         bool use_specular_texture = false;
 

@@ -32,6 +32,9 @@ namespace Hachiko
         Texture image;
         Texture hover_image;
 
+        char image_filename_buffer[MAX_PATH] = "Image Filename\0";
+        char hover_image_filename_buffer[MAX_PATH] = "Hover Image Filename\0";
+
         float4 color = float4::one;
         float4 hover_color = float4::one;
         bool use_image = false;
