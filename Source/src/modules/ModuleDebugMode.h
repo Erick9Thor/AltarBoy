@@ -49,6 +49,9 @@ namespace Hachiko
 		ImGuiWindowFlags SetupWindow();
 		void UpdateRenderValues();
 		const GameObject* FindPlayer();
+
+		//TODO: Remove ASAP
+		void RenderGui();
 	private:
 		bool is_gui_active;
 		int fps, poly_on_screen, poly_total;

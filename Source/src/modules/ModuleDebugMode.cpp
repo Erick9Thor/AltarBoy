@@ -55,10 +55,12 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 		DrawGUI();
 	}
 
+	RenderGui();
+
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
-UpdateStatus Hachiko::ModuleDebugMode::PostUpdate(const float delta)
+void Hachiko::ModuleDebugMode::RenderGui()
 {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -66,7 +68,10 @@ UpdateStatus Hachiko::ModuleDebugMode::PostUpdate(const float delta)
 	ImGui::UpdatePlatformWindows();
 	ImGui::RenderPlatformWindowsDefault();
 	SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
+}
 
+UpdateStatus Hachiko::ModuleDebugMode::PostUpdate(const float delta)
+{
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -77,8 +82,6 @@ bool Hachiko::ModuleDebugMode::CleanUp()
 
 ImGuiWindowFlags Hachiko::ModuleDebugMode::SetupWindow()
 {
-
-
 	ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking |
 		ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar;
 	return window_flags;
@@ -146,7 +149,7 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 		ImGui::Text("Player position: ");
 		if (ImGui::DragFloat3("(x, y, z)", player_pos_editor.ptr(), 0.1f, -inf, inf))
 		{
-			player->GetTransform()->SetPosition(player_pos_editor);
+			player->GetTransform()->SetGlobalPosition(player_pos_editor);
 		}
 	}
 	ImGui::End();
