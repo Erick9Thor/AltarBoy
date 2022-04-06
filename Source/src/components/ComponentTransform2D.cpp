@@ -63,23 +63,17 @@ void Hachiko::ComponentTransform2D::DrawGui(){
             SetPivot(ed_piv);
         }
 
-        ImGui::Checkbox("Debug Transforms", &debug_transforms);
+        ImGui::Checkbox("Debug Transform2D matrix", &debug_transforms);
         if (debug_transforms)
         {
 
             ImGui::Separator();
-            ImGui::Text("Local");
+            ImGui::Text("Scaled Transform");
+            const float4x4& scaled = GetGlobalScaledTransform();
             for (int r = 0; r < 4; ++r)
             {
-                float4& row = local_transform.Row(r);
-                ImGui::Text("%.2f, %.2f, %.2f, %.2f", row.x, row.y, row.z, row.w);
-            }
-
-            ImGui::Separator();
-            ImGui::Text("Global");
-            for (int r = 0; r < 4; ++r)
-            {
-                float4& row = global_transform.Row(r);
+                
+                const float4& row = scaled.Row(r);
                 ImGui::Text("%.2f, %.2f, %.2f, %.2f", row.x, row.y, row.z, row.w);
             }
 
