@@ -396,3 +396,8 @@ HACHIKO_API void GetMouseDeltaPixels(int& out_delta_x, int& out_delta_y);
 HACHIKO_API void GetMousePositionPixels(int& out_position_x, 
     int& out_position_y);
 } // namespace Hachiko::Input
+
+namespace Hachiko::SceneManagement
+{
+    HACHIKO_API void SwitchScene(const char* name);
+}

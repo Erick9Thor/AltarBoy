@@ -1,6 +1,7 @@
 #include "core/hepch.h"
 #include "utils/Logger.h"
 #include "modules/ModuleInput.h"
+#include "modules/ModuleSceneManager.h"
 #include "Gameplay.h"
 #include "Time.h"
 
@@ -76,6 +77,15 @@ void Hachiko::Input::GetMousePositionPixels(int& out_position_x,
     int& out_position_y) 
 {
     App->input->GetMousePosition(out_position_x, out_position_y);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*SCENE MANAGEMENT-----------------------------------------------------------*/
+
+void Hachiko::SceneManagement::SwitchScene(const char* name)
+{
+    App->scene_manager->SwitchTo(name);
 }
 
 /*---------------------------------------------------------------------------*/
