@@ -125,17 +125,17 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     }
 }
 
-void Hachiko::ModuleCamera::AddCameraComponent(Component* camera)
+void Hachiko::ModuleCamera::AddCameraComponent(ComponentCamera* camera)
 {
     camera_buffer.push_back(camera);
 }
 
-void Hachiko::ModuleCamera::RemoveCameraComponent(Component* camera) 
+void Hachiko::ModuleCamera::RemoveCameraComponent(ComponentCamera* camera)
 {
     camera_buffer.erase(std::remove(camera_buffer.begin(), camera_buffer.end(), camera), camera_buffer.end());
 }
 
-void Hachiko::ModuleCamera::SetMainCamera(Component* camera) 
+void Hachiko::ModuleCamera::SetMainCamera(ComponentCamera* camera)
 {
     main_camera = static_cast<ComponentCamera*>(camera);
     main_camera_game_object = camera->GetGameObject();
