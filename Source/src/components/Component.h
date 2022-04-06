@@ -22,6 +22,12 @@ namespace Hachiko
             DIRLIGHT,
             POINTLIGHT,
             SPOTLIGHT,
+            CANVAS,
+            CANVAS_RENDERER,
+            TRANSFORM_2D,
+            IMAGE,
+            BUTTON,
+            PROGRESS_BAR,
             UNKNOWN
         };
 
@@ -31,6 +37,7 @@ namespace Hachiko
 
         virtual ~Component() = default;
 
+        virtual void Start() { }
         virtual void Update() { }
 
         virtual void OnTransformUpdated() {}
@@ -69,6 +76,14 @@ namespace Hachiko
         virtual void Save(JsonFormatterValue j_component) const {}
 
         virtual void Load(JsonFormatterValue j_component) {}
+
+        [[nodiscard]] bool IsActive() const
+        {
+            return active;
+        }
+
+        virtual bool CanBeRemoved() const;
+        virtual bool HasDependentComponents(GameObject* game_object) const;
 
     protected:
         GameObject* game_object = nullptr;

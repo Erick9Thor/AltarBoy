@@ -10,6 +10,7 @@
 
 #include "ui/WindowScene.h"
 
+
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
 Hachiko::ModuleCamera::~ModuleCamera() = default;
@@ -27,7 +28,6 @@ bool Hachiko::ModuleCamera::Init()
     main_camera_game_object->Update();
 
     ImGuizmo::Enable(true);
-
     return true;
 }
 
@@ -65,6 +65,10 @@ bool Hachiko::ModuleCamera::CleanUp()
 void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int screen_height) const
 {
     main_camera->SetResolution(screen_width, screen_height);
+    if (main_camera != nullptr)
+    {
+        main_camera->SetResolution(screen_width, screen_height);
+    }
 }
 
 void Hachiko::ModuleCamera::Controller(const float delta) const
@@ -73,9 +77,10 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     static const float rot_speed = 2.0f;
     static const float perpendicular_movement_speed = 2.0f;
 
+#ifndef PLAY_BUILD
     if (!App->editor->GetSceneWindow()->IsHovering())
         return;
-    
+#endif  
     if (main_camera->GetCameraType() != ComponentCamera::CameraType::GOD)
         return;
 
@@ -93,7 +98,7 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
     const int scrolled_y = App->input->GetScrollDelta();
     if (scrolled_y != 0)
-        Zoom(-static_cast<float>(scrolled_y) * zoom_speed);
+        Zoom(static_cast<float>(scrolled_y) * zoom_speed);
 
     if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN)
     {
@@ -105,7 +110,10 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     {
         const float distance = (main_camera->reference_point - main_camera->GetGameObject()->GetTransform()->GetPosition()).Length();
         GameObject* go = App->editor->GetSelectedGameObject();
-        FocusOnModel(go->GetTransform()->GetPosition(), distance);
+        if (go != nullptr)
+        {
+            FocusOnModel(go->GetTransform()->GetPosition(), distance);
+        }
     }
     if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
     {
@@ -138,6 +146,21 @@ void Hachiko::ModuleCamera::RestoreOriginCamera()
         main_camera->GetGameObject()->GetTransform()->SetPosition(main_camera->camera_pinned_pos);
     main_camera = static_cast<ComponentCamera*>(camera_buffer[0]);
     main_camera_game_object = camera_buffer[0]->GetGameObject();
+}
+
+void Hachiko::ModuleCamera::ReturnPlayerCamera()
+{
+    for (auto it = camera_buffer.rbegin(); it != camera_buffer.rend(); ++it)
+    {
+        if (static_cast<ComponentCamera*>(*it)->GetCameraType() == ComponentCamera::CameraType::PLAYER)
+        {
+            HE_LOG("Player Camera");
+            SetMainCamera(*it);
+            break;
+        }
+        else
+            HE_LOG("Not Player Camera");
+    }
 }
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const
@@ -201,7 +224,6 @@ void Hachiko::ModuleCamera::FocusOnModel(const float3& target, float distance) c
 
     transform->SetPosition(target + (v * distance));
     main_camera->GetGameObject()->Update();
-
     main_camera->reference_point = target;
 }
 

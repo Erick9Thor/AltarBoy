@@ -4,9 +4,9 @@
 
 #define HE_LOG(format, ...) Logging->log(__FILENAME__, __LINE__, format, __VA_ARGS__);
 
-#define M_PI 3.14159265358979323846
-constexpr float TO_RAD = static_cast<float>(M_PI) / 180.0f;
-constexpr float TO_DEG = 180.0f / static_cast<float>(M_PI);
+#define HACHIKO_PI 3.14159265358979323846
+constexpr float TO_RAD = static_cast<float>(HACHIKO_PI) / 180.0f;
+constexpr float TO_DEG = 180.0f / static_cast<float>(HACHIKO_PI);
 
 enum class UpdateStatus
 {
@@ -49,6 +49,7 @@ enum class UpdateStatus
 #define VERSION "0.1"
 #define ASSETS_FOLDER "Assets"
 #define ASSETS_FOLDER_SCENES "Assets/Scenes"
+#define ASSETS_FOLDER_TEXTURES "Assets/Textures"
 
 #define SETTINGS_FOLDER "Settings"
 #define LIBRARY_FOLDER "Library"

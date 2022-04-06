@@ -1,6 +1,6 @@
 #include "core/hepch.h"
 #include "Quadtree.h"
-#include "debugdraw.h"
+#include <debugdraw.h>
 
 Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) :
     box(box),

@@ -2,7 +2,7 @@
 #include "ImGuiUtils.h"
 #include <IconsFontAwesome5.h>
 
-#include "imgui_internal.h"
+#include <imgui_internal.h>
 
 #include "core/GameObject.h"
 #include "components/Component.h"
@@ -79,7 +79,9 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
 
     if (ImGui::BeginPopup(header_name))
     {
-        game_object->RemoveComponent(component);
+
+        game_object->AttemptRemoveComponent(component);
+        
         ImGui::EndPopup();
     }
 

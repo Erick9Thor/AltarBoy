@@ -23,15 +23,16 @@ namespace Hachiko
         void Controller(float delta) const;
         void MovementController(float delta) const;
 
-        [[nodiscard]] ComponentCamera* GetMainCamera() const
+        [[nodiscard]] ComponentCamera* GetMainCamera() 
         {
             return main_camera;
         }
+
         void AddCameraComponent(Component* camera);
         void RemoveCameraComponent(Component* camera);
         void SetMainCamera(Component* camera);
         void RestoreOriginCamera();
-
+        void ReturnPlayerCamera();
 
         // Camera actions
         void Zoom(float zoom) const;
@@ -42,9 +43,12 @@ namespace Hachiko
         void RunDynamicScript(const float delta);
 
     private:
-        std::vector<Component*> camera_buffer;
-        GameObject* main_camera_game_object = nullptr; // TODO: This name may be too long for Eric or Bernat's taste.
+        
+        GameObject* main_camera_game_object = nullptr;
         ComponentCamera* main_camera = nullptr;
+        ComponentCamera* player_camera = nullptr;
+
+        std::vector<Component*> camera_buffer;
         unsigned int last_it = 0;
     };
 }

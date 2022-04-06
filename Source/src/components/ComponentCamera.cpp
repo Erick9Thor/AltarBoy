@@ -134,7 +134,7 @@ float4x4 Hachiko::ComponentCamera::GetProjectionMatrix(const bool transpose) con
 
 void Hachiko::ComponentCamera::OnTransformUpdated()
 {
-    const ComponentTransform* transform = game_object->GetTransform();
+    ComponentTransform* transform = game_object->GetTransform();
 
     frustum.SetFrame(transform->GetPosition(), transform->GetFront(), transform->GetUp());
     frustum.GetPlanes(planes);
@@ -167,6 +167,7 @@ void Hachiko::ComponentCamera::Save(JsonFormatterValue j_component) const
     j_frustum["NearDistance"] = frustum.NearPlaneDistance();
     j_frustum["FarDistance"] = frustum.FarPlaneDistance();
     j_frustum["Fov"] = horizontal_fov;
+    j_frustum["CameraType"] = static_cast<int>(camera_type);
 
     const JsonFormatterValue j_pos = j_frustum["Pos"];
     j_pos[0] = frustum.Pos().x;
@@ -191,6 +192,7 @@ void Hachiko::ComponentCamera::Load(JsonFormatterValue j_component)
     SetNearPlane(j_frustum["NearDistance"]);
     SetFarPlane(j_frustum["FarDistance"]);
     SetHorizontalFov(j_frustum["Fov"]);
+    SetCameraType(static_cast<CameraType>(static_cast<int>(j_frustum["CameraType"])));
 
     const JsonFormatterValue j_pos = j_frustum["Pos"];
     const JsonFormatterValue j_front = j_frustum["Front"];
@@ -210,15 +212,15 @@ void Hachiko::ComponentCamera::DrawGui()
     {
         ImGui::Checkbox("Draw Frustum", &draw_frustum);
         ImGui::SameLine();
-        
-        ImGui::Checkbox("Preview Camera", &preview_cam);
-        if (preview_cam)
-        {
-            App->camera->SetMainCamera(this);
-        }
-        else
-            App->camera->RestoreOriginCamera();
-        
+        #ifndef PLAY_BUILD
+            ImGui::Checkbox("Preview Camera", &preview_cam);
+            if (preview_cam)
+            {
+                App->camera->SetMainCamera(this);
+            }
+            else
+                App->camera->RestoreOriginCamera();
+        #endif
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))
         {
@@ -233,33 +235,33 @@ void Hachiko::ComponentCamera::DrawGui()
             App->scene_manager->GetActiveScene()->SetCullingCamera(this);
         }
 
+        #ifndef PLAY_BUILD
+            int cam_type_selector = static_cast<int>(camera_type);
+            if (ImGui::RadioButton("Static", &cam_type_selector, 1))
+            {
+                SetCameraType(CameraType::STATIC);
+            };
+            ImGui::SameLine();
+            if (ImGui::RadioButton("Dynamic", &cam_type_selector, 2))
+            {
+                SetCameraType(CameraType::DYNAMIC);
+            };
+            ImGui::SameLine();
+            if (ImGui::RadioButton("God", &cam_type_selector, 3))
+            {
+                SetCameraType(CameraType::GOD);
+            };
+            ImGui::SameLine();
+            if (ImGui::RadioButton("Player", &cam_type_selector, 4))
+            {
+                SetCameraType(CameraType::PLAYER);
+            };
 
-        int cam_type_selector = static_cast<int>(camera_type);
-        if (ImGui::RadioButton("Static", &cam_type_selector, 1))
-        {
-            SetCameraType(CameraType::STATIC);
-        };
-        ImGui::SameLine();
-        if (ImGui::RadioButton("Dynamic", &cam_type_selector, 2))
-        {
-            SetCameraType(CameraType::DYNAMIC);
-        };
-        ImGui::SameLine();
-        if (ImGui::RadioButton("God", &cam_type_selector, 3))
-        {
-            SetCameraType(CameraType::GOD);
-        };
-        ImGui::SameLine();
-        if (ImGui::RadioButton("Player", &cam_type_selector, 4))
-        {
-            SetCameraType(CameraType::PLAYER);
-        };
-
-        if (ImGui::Button("Set Initial Position"))
-        {
-            SetCameraInitialPos();
-        }
-
+            if (ImGui::Button("Set Initial Position"))
+            {
+                SetCameraInitialPos();
+            }
+        #endif
         ImGui::Checkbox("Debug", &debug_data);
         if (debug_data)
         {

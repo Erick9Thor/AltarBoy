@@ -1,7 +1,8 @@
 #pragma once
-#include "MathGeoLib.h"
 
+#include <MathGeoLib.h>
 #include <vector>
+
 #include "utils/UUID.h"
 #include "components/Component.h"
 
@@ -31,17 +32,30 @@ namespace Hachiko
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
-        void RemoveComponent(Component* component);
+        bool AttemptRemoveComponent(Component* component);
 
         Component* CreateComponent(Component::Type type);
         void RemoveChild(GameObject* gameObject);
 
         //void Destroy();
+        void Start();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
         void DrawStencil(ComponentCamera* camera, Program* program);
 
+        void SetActive(bool set_active) 
+        {
+            if (active == set_active)
+            {
+                return;
+            }
+            active = set_active;
+            if (active)
+            {
+                Start();
+            }
+        }
         bool IsActive() const
         {
             return active;
@@ -83,7 +97,7 @@ namespace Hachiko
         }
 
         template<typename RetComponent>
-        RetComponent* GetComponent()
+        RetComponent* GetComponent() const
         {
             const Component::Type type = RetComponent::GetType();
             for (auto& component : components)
