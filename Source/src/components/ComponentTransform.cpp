@@ -24,12 +24,14 @@ Hachiko::ComponentTransform::ComponentTransform(GameObject* container, const flo
     : ComponentTransform(container)
 {
     SetLocalTransform(new_position_local, new_rotation_local, new_scale_local);
+    UpdateTransform();
 }
 
 Hachiko::ComponentTransform::ComponentTransform(GameObject* container, const float4x4& new_transform_local) 
     : ComponentTransform(container)
 {
     SetLocalTransform(new_transform_local);
+    UpdateTransform();
 }
 
 void Hachiko::ComponentTransform::OnTransformUpdated()
