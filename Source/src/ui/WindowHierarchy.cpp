@@ -75,31 +75,16 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 
     if (ImGui::IsItemHovered() && !ImGui::IsItemToggledOpen())
     {
-        /*if (dragged_object && dragged_object != game_object)
-        {
-            ImGui::BeginTooltip();
-            ImGui::Text("% s->% s ", dragged_object->name.c_str(), game_object->name.c_str());
-            ImGui::EndTooltip();
-            App->editor->SetSelectedGO(dragged_object);
-        }*/
 
         if (ImGui::IsMouseClicked(0))
         {
             App->editor->SetSelectedGO(game_object);
-            //dragged_object = game_object;
         }
 
         if (ImGui::IsMouseClicked(1))
         {
             ImGui::OpenPopup(game_object->name.c_str());
         }
-
-        //if (dragged_object && ImGui::IsMouseReleased(0) && dragged_object != game_object)
-        //{
-        //    App->editor->SetSelectedGO(dragged_object);
-        //    dragged_object->SetNewParent(game_object);
-        //    dragged_object = nullptr;
-        //}
         
         if (ImGui::IsMouseClicked(0) && flags == isSelected)
         {
