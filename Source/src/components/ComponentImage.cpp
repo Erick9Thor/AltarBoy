@@ -21,8 +21,7 @@ void Hachiko::ComponentImage::DrawGui()
     {   
 
         ImGui::Checkbox("Use Image", &use_image);
-
-        static char image_filename_buffer[MAX_PATH] = "Image Filename\0";
+        
         if (ImGui::InputText("Image File", image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(image);
@@ -37,7 +36,6 @@ void Hachiko::ComponentImage::DrawGui()
 
         ImGui::Checkbox("Use Hover Image", &use_hover_image);
 
-        static char hover_image_filename_buffer[MAX_PATH] = "Hover Image Filename\0";
         if (ImGui::InputText("Hover Image File", hover_image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(hover_image);

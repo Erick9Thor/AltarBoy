@@ -31,7 +31,6 @@ Hachiko::ResourceMaterial* Hachiko::MaterialImporter::Material::Import(const aiM
     }
 
     assimp_material->Get(AI_MATKEY_SHININESS, r_material->shininess);
-
     std::vector<std::string> search_paths;
     if (assimp_material->GetTexture(aiTextureType_DIFFUSE, index, &file) == AI_SUCCESS)
     {
