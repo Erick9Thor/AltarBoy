@@ -45,6 +45,7 @@ void Hachiko::WindowHierarchy::DrawChildren(const GameObject* game_object)
     }
 }
 
+// TODO: Refactor to simplify function
 void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 {
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
