@@ -99,7 +99,7 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 	float vram_usage = vram_total - vram_free;
 	// Do not try this at home, delete asap
 	player = FindPlayer();
-	float3 player_pos_editor = player->GetTransform()->GetPosition();
+	float3 player_pos_editor = player->GetTransform()->GetGlobalPosition();
 	
 	
 	UpdateRenderValues();
