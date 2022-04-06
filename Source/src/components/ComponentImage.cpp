@@ -68,7 +68,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
-    if (button && button->IsHovered() && hover_image.loaded)
+    if (button && button->IsHovered())
     {
         img_to_draw = &hover_image;
         render_color = &hover_color;
