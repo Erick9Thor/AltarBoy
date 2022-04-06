@@ -14,8 +14,7 @@
 
 #include "ui/ImGuiUtils.h"
 
-Hachiko::WindowScene::WindowScene() :
-    Window("Scene", true) {}
+Hachiko::WindowScene::WindowScene() : Window("Scene", true) {}
 
 Hachiko::WindowScene::~WindowScene() = default;
 
@@ -70,7 +69,7 @@ void Hachiko::WindowScene::GuizmoOptionsController()
     {
         guizmo_mode = ImGuizmo::LOCAL;
     }
-    
+
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_GLOBE, guizmo_mode == ImGuizmo::WORLD, "Switches to Global Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::WORLD;
@@ -86,32 +85,17 @@ void Hachiko::WindowScene::ToolbarMenu() const
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PAUSE, GameTimer::paused && GameTimer::running, "Pause"))
     {
-        if (!GameTimer::paused)
-        {
-            GameTimer::Pause();
-        }
+        App->scene_manager->AttemptScenePause();
     }
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, !GameTimer::paused && GameTimer::running, "Play"))
     {
-        if (!GameTimer::running)
-        {
-            App->scene_manager->SaveScene("tmp_scene.scene");
-            GameTimer::Start();
-        }
-        else if (GameTimer::paused)
-        {
-            GameTimer::Resume();
-        }
+        App->scene_manager->AttemptScenePlay();
     }
 
     if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_STOP, !GameTimer::running, "Stop"))
     {
-        if (GameTimer::running)
-        {
-            GameTimer::Stop();
-            App->scene_manager->LoadScene("tmp_scene.scene");
-        }
+        App->scene_manager->AttemptSceneStop();
     }
 
     ImGui::Separator();
@@ -122,7 +106,10 @@ void Hachiko::WindowScene::DrawScene()
     ImVec2 size = ImGui::GetContentRegionAvail();
     if (size.x != texture_size.x || size.y != texture_size.y)
     {
-        texture_size = {size.x, size.y,};
+        texture_size = {
+            size.x,
+            size.y,
+        };
         App->camera->OnResize(static_cast<unsigned>(texture_size.x), static_cast<unsigned>(texture_size.y));
     }
 
@@ -133,9 +120,9 @@ void Hachiko::WindowScene::DrawScene()
     // Bottom left corner in opengl coordinates, bottom is y = 0
     texture_position = float2(guizmo_rect_origin.x, static_cast<float>(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 
-    ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2{0, 1}, ImVec2{1, 0});
+    ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2 {0, 1}, ImVec2 {1, 0});
     // Checking hover on image for more intuitive controls
-    hovering = ImGui::IsItemHovered(); 
+    hovering = ImGui::IsItemHovered();
 
     // TODO: Move to other section to take the input
     if (ImGui::BeginDragDropTarget())
@@ -241,4 +228,3 @@ float2 Hachiko::WindowScene::GetInterfaceClickPos() const
     const ImVec2 mouse_pos = ImGui::GetMousePos();
     return ImguiToScreenPos(float2(mouse_pos.x, mouse_pos.y));
 }
-
