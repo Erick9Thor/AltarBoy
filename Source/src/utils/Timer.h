@@ -1,4 +1,7 @@
 #pragma once
+
+constexpr float ONE_SEC_IN_MS = 1000.0f;
+
 namespace Hachiko
 {
     class Timer

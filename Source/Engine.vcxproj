@@ -176,6 +176,7 @@
     <ClCompile Include="src\components\ComponentImage.cpp" />
     <ClCompile Include="src\components\ComponentProgressBar.cpp" />
     <ClCompile Include="src\components\ComponentTransform2D.cpp" />
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp" />
     <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -550,6 +551,7 @@
     <ClInclude Include="src\events\InputEventPayload.h" />
     <ClInclude Include="src\events\MouseEventPayload.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\modules\ModuleDebugMode.h" />
     <ClInclude Include="src\modules\ModuleUserInterface.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
