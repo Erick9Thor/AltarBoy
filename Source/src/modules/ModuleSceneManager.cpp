@@ -25,7 +25,7 @@ bool Hachiko::ModuleSceneManager::Init()
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 
 #ifdef PLAY_BUILD
-    App->camera->SetMainCamera(main_scene->GetMainCamera()); // PLAY_BUILD UNCOMMENT
+    App->camera->ReturnPlayerCamera(); // PLAY_BUILD UNCOMMENT
     main_scene->Start();
 #endif
 
@@ -109,8 +109,10 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
     delete main_scene;
     main_scene = SceneImporter::LoadScene(file_path);
-    App->camera->SetMainCamera(main_scene->GetMainCamera());
+#ifdef PLAY_BUILD
+    App->camera->ReturnPlayerCamera();
     main_scene->Start();
+#endif
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
