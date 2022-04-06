@@ -57,6 +57,9 @@ bool Hachiko::Application::Init()
 
     delta = 0;
     EngineTimer::Start();
+    #ifdef PLAY_BUILD 
+        GameTimer::Start();
+    #endif
     return ret;
 }
 

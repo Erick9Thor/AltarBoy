@@ -1,7 +1,8 @@
 #include "core/hepch.h"
 #include "ModuleSceneManager.h"
 
-#include "modules/ModuleCamera.h"
+#include "ModuleCamera.h"
+#include "ModuleEvent.h"
 
 #include "importers/SceneImporter.h"
 #include "ModuleFileSystem.h"
@@ -25,7 +26,7 @@ bool Hachiko::ModuleSceneManager::Init()
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 
 #ifdef PLAY_BUILD
-    App->camera->SetMainCamera(main_scene->GetMainCamera()); // PLAY_BUILD UNCOMMENT
+    App->camera->ReturnPlayerCamera(); // PLAY_BUILD UNCOMMENT
     main_scene->Start();
 #endif
 
@@ -36,6 +37,10 @@ void Hachiko::ModuleSceneManager::AttemptScenePause()
 {
     if (!GameTimer::paused)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::PAUSED);
+        App->event->Publish(game_state);
+
         GameTimer::Pause();
     }
 }
@@ -44,11 +49,22 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 {
     if (!GameTimer::running)
     {
-        SaveScene("tmp_scene.scene");
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
+        App->event->Publish(game_state);
+
+        SaveScene("tmp_scene.scene");       
+        
         GameTimer::Start();
     }
     else if (GameTimer::paused)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::RESUMED);
+        App->event->Publish(game_state);
+        
+        SaveScene("tmp_scene.scene");
+        
         GameTimer::Resume();
     }
 }
@@ -57,7 +73,12 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 {
     if (GameTimer::running)
     {
+        Event game_state(Event::Type::GAME_STATE);
+        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
+        App->event->Publish(game_state);
+
         GameTimer::Stop();
+
         LoadScene("tmp_scene.scene");
     }
 }
@@ -109,8 +130,10 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
     delete main_scene;
     main_scene = SceneImporter::LoadScene(file_path);
-    App->camera->SetMainCamera(main_scene->GetMainCamera());
+#ifdef PLAY_BUILD
+    App->camera->ReturnPlayerCamera();
     main_scene->Start();
+#endif
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const
