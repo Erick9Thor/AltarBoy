@@ -7,6 +7,9 @@
 Hachiko::ModuleDebugMode::ModuleDebugMode()
 {
 	is_gui_active = false;
+	fps = 0;
+	poly_on_screen = 0;
+	poly_total = 0;
 	player = nullptr;
 }
 

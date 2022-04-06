@@ -21,8 +21,8 @@ namespace Hachiko
     class ModuleProgram;
     class ModuleHardware;
     class ModuleFileSystem;
-    class ModuleDebugMode;
     class ModuleUserInterface;
+    class ModuleDebugMode;
     class Program;
     class AppLog;
 
@@ -52,8 +52,8 @@ namespace Hachiko
         ModuleHardware* hw = nullptr;
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
-        ModuleDebugMode* debug_mode = nullptr;
         ModuleUserInterface* ui = nullptr;
+        ModuleDebugMode* debug_mode = nullptr;
 
     private:
         PerformanceTimer timer;
