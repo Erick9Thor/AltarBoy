@@ -1,7 +1,5 @@
 #pragma once
 
-#include "MathGeolib.h"
-
 namespace Hachiko
 {
     struct GameStateEventPayload
