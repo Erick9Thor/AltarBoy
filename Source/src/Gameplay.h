@@ -6,6 +6,11 @@
 #define HACHIKO_API __declspec(dllexport)
 #endif
 
+namespace Hachiko
+{
+    class GameObject;
+}
+
 namespace Hachiko::Time
 {
 HACHIKO_API float DeltaTime();
@@ -400,4 +405,5 @@ HACHIKO_API void GetMousePositionPixels(int& out_position_x,
 namespace Hachiko::SceneManagement
 {
     HACHIKO_API void SwitchScene(const char* name);
+    HACHIKO_API GameObject* Raycast(const float3& origin, const float3& destination);
 }

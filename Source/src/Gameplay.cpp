@@ -88,4 +88,9 @@ void Hachiko::SceneManagement::SwitchScene(const char* name)
     App->scene_manager->SwitchTo(name);
 }
 
+Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin, const float3& destination)
+{
+    return App->scene_manager->Raycast(origin, destination);
+}
+
 /*---------------------------------------------------------------------------*/

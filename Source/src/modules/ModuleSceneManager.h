@@ -54,6 +54,7 @@ namespace Hachiko
         void LoadScene(const char* file_path);
         void SaveScene(const char* file_path) const;
 
+        GameObject* Raycast(const float3& origin, const float3& destination);
         void SwitchTo(const char* file_path);
 
     private:
