@@ -20,21 +20,21 @@ namespace Hachiko
     public:
         enum class Type
         {
-            NONE,
-            TRANSFORM,
-            MESH,
-            MATERIAL,
-            CAMERA,
-            DIRLIGHT,
-            POINTLIGHT,
-            SPOTLIGHT,
-            SCRIPT,
-            CANVAS,
-            CANVAS_RENDERER,
-            TRANSFORM_2D,
-            IMAGE,
-            BUTTON,
-            PROGRESS_BAR,
+            NONE = 0,
+            TRANSFORM = 1,
+            MESH = 2,
+            MATERIAL = 3,
+            CAMERA = 4,
+            DIRLIGHT = 5,
+            POINTLIGHT = 6,
+            SPOTLIGHT = 7,
+            CANVAS = 8,
+            CANVAS_RENDERER = 9,
+            TRANSFORM_2D = 10,
+            IMAGE = 11,
+            BUTTON = 12,
+            PROGRESS_BAR = 13,
+            SCRIPT = 14,
             UNKNOWN
         };
 
