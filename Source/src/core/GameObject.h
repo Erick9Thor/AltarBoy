@@ -32,16 +32,20 @@ namespace Hachiko
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
-        void RemoveComponent(Component* component);
+        bool AttemptRemoveComponent(Component* component);
 
         Component* CreateComponent(Component::Type type);
         void RemoveChild(GameObject* gameObject);
 
         //void Destroy();
+        void Start();
+        void Stop();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
         void DrawStencil(ComponentCamera* camera, Program* program);
+
+        void SetActive(bool set_active);
 
         bool IsActive() const
         {
@@ -84,7 +88,7 @@ namespace Hachiko
         }
 
         template<typename RetComponent>
-        RetComponent* GetComponent()
+        RetComponent* GetComponent() const
         {
             const Component::Type type = RetComponent::GetType();
             for (auto& component : components)
@@ -103,6 +107,7 @@ namespace Hachiko
         bool active = true;
 
     private:
+        bool started = false;
         std::vector<Component*> components;
         ComponentTransform* transform = nullptr;
 

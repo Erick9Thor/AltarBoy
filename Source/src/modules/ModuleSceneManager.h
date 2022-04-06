@@ -16,11 +16,18 @@ namespace Hachiko
 
         // --- Life cycle --- //
         bool Init() override;
+        
+        void AttemptScenePause();
+        void AttemptScenePlay();
+        void AttemptSceneStop();
+        bool IsScenePlaying();
+        
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
         // --- Scene management --- //
         void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
+        void LoadImageObject(const char* model_path) const; // TODO: Remove after vs1
 
         GameObject* GetRoot()
         {
@@ -47,7 +54,12 @@ namespace Hachiko
         void LoadScene(const char* file_path);
         void SaveScene(const char* file_path) const;
 
+        void SwitchTo(const char* file_path);
+
     private:
         Scene* main_scene = nullptr;
+
+        bool scene_ready_to_load = false;
+        std::string scene_to_load;
     };
-}
+} // namespace Hachiko
