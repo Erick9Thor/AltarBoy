@@ -361,7 +361,7 @@ void Hachiko::ComponentTransform::DrawGui()
 
             SetLocalPosition(position_local_editor);
         }
-        if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, 0.0f, 360.f))
+        if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, -inf, inf))
         {
             SetLocalRotationInEulerAngles(rotation_local_editor);
         }
@@ -382,7 +382,7 @@ void Hachiko::ComponentTransform::DrawGui()
             {
                 SetPosition(position_editor);
             }
-            if (ImGui::DragFloat3("Rotation", rotation_editor.ptr(), 0.1f, 0.0f, 360.f))
+            if (ImGui::DragFloat3("Rotation", rotation_editor.ptr(), 0.1f, -inf, inf))
             {
                 SetRotationInEulerAngles(rotation_editor);
             }
