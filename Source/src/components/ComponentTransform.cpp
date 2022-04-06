@@ -50,7 +50,7 @@ inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 
 void Hachiko::ComponentTransform::LookAtTarget(const float3& target)
 {
-    const float3 direction = (GetPosition() - target).Normalized();
+    const float3 direction = (GetLocalPosition() - target).Normalized();
 
     SetLocalRotation(SimulateLookAt(direction));
 }
@@ -91,6 +91,11 @@ void Hachiko::ComponentTransform::SetGlobalTransform(const float4x4& new_transfo
     }        
 }
 
+void Hachiko::ComponentTransform::SetGlobalTransform(const float3& new_position, const Quat& new_rotation, const float3& new_scale)
+{
+    SetGlobalTransform(float4x4::FromTRS(new_position, new_rotation, new_scale));
+}
+
 void Hachiko::ComponentTransform::SetLocalTransform(const float3& new_local_position, const Quat& new_local_rotation, const float3& new_local_scale)
 {
     SetLocalTransform(float4x4::FromTRS(new_local_position, new_local_rotation, new_local_scale));
@@ -126,6 +131,35 @@ void Hachiko::ComponentTransform::SetGlobalRotationAxis(float3 x, float3 y, floa
     SetGlobalTransform(matrix);
 }
 
+void Hachiko::ComponentTransform::SetGlobalPosition(const float3& new_position)
+{
+    position = new_position;
+    // This already invalidates the transform
+    SetGlobalTransform(position, rotation, scale);
+}
+
+void Hachiko::ComponentTransform::SetGlobalScale(const float3& new_scale)
+{
+    scale = new_scale;
+    // This already invalidates the transform
+    SetGlobalTransform(position, rotation, scale);
+}
+
+void Hachiko::ComponentTransform::SetGlobalRotation(const Quat& new_rotation)
+{
+    rotation = new_rotation;
+    rotation_euler = RadToDeg(rotation.ToEulerXYZ());
+    SetGlobalTransform(position, rotation, scale);
+}
+
+void Hachiko::ComponentTransform::SetGlobalRotationEuler(const float3& new_rotation_euler)
+{
+    rotation_euler = new_rotation_euler;
+    float3 rad_rotation = DegToRad(new_rotation_euler);
+    rotation = Quat::FromEulerXYZ(rad_rotation.x, rad_rotation.y, rad_rotation.z).Normalized();
+    SetGlobalTransform(position, rotation, scale);
+}
+
 
 /***    GETTERS     ***/
 
@@ -138,22 +172,46 @@ const float4x4& Hachiko::ComponentTransform::GetLocalMatrix()
 const float3& Hachiko::ComponentTransform::GetPosition()
 {
     UpdateTransform();
-    return local_position;
+    return position;
 }
 
 const float3& Hachiko::ComponentTransform::GetScale()
 {
     UpdateTransform();
-    return local_scale;
+    return scale;
 }
 
 const Quat& Hachiko::ComponentTransform::GetRotation()
 {
     UpdateTransform();
-    return local_rotation;
+    return rotation;
 }
 
 const float3& Hachiko::ComponentTransform::GetRotationEuler()
+{
+    UpdateTransform();
+    return rotation_euler;
+}
+
+const float3& Hachiko::ComponentTransform::GetLocalPosition()
+{
+    UpdateTransform();
+    return local_position;
+}
+
+const float3& Hachiko::ComponentTransform::GetLocalScale()
+{
+    UpdateTransform();
+    return local_scale;
+}
+
+const Quat& Hachiko::ComponentTransform::GetLocalRotation()
+{
+    UpdateTransform();
+    return local_rotation;
+}
+
+const float3& Hachiko::ComponentTransform::GetLocalRotationEuler()
 {
     UpdateTransform();
     return local_rotation_euler;
@@ -201,9 +259,15 @@ void Hachiko::ComponentTransform::UpdateTransform()
         {
             matrix = matrix_local;
         }
+
+        // Update global matrix related variables
         right = matrix.WorldX();
         up = matrix.WorldY();
         front = matrix.WorldZ();
+
+        matrix.Decompose(position, rotation, scale);
+        rotation_euler = RadToDeg(rotation.ToEulerXYZ());
+
         changed = true;
         dirty = false;
     }   
@@ -271,7 +335,6 @@ void Hachiko::ComponentTransform::DrawGui()
         float3 rotation_local_editor = local_rotation_euler;
         if (ImGui::DragFloat3("Local Position", position_local_editor.ptr(), 0.1f, -inf, inf))
         {
-
             SetLocalPosition(position_local_editor);
         }
         if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, 0.0f, 360.f))
@@ -286,24 +349,23 @@ void Hachiko::ComponentTransform::DrawGui()
         ImGui::Checkbox("Debug Transforms", &debug_transforms);
         if (debug_transforms)
         {
-            /* math::float3 position_editor = position;
+            math::float3 position_editor = position;
             math::float3 rotation_editor = rotation_euler;
             math::float3 scale_editor = scale;
 
             ImGui::Separator();
             if (ImGui::DragFloat3("Position", position_editor.ptr(), 0.1f, -inf, inf))
             {
-                SetPosition(position_editor);
+                SetGlobalPosition(position_editor);
             }
             if (ImGui::DragFloat3("Rotation", rotation_editor.ptr(), 0.1f, 0.0f, 360.f))
             {
-                SetRotationEuler(rotation_editor);
+                SetGlobalRotationEuler(rotation_editor);
             }
             if (ImGui::DragFloat3("Scale", scale_editor.ptr(), 0.1f, 0.0001f, inf, "%.3f", ImGuiSliderFlags_AlwaysClamp))
             {
-                SetScale(scale_editor);
+                SetGlobalScale(scale_editor);
             }
-            */
 
             ImGui::Separator();
             ImGui::Text("Local");

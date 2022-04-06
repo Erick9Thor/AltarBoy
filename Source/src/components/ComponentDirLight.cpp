@@ -30,7 +30,7 @@ void Hachiko::ComponentDirLight::DebugDraw()
         auto* transform = game_object->GetTransform();
         if (transform)
         {
-            dd::arrow(transform->GetPosition(), transform->GetFront().Mul(3.f) + transform->GetPosition(), dd::colors::Blue, 1.f);
+            dd::arrow(transform->GetLocalPosition(), transform->GetFront().Mul(3.f) + transform->GetLocalPosition(), dd::colors::Blue, 1.f);
         }
     }
 }
