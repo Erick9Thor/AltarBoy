@@ -34,6 +34,8 @@ namespace Hachiko
         void RestoreOriginCamera();
         void ReturnPlayerCamera();
 
+        LineSegment GetRaycastLineSegment() const;
+
         // Camera actions
         void Zoom(float zoom) const;
         void Orbit(float motion_x, float motion_y) const;

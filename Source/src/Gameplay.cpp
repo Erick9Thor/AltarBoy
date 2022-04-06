@@ -2,6 +2,7 @@
 #include "utils/Logger.h"
 #include "modules/ModuleInput.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleCamera.h"
 #include "Gameplay.h"
 #include "Time.h"
 
@@ -91,6 +92,15 @@ void Hachiko::SceneManagement::SwitchScene(const char* name)
 Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin, const float3& destination)
 {
     return App->scene_manager->Raycast(origin, destination);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*CAMERA MANAGEMENT-----------------------------------------------------------*/
+
+math::LineSegment Hachiko::CameraManagement::GetRaycastLineSegment()
+{
+    return App->camera->GetRaycastLineSegment();
 }
 
 /*---------------------------------------------------------------------------*/

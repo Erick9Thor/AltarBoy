@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
 #include "components/ComponentTransform.h"
+#include "modules/ModuleSceneManager.h"
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -49,7 +50,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		math::Quat current_rotation = transform->GetRotation();
 		math::Quat delta_rotation = math::Quat::RotateY(rotation_amount);
-		transform->SetRotation(current_rotation * delta_rotation);
+		transform->SetGlobalRotation(current_rotation * delta_rotation);
 	}
 	
 	math::float3 current_position = transform->GetPosition();
@@ -58,6 +59,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	float delta_time = Time::DeltaTime();
 	float velocity = _movement_speed * delta_time;
+
+	GameObject* go = SceneManagement::Raycast(current_position - math::float3(0.0f, 1.0f, 0.0f), current_position);
+	if (go == nullptr || go->name == "Player") 
+	{
+		_is_falling = true;
+	}
 
 	if (!_is_dashing && !_is_falling)
 	{
@@ -87,17 +94,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		}
 	}
 
-	// TODO: instead of p raycast -> GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetPosition() - float3(0, 5, 0), transform->GetPosition()); filter by name
-	if (Input::GetKeyDown(Input::KeyCode::KEY_P))
-	{
-		if (_is_falling)
-		{
-			_speed_y = 0;
-			current_position.y = _original_y;
-		}
-		_is_falling = !_is_falling;
-	}
-
 	if (_is_dashing)
 	{
 		_dash_progress += delta_time / _dash_duration;
@@ -114,9 +110,49 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (_is_falling)
 	{
-		_speed_y += 9.0f * delta_time;
+		_speed_y += 25.0f * delta_time;
 		current_position.y -= _speed_y * delta_time;
 	}
 
-	transform->SetPosition(current_position);
+	// Reset falling
+	if (Input::GetKeyDown(Input::KeyCode::KEY_P))
+	{
+		if (_is_falling)
+		{
+			_speed_y = 0;
+			current_position.y = _original_y;
+		}
+		_is_falling = !_is_falling;
+	}
+
+	// Loading scene
+	if (Input::GetKeyDown(Input::KeyCode::KEY_C))
+	{
+		SceneManagement::SwitchScene("Assets/Scenes/first_deliver_scene.scene");
+	}
+
+	transform->SetGlobalPosition(current_position);
+
+	/* Make the player look the mouse */
+	math::Plane plane(math::vec(0.0f, current_position.y, 0.0f), math::vec(0.0f, 1.0f, 0.0f));
+	math::LineSegment lineSeg = CameraManagement::GetRaycastLineSegment();
+
+	HE_LOG("origin = %f %f %f", lineSeg.a.x, lineSeg.a.y, lineSeg.a.z);
+	HE_LOG("dest = %f %f %f", lineSeg.b.x, lineSeg.b.y, lineSeg.b.z);
+
+	float dist;
+	bool intersect = plane.Intersects(lineSeg, &dist);
+	if (intersect)
+	{
+		HE_LOG("Intersection");
+		math::float3 mouse_position = lineSeg.GetPoint(dist);
+		HE_LOG("point = %f %f %f", mouse_position.x, mouse_position.y, mouse_position.z);
+		mouse_position.y = current_position.y;
+		transform->LookAtTarget(mouse_position);
+	}
+	else
+	{
+		HE_LOG("NO Intersection");
+	}
+	/* Make the player look the mouse */
 }

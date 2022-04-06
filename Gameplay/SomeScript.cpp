@@ -25,7 +25,7 @@ void Hachiko::Scripting::SomeScript::OnUpdate()
 	math::float3 current_position = math::float3::Lerp(_initial_position,
 		_initial_position + _position_offset, _lerp_position);
 
-	game_object->GetTransform()->SetPosition(current_position);
+	game_object->GetTransform()->SetGlobalPosition(current_position);
 
 
 	if (_lerp_position == 1.0f)

@@ -39,5 +39,5 @@ void Hachiko::Scripting::DynamicCamera::OnUpdate()
 		_lerp_position = 0.0f;
 	}
 
-	transform->SetPosition(math::float3::Lerp(_start_point, _end_point, _lerp_position / distance));
+	transform->SetGlobalPosition(math::float3::Lerp(_start_point, _end_point, _lerp_position / distance));
 }

@@ -407,3 +407,8 @@ namespace Hachiko::SceneManagement
     HACHIKO_API void SwitchScene(const char* name);
     HACHIKO_API GameObject* Raycast(const float3& origin, const float3& destination);
 }
+
+namespace Hachiko::CameraManagement
+{
+    HACHIKO_API math::LineSegment GetRaycastLineSegment();
+} // namespace Hachiko::CameraManagement
