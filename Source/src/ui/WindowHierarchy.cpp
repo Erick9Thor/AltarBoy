@@ -144,6 +144,16 @@ void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
         {
             IM_ASSERT(payload->DataSize == sizeof(std::intptr_t*));
             GameObject* payload_n = *(GameObject**)payload->Data;
+            GameObject* parent_check = game_object->parent;
+            while (parent_check != nullptr)
+            {
+                if (parent_check == payload_n)
+                {
+                    HE_LOG("Trying to move parent to its child! Operation aborted.");
+                    return;
+                }
+                parent_check = parent_check->parent;
+            }
             payload_n->SetNewParent(game_object);
         }
         ImGui::EndDragDropTarget();
