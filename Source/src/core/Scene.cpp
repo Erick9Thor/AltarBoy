@@ -22,7 +22,7 @@ Hachiko::Scene::Scene():
     skybox(new Skybox()),
     quadtree(new Quadtree())
 {
-    quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
+    quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
 
 Hachiko::Scene::~Scene()
