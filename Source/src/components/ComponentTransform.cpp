@@ -50,7 +50,7 @@ inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 
 void Hachiko::ComponentTransform::LookAtTarget(const float3& target)
 {
-    const float3 direction = (GetPosition() - target).Normalized();
+    const float3 direction = (GetGlobalPosition() - target).Normalized();
 
     SetGlobalRotation(SimulateLookAt(direction));
 }
@@ -81,7 +81,7 @@ void Hachiko::ComponentTransform::SetGlobalTransform(const float4x4& new_transfo
     // Sub methods already invalidate
     if (game_object->parent)
     {
-        float4x4 parent_transform = game_object->parent->GetTransform()->GetMatrix();
+        float4x4 parent_transform = game_object->parent->GetTransform()->GetGlobalMatrix();
         parent_transform.Inverse();
         SetLocalTransform(parent_transform * new_transform);
     }
@@ -169,25 +169,25 @@ const float4x4& Hachiko::ComponentTransform::GetLocalMatrix()
     return matrix_local;
 }
 
-const float3& Hachiko::ComponentTransform::GetPosition()
+const float3& Hachiko::ComponentTransform::GetGlobalPosition()
 {
     UpdateTransform();
     return position;
 }
 
-const float3& Hachiko::ComponentTransform::GetScale()
+const float3& Hachiko::ComponentTransform::GetGlobalScale()
 {
     UpdateTransform();
     return scale;
 }
 
-const Quat& Hachiko::ComponentTransform::GetRotation()
+const Quat& Hachiko::ComponentTransform::GetGlobalRotation()
 {
     UpdateTransform();
     return rotation;
 }
 
-const float3& Hachiko::ComponentTransform::GetRotationEuler()
+const float3& Hachiko::ComponentTransform::GetGlobalRotationEuler()
 {
     UpdateTransform();
     return rotation_euler;
@@ -235,7 +235,7 @@ const float3& Hachiko::ComponentTransform::GetRight()
     return right;
 }
 
-const float4x4& Hachiko::ComponentTransform::GetMatrix()
+const float4x4& Hachiko::ComponentTransform::GetGlobalMatrix()
 {
     UpdateTransform();
     return matrix;
