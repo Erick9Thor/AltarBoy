@@ -47,13 +47,13 @@ namespace Hachiko
         [[nodiscard]] const float3& GetFront();
         [[nodiscard]] const float3& GetUp();
         [[nodiscard]] const float3& GetRight();
-        [[nodiscard]] const float4x4& GetMatrix();
+        [[nodiscard]] const float4x4& GetGlobalMatrix();
         [[nodiscard]] const float4x4& GetLocalMatrix();
         
-        [[nodiscard]] const float3& GetPosition();
-        [[nodiscard]] const float3& GetScale();
-        [[nodiscard]] const Quat& GetRotation();
-        [[nodiscard]] const float3& GetRotationEuler();
+        [[nodiscard]] const float3& GetGlobalPosition();
+        [[nodiscard]] const float3& GetGlobalScale();
+        [[nodiscard]] const Quat& GetGlobalRotation();
+        [[nodiscard]] const float3& GetGlobalRotationEuler();
 
 
 

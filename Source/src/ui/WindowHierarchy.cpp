@@ -70,21 +70,23 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     ImGui::PushStyleColor(ImGuiCol_Text, node_color);
 
     const bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
+    
+    DragAndDrop(game_object);
 
     if (ImGui::IsItemHovered() && !ImGui::IsItemToggledOpen())
     {
-        if (dragged_object && dragged_object != game_object)
+        /*if (dragged_object && dragged_object != game_object)
         {
             ImGui::BeginTooltip();
             ImGui::Text("% s->% s ", dragged_object->name.c_str(), game_object->name.c_str());
             ImGui::EndTooltip();
             App->editor->SetSelectedGO(dragged_object);
-        }
+        }*/
 
         if (ImGui::IsMouseClicked(0))
         {
             App->editor->SetSelectedGO(game_object);
-            dragged_object = game_object;
+            //dragged_object = game_object;
         }
 
         if (ImGui::IsMouseClicked(1))
@@ -92,12 +94,12 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
             ImGui::OpenPopup(game_object->name.c_str());
         }
 
-        if (dragged_object && ImGui::IsMouseReleased(0) && dragged_object != game_object)
-        {
-            App->editor->SetSelectedGO(dragged_object);
-            dragged_object->SetNewParent(game_object);
-            dragged_object = nullptr;
-        }
+        //if (dragged_object && ImGui::IsMouseReleased(0) && dragged_object != game_object)
+        //{
+        //    App->editor->SetSelectedGO(dragged_object);
+        //    dragged_object->SetNewParent(game_object);
+        //    dragged_object = nullptr;
+        //}
         
         if (ImGui::IsMouseClicked(0) && flags == isSelected)
         {
@@ -141,4 +143,24 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     }
 
     ImGui::PopStyleColor();
+}
+
+void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
+{
+    if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+    {
+        ImGui::SetDragDropPayload("GameObject", &game_object, sizeof(GameObject*));
+        ImGui::Text("%s", game_object->name.c_str());
+        ImGui::EndDragDropSource();
+    }
+    if (ImGui::BeginDragDropTarget())
+    {
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject"))
+        {
+            IM_ASSERT(payload->DataSize == sizeof(std::intptr_t*));
+            GameObject* payload_n = *(GameObject**)payload->Data;
+            payload_n->SetNewParent(game_object);
+        }
+        ImGui::EndDragDropTarget();
+    }
 }
