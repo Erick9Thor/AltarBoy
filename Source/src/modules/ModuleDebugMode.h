@@ -8,6 +8,11 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
+#include "RenderList.h"
+//Delete after  VS1
+#include "ModuleSceneManager.h"
+#include "components/ComponentTransform.h"
+
 
 
 struct HardwareInfo {
@@ -43,13 +48,17 @@ namespace Hachiko
 		void DrawGUI();
 		ImGuiWindowFlags SetupWindow();
 		void UpdateRenderValues();
+		const GameObject* FindPlayer();
 	private:
 		bool is_gui_active;
 		int fps, poly_on_screen, poly_total;
 		std::vector<float> fps_buffer;
+		std::vector<float> ms_buffer;
 		float3 player_pos;
 		HardwareInfo hw_info;
 		ImGuiWindowFlags window_flags;
+		//Deprecated after VS1
+		const GameObject* player;
 	};
 }
 

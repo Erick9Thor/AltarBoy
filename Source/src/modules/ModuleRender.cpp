@@ -119,6 +119,13 @@ void Hachiko::ModuleRender::SetGLOptions()
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); // Only replace stencil value if stencil and depth tests pass
 }
 
+UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
+{
+    render_list.PreUpdate();
+
+    return UpdateStatus::UPDATE_CONTINUE;
+}
+
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {
     ComponentCamera* camera = App->camera->GetMainCamera();

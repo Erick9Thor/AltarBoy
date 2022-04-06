@@ -1,10 +1,13 @@
 #include "core/hepch.h"
 
 #include "ModuleDebugMode.h"
+#include "core/GameObject.h"
+
 
 Hachiko::ModuleDebugMode::ModuleDebugMode()
 {
 	is_gui_active = false;
+	player = nullptr;
 }
 
 Hachiko::ModuleDebugMode::~ModuleDebugMode()
@@ -23,6 +26,11 @@ bool Hachiko::ModuleDebugMode::Init()
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &hw_info.vram_capacity);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &hw_info.vram_free);
 	SDL_GetVersion(&hw_info.sdl_version);
+
+	// Deprecated after VS1
+	player = FindPlayer();
+	
+
 	return true;
 }
 
@@ -34,7 +42,7 @@ UpdateStatus Hachiko::ModuleDebugMode::PreUpdate(const float delta)
 UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 {
 	if (App->input->GetKey(SDL_SCANCODE_LALT) == Hachiko::KeyState::KEY_REPEAT &&
-		App->input->GetKey(SDL_SCANCODE_E) == Hachiko::KeyState::KEY_DOWN)
+		App->input->GetKey(SDL_SCANCODE_D) == Hachiko::KeyState::KEY_DOWN)
 	{
 		Toggle();
 	}
@@ -76,6 +84,20 @@ ImGuiWindowFlags Hachiko::ModuleDebugMode::SetupWindow()
 void Hachiko::ModuleDebugMode::UpdateRenderValues()
 {
 	fps = EngineTimer::fps;
+	const Hachiko::RenderList* render_list = App->renderer->GetRenderList();
+	poly_on_screen = render_list->GetPolycountRendered();
+	poly_total = render_list->GetPolycountTotal();
+}
+
+const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer()
+{
+	for (Hachiko::GameObject* child : App->scene_manager->GetRoot()->children)
+	{
+		if (child->name == "Player")
+		{
+			return child;
+		}
+	}
 }
 
 void Hachiko::ModuleDebugMode::DrawGUI()
@@ -85,16 +107,14 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 	float vram_free = hw_info.vram_free / 1024.0f;
 	float vram_usage = vram_total - vram_free;
 	float frame_rate = 0.0f;
+	float3 player_pos_editor = player->GetTransform()->GetPosition();
 	
 	window_flags = SetupWindow();
 	UpdateRenderValues();
 
 	if (ImGui::Begin("InGame Window", &is_gui_active, window_flags))
 	{
-		ImGui::Text("FPS: %i", fps);
-		//char title[25];
-		//sprintf_s(title, 25, "Framerate %.1f", frame_rate);
-		//ImGui::PlotHistogram("##framerate", &fps_buffer[0], (int)fps_buffer.size(), 0, title, 0.0f, 1000.f, ImVec2(310, 100));
+		App->renderer->FpsGraph();
 		ImGui::Separator();
 
 		ImGui::Text("Polycount (On screen): %i", poly_on_screen);
@@ -117,6 +137,13 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 		if(ImGui::Button("Toggle Wire"))
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		}
+		ImGui::Separator();
+
+		ImGui::Text("Player position: ");
+		if (ImGui::DragFloat3("(x, y, z)", player_pos_editor.ptr(), 0.1f, -inf, inf))
+		{
+			player->GetTransform()->SetPosition(player_pos_editor);
 		}
 	}
 	ImGui::End();
