@@ -60,6 +60,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = true;
 	}
 
+	if (go->name == "Goal")
+	{
+		SceneManagement::SwitchScene("Assets/Scenes/menu.scene"); //Change this to the victory scene or add a victory effect
+	}
+
 	if (!_is_dashing && !_is_falling)
 	{
 		if (Input::GetKey(Input::KeyCode::KEY_W))
@@ -124,6 +129,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_speed_y = 0;
 		current_position = _starting_position;
 		_is_falling = false;
+		SceneManagement::SwitchScene("Assets/Scenes/menu.scene"); // Change this to game over scene
 	}
 
 	// Loading scene
