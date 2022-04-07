@@ -154,7 +154,7 @@
                             {
                                 "ComponentID": 0,
                                 "ComponentType": 11,
-                                "ImagePath": "Assets/Textures/win_bg.png",
+                                "ImagePath": "Assets/Textures/white_background.bg",
                                 "HoverImagePath": ""
                             }
                         ],
@@ -195,8 +195,8 @@
                                     0.0
                                 ],
                                 "Size": [
-                                    1000.0,
-                                    500.0
+                                    420.0,
+                                    129.0
                                 ],
                                 "Scale": [
                                     1.0,
@@ -235,6 +235,76 @@
                                 "ComponentID": 0,
                                 "ComponentType": 14,
                                 "ClassName": "BackToMainMenu"
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 4742838259588439493,
+                        "GOName": "New Game Object",
+                        "Active": true,
+                        "ParentId": 13271941709950576850,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 10,
+                                "Position": [
+                                    0.0,
+                                    200.0,
+                                    0.0
+                                ],
+                                "Size": [
+                                    807.0,
+                                    182.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Pivot": [
+                                    0.5,
+                                    0.5
+                                ],
+                                "Anchor": [
+                                    0.5,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 9
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 11,
+                                "ImagePath": "Assets/Textures/win.png",
+                                "HoverImagePath": ""
                             }
                         ],
                         "GOChildrens": null
