@@ -23,6 +23,7 @@ Hachiko::Application::Application()
     modules.push_back(file_sys = new ModuleFileSystem());
     modules.push_back(window = new ModuleWindow());
     modules.push_back(input = new ModuleInput());
+    modules.push_back(scripting_system = new ModuleScriptingSystem());
     modules.push_back(texture = new ModuleTexture());
     modules.push_back(renderer = new ModuleRender());
     modules.push_back(camera = new ModuleCamera());
@@ -32,7 +33,6 @@ Hachiko::Application::Application()
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
     modules.push_back(ui = new ModuleUserInterface());
-    modules.push_back(scripting_system = new ModuleScriptingSystem());
 }
 
 Hachiko::Application::~Application()

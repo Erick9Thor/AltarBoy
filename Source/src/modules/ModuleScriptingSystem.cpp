@@ -5,6 +5,7 @@
 #include "scripting/Script.h"
 #include "modules/ModuleFileSystem.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleEvent.h"
 #include "Application.h"
 
 constexpr const wchar_t* SCRIPTING_DLL_NAME = L"Gameplay";
@@ -24,15 +25,27 @@ Hachiko::ModuleScriptingSystem::ModuleScriptingSystem()
 bool Hachiko::ModuleScriptingSystem::Init()
 {
     _dll_change_check_frequency_in_secs = 2.0f;
-    _dll_change_check_timer = _dll_change_check_frequency_in_secs;
+    _dll_change_check_timer = 0.0f;
 
-    bool loading_successful = HotReload(0.0f);
+    bool loading_successful = LoadFirstTime();
 
     if (!loading_successful)
     {
         HE_LOG("There are no Gameplay.dll detected by Hachiko " 
             "Continuing without scripting functionality.");
     }
+
+    std::function on_stop_pressed = [&](Event& evt) 
+    { 
+        auto& event_data = evt.GetEventData<GameStateEventPayload>();
+        
+        if (event_data.GetState() == GameStateEventPayload::State::STOPPED)
+        {
+            HE_LOG("PRESSED STOP.");
+        }
+    };
+
+    App->event->Subscribe(Event::Type::GAME_STATE, on_stop_pressed);
 
     return true;
 }
@@ -41,8 +54,6 @@ bool Hachiko::ModuleScriptingSystem::CleanUp()
 {
     if (_loaded_dll != NULL)
     {
-        DeleteAllScriptsOnCurrentScene();
-
         FreeDll(_loaded_dll, _times_reloaded);
     }
 
@@ -208,6 +219,37 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     }
 
     return true;
+}
+
+bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
+{
+     // Pause script updates:
+    _scripts_paused = true;
+
+    _loaded_dll = NULL;
+    LoadDll(&_loaded_dll);
+
+    // Build the name of the new file that's gonna hold the copy of new dll:
+    std::wstring current_dll_path = App->file_sys->GetWorkingDirectoryW();
+    current_dll_path += L"\\";
+    current_dll_path += SCRIPTING_DLL_NAME;
+    current_dll_path += L".dll";
+
+    GetFileLastWriteTimestamp(current_dll_path, _current_dll_timestamp);
+
+    if (_loaded_dll == NULL)
+    {
+        _times_reloaded--;
+        return false;
+    }
+
+    HE_LOG("Loaded Gameplay Scripting dll (%u).", _times_reloaded);
+
+    _script_factory = reinterpret_cast<Scripting::ScriptFactory>(
+            GetProcAddress(_loaded_dll, "InstantiateScript"));
+
+    // Unpause script updates:
+    _scripts_paused = false;
 }
 
 bool Hachiko::ModuleScriptingSystem::ShouldCheckForChanges(const float delta)

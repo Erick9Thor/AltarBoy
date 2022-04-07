@@ -23,6 +23,9 @@ public:
     void Start() override;
     void Awake();
 
+    void Save(JsonFormatterValue j_component) const override;
+    void Load(JsonFormatterValue j_component) override;
+
     virtual void OnAwake() {};
     virtual void OnStart() {};
     virtual void OnUpdate() {};

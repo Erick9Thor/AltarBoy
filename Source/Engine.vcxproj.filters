@@ -399,7 +399,7 @@
     <ClCompile Include="src\components\ComponentTransform2D.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-        <ClCompile Include="src\modules\ModuleScriptingSystem.cpp">
+    <ClCompile Include="src\modules\ModuleScriptingSystem.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="src\scripting\Script.cpp">
@@ -1063,6 +1063,9 @@
     </ClInclude>
     <ClInclude Include="src\components\ISelectable.h">
       <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\GameStateEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

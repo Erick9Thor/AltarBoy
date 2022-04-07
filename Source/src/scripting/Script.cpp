@@ -86,6 +86,16 @@ void Hachiko::Scripting::Script::Awake()
     }
 }
 
+void Hachiko::Scripting::Script::Save(JsonFormatterValue j_component) const 
+{
+    j_component["ClassName"] = name.c_str();
+}
+
+void Hachiko::Scripting::Script::Load(JsonFormatterValue j_component) 
+{
+ /*   name = j_component["ClassName"];*/
+}
+
 void Hachiko::Scripting::Script::DrawGui()
 {
     ImGui::PushID(this);

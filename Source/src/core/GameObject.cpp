@@ -19,6 +19,7 @@
 // TODO: REMOVE
 #include "Application.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleScriptingSystem.h"
 //
 
 #include <debugdraw.h>
@@ -397,9 +398,28 @@ void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
 
         const auto type = static_cast<Component::Type>(enum_type);
 
-        Component* component = CreateComponent(type);
+        Component* component = nullptr;
 
-        component->Load(j_component);
+        if (type == Component::Type::SCRIPT)
+        {
+            std::string script_name = j_component["ClassName"];
+            component = (Component*)(
+                App->scripting_system->InstantiateScript(script_name, this));
+
+            if (component != nullptr)
+            {
+                this->AddComponent(component);
+            }
+        }
+        else
+        {
+            component = CreateComponent(type);
+        }
+
+        if (component != nullptr)
+        {
+            component->Load(j_component);
+        }
     }
 
     const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
