@@ -89,14 +89,17 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(GameObject* game_objec
     ComponentButton* selectable = game_object->GetComponent<ComponentButton>();
     if (transform && selectable)
     {
+        selectable->OnUnSelect();
+
         if (transform->Intersects(mouse_pos))
         {
             //HE_LOG("Intersects %s", transform->GetGameObject()->name.c_str());
             selectable->OnPointerEnter();
             if (is_click)
             {
-                HE_LOG("Clicks %s", transform->GetGameObject()->name.c_str());
+                //HE_LOG("Clicks %s", transform->GetGameObject()->name.c_str());
                 selectable->Activate();
+                selectable->OnSelect();
             }
         }
         else
