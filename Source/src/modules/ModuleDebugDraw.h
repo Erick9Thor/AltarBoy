@@ -24,7 +24,7 @@ namespace Hachiko
             debug_draw = v;
         }
 
-        bool debug_draw = true;
+        bool debug_draw = false;
         bool draw_quadtree = false;
 
     private:

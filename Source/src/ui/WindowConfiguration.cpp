@@ -30,21 +30,6 @@ void Hachiko::WindowConfiguration::Update()
             App->program->OptionsMenu();
         }
 
-        // TODO: REMOVE
-        if (ImGui::Button("Toggle editor camera"))
-        {
-            App->camera->RestoreOriginCamera();
-        }
-        if (ImGui::Button("Load scene: first_deliver_scene.scene"))
-        {
-            App->scene_manager->SwitchTo(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
-        }
-        if (ImGui::Button("Load scene: untitled.scene"))
-        {
-            App->scene_manager->SwitchTo(ASSETS_FOLDER "/Scenes/untitled.scene");
-        }
-        //
-
         //It is already a collapsing header
         App->camera->GetMainCamera()->DrawGui();
 
