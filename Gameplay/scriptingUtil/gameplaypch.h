@@ -16,6 +16,7 @@
 					    // Gameplay.h
 
 #include <components/Component.h>
+#include <components/ComponentButton.h>
 #include <core/GameObject.h>
 #include <Gameplay.h>
 #include <Globals.h>

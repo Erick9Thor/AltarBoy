@@ -5,6 +5,7 @@
 #include "DynamicCamera.h"
 #include "Experiment.h"
 #include "Funky.h"
+#include "MainMenuManager.h"
 #include "PlayerController.h"
 #include "SomeScript.h"
 
@@ -125,6 +126,137 @@ void Hachiko::Scripting::Funky::SerializeTo(std::unordered_map<std::string, Seri
 	serialized_fields["_lerp_reverse"] = SerializedField(std::string("_lerp_reverse"), std::make_any<bool>(_lerp_reverse), std::string("bool"));
 
 	serialized_fields["_initial_color"] = SerializedField(std::string("_initial_color"), std::make_any<math::float4>(_initial_color), std::string("math::float4"));
+}
+
+void Hachiko::Scripting::MainMenuManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_state") != serialized_fields.end())
+	{
+		const SerializedField& _state_sf = serialized_fields["_state"];
+		if (_state_sf.type_name == "State")
+		{
+			_state = std::any_cast<State>(_state_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_state_changed") != serialized_fields.end())
+	{
+		const SerializedField& _state_changed_sf = serialized_fields["_state_changed"];
+		if (_state_changed_sf.type_name == "bool")
+		{
+			_state_changed = std::any_cast<bool>(_state_changed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_main_background") != serialized_fields.end())
+	{
+		const SerializedField& _main_background_sf = serialized_fields["_main_background"];
+		if (_main_background_sf.type_name == "GameObject*")
+		{
+			_main_background = std::any_cast<GameObject*>(_main_background_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_background") != serialized_fields.end())
+	{
+		const SerializedField& _button_background_sf = serialized_fields["_button_background"];
+		if (_button_background_sf.type_name == "GameObject*")
+		{
+			_button_background = std::any_cast<GameObject*>(_button_background_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_play") != serialized_fields.end())
+	{
+		const SerializedField& _button_play_sf = serialized_fields["_button_play"];
+		if (_button_play_sf.type_name == "ComponentButton*")
+		{
+			_button_play = std::any_cast<ComponentButton*>(_button_play_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_quit") != serialized_fields.end())
+	{
+		const SerializedField& _button_quit_sf = serialized_fields["_button_quit"];
+		if (_button_quit_sf.type_name == "ComponentButton*")
+		{
+			_button_quit = std::any_cast<ComponentButton*>(_button_quit_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_settings") != serialized_fields.end())
+	{
+		const SerializedField& _button_settings_sf = serialized_fields["_button_settings"];
+		if (_button_settings_sf.type_name == "ComponentButton*")
+		{
+			_button_settings = std::any_cast<ComponentButton*>(_button_settings_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_credits") != serialized_fields.end())
+	{
+		const SerializedField& _button_credits_sf = serialized_fields["_button_credits"];
+		if (_button_credits_sf.type_name == "ComponentButton*")
+		{
+			_button_credits = std::any_cast<ComponentButton*>(_button_credits_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_settings") != serialized_fields.end())
+	{
+		const SerializedField& _settings_sf = serialized_fields["_settings"];
+		if (_settings_sf.type_name == "GameObject*")
+		{
+			_settings = std::any_cast<GameObject*>(_settings_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_credits") != serialized_fields.end())
+	{
+		const SerializedField& _credits_sf = serialized_fields["_credits"];
+		if (_credits_sf.type_name == "GameObject*")
+		{
+			_credits = std::any_cast<GameObject*>(_credits_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_back") != serialized_fields.end())
+	{
+		const SerializedField& _button_back_sf = serialized_fields["_button_back"];
+		if (_button_back_sf.type_name == "ComponentButton*")
+		{
+			_button_back = std::any_cast<ComponentButton*>(_button_back_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::MainMenuManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<State>(_state), std::string("State"));
+
+	serialized_fields["_state_changed"] = SerializedField(std::string("_state_changed"), std::make_any<bool>(_state_changed), std::string("bool"));
+
+	serialized_fields["_main_background"] = SerializedField(std::string("_main_background"), std::make_any<GameObject*>(_main_background), std::string("GameObject*"));
+
+	serialized_fields["_button_background"] = SerializedField(std::string("_button_background"), std::make_any<GameObject*>(_button_background), std::string("GameObject*"));
+
+	serialized_fields["_button_play"] = SerializedField(std::string("_button_play"), std::make_any<ComponentButton*>(_button_play), std::string("ComponentButton*"));
+
+	serialized_fields["_button_quit"] = SerializedField(std::string("_button_quit"), std::make_any<ComponentButton*>(_button_quit), std::string("ComponentButton*"));
+
+	serialized_fields["_button_settings"] = SerializedField(std::string("_button_settings"), std::make_any<ComponentButton*>(_button_settings), std::string("ComponentButton*"));
+
+	serialized_fields["_button_credits"] = SerializedField(std::string("_button_credits"), std::make_any<ComponentButton*>(_button_credits), std::string("ComponentButton*"));
+
+	serialized_fields["_settings"] = SerializedField(std::string("_settings"), std::make_any<GameObject*>(_settings), std::string("GameObject*"));
+
+	serialized_fields["_credits"] = SerializedField(std::string("_credits"), std::make_any<GameObject*>(_credits), std::string("GameObject*"));
+
+	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
 }
 
 void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
