@@ -35,8 +35,9 @@ UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
     int height, width;
     App->window->GetWindowSize(width, height);
     float2 mouse_pos = Input::GetMousePosition();
-    mouse_pos = float2(mouse_pos.x - 0.5f, mouse_pos.y - 0.5f); // We center the mouse
+    mouse_pos = float2(mouse_pos.x - 0.5f, (mouse_pos.y - 0.5f) * -1); // We center the mouse
     mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height); // We scale it from normalized
+    HE_LOG("MOUSEPOS %f %f", mouse_pos.x, mouse_pos.y);
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, false);
 #else
     const WindowScene* w_scene = App->editor->GetSceneWindow();
@@ -132,7 +133,7 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     int height, width;
     App->window->GetWindowSize(width, height);
     float2 mouse_pos = Input::GetMousePosition();
-    mouse_pos = float2(mouse_pos.x - 0.5f, mouse_pos.y - 0.5f); // We center the mouse
+    mouse_pos = float2(mouse_pos.x - 0.5f, (mouse_pos.y - 0.5f) * -1); // We center the mouse
     mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height); // We scale it from normalized
     constexpr bool is_click = true;
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, is_click);
