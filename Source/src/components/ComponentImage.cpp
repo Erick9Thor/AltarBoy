@@ -106,6 +106,7 @@ void Hachiko::ComponentImage::Load(JsonFormatterValue j_component)
     if (!hover_image_path.empty())
     {
         hover_image = ModuleTexture::Load(hover_image_path.c_str());
+        use_hover_image = true;
     }
 }
 
