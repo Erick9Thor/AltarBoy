@@ -16,11 +16,12 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
-Hachiko::Scene::Scene():
-    root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
-    skybox(new Skybox()),
-    quadtree(new Quadtree())
+Hachiko::Scene::Scene()
+    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    , culling_camera(App->camera->GetMainCamera())
+    , skybox(new Skybox())
+    , quadtree(new Quadtree())
+    , loaded(false)
 {
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
@@ -30,12 +31,13 @@ Hachiko::Scene::~Scene()
     CleanScene();
 }
 
-void Hachiko::Scene::CleanScene() const
+void Hachiko::Scene::CleanScene() 
 {
     App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
+    loaded = false;
 }
 
 void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
@@ -146,6 +148,8 @@ void Hachiko::Scene::Load(JsonFormatterValue j_scene)
     root = new GameObject(nullptr, "Root", j_root["Uid"]);
     root->scene_owner = this;
     root->Load(j_root);
+
+    loaded = true;
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const

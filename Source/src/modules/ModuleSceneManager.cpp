@@ -126,12 +126,24 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
+    Event scene_load(Event::Type::SCENE_LOADED);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
+
     delete main_scene;
+
     main_scene = SceneImporter::LoadScene(file_path);
+
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
     main_scene->Start();
 #endif
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path) const

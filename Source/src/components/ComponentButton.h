@@ -1,8 +1,8 @@
 #pragma once
 
 #include "components/Component.h"
-#include "components/ISelectable.h"
 #include "Globals.h"
+#include "components/ISelectable.h"
 
 namespace Hachiko
 {

@@ -548,6 +548,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\events\GameStateEventPayload.h" />
+    <ClInclude Include="src\events\SceneLoadEventPayload.h" />
     <ClInclude Include="src\Gameplay.h" />
     <ClInclude Include="src\HachikoApiDefine.h" />
     <ClInclude Include="src\scripting\serialization\ISerializable.h" />

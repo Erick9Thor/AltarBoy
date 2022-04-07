@@ -19,6 +19,8 @@ Hachiko::ModuleScriptingSystem::ModuleScriptingSystem()
     , _dll_change_check_frequency_in_secs(0.0f)
     , _script_factory(nullptr)
     , _scripts_paused(false)
+    , _in_play_mode(false)
+    , _waiting_for_scene_load(true)
 {
 }
 
@@ -26,6 +28,8 @@ bool Hachiko::ModuleScriptingSystem::Init()
 {
     _dll_change_check_frequency_in_secs = 2.0f;
     _dll_change_check_timer = 0.0f;
+    _in_play_mode = false;
+    _waiting_for_scene_load = true;
 
     bool loading_successful = LoadFirstTime();
 
@@ -35,17 +39,55 @@ bool Hachiko::ModuleScriptingSystem::Init()
             "Continuing without scripting functionality.");
     }
 
-    std::function on_stop_pressed = [&](Event& evt) 
+    std::function on_mode_changed = [&](Event& evt) 
     { 
         auto& event_data = evt.GetEventData<GameStateEventPayload>();
-        
-        if (event_data.GetState() == GameStateEventPayload::State::STOPPED)
+        _waiting_for_scene_load = 
+            !App->scene_manager->GetActiveScene()->Loaded();
+
+        switch (event_data.GetState())
         {
-            HE_LOG("PRESSED STOP.");
+            case GameStateEventPayload::State::STOPPED:
+                _in_play_mode = false;
+            break;
+
+            case GameStateEventPayload::State::PAUSED:
+                _in_play_mode = false;
+            break;
+
+            case GameStateEventPayload::State::STARTED:
+                _in_play_mode = true;
+                if (!_waiting_for_scene_load)
+                {
+                    AwakeAllScriptsOnCurrentScene();
+                }
+
+            break;
+
+            case GameStateEventPayload::State::RESUMED:
+                _in_play_mode = true;
+            break;
+
+            default:
+            break;
         }
     };
 
-    App->event->Subscribe(Event::Type::GAME_STATE, on_stop_pressed);
+    std::function on_scene_loaded = [&](Event& evt) 
+    { 
+        auto& event_data = evt.GetEventData<SceneLoadEventPayload>();
+
+        _waiting_for_scene_load = 
+            event_data.GetState() == SceneLoadEventPayload::State::NOT_LOADED;
+        
+        if (_in_play_mode && !_waiting_for_scene_load)
+        {
+            AwakeAllScriptsOnCurrentScene();
+        }
+    };
+
+    App->event->Subscribe(Event::Type::GAME_STATE, on_mode_changed);
+    App->event->Subscribe(Event::Type::SCENE_LOADED, on_scene_loaded);
 
     return true;
 }
@@ -89,7 +131,8 @@ Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
         _script_factory(owner_game_object, script_name);
 
     // TODO: Only do this when the game is running.
-    if (script != nullptr && !_scripts_paused)
+    if (!_waiting_for_scene_load && _in_play_mode && script != nullptr 
+        && !_scripts_paused)
     {
         script->Awake();
 
@@ -346,6 +389,25 @@ void Hachiko::ModuleScriptingSystem::DeleteAllScriptsOnCurrentScene() const
         delete script;
         
         script = nullptr;
+    }
+
+    scripts.clear();
+}
+
+void Hachiko::ModuleScriptingSystem::AwakeAllScriptsOnCurrentScene() const 
+{
+    // Get all the scripts inside the current scene:
+    std::vector<Component*>& scripts = App->scene_manager->GetRoot()->
+        GetComponentsInDescendants(Component::Type::SCRIPT);
+
+    for (Component* script : scripts)
+    {
+        static_cast<Scripting::Script*>(script)->Awake();
+    }
+
+    for (Component* script : scripts)
+    {
+        static_cast<Scripting::Script*>(script)->Start();
     }
 
     scripts.clear();

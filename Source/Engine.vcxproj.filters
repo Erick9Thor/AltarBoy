@@ -1073,6 +1073,9 @@
     <ClInclude Include="src\modules\ModuleDebugMode.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="src\events\SceneLoadEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

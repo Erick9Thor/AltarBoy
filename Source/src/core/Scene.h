@@ -24,7 +24,7 @@ namespace Hachiko
         Scene();
         ~Scene();
 
-        void CleanScene() const;
+        void CleanScene();
 
         // --- Life cycle Scene --- //
         void Start() const;
@@ -69,6 +69,11 @@ namespace Hachiko
             return skybox;
         }
 
+        bool Loaded() const 
+        {
+            return loaded;
+        }
+
         [[nodiscard]] GameObject* RayCast(const float3& origin, const float3& destination) const;
         [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
 
@@ -89,6 +94,7 @@ namespace Hachiko
     private:
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
+        bool loaded = false;
 
         Skybox* skybox;
         Quadtree* quadtree = nullptr;

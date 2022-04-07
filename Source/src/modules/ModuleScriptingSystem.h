@@ -37,8 +37,8 @@ private:
     void LoadDll(HMODULE* dll);
     void FreeDll(HMODULE dll, unsigned int load_index);
     void DeleteAllScriptsOnCurrentScene() const; 
+    void AwakeAllScriptsOnCurrentScene() const; 
     bool IsDllVersionChanged();
-    //void OnGameModeStarted(Event<Event>)
 
 private:
     HMODULE _loaded_dll;
@@ -54,11 +54,13 @@ private:
     float _dll_change_check_timer;
     
     bool _scripts_paused;
+    bool _in_play_mode;
+    bool _waiting_for_scene_load;
 };
 
 inline bool Hachiko::ModuleScriptingSystem::ShouldUpdateScripts() const
 {
-    return !_scripts_paused;
+    return !_scripts_paused && _in_play_mode && !_waiting_for_scene_load;
 }
 
 inline void Hachiko::ModuleScriptingSystem::StopUpdatingScripts() 
