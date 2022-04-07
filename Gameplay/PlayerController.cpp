@@ -34,7 +34,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 void Hachiko::Scripting::PlayerController::OnStart()
 {
-	game_object->GetTransform()->SetGlobalPosition(_starting_position);
+	//game_object->GetTransform()->SetGlobalPosition(_starting_position);
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()

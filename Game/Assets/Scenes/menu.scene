@@ -105,8 +105,8 @@
                             0.0
                         ],
                         "Size": [
-                            1570.0,
-                            1058.0
+                            1293.0,
+                            655.0
                         ],
                         "Scale": [
                             1.0,
@@ -130,6 +130,11 @@
                     {
                         "ComponentID": 0,
                         "ComponentType": 8
+                    },
+                    {
+                        "ComponentID": 0,
+                        "ComponentType": 14,
+                        "ClassName": "MainMenuManager"
                     }
                 ],
                 "GOChildrens": [
@@ -572,7 +577,7 @@
                     {
                         "Uid": 8334921521273061537,
                         "GOName": "settings",
-                        "Active": false,
+                        "Active": true,
                         "ParentId": 1732379304205272183,
                         "Components": [
                             {
@@ -642,7 +647,7 @@
                     {
                         "Uid": 12206184620305822438,
                         "GOName": "credits",
-                        "Active": false,
+                        "Active": true,
                         "ParentId": 1732379304205272183,
                         "Components": [
                             {
@@ -712,7 +717,7 @@
                     {
                         "Uid": 5439860216443072899,
                         "GOName": "button_back",
-                        "Active": false,
+                        "Active": true,
                         "ParentId": 1732379304205272183,
                         "Components": [
                             {
