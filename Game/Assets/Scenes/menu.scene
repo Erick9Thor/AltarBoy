@@ -106,7 +106,7 @@
                         ],
                         "Size": [
                             1570.0,
-                            881.0
+                            1058.0
                         ],
                         "Scale": [
                             1.0,
@@ -168,8 +168,8 @@
                                     0.0
                                 ],
                                 "Size": [
-                                    1600.0,
-                                    1000.0
+                                    2000.0,
+                                    1500.0
                                 ],
                                 "Scale": [
                                     1.0,
@@ -561,6 +561,220 @@
                                 "ComponentType": 11,
                                 "ImagePath": "Assets/Textures/button_quit.png",
                                 "HoverImagePath": "Assets/Textures/button_quit_selected.png"
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 12
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 8334921521273061537,
+                        "GOName": "settings",
+                        "Active": false,
+                        "ParentId": 1732379304205272183,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 10,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Size": [
+                                    1191.0,
+                                    174.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Pivot": [
+                                    0.5,
+                                    0.5
+                                ],
+                                "Anchor": [
+                                    0.5,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 9
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 11,
+                                "ImagePath": "Assets/Textures/settings.png",
+                                "HoverImagePath": ""
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 12206184620305822438,
+                        "GOName": "credits",
+                        "Active": false,
+                        "ParentId": 1732379304205272183,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 10,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Size": [
+                                    1920.0,
+                                    1080.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Pivot": [
+                                    0.5,
+                                    0.5
+                                ],
+                                "Anchor": [
+                                    0.5,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 9
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 11,
+                                "ImagePath": "Assets/Textures/credits.png",
+                                "HoverImagePath": ""
+                            }
+                        ],
+                        "GOChildrens": null
+                    },
+                    {
+                        "Uid": 5439860216443072899,
+                        "GOName": "button_back",
+                        "Active": false,
+                        "ParentId": 1732379304205272183,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 10,
+                                "Position": [
+                                    -470.0,
+                                    420.0,
+                                    0.0
+                                ],
+                                "Size": [
+                                    350.0,
+                                    100.0
+                                ],
+                                "Scale": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "Pivot": [
+                                    0.5,
+                                    0.5
+                                ],
+                                "Anchor": [
+                                    0.5,
+                                    0.5
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 9
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 11,
+                                "ImagePath": "Assets/Textures/button_back.png",
+                                "HoverImagePath": "Assets/Textures/button_back_selected.png"
                             },
                             {
                                 "ComponentID": 0,
