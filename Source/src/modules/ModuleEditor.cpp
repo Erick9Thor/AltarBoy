@@ -12,7 +12,6 @@ Hachiko::ModuleEditor::ModuleEditor()
 
 #ifndef PLAY_BUILD
     windows.push_back(&w_configuration);
-    windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);
     windows.push_back(&w_inspector);
