@@ -10,7 +10,6 @@
 #include "components/ComponentCamera.h"
 
 #include "ui/WindowScene.h"
-
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
 Hachiko::ModuleCamera::~ModuleCamera() = default;
@@ -168,16 +167,14 @@ void Hachiko::ModuleCamera::ReturnPlayerCamera()
 
 LineSegment Hachiko::ModuleCamera::GetRaycastLineSegment() const
 {
-    int x, y;
-    App->input->GetMousePosition(x, y);
-    HE_LOG("mouse_screen_pos %d %d", x, y);
+    float x, y;
+    App->input->GetMousePositionRelative(x, y);
+    //HE_LOG("mouse_screen_pos %f %f", x - 0.5f, (y - 0.5f) * -1);
     int width, height;
     App->window->GetWindowSize(width, height);
-
-    LineSegment lineSeg = main_camera->RayCast(x / width * 2.0f - 1.0f, y / height * 2.0f - 1.0f);
-    HE_LOG("origin = %f %f %f", lineSeg.a.x, lineSeg.a.y, lineSeg.a.z);
-    HE_LOG("dest = %f %f %f", lineSeg.b.x, lineSeg.b.y, lineSeg.b.z);
-
+    LineSegment lineSeg = main_camera->RayCast(x - 0.5f, (y - 0.5f) * -1);
+    //HE_LOG("origin = %f %f %f", lineSeg.a.x, lineSeg.a.y, lineSeg.a.z);
+    //HE_LOG("dest = %f %f %f", lineSeg.b.x, lineSeg.b.y, lineSeg.b.z);
     return lineSeg;
 
     //const ImVec2 mouse = ImGui::GetMousePos();

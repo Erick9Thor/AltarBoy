@@ -45,7 +45,7 @@
                             -9.099628641706659e-7,
                             1.0,
                             -9.099628641706659e-7,
-                            -4.371228001787131e-8
+                            -4.3712290676012347e-8
                         ],
                         "Scale": [
                             0.9999993443489075,
@@ -442,203 +442,6 @@
                 ]
             },
             {
-                "Uid": 17631367046667315039,
-                "GOName": "Player",
-                "Active": true,
-                "ParentId": 7865191887523500989,
-                "Components": [
-                    {
-                        "ComponentID": 0,
-                        "ComponentType": 1,
-                        "Position": [
-                            0.0,
-                            1.0,
-                            0.0
-                        ],
-                        "Rotation": [
-                            0.0,
-                            0.0,
-                            0.0,
-                            1.0
-                        ],
-                        "Scale": [
-                            2.130000114440918,
-                            2.130000114440918,
-                            2.130000114440918
-                        ]
-                    }
-                ],
-                "GOChildrens": [
-                    {
-                        "Uid": 4343651034254014147,
-                        "GOName": "Gun",
-                        "Active": true,
-                        "ParentId": 17631367046667315039,
-                        "Components": [
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 1,
-                                "Position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "Rotation": [
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ],
-                                "Scale": [
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ]
-                            },
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 2
-                            },
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 3,
-                                "HasDiffuse": true,
-                                "HasSpecular": true,
-                                "DiffusePath": "Assets\\Textures\\GunDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\GunSpecular.tif",
-                                "Shininess": 2.0,
-                                "DiffuseColor": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "SpecularColor": [
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ]
-                            }
-                        ],
-                        "GOChildrens": null
-                    },
-                    {
-                        "Uid": 4928332077875624079,
-                        "GOName": "Player",
-                        "Active": true,
-                        "ParentId": 17631367046667315039,
-                        "Components": [
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 1,
-                                "Position": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "Rotation": [
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ],
-                                "Scale": [
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ]
-                            },
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 2
-                            },
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 3,
-                                "HasDiffuse": true,
-                                "HasSpecular": true,
-                                "DiffusePath": "Assets\\Textures\\PlayerDiffuse.png",
-                                "SpecularPath": "Assets\\Textures\\PlayerSpecular.tif",
-                                "Shininess": 2.0,
-                                "DiffuseColor": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "SpecularColor": [
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ]
-                            }
-                        ],
-                        "GOChildrens": null
-                    },
-                    {
-                        "Uid": 3408715395981014726,
-                        "GOName": "Camera",
-                        "Active": true,
-                        "ParentId": 17631367046667315039,
-                        "Components": [
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 1,
-                                "Position": [
-                                    -2.1827402114868166,
-                                    3.221189022064209,
-                                    -5.290846824645996
-                                ],
-                                "Rotation": [
-                                    0.15245409309864045,
-                                    0.03420202434062958,
-                                    -0.005279426462948322,
-                                    0.9877044558525086
-                                ],
-                                "Scale": [
-                                    0.4694660007953644,
-                                    0.46947184205055239,
-                                    0.4694741368293762
-                                ]
-                            },
-                            {
-                                "ComponentID": 0,
-                                "ComponentType": 4,
-                                "Frustrum": {
-                                    "NearDistance": 0.10000000149011612,
-                                    "FarDistance": 1000.0,
-                                    "Fov": 65.0,
-                                    "CameraType": 4,
-                                    "Pos": [
-                                        -4.649236679077148,
-                                        7.861133098602295,
-                                        -11.26950454711914
-                                    ],
-                                    "Front": [
-                                        0.06595192104578018,
-                                        -0.30151429772377016,
-                                        0.9511568546295166
-                                    ],
-                                    "Up": [
-                                        0.020856980234384538,
-                                        0.953436017036438,
-                                        0.3007905185222626
-                                    ],
-                                    "PinnedCamera": [
-                                        0.0,
-                                        0.0,
-                                        0.0
-                                    ]
-                                }
-                            }
-                        ],
-                        "GOChildrens": null
-                    }
-                ]
-            },
-            {
                 "Uid": 14261037417874424292,
                 "GOName": "Dollhouse",
                 "Active": true,
@@ -654,14 +457,14 @@
                         ],
                         "Rotation": [
                             0.0,
-                            0.9590730667114258,
+                            0.9590731263160706,
                             0.0,
-                            0.2831587493419647
+                            0.2831588387489319
                         ],
                         "Scale": [
-                            1.0000026226043702,
+                            1.0000027418136597,
                             1.0,
-                            1.0000026226043702
+                            1.0000027418136597
                         ]
                     }
                 ],
@@ -1133,9 +936,9 @@
                             0.06319594383239746
                         ],
                         "Scale": [
-                            1.0000040531158448,
+                            1.000004768371582,
                             1.0,
-                            1.0000040531158448
+                            1.000004768371582
                         ]
                     }
                 ],
@@ -1449,12 +1252,12 @@
                             0.6893669962882996,
                             0.0,
                             0.0,
-                            0.7244123220443726
+                            0.7244122624397278
                         ],
                         "Scale": [
                             0.9999999403953552,
-                            0.9999988675117493,
-                            0.9999988675117493
+                            0.999998927116394,
+                            0.999998927116394
                         ]
                     },
                     {
@@ -1612,8 +1415,8 @@
                 "GOChildrens": null
             },
             {
-                "Uid": 479067133427543758,
-                "GOName": "DynamicCamera",
+                "Uid": 24932649800647833,
+                "GOName": "MainCharacter",
                 "Active": true,
                 "ParentId": 7865191887523500989,
                 "Components": [
@@ -1621,54 +1424,232 @@
                         "ComponentID": 0,
                         "ComponentType": 1,
                         "Position": [
-                            -9.944820404052735,
-                            3.952713966369629,
-                            23.025859832763673
+                            0.0,
+                            0.0,
+                            0.0
                         ],
                         "Rotation": [
-                            0.009315839037299157,
-                            0.9782572984695435,
-                            -0.04506254941225052,
-                            0.202225923538208
+                            0.0,
+                            0.0,
+                            0.0,
+                            1.0
                         ],
                         "Scale": [
-                            1.0000215768814088,
-                            0.9999647736549377,
-                            1.0001461505889893
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                ],
+                "GOChildrens": [
+                    {
+                        "Uid": 17631367046667315039,
+                        "GOName": "Player",
+                        "Active": true,
+                        "ParentId": 24932649800647833,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    1.4509317874908448,
+                                    1.0,
+                                    3.6759703159332277
+                                ],
+                                "Rotation": [
+                                    0.0,
+                                    0.9026459455490112,
+                                    0.0,
+                                    -0.43038392066955569
+                                ],
+                                "Scale": [
+                                    2.1355230808258058,
+                                    2.130000114440918,
+                                    2.1355230808258058
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 14,
+                                "ClassName": "PlayerController"
+                            }
+                        ],
+                        "GOChildrens": [
+                            {
+                                "Uid": 4343651034254014147,
+                                "GOName": "Gun",
+                                "Active": true,
+                                "ParentId": 17631367046667315039,
+                                "Components": [
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 1,
+                                        "Position": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 2
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 3,
+                                        "HasDiffuse": true,
+                                        "HasSpecular": true,
+                                        "DiffusePath": "Assets\\Textures\\GunDiffuse.png",
+                                        "SpecularPath": "Assets\\Textures\\GunSpecular.tif",
+                                        "Shininess": 2.0,
+                                        "DiffuseColor": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "SpecularColor": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ]
+                                    }
+                                ],
+                                "GOChildrens": null
+                            },
+                            {
+                                "Uid": 4928332077875624079,
+                                "GOName": "Player",
+                                "Active": true,
+                                "ParentId": 17631367046667315039,
+                                "Components": [
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 1,
+                                        "Position": [
+                                            0.0,
+                                            0.0,
+                                            0.0
+                                        ],
+                                        "Rotation": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ],
+                                        "Scale": [
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ]
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 2
+                                    },
+                                    {
+                                        "ComponentID": 0,
+                                        "ComponentType": 3,
+                                        "HasDiffuse": true,
+                                        "HasSpecular": true,
+                                        "DiffusePath": "Assets\\Textures\\PlayerDiffuse.png",
+                                        "SpecularPath": "Assets\\Textures\\PlayerSpecular.tif",
+                                        "Shininess": 2.0,
+                                        "DiffuseColor": [
+                                            1.0,
+                                            1.0,
+                                            1.0,
+                                            1.0
+                                        ],
+                                        "SpecularColor": [
+                                            0.0,
+                                            0.0,
+                                            0.0,
+                                            1.0
+                                        ]
+                                    }
+                                ],
+                                "GOChildrens": null
+                            }
                         ]
                     },
                     {
-                        "ComponentID": 0,
-                        "ComponentType": 4,
-                        "Frustrum": {
-                            "NearDistance": 0.10000000149011612,
-                            "FarDistance": 1000.0,
-                            "Fov": 65.0,
-                            "CameraType": 1,
-                            "Pos": [
-                                -9.944820404052735,
-                                3.952713966369629,
-                                23.025859832763673
-                            ],
-                            "Front": [
-                                0.39487606287002566,
-                                -0.09194678068161011,
-                                -0.9142817854881287
-                            ],
-                            "Up": [
-                                0.03645091876387596,
-                                0.9957301020622253,
-                                -0.08439475297927857
-                            ],
-                            "PinnedCamera": [
-                                -9.944820404052735,
-                                3.952713966369629,
-                                23.025859832763673
-                            ]
-                        }
+                        "Uid": 3408715395981014726,
+                        "GOName": "Camera",
+                        "Active": true,
+                        "ParentId": 24932649800647833,
+                        "Components": [
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 1,
+                                "Position": [
+                                    3.4509317874908449,
+                                    14.0,
+                                    11.675970077514649
+                                ],
+                                "Rotation": [
+                                    0.46107324957847597,
+                                    0.03408944234251976,
+                                    0.005964774172753096,
+                                    0.8866869807243347
+                                ],
+                                "Scale": [
+                                    0.46946579217910769,
+                                    0.4694720506668091,
+                                    0.4694734215736389
+                                ]
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 4,
+                                "Frustrum": {
+                                    "NearDistance": 0.10000000149011612,
+                                    "FarDistance": 1000.0,
+                                    "Fov": 65.0,
+                                    "CameraType": 3,
+                                    "Pos": [
+                                        3.4509317874908449,
+                                        14.0,
+                                        11.675970077514649
+                                    ],
+                                    "Front": [
+                                        0.03096351958811283,
+                                        -0.3836764991283417,
+                                        0.2687729001045227
+                                    ],
+                                    "Up": [
+                                        0.009792099706828595,
+                                        0.2698298692703247,
+                                        0.3840572237968445
+                                    ],
+                                    "PinnedCamera": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ]
+                                }
+                            },
+                            {
+                                "ComponentID": 0,
+                                "ComponentType": 14,
+                                "ClassName": "PlayerCamera"
+                            }
+                        ],
+                        "GOChildrens": null
                     }
-                ],
-                "GOChildrens": null
+                ]
             }
         ]
     }

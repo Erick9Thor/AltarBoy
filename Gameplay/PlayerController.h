@@ -30,6 +30,7 @@ private:
 	SERIALIZE_FIELD(bool, _is_falling);
 	SERIALIZE_FIELD(float, _original_y);
 	SERIALIZE_FIELD(float, _speed_y);
+	SERIALIZE_FIELD(math::float3, _starting_position);
 };
 }
 }
