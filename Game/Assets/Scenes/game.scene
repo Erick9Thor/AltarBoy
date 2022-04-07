@@ -1617,7 +1617,7 @@
                                 "Frustrum": {
                                     "NearDistance": 0.10000000149011612,
                                     "FarDistance": 1000.0,
-                                    "Fov": 65.0,
+                                    "Fov": 70.0,
                                     "CameraType": 3,
                                     "Pos": [
                                         3.4509317874908449,

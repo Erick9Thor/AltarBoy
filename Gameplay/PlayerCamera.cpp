@@ -10,7 +10,7 @@ Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerCamera::OnAwake()
 {
-	_distance_to_player = math::float3(0.0f, 60.0f, 15.0f);
+	_distance_to_player = math::float3(0.0f, 50.0f, 40.0f);
 	std::string t_name;
 	int i = 0;
 	while (t_name != "Player")
