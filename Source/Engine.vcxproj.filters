@@ -1069,6 +1069,7 @@
     </ClInclude>
     <ClInclude Include="src\events\GameStateEventPayload.h">
       <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
     <ClInclude Include="src\modules\ModuleDebugMode.h">
       <Filter>Modules</Filter>
     </ClInclude>
