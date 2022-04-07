@@ -73,14 +73,6 @@ bool Hachiko::ModuleScriptingSystem::Init()
         }
     };
 
-#ifdef PLAY_BUILD
-    _in_play_mode = true;
-    if (!_waiting_for_scene_load)
-    {
-        AwakeAllScriptsOnCurrentScene();
-    }
-#endif
-
     std::function on_scene_loaded = [&](Event& evt) 
     { 
         auto& event_data = evt.GetEventData<SceneLoadEventPayload>();
@@ -96,6 +88,15 @@ bool Hachiko::ModuleScriptingSystem::Init()
 
     App->event->Subscribe(Event::Type::GAME_STATE, on_mode_changed);
     App->event->Subscribe(Event::Type::SCENE_LOADED, on_scene_loaded);
+
+
+    #ifdef PLAY_BUILD
+    _in_play_mode = true;
+    if (!_waiting_for_scene_load)
+    {
+        AwakeAllScriptsOnCurrentScene();
+    }
+    #endif
 
     return true;
 }

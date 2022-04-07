@@ -16,6 +16,10 @@ bool Hachiko::ModuleSceneManager::Init()
     HE_LOG("Creating Empty scene");
 
     // main_scene = new Scene();
+    Event scene_load(Event::Type::SCENE_LOADED);
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
 
     //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
 
@@ -25,10 +29,9 @@ bool Hachiko::ModuleSceneManager::Init()
     main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
 #endif
 
-    //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
-
-    // CreateEmptyScene();
-    // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera(); // PLAY_BUILD UNCOMMENT
