@@ -15,6 +15,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _is_falling(false)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
+	, _starting_position(math::float3::zero)
 {}
 
 void Hachiko::Scripting::PlayerController::OnAwake()
@@ -27,12 +28,13 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
 	
+	_starting_position = math::float3(0.0f, 1.0f, 0.0f);
 	HE_LOG("OnAwake %f", _movement_speed);
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
 {
-
+	game_object->GetTransform()->SetGlobalPosition(_starting_position);
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -44,14 +46,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	}
 
 	ComponentTransform* transform = game_object->GetTransform();
-
-	float rotation_amount = Input::GetMouseDelta().x * _rotation_speed;
-	if (rotation_amount != 0.0f)
-	{
-		math::Quat current_rotation = transform->GetGlobalRotation();
-		math::Quat delta_rotation = math::Quat::RotateY(rotation_amount);
-		transform->SetGlobalRotation(current_rotation * delta_rotation);
-	}
 	
 	math::float3 current_position = transform->GetGlobalPosition();
 	math::float3 current_front = transform->GetFront();
@@ -70,20 +64,20 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		if (Input::GetKey(Input::KeyCode::KEY_W))
 		{
-			current_position += current_front * velocity;
+			current_position -= math::float3(0, 0, 1) * velocity;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_S))
 		{
-			current_position -= current_front * velocity;
+			current_position += math::float3(0, 0, 1) * velocity;
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_D))
 		{
-			current_position -= current_right * velocity;
+			current_position += math::float3(1, 0, 0) * velocity;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_A))
 		{
-			current_position += current_right * velocity;
+			current_position -= math::float3(1, 0, 0) * velocity;
 		}
 
 		if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
@@ -125,6 +119,13 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = !_is_falling;
 	}
 
+	if (current_position.y < -20)
+	{
+		_speed_y = 0;
+		current_position = _starting_position;
+		_is_falling = false;
+	}
+
 	// Loading scene
 	/*if (Input::GetKeyDown(Input::KeyCode::KEY_0))
 	{
@@ -137,22 +138,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	math::Plane plane(math::vec(0.0f, current_position.y, 0.0f), math::vec(0.0f, 1.0f, 0.0f));
 	math::LineSegment lineSeg = CameraManagement::GetRaycastLineSegment();
 
-	HE_LOG("origin = %f %f %f", lineSeg.a.x, lineSeg.a.y, lineSeg.a.z);
-	HE_LOG("dest = %f %f %f", lineSeg.b.x, lineSeg.b.y, lineSeg.b.z);
-
-	float dist;
-	bool intersect = plane.Intersects(lineSeg, &dist);
-	if (intersect)
-	{
-		HE_LOG("Intersection");
-		math::float3 mouse_position = lineSeg.GetPoint(dist);
-		HE_LOG("point = %f %f %f", mouse_position.x, mouse_position.y, mouse_position.z);
-		mouse_position.y = current_position.y;
-		transform->LookAtTarget(mouse_position);
-	}
-	else
-	{
-		HE_LOG("NO Intersection");
-	}
+	math::vec intersect = plane.ClosestPoint(lineSeg);
+	transform->LookAtTarget(intersect);
 	/* Make the player look the mouse */
 }

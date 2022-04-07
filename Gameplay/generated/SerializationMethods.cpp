@@ -6,6 +6,7 @@
 #include "Experiment.h"
 #include "Funky.h"
 #include "MainMenuManager.h"
+#include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "SomeScript.h"
 
@@ -259,6 +260,38 @@ void Hachiko::Scripting::MainMenuManager::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
 }
 
+void Hachiko::Scripting::PlayerCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_distance_to_player") != serialized_fields.end())
+	{
+		const SerializedField& _distance_to_player_sf = serialized_fields["_distance_to_player"];
+		if (_distance_to_player_sf.type_name == "math::float3")
+		{
+			_distance_to_player = std::any_cast<math::float3>(_distance_to_player_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_player") != serialized_fields.end())
+	{
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
+		{
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerCamera::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_distance_to_player"] = SerializedField(std::string("_distance_to_player"), std::make_any<math::float3>(_distance_to_player), std::string("math::float3"));
+
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
+}
+
 void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
@@ -352,6 +385,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 			_speed_y = std::any_cast<float>(_speed_y_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_starting_position") != serialized_fields.end())
+	{
+		const SerializedField& _starting_position_sf = serialized_fields["_starting_position"];
+		if (_starting_position_sf.type_name == "math::float3")
+		{
+			_starting_position = std::any_cast<math::float3>(_starting_position_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -377,6 +419,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_original_y"] = SerializedField(std::string("_original_y"), std::make_any<float>(_original_y), std::string("float"));
 
 	serialized_fields["_speed_y"] = SerializedField(std::string("_speed_y"), std::make_any<float>(_speed_y), std::string("float"));
+
+	serialized_fields["_starting_position"] = SerializedField(std::string("_starting_position"), std::make_any<math::float3>(_starting_position), std::string("math::float3"));
 }
 
 void Hachiko::Scripting::SomeScript::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

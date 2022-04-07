@@ -324,6 +324,7 @@
     <ClInclude Include="Funky.h" />
     <ClInclude Include="generated\Factory.h" />
     <ClInclude Include="MainMenuManager.h" />
+    <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
@@ -798,6 +799,7 @@
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
     <ClCompile Include="MainMenuManager.cpp" />
+    <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

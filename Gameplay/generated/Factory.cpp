@@ -4,6 +4,7 @@
 #include "Experiment.h"
 #include "Funky.h"
 #include "MainMenuManager.h"
+#include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "SomeScript.h"
 
@@ -28,6 +29,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "MainMenuManager")
 	{
 		return new Hachiko::Scripting::MainMenuManager(script_owner);
+	}
+
+	if (script_name == "PlayerCamera")
+	{
+		return new Hachiko::Scripting::PlayerCamera(script_owner);
 	}
 
 	if (script_name == "PlayerController")

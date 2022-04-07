@@ -1,5 +1,6 @@
 #pragma once
-#include "scripting/Script.h"
+
+#include <scripting/Script.h>
 
 namespace Hachiko
 {

@@ -504,6 +504,7 @@
     <ClInclude Include="Experiment.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MainMenuManager.h" />
+    <ClInclude Include="PlayerCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\vendors\imgui\imgui_stdlib.cpp">
@@ -752,6 +753,7 @@
     <ClCompile Include="Experiment.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MainMenuManager.cpp" />
+    <ClCompile Include="PlayerCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
