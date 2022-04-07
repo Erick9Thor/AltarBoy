@@ -6,6 +6,7 @@
 #include "ModuleEditor.h"
 #include "ModuleInput.h"
 #include "ModuleEvent.h"
+#include "ModuleWindow.h"
 
 #include "core/Scene.h"
 #include "core/GameObject.h"
@@ -30,10 +31,19 @@ bool Hachiko::ModuleUserInterface::Init()
 
 UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
+#ifdef PLAY_BUILD   // On playbuild mouse position is taken from the Window, not ImGUI
+    int height, width;
+    App->window->GetWindowSize(width, height);
+    float2 mouse_pos = Input::GetMousePosition();
+    mouse_pos = float2(mouse_pos.x - 0.5f, mouse_pos.y - 0.5f); // We center the mouse
+    mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height); // We scale it from normalized
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, false);
+#else
     const WindowScene* w_scene = App->editor->GetSceneWindow();
     ImVec2 mouse_pos = ImGui::GetMousePos();
     float2 click_pos = w_scene->ImguiToScreenPos(float2(mouse_pos.x, mouse_pos.y));
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, false);
+#endif
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -118,13 +128,23 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     const auto& payload = evt.GetEventData<MouseEventPayload>();
     MouseEventPayload::Action action = payload.GetAction();
     float2 coords = payload.GetCoords();
-
+#ifdef PLAY_BUILD
+    int height, width;
+    App->window->GetWindowSize(width, height);
+    float2 mouse_pos = Input::GetMousePosition();
+    mouse_pos = float2(mouse_pos.x - 0.5f, mouse_pos.y - 0.5f); // We center the mouse
+    mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height); // We scale it from normalized
+    constexpr bool is_click = true;
+    RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, is_click);
+#else
     const WindowScene* w_scene = App->editor->GetSceneWindow();
     float2 click_pos = w_scene->ImguiToScreenPos(coords);
 
-    //HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
+    HE_LOG("Mouse event on ui %.2f %.2f, %.2f %.2f", coords.x, coords.y, click_pos.x, click_pos.y);
     constexpr bool is_click = true;
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, is_click);
+#endif
+
 }
 
 void Hachiko::ModuleUserInterface::CreateSquare()

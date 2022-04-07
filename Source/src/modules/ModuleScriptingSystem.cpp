@@ -73,6 +73,14 @@ bool Hachiko::ModuleScriptingSystem::Init()
         }
     };
 
+#ifdef PLAY_BUILD
+    _in_play_mode = true;
+    if (!_waiting_for_scene_load)
+    {
+        AwakeAllScriptsOnCurrentScene();
+    }
+#endif
+
     std::function on_scene_loaded = [&](Event& evt) 
     { 
         auto& event_data = evt.GetEventData<SceneLoadEventPayload>();

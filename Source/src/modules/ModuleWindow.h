@@ -49,6 +49,11 @@ namespace Hachiko
             SDL_GetWindowSize(window, &width, &height);
         }
 
+        void GetWindowPosition(int& x, int& y)
+        {
+            SDL_GetWindowPosition(window, &x, &y);
+        }
+
     private:
         static void GetMonitorResolution(int& width, int& height);
 
