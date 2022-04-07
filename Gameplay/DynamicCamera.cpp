@@ -12,7 +12,7 @@ Hachiko::Scripting::DynamicCamera::DynamicCamera(GameObject* game_object)
 
 void Hachiko::Scripting::DynamicCamera::OnAwake()
 {
-	_start_point = game_object->GetTransform()->GetPosition();
+	_start_point = game_object->GetTransform()->GetGlobalPosition();
 	_end_point = math::float3(-10.0f, 3.0f, -4.0f);
 	_speed = 5.0f;
 	_lerp_position = 0.0f;

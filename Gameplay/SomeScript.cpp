@@ -10,7 +10,7 @@ Hachiko::Scripting::SomeScript::SomeScript(GameObject* game_object)
 
 void Hachiko::Scripting::SomeScript::OnAwake()
 {
-	_initial_position = game_object->GetTransform()->GetPosition();
+	_initial_position = game_object->GetTransform()->GetGlobalPosition();
 	_position_offset = math::float3(3.0f, 0.0f, 0.0f);
 	_lerp_position = 0.0f;
 }

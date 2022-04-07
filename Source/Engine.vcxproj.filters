@@ -414,6 +414,9 @@
     <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
     <ClCompile Include="src\LogFunction.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1066,6 +1069,8 @@
     </ClInclude>
     <ClInclude Include="src\events\GameStateEventPayload.h">
       <Filter>Core\Events\Payload</Filter>
+    <ClInclude Include="src\modules\ModuleDebugMode.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

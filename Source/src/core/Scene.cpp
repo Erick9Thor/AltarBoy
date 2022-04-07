@@ -169,7 +169,7 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
-            local_segment.Transform(game_object->GetTransform()->GetMatrix().Inverted());
+            local_segment.Transform(game_object->GetTransform()->GetGlobalMatrix().Inverted());
 
             const float* vertices = mesh->GetVertices();
             const unsigned* indices = mesh->GetIndices();

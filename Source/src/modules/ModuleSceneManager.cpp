@@ -63,8 +63,6 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::RESUMED);
         App->event->Publish(game_state);
         
-        SaveScene("tmp_scene.scene");
-        
         GameTimer::Resume();
     }
 }

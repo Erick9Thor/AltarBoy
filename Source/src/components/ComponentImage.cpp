@@ -21,8 +21,7 @@ void Hachiko::ComponentImage::DrawGui()
     {   
 
         ImGui::Checkbox("Use Image", &use_image);
-
-        static char image_filename_buffer[MAX_PATH] = "Image Filename\0";
+        
         if (ImGui::InputText("Image File", image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(image);
@@ -37,7 +36,6 @@ void Hachiko::ComponentImage::DrawGui()
 
         ImGui::Checkbox("Use Hover Image", &use_hover_image);
 
-        static char hover_image_filename_buffer[MAX_PATH] = "Hover Image Filename\0";
         if (ImGui::InputText("Hover Image File", hover_image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(hover_image);
@@ -62,18 +60,21 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     // TODO
     const Texture* img_to_draw = &image;
-    bool render_img = use_image;
+    const float4* render_color = &color;
+    bool render_img = use_image;    
+    
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
-    if (button && button->IsHovered() && hover_image.loaded)
+    if (button && button->IsHovered())
     {
         img_to_draw = &hover_image;
+        render_color = &hover_color;
         render_img = use_hover_image;
     }
 
     program->BindUniformBool("diffuse_flag", img_to_draw->loaded && render_img);
-    program->BindUniformFloat4("img_color", color.ptr());
+    program->BindUniformFloat4("img_color", render_color->ptr());
     ModuleTexture::Bind(img_to_draw->id, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }

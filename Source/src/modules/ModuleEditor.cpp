@@ -165,7 +165,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    RenderGui();
+    //RenderGui();
     return retval;
 }
 

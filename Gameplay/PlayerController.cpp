@@ -24,7 +24,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_movement_speed = 10.0f;
 	_rotation_speed = 2.5f;
 
-	_original_y = game_object->GetTransform()->GetPosition().y;
+	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
 	
 	HE_LOG("OnAwake %f", _movement_speed);
@@ -48,12 +48,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	float rotation_amount = Input::GetMouseDelta().x * _rotation_speed;
 	if (rotation_amount != 0.0f)
 	{
-		math::Quat current_rotation = transform->GetRotation();
+		math::Quat current_rotation = transform->GetGlobalRotation();
 		math::Quat delta_rotation = math::Quat::RotateY(rotation_amount);
 		transform->SetGlobalRotation(current_rotation * delta_rotation);
 	}
 	
-	math::float3 current_position = transform->GetPosition();
+	math::float3 current_position = transform->GetGlobalPosition();
 	math::float3 current_front = transform->GetFront();
 	math::float3 current_right = transform->GetRight();
 
@@ -126,10 +126,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	}
 
 	// Loading scene
-	if (Input::GetKeyDown(Input::KeyCode::KEY_C))
+	/*if (Input::GetKeyDown(Input::KeyCode::KEY_0))
 	{
 		SceneManagement::SwitchScene("Assets/Scenes/first_deliver_scene.scene");
-	}
+	}*/
 
 	transform->SetGlobalPosition(current_position);
 
