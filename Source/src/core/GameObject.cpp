@@ -483,3 +483,17 @@ Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
 
     return components_in_descendants;
 }
+
+Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(
+    const std::string& child_name) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->name == child_name)
+        {
+            return child;
+        }
+    }
+
+    return nullptr;
+}

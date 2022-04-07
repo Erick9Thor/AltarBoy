@@ -9,7 +9,7 @@ namespace Hachiko
 
     class ComponentCanvas;
 
-    class ComponentTransform2D : public Component
+    class HACHIKO_API ComponentTransform2D : public Component
     {
     public:
         ComponentTransform2D(GameObject* container);

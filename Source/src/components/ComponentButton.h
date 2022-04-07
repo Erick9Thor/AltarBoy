@@ -1,8 +1,8 @@
 #pragma once
 
 #include "components/Component.h"
-#include "Globals.h"
 #include "components/ISelectable.h"
+#include "Globals.h"
 
 namespace Hachiko
 {
@@ -10,7 +10,7 @@ namespace Hachiko
 
     class ComponentTransform2D;
 
-    class ComponentButton : public Component, public ISelectable
+    class HACHIKO_API ComponentButton : public Component, public ISelectable
     {
     public:
         ComponentButton(GameObject* container);

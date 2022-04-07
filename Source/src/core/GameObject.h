@@ -2,10 +2,17 @@
 
 #include <MathGeoLib.h>
 #include <vector>
+#include <string>
 #include <typeinfo>
 
 #include "utils/UUID.h"
 #include "components/Component.h"
+
+#if defined(HACHIKO_API)
+// Do Nothing
+#elif defined(_MSC_VER)
+#define HACHIKO_API __declspec(dllexport)
+#endif
 
 namespace Hachiko
 {
@@ -15,7 +22,7 @@ class ComponentCamera;
 class Program;
 class Scene;
 
-class GameObject final
+class HACHIKO_API GameObject final
 {
     friend class Component;
 
@@ -160,6 +167,8 @@ public:
     std::vector<Component*> GetComponents(Component::Type type) const;
     std::vector<Component*> GetComponentsInDescendants(
         Component::Type type) const;
+
+    GameObject* GetFirstChildWithName(const std::string& child_name) const;
 
 public:
     std::string name;
