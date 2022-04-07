@@ -72,7 +72,7 @@
             },
             {
                 "Uid": 1732379304205272183,
-                "GOName": "Menu",
+                "GOName": "GameObject",
                 "Active": true,
                 "ParentId": 7865191887523500989,
                 "Components": [
@@ -105,8 +105,8 @@
                             0.0
                         ],
                         "Size": [
-                            1787.0,
-                            1110.0
+                            1570.0,
+                            1058.0
                         ],
                         "Scale": [
                             1.0,
@@ -130,11 +130,6 @@
                     {
                         "ComponentID": 0,
                         "ComponentType": 8
-                    },
-                    {
-                        "ComponentID": 0,
-                        "ComponentType": 14,
-                        "ClassName": "MainMenuManager"
                     }
                 ],
                 "GOChildrens": [
