@@ -161,6 +161,8 @@ public:
     std::vector<Component*> GetComponentsInDescendants(
         Component::Type type) const;
 
+    GameObject* GetFirstChildWithName(const std::string& child_name) const;
+
 public:
     std::string name;
     Scene* scene_owner = nullptr;
