@@ -319,6 +319,7 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="Experiment.h" />
     <ClInclude Include="Funky.h" />
@@ -793,6 +794,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="Experiment.cpp" />
     <ClCompile Include="Funky.cpp" />

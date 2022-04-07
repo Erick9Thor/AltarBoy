@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "generated/Factory.h"
+#include "BackToMainMenu.h"
 #include "DynamicCamera.h"
 #include "Experiment.h"
 #include "Funky.h"
@@ -11,6 +12,11 @@
 
 Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)
 {
+	if (script_name == "BackToMainMenu")
+	{
+		return new Hachiko::Scripting::BackToMainMenu(script_owner);
+	}
+
 	if (script_name == "DynamicCamera")
 	{
 		return new Hachiko::Scripting::DynamicCamera(script_owner);

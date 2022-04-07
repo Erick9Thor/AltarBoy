@@ -118,7 +118,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 
 	if (_button_play->IsSelected())
 	{
-		SceneManagement::SwitchScene("Assets/Scenes/untitled.scene");
+		SceneManagement::SwitchScene("Assets/Scenes/game.scene");
 
 		return;
 	}

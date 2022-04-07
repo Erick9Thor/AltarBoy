@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
+#include "BackToMainMenu.h"
 #include "DynamicCamera.h"
 #include "Experiment.h"
 #include "Funky.h"
@@ -10,6 +11,27 @@
 #include "PlayerController.h"
 #include "SomeScript.h"
 
+
+void Hachiko::Scripting::BackToMainMenu::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_button_back") != serialized_fields.end())
+	{
+		const SerializedField& _button_back_sf = serialized_fields["_button_back"];
+		if (_button_back_sf.type_name == "ComponentButton*")
+		{
+			_button_back = std::any_cast<ComponentButton*>(_button_back_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::BackToMainMenu::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
+}
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
