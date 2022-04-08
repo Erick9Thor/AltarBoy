@@ -8,6 +8,19 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 
+// UI
+#include "components/ComponentCanvas.h"
+#include "components/ComponentCanvasRenderer.h"
+#include "components/ComponentTransform2D.h"
+#include "components/ComponentImage.h"
+#include "components/ComponentButton.h"
+#include "Components/ComponentProgressBar.h"
+
+// TODO: REMOVE
+#include "Application.h"
+#include "modules/ModuleSceneManager.h"
+//
+
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name) :
@@ -20,16 +33,16 @@ Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, c
     name(name),
     uid(uid)
 {
-    SetNewParent(parent);
     AddComponent(new ComponentTransform(this, transform));
+    SetNewParent(parent);
 }
 
 Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) :
     name(name),
     uid(uid)
 {
-    SetNewParent(parent);
     AddComponent(new ComponentTransform(this, translation, rotation, scale));
+    SetNewParent(parent);
 }
 
 Hachiko::GameObject::~GameObject()
@@ -72,11 +85,14 @@ void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
         parent->RemoveChild(this);
     }
 
+    parent = new_parent;
+
     if (new_parent)
     {
+        float4x4 temp_matrix = this->GetTransform()->GetGlobalMatrix();
         new_parent->children.push_back(this);
+        this->GetTransform()->SetGlobalTransform(temp_matrix);
     }
-    parent = new_parent;
 }
 
 void Hachiko::GameObject::AddComponent(Component* component)
@@ -125,6 +141,30 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);
         break;
+    case (Component::Type::CANVAS):
+        if (!GetComponent<ComponentCanvas>())
+            new_component = new ComponentCanvas(this);
+        break;
+    case (Component::Type::CANVAS_RENDERER):
+        if (!GetComponent<ComponentCanvasRenderer>())
+            new_component = new ComponentCanvasRenderer(this);
+        break;
+    case (Component::Type::TRANSFORM_2D):
+        if (!GetComponent<ComponentTransform2D>())
+            new_component = new ComponentTransform2D(this);
+        break;
+    case (Component::Type::IMAGE):
+        if (!GetComponent<ComponentImage>())
+            new_component = new ComponentImage(this);
+        break;
+    case (Component::Type::BUTTON):
+        if (!GetComponent<ComponentButton>())
+            new_component = new ComponentButton(this);
+        break;
+    case (Component::Type::PROGRESS_BAR):
+        if (!GetComponent<ComponentProgressBar>())
+            new_component = new ComponentProgressBar(this);
+        break;
     }
 
     if (new_component != nullptr)
@@ -138,8 +178,46 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::SetActive(bool set_active)
+{
+    if (!active && set_active)
+    {
+        Start();
+    }
+    active = set_active;
+}
+
+
+void Hachiko::GameObject::Start() 
+{
+    if (!started)
+    {
+        transform->Start();
+        for (Component* component : components)
+        {
+            component->Start();
+        }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Start();
+            }
+        }
+        started = true;
+    }  
+}
+
 void Hachiko::GameObject::Update()
 {
+    // TODO: REMOVE
+    if (name == "Gun")  // This is temporal, once scripting is finally merged, we should try to do the same there for the player 
+    {
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetGlobalPosition() - float3(0, 5, 0), transform->GetGlobalPosition());
+    }
+    //
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();
@@ -257,7 +335,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         constexpr float default_bounding_size = 1.0f;
         // If there is no mesh generate a default size
         aabb.SetNegativeInfinity();
-        aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+        aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
         obb = aabb;
     }
 
@@ -270,10 +348,15 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     }
 }
 
-void Hachiko::GameObject::RemoveComponent(Component* component)
+bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
 {
     //TODO: Should I delete the component?
-    components.erase(std::remove(components.begin(), components.end(), component));
+    if (component->CanBeRemoved())
+    {
+        components.erase(std::remove(components.begin(), components.end(), component));
+        return true;
+    }
+    return false;
 }
 
 void Hachiko::GameObject::Save(YAML::Node& node) const

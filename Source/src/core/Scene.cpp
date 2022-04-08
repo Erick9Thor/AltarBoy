@@ -5,6 +5,7 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMesh.h"
 #include "components/ComponentMaterial.h"
+#include "components/ComponentImage.h"
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"
@@ -33,7 +34,7 @@ Hachiko::Scene::~Scene()
 
 void Hachiko::Scene::CleanScene() const
 {
-    App->editor->SetSelectedGameObject(nullptr);
+    App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
@@ -41,11 +42,36 @@ void Hachiko::Scene::CleanScene() const
 
 void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 {
-    if (App->editor->GetSelectedGameObject() == game_object)
+    if (App->editor->GetSelectedGO() == game_object)
     {
-        App->editor->SetSelectedGameObject(nullptr);
+        App->editor->SetSelectedGO(nullptr);
     }
     quadtree->Remove(game_object);
+}
+
+Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
+{
+    return SearchMainCamera(root);
+}
+
+Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
+{
+    ComponentCamera* component_camera = nullptr;
+    component_camera = game_object->GetComponent<ComponentCamera>();
+    if (component_camera != nullptr)
+    {
+        return component_camera;
+    }
+
+    for (GameObject* child : game_object->children)
+    {
+        component_camera = SearchMainCamera(child);
+        if (component_camera != nullptr)
+        {
+            return component_camera;
+        }
+    }
+    return nullptr;
 }
 
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
@@ -65,7 +91,7 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
 
 void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
-    GameObject* game_object = App->editor->GetSelectedGameObject();
+    GameObject* game_object = App->editor->GetSelectedGO();
     if (game_object == nullptr)
     {
         game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
@@ -96,7 +122,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
                 component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));
             }
-
+            
             createChilds(last_parent, child->childs);
         }
     };
@@ -104,9 +130,25 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
     createChilds(game_object, model->child_nodes);
 }
 
+//Hachiko::GameObject* Hachiko::Scene::LoadImageObject(const std::string& path)
+//{
+//    const auto file_name = path.substr(path.find_last_of("/\\") + 1);
+//    const auto name = file_name.substr(0, file_name.find_last_of('.'));
+//
+//    GameObject* game_object = nullptr;
+//    game_object = CreateNewGameObject(name.c_str(), root);
+//    game_object->CreateComponent(Component::Type::TRANSFORM_2D);
+//    game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
+//    game_object->CreateComponent(Component::Type::IMAGE);
+//    ComponentImage* image = game_object->GetComponent<ComponentImage>();
+//    image->Import(path.c_str());
+//
+//    return game_object;
+//}
+
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
-    GameObject* game_object = App->editor->GetSelectedGameObject();
+    GameObject* game_object = App->editor->GetSelectedGO();
     if (game_object == nullptr)
     {
         HE_LOG("No game object selected to apply material on");
@@ -118,6 +160,12 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     {
         component_material->SetResourceMaterial(material);
     }
+}
+
+Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+{
+    LineSegment line_seg(origin, destination);
+    return RayCast(line_seg);
 }
 
 Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
@@ -144,11 +192,6 @@ Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
         const unsigned* indices = mesh->GetIndices(0);
         for (unsigned i = 0; i < mesh->GetBufferSize(0, ResourceMesh::Buffers::INDICES); i += 3)
         {
-            Triangle triangle;
-            triangle.a = vec(&vertices[indices[i] * 3]);
-            triangle.b = vec(&vertices[indices[i + 1] * 3]);
-            triangle.c = vec(&vertices[indices[i + 2] * 3]);
-
             float hit_distance;
             float3 hit_point;
             if (!local_segment.Intersects(triangle, &hit_distance, &hit_point))
@@ -219,6 +262,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
+}
+
+void Hachiko::Scene::Start() const 
+{
+    root->Start();
 }
 
 void Hachiko::Scene::Update() const

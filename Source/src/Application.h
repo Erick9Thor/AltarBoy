@@ -13,7 +13,6 @@ namespace Hachiko
     class ModuleWindow;
     class ModuleTextures;
     class ModuleInput;
-    class ModuleRenderExercise;
     class ModuleEditor;
     class ModuleDebugDraw;
     class ModuleCamera;
@@ -24,6 +23,8 @@ namespace Hachiko
     class ModuleFileSystem;
     class ModuleResources;
     class ModuleImporter;
+    class ModuleUserInterface;
+    class ModuleDebugMode;
 
     class PreferenceManager;
     class Program;
@@ -56,6 +57,8 @@ namespace Hachiko
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
         ModuleResources* resources = nullptr;
+        ModuleUserInterface* ui = nullptr;
+        ModuleDebugMode* debug_mode = nullptr;
 
         PreferenceManager* preferences = nullptr;
     private:

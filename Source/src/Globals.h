@@ -47,21 +47,18 @@ enum class UpdateStatus
 
 // File System config -----------
 #define VERSION "0.1"
-#define ASSETS_FOLDER "Assets/"
-#define ASSETS_FOLDER_SCENES "Assets/Scenes/"
-#define ASSETS_FOLDER_TEXTURES "Assets/textures/"
+#define ASSETS_FOLDER "Assets"
+#define ASSETS_FOLDER_SCENES "Assets/Scenes"
+#define ASSETS_FOLDER_TEXTURES "Assets/Textures"
 
-#define SETTINGS_FOLDER "settings"
-#define SETTINGS_FILE_PATH "settings/he.cfg"
-
-#define LIBRARY_FOLDER "Library/"
-#define LIBRARY_TEXTURES_FOLDER "Library/Textures/"
-#define LIBRARY_MESH_FOLDER "Library/Meshes/"
-#define LIBRARY_SCENE_FOLDER "Library/Scenes/"
-#define LIBRARY_MATERIAL_FOLDER "Library/Materials/"
-#define LIBRARY_MODEL_FOLDER "Library/Models/"
-#define LIBRARY_SHADERS_FOLDER "Library/Shaders/"
-#define LIBRARY_FONTS_FOLDER "Library/Fonts/"
+#define SETTINGS_FOLDER "Settings"
+#define LIBRARY_FOLDER "Library"
+#define LIBRARY_TEXTURES_FOLDER "Library/Textures"
+#define LIBRARY_MESH_FOLDER "Library/Meshes"
+#define LIBRARY_SCENE_FOLDER "Library/Scenes"
+#define LIBRARY_MATERIAL_FOLDER "Library/Materials"
+#define LIBRARY_SHADERS_FOLDER "Library/Shaders"
+#define LIBRARY_FONTS_FOLDER "Library/Fonts"
 
 #define JPG_TEXTURE_EXTENSION ".jpg"
 #define PNG_TEXTURE_EXTENSION ".png"

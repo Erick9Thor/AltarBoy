@@ -30,9 +30,10 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     {
         return;
     }
-    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
     
-    // TODO: Why we take care of other components?
+   //assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
+
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
     
     if (material != nullptr)
@@ -53,7 +54,9 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
     {
         return;
     }
-    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
+    
+    //assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     for (auto mesh : meshes)
     {
