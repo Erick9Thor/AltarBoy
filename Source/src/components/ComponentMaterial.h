@@ -43,12 +43,6 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
-        
-        char diffuse_filename_buffer[MAX_PATH] = "Diffuse Filename\0";
-        char specular_filename_buffer[MAX_PATH] = "Specular Filename\0";
-
-        bool use_diffuse_texture = false;
-        bool use_specular_texture = false;
 
     private:
         ResourceMaterial* material{};

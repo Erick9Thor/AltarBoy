@@ -1,13 +1,11 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
-#include "events/MouseEventPayload.h"
 
 #include <SDL.h>
 
-
 namespace Hachiko
-{   
+{
     using Uint8 = unsigned __int8;
 
     enum class KeyState
@@ -62,7 +60,6 @@ namespace Hachiko
 
     private:
         void UpdateInputMaps();
-        void NotifyMouseAction(float2 position, MouseEventPayload::Action action);
 
         KeyState* keyboard = nullptr;
         Uint32 mouse{};

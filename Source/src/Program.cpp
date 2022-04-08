@@ -51,11 +51,6 @@ void Hachiko::Program::BindUniformFloat3(const char* name, const float* data) co
     glUniform3fv(glGetUniformLocation(id, name), 1, data);
 }
 
-void Hachiko::Program::BindUniformFloat4(const char* name, const float* data) const
-{
-    glUniform4fv(glGetUniformLocation(id, name), 1, data);
-}
-
 void Hachiko::Program::BindUniformFloat(const char* name, const float* data) const
 {
     glUniform1fv(glGetUniformLocation(id, name), 1, data);

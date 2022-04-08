@@ -4,12 +4,6 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMesh.h"
 
-void Hachiko::RenderList::PreUpdate()
-{
-    polycount_rendered = 0;
-    polycount_total = 0;
-}
-
 void Hachiko::RenderList::Update(ComponentCamera* camera, GameObject* game_object)
 {
     nodes.clear();
@@ -54,11 +48,6 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
             {
                 CollectMesh(camera_pos, game_object);
             }
-
-            if (game_object->GetComponent<ComponentMesh>())
-            {
-                polycount_total += game_object->GetComponent<ComponentMesh>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
-            }
         }
         // Call for all children (What to do if it is duplicated when collecting)?
         if (!quadtree->IsLeaf())
@@ -90,6 +79,5 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
                                              return it_target.distance < new_target.distance;
                                          });
         nodes.insert(it, target);
-        polycount_rendered += game_object->GetComponent<ComponentMesh>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
     }
 }

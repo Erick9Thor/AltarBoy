@@ -18,7 +18,7 @@ namespace Hachiko
         void DrawHierarchyTree(const GameObject* game_object);
         void DrawChildren(const GameObject* game_object);
         void DrawGameObject(GameObject* game_object);
-        void DragAndDrop(GameObject* game_object);
+
         GameObject* dragged_object = nullptr;
     };
 }

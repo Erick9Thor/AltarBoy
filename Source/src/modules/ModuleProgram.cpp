@@ -17,8 +17,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateMainProgram();
     CreateSkyboxProgram();
     CreateStencilProgram();
-    CreateUserInterfaceProgram();
-    if (!main_program || !skybox_program || !stencil_program || !ui_program)
+    if (!main_program || !skybox_program || !stencil_program)
     {
         return false;
     }
@@ -124,12 +123,6 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
     return stencil_program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceProgram()
-{
-    ui_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_ui.glsl", ASSETS_FOLDER "/Shaders/fragment_ui.glsl");
-    return ui_program;
-}
-
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {
     glGenBuffers(1, &ubos[static_cast<int>(binding_point)]);
@@ -148,7 +141,7 @@ void Hachiko::ModuleProgram::UpdateUBO(UBOPoints binding_point, unsigned size, v
 
 void Hachiko::ModuleProgram::CreateCameraUBO()
 {
-    CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
+    CreateUBO(UBOPoints::CAMERA, sizeof(Camera));
 }
 
 void Hachiko::ModuleProgram::CreateMaterialUBO()
@@ -169,25 +162,18 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete skybox_program;
     stencil_program->CleanUp();
     delete stencil_program;
-    ui_program->CleanUp();
-    delete ui_program;
     return true;
 }
 
 void Hachiko::ModuleProgram::UpdateCamera(const ComponentCamera* camera) const
 {
-    CameraData camera_data;
+    Camera camera_data;
     camera_data.view = camera->GetViewMatrix();
     camera_data.proj = camera->GetProjectionMatrix();
     // TODO: Understand why camera_data.view.TranslatePart() does not give the position
     camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
-    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), &camera_data);
-}
-
-void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
-{
-    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*) &camera_data);
+    UpdateUBO(UBOPoints::CAMERA, sizeof(Camera), &camera_data);
 }
 
 void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp) const
@@ -204,9 +190,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
 
     MaterialData material_data;
     material_data.diffuse_color = material->diffuse_color;
-    material_data.diffuse_flag = material_comp->use_diffuse_texture && material->diffuse.loaded;
+    material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
-    material_data.specular_flag = material_comp->use_specular_texture && material->specular.loaded;
+    material_data.specular_flag = material->HasSpecular();
+    material_data.normal_flag = material->HasNormal();
     material_data.shininess = material->shininess;
 
     if (material_data.diffuse_flag)

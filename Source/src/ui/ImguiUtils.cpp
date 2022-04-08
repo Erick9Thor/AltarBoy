@@ -79,9 +79,7 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
 
     if (ImGui::BeginPopup(header_name))
     {
-
-        game_object->AttemptRemoveComponent(component);
-        
+        game_object->RemoveComponent(component);
         ImGui::EndPopup();
     }
 

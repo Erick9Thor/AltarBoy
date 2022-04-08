@@ -32,7 +32,6 @@ namespace Hachiko
         ~ModuleRender() override;
 
         bool Init() override;
-        UpdateStatus PreUpdate(float delta) override;
         UpdateStatus Update(float delta) override;
         UpdateStatus PostUpdate(float delta) override;
         bool CleanUp() override;
@@ -65,11 +64,6 @@ namespace Hachiko
         [[nodiscard]] GlVersion GetGlVersion() const
         {
             return gl;
-        }
-
-        [[nodiscard]] const RenderList* GetRenderList() const
-        {
-            return &render_list;
         }
 
     private:

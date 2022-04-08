@@ -44,15 +44,6 @@ namespace Hachiko
             return window;
         }
 
-        #ifdef PLAY_BUILD 
-
-        void GetWindowSize(int& width, int& height) 
-        {
-            SDL_GetWindowSize(window, &width, &height);
-        }
-
-        #endif
-
     private:
         static void GetMonitorResolution(int& width, int& height);
 

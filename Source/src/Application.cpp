@@ -15,8 +15,6 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleFileSystem.h"
 #include "Modules/ModuleResources.h"
-#include "modules/ModuleUserInterface.h"
-#include "modules/ModuleDebugMode.h"
 
 #include "Core/preferences/PreferenceManager.h"
 
@@ -38,8 +36,7 @@ Hachiko::Application::Application()
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
-    modules.push_back(ui = new ModuleUserInterface()); 
-    modules.push_back(debug_mode = new ModuleDebugMode());
+    
 
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }
@@ -64,9 +61,6 @@ bool Hachiko::Application::Init()
 
     delta = 0;
     EngineTimer::Start();
-    #ifdef PLAY_BUILD 
-        GameTimer::Start();
-    #endif
     return ret;
 }
 

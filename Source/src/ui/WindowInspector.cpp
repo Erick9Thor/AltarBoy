@@ -82,62 +82,8 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         }
         if (ImGui::MenuItem("Material"))
         {
-            if (ImGui::MenuItem("Camera"))
-            {
-                game_object->CreateComponent(Component::Type::CAMERA);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Point Light"))
-            {
-                game_object->CreateComponent(Component::Type::POINTLIGHT);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Spot Light"))
-            {
-                game_object->CreateComponent(Component::Type::SPOTLIGHT);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Dir Light"))
-            {
-                game_object->CreateComponent(Component::Type::DIRLIGHT);
-                ImGui::CloseCurrentPopup();
-            }
-
-            if (ImGui::MenuItem("Canvas"))
-            {
-                game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-                game_object->CreateComponent(Component::Type::CANVAS);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Button"))
-            {                
-                game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-                game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
-                game_object->CreateComponent(Component::Type::BUTTON);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Image"))
-            {
-                game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-                game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
-                game_object->CreateComponent(Component::Type::IMAGE);
-                ImGui::CloseCurrentPopup();
-            }
-            if (ImGui::MenuItem("Progress Bar"))
-            {
-                game_object->CreateComponent(Component::Type::PROGRESS_BAR);
-                game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-                GameObject* background = new GameObject(game_object, "Bar Background");
-                background->CreateComponent(Component::Type::TRANSFORM_2D);
-                background->CreateComponent(Component::Type::CANVAS_RENDERER);
-                background->CreateComponent(Component::Type::IMAGE);
-                GameObject* fill = new GameObject(game_object, "Bar Fill");
-                fill->CreateComponent(Component::Type::TRANSFORM_2D);
-                fill->CreateComponent(Component::Type::CANVAS_RENDERER);
-                fill->CreateComponent(Component::Type::IMAGE);
-                ImGui::CloseCurrentPopup();
-            }
-            ImGui::EndPopup();
+            game_object->CreateComponent(Component::Type::MATERIAL);
+            ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
     }
