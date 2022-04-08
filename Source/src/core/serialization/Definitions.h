@@ -60,7 +60,7 @@
 //////////////////////////
 
 #define SCENE_EXTENSION ".scene"
-#define MODEL_EXTENSION ".model"
+#define MODEL_EXTENSION ".meta"
 #define MESH_EXTENSION ".mesh"
 #define MATERIAL_EXTENSION ".mat"
  

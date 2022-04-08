@@ -38,7 +38,7 @@ void Hachiko::WindowResource::Update()
     }
     //
 
-    std::filesystem::path library_path("./library");
+    std::filesystem::path library_path("./");
 
     if (current_directory != library_path)
     {

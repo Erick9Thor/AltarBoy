@@ -65,11 +65,7 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
 
 void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
-    GameObject* game_object = App->editor->GetSelectedGameObject();
-    if (game_object == nullptr)
-    {
-        game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
-    }
+    GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
     std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChilds = [&](GameObject* parent, const std::vector<ResourceNode*>& childs)
     {
