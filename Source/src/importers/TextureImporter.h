@@ -18,7 +18,7 @@ namespace Hachiko
         Resource* Load(const char* path) override;
         void Save(const Resource* resource) override;
 
-        bool CheckIfImported(const char* path) override
+        bool IsImported(const char* path) override
         {
             return false;
         }
