@@ -35,12 +35,7 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
-    
-    if (material != nullptr)
-    {
-        App->program->UpdateMaterial(material);
-    }
-
+    App->program->UpdateMaterial(material);
     glBindVertexArray(mesh->vao);
     glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }

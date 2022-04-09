@@ -203,6 +203,6 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
 bool Hachiko::ModelImporter::CheckIfImported(const char* path)
 {
     const std::filesystem::path model(path);
-    return std::filesystem::exists(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL),
+    return std::filesystem::exists(StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MODEL),
         model.filename().replace_extension(MODEL_EXTENSION).string().c_str()));
 }

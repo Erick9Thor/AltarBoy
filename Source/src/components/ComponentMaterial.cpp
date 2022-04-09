@@ -36,7 +36,7 @@ void Hachiko::ComponentMaterial::Load(const YAML::Node& node)
 
 void Hachiko::ComponentMaterial::DrawGui()
 {
-    ImGui::PushID(this);
+    //ImGui::PushID(this);
     //if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
     //{
     //    if (material != nullptr)
@@ -142,6 +142,21 @@ void Hachiko::ComponentMaterial::DrawGui()
     //        // TODO: material selection option
     //    }
     //}
+    //ImGui::PopID();
+
+    ImGui::PushID(this);
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Material"))
+    {
+        if (material != nullptr)
+        {
+            material->DrawGui();
+        }
+        else
+        {
+            ImGui::Text("No material resource");
+            // TODO: material selection option
+        }
+    }
     ImGui::PopID();
 }
 
