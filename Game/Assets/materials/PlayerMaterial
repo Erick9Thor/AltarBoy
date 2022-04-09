@@ -1,0 +1,12 @@
+id: 11313509718924066263
+type: 0
+name: PlayerMaterial
+diffuse: PlayerDiffuse
+specular: PlayerSpecular
+normals: PlayerNormals
+diffuse_path: assets/textures/PlayerDiffuse.png
+specular_path: assets/textures/PlayerSpecular.tif
+normals_path: assets/textures/PlayerNormals.png
+diffuse_color: [1, 1, 1, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 2

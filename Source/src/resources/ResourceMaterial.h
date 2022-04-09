@@ -86,7 +86,7 @@ namespace Hachiko
             switch (type)
             {
             case ResourceTexture::Type::DIFFUSE:
-                return "Difusse";
+                return "Diffuse";
             case ResourceTexture::Type::SPECULAR:
                 return "Specular";
             case ResourceTexture::Type::NORMALS:

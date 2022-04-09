@@ -11,53 +11,82 @@ Hachiko::ResourceMaterial::~ResourceMaterial()
 
 void Hachiko::ResourceMaterial::DrawGui() 
 {
-    ImGui::Text(name.c_str());
-    ImGui::DragFloat("Shininess", &shininess);
+    static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+    // ImGui::InputText("Name", &name[0], 64);
+    ImGui::Text("Name", name, 64);
+    if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
+    {
+        if (diffuse != nullptr)
+        {
+            //diffuse->DrawGui();
 
-    // Diffuse
-    ImGui::Text("Diffuse: ");
-    ImGui::SameLine();
-    ImGui::Text((diffuse != nullptr) ? diffuse->path.c_str() : "None");
-    if (diffuse != nullptr)
-    {
-        diffuse->DrawGui();
-        RemoveTexture(ResourceTexture::Type::DIFFUSE);
-    }
-    else
-    {
-        ImGui::ColorEdit4("Diffuse color", &diffuse_color[0]);
-        AddTexture(ResourceTexture::Type::DIFFUSE);
-    }
+            ImGui::Image(reinterpret_cast<void*>(diffuse->GetId()), ImVec2(80, 80));
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("%dx%d", diffuse->width, diffuse->height);
+            ImGui::Text("Path: %s", diffuse->path.c_str());
 
-    // Specular
+            //config
 
-    // TODO: texture selection
-    ImGui::Text("Specular: ");
-    ImGui::SameLine();
-    ImGui::Text((specular != nullptr) ? specular->path.c_str() : "None");
-    if (specular != nullptr)
-    {
-        specular->DrawGui();
-        RemoveTexture(ResourceTexture::Type::SPECULAR);
-    }
-    else
-    {
-        ImGui::ColorEdit4("Specular color", &specular_color[0]);
-        AddTexture(ResourceTexture::Type::SPECULAR);
-    }
+            RemoveTexture(ResourceTexture::Type::DIFFUSE);
 
-    // Normals
-    ImGui::Text("Normals: ");
-    ImGui::SameLine();
-    ImGui::Text((normal != nullptr) ? normal->path.c_str() : "None");
-    if (normal != nullptr)
-    {
-        normal->DrawGui();
-        RemoveTexture(ResourceTexture::Type::NORMALS);
+            ImGui::EndGroup();
+        }
+        else
+        {
+            ImGui::ColorEdit4("Diffuse color", &diffuse_color[0]);
+            AddTexture(ResourceTexture::Type::DIFFUSE);
+        }
+        ImGui::TreePop();
     }
-    else
+    if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
     {
-        AddTexture(ResourceTexture::Type::NORMALS);
+        if (specular != nullptr)
+        {
+            //specular->DrawGui();
+
+            ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("%dx%d", specular->width, specular->height);
+            ImGui::Text("Path: %s", specular->path.c_str());
+
+            //config
+
+            RemoveTexture(ResourceTexture::Type::SPECULAR);
+
+            ImGui::EndGroup();
+        }
+        else
+        {
+            ImGui::ColorEdit4("Specular color", &specular_color[0]);
+            AddTexture(ResourceTexture::Type::SPECULAR);
+        }
+        ImGui::TreePop();
+    }
+    if (ImGui::TreeNodeEx((void*)&normal, texture_flags, "Normal"))
+    {
+        if (normal != nullptr)
+        {
+            //normal->DrawGui();
+
+            ImGui::Image(reinterpret_cast<void*>(normal->GetId()), ImVec2(80, 80));
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("%dx%d", normal->width, normal->height);
+            ImGui::Text("Path: %s", normal->path.c_str());
+
+            //config
+
+            RemoveTexture(ResourceTexture::Type::NORMALS);
+
+            ImGui::EndGroup();
+        }
+        else
+        {
+            AddTexture(ResourceTexture::Type::NORMALS);
+        }
+        ImGui::TreePop();
     }
 }
 
