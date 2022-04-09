@@ -13,7 +13,7 @@ namespace Hachiko
         ~ImporterManager();
         void Import(const std::string& asset_path, Resource::Type asset_type);
         Resource* Load(Resource::Type type, const char* path);
-        bool CheckIfImported(const char* path, Resource::Type type) const;
+        bool IsImported(const char* path, Resource::Type type) const;
        
     private:
         std::vector<std::pair<Importer::Type, Importer*>> importers;

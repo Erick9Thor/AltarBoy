@@ -16,7 +16,7 @@ namespace Hachiko
         void Import(const char* path) override;
         void Save(const Resource* resource) override;
         Resource* Load(const char* model_path) override;
-        bool CheckIfImported(const char* path) override;
+        bool IsImported(const char* path) override;
         Resource* CherryImport(int mesh_index, const UID uid, const char* model_path);
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);

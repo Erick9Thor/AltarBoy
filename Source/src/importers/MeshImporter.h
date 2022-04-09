@@ -14,7 +14,7 @@ namespace Hachiko
         void Import(const char* path) override;
         void Save(const Resource* mesh) override;
         Resource* Load(const char* path) override;
-        bool CheckIfImported(const char* path) override
+        bool IsImported(const char* path) override
         {
             return false;
         }

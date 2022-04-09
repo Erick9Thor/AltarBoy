@@ -78,16 +78,8 @@ void Hachiko::WindowResource::Update()
 
 void Hachiko::WindowResource::LoadResource(const std::string& path)
 {
-    Scene* scene = App->scene_manager->GetActiveScene();
-    Resource::Type type = App->resources->GetType(path);
-    
-    switch (type)
-    {
-    case Resource::Type::MODEL:
-        scene->HandleInputModel(App->resources->GetModel(path));
-        break;
-    case Resource::Type::MATERIAL:
-        //scene->HandleInputMaterial(App->resources->GetMaterial(path));
-        return;
-    }
+    HE_LOG("Resource file: %s", path.c_str());
+    Hachiko::Event resource_file(Hachiko::Event::Type::FILE_ADDED);
+    resource_file.SetEventData<Hachiko::FileAddedEventPayload>(path.c_str());
+    App->event->Publish(resource_file);
 }

@@ -22,8 +22,7 @@ void Hachiko::ModelImporter::Import(const char* path)
     //import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
     const aiScene* scene = nullptr;
     const std::filesystem::path model_path(path);
-    const std::string model_name = model_path.filename().replace_extension().string();
-    const std::string model_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MODEL) + model_name + MODEL_EXTENSION;
+    const std::string model_output_path = model_path.parent_path().string().append("\\").append(model_path.filename().replace_extension(MODEL_EXTENSION).string());
     scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -38,7 +37,7 @@ void Hachiko::ModelImporter::Import(const char* path)
 
     ImportModel(scene, model_node);
 
-    App->file_sys->Save(model_library_path.c_str(), model_node);
+    App->file_sys->Save(model_output_path.c_str(), model_node);
 }
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
@@ -200,9 +199,8 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     return mesh_importer.Load(mesh_path.c_str());
 }
 
-bool Hachiko::ModelImporter::CheckIfImported(const char* path)
+bool Hachiko::ModelImporter::IsImported(const char* path)
 {
     const std::filesystem::path model(path);
-    return std::filesystem::exists(StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MODEL),
-        model.filename().replace_extension(MODEL_EXTENSION).string().c_str()));
+    return std::filesystem::exists( model.parent_path().string().append("\\").append(model.filename().replace_extension(MODEL_EXTENSION).string()));
 }

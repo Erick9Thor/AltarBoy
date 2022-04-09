@@ -76,25 +76,41 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
 void ModuleResources::HandleResource(const std::filesystem::path& path)
 {
     Resource::Type type = GetType(path);
+    
     if (type == Resource::Type::UNKNOWN)
     {
         HE_LOG("Unknown resource type recevied, nothing to be done");
         return;
     }
 
-    // Copy to assets if it does not exist
-    std::filesystem::path destination = preferences->GetAssetsPath(type);
-    // Relative asset path
-    std::filesystem::path asset_path = destination.append(path.filename().c_str());
-    App->file_sys->Copy(path.string().c_str(), asset_path.string().c_str(), true);
+    bool file_in_asset = path.string().find("assets\\") != std::string::npos;
 
+    std::filesystem::path destination;
 
-    // Attempt import from assets
-    if (!importer_manager.CheckIfImported(path.string().c_str(), type))
+    if (file_in_asset)
+    {
+        HE_LOG("Resource file in assets folder");
+        destination = path;
+    }
+    else
+    {
+        HE_LOG("Resource file outside the assets folder");
+        destination = preferences->GetAssetsPath(type);
+        destination.append(path.filename().c_str());
+        App->file_sys->Copy(path.string().c_str(), destination.string().c_str(), true);
+    }
+
+    // Import asset
+    if (!importer_manager.IsImported(path.string().c_str(), type))
     {
         last_resource_path = path; // We may need this to import more assets from this path
-        ImportResource(asset_path, type);
+        ImportResource(destination, type);
         HE_LOG("File destination: %s", destination.string().c_str());
+    }
+
+    if (file_in_asset)
+    {
+
     }
 }
 
