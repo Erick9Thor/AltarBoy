@@ -110,7 +110,8 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
 
     if (file_in_asset)
     {
-
+        Scene* scene = App->scene_manager->GetActiveScene();
+        scene->HandleInputModel(GetModel(destination.string().c_str()));
     }
 }
 
@@ -144,8 +145,10 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     {
         return it->second;
     }
-
-    auto res = static_cast<ResourceModel*>(importer_manager.Load(Resource::Type::MODEL, name.c_str()));
+    // Use always .model extension for loading
+    std::filesystem::path model_path(name);
+    auto res = static_cast<ResourceModel*>( importer_manager.Load(Resource::Type::MODEL, 
+            model_path.parent_path().string().append("\\").append(model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
 
     // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr && "Unable to return a valid model resource");
