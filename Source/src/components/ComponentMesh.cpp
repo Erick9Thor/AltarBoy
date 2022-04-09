@@ -74,7 +74,7 @@ void Hachiko::ComponentMesh::DrawGui()
 {
     if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        if (mesh = nullptr)
+        if (mesh == nullptr)
         {
             return;
         }
