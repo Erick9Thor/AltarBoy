@@ -10,6 +10,9 @@ Hachiko::ModuleEditor::ModuleEditor()
 {
     HE_LOG("Creating windows");
 
+#ifdef PLAY_BUILD
+    windows.push_back(&w_configuration);
+#else
     windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);
@@ -19,6 +22,7 @@ Hachiko::ModuleEditor::ModuleEditor()
     windows.push_back(&w_resource);
     windows.push_back(&w_project);
     windows.push_back(&w_timers);
+#endif
 }
 
 void Hachiko::ModuleEditor::UpdateTheme() const
@@ -126,6 +130,9 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     ImGui::CaptureMouseFromApp(true);
     ImGui::CaptureKeyboardFromApp(true);
 
+#ifdef PLAY_BUILD
+    const UpdateStatus retval = UpdateStatus::UPDATE_CONTINUE;
+#else
     const UpdateStatus retval = MainMenuBar();
 
     if (ImGuiFileDialog::Instance()->Display("LoadScene"))
@@ -147,6 +154,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     }
 
     GenerateDockingSpace();
+#endif
+
 
     for (Window* panel : windows)
     {
@@ -156,7 +165,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    RenderGui();
+    //RenderGui();
     return retval;
 }
 
@@ -302,18 +311,18 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
 }
 
-void Hachiko::ModuleEditor::ViewMenu() const
+void Hachiko::ModuleEditor::ViewMenu()
 {
     if (ImGui::BeginMenu("View"))
     {
-        ImGui::MenuItem(w_scene.name, "", &w_scene.active);
-        ImGui::MenuItem(w_inspector.name, "", &w_inspector.active);
-        ImGui::MenuItem(w_hierarchy.name, "", &w_hierarchy.active);
-        ImGui::MenuItem(w_configuration.name, "", &w_configuration.active);
-        ImGui::MenuItem(w_about.name, "", &w_about.active);
-        ImGui::MenuItem(w_resource.name, "", &w_resource.active);
-        ImGui::MenuItem(w_project.name, "", &w_project.active);
-        ImGui::MenuItem(w_timers.name, "", &w_timers.active);
+        ImGui::MenuItem(w_scene.name, nullptr, &w_scene.active);
+        ImGui::MenuItem(w_inspector.name, nullptr, &w_inspector.active);
+        ImGui::MenuItem(w_hierarchy.name, nullptr, &w_hierarchy.active);
+        ImGui::MenuItem(w_configuration.name, nullptr, &w_configuration.active);
+        ImGui::MenuItem(w_about.name, nullptr, &w_about.active);
+        ImGui::MenuItem(w_resource.name, nullptr, &w_resource.active);
+        ImGui::MenuItem(w_project.name, nullptr, &w_project.active);
+        ImGui::MenuItem(w_timers.name, nullptr, &w_timers.active);
         ImGui::EndMenu();
     }
 }

@@ -12,6 +12,7 @@ namespace Hachiko
 
         void BindUniformFloat4x4(const char* name, const float* data, bool transpose = true) const;
         void BindUniformFloat3(const char* name, const float* data) const;
+        void BindUniformFloat4(const char* name, const float* data) const;
         void BindUniformFloat(const char* name, const float* data) const;
         void BindUniformBool(const char* name, bool value) const;
         void BindUniformInts(const char* name, unsigned size, const int* data) const;

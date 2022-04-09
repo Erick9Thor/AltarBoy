@@ -33,6 +33,14 @@ namespace Hachiko
             COUNT,
         };
 
+        struct CameraData
+        {
+            float4x4 view = float4x4::identity;
+            float4x4 proj = float4x4::identity;
+            float3 pos = float3::zero;
+            float padding = 0; // Renderdoc complained
+        };
+
         ModuleProgram();
         ~ModuleProgram() override;
 
@@ -54,7 +62,13 @@ namespace Hachiko
             return stencil_program;
         }
 
+        [[nodiscard]] Program* GetUserInterfaceProgram() const
+        {
+            return ui_program;
+        }
+
         void UpdateCamera(const ComponentCamera* camera) const;
+        void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMaterial* material_comp) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
@@ -69,10 +83,12 @@ namespace Hachiko
         Program* CreateMainProgram();
         Program* CreateSkyboxProgram();
         Program* CreateStencilProgram();
+        Program* CreateUserInterfaceProgram();
 
         Program* main_program{};
         Program* skybox_program{};
         Program* stencil_program{};
+        Program* ui_program;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);
@@ -82,14 +98,7 @@ namespace Hachiko
         void CreateLightsUBO();
 
         unsigned ubos[static_cast<int>(UBOPoints::COUNT)]{};
-
-        struct Camera
-        {
-            float4x4 view = float4x4::identity;
-            float4x4 proj = float4x4::identity;
-            float3 pos = float3::zero;
-        };
-
+        
         struct MaterialData
         {
             float4 diffuse_color;

@@ -411,6 +411,33 @@
     <ClCompile Include="src\ui\WindowResource.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\ModuleUserInterface.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\Component.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentButton.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentCanvas.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentCanvasRenderer.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentImage.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentProgressBar.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentTransform2D.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1061,6 +1088,42 @@
     <ClInclude Include="src\ui\WindowResource.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
+    <ClInclude Include="src\modules\ModuleUserInterface.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\InputEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\MouseEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentButton.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentCanvas.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentCanvasRenderer.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentImage.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentProgressBar.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentTransform2D.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ISelectable.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleDebugMode.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\events\GameStateEventPayload.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

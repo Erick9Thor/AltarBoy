@@ -158,6 +158,9 @@
 #define TRANSFORM_POSITION "position"
 #define TRANSFORM_ROTATION "rotation"
 #define TRANSFORM_SCALE "scale"
+#define TRANSFORM_SIZE "size"
+#define TRANSFORM_PIVOT "pivot"
+#define TRANSFORM_ANCHOR "anchor"
 
 // Component Mesh
 #define MESH_NODE "mesh"
@@ -183,3 +186,16 @@
 #define CAMERA_POSITION "position"
 #define CAMERA_FRONT "front"
 #define CAMERA_UP "up"
+#define CAMERA_TYPE "type"
+#define PINNED_CAMERA "pinned_camera"
+
+// Component Image
+#define IMAGE_PATH "image_path"
+#define HOVER_IMAGE_PATH "hover_image_path"
+
+// Component Progress Bar
+#define BAR_PARAMS "params"
+#define BAR_MIN "min"
+#define BAR_MAX "max"
+#define BAR_FILLED "filled"
+#define BAR_DIRECTION "direction"

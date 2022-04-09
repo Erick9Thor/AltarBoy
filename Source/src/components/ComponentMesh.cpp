@@ -15,7 +15,7 @@ Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMes
 {
     if (res != nullptr)
     {
-        meshes.push_back(res);
+        mesh = res;
     }
 }
 
@@ -26,13 +26,14 @@ Hachiko::ComponentMesh::~ComponentMesh()
 
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
-    if (meshes.empty())
+    if (mesh == nullptr)
     {
         return;
     }
-    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
     
-    // TODO: Why we take care of other components?
+   //assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
+
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
     
     if (material != nullptr)
@@ -40,26 +41,22 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
         App->program->UpdateMaterial(material);
     }
 
-    for (auto mesh : meshes)
-    {
-        glBindVertexArray(mesh->vao);
-        glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
-    }
+    glBindVertexArray(mesh->vao);
+    glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
 void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* program) const
 {
-    if (meshes.empty())
+    if (mesh == nullptr)
     {
         return;
     }
-    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetMatrix().ptr());
+    
+    //assert(resource->loaded == true);
+    program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
-    for (auto mesh : meshes)
-    {
-        glBindVertexArray(mesh->vao);
-        glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
-    }
+    glBindVertexArray(mesh->vao);
+    glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
 void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
@@ -70,26 +67,23 @@ void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 {
-    meshes.push_back(App->resources->GetMesh(mesh_id, asset_path, mesh_index));
+    mesh = App->resources->GetMesh(mesh_id, asset_path, mesh_index);
 }
 
 void Hachiko::ComponentMesh::DrawGui()
 {
     if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        if (meshes.empty())
+        if (mesh = nullptr)
         {
             return;
         }
 
-        for (auto mesh : meshes)
-        {
-            ImGui::Text("%d Triangles\n%d vertices\n%d indices",
-                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
-                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
-                        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
-            ImGui::Checkbox("Visible", &visible);
-        }
+        ImGui::Text("%d Triangles\n%d vertices\n%d indices",
+                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
+                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
+                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
+        ImGui::Checkbox("Visible", &visible);
     }
 }
 

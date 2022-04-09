@@ -27,7 +27,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsLoaded() const
         {
-            return !meshes.empty();
+            return mesh != nullptr;
         }
 
         [[nodiscard]] bool IsVisible() const
@@ -35,29 +35,29 @@ namespace Hachiko
             return visible;
         }
 
-        [[nodiscard]] AABB GetAABB(const int index) const
+        [[nodiscard]] AABB GetAABB() const
         {
-            return meshes[index]->bounding_box;
+            return mesh->bounding_box;
         }
 
-        [[nodiscard]] unsigned GetBufferSize(const int index, ResourceMesh::Buffers buffer) const
+        [[nodiscard]] unsigned GetBufferSize(ResourceMesh::Buffers buffer) const
         {
-            return meshes[index]->buffer_sizes[static_cast<int>(buffer)];
+            return mesh->buffer_sizes[static_cast<int>(buffer)];
         }
 
-        [[nodiscard]] unsigned GetBufferId(const int index, ResourceMesh::Buffers buffer) const
+        [[nodiscard]] unsigned GetBufferId(ResourceMesh::Buffers buffer) const
         {
-            return meshes[index]->buffer_ids[static_cast<int>(buffer)];
+            return mesh->buffer_ids[static_cast<int>(buffer)];
         }
 
-        [[nodiscard]] const float* GetVertices(const int index) const
+        [[nodiscard]] const float* GetVertices() const
         {
-            return meshes[index]->vertices;
+            return mesh->vertices;
         }
 
-        [[nodiscard]] const unsigned* GetIndices(const int index) const
+        [[nodiscard]] const unsigned* GetIndices() const
         {
-            return meshes[index]->indices;
+            return mesh->indices;
         }
 
         [[nodiscard]] const std::string& GetResourcePath() const
@@ -80,16 +80,6 @@ namespace Hachiko
             model_name = name;
         }
 
-        [[nodiscard]] size_t GetMeshesCount() const
-        {
-            return meshes.size();
-        }
-
-        [[nodiscard]] ResourceMesh* GetMeshesByIndex(const int index) const
-        {
-            return meshes[index];
-        }
-
         [[nodiscard]] int GetMeshIndex() const
         {
             return mesh_index;
@@ -102,7 +92,7 @@ namespace Hachiko
 
         void AddResourceMesh(ResourceMesh* res)
         {
-            meshes.push_back(res);
+            mesh = res;
         }
 
         void LoadMesh(const char* mesh_path);
@@ -117,6 +107,6 @@ namespace Hachiko
         int mesh_index;
         std::string asset_path;
         std::string model_name;
-        std::vector<ResourceMesh*> meshes = {};
+        ResourceMesh* mesh = nullptr;
     };
 }
