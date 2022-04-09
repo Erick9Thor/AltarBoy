@@ -182,7 +182,7 @@ void Hachiko::ComponentCamera::Load(const YAML::Node& node)
     frustum.SetFront(node_frustum[CAMERA_FRONT].as<vec>());
     frustum.SetUp(node_frustum[CAMERA_UP].as<vec>());
     SetCameraType(static_cast<CameraType>(static_cast<int>(node_frustum[CAMERA_TYPE].as<int>())));
-    camera_pinned_pos = node_frustum[CAMERA_TYPE].as<float3>();
+    camera_pinned_pos = node_frustum[PINNED_CAMERA].as<float3>();
 }
 
 void Hachiko::ComponentCamera::DrawGui()
