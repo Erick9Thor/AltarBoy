@@ -96,6 +96,8 @@ namespace Hachiko
             unsigned diffuse_flag{};
             unsigned specular_flag{};
             float shininess{};
+            float smoothness{};
+            float metalness{};
         };
 
         // Use float4 to prevent padding
