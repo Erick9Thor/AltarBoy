@@ -9,9 +9,9 @@
 #include "ui/WindowInspector.h"
 #include "ui/WindowScene.h"
 #include "ui/WindowResource.h"
-#include "ui/WindowProject.h"
 #include "ui/WindowConsole.h"
 #include "ui/WindowTimers.h"
+#include "ui/WindowProject.h"
 
 #include "ModuleRender.h"
 
@@ -54,7 +54,7 @@ namespace Hachiko
 
         void SetSelectedGO(GameObject* const selected_game_object)
         {
-            this->selected_go = selected_game_object;
+            selected_go = selected_game_object;
         }
 
         [[nodiscard]] const WindowScene* GetSceneWindow() const
@@ -107,8 +107,8 @@ namespace Hachiko
         WindowAbout w_about;
         WindowConsole w_console;
         WindowResource w_resource;
-        WindowProject w_project;
         WindowTimers w_timers;
+        WindowProject w_project;
 
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };

@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 
 // system includes
 #include <iostream>
@@ -51,6 +52,10 @@
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
+#include <assimp/scene.h>
+#include <assimp/Importer.hpp>
+#include <assimp/include/assimp/postprocess.h>
+
 //project includes
 #include "Globals.h"
 #include "Application.h"
@@ -63,6 +68,10 @@
 #include "core/GameObject.h"
 #include "core/Scene.h"
 #include "core/serialization/TypeConverter.h"
+#include "core/serialization/Definitions.h"
+
+#include "Core/preferences/Preferences.h"
+#include "Core/preferences/PreferenceManager.h"
 
 #include "utils/JsonFormatterValue.h"
 #include "utils/PathNode.h"
@@ -72,6 +81,7 @@
 #include "utils/StringUtils.h"
 
 #include "components/Component.h"
+#include "importers/Importer.h"
 
 #include "ui/Window.h"
 #include "ui/ImGuiUtils.h"

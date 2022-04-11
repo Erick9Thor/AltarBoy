@@ -9,15 +9,21 @@ namespace Hachiko
     public:
         enum class Type
         {
-            UNKNOWN,
             MATERIAL,
             TEXTURE,
             MODEL,
             MESH,
             SCENE,
-            SHADER
+            SHADER,
+            AUDIO,
+            ANIMATION,
+            SCRIPT,
+            VIDEO,
+            SKYBOX,
+            UNKNOWN
         };
 
+        Resource(Type type);
         Resource(UID id, Type type);
         virtual ~Resource();
 

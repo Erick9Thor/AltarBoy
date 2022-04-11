@@ -1,0 +1,12 @@
+id: 2969871097338449748
+type: 0
+name: GunMaterial
+diffuse: GunDiffuse
+specular: GunSpecular
+normals: GunNormals
+diffuse_path: assets/textures/GunDiffuse.png
+specular_path: assets/textures/GunSpecular.tif
+normals_path: assets/textures/GunNormals.png
+diffuse_color: [1, 1, 1, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 2

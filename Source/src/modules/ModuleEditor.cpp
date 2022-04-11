@@ -10,15 +10,19 @@ Hachiko::ModuleEditor::ModuleEditor()
 {
     HE_LOG("Creating windows");
 
+#ifdef PLAY_BUILD
+    windows.push_back(&w_configuration);
+#else
     windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);
     windows.push_back(&w_inspector);
     windows.push_back(&w_about);
     windows.push_back(&w_console);
-    // windows.push_back(&w_resource);
+    windows.push_back(&w_resource);
     windows.push_back(&w_project);
     windows.push_back(&w_timers);
+#endif
 }
 
 void Hachiko::ModuleEditor::UpdateTheme() const
@@ -88,10 +92,10 @@ bool Hachiko::ModuleEditor::Init()
     config.PixelSnapH = true;
 
     static constexpr ImWchar ICONS_RANGES[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
-    io.Fonts->AddFontFromFileTTF("Fonts/JetBrainsMono-Light.ttf", 16.0f);
+    io.Fonts->AddFontFromFileTTF("fonts/JetBrainsMono-Light.ttf", 16.0f);
 
-    m_big_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("Fonts/",FONT_ICON_FILE_NAME_FAS).c_str(), 10.0f, &config, ICONS_RANGES);
-    m_small_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("Fonts/",FONT_ICON_FILE_NAME_FAR).c_str(), 10.0f, &config, ICONS_RANGES);
+    m_big_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("fonts/",FONT_ICON_FILE_NAME_FAS).c_str(), 10.0f, &config, ICONS_RANGES);
+    m_small_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("fonts/",FONT_ICON_FILE_NAME_FAR).c_str(), 10.0f, &config, ICONS_RANGES);
 
     // Setup style
     ImGui::StyleColorsDark();
@@ -126,6 +130,9 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     ImGui::CaptureMouseFromApp(true);
     ImGui::CaptureKeyboardFromApp(true);
 
+#ifdef PLAY_BUILD
+    const UpdateStatus retval = UpdateStatus::UPDATE_CONTINUE;
+#else
     const UpdateStatus retval = MainMenuBar();
 
     if (ImGuiFileDialog::Instance()->Display("LoadScene"))
@@ -147,6 +154,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     }
 
     GenerateDockingSpace();
+#endif
+
 
     for (Window* panel : windows)
     {
@@ -156,7 +165,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    RenderGui();
+    //RenderGui();
     return retval;
 }
 
@@ -389,7 +398,7 @@ void Hachiko::ModuleEditor::GoMenu() const
 
     if (ImGui::MenuItem("Add GameObject"))
     {
-        App->scene_manager->GetActiveScene()->CreateNewGameObject("GameObject", App->scene_manager->GetActiveScene()->GetRoot());
+        App->scene_manager->GetActiveScene()->CreateNewGameObject(App->scene_manager->GetActiveScene()->GetRoot(), "GameObject");
     }
 
     ImGui::EndMenu();

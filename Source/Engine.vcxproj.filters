@@ -228,39 +228,6 @@
     <ClCompile Include="vendors\PhysicsFS\physfs_unicode.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\ModuleCamera.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleDebugDraw.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleEditor.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleFileSystem.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleHardware.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleInput.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleProgram.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleRender.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleTexture.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleWindow.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\Window.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
@@ -280,9 +247,6 @@
       <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowProject.cpp">
-      <Filter>UI\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\WindowResource.cpp">
       <Filter>UI\Window</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\WindowScene.cpp">
@@ -314,15 +278,6 @@
     </ClCompile>
     <ClCompile Include="src\utils\UUID.cpp">
       <Filter>Core\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="src\importers\MaterialImporter.cpp">
-      <Filter>Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\importers\MeshImporter.cpp">
-      <Filter>Importers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\importers\SceneImporter.cpp">
-      <Filter>Importers</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\ImguiUtils.cpp">
       <Filter>UI</Filter>
@@ -366,14 +321,122 @@
     <ClCompile Include="src\utils\JsonFormatterValue.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\Modules\ModuleEvent.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="vendors\imgui\imgui_stdlib.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\core\hepch.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleCamera.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleDebugDraw.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleEditor.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleEvent.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleFileSystem.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleHardware.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleInput.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleProgram.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleRender.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleTexture.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleWindow.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\PreferenceManager.cpp">
+      <Filter>Core\Preferences</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\CameraPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\EditorPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\GlobalPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\RenderPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\preferences\src\ResourcesPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Modules\ModuleResources.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
+      <Filter>Core\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\ResourceTexture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceModel.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\ImporterManager.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\MaterialImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\MeshImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\ModelImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Importers\TextureImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowResource.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\Component.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentButton.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentCanvas.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentCanvasRenderer.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentImage.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentProgressBar.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentTransform2D.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleDebugMode.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleUserInterface.cpp">
+      <Filter>Modules\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -691,39 +754,6 @@
     <ClInclude Include="src\modules\Module.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="src\modules\ModuleCamera.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleDebugDraw.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleEditor.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleFileSystem.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleHardware.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleInput.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleProgram.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleRender.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleSceneManager.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleTexture.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleWindow.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="src\ui\Window.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
@@ -743,9 +773,6 @@
       <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowProject.h">
-      <Filter>UI\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\WindowResource.h">
       <Filter>UI\Window</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\WindowScene.h">
@@ -780,15 +807,6 @@
     </ClInclude>
     <ClInclude Include="src\utils\UUID.h">
       <Filter>Core\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="src\importers\MaterialImporter.h">
-      <Filter>Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\importers\MeshImporter.h">
-      <Filter>Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\importers\SceneImporter.h">
-      <Filter>Importers</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\ImGuiUtils.h">
       <Filter>UI</Filter>
@@ -840,9 +858,6 @@
     </ClInclude>
     <ClInclude Include="vendors\imgui\imgui_stdlib.h">
       <Filter>Vendors\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\modules\ModuleEvent.h">
-      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\StringUtils.h">
       <Filter>Core\Util</Filter>
@@ -976,7 +991,140 @@
     <ClInclude Include="src\core\serialization\TypeConverter.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
+    <ClInclude Include="src\modules\ModuleCamera.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleDebugDraw.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleEditor.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleEvent.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleFileSystem.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleHardware.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleInput.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleProgram.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleRender.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleSceneManager.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleTexture.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleWindow.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\Preferences.h">
+      <Filter>Core\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\PreferenceManager.h">
+      <Filter>Core\Preferences</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\CameraPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\EditorPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\GlobalPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\RenderPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\preferences\src\ResourcesPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Modules\ModuleResources.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\Core\serialization\Definitions.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Importers\Importer.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\serialization\SceneSerializer.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\serialization\Serializable.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\ResourceTexture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceModel.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\ImporterManager.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\MaterialImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\MeshImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Importers\ModelImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Importers\TextureImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowResource.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\InputEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\MouseEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentButton.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentCanvas.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentCanvasRenderer.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentImage.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentProgressBar.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentTransform2D.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ISelectable.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\events\GameStateEventPayload.h" />
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\modules\ModuleDebugMode.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleUserInterface.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -1083,6 +1231,21 @@
     </Filter>
     <Filter Include="Core\Serialization">
       <UniqueIdentifier>{9ea70c61-018b-4598-bef9-93e1ecfc6f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Source">
+      <UniqueIdentifier>{9534de9b-2e95-4156-b1ec-f8f18b431839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Headers">
+      <UniqueIdentifier>{1dc25ef2-9258-4059-a47b-0f248b5fa5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Preferences">
+      <UniqueIdentifier>{43e2ebb8-d52a-4206-965b-e005da0cadd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Preferences\Source">
+      <UniqueIdentifier>{6a048cf4-659f-4f54-8848-fb3bbf97538b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Importers\Source">
+      <UniqueIdentifier>{bbd110d9-ae9b-4357-815d-ebfdb99fdb40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

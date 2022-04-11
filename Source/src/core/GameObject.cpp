@@ -8,6 +8,19 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 
+// UI
+#include "components/ComponentCanvas.h"
+#include "components/ComponentCanvasRenderer.h"
+#include "components/ComponentTransform2D.h"
+#include "components/ComponentImage.h"
+#include "components/ComponentButton.h"
+#include "Components/ComponentProgressBar.h"
+
+// TODO: REMOVE
+#include "Application.h"
+#include "modules/ModuleSceneManager.h"
+//
+
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name) :
@@ -20,16 +33,16 @@ Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, c
     name(name),
     uid(uid)
 {
-    SetNewParent(parent);
     AddComponent(new ComponentTransform(this, transform));
+    SetNewParent(parent);
 }
 
 Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) :
     name(name),
     uid(uid)
 {
-    SetNewParent(parent);
     AddComponent(new ComponentTransform(this, translation, rotation, scale));
+    SetNewParent(parent);
 }
 
 Hachiko::GameObject::~GameObject()
@@ -40,7 +53,9 @@ Hachiko::GameObject::~GameObject()
     }
 
     if (scene_owner)
+    {
         scene_owner->DestroyGameObject(this);
+    }
 
     for (GameObject* child : children)
     {
@@ -70,11 +85,14 @@ void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
         parent->RemoveChild(this);
     }
 
+    parent = new_parent;
+
     if (new_parent)
     {
+        float4x4 temp_matrix = this->GetTransform()->GetGlobalMatrix();
         new_parent->children.push_back(this);
+        this->GetTransform()->SetGlobalTransform(temp_matrix);
     }
-    parent = new_parent;
 }
 
 void Hachiko::GameObject::AddComponent(Component* component)
@@ -123,6 +141,30 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);
         break;
+    case (Component::Type::CANVAS):
+        if (!GetComponent<ComponentCanvas>())
+            new_component = new ComponentCanvas(this);
+        break;
+    case (Component::Type::CANVAS_RENDERER):
+        if (!GetComponent<ComponentCanvasRenderer>())
+            new_component = new ComponentCanvasRenderer(this);
+        break;
+    case (Component::Type::TRANSFORM_2D):
+        if (!GetComponent<ComponentTransform2D>())
+            new_component = new ComponentTransform2D(this);
+        break;
+    case (Component::Type::IMAGE):
+        if (!GetComponent<ComponentImage>())
+            new_component = new ComponentImage(this);
+        break;
+    case (Component::Type::BUTTON):
+        if (!GetComponent<ComponentButton>())
+            new_component = new ComponentButton(this);
+        break;
+    case (Component::Type::PROGRESS_BAR):
+        if (!GetComponent<ComponentProgressBar>())
+            new_component = new ComponentProgressBar(this);
+        break;
     }
 
     if (new_component != nullptr)
@@ -136,8 +178,46 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     return new_component;
 }
 
+void Hachiko::GameObject::SetActive(bool set_active)
+{
+    if (!active && set_active)
+    {
+        Start();
+    }
+    active = set_active;
+}
+
+
+void Hachiko::GameObject::Start() 
+{
+    if (!started)
+    {
+        transform->Start();
+        for (Component* component : components)
+        {
+            component->Start();
+        }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Start();
+            }
+        }
+        started = true;
+    }  
+}
+
 void Hachiko::GameObject::Update()
 {
+    // TODO: REMOVE
+    if (name == "Gun")  // This is temporal, once scripting is finally merged, we should try to do the same there for the player 
+    {
+        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetGlobalPosition() - float3(0, 5, 0), transform->GetGlobalPosition());
+    }
+    //
+
     if (transform->HasChanged())
     {
         OnTransformUpdated();
@@ -238,11 +318,11 @@ void Hachiko::GameObject::DrawBoundingBox() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
-    auto* mesh = GetComponent<ComponentMesh>();
-    if (mesh != nullptr)
+    ComponentMesh* component_mesh = GetComponent<ComponentMesh>();
+    if (component_mesh != nullptr)
     {
-        obb = mesh->GetAABB();
-        obb.Transform(transform->GetMatrix());
+        obb = component_mesh->GetAABB();
+        obb.Transform(transform->GetGlobalMatrix());
         // Enclose is accumulative, reset the box
         aabb.SetNegativeInfinity();
         aabb.Enclose(obb);
@@ -252,7 +332,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         constexpr float default_bounding_size = 1.0f;
         // If there is no mesh generate a default size
         aabb.SetNegativeInfinity();
-        aabb.SetFromCenterAndSize(transform->GetPosition(), float3(default_bounding_size));
+        aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
         obb = aabb;
     }
 
@@ -265,65 +345,66 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     }
 }
 
-void Hachiko::GameObject::RemoveComponent(Component* component)
+bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
 {
     //TODO: Should I delete the component?
-    components.erase(std::remove(components.begin(), components.end(), component));
+    if (component->CanBeRemoved())
+    {
+        components.erase(std::remove(components.begin(), components.end(), component));
+        return true;
+    }
+    return false;
 }
 
-void Hachiko::GameObject::Save(JsonFormatterValue j_gameObject) const
+void Hachiko::GameObject::Save(YAML::Node& node) const
 {
-    j_gameObject["Uid"] = uid;
-    j_gameObject["GOName"] = name.c_str();
-    j_gameObject["Active"] = active;
-    j_gameObject["ParentId"] = parent != nullptr ? parent->uid : 0;
+    node[GAME_OBJECT_ID] = uid;
+    node[GAME_OBJECT_NAME] = name.c_str();
+    node[GAME_OBJECT_ENABLED] = active;
+    node[GAME_OBJECT_PARENT_ID] = parent != nullptr ? parent->uid : 0;
 
-    const JsonFormatterValue j_components = j_gameObject["Components"];
+    
     for (unsigned i = 0; i < components.size(); ++i)
     {
-        JsonFormatterValue j_component = j_components[i];
-        const Component* component = components[i];
-
-        j_component["ComponentID"] = component->GetID();
-        j_component["ComponentType"] = static_cast<int>(component->GetType());
-        component->Save(j_component);
+        node[COMPONENT_NODE][i][COMPONENT_ID] = (size_t)components[i]->GetID();
+        node[COMPONENT_NODE][i][COMPONENT_TYPE] = (int)components[i]->GetType();
+        node[COMPONENT_NODE][i][COMPONENT_ENABLED] = components[i]->IsActive();
+        components[i]->Save(node[COMPONENT_NODE][i]);
     }
 
-    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
     for (unsigned i = 0; i < children.size(); ++i)
     {
-        const JsonFormatterValue j_child = j_children[i];
-        const GameObject* child = children[i];
-        child->Save(j_child);
+        children[i]->Save(node[CHILD_NODE][i]);
     }
 }
 
-void Hachiko::GameObject::Load(JsonFormatterValue j_gameObject)
+void Hachiko::GameObject::Load(const YAML::Node& node)
 {
-    const JsonFormatterValue j_components = j_gameObject["Components"];
-    for (unsigned i = 0; i < j_components.Size(); ++i)
+    const YAML::Node components_node = node[COMPONENT_NODE];
+    for (unsigned i = 0; i < components_node.size(); ++i)
     {
-        JsonFormatterValue j_component = j_components[i];
 
-        UID c_uid = j_component["ComponentID"];
-        int enum_type = j_component["ComponentType"];
-        bool active = j_component["Active"];
-
-        const auto type = static_cast<Component::Type>(enum_type);
+        UID c_uid = components_node[i][COMPONENT_ID].as<unsigned long long>();
+        bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
+        const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
 
         Component* component = CreateComponent(type);
-
-        component->Load(j_component);
+        component->SetID(c_uid);
+        component->Load(components_node[i]);
+        active ? component->Enable() : component->Disable();
     }
 
-    const JsonFormatterValue j_children = j_gameObject["GOChildrens"];
-    for (unsigned i = 0; i < j_children.Size(); ++i)
+    const YAML::Node childs_node = node[CHILD_NODE];
+    if (!childs_node.IsDefined())
     {
-        JsonFormatterValue j_child = j_children[i];
-
-        std::string child_name = j_child["GOName"];
-        const auto child = new GameObject(this, child_name.c_str(), j_child["Uid"]);
+        return;
+    }
+    for (unsigned i = 0; i < childs_node.size(); ++i)
+    {
+        std::string child_name = childs_node[i][GAME_OBJECT_NAME].as<std::string>();
+        UID child_uid = childs_node[i][GAME_OBJECT_ID].as<unsigned long long>();
+        const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(j_child);
+        child->Load(childs_node[i]);
     }
 }

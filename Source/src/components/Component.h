@@ -1,7 +1,7 @@
 #pragma once
 
+#include "core/serialization/Serializable.h"
 #include "utils/UUID.h"
-#include "utils/JsonFormatterValue.h"
 
 namespace Hachiko
 {
@@ -9,7 +9,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class Component
+    class Component : public Serializable
     {
     public:
         enum class Type
@@ -22,15 +22,29 @@ namespace Hachiko
             DIRLIGHT,
             POINTLIGHT,
             SPOTLIGHT,
+            CANVAS,
+            CANVAS_RENDERER,
+            TRANSFORM_2D,
+            IMAGE,
+            BUTTON,
+            PROGRESS_BAR,
             UNKNOWN
         };
 
-        Component(const Type type, GameObject* container) :
+        Component(const Type type, GameObject* container, UID id = 0) :
             game_object(container),
-            type(type) {}
+            type(type),
+            uid(id)
+        {
+            if (!uid)
+            {
+                uid = UUID::GenerateUID();
+            }
+        }
 
         virtual ~Component() = default;
 
+        virtual void Start() { }
         virtual void Update() { }
 
         virtual void OnTransformUpdated() {}
@@ -43,6 +57,26 @@ namespace Hachiko
         [[nodiscard]] UID GetID() const
         {
             return uid;
+        }
+
+        void SetID(const UID new_uid)
+        {
+            uid = new_uid;
+        }
+
+        void Enable()
+        {
+            active = true;
+        }
+
+        void Disable()
+        {
+            active = false;
+        }
+
+        bool IsActive()
+        {
+            return active;
         }
 
         [[nodiscard]] const GameObject* GetGameObject() const
@@ -66,9 +100,17 @@ namespace Hachiko
 
         virtual void DebugDraw() {}
 
-        virtual void Save(JsonFormatterValue j_component) const {}
+        virtual void Save(YAML::Node& node) const {}
 
-        virtual void Load(JsonFormatterValue j_component) {}
+        virtual void Load(const YAML::Node& node) {}
+
+        [[nodiscard]] bool IsActive() const
+        {
+            return active;
+        }
+
+        virtual bool CanBeRemoved() const;
+        virtual bool HasDependentComponents(GameObject* game_object) const;
 
     protected:
         GameObject* game_object = nullptr;
