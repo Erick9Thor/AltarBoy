@@ -115,13 +115,13 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
         model_output->materials.push_back(material_info);
     }
 
-    LoadChilds(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
+    LoadChildren(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
     return model_output;
 }
 
-void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& childs)
+void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& children)
 {
-    childs.reserve(node.size());
+    children.reserve(node.size());
     for (int i = 0; i < node.size(); ++i)
     {
         ResourceNode* resource_node = new ResourceNode();
@@ -140,10 +140,10 @@ void Hachiko::ModelImporter::LoadChilds(YAML::Node& node, YAML::Node& meshes, YA
         
         if (node[i][NODE_CHILD].IsDefined())
         {
-            LoadChilds(node[i][NODE_CHILD], meshes, materials, resource_node->childs);
+            LoadChildren(node[i][NODE_CHILD], meshes, materials, resource_node->children);
         }
 
-        childs.emplace_back(resource_node);
+        children.emplace_back(resource_node);
     }
 }
 

@@ -8,7 +8,7 @@ namespace Hachiko
     {
         ~ResourceNode() 
         {
-            for (auto child : childs)
+            for (auto child : children)
             {
                 delete child;
             }
@@ -19,7 +19,7 @@ namespace Hachiko
         std::string node_name;
         float4x4 node_transform;
         std::vector<int> meshes_index;
-        std::vector<ResourceNode*> childs {};
+        std::vector<ResourceNode*> children {};
     };
 
     struct MeshInfo

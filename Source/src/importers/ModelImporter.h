@@ -21,6 +21,6 @@ namespace Hachiko
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);
         void ImportNode(const aiNode* assimp_node, YAML::Node& node);
-        void LoadChilds(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& childs);
+        void LoadChildren(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& children);
     };
 }

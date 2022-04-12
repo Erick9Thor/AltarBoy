@@ -93,9 +93,9 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChilds = [&](GameObject* parent, const std::vector<ResourceNode*>& childs)
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChildren = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
     {
-        for (auto child : childs)
+        for (auto child : children)
         {
             GameObject* last_parent = parent;
 
@@ -119,11 +119,11 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));
             }
             
-            createChilds(last_parent, child->childs);
+            createChildren(last_parent, child->children);
         }
     };
 
-    createChilds(game_object, model->child_nodes);
+    createChildren(game_object, model->child_nodes);
 }
 
 //Hachiko::GameObject* Hachiko::Scene::LoadImageObject(const std::string& path)
@@ -147,7 +147,7 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     GameObject* game_object = App->editor->GetSelectedGameObject();
     if (game_object == nullptr)
     {
-        HE_LOG("No game object selected to apply material on");
+        HE_LOG("No game object selected to apply a material on");
         return;
     }
 
@@ -220,14 +220,14 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 {
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     root->SetID(node[ROOT_ID].as<UID>());
-    const YAML::Node childs_node = node[CHILD_NODE];
-    for (unsigned i = 0; i < childs_node.size(); ++i)
+    const YAML::Node children_node = node[CHILD_NODE];
+    for (unsigned i = 0; i < children_node.size(); ++i)
     {
-        std::string child_name = childs_node[i][GAME_OBJECT_NAME].as<std::string>();
-        UID child_uid = childs_node[i][GAME_OBJECT_ID].as<unsigned long long>();
+        std::string child_name = children_node[i][GAME_OBJECT_NAME].as<std::string>();
+        UID child_uid = children_node[i][GAME_OBJECT_ID].as<UID>();
         const auto child = new GameObject(root, child_name.c_str(), child_uid);
         child->scene_owner = this;
-        child->Load(childs_node[i]);
+        child->Load(children_node[i]);
     }
 }
 

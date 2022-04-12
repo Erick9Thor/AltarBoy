@@ -74,7 +74,7 @@ namespace Hachiko
             active = false;
         }
 
-        bool IsActive()
+        [[nodiscard]] bool IsActive() const
         {
             return active;
         }
@@ -103,11 +103,6 @@ namespace Hachiko
         virtual void Save(YAML::Node& node) const {}
 
         virtual void Load(const YAML::Node& node) {}
-
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
 
         virtual bool CanBeRemoved() const;
         virtual bool HasDependentComponents(GameObject* game_object) const;

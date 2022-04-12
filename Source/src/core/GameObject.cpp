@@ -211,13 +211,6 @@ void Hachiko::GameObject::Start()
 
 void Hachiko::GameObject::Update()
 {
-    // TODO: REMOVE
-    if (name == "Gun")  // This is temporal, once scripting is finally merged, we should try to do the same there for the player 
-    {
-        GameObject* go = App->scene_manager->GetActiveScene()->RayCast(transform->GetGlobalPosition() - float3(0, 5, 0), transform->GetGlobalPosition());
-    }
-    //
-
     if (transform->HasChanged())
     {
         OnTransformUpdated();
@@ -366,8 +359,8 @@ void Hachiko::GameObject::Save(YAML::Node& node) const
     
     for (unsigned i = 0; i < components.size(); ++i)
     {
-        node[COMPONENT_NODE][i][COMPONENT_ID] = (size_t)components[i]->GetID();
-        node[COMPONENT_NODE][i][COMPONENT_TYPE] = (int)components[i]->GetType();
+        node[COMPONENT_NODE][i][COMPONENT_ID] = static_cast<size_t>(components[i]->GetID());
+        node[COMPONENT_NODE][i][COMPONENT_TYPE] = static_cast<int>(components[i]->GetType());
         node[COMPONENT_NODE][i][COMPONENT_ENABLED] = components[i]->IsActive();
         components[i]->Save(node[COMPONENT_NODE][i]);
     }
@@ -394,17 +387,17 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         active ? component->Enable() : component->Disable();
     }
 
-    const YAML::Node childs_node = node[CHILD_NODE];
-    if (!childs_node.IsDefined())
+    const YAML::Node children_nodes = node[CHILD_NODE];
+    if (!children_nodes.IsDefined())
     {
         return;
     }
-    for (unsigned i = 0; i < childs_node.size(); ++i)
+    for (unsigned i = 0; i < children_nodes.size(); ++i)
     {
-        std::string child_name = childs_node[i][GAME_OBJECT_NAME].as<std::string>();
-        UID child_uid = childs_node[i][GAME_OBJECT_ID].as<unsigned long long>();
+        std::string child_name = children_nodes[i][GAME_OBJECT_NAME].as<std::string>();
+        UID child_uid = children_nodes[i][GAME_OBJECT_ID].as<unsigned long long>();
         const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(childs_node[i]);
+        child->Load(children_nodes[i]);
     }
 }

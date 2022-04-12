@@ -13,10 +13,6 @@ Hachiko::ComponentMaterial::ComponentMaterial(GameObject* container)
 {
 }
 
-Hachiko::ComponentMaterial::~ComponentMaterial()
-{
-}
-
 void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
 {
     if (material == nullptr)

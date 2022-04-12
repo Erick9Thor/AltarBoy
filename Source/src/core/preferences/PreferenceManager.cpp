@@ -1,4 +1,4 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "PreferenceManager.h"
 
 #include "src/CameraPreferences.h"

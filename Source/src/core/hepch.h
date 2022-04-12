@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 // system includes
 #include <iostream>
@@ -70,8 +69,8 @@
 #include "core/serialization/TypeConverter.h"
 #include "core/serialization/Definitions.h"
 
-#include "Core/preferences/Preferences.h"
-#include "Core/preferences/PreferenceManager.h"
+#include "core/preferences/Preferences.h"
+#include "core/preferences/PreferenceManager.h"
 
 #include "utils/JsonFormatterValue.h"
 #include "utils/PathNode.h"

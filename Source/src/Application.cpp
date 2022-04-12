@@ -18,7 +18,7 @@
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
 
-#include "Core/preferences/PreferenceManager.h"
+#include "core/preferences/PreferenceManager.h"
 
 using namespace std;
 

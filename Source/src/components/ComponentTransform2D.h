@@ -56,7 +56,7 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
     private:
-        void Invalidate(); // Set this and childs to dirty
+        void Invalidate(); // Set this and children to dirty
         void UpdateTransforms(); // Only does oeprations triggers class is dirty
         void UpdateUIComponents(); // Called when the transforms change
         void UpdateBoundingBox();

@@ -178,9 +178,9 @@ void Hachiko::ComponentCamera::Load(const YAML::Node& node)
     SetNearPlane(node_frustum[NEAR_DISTANCE].as<float>());
     SetFarPlane(node_frustum[FAR_DISTANCE].as<float>());
     SetHorizontalFov(node_frustum[FOV].as<float>());
-    frustum.SetPos(node_frustum[CAMERA_POSITION].as<vec>());
-    frustum.SetFront(node_frustum[CAMERA_FRONT].as<vec>());
-    frustum.SetUp(node_frustum[CAMERA_UP].as<vec>());
+    frustum.SetPos(node_frustum[CAMERA_POSITION].as<float3>());
+    frustum.SetFront(node_frustum[CAMERA_FRONT].as<float3>());
+    frustum.SetUp(node_frustum[CAMERA_UP].as<float3>());
     SetCameraType(static_cast<CameraType>(static_cast<int>(node_frustum[CAMERA_TYPE].as<int>())));
     camera_pinned_pos = node_frustum[PINNED_CAMERA].as<float3>();
 }

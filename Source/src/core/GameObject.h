@@ -47,7 +47,7 @@ namespace Hachiko
 
         void SetActive(bool set_active);
 
-        bool IsActive() const
+        [[nodiscard]] bool IsActive() const
         {
             return active;
         }
@@ -112,11 +112,6 @@ namespace Hachiko
         void SetName(const std::string& new_name)
         {
             name = new_name;
-        }
-
-        bool IsActive()
-        {
-            return active;
         }
 
         void Enable()
