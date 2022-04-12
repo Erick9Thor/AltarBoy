@@ -21,7 +21,7 @@ bool Hachiko::ModuleSceneManager::Init()
     }
 
 #ifdef PLAY_BUILD
-    App->camera->ReturnPlayerCamera(); // PLAY_BUILD UNCOMMENT
+    App->camera->ReturnPlayerCamera();
     main_scene->Start();
 #endif
 

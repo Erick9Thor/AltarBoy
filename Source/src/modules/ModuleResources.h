@@ -30,13 +30,13 @@ namespace Hachiko
 
         void CreateResource(Resource::Type type, const std::string& name) const;
 
-        // TODO: This containers should be private
+
+    private:
         std::map<std::string, ResourceModel*> models;
         std::map<std::string, ResourceMaterial*> materials;
         std::map<std::string, ResourceTexture*> textures;
         std::map<UID, ResourceMesh*> meshes;
 
-    private:
         std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
         {{Hachiko::Resource::Type::TEXTURE, ".png"},
         {Hachiko::Resource::Type::TEXTURE, ".tif"},

@@ -63,7 +63,6 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         mesh_importer.Import(mesh, mesh_id);
     }
 
-    // TODO: We are not considering that the root node could have a mesh or material
     ImportNode(scene->mRootNode, node);
 }
 

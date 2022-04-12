@@ -20,7 +20,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const char* path, bool flip) // TODO: rename import
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const char* path, bool flip)
 {
     std::filesystem::path texture_path = path;
 
@@ -47,8 +47,6 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::LoadResource(UID uid, const ch
     texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
     texture->data = new byte[texture->data_size];
     memcpy(texture->data, data, texture->data_size);
-
-    //texture->GenerateBuffer();
 
     DeleteImg(img_id);
 

@@ -9,6 +9,7 @@ namespace Hachiko
     public:
         enum class Type
         {
+            UNKNOWN,
             MATERIAL,
             TEXTURE,
             MODEL,
@@ -19,8 +20,7 @@ namespace Hachiko
             ANIMATION,
             SCRIPT,
             VIDEO,
-            SKYBOX,
-            UNKNOWN
+            SKYBOX
         };
 
         Resource(Type type);

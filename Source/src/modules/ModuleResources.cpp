@@ -47,22 +47,22 @@ bool ModuleResources::CleanUp()
 {
     for (auto& it : models)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : meshes)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : materials)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : textures)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     return true;
@@ -219,7 +219,6 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     
     if (res == nullptr && !asset_path.empty())
     {
-        // TODO: If we start the engine without library/ textures will not be rendered as we do not GenerateBuffers on ImportTexture()
         Hachiko::TextureImporter texture_importer;
         res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str())); 
         res->GenerateBuffer();

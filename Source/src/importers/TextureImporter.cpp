@@ -119,7 +119,7 @@ Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID
         uid = Hachiko::UUID::GenerateUID();
     }
 
-    ResourceTexture* texture = App->texture->LoadResource(uid, path, false); // TODO: could we extract ModuleTexture functionality to this importer?
+    ResourceTexture* texture = App->texture->ImportResource(uid, path, false); // TODO: could we extract ModuleTexture functionality to this importer?
 
     if (texture != nullptr)
     {
