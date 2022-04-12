@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Resources/Resource.h"
+#include "resources/Resource.h"
 #include "importers/ImporterManager.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 

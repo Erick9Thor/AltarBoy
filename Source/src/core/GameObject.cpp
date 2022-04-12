@@ -377,7 +377,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
     for (unsigned i = 0; i < components_node.size(); ++i)
     {
 
-        UID c_uid = components_node[i][COMPONENT_ID].as<unsigned long long>();
+        UID c_uid = components_node[i][COMPONENT_ID].as<UID>();
         bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
         const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
 

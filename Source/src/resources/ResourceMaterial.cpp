@@ -1,7 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceMaterial.h"
 #include "modules/ModuleResources.h"
-#include <importers/MaterialImporter.h>
+#include "importers/MaterialImporter.h"
 
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}

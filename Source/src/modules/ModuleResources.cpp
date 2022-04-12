@@ -6,7 +6,7 @@
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 #include "importers/MeshImporter.h"
 #include "importers/TextureImporter.h"
@@ -148,7 +148,7 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     // Use always .model extension for loading
     std::filesystem::path model_path(name);
     auto res = static_cast<ResourceModel*>( importer_manager.Load(Resource::Type::MODEL, 
-            model_path.parent_path().string().append("\\").append(model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
+            StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
 
     // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr && "Unable to return a valid model resource");

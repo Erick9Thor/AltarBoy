@@ -10,7 +10,7 @@ namespace Hachiko
         {
             for (auto child : children)
             {
-                delete child;
+                RELEASE(child);
             }
         }
 

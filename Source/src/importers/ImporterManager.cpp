@@ -16,7 +16,7 @@ ImporterManager::ImporterManager()
     const auto texture = new TextureImporter();
     const auto material = new MaterialImporter();
 
-    importers.reserve((size_t)Importer::Type::COUNT);
+    importers.reserve(static_cast<size_t>(Importer::Type::COUNT));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(model->GetType(), model));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(mesh->GetType(), mesh));
     importers.push_back(std::make_pair<Importer::Type, Importer*>(texture->GetType(), texture));

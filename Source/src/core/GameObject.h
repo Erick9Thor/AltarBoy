@@ -59,7 +59,7 @@ namespace Hachiko
         void DrawBoundingBox() const;
         void UpdateBoundingBoxes();
 
-        UID GetID() const
+        [[nodiscard]] UID GetID() const
         {
             return uid;
         }
@@ -104,7 +104,7 @@ namespace Hachiko
             return nullptr;
         }
 
-        const std::string& GetName() const
+        [[nodiscard]] const std::string& GetName() const
         {
             return name;
         }

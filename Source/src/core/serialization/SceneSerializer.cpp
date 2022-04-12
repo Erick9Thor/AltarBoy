@@ -1,7 +1,7 @@
 #include "core/hepch.h"
 #include "SceneSerializer.h"
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
 {
@@ -15,7 +15,6 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     preferences = App->preferences->GetResourcesPreference();
     const auto scene_output = new Scene();
     
-
     if (!scene_node[CHILD_NODE].IsDefined())
     {
         return scene_output;

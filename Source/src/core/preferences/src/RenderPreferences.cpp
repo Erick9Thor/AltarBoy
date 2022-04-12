@@ -1,4 +1,4 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "RenderPreferences.h"
 
 using namespace Hachiko;

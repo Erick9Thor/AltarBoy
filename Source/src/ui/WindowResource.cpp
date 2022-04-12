@@ -13,7 +13,7 @@ Hachiko::WindowResource::WindowResource() :
 void Hachiko::WindowResource::Update()
 {
     ImGui::SetNextWindowSize(ImVec2(1100, 170), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin((std::string(ICON_FA_IMAGES " ") + name).c_str(), &active))
+    if (!ImGui::Begin(StringUtils::Concat(ICON_FA_IMAGES, " ", name).c_str(), &active))
     {
         ImGui::End();
         return;
@@ -23,15 +23,15 @@ void Hachiko::WindowResource::Update()
     if (ImGui::Button("Create material (WIP)"))
     {
         ImGui::OpenPopup("CreateMaterialPopup");
-        auxiliar_name = "NewMaterial";
+        auxiliary_name = "NewMaterial";
     }
 
     if (ImGui::BeginPopup("CreateMaterialPopup"))
     {
-        ImGui::InputText("Name", &auxiliar_name[0], 64);
+        ImGui::InputText("Name", &auxiliary_name[0], 64);
         if (ImGui::Button("Create material"))
         {
-            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliar_name);
+            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliary_name);
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();

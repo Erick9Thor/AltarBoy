@@ -58,7 +58,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
     YAML::Node material_node;
     material_node[MATERIAL_ID] = material->GetID();
-    material_node[GENERIC_TYPE] = (int)material->GetType();
+    material_node[GENERIC_TYPE] = static_cast<int>(material->GetType());
     material_node[MATERIAL_NAME] = material->GetName();
 
     material_node[MATERIAL_DIFFUSE_NAME] = (material->diffuse != nullptr) ? material->diffuse->GetName() : std::string();

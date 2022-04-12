@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 namespace Hachiko
 {

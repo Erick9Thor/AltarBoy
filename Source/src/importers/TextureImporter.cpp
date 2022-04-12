@@ -1,7 +1,7 @@
 #include "core/hepch.h"
 #include "TextureImporter.h"
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleFileSystem.h"
@@ -52,7 +52,9 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
     size_bytes = path_size;
     texture->path = "";
     for (unsigned i = 0; i < size_bytes; ++i)
+    {
         texture->path += cursor[i];
+    }
     cursor += size_bytes;
 
     size_bytes = texture->data_size;
@@ -70,7 +72,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE) + texture->GetName();
+    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), texture->GetName());
 
     unsigned header[9] = {
         texture->path.length(),

@@ -2,7 +2,7 @@
 #include "Module.h"
 
 #include "core/Scene.h"
-#include "Core/serialization/SceneSerializer.h"
+#include "core/serialization/SceneSerializer.h"
 
 namespace Hachiko
 {

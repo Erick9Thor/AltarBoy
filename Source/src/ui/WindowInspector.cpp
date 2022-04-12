@@ -11,7 +11,7 @@ Hachiko::WindowInspector::~WindowInspector() = default;
 void Hachiko::WindowInspector::Update()
 {
     ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
-    if (ImGui::Begin((std::string(ICON_FA_EYE " ") + name).c_str(), &active))
+    if (ImGui::Begin(StringUtils::Concat(ICON_FA_EYE, " ", name).c_str(), &active))
     {
         DrawGameObject(App->editor->GetSelectedGameObject());
     }
@@ -46,9 +46,9 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
     }
 
     ImGui::Separator();
-    const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize((std::string(ICON_FA_PLUS " ") + "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
+    const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
     ImGui::SetCursorPosX(x);
-    if (ImGui::Button((std::string(ICON_FA_PLUS " ") + "Add component").c_str()))
+    if (ImGui::Button(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()))
     {
         ImGui::OpenPopup("AddComponentPopup");
     }

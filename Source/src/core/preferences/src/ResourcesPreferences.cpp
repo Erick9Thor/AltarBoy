@@ -1,4 +1,4 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "ResourcesPreferences.h"
 
 #include <cassert>
