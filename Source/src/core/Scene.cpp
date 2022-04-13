@@ -126,22 +126,6 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
     createChildren(game_object, model->child_nodes);
 }
 
-//Hachiko::GameObject* Hachiko::Scene::LoadImageObject(const std::string& path)
-//{
-//    const auto file_name = path.substr(path.find_last_of("/\\") + 1);
-//    const auto name = file_name.substr(0, file_name.find_last_of('.'));
-//
-//    GameObject* game_object = nullptr;
-//    game_object = CreateNewGameObject(name.c_str(), root);
-//    game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-//    game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
-//    game_object->CreateComponent(Component::Type::IMAGE);
-//    ComponentImage* image = game_object->GetComponent<ComponentImage>();
-//    image->Import(path.c_str());
-//
-//    return game_object;
-//}
-
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
     GameObject* game_object = App->editor->GetSelectedGameObject();

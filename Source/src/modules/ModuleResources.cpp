@@ -26,7 +26,7 @@ bool ModuleResources::Init()
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
-    for (int i = 0; i < static_cast<int>(Resource::Type::UNKNOWN); ++i)
+    for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
         App->file_sys->CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
         App->file_sys->CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
