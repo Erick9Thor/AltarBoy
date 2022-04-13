@@ -1,7 +1,7 @@
 #pragma once
 
 #include "utils/UUID.h"
-#include "core/serialization/Serializable.h"
+#include "core/serialization/ISerializable.h"
 #include "components/Component.h"
 
 namespace Hachiko
@@ -11,7 +11,7 @@ namespace Hachiko
     class Program;
     class Scene;
 
-    class GameObject final : public Serializable
+    class GameObject final : public ISerializable
     {
         friend class Component;
 

@@ -11,7 +11,7 @@ EditorPreferences::EditorPreferences()
     group_name = EDITOR_NODE;
 }
 
-void EditorPreferences::SetConfigurationData(const YAML::Node& node)
+void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -52,7 +52,7 @@ void EditorPreferences::SetConfigurationData(const YAML::Node& node)
     }
 }
 
-void EditorPreferences::GetConfigurationData(YAML::Node& node)
+void EditorPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][DISPLAY_CAMERA_SETTINGS] = display_camera_settings;
     node[group_name][FULLSCREEN_NODE] = fullscreen;

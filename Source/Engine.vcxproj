@@ -562,7 +562,7 @@
     <ClInclude Include="src\core\preferences\Preferences.h" />
     <ClInclude Include="src\core\serialization\Definitions.h" />
     <ClInclude Include="src\core\serialization\SceneSerializer.h" />
-    <ClInclude Include="src\core\serialization\Serializable.h" />
+    <ClInclude Include="src\core\serialization\ISerializable.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\events\GameStateEventPayload.h" />
     <ClInclude Include="src\importers\Importer.h" />

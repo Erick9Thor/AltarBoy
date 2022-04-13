@@ -11,7 +11,7 @@ ResourcesPreferences::ResourcesPreferences()
     group_name = RESOURCES_NODE;
 }
 
-void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
+void ResourcesPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -109,7 +109,7 @@ void ResourcesPreferences::SetConfigurationData(const YAML::Node& node)
     }
 }
 
-void ResourcesPreferences::GetConfigurationData(YAML::Node& node)
+void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][SCENE_NAME] = scene_name;
     node[group_name][SCENE_ID] = scene_id;

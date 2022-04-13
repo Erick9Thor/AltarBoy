@@ -24,8 +24,8 @@ namespace Hachiko
 
         virtual ~Preferences() = default;
 
-        virtual void SetConfigurationData(const YAML::Node& node) = 0;
-        virtual void GetConfigurationData(YAML::Node& node) = 0;
+        virtual void LoadConfigurationData(const YAML::Node& node) = 0;
+        virtual void SaveConfigurationData(YAML::Node& node) = 0;
         virtual Type GetType() { return type; }
         [[nodiscard]] const std::string& GetGroupName() const { return group_name; }
 

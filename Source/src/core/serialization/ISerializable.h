@@ -4,10 +4,10 @@
 
 namespace Hachiko
 {
-    class Serializable
+    class ISerializable
     {
     public:
-        virtual ~Serializable() = default;
+        virtual ~ISerializable() = default;
         virtual void Save(YAML::Node&) const = 0;
         virtual void Load(const YAML::Node&) = 0;
     };

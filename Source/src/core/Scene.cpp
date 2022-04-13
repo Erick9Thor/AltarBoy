@@ -93,7 +93,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChildren = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
     {
         for (auto child : children)
         {
@@ -119,11 +119,11 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 }
             }
             
-            createChildren(last_parent, child->children);
+            create_children_function(last_parent, child->children);
         }
     };
 
-    createChildren(game_object, model->child_nodes);
+    create_children_function(game_object, model->child_nodes);
 }
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)

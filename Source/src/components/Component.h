@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/serialization/Serializable.h"
+#include "core/serialization/ISerializable.h"
 #include "utils/UUID.h"
 
 namespace Hachiko
@@ -9,7 +9,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class Component : public Serializable
+    class Component : public ISerializable
     {
     public:
         enum class Type

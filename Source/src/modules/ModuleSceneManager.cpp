@@ -49,7 +49,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        SaveScene("tmp_scene.scene");       
+        SaveScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
         
         GameTimer::Start();
     }
@@ -73,7 +73,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         GameTimer::Stop();
 
-        LoadScene("tmp_scene.scene");
+        LoadScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
     }
 }
 

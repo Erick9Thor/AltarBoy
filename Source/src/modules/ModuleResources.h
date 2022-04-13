@@ -19,7 +19,6 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        void ResoreLibrary() {} // WIP
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
         
@@ -48,7 +47,7 @@ namespace Hachiko
         
         Hachiko::ResourcesPreferences* preferences = nullptr;
         Hachiko::ImporterManager importer_manager;
-        std::filesystem::path last_resource_path; // TODO: This will track every resource, his type and path loaded
+        std::filesystem::path last_resource_path;
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);

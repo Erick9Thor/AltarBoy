@@ -1061,7 +1061,7 @@
     <ClInclude Include="src\Core\serialization\SceneSerializer.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\serialization\Serializable.h">
+    <ClInclude Include="src\core\serialization\ISerializable.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\Resources\ResourceTexture.h">
@@ -1125,6 +1125,7 @@
     <ClInclude Include="src\modules\ModuleUserInterface.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

@@ -108,11 +108,11 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         HE_LOG("File destination: %s", destination.string().c_str());
     }
 
-    if (file_in_asset)
+    /* if (file_in_asset)
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         scene->HandleInputModel(GetModel(destination.string().c_str()));
-    }
+    }*/
 }
 
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)

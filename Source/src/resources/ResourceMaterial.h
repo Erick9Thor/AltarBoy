@@ -93,7 +93,7 @@ namespace Hachiko
                 return "Normals";
             }
         }
-        // TODO: Move this memebers to private
+
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
         ResourceTexture* normal = nullptr;

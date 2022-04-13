@@ -11,8 +11,8 @@ namespace Hachiko
     public:
         EditorPreferences();
         ~EditorPreferences() override = default;
-        void SetConfigurationData(const YAML::Node& node) override;
-        void GetConfigurationData(YAML::Node& node) override;
+        void LoadConfigurationData(const YAML::Node& node) override;
+        void SaveConfigurationData(YAML::Node& node) override;
 
         void SetDisplayDebugDraw(const bool displayDebugDraw)
         {

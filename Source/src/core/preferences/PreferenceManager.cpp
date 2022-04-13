@@ -55,7 +55,7 @@ void PreferenceManager::LoadConfigurationFile() const
             {
                 continue;
             }
-            it->SetConfigurationData(node[it->GetGroupName()]);
+            it->LoadConfigurationData(node[it->GetGroupName()]);
         }
     }
 }
@@ -65,7 +65,7 @@ void PreferenceManager::SaveConfigurationFile() const
     YAML::Node output;
     for (const auto it : preferences)
     {
-        it->GetConfigurationData(output);
+        it->SaveConfigurationData(output);
     }
     std::ofstream fout(config_file);
     fout << output;

@@ -9,7 +9,7 @@ CameraPreferences::CameraPreferences()
     group_name = CAMERA_NODE;
 }
 
-void CameraPreferences::SetConfigurationData(const YAML::Node& node)
+void CameraPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -44,7 +44,7 @@ void CameraPreferences::SetConfigurationData(const YAML::Node& node)
     }
 }
 
-void CameraPreferences::GetConfigurationData(YAML::Node& node)
+void CameraPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][MOVE_SPEED] = move_speed;
     node[group_name][ROTATION_SPEED] = rotation_speed;

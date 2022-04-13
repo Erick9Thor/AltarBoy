@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/serialization/Serializable.h"
+#include "core/serialization/ISerializable.h"
 
 namespace Hachiko
 {
@@ -16,7 +16,7 @@ namespace Hachiko
     class ResourceModel;
     class ResourceMaterial;
 
-    class Scene : public Serializable
+    class Scene : public ISerializable
     {
         friend class ModuleSceneManager;
 

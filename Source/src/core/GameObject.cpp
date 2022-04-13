@@ -70,6 +70,7 @@ Hachiko::GameObject::~GameObject()
 
 void Hachiko::GameObject::RemoveChild(GameObject* game_object)
 {
+    assert(game_object != nullptr);
     children.erase(std::remove(children.begin(), children.end(), game_object), children.end());
 }
 
