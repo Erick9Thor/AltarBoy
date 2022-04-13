@@ -498,10 +498,7 @@
     <ClInclude Include="generated\Factory.h">
       <Filter>generated</Filter>
     </ClInclude>
-    <ClInclude Include="SomeScript.h" />
-    <ClInclude Include="Funky.h" />
     <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="Experiment.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="MainMenuManager.h" />
     <ClInclude Include="PlayerCamera.h" />
@@ -748,10 +745,7 @@
     <ClCompile Include="generated\SerializationMethods.cpp">
       <Filter>generated</Filter>
     </ClCompile>
-    <ClCompile Include="Funky.cpp" />
     <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="SomeScript.cpp" />
-    <ClCompile Include="Experiment.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="MainMenuManager.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
