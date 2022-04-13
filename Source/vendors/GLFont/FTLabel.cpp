@@ -79,9 +79,7 @@ FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
     glUseProgram(0);
-
-    recalculateVertices(_text, _x, _y, _width, _height);
-
+    
     _isInitialized = true;
 }
 

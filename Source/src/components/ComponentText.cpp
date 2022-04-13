@@ -100,6 +100,10 @@ void Hachiko::ComponentText::BuildLabel()
                                                 startY,
                                                 windowWidth,
                                                 windowHeight));
+    label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
+    label->setPixelSize(64);
+    label->setAlignment(FTLabel::FontFlags::CenterAligned);
+    label->appendFontFlags(FTLabel::FontFlags::Indented);
     //label->setText(label_text);
     /* label->setPosition(500, 250);
     label->setSize(100, 100);
