@@ -105,18 +105,18 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
-                    UID mesh_id = model->meshes[child->meshes_index[i]].mesh_id;
+                    MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
                     ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                    component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
+                    component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
                     component->SetResourcePath(model->model_path);
                     component->SetModelName(model->model_name);
 
                     component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(App->resources->GetMesh(mesh_id));
-                }
+                    component->AddResourceMesh(App->resources->GetMesh(mesh_info.mesh_id));
 
-                ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));
+                    ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
+                    component_material->SetResourceMaterial(App->resources->GetMaterial(model->materials[mesh_info.material_index].material_name));
+                }
             }
             
             createChildren(last_parent, child->children);

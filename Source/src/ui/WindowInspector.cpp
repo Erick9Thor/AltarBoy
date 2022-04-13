@@ -24,12 +24,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
     {
         return;
     }
-    char go_name[50];
-    strcpy_s(go_name, 50, game_object->GetName().c_str());
+    char game_object_name[50];
+    strcpy_s(game_object_name, 50, game_object->GetName().c_str());
     const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
-    if (ImGui::InputText("###", go_name, 50, name_input_flags))
+    if (ImGui::InputText("###", game_object_name, 50, name_input_flags))
     {
-        game_object->SetName(go_name);
+        game_object->SetName(game_object_name);
     }
 
     ImGui::SameLine();
@@ -39,8 +39,8 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         activate ? game_object->Enable() : game_object->Disable();
     }
 
-    std::vector<Component*> go_components = game_object->GetComponents();
-    for (auto it = go_components.begin(); it != go_components.end(); ++it)
+    std::vector<Component*> game_object_components = game_object->GetComponents();
+    for (auto it = game_object_components.begin(); it != game_object_components.end(); ++it)
     {
         (*it)->DrawGui();
     }
