@@ -3,24 +3,25 @@
 #include "GLFont.h"
 #include <fstream>
 
-GLFont::GLFont(const char* fontFile) {
+GLFont::GLFont(const char* fontFile, FT_Library& ft) {
     // Initialize FreeType
 
-    _error = FT_Init_FreeType(&_ft);
+    /* _error = FT_Init_FreeType(&_ft);
     if(_error) {
         throw std::exception("Failed to initialize FreeType");
-    }
-    setFontFile(fontFile);
+    }*/
+    setFontFile(fontFile, ft);
 }
 
 GLFont::~GLFont() {}
 
 
-void GLFont::setFontFile(const char* fontFile) {
+void GLFont::setFontFile(const char* fontFile, FT_Library& ft)
+{
     _fontFile = (char*)fontFile;
 
     // Create a new font
-    _error = FT_New_Face(_ft,       // FreeType instance handle
+    _error = FT_New_Face(ft,       // FreeType instance handle
                          _fontFile, // Font family to use
                          0,         // index of font (in case there are more than one in the file)
                          &_face);   // font face handle

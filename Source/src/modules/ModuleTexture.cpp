@@ -133,7 +133,7 @@ Hachiko::Font Hachiko::ModuleTexture::LoadFont(const char* path)
     font.path = path;
     try
     {
-        font.gl_font = std::shared_ptr<GLFont>(new GLFont(path));
+        font.gl_font = std::shared_ptr<GLFont>(new GLFont(path, freetype_lib));
         font.loaded = true;
 
         return font;

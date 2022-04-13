@@ -51,7 +51,7 @@ namespace Hachiko
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);
 
-        static Font LoadFont(const char* path);
+        Font LoadFont(const char* path);
 
         [[nodiscard]] short GetDevilVersion() const
         {

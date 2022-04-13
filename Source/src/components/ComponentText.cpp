@@ -23,7 +23,7 @@ void Hachiko::ComponentText::DrawGui()
         if (ImGui::InputText("Font File", font_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             std::string destination = std::string(ASSETS_FOLDER_FONTS) + "/" + font_filename_buffer;
-            font = ModuleTexture::LoadFont(destination.c_str());
+            font = App->texture->LoadFont(destination.c_str());
             BuildLabel();
         }
 
@@ -67,7 +67,7 @@ void Hachiko::ComponentText::Load(JsonFormatterValue j_component)
 
     if (!font_path.empty())
     {
-        font = ModuleTexture::LoadFont(font_path.c_str());
+        font = App->texture->LoadFont(font_path.c_str());
         BuildLabel();
     }    
 }

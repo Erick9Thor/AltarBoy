@@ -6,17 +6,16 @@
 
 class GLFont {
 public:
-    GLFont(const char* fontFile);
+    GLFont(const char* fontFile, FT_Library& ft);
     ~GLFont();
 
-    void setFontFile(const char* fontFile);
+    void setFontFile(const char* fontFile, FT_Library& ft);
 
     FT_Face getFaceHandle();
 
 private:
     char* _fontFile;
     FT_Error _error;
-    FT_Library _ft;
     FT_Face _face;
 
 };
