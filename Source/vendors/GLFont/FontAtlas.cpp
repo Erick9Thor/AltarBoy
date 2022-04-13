@@ -24,7 +24,7 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
             continue; // try next character
         }
 
-        _width += _slot->bitmap.width + 2; // add the width of this glyph to our texture width
+        _width += _slot->bitmap.width; // add the width of this glyph to our texture width
         // Note: We add 2 pixels of blank space between glyphs for padding - this helps reduce texture bleeding
         //       that can occur with antialiasing
 
@@ -32,8 +32,8 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
     }
 
     // Create texture
-    glGenTextures(1, &_tex);
-    glActiveTexture(GL_TEXTURE0 + _tex);
+    glActiveTexture(GL_TEXTURE0);
+    glGenTextures(1, &_tex);    
     glBindTexture(GL_TEXTURE_2D, _tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -54,9 +54,9 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
             continue;
 
         // Add this character glyph to our texture
-        glTexSubImage2D(GL_TEXTURE_2D, 0, texPos, 0, 1, _slot->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, (char)0); // padding
+        //glTexSubImage2D(GL_TEXTURE_2D, 0, texPos-2, 0, 1, _slot->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, (char)0); // padding
         glTexSubImage2D(GL_TEXTURE_2D, 0, texPos, 0, _slot->bitmap.width, _slot->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, _slot->bitmap.buffer);
-        glTexSubImage2D(GL_TEXTURE_2D, 0, texPos, 0, 1, _slot->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, (char)0); // padding
+        //glTexSubImage2D(GL_TEXTURE_2D, 0, texPos, 0, 1, _slot->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, (char)0); // padding
 
         // Store glyph info in our char array for this pixel size
         _chars[i].advanceX = _slot->advance.x >> 6;
@@ -71,8 +71,9 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
         _chars[i].xOffset = (float)texPos / (float)_width;
 
         // Increase texture offset
-        texPos += _slot->bitmap.width + 2;
+        texPos += _slot->bitmap.width;
     }
+    int a = 1;
 }
 
 FontAtlas::~FontAtlas() {

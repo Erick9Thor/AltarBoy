@@ -4,6 +4,7 @@
 #include "ComponentButton.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
+#include "ComponentText.h"
 
 #include "Program.h"
 
@@ -45,6 +46,12 @@ void Hachiko::ComponentCanvasRenderer::Render(Program* program) const
         if (image && image->IsActive())
         {
             image->Draw(transform, program);
+        }
+
+        ComponentText* text = game_object->GetComponent<ComponentText>();
+        if (text && text->IsActive())
+        {
+            text->Draw(transform, program);
         }
         
     }

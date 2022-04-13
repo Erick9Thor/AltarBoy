@@ -35,7 +35,7 @@ namespace Hachiko
         Font font;
         std::unique_ptr<FTLabel> label = nullptr;
 
-        
+        std::string label_text = "Sample Text";
 
         float4 font_color = float4::one;
         float font_size = 28.f;

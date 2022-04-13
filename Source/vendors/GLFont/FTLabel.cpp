@@ -66,7 +66,7 @@ FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
 
     GLuint curTex = _fontAtlas[_pixelSize]->getTexId(); // get texture ID for this pixel size
 
-    glActiveTexture(GL_TEXTURE0 + curTex);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, curTex);
 
     // Set our uniforms
@@ -79,6 +79,8 @@ FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
     glUseProgram(0);
+
+    recalculateVertices(_text, _x, _y, _width, _height);
 
     _isInitialized = true;
 }
@@ -163,7 +165,7 @@ void FTLabel::recalculateVertices(const char* text, float x, float y, int width,
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     GLuint curTex = _fontAtlas[_pixelSize]->getTexId();
-    glActiveTexture(GL_TEXTURE0 + curTex);
+    glActiveTexture(GL_TEXTURE0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
@@ -272,7 +274,7 @@ void FTLabel::render() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     GLuint curTex = _fontAtlas[_pixelSize]->getTexId();
-    glActiveTexture(GL_TEXTURE0 + curTex);
+    glActiveTexture(GL_TEXTURE0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
@@ -328,14 +330,10 @@ int FTLabel::calcWidth(const char* text) {
     return width;
 }
 
-void FTLabel::setText(char* text) {
+void FTLabel::setText(const char* text) {
     _text = text;
 
     recalculateVertices(_text, _x, _y, _width, _height);
-}
-
-void FTLabel::setText(string text) {
-    setText(text.c_str());
 }
 
 string FTLabel::getText() {

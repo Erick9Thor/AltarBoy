@@ -34,7 +34,12 @@ void Hachiko::ComponentText::DrawGui()
             ImGui::Text("Load a font to enable font controls");
             ImGui::PopID();
             return;
-        }        
+        }
+
+        if (ImGui::InputText("Text", &label_text, ImGuiInputTextFlags_EnterReturnsTrue))
+        {
+            label->setText(label_text.c_str());
+        }
 
         if (ImGui::DragFloat("Font Size", &font_size, 2.0f, 0.0f, FLT_MAX))
         {
@@ -51,7 +56,16 @@ void Hachiko::ComponentText::DrawGui()
 
 void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program) const
 {
-
+    //program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
+    // Setting diffuse flag to false makes shader default to color
+    //program->BindUniformBool("diffuse_flag", false);
+    //program->BindUniformFloat4("img_color", font_color.ptr());
+    
+    if (label)
+    {
+        label->render();
+        program->Activate();
+    }        
 }
 
 void Hachiko::ComponentText::Save(JsonFormatterValue j_component) const
@@ -86,6 +100,7 @@ void Hachiko::ComponentText::BuildLabel()
                                                 startY,
                                                 windowWidth,
                                                 windowHeight));
+    //label->setText(label_text);
     /* label->setPosition(500, 250);
     label->setSize(100, 100);
     label->setPixelSize(24);
