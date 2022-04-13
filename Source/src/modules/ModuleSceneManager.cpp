@@ -9,6 +9,7 @@
 
 bool Hachiko::ModuleSceneManager::Init()
 {
+    serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
     std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
     if (std::filesystem::exists(scene_path))
@@ -97,22 +98,9 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 {
     SaveScene();
     RELEASE(main_scene);
+    RELEASE(serializer);
     return true;
 }
-
-//void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
-//{
-//    // delete scene_model;
-//    main_scene->LoadFBX(model_path);
-//}
-//
-//void Hachiko::ModuleSceneManager::LoadImageObject(const char* model_path) const
-//{
-//    std::string file = App->file_sys->GetFileNameAndExtension(model_path);
-//    std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + file;
-//    App->file_sys->Copy(model_path, destination.c_str());
-//    main_scene->LoadImageObject(destination);
-//}
 
 void Hachiko::ModuleSceneManager::CreateEmptyScene()
 {
@@ -123,7 +111,7 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
     delete main_scene;
-    main_scene = serializer.Load(file_path);
+    main_scene = serializer->Load(file_path);
     
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -133,12 +121,12 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
 void Hachiko::ModuleSceneManager::SaveScene()
 {
-    serializer.Save(main_scene);
+    serializer->Save(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer.Save(main_scene, file_path); // TODO: Take into account temporal scenes
+    serializer->Save(main_scene, file_path); // TODO: Take into account temporal scenes
 }
 
 void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)

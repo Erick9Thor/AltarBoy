@@ -61,7 +61,7 @@ namespace Hachiko
 
     private:
         Scene* main_scene = nullptr;
-        SceneSerializer serializer;
+        SceneSerializer* serializer = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
         bool scene_ready_to_load = false;

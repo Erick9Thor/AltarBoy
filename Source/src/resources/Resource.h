@@ -20,7 +20,8 @@ namespace Hachiko
             ANIMATION,
             SCRIPT,
             VIDEO,
-            SKYBOX
+            SKYBOX,
+            COUNT
         };
 
         Resource(Type type);
