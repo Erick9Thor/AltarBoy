@@ -9,13 +9,13 @@
 
 using namespace Hachiko;
 
-PreferenceManager::PreferenceManager(const char* cfg) :
-    globals(new GlobalPreferences()),
-    editor(new EditorPreferences()),
-    render(new RenderPreferences()),
-    camera(new CameraPreferences()),
-    resources(new ResourcesPreferences()),
-    config_file(cfg)
+PreferenceManager::PreferenceManager(const char* cfg)
+    : globals(new GlobalPreferences())
+    , editor(new EditorPreferences())
+    , render(new RenderPreferences())
+    , camera(new CameraPreferences())
+    , resources(new ResourcesPreferences())
+    , config_file(cfg)
 {
     preferences.reserve(static_cast<size_t>(Preferences::Type::COUNT));
 

@@ -5,7 +5,8 @@
 
 using namespace Hachiko;
 
-EditorPreferences::EditorPreferences() : Preferences(Type::EDITOR)
+EditorPreferences::EditorPreferences()
+    : Preferences(Type::EDITOR)
 {
     group_name = EDITOR_NODE;
 }

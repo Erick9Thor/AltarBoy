@@ -5,7 +5,8 @@
 
 using namespace Hachiko;
 
-ResourcesPreferences::ResourcesPreferences() : Preferences(Type::RESOURCES)
+ResourcesPreferences::ResourcesPreferences()
+    : Preferences(Type::RESOURCES)
 {
     group_name = RESOURCES_NODE;
 }

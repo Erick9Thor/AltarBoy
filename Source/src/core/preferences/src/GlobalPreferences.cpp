@@ -3,7 +3,8 @@
 
 using namespace Hachiko;
 
-GlobalPreferences::GlobalPreferences() : Preferences(Type::GLOBALS)
+GlobalPreferences::GlobalPreferences()
+    : Preferences(Type::GLOBALS)
 {
     group_name = GLOBAL_NODE;
 }

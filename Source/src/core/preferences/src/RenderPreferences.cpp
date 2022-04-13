@@ -3,7 +3,8 @@
 
 using namespace Hachiko;
 
-RenderPreferences::RenderPreferences() : Preferences(Type::RENDER)
+RenderPreferences::RenderPreferences()
+    : Preferences(Type::RENDER)
 {
     group_name = RENDER_NODE;
 }

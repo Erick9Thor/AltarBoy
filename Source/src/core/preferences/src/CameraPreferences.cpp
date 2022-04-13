@@ -3,7 +3,8 @@
 
 using namespace Hachiko;
 
-CameraPreferences::CameraPreferences() : Preferences(Type::CAMERA)
+CameraPreferences::CameraPreferences()
+    : Preferences(Type::CAMERA)
 {
     group_name = CAMERA_NODE;
 }
