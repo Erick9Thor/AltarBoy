@@ -28,6 +28,7 @@ namespace Hachiko
             IMAGE,
             BUTTON,
             PROGRESS_BAR,
+            TEXT,
             UNKNOWN
         };
 

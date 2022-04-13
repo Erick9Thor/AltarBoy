@@ -29,6 +29,13 @@ namespace Hachiko
         unsigned heighths[6]{};
     };
 
+    struct Font
+    {
+        bool loaded = false;
+        std::string path;
+        std::shared_ptr<GLFont> gl_font = nullptr;
+    };
+
     class ModuleTexture final : public Module
     {
     public:
@@ -44,7 +51,7 @@ namespace Hachiko
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);
 
-        void LoadFont();
+        static Font LoadFont(const char* path);
 
         [[nodiscard]] short GetDevilVersion() const
         {

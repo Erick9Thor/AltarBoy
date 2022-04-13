@@ -15,6 +15,7 @@
 #include "components/ComponentImage.h"
 #include "components/ComponentButton.h"
 #include "Components/ComponentProgressBar.h"
+#include "components/ComponentText.h"
 
 // TODO: REMOVE
 #include "Application.h"
@@ -162,6 +163,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::PROGRESS_BAR):
         if (!GetComponent<ComponentProgressBar>())
             new_component = new ComponentProgressBar(this);
+        break;
+    case (Component::Type::TEXT):
+        if (!GetComponent<ComponentProgressBar>())
+            new_component = new ComponentText(this);
         break;
     }
 

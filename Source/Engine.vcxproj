@@ -175,6 +175,7 @@
     <ClCompile Include="src\components\ComponentCanvasRenderer.cpp" />
     <ClCompile Include="src\components\ComponentImage.cpp" />
     <ClCompile Include="src\components\ComponentProgressBar.cpp" />
+    <ClCompile Include="src\components\ComponentText.cpp" />
     <ClCompile Include="src\components\ComponentTransform2D.cpp" />
     <ClCompile Include="src\modules\ModuleDebugMode.cpp" />
     <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
@@ -550,6 +551,7 @@
     <ClInclude Include="src\components\ComponentCanvasRenderer.h" />
     <ClInclude Include="src\components\ComponentImage.h" />
     <ClInclude Include="src\components\ComponentProgressBar.h" />
+    <ClInclude Include="src\components\ComponentText.h" />
     <ClInclude Include="src\components\ComponentTransform2D.h" />
     <ClInclude Include="src\components\ISelectable.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />

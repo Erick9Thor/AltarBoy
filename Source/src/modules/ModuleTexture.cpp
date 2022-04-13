@@ -127,30 +127,22 @@ void Hachiko::ModuleTexture::Unbind(unsigned slot)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Hachiko::ModuleTexture::LoadFont()
-{
-    // TODO: Remove test code
-    std::shared_ptr<GLFont> gl_font = std::shared_ptr<GLFont>(new GLFont("assets/fonts/13_5Atom_Sans_Regular.ttf"));
-    // Some values we will use to create our labels
-    int startX = 100;
-    int startY = 100;
-    int windowWidth = 800;
-    int windowHeight = 600;
+Hachiko::Font Hachiko::ModuleTexture::LoadFont(const char* path)
+{  
+    Font font;
+    font.path = path;
+    try
+    {
+        font.gl_font = std::shared_ptr<GLFont>(new GLFont(path));
+        font.loaded = true;
 
-    std::unique_ptr<FTLabel> label = std::unique_ptr<FTLabel>(new FTLabel(
-        gl_font, // Font face handle
-        "Hello world!", // Text to render
-        startX,
-        startY,
-        windowWidth,
-        windowHeight));
-    /* label->setPosition(500, 250);
-    label->setSize(100, 100);
-    label->setPixelSize(24);
-    label->setIndentation(50);
-    label->setAlignment(FTLabel::FontFlags::LeftAligned);
-    label->setColor(0.89, 0.26, 0.3, 0.9);
-    label->rotate(90, 0, 1, 0); */
+        return font;
+    }
+    catch (std::exception& e)
+    {
+        // Catch exception and return unloaded font if fails
+        return font;
+    } 
 }
 
 void SetOption(unsigned option, unsigned value)
