@@ -3,7 +3,7 @@
 
 #include "resources/ResourceMesh.h"
 
-#include "MathGeoLib.h"
+#include <MathGeoLib.h>
 
 namespace Hachiko
 {
