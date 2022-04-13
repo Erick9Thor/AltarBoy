@@ -134,7 +134,7 @@
 // Scene
 #define SCENE_ID "scene_id"
 #define SCENE_NAME "scene_name"
-#define UNNAMED_SCENE "Unnamed Scene"
+#define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
 
 // Game Object

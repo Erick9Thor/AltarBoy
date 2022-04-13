@@ -275,7 +275,7 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
-        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + "untitled" + SCENE_EXTENSION;
+        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + UNNAMED_SCENE + SCENE_EXTENSION;
         App->scene_manager->SaveScene(temp_scene_file_path.c_str());
     }
     if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer

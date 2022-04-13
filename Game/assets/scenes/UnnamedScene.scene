@@ -1,0 +1,111 @@
+scene_name: UnnamedScene
+root_id: 9275766172509510925
+child:
+  - id: 126052866595234912
+    name: BakerHouse
+    enabled: true
+    parent_id: 9275766172509510925
+    component:
+      - id: 13220080217292574658
+        type: 1
+        enabled: true
+        position: [-3.42367721, 0, -1.71936333]
+        rotation: [0, 0, 0, 1]
+        scale: [100, 100, 100]
+    child:
+      - id: 9699343842429684815
+        name: Chimney
+        enabled: true
+        parent_id: 126052866595234912
+        component:
+          - id: 16789474083542925559
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 7449557982695111767
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\PC\Desktop\Master\Github\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 0
+          - id: 17457678642204254167
+            type: 3
+            enabled: true
+            name: Baker_house
+      - id: 16557273092191946266
+        name: Baker_house
+        enabled: true
+        parent_id: 126052866595234912
+        component:
+          - id: 2136408883545228388
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 1999108891449624842
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\PC\Desktop\Master\Github\Hachiko-Engine\Game\assets\models\BakerHouse.fbx
+            model_name: BakerHouse
+            mesh_index: 1
+          - id: 15956305412347897086
+            type: 3
+            enabled: true
+            name: Baker_house
+  - id: 11481012081200279972
+    name: Player
+    enabled: true
+    parent_id: 9275766172509510925
+    component:
+      - id: 403156192315181342
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 7921223041410058643
+        name: Gun
+        enabled: true
+        parent_id: 11481012081200279972
+        component:
+          - id: 6854247480839215668
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 11528725812432921341
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\PC\Desktop\Master\Github\Hachiko-Engine\Game\assets\models\Player.fbx
+            model_name: Player
+            mesh_index: 0
+          - id: 10979905075924111325
+            type: 3
+            enabled: true
+            name: GunMaterial
+      - id: 11532137652138604772
+        name: Player
+        enabled: true
+        parent_id: 11481012081200279972
+        component:
+          - id: 12956600377118876484
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 14259964026201598289
+            type: 2
+            enabled: true
+            model_file_path: C:\Users\PC\Desktop\Master\Github\Hachiko-Engine\Game\assets\models\Player.fbx
+            model_name: Player
+            mesh_index: 1
+          - id: 17944720605343991792
+            type: 3
+            enabled: true
+            name: PlayerMaterial
