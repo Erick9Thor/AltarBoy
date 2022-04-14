@@ -27,6 +27,8 @@ namespace Hachiko
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
 
+        void RefreshWindowSize();
+
 
     private:
         void BuildLabel();

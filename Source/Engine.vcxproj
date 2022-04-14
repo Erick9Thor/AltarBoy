@@ -182,7 +182,6 @@
     <ClCompile Include="vendors\GLFont\FontAtlas.cpp" />
     <ClCompile Include="vendors\GLFont\FTLabel.cpp" />
     <ClCompile Include="vendors\GLFont\GLFont.cpp" />
-    <ClCompile Include="vendors\GLFont\GLUtils.cpp" />
     <ClCompile Include="vendors\glm\detail\glm.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -566,7 +565,6 @@
     <ClInclude Include="vendors\GLFont\FontAtlas.h" />
     <ClInclude Include="vendors\GLFont\FTLabel.h" />
     <ClInclude Include="vendors\GLFont\GLFont.h" />
-    <ClInclude Include="vendors\GLFont\GLUtils.h" />
     <ClInclude Include="vendors\glm\common.hpp" />
     <ClInclude Include="vendors\glm\detail\compute_common.hpp" />
     <ClInclude Include="vendors\glm\detail\compute_vector_relational.hpp" />

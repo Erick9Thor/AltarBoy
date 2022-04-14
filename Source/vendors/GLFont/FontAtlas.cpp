@@ -32,11 +32,11 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
     }
 
     // Create texture
-    glActiveTexture(GL_TEXTURE0);
     glGenTextures(1, &_tex);    
     glBindTexture(GL_TEXTURE_2D, _tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+    HE_LOG("Texture id %d", _tex);
     // Set texture parameters 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -73,7 +73,7 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
         // Increase texture offset
         texPos += _slot->bitmap.width;
     }
-    int a = 1;
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 }
 
 FontAtlas::~FontAtlas() {

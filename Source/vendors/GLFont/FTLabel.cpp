@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 
 #include "FTLabel.h"
-#include "GLUtils.h"
 #include "FontAtlas.h"
 
 #include <stdio.h>
@@ -13,6 +12,9 @@
 // GLM
 #include "glm\gtc\type_ptr.hpp"
 #include "glm\gtx\transform.hpp"
+
+#include "modules/ModuleProgram.h"
+#include "modules/ModuleTexture.h"
 
 FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
   _isInitialized(false),
@@ -45,12 +47,6 @@ FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
 
     recalculateMVP();
 
-    // Load the shaders
-    _programId = glCreateProgram();
-    GLUtils::loadShader("assets\\shaders\\vertex_font.glsl", GL_VERTEX_SHADER, _programId);
-    GLUtils::loadShader("assets\\shaders\\fragment_font.glsl", GL_FRAGMENT_SHADER, _programId);
-
-    glUseProgram(_programId);
 
     // Create and bind the vertex array object
     glGenVertexArrays(1, &_vao);
@@ -58,27 +54,11 @@ FTLabel::FTLabel(shared_ptr<GLFont> ftFace, int windowWidth, int windowHeight) :
 
     // Set default pixel size and create the texture
     setPixelSize(48); // default pixel size
-
-    // Get shader handles
-    _uniformTextureHandle = glGetUniformLocation(_programId, "tex");
-    _uniformTextColorHandle = glGetUniformLocation(_programId, "textColor");
-    _uniformMVPHandle = glGetUniformLocation(_programId, "mvp");
-
-    GLuint curTex = _fontAtlas[_pixelSize]->getTexId(); // get texture ID for this pixel size
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, curTex);
-
-    // Set our uniforms
-    glUniform1i(_uniformTextureHandle, curTex);
-    glUniform4fv(_uniformTextColorHandle, 1, glm::value_ptr(_textColor));
-    glUniformMatrix4fv(_uniformMVPHandle, 1, GL_FALSE, glm::value_ptr(_mvp));
-
+    
     // Create the vertex buffer object
     glGenBuffers(1, &_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 
-    glUseProgram(0);
     
     _isInitialized = true;
 }
@@ -158,32 +138,16 @@ void FTLabel::recalculateVertices(const char* text, float x, float y, int width,
         y += (_face->size->metrics.height >> 6);
         indent = 0;
     }
-    glUseProgram(_programId);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    GLuint curTex = _fontAtlas[_pixelSize]->getTexId();
-    glActiveTexture(GL_TEXTURE0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-
-    glBindTexture(GL_TEXTURE_2D, curTex);
-    glUniform1i(_uniformTextureHandle, curTex);
-
+    // Update vbo
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);      
+    glBufferData(GL_ARRAY_BUFFER, _coords.size() * sizeof(Point), _coords.data(), GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Point), 0);    
     glEnableVertexAttribArray(0);
 
-    // Send the data to the gpu
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Point), 0);
-    glBufferData(GL_ARRAY_BUFFER, _coords.size() * sizeof(Point), _coords.data(), GL_DYNAMIC_DRAW);
-    glDrawArrays(GL_TRIANGLES, 0, _coords.size());
     _numVertices = _coords.size();
 
-    glDisableVertexAttribArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glDisable(GL_BLEND);
-    glUseProgram(0);
 }
 
 void FTLabel::recalculateVertices(const char* text, float x, float y) {
@@ -293,6 +257,15 @@ void FTLabel::render() {
     glUseProgram(0);
 }
 
+void FTLabel::HachikoRender(Hachiko::Program* program)
+{
+    program->Activate();
+    program->BindUniformFloat4x4("mvp", glm::value_ptr(_mvp));
+    program->BindUniformFloat4("textColor", glm::value_ptr(_textColor));
+    GLuint font_texture = _fontAtlas[_pixelSize]->getTexId();
+    Hachiko::ModuleTexture::Bind(font_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+}
+
 vector<string> FTLabel::splitText(const char* text) {
     string textStr = string(text);
     vector<string> words;
@@ -394,13 +367,6 @@ int FTLabel::getIndentation() {
 
 void FTLabel::setColor(float r, float b, float g, float a) {
     _textColor = glm::vec4(r, b, g, a);
-
-    // Update the textColor uniform
-    if(_programId != -1) {
-        glUseProgram(_programId);
-        glUniform4fv(_uniformTextColorHandle, 1, glm::value_ptr(_textColor));
-        glUseProgram(0);
-    }
 }
 
 glm::vec4 FTLabel::getColor() {
@@ -484,10 +450,4 @@ void FTLabel::scale(float x, float y, float z) {
 
 void FTLabel::recalculateMVP() {
     _mvp = _projection * _view * _model;
-
-    if(_uniformMVPHandle != -1) {
-        glUseProgram(_programId);
-        glUniformMatrix4fv(_uniformMVPHandle, 1, GL_FALSE, glm::value_ptr(_mvp));
-        glUseProgram(0);
-    }
 }

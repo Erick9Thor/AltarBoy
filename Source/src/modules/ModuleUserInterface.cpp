@@ -45,8 +45,9 @@ bool Hachiko::ModuleUserInterface::CleanUp()
 
 void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 {
-    Program* program = App->program->GetUserInterfaceProgram();
-    program->Activate();
+    Program* img_program = App->program->GetUserInterfaceImageProgram();
+    Program* txt_program = App->program->GetUserInterfaceTextProgram();
+
     glDepthFunc(GL_ALWAYS);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -61,23 +62,23 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 
     App->program->UpdateCamera(camera_data);
     BindSquare();
-    RecursiveDrawUI(scene->GetRoot(), program);
+    RecursiveDrawUI(scene->GetRoot(), img_program, txt_program);
     UnbindSuare();
     glDepthFunc(GL_LESS);
 }
 
-void Hachiko::ModuleUserInterface::RecursiveDrawUI(GameObject* game_object, Program* program)
+void Hachiko::ModuleUserInterface::RecursiveDrawUI(GameObject* game_object, Program* img_program, Program* txt_program)
 {
     ComponentCanvasRenderer* renderer = game_object->GetComponent<ComponentCanvasRenderer>();
 
     if (renderer && game_object->IsActive() && renderer->IsActive())
     {
-        renderer->Render(program);
+        renderer->Render(img_program, txt_program);
     }
 
     for (GameObject* child : game_object->children)
     {
-        RecursiveDrawUI(child, program);
+        RecursiveDrawUI(child, img_program, txt_program);
     }
 }
 

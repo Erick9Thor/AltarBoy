@@ -417,9 +417,6 @@
     <ClCompile Include="vendors\glm\detail\glm.cpp">
       <Filter>Vendors\Glm</Filter>
     </ClCompile>
-    <ClCompile Include="vendors\GLFont\GLUtils.cpp">
-      <Filter>Vendors\GLFont</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1188,9 +1185,6 @@
     </ClInclude>
     <ClInclude Include="vendors\glm\glm.hpp">
       <Filter>Vendors\Glm</Filter>
-    </ClInclude>
-    <ClInclude Include="vendors\GLFont\GLUtils.h">
-      <Filter>Vendors\GLFont</Filter>
     </ClInclude>
     <ClInclude Include="vendors\glm\gtx\gradient_paint.hpp">
       <Filter>Vendors\Glm</Filter>

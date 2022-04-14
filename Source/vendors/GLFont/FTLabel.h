@@ -27,8 +27,11 @@ using namespace std;
 
 class FontAtlas;
 
+class Hachiko::Program;
+
 class FTLabel {
 public:
+
     enum FontFlags {
         LeftAligned      = 1 << 1,
         RightAligned     = 1 << 2,
@@ -89,7 +92,7 @@ public:
 
     void render();
 
-    void HachikoRender();
+    void HachikoRender(Hachiko::Program* program);
 
 private:
 

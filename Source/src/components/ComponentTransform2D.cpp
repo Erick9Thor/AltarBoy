@@ -5,6 +5,7 @@
 #include "ComponentImage.h"
 #include "ComponentCanvasRenderer.h"
 #include "ComponentProgressBar.h"
+#include "ComponentText.h"
 
 #include "debugdraw.h"
 
@@ -327,6 +328,11 @@ void Hachiko::ComponentTransform2D::UpdateTransforms()
 
 void Hachiko::ComponentTransform2D::UpdateUIComponents()
 {
+    ComponentText* text = game_object->parent->GetComponent<ComponentText>();
+    if (text)
+    {
+        text->RefreshWindowSize();
+    }
 }
 
 void Hachiko::ComponentTransform2D::UpdateBoundingBox()

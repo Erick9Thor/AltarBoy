@@ -57,6 +57,7 @@ void Hachiko::ComponentImage::DrawGui()
 void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* program) const
 {
 	// Bind matrix
+    program->Activate();
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     // TODO
     const Texture* img_to_draw = &image;

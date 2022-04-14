@@ -2,8 +2,10 @@
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
 #include "ComponentButton.h"
+#include "ComponentCamera.h"
 
 #include "modules/ModuleProgram.h"
+#include "modules/ModuleCamera.h"
 
 #include "Program.h"
 
@@ -63,8 +65,8 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
     
     if (label)
     {
-        label->render();
-        program->Activate();
+        // Program is activated inside hachikorender
+        label->HachikoRender(program);
     }        
 }
 
@@ -86,13 +88,24 @@ void Hachiko::ComponentText::Load(JsonFormatterValue j_component)
     }    
 }
 
+void Hachiko::ComponentText::RefreshWindowSize()
+{
+    if (label)
+    {
+        unsigned windowWidth, windowHeight;
+        App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
+        label->setWindowSize(windowWidth, windowHeight);
+    }
+}
+
 void Hachiko::ComponentText::BuildLabel()
 {
     // TODO: Get From transform
     int startX = 100;
     int startY = 100;
-    int windowWidth = 800;
-    int windowHeight = 600;
+
+    unsigned windowWidth, windowHeight;
+    App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
     
     label = std::unique_ptr<FTLabel>(new FTLabel(font.gl_font, // Font face handle
                                                 "Hello world!", // Text to render
