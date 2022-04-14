@@ -328,10 +328,10 @@ void Hachiko::ComponentTransform2D::UpdateTransforms()
 
 void Hachiko::ComponentTransform2D::UpdateUIComponents()
 {
-    ComponentText* text = game_object->parent->GetComponent<ComponentText>();
+    ComponentText* text = game_object->GetComponent<ComponentText>();
     if (text)
     {
-        text->RefreshWindowSize();
+        text->Invalidate();
     }
 }
 

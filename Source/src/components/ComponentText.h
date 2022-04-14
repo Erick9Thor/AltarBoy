@@ -22,16 +22,23 @@ namespace Hachiko
         static Type GetType();
 
         void DrawGui() override;
-        void Draw(ComponentTransform2D* transform, Program* program) const;
+        void Draw(ComponentTransform2D* transform, Program* program);
 
         void Save(JsonFormatterValue j_component) const override;
         void Load(JsonFormatterValue j_component) override;
 
-        void RefreshWindowSize();
+        
 
+        void Invalidate()
+        {
+            dirty = true;
+        }
 
     private:
-        void BuildLabel();
+        void RefreshLabel(ComponentTransform2D* transform);
+        
+        bool dirty = true;
+        void BuildLabel(ComponentTransform2D* transform);
 
 
         Font font;

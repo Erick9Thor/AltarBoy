@@ -1,4 +1,4 @@
-#version 330 core
+#version 460
 
 in vec2 texcoord;
 uniform vec4 textColor;

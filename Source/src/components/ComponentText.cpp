@@ -26,7 +26,7 @@ void Hachiko::ComponentText::DrawGui()
         {
             std::string destination = std::string(ASSETS_FOLDER_FONTS) + "/" + font_filename_buffer;
             font = App->texture->LoadFont(destination.c_str());
-            BuildLabel();
+            BuildLabel(game_object->GetComponent<ComponentTransform2D>());
         }
         
 
@@ -51,11 +51,28 @@ void Hachiko::ComponentText::DrawGui()
         {
             label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
         }
+
+        static float2 sc(1.0f);
+        if (ImGui::DragFloat2("Sc", sc.ptr(), 2.0f, 0.0f, FLT_MAX))
+        {
+            label->scale(sc.x, sc.y, 1.0f);
+        }
+
+        /* static float2 sz(1.0f);
+        if (ImGui::DragFloat2("Sc", sc.ptr(), 2.0f, 0.0f, FLT_MAX))
+        {
+            label->setSize(sc.x, sc.y);
+        }*/
+        /* static float2 ps(100.0f);
+        if (ImGui::DragFloat2("Ps", ps.ptr(), 2.0f, 0.0f, FLT_MAX))
+        {
+            label->setPosition(ps.x, ps.y);
+        } */
 	}
     ImGui::PopID();
 }
 
-void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program) const
+void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program)
 {
     //program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     // Setting diffuse flag to false makes shader default to color
@@ -64,6 +81,9 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
     
     if (label)
     {
+        // Make sure transform is refreshed
+        transform->GetGlobalTransform();
+        RefreshLabel(transform);
         // Program is activated inside hachikorender
         label->HachikoRender(program);
     }        
@@ -83,21 +103,29 @@ void Hachiko::ComponentText::Load(JsonFormatterValue j_component)
     if (!font_path.empty())
     {
         font = App->texture->LoadFont(font_path.c_str());
-        BuildLabel();
+        BuildLabel(game_object->GetComponent<ComponentTransform2D>());
     }    
 }
 
-void Hachiko::ComponentText::RefreshWindowSize()
+void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 {
-    if (label)
+    if (dirty)
     {
         unsigned windowWidth, windowHeight;
         App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
         label->setWindowSize(windowWidth, windowHeight);
+        const float3& scale = transform->GetScale();
+        const float2& size = transform->GetSize();
+        //const float2& size = transform->GetPo();
+        //label->scale(scale.x, scale.y, scale.z);
+        //label->setSize(size.x, size.y);
+        const float3& pos = transform->GetGlobalScaledTransform().TranslatePart();
+        label->setPosition(pos.x + (windowWidth / 2), pos.y + (windowHeight / 2));
+        dirty = false;
     }
 }
 
-void Hachiko::ComponentText::BuildLabel()
+void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
 {
     // TODO: Get From transform
     int startX = 100;
@@ -116,4 +144,6 @@ void Hachiko::ComponentText::BuildLabel()
     label->setPixelSize(64);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
     label->appendFontFlags(FTLabel::FontFlags::Indented);
+
+    RefreshLabel(transform);
 }

@@ -40,14 +40,17 @@ namespace Hachiko
         {
             return size;
         }
+
+        [[nodiscard]] float3 GetScale() const
+        {
+            return scale;
+        }
         
         [[nodiscard]] float3 GetPivotOffsetFromParent() const;
         [[nodiscard]] float3 GetPivotScreenPosition() const;
 
         [[nodiscard]] float4x4 GetGlobalTransform();
         [[nodiscard]] float4x4 GetGlobalScaledTransform();
-
-        void UpdateHierarchy();
 
         bool HasDependentComponents(GameObject* game_object) const override;
         bool Intersects(const float2& mouse_pos) const;
