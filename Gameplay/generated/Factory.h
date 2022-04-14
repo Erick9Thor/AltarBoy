@@ -4,12 +4,12 @@
 
 namespace Hachiko
 {
-	class GameObject;
+class GameObject;
 
-	namespace Scripting
-	{
-		class Script;
-	}
+namespace Scripting
+{
+class Script;
+}
 }
 
 extern "C" GAMEPLAY_API Hachiko::Scripting::Script* __cdecl 

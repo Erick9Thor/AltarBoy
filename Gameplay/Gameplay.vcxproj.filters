@@ -55,11 +55,11 @@
     <Filter Include="Vendors\Yaml-cpp\Contrib">
       <UniqueIdentifier>{4e79e6fa-3f9a-423a-8705-0cc1d46b00b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scriptingUtil">
-      <UniqueIdentifier>{b5ff605b-6bbf-4616-a08c-e734095a1b1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="generated">
+    <Filter Include="Generated">
       <UniqueIdentifier>{420c8bbd-6b5a-4f11-97b2-3e30630b7d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptingUtil">
+      <UniqueIdentifier>{b5ff605b-6bbf-4616-a08c-e734095a1b1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -490,13 +490,13 @@
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
     <ClInclude Include="scriptingUtil\framework.h">
-      <Filter>scriptingUtil</Filter>
+      <Filter>ScriptingUtil</Filter>
     </ClInclude>
     <ClInclude Include="scriptingUtil\gameplaypch.h">
-      <Filter>scriptingUtil</Filter>
+      <Filter>ScriptingUtil</Filter>
     </ClInclude>
     <ClInclude Include="generated\Factory.h">
-      <Filter>generated</Filter>
+      <Filter>Generated</Filter>
     </ClInclude>
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="DynamicCamera.h" />
@@ -737,13 +737,13 @@
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
-      <Filter>scriptingUtil</Filter>
+      <Filter>ScriptingUtil</Filter>
     </ClCompile>
     <ClCompile Include="generated\Factory.cpp">
-      <Filter>generated</Filter>
+      <Filter>Generated</Filter>
     </ClCompile>
     <ClCompile Include="generated\SerializationMethods.cpp">
-      <Filter>generated</Filter>
+      <Filter>Generated</Filter>
     </ClCompile>
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
