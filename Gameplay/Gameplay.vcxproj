@@ -97,7 +97,11 @@
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(TargetPath)" "$(TargetDir)..\" /Y</Command>
+      <Command>xcopy "$(TargetDir)\$(TargetName).exp" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).pdb" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).lib" "$(TargetDir)..\" /Y
+xcopy "$(TargetPath)" "$(TargetDir)..\" /Y
+RD /S /Q "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,7 +130,11 @@
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)Gameplay.dll" "$(OutDir)..\" /Y</Command>
+      <Command>xcopy "$(TargetDir)\$(TargetName).exp" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).pdb" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).lib" "$(TargetDir)..\" /Y
+xcopy "$(TargetPath)" "$(TargetDir)..\" /Y
+RD /S /Q "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Play|x64'">
@@ -155,7 +163,11 @@
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>xcopy "$(OutDir)Gameplay.dll" "$(OutDir)..\" /Y</Command>
+      <Command>xcopy "$(TargetDir)\$(TargetName).exp" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).pdb" "$(TargetDir)..\" /Y
+xcopy "$(TargetDir)\$(TargetName).lib" "$(TargetDir)..\" /Y
+xcopy "$(TargetPath)" "$(TargetDir)..\" /Y
+RD /S /Q "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
