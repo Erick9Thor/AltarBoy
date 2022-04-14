@@ -197,20 +197,19 @@ void FTLabel::recalculateVertices(const char* text, float x, float y) {
         if(!w || !h)
             continue;
 
+        _coords.push_back(Point(x2 + w, -y2, chars[*p].xOffset + chars[*p].bitmapWidth / atlasWidth, 0));
+        
+        
+
         _coords.push_back(Point(x2,                // window x
                                 -y2,               // window y
                                 chars[*p].xOffset, // texture atlas x offset
                                 0));               // texture atlas y offset
 
-        _coords.push_back(Point(x2 + w,
-                                -y2,
-                                chars[*p].xOffset + chars[*p].bitmapWidth / atlasWidth,
-                                0));
+        _coords.push_back(Point(x2, -y2 - h, chars[*p].xOffset, chars[*p].bitmapHeight / atlasHeight));
+        
 
-        _coords.push_back(Point(x2,
-                                -y2 - h,
-                                chars[*p].xOffset,
-                                chars[*p].bitmapHeight / atlasHeight));
+        
 
         _coords.push_back(Point(x2 + w,
                                 -y2,

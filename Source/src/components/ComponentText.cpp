@@ -37,37 +37,26 @@ void Hachiko::ComponentText::DrawGui()
             return;
         }
 
+        ImGui::Text("No text = size is too small, nothing can be drawn");
+
         if (ImGui::InputText("Text", &label_text, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             label->setText(label_text.c_str());
+            Invalidate();
         }
 
         if (ImGui::DragFloat("Font Size", &font_size, 2.0f, 0.0f, FLT_MAX))
         {
             label->setPixelSize(static_cast<int>(font_size));
+            Invalidate();
         }
 
         if (ImGuiUtils::CompactColorPicker("Font Color", font_color.ptr()))
         {
             label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
+            Invalidate();
         }
 
-        static float2 sc(1.0f);
-        if (ImGui::DragFloat2("Sc", sc.ptr(), 2.0f, 0.0f, FLT_MAX))
-        {
-            label->scale(sc.x, sc.y, 1.0f);
-        }
-
-        /* static float2 sz(1.0f);
-        if (ImGui::DragFloat2("Sc", sc.ptr(), 2.0f, 0.0f, FLT_MAX))
-        {
-            label->setSize(sc.x, sc.y);
-        }*/
-        /* static float2 ps(100.0f);
-        if (ImGui::DragFloat2("Ps", ps.ptr(), 2.0f, 0.0f, FLT_MAX))
-        {
-            label->setPosition(ps.x, ps.y);
-        } */
 	}
     ImGui::PopID();
 }
@@ -114,12 +103,14 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
         unsigned windowWidth, windowHeight;
         App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
         label->setWindowSize(windowWidth, windowHeight);
-        const float3& scale = transform->GetScale();
         const float2& size = transform->GetSize();
         //const float2& size = transform->GetPo();
-        //label->scale(scale.x, scale.y, scale.z);
-        //label->setSize(size.x, size.y);
-        const float3& pos = transform->GetGlobalScaledTransform().TranslatePart();
+        
+        
+        const float4x4& trf = transform->GetGlobalTransform();
+        const float3& pos = trf.TranslatePart();
+        label->scale(trf.scaleX, trf.scaleY, trf.scaleZ);
+        label->setSize(size.x, size.y);
         label->setPosition(pos.x + (windowWidth / 2), pos.y + (windowHeight / 2));
         dirty = false;
     }
@@ -131,19 +122,24 @@ void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
     int startX = 100;
     int startY = 100;
 
+
     unsigned windowWidth, windowHeight;
     App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
+
+    const float4x4& trf = transform->GetGlobalTransform();
     
     label = std::unique_ptr<FTLabel>(new FTLabel(font.gl_font, // Font face handle
-                                                "Hello world!", // Text to render
-                                                startX,
-                                                startY,
-                                                windowWidth,
-                                                windowHeight));
+                                                 "", // Text to render
+                                                 startX,
+                                                 startY,
+                                                 windowWidth,
+                                                 windowHeight));
+    
+    label->setText(label_text.c_str()); // Text in constructor seems to not have effect
     label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
-    label->setPixelSize(64);
+    label->setPixelSize(font_size);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
-    label->appendFontFlags(FTLabel::FontFlags::Indented);
+    //label->appendFontFlags(FTLabel::FontFlags::Indented);
 
     RefreshLabel(transform);
 }
