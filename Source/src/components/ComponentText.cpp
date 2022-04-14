@@ -28,7 +28,6 @@ void Hachiko::ComponentText::DrawGui()
             font = App->texture->LoadFont(destination.c_str());
             BuildLabel();
         }
-
         
 
         if (!label)
@@ -117,12 +116,4 @@ void Hachiko::ComponentText::BuildLabel()
     label->setPixelSize(64);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
     label->appendFontFlags(FTLabel::FontFlags::Indented);
-    //label->setText(label_text);
-    /* label->setPosition(500, 250);
-    label->setSize(100, 100);
-    label->setPixelSize(24);
-    label->setIndentation(50);
-    label->setAlignment(FTLabel::FontFlags::LeftAligned);
-    label->setColor(0.89, 0.26, 0.3, 0.9);
-    label->rotate(90, 0, 1, 0); */
 }

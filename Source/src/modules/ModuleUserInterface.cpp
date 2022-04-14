@@ -61,7 +61,6 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
     camera_data.proj = float4x4::D3DOrthoProjLH(-1, 1, static_cast<float>(width), static_cast<float>(height));
 
     App->program->UpdateCamera(camera_data);
-    BindSquare();
     RecursiveDrawUI(scene->GetRoot(), img_program, txt_program);
     UnbindSuare();
     glDepthFunc(GL_LESS);

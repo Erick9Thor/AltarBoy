@@ -260,10 +260,13 @@ void FTLabel::render() {
 void FTLabel::HachikoRender(Hachiko::Program* program)
 {
     program->Activate();
+    glBindVertexArray(_vao);
     program->BindUniformFloat4x4("mvp", glm::value_ptr(_mvp));
     program->BindUniformFloat4("textColor", glm::value_ptr(_textColor));
     GLuint font_texture = _fontAtlas[_pixelSize]->getTexId();
     Hachiko::ModuleTexture::Bind(font_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+
+    glDrawArrays(GL_TRIANGLES, 0, _coords.size());
 }
 
 vector<string> FTLabel::splitText(const char* text) {
