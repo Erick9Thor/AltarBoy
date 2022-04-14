@@ -3,26 +3,26 @@
 
 namespace Hachiko
 {
-	class ComponentButton;
-	class GameObject;
+class ComponentButton;
+class GameObject;
 
-	namespace Scripting
-	{
-		class BackToMainMenu : public Script
-		{
-			SERIALIZATION_METHODS(false)
+namespace Scripting
+{
+class BackToMainMenu : public Script
+{
+	SERIALIZATION_METHODS(false)
 
-		public:
-			BackToMainMenu(GameObject* game_object);
-			~BackToMainMenu() override = default;
+public:
+	BackToMainMenu(GameObject* game_object);
+	~BackToMainMenu() override = default;
 
-			void OnAwake() override;
-			void OnStart() override;
-			void OnUpdate() override;
+	void OnAwake() override;
+	void OnStart() override;
+	void OnUpdate() override;
 
-		private:
-			SERIALIZE_FIELD(ComponentButton*, _button_back);
+private:
+	SERIALIZE_FIELD(ComponentButton*, _button_back);
 
-		};
-	} // namespace Scripting
+};
+} // namespace Scripting
 } // namespace Hachiko

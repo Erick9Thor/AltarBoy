@@ -25,5 +25,5 @@ private:
 	SERIALIZE_FIELD(float, _speed);
 	SERIALIZE_FIELD(float, _lerp_position);
 };
-}
-}
+} // namespace Scripting
+} // namespace Hachiko

@@ -5,6 +5,7 @@
 namespace Hachiko
 { 
 class GameObject;
+
 namespace Scripting
 {
 class PlayerController : public Script
@@ -32,5 +33,5 @@ private:
 	SERIALIZE_FIELD(float, _speed_y);
 	SERIALIZE_FIELD(math::float3, _starting_position);
 };
-}
-}
+} // namespace Scripting
+} // namespace Hachiko

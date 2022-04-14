@@ -14,12 +14,11 @@ Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
 	, _credits(nullptr)
 	, _settings(nullptr)
 	, _button_back(nullptr)
-{}
+{
+}
 
 void Hachiko::Scripting::MainMenuManager::OnAwake()
 {
-	HE_LOG("ON AWAKE");
-
 	bool any_null = false;
 
 	_main_background = game_object->GetFirstChildWithName(
@@ -60,14 +59,13 @@ void Hachiko::Scripting::MainMenuManager::OnAwake()
 
 	if (any_null)
 	{
-		HE_LOG("If you renamed any game object in this scene," 
+		HE_LOG("If you renamed or deleted any game object in this scene," 
 			   " please check this script.");
 	}
 }
 
 void Hachiko::Scripting::MainMenuManager::OnStart()
 {
-	HE_LOG("ON START");
 	_state = State::MAIN;
 	_state_changed = true;
 }
@@ -145,7 +143,6 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 		
 		return;
 	}
-
 }
 
 void Hachiko::Scripting::MainMenuManager::OnUpdateSettings()

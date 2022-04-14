@@ -1,7 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
-#include "components/ComponentTransform.h"
-#include "modules/ModuleSceneManager.h"
+#include <components/ComponentTransform.h>
+#include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -16,7 +16,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
 	, _starting_position(math::float3::zero)
-{}
+{
+}
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
@@ -29,7 +30,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_speed_y = 0.0f;
 	
 	_starting_position = math::float3(0.0f, 1.0f, 0.0f);
-	HE_LOG("OnAwake %f", _movement_speed);
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -139,11 +139,14 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (!_is_dashing)
 	{
-		math::Plane plane(math::vec(0.0f, current_position.y, 0.0f),
-			math::vec(0.0f, 1.0f, 0.0f));
-		math::LineSegment lineSeg = CameraManagement::GetRaycastLineSegment();
+		math::Plane plane(
+			math::float3(0.0f, current_position.y, 0.0f),
+			math::float3(0.0f, 1.0f, 0.0f));
 
-		math::vec intersect = plane.ClosestPoint(lineSeg);
+		math::LineSegment line_segment = 
+			CameraManagement::GetRaycastLineSegment();
+
+		math::float3 intersect = plane.ClosestPoint(line_segment);
 
 		// Make the player look the mouse:
 		transform->LookAtTarget(intersect);
