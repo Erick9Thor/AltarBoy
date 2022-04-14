@@ -34,7 +34,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 void Hachiko::Scripting::PlayerController::OnStart()
 {
-	//game_object->GetTransform()->SetGlobalPosition(_starting_position);
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -54,13 +53,15 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	float delta_time = Time::DeltaTime();
 	float velocity = _movement_speed * delta_time;
 
-	GameObject* go = SceneManagement::Raycast(current_position - math::float3(0.0f, 1.0f, 0.0f), current_position);
-	if (go == nullptr || go->name == "Player") 
+	GameObject* raycast_hit = SceneManagement::Raycast(
+		current_position - math::float3(0.0f, 1.0f, 0.0f), current_position);
+
+	if (raycast_hit == nullptr || raycast_hit->name == "Player") 
 	{
 		_is_falling = true;
 	}
 
-	if (go->name == "Goal")
+	if (raycast_hit != nullptr && raycast_hit->name == "Goal")
 	{
 		SceneManagement::SwitchScene("Assets/Scenes/win.scene");
 	}
@@ -113,7 +114,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		current_position.y -= _speed_y * delta_time;
 	}
 
-	// Reset falling
+	// Reset falling:
 	if (Input::GetKeyDown(Input::KeyCode::KEY_P))
 	{
 		if (_is_falling)
@@ -129,22 +130,22 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_speed_y = 0;
 		current_position = _starting_position;
 		_is_falling = false;
+
 		SceneManagement::SwitchScene("Assets/Scenes/lose.scene");
 	}
 
-	// Loading scene
-	/*if (Input::GetKeyDown(Input::KeyCode::KEY_0))
-	{
-		SceneManagement::SwitchScene("Assets/Scenes/first_deliver_scene.scene");
-	}*/
-
+	// Apply the position:
 	transform->SetGlobalPosition(current_position);
 
-	/* Make the player look the mouse */
-	math::Plane plane(math::vec(0.0f, current_position.y, 0.0f), math::vec(0.0f, 1.0f, 0.0f));
-	math::LineSegment lineSeg = CameraManagement::GetRaycastLineSegment();
+	if (!_is_dashing)
+	{
+		math::Plane plane(math::vec(0.0f, current_position.y, 0.0f),
+			math::vec(0.0f, 1.0f, 0.0f));
+		math::LineSegment lineSeg = CameraManagement::GetRaycastLineSegment();
 
-	math::vec intersect = plane.ClosestPoint(lineSeg);
-	transform->LookAtTarget(intersect);
-	/* Make the player look the mouse */
+		math::vec intersect = plane.ClosestPoint(lineSeg);
+
+		// Make the player look the mouse:
+		transform->LookAtTarget(intersect);
+	}
 }
