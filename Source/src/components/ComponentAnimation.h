@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include <resources/ResourceAnimation.h>
+#include "resources/ResourceAnimation.h"
 
 namespace Hachiko
 {
