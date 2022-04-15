@@ -28,6 +28,7 @@ namespace Hachiko
             IMAGE,
             BUTTON,
             PROGRESS_BAR,
+            ANIMATION,
             UNKNOWN
         };
 
@@ -44,9 +45,11 @@ namespace Hachiko
 
         virtual ~Component() = default;
 
-        virtual void Start() { }
-        virtual void Update() { }
+        // --- COMPONENT EVENTS --- //
 
+        virtual void Start() { }
+        virtual void Stop() {};
+        virtual void Update() { }
         virtual void OnTransformUpdated() {}
 
         [[nodiscard]] Type GetType() const

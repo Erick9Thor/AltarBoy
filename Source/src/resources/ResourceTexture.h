@@ -58,7 +58,7 @@ namespace Hachiko
         unsigned mag_filter = 0x2601;
         unsigned wrap = 0x2900;
 
-        byte* data{};
+        ::byte* data{};
         unsigned data_size = 0;
 
         std::string path;
