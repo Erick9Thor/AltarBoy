@@ -3,12 +3,12 @@
 #include "ComponentAnimation.h"
 #include "ComponentTransform.h"
 
-#include "animation/AnimController.h"
+#include "animation/AnimationController.h"
 #include "importers/AnimationImporter.h"
 
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
-    controller = new AnimController();
+    controller = new AnimationController();
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()

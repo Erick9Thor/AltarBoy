@@ -171,7 +171,7 @@
   <ItemGroup>
     <ClCompile Include="src\resources\ResourceAnimation.cpp" />
     <ClCompile Include="src\importers\AnimationImporter.cpp" />
-    <ClCompile Include="src\components\animation\AnimController.cpp" />
+    <ClCompile Include="src\components\animation\AnimationController.cpp" />
     <ClCompile Include="src\components\ComponentAnimation.cpp" />
     <ClCompile Include="src\core\preferences\src\CameraPreferences.cpp" />
     <ClCompile Include="src\core\preferences\src\EditorPreferences.cpp" />
@@ -558,7 +558,7 @@
   <ItemGroup>
     <ClInclude Include="src\resources\ResourceAnimation.h" />
     <ClInclude Include="src\importers\AnimationImporter.h" />
-    <ClInclude Include="src\components\animation\AnimController.h" />
+    <ClInclude Include="src\components\animation\AnimationController.h" />
     <ClInclude Include="src\components\ComponentAnimation.h" />
     <ClInclude Include="src\core\preferences\src\CameraPreferences.h" />
     <ClInclude Include="src\core\preferences\src\EditorPreferences.h" />

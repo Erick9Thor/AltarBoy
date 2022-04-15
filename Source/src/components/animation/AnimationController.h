@@ -6,11 +6,11 @@
 
 namespace Hachiko
 {
-    class AnimController
+    class AnimationController
     {
     public:
-        AnimController();
-        ~AnimController();
+        AnimationController();
+        ~AnimationController();
 
         void Play();
         void Stop();

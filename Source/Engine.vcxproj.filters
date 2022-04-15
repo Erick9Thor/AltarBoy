@@ -441,7 +441,7 @@
     <ClCompile Include="src\components\ComponentAnimation.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\animation\AnimController.cpp">
+    <ClCompile Include="src\components\animation\AnimationController.cpp">
       <Filter>Core\Components\animation</Filter>
     </ClCompile>
     <ClCompile Include="src\importers\AnimationImporter.cpp">
@@ -1142,7 +1142,7 @@
     <ClInclude Include="src\components\ComponentAnimation.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\animation\AnimController.h">
+    <ClInclude Include="src\components\animation\AnimationController.h">
       <Filter>Core\Components\animation</Filter>
     </ClInclude>
     <ClInclude Include="src\importers\AnimationImporter.h">
@@ -1151,6 +1151,7 @@
     <ClInclude Include="src\resources\ResourceAnimation.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

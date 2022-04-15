@@ -6,7 +6,7 @@
 namespace Hachiko
 {
     class GameObject;
-    class AnimController;
+    class AnimationController;
 
     class ComponentAnimation : public Component
     {
@@ -33,7 +33,7 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
     private:
-        AnimController* controller = nullptr;
+        AnimationController* controller = nullptr;
         ResourceAnimation* resource = nullptr;
     };
 } // namespace Hachiko

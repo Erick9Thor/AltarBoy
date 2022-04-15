@@ -1,27 +1,27 @@
 #include "core/hepch.h"
-#include "AnimController.h"
+#include "AnimationController.h"
 
-Hachiko::AnimController::AnimController() {}
+Hachiko::AnimationController::AnimationController() {}
 
-Hachiko::AnimController::~AnimController() {}
+Hachiko::AnimationController::~AnimationController() {}
 
-void Hachiko::AnimController::Play() {}
+void Hachiko::AnimationController::Play() {}
 
-void Hachiko::AnimController::Stop() {}
+void Hachiko::AnimationController::Stop() {}
 
-void Hachiko::AnimController::Update() {}
+void Hachiko::AnimationController::Update() {}
 
-bool Hachiko::AnimController::GetTransform(const std::string& channel_name, math::float3& position, Quat& rotation) const
+bool Hachiko::AnimationController::GetTransform(const std::string& channel_name, math::float3& position, Quat& rotation) const
 {
     return false;
 }
 
-float3 Hachiko::AnimController::Interpolate(const float3& first, const float3& second, float lambda)
+float3 Hachiko::AnimationController::Interpolate(const float3& first, const float3& second, float lambda)
 {
     return first * (1.0f - lambda) + second * lambda;
 }
 
-Quat Hachiko::AnimController::Interpolate(const Quat& first, const Quat& second, float lambda) const
+Quat Hachiko::AnimationController::Interpolate(const Quat& first, const Quat& second, float lambda) const
 {
     Quat result;
     float dot = first.Dot(second);
