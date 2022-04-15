@@ -16,6 +16,7 @@ namespace Hachiko
             MESH,
             TEXTURE,
             MATERIAL,
+            ANIMATION,
             COUNT
         };
 

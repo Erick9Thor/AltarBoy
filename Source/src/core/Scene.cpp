@@ -6,6 +6,7 @@
 #include "components/ComponentMesh.h"
 #include "components/ComponentMaterial.h"
 #include "components/ComponentImage.h"
+#include "components/ComponentAnimation.h"
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"

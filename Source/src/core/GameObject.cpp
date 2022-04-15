@@ -7,6 +7,7 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
+#include "components/ComponentAnimation.h"
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -127,6 +128,9 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::CAMERA):
         new_component = new ComponentCamera(this);
         break;
+    case (Component::Type::ANIMATION):
+        new_component = new ComponentAnimation(this);
+        break;
     case (Component::Type::MESH):
         new_component = new ComponentMesh(this);
         break;
@@ -167,6 +171,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
             new_component = new ComponentProgressBar(this);
         break;
     }
+
 
     if (new_component != nullptr)
     {

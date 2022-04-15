@@ -55,9 +55,6 @@ namespace Hachiko
         [[nodiscard]] const Quat& GetGlobalRotation();
         [[nodiscard]] const float3& GetGlobalRotationEuler();
 
-
-
-
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
@@ -66,7 +63,6 @@ namespace Hachiko
     private:
         void Invalidate();
         void UpdateTransform();  
-
 
     private:
         bool dirty;
