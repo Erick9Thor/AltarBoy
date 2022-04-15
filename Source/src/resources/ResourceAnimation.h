@@ -29,10 +29,7 @@ namespace Hachiko
         struct Node
         {
             Node() = default;
-            Node(const std::string name, unsigned int index_parent) : name(name), index_parent(index_parent)
-            {
-                ;
-            }
+            Node(const std::string name, unsigned int index_parent) : name(name), index_parent(index_parent) {}
 
             /* TODO: ADD transform and array od meshMat (¿point to resource?)*/
 
