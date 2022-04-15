@@ -58,11 +58,10 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 	// Teleport player with mouse double click
 	if (App->input->GetKey(SDL_SCANCODE_RALT) == Hachiko::KeyState::KEY_REPEAT && ImGui::IsMouseDoubleClicked(0))
 	{
-        Plane plane = Plane(vec(50, 0, 50), vec(50, 0, -50), vec(-50, 0, -50));
+        Plane plane(vec(50, 0, 50), vec(50, 0, -50), vec(-50, 0, -50));
         float d = 0;
         if (line.Intersects(plane, &d))
         {
-            vec v = line.GetPoint(d);
             player = FindPlayer();
             player->GetTransform()->SetGlobalPosition(line.GetPoint(d));
         }
@@ -74,7 +73,7 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
         player = FindPlayer();
         float3 currentPosition = player->GetTransform()->GetGlobalPosition();
 		
-		int dist = 1000.0f;
+		float dist = 1000.0f;
 		int loc = 0;
 		for (int i = 0; i < playerLocations.size(); ++i)
 		{
