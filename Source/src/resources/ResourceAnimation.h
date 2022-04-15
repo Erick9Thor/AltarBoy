@@ -6,7 +6,6 @@
 #include <memory>
 #include <MathGeoLibFwd.h>
 
-using namespace std;
 
 namespace Hachiko
 {
@@ -35,7 +34,7 @@ namespace Hachiko
                 ;
             }
 
-            /* TODO: ADD transform and array od meshMat (¿point to resource?)*/
+            /* TODO: ADD transform and array od meshMat (Â¿point to resource?)*/
 
             std::string name;
             unsigned int index_parent;
