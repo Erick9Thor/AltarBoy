@@ -22,11 +22,10 @@ bool Hachiko::ModuleDebugMode::Init()
 	player = FindPlayer();
 
 	// God mode
-    playerLocations.resize(4);
-    playerLocations[0] = float3(0.0f, 0.0f, 0.0f);
-    playerLocations[1] = float3(10.0f, 0.0f, 0.0f);
-    playerLocations[2] = float3(10.0f, 0.0f, 7.0f);
-    playerLocations[3] = float3(7.0f, 0.0f, 7.0f);
+    playerLocations.push_back(float3(0.0f, 0.0f, 0.0f));
+    playerLocations.push_back(float3(10.0f, 0.0f, 0.0f));
+    playerLocations.push_back(float3(10.0f, 0.0f, 7.0f));
+    playerLocations.push_back(float3(7.0f, 0.0f, 7.0f));
 	
 	SetupWindow();
 
@@ -69,7 +68,7 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
         }
 	}
 
-	// Teleport player to the nearest position from playerLocations
+	// Teleport player to the nearest position in playerLocations
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == Hachiko::KeyState::KEY_DOWN)
 	{
         player = FindPlayer();
@@ -88,7 +87,7 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
         player->GetTransform()->SetGlobalPosition(playerLocations[loc]);
 	}
 	
-	// Teleport player to the next position from playerLocations
+	// Teleport player to the next position in playerLocations
     if (App->input->GetKey(SDL_SCANCODE_RETURN) == Hachiko::KeyState::KEY_DOWN)
 	{
         player = FindPlayer();
