@@ -1,26 +1,26 @@
 #pragma once
 
-#include <MathGeoLib.h>
-#include <vector>
-
 #include "utils/UUID.h"
+#include "core/serialization/ISerializable.h"
 #include "components/Component.h"
 
 namespace Hachiko
 {
-    class JsonFormatterValue;
     class ComponentTransform;
     class ComponentCamera;
     class Program;
     class Scene;
 
-    class GameObject final
+    class GameObject final : public ISerializable
     {
         friend class Component;
 
     public:
         GameObject(const char* name = "Unnamed");
-        GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
+        GameObject(GameObject* parent,
+                   const float4x4& transform, 
+                   const char* name = "Unnamed", 
+                   UID uid = UUID::GenerateUID());
         GameObject(GameObject* parent,
                    const char* name = "Unnamed",
                    UID uid = UUID::GenerateUID(),
@@ -47,7 +47,7 @@ namespace Hachiko
 
         void SetActive(bool set_active);
 
-        bool IsActive() const
+        [[nodiscard]] bool IsActive() const
         {
             return active;
         }
@@ -59,13 +59,18 @@ namespace Hachiko
         void DrawBoundingBox() const;
         void UpdateBoundingBoxes();
 
-        UID getUID() const
+        [[nodiscard]] UID GetID() const
         {
             return uid;
         }
 
-        void Save(JsonFormatterValue j_gameObject) const;
-        void Load(JsonFormatterValue j_gameObject);
+        void SetID(const UID new_id) 
+        {
+            uid = new_id;
+        }
+
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
         [[nodiscard]] const OBB& GetOBB() const
         {
@@ -99,14 +104,33 @@ namespace Hachiko
             return nullptr;
         }
 
-        std::string name;
+        [[nodiscard]] const std::string& GetName() const
+        {
+            return name;
+        }
+
+        void SetName(const std::string& new_name)
+        {
+            name = new_name;
+        }
+
+        void Enable()
+        {
+            active = true;
+        }
+
+        void Disable()
+        {
+            active = false;
+        }
+
         Scene* scene_owner = nullptr;
         GameObject* parent = nullptr;
         std::vector<GameObject*> children;
 
+    public:
         bool active = true;
-
-    private:
+        std::string name;
         bool started = false;
         std::vector<Component*> components;
         ComponentTransform* transform = nullptr;

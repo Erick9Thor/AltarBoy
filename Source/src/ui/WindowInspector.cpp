@@ -11,7 +11,7 @@ Hachiko::WindowInspector::~WindowInspector() = default;
 void Hachiko::WindowInspector::Update()
 {
     ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
-    if (ImGui::Begin((std::string(ICON_FA_EYE " ") + name).c_str(), &active))
+    if (ImGui::Begin(StringUtils::Concat(ICON_FA_EYE, " ", name).c_str(), &active))
     {
         DrawGameObject(App->editor->GetSelectedGameObject());
     }
@@ -20,34 +20,67 @@ void Hachiko::WindowInspector::Update()
 
 void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
 {
-    if (game_object != nullptr)
+    if (game_object == nullptr)
     {
-        char go_name[50];
-        strcpy_s(go_name, 50, game_object->name.c_str());
-        const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
-        if (ImGui::InputText("###", go_name, 50, name_input_flags))
+        return;
+    }
+    char game_object_name[50];
+    strcpy_s(game_object_name, 50, game_object->GetName().c_str());
+    const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+    if (ImGui::InputText("###", game_object_name, 50, name_input_flags))
+    {
+        game_object->SetName(game_object_name);
+    }
+
+    ImGui::SameLine();
+    bool activate = game_object->IsActive();
+    if (ImGui::Checkbox("Active", &activate))
+    {
+        activate ? game_object->Enable() : game_object->Disable();
+    }
+
+    std::vector<Component*> game_object_components = game_object->GetComponents();
+    for (auto it = game_object_components.begin(); it != game_object_components.end(); ++it)
+    {
+        (*it)->DrawGui();
+    }
+
+    ImGui::Separator();
+    const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
+    ImGui::SetCursorPosX(x);
+    if (ImGui::Button(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()))
+    {
+        ImGui::OpenPopup("AddComponentPopup");
+    }
+
+    if (ImGui::BeginPopup("AddComponentPopup"))
+    {
+        if (ImGui::MenuItem("Camera"))
         {
-            game_object->name = go_name;
+            game_object->CreateComponent(Component::Type::CAMERA);
+            ImGui::CloseCurrentPopup();
         }
-
-        ImGui::SameLine();
-        ImGui::Checkbox("Active", &game_object->active);
-
-        std::vector<Component*> go_components = game_object->GetComponents();
-        for (auto it = go_components.begin(); it != go_components.end(); ++it)
+        if (ImGui::MenuItem("Point Light"))
         {
-            (*it)->DrawGui();
+            game_object->CreateComponent(Component::Type::POINTLIGHT);
+            ImGui::CloseCurrentPopup();
         }
-
-        ImGui::Separator();
-        const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize((std::string(ICON_FA_PLUS " ") + "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
-        ImGui::SetCursorPosX(x);
-        if (ImGui::Button((std::string(ICON_FA_PLUS " ") + "Add component").c_str()))
+        if (ImGui::MenuItem("Spot Light"))
         {
-            ImGui::OpenPopup("AddComponentPopup");
+            game_object->CreateComponent(Component::Type::SPOTLIGHT);
+            ImGui::CloseCurrentPopup();
         }
-
-        if (ImGui::BeginPopup("AddComponentPopup"))
+        if (ImGui::MenuItem("Dir Light"))
+        {
+            game_object->CreateComponent(Component::Type::DIRLIGHT);
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Mesh"))
+        {
+            game_object->CreateComponent(Component::Type::MESH);
+            ImGui::CloseCurrentPopup();
+        }
+        if (ImGui::MenuItem("Material"))
         {
             if (ImGui::MenuItem("Camera"))
             {
@@ -106,5 +139,6 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             }
             ImGui::EndPopup();
         }
+        ImGui::EndPopup();
     }
 }

@@ -6,7 +6,7 @@
 
 namespace Hachiko
 {
-    struct Texture
+    struct Texture // TODO: removed
     {
         bool loaded = false;
         unsigned id = 0;
@@ -15,13 +15,15 @@ namespace Hachiko
         unsigned height = 0;
     };
 
-    struct TextureCube
+    struct TextureCube // TODO: removed
     {
         bool loaded = false;
         unsigned id{};
         unsigned widths[6]{};
         unsigned heighths[6]{};
     };
+
+    class ResourceTexture;
 
     class ModuleTexture final : public Module
     {
@@ -32,7 +34,11 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
+        static ResourceTexture* ImportResource(UID uid, const char* path, bool flip = true);
+
+        [[deprecated]]
         static Texture Load(const char* path, bool flip = true);
+        [[deprecated]]
         static void Unload(Texture& texture);
         static TextureCube LoadCubeMap(const char* paths[6]);
         static void Bind(unsigned id, unsigned slot);

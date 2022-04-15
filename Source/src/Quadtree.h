@@ -32,7 +32,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsLeaf() const
         {
-            return childs[0] == nullptr;
+            return children[0] == nullptr;
         }
 
         [[nodiscard]] const AABB& GetBox() const
@@ -48,7 +48,7 @@ namespace Hachiko
         template<typename T>
         void GetIntersections(std::vector<GameObject*>& objects, const T& primitive) const;
 
-        QuadtreeNode* childs[static_cast<int>(Quadrants::COUNT)]{};
+        QuadtreeNode* children[static_cast<int>(Quadrants::COUNT)]{};
 
         void DebugDraw();
 
@@ -96,11 +96,11 @@ namespace Hachiko
             }
 
             // If it has one child all exist
-            if (childs[0] != nullptr)
+            if (children[0] != nullptr)
             {
                 for (int i = 0; i < 4; ++i)
                 {
-                    childs[i]->GetIntersections(intersected, primitive);
+                    children[i]->GetIntersections(intersected, primitive);
                 }
             }
         }

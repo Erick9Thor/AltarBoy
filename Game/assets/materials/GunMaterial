@@ -1,0 +1,12 @@
+id: 2666552267691168624
+type: 1
+name: GunMaterial
+diffuse: ""
+specular: ""
+normals: ""
+diffuse_path: ""
+specular_path: ""
+normals_path: ""
+diffuse_color: [1, 1, 1, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 2
