@@ -18,11 +18,11 @@ bool Hachiko::ModuleSceneManager::Init()
     // main_scene = new Scene();
 
     //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/lights_delivery.scene");
-    main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
+    //main_scene = SceneImporter::LoadScene(ASSETS_FOLDER "/Scenes/first_deliver_scene.scene");
 
     //LoadModel(ASSETS_FOLDER "\\Models\\BakerHouse.fbx"); //TODO: Remove this when importen will be created
 
-    // CreateEmptyScene();
+     CreateEmptyScene();
     // LoadScene(LIBRARY_SCENE_FOLDER "/survival_shooter.scene");
 
 #ifdef PLAY_BUILD
