@@ -158,11 +158,28 @@
   <ItemGroup>
     <ClCompile Include="src\Gameplay.cpp" />
     <ClCompile Include="src\LogFunction.cpp" />
-    <ClCompile Include="src\scripting\serialization\ISerializable.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
     <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
+    <ClCompile Include="src\resources\ResourceAnimation.cpp" />
+    <ClCompile Include="src\importers\AnimationImporter.cpp" />
+    <ClCompile Include="src\components\animation\AnimationController.cpp" />
+    <ClCompile Include="src\components\ComponentAnimation.cpp" />
+    <ClCompile Include="src\core\preferences\src\CameraPreferences.cpp" />
+    <ClCompile Include="src\core\preferences\src\EditorPreferences.cpp" />
+    <ClCompile Include="src\core\preferences\src\GlobalPreferences.cpp" />
+    <ClCompile Include="src\core\preferences\src\RenderPreferences.cpp" />
+    <ClCompile Include="src\core\preferences\src\ResourcesPreferences.cpp" />
+    <ClCompile Include="src\core\preferences\PreferenceManager.cpp" />
+    <ClCompile Include="src\core\serialization\SceneSerializer.cpp" />
+    <ClCompile Include="src\importers\ModelImporter.cpp" />
+    <ClCompile Include="src\importers\ImporterManager.cpp" />
+    <ClCompile Include="src\modules\ModuleResources.cpp" />
+    <ClCompile Include="src\importers\TextureImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceTexture.cpp" />
+    <ClCompile Include="src\resources\ResourceModel.cpp" />
+    <ClCompile Include="src\ui\WindowResource.cpp" />
     <ClCompile Include="src\components\Component.cpp" />
     <ClCompile Include="src\components\ComponentButton.cpp" />
     <ClCompile Include="src\components\ComponentCanvas.cpp" />
@@ -327,8 +344,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\importers\MaterialImporter.cpp" />
-    <ClCompile Include="src\importers\SceneImporter.cpp" />
-    <ClCompile Include="src\Modules\ModuleEvent.cpp" />
+    <ClCompile Include="src\modules\ModuleEvent.cpp" />
     <ClCompile Include="src\modules\ModuleFileSystem.cpp" />
     <ClCompile Include="src\resources\ResourceMesh.cpp" />
     <ClCompile Include="src\resources\ResourceMaterial.cpp" />
@@ -607,7 +623,6 @@
     <ClCompile Include="src\ui\WindowInspector.cpp" />
     <ClCompile Include="src\ui\WindowScene.cpp" />
     <ClCompile Include="src\ui\WindowConsole.cpp" />
-    <ClCompile Include="src\ui\WindowResource.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
@@ -616,9 +631,30 @@
     <ClInclude Include="src\events\SceneLoadEventPayload.h" />
     <ClInclude Include="src\Gameplay.h" />
     <ClInclude Include="src\HachikoApiDefine.h" />
-    <ClInclude Include="src\scripting\serialization\ISerializable.h" />
+    <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\scripting\Script.h" />
+    <ClInclude Include="src\resources\ResourceAnimation.h" />
+    <ClInclude Include="src\importers\AnimationImporter.h" />
+    <ClInclude Include="src\components\animation\AnimationController.h" />
+    <ClInclude Include="src\components\ComponentAnimation.h" />
+    <ClInclude Include="src\core\preferences\src\CameraPreferences.h" />
+    <ClInclude Include="src\core\preferences\src\EditorPreferences.h" />
+    <ClInclude Include="src\core\preferences\src\GlobalPreferences.h" />
+    <ClInclude Include="src\core\preferences\src\RenderPreferences.h" />
+    <ClInclude Include="src\core\preferences\src\ResourcesPreferences.h" />
+    <ClInclude Include="src\core\preferences\PreferenceManager.h" />
+    <ClInclude Include="src\core\preferences\Preferences.h" />
+    <ClInclude Include="src\core\serialization\Definitions.h" />
+    <ClInclude Include="src\core\serialization\SceneSerializer.h" />
+    <ClInclude Include="src\core\serialization\ISerializable.h" />
+    <ClInclude Include="src\core\serialization\TypeConverter.h" />
+    <ClInclude Include="src\importers\Importer.h" />
+    <ClInclude Include="src\importers\ModelImporter.h" />
+    <ClInclude Include="src\importers\ImporterManager.h" />
+    <ClInclude Include="src\modules\ModuleResources.h" />
+    <ClInclude Include="src\resources\ResourceTexture.h" />
+    <ClInclude Include="src\resources\ResourceModel.h" />
     <ClInclude Include="src\components\ComponentButton.h" />
     <ClInclude Include="src\components\ComponentCanvas.h" />
     <ClInclude Include="src\components\ComponentCanvasRenderer.h" />
@@ -626,7 +662,6 @@
     <ClInclude Include="src\components\ComponentProgressBar.h" />
     <ClInclude Include="src\components\ComponentTransform2D.h" />
     <ClInclude Include="src\components\ISelectable.h" />
-    <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\events\InputEventPayload.h" />
     <ClInclude Include="src\events\MouseEventPayload.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
@@ -635,8 +670,10 @@
     <ClInclude Include="src\modules\ModuleDebugMode.h" />
     <ClInclude Include="src\modules\ModuleUserInterface.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
+    <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="src\utils\WindowsFileUtil.h" />
+    <ClInclude Include="src\importers\TextureImporter.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
@@ -667,7 +704,6 @@
     <ClInclude Include="vendors\PhysicsFS\physfs_miniz.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs_platforms.h" />
     <ClInclude Include="src\importers\MaterialImporter.h" />
-    <ClInclude Include="src\importers\SceneImporter.h" />
     <ClInclude Include="src\modules\ModuleFileSystem.h" />
     <ClInclude Include="src\resources\ResourceMesh.h" />
     <ClInclude Include="src\resources\ResourceMaterial.h" />
@@ -795,7 +831,6 @@
     <ClInclude Include="src\ui\WindowInspector.h" />
     <ClInclude Include="src\ui\WindowScene.h" />
     <ClInclude Include="src\ui\WindowConsole.h" />
-    <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\utils\UUID.h" />
     <ClInclude Include="src\ui\WindowTimers.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h" />

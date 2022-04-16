@@ -7,7 +7,7 @@
 Hachiko::Scripting::Script::Script(GameObject* new_game_object, 
 	std::string new_name) 
 	: Component(Hachiko::Component::Type::SCRIPT, new_game_object)
-	, ISerializable()
+	, IRuntimeSerializable()
 	, name(new_name) 
 {
 	active = true;
@@ -86,14 +86,17 @@ void Hachiko::Scripting::Script::Awake()
     }
 }
 
-void Hachiko::Scripting::Script::Save(JsonFormatterValue j_component) const 
+void Hachiko::Scripting::Script::Save(YAML::Node& node) const
 {
-    j_component["ClassName"] = name.c_str();
+    node[SCRIPT_NAME] = name;
+
+    // TODO: Will be generalized to all scripts using the SerializedField dict
+    // we can get from Script::SerializeTo and Script::DeserializeFrom.
 }
 
-void Hachiko::Scripting::Script::Load(JsonFormatterValue j_component) 
+void Hachiko::Scripting::Script::Load(const YAML::Node& node)
 {
- /*   name = j_component["ClassName"];*/
+    // TODO: Will be implemented after the first merge.
 }
 
 void Hachiko::Scripting::Script::DrawGui()

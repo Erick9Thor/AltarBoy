@@ -211,7 +211,7 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
         GameObject* game_object = script->GetGameObject();
 
         HE_LOG("Reloading %s of %s with id %llu", script->GetName().c_str(),
-            game_object->name.c_str(), game_object->getUID());
+            game_object->name.c_str(), game_object->GetID());
         
         // Serialize script into the map:
         script->SerializeTo(serialization);

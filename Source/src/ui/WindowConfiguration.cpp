@@ -8,10 +8,6 @@
 
 #include "components/ComponentCamera.h"
 
-// TODO: REMOVE
-#include "modules/ModuleSceneManager.h"
-//
-
 Hachiko::WindowConfiguration::WindowConfiguration() :
     Window("Configuration", true) {}
 

@@ -5,7 +5,7 @@
 
 namespace Hachiko::Scripting
 {
-class HACHIKO_API ISerializable
+class HACHIKO_API IRuntimeSerializable
 {
 public:
     virtual void SerializeTo (

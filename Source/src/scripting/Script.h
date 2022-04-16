@@ -2,7 +2,7 @@
 
 #include "HachikoApiDefine.h"
 #include "scripting/ScriptingMacros.h"
-#include "scripting/serialization/ISerializable.h"
+#include "scripting/serialization/IRuntimeSerializable.h"
 #include "components/Component.h"
 
 #include <unordered_map>
@@ -13,7 +13,7 @@ class GameObject;
 
 namespace Scripting
 {
-class HACHIKO_API Script : public Component, public ISerializable
+class HACHIKO_API Script : public Component, public IRuntimeSerializable
 {
     SERIALIZATION_METHODS(true)
 public:
@@ -23,8 +23,8 @@ public:
     void Start() override;
     void Awake();
 
-    void Save(JsonFormatterValue j_component) const override;
-    void Load(JsonFormatterValue j_component) override;
+    void Save(YAML::Node& node) const override;
+    void Load(const YAML::Node& node) override;
 
     virtual void OnAwake() {};
     virtual void OnStart() {};

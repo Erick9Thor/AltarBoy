@@ -6,6 +6,7 @@
 #include <typeinfo>
 
 #include "utils/UUID.h"
+#include "core/serialization/ISerializable.h"
 #include "components/Component.h"
 
 #if defined(HACHIKO_API)
@@ -16,26 +17,28 @@
 
 namespace Hachiko
 {
-class JsonFormatterValue;
-class ComponentTransform;
-class ComponentCamera;
-class Program;
-class Scene;
+    class ComponentTransform;
+    class ComponentCamera;
+    class Program;
+    class Scene;
 
-class HACHIKO_API GameObject final
-{
-    friend class Component;
+    class HACHIKO_API GameObject final : public ISerializable
+    {
+        friend class Component;
 
-public:
-    GameObject(const char* name = "Unnamed");
-    GameObject(GameObject* parent, const float4x4& transform, const char* name = "Unnamed", UID uid = UUID::GenerateUID());
-    GameObject(GameObject* parent,
-                const char* name = "Unnamed",
-                UID uid = UUID::GenerateUID(),
-                const float3& translation = float3::zero,
-                const Quat& rotation = Quat::identity,
-                const float3& scale = float3::one);
-    virtual ~GameObject();
+    public:
+        GameObject(const char* name = "Unnamed");
+        GameObject(GameObject* parent,
+                   const float4x4& transform, 
+                   const char* name = "Unnamed", 
+                   UID uid = UUID::GenerateUID());
+        GameObject(GameObject* parent,
+                   const char* name = "Unnamed",
+                   UID uid = UUID::GenerateUID(),
+                   const float3& translation = float3::zero,
+                   const Quat& rotation = Quat::identity,
+                   const float3& scale = float3::one);
+        virtual ~GameObject();
 
     void SetNewParent(GameObject* new_parent);
 
@@ -59,13 +62,12 @@ public:
     void Draw(ComponentCamera* camera, Program* program) const;
     void DrawStencil(ComponentCamera* camera, Program* program);
 
-    void SetActive(bool set_active);
-    
-    
-    bool IsActive() const
-    {
-        return active;
-    }
+        void SetActive(bool set_active);
+
+        [[nodiscard]] bool IsActive() const
+        {
+            return active;
+        }
 
     void OnTransformUpdated();
 
@@ -74,13 +76,18 @@ public:
     void DrawBoundingBox() const;
     void UpdateBoundingBoxes();
 
-    UID getUID() const
-    {
-        return uid;
-    }
+        [[nodiscard]] UID GetID() const
+        {
+            return uid;
+        }
 
-    void Save(JsonFormatterValue j_gameObject) const;
-    void Load(JsonFormatterValue j_gameObject);
+        void SetID(const UID new_id) 
+        {
+            uid = new_id;
+        }
+
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
     [[nodiscard]] const OBB& GetOBB() const
     {
@@ -100,6 +107,26 @@ public:
     [[nodiscard]] ComponentTransform* GetTransform() const 
     {
         return transform;
+    }
+
+    [[nodiscard]] const std::string& GetName() const
+    {
+        return name;
+    }
+
+    void SetName(const std::string& new_name)
+    {
+        name = new_name;
+    }
+
+    void Enable()
+    {
+        active = true;
+    }
+
+    void Disable()
+    {
+        active = false;
     }
 
     template<typename RetComponent>
@@ -189,4 +216,3 @@ private:
     UID uid = 0;
 };
 }
-        

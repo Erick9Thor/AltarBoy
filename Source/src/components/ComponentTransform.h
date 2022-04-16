@@ -62,18 +62,14 @@ namespace Hachiko
         [[nodiscard]] const Quat& GetGlobalRotation();
         [[nodiscard]] const float3& GetGlobalRotationEuler();
 
-
-
-
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
         void DrawGui() override;        
 
     private:
         void Invalidate();
         void UpdateTransform();  
-
 
     private:
         bool dirty;

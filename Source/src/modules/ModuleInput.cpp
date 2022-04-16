@@ -1,9 +1,11 @@
 #include "core/hepch.h"
 #include "ModuleInput.h"
 
+#include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEvent.h"
+#include "events/Event.h"
 
 #define MAX_KEYS 300
 
@@ -81,17 +83,14 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
         case SDL_MOUSEWHEEL:
             scroll_delta = event.wheel.y;
             break;
-        case SDL_DROPFILE: HE_LOG("Dropped file: %s", event.drop.file);
-            std::string file_path = std::string(event.drop.file);
-            std::string extension = file_path.substr(file_path.find_last_of(".") + 1);
-            std::vector<std::string> img_ext {"png", "PNG", "jpg", "JPG", "jpeg", "JPEG"};
-            if (std::find(std::begin(img_ext), std::end(img_ext), extension) != std::end(img_ext))
+        case SDL_DROPFILE: 
             {
-                App->scene_manager->LoadImageObject(event.drop.file);
+                HE_LOG("Dropped file: %s", event.drop.file);
+                Hachiko::Event fileDropped(Hachiko::Event::Type::FILE_ADDED);
+                fileDropped.SetEventData<Hachiko::FileAddedEventPayload>(event.drop.file);
+                App->event->Publish(fileDropped);
+                SDL_free(event.drop.file);
             }
-            // TODO: Remove asap <3
-            App->scene_manager->LoadModel(event.drop.file);
-            SDL_free(event.drop.file);
             break;
         }
     }

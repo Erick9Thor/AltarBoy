@@ -53,9 +53,8 @@ namespace Hachiko
         void SetResolution(unsigned width, unsigned height);
         void GetResolution(unsigned& width, unsigned& height) const;
 
-
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
         void DrawGui() override;
 

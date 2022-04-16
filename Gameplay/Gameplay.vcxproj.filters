@@ -1,68 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Vendors">
-      <UniqueIdentifier>{1629cd9e-f3f2-446d-90d0-f5aa40080b69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\ImGui">
-      <UniqueIdentifier>{8b5cd28e-6f08-473d-b1be-d7bda84dba16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib">
-      <UniqueIdentifier>{2ba2d1d6-d71a-4171-96a1-bca5d25fa1b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib\Math">
-      <UniqueIdentifier>{85f98093-9229-4dd1-8dbc-338ac73cb551}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib\Time">
-      <UniqueIdentifier>{a2294a4e-2ae7-4939-b24f-3640dcb29db0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib\Geometry">
-      <UniqueIdentifier>{50478542-0824-42eb-9290-ea86c6722bb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib\Algorithm">
-      <UniqueIdentifier>{d3441161-324a-455f-868c-425f7ed54557}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\MathGeoLib\Algorithm\Random">
-      <UniqueIdentifier>{e511defc-34fb-42fb-85e4-1b186a6f5abd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\DebugDraw">
-      <UniqueIdentifier>{5a452b21-1e83-47a6-8ac0-d51c93459587}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\imGuizmo">
-      <UniqueIdentifier>{16c52a1f-da6b-4757-b986-cc8646897228}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\ImGuiFileDialog">
-      <UniqueIdentifier>{10eab35a-f54d-43fe-9f7c-13f068afb47e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\ImGuiFileDialog\stb">
-      <UniqueIdentifier>{35e0842f-2d60-4f38-9c8d-422a5cd2285b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\ImGuiFileDialog\dirent">
-      <UniqueIdentifier>{70f11188-0832-41ca-bd0f-3455187ff620}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\PhysicsFS">
-      <UniqueIdentifier>{3ee3dfb1-795d-4f06-a68b-23cc2710751a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\Yaml-cpp">
-      <UniqueIdentifier>{fc4deccd-db98-4cc4-94fd-ce3f549f6f73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\Yaml-cpp\Node">
-      <UniqueIdentifier>{16e54419-98d5-475a-814f-7fea47fd602f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\Yaml-cpp\Node\Detail">
-      <UniqueIdentifier>{3398f37a-69aa-42ca-b30c-50a628737463}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendors\Yaml-cpp\Contrib">
-      <UniqueIdentifier>{4e79e6fa-3f9a-423a-8705-0cc1d46b00b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Generated">
       <UniqueIdentifier>{420c8bbd-6b5a-4f11-97b2-3e30630b7d6d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ScriptingUtil">
       <UniqueIdentifier>{b5ff605b-6bbf-4616-a08c-e734095a1b1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendors">
+      <UniqueIdentifier>{8bf8fb46-cc1b-4b17-a6f7-5dbc57e873e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGui">
+      <UniqueIdentifier>{b5a01a0f-c77b-470b-9258-53c0c373fa67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib">
+      <UniqueIdentifier>{18526eaa-4c5f-450b-b380-34f26c6ec864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Math">
+      <UniqueIdentifier>{3ce66730-dd88-485a-8117-2ea8f87b3f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Time">
+      <UniqueIdentifier>{ee7275ad-6750-44ee-8f2d-44649484b2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Geometry">
+      <UniqueIdentifier>{691b7f35-abe1-4505-a8c6-52e6195d6ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Algorithm">
+      <UniqueIdentifier>{aa3ad11d-7799-4bba-89c8-2c8dcbe08dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\MathGeoLib\Algorithm\Random">
+      <UniqueIdentifier>{4a7d9a04-56f2-4d17-b419-a4d0f474f4cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\DebugDraw">
+      <UniqueIdentifier>{85b7c686-ade7-4eee-8aac-94dafb906b5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\imGuizmo">
+      <UniqueIdentifier>{3ff23b74-28c0-4749-8190-7c043ea3c10f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog">
+      <UniqueIdentifier>{3806c06e-09fc-4c7b-9877-5bfe8182a351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog\stb">
+      <UniqueIdentifier>{ebb77197-4ea7-4de2-8498-93a30e9aef81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\ImGuiFileDialog\dirent">
+      <UniqueIdentifier>{57495ea0-4bc8-43a6-ac0b-80a9508a6f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\PhysicsFS">
+      <UniqueIdentifier>{817fc4eb-8b53-4865-ace9-0df53affab61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp">
+      <UniqueIdentifier>{ca1eab65-ca58-45b9-8529-d4c2c6da0117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node">
+      <UniqueIdentifier>{cd68ffb4-cde1-40cc-933f-88e5eea76627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Node\Detail">
+      <UniqueIdentifier>{fd1e91d8-7212-4ded-a8af-67412b4937e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Yaml-cpp\Contrib">
+      <UniqueIdentifier>{b583ce28-2a30-4157-bff1-3a6c3499fef3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="scriptingUtil\framework.h">
+      <Filter>ScriptingUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="scriptingUtil\gameplaypch.h">
+      <Filter>ScriptingUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="generated\Factory.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="DynamicCamera.h" />
+    <ClInclude Include="MainMenuManager.h" />
+    <ClInclude Include="PlayerCamera.h" />
+    <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="..\Source\vendors\imgui\imgui_stdlib.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
@@ -489,22 +503,22 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="scriptingUtil\framework.h">
-      <Filter>ScriptingUtil</Filter>
-    </ClInclude>
-    <ClInclude Include="scriptingUtil\gameplaypch.h">
-      <Filter>ScriptingUtil</Filter>
-    </ClInclude>
-    <ClInclude Include="generated\Factory.h">
-      <Filter>Generated</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="DynamicCamera.h" />
-    <ClInclude Include="MainMenuManager.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="BackToMainMenu.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="scriptingUtil\gameplaypch.cpp">
+      <Filter>ScriptingUtil</Filter>
+    </ClCompile>
+    <ClCompile Include="generated\Factory.cpp">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="generated\SerializationMethods.cpp">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="DynamicCamera.cpp" />
+    <ClCompile Include="MainMenuManager.cpp" />
+    <ClCompile Include="PlayerCamera.cpp" />
+    <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="..\Source\vendors\imgui\imgui_stdlib.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
@@ -736,20 +750,6 @@
     <ClCompile Include="..\Source\vendors\PhysicsFS\physfs_unicode.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="scriptingUtil\gameplaypch.cpp">
-      <Filter>ScriptingUtil</Filter>
-    </ClCompile>
-    <ClCompile Include="generated\Factory.cpp">
-      <Filter>Generated</Filter>
-    </ClCompile>
-    <ClCompile Include="generated\SerializationMethods.cpp">
-      <Filter>Generated</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
-    <ClCompile Include="MainMenuManager.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="BackToMainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

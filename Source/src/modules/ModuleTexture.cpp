@@ -1,6 +1,9 @@
 #include "core/hepch.h"
 #include "ModuleTexture.h"
 
+#include "resources/ResourceTexture.h"
+#include "modules/ModuleResources.h"
+
 Hachiko::ModuleTexture::ModuleTexture() = default;
 
 Hachiko::ModuleTexture::~ModuleTexture() = default;
@@ -15,6 +18,39 @@ bool Hachiko::ModuleTexture::CleanUp()
 {
     ilShutDown();
     return true;
+}
+
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const char* path, bool flip)
+{
+    std::filesystem::path texture_path = path;
+
+    unsigned int img_id = LoadImg(path, flip);
+
+    if (img_id == 0)
+    {
+        return nullptr;
+    }
+ 
+    ResourceTexture* texture = new ResourceTexture();
+    texture->path = path;
+    texture->SetName(texture_path.filename().replace_extension().string().c_str());
+    texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+    texture->mag_filter = GL_LINEAR;
+    texture->wrap = GL_CLAMP;
+
+    texture->bpp = ilGetInteger(IL_IMAGE_BPP);
+    texture->width = ilGetInteger(IL_IMAGE_WIDTH);
+    texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
+    texture->format = ilGetInteger(IL_IMAGE_FORMAT);
+
+    byte* data = ilGetData();
+    texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+    texture->data = new byte[texture->data_size];
+    memcpy(texture->data, data, texture->data_size);
+
+    DeleteImg(img_id);
+
+    return texture;    
 }
 
 Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)

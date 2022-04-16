@@ -67,8 +67,8 @@ namespace Hachiko
             fill_direction = new_direction;
         }
 
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
     private:
         GameObject* background = nullptr;

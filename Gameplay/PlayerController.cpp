@@ -66,6 +66,9 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		SceneManagement::SwitchScene("Assets/Scenes/win.scene");
 	}
 
+	// TODO: Delete this.
+	_is_falling = false;
+
 	if (!_is_dashing && !_is_falling)
 	{
 		if (Input::GetKey(Input::KeyCode::KEY_W))
@@ -125,14 +128,15 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = !_is_falling;
 	}
 
-	if (current_position.y < -20)
+	// TODO: Uncomment.
+	/*if (current_position.y < -20)
 	{
 		_speed_y = 0;
 		current_position = _starting_position;
 		_is_falling = false;
 
 		SceneManagement::SwitchScene("Assets/Scenes/lose.scene");
-	}
+	}*/
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
