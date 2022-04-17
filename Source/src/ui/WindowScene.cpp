@@ -206,8 +206,8 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera,
     const float x_normalized = mouse_viewport_pos.x / texture_size.x * 2.f - 1.f;
     const float y_normalized = -(mouse_viewport_pos.y / texture_size.y * 2.f - 1.f);
 
-    const LineSegment line = camera->RayCast(x_normalized, y_normalized);
-    GameObject* selected = scene->RayCast(line);
+    const LineSegment line = camera->Raycast(x_normalized, y_normalized);
+    GameObject* selected = scene->Raycast(line);
 
     return selected;
 }

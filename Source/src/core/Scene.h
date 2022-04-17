@@ -40,7 +40,7 @@ namespace Hachiko
         void HandleInputModel(ResourceModel* model);
         void HandleInputMaterial(ResourceMaterial* material);
 
-        [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
+        [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
         [[nodiscard]] GameObject* GetRoot() const
         {
             return root;
@@ -80,7 +80,7 @@ namespace Hachiko
         {
             return name.c_str();
         }
-        [[nodiscard]] GameObject* RayCast(const float3& origin, const float3& destination) const;
+        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
         void SetName(const char* new_name)
         {

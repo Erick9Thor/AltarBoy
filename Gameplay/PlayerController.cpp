@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
 #include <components/ComponentTransform.h>
+#include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
@@ -147,12 +148,15 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			math::float3(0.0f, current_position.y, 0.0f),
 			math::float3(0.0f, 1.0f, 0.0f));
 
-		math::LineSegment line_segment = 
-			CameraManagement::GetRaycastLineSegment();
+		math::float2 mouse_position_view = 
+			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
+		
+		math::LineSegment ray = Debug::GetEditorCamera()->Raycast(
+			mouse_position_view.x, mouse_position_view.y);
 
-		math::float3 intersect = plane.ClosestPoint(line_segment);
+		math::float3 intersection_position = plane.ClosestPoint(ray);
 
 		// Make the player look the mouse:
-		transform->LookAtTarget(intersect);
+		transform->LookAtTarget(intersection_position);
 	}
 }

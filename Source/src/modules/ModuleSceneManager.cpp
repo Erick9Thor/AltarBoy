@@ -150,7 +150,7 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 
 Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
 {
-    return main_scene->RayCast(origin, destination);
+    return main_scene->Raycast(origin, destination);
 }
 
 void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)

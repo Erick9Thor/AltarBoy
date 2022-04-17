@@ -145,13 +145,13 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     }
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
 {
     LineSegment line_seg(origin, destination);
-    return RayCast(line_seg);
+    return Raycast(line_seg);
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;

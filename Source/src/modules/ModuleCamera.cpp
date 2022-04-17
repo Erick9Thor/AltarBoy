@@ -165,28 +165,6 @@ void Hachiko::ModuleCamera::ReturnPlayerCamera()
     }
 }
 
-LineSegment Hachiko::ModuleCamera::GetRaycastLineSegment() const
-{
-    float x, y;
-    App->input->GetMousePositionRelative(x, y);
-    //HE_LOG("mouse_screen_pos %f %f", x - 0.5f, (y - 0.5f) * -1);
-    int width, height;
-    App->window->GetWindowSize(width, height);
-    LineSegment lineSeg = main_camera->RayCast(x - 0.5f, (y - 0.5f) * -1);
-    //HE_LOG("origin = %f %f %f", lineSeg.a.x, lineSeg.a.y, lineSeg.a.z);
-    //HE_LOG("dest = %f %f %f", lineSeg.b.x, lineSeg.b.y, lineSeg.b.z);
-    return lineSeg;
-
-    //const ImVec2 mouse = ImGui::GetMousePos();
-    //const auto mouse_viewport_pos = float2(mouse.x - guizmo_rect_origin.x, mouse.y - guizmo_rect_origin.y);
-
-    // Fit in range and coordinate direction
-    //const float x_normalized = mouse_viewport_pos.x / texture_size.x * 2.f - 1.f;
-    //const float y_normalized = -(mouse_viewport_pos.y / texture_size.y * 2.f - 1.f);
-
-    //return main_camera->RayCast(x_normalized, y_normalized);
-}
-
 void Hachiko::ModuleCamera::Zoom(float zoom) const
 {
     auto* transform = main_camera->GetGameObject()->GetTransform();

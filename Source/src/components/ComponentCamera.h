@@ -6,11 +6,20 @@
 #define DEFAULT_CAMERA_WIDTH 1920
 #define DEFAULT_CAMERA_HEIGHT 1080
 
+#if defined(HACHIKO_API)
+// Do Nothing
+#elif defined(_MSC_VER)
+#define HACHIKO_API __declspec(dllexport)
+#endif
+
+// TODO: Only expose some methods of ComponentCamera to Scripting. Not all of 
+// them.
+
 namespace Hachiko
 {
     class GameObject;
 
-    class ComponentCamera : public Component
+    class HACHIKO_API ComponentCamera : public Component
     {
     public:
         enum class CameraType
@@ -35,7 +44,7 @@ namespace Hachiko
         [[nodiscard]] float4x4 GetViewMatrix(bool transpose = false) const;
         [[nodiscard]] float4x4 GetProjectionMatrix(bool transpose = false) const;
 
-        Frustum* ComponentCamera::GetFrustum()
+        Frustum* GetFrustum()
         {
             return &frustum;
         }
@@ -60,7 +69,11 @@ namespace Hachiko
 
         void DebugDraw() override;
 
-        LineSegment RayCast(float x, float y) const;
+        LineSegment Raycast(float x, float y) const;
+        LineSegment Raycast(const float2& from_position) const;
+
+        static float2 ScreenPositionToView(float x, float y);
+        static float2 ScreenPositionToView(const float2& screen_position);
 
         Plane planes[6];
         float3 reference_point = float3::zero;

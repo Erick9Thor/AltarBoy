@@ -8,7 +8,8 @@
 
 namespace Hachiko
 {
-    class GameObject;
+class GameObject;
+class ComponentCamera;
 }
 
 namespace Hachiko::Time
@@ -404,11 +405,12 @@ HACHIKO_API void GetMousePositionPixels(int& out_position_x,
 
 namespace Hachiko::SceneManagement
 {
-    HACHIKO_API void SwitchScene(const char* name);
-    HACHIKO_API GameObject* Raycast(const float3& origin, const float3& destination);
-}
+HACHIKO_API void SwitchScene(const char* name);
+HACHIKO_API GameObject* Raycast(const float3& origin, 
+    const float3& destination);
+} // namespace Hachiko::SceneManagement
 
-namespace Hachiko::CameraManagement
+namespace Hachiko::Debug
 {
-    HACHIKO_API math::LineSegment GetRaycastLineSegment();
-} // namespace Hachiko::CameraManagement
+HACHIKO_API const Hachiko::ComponentCamera* GetEditorCamera();
+} // namespace Hachiko::Debug
