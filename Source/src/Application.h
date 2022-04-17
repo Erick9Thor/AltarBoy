@@ -19,7 +19,6 @@ namespace Hachiko
     class ModuleTexture;
     class ModuleSceneManager;
     class ModuleProgram;
-    class ModuleHardware;
     class ModuleFileSystem;
     class ModuleResources;
     class ModuleImporter;
@@ -53,7 +52,6 @@ namespace Hachiko
         ModuleTexture* texture = nullptr;
         ModuleSceneManager* scene_manager = nullptr;
         ModuleProgram* program = nullptr;
-        ModuleHardware* hw = nullptr;
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
         ModuleResources* resources = nullptr;

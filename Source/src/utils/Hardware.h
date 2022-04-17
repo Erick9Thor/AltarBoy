@@ -1,10 +1,8 @@
 #pragma once
-#include "Module.h"
-#include <SDL.h>
 
 namespace Hachiko
 {
-    class ModuleHardware : public Module
+    class Hardware
     {
     public:
         struct hw_info
@@ -19,10 +17,8 @@ namespace Hachiko
         };
 
     public:
-        ModuleHardware();
-        ~ModuleHardware() override;
-
-        bool Init() override;
+        Hardware();
+        ~Hardware() = default;
 
         hw_info GetInfo() const
         {

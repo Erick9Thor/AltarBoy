@@ -116,6 +116,7 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
       <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
+      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -537,7 +538,7 @@
     <ClCompile Include="src\modules\ModuleCamera.cpp" />
     <ClCompile Include="src\modules\ModuleDebugDraw.cpp" />
     <ClCompile Include="src\modules\ModuleEditor.cpp" />
-    <ClCompile Include="src\modules\ModuleHardware.cpp" />
+    <ClCompile Include="src\utils\Hardware.cpp" />
     <ClCompile Include="src\modules\ModuleInput.cpp" />
     <ClCompile Include="src\modules\ModuleRender.cpp" />
     <ClCompile Include="src\modules\ModuleProgram.cpp" />
@@ -736,7 +737,7 @@
     <ClInclude Include="src\modules\ModuleCamera.h" />
     <ClInclude Include="src\modules\ModuleDebugDraw.h" />
     <ClInclude Include="src\modules\ModuleEditor.h" />
-    <ClInclude Include="src\modules\ModuleHardware.h" />
+    <ClInclude Include="src\utils\Hardware.h" />
     <ClInclude Include="src\modules\ModuleInput.h" />
     <ClInclude Include="src\modules\ModuleRender.h" />
     <ClInclude Include="src\modules\ModuleProgram.h" />

@@ -9,7 +9,6 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleProgram.h"
-#include "modules/ModuleHardware.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
@@ -24,7 +23,6 @@ using namespace std;
 
 Hachiko::Application::Application()
 {
-    modules.push_back(hw = new ModuleHardware());
     modules.push_back(file_sys = new ModuleFileSystem());
 
     modules.push_back(window = new ModuleWindow());
