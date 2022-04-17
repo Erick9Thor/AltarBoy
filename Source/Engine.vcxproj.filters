@@ -339,9 +339,6 @@
     <ClCompile Include="src\Modules\ModuleEvent.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\utils\FileSystem.cpp">
-      <Filter>Modules\Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\modules\ModuleInput.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
@@ -448,6 +445,9 @@
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\Hardware.cpp">
+      <Filter>Core\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\FileSystem.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1015,9 +1015,6 @@
     <ClInclude Include="src\modules\ModuleEvent.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\utils\FileSystem.h">
-      <Filter>Modules\Headers</Filter>
-    </ClInclude>
     <ClInclude Include="src\modules\ModuleInput.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
@@ -1152,6 +1149,9 @@
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\utils\Hardware.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\FileSystem.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
   </ItemGroup>
