@@ -27,10 +27,11 @@ public:
     Scripting::Script* InstantiateScript(const std::string& script_name,
         GameObject* owner_game_object) const;
 
-    bool ShouldUpdateScripts() const;
-    void StopUpdatingScripts();
+    bool ShouldExecuteScripts() const;
+    void StopExecutingScripts();
 
 private:
+    void SubscribeToEvents();
     bool LoadFirstTime();
     bool HotReload(const float delta);
     bool ShouldCheckForChanges(const float delta);
@@ -57,15 +58,4 @@ private:
     bool _in_play_mode;
     bool _waiting_for_scene_load;
 };
-
-inline bool Hachiko::ModuleScriptingSystem::ShouldUpdateScripts() const
-{
-    return !_scripts_paused && _in_play_mode && !_waiting_for_scene_load;
-}
-
-inline void Hachiko::ModuleScriptingSystem::StopUpdatingScripts() 
-{
-    _scripts_paused = true;
-}
-
 } // namespace Hachiko

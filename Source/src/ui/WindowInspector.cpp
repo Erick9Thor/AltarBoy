@@ -44,7 +44,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
     bool activate = game_object->IsActive();
     if (ImGui::Checkbox("Active", &activate))
     {
-        activate ? game_object->Enable() : game_object->Disable();
+        game_object->SetActive(activate);
     }
 
     std::vector<Component*> game_object_components = game_object->GetComponents();

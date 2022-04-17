@@ -54,20 +54,18 @@ namespace Hachiko
     void ForceRemoveComponent(Component* component);
     void RemoveChild(GameObject* gameObject);
 
-    //void Destroy();
     void Start();
-    void Stop();
     void Update();
     void DrawAll(ComponentCamera* camera, Program* program) const;
     void Draw(ComponentCamera* camera, Program* program) const;
     void DrawStencil(ComponentCamera* camera, Program* program);
 
-        void SetActive(bool set_active);
+    void SetActive(bool set_active);
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
+    [[nodiscard]] bool IsActive() const
+    {
+        return active;
+    }
 
     void OnTransformUpdated();
 
@@ -117,16 +115,6 @@ namespace Hachiko
     void SetName(const std::string& new_name)
     {
         name = new_name;
-    }
-
-    void Enable()
-    {
-        active = true;
-    }
-
-    void Disable()
-    {
-        active = false;
     }
 
     template<typename RetComponent>
@@ -202,17 +190,14 @@ public:
     Scene* scene_owner = nullptr;
     GameObject* parent = nullptr;
     std::vector<GameObject*> children;
-
     bool active = true;
 
 private:
     bool started = false;
     std::vector<Component*> components;
     ComponentTransform* transform = nullptr;
-
     AABB aabb;
     OBB obb;
-
     UID uid = 0;
 };
 }

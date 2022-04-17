@@ -17,11 +17,10 @@
 #include "components/ComponentButton.h"
 #include "Components/ComponentProgressBar.h"
 
-// TODO: REMOVE
 #include "Application.h"
 #include "modules/ModuleSceneManager.h"
-#include "modules/ModuleScriptingSystem.h"
-//
+#include "modules/ModuleScriptingSystem.h" // For instantiating Scripts.
+
 
 #include <debugdraw.h>
 
@@ -193,7 +192,6 @@ void Hachiko::GameObject::SetActive(bool set_active)
     }
     active = set_active;
 }
-
 
 void Hachiko::GameObject::Start() 
 {
@@ -368,8 +366,7 @@ void Hachiko::GameObject::Save(YAML::Node& node) const
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
     node[GAME_OBJECT_PARENT_ID] = parent != nullptr ? parent->uid : 0;
-
-    
+   
     for (unsigned i = 0; i < components.size(); ++i)
     {
         node[COMPONENT_NODE][i][COMPONENT_ID] = static_cast<size_t>(components[i]->GetID());

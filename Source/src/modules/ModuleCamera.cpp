@@ -4,12 +4,13 @@
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
-#include "ModuleWindow.h"
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
 
 #include "ui/WindowScene.h"
+
+
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
 Hachiko::ModuleCamera::~ModuleCamera() = default;

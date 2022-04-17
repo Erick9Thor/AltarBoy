@@ -71,7 +71,7 @@ namespace Hachiko
             return skybox;
         }
 
-        bool Loaded() const 
+        bool IsLoaded() const 
         {
             return loaded;
         }

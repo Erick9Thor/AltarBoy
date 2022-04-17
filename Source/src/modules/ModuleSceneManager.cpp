@@ -13,10 +13,6 @@ bool Hachiko::ModuleSceneManager::Init()
     preferences = App->preferences->GetResourcesPreference();
     std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
     
-    Event scene_load(Event::Type::SCENE_LOADED);
-    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
-    App->event->Publish(scene_load);
-
     if (std::filesystem::exists(scene_path))
     {
         LoadScene(scene_path.c_str());
@@ -25,10 +21,6 @@ bool Hachiko::ModuleSceneManager::Init()
     {
         CreateEmptyScene();
     }
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::LOADED);
-    App->event->Publish(scene_load);
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -113,8 +105,18 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 
 void Hachiko::ModuleSceneManager::CreateEmptyScene()
 {
+    Event scene_load(Event::Type::SCENE_LOADED);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
+
     delete main_scene;
     main_scene = new Scene();
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
@@ -127,15 +129,14 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
     delete main_scene;
     main_scene = serializer->Load(file_path);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
     
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
     main_scene->Start();
 #endif
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::LOADED);
-    App->event->Publish(scene_load);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene()

@@ -15,14 +15,11 @@ Hachiko::Scripting::Script::Script(GameObject* new_game_object,
 
 void Hachiko::Scripting::Script::Update() 
 {
-    if (!App->scripting_system->ShouldUpdateScripts())
+    if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
 	
-	// TODO(Baran): Add check for play mode/editor mode to run Update of 
-	// script.
-
     __try
     {
         OnUpdate();
@@ -31,7 +28,7 @@ void Hachiko::Scripting::Script::Update()
     {
         HE_LOG("Exception occured on script '%s::OnUpdate'", GetName().c_str());
 
-        App->scripting_system->StopUpdatingScripts();
+        App->scripting_system->StopExecutingScripts();
 
         HE_LOG("Therefore, scripts are paused.");
     }
@@ -39,13 +36,10 @@ void Hachiko::Scripting::Script::Update()
 
 void Hachiko::Scripting::Script::Start() 
 {
-	if (!App->scripting_system->ShouldUpdateScripts())
+	if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
-
-    // TODO(Baran): Add check for play mode/editor mode to run Start of
-    // script.
 
     __try
     {
@@ -55,7 +49,7 @@ void Hachiko::Scripting::Script::Start()
     {
         HE_LOG("Exception occured on script '%s::OnStart'", GetName().c_str());
 
-        App->scripting_system->StopUpdatingScripts();
+        App->scripting_system->StopExecutingScripts();
 
         HE_LOG("Therefore, scripts are paused.");
     }
@@ -64,13 +58,10 @@ void Hachiko::Scripting::Script::Start()
 
 void Hachiko::Scripting::Script::Awake() 
 {
-    if (!App->scripting_system->ShouldUpdateScripts())
+    if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
-
-    // TODO(Baran): Add check for play mode/editor mode to run Awake of
-    // script.
 
     __try
     {
@@ -80,7 +71,7 @@ void Hachiko::Scripting::Script::Awake()
     {
         HE_LOG("Exception occured on script '%s::OnAwake'", GetName().c_str());
 
-        App->scripting_system->StopUpdatingScripts();
+        App->scripting_system->StopExecutingScripts();
 
         HE_LOG("Therefore, scripts are paused.");
     }

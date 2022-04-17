@@ -39,56 +39,8 @@ bool Hachiko::ModuleScriptingSystem::Init()
             "Continuing without scripting functionality.");
     }
 
-    std::function on_mode_changed = [&](Event& evt) 
-    { 
-        auto& event_data = evt.GetEventData<GameStateEventPayload>();
-        _waiting_for_scene_load = 
-            !App->scene_manager->GetActiveScene()->Loaded();
-
-        switch (event_data.GetState())
-        {
-            case GameStateEventPayload::State::STOPPED:
-                _in_play_mode = false;
-            break;
-
-            case GameStateEventPayload::State::PAUSED:
-                _in_play_mode = false;
-            break;
-
-            case GameStateEventPayload::State::STARTED:
-                _in_play_mode = true;
-                if (!_waiting_for_scene_load)
-                {
-                    AwakeAllScriptsOnCurrentScene();
-                }
-
-            break;
-
-            case GameStateEventPayload::State::RESUMED:
-                _in_play_mode = true;
-            break;
-
-            default:
-            break;
-        }
-    };
-
-    std::function on_scene_loaded = [&](Event& evt) 
-    { 
-        auto& event_data = evt.GetEventData<SceneLoadEventPayload>();
-
-        _waiting_for_scene_load = 
-            event_data.GetState() == SceneLoadEventPayload::State::NOT_LOADED;
-        
-        if (_in_play_mode && !_waiting_for_scene_load)
-        {
-            AwakeAllScriptsOnCurrentScene();
-        }
-    };
-
-    App->event->Subscribe(Event::Type::GAME_STATE, on_mode_changed);
-    App->event->Subscribe(Event::Type::SCENE_LOADED, on_scene_loaded);
-
+    // Subscribe to events that may effect script updating behaviour:
+    SubscribeToEvents();
 
     #ifdef PLAY_BUILD
     _in_play_mode = true;
@@ -139,7 +91,6 @@ Hachiko::Scripting::Script* Hachiko::ModuleScriptingSystem::InstantiateScript(
     Scripting::Script* script = 
         _script_factory(owner_game_object, script_name);
 
-    // TODO: Only do this when the game is running.
     if (!_waiting_for_scene_load && _in_play_mode && script != nullptr 
         && !_scripts_paused)
     {
@@ -250,7 +201,6 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
         script = nullptr;
         HE_LOG("\tDeleted the old script.");
 
-
         // Clear the serialization map:
         serialization.clear();
     }
@@ -264,13 +214,78 @@ bool Hachiko::ModuleScriptingSystem::HotReload(const float delta)
     // Unpause script updates:
     _scripts_paused = false;
 
-    // TODO: Call Awake of all the scripts if in game mode here.
-    for (Scripting::Script* script : new_scripts)
+    if (ShouldExecuteScripts())
     {
-        script->Awake();
+        for (Scripting::Script* script : new_scripts)
+        {
+            script->Awake();
+        }
     }
 
     return true;
+}
+
+bool Hachiko::ModuleScriptingSystem::ShouldExecuteScripts() const
+{
+    return !_scripts_paused && _in_play_mode && !_waiting_for_scene_load;
+}
+
+void Hachiko::ModuleScriptingSystem::StopExecutingScripts()
+{
+    _scripts_paused = true;
+}
+
+void Hachiko::ModuleScriptingSystem::SubscribeToEvents() 
+{
+    std::function on_mode_changed = [&](Event& evt) 
+    { 
+        auto& event_data = evt.GetEventData<GameStateEventPayload>();
+        _waiting_for_scene_load = 
+            !App->scene_manager->GetActiveScene()->IsLoaded();
+
+        switch (event_data.GetState())
+        {
+            case GameStateEventPayload::State::STOPPED:
+            case GameStateEventPayload::State::PAUSED:
+            {
+                _in_play_mode = false;
+            }
+            break;
+
+            case GameStateEventPayload::State::STARTED:
+            {
+                _in_play_mode = true;
+                
+                if (!_waiting_for_scene_load)
+                {
+                    AwakeAllScriptsOnCurrentScene();
+                }
+            }
+            break;
+
+            case GameStateEventPayload::State::RESUMED:
+            {
+                _in_play_mode = true;
+            }
+            break;
+        }
+    };
+
+    std::function on_scene_loaded = [&](Event& evt) 
+    { 
+        auto& event_data = evt.GetEventData<SceneLoadEventPayload>();
+
+        _waiting_for_scene_load = 
+            event_data.GetState() == SceneLoadEventPayload::State::NOT_LOADED;
+        
+        if (_in_play_mode && !_waiting_for_scene_load)
+        {
+            AwakeAllScriptsOnCurrentScene();
+        }
+    };
+
+    App->event->Subscribe(Event::Type::GAME_STATE, on_mode_changed);
+    App->event->Subscribe(Event::Type::SCENE_LOADED, on_scene_loaded);
 }
 
 bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
@@ -333,6 +348,8 @@ void Hachiko::ModuleScriptingSystem::LoadDll(HMODULE* dll)
     std::ifstream source;
     std::ofstream destination(current_dll_name, std::ios::binary);
 
+    // NOTE: The following todo will be fixed by new flow of the scripting
+    // hot reloading implementation. Please ignore this ugly solution for now.
     // I couldn't solve this problem in a beautiful manner, for now I'm doing 
     // this to do other stuff. TODO: Find a robust solution to this.
     // Wait while the file is just created:
@@ -386,8 +403,6 @@ void Hachiko::ModuleScriptingSystem::DeleteAllScriptsOnCurrentScene() const
     // Get all the scripts inside the current scene:
     std::vector<Component*>& scripts = App->scene_manager->GetRoot()->
         GetComponentsInDescendants(Component::Type::SCRIPT);
-
-    // TODO(Baran): Save all the scripts here also maybe?
 
     // We are deleting the scripts here because, scripts belong to dll and must
     // be deleted/freed before freeing the dll:
