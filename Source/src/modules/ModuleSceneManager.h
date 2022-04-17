@@ -59,12 +59,15 @@ namespace Hachiko
 
         void SwitchTo(const char* file_path);
 
+        void OptionsMenu();
+
     private:
         Scene* main_scene = nullptr;
         SceneSerializer* serializer = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
         bool scene_ready_to_load = false;
+        bool scene_autosave = false;
         std::string scene_to_load;
     };
 } // namespace Hachiko

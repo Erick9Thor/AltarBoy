@@ -80,6 +80,7 @@
 #define THEME_LIGHT "light"
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
+#define SCENE_AUTOSAVE "scene_autosave"
 
 // Resources
 #define RESOURCES_NODE "resources"

@@ -6,6 +6,7 @@
 
 #include "ModuleFileSystem.h"
 #include "core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 bool Hachiko::ModuleSceneManager::Init()
 {
@@ -26,6 +27,8 @@ bool Hachiko::ModuleSceneManager::Init()
     main_scene->Start();
 #endif
 
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    scene_autosave = pref->GetAutosave();
     return true;
 }
 
@@ -96,7 +99,14 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 
 bool Hachiko::ModuleSceneManager::CleanUp()
 {
-    SaveScene();
+    if (scene_autosave)
+    {
+        SaveScene();
+    }
+
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    pref->SetAutosave(scene_autosave);
+    
     RELEASE(main_scene);
     RELEASE(serializer);
     return true;
@@ -121,7 +131,14 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
 void Hachiko::ModuleSceneManager::SaveScene()
 {
-    serializer->Save(main_scene);
+    Scene* save_scene = main_scene;
+
+    if (IsScenePlaying())
+    {
+        save_scene = serializer->Load(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+    }
+
+    serializer->Save(save_scene);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
@@ -133,4 +150,9 @@ void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
+}
+
+void Hachiko::ModuleSceneManager::OptionsMenu()
+{
+    ImGui::Checkbox("Autosave Scene", &scene_autosave);
 }
