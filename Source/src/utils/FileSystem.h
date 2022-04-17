@@ -1,29 +1,23 @@
 #pragma once
-#include "Module.h"
-
-#include "utils/PathNode.h"
-
-#include <string>
-#include <vector>
 
 namespace Hachiko
 {
-    class ModuleFileSystem : public Module
+    class PathNode;
+
+    class FileSystem
     {
     public:
-        ModuleFileSystem();
-        ~ModuleFileSystem() override;
+        FileSystem();
+        ~FileSystem();
 
-        bool Init() override;
-
-        void CreateContext();
+        bool Init();
 
         // --- CRUD --- //
-        void CreateDir(const char* directory_path) const;
-        char* Load(const char* file_path) const;
-        bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false) const;
-        bool Save(const char* path, const YAML::Node& node) const;
-        void Delete(const char* file_path) const;
+        static void CreateDir(const char* directory_path);
+        static char* Load(const char* file_path);
+        static bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false);
+        static bool Save(const char* path, const YAML::Node& node);
+        static void Delete(const char* file_path);
 
         // --- Folder utils --- //
         static bool Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist = false);
@@ -33,13 +27,13 @@ namespace Hachiko
 
         // --- File utils --- //
         static void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr);
-        std::string GetFileNameAndExtension(const char* file_path) const;
-        std::string GetFileExtension(const char* file_path) const;
+        static std::string GetFileNameAndExtension(const char* file_path);
+        static std::string GetFileExtension(const char* file_path);
         static bool HasExtension(const char* path);
         static bool HasExtension(const char* path, std::vector<std::string> extensions);
 
         // --- Path utils --- //
-        PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const;
+        static PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext);
         static void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
 
         std::string GetWorkingDirectory()
@@ -48,6 +42,7 @@ namespace Hachiko
         }
 
     private:
+        void CreateContext();
         std::string working_directory;
     };
 }

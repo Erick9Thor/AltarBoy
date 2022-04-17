@@ -323,7 +323,7 @@
     </ClCompile>
     <ClCompile Include="src\importers\MaterialImporter.cpp" />
     <ClCompile Include="src\modules\ModuleEvent.cpp" />
-    <ClCompile Include="src\modules\ModuleFileSystem.cpp" />
+    <ClCompile Include="src\utils\FileSystem.cpp" />
     <ClCompile Include="src\resources\ResourceMesh.cpp" />
     <ClCompile Include="src\resources\ResourceMaterial.cpp" />
     <ClCompile Include="src\resources\Resource.cpp" />
@@ -626,7 +626,7 @@
     <ClInclude Include="vendors\PhysicsFS\physfs_miniz.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs_platforms.h" />
     <ClInclude Include="src\importers\MaterialImporter.h" />
-    <ClInclude Include="src\modules\ModuleFileSystem.h" />
+    <ClInclude Include="src\utils\FileSystem.h" />
     <ClInclude Include="src\resources\ResourceMesh.h" />
     <ClInclude Include="src\resources\ResourceMaterial.h" />
     <ClInclude Include="src\resources\Resource.h" />

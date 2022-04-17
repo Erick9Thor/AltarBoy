@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "modules/Module.h"
 #include "utils/Timer.h"
+#include "utils/FileSystem.h"
 
 #include <vector>
 
@@ -19,7 +20,6 @@ namespace Hachiko
     class ModuleTexture;
     class ModuleSceneManager;
     class ModuleProgram;
-    class ModuleFileSystem;
     class ModuleResources;
     class ModuleImporter;
     class ModuleUserInterface;
@@ -52,7 +52,6 @@ namespace Hachiko
         ModuleTexture* texture = nullptr;
         ModuleSceneManager* scene_manager = nullptr;
         ModuleProgram* program = nullptr;
-        ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
         ModuleResources* resources = nullptr;
         ModuleUserInterface* ui = nullptr;
@@ -61,6 +60,7 @@ namespace Hachiko
         PreferenceManager* preferences = nullptr;
     private:
         PerformanceTimer timer;
+        FileSystem file_system;
 
         double delta = 0;
         double prev_tick_time = 0;

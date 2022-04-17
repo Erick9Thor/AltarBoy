@@ -1,7 +1,8 @@
 #include "core/hepch.h"
-#include "ModuleFileSystem.h"
+#include "FileSystem.h"
+#include "PathNode.h"
 
-Hachiko::ModuleFileSystem::ModuleFileSystem()
+Hachiko::FileSystem::FileSystem()
 {
     HE_LOG("Creating virtual file system");
     // Create base path to be ready for other modules
@@ -14,12 +15,12 @@ Hachiko::ModuleFileSystem::ModuleFileSystem()
     PHYSFS_setWriteDir(".");
 }
 
-Hachiko::ModuleFileSystem::~ModuleFileSystem()
+Hachiko::FileSystem::~FileSystem()
 {
     PHYSFS_deinit();
 }
 
-bool Hachiko::ModuleFileSystem::Init()
+bool Hachiko::FileSystem::Init()
 {
     HE_LOG("Init virtual file system");
 
@@ -27,11 +28,10 @@ bool Hachiko::ModuleFileSystem::Init()
 
     char* write_path = SDL_GetPrefPath("Akita", "Hachiko");
     SDL_free(write_path);
-
-    return true;
+    return false;
 }
 
-void Hachiko::ModuleFileSystem::CreateContext()
+void Hachiko::FileSystem::CreateContext()
 {
     char engine_path[MAX_PATH];
     GetCurrentDirectory(MAX_PATH, engine_path);
@@ -40,7 +40,7 @@ void Hachiko::ModuleFileSystem::CreateContext()
     HE_LOG("Engine context: %s", working_directory.c_str());
 }
 
-char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
+char* Hachiko::FileSystem::Load(const char* file_path)
 {
     char* buffer = nullptr;
 
@@ -75,7 +75,7 @@ char* Hachiko::ModuleFileSystem::Load(const char* file_path) const
     return buffer;
 }
 
-bool Hachiko::ModuleFileSystem::Save(const char* file_path, const void* buffer, unsigned int size, bool append) const
+bool Hachiko::FileSystem::Save(const char* file_path, const void* buffer, unsigned int size, bool append)
 {
     const bool overwrite = PHYSFS_exists(file_path) != 0;
     PHYSFS_File* file = append ? PHYSFS_openAppend(file_path) : PHYSFS_openWrite(file_path);
@@ -106,7 +106,7 @@ bool Hachiko::ModuleFileSystem::Save(const char* file_path, const void* buffer, 
     return true;
 }
 
-bool Hachiko::ModuleFileSystem::Save(const char* path, const YAML::Node& node) const
+bool Hachiko::FileSystem::Save(const char* path, const YAML::Node& node)
 {
     std::ofstream output(path);
     output << node;
@@ -114,17 +114,17 @@ bool Hachiko::ModuleFileSystem::Save(const char* path, const YAML::Node& node) c
     return true;
 }
 
-bool Hachiko::ModuleFileSystem::Exists(const char* file_path)
+bool Hachiko::FileSystem::Exists(const char* file_path)
 {
     return PHYSFS_exists(file_path) != 0 && !std::string(file_path).empty();
 }
 
-bool Hachiko::ModuleFileSystem::IsDirectory(const char* directory_path)
+bool Hachiko::FileSystem::IsDirectory(const char* directory_path)
 {
     return PHYSFS_isDirectory(directory_path) != 0;
 }
 
-void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
+void Hachiko::FileSystem::CreateDir(const char* directory_path)
 {
     if (!Exists(directory_path) && !PHYSFS_mkdir(directory_path))
     {
@@ -132,12 +132,12 @@ void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
     }
 }
 
-bool Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist)
+bool Hachiko::FileSystem::Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist)
 {
     return CopyFile(source_file_path, destination_file_path, fail_if_exist);
 }
 
-void Hachiko::ModuleFileSystem::Delete(const char* file_path) const
+void Hachiko::FileSystem::Delete(const char* file_path)
 {
     if (!PHYSFS_delete(file_path))
     {
@@ -145,7 +145,7 @@ void Hachiko::ModuleFileSystem::Delete(const char* file_path) const
     }
 }
 
-std::string Hachiko::ModuleFileSystem::NormalizePath(const char* full_path)
+std::string Hachiko::FileSystem::NormalizePath(const char* full_path)
 {
     std::string newPath(full_path);
     for (char& i : newPath)
@@ -158,7 +158,7 @@ std::string Hachiko::ModuleFileSystem::NormalizePath(const char* full_path)
     return newPath;
 }
 
-std::string Hachiko::ModuleFileSystem::GetFileNameAndExtension(const char* file_path) const
+std::string Hachiko::FileSystem::GetFileNameAndExtension(const char* file_path)
 {
     const char* last_slash = strrchr(file_path, '/');
     const char* last_backslash = strrchr(file_path, '\\');
@@ -173,7 +173,7 @@ std::string Hachiko::ModuleFileSystem::GetFileNameAndExtension(const char* file_
     return name_extension;
 }
 
-std::string Hachiko::ModuleFileSystem::GetFileExtension(const char* file_path) const
+std::string Hachiko::FileSystem::GetFileExtension(const char* file_path)
 {
     const char* last_slash = strrchr(file_path, '/');
     const char* last_backslash = strrchr(file_path, '\\');
@@ -187,7 +187,7 @@ std::string Hachiko::ModuleFileSystem::GetFileExtension(const char* file_path) c
     return extension;
 }
 
-Hachiko::PathNode Hachiko::ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
+Hachiko::PathNode Hachiko::FileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext)
 {
     PathNode root;
     if (Exists(directory))
@@ -237,7 +237,7 @@ Hachiko::PathNode Hachiko::ModuleFileSystem::GetAllFiles(const char* directory, 
     return root;
 }
 
-void Hachiko::ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
+void Hachiko::FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
 {
     if (full_path == nullptr || path == nullptr || file == nullptr || extension == nullptr)
     {
@@ -275,7 +275,7 @@ void Hachiko::ModuleFileSystem::SplitFilePath(const char* full_path, std::string
     }
 }
 
-void Hachiko::ModuleFileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list)
+void Hachiko::FileSystem::DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list)
 {
     char** rc = PHYSFS_enumerateFiles(directory);
 
@@ -295,14 +295,14 @@ void Hachiko::ModuleFileSystem::DiscoverFiles(const char* directory, std::vector
     PHYSFS_freeList(rc);
 }
 
-bool Hachiko::ModuleFileSystem::HasExtension(const char* path)
+bool Hachiko::FileSystem::HasExtension(const char* path)
 {
     std::string ext;
     SplitFilePath(path, nullptr, nullptr, &ext);
     return !ext.empty();
 }
 
-bool Hachiko::ModuleFileSystem::HasExtension(const char* path, std::vector<std::string> extensions)
+bool Hachiko::FileSystem::HasExtension(const char* path, std::vector<std::string> extensions)
 {
     std::string ext;
     SplitFilePath(path, nullptr, nullptr, &ext);

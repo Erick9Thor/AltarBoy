@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 
 #include "MeshImporter.h"
-#include "modules/ModuleFileSystem.h"
 #include "resources/ResourceMesh.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
@@ -63,7 +62,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     memcpy(cursor, mesh->tangents, size_bytes);
     cursor += size_bytes;
 
-    App->file_sys->Save(file_path.c_str(), file_buffer, file_size);
+    FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
 }
 
@@ -74,11 +73,11 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path);
+    char* file_buffer = FileSystem::Load(file_path);
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    std::string mesh_id = App->file_sys->GetFileNameAndExtension(file_path);
+    std::string mesh_id = FileSystem::GetFileNameAndExtension(file_path);
 
     const auto mesh = new ResourceMesh(UUID::StringToUID(mesh_id));
 
