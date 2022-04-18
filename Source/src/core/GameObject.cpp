@@ -17,10 +17,10 @@
 #include "components/ComponentButton.h"
 #include "Components/ComponentProgressBar.h"
 
-// TODO: REMOVE
 #include "Application.h"
 #include "modules/ModuleSceneManager.h"
-//
+#include "modules/ModuleScriptingSystem.h" // For instantiating Scripts.
+
 
 #include <debugdraw.h>
 
@@ -108,7 +108,7 @@ void Hachiko::GameObject::AddComponent(Component* component)
         component->SetGameObject(this);
         break;
     }
-    case (Component::Type::CAMERA):
+    default:
     {
         components.push_back(component);
         component->SetGameObject(this);
@@ -192,7 +192,6 @@ void Hachiko::GameObject::SetActive(bool set_active)
     }
     active = set_active;
 }
-
 
 void Hachiko::GameObject::Start() 
 {
@@ -352,7 +351,13 @@ bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
         components.erase(std::remove(components.begin(), components.end(), component));
         return true;
     }
+    
     return false;
+}
+
+void Hachiko::GameObject::ForceRemoveComponent(Component* component)
+{
+    components.erase(std::remove(components.begin(), components.end(), component));
 }
 
 void Hachiko::GameObject::Save(YAML::Node& node) const
@@ -361,8 +366,7 @@ void Hachiko::GameObject::Save(YAML::Node& node) const
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
     node[GAME_OBJECT_PARENT_ID] = parent != nullptr ? parent->uid : 0;
-
-    
+   
     for (unsigned i = 0; i < components.size(); ++i)
     {
         node[COMPONENT_NODE][i][COMPONENT_ID] = static_cast<size_t>(components[i]->GetID());
@@ -385,12 +389,30 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
 
         UID c_uid = components_node[i][COMPONENT_ID].as<UID>();
         bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
-        const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
+        const auto type = static_cast<Component::Type>(
+            components_node[i][COMPONENT_TYPE].as<int>());
 
-        Component* component = CreateComponent(type);
-        component->SetID(c_uid);
-        component->Load(components_node[i]);
-        active ? component->Enable() : component->Disable();
+        Component* component = nullptr;
+
+        if (type == Component::Type::SCRIPT)
+        {
+            std::string script_name = 
+                components_node[i][SCRIPT_NAME].as<std::string>();
+            component = (Component*)(
+                App->scripting_system->InstantiateScript(script_name, this));
+
+            if (component != nullptr)
+            {
+                this->AddComponent(component);
+            }
+        }
+        else
+        {
+            component = CreateComponent(type);
+            component->SetID(c_uid);
+            component->Load(components_node[i]);
+            active ? component->Enable() : component->Disable();
+        }
     }
 
     const YAML::Node children_nodes = node[CHILD_NODE];
@@ -398,6 +420,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
     {
         return;
     }
+
     for (unsigned i = 0; i < children_nodes.size(); ++i)
     {
         std::string child_name = children_nodes[i][GAME_OBJECT_NAME].as<std::string>();
@@ -406,4 +429,65 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         child->scene_owner = scene_owner;
         child->Load(children_nodes[i]);
     }
+}
+
+std::vector<Hachiko::Component*> 
+Hachiko::GameObject::GetComponents(Component::Type type) const
+{
+    std::vector<Component*> components_of_type;
+
+    components_of_type.reserve(components.size());
+
+    for (Component* component : components)
+    {
+        if (component->GetType() == type)
+        {
+            components_of_type.push_back(component);
+        }
+    }
+
+    return components_of_type;
+}
+
+std::vector<Hachiko::Component*> 
+Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
+{
+    std::vector<Component*> components_in_descendants;
+
+    for (GameObject* child : children)
+    {
+        std::vector<Component*> components_in_child = 
+            child->GetComponents(type);
+
+        for (Component* component_in_child : components_in_child)
+        {
+            components_in_descendants.push_back(component_in_child);
+        }
+
+        std::vector<Component*> components_in_childs_descendants = 
+            child->GetComponentsInDescendants(type);
+
+        for (Component* component_in_childs_descendants : 
+            components_in_childs_descendants)
+        {
+            components_in_descendants.push_back(
+                component_in_childs_descendants);
+        }
+    }
+
+    return components_in_descendants;
+}
+
+Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(
+    const std::string& child_name) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->name == child_name)
+        {
+            return child;
+        }
+    }
+
+    return nullptr;
 }
