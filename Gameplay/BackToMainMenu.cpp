@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "Scenes.h"
 
 Hachiko::Scripting::BackToMainMenu::BackToMainMenu(GameObject* game_object)
 	: Script(game_object, "BackToMainMenu")
@@ -23,8 +24,10 @@ void Hachiko::Scripting::BackToMainMenu::OnStart()
 
 void Hachiko::Scripting::BackToMainMenu::OnUpdate()
 {
-	if (_button_back->IsSelected())
+	// TODO: Uncomment this in the next PR after adding the new scenes with
+	// YAML based serialization.
+	/*if (_button_back->IsSelected())
 	{
-		SceneManagement::SwitchScene("Assets/Scenes/menu.scene");
-	}
+		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
+	}*/
 }

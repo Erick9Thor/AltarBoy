@@ -1,5 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
+#include "Scenes.h"
+
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
@@ -64,10 +66,14 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (raycast_hit != nullptr && raycast_hit->name == "Goal")
 	{
-		SceneManagement::SwitchScene("Assets/Scenes/win.scene");
+		// TODO: Uncomment this in the next PR after adding the new scenes with
+		// YAML based serialization.
+		// 
+		// SceneManagement::SwitchScene(Scenes::WIN);
 	}
 
-	// TODO: Delete this.
+	// TODO: Delete this in the next PR after adding the new scenes with
+	// YAML based serialization. For now, player is not falling by default.
 	_is_falling = false;
 
 	if (!_is_dashing && !_is_falling)
@@ -129,14 +135,15 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = !_is_falling;
 	}
 
-	// TODO: Uncomment.
+	// TODO: Uncomment this in the next PR after adding the new scenes with
+	// YAML based serialization.
 	/*if (current_position.y < -20)
 	{
 		_speed_y = 0;
 		current_position = _starting_position;
 		_is_falling = false;
 
-		SceneManagement::SwitchScene("Assets/Scenes/lose.scene");
+		SceneManagement::SwitchScene(Scenes::LOSE);
 	}*/
 
 	// Apply the position:

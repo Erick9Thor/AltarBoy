@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "MainMenuManager.h"
+#include "Scenes.h"
 
 Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
 	: Script(game_object, "MainMenuManager")
@@ -114,12 +115,14 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 		_state_changed = false;
 	}
 
-	if (_button_play->IsSelected())
+	// TODO: Uncomment this in the next PR after adding the new scenes with
+	// YAML based serialization.
+	/*if (_button_play->IsSelected())
 	{
-		SceneManagement::SwitchScene("Assets/Scenes/game.scene");
+		SceneManagement::SwitchScene(Scenes::GAME);
 
 		return;
-	}
+	}*/
 
 	if (_button_settings->IsSelected())
 	{
