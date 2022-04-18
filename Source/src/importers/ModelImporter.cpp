@@ -151,7 +151,7 @@ void Hachiko::ModelImporter::Save(const Resource* resource) {}
 Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UID uid, const char* model_path)
 {
     HE_LOG("ModelImporter::CherryImport");
-    HE_LOG("Model path: %s", model_path)
+    HE_LOG("Model path: %s", model_path);
     HE_LOG("UID: %ull", uid);
     HE_LOG("Mesh index: %d", mesh_index);
 

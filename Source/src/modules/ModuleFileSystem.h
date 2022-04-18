@@ -42,12 +42,12 @@ namespace Hachiko
         PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const;
         static void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
 
-        std::string GetWorkingDirectory()
+        const std::string& GetWorkingDirectory() const
         {
             return working_directory;
         }
 
-        std::wstring GetWorkingDirectoryW()
+        const std::wstring& GetWorkingDirectoryW() const
         {
             return working_directory_w;
         }

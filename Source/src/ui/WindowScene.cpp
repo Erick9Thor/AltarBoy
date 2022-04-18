@@ -6,6 +6,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleRender.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleDebugMode.h"
 
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform.h"
@@ -207,6 +208,7 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera,
     const float y_normalized = -(mouse_viewport_pos.y / texture_size.y * 2.f - 1.f);
 
     const LineSegment line = camera->Raycast(x_normalized, y_normalized);
+    App->debug_mode->SetLine(line);
     GameObject* selected = scene->Raycast(line);
 
     return selected;
