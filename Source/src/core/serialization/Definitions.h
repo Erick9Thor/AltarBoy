@@ -97,6 +97,7 @@
 #define ANIMATIONS_ASSETS "animations_assets"
 #define SKYBOX_ASSETS "skybox_assets"
 // Library
+#define SCENES_LIBRARY "scenes_library"
 #define MODELS_LIBRARY "models_library"
 #define MESHES_LIBRARY "meshes_library"
 #define TEXTURES_LIBRARY "textures_library"
@@ -137,6 +138,7 @@
 #define SCENE_NAME "scene_name"
 #define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
+#define SCENE_TEMP_NAME "temp_scene"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"

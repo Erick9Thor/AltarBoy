@@ -52,7 +52,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        SaveScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+        SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
         
         GameTimer::Start();
     }
@@ -76,7 +76,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         GameTimer::Stop();
 
-        LoadScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
     }
 }
 
@@ -107,6 +107,7 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     EditorPreferences* pref = App->preferences->GetEditorPreference();
     pref->SetAutosave(scene_autosave);
     
+    // TODO: Remove temp_scene.scene from disk
     RELEASE(main_scene);
     RELEASE(serializer);
     return true;
@@ -135,7 +136,7 @@ void Hachiko::ModuleSceneManager::SaveScene()
 
     if (IsScenePlaying())
     {
-        save_scene = serializer->Load(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+        save_scene = serializer->Load(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
     }
 
     serializer->Save(save_scene);

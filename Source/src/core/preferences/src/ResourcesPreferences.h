@@ -33,6 +33,7 @@ namespace Hachiko
         std::string animations_assets = "assets/animations/";
         std::string skybox_assets     = "assets/skybox/";
 
+        std::string scenes_library     = "library/scenes/";
         std::string models_library     = "library/models/";
         std::string meshes_library     = "library/meshes/";
         std::string textures_library   = "library/textures/";
