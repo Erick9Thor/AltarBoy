@@ -59,6 +59,8 @@ namespace Hachiko
 
         void SwitchTo(const char* file_path);
 
+        void ReloadScene();
+
     private:
         Scene* main_scene = nullptr;
         SceneSerializer* serializer = nullptr;
@@ -66,5 +68,7 @@ namespace Hachiko
 
         bool scene_ready_to_load = false;
         std::string scene_to_load;
+
+        std::string currentScenePath;
     };
 } // namespace Hachiko

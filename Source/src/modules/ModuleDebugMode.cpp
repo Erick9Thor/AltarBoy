@@ -140,8 +140,13 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 			{
 				player->GetTransform()->SetGlobalPosition(player_pos_editor);
 			}
+            ImGui::Separator();
 		}
-		
+
+		if (ImGui::Button("Reload current scene"))
+        {
+            App->scene_manager->ReloadScene();
+        }	
 	}
 	ImGui::End();
 }
