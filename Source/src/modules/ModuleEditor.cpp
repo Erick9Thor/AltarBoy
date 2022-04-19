@@ -18,7 +18,7 @@ Hachiko::ModuleEditor::ModuleEditor()
     windows.push_back(&w_about);
     windows.push_back(&w_console);
     windows.push_back(&w_resource);
-    windows.push_back(&w_project);
+    //windows.push_back(&w_project);
     windows.push_back(&w_timers);
 #endif
 }

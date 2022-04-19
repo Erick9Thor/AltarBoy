@@ -194,7 +194,7 @@ std::string Hachiko::ModuleFileSystem::GetFileExtension(const char* file_path) c
 Hachiko::PathNode Hachiko::ModuleFileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const
 {
     PathNode root;
-    if (Exists(directory))
+    if (!Exists(directory))
     {
         return root;
     }
@@ -243,7 +243,7 @@ Hachiko::PathNode Hachiko::ModuleFileSystem::GetAllFiles(const char* directory, 
 
 void Hachiko::ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
 {
-    if (full_path == nullptr || path == nullptr || file == nullptr || extension == nullptr)
+    if (full_path == nullptr)
     {
         return;
     }
@@ -251,31 +251,41 @@ void Hachiko::ModuleFileSystem::SplitFilePath(const char* full_path, std::string
     const std::string full(full_path);
     const size_t pos_separator = full.find_last_of("\\/");
     const size_t pos_dot = full.find_last_of('.');
-    if (pos_separator < full.length())
+
+    if (path != nullptr)
     {
-        *path = full.substr(0, pos_separator + 1);
-    }
-    else
-    {
-        path->clear();
+        if (pos_separator < full.length())
+        {
+            *path = full.substr(0, pos_separator + 1);
+        }
+        else
+        {
+            path->clear();
+        }
     }
 
-    if (pos_separator < full.length())
+    if (file != nullptr)
     {
-        *file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
-    }
-    else
-    {
-        *file = full.substr(0, pos_dot);
+        if (pos_separator < full.length())
+        {
+            *file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
+        }
+        else
+        {
+            *file = full.substr(0, pos_dot);
+        }
     }
 
-    if (pos_dot < full.length())
+    if (extension != nullptr)
     {
-        *extension = full.substr(pos_dot + 1);
-    }
-    else
-    {
-        extension->clear();
+        if (pos_dot < full.length())
+        {
+            *extension = full.substr(pos_dot + 1);
+        }
+        else
+        {
+            extension->clear();
+        }
     }
 }
 

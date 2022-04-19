@@ -32,6 +32,10 @@ bool ModuleResources::Init()
         App->file_sys->CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
+    //std::vector<std::string> filter_ext;
+    //std::vector<std::string> ignore_ext;
+    //PathNode pathnode = App->file_sys->GetAllFiles("assets", &filter_ext, &ignore_ext);
+
     std::function handleAddedFile = [&](Event& evt)
     {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
