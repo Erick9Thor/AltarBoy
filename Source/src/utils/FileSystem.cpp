@@ -28,7 +28,7 @@ bool Hachiko::FileSystem::Init()
 
     char* write_path = SDL_GetPrefPath("Akita", "Hachiko");
     SDL_free(write_path);
-    return false;
+    return true;
 }
 
 void Hachiko::FileSystem::CreateContext()
