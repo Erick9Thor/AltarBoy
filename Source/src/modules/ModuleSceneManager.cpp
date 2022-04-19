@@ -144,8 +144,7 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 {
     if (std::filesystem::exists(currentScenePath))
     {
-        delete main_scene;
-        main_scene = serializer->Load(currentScenePath.c_str());
+        LoadScene(currentScenePath.c_str());
     }
     else
     {
