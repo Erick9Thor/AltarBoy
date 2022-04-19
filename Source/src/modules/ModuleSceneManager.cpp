@@ -16,7 +16,6 @@ bool Hachiko::ModuleSceneManager::Init()
     if (std::filesystem::exists(scene_path))
     {
         LoadScene(scene_path.c_str());
-        currentScenePath = scene_path;
     }
     else
     {
@@ -119,6 +118,7 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
+
     currentScenePath = "";
 }
 
