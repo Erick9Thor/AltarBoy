@@ -62,12 +62,7 @@ void Hachiko::ComponentText::DrawGui()
 }
 
 void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program)
-{
-    //program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
-    // Setting diffuse flag to false makes shader default to color
-    //program->BindUniformBool("diffuse_flag", false);
-    //program->BindUniformFloat4("img_color", font_color.ptr());
-    
+{   
     if (label)
     {
         // Make sure transform is refreshed
@@ -78,22 +73,20 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
     }        
 }
 
-void Hachiko::ComponentText::Save(JsonFormatterValue j_component) const
+void Hachiko::ComponentText::Save(YAML::Node& node) const
 {
-    const JsonFormatterValue j_font_path = j_component["FontPath"];
-    j_font_path = font.path.c_str();
+    node[FONT_PATH] = font.path.c_str();
 }
 
-void Hachiko::ComponentText::Load(JsonFormatterValue j_component)
+void Hachiko::ComponentText::Load(const YAML::Node& node)
 {
-    const JsonFormatterValue j_font_path = j_component["FontPath"];
-    const std::string font_path = j_font_path;
+    const std::string font_path = node[FONT_PATH].as<std::string>();
 
     if (!font_path.empty())
     {
         font = App->texture->LoadFont(font_path.c_str());
         BuildLabel(game_object->GetComponent<ComponentTransform2D>());
-    }    
+    }
 }
 
 void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)

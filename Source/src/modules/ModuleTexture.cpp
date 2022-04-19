@@ -58,9 +58,9 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const 
     texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
     texture->format = ilGetInteger(IL_IMAGE_FORMAT);
 
-    byte* data = ilGetData();
+    unsigned char* data = ilGetData();
     texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
-    texture->data = new byte[texture->data_size];
+    texture->data = new unsigned char[texture->data_size];
     memcpy(texture->data, data, texture->data_size);
 
     DeleteImg(img_id);

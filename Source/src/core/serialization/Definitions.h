@@ -193,6 +193,9 @@
 #define IMAGE_PATH "image_path"
 #define HOVER_IMAGE_PATH "hover_image_path"
 
+// Component Text
+#define FONT_PATH "font_path"
+
 // Component Progress Bar
 #define BAR_PARAMS "params"
 #define BAR_MIN "min"
