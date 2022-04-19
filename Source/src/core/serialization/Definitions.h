@@ -202,3 +202,6 @@
 #define BAR_MAX "max"
 #define BAR_FILLED "filled"
 #define BAR_DIRECTION "direction"
+
+// Script
+#define SCRIPT_NAME "class_name"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Component.h"
-#include "ComponentTransform2D.h"
+#include "components/Component.h"
+#include "components/ComponentTransform2D.h"
 #include "Globals.h"
 
 namespace Hachiko
