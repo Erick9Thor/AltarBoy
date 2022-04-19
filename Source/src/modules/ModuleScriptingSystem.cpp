@@ -296,6 +296,12 @@ bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
     _loaded_dll = NULL;
     LoadDll(&_loaded_dll);
 
+    if (_loaded_dll == NULL)
+    {
+        _times_reloaded--;
+        return false;
+    }
+
     // Build the name of the new file that's gonna hold the copy of new dll:
     std::wstring current_dll_path = App->file_sys->GetWorkingDirectoryW();
     current_dll_path += L"\\";
@@ -303,12 +309,6 @@ bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
     current_dll_path += L".dll";
 
     GetFileLastWriteTimestamp(current_dll_path, _current_dll_timestamp);
-
-    if (_loaded_dll == NULL)
-    {
-        _times_reloaded--;
-        return false;
-    }
 
     HE_LOG("Loaded Gameplay Scripting dll (%u).", _times_reloaded);
 
@@ -354,6 +354,7 @@ void Hachiko::ModuleScriptingSystem::LoadDll(HMODULE* dll)
     // this to do other stuff. TODO: Find a robust solution to this.
     // Wait while the file is just created:
     int source_buffer_size = 0;
+    bool source_open_failed = false;
 
     std::wstring main_dll_name = SCRIPTING_DLL_NAME;
     main_dll_name = main_dll_name + L".dll";
@@ -366,23 +367,33 @@ void Hachiko::ModuleScriptingSystem::LoadDll(HMODULE* dll)
         source.close();
         source.open(main_dll_name, std::ios::binary);
 
+        if (source.fail())
+        {
+            HE_LOG("No Gameplay.dll found.");
+            source_open_failed = true;
+            break;
+        }
+
         source_buffer_size = source.rdbuf()->pubseekoff(0, source.end, 
             source.in);
     }
 
-    // Go back to initial position:
-    source.rdbuf()->pubseekpos(0, source.in);
+    if (!source_open_failed)
+    {
+        // Go back to initial position:
+        source.rdbuf()->pubseekpos(0, source.in);
 
-    // Copy the original dll to the one we will use:
-    destination << source.rdbuf();
+        // Copy the original dll to the one we will use:
+        destination << source.rdbuf();
 
-    // Close streams:
-    source.close();
-    destination.close();
+        // Close streams:
+        source.close();
+        destination.close();
 
-    // Load the copied library:
-    *dll = LoadLibraryW(current_dll_name.c_str());
-    _current_dll_name = current_dll_name;
+        // Load the copied library:
+        *dll = LoadLibraryW(current_dll_name.c_str());
+        _current_dll_name = current_dll_name;
+    }
 }
 
 void Hachiko::ModuleScriptingSystem::FreeDll(HMODULE dll, 
