@@ -152,14 +152,12 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
 void Hachiko::ModuleSceneManager::SaveScene()
 {
-    Scene* save_scene = main_scene;
-
     if (IsScenePlaying())
     {
-        save_scene = serializer->Load(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
     }
 
-    serializer->Save(save_scene);
+    serializer->Save(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
