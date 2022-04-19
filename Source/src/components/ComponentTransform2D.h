@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "components/Component.h"
 #include "Globals.h"
 
 namespace Hachiko
@@ -9,7 +9,7 @@ namespace Hachiko
 
     class ComponentCanvas;
 
-    class ComponentTransform2D : public Component
+    class HACHIKO_API ComponentTransform2D : public Component
     {
     public:
         ComponentTransform2D(GameObject* container);
@@ -55,11 +55,11 @@ namespace Hachiko
         bool HasDependentComponents(GameObject* game_object) const override;
         bool Intersects(const float2& mouse_pos) const;
 
-        void Save(JsonFormatterValue j_component) const override;
-        void Load(JsonFormatterValue j_component) override;
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
 
     private:
-        void Invalidate(); // Set this and childs to dirty
+        void Invalidate(); // Set this and children to dirty
         void UpdateTransforms(); // Only does oeprations triggers class is dirty
         void UpdateUIComponents(); // Called when the transforms change
         void UpdateBoundingBox();

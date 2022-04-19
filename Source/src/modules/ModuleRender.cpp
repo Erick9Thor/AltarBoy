@@ -196,12 +196,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     }
 
-    const float4x4 view = camera->GetViewMatrix();
-    const float4x4 proj = camera->GetProjectionMatrix();
-
     glStencilMask(0XFF);
 
-    ModuleDebugDraw::Draw(view, proj, fb_height, fb_width);
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

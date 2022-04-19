@@ -22,10 +22,11 @@ namespace Hachiko
         void CreateDir(const char* directory_path) const;
         char* Load(const char* file_path) const;
         bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false) const;
+        bool Save(const char* path, const YAML::Node& node) const;
         void Delete(const char* file_path) const;
 
         // --- Folder utils --- //
-        static void Copy(const char* source_file_path, const char* destination_file_path);
+        static bool Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist = false);
         static std::string NormalizePath(const char* full_path);
         static bool Exists(const char* file_path);
         static bool IsDirectory(const char* directory_path);
@@ -41,12 +42,18 @@ namespace Hachiko
         PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext) const;
         static void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
 
-        std::string GetWorkingDirectory()
+        const std::string& GetWorkingDirectory() const
         {
             return working_directory;
         }
 
+        const std::wstring& GetWorkingDirectoryW() const
+        {
+            return working_directory_w;
+        }
+
     private:
         std::string working_directory;
+        std::wstring working_directory_w;
     };
 }
