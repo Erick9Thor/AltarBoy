@@ -15,6 +15,6 @@ namespace Hachiko
         void Update() override;
 
     private:
-        Hardware* hw;
+        Hardware* hardware;
     };
 }
