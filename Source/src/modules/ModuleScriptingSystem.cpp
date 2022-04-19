@@ -35,7 +35,23 @@ bool Hachiko::ModuleScriptingSystem::Init()
 
     if (!loading_successful)
     {
-        HE_LOG("There are no Gameplay.dll detected by Hachiko " 
+        // NOTE: If this happens to be true, i.e someone does not have Gameplay
+        // built before running the engine, the scene will load without scripts
+        // and therefore, after a new dll is built and the Hachiko detects it,
+        // since there are no scripts on the scene, this module will not try to
+        // re-create the scripts. To solve this issue we may have a auxiliary
+        // save file that has gameobject uids and scripts that are attached to
+        // them, and the serialized fields of those scripts. When we try to 
+        // load the scripts for the first time and there is no Gameplay.dll,
+        // We save all the scripts on the scene to that file, and hold it until
+        // we have a built Gameplay.dll. If we don't someone may save the scene
+        // without the scripts and lose all the attached scripts. On another 
+        // note though, with the new flow of scripting layer building, this 
+        // issue won't happen as we will always compile the "Gameplay" when we
+        // first run the engine.
+        // TODO: Handle this.
+
+        HE_LOG("[IMPORTANT] There are no Gameplay.dll detected by Hachiko " 
             "Continuing without scripting functionality.");
     }
 
@@ -296,6 +312,12 @@ bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
     _loaded_dll = NULL;
     LoadDll(&_loaded_dll);
 
+    if (_loaded_dll == NULL)
+    {
+        _times_reloaded--;
+        return false;
+    }
+
     // Build the name of the new file that's gonna hold the copy of new dll:
     std::wstring current_dll_path = App->file_sys->GetWorkingDirectoryW();
     current_dll_path += L"\\";
@@ -303,12 +325,6 @@ bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
     current_dll_path += L".dll";
 
     GetFileLastWriteTimestamp(current_dll_path, _current_dll_timestamp);
-
-    if (_loaded_dll == NULL)
-    {
-        _times_reloaded--;
-        return false;
-    }
 
     HE_LOG("Loaded Gameplay Scripting dll (%u).", _times_reloaded);
 
@@ -339,21 +355,16 @@ void Hachiko::ModuleScriptingSystem::LoadDll(HMODULE* dll)
     // delete the previous one when we load the new one:
     _times_reloaded++;
 
-    // Build the name of the new file that's gonna hold the copy of new dll:
-    std::wstringstream wss;
-    wss << L"_" << _times_reloaded << L".dll";
-    std::wstring current_dll_name = SCRIPTING_DLL_NAME + wss.str();
-
-    // Open the dll we will copy from, and dll we will use:
+    // Open the dll we will copy from:
     std::ifstream source;
-    std::ofstream destination(current_dll_name, std::ios::binary);
-
+    
     // NOTE: The following todo will be fixed by new flow of the scripting
     // hot reloading implementation. Please ignore this ugly solution for now.
     // I couldn't solve this problem in a beautiful manner, for now I'm doing 
     // this to do other stuff. TODO: Find a robust solution to this.
     // Wait while the file is just created:
     int source_buffer_size = 0;
+    bool source_open_failed = false;
 
     std::wstring main_dll_name = SCRIPTING_DLL_NAME;
     main_dll_name = main_dll_name + L".dll";
@@ -366,23 +377,41 @@ void Hachiko::ModuleScriptingSystem::LoadDll(HMODULE* dll)
         source.close();
         source.open(main_dll_name, std::ios::binary);
 
+        if (source.fail())
+        {
+            source_open_failed = true;
+            break;
+        }
+
         source_buffer_size = source.rdbuf()->pubseekoff(0, source.end, 
             source.in);
     }
 
-    // Go back to initial position:
-    source.rdbuf()->pubseekpos(0, source.in);
+    if (!source_open_failed)
+    {
+        // Go back to initial position:
+        source.rdbuf()->pubseekpos(0, source.in);
 
-    // Copy the original dll to the one we will use:
-    destination << source.rdbuf();
+        // Build the name of the new file that's gonna hold the copy of new 
+        // dll:
+        std::wstringstream wss;
+        wss << L"_" << _times_reloaded << L".dll";
+        std::wstring current_dll_name = SCRIPTING_DLL_NAME + wss.str();
 
-    // Close streams:
-    source.close();
-    destination.close();
+        // Open the dll we will use:
+        std::ofstream destination(current_dll_name, std::ios::binary);
 
-    // Load the copied library:
-    *dll = LoadLibraryW(current_dll_name.c_str());
-    _current_dll_name = current_dll_name;
+        // Copy the original dll to the one we will use:
+        destination << source.rdbuf();
+
+        // Close streams:
+        source.close();
+        destination.close();
+
+        // Load the copied library:
+        *dll = LoadLibraryW(current_dll_name.c_str());
+        _current_dll_name = current_dll_name;
+    }
 }
 
 void Hachiko::ModuleScriptingSystem::FreeDll(HMODULE dll, 
