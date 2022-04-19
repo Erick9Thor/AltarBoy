@@ -5,13 +5,15 @@
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleWindow.h"
+#include "modules/ModuleSceneManager.h"
 
 #include "components/ComponentCamera.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::WindowConfiguration::WindowConfiguration() :
-    Window("Configuration", true) {}
-
-Hachiko::WindowConfiguration::~WindowConfiguration() = default;
+    Window("Configuration", true)
+{
+}
 
 void Hachiko::WindowConfiguration::Update()
 {
@@ -21,6 +23,8 @@ void Hachiko::WindowConfiguration::Update()
         if (ImGui::CollapsingHeader("Scene"))
         {
             App->renderer->OptionsMenu();
+            ImGui::Separator();
+            App->scene_manager->OptionsMenu();
             ImGui::Separator();
             ImGui::Text("Shader Options");
             App->program->OptionsMenu();
