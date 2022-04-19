@@ -6,6 +6,7 @@
 
 #include "ModuleFileSystem.h"
 #include "core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 bool Hachiko::ModuleSceneManager::Init()
 { 
@@ -27,6 +28,8 @@ bool Hachiko::ModuleSceneManager::Init()
     main_scene->Start();
 #endif
 
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    scene_autosave = pref->GetAutosave();
     return true;
 }
 
@@ -50,7 +53,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        SaveScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+        SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
         
         GameTimer::Start();
     }
@@ -74,7 +77,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         GameTimer::Stop();
 
-        LoadScene(ASSETS_FOLDER_SCENES "tmp_scene.scene");
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
     }
 }
 
@@ -97,7 +100,15 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 
 bool Hachiko::ModuleSceneManager::CleanUp()
 {
-    SaveScene();
+    if (scene_autosave)
+    {
+        SaveScene();
+    }
+
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    pref->SetAutosave(scene_autosave);
+    
+    // TODO: Remove temp_scene.scene from disk
     RELEASE(main_scene);
     RELEASE(serializer);
     return true;
@@ -141,6 +152,11 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
 void Hachiko::ModuleSceneManager::SaveScene()
 {
+    if (IsScenePlaying())
+    {
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+    }
+
     serializer->Save(main_scene);
 }
 
@@ -158,4 +174,9 @@ void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
+}
+
+void Hachiko::ModuleSceneManager::OptionsMenu()
+{
+    ImGui::Checkbox("Autosave Scene", &scene_autosave);
 }

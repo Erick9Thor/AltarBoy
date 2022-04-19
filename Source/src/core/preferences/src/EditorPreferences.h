@@ -91,6 +91,16 @@ namespace Hachiko
             return theme;
         }
 
+        void SetAutosave(bool value)
+        {
+            scene_autosave = value;
+        }
+
+        [[nodiscard]] bool GetAutosave()
+        {
+            return scene_autosave;
+        }
+
     private:
         bool display_debug_draw = false;
         float3 scene_background_color = float3(0.9f);
@@ -100,6 +110,7 @@ namespace Hachiko
 
         float max_fps = 250.0f;
         bool fullscreen = false;
+        bool scene_autosave = false;
         int vsync = 0;
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
