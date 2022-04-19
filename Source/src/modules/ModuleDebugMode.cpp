@@ -3,6 +3,9 @@
 #include "ModuleDebugMode.h"
 #include "core/GameObject.h"
 
+#include "ModuleCamera.h"
+#include "components/ComponentCamera.h"
+
 bool Hachiko::ModuleDebugMode::Init()
 {
 	
@@ -17,6 +20,12 @@ bool Hachiko::ModuleDebugMode::Init()
 
 	// Deprecated after VS1
 	player = FindPlayer();
+
+	// God mode
+    playerLocations.push_back(float3(0.0f, 0.0f, 0.0f));
+    playerLocations.push_back(float3(10.0f, 0.0f, 0.0f));
+    playerLocations.push_back(float3(10.0f, 0.0f, 7.0f));
+    playerLocations.push_back(float3(7.0f, 0.0f, 7.0f));
 	
 	SetupWindow();
 
@@ -42,6 +51,64 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 	}
 
 	RenderGui();
+
+
+	// God mode
+	
+	// Teleport player with mouse double click
+	if (App->input->GetKey(SDL_SCANCODE_RALT) == Hachiko::KeyState::KEY_REPEAT && ImGui::IsMouseDoubleClicked(0))
+	{
+        Plane plane(vec(50, 0, 50), vec(50, 0, -50), vec(-50, 0, -50));
+        float d = 0;
+        if (line.Intersects(plane, &d))
+        {
+            player = FindPlayer();
+            player->GetTransform()->SetGlobalPosition(line.GetPoint(d));
+        }
+	}
+
+	// Teleport player to the nearest position in playerLocations
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == Hachiko::KeyState::KEY_DOWN)
+	{
+        player = FindPlayer();
+        float3 currentPosition = player->GetTransform()->GetGlobalPosition();
+		
+		float dist = 1000.0f;
+		int loc = 0;
+		for (int i = 0; i < playerLocations.size(); ++i)
+		{
+            if (dist > math::Distance(currentPosition, playerLocations[i]) && math::Distance(currentPosition, playerLocations[i]) != 0)
+			{
+                dist = math::Distance(currentPosition, playerLocations[i]);
+                loc = i;
+			}
+		}
+        player->GetTransform()->SetGlobalPosition(playerLocations[loc]);
+	}
+	
+	// Teleport player to the next position in playerLocations
+    if (App->input->GetKey(SDL_SCANCODE_RETURN) == Hachiko::KeyState::KEY_DOWN)
+	{
+        player = FindPlayer();
+        float3 currentPosition = player->GetTransform()->GetGlobalPosition();
+        
+		int loc = 0;
+		for (int i = 0; i < playerLocations.size(); ++i)
+		{
+            if (math::Distance(currentPosition, playerLocations[i]) == 0)
+			{
+                loc = i + 1;
+                break;
+			}
+		}
+
+		if (loc == playerLocations.size())
+		{
+            loc = 0;
+		}
+
+        player->GetTransform()->SetGlobalPosition(playerLocations[loc]);
+	}
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -91,6 +158,12 @@ const Hachiko::GameObject* Hachiko::ModuleDebugMode::FindPlayer() const
 		}
 	}
 	return nullptr;
+}
+
+// God mode
+void Hachiko::ModuleDebugMode::SetLine(LineSegment newLine) 
+{
+    line = newLine;
 }
 
 void Hachiko::ModuleDebugMode::DrawGUI()

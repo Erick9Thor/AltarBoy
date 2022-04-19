@@ -5,6 +5,7 @@ namespace Hachiko
     class Scene;
     class GameObject;
     class Component;
+    class ResourcesPreferences;
 
     class SceneSerializer
     {

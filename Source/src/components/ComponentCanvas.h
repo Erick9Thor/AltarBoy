@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "components/Component.h"
 #include "Globals.h"
 
 namespace Hachiko

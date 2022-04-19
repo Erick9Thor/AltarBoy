@@ -21,6 +21,7 @@ namespace Hachiko
     class ModuleProgram;
     class ModuleHardware;
     class ModuleFileSystem;
+    class ModuleScriptingSystem;
     class ModuleResources;
     class ModuleImporter;
     class ModuleUserInterface;
@@ -56,6 +57,7 @@ namespace Hachiko
         ModuleHardware* hw = nullptr;
         ModuleFileSystem* file_sys = nullptr;
         ModuleEvent* event = nullptr;
+        ModuleScriptingSystem* scripting_system = nullptr;
         ModuleResources* resources = nullptr;
         ModuleUserInterface* ui = nullptr;
         ModuleDebugMode* debug_mode = nullptr;
