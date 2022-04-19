@@ -240,7 +240,7 @@ void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
 
     node[TRANSFORM_POSITION] = position;
     node[TRANSFORM_SIZE] = size;
-    node[TRANSFORM_SCALE] = scale;
+    node[TRANSFORM_SCALE] = scale.xy();
     node[TRANSFORM_ROTATION] = rotation;
     node[TRANSFORM_PIVOT] = pivot_pct_position;
     node[TRANSFORM_ANCHOR] = anchor_pct_position;
