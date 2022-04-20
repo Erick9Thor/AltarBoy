@@ -14,7 +14,7 @@ Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL)
 {
 }
 
-void Hachiko::ModelImporter::Import(const char* path)
+void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
 {
     HE_LOG("Entering ModelImporter: %s", path);
     Assimp::Importer import;
@@ -32,13 +32,12 @@ void Hachiko::ModelImporter::Import(const char* path)
         return;
     }
 
-    YAML::Node model_node;
-    model_node[MODEL_ID] = UUID::GenerateUID();
-    model_node[MODEL_FILE_PATH] = model_path.string();
+    meta[MODEL_ID] = UUID::GenerateUID();
+    meta[MODEL_FILE_PATH] = model_path.string();
 
-    ImportModel(scene, model_node);
+    ImportModel(scene, meta);
 
-    FileSystem::Save(model_output_path.c_str(), model_node);
+    FileSystem::Save(model_output_path.c_str(), meta);
 }
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)

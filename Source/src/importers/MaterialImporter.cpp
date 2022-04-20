@@ -21,7 +21,7 @@ Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIA
 {
 }
 
-void Hachiko::MaterialImporter::Import(const char* path)
+void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
     HE_LOG("Entering MaterialImporter: %s", path);
     Assimp::Importer import;
@@ -38,16 +38,15 @@ void Hachiko::MaterialImporter::Import(const char* path)
         return;
     }
 
-    YAML::Node material_node;
     for (unsigned i = 0; i < scene->mNumMaterials; ++i)
     {
         aiMaterial* material = scene->mMaterials[i];
         Hachiko::UID material_id = UUID::GenerateUID();
-        material_node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
+        meta[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
         Import(material, material_id);
     }
 
-    FileSystem::Save(material_output_path.c_str(), material_node);
+    FileSystem::Save(material_output_path.c_str(), meta);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 

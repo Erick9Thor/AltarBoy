@@ -19,11 +19,11 @@ ImporterManager::ImporterManager()
     const auto animation = new AnimationImporter();
 
     importers.reserve(static_cast<size_t>(Importer::Type::COUNT));
-    importers.push_back(std::make_pair<Importer::Type, Importer*>(model->GetType(), model));
-    importers.push_back(std::make_pair<Importer::Type, Importer*>(mesh->GetType(), mesh));
-    importers.push_back(std::make_pair<Importer::Type, Importer*>(texture->GetType(), texture));
-    importers.push_back(std::make_pair<Importer::Type, Importer*>(material->GetType(), material));
-    importers.push_back(std::make_pair<Importer::Type, Importer*>(animation->GetType(), animation));
+    importers.push_back(std::make_pair(model->GetType(), model));
+    importers.push_back(std::make_pair(mesh->GetType(), mesh));
+    importers.push_back(std::make_pair(texture->GetType(), texture));
+    importers.push_back(std::make_pair(material->GetType(), material));
+    importers.push_back(std::make_pair(animation->GetType(), animation));
 }
 
 ImporterManager::~ImporterManager()
@@ -36,9 +36,9 @@ ImporterManager::~ImporterManager()
 
 void ImporterManager::Import(const std::string& asset_path, const Resource::Type asset_type)
 {
-    // TODO: This is a hack. We need to implement our own assert with message
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-    GetImporter(asset_type)->Import(asset_path.c_str());
+    YAML::Node meta = CreateMeta(asset_path.c_str());
+    GetImporter(asset_type)->Import(asset_path.c_str(), meta);
 }
 
 Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
@@ -97,4 +97,18 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     }
 
     return iType;
+}
+
+YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path)
+{
+    YAML::Node node;
+    std::string file_timestamp;
+    std::string file_path(path);
+    GetFileLastWriteTimestamp(StringUtils::StringToWString(file_path), file_timestamp);
+
+    node["General"]["id"] = UUID::GenerateUID();
+    node["General"]["path"] = file_path;
+    node["General"]["timestamp"] = file_timestamp;
+
+    return node;
 }

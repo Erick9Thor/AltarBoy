@@ -11,7 +11,7 @@ namespace Hachiko
         friend class ModelImporter;
     public:
         MeshImporter();
-        void Import(const char* path) override;
+        void Import(const char* path, YAML::Node& meta) override {};
         void Save(const Resource* mesh) override;
         Resource* Load(const char* path) override;
         bool IsImported(const char* path) override

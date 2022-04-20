@@ -451,7 +451,6 @@
       <Filter>Core\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\LogFunction.cpp" />
-    <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
     <ClCompile Include="src\Gameplay.cpp">
       <Filter>Scripting</Filter>
     </ClCompile>
@@ -463,6 +462,9 @@
     </ClCompile>
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp">
       <Filter>Scripting\Serialization</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\WindowsFileUtil.cpp">
+      <Filter>Core\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1014,9 +1016,6 @@
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\serialization\TypeConverter.h">
-      <Filter>Core\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="src\modules\ModuleCamera.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
@@ -1168,7 +1167,6 @@
       <Filter>Core\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\HachikoApiDefine.h" />
-    <ClInclude Include="src\utils\WindowsFileUtil.h" />
     <ClInclude Include="src\events\GameStateEventPayload.h">
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
@@ -1192,6 +1190,12 @@
     </ClInclude>
     <ClInclude Include="src\scripting\serialization\SerializedField.h">
       <Filter>Scripting\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\WindowsFileUtil.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h">
+      <Filter>Core\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

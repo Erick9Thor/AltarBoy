@@ -8,10 +8,6 @@ Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
 {
 }
 
-void Hachiko::MeshImporter::Import(const char* path)
-{
-}
-
 void Hachiko::MeshImporter::Save(const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);

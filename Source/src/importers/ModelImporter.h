@@ -13,7 +13,7 @@ namespace Hachiko
         ModelImporter();
         ~ModelImporter() override = default;
         
-        void Import(const char* path) override;
+        void Import(const char* path, YAML::Node& meta) override;
         void Save(const Resource* resource) override;
         Resource* Load(const char* model_path) override;
         [[nodiscard]] bool IsImported(const char* path) override;

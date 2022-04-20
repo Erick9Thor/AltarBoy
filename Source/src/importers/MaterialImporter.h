@@ -14,7 +14,7 @@ namespace Hachiko
     public:
         MaterialImporter();
 
-        void Import(const char* path) override;
+        void Import(const char* path, YAML::Node& meta) override;
         void Save(const Resource* material) override;
         Resource* Load(const char* path) override;
 

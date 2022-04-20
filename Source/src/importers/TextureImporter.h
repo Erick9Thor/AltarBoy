@@ -14,7 +14,7 @@ namespace Hachiko
         TextureImporter();
         ~TextureImporter() override = default;
 
-        void Import(const char* path) override;
+        void Import(const char* path, YAML::Node& meta) override;
         Resource* Load(const char* path) override;
         void Save(const Resource* resource) override;
 

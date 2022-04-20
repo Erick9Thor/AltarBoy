@@ -7,7 +7,7 @@
 
 Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) {}
 
-void Hachiko::AnimationImporter::Import(const char* path) {}
+void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) {}
 
 void Hachiko::AnimationImporter::Save(const Resource* resource) {}
 
