@@ -60,9 +60,10 @@ namespace Hachiko
         ModuleDebugMode* debug_mode = nullptr;
 
         PreferenceManager* preferences = nullptr;
+        FileSystem file_system;
+
     private:
         PerformanceTimer timer;
-        FileSystem file_system;
 
         double delta = 0;
         double prev_tick_time = 0;

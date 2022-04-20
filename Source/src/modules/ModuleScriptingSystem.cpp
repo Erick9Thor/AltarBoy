@@ -3,7 +3,6 @@
 #include "utils/WindowsFileUtil.h"
 #include "core/GameObject.h"
 #include "scripting/Script.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
 #include "Application.h"
@@ -319,7 +318,7 @@ bool Hachiko::ModuleScriptingSystem::LoadFirstTime()
     }
 
     // Build the name of the new file that's gonna hold the copy of new dll:
-    std::wstring current_dll_path = App->file_sys->GetWorkingDirectoryW();
+    std::wstring current_dll_path = App->file_system.GetWorkingDirectoryW();
     current_dll_path += L"\\";
     current_dll_path += SCRIPTING_DLL_NAME;
     current_dll_path += L".dll";
@@ -470,7 +469,7 @@ bool Hachiko::ModuleScriptingSystem::IsDllVersionChanged()
 {
     std::string new_timestamp = "";
 
-    std::wstring current_dll_path = App->file_sys->GetWorkingDirectoryW();
+    std::wstring current_dll_path = App->file_system.GetWorkingDirectoryW();
     current_dll_path += L"\\";
     current_dll_path += SCRIPTING_DLL_NAME;
     current_dll_path += L".dll";
