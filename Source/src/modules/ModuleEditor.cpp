@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 
 #include "ModuleEditor.h"
-#include "ModuleFileSystem.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
@@ -140,7 +139,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
             const std::string file_path_name = ImGuiFileDialog::Instance()->GetFilePathName();
 
             //TODO: Make a function inside file sys to get relative path Assets/Scenes/X.scene
-            const std::string file_name_extension = App->file_sys->GetFileNameAndExtension(file_path_name.c_str());
+            const std::string file_name_extension = FileSystem::GetFileNameAndExtension(file_path_name.c_str());
 
             const std::string file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_extension;
 

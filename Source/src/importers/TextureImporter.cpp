@@ -4,7 +4,6 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 
 #include "resources/ResourceTexture.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleResources.h"
 
@@ -28,7 +27,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.string().c_str());
+    char* file_buffer = FileSystem::Load(file_path.string().c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -107,7 +106,7 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
     memcpy(cursor, texture->data, size_bytes);
     cursor += size_bytes;
 
-    App->file_sys->Save(file_path.c_str(), file_buffer, file_size);
+    FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
 }
 

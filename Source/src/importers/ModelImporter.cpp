@@ -4,7 +4,6 @@
 #include "MaterialImporter.h"
 
 #include "resources/ResourceModel.h"
-#include "modules/ModuleFileSystem.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
 #include <assimp/cimport.h>
@@ -39,7 +38,7 @@ void Hachiko::ModelImporter::Import(const char* path)
 
     ImportModel(scene, model_node);
 
-    App->file_sys->Save(model_output_path.c_str(), model_node);
+    FileSystem::Save(model_output_path.c_str(), model_node);
 }
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
@@ -192,7 +191,7 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     mesh_importer.Import(scene->mMeshes[mesh_index], uid);
 
     // 4- If ok, save new model data
-    App->file_sys->Save(model_library_path.c_str(), model_node);
+    FileSystem::Save(model_library_path.c_str(), model_node);
 
     std::string mesh_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH), std::to_string(uid));
     return mesh_importer.Load(mesh_path.c_str());

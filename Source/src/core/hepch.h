@@ -79,6 +79,7 @@
 #include "utils/Timer.h"
 #include "utils/UUID.h"
 #include "utils/StringUtils.h"
+#include "utils/FileSystem.h"
 
 #include "components/Component.h"
 #include "importers/Importer.h"

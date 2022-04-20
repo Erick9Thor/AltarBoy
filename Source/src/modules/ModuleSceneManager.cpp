@@ -4,7 +4,6 @@
 #include "ModuleCamera.h"
 #include "ModuleEvent.h"
 
-#include "ModuleFileSystem.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
 

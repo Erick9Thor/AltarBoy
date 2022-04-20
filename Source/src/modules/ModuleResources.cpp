@@ -2,7 +2,6 @@
 
 #include "ModuleResources.h"
 #include "ModuleEvent.h"
-#include "ModuleFileSystem.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
 
@@ -28,8 +27,8 @@ bool ModuleResources::Init()
     // create assets & library directory tree
     for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
-        App->file_sys->CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        App->file_sys->CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
     std::function handleAddedFile = [&](Event& evt)
@@ -97,7 +96,7 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         HE_LOG("Resource file outside the assets folder");
         destination = preferences->GetAssetsPath(type);
         destination.append(path.filename().c_str());
-        App->file_sys->Copy(path.string().c_str(), destination.string().c_str(), true);
+        FileSystem::Copy(path.string().c_str(), destination.string().c_str(), true);
     }
 
     // Import asset
