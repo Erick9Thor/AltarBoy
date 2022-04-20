@@ -9,8 +9,8 @@ namespace Hachiko
     public:
         ResourcesPreferences();
         ~ResourcesPreferences() override = default;
-        void SetConfigurationData(const YAML::Node& node) override;
-        void GetConfigurationData(YAML::Node& node) override;
+        void LoadConfigurationData(const YAML::Node& node) override;
+        void SaveConfigurationData(YAML::Node& node) override;
         [[nodiscard]] const char* GetAssetsPath(Resource::Type type);
         [[nodiscard]] const char* GetLibraryPath(Resource::Type type) const;
         [[nodiscard]] const char* GetSceneName() const
@@ -19,7 +19,7 @@ namespace Hachiko
         }
 
     private:
-        std::string scene_name        = "Unnamed Scene.scene";
+        std::string scene_name        = "UnnamedScene.scene";
         std::string scene_id;
         std::string scenes_assets     = "assets/scenes/";
         std::string models_assets     = "assets/models/";
@@ -33,6 +33,7 @@ namespace Hachiko
         std::string animations_assets = "assets/animations/";
         std::string skybox_assets     = "assets/skybox/";
 
+        std::string scenes_library     = "library/scenes/";
         std::string models_library     = "library/models/";
         std::string meshes_library     = "library/meshes/";
         std::string textures_library   = "library/textures/";

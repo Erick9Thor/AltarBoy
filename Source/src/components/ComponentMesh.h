@@ -1,9 +1,9 @@
 #pragma once
-#include "Component.h"
+#include "components/Component.h"
 
 #include "resources/ResourceMesh.h"
 
-#include "MathGeoLib.h"
+#include <MathGeoLib.h>
 
 namespace Hachiko
 {
@@ -15,7 +15,7 @@ namespace Hachiko
     {
     public:
         ComponentMesh(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
-        ~ComponentMesh() override;
+        ~ComponentMesh() override = default;
 
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;

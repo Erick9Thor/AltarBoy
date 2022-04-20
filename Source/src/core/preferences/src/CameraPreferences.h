@@ -9,8 +9,8 @@ namespace Hachiko
     public:
         CameraPreferences();
         ~CameraPreferences() override = default;
-        void SetConfigurationData(const YAML::Node& node) override;
-        void GetConfigurationData(YAML::Node& node) override;
+        void LoadConfigurationData(const YAML::Node& node) override;
+        void SaveConfigurationData(YAML::Node& node) override;
 
         [[nodiscard]] unsigned int GetMoveSpeed() const { return move_speed; }
         [[nodiscard]] unsigned int GetRotationSpeed() const { return rotation_speed; }

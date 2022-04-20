@@ -1,14 +1,15 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "GlobalPreferences.h"
 
 using namespace Hachiko;
 
-GlobalPreferences::GlobalPreferences() : Preferences(Type::GLOBALS)
+GlobalPreferences::GlobalPreferences()
+    : Preferences(Type::GLOBALS)
 {
     group_name = GLOBAL_NODE;
 }
 
-void GlobalPreferences::SetConfigurationData(const YAML::Node& node)
+void GlobalPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -25,7 +26,7 @@ void GlobalPreferences::SetConfigurationData(const YAML::Node& node)
     }
 }
 
-void GlobalPreferences::GetConfigurationData(YAML::Node& node)
+void GlobalPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][TITLE_NODE] = title;
     node[group_name][VERSION_NODE] = version;

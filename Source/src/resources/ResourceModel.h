@@ -8,18 +8,16 @@ namespace Hachiko
     {
         ~ResourceNode() 
         {
-            for (auto child : childs)
+            for (auto child : children)
             {
-                delete child;
+                RELEASE(child);
             }
         }
 
-        UID mesh_id; // TO REMOVE
-        std::string material_name; // TO REMOVE
         std::string node_name;
         float4x4 node_transform;
         std::vector<int> meshes_index;
-        std::vector<ResourceNode*> childs {};
+        std::vector<ResourceNode*> children {};
     };
 
     struct MeshInfo
@@ -41,8 +39,8 @@ namespace Hachiko
         ResourceModel(UID uid);
         ~ResourceModel() override;
 
-        std::vector<MeshInfo> meshes {}; // NEW
-        std::vector<MaterialInfo> materials {}; // NEW
+        std::vector<MeshInfo> meshes {};
+        std::vector<MaterialInfo> materials {};
 
         std::vector<ResourceNode*> child_nodes;
         std::string model_path;

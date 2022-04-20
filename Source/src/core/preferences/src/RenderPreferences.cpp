@@ -1,14 +1,15 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "RenderPreferences.h"
 
 using namespace Hachiko;
 
-RenderPreferences::RenderPreferences() : Preferences(Type::RENDER)
+RenderPreferences::RenderPreferences()
+    : Preferences(Type::RENDER)
 {
     group_name = RENDER_NODE;
 }
 
-void RenderPreferences::SetConfigurationData(const YAML::Node& node)
+void RenderPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -25,7 +26,7 @@ void RenderPreferences::SetConfigurationData(const YAML::Node& node)
     }
 }
 
-void RenderPreferences::GetConfigurationData(YAML::Node& node)
+void RenderPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][MAX_FPS] = max_fps;
     node[group_name][FPS_THRESHOLD] = fps_threshold;

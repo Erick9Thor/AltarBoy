@@ -13,7 +13,7 @@ Hachiko::WindowResource::WindowResource() :
 void Hachiko::WindowResource::Update()
 {
     ImGui::SetNextWindowSize(ImVec2(1100, 170), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin((std::string(ICON_FA_IMAGES " ") + name).c_str(), &active))
+    if (!ImGui::Begin(StringUtils::Concat(ICON_FA_IMAGES, " ", name).c_str(), &active))
     {
         ImGui::End();
         return;
@@ -23,15 +23,15 @@ void Hachiko::WindowResource::Update()
     if (ImGui::Button("Create material (WIP)"))
     {
         ImGui::OpenPopup("CreateMaterialPopup");
-        auxiliar_name = "NewMaterial";
+        auxiliary_name = "NewMaterial";
     }
 
     if (ImGui::BeginPopup("CreateMaterialPopup"))
     {
-        ImGui::InputText("Name", &auxiliar_name[0], 64);
+        ImGui::InputText("Name", &auxiliary_name[0], 64);
         if (ImGui::Button("Create material"))
         {
-            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliar_name);
+            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliary_name);
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
@@ -79,7 +79,19 @@ void Hachiko::WindowResource::Update()
 void Hachiko::WindowResource::LoadResource(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
-    Hachiko::Event resource_file(Hachiko::Event::Type::FILE_ADDED);
+    /* Hachiko::Event resource_file(Hachiko::Event::Type::FILE_ADDED);
     resource_file.SetEventData<Hachiko::FileAddedEventPayload>(path.c_str());
-    App->event->Publish(resource_file);
+    App->event->Publish(resource_file);*/
+
+    //
+    std::string str_path = std::string(path);
+    int extension_index = str_path.rfind('.');
+    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
+    //
+
+    if (extension == "model")
+    {
+        Scene* scene = App->scene_manager->GetActiveScene();
+        scene->HandleInputModel(App->resources->GetModel(path.c_str()));
+    }
 }

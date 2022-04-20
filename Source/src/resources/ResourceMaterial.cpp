@@ -1,7 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceMaterial.h"
 #include "modules/ModuleResources.h"
-#include <importers/MaterialImporter.h>
+#include "importers/MaterialImporter.h"
 
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}
@@ -12,21 +12,18 @@ Hachiko::ResourceMaterial::~ResourceMaterial()
 void Hachiko::ResourceMaterial::DrawGui() 
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-    // ImGui::InputText("Name", &name[0], 64);
     ImGui::Text("Name", name, 64);
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
         if (diffuse != nullptr)
         {
-            //diffuse->DrawGui();
-
             ImGui::Image(reinterpret_cast<void*>(diffuse->GetId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", diffuse->width, diffuse->height);
             ImGui::Text("Path: %s", diffuse->path.c_str());
 
-            //config
+            // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
             RemoveTexture(ResourceTexture::Type::DIFFUSE);
 
@@ -43,15 +40,13 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (specular != nullptr)
         {
-            //specular->DrawGui();
-
             ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", specular->width, specular->height);
             ImGui::Text("Path: %s", specular->path.c_str());
 
-            //config
+            // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
             RemoveTexture(ResourceTexture::Type::SPECULAR);
 
@@ -68,15 +63,13 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (normal != nullptr)
         {
-            //normal->DrawGui();
-
             ImGui::Image(reinterpret_cast<void*>(normal->GetId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", normal->width, normal->height);
             ImGui::Text("Path: %s", normal->path.c_str());
 
-            //config
+            // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
             RemoveTexture(ResourceTexture::Type::NORMALS);
 

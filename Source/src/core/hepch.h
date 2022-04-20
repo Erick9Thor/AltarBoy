@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 // system includes
 #include <iostream>
@@ -58,6 +57,7 @@
 
 //project includes
 #include "Globals.h"
+#include "Gameplay.h"
 #include "Application.h"
 #include "modules/Module.h"
 #include "RenderList.h"
@@ -70,8 +70,8 @@
 #include "core/serialization/TypeConverter.h"
 #include "core/serialization/Definitions.h"
 
-#include "Core/preferences/Preferences.h"
-#include "Core/preferences/PreferenceManager.h"
+#include "core/preferences/Preferences.h"
+#include "core/preferences/PreferenceManager.h"
 
 #include "utils/JsonFormatterValue.h"
 #include "utils/PathNode.h"
@@ -79,6 +79,7 @@
 #include "utils/Timer.h"
 #include "utils/UUID.h"
 #include "utils/StringUtils.h"
+#include "utils/FileSystem.h"
 
 #include "components/Component.h"
 #include "importers/Importer.h"

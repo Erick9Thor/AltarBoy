@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Component.h"
+#include "components/Component.h"
+#include "HachikoApiDefine.h"
 
 namespace Hachiko
 {
-    class ComponentPointLight : public Component
+    class HACHIKO_API ComponentPointLight : public Component
     {
     public:
         // TODO: add more light types

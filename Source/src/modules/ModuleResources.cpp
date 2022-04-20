@@ -2,11 +2,10 @@
 
 #include "ModuleResources.h"
 #include "ModuleEvent.h"
-#include "ModuleFileSystem.h"
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 #include "importers/MeshImporter.h"
 #include "importers/TextureImporter.h"
@@ -26,10 +25,10 @@ bool ModuleResources::Init()
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
-    for (int i = 0; i < static_cast<int>(Resource::Type::UNKNOWN); ++i)
+    for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
-        App->file_sys->CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        App->file_sys->CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
     std::function handleAddedFile = [&](Event& evt)
@@ -47,22 +46,22 @@ bool ModuleResources::CleanUp()
 {
     for (auto& it : models)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : meshes)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : materials)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     for (auto& it : textures)
     {
-        delete it.second;
+        RELEASE(it.second);
     }
 
     return true;
@@ -97,7 +96,7 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         HE_LOG("Resource file outside the assets folder");
         destination = preferences->GetAssetsPath(type);
         destination.append(path.filename().c_str());
-        App->file_sys->Copy(path.string().c_str(), destination.string().c_str(), true);
+        FileSystem::Copy(path.string().c_str(), destination.string().c_str(), true);
     }
 
     // Import asset
@@ -108,11 +107,11 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         HE_LOG("File destination: %s", destination.string().c_str());
     }
 
-    if (file_in_asset)
+    /* if (file_in_asset)
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         scene->HandleInputModel(GetModel(destination.string().c_str()));
-    }
+    }*/
 }
 
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
@@ -148,7 +147,7 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     // Use always .model extension for loading
     std::filesystem::path model_path(name);
     auto res = static_cast<ResourceModel*>( importer_manager.Load(Resource::Type::MODEL, 
-            model_path.parent_path().string().append("\\").append(model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
+            StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
 
     // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr && "Unable to return a valid model resource");
@@ -219,7 +218,6 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     
     if (res == nullptr && !asset_path.empty())
     {
-        // TODO: If we start the engine without library/ textures will not be rendered as we do not GenerateBuffers on ImportTexture()
         Hachiko::TextureImporter texture_importer;
         res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str())); 
         res->GenerateBuffer();

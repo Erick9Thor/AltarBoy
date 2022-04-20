@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Resources/Resource.h"
+#include "resources/Resource.h"
 #include "importers/ImporterManager.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
@@ -19,7 +19,6 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        void ResoreLibrary() {} // WIP
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
         
@@ -30,13 +29,13 @@ namespace Hachiko
 
         void CreateResource(Resource::Type type, const std::string& name) const;
 
-        // TODO: This containers should be private
+
+    private:
         std::map<std::string, ResourceModel*> models;
         std::map<std::string, ResourceMaterial*> materials;
         std::map<std::string, ResourceTexture*> textures;
         std::map<UID, ResourceMesh*> meshes;
 
-    private:
         std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
         {{Hachiko::Resource::Type::TEXTURE, ".png"},
         {Hachiko::Resource::Type::TEXTURE, ".tif"},
@@ -48,7 +47,7 @@ namespace Hachiko
         
         Hachiko::ResourcesPreferences* preferences = nullptr;
         Hachiko::ImporterManager importer_manager;
-        std::filesystem::path last_resource_path; // TODO: This will track every resource, his type and path loaded
+        std::filesystem::path last_resource_path;
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);

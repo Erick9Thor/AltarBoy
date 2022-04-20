@@ -14,6 +14,6 @@ namespace Hachiko
     private:
         void LoadResource(const std::string& path);
         std::filesystem::path current_directory = "./assets";
-        std::string auxiliar_name;
+        std::string auxiliary_name;
     };
 }

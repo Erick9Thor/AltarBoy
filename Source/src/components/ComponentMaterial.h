@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "components/Component.h"
 
 namespace Hachiko
 {
@@ -10,7 +10,7 @@ namespace Hachiko
     {
     public:
         ComponentMaterial(GameObject* container);
-        ~ComponentMaterial() override;
+        ~ComponentMaterial() override = default;
 
         static Type GetType()
         {

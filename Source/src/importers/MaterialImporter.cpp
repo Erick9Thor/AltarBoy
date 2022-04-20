@@ -3,7 +3,6 @@
 #include "MaterialImporter.h"
 
 #include "modules/ModuleResources.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleTexture.h"
 
 #include "resources/ResourceMaterial.h"
@@ -48,7 +47,7 @@ void Hachiko::MaterialImporter::Import(const char* path)
         Import(material, material_id);
     }
 
-    App->file_sys->Save(material_output_path.c_str(), material_node);
+    FileSystem::Save(material_output_path.c_str(), material_node);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
@@ -58,22 +57,22 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
     YAML::Node material_node;
     material_node[MATERIAL_ID] = material->GetID();
-    material_node[GENERIC_TYPE] = (int)material->GetType();
+    material_node[GENERIC_TYPE] = static_cast<int>(material->GetType());
     material_node[MATERIAL_NAME] = material->GetName();
 
-    material_node[MATERIAL_DIFFUSE_NAME] = (material->diffuse != nullptr) ? material->diffuse->GetName() : std::string();
-    material_node[MATERIAL_SPECULAR_NAME] = (material->specular != nullptr) ? material->specular->GetName() : std::string();
-    material_node[MATERIAL_NORMALS_NAME] = (material->normal != nullptr) ? material->normal->GetName() : std::string();
+    material_node[MATERIAL_DIFFUSE_NAME] = (material->HasDiffuse()) ? material->diffuse->GetName() : std::string();
+    material_node[MATERIAL_SPECULAR_NAME] = (material->HasSpecular()) ? material->specular->GetName() : std::string();
+    material_node[MATERIAL_NORMALS_NAME] = (material->HasNormal()) ? material->normal->GetName() : std::string();
 
-    material_node[MATERIAL_DIFFUSE_PATH] = (material->diffuse != nullptr) ? material->diffuse->GetAssetPath() : std::string();
-    material_node[MATERIAL_SPECULAR_PATH] = (material->specular != nullptr) ? material->specular->GetAssetPath() : std::string();
-    material_node[MATERIAL_NORMALS_PATH] = (material->normal != nullptr) ? material->normal->GetAssetPath() : std::string();
+    material_node[MATERIAL_DIFFUSE_PATH] = (material->HasDiffuse()) ? material->diffuse->GetAssetPath() : std::string();
+    material_node[MATERIAL_SPECULAR_PATH] = (material->HasSpecular()) ? material->specular->GetAssetPath() : std::string();
+    material_node[MATERIAL_NORMALS_PATH] = (material->HasNormal()) ? material->normal->GetAssetPath() : std::string();
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
 
-    App->file_sys->Save(material_library_path.c_str(), material_node);
+    FileSystem::Save(material_library_path.c_str(), material_node);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)

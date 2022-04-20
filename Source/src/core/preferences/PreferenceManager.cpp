@@ -1,4 +1,4 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "PreferenceManager.h"
 
 #include "src/CameraPreferences.h"
@@ -9,13 +9,13 @@
 
 using namespace Hachiko;
 
-PreferenceManager::PreferenceManager(const char* cfg) :
-    globals(new GlobalPreferences()),
-    editor(new EditorPreferences()),
-    render(new RenderPreferences()),
-    camera(new CameraPreferences()),
-    resources(new ResourcesPreferences()),
-    config_file(cfg)
+PreferenceManager::PreferenceManager(const char* cfg)
+    : globals(new GlobalPreferences())
+    , editor(new EditorPreferences())
+    , render(new RenderPreferences())
+    , camera(new CameraPreferences())
+    , resources(new ResourcesPreferences())
+    , config_file(cfg)
 {
     preferences.reserve(static_cast<size_t>(Preferences::Type::COUNT));
 
@@ -55,7 +55,7 @@ void PreferenceManager::LoadConfigurationFile() const
             {
                 continue;
             }
-            it->SetConfigurationData(node[it->GetGroupName()]);
+            it->LoadConfigurationData(node[it->GetGroupName()]);
         }
     }
 }
@@ -65,7 +65,7 @@ void PreferenceManager::SaveConfigurationFile() const
     YAML::Node output;
     for (const auto it : preferences)
     {
-        it->GetConfigurationData(output);
+        it->SaveConfigurationData(output);
     }
     std::ofstream fout(config_file);
     fout << output;

@@ -19,11 +19,6 @@ Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMes
     }
 }
 
-Hachiko::ComponentMesh::~ComponentMesh()
-{
-    // ResourceMesh's are deleted in ModuleResources only
-}
-
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
     if (mesh == nullptr)
@@ -31,7 +26,6 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
         return;
     }
     
-   //assert(resource->loaded == true);
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
@@ -47,7 +41,6 @@ void Hachiko::ComponentMesh::DrawStencil(ComponentCamera* camera, Program* progr
         return;
     }
     
-    //assert(resource->loaded == true);
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     glBindVertexArray(mesh->vao);

@@ -6,6 +6,7 @@
 #include "components/ComponentMesh.h"
 #include "components/ComponentMaterial.h"
 #include "components/ComponentImage.h"
+#include "components/ComponentAnimation.h"
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"
@@ -16,15 +17,16 @@
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 
-Hachiko::Scene::Scene():
-    root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
-    skybox(new Skybox()),
-    quadtree(new Quadtree()),
-    name(UNNAMED_SCENE)
+Hachiko::Scene::Scene()
+    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    , culling_camera(App->camera->GetMainCamera())
+    , skybox(new Skybox())
+    , quadtree(new Quadtree())
+    , loaded(false)
+    , name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
-    quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
+    quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
 
 Hachiko::Scene::~Scene()
@@ -32,12 +34,13 @@ Hachiko::Scene::~Scene()
     CleanScene();
 }
 
-void Hachiko::Scene::CleanScene() const
+void Hachiko::Scene::CleanScene() 
 {
     App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
+    loaded = false;
 }
 
 void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
@@ -93,9 +96,9 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> createChilds = [&](GameObject* parent, const std::vector<ResourceNode*>& childs)
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
     {
-        for (auto child : childs)
+        for (auto child : children)
         {
             GameObject* last_parent = parent;
 
@@ -105,49 +108,33 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
-                    UID mesh_id = model->meshes[child->meshes_index[i]].mesh_id;
+                    MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
                     ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                    component->SetID(mesh_id); // TODO: ask if this is correct (i dont think so)
+                    component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
                     component->SetResourcePath(model->model_path);
                     component->SetModelName(model->model_name);
 
                     component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(App->resources->GetMesh(mesh_id));
-                }
+                    component->AddResourceMesh(App->resources->GetMesh(mesh_info.mesh_id));
 
-                ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                component_material->SetResourceMaterial(App->resources->GetMaterial(child->material_name));
+                    ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
+                    component_material->SetResourceMaterial(App->resources->GetMaterial(model->materials[mesh_info.material_index].material_name));
+                }
             }
             
-            createChilds(last_parent, child->childs);
+            create_children_function(last_parent, child->children);
         }
     };
 
-    createChilds(game_object, model->child_nodes);
+    create_children_function(game_object, model->child_nodes);
 }
-
-//Hachiko::GameObject* Hachiko::Scene::LoadImageObject(const std::string& path)
-//{
-//    const auto file_name = path.substr(path.find_last_of("/\\") + 1);
-//    const auto name = file_name.substr(0, file_name.find_last_of('.'));
-//
-//    GameObject* game_object = nullptr;
-//    game_object = CreateNewGameObject(name.c_str(), root);
-//    game_object->CreateComponent(Component::Type::TRANSFORM_2D);
-//    game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
-//    game_object->CreateComponent(Component::Type::IMAGE);
-//    ComponentImage* image = game_object->GetComponent<ComponentImage>();
-//    image->Import(path.c_str());
-//
-//    return game_object;
-//}
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
     GameObject* game_object = App->editor->GetSelectedGameObject();
     if (game_object == nullptr)
     {
-        HE_LOG("No game object selected to apply material on");
+        HE_LOG("No game object selected to apply a material on");
         return;
     }
 
@@ -158,13 +145,13 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     }
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
 {
     LineSegment line_seg(origin, destination);
-    return RayCast(line_seg);
+    return Raycast(line_seg);
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
@@ -220,15 +207,18 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 {
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     root->SetID(node[ROOT_ID].as<UID>());
-    const YAML::Node childs_node = node[CHILD_NODE];
-    for (unsigned i = 0; i < childs_node.size(); ++i)
+    const YAML::Node children_node = node[CHILD_NODE];
+
+    for (unsigned i = 0; i < children_node.size(); ++i)
     {
-        std::string child_name = childs_node[i][GAME_OBJECT_NAME].as<std::string>();
-        UID child_uid = childs_node[i][GAME_OBJECT_ID].as<unsigned long long>();
+        std::string child_name = children_node[i][GAME_OBJECT_NAME].as<std::string>();
+        UID child_uid = children_node[i][GAME_OBJECT_ID].as<UID>();
         const auto child = new GameObject(root, child_name.c_str(), child_uid);
         child->scene_owner = this;
-        child->Load(childs_node[i]);
+        child->Load(children_node[i]);
     }
+
+    loaded = true;
 }
 
 void Hachiko::Scene::CreateLights()

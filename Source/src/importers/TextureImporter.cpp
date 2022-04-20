@@ -1,10 +1,9 @@
 #include "core/hepch.h"
 #include "TextureImporter.h"
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 #include "resources/ResourceTexture.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleResources.h"
 
@@ -28,7 +27,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
         return nullptr;
     }
 
-    char* file_buffer = App->file_sys->Load(file_path.string().c_str());
+    char* file_buffer = FileSystem::Load(file_path.string().c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -52,7 +51,9 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
     size_bytes = path_size;
     texture->path = "";
     for (unsigned i = 0; i < size_bytes; ++i)
+    {
         texture->path += cursor[i];
+    }
     cursor += size_bytes;
 
     size_bytes = texture->data_size;
@@ -70,7 +71,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE) + texture->GetName();
+    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), texture->GetName());
 
     unsigned header[9] = {
         texture->path.length(),
@@ -105,7 +106,7 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
     memcpy(cursor, texture->data, size_bytes);
     cursor += size_bytes;
 
-    App->file_sys->Save(file_path.c_str(), file_buffer, file_size);
+    FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
 }
 
@@ -117,7 +118,13 @@ Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID
         uid = Hachiko::UUID::GenerateUID();
     }
 
-    ResourceTexture* texture = App->texture->LoadResource(uid, path, false); // TODO: could we extract ModuleTexture functionality to this importer?
+    // TODO: texture configuration to flip so this will not be needed
+    std::string str_path = std::string(path);
+    int extension_index = str_path.rfind('.');
+    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
+    //
+
+    ResourceTexture* texture = App->texture->ImportResource(uid, path, extension != "tif"); // TODO: could we extract ModuleTexture functionality to this importer?
 
     if (texture != nullptr)
     {

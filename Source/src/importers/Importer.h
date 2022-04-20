@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/ResourcesPreferences.h"
 
 namespace Hachiko
 {
@@ -16,6 +16,7 @@ namespace Hachiko
             MESH,
             TEXTURE,
             MATERIAL,
+            ANIMATION,
             COUNT
         };
 

@@ -4,13 +4,15 @@
 #include "ModuleCamera.h"
 #include "ModuleEvent.h"
 
-#include "ModuleFileSystem.h"
 #include "core/preferences/src/ResourcesPreferences.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 bool Hachiko::ModuleSceneManager::Init()
-{
+{ 
+    serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
     std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
+    
     if (std::filesystem::exists(scene_path))
     {
         LoadScene(scene_path.c_str());
@@ -21,10 +23,12 @@ bool Hachiko::ModuleSceneManager::Init()
     }
 
 #ifdef PLAY_BUILD
-    App->camera->ReturnPlayerCamera(); // PLAY_BUILD UNCOMMENT
+    App->camera->ReturnPlayerCamera();
     main_scene->Start();
 #endif
 
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    scene_autosave = pref->GetAutosave();
     return true;
 }
 
@@ -48,7 +52,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        SaveScene("tmp_scene.scene");       
+        SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
         
         GameTimer::Start();
     }
@@ -72,7 +76,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         GameTimer::Stop();
 
-        LoadScene("tmp_scene.scene");
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
     }
 }
 
@@ -95,35 +99,49 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 
 bool Hachiko::ModuleSceneManager::CleanUp()
 {
-    SaveScene();
+    if (scene_autosave)
+    {
+        SaveScene();
+    }
+
+    EditorPreferences* pref = App->preferences->GetEditorPreference();
+    pref->SetAutosave(scene_autosave);
+    
+    // TODO: Remove temp_scene.scene from disk
     RELEASE(main_scene);
+    RELEASE(serializer);
     return true;
 }
 
-//void Hachiko::ModuleSceneManager::LoadModel(const char* model_path) const
-//{
-//    // delete scene_model;
-//    main_scene->LoadFBX(model_path);
-//}
-//
-//void Hachiko::ModuleSceneManager::LoadImageObject(const char* model_path) const
-//{
-//    std::string file = App->file_sys->GetFileNameAndExtension(model_path);
-//    std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + file;
-//    App->file_sys->Copy(model_path, destination.c_str());
-//    main_scene->LoadImageObject(destination);
-//}
-
 void Hachiko::ModuleSceneManager::CreateEmptyScene()
 {
+    Event scene_load(Event::Type::SCENE_LOADED);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
+
     delete main_scene;
     main_scene = new Scene();
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
+    Event scene_load(Event::Type::SCENE_LOADED);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(
+        SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
+
     delete main_scene;
-    main_scene = serializer.Load(file_path);
+    main_scene = serializer->Load(file_path);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
     
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -133,16 +151,31 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
 void Hachiko::ModuleSceneManager::SaveScene()
 {
-    serializer.Save(main_scene);
+    if (IsScenePlaying())
+    {
+        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+    }
+
+    serializer->Save(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer.Save(main_scene, file_path); // TODO: Take into account temporal scenes
+    serializer->Save(main_scene, file_path); // TODO: Take into account temporal scenes
+}
+
+Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
+{
+    return main_scene->Raycast(origin, destination);
 }
 
 void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
+}
+
+void Hachiko::ModuleSceneManager::OptionsMenu()
+{
+    ImGui::Checkbox("Autosave Scene", &scene_autosave);
 }

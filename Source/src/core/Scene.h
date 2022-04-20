@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/serialization/Serializable.h"
+#include "core/serialization/ISerializable.h"
 
 namespace Hachiko
 {
@@ -16,14 +16,15 @@ namespace Hachiko
     class ResourceModel;
     class ResourceMaterial;
 
-    class Scene : public Serializable
+    class Scene : public ISerializable
     {
         friend class ModuleSceneManager;
 
     public:
         Scene();
         ~Scene();
-        void CleanScene() const;
+
+        void CleanScene();
 
         // --- Life cycle Scene --- //
         void Start() const;
@@ -39,7 +40,7 @@ namespace Hachiko
         void HandleInputModel(ResourceModel* model);
         void HandleInputMaterial(ResourceMaterial* material);
 
-        [[nodiscard]] GameObject* RayCast(const LineSegment& segment) const;
+        [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
         [[nodiscard]] GameObject* GetRoot() const
         {
             return root;
@@ -70,11 +71,16 @@ namespace Hachiko
             return skybox;
         }
 
+        bool IsLoaded() const 
+        {
+            return loaded;
+        }
+
         [[nodiscard]] const char* GetName() const 
         {
             return name.c_str();
         }
-        [[nodiscard]] GameObject* RayCast(const float3& origin, const float3& destination) const;
+        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
         void SetName(const char* new_name)
         {
@@ -94,6 +100,8 @@ namespace Hachiko
         std::string name;
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
+        bool loaded = false;
+
         Skybox* skybox;
         Quadtree* quadtree = nullptr;
     };

@@ -63,7 +63,7 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
         // Call for all children (What to do if it is duplicated when collecting)?
         if (!quadtree->IsLeaf())
         {
-            for (QuadtreeNode* child : quadtree->childs)
+            for (QuadtreeNode* child : quadtree->children)
             {
                 CollectObjects(camera, camera_pos, child);
             }

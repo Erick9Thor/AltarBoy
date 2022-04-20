@@ -5,12 +5,13 @@
 
 using namespace Hachiko;
 
-EditorPreferences::EditorPreferences() : Preferences(Type::EDITOR)
+EditorPreferences::EditorPreferences()
+    : Preferences(Type::EDITOR)
 {
     group_name = EDITOR_NODE;
 }
 
-void EditorPreferences::SetConfigurationData(const YAML::Node& node)
+void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
 {
     for (auto it = node.begin(); it != node.end(); ++it)
     {
@@ -48,10 +49,15 @@ void EditorPreferences::SetConfigurationData(const YAML::Node& node)
         {
             vsync = it->second.as<int>();
         }
+
+        if (it->first.as<std::string>()._Equal(SCENE_AUTOSAVE))
+        {
+            scene_autosave = it->second.as<bool>();
+        }
     }
 }
 
-void EditorPreferences::GetConfigurationData(YAML::Node& node)
+void EditorPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][DISPLAY_CAMERA_SETTINGS] = display_camera_settings;
     node[group_name][FULLSCREEN_NODE] = fullscreen;
@@ -59,4 +65,5 @@ void EditorPreferences::GetConfigurationData(YAML::Node& node)
     node[group_name][THEME] = Editor::Theme::ToString(theme);
     node[group_name][VSYNC] = vsync;
     node[group_name][SCENE_BACKGROUND_COLOR] = scene_background_color;
+    node[group_name][SCENE_AUTOSAVE] = scene_autosave;
 }

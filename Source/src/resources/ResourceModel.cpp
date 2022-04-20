@@ -1,4 +1,4 @@
-#include "Core/hepch.h"
+#include "core/hepch.h"
 #include "ResourceModel.h"
 #include "ResourceMesh.h"
 
@@ -10,6 +10,6 @@ Hachiko::ResourceModel::~ResourceModel()
 {
     for (auto child : child_nodes)
     {
-        delete child;
+        RELEASE(child);
     }
 }

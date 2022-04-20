@@ -9,8 +9,8 @@ namespace Hachiko
     public:
         GlobalPreferences();
         ~GlobalPreferences() override = default;
-        void SetConfigurationData(const YAML::Node& node) override;
-        void GetConfigurationData(YAML::Node& node) override;
+        void LoadConfigurationData(const YAML::Node& node) override;
+        void SaveConfigurationData(YAML::Node& node) override;
 
     private:
         std::string title = "Hachiko Engine";

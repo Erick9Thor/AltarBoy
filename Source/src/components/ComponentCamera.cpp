@@ -153,9 +153,24 @@ void Hachiko::ComponentCamera::GetResolution(unsigned& width, unsigned& height) 
     height = resolution_y;
 }
 
-LineSegment Hachiko::ComponentCamera::RayCast(float x, float y) const
+LineSegment Hachiko::ComponentCamera::Raycast(float x, float y) const
 {
     return frustum.UnProjectLineSegment(x, y);
+}
+
+float2 Hachiko::ComponentCamera::ScreenPositionToView(float x, float y)
+{
+    return float2(x - 0.5f, (y - 0.5f) * -1.0f);
+}
+
+LineSegment Hachiko::ComponentCamera::Raycast(const float2& from_position) const
+{
+    return Raycast(from_position.x, from_position.y);
+}
+
+float2 Hachiko::ComponentCamera::ScreenPositionToView(const float2& screen_position)
+{
+    return ScreenPositionToView(screen_position.x, screen_position.y);
 }
 
 void Hachiko::ComponentCamera::Save(YAML::Node& node) const
@@ -178,9 +193,9 @@ void Hachiko::ComponentCamera::Load(const YAML::Node& node)
     SetNearPlane(node_frustum[NEAR_DISTANCE].as<float>());
     SetFarPlane(node_frustum[FAR_DISTANCE].as<float>());
     SetHorizontalFov(node_frustum[FOV].as<float>());
-    frustum.SetPos(node_frustum[CAMERA_POSITION].as<vec>());
-    frustum.SetFront(node_frustum[CAMERA_FRONT].as<vec>());
-    frustum.SetUp(node_frustum[CAMERA_UP].as<vec>());
+    frustum.SetPos(node_frustum[CAMERA_POSITION].as<float3>());
+    frustum.SetFront(node_frustum[CAMERA_FRONT].as<float3>());
+    frustum.SetUp(node_frustum[CAMERA_UP].as<float3>());
     SetCameraType(static_cast<CameraType>(static_cast<int>(node_frustum[CAMERA_TYPE].as<int>())));
     camera_pinned_pos = node_frustum[PINNED_CAMERA].as<float3>();
 }

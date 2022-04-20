@@ -9,26 +9,22 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleProgram.h"
-#include "modules/ModuleHardware.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
-#include "modules/ModuleFileSystem.h"
+#include "modules/ModuleScriptingSystem.h"
 #include "Modules/ModuleResources.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
 
-#include "Core/preferences/PreferenceManager.h"
+#include "core/preferences/PreferenceManager.h"
 
-using namespace std;
 
 Hachiko::Application::Application()
 {
-    modules.push_back(hw = new ModuleHardware());
-    modules.push_back(file_sys = new ModuleFileSystem());
-
     modules.push_back(window = new ModuleWindow());
     modules.push_back(input = new ModuleInput());
+    modules.push_back(scripting_system = new ModuleScriptingSystem());
     modules.push_back(texture = new ModuleTexture());
     modules.push_back(renderer = new ModuleRender());
     modules.push_back(camera = new ModuleCamera());
@@ -56,6 +52,7 @@ Hachiko::Application::~Application()
 bool Hachiko::Application::Init()
 {
     bool ret = true;
+    file_system.Init();
 
     for (auto it = modules.begin(); it != modules.end() && ret; ++it)
     {

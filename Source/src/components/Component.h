@@ -1,7 +1,13 @@
 #pragma once
 
-#include "core/serialization/Serializable.h"
+#include "core/serialization/ISerializable.h"
 #include "utils/UUID.h"
+
+#if defined(HACHIKO_API)
+// Do Nothing
+#elif defined(_MSC_VER)
+#define HACHIKO_API __declspec(dllexport)
+#endif
 
 namespace Hachiko
 {
@@ -9,44 +15,39 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class Component : public Serializable
+    class HACHIKO_API Component : public ISerializable
     {
     public:
         enum class Type
         {
-            NONE,
-            TRANSFORM,
-            MESH,
-            MATERIAL,
-            CAMERA,
-            DIRLIGHT,
-            POINTLIGHT,
-            SPOTLIGHT,
-            CANVAS,
-            CANVAS_RENDERER,
-            TRANSFORM_2D,
-            IMAGE,
-            BUTTON,
-            PROGRESS_BAR,
+            NONE = 0,
+            TRANSFORM = 1,
+            MESH = 2,
+            MATERIAL = 3,
+            CAMERA = 4,
+            DIRLIGHT = 5,
+            POINTLIGHT = 6,
+            SPOTLIGHT = 7,
+            CANVAS = 8,
+            CANVAS_RENDERER = 9,
+            TRANSFORM_2D = 10,
+            IMAGE = 11,
+            BUTTON = 12,
+            PROGRESS_BAR = 13,
+            ANIMATION = 14,
+            SCRIPT = 15,
             UNKNOWN
         };
 
-        Component(const Type type, GameObject* container, UID id = 0) :
-            game_object(container),
-            type(type),
-            uid(id)
-        {
-            if (!uid)
-            {
-                uid = UUID::GenerateUID();
-            }
-        }
+        Component(const Type type, GameObject* container, UID id = 0);
 
         virtual ~Component() = default;
 
-        virtual void Start() { }
-        virtual void Update() { }
+        // --- COMPONENT EVENTS --- //
 
+        virtual void Start() { }
+        virtual void Stop() {};
+        virtual void Update() { }
         virtual void OnTransformUpdated() {}
 
         [[nodiscard]] Type GetType() const
@@ -74,7 +75,7 @@ namespace Hachiko
             active = false;
         }
 
-        bool IsActive()
+        [[nodiscard]] bool IsActive() const
         {
             return active;
         }
@@ -104,13 +105,14 @@ namespace Hachiko
 
         virtual void Load(const YAML::Node& node) {}
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
         virtual bool CanBeRemoved() const;
         virtual bool HasDependentComponents(GameObject* game_object) const;
+
+    protected:
+        void OverrideUID(UID new_uid) 
+        {
+            uid = new_uid;
+        }
 
     protected:
         GameObject* game_object = nullptr;
