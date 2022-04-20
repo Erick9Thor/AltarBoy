@@ -206,7 +206,6 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.diffuse_color = material->diffuse_color;
     material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
-    material_data.specular_flag = material_comp->use_specular_texture;
     material_data.smoothness = material->smoothness;
     material_data.metalness = material->metalness;
     material_data.specular_flag = material->HasSpecular();

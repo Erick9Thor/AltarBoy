@@ -125,12 +125,12 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
     vec3 halfway_dir = normalize(light_dir + view_dir);
     float VdotH = max(dot(view_dir, halfway_dir), 0.0);
 
-    vec3 NDF =  GGX(normal, halfway_dir, roughness)
-    vec3 SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);
-    vec3 fresnel = SchlickFresnel(f0, VdotH);
+    float NDF =  GGX(normal, halfway_dir, roughness);
+    float SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);
+    vec3 fresnel = SchlickFresnel(specular_color, VdotH);
     
-    //vec3 part1 = (diffuse_color * (vec3(1.0) - specular_color)) / PI;
-    //vec3 part2 = ((shininess + 2.0) / (2.0 * PI)) * fresnel * pow(VdR, shininess);
+    vec3 part1 = diffuse_color * (vec3(1.0) - specular_color);
+    vec3 part2 = (fresnel*SVF*NDF)/4;
 
     
 
@@ -138,13 +138,13 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
 }
 
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color, float shininess)
+                    const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
 {
     vec3 L = normalize(-light.direction.xyz);
     
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation, smoothness) * light.intensity;
 }
 
 float Attenuation(float distance)
@@ -158,7 +158,7 @@ float EpicAttenuation(float distance, float radius)
 }
 
 vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
-                   const vec3 diffuse_color, const vec3 specular_color, float shininess)
+                   const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
 {
     vec3 L = light.position.xyz - frag_pos;
     float light_distance = length(L);
@@ -166,7 +166,7 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
 
     float radius = 250.0;
     float attenuation = EpicAttenuation(light_distance, light.radius);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation, smoothness) * light.intensity;
 }
 
 // TODO: Test more
@@ -189,7 +189,7 @@ float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
 }
 
 vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const SpotLight light, 
-             const vec3 diffuse_color, const vec3 specular_color, float shininess)
+             const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
 {
     // Not the same as spot light direction (L)
     vec3 L = light.position.xyz - frag_pos;
@@ -198,7 +198,7 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
 
     float attenuation = SpotAttenuation(L, cone_direction, light.radius);
     float cone = Cone(L, cone_direction, light.inner, light.outer);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone, smoothness) * light.intensity;
 }
 
 mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
@@ -228,6 +228,7 @@ void main()
 
     float shininess = material.shininess;
     vec3 specular_color = material.specular_color.rgb;
+    vec3 f0 = mix(0.04, diffuse_color, material.metalness);
     if (material.specular_flag > 0)
     {
         // Should we gaMma correct specular?
@@ -236,20 +237,19 @@ void main()
         // Use alpha as shininess?
         //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
     }
-
+	float smoothness = material.smoothness;
     
     vec3 hdr_color = vec3(0.0);
-
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, specular_color, shininess);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, specular_color, shininess, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, specular_color, shininess);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, specular_color, shininess, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, specular_color, shininess);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, specular_color, shininess, smoothness);
         
     }   
     hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
