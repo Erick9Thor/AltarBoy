@@ -450,6 +450,20 @@
     <ClCompile Include="src\utils\FileSystem.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\LogFunction.cpp" />
+    <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
+    <ClCompile Include="src\Gameplay.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleScriptingSystem.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripting\Script.cpp">
+      <Filter>Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scripting\serialization\SerializedField.cpp">
+      <Filter>Scripting\Serialization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1123,7 +1137,6 @@
     </ClInclude>
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
-    <ClInclude Include="src\events\GameStateEventPayload.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\modules\ModuleDebugMode.h">
       <Filter>Modules\Headers</Filter>
@@ -1153,6 +1166,32 @@
     </ClInclude>
     <ClInclude Include="src\utils\FileSystem.h">
       <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HachikoApiDefine.h" />
+    <ClInclude Include="src\utils\WindowsFileUtil.h" />
+    <ClInclude Include="src\events\GameStateEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\events\SceneLoadEventPayload.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h">
+      <Filter>Scripting\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Gameplay.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleScriptingSystem.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\Script.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\ScriptingMacros.h">
+      <Filter>Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scripting\serialization\SerializedField.h">
+      <Filter>Scripting\Serialization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1278,6 +1317,12 @@
     </Filter>
     <Filter Include="Core\Components\animation">
       <UniqueIdentifier>{14cf1f89-e3ac-4fb9-a69e-24875059d36e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting">
+      <UniqueIdentifier>{33ad14cf-c1d2-4712-81b7-8075b4a4acb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripting\Serialization">
+      <UniqueIdentifier>{18f98b2e-c29c-4cd0-8e61-02bd557ad5dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

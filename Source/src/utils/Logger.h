@@ -1,8 +1,7 @@
 #pragma once
 
 #include <imgui.h>
-
-#define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#include "HachikoApiDefine.h"
 
 namespace Hachiko
 {
@@ -11,7 +10,7 @@ namespace Hachiko
     public:
         Logger();
         ~Logger();
-        void log(const char file[], int line, const char* format, ...);
+        void log(const char file[], int line, const char* format, va_list args);
         ImVector<int> line_offsets;
         ImGuiTextBuffer buff;
     };

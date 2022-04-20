@@ -9,9 +9,7 @@ Hachiko::ModuleEditor::ModuleEditor()
 {
     HE_LOG("Creating windows");
 
-#ifdef PLAY_BUILD
-    windows.push_back(&w_configuration);
-#else
+#ifndef PLAY_BUILD
     windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);

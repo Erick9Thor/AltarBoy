@@ -20,6 +20,7 @@ namespace Hachiko
     class ModuleTexture;
     class ModuleSceneManager;
     class ModuleProgram;
+    class ModuleScriptingSystem;
     class ModuleResources;
     class ModuleImporter;
     class ModuleUserInterface;
@@ -53,6 +54,7 @@ namespace Hachiko
         ModuleSceneManager* scene_manager = nullptr;
         ModuleProgram* program = nullptr;
         ModuleEvent* event = nullptr;
+        ModuleScriptingSystem* scripting_system = nullptr;
         ModuleResources* resources = nullptr;
         ModuleUserInterface* ui = nullptr;
         ModuleDebugMode* debug_mode = nullptr;

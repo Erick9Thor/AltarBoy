@@ -27,10 +27,6 @@ namespace Hachiko
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
-        // --- Scene management --- //
-        void LoadModel(const char* model_path) const; // TODO: delete Change to load scene and load al gameObjects for path
-        void LoadImageObject(const char* model_path) const; // TODO: Remove after vs1
-
         GameObject* GetRoot()
         {
             return main_scene->root;
@@ -57,14 +53,19 @@ namespace Hachiko
         void SaveScene();
         void SaveScene(const char* path);
 
+        GameObject* Raycast(const float3& origin, const float3& destination);
         void SwitchTo(const char* file_path);
+
+        void OptionsMenu();
 
     private:
         Scene* main_scene = nullptr;
         SceneSerializer* serializer = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
+
         bool scene_ready_to_load = false;
+        bool scene_autosave = false;
         std::string scene_to_load;
     };
 } // namespace Hachiko

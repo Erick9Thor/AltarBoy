@@ -17,15 +17,16 @@
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 
-Hachiko::Scene::Scene():
-    root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
-    skybox(new Skybox()),
-    quadtree(new Quadtree()),
-    name(UNNAMED_SCENE)
+Hachiko::Scene::Scene()
+    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    , culling_camera(App->camera->GetMainCamera())
+    , skybox(new Skybox())
+    , quadtree(new Quadtree())
+    , loaded(false)
+    , name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
-    quadtree->SetBox(AABB(float3(-500, 0, -500), float3(500, 250, 500)));
+    quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
 
 Hachiko::Scene::~Scene()
@@ -33,12 +34,13 @@ Hachiko::Scene::~Scene()
     CleanScene();
 }
 
-void Hachiko::Scene::CleanScene() const
+void Hachiko::Scene::CleanScene() 
 {
     App->editor->SetSelectedGO(nullptr);
     delete root;
     delete skybox;
     delete quadtree;
+    loaded = false;
 }
 
 void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
@@ -143,13 +145,13 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     }
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const float3& origin, const float3& destination) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
 {
     LineSegment line_seg(origin, destination);
-    return RayCast(line_seg);
+    return Raycast(line_seg);
 }
 
-Hachiko::GameObject* Hachiko::Scene::RayCast(const LineSegment& segment) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
@@ -206,6 +208,7 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     root->SetID(node[ROOT_ID].as<UID>());
     const YAML::Node children_node = node[CHILD_NODE];
+
     for (unsigned i = 0; i < children_node.size(); ++i)
     {
         std::string child_name = children_node[i][GAME_OBJECT_NAME].as<std::string>();
@@ -214,6 +217,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->scene_owner = this;
         child->Load(children_node[i]);
     }
+
+    loaded = true;
 }
 
 void Hachiko::Scene::CreateLights()
