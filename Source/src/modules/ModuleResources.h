@@ -28,7 +28,7 @@ namespace Hachiko
         ResourceTexture* GetTexture(const std::string& texture_name, const std::string& asset_path = std::string());
 
         void CreateResource(Resource::Type type, const std::string& name) const;
-
+        void AssetsLibraryCheck();
 
     private:
         std::map<std::string, ResourceModel*> models;
@@ -51,5 +51,7 @@ namespace Hachiko
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
+
+        void IterateFolder(const PathNode& folder);
     };
 }

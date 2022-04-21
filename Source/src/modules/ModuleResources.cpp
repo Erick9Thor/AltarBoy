@@ -31,6 +31,8 @@ bool ModuleResources::Init()
         FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
+    AssetsLibraryCheck();
+
     std::function handleAddedFile = [&](Event& evt)
     {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
@@ -232,6 +234,40 @@ void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::st
         {
             MaterialImporter material_importer;
             material_importer.CreateMaterial(name);
+        }
+    }
+}
+
+void Hachiko::ModuleResources::AssetsLibraryCheck()
+{
+    HE_LOG("Assets/Library check...");
+
+    // TODO: use defined values, for extensions and assets
+    std::vector<std::string> ignore_ext {"model", "meta"};
+    PathNode assets_folder = App->file_sys->GetAllFiles("assets", nullptr, &ignore_ext);
+
+    IterateFolder(assets_folder);
+
+    HE_LOG("Assets/Library check finished.");
+}
+
+void Hachiko::ModuleResources::IterateFolder(const PathNode& folder) 
+{
+    for (PathNode node : folder.children)
+    {
+        if (node.isFile)
+        {
+            // TODO: process
+            
+            // if (file.hasMeta)
+            //  if (!meta.matchesTimestamp(file))
+            //   reimport + remake meta 
+            // else
+            //  import + create meta
+        }
+        else
+        {
+            IterateFolder(node);
         }
     }
 }

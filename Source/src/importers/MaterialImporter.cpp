@@ -52,7 +52,7 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-    const std::string material_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName();
+    const std::string material_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION;
 
     YAML::Node material_node;
     material_node[MATERIAL_ID] = material->GetID();
@@ -76,12 +76,13 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
 {
-    if (!std::filesystem::exists(material_path))
+    std::string material_path_with_ext = StringUtils::Concat(material_path, MATERIAL_EXTENSION); 
+    if (!std::filesystem::exists(material_path_with_ext.c_str()))
     {
         return nullptr;
     }
 
-    YAML::Node node = YAML::LoadFile(material_path);
+    YAML::Node node = YAML::LoadFile(material_path_with_ext.c_str());
     Hachiko::ResourceMaterial* material = new ResourceMaterial(node[MATERIAL_ID].as<UID>());
 
     material->SetName(node[MATERIAL_NAME].as<std::string>());

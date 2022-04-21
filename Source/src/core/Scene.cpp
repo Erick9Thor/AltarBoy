@@ -18,7 +18,7 @@
 #include "resources/ResourceMaterial.h"
 
 Hachiko::Scene::Scene()
-    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    : root(new GameObject(nullptr, float4x4::identity, "Root", 0))
     , culling_camera(App->camera->GetMainCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
