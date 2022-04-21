@@ -179,10 +179,6 @@ std::string Hachiko::ModuleFileSystem::GetFileNameAndExtension(const char* file_
 
 std::string Hachiko::ModuleFileSystem::GetFileExtension(const char* file_path) const
 {
-    const char* last_slash = strrchr(file_path, '/');
-    const char* last_backslash = strrchr(file_path, '\\');
-    const char* last_separator = last_slash >= last_backslash ? last_slash : last_backslash;
-
     const char* lastDot = strrchr(file_path, '.');
 
     auto extension = std::string(lastDot);
