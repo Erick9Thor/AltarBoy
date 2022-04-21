@@ -195,6 +195,9 @@
 
 // Component Text
 #define FONT_PATH "font_path"
+#define FONT_COLOR "color"
+#define FONT_SIZE "size"
+#define FONT_LABEL_TEXT "label_text"
 
 // Component Progress Bar
 #define BAR_PARAMS "params"

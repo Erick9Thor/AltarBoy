@@ -76,6 +76,9 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
 void Hachiko::ComponentText::Save(YAML::Node& node) const
 {
     node[FONT_PATH] = font.path.c_str();
+    node[FONT_COLOR] = font_color;
+    node[FONT_SIZE] = font_size;
+    node[FONT_LABEL_TEXT] = label_text;
 }
 
 void Hachiko::ComponentText::Load(const YAML::Node& node)
@@ -85,6 +88,9 @@ void Hachiko::ComponentText::Load(const YAML::Node& node)
     if (!font_path.empty())
     {
         font = App->texture->LoadFont(font_path.c_str());
+        font_color = node[FONT_COLOR].as<float4>();
+        font_size = node[FONT_SIZE].as<float>();
+        label_text = node[FONT_LABEL_TEXT].as<std::string>();
         BuildLabel(game_object->GetComponent<ComponentTransform2D>());
     }
 }

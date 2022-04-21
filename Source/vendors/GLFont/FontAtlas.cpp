@@ -9,6 +9,8 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
   _width(0),
   _height(0)
 {
+    constexpr int offset = 10;
+    
     _slot = _face->glyph;
     FT_Set_Pixel_Sizes(_face,      // Font face handle
                        0,          // Pixel width  (0 defaults to pixel height)
@@ -24,7 +26,7 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
             continue; // try next character
         }
 
-        _width += _slot->bitmap.width; // add the width of this glyph to our texture width
+        _width += _slot->bitmap.width + offset; // add the width of this glyph to our texture width
         // Note: We add 2 pixels of blank space between glyphs for padding - this helps reduce texture bleeding
         //       that can occur with antialiasing
 
@@ -71,7 +73,7 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
         _chars[i].xOffset = (float)texPos / (float)_width;
 
         // Increase texture offset
-        texPos += _slot->bitmap.width;
+        texPos += _slot->bitmap.width + offset;
     }
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 }
