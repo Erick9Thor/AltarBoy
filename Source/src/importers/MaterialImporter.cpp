@@ -3,7 +3,6 @@
 #include "MaterialImporter.h"
 
 #include "modules/ModuleResources.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleTexture.h"
 
 #include "resources/ResourceMaterial.h"
@@ -48,7 +47,7 @@ void Hachiko::MaterialImporter::Import(const char* path)
         Import(material, material_id);
     }
 
-    App->file_sys->Save(material_output_path.c_str(), material_node);
+    FileSystem::Save(material_output_path.c_str(), material_node);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
@@ -73,7 +72,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
 
-    App->file_sys->Save(material_library_path.c_str(), material_node);
+    FileSystem::Save(material_library_path.c_str(), material_node);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)

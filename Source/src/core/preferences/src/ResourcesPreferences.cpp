@@ -72,6 +72,12 @@ void ResourcesPreferences::LoadConfigurationData(const YAML::Node& node)
         }
 
         // Library path
+        if (it->first.as<std::string>()._Equal(SCENES_LIBRARY))
+        {
+            scenes_library = std::move(it->second.as<std::string>());
+            continue;
+        }
+
         if (it->first.as<std::string>()._Equal(MODELS_LIBRARY))
         {
             models_library = std::move(it->second.as<std::string>());
@@ -125,6 +131,7 @@ void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][ANIMATIONS_ASSETS] = animations_assets;
     node[group_name][SKYBOX_ASSETS] = skybox_assets;
 
+    node[group_name][SCENES_LIBRARY] = scenes_library;
     node[group_name][MODELS_LIBRARY] = models_library;
     node[group_name][MESHES_LIBRARY] = meshes_library;
     node[group_name][TEXTURES_LIBRARY] = textures_library;
@@ -174,7 +181,7 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
     switch (type)
     {
     case Resource::Type::SCENE:
-        break;
+        return scenes_library.c_str();
     case Resource::Type::MODEL:
         return models_library.c_str();
     case Resource::Type::MESH:

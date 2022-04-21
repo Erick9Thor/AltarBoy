@@ -1,11 +1,7 @@
 #include "core/hepch.h"
-#include "ModuleHardware.h"
+#include "Hardware.h"
 
-Hachiko::ModuleHardware::ModuleHardware() = default;
-
-Hachiko::ModuleHardware::~ModuleHardware() = default;
-
-bool Hachiko::ModuleHardware::Init()
+Hachiko::Hardware::Hardware() 
 {
     SDL_GetVersion(&info.sdl_version);
 
@@ -20,6 +16,4 @@ bool Hachiko::ModuleHardware::Init()
     info.vram_mb_budget = info.vram_mb_budget / 1024;
     glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &info.vram_mb_free);
     info.vram_mb_free = info.vram_mb_free / 1024;
-
-    return true;
 }
