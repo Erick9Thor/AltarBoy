@@ -89,7 +89,8 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
     if (file_in_asset)
     {
         HE_LOG("Resource file in assets folder");
-        destination = path;
+        std::filesystem::path root(path);
+        destination = std::filesystem::proximate(root, "assets\\");
     }
     else
     {

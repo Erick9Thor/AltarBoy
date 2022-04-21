@@ -32,11 +32,7 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
         return;
     }
 
-    meta[MODEL_ID] = UUID::GenerateUID();
-    meta[MODEL_FILE_PATH] = model_path.string();
-
     ImportModel(scene, meta);
-
     FileSystem::Save(model_output_path.c_str(), meta);
 }
 
