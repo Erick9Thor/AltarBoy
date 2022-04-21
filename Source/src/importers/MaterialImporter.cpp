@@ -169,7 +169,8 @@ Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMater
 
     for (std::string& path : search_paths)
     {
-        output_texture = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
+        // TODO: Importing must be done by importer manager class
+        output_texture = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str(), UUID::GenerateUID()));
         if (output_texture == nullptr)
         {
             continue;

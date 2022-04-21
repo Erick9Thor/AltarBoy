@@ -24,6 +24,6 @@ namespace Hachiko
         }
 
     private:
-        Resource* ImportTexture(const char* path, UID id = 0);
+        Resource* ImportTexture(const char* path, UID uid);
     };
 }

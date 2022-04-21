@@ -214,8 +214,9 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     
     if (res == nullptr && !asset_path.empty())
     {
+        // TODO: Importing must be done by importer manager
         Hachiko::TextureImporter texture_importer;
-        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str())); 
+        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str(), UUID::GenerateUID()));
         res->GenerateBuffer();
     }
     

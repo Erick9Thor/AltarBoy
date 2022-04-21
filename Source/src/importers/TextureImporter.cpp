@@ -111,14 +111,8 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
     delete[] file_buffer;
 }
 
-Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID id)
+Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID uid)
 {
-    Hachiko::UID uid = id;
-    if (!id)
-    {
-        uid = Hachiko::UUID::GenerateUID();
-    }
-
     // TODO: texture configuration to flip so this will not be needed
     std::string str_path = std::string(path);
     int extension_index = str_path.rfind('.');
