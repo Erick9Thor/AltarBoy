@@ -4,6 +4,11 @@
 #include <il.h>
 #include <string>
 
+#include "ft2build.h"
+#include "freetype.h"
+#include "GLfont.h"
+
+
 namespace Hachiko
 {
     struct Texture // TODO: removed
@@ -23,6 +28,13 @@ namespace Hachiko
         unsigned heighths[6]{};
     };
 
+    struct Font
+    {
+        bool loaded = false;
+        std::string path;
+        std::shared_ptr<GLFont> gl_font = nullptr;
+    };
+    
     class ResourceTexture;
 
     class ModuleTexture final : public Module
@@ -44,6 +56,8 @@ namespace Hachiko
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);
 
+        Font LoadFont(const char* path);
+
         [[nodiscard]] short GetDevilVersion() const
         {
             return devil_version;
@@ -55,5 +69,7 @@ namespace Hachiko
         const short devil_version = IL_VERSION;
         static unsigned int LoadImg(const char* path, bool flip = true);
         static void DeleteImg(unsigned& img_id);
+
+        FT_Library freetype_lib;
     };
 }

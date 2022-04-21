@@ -5,6 +5,7 @@
 #include "ComponentImage.h"
 #include "ComponentCanvasRenderer.h"
 #include "ComponentProgressBar.h"
+#include "ComponentText.h"
 
 #include "debugdraw.h"
 
@@ -239,7 +240,7 @@ void Hachiko::ComponentTransform2D::Save(YAML::Node& node) const
 
     node[TRANSFORM_POSITION] = position;
     node[TRANSFORM_SIZE] = size;
-    node[TRANSFORM_SCALE] = scale;
+    node[TRANSFORM_SCALE] = scale.xy();
     node[TRANSFORM_ROTATION] = rotation;
     node[TRANSFORM_PIVOT] = pivot_pct_position;
     node[TRANSFORM_ANCHOR] = anchor_pct_position;
@@ -300,6 +301,11 @@ void Hachiko::ComponentTransform2D::UpdateTransforms()
 
 void Hachiko::ComponentTransform2D::UpdateUIComponents()
 {
+    ComponentText* text = game_object->GetComponent<ComponentText>();
+    if (text)
+    {
+        text->Invalidate();
+    }
 }
 
 void Hachiko::ComponentTransform2D::UpdateBoundingBox()

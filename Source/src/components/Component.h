@@ -36,6 +36,7 @@ namespace Hachiko
             PROGRESS_BAR = 13,
             ANIMATION = 14,
             SCRIPT = 15,
+            TEXT = 16,
             UNKNOWN
         };
 

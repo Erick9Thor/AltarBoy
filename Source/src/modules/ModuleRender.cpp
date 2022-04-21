@@ -150,11 +150,9 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
     ManageResolution(camera);
     
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
 #endif
-    ManageResolution(camera);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
 
     if (active_scene == nullptr)
