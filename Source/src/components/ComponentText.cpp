@@ -111,11 +111,6 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 
 void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
 {
-    // TODO: Get From transform
-    int startX = 100;
-    int startY = 100;
-
-
     unsigned windowWidth, windowHeight;
     App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
 
@@ -123,8 +118,8 @@ void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
     
     label = std::unique_ptr<FTLabel>(new FTLabel(font.gl_font, // Font face handle
                                                  "", // Text to render
-                                                 startX,
-                                                 startY,
+                                                 0,
+                                                 0,
                                                  windowWidth,
                                                  windowHeight));
     

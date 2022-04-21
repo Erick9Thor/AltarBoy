@@ -19,7 +19,10 @@ namespace Hachiko
         ComponentText(GameObject* container);
         ~ComponentText() override = default;
 
-        static Type GetType();
+        static Type GetType()
+        {
+            return Type::TEXT;
+        }
 
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program);
@@ -51,8 +54,3 @@ namespace Hachiko
         char font_filename_buffer[MAX_PATH] = "Image Filename\0";
     };
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentText::GetType()
-{
-    return Type::TEXT;
-}
