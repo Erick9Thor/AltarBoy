@@ -82,15 +82,14 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         return;
     }
 
-    bool file_in_asset = path.string().find("assets\\") != std::string::npos;
-
+    size_t relative_pos = path.string().find("assets\\");
+    bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
     if (file_in_asset)
     {
         HE_LOG("Resource file in assets folder");
-        std::filesystem::path root(path);
-        destination = std::filesystem::proximate(root, "assets\\");
+        destination = std::filesystem::relative(path, path.string().substr(0, relative_pos));
     }
     else
     {
@@ -107,12 +106,6 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         ImportResource(destination, type);
         HE_LOG("File destination: %s", destination.string().c_str());
     }
-
-    /* if (file_in_asset)
-    {
-        Scene* scene = App->scene_manager->GetActiveScene();
-        scene->HandleInputModel(GetModel(destination.string().c_str()));
-    }*/
 }
 
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)

@@ -34,11 +34,15 @@ ImporterManager::~ImporterManager()
     }
 }
 
-void ImporterManager::Import(const std::string& asset_path, const Resource::Type asset_type)
+void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type)
 {
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-    YAML::Node meta = CreateMeta(asset_path.c_str());
-    GetImporter(asset_type)->Import(asset_path.c_str(), meta);
+    YAML::Node meta = CreateMeta(asset_path.string().c_str());
+    GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
+
+    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\",
+        asset_path.filename().replace_extension(META_EXTENSION).string());
+    FileSystem::Save(meta_path.c_str(), meta);
 }
 
 Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)

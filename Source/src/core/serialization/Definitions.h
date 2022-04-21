@@ -63,6 +63,7 @@
 #define MODEL_EXTENSION ".model"
 #define MESH_EXTENSION ".mesh"
 #define MATERIAL_EXTENSION ".mat"
+#define META_EXTENSION ".meta"
  
 //////////////////////////
 //						//
