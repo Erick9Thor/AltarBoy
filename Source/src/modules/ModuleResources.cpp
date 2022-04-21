@@ -244,7 +244,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
 
     // TODO: use defined values, for extensions and assets
     std::vector<std::string> ignore_ext {"model", "meta"};
-    PathNode assets_folder = App->file_sys->GetAllFiles("assets", nullptr, &ignore_ext);
+    PathNode assets_folder = FileSystem::GetAllFiles("assets", nullptr, &ignore_ext);
 
     IterateFolder(assets_folder);
 

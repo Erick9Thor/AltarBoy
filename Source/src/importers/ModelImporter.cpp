@@ -33,7 +33,6 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
     }
 
     ImportModel(scene, meta);
-    FileSystem::Save(model_output_path.c_str(), meta);
 }
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)

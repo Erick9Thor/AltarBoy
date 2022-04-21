@@ -70,7 +70,9 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), texture->GetName());
+    const std::string file_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE),
+            std::to_string(texture->GetID()));
 
     unsigned header[9] = {
         texture->path.length(),
