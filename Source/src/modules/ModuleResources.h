@@ -22,19 +22,34 @@ namespace Hachiko
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
         
+        // TODO: Replace getters for only one get function
         ResourceModel* GetModel(const std::string& name);
         ResourceMesh* GetMesh(const UID uid, const std::string& model_path = std::string(), int mesh_index = -1);
         ResourceMaterial* GetMaterial(const std::string& material_name);
         ResourceTexture* GetTexture(const std::string& texture_name, const std::string& asset_path = std::string());
 
+        Resource* GetResource(UID uid)  const
+        {
+            auto it = loaded_resources.find(uid);
+            if (it  != loaded_resources.end())
+            {
+                return it->second;
+            }
+
+            return nullptr;
+        }
+
         void CreateResource(Resource::Type type, const std::string& name) const;
         void AssetsLibraryCheck();
 
     private:
+        // TODO: Use only loaded_resources map
         std::map<std::string, ResourceModel*> models;
         std::map<std::string, ResourceMaterial*> materials;
         std::map<std::string, ResourceTexture*> textures;
         std::map<UID, ResourceMesh*> meshes;
+
+        std::map<UID, Resource*> loaded_resources;
 
         std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
         {{Hachiko::Resource::Type::TEXTURE, ".png"},
