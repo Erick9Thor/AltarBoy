@@ -15,7 +15,7 @@ namespace Hachiko
         bool IsImported(const char* path, Resource::Type type) const;
        
     private:
-        std::vector<std::pair<Importer::Type, Importer*>> importers;
+        std::map<Importer::Type, Importer*> importers;
         Importer* GetImporter(Resource::Type type) const;
         Importer::Type ToImporterType(Resource::Type type) const;
         YAML::Node CreateMeta(const char* path);

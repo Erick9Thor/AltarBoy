@@ -18,12 +18,11 @@ ImporterManager::ImporterManager()
     const auto material = new MaterialImporter();
     const auto animation = new AnimationImporter();
 
-    importers.reserve(static_cast<size_t>(Importer::Type::COUNT));
-    importers.push_back(std::make_pair(model->GetType(), model));
-    importers.push_back(std::make_pair(mesh->GetType(), mesh));
-    importers.push_back(std::make_pair(texture->GetType(), texture));
-    importers.push_back(std::make_pair(material->GetType(), material));
-    importers.push_back(std::make_pair(animation->GetType(), animation));
+    importers.emplace(model->GetType(), model);
+    importers.emplace(mesh->GetType(), mesh);
+    importers.emplace(texture->GetType(), texture);
+    importers.emplace(material->GetType(), material);
+    importers.emplace(animation->GetType(), animation);
 }
 
 ImporterManager::~ImporterManager()
@@ -57,12 +56,7 @@ bool Hachiko::ImporterManager::IsImported(const char* path, Resource::Type type)
 
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
 {
-    auto it = std::find_if(importers.begin(), importers.end(), [&](const std::pair<Importer::Type, Importer*>& element)
-        { 
-            return element.first == ToImporterType(type);
-        });
-
-    assert(it != importers.end());
+    auto it = importers.find(ToImporterType(type));
     return it->second;
 }
 
