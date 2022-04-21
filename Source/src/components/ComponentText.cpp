@@ -10,8 +10,6 @@
 #include "Program.h"
 
 
-
-
 Hachiko::ComponentText::ComponentText(GameObject* container) 
 	: Component(Type::TEXT, container) {
 }
@@ -63,14 +61,16 @@ void Hachiko::ComponentText::DrawGui()
 
 void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program)
 {   
-    if (label)
+    if (!label)
     {
-        // Make sure transform is refreshed
-        transform->GetGlobalTransform();
-        RefreshLabel(transform);
-        // Program is activated inside hachikorender
-        label->HachikoRender(program);
-    }        
+        return;
+    }
+    
+    // Make sure transform is refreshed
+    transform->GetGlobalTransform();
+    RefreshLabel(transform);
+    // Program is activated inside hachikorender
+    label->HachikoRender(program);   
 }
 
 void Hachiko::ComponentText::Save(YAML::Node& node) const
@@ -103,8 +103,6 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
         App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
         label->setWindowSize(windowWidth, windowHeight);
         const float2& size = transform->GetSize();
-        //const float2& size = transform->GetPo();
-        
         
         const float4x4& trf = transform->GetGlobalTransform();
         const float3& pos = trf.TranslatePart();
@@ -133,7 +131,5 @@ void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
     label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
     label->setPixelSize(font_size);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
-    //label->appendFontFlags(FTLabel::FontFlags::Indented);
-
     RefreshLabel(transform);
 }

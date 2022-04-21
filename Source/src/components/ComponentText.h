@@ -42,7 +42,7 @@ namespace Hachiko
         bool dirty = true;
         void BuildLabel(ComponentTransform2D* transform);
 
-
+    private:
         Font font;
         std::unique_ptr<FTLabel> label = nullptr;
 

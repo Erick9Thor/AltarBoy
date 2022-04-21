@@ -64,7 +64,9 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
         {
             player = FindPlayer();
             if (player)
-				player->GetTransform()->SetGlobalPosition(line.GetPoint(d));
+            {
+                player->GetTransform()->SetGlobalPosition(line.GetPoint(d));
+            }
         }
 	}
 
