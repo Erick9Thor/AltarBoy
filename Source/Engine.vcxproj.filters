@@ -402,6 +402,24 @@
     <ClCompile Include="src\modules\ModuleDebugMode.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\ModuleAudio.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1037,6 +1055,27 @@
     <ClInclude Include="src\modules\ModuleDebugMode.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="src\modules\ModuleAudio.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -1143,6 +1182,9 @@
     </Filter>
     <Filter Include="Core\Serialization">
       <UniqueIdentifier>{9ea70c61-018b-4598-bef9-93e1ecfc6f15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Wwise">
+      <UniqueIdentifier>{14afcdf2-9bbd-4a73-9ecc-81e27ef4467f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

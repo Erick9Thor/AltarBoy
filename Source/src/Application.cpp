@@ -16,6 +16,7 @@
 #include "modules/ModuleFileSystem.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
+#include "modules/ModuleAudio.h"
 
 using namespace std;
 
@@ -35,7 +36,8 @@ Hachiko::Application::Application()
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
     modules.push_back(ui = new ModuleUserInterface()); 
-modules.push_back(debug_mode = new ModuleDebugMode());
+    modules.push_back(debug_mode = new ModuleDebugMode());
+    modules.push_back(audio = new ModuleAudio());
 }
 
 Hachiko::Application::~Application()
