@@ -51,6 +51,12 @@
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
+#include <AK/SoundEngine/Common/AkDefaultLowLevelIODispatcher.h>
+#include <AK/SoundEngine/Common/AkFileLocationBase.h>
+#include <AK/SoundEngine/Common/AkFilePackage.h>
+#include <AK/SoundEngine/Common/AkFilePackageLUT.h>
+#include <AK/SoundEngine/Common/AkMultipleFileLocation.h>
+
 //project includes
 #include "Globals.h"
 #include "Application.h"
