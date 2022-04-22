@@ -24,6 +24,8 @@ written agreement between you and Audiokinetic Inc.
 //
 //////////////////////////////////////////////////////////////////////
 
+#include "core/hepch.h"
+
 #include "stdafx.h"
 
 #include <AK/SoundEngine/Common/AkStreamMgrModule.h>
@@ -35,8 +37,12 @@ written agreement between you and Audiokinetic Inc.
 #include <AK/Tools/Common/AkAssert.h>
 #include <AK/Tools/Common/AkObject.h>
 
-#include "AkFileHelpers.h"
-#include "AkMultipleFileLocation.h"
+//#include "AkFileHelpers.h"
+#include "AK/SoundEngine/IO/AkFileHelpers.h"
+#include "AK/SoundEngine/Common/AkMultipleFileLocation.h"
+//#include "AkMultipleFileLocation.h"
+
+//#include "core/hepch.h"
 
 #define MAX_NUMBER_STRING_SIZE      (10)    // 4G
 #define ID_TO_STRING_FORMAT_BANK    AKTEXT("%u.bnk")

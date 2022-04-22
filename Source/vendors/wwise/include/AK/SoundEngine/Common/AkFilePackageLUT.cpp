@@ -40,6 +40,8 @@ written agreement between you and Audiokinetic Inc.
 #include <AK/Tools/Common/AkPlatformFuncs.h>
 #include <AK/Tools/Common/AkFNVHash.h>
 
+#include "core/hepch.h"
+
 #ifdef _DEBUG
 	template<bool> struct AkCompileTimeAssert;
 	template<> struct AkCompileTimeAssert<true> { };

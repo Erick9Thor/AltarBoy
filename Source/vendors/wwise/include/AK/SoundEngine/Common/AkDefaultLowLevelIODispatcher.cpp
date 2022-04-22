@@ -38,7 +38,7 @@ written agreement between you and Audiokinetic Inc.
 #include "stdafx.h"
 #include "AkDefaultLowLevelIODispatcher.h"
 #include <AK/Tools/Common/AkAssert.h>
-
+#include "core/hepch.h"
 
 CAkDefaultLowLevelIODispatcher::CAkDefaultLowLevelIODispatcher()
 :m_uNumDevices( 0 )

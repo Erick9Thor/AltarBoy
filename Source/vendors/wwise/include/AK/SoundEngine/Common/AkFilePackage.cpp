@@ -28,6 +28,8 @@ written agreement between you and Audiokinetic Inc.
 #include "stdafx.h"
 #include "AkFilePackage.h"
 
+#include "core/hepch.h"
+
 // Destroy file package and free memory.
 void CAkFilePackage::Destroy()
 {
