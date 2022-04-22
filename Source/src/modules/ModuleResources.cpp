@@ -244,31 +244,62 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     HE_LOG("Assets/Library check...");
 
     // TODO: use defined values, for extensions and assets
-    std::vector<std::string> ignore_ext {"model", "meta"};
-    PathNode assets_folder = FileSystem::GetAllFiles("assets", nullptr, &ignore_ext);
+    std::vector<std::string> meta_ext { "meta" };
+    PathNode assets_folder = FileSystem::GetAllFiles("assets", nullptr, &meta_ext);
+    //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
+    // TODO: check library folder
 
-    IterateFolder(assets_folder);
+    GenerateLibrary(assets_folder);
 
     HE_LOG("Assets/Library check finished.");
 }
 
-void Hachiko::ModuleResources::IterateFolder(const PathNode& folder) 
+void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
 {
     for (PathNode node : folder.children)
     {
         if (node.isFile)
         {
-            // TODO: process
-            
-            // if (file.hasMeta)
-            //  if (!meta.matchesTimestamp(file))
-            //   reimport + remake meta 
-            // else
-            //  import + create meta
+            Resource::Type type = GetType(node.path);
+            std::string meta_path = StringUtils::Concat(node.path, META_EXTENSION);
+
+            if (FileSystem::Exists(meta_path.c_str()))
+            {
+                YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+                // Extract data from meta
+                // TODO: change for defines
+                UID meta_uid = meta_node["General"]["id"].as<UID>();
+                //node["General"]["path"] = file_path;
+                //node["General"]["timestamp"] = file_timestamp;
+                
+                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), meta_uid);
+                bool library_file_exists = FileSystem::Exists(library_path.c_str());
+
+                if (true) // TODO: if (!meta.matchesTimestamp(file))
+                {
+                    if (library_file_exists)
+                    {
+                        // TODO: delete it ?
+                    }
+                    // TODO: reimport + remake meta 
+                }
+                else if (!library_file_exists)
+                {
+                    // TODO: import + remake meta
+
+                    // TODO: import but with a meta created -> overload
+                    continue;
+                }
+            }
+            else
+            {
+                importer_manager.Import(std::filesystem::path(node.path), type);
+            }
         }
         else
         {
-            IterateFolder(node);
+            GenerateLibrary(node);
         }
     }
 }

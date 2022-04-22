@@ -67,6 +67,6 @@ namespace Hachiko
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
 
-        void IterateFolder(const PathNode& folder);
+        void GenerateLibrary(const PathNode& folder);
     };
 }
