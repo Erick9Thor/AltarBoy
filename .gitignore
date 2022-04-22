@@ -362,3 +362,7 @@ imgui.ini
 
 Source/VTune Profiler Results/
 Source/.idea/
+
+# Wwise
+!Source/vendors/wwise/x64_vc140/Debug/
+!Source/vendors/wwise/include/AK/Tools/Win32/
