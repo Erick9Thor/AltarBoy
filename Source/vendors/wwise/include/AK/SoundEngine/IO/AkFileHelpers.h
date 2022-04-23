@@ -24,6 +24,7 @@ written agreement between you and Audiokinetic Inc.
 #define _AK_FILE_HELPERS_H_
 
 #include "../Common/AkFileHelpersBase.h"
+#include "AK/SoundEngine/Common/AkFileHelpersBase.h"
 
 #include <AK/Tools/Common/AkAssert.h>
 #include <windows.h>
