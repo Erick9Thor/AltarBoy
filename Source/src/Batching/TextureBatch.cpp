@@ -41,6 +41,10 @@ void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material)
     {
         AddTexture(resource_material->specular);
     }
+    if (resource_material->HasNormal())
+    {
+        AddTexture(resource_material->normal);
+    }
 }
 
 void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture) 
