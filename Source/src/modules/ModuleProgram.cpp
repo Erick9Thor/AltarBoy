@@ -17,7 +17,9 @@ bool Hachiko::ModuleProgram::Init()
     CreateMainProgram();
     CreateSkyboxProgram();
     CreateStencilProgram();
-    if (!main_program || !skybox_program || !stencil_program)
+    CreateUserInterfaceImageProgram();
+    CreateUserInterfaceTextProgram();
+    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program)
     {
         return false;
     }
@@ -108,20 +110,32 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateProgram(const char* vtx_shader_p
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()
 {
-    main_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment.glsl");
+    main_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex.glsl", ASSETS_FOLDER "/shaders/fragment.glsl");
     return main_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
 {
-    skybox_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_skybox.glsl", ASSETS_FOLDER "/Shaders/fragment_skybox.glsl");
+    skybox_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_skybox.glsl", ASSETS_FOLDER "/shaders/fragment_skybox.glsl");
     return skybox_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 {
-    stencil_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_stencil.glsl", ASSETS_FOLDER "/Shaders/fragment_stencil.glsl");
+    stencil_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_stencil.glsl", ASSETS_FOLDER "/shaders/fragment_stencil.glsl");
     return stencil_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceImageProgram()
+{
+    ui_image_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_ui.glsl", ASSETS_FOLDER "/shaders/fragment_ui.glsl");
+    return ui_image_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
+{
+    ui_text_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_font.glsl", ASSETS_FOLDER "/Shaders/fragment_font.glsl");
+    return ui_text_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -156,14 +170,15 @@ void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, 
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
+
 void Hachiko::ModuleProgram::CreateCameraUBO()
 {
-    CreateUBO(UBOPoints::CAMERA, sizeof(Camera));
+    CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
 }
 
 void Hachiko::ModuleProgram::CreateMaterialUBO()
 {
-    //CreateUBO(UBOPoints::MATERIAL, sizeof(MaterialData));
+    CreateUBO(UBOPoints::MATERIAL, sizeof(MaterialData));
 }
 
 void Hachiko::ModuleProgram::CreateLightsUBO()
@@ -184,41 +199,60 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete skybox_program;
     stencil_program->CleanUp();
     delete stencil_program;
+    ui_image_program->CleanUp();
+    delete ui_image_program;
+    ui_text_program->CleanUp();
+    delete ui_text_program;
     return true;
 }
 
 void Hachiko::ModuleProgram::UpdateCamera(const ComponentCamera* camera) const
 {
-    Camera camera_data;
+    CameraData camera_data;
     camera_data.view = camera->GetViewMatrix();
     camera_data.proj = camera->GetProjectionMatrix();
     // TODO: Understand why camera_data.view.TranslatePart() does not give the position
     camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
-    UpdateUBO(UBOPoints::CAMERA, sizeof(Camera), &camera_data);
+    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), &camera_data);
+}
+
+void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
+{
+    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*)&camera_data);
 }
 
 void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp) const
 {
-    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR)};
+    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
     const ResourceMaterial* material = material_comp->GetMaterial();
 
+    if (material == nullptr)
+    {
+        return;
+    }
+
     MaterialData material_data;
     material_data.diffuse_color = material->diffuse_color;
-    material_data.diffuse_flag = material_comp->use_diffuse_texture;
+    material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
-    material_data.specular_flag = material_comp->use_specular_texture;
+    material_data.specular_flag = material->HasSpecular();
+    material_data.normal_flag = material->HasNormal();
     material_data.shininess = material->shininess;
 
-    if (material_comp->use_diffuse_texture)
+    if (material_data.diffuse_flag)
     {
         ModuleTexture::Bind(material->GetDiffuseId(), static_cast<int>(TextureSlots::DIFFUSE));
     }
-    if (material_comp->use_specular_texture)
+    if (material_data.specular_flag)
     {
         ModuleTexture::Bind(material->GetSpecularId(), static_cast<int>(TextureSlots::SPECULAR));
+    }
+    if (material_data.normal_flag)
+    {
+        ModuleTexture::Bind(material->GetNomalId(), static_cast<int>(TextureSlots::NORMAL));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MathGeoLib.h"
+#include <MathGeoLib.h>
 
 #include <vector>
 
@@ -22,6 +22,7 @@ namespace Hachiko
     class RenderList
     {
     public:
+        void PreUpdate();
         void Update(ComponentCamera* camera, GameObject* game_object);
         void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
 
@@ -35,11 +36,22 @@ namespace Hachiko
             return nodes;
         }
 
+        [[nodiscard]] unsigned GetPolycountRendered() const
+        {
+            return polycount_rendered;
+        }
+
+        [[nodiscard]] unsigned GetPolycountTotal() const
+        {
+            return polycount_total;
+        }
+
     private:
         void CollectObjects(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
         void CollectObjects(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
         void CollectMesh(const float3& camera_pos, GameObject* game_object);
 
         std::vector<RenderTarget> nodes;
+        unsigned polycount_rendered = 0, polycount_total = 0;
     };
 }

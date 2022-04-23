@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Module.h"
-#include "SDL.h"
+#include <SDL.h>
 
 namespace Hachiko
 {
@@ -42,6 +42,16 @@ namespace Hachiko
         [[nodiscard]] SDL_Window* GetWindow() const
         {
             return window;
+        }
+
+        void GetWindowSize(int& width, int& height) 
+        {
+            SDL_GetWindowSize(window, &width, &height);
+        }
+
+        void GetWindowPosition(int& x, int& y)
+        {
+            SDL_GetWindowPosition(window, &x, &y);
         }
 
     private:

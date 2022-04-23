@@ -34,15 +34,15 @@ namespace Hachiko
             TexAddress diffuseMap;
             TexAddress specularMap;
             TexAddress normalMap;
-            int padding0;
-            int padding1;
+            int padding0 = 0;
+            int padding1 = 0;
         };
 
         TextureBatch();
         ~TextureBatch();
 
         void AddMaterial(const ComponentMaterial* material);
-        void AddTexture(const Texture* texture);
+        void AddTexture(const ResourceTexture* texture);
 
         void GenerateBatch();
 
@@ -53,12 +53,12 @@ namespace Hachiko
 
         void ImGuiWindow(); // Debug window
 
-        bool EqualLayout(const TextureArray& texuteLayout, const Texture& texture);
+        bool EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture);
 
         // TODO: make private
         // TODO: consider creating a ResourceTexture
 
-        std::map<const Texture*, TexAddress*> resources; // contains all the Texture resources and their address
+        std::map<const ResourceTexture*, TexAddress*> resources; // contains all the Texture resources and their address
         std::vector<TextureArray*> textureArrays; // contains all the texture arrays
 
         std::vector<Material> materials;

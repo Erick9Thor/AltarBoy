@@ -2,11 +2,11 @@
 #include "BatchManager.h"
 
 #include "Application.h"
-#include "../Core/GameObject.h"
-#include "../Components/ComponentTransform.h"
-#include "../Components/ComponentMesh.h"
-#include "../Resources/ResourceMesh.h"
-#include "../Modules/ModuleProgram.h"
+#include "core/GameObject.h"
+#include "components/ComponentTransform.h"
+#include "components/ComponentMesh.h"
+#include "resources/ResourceMesh.h"
+#include "modules/ModuleProgram.h"
 
 Hachiko::BatchManager::BatchManager() 
 {
@@ -30,7 +30,7 @@ void Hachiko::BatchManager::CollectMeshes(const GameObject* game_object)
 
 void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
 {
-    auto* mesh = game_object->GetComponent<ComponentMesh>();
+    const ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
     if (mesh == nullptr)
     {
         return;

@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 
 #include "ModuleEditor.h"
-#include "ModuleFileSystem.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
@@ -10,15 +9,17 @@ Hachiko::ModuleEditor::ModuleEditor()
 {
     HE_LOG("Creating windows");
 
+#ifndef PLAY_BUILD
     windows.push_back(&w_configuration);
     windows.push_back(&w_hierarchy);
     windows.push_back(&w_scene);
     windows.push_back(&w_inspector);
     windows.push_back(&w_about);
     windows.push_back(&w_console);
-    // windows.push_back(&w_resource);
+    windows.push_back(&w_resource);
     windows.push_back(&w_project);
     windows.push_back(&w_timers);
+#endif
 }
 
 void Hachiko::ModuleEditor::UpdateTheme() const
@@ -88,10 +89,10 @@ bool Hachiko::ModuleEditor::Init()
     config.PixelSnapH = true;
 
     static constexpr ImWchar ICONS_RANGES[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
-    io.Fonts->AddFontFromFileTTF("Fonts/JetBrainsMono-Light.ttf", 16.0f);
+    io.Fonts->AddFontFromFileTTF("fonts/JetBrainsMono-Light.ttf", 16.0f);
 
-    m_big_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("Fonts/",FONT_ICON_FILE_NAME_FAS).c_str(), 10.0f, &config, ICONS_RANGES);
-    m_small_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("Fonts/",FONT_ICON_FILE_NAME_FAR).c_str(), 10.0f, &config, ICONS_RANGES);
+    m_big_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("fonts/",FONT_ICON_FILE_NAME_FAS).c_str(), 10.0f, &config, ICONS_RANGES);
+    m_small_icon_font = io.Fonts->AddFontFromFileTTF(StringUtils::Concat("fonts/",FONT_ICON_FILE_NAME_FAR).c_str(), 10.0f, &config, ICONS_RANGES);
 
     // Setup style
     ImGui::StyleColorsDark();
@@ -126,6 +127,9 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     ImGui::CaptureMouseFromApp(true);
     ImGui::CaptureKeyboardFromApp(true);
 
+#ifdef PLAY_BUILD
+    const UpdateStatus retval = UpdateStatus::UPDATE_CONTINUE;
+#else
     const UpdateStatus retval = MainMenuBar();
 
     if (ImGuiFileDialog::Instance()->Display("LoadScene"))
@@ -135,7 +139,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
             const std::string file_path_name = ImGuiFileDialog::Instance()->GetFilePathName();
 
             //TODO: Make a function inside file sys to get relative path Assets/Scenes/X.scene
-            const std::string file_name_extension = App->file_sys->GetFileNameAndExtension(file_path_name.c_str());
+            const std::string file_name_extension = FileSystem::GetFileNameAndExtension(file_path_name.c_str());
 
             const std::string file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_extension;
 
@@ -147,6 +151,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
     }
 
     GenerateDockingSpace();
+#endif
+
 
     for (Window* panel : windows)
     {
@@ -156,7 +162,7 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    RenderGui();
+    //RenderGui();
     return retval;
 }
 
@@ -266,7 +272,7 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
-        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + "untitled" + SCENE_EXTENSION;
+        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + UNNAMED_SCENE + SCENE_EXTENSION;
         App->scene_manager->SaveScene(temp_scene_file_path.c_str());
     }
     if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
@@ -302,18 +308,18 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
 }
 
-void Hachiko::ModuleEditor::ViewMenu() const
+void Hachiko::ModuleEditor::ViewMenu()
 {
     if (ImGui::BeginMenu("View"))
     {
-        ImGui::MenuItem(w_scene.name, "", &w_scene.active);
-        ImGui::MenuItem(w_inspector.name, "", &w_inspector.active);
-        ImGui::MenuItem(w_hierarchy.name, "", &w_hierarchy.active);
-        ImGui::MenuItem(w_configuration.name, "", &w_configuration.active);
-        ImGui::MenuItem(w_about.name, "", &w_about.active);
-        ImGui::MenuItem(w_resource.name, "", &w_resource.active);
-        ImGui::MenuItem(w_project.name, "", &w_project.active);
-        ImGui::MenuItem(w_timers.name, "", &w_timers.active);
+        ImGui::MenuItem(w_scene.name, nullptr, &w_scene.active);
+        ImGui::MenuItem(w_inspector.name, nullptr, &w_inspector.active);
+        ImGui::MenuItem(w_hierarchy.name, nullptr, &w_hierarchy.active);
+        ImGui::MenuItem(w_configuration.name, nullptr, &w_configuration.active);
+        ImGui::MenuItem(w_about.name, nullptr, &w_about.active);
+        ImGui::MenuItem(w_resource.name, nullptr, &w_resource.active);
+        ImGui::MenuItem(w_project.name, nullptr, &w_project.active);
+        ImGui::MenuItem(w_timers.name, nullptr, &w_timers.active);
         ImGui::EndMenu();
     }
 }
@@ -389,7 +395,7 @@ void Hachiko::ModuleEditor::GoMenu() const
 
     if (ImGui::MenuItem("Add GameObject"))
     {
-        App->scene_manager->GetActiveScene()->CreateNewGameObject("GameObject", App->scene_manager->GetActiveScene()->GetRoot());
+        App->scene_manager->GetActiveScene()->CreateNewGameObject(App->scene_manager->GetActiveScene()->GetRoot(), "GameObject");
     }
 
     ImGui::EndMenu();

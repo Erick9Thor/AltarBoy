@@ -140,7 +140,7 @@ void Hachiko::GeometryBatch::BatchTransforms()
     transforms.reserve(components.size());
     for (const ComponentMesh* component : components)
     {
-        transforms.push_back(component->GetGameObject()->GetTransform()->GetMatrix());
+        transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
     }
 }
 
@@ -193,12 +193,18 @@ void Hachiko::GeometryBatch::GenerateBuffers()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(2);
 
+    // Tangents (3 values per coord)
+    glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]);
+    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+    glEnableVertexAttribArray(3);
+
     // Instance indices (one per component to draw)
     glGenBuffers(1, &instance_indices_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, instance_indices_vbo);
     glVertexAttribPointer(3, 1, GL_UNSIGNED_INT, GL_FALSE, sizeof(unsigned), static_cast<void*>(nullptr));
-    glEnableVertexAttribArray(3);
-    glVertexAttribDivisor(3, 1); // advances divisor times per instance/draw command
+    glEnableVertexAttribArray(4);
+    glVertexAttribDivisor(4, 1); // advances divisor times per instance/draw command
 
     // Indices (1 value)
     glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::INDICES)]);

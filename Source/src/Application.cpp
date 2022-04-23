@@ -9,29 +9,35 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleProgram.h"
-#include "modules/ModuleHardware.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
-#include "modules/ModuleFileSystem.h"
+#include "modules/ModuleScriptingSystem.h"
+#include "Modules/ModuleResources.h"
+#include "modules/ModuleUserInterface.h"
+#include "modules/ModuleDebugMode.h"
 
-using namespace std;
+#include "core/preferences/PreferenceManager.h"
+
 
 Hachiko::Application::Application()
 {
-    modules.push_back(hw = new ModuleHardware());
-    modules.push_back(file_sys = new ModuleFileSystem());
-
     modules.push_back(window = new ModuleWindow());
     modules.push_back(input = new ModuleInput());
+    modules.push_back(scripting_system = new ModuleScriptingSystem());
     modules.push_back(texture = new ModuleTexture());
     modules.push_back(renderer = new ModuleRender());
     modules.push_back(camera = new ModuleCamera());
+    modules.push_back(resources = new ModuleResources());
     modules.push_back(scene_manager = new ModuleSceneManager());
     modules.push_back(program = new ModuleProgram());
     modules.push_back(debug_draw = new ModuleDebugDraw());
     modules.push_back(editor = new ModuleEditor());
     modules.push_back(event = new ModuleEvent());
+    modules.push_back(ui = new ModuleUserInterface()); 
+    modules.push_back(debug_mode = new ModuleDebugMode());
+
+    preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 }
 
 Hachiko::Application::~Application()
@@ -40,11 +46,13 @@ Hachiko::Application::~Application()
     {
         delete *it;
     }
+    delete preferences;
 }
 
 bool Hachiko::Application::Init()
 {
     bool ret = true;
+    file_system.Init();
 
     for (auto it = modules.begin(); it != modules.end() && ret; ++it)
     {
@@ -53,6 +61,9 @@ bool Hachiko::Application::Init()
 
     delta = 0;
     EngineTimer::Start();
+    #ifdef PLAY_BUILD 
+        GameTimer::Start();
+    #endif
     return ret;
 }
 
@@ -90,6 +101,7 @@ bool Hachiko::Application::CleanUp()
         ret = (*it)->CleanUp();
     }
 
+    preferences->SaveConfigurationFile();
     return ret;
 }
 

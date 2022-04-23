@@ -1,20 +1,71 @@
 #include "core/hepch.h"
 #include "ModuleTexture.h"
 
+#include "GLFont.h"
+#include "FTLabel.h"
+#include "resources/ResourceTexture.h"
+#include "modules/ModuleResources.h"
+
 Hachiko::ModuleTexture::ModuleTexture() = default;
 
 Hachiko::ModuleTexture::~ModuleTexture() = default;
 
 bool Hachiko::ModuleTexture::Init()
 {
+    // Initialize image library
     ilInit();
+
+    // Initialize fonts library
+    if (FT_Init_FreeType(&freetype_lib))
+    {
+        HE_LOG("Failed to load FreeType library.");
+        return false;
+    }
+
     return true;
 }
 
 bool Hachiko::ModuleTexture::CleanUp()
 {
+    // Release image library
     ilShutDown();
+
+    // Release fonts library
+    FT_Done_FreeType(freetype_lib);
     return true;
+}
+
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const char* path, bool flip)
+{
+    std::filesystem::path texture_path = path;
+
+    unsigned int img_id = LoadImg(path, flip);
+
+    if (img_id == 0)
+    {
+        return nullptr;
+    }
+
+    ResourceTexture* texture = new ResourceTexture();
+    texture->path = path;
+    texture->SetName(texture_path.filename().replace_extension().string().c_str());
+    texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+    texture->mag_filter = GL_LINEAR;
+    texture->wrap = GL_CLAMP;
+
+    texture->bpp = ilGetInteger(IL_IMAGE_BPP);
+    texture->width = ilGetInteger(IL_IMAGE_WIDTH);
+    texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
+    texture->format = ilGetInteger(IL_IMAGE_FORMAT);
+
+    unsigned char* data = ilGetData();
+    texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+    texture->data = new unsigned char[texture->data_size];
+    memcpy(texture->data, data, texture->data_size);
+
+    DeleteImg(img_id);
+
+    return texture;
 }
 
 Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
@@ -33,11 +84,11 @@ Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
 
         glTexImage2D(GL_TEXTURE_2D,
                      0,
-                     texture.bpp = ilGetInteger(IL_IMAGE_BPP),
+                     ilGetInteger(IL_IMAGE_BPP),
                      texture.width = ilGetInteger(IL_IMAGE_WIDTH),
                      texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
                      0,
-                     texture.format = ilGetInteger(IL_IMAGE_FORMAT),
+                     ilGetInteger(IL_IMAGE_FORMAT),
                      GL_UNSIGNED_BYTE,
                      ilGetData());
         glGenerateMipmap(GL_TEXTURE_2D);
@@ -111,6 +162,24 @@ void Hachiko::ModuleTexture::Unbind(unsigned slot)
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+Hachiko::Font Hachiko::ModuleTexture::LoadFont(const char* path)
+{
+    Font font;
+    font.path = path;
+    try
+    {
+        font.gl_font = std::shared_ptr<GLFont>(new GLFont(path, freetype_lib));
+        font.loaded = true;
+
+        return font;
+    }
+    catch (std::exception& e)
+    {
+        // Catch exception and return unloaded font if fails
+        return font;
+    }
+}
+
 void SetOption(unsigned option, unsigned value)
 {
     glTexParameteri(GL_TEXTURE_2D, option, value);
@@ -120,8 +189,8 @@ void Hachiko::ModuleTexture::OptionsMenu() const
 {
     const char* labels_mag[] = {"Linear", "Nearest"};
     const unsigned values_mag[] = {GL_LINEAR, GL_NEAREST};
-    const char* labels_min[] = {"Nearest", "Linear", "Nearest Mipmaps Nearest Criteria", "Nearest Mipmap Linear Criteria", "Linear Mipmaps (Two Closest) Nearest Criteria",
-                                "Linear Mipmaps (Two Closest) Linear Criteria"};
+    const char* labels_min[]
+        = {"Nearest", "Linear", "Nearest Mipmaps Nearest Criteria", "Nearest Mipmap Linear Criteria", "Linear Mipmaps (Two Closest) Nearest Criteria", "Linear Mipmaps (Two Closest) Linear Criteria"};
     const unsigned values_min[] = {GL_NEAREST, GL_LINEAR, GL_NEAREST_MIPMAP_NEAREST, GL_LINEAR_MIPMAP_NEAREST, GL_NEAREST_MIPMAP_LINEAR, GL_LINEAR_MIPMAP_LINEAR};
     static int mag_filter = 0; // Default is GL_LINEAR
     static int min_filter = 3; // Default is GL_NEAREST_MIPMAP_LINEAR
@@ -145,12 +214,12 @@ unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
     return img_id;
 }
 
+::byte* Hachiko::ModuleTexture::GetData()
+{
+    return ilGetData();
+}
+
 void Hachiko::ModuleTexture::DeleteImg(unsigned& img_id)
 {
     ilDeleteImages(1, &img_id);
-}
-
-byte* Hachiko::ModuleTexture::GetData()
-{
-    return ilGetData();
 }

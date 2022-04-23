@@ -30,7 +30,16 @@ namespace Hachiko
         {
             DIFFUSE = 0,
             SPECULAR,
+            NORMAL,
             COUNT,
+        };
+
+        struct CameraData
+        {
+            float4x4 view = float4x4::identity;
+            float4x4 proj = float4x4::identity;
+            float3 pos = float3::zero;
+            float padding = 0; // Renderdoc complained
         };
 
         ModuleProgram();
@@ -54,7 +63,18 @@ namespace Hachiko
             return stencil_program;
         }
 
+        [[nodiscard]] Program* GetUserInterfaceImageProgram() const
+        {
+            return ui_image_program;
+        }
+
+        [[nodiscard]] Program* GetUserInterfaceTextProgram() const
+        {
+            return ui_text_program;
+        }
+
         void UpdateCamera(const ComponentCamera* camera) const;
+        void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMaterial* material_comp) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
         void UpdateTransforms(const std::vector<float4x4>& transforms) const;
@@ -70,10 +90,14 @@ namespace Hachiko
         Program* CreateMainProgram();
         Program* CreateSkyboxProgram();
         Program* CreateStencilProgram();
+        Program* CreateUserInterfaceImageProgram();
+        Program* CreateUserInterfaceTextProgram();
 
-        Program* main_program{};
-        Program* skybox_program{};
-        Program* stencil_program{};
+        Program* main_program = nullptr;
+        Program* skybox_program = nullptr;
+        Program* stencil_program = nullptr;
+        Program* ui_image_program = nullptr;
+        Program* ui_text_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);
@@ -85,22 +109,16 @@ namespace Hachiko
         void CreateLightsUBO();
         void CreateTransformSSBO();
 
-        unsigned buffers[static_cast<int>(UBOPoints::COUNT)]{};
-
-        struct Camera
-        {
-            float4x4 view = float4x4::identity;
-            float4x4 proj = float4x4::identity;
-            float3 pos = float3::zero;
-        };
+        unsigned buffers[static_cast<int>(UBOPoints::COUNT)] {};
 
         struct MaterialData
         {
             float4 diffuse_color;
             float4 specular_color;
-            unsigned diffuse_flag{};
-            unsigned specular_flag{};
-            float shininess{};
+            unsigned diffuse_flag {};
+            unsigned specular_flag {};
+            unsigned normal_flag {};
+            float shininess {};
         };
 
         // Use float4 to prevent padding
@@ -108,24 +126,24 @@ namespace Hachiko
         {
             float4 color = float4::one;
             float intensity = 0.05f;
-            float padding[3]{};
+            float padding[3] {};
         };
 
         struct DirLight
         {
             float4 direction = float4::zero;
             float4 color = float4::zero;
-            float intensity{};
-            float padding[3]{};
+            float intensity {};
+            float padding[3] {};
         };
 
         struct PointLight
         {
             float4 position = float4::zero;
             float4 color = float4::zero;
-            float intensity{};
-            float radius{};
-            float padding[2]{};
+            float intensity {};
+            float radius {};
+            float padding[2] {};
         };
 
         struct SpotLight
@@ -133,10 +151,10 @@ namespace Hachiko
             float4 position = float4::zero;
             float4 direction = float4::zero;
             float4 color = float4::zero;
-            float inner{};
-            float outer{};
-            float intensity{};
-            float radius{};
+            float inner {};
+            float outer {};
+            float intensity {};
+            float radius {};
         };
 
         struct Lights
@@ -145,11 +163,11 @@ namespace Hachiko
             DirLight directional;
             PointLight points[MAX_POINT_LIGHTS];
             SpotLight spots[MAX_SPOT_LIGHTS];
-            unsigned int n_points{};
-            unsigned int n_spots{};
+            unsigned int n_points {};
+            unsigned int n_spots {};
         };
 
         AmbientLight ambient_light;
         float ambient_strength = 0.05f;
     };
-}
+} // namespace Hachiko

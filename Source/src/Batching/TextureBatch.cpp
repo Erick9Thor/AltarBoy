@@ -1,9 +1,10 @@
 #include "core/hepch.h"
 #include "TextureBatch.h"
 
-#include "Core/GameObject.h"
-#include "Components/ComponentMesh.h"
-#include "Components/ComponentMaterial.h"
+#include "core/GameObject.h"
+#include "components/ComponentMesh.h"
+#include "components/ComponentMaterial.h"
+#include "resources/ResourceMaterial.h"
 
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleTexture.h"
@@ -32,17 +33,17 @@ void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material)
 {
     const ResourceMaterial* resource_material = material->GetMaterial();
 
-    if (material->use_diffuse_texture)
+    if (resource_material->HasDiffuse())
     {
-        AddTexture(&resource_material->diffuse);
+        AddTexture(resource_material->diffuse);
     }
-    if (material->use_specular_texture)
+    if (resource_material->HasSpecular())
     {
-        AddTexture(&resource_material->specular);
+        AddTexture(resource_material->specular);
     }
 }
 
-void Hachiko::TextureBatch::AddTexture(const Texture* texture) 
+void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture) 
 {
     auto it = resources.find(texture);
 
@@ -192,22 +193,28 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
         materials[i].diffuseColor = material->diffuse_color;
         materials[i].specularColor = material->specular_color;
         materials[i].shininess = material->shininess;
-        materials[i].hasDiffuseMap = material_comp->use_diffuse_texture;
-        materials[i].hasSpecularMap = material_comp->use_specular_texture;
-        materials[i].hasNormalMap = 0;
+        materials[i].hasDiffuseMap = material->HasDiffuse();
+        materials[i].hasSpecularMap = material->HasSpecular();
+        materials[i].hasNormalMap = material->HasNormal();
         if (materials[i].hasDiffuseMap)
         {
-            materials[i].diffuseMap = (*resources[&material->diffuse]);
+            materials[i].diffuseMap = (*resources[material->diffuse]);
             //materials[i].diffuseMap.texIndex = resources[&material->diffuse]->texIndex;
             //materials[i].diffuseMap.layerIndex = resources[&material->diffuse]->layerIndex;
         }
         if (materials[i].hasSpecularMap)
         {
-            materials[i].specularMap = (*resources[&material->specular]);
+            materials[i].specularMap = (*resources[material->specular]);
             //materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
             //materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
         }
-        materials[i].normalMap;
+        if (materials[i].hasNormalMap)
+        {
+            materials[i].normalMap = (*resources[material->normal]);
+            //materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
+            //materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
+        }
+        //materials[i].normalMap;
         //materials[i].padding0;
         //materials[i].padding1;
     }
@@ -277,7 +284,7 @@ void Hachiko::TextureBatch::ImGuiWindow()
 }
 
 
-bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texuteLayout, const Texture& texture)
+bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture)
 {
     return (texuteLayout.width == texture.width && texuteLayout.height == texture.height && texuteLayout.format == texture.format);
 }
