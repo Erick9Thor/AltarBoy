@@ -120,7 +120,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc140\Debug\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
