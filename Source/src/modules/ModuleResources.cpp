@@ -143,7 +143,7 @@ ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
     // Use always .model extension for loading
     std::filesystem::path model_path(name);
     auto res = static_cast<ResourceModel*>( importer_manager.Load(Resource::Type::MODEL, 
-            StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
+            StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(META_EXTENSION).string()).c_str()));
 
     // TODO: This is a hack. We need to implement our own assert with message
     assert(res != nullptr && "Unable to return a valid model resource");
@@ -227,6 +227,23 @@ ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture
     return res;
 }
 
+Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
+{
+    auto it = loaded_resources.find(id);
+    if (it != loaded_resources.end())
+    {
+        return it->second;
+    }
+
+    auto res = importer_manager.Load(type, id);
+    if (res != nullptr)
+    {
+        return loaded_resources.emplace(id, res).first->second;
+    }
+
+    return nullptr;
+}
+
 void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::string& name) const
 {
     switch (type)
@@ -273,7 +290,7 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
                 //node["General"]["path"] = file_path;
                 //node["General"]["timestamp"] = file_timestamp;
                 
-                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), meta_uid);
+                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid).c_str());
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());
 
                 if (true) // TODO: if (!meta.matchesTimestamp(file))

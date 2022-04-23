@@ -224,22 +224,22 @@ namespace YAML
             node[0].push_back(static_cast<float>(rhs.a2));
             node[0].push_back(static_cast<float>(rhs.a3));
             node[0].push_back(static_cast<float>(rhs.a4));
-            
+
             node[1].push_back(static_cast<float>(rhs.b1));
             node[1].push_back(static_cast<float>(rhs.b2));
             node[1].push_back(static_cast<float>(rhs.b3));
             node[1].push_back(static_cast<float>(rhs.b4));
-            
+
             node[2].push_back(static_cast<float>(rhs.c1));
             node[2].push_back(static_cast<float>(rhs.c2));
             node[2].push_back(static_cast<float>(rhs.c3));
             node[2].push_back(static_cast<float>(rhs.c4));
-            
+
             node[3].push_back(static_cast<float>(rhs.d1));
             node[3].push_back(static_cast<float>(rhs.d2));
             node[3].push_back(static_cast<float>(rhs.d3));
             node[3].push_back(static_cast<float>(rhs.d4));
-            
+
             node.SetStyle(EmitterStyle::Flow);
             return node;
         }
@@ -270,6 +270,33 @@ namespace YAML
             rhs.d2 = node[3][1].as<float>();
             rhs.d3 = node[3][2].as<float>();
             rhs.d4 = node[3][3].as<float>();
+
+            return true;
+        }
+    };
+    
+    template<>
+    struct convert<FILETIME>
+    {
+        static Node encode(const FILETIME& rhs)
+        {
+            Node node;
+            node[0].push_back(static_cast<float>(rhs.dwLowDateTime));
+            node[1].push_back(static_cast<float>(rhs.dwHighDateTime));
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+        
+        static bool decode(const Node& node, FILETIME& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 1)
+            {
+                return false;
+            }
+
+            rhs.dwLowDateTime = node[0].as<DWORD>();
+            rhs.dwHighDateTime = node[1].as<DWORD>();
 
             return true;
         }

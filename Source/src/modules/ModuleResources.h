@@ -28,17 +28,7 @@ namespace Hachiko
         ResourceMaterial* GetMaterial(const std::string& material_name);
         ResourceTexture* GetTexture(const std::string& texture_name, const std::string& asset_path = std::string());
 
-        Resource* GetResource(UID uid)  const
-        {
-            auto it = loaded_resources.find(uid);
-            if (it  != loaded_resources.end())
-            {
-                return it->second;
-            }
-
-            return nullptr;
-        }
-
+        Resource* GetResource(Resource::Type type, UID id);
         void CreateResource(Resource::Type type, const std::string& name) const;
         void AssetsLibraryCheck();
 
@@ -51,14 +41,16 @@ namespace Hachiko
 
         std::map<UID, Resource*> loaded_resources;
 
-        std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
-        {{Hachiko::Resource::Type::TEXTURE, ".png"},
-        {Hachiko::Resource::Type::TEXTURE, ".tif"},
-        {Hachiko::Resource::Type::MODEL, ".fbx"},
-        {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
-        // Imported Resources
-        {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION},
-        {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION}};
+        std::map<Hachiko::Resource::Type, std::string> supported_extensions = 
+        {
+            {Hachiko::Resource::Type::TEXTURE, ".png"},
+            {Hachiko::Resource::Type::TEXTURE, ".tif"},
+            {Hachiko::Resource::Type::MODEL, ".fbx"},
+            {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
+            // Imported Resources
+            {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION},
+            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION}
+        };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;
         Hachiko::ImporterManager importer_manager;
@@ -66,7 +58,6 @@ namespace Hachiko
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void HandleResource(const std::filesystem::path& path);
-
         void GenerateLibrary(const PathNode& folder);
     };
 }

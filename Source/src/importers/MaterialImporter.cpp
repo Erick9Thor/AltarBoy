@@ -47,6 +47,7 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
     }
 
     FileSystem::Save(material_output_path.c_str(), meta);
+    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
@@ -55,8 +56,8 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     const std::string material_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION;
 
     YAML::Node material_node;
-    material_node[MATERIAL_ID] = material->GetID();
-    material_node[GENERIC_TYPE] = static_cast<int>(material->GetType());
+    material_node[GENERAL_NODE][GENERAL_ID] = material->GetID();
+    material_node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(material->GetType());
     material_node[MATERIAL_NAME] = material->GetName();
 
     material_node[MATERIAL_DIFFUSE_NAME] = (material->HasDiffuse()) ? material->diffuse->GetName() : std::string();

@@ -20,11 +20,8 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
     Assimp::Importer import;
     import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
     const aiScene* scene = nullptr;
-    const std::filesystem::path model_path(path);
-    const std::string model_output_path = StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string());
-    //scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
 
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -33,6 +30,7 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
     }
 
     ImportModel(scene, meta);
+    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
 }
 
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
@@ -44,7 +42,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
     {
         aiMaterial* material = scene->mMaterials[i];
         Hachiko::UID material_id = UUID::GenerateUID();
-        node[MODEL_MATERIAL_NODE][i][MATERIAL_ID] = material_id;
+        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
         node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = scene->mMaterials[i]->GetName().C_Str();
         material_importer.Import(material, material_id);
     }
@@ -87,10 +85,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     }
 
     YAML::Node model_node = YAML::LoadFile(model_path);
-    Hachiko::ResourceModel* model_output = new ResourceModel(model_node[MODEL_ID].as<UID>());
-    model_output->model_path = model_node[MODEL_FILE_PATH].as<std::string>();
-    std::filesystem::path mp = model_node[MODEL_FILE_PATH].as<std::string>();
-    model_output->model_name = mp.filename().replace_extension().string();
+    Hachiko::ResourceModel* model_output = new ResourceModel(model_node[GENERAL_NODE][GENERAL_ID].as<UID>());
 
     model_output->meshes.reserve(model_node[MODEL_MESH_NODE].size());
     for (unsigned i = 0; i < model_node[MODEL_MESH_NODE].size(); ++i)
@@ -104,7 +99,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
     for (unsigned i = 0; i < model_node[MODEL_MATERIAL_NODE].size(); ++i)
     {
         MaterialInfo material_info;
-        material_info.material_id = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_ID].as<UID>();
+        material_info.material_id = model_node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID].as<UID>();
         material_info.material_name = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME].as<std::string>();
         model_output->materials.push_back(material_info);
     }
@@ -168,8 +163,8 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
 
     if (!std::filesystem::exists(model_library_path))
     {
-        model_node[MODEL_ID] = UUID::GenerateUID();
-        model_node[MODEL_FILE_PATH] = model.string();
+        model_node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
+        model_node[GENERAL_NODE][GENERAL_FILE_PATH] = model.string();
 
         ImportNode(scene->mRootNode, model_node);
     }

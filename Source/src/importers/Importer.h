@@ -34,6 +34,7 @@ namespace Hachiko
         virtual void Import(const char* path, YAML::Node& meta) = 0;
         virtual void Save(const Resource* resource) = 0;
         virtual Resource* Load(const char* path) = 0;
+        virtual Resource* Load(UID id) = 0;
         virtual bool IsImported(const char* path) = 0;
 
     protected:

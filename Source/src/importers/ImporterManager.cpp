@@ -36,17 +36,25 @@ ImporterManager::~ImporterManager()
 void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type)
 {
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-    YAML::Node meta = CreateMeta(asset_path.string().c_str());
+    
+    YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type);
+    
     GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\",
         asset_path.filename().replace_extension(META_EXTENSION).string());
+    
     FileSystem::Save(meta_path.c_str(), meta);
 }
 
 Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
 {
     return GetImporter(type)->Load(path);
+}
+
+Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID id)
+{
+    return GetImporter(type)->Load(id);
 }
 
 bool Hachiko::ImporterManager::IsImported(const char* path, Resource::Type type) const
@@ -97,16 +105,16 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     return iType;
 }
 
-YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path)
+YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type)
 {
     YAML::Node node;
-    std::string file_timestamp;
     std::string file_path(path);
-    GetFileLastWriteTimestamp(StringUtils::StringToWString(file_path), file_timestamp);
+    auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
 
-    node["General"]["id"] = UUID::GenerateUID();
-    node["General"]["path"] = file_path;
-    node["General"]["timestamp"] = file_timestamp;
+    node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
+    node[GENERAL_NODE][GENERAL_FILE_PATH] = file_path;
+    node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
+    node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
 
     return node;
 }

@@ -6,6 +6,13 @@
 //						//
 //////////////////////////
 
+// General
+#define GENERAL_NODE "General"
+#define GENERAL_ID "id"
+#define GENERAL_FILE_PATH "file_path"
+#define GENERAL_TYPE "type"
+#define GENERAL_LAST_WRITE_TIME "last_write"
+
 // Texture
 #define TEXTURE_ID "id"
 #define TEXTURE_FILE_PATH "file_path"
@@ -47,11 +54,6 @@
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
 #define MATERIAL_SHININESS "shininess"
-
-// Generic
-#define GENERIC_ID "id"
-#define GENERIC_FILE_PATH "file_path"
-#define GENERIC_TYPE "type"
 
 //////////////////////////
 //						//

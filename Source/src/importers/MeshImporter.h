@@ -14,6 +14,11 @@ namespace Hachiko
         void Import(const char* path, YAML::Node& meta) override {};
         void Save(const Resource* mesh) override;
         Resource* Load(const char* path) override;
+        Resource* Load(UID id) override
+        {
+            return nullptr;
+        }
+
         bool IsImported(const char* path) override
         {
             return false;

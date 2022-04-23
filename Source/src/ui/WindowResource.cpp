@@ -79,17 +79,7 @@ void Hachiko::WindowResource::Update()
 void Hachiko::WindowResource::LoadResource(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
-    /* Hachiko::Event resource_file(Hachiko::Event::Type::FILE_ADDED);
-    resource_file.SetEventData<Hachiko::FileAddedEventPayload>(path.c_str());
-    App->event->Publish(resource_file);*/
-
-    //
-    std::string str_path = std::string(path);
-    int extension_index = str_path.rfind('.');
-    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
-    //
-
-    if (extension == "model")
+    if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         scene->HandleInputModel(App->resources->GetModel(path.c_str()));
