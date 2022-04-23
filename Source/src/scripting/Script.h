@@ -7,6 +7,8 @@
 
 #include <unordered_map>
 
+struct ImGuiContext;
+
 namespace Hachiko
 {
 class GameObject;
@@ -25,13 +27,14 @@ public:
 
     void Save(YAML::Node& node) const override;
     void Load(const YAML::Node& node) override;
+    void DrawGui() override;
 
     virtual void OnAwake() {};
     virtual void OnStart() {};
     virtual void OnUpdate() {};
     virtual void OnDisable() {};
     virtual void OnEnable() {};
-    void DrawGui() override;
+    virtual void OnEditor(ImGuiContext* context) {};
 
     const std::string& GetName() const;
 
