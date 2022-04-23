@@ -143,6 +143,24 @@ namespace Hachiko
         }
 
         template<typename RetComponent>
+        std::vector<RetComponent*> GetComponents() const
+        {
+            std::vector<RetComponent*> components_of_type;
+
+            components_of_type.reserve(components.size());
+
+            for (Component* component : components)
+            {
+                if (typeid(*component) == typeid(RetComponent))
+                {
+                    components_of_type.push_back(static_cast<RetComponent*>(component));
+                }
+            }
+
+            return components_of_type;
+        }
+
+        template<typename RetComponent>
         std::vector<RetComponent*> GetComponentsInDescendants() const
         {
             std::vector<RetComponent*> components_in_descendants;
