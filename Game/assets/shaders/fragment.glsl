@@ -55,6 +55,7 @@ layout(std140, binding = 1) uniform Material
     vec4 specular_color;
     uint diffuse_flag;
     uint specular_flag;
+    bool is_metallic;
     float smoothness;
     float metalness;
     uint normal_flag;
@@ -227,29 +228,36 @@ void main()
     }
 
     float shininess = material.shininess;
-    vec3 specular_color = material.specular_color.rgb;
-    vec3 f0 = mix(0.04, diffuse_color, material.metalness);
-    if (material.specular_flag > 0)
+    if(material.is_metallic)
     {
-        // Should we gaMma correct specular?
-        // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        specular_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
-        // Use alpha as shininess?
-        //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
+        vec3 f0 = mix(0.04, diffuse_color, material.metalness);
     }
+    else 
+    {
+        vec3 f0 = material.specular_color.rgb;
+        if (material.specular_flag > 0)
+        {
+            // Should we gaMma correct specular?
+            // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+            f0 = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
+            // Use alpha as shininess?
+            //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
+        }
+    }
+
 	float smoothness = material.smoothness;
     
     vec3 hdr_color = vec3(0.0);
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, specular_color, shininess, smoothness);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, f0, shininess, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, specular_color, shininess, smoothness);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, f0, shininess, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, specular_color, shininess, smoothness);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, f0, shininess, smoothness);
         
     }   
     hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
