@@ -266,57 +266,60 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
     // TODO: check library folder
 
-    GenerateLibrary(assets_folder);
+    //GenerateLibrary(assets_folder);
 
     HE_LOG("Assets/Library check finished.");
 }
 
 void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
 {
-    for (PathNode node : folder.children)
+    for (PathNode path_node : folder.children)
     {
-        if (node.isFile)
+        if (path_node.isFile)
         {
-            Resource::Type type = GetType(node.path);
-            std::string meta_path = StringUtils::Concat(node.path, META_EXTENSION);
+            Resource::Type type = GetType(path_node.path);
+            std::string meta_path = StringUtils::Concat(path_node.path, META_EXTENSION);
 
             if (FileSystem::Exists(meta_path.c_str()))
             {
                 YAML::Node meta_node = YAML::LoadFile(meta_path);
 
                 // Extract data from meta
-                // TODO: change for defines
-                UID meta_uid = meta_node["General"]["id"].as<UID>();
-                //node["General"]["path"] = file_path;
-                //node["General"]["timestamp"] = file_timestamp;
+                UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
+                //node[GENERAL_NODE][GENERAL_FILE_PATH]
+                //node[GENERAL_NODE][GENERAL_TYPE]
+                FILETIME meta_timestamp = meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].as<FILETIME>();
                 
-                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid).c_str());
+                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());
 
-                if (true) // TODO: if (!meta.matchesTimestamp(file))
+                // Get the asset timestamp
+                FILETIME asset_timestamp = GetFileLastWriteTime(StringUtils::StringToWString(path_node.path));
+
+                if (CompareFileTime(&meta_timestamp, &asset_timestamp) != 0)
                 {
+
                     if (library_file_exists)
                     {
-                        // TODO: delete it ?
+                        importer_manager.DeleteWithMeta(type, meta_node);
+                        // TODO: delete it -> should be done by the importer (to search dependent files as models with meshes)
                     }
-                    // TODO: reimport + remake meta 
+                    // TODO: reimport + remake meta with new timestamp
                 }
                 else if (!library_file_exists)
                 {
-                    // TODO: import + remake meta
-
-                    // TODO: import but with a meta created -> overload
+                    // TODO: import but with the meta -> overload, since we will need info of the meta has the uid, or in models case other things
                     continue;
                 }
             }
             else
             {
-                importer_manager.Import(std::filesystem::path(node.path), type);
+                importer_manager.Import(std::filesystem::path(path_node.path), type);
             }
         }
         else
         {
-            GenerateLibrary(node);
+            GenerateLibrary(path_node);
         }
     }
 }

@@ -41,9 +41,7 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
     
     GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
 
-    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\",
-        asset_path.filename().replace_extension(META_EXTENSION).string());
-    
+    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
 }
 
@@ -60,6 +58,24 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID id)
 bool Hachiko::ImporterManager::IsImported(const char* path, Resource::Type type) const
 {
     return GetImporter(type)->IsImported(path);
+}
+
+void Hachiko::ImporterManager::ImportWithMeta(const std::filesystem::path& asset_path, Resource::Type asset_type, YAML::Node& meta) const 
+{
+    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
+
+    UpdateMeta(asset_path.string().c_str(), asset_type, meta);
+
+    // TODO: IMPORT WITH META
+    //GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
+
+    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
+    FileSystem::Save(meta_path.c_str(), meta);
+}
+
+void Hachiko::ImporterManager::DeleteWithMeta(Resource::Type asset_type, const YAML::Node& meta) const 
+{
+    GetImporter(asset_type)->Delete(meta);
 }
 
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
@@ -105,7 +121,7 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     return iType;
 }
 
-YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type)
+YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type) const
 {
     YAML::Node node;
     std::string file_path(path);
@@ -115,6 +131,15 @@ YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource
     node[GENERAL_NODE][GENERAL_FILE_PATH] = file_path;
     node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
     node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
-
+    
     return node;
+}
+
+void Hachiko::ImporterManager::UpdateMeta(const char* path, const Resource::Type resource_type, YAML::Node& meta) const
+{
+    std::string file_path(path);
+    auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
+
+    meta[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
+    meta[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
 }
