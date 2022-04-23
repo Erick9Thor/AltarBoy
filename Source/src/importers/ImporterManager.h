@@ -16,7 +16,6 @@ namespace Hachiko
         std::map<Importer::Type, Importer*> importers;
         
         void Import(const std::filesystem::path& asset_path, Resource::Type asset_type);
-        Resource* Load(Resource::Type type, const char* path); // TODO: to remove
         Resource* Load(Resource::Type type, UID id);
         bool IsImported(const char* path, Resource::Type type) const;
 

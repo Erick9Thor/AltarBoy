@@ -11,7 +11,7 @@ void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) {}
 
 void Hachiko::AnimationImporter::Save(const Resource* resource) {}
 
-Hachiko::Resource* Hachiko::AnimationImporter::Load(const char* model_path)
+Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
     return nullptr;
 }

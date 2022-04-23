@@ -26,7 +26,7 @@ void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
 void Hachiko::ComponentMaterial::Load(const YAML::Node& node)
 {
     SetID(node[COMPONENT_ID].as<UID>());
-    LoadMaterial(node[MATERIAL_NAME].as<std::string>());
+    LoadMaterial(node[COMPONENT_ID].as<UID>());
     material->SetName(node[MATERIAL_NAME].as<std::string>());
 }
 
@@ -48,7 +48,7 @@ void Hachiko::ComponentMaterial::DrawGui()
     ImGui::PopID();
 }
 
-void Hachiko::ComponentMaterial::LoadMaterial(const std::string& material_path)
+void Hachiko::ComponentMaterial::LoadMaterial(UID id)
 {
-    material = App->resources->GetMaterial(material_path);
+    material = static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, id));
 }

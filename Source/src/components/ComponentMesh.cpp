@@ -55,7 +55,7 @@ void Hachiko::ComponentMesh::LoadMesh(const char* mesh_path)
 
 void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 {
-    mesh = App->resources->GetMesh(mesh_id, asset_path, mesh_index);
+    mesh = static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id));
 }
 
 void Hachiko::ComponentMesh::DrawGui()

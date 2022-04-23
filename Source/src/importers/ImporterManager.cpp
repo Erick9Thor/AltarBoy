@@ -45,11 +45,6 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
     FileSystem::Save(meta_path.c_str(), meta);
 }
 
-Resource* Hachiko::ImporterManager::Load(Resource::Type type, const char* path)
-{
-    return GetImporter(type)->Load(path);
-}
-
 Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID id)
 {
     return GetImporter(type)->Load(id);

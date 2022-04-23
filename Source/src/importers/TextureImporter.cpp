@@ -18,20 +18,19 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
     delete texture;
 }
 
-Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
+Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
-    const std::filesystem::path file_path(path);
-    if (!std::filesystem::exists(file_path))
-    {
-        return nullptr;
-    }
+    assert(id && "Unable to load texture. Given an empty id");
 
-    char* file_buffer = FileSystem::Load(file_path.string().c_str());
+    const std::string file_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), std::to_string(id));
+
+    char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    auto texture = new ResourceTexture();
-    texture->SetName(file_path.filename().string());
+    auto texture = new ResourceTexture(id);
+
     unsigned header[9];
     size_bytes = sizeof(header);
     memcpy(header, cursor, size_bytes);

@@ -77,14 +77,13 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     }
 }
 
-Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
+Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
 {
-    if (!std::filesystem::exists(model_path))
-    {
-        return nullptr;
-    }
+    assert(id && "Unable to load module. Given an empty id");
 
-    YAML::Node model_node = YAML::LoadFile(model_path);
+    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), std::to_string(id), MODEL_EXTENSION);
+    
+    YAML::Node model_node = YAML::LoadFile(model_library_path);
     Hachiko::ResourceModel* model_output = new ResourceModel(model_node[GENERAL_NODE][GENERAL_ID].as<UID>());
 
     model_output->meshes.reserve(model_node[MODEL_MESH_NODE].size());
@@ -158,7 +157,7 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
 
     // 2 - Open model meta if exists. If not, create one
     const std::string model_name = model.filename().replace_extension().string();
-    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), model_name, MODEL_EXTENSION);
+    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), model_name, META_EXTENSION);
     YAML::Node model_node;
 
     if (!std::filesystem::exists(model_library_path))
@@ -182,12 +181,11 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     // 4- If ok, save new model data
     FileSystem::Save(model_library_path.c_str(), model_node);
 
-    std::string mesh_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH), std::to_string(uid));
-    return mesh_importer.Load(mesh_path.c_str());
+    return mesh_importer.Load(uid);
 }
 
 bool Hachiko::ModelImporter::IsImported(const char* path)
 {
     const std::filesystem::path model(path);
-    return std::filesystem::exists(StringUtils::Concat(model.parent_path().string(), "\\", model.filename().replace_extension(MODEL_EXTENSION).string()));
+    return std::filesystem::exists(StringUtils::Concat(model.parent_path().string(), "\\", model.filename().replace_extension(META_EXTENSION).string()));
 }

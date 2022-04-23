@@ -39,7 +39,7 @@ namespace Hachiko
         }
 
         void DrawGui() override;
-        void LoadMaterial(const std::string& material_path);
+        void LoadMaterial(UID id);
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;

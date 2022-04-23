@@ -4,6 +4,7 @@
 #include "modules/ModuleResources.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
+#include "resources/ResourceModel.h"
 
 Hachiko::WindowResource::WindowResource() : 
     Window("Resources", true)
@@ -82,6 +83,8 @@ void Hachiko::WindowResource::LoadResource(const std::string& path)
     if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
-        scene->HandleInputModel(App->resources->GetModel(path.c_str()));
+        YAML::Node node = YAML::LoadFile(path);
+        auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+        scene->HandleInputModel(model_res);
     }
 }
