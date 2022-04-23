@@ -81,7 +81,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
 {
     assert(id && "Unable to load module. Given an empty id");
 
-    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), std::to_string(id), MODEL_EXTENSION);
+    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), std::to_string(id));
     
     YAML::Node model_node = YAML::LoadFile(model_library_path);
     Hachiko::ResourceModel* model_output = new ResourceModel(model_node[GENERAL_NODE][GENERAL_ID].as<UID>());
