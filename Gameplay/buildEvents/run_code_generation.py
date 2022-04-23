@@ -67,6 +67,23 @@ deserialize_method_if_format = (''
 + '{new_line}{tab}{tab}{right_curly}'     
 + '{new_line}{tab}{right_curly}')
 
+
+# This beautiful piece of function was found from stack overflow:
+def delete_comments_from_file(text):
+    def replacer(match):
+        s = match.group(0)
+        if s.startswith('/'):
+            return " "
+        else:
+            return s
+
+    pattern = re.compile(
+        r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"',
+        re.DOTALL | re.MULTILINE
+    )
+    return re.sub(pattern, replacer, text)
+
+
 print("Running Pre-Build Event \"Create ScriptFactory & Serialization\"")
 print("Using header files:")
 
@@ -77,6 +94,8 @@ for file_name in files_in_directory:
     if file_name[-2:] == '.h':
         header_file = open(scripting_path+file_name)
         header_file_as_string = header_file.read()
+        header_file_as_string = (delete_comments_from_file(header_file_as_string))
+
         # File content without spaces, tabs and new lines:
         header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
         # Assume class name to be the same with the file name:
