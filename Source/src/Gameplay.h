@@ -9,6 +9,7 @@
 namespace Hachiko
 {
 class GameObject;
+class Component;
 class ComponentCamera;
 }
 
@@ -414,3 +415,51 @@ namespace Hachiko::Debug
 {
 HACHIKO_API const Hachiko::ComponentCamera* GetEditorCamera();
 } // namespace Hachiko::Debug
+
+
+#define TYPE_IF_DERIVED_CLASS(BASE, DERIVED, TYPE)              \
+    std::enable_if_t<std::is_base_of<BASE, DERIVED>::value, TYPE>
+
+#define HACHIKO_API_COMPONENT_VOID                                \
+    template<class COMPONENT_TYPE>                                \
+    HACHIKO_API                                                   \
+    TYPE_IF_DERIVED_CLASS(Hachiko::Component, COMPONENT_TYPE, void)
+
+namespace Hachiko::Editor
+{
+HACHIKO_API void ShowGameObjectDragDropArea(const char* field_name, 
+    const char* field_type, GameObject** game_object, bool& changed);
+
+HACHIKO_API void Show(const char* field_name, int& field);
+HACHIKO_API void Show(const char* field_name, unsigned int& field);
+HACHIKO_API void Show(const char* field_name, float& field);
+HACHIKO_API void Show(const char* field_name, double& field);
+HACHIKO_API void Show(const char* field_name, bool& field);
+HACHIKO_API void Show(const char* field_name, math::float2& field);
+HACHIKO_API void Show(const char* field_name, math::float3& field);
+HACHIKO_API void Show(const char* field_name, math::float4& field);
+HACHIKO_API void Show(const char* field_name, std::string& field);
+HACHIKO_API void Show(const char* field_name, GameObject** field);
+
+HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type, 
+    COMPONENT_TYPE** field) 
+{
+    bool changed = false;
+    GameObject* game_object = (*field) != nullptr 
+        ? (*field)->GetGameObject() 
+        : nullptr;
+
+    ShowGameObjectDragDropArea(field_name, field_type, &game_object, changed);
+
+    if (changed)
+    {
+        *field = nullptr;
+
+        if (game_object != nullptr)
+        {
+            *field = game_object->GetComponent<std::remove_pointer<
+                std::remove_pointer<decltype(field)>::type>::type>();
+        }
+    }
+}
+} // namespace Hachiko::Editor
