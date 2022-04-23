@@ -228,13 +228,15 @@ void main()
     }
 
     float shininess = material.shininess;
+
+    vec3 f0;
     if(material.is_metallic)
     {
-        vec3 f0 = mix(0.04, diffuse_color, material.metalness);
+        f0 = mix(0.04, diffuse_color, material.metalness);
     }
     else 
     {
-        vec3 f0 = material.specular_color.rgb;
+        f0 = material.specular_color.rgb;
         if (material.specular_flag > 0)
         {
             // Should we gaMma correct specular?

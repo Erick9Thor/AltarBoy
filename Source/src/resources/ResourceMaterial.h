@@ -102,6 +102,7 @@ namespace Hachiko
         float shininess = 50.0f;
         float smoothness = 50.0f;
         float metalness = 50.0f;
+        bool is_metallic = false;
 
     private:
         void AddTexture(ResourceTexture::Type type);
