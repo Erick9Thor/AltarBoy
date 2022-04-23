@@ -109,6 +109,7 @@ namespace Hachiko
             float shininess{};
             float smoothness{};
             float metalness{};
+            bool is_metallic{};
         };
 
         // Use float4 to prevent padding

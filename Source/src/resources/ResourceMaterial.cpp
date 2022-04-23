@@ -81,6 +81,12 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
+    ImGui::Checkbox("Metallic", &is_metallic);
+    if (is_metallic)
+    {
+        ImGui::SliderFloat("Metalness", &metalness, 0.0f, 1.0f, "%.2f", 1.0f);
+    }
+    ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
 }
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)

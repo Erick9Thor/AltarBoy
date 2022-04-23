@@ -71,6 +71,9 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
+    material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
+    material_node[MATERIAL_METALNESS] = material->metalness;
+    material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
 
     FileSystem::Save(material_library_path.c_str(), material_node);
 }
@@ -89,6 +92,9 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
     material->shininess = node[MATERIAL_SHININESS].as<float>();
+    material->smoothness = node[MATERIAL_SMOOTHNESS].as<float>();
+    material->metalness = node[MATERIAL_METALNESS].as<float>();
+    material->is_metallic = node[MATERIAL_IS_METALLIC].as<bool>();
 
     std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
     std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();

@@ -113,7 +113,7 @@ float SmithVisibilityFunction(const vec3 normal, const vec3 view_dir, const vec3
 }
 
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
-         const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation, float smoothness)
+         const vec3 diffuse_color, const vec3 specular_color, float attenuation, float smoothness)
 {
     vec3 reflect_dir = reflect(-light_dir, normal);
     // Should equal cos theta
@@ -139,13 +139,13 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
 }
 
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
+                    const vec3 diffuse_color, const vec3 specular_color, float smoothness)
 {
     vec3 L = normalize(-light.direction.xyz);
     
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation, smoothness) * light.intensity;
 }
 
 float Attenuation(float distance)
@@ -159,7 +159,7 @@ float EpicAttenuation(float distance, float radius)
 }
 
 vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
-                   const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
+                   const vec3 diffuse_color, const vec3 specular_color, float smoothness)
 {
     vec3 L = light.position.xyz - frag_pos;
     float light_distance = length(L);
@@ -167,7 +167,7 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
 
     float radius = 250.0;
     float attenuation = EpicAttenuation(light_distance, light.radius);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation, smoothness) * light.intensity;
 }
 
 // TODO: Test more
@@ -190,7 +190,7 @@ float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
 }
 
 vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const SpotLight light, 
-             const vec3 diffuse_color, const vec3 specular_color, float shininess, float smoothness)
+             const vec3 diffuse_color, const vec3 specular_color, float smoothness)
 {
     // Not the same as spot light direction (L)
     vec3 L = light.position.xyz - frag_pos;
@@ -199,7 +199,7 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
 
     float attenuation = SpotAttenuation(L, cone_direction, light.radius);
     float cone = Cone(L, cone_direction, light.inner, light.outer);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation * cone, smoothness) * light.intensity;
 }
 
 mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
@@ -232,7 +232,7 @@ void main()
     vec3 f0;
     if(material.is_metallic)
     {
-        f0 = mix(0.04, diffuse_color, material.metalness);
+        f0 = mix(vec3(0.04), diffuse_color, material.metalness);
     }
     else 
     {
@@ -250,16 +250,16 @@ void main()
 	float smoothness = material.smoothness;
     
     vec3 hdr_color = vec3(0.0);
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, f0, shininess, smoothness);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, f0, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, f0, shininess, smoothness);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, f0, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, f0, shininess, smoothness);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, f0, smoothness);
         
     }   
     hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;

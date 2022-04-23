@@ -211,6 +211,7 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.specular_flag = material->HasSpecular();
     material_data.normal_flag = material->HasNormal();
     material_data.shininess = material->shininess;
+    material_data.is_metallic = material->is_metallic;
 
     if (material_data.diffuse_flag)
     {
