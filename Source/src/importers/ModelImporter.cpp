@@ -184,6 +184,19 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     return mesh_importer.Load(uid);
 }
 
+void Hachiko::ModelImporter::Delete(const YAML::Node& meta) 
+{
+    for (unsigned i = 0; i < meta[MODEL_MESH_NODE].size(); ++i)
+    {
+        UID mesh_uid = meta[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>();
+        std::string mesh_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH), std::to_string(mesh_uid));
+
+        FileSystem::Delete(mesh_library_path.c_str());
+    }
+
+    Importer::Delete(meta);
+}
+
 bool Hachiko::ModelImporter::IsImported(const char* path)
 {
     const std::filesystem::path model(path);

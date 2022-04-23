@@ -298,18 +298,15 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
                 if (CompareFileTime(&meta_timestamp, &asset_timestamp) != 0)
                 {
-
                     if (library_file_exists)
                     {
                         importer_manager.DeleteWithMeta(type, meta_node);
-                        // TODO: delete it -> should be done by the importer (to search dependent files as models with meshes)
                     }
-                    // TODO: reimport + remake meta with new timestamp
+                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
                 }
                 else if (!library_file_exists)
                 {
-                    // TODO: import but with the meta -> overload, since we will need info of the meta has the uid, or in models case other things
-                    continue;
+                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
                 }
             }
             else

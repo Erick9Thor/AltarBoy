@@ -61,8 +61,7 @@ void Hachiko::ImporterManager::ImportWithMeta(const std::filesystem::path& asset
 
     UpdateMeta(asset_path.string().c_str(), asset_type, meta);
 
-    // TODO: IMPORT WITH META
-    //GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
+    GetImporter(asset_type)->ImportWithMeta(asset_path.string().c_str(), meta);
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
