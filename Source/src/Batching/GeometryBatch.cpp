@@ -242,21 +242,6 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
     glBindVertexArray(0);
 }
 
-/*
-void Hachiko::GeometryBatch::BindTransforms(unsigned ssbo_id)
-{
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, transforms.size() * sizeof(float) * 16, &transforms[0], GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-void Hachiko::GeometryBatch::Bind()
-{
-    glBindVertexArray(batch->vao);
-    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
-    App->program->UpdateTransforms(transforms);
-}
-*/
 void Hachiko::GeometryBatch::ImGuiWindow() 
 {
     if (ImGui::Begin("GeometryBatch"))

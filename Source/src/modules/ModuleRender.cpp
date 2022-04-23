@@ -223,10 +223,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         }
     }
 
-    //batch_manager->BuildBatches();
     batch_manager->DrawBatches();
     batch_manager->ClearBatchesDrawList();
-    //batch_manager->CleanUp();
 
     Program::Deactivate();
 

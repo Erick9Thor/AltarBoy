@@ -19,7 +19,6 @@ namespace Hachiko
         GeometryBatch(ResourceMesh::Layout batch_layout);
         ~GeometryBatch();
 
-        // TODO: Store all geometry data from several meshes
         void AddMesh(const ComponentMesh* mesh);
 
         void AddDrawComponent(const ComponentMesh* mesh);

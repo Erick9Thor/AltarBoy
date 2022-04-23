@@ -106,13 +106,8 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             intersects[i] = children[i]->box.Intersects(game_object->GetAABB());
         }
 
-        // If it intersects in more than one quadrant dont move it downwards
-        int n_intersects = intersects[static_cast<int>(Quadrants::NW)] + intersects[static_cast<int>(Quadrants::NE)] + intersects[static_cast<int>(Quadrants::SE)] + intersects[static_cast<int>(Quadrants::SW)];
-        if (n_intersects > 1)
-        {
-            ++it;
-            continue;
-        }
+        // If it intersects all there is no point in moving downwards
+        if (intersects[static_cast<int>(Quadrants::NW)] && intersects[static_cast<int>(Quadrants::NE)] && intersects[static_cast<int>(Quadrants::SE)] && intersects[static_cast<int>(Quadrants::SW)])
 
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
