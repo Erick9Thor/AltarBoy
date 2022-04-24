@@ -34,7 +34,7 @@ public:
     virtual void OnUpdate() {};
     virtual void OnDisable() {};
     virtual void OnEnable() {};
-    virtual void OnEditor(ImGuiContext* context) {};
+    virtual void OnEditor() {};
 
     const std::string& GetName() const;
 

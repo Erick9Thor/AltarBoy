@@ -96,7 +96,7 @@ void Hachiko::Scripting::Script::DrawGui()
     
     if (ImGuiUtils::CollapsingHeader(game_object, this, name.c_str()))
     {
-        OnEditor(ImGui::GetCurrentContext());
+        OnEditor();
     }
 
     ImGui::PopID();
