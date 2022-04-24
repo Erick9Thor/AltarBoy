@@ -53,12 +53,6 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
     }
 }
 
-void Hachiko::ComponentAnimation::Import(const aiScene* scene)
-{
-    assert(scene->mNumAnimations == 1);
-    // resource = Hachiko::AnimationImporter::Import(scene->mAnimations[0]);
-}
-
 void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
