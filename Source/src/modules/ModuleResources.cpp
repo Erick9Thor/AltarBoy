@@ -157,7 +157,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
     // TODO: check library folder
 
-    //GenerateLibrary(assets_folder);
+    GenerateLibrary(assets_folder);
 
     HE_LOG("Assets/Library check finished.");
 }
@@ -169,6 +169,12 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
         if (path_node.isFile)
         {
             Resource::Type type = GetType(path_node.path);
+            
+            if (type == Resource::Type::UNKNOWN)
+            {
+                continue;
+            }
+
             std::string meta_path = StringUtils::Concat(path_node.path, META_EXTENSION);
 
             if (FileSystem::Exists(meta_path.c_str()))
