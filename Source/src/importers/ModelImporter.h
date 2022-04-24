@@ -20,7 +20,7 @@ namespace Hachiko
         void Delete(const YAML::Node& meta) override;
 
         [[nodiscard]] bool IsImported(const char* path) override;
-        Resource* CherryImport(int mesh_index, const UID uid, const char* model_path);
+        //Resource* CherryImport(int mesh_index, const UID uid, const char* model_path); // TODO: To remove
     private:
         void ImportModel(const aiScene* scene, YAML::Node& ticket);
         void ImportNode(const aiNode* assimp_node, YAML::Node& node);
