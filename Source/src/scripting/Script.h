@@ -17,7 +17,7 @@ namespace Scripting
 {
 class HACHIKO_API Script : public Component, public IRuntimeSerializable
 {
-    SERIALIZATION_METHODS(true)
+    SCRIPTING_METHODS_BASE
 public:
     virtual ~Script() = default;
     
@@ -34,7 +34,6 @@ public:
     virtual void OnUpdate() {};
     virtual void OnDisable() {};
     virtual void OnEnable() {};
-    virtual void OnEditor() {};
 
     const std::string& GetName() const;
 
