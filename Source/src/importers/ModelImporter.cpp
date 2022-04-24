@@ -22,9 +22,12 @@ void Hachiko::ModelImporter::Import(const char* path)
     const aiScene* scene = nullptr;
     const std::filesystem::path model_path(path);
     const std::string model_output_path = StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string());
-    //scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
 
+
+    unsigned flags = aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices | aiProcess_ImproveCacheLocality | aiProcess_LimitBoneWeights
+                     | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_SortByPType | aiProcess_FindDegenerates | aiProcess_FindInvalidData | 0;
+    
+    scene = import.ReadFile(path, flags);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -77,10 +80,10 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
         node[NODE_MESH_INDEX][j] = assimp_node->mMeshes[j];
     }
 
-    auto child_node = assimp_node->mChildren;
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
-        ImportNode(*child_node, node[NODE_CHILD][i]);
+        auto child_node = assimp_node->mChildren[i];
+        ImportNode(child_node, node[NODE_CHILD][i]);
         ++child_node;
     }
 }
@@ -106,6 +109,7 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(const char* model_path)
         mesh_info.material_index = model_node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX].as<int>();
         model_output->meshes.push_back(mesh_info);
     }
+
     model_output->materials.reserve(model_node[MODEL_MATERIAL_NODE].size());
     for (unsigned i = 0; i < model_node[MODEL_MATERIAL_NODE].size(); ++i)
     {

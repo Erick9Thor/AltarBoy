@@ -102,10 +102,10 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
         {
             GameObject* last_parent = parent;
 
+            last_parent = CreateNewGameObject(parent, child->node_name.c_str());
+
             if (!child->meshes_index.empty())
             {
-                last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
