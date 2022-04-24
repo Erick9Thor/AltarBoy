@@ -55,11 +55,11 @@ layout(std140, binding = 1) uniform Material
     vec4 specular_color;
     uint diffuse_flag;
     uint specular_flag;
-    bool is_metallic;
-    float smoothness;
-    float metalness;
     uint normal_flag;
     float shininess;
+    float smoothness;
+    float metalness;
+    uint is_metallic;
 } material;
 
 layout(std140, binding = 2) uniform Lights
@@ -113,7 +113,7 @@ float SmithVisibilityFunction(const vec3 normal, const vec3 view_dir, const vec3
 }
 
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
-         const vec3 diffuse_color, const vec3 specular_color, float attenuation, float smoothness)
+         const vec3 diffuse_color, const vec3 F0, float attenuation, float smoothness)
 {
     vec3 reflect_dir = reflect(-light_dir, normal);
     // Should equal cos theta
@@ -128,24 +128,24 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
 
     float NDF =  GGX(normal, halfway_dir, roughness);
     float SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);
-    vec3 fresnel = SchlickFresnel(specular_color, VdotH);
+    vec3 fresnel = SchlickFresnel(F0, VdotH);
     
-    vec3 part1 = diffuse_color * (vec3(1.0) - specular_color);
+    vec3 part1 = diffuse_color * (vec3(1.0) - F0);
     vec3 part2 = (fresnel*SVF*NDF)/4;
 
     
 
-    return light_color * (part1 + part2) * NdL * attenuation;
+    return light_color * (diffuse_color * (vec3(1.0) - F0) + 0.25*fresnel*SVF*NDF) * NdL * attenuation;
 }
 
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color, float smoothness)
+                    const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     vec3 L = normalize(-light.direction.xyz);
     
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation, smoothness) * light.intensity;
 }
 
 float Attenuation(float distance)
@@ -159,7 +159,7 @@ float EpicAttenuation(float distance, float radius)
 }
 
 vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
-                   const vec3 diffuse_color, const vec3 specular_color, float smoothness)
+                   const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     vec3 L = light.position.xyz - frag_pos;
     float light_distance = length(L);
@@ -167,7 +167,7 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
 
     float radius = 250.0;
     float attenuation = EpicAttenuation(light_distance, light.radius);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation, smoothness) * light.intensity;
 }
 
 // TODO: Test more
@@ -190,7 +190,7 @@ float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
 }
 
 vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const SpotLight light, 
-             const vec3 diffuse_color, const vec3 specular_color, float smoothness)
+             const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     // Not the same as spot light direction (L)
     vec3 L = light.position.xyz - frag_pos;
@@ -199,7 +199,7 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
 
     float attenuation = SpotAttenuation(L, cone_direction, light.radius);
     float cone = Cone(L, cone_direction, light.inner, light.outer);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, attenuation * cone, smoothness) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation * cone, smoothness) * light.intensity;
 }
 
 mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
@@ -230,12 +230,15 @@ void main()
     float shininess = material.shininess;
 
     vec3 f0;
-    if(material.is_metallic)
+    vec3 Cd;
+    if(material.is_metallic > 0)
     {
-        f0 = mix(vec3(0.04), diffuse_color, material.metalness);
+        Cd = diffuse_color * (1 - material.metalness);
+        f0 = vec3(0.04) * (1 - material.metalness) + diffuse_color * material.metalness;
     }
     else 
     {
+        Cd = diffuse_color;
         f0 = material.specular_color.rgb;
         if (material.specular_flag > 0)
         {
@@ -250,23 +253,24 @@ void main()
 	float smoothness = material.smoothness;
     
     vec3 hdr_color = vec3(0.0);
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, f0, smoothness);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, f0, smoothness);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, f0, smoothness);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
         
     }   
-    hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
+    hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
 
     // Reinhard tone mapping
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
     // Gamma correction & alpha from diffuse texture
-    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    //color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    color = vec4(hdr_color, 1.0);
 }
