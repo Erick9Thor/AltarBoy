@@ -122,7 +122,6 @@ YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource
     auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
 
     node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
-    node[GENERAL_NODE][GENERAL_FILE_PATH] = file_path;
     node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
     node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
     

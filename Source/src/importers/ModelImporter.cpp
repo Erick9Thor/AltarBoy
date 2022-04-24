@@ -168,7 +168,6 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     if (!std::filesystem::exists(model_library_path))
     {
         model_node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
-        model_node[GENERAL_NODE][GENERAL_FILE_PATH] = model.string();
 
         ImportNode(scene->mRootNode, model_node);
     }

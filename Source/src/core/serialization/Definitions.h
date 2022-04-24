@@ -9,7 +9,6 @@
 // General
 #define GENERAL_NODE "General"
 #define GENERAL_ID "id"
-#define GENERAL_FILE_PATH "file_path"
 #define GENERAL_TYPE "type"
 #define GENERAL_LAST_WRITE_TIME "last_write"
 
