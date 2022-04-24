@@ -15,7 +15,5 @@ public:
     virtual void DeserializeFrom(
         std::unordered_map<std::string, SerializedField>& serialized_fields
     ) = 0;
-
-    virtual void ShowInEditor() {};
 };
 } // namespace Hachiko::Scripting
