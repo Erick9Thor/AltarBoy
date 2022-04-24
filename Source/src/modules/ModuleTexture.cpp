@@ -1,6 +1,8 @@
 #include "core/hepch.h"
 #include "ModuleTexture.h"
 
+#include "GLFont.h"
+#include "FTLabel.h"
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleResources.h"
 
@@ -10,13 +12,26 @@ Hachiko::ModuleTexture::~ModuleTexture() = default;
 
 bool Hachiko::ModuleTexture::Init()
 {
+    // Initialize image library
     ilInit();
+
+    // Initialize fonts library
+    if (FT_Init_FreeType(&freetype_lib))
+    {
+        HE_LOG("Failed to load FreeType library.");
+        return false;
+    }
+    
     return true;
 }
 
 bool Hachiko::ModuleTexture::CleanUp()
 {
+    // Release image library
     ilShutDown();
+
+    // Release fonts library
+    FT_Done_FreeType(freetype_lib);
     return true;
 }
 
@@ -43,9 +58,9 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const 
     texture->height = ilGetInteger(IL_IMAGE_HEIGHT);
     texture->format = ilGetInteger(IL_IMAGE_FORMAT);
 
-    byte* data = ilGetData();
+    unsigned char* data = ilGetData();
     texture->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
-    texture->data = new byte[texture->data_size];
+    texture->data = new unsigned char[texture->data_size];
     memcpy(texture->data, data, texture->data_size);
 
     DeleteImg(img_id);
@@ -145,6 +160,24 @@ void Hachiko::ModuleTexture::Unbind(unsigned slot)
 {
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Hachiko::Font Hachiko::ModuleTexture::LoadFont(const char* path)
+{  
+    Font font;
+    font.path = path;
+    try
+    {
+        font.gl_font = std::shared_ptr<GLFont>(new GLFont(path, freetype_lib));
+        font.loaded = true;
+
+        return font;
+    }
+    catch (std::exception& e)
+    {
+        // Catch exception and return unloaded font if fails
+        return font;
+    } 
 }
 
 void SetOption(unsigned option, unsigned value)

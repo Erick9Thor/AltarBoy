@@ -51,6 +51,7 @@ enum class UpdateStatus
 #define ASSETS_FOLDER "assets/"
 #define ASSETS_FOLDER_SCENES "assets/scenes/"
 #define ASSETS_FOLDER_TEXTURES "assets/textures/"
+#define ASSETS_FOLDER_FONTS "assets/fonts/"
 
 #define SETTINGS_FOLDER "settings"
 #define SETTINGS_FILE_PATH "settings/he.cfg"

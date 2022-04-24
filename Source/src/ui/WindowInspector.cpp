@@ -137,6 +137,14 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             ImGui::CloseCurrentPopup();
         }
 
+        if (ImGui::MenuItem("Text Label"))
+        {
+            game_object->CreateComponent(Component::Type::TRANSFORM_2D);
+            game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
+            game_object->CreateComponent(Component::Type::TEXT);
+            ImGui::CloseCurrentPopup();
+        }
+
         ImGui::EndPopup();
     }
 

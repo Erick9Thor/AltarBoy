@@ -4,6 +4,8 @@
 #include "ComponentButton.h"
 
 #include "modules/ModuleProgram.h"
+#include "Application.h"
+#include "modules/ModuleUserInterface.h"
 
 #include "Program.h"
 
@@ -57,8 +59,9 @@ void Hachiko::ComponentImage::DrawGui()
 void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* program) const
 {
 	// Bind matrix
+    program->Activate();
+    App->ui->BindSquare();
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
-    // TODO
     const Texture* img_to_draw = &image;
     const float4* render_color = &color;
     bool render_img = use_image;    
