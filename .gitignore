@@ -71,6 +71,7 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
+!Game/assets/*.meta
 *.obj
 *.iobj
 *.pch

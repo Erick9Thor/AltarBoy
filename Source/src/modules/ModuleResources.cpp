@@ -152,8 +152,8 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     HE_LOG("Assets/Library check...");
 
     // TODO: use defined values, for extensions and assets
-    std::vector<std::string> meta_ext { "meta" };
-    PathNode assets_folder = FileSystem::GetAllFiles("assets", nullptr, &meta_ext);
+    std::vector<std::string> meta_ext {"meta", "scene"};
+    PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &meta_ext);
     //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
     // TODO: check library folder
 
