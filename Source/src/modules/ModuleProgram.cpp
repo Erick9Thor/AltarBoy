@@ -7,6 +7,7 @@
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentMaterial.h"
 #include "resources/ResourceMaterial.h"
+#include "Batching/TextureBatch.h"
 
 Hachiko::ModuleProgram::ModuleProgram() = default;
 
@@ -24,10 +25,12 @@ bool Hachiko::ModuleProgram::Init()
         return false;
     }
 
-    CreateCameraUBO();
-    CreateMaterialUBO();
-    CreateLightsUBO();
-    CreateTransformSSBO();
+    CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
+    CreateSSBO(UBOPoints::MATERIAL, 0);
+    CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
+    CreateSSBO(UBOPoints::TRANSFORMS, 0);
+
+
     return true;
 }
 
@@ -170,27 +173,6 @@ void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, 
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-
-void Hachiko::ModuleProgram::CreateCameraUBO()
-{
-    CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
-}
-
-void Hachiko::ModuleProgram::CreateMaterialUBO()
-{
-    CreateUBO(UBOPoints::MATERIAL, sizeof(MaterialData));
-}
-
-void Hachiko::ModuleProgram::CreateLightsUBO()
-{
-    CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
-}
-
-void Hachiko::ModuleProgram::CreateTransformSSBO()
-{
-    CreateSSBO(UBOPoints::TRANSFORMS, 0);
-}
-
 bool Hachiko::ModuleProgram::CleanUp()
 {
     main_program->CleanUp();
@@ -318,6 +300,19 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
 void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const
 {
     UpdateSSBO(UBOPoints::TRANSFORMS, transforms.size() * sizeof(float) * 16, (void*)transforms.data());
+}
+
+void Hachiko::ModuleProgram::UpdateMaterials(const std::vector<Hachiko::TextureBatch::Material>& materials) const
+{
+
+    if (materials.size() <= 0)
+    {
+        UpdateSSBO(UBOPoints::MATERIAL, 0, nullptr);
+    }
+    else
+    {
+        UpdateSSBO(UBOPoints::MATERIAL, materials.size() * sizeof(TextureBatch::Material), (void*)materials.data());
+    }
 }
 
 void Hachiko::ModuleProgram::OptionsMenu()

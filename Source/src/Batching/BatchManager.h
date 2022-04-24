@@ -21,7 +21,6 @@ namespace Hachiko
 
         void AddDrawComponent(const ComponentMesh* mesh);
 
-        void GenerateDynamicBuffers();
         void BuildBatches();
         void DrawBatches();
         void ClearBatchesDrawList();

@@ -14,7 +14,7 @@ Hachiko::GeometryBatch::GeometryBatch(ResourceMesh::Layout batch_layout) {
     batch = new ResourceMesh(0);
     batch->layout = batch_layout;
 
-    textureBatch = new TextureBatch();
+    texture_batch = new TextureBatch();
 
     GenerateBuffers();
 }
@@ -31,7 +31,7 @@ Hachiko::GeometryBatch::~GeometryBatch() {
     }
 
     RELEASE(batch);
-    RELEASE(textureBatch);
+    RELEASE(texture_batch);
 }
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
@@ -46,7 +46,7 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMesh* mesh)
     }
 
     const ComponentMaterial* material_comp = mesh->GetGameObject()->GetComponent<ComponentMaterial>();
-    textureBatch->AddMaterial(material_comp);
+    texture_batch->AddMaterial(material_comp);
 }
 
 void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMesh* mesh)
@@ -59,7 +59,7 @@ void Hachiko::GeometryBatch::BuildBatch() {
     BatchMeshes();
     UpdateBuffers();
 
-    textureBatch->GenerateBatch();
+    texture_batch->GenerateBatch();
 }
 
 void Hachiko::GeometryBatch::BatchMeshes()
@@ -131,16 +131,16 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
-void Hachiko::GeometryBatch::Draw()
+void Hachiko::GeometryBatch::UpdateWithTextureBatch()
 {
     BatchTransforms();
     GenerateCommands();
 
-    textureBatch->GenerateMaterials(components);
-
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
     App->program->UpdateTransforms(transforms);
+
+    texture_batch->Draw(components);
 }
 
 void Hachiko::GeometryBatch::BatchTransforms()
@@ -261,7 +261,7 @@ void Hachiko::GeometryBatch::ImGuiWindow()
         {
             ImGui::Text(components[i]->GetGameObject()->name.c_str());
         }
-        textureBatch->ImGuiWindow();
+        texture_batch->ImGuiWindow();
     }
     ImGui::End();
 }

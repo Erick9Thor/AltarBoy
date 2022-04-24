@@ -10,7 +10,6 @@
 
 Hachiko::BatchManager::BatchManager() 
 {
-    GenerateDynamicBuffers();
 }
 
 Hachiko::BatchManager::~BatchManager()
@@ -68,15 +67,6 @@ void Hachiko::BatchManager::AddDrawComponent(const ComponentMesh* mesh)
     }
 }
 
-void Hachiko::BatchManager::GenerateDynamicBuffers() 
-{
-    glGenBuffers(1, &material_ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, material_ssbo);
-    glBufferData(GL_SHADER_STORAGE_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, material_ssbo);
-    glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
 void Hachiko::BatchManager::BuildBatches()
 {
     for (GeometryBatch* geometry_batch : geometry_batches)
@@ -93,11 +83,9 @@ void Hachiko::BatchManager::DrawBatches()
         geometry_batch->ImGuiWindow(); // DEBUG
 
         // Binds meshes and transforms
-        geometry_batch->Draw();
+        geometry_batch->UpdateWithTextureBatch();
         App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
         // Bind texture batch
-        geometry_batch->textureBatch->UpdateTextureBatch();
-        geometry_batch->textureBatch->UpdateMaterials(material_ssbo);
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);

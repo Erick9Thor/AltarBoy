@@ -25,17 +25,16 @@ namespace Hachiko
 
         struct Material
         {
-            float4 diffuseColor;
-            float4 specularColor;
+            float4 diffuse_color;
+            float4 specular_color;
             float shininess; // float smoothness;
-            int hasDiffuseMap;
-            int hasSpecularMap;
-            int hasNormalMap;
-            TexAddress diffuseMap;
-            TexAddress specularMap;
-            TexAddress normalMap;
-            int padding0 = 0;
-            int padding1 = 0;
+            int has_diffuse_map;
+            int has_specular_map;
+            int has_normal_map;
+            TexAddress diffuse_map;
+            TexAddress specular_map;
+            TexAddress normal_map;
+            float2 padding = float2::zero;
         };
 
         TextureBatch();
@@ -46,10 +45,12 @@ namespace Hachiko
 
         void GenerateBatch();
 
+        void Draw(const std::vector<const ComponentMesh*>& components);
+
         void GenerateMaterials(const std::vector<const ComponentMesh*>& components);
 
         void UpdateTextureBatch();
-        void UpdateMaterials(unsigned ssbo_id);
+        void UpdateMaterials();
 
         void ImGuiWindow(); // Debug window
 
@@ -59,7 +60,7 @@ namespace Hachiko
         // TODO: consider creating a ResourceTexture
 
         std::map<const ResourceTexture*, TexAddress*> resources; // contains all the Texture resources and their address
-        std::vector<TextureArray*> textureArrays; // contains all the texture arrays
+        std::vector<TextureArray*> texture_arrays; // contains all the texture arrays
 
         std::vector<Material> materials;
 

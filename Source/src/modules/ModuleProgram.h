@@ -2,6 +2,7 @@
 #include "Module.h"
 
 #include <vector>
+#include "Batching/TextureBatch.h"
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
@@ -78,6 +79,7 @@ namespace Hachiko
         void UpdateMaterial(const ComponentMaterial* material_comp) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
         void UpdateTransforms(const std::vector<float4x4>& transforms) const;
+        void UpdateMaterials(const std::vector<TextureBatch::Material>& materials) const;
 
         void OptionsMenu();
 
@@ -104,10 +106,6 @@ namespace Hachiko
         void UpdateUBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0) const;
         void CreateSSBO(UBOPoints binding_point, unsigned size);
         void UpdateSSBO(UBOPoints binding_point, unsigned size, void* data, unsigned offset = 0) const;
-        void CreateCameraUBO();
-        void CreateMaterialUBO();
-        void CreateLightsUBO();
-        void CreateTransformSSBO();
 
         unsigned buffers[static_cast<int>(UBOPoints::COUNT)] {};
 

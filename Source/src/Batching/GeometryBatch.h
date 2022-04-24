@@ -27,7 +27,7 @@ namespace Hachiko
         void BatchMeshes();
         void BatchTransforms();
 
-        void Draw();
+        void UpdateWithTextureBatch();
 
         void ClearDrawList();
 
@@ -52,7 +52,7 @@ namespace Hachiko
         std::vector<float4x4> transforms;
         std::vector<DrawCommand> commands;
 
-        TextureBatch* textureBatch = nullptr;
+        TextureBatch* texture_batch = nullptr;
         unsigned indirect_buffer_id;
     };
 

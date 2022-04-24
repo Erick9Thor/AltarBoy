@@ -21,12 +21,12 @@ Hachiko::TextureBatch::~TextureBatch()
     }
     resources.clear();
 
-    for (TextureArray* textureArray : textureArrays)
+    for (TextureArray* textureArray : texture_arrays)
     {
         glDeleteTextures(textureArray->depth, &textureArray->id);
         delete textureArray;
     }
-    textureArrays.clear();
+    texture_arrays.clear();
 }
 
 void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material)
@@ -58,7 +58,7 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
 
         // Search for the its textureArray
         bool textureArrayFound = false;
-        for (TextureArray* textureArray : textureArrays)
+        for (TextureArray* textureArray : texture_arrays)
         {
             if (EqualLayout(*textureArray, *texture))
             {
@@ -77,7 +77,7 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
             textureArray->height = texture->height;
             textureArray->format = texture->format;
 
-            textureArrays.push_back(textureArray);
+            texture_arrays.push_back(textureArray);
         }
 
         // Set the flag as not all textures are loaded
@@ -95,40 +95,40 @@ void Hachiko::TextureBatch::GenerateBatch()
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
 
     // Security check, amount of texture units
-    if (textureArrays.size() > maxUnits - 8)
+    if (texture_arrays.size() > maxUnits - 8)
     {
         HE_LOG("[Error] TextureBatch: there are more texture units than the maximum.");
     }
 
     unsigned index = 0;
-    for (unsigned i = 0; i < textureArrays.size(); ++i)
+    for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
         // Security check, amount of layers in a texture array
-        if (textureArrays[i]->depth > maxLayers)
+        if (texture_arrays[i]->depth > maxLayers)
         {
             HE_LOG("[Error] TextureBatch: there are layers in a texture array than the maximum.");
         }
 
-        glGenTextures(1, &textureArrays[i]->id);
-        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
+        glGenTextures(1, &texture_arrays[i]->id);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
 
         // Generate texture array
         unsigned sizedFormat = GL_RGBA8;
-        if (textureArrays[i]->format == GL_RGBA)
+        if (texture_arrays[i]->format == GL_RGBA)
         {
             sizedFormat = GL_RGBA8;
         }
-        else if (textureArrays[i]->format == GL_RGB)
+        else if (texture_arrays[i]->format == GL_RGB)
         {
             sizedFormat = GL_RGB8;
         }
 
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, sizedFormat, textureArrays[i]->width, textureArrays[i]->height, textureArrays[i]->depth);
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, sizedFormat, texture_arrays[i]->width, texture_arrays[i]->height, texture_arrays[i]->depth);
         //glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, sizedFormat, textureArrays[i]->width, textureArrays[i]->height, textureArrays[i]->depth);
         unsigned depth = 0;
         for (auto& resource : resources)
         {
-            if (EqualLayout(*textureArrays[i], *resource.first))
+            if (EqualLayout(*texture_arrays[i], *resource.first))
             {
                 resource.second->texIndex = i;
                 resource.second->layerIndex = depth;
@@ -155,10 +155,10 @@ void Hachiko::TextureBatch::GenerateBatch()
                     0, // xoffset
                     0, // yoffset
                     depth, // zoffset
-                    textureArrays[i]->width, // width
-                    textureArrays[i]->height, // height
+                    texture_arrays[i]->width, // width
+                    texture_arrays[i]->height, // height
                     1, // depth
-                    textureArrays[i]->format, // format
+                    texture_arrays[i]->format, // format
                     GL_UNSIGNED_BYTE, // type
                     ModuleTexture::GetData() // texture_data
                 );
@@ -184,6 +184,13 @@ void Hachiko::TextureBatch::GenerateBatch()
     }
 }
 
+void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMesh*>& components)
+{
+    GenerateMaterials(components);
+    UpdateTextureBatch();
+    UpdateMaterials();
+}
+
 void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMesh*>& components)
 {
     materials.resize(components.size());
@@ -194,68 +201,50 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
         const ResourceMaterial* material = material_comp->GetMaterial();
 
-        materials[i].diffuseColor = material->diffuse_color;
-        materials[i].specularColor = material->specular_color;
+        materials[i].diffuse_color = material->diffuse_color;
+        materials[i].specular_color = material->specular_color;
         materials[i].shininess = material->shininess;
-        materials[i].hasDiffuseMap = material->HasDiffuse();
-        materials[i].hasSpecularMap = material->HasSpecular();
-        materials[i].hasNormalMap = material->HasNormal();
-        if (materials[i].hasDiffuseMap)
+        materials[i].has_diffuse_map = material->HasDiffuse();
+        materials[i].has_specular_map = material->HasSpecular();
+        materials[i].has_normal_map = material->HasNormal();
+
+        if (materials[i].has_diffuse_map)
         {
-            materials[i].diffuseMap = (*resources[material->diffuse]);
-            //materials[i].diffuseMap.texIndex = resources[&material->diffuse]->texIndex;
-            //materials[i].diffuseMap.layerIndex = resources[&material->diffuse]->layerIndex;
+            materials[i].diffuse_map = (*resources[material->diffuse]);
         }
-        if (materials[i].hasSpecularMap)
+        if (materials[i].has_specular_map)
         {
-            materials[i].specularMap = (*resources[material->specular]);
-            //materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
-            //materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
+            materials[i].specular_map = (*resources[material->specular]);
         }
-        if (materials[i].hasNormalMap)
+        if (materials[i].has_normal_map)
         {
-            materials[i].normalMap = (*resources[material->normal]);
-            //materials[i].specularMap.texIndex = resources[&material->specular]->texIndex;
-            //materials[i].specularMap.layerIndex = resources[&material->specular]->layerIndex;
+            materials[i].normal_map = (*resources[material->normal]);
         }
-        //materials[i].normalMap;
-        //materials[i].padding0;
-        //materials[i].padding1;
+        //materials[i].padding = *resources[material->padding]);
     }
 }
 
 void Hachiko::TextureBatch::UpdateTextureBatch() 
 {
-    for (unsigned i = 0; i < textureArrays.size(); ++i)
+    for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
         //glEnable(GL_TEXTURE_2D);
         glActiveTexture(GL_TEXTURE0 + i);
-        glBindTexture(GL_TEXTURE_2D_ARRAY, textureArrays[i]->id);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
         glUniform1i(1 + i, i);
     }
 }
 
-void Hachiko::TextureBatch::UpdateMaterials(unsigned ssbo_id)
+void Hachiko::TextureBatch::UpdateMaterials()
 {
-    if (materials.size() <= 0)
-    {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, 0, nullptr, GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-    }
-    else
-    {
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, ssbo_id);
-        glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(Material) * materials.size(), &materials[0], GL_DYNAMIC_DRAW);
-        glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-    }
+    App->program->UpdateMaterials(materials);
 }
 
 void Hachiko::TextureBatch::ImGuiWindow()
 {
     ImGui::Text("TEXTURE_BATCH");
 
-    for (unsigned i = 0; i < textureArrays.size(); ++i)
+    for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
         ImGui::BulletText("TextureArray ");
         ImGui::SameLine();
@@ -263,23 +252,23 @@ void Hachiko::TextureBatch::ImGuiWindow()
 
         ImGui::Text("Depth (number of textures): ");
         ImGui::SameLine();
-        ImGui::Text(std::to_string(textureArrays[i]->depth).c_str());
+        ImGui::Text(std::to_string(texture_arrays[i]->depth).c_str());
 
         ImGui::Text("Width: ");
         ImGui::SameLine();
-        ImGui::Text(std::to_string(textureArrays[i]->width).c_str());
+        ImGui::Text(std::to_string(texture_arrays[i]->width).c_str());
 
         ImGui::Text("Height: ");
         ImGui::SameLine();
-        ImGui::Text(std::to_string(textureArrays[i]->height).c_str());
+        ImGui::Text(std::to_string(texture_arrays[i]->height).c_str());
 
         ImGui::Text("Format: ");
         ImGui::SameLine();
-        ImGui::Text(std::to_string(textureArrays[i]->format).c_str());
+        ImGui::Text(std::to_string(texture_arrays[i]->format).c_str());
 
         for (auto& resource : resources)
         {
-            if (EqualLayout(*textureArrays[i], *resource.first))
+            if (EqualLayout(*texture_arrays[i], *resource.first))
             {
                 ImGui::Text(resource.first->path.c_str());
             }
@@ -288,7 +277,7 @@ void Hachiko::TextureBatch::ImGuiWindow()
 }
 
 
-bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture)
+bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texture_layout, const ResourceTexture& texture)
 {
-    return (texuteLayout.width == texture.width && texuteLayout.height == texture.height && texuteLayout.format == texture.format);
+    return (texture_layout.width == texture.width && texture_layout.height == texture.height && texture_layout.format == texture.format);
 }
