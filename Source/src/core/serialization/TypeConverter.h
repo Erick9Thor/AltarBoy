@@ -281,8 +281,8 @@ namespace YAML
         static Node encode(const FILETIME& rhs)
         {
             Node node;
-            node[0].push_back(static_cast<float>(rhs.dwLowDateTime));
-            node[1].push_back(static_cast<float>(rhs.dwHighDateTime));
+            node.push_back(static_cast<DWORD>(rhs.dwLowDateTime));
+            node.push_back(static_cast<DWORD>(rhs.dwHighDateTime));
 
             node.SetStyle(EmitterStyle::Flow);
             return node;
@@ -290,7 +290,7 @@ namespace YAML
         
         static bool decode(const Node& node, FILETIME& rhs)
         {
-            if (!node.IsSequence() || node.size() != 1)
+            if (!node.IsSequence() || node.size() != 2)
             {
                 return false;
             }
