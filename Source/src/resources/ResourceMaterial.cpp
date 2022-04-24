@@ -93,8 +93,8 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
         ImGuiFileDialog::Instance()->OpenDialog(
             title.c_str(),
             "Select Texture",
-            ".*",
-            "./library/textures/",
+            ".png,.tif,.jpg,.tga",
+            "./assets/textures/",
             1,
             nullptr,
               ImGuiFileDialogFlags_DontShowHiddenFiles 
@@ -107,7 +107,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
-            std::string texture_path = ImGuiFileDialog::Instance()->GetFilePathName().c_str();
+            std::string texture_path = ImGuiFileDialog::Instance()->GetFilePathName();
             texture_path.append(META_EXTENSION);
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 

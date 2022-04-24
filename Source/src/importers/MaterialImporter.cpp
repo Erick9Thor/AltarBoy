@@ -95,9 +95,23 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
     material->shininess = node[MATERIAL_SHININESS].as<float>();
 
-    material->diffuse = static_cast<ResourceTexture*> (App->resources->GetResource(Resource::Type::TEXTURE, node[MATERIAL_DIFFUSE_ID].as<UID>()));
-    material->specular = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, node[MATERIAL_SPECULAR_ID].as<UID>()));
-    material->normal = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, node[MATERIAL_NORMALS_ID].as<UID>()));
+    UID texture_id = node[MATERIAL_DIFFUSE_ID].as<UID>();
+    if (texture_id)
+    {
+        material->diffuse = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_SPECULAR_ID].as<UID>();
+    if (texture_id)
+    {
+        material->specular = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_NORMALS_ID].as<UID>();
+    if (texture_id)
+    {
+        material->normal = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
 
     return material;
 }
