@@ -204,12 +204,12 @@ void main()
     
     Material material = materialsBuffer.materials[instance];
 
-    if (material.hasNormalMap > 0)
+    /*if (material.hasNormalMap > 0)
     {
         mat3 tbn = CreateTangentSpace(normalize(fragment.normal), normalize(fragment.tangent));
 	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normalMap.texIndex+1], vec3(fragment.tex_coord, material.normalMap.layerIndex)).xyz * 2.0 - 1.0);
 	    norm = normalize(fragmentNormal);
-    }
+    }*/
 
     vec3 diffuse_color = material.diffuseColor.rgb;
     if (material.hasDiffuseMap > 0)

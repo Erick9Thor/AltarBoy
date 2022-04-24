@@ -28,7 +28,6 @@ namespace Hachiko
 
         void CleanUp();
 
-        unsigned transform_ssbo;
         unsigned material_ssbo;
         // One GeometryBatch per attribute layout
         std::vector<GeometryBatch*> geometry_batches;

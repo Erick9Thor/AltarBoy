@@ -69,7 +69,8 @@ void Hachiko::GeometryBatch::BatchMeshes()
     static const int buffer_types[] = {static_cast<int>(ResourceMesh::Buffers::INDICES),
                                        static_cast<int>(ResourceMesh::Buffers::VERTICES),
                                        static_cast<int>(ResourceMesh::Buffers::NORMALS),
-                                       static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)};
+                                       static_cast<int>(ResourceMesh::Buffers::TEX_COORDS),
+                                       static_cast<int>(ResourceMesh::Buffers::TANGENTS)};
 
     // Index all resources and compute total size to generate batch buffers;
     for (auto& resource : resources)
@@ -86,11 +87,13 @@ void Hachiko::GeometryBatch::BatchMeshes()
     batch->vertices = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     batch->normals = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)]];
     batch->tex_coords = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]];
+    batch->tangents = new float[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]];
 
     unsigned indices_offset = 0;
     unsigned vertices_offset = 0;
     unsigned normals_offset = 0;
     unsigned tex_coords_offset = 0;
+    unsigned tangents_offset = 0;
 
     for (auto& resource : resources)
     {
@@ -120,6 +123,11 @@ void Hachiko::GeometryBatch::BatchMeshes()
         size_bytes = sizeof(float) * size;
         memcpy(&batch->tex_coords[tex_coords_offset], r->tex_coords, size_bytes);
         tex_coords_offset += size;
+
+        size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)];
+        size_bytes = sizeof(float) * size;
+        memcpy(&batch->tangents[tangents_offset], r->tangents, size_bytes);
+        tangents_offset += size;
     }
 }
 
@@ -229,6 +237,9 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
 
     glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)]);
     glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] * sizeof(float), batch->tex_coords, GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]);
+    glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)] * sizeof(float), batch->tangents, GL_DYNAMIC_DRAW);
 
     std::vector<unsigned> indices_vbo(components.size());
     std::iota(std::begin(indices_vbo), std::end(indices_vbo), 0);
