@@ -439,26 +439,25 @@ HACHIKO_API void Show(const char* field_name, math::float2& field);
 HACHIKO_API void Show(const char* field_name, math::float3& field);
 HACHIKO_API void Show(const char* field_name, math::float4& field);
 HACHIKO_API void Show(const char* field_name, std::string& field);
-HACHIKO_API void Show(const char* field_name, GameObject** field);
+HACHIKO_API void Show(const char* field_name, GameObject*& field);
 
 HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type, 
-    COMPONENT_TYPE** field) 
+    COMPONENT_TYPE*& field) 
 {
     bool changed = false;
-    GameObject* game_object = (*field) != nullptr 
-        ? (*field)->GetGameObject() 
+    GameObject* game_object = field != nullptr 
+        ? field->GetGameObject() 
         : nullptr;
 
     ShowGameObjectDragDropArea(field_name, field_type, &game_object, changed);
 
     if (changed)
     {
-        *field = nullptr;
+        field = nullptr;
 
         if (game_object != nullptr)
         {
-            *field = game_object->GetComponent<std::remove_pointer<
-                std::remove_pointer<decltype(field)>::type>::type>();
+            field = game_object->GetComponent<COMPONENT_TYPE>();
         }
     }
 }

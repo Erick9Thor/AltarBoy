@@ -221,12 +221,12 @@ void Hachiko::Editor::Show(const char* field_name, std::string& field)
     ImGui::Text(" (string)");
 }
 
-void Hachiko::Editor::Show(const char* field_name, GameObject** field)
+void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
 {
     // We don't need this here, just used to supply to the function.
     bool changed = false;
 
-    ShowGameObjectDragDropArea(field_name, "GameObject*", field, changed);
+    ShowGameObjectDragDropArea(field_name, "GameObject*", &field, changed);
 }
 
 /*---------------------------------------------------------------------------*/
