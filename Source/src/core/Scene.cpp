@@ -16,6 +16,7 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include <debugdraw.h>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
@@ -122,9 +123,13 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 }
             }
             
+
+            last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
+
             create_children_function(last_parent, child->children);
         }
     };
+
 
     create_children_function(game_object, model->child_nodes);
 }

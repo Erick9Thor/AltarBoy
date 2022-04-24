@@ -243,14 +243,13 @@ const float4x4& Hachiko::ComponentTransform::GetGlobalMatrix()
     return matrix;
 }
 
-
 /***    OPERATION METHODS   ***/
 
 void Hachiko::ComponentTransform::UpdateTransform()
 {
     if (dirty)
     {
-        matrix_local =  float4x4::FromTRS(local_position, local_rotation, local_scale);
+        matrix_local = float4x4::FromTRS(local_position, local_rotation, local_scale);
 
         if (game_object->parent)
         {

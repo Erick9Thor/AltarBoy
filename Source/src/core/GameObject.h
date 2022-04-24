@@ -72,6 +72,7 @@ namespace Hachiko
     void DebugDrawAll();
     void DebugDraw() const;
     void DrawBoundingBox() const;
+    void DrawBones() const;
     void UpdateBoundingBoxes();
 
         [[nodiscard]] UID GetID() const
