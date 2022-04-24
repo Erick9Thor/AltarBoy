@@ -14,8 +14,13 @@ Hachiko::TextureImporter::TextureImporter()
 
 void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 {
-    Resource* texture = ImportTexture(path, meta["General"]["id"].as<UID>());
+    Resource* texture = ImportTexture(path, meta[GENERAL_NODE][GENERAL_ID].as<UID>());
     delete texture;
+}
+
+void Hachiko::TextureImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
+{
+    Import(path, meta);
 }
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)

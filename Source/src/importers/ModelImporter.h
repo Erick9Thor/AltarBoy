@@ -14,6 +14,7 @@ namespace Hachiko
         ~ModelImporter() override = default;
         
         void Import(const char* path, YAML::Node& meta) override;
+        void ImportWithMeta(const char* path, YAML::Node& meta) override;
         void Save(const Resource* resource) override;
         Resource* Load(UID id) override;
         void Delete(const YAML::Node& meta) override;

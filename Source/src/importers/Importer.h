@@ -32,7 +32,7 @@ namespace Hachiko
         }
 
         virtual void Import(const char* path, YAML::Node& meta) = 0;
-        virtual void ImportWithMeta(const char* path, YAML::Node& meta) {}; // TODO: implement
+        virtual void ImportWithMeta(const char* path, YAML::Node& meta) = 0;
         virtual void Save(const Resource* resource) = 0;
         virtual Resource* Load(UID id) = 0;
         virtual void Delete(const YAML::Node& meta) 

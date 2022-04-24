@@ -33,6 +33,11 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
     FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
 }
 
+void Hachiko::ModelImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
+{
+    // TODO: move cherry import here
+}
+
 void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
     Hachiko::MeshImporter mesh_importer;

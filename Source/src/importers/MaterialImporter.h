@@ -15,6 +15,7 @@ namespace Hachiko
         MaterialImporter();
 
         void Import(const char* path, YAML::Node& meta) override;
+        void ImportWithMeta(const char* path, YAML::Node& meta) override;
         void Save(const Resource* material) override;
         Resource* Load(UID id) override;
 

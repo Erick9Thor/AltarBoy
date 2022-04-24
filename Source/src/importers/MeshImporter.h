@@ -12,6 +12,7 @@ namespace Hachiko
     public:
         MeshImporter();
         void Import(const char* path, YAML::Node& meta) override {};
+        void ImportWithMeta(const char* path, YAML::Node& meta) override {};
         void Save(const Resource* mesh) override;
         Resource* Load(UID id) override;
         bool IsImported(const char* path) override

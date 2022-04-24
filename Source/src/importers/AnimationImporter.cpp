@@ -9,6 +9,11 @@ Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMA
 
 void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) {}
 
+void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
+{
+    // TODO: implement
+}
+
 void Hachiko::AnimationImporter::Save(const Resource* resource) {}
 
 Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
