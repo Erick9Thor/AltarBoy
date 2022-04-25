@@ -29,7 +29,7 @@ Hachiko::Scene::Scene() :
     name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
-    quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
+    quadtree->SetBox(AABB(float3(-1000, -50000, -1000), float3(500, 50000, 1000)));
 }
 
 Hachiko::Scene::~Scene()

@@ -2,9 +2,7 @@
 #include "Quadtree.h"
 #include <debugdraw.h>
 
-Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) :
-    box(box),
-    parent(parent)
+Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) : box(box), parent(parent)
 {
     children[static_cast<int>(Quadrants::NW)] = children[static_cast<int>(Quadrants::NE)] = children[static_cast<int>(Quadrants::SE)] = children[static_cast<int>(Quadrants::SW)] = nullptr;
 }
@@ -108,6 +106,10 @@ void Hachiko::QuadtreeNode::RearangeChildren()
 
         // If it intersects all there is no point in moving downwards
         if (intersects[static_cast<int>(Quadrants::NW)] && intersects[static_cast<int>(Quadrants::NE)] && intersects[static_cast<int>(Quadrants::SE)] && intersects[static_cast<int>(Quadrants::SW)])
+        {
+            ++it;
+            continue;
+        }
 
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
