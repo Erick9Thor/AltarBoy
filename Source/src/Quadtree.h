@@ -7,7 +7,7 @@
 
 #define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 50.f
-#define QUADTREE_MAX_DEPTH 8
+#define QUADTREE_MAX_DEPTH 3
 
 namespace Hachiko
 {

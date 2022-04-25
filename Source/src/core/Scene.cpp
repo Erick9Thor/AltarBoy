@@ -26,7 +26,7 @@ Hachiko::Scene::Scene()
     , name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
-    quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
+    quadtree->SetBox(AABB(float3(-100, -100, -100), float3(100, 250, 100)));
 }
 
 Hachiko::Scene::~Scene()
@@ -81,7 +81,7 @@ void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) c
 {
     GameObject* new_parent = parent ? parent : root;
     new_parent->children.push_back(new_object);
-    //quadtree->Insert(new_object);
+    quadtree->Insert(new_object);
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)

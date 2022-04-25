@@ -30,6 +30,7 @@ void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
     {
         return;
     }
+
     // No split due to minimum size
     if (box.HalfSize().LengthSq() <= (QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE))
     {
