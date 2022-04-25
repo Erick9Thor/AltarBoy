@@ -23,7 +23,8 @@ void Hachiko::MeshImporter::Save(const Resource* res)
         sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
         sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)], 
         sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)],
-        sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]
+        sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)],
+        sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]
     };
 
     unsigned file_size = 0;
@@ -33,6 +34,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)];
+    file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
 
     const auto file_buffer = new char[file_size];
     char* cursor = file_buffer;
@@ -61,6 +63,10 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)];
     memcpy(cursor, mesh->tangents, size_bytes);
     cursor += size_bytes;
+
+    // size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    // memcpy(cursor, mesh->bones, size_bytes);
+    // cursor += size_bytes;
 
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
@@ -137,7 +143,12 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     else
     {
         mesh->tangents = nullptr;
-    }    
+    }   
+
+    // TODO: ANIMATIONS LOAD BONES FOR Resources
+    if (sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] > 0)
+    {
+    }
 
     mesh->GenerateBuffers();
     mesh->GenerateAABB();

@@ -19,6 +19,7 @@ namespace Hachiko
             NORMALS,
             TEX_COORDS,
             TANGENTS,
+            BONES,
             COUNT,
         };
 
