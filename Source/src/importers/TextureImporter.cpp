@@ -117,13 +117,8 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 
 Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID uid)
 {
-    // TODO: texture configuration to flip so this will not be needed
-    std::string str_path = std::string(path);
-    int extension_index = str_path.rfind('.');
-    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
-    //
-
-    ResourceTexture* texture = App->texture->ImportResource(uid, path, extension != "tif"); // TODO: could we extract ModuleTexture functionality to this importer?
+    std::string extension = FileSystem::GetFileExtension(path);
+    ResourceTexture* texture = App->texture->ImportResource(uid, path, extension != ".tif"); // TODO: could we extract ModuleTexture functionality to this importer?
 
     if (texture != nullptr)
     {
