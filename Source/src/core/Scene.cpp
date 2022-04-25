@@ -117,7 +117,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                     component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
 
                     ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                    MaterialInfo mat_info = model->materials[child->meshes_index[i]];
+                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
                     component_material->SetID(mat_info.material_id);
                     component_material->SetResourceMaterial(static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, 
                         model->materials[mesh_info.material_index].material_id)));
