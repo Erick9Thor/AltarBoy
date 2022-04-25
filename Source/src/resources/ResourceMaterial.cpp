@@ -13,6 +13,7 @@ void Hachiko::ResourceMaterial::DrawGui()
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::Text("Name", name, 64);
+    ImGui::Checkbox("Metallic", &is_metallic);
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
         if (diffuse != nullptr)
@@ -36,7 +37,11 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
-    if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
+    if (is_metallic)
+    {
+        ImGui::SliderFloat("Metalness", &metalness, 0.0f, 1.0f, "%.2f", 1.0f);
+    }
+    else if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
     {
         if (specular != nullptr)
         {
@@ -80,11 +85,6 @@ void Hachiko::ResourceMaterial::DrawGui()
             AddTexture(ResourceTexture::Type::NORMALS);
         }
         ImGui::TreePop();
-    }
-    ImGui::Checkbox("Metallic", &is_metallic);
-    if (is_metallic)
-    {
-        ImGui::SliderFloat("Metalness", &metalness, 0.0f, 1.0f, "%.2f", 1.0f);
     }
     ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
 }

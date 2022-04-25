@@ -3,7 +3,8 @@
 #define DIFFUSE_SAMPLER 0
 #define SPECULAR_SAMPLER 1
 #define NORMAL_SAMPLER 2
-#define N_2D_SAMPLERS 3
+#define METALLIC_SAMPLER 3
+#define N_2D_SAMPLERS 4
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
@@ -56,6 +57,7 @@ layout(std140, binding = 1) uniform Material
     uint diffuse_flag;
     uint specular_flag;
     uint normal_flag;
+    uint metallic_flag;
     float shininess;
     float smoothness;
     float metalness;
@@ -231,8 +233,12 @@ void main()
 
     vec3 f0;
     vec3 Cd;
+    float smoothness;
+    
     if(material.is_metallic > 0)
     {
+        //vec4 colorMetallic = texture(metallicMap, UV);
+        //float metalnessMask = hasMetallicMap * colorMetallic.r + (1 - hasMetallicMap) * metalness;
         Cd = diffuse_color * (1 - material.metalness);
         f0 = vec3(0.04) * (1 - material.metalness) + diffuse_color * material.metalness;
     }
