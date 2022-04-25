@@ -751,7 +751,9 @@
     <ClCompile Include="..\Source\vendors\PhysicsFS\physfs_unicode.c">
       <Filter>Vendors\PhysicsFS</Filter>
     </ClCompile>
-    <ClCompile Include="generated\GeneratedEditor.cpp" />
+    <ClCompile Include="generated\GeneratedEditor.cpp">
+      <Filter>Generated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
