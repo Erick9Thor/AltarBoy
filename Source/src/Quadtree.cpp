@@ -2,9 +2,8 @@
 #include "Quadtree.h"
 #include <debugdraw.h>
 
-Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent) :
-    box(box),
-    parent(parent)
+Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parentm, int depth) :
+    box(box), parent(parent), depth(depth)
 {
     children[static_cast<int>(Quadrants::NW)] = children[static_cast<int>(Quadrants::NE)] = children[static_cast<int>(Quadrants::SE)] = children[static_cast<int>(Quadrants::SW)] = nullptr;
 }
