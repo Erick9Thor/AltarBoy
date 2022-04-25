@@ -64,7 +64,7 @@ bool Hachiko::WindowHierarchy::RecursiveDraw(GameObject* game_object)
 
 bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop)
 {
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
 
     if (game_object->children.empty())
     {
