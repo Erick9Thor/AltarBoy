@@ -43,7 +43,7 @@ void Hachiko::ModelImporter::ImportWithMeta(const char* path, YAML::Node& meta)
     // 1 - Open assimp model
     Assimp::Importer import;
     const aiScene* scene = nullptr;
-    scene = import.ReadFile(model.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
