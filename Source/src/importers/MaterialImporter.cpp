@@ -150,27 +150,41 @@ Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMater
     const std::string model_texture_path(file.data);
     const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
     
+    std::string meta_path = asset_path + filename;
+    meta_path.append(META_EXTENSION);
+    YAML::Node text_node;
+    bool imported = false;
+
     search_paths.emplace_back(asset_path + filename);
     search_paths.emplace_back(model_path + "\\" + filename);
     search_paths.emplace_back(file.data);
 
-    for (std::string& path : search_paths)
+    if (!FileSystem::Exists(meta_path.c_str()))
     {
-        // TODO: Importing must be done by importer manager class
-        output_texture = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str(), UUID::GenerateUID()));
-        if (output_texture == nullptr)
+        for (std::string& path : search_paths)
         {
-            continue;
-        }
-            
-        if (path != (asset_path + filename))
-        {
-            std::filesystem::copy_file(path.c_str(), (asset_path + filename),
-                std::filesystem::copy_options::skip_existing);
-            output_texture->SetAssetPath(asset_path + filename);
-        }
+            if (!std::filesystem::exists(path))
+            {
+                continue;
+            }
 
-        break;
+            App->resources->HandleResource(path);
+            text_node = YAML::LoadFile(meta_path);
+            imported = true;
+            break;
+        }
+    }
+    else
+    {
+        text_node = YAML::LoadFile(meta_path);
+        texture_importer.ImportWithMeta(search_paths[0].c_str(), text_node);
+        imported = true;
+    }
+
+    if (imported)
+    {
+        UID id = text_node[GENERAL_NODE][GENERAL_ID].as<UID>();
+        output_texture = static_cast<ResourceTexture*>(texture_importer.Load(id));
     }
 
     return output_texture;

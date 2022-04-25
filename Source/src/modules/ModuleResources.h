@@ -25,6 +25,7 @@ namespace Hachiko
         Resource* GetResource(Resource::Type type, UID id);
         void CreateResource(Resource::Type type, const std::string& name) const;
         void AssetsLibraryCheck();
+        void HandleResource(const std::filesystem::path& path);
 
     private:
         // TODO: Use only loaded_resources map
@@ -51,7 +52,6 @@ namespace Hachiko
         std::filesystem::path last_resource_path;
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
-        void HandleResource(const std::filesystem::path& path);
         void GenerateLibrary(const PathNode& folder);
     };
 }
