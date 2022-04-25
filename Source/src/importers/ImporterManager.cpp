@@ -59,7 +59,7 @@ void Hachiko::ImporterManager::ImportWithMeta(const std::filesystem::path& asset
 {
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
 
-    UpdateMeta(asset_path.string().c_str(), asset_type, meta);
+    UpdateMeta(asset_path.string().c_str(), meta);
 
     GetImporter(asset_type)->ImportWithMeta(asset_path.string().c_str(), meta);
 
@@ -128,11 +128,10 @@ YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource
     return node;
 }
 
-void Hachiko::ImporterManager::UpdateMeta(const char* path, const Resource::Type resource_type, YAML::Node& meta) const
+void Hachiko::ImporterManager::UpdateMeta(const char* path, YAML::Node& meta) const
 {
     std::string file_path(path);
     auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
 
-    meta[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
     meta[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
 }

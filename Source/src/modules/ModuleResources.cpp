@@ -157,7 +157,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
     // TODO: check library folder
 
-    GenerateLibrary(assets_folder);
+    GenerateLibrary(assets_folder); // TODO: Add preference for (de)activate this check
 
     HE_LOG("Assets/Library check finished.");
 }
@@ -183,9 +183,8 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
                 // Extract data from meta
                 UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-                //node[GENERAL_NODE][GENERAL_FILE_PATH]
-                //node[GENERAL_NODE][GENERAL_TYPE]
-                FILETIME meta_timestamp = meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].as<FILETIME>();
+                FILETIME meta_timestamp = meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].IsDefined() ?
+                    meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].as<FILETIME>() : FILETIME();
                 
                 std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());

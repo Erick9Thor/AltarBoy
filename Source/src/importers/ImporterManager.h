@@ -25,6 +25,6 @@ namespace Hachiko
         Importer* GetImporter(Resource::Type type) const;
         Importer::Type ToImporterType(Resource::Type type) const;
         YAML::Node CreateMeta(const char* path, const Resource::Type resource_type) const;
-        void UpdateMeta(const char* path, const Resource::Type resource_type, YAML::Node& meta) const;
+        void UpdateMeta(const char* path, YAML::Node& meta) const;
     };
 }

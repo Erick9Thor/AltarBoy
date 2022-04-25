@@ -23,61 +23,38 @@ Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIA
 
 void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
-    /* HE_LOG("Entering MaterialImporter: %s", path);
-    Assimp::Importer import;
-    //import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
-    const aiScene* scene = nullptr;
-    const std::filesystem::path material_path(path);
-    const std::string model_name = material_path.filename().replace_extension().string();
-    const std::string material_output_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + model_name + MATERIAL_EXTENSION;
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-    {
-        HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
-        return;
-    }
-
-    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
-    {
-        aiMaterial* material = scene->mMaterials[i];
-        Hachiko::UID material_id = UUID::GenerateUID();
-        meta[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
-        Import(material, material_id);
-    }
-
-    FileSystem::Save(material_output_path.c_str(), meta);
-    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);*/
+    HE_LOG("Entering MaterialImporter: %s", path);
+    YAML::Node material_node = YAML::LoadFile(path);
+    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL),
+        meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), material_node);
 }
 
 void Hachiko::MaterialImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
 {
-    UID material_uid = meta[GENERAL_NODE][GENERAL_ID].as<UID>();
-
-    Hachiko::ResourceMaterial* material = static_cast<Hachiko::ResourceMaterial*>(Load(material_uid));
-
-    const std::string material_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(material_uid);
-
-    FileSystem::Copy(path, material_library_path.c_str());
+    Import(path, meta);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
     const std::string material_asset_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION;
+    const std::string meta_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION + META_EXTENSION;
     const std::string material_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(material->GetID());
+    
+    YAML::Node meta_node;
+    meta_node[GENERAL_NODE][GENERAL_ID] = material->GetID();
+    meta_node[GENERAL_NODE][GENERAL_TYPE] = (int)material->GetType();
 
     YAML::Node material_node;
     material_node[MATERIAL_NAME] = material->GetName();
-
     material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
     material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
     material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
-
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
 
+    FileSystem::Save(meta_path.c_str(), meta_node);
     FileSystem::Save(material_asset_path.c_str(), material_node);
     FileSystem::Save(material_library_path.c_str(), material_node);
 }
@@ -126,13 +103,8 @@ void Hachiko::MaterialImporter::CreateMaterial(const std::string& name)
     delete material;
 }
 
-void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id) 
-{
-    if (!id)
-    {
-        const_cast<UID&>(id) = UUID::GenerateUID();
-    }
-    
+void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id) 
+{  
     const auto material = new ResourceMaterial(id);
     material->SetName(ai_material->GetName().C_Str());
     
