@@ -340,12 +340,12 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
     }
 
     // Without the check main camera crashes bcs there is no quadtree
-    if (scene_owner)
+    /* if (scene_owner)
     {
         const Quadtree* quadtree = scene_owner->GetQuadtree();
         quadtree->Remove(this);
         quadtree->Insert(this);
-    }
+    }*/
 }
 
 bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)

@@ -208,7 +208,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     //root->DrawAll(camera);
     //render_list.Update(culling, root);
 
-    render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+    //render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+    render_list.Update(culling, scene->GetRoot());
     Program* program = App->program->GetMainProgram();
     program->Activate();
 
