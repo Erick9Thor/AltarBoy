@@ -36,9 +36,10 @@ namespace Hachiko
 
         std::map<UID, Resource*> loaded_resources;
 
-        std::map<Hachiko::Resource::Type, std::string> supported_extensions = 
+        std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
         {
             {Hachiko::Resource::Type::TEXTURE, ".png"},
+            {Hachiko::Resource::Type::TEXTURE, ".jpg"},
             {Hachiko::Resource::Type::TEXTURE, ".tif"},
             {Hachiko::Resource::Type::MODEL, ".fbx"},
             {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
