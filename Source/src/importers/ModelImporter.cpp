@@ -75,7 +75,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     Quat rot(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
     float3 scale(aiScale.x, aiScale.y, aiScale.z);
 
-    bool dummy_node = true;
+    /* bool dummy_node = true;
     while (dummy_node)
     {
         dummy_node = false;
@@ -91,7 +91,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
             node_name = assimp_node->mName.C_Str();
             dummy_node = true;
         }
-    }
+    }*/
 
     node[NODE_NAME] = assimp_node->mName.C_Str();
     node[TRANSFORM_POSITION] = pos;
