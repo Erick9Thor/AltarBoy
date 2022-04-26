@@ -1,0 +1,298 @@
+scene_name: UnnamedScene
+root_id: 5235291340422193178
+child:
+  - id: 18445494478746843994
+    name: Menu
+    enabled: true
+    parent_id: 5235291340422193178
+    component:
+      - id: 2483218306693840626
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 17934532275747033677
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1797, 1110]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - id: 13622383456314143758
+        type: 8
+        enabled: true
+      - id: 13587497253184537647
+        type: 15
+        enabled: true
+        class_name: MainMenuManager
+    child:
+      - id: 10082061704169672251
+        name: button_whitebackground
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 15429828522585311294
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 8019540446881258551
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [2000, 2000]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 7937656286445990427
+            type: 9
+            enabled: true
+          - id: 2639990090249246383
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_whitebackground.png
+            hover_image_path: ""
+      - id: 17173861091839687682
+        name: button_background
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 459051692813034050
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 6988502365216584048
+            type: 10
+            enabled: true
+            position: [-1, 0, 0]
+            size: [800, 168]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 2162872944089700330
+            type: 9
+            enabled: true
+          - id: 16003216372258174980
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_background.png
+            hover_image_path: ""
+      - id: 17403586578365033992
+        name: button_play
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 7554471983338578288
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 1150487613118513026
+            type: 10
+            enabled: true
+            position: [-290, 5, 0]
+            size: [110, 50]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 3678389635271115506
+            type: 9
+            enabled: true
+          - id: 9553290107431015733
+            type: 12
+            enabled: true
+          - id: 17122912054462707929
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_play.png
+            hover_image_path: assets/textures//button_play_selected.png
+      - id: 18227427394033156495
+        name: button_settings
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 2663282343717602934
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 12991804943948754050
+            type: 10
+            enabled: true
+            position: [-110, 5, 0]
+            size: [193, 51]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 15379523570802465263
+            type: 9
+            enabled: true
+          - id: 15148141040245944730
+            type: 12
+            enabled: true
+          - id: 379825543397275194
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_settings.png
+            hover_image_path: assets/textures//button_settings_selected.png
+      - id: 17621187367077212916
+        name: button_credits
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 1168940995099594225
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 17311320170310641106
+            type: 10
+            enabled: true
+            position: [100, 5, 0]
+            size: [163, 51]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 8129005550394878942
+            type: 9
+            enabled: true
+          - id: 15091875002014427796
+            type: 12
+            enabled: true
+          - id: 13068270238534856738
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_credits.png
+            hover_image_path: assets/textures//button_credits_selected.png
+      - id: 2973420941349668650
+        name: button_quit
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 5213390030237227216
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 13146316951948727790
+            type: 10
+            enabled: true
+            position: [260, 5, 0]
+            size: [92, 51]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 18202840912449849024
+            type: 9
+            enabled: true
+          - id: 11252690455515403083
+            type: 12
+            enabled: true
+          - id: 1062751069688855338
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_quit.png
+            hover_image_path: assets/textures//button_quit_selected.png
+      - id: 15800827742945610830
+        name: credits
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 1575799025511794964
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 1155854151582303011
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1920, 1080]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 15737332369728345224
+            type: 9
+            enabled: true
+          - id: 5524851157849802580
+            type: 11
+            enabled: true
+            image_path: assets/textures//credits.png
+            hover_image_path: ""
+      - id: 5829217024272967794
+        name: button_back
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 10379917796749760117
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 3852759772818444673
+            type: 10
+            enabled: true
+            position: [-540, 420, 0]
+            size: [420, 129]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 11987364725580865186
+            type: 9
+            enabled: true
+          - id: 8015123497227896096
+            type: 12
+            enabled: true
+          - id: 15319895227806136068
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_back.png
+            hover_image_path: assets/textures//button_back_selected.png
+      - id: 14323985393223490193
+        name: settings
+        enabled: true
+        parent_id: 18445494478746843994
+        component:
+          - id: 6665686226718890024
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 2547485766222249227
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1191, 174]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 12992060643194559027
+            type: 9
+            enabled: true
+          - id: 11739928590846258687
+            type: 11
+            enabled: true
+            image_path: assets/textures//settings.png
+            hover_image_path: ""

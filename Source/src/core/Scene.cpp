@@ -35,7 +35,7 @@ Hachiko::Scene::~Scene()
     CleanScene();
 }
 
-void Hachiko::Scene::CleanScene() 
+void Hachiko::Scene::CleanScene()
 {
     App->editor->SetSelectedGO(nullptr);
     delete root;
@@ -97,8 +97,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
-    {
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
         for (auto child : children)
         {
             GameObject* last_parent = parent;
@@ -228,7 +227,7 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 
 void Hachiko::Scene::CreateLights()
 {
-    GameObject* sun = CreateNewGameObject(root , "Sun");
+    GameObject* sun = CreateNewGameObject(root, "Sun");
     sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
     sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
     sun->CreateComponent(Component::Type::DIRLIGHT);
@@ -257,7 +256,7 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     return camera;
 }
 
-void Hachiko::Scene::Start() const 
+void Hachiko::Scene::Start() const
 {
     root->Start();
 }

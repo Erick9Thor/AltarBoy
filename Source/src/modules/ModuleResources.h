@@ -40,6 +40,7 @@ namespace Hachiko
         {{Hachiko::Resource::Type::TEXTURE, ".png"},
         {Hachiko::Resource::Type::TEXTURE, ".tif"},
         {Hachiko::Resource::Type::MODEL, ".fbx"},
+        {Hachiko::Resource::Type::MODEL, ".obj"},
         {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
         // Imported Resources
         {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION},
