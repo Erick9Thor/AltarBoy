@@ -10,9 +10,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
-Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL)
-{
-}
+Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL) {}
 
 void Hachiko::ModelImporter::Import(const char* path)
 {
@@ -24,7 +22,6 @@ void Hachiko::ModelImporter::Import(const char* path)
     const std::string model_output_path = StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string());
     //scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
-
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -69,9 +66,38 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 
 void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node)
 {
+    std::string node_name = assimp_node->mName.C_Str();
+
+    aiVector3D aiTranslation, aiScale;
+    aiQuaternion aiRotation;
+    assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+    float3 pos(aiTranslation.x, aiTranslation.y, aiTranslation.z);
+    Quat rot(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+    float3 scale(aiScale.x, aiScale.y, aiScale.z);
+
+    bool dummy_node = true;
+    while (dummy_node)
+    {
+        dummy_node = false;
+        if (node_name.find("_$AssimpFbx$_") != std::string::npos && assimp_node->mNumChildren == 1)
+        {
+            assimp_node = assimp_node->mChildren[0];
+            assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+
+            pos += float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
+            rot = rot * Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+            scale = float3(scale.x * aiScale.x, scale.y * aiScale.y, scale.z * aiScale.z);
+
+            node_name = assimp_node->mName.C_Str();
+            dummy_node = true;
+        }
+    }
+
     node[NODE_NAME] = assimp_node->mName.C_Str();
-    node[NODE_TRANSFORM] = assimp_node->mTransformation;
-    
+    node[TRANSFORM_POSITION] = pos;
+    node[TRANSFORM_ROTATION] = rot;
+    node[TRANSFORM_SCALE] = scale;
+
     for (unsigned int j = 0; j < assimp_node->mNumMeshes; ++j)
     {
         node[NODE_MESH_INDEX][j] = assimp_node->mMeshes[j];
@@ -126,16 +152,16 @@ void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, 
     {
         ResourceNode* resource_node = new ResourceNode();
         resource_node->node_name = node[i][NODE_NAME].as<std::string>();
-        resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
+        resource_node->node_transform = float4x4::FromTRS(node[i][TRANSFORM_POSITION].as<float3>(), node[i][TRANSFORM_ROTATION].as<Quat>(), node[i][TRANSFORM_SCALE].as<float3>());
 
         for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
         {
             int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
             int material_idx = meshes[mesh_idx][NODE_MATERIAL_INDEX].as<int>();
-            
+
             resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
         }
-        
+
         if (node[i][NODE_CHILD].IsDefined())
         {
             LoadChildren(node[i][NODE_CHILD], meshes, materials, resource_node->children);
@@ -155,7 +181,7 @@ Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UI
     HE_LOG("Mesh index: %d", mesh_index);
 
     const std::filesystem::path model(model_path);
-  
+
     // 1 - Open assimp model
     Assimp::Importer import;
     const aiScene* scene = nullptr;
