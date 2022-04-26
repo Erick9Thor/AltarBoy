@@ -41,14 +41,16 @@
 #define MATERIAL_DIFFUSE_NAME "diffuse"
 #define MATERIAL_SPECULAR_NAME "specular"
 #define MATERIAL_NORMALS_NAME "normals"
+#define MATERIAL_METALNESS_NAME "metalness"
 #define MATERIAL_DIFFUSE_PATH "diffuse_path"
 #define MATERIAL_SPECULAR_PATH "specular_path"
 #define MATERIAL_NORMALS_PATH "normals_path"
+#define MATERIAL_METALNESS_PATH "metalness_path"
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
 #define MATERIAL_SHININESS "shininess"
 #define MATERIAL_SMOOTHNESS "smoothness"
-#define MATERIAL_METALNESS "metalness"
+#define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"
 
 // Generic

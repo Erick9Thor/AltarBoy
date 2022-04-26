@@ -39,30 +39,53 @@ void Hachiko::ResourceMaterial::DrawGui()
     }
     if (is_metallic)
     {
-        ImGui::SliderFloat("Metalness", &metalness, 0.0f, 1.0f, "%.2f", 1.0f);
+        if (ImGui::TreeNodeEx((void*)&metalness, texture_flags, "Metalness"))
+        {
+            if (metalness != nullptr)
+            {
+                ImGui::Image(reinterpret_cast<void*>(metalness->GetId()), ImVec2(80, 80));
+                ImGui::SameLine();
+                ImGui::BeginGroup();
+                ImGui::Text("%dx%d", metalness->width, metalness->height);
+                ImGui::Text("Path: %s", metalness->path.c_str());
+
+                RemoveTexture(ResourceTexture::Type::METALNESS);
+
+                ImGui::EndGroup();
+            }
+            else
+            {
+                ImGui::SliderFloat("Metalness", &metalness_value, 0.0f, 1.0f, "%.2f", 1.0f);
+                AddTexture(ResourceTexture::Type::METALNESS);
+            }
+            ImGui::TreePop();
+        }
     }
-    else if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
+    else 
     {
-        if (specular != nullptr)
+        if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
         {
-            ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
-            ImGui::SameLine();
-            ImGui::BeginGroup();
-            ImGui::Text("%dx%d", specular->width, specular->height);
-            ImGui::Text("Path: %s", specular->path.c_str());
+            if (specular != nullptr)
+            {
+                ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
+                ImGui::SameLine();
+                ImGui::BeginGroup();
+                ImGui::Text("%dx%d", specular->width, specular->height);
+                ImGui::Text("Path: %s", specular->path.c_str());
 
-            // TODO: textue configuration (maybe delegate to the ResourceTexture)
+                // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
-            RemoveTexture(ResourceTexture::Type::SPECULAR);
+                RemoveTexture(ResourceTexture::Type::SPECULAR);
 
-            ImGui::EndGroup();
+                ImGui::EndGroup();
+            }
+            else
+            {
+                ImGui::ColorEdit4("Specular color", &specular_color[0]);
+                AddTexture(ResourceTexture::Type::SPECULAR);
+            }
+            ImGui::TreePop();
         }
-        else
-        {
-            ImGui::ColorEdit4("Specular color", &specular_color[0]);
-            AddTexture(ResourceTexture::Type::SPECULAR);
-        }
-        ImGui::TreePop();
     }
     if (ImGui::TreeNodeEx((void*)&normal, texture_flags, "Normal"))
     {

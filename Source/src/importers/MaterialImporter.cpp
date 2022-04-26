@@ -63,16 +63,18 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_DIFFUSE_NAME] = (material->HasDiffuse()) ? material->diffuse->GetName() : std::string();
     material_node[MATERIAL_SPECULAR_NAME] = (material->HasSpecular()) ? material->specular->GetName() : std::string();
     material_node[MATERIAL_NORMALS_NAME] = (material->HasNormal()) ? material->normal->GetName() : std::string();
+    material_node[MATERIAL_METALNESS_NAME] = (material->HasMetalness()) ? material->metalness->GetName() : std::string();
 
     material_node[MATERIAL_DIFFUSE_PATH] = (material->HasDiffuse()) ? material->diffuse->GetAssetPath() : std::string();
     material_node[MATERIAL_SPECULAR_PATH] = (material->HasSpecular()) ? material->specular->GetAssetPath() : std::string();
     material_node[MATERIAL_NORMALS_PATH] = (material->HasNormal()) ? material->normal->GetAssetPath() : std::string();
+    material_node[MATERIAL_METALNESS_PATH] = (material->HasMetalness()) ? material->metalness->GetAssetPath() : std::string();
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
     material_node[MATERIAL_SHININESS] = material->shininess;
     material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
-    material_node[MATERIAL_METALNESS] = material->metalness;
+    material_node[MATERIAL_METALNESS_VALUE] = material->metalness;
     material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
 
     FileSystem::Save(material_library_path.c_str(), material_node);
@@ -93,16 +95,18 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
     material->shininess = node[MATERIAL_SHININESS].as<float>();
     material->smoothness = node[MATERIAL_SMOOTHNESS].as<float>();
-    material->metalness = node[MATERIAL_METALNESS].as<float>();
+    material->metalness_value = node[MATERIAL_METALNESS_VALUE].as<float>();
     material->is_metallic = node[MATERIAL_IS_METALLIC].as<bool>();
 
     std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
     std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
     std::string normals_path = node[MATERIAL_NORMALS_PATH].as<std::string>();
+    std::string metalness_path = node[MATERIAL_METALNESS_PATH].as<std::string>();
     
     material->diffuse = App->resources->GetTexture(node[MATERIAL_DIFFUSE_NAME].as<std::string>(), diffuse_path);
     material->specular = App->resources->GetTexture(node[MATERIAL_SPECULAR_NAME].as<std::string>(), specular_path);
     material->normal = App->resources->GetTexture(node[MATERIAL_NORMALS_NAME].as<std::string>(), normals_path);
+    material->metalness = App->resources->GetTexture(node[MATERIAL_METALNESS_NAME].as<std::string>(), metalness_path);
 
     return material;
 }
@@ -142,12 +146,14 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id)
     material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
     material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
-
+    material->metalness = ImportTexture(ai_material, aiTextureType_METALNESS);
+    
     Save(material);
 
     delete material->diffuse;
     delete material->specular;
     delete material->normal;
+    delete material->metalness;
     delete material;
 }
 

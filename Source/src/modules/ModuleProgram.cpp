@@ -216,9 +216,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
     material_data.smoothness = material->smoothness;
-    material_data.metalness = material->metalness;
+    material_data.metalness = material->metalness_value;
     material_data.specular_flag = material->HasSpecular();
     material_data.normal_flag = material->HasNormal();
+    material_data.metalness_flag = material->HasNormal();
     material_data.shininess = material->shininess;
     material_data.is_metallic = material->is_metallic;
 
@@ -231,6 +232,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
         ModuleTexture::Bind(material->GetSpecularId(), static_cast<int>(TextureSlots::SPECULAR));
     }
     if (material_data.normal_flag)
+    {
+        ModuleTexture::Bind(material->GetNomalId(), static_cast<int>(TextureSlots::NORMAL));
+    }
+    if (material_data.metalness_flag)
     {
         ModuleTexture::Bind(material->GetNomalId(), static_cast<int>(TextureSlots::NORMAL));
     }

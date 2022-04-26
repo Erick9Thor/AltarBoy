@@ -28,6 +28,11 @@ namespace Hachiko
             return normal != nullptr;
         }
 
+        [[nodiscard]] bool HasMetalness() const
+        {
+            return metalness != nullptr;
+        }
+
         [[nodiscard]] unsigned GetDiffuseId() const
         {
             if (diffuse != nullptr)
@@ -55,6 +60,15 @@ namespace Hachiko
             return 0;
         }
 
+        [[nodiscard]] unsigned GetMetalnessId() const
+        {
+            if (metalness != nullptr)
+            {
+                return metalness->GetId();
+            }
+            return 0;
+        }
+
         [[nodiscard]] std::string GetName() const
         {
             return name;
@@ -78,6 +92,9 @@ namespace Hachiko
             case ResourceTexture::Type::NORMALS:
                 normal = res;
                 break;
+            case ResourceTexture::Type::METALNESS:
+                metalness = res;
+                break;
             }
         }
 
@@ -91,17 +108,20 @@ namespace Hachiko
                 return "Specular";
             case ResourceTexture::Type::NORMALS:
                 return "Normals";
+            case ResourceTexture::Type::METALNESS:
+                return "Metalness";
             }
         }
 
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
         ResourceTexture* normal = nullptr;
+        ResourceTexture* metalness = nullptr;
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
         float shininess = 50.0f;
         float smoothness = 50.0f;
-        float metalness = 50.0f;
+        float metalness_value = 50.0f;
         bool is_metallic = false;
 
     private:
