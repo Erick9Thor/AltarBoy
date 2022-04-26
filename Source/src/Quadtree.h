@@ -6,7 +6,8 @@
 #include <list>
 
 #define QUADTREE_MAX_ITEMS 8
-#define QUADTREE_MIN_SIZE 10.0f
+#define QUADTREE_MIN_SIZE 50.f
+#define QUADTREE_MAX_DEPTH 3
 
 namespace Hachiko
 {
@@ -22,7 +23,7 @@ namespace Hachiko
     class QuadtreeNode
     {
     public:
-        QuadtreeNode(const AABB& box, QuadtreeNode* parent);
+        QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth);
         ~QuadtreeNode();
 
         void Insert(GameObject* game_object);
@@ -48,11 +49,12 @@ namespace Hachiko
         template<typename T>
         void GetIntersections(std::vector<GameObject*>& objects, const T& primitive) const;
 
-        QuadtreeNode* children[static_cast<int>(Quadrants::COUNT)]{};
+        QuadtreeNode* children[static_cast<int>(Quadrants::COUNT)] {};
 
         void DebugDraw();
 
     private:
+        int depth = 0;
         AABB box;
         QuadtreeNode* parent;
         std::list<GameObject*> objects;
@@ -105,4 +107,4 @@ namespace Hachiko
             }
         }
     }
-}
+} // namespace Hachiko

@@ -16,14 +16,15 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include <debugdraw.h>
 
-Hachiko::Scene::Scene()
-    : root(new GameObject(nullptr, float4x4::identity, "Root", 0))
-    , culling_camera(App->camera->GetMainCamera())
-    , skybox(new Skybox())
-    , quadtree(new Quadtree())
-    , loaded(false)
-    , name(UNNAMED_SCENE)
+Hachiko::Scene::Scene() :
+    root(new GameObject(nullptr, float4x4::identity, "Root")),
+    culling_camera(App->camera->GetMainCamera()),
+    skybox(new Skybox()),
+    quadtree(new Quadtree()),
+    loaded(false),
+    name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
@@ -34,7 +35,7 @@ Hachiko::Scene::~Scene()
     CleanScene();
 }
 
-void Hachiko::Scene::CleanScene() 
+void Hachiko::Scene::CleanScene()
 {
     App->editor->SetSelectedGO(nullptr);
     delete root;
@@ -96,17 +97,16 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children)
-    {
+    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
         for (auto child : children)
         {
             GameObject* last_parent = parent;
 
+            last_parent = CreateNewGameObject(parent, child->node_name.c_str());
+            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
+            
             if (!child->meshes_index.empty())
             {
-                last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-                last_parent->GetTransform()->SetLocalTransform(child->node_transform);
-
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
@@ -124,7 +124,9 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                         model->materials[mesh_info.material_index].material_id)));
                 }
             }
-            
+
+            last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
+
             create_children_function(last_parent, child->children);
         }
     };
@@ -226,7 +228,7 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 
 void Hachiko::Scene::CreateLights()
 {
-    GameObject* sun = CreateNewGameObject(root , "Sun");
+    GameObject* sun = CreateNewGameObject(root, "Sun");
     sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
     sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
     sun->CreateComponent(Component::Type::DIRLIGHT);
@@ -255,7 +257,7 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     return camera;
 }
 
-void Hachiko::Scene::Start() const 
+void Hachiko::Scene::Start() const
 {
     root->Start();
 }
