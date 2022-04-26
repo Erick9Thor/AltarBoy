@@ -64,9 +64,9 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     memcpy(cursor, mesh->tangents, size_bytes);
     cursor += size_bytes;
 
-    // size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
-    // memcpy(cursor, mesh->bones, size_bytes);
-    // cursor += size_bytes;
+    size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    memcpy(cursor, mesh->bones.get(), size_bytes);
+    cursor += size_bytes;
 
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
@@ -148,6 +148,10 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     // TODO: ANIMATIONS LOAD BONES FOR Resources
     if (sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] > 0)
     {
+        mesh->bones = std::make_unique<Hachiko::ResourceMesh::Bone[]>(sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
+        size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+        memcpy(mesh->bones.get(), cursor, size_bytes);
+        cursor += size_bytes;
     }
 
     mesh->GenerateBuffers();
