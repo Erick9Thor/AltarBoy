@@ -1,0 +1,22 @@
+General:
+  id: 9925426821977438415
+  type: 3
+  last_write: [1080265455, 30955708]
+model_name: rock01_mesh
+material:
+  - id: 13084526012427199591
+    name: lambert1
+mesh:
+  - id: 7140512660761195648
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: rock01_mesh
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

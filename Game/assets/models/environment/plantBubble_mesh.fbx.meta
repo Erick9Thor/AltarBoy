@@ -1,0 +1,22 @@
+General:
+  id: 5648300556596277590
+  type: 3
+  last_write: [1080205616, 30955708]
+model_name: plantBubble_mesh
+material:
+  - id: 5648156256391377427
+    name: lambert1
+mesh:
+  - id: 7127146596675619815
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: plant_mesh
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

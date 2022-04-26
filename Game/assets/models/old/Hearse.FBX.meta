@@ -1,0 +1,22 @@
+General:
+  id: 5432477776710347820
+  type: 3
+  last_write: [1277690246, 30955708]
+model_name: Hearse
+material:
+  - id: 5864815738693123789
+    name: HearseMaterial
+mesh:
+  - id: 14015300775374676288
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Hearse
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

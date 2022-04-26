@@ -1,0 +1,7 @@
+name: tallrock_LP_01
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.5, 0.5, 0.5, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 0

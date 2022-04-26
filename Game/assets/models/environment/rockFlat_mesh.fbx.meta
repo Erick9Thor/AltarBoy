@@ -1,0 +1,22 @@
+General:
+  id: 7764308952792092250
+  type: 3
+  last_write: [1080325291, 30955708]
+model_name: rockFlat_mesh
+material:
+  - id: 5854136081612480432
+    name: DefaultMaterial
+mesh:
+  - id: 11268050866123983360
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Box027
+    position: [40.8980331, 22.2405624, 2.35988235]
+    rotation: [-0.707106769, 0, 0, 0.707106769]
+    scale: [1, 1, 0.637839019]
+    mesh_index:
+      - 0

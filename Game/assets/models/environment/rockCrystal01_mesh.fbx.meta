@@ -1,0 +1,46 @@
+General:
+  id: 11993396835497095354
+  type: 3
+  last_write: [1080305346, 30955708]
+model_name: rockCrystal01_mesh
+material:
+  - id: 14208559663001252458
+    name: DefaultMaterial
+mesh:
+  - id: 8954080995227794526
+    material_index: 0
+  - id: 129653464253576884
+    material_index: 0
+  - id: 11175873303232655868
+    material_index: 0
+  - id: 1239692003940148613
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Box012
+    position: [-51.742672, 2.64490652, 0.0122552598]
+    rotation: [1.49011612e-07, 0, 0, 0.99999994]
+    scale: [5.83426189, 8.40509987, 6.6303091]
+    mesh_index:
+      - 0
+  - name: Box013
+    position: [-49.482914, 5.96983099, 0.709951162]
+    rotation: [-1.78813934e-07, 0.721815586, -1.1920929e-07, -0.692085385]
+    scale: [2.78054595, 6.4180665, 2.48505187]
+    mesh_index:
+      - 1
+  - name: Box014
+    position: [-52.7401352, 3.1911602, 1.49566984]
+    rotation: [1.49011612e-07, 0, 0, 0.99999994]
+    scale: [1.91138899, 4.41187668, 1.70826173]
+    mesh_index:
+      - 2
+  - name: Box015
+    position: [-52.7401352, 3.1911602, 1.01527131]
+    rotation: [2.68220901e-07, -0.217119873, 1.49011612e-08, 0.97614491]
+    scale: [1.48141003, 3.41939688, 1.32397783]
+    mesh_index:
+      - 3

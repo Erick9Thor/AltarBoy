@@ -1,0 +1,38 @@
+General:
+  id: 10438343878811543673
+  type: 3
+  last_write: [1277670290, 30955708]
+model_name: Floor
+material:
+  - id: 10800861054350406937
+    name: PlanksMaterial
+mesh:
+  - id: 2836608868493623617
+    material_index: 0
+  - id: 14187740719789791284
+    material_index: 0
+  - id: 16081823909802429812
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Base
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0
+  - name: Sides
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 1
+  - name: Planks
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 2

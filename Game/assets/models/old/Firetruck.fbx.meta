@@ -1,0 +1,22 @@
+General:
+  id: 13104177309545277496
+  type: 3
+  last_write: [1277620424, 30955708]
+model_name: Firetruck
+material:
+  - id: 16386543639655117357
+    name: FiretruckMaterial
+mesh:
+  - id: 16716801502780131967
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Firetruck
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

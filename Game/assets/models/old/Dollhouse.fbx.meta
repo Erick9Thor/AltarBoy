@@ -1,0 +1,22 @@
+General:
+  id: 16298907547880611668
+  type: 3
+  last_write: [1277590507, 30955708]
+model_name: Dollhouse
+material:
+  - id: 4712795628065345710
+    name: DollhouseMaterial
+mesh:
+  - id: 11250998751814027321
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Dollhouse
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

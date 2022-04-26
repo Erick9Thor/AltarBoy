@@ -1,0 +1,278 @@
+General:
+  id: 10033856737443338916
+  type: 3
+  last_write: [40863509, 30954511]
+model_name: Level_colour
+material:
+  - id: 2064279906559667324
+    name: Path_desert
+  - id: 12589363044304969101
+    name: Wall_in
+  - id: 6878441194226323120
+    name: Wall_desert
+  - id: 15422479456768226261
+    name: level_1:lambert2SG1
+  - id: 18028557744759827564
+    name: level_1:initialShadingGroup1
+mesh:
+  - id: 2643985039524827662
+    material_index: 0
+  - id: 7279537398175928441
+    material_index: 0
+  - id: 1695905745803143024
+    material_index: 0
+  - id: 16002869110137172708
+    material_index: 1
+  - id: 14306308116044828361
+    material_index: 2
+  - id: 7837088062346705324
+    material_index: 2
+  - id: 2796185785891475214
+    material_index: 2
+  - id: 14342670978049737819
+    material_index: 1
+  - id: 14111742474886561566
+    material_index: 2
+  - id: 639704118834568248
+    material_index: 0
+  - id: 15934861983054040221
+    material_index: 1
+  - id: 2885730578214127392
+    material_index: 2
+  - id: 1939925890827981517
+    material_index: 0
+  - id: 17640588041992125469
+    material_index: 3
+  - id: 12657261769585966800
+    material_index: 4
+  - id: 12872110528723977602
+    material_index: 0
+  - id: 15222086074299834384
+    material_index: 0
+  - id: 14931810595080392207
+    material_index: 2
+  - id: 5823237543083501940
+    material_index: 0
+  - id: 13457422965288390969
+    material_index: 2
+  - id: 15366550664515475875
+    material_index: 2
+  - id: 11419966003024337047
+    material_index: 2
+  - id: 10026187339702488522
+    material_index: 2
+  - id: 16733640984398368163
+    material_index: 2
+  - id: 10357352897651714217
+    material_index: 2
+  - id: 10462390349602620616
+    material_index: 2
+  - id: 15422081238831094321
+    material_index: 2
+  - id: 9768642822494735436
+    material_index: 2
+  - id: 18217116530722251404
+    material_index: 2
+  - id: 18414565770162236978
+    material_index: 2
+  - id: 7310229304706074327
+    material_index: 2
+  - id: 3070484457705150317
+    material_index: 1
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: level_1:Path_curve2
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 0
+  - name: level_1:Path_curve3
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 1
+  - name: level_1:Path_curve4
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 2
+  - name: level_1:Floor_final
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 3
+  - name: level_1:Hose_3
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 4
+  - name: level_1:Hose_2
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 5
+  - name: level_1:Wall_3
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 6
+  - name: level_1:Wall_1
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 7
+  - name: level_1:Hose_1
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 8
+  - name: level_1:Initial_platform1
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 9
+  - name: level_1:Wall_2
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 10
+  - name: level_1:Floor_hole
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 11
+  - name: level_1:Initial_platform
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 12
+  - name: level_1:Character
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 13
+  - name: level_1:pCylinder1
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 14
+  - name: level_1:Path_curve
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 15
+  - name: level_1:Path_curve1
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 16
+  - name: level_1:Path_curve6
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 17
+  - name: level_1:Path_curve5
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 18
+  - name: Column_hose_1
+    position: [0, 2.68095112, -14.8195543]
+    rotation: [0, 0, 0, 1]
+    scale: [94.5999985, 564.044312, 94.5999985]
+    mesh_index:
+      - 19
+  - name: Column_hose_2
+    position: [0, 2.68095112, -22.0711021]
+    rotation: [0, 0, 0, 1]
+    scale: [94.5999985, 564.044312, 94.5999985]
+    mesh_index:
+      - 20
+  - name: Column_hose_3
+    position: [-9.37880707, 2.68095112, -14.8195543]
+    rotation: [0, 0, 0, 1]
+    scale: [94.5999985, 564.044312, 94.5999985]
+    mesh_index:
+      - 21
+  - name: Column_hose_4
+    position: [-9.37880707, 2.68095112, -24.2411156]
+    rotation: [0, 0, 0, 1]
+    scale: [94.5999985, 564.044312, 94.5999985]
+    mesh_index:
+      - 22
+  - name: Column_temple_1
+    position: [-2.2319026, 2.68095112, -44.7721024]
+    rotation: [0, 0, 0, 1]
+    scale: [98.1999969, 684.400024, 98.1999969]
+    mesh_index:
+      - 23
+  - name: Column_temple_2
+    position: [2.99813867, 2.68095112, -44.7721024]
+    rotation: [0, 0, 0, 1]
+    scale: [98.1999969, 684.400024, 98.1999969]
+    mesh_index:
+      - 24
+  - name: Column_temple_3
+    position: [0.500002861, -2.73111224, -63.0174446]
+    rotation: [0, 0, 0, 1]
+    scale: [78.5999985, 453.188721, 78.5999985]
+    mesh_index:
+      - 25
+  - name: Column_temple_4
+    position: [0.500002861, -2.73111224, -55.9168358]
+    rotation: [0, 0, 0, 1]
+    scale: [78.5999985, 453.188721, 78.5999985]
+    mesh_index:
+      - 26
+  - name: Arc_temple_2
+    position: [0.374465615, 6.16525698, -45.338623]
+    rotation: [0, 0, 0, 1]
+    scale: [551.320312, 644.862122, 201.729416]
+    mesh_index:
+      - 27
+  - name: Arc_temple_1
+    position: [0.374465615, 0.938823462, -59.482708]
+    rotation: [0, 0.707106709, 0, 0.707106829]
+    scale: [624.585083, 74.5396347, 138.969803]
+    mesh_index:
+      - 28
+  - name: Column_temple_5
+    position: [-1.56030548, 2.68095112, -70.515213]
+    rotation: [0, 0, 0, 1]
+    scale: [98.1999969, 684.400024, 98.1999969]
+    mesh_index:
+      - 29
+  - name: Column_temple_6
+    position: [2.57469511, 1.0462445, -70.515213]
+    rotation: [0, 0, 0, 1]
+    scale: [98.1999969, 260.450043, 98.1999969]
+    mesh_index:
+      - 30
+  - name: Wall_3
+    position: [0, 0, -0.394999981]
+    rotation: [0, 0, 0, 1]
+    scale: [0.5, 0.5, 0.5]
+    mesh_index:
+      - 31

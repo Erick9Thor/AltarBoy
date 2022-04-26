@@ -1,0 +1,22 @@
+General:
+  id: 10621604085508243159
+  type: 3
+  last_write: [1277600478, 30955708]
+model_name: Drawers
+material:
+  - id: 7039674010528848919
+    name: DrawersMaterial
+mesh:
+  - id: 16495389768741276604
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Drawers
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

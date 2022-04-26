@@ -1,0 +1,22 @@
+General:
+  id: 18052673861525630699
+  type: 3
+  last_write: [1080115848, 30955708]
+model_name: plant01_emission_mesh
+material:
+  - id: 12618090652517073685
+    name: 01 - Default
+mesh:
+  - id: 5824083625857304385
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: plant_mesh
+    position: [-0.00831633806, 0, 0.00965172052]
+    rotation: [5.96046448e-08, 0, 0, 0.99999994]
+    scale: [1.04753804, 1.04753804, 1.04753804]
+    mesh_index:
+      - 0

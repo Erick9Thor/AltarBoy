@@ -1,0 +1,22 @@
+General:
+  id: 16808201151351989752
+  type: 3
+  last_write: [1277770038, 30955708]
+model_name: SpinningTop
+material:
+  - id: 6668992649286748834
+    name: SpinningTopMaterial
+mesh:
+  - id: 7540606682135718394
+    material_index: 0
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: SpinningTop
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0

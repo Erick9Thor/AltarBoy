@@ -1,0 +1,7 @@
+name: ClockGlassMaterial
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.588235319, 0.588235319, 0.588235319, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 2

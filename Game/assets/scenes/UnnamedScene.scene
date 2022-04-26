@@ -1,0 +1,920 @@
+scene_name: UnnamedScene
+root_id: 5371058281039487094
+child:
+  - id: 11695334725691261170
+    name: BakerHouse
+    enabled: true
+    parent_id: 5371058281039487094
+    component:
+      - id: 9113002678576227721
+        type: 1
+        enabled: true
+        position: [-4.28454351, 0, -3.35048294]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 1811422734964981844
+        name: Chimney
+        enabled: true
+        parent_id: 11695334725691261170
+        component:
+          - id: 12648448718248891038
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [100, 99.9999847, 99.9999847]
+          - id: 17175637234531717173
+            type: 2
+            enabled: true
+            model_file_path: ""
+            model_name: BakerHouse
+            mesh_index: 0
+          - id: 13115318114335302978
+            type: 3
+            enabled: true
+            name: Baker_house
+      - id: 1065468267645572392
+        name: Baker_house
+        enabled: true
+        parent_id: 11695334725691261170
+        component:
+          - id: 9099299487461441384
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [100, 99.9999847, 99.9999847]
+          - id: 6824114287448073681
+            type: 2
+            enabled: true
+            model_file_path: ""
+            model_name: BakerHouse
+            mesh_index: 1
+          - id: 13115318114335302978
+            type: 3
+            enabled: true
+            name: Baker_house
+  - id: 3657093189778022525
+    name: Player
+    enabled: true
+    parent_id: 5371058281039487094
+    component:
+      - id: 15334419537760640157
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 11188759375770323259
+        name: Gun
+        enabled: true
+        parent_id: 3657093189778022525
+        component:
+          - id: 16859885376501022340
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 5164935894770005485
+            type: 2
+            enabled: true
+            model_file_path: ""
+            model_name: Player
+            mesh_index: 0
+          - id: 120423791973162266
+            type: 3
+            enabled: true
+            name: GunMaterial
+      - id: 16883041708449037114
+        name: PlayerCtrl
+        enabled: true
+        parent_id: 3657093189778022525
+        component:
+          - id: 5028639826530022564
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 4455905368977758983
+            name: Root
+            enabled: true
+            parent_id: 16883041708449037114
+            component:
+              - id: 1732876990826015473
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 1539891621710463582
+                name: Hips
+                enabled: true
+                parent_id: 4455905368977758983
+                component:
+                  - id: 6368001490726853604
+                    type: 1
+                    enabled: true
+                    position: [-0.134608597, 0.163613811, -0.0454037674]
+                    rotation: [-0.685951173, 0, 0, 0.727647603]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 10937275127668362104
+                    name: Spine
+                    enabled: true
+                    parent_id: 1539891621710463582
+                    component:
+                      - id: 13076217412056486183
+                        type: 1
+                        enabled: true
+                        position: [0.0274275076, 0.0653713271, 0.149609923]
+                        rotation: [0.203889355, -0.242166951, -0.527305186, 0.788500845]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 15278659203021055709
+                        name: Head
+                        enabled: true
+                        parent_id: 10937275127668362104
+                        component:
+                          - id: 3166300952292235179
+                            type: 1
+                            enabled: true
+                            position: [1.52009592e-17, 0.020128822, 0.232369661]
+                            rotation: [-0.000749464671, 0.0751057118, 0.48530069, 0.871115327]
+                            scale: [0.999999821, 0.999999702, 0.99999994]
+                        child:
+                          - id: 9063632223721145956
+                            name: Hat1
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 8033609937830262215
+                                type: 1
+                                enabled: true
+                                position: [0.0112348069, 0.0294139087, 0.548026502]
+                                rotation: [-0.419550568, -0.150959119, -0.0661756247, 0.892641962]
+                                scale: [1, 0.999999881, 1]
+                            child:
+                              - id: 11073947094874486005
+                                name: Hat2
+                                enabled: true
+                                parent_id: 9063632223721145956
+                                component:
+                                  - id: 16364331359180799300
+                                    type: 1
+                                    enabled: true
+                                    position: [-0.0663901269, -0.00896175578, 0.33840251]
+                                    rotation: [-0.320834666, -0.0379982591, 0.404435039, 0.855601311]
+                                    scale: [0.99999994, 0.99999994, 0.999999821]
+                                child:
+                                  - id: 11727498802092063695
+                                    name: Hat3
+                                    enabled: true
+                                    parent_id: 11073947094874486005
+                                    component:
+                                      - id: 9692518050866940693
+                                        type: 1
+                                        enabled: true
+                                        position: [9.76996256e-17, 2.04281027e-16, 0.207841396]
+                                        rotation: [-0.399669021, 0.0657644495, -0.105372362, 0.908205032]
+                                        scale: [0.99999994, 1, 1]
+                                    child:
+                                      - id: 16521279752962535243
+                                        name: Hat4
+                                        enabled: true
+                                        parent_id: 11727498802092063695
+                                        component:
+                                          - id: 11664953199211861549
+                                            type: 1
+                                            enabled: true
+                                            position: [8.881784e-18, 6.66133775e-17, 0.098135151]
+                                            rotation: [-0.211124837, -0.182990849, -0.222518116, 0.934037685]
+                                            scale: [0.99999994, 0.99999994, 0.99999994]
+                                        child:
+                                          - id: 8076000552378487773
+                                            name: Hat5
+                                            enabled: true
+                                            parent_id: 16521279752962535243
+                                            component:
+                                              - id: 9728815986631229114
+                                                type: 1
+                                                enabled: true
+                                                position: [-1.90342531e-16, -1.3322676e-17, 0.135960162]
+                                                rotation: [-0.124024548, -0.162942648, 0.193857104, 0.959420264]
+                                                scale: [0.999999881, 0.999999881, 0.999999881]
+                                            child:
+                                              - id: 31955045721085754
+                                                name: HatEnd
+                                                enabled: true
+                                                parent_id: 8076000552378487773
+                                                component:
+                                                  - id: 1483930682006629684
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [2.3014576e-16, -4.10782524e-17, 0.0892126635]
+                                                    rotation: [0.0606318675, -0.0492132008, 0.00299304188, 0.996941805]
+                                                    scale: [1, 1, 1]
+                          - id: 13458518137716773832
+                            name: LeftBrow3
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 8030280376356479192
+                                type: 1
+                                enabled: true
+                                position: [0.118064173, -0.145256445, 0.262666553]
+                                rotation: [0.633174777, 0.285010099, 0.26545167, 0.668875515]
+                                scale: [0.99999994, 1, 1]
+                            child:
+                              - id: 7794262559144044205
+                                name: LeftBrow3End
+                                enabled: true
+                                parent_id: 13458518137716773832
+                                component:
+                                  - id: 13971091446974868098
+                                    type: 1
+                                    enabled: true
+                                    position: [-7.1054272e-17, -1.28785867e-16, 0.184453756]
+                                    rotation: [0.0705081299, 0.0586287826, -0.0308915712, 0.995307565]
+                                    scale: [1, 1, 1]
+                          - id: 10707825043792102021
+                            name: LeftBrow2
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 14885921147122652943
+                                type: 1
+                                enabled: true
+                                position: [0.118064173, -0.145256445, 0.262666553]
+                                rotation: [0.732428312, 0.158197492, 0.129136205, 0.649496913]
+                                scale: [0.99999994, 0.99999994, 1]
+                            child:
+                              - id: 6678267163802704368
+                                name: LeftBrow2End
+                                enabled: true
+                                parent_id: 10707825043792102021
+                                component:
+                                  - id: 18393199681290748088
+                                    type: 1
+                                    enabled: true
+                                    position: [-0.0034312841, 0.00195151253, 0.184212998]
+                                    rotation: [-0.0634761155, 0.0460817292, -0.0728769675, 0.994251609]
+                                    scale: [1, 1, 0.99999994]
+                          - id: 8994884777229857192
+                            name: LeftBrow1
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 17293780775094342818
+                                type: 1
+                                enabled: true
+                                position: [0.118064173, -0.145256445, 0.262666553]
+                                rotation: [0.626577556, 0.00608031405, 0.00123947556, 0.779334366]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8459395491465241026
+                                name: LeftBrow1End
+                                enabled: true
+                                parent_id: 8994884777229857192
+                                component:
+                                  - id: 6381704573623078996
+                                    type: 1
+                                    enabled: true
+                                    position: [-1.38777878e-17, 1.6431301e-16, 0.184020475]
+                                    rotation: [0.0472199693, -0.00488449587, 0.000230906022, 0.998872638]
+                                    scale: [1, 1, 1]
+                          - id: 4996953243034836433
+                            name: RightBrow1
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 8196104573796878437
+                                type: 1
+                                enabled: true
+                                position: [-0.114997387, -0.145256504, 0.264023513]
+                                rotation: [-0.779356658, 0.00488837669, -0.0015416987, 0.626559615]
+                                scale: [1, 1.00000012, 1.00000012]
+                            child:
+                              - id: 4194410921017946460
+                                name: RightBrow1End
+                                enabled: true
+                                parent_id: 4996953243034836433
+                                component:
+                                  - id: 8076742617194570713
+                                    type: 1
+                                    enabled: true
+                                    position: [6.79825007e-07, -1.35318089e-07, -0.184020415]
+                                    rotation: [0, 4.6566126e-10, -1.45519144e-11, 1]
+                                    scale: [1, 1, 1]
+                          - id: 3725161848070925266
+                            name: RightBrow2
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 14153578418789995420
+                                type: 1
+                                enabled: true
+                                position: [-0.114997387, -0.145256504, 0.264023513]
+                                rotation: [-0.650407314, 0.133399397, -0.154412463, 0.731663704]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 3857559148303912197
+                                name: RightBrow2End
+                                enabled: true
+                                parent_id: 3725161848070925266
+                                component:
+                                  - id: 1667771702650352139
+                                    type: 1
+                                    enabled: true
+                                    position: [0.00343111297, -0.00195195805, -0.184212402]
+                                    rotation: [-0.0649051443, 0.0440461934, -0.0413198955, 0.996062219]
+                                    scale: [1, 0.999999881, 0.99999994]
+                          - id: 13507502156104814181
+                            name: RightBrow3
+                            enabled: true
+                            parent_id: 15278659203021055709
+                            component:
+                              - id: 958785028413540482
+                                type: 1
+                                enabled: true
+                                position: [-0.114997387, -0.145256504, 0.264023513]
+                                rotation: [-0.67052412, 0.269134492, -0.281109989, 0.631617963]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 308118421136125931
+                                name: RightBrow3End
+                                enabled: true
+                                parent_id: 13507502156104814181
+                                component:
+                                  - id: 8582742741472922199
+                                    type: 1
+                                    enabled: true
+                                    position: [-0.0081445938, -1.35237599e-07, -0.184273675]
+                                    rotation: [0.0698087513, 0.0805944353, -0.0324411094, 0.993770123]
+                                    scale: [0.999999821, 1, 1]
+                      - id: 12366863411640818965
+                        name: LeftShoulder
+                        enabled: true
+                        parent_id: 10937275127668362104
+                        component:
+                          - id: 9636177800056097645
+                            type: 1
+                            enabled: true
+                            position: [0.0836690441, 0.0290556476, 0.208529621]
+                            rotation: [-0.184914753, 0.712583244, -0.0326053314, 0.675994515]
+                            scale: [1, 0.99999994, 1.00000012]
+                        child:
+                          - id: 1321823527715298066
+                            name: LeftUpperArm
+                            enabled: true
+                            parent_id: 12366863411640818965
+                            component:
+                              - id: 6521157894863328750
+                                type: 1
+                                enabled: true
+                                position: [-0.0027035519, 5.97821017e-05, 0.152926683]
+                                rotation: [0.584769726, 0.528765261, -0.175367907, 0.589659095]
+                                scale: [1.00000012, 1, 1]
+                            child:
+                              - id: 14111486851619641216
+                                name: LeftLowerArm
+                                enabled: true
+                                parent_id: 1321823527715298066
+                                component:
+                                  - id: 5319433971737205257
+                                    type: 1
+                                    enabled: true
+                                    position: [2.13162816e-16, -5.3290704e-17, 0.149731323]
+                                    rotation: [1.52438915e-05, 0.000724888523, -0.000271539757, 0.999999702]
+                                    scale: [0.999999881, 0.99999994, 0.99999994]
+                                child:
+                                  - id: 10951904136619273441
+                                    name: LeftLowerArm2
+                                    enabled: true
+                                    parent_id: 14111486851619641216
+                                    component:
+                                      - id: 16043720583189071028
+                                        type: 1
+                                        enabled: true
+                                        position: [-1.42108544e-16, -1.24344979e-16, 0.0667147413]
+                                        rotation: [-1.73015251e-05, -0.00141922908, 4.44089676e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 6183063248253757894
+                                        name: LeftWrist
+                                        enabled: true
+                                        parent_id: 10951904136619273441
+                                        component:
+                                          - id: 10653621750132441989
+                                            type: 1
+                                            enabled: true
+                                            position: [-2.62900816e-15, 2.6645352e-17, 0.0686311871]
+                                            rotation: [-0.0313578993, -0.0243380517, -0.203764737, 0.97821486]
+                                            scale: [1.00000024, 1.00000012, 0.99999994]
+                                        child:
+                                          - id: 15691173985018322995
+                                            name: LeftHand1
+                                            enabled: true
+                                            parent_id: 6183063248253757894
+                                            component:
+                                              - id: 11170135859648002426
+                                                type: 1
+                                                enabled: true
+                                                position: [-3.5527136e-17, -7.1054272e-17, 0.0905789137]
+                                                rotation: [0.11440254, -0.0292399283, -0.00240444229, 0.993001163]
+                                                scale: [1, 1, 0.999999821]
+                                            child:
+                                              - id: 16496970633228883583
+                                                name: LeftHand2
+                                                enabled: true
+                                                parent_id: 15691173985018322995
+                                                component:
+                                                  - id: 13740112143980375957
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-1.7763568e-17, 1.42108544e-16, 0.0939890295]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                          - id: 15385500676114665289
+                                            name: LeftThumb1
+                                            enabled: true
+                                            parent_id: 6183063248253757894
+                                            component:
+                                              - id: 10817155396860167593
+                                                type: 1
+                                                enabled: true
+                                                position: [-0.0751799494, -0.0166544002, 0.0396397859]
+                                                rotation: [0.241620138, -0.44144389, 0.223701283, 0.834688425]
+                                                scale: [1, 1.00000012, 1]
+                                            child:
+                                              - id: 12479248054401948143
+                                                name: LeftThumb2
+                                                enabled: true
+                                                parent_id: 15385500676114665289
+                                                component:
+                                                  - id: 8523775785076452251
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [7.1054272e-17, 0, 0.0496346988]
+                                                    rotation: [0.509321868, 0.0884056836, 0.252194256, 0.818030417]
+                                                    scale: [1, 1, 1]
+                          - id: 3837544506474703798
+                            name: LeftUpperArm_FK
+                            enabled: true
+                            parent_id: 12366863411640818965
+                            component:
+                              - id: 18074886045800964718
+                                type: 1
+                                enabled: true
+                                position: [-0.0027035519, 5.97821017e-05, 0.152926683]
+                                rotation: [0.355023026, 0.54451108, -5.53465688e-05, 0.759912074]
+                                scale: [1, 0.99999994, 0.999999881]
+                            child:
+                              - id: 9087874257849856478
+                                name: LeftLowerArm_FK
+                                enabled: true
+                                parent_id: 3837544506474703798
+                                component:
+                                  - id: 12349346415662400958
+                                    type: 1
+                                    enabled: true
+                                    position: [2.13162816e-16, -5.3290704e-17, 0.149731323]
+                                    rotation: [0.0210964512, 0.00583459018, -0.000148560197, 0.999760449]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 9972898839962067251
+                                    name: LeftLowerArm_2_FK
+                                    enabled: true
+                                    parent_id: 9087874257849856478
+                                    component:
+                                      - id: 18038221012860594736
+                                        type: 1
+                                        enabled: true
+                                        position: [-1.42108544e-16, -1.24344979e-16, 0.0667147413]
+                                        rotation: [-1.73015251e-05, -0.00141922908, 4.44089676e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 15911209308705413520
+                                        name: LeftWrist_FK
+                                        enabled: true
+                                        parent_id: 9972898839962067251
+                                        component:
+                                          - id: 4804161846099463292
+                                            type: 1
+                                            enabled: true
+                                            position: [-2.62900816e-15, 2.6645352e-17, 0.0686311871]
+                                            rotation: [-0.0403021984, -0.0956452936, 0.700494945, 0.706069827]
+                                            scale: [1.00000024, 1, 0.99999994]
+                          - id: 9249950719490246675
+                            name: LeftUpperArm_IK
+                            enabled: true
+                            parent_id: 12366863411640818965
+                            component:
+                              - id: 17435642173232596762
+                                type: 1
+                                enabled: true
+                                position: [-0.0027035519, 5.97821017e-05, 0.152926683]
+                                rotation: [0.584769726, 0.528765261, -0.175367907, 0.589659095]
+                                scale: [1.00000012, 1, 1]
+                            child:
+                              - id: 10029049819263690625
+                                name: LeftLowerArm_IK
+                                enabled: true
+                                parent_id: 9249950719490246675
+                                component:
+                                  - id: 5191878831845384277
+                                    type: 1
+                                    enabled: true
+                                    position: [2.13162816e-16, -5.3290704e-17, 0.149731323]
+                                    rotation: [1.52438915e-05, 0.000724888523, -0.000271539757, 0.999999702]
+                                    scale: [0.999999881, 0.99999994, 0.99999994]
+                                child:
+                                  - id: 9793198092250487065
+                                    name: LeftLowerArm2_IK
+                                    enabled: true
+                                    parent_id: 10029049819263690625
+                                    component:
+                                      - id: 5606364273682324808
+                                        type: 1
+                                        enabled: true
+                                        position: [-7.1054272e-17, -1.33226755e-16, 0.0667147413]
+                                        rotation: [-1.73015251e-05, -0.00141922908, 4.44089676e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 4345542246348013505
+                                        name: LeftWrist_IK
+                                        enabled: true
+                                        parent_id: 9793198092250487065
+                                        component:
+                                          - id: 477203137911669846
+                                            type: 1
+                                            enabled: true
+                                            position: [-2.70006236e-15, 2.6645352e-17, 0.0686311871]
+                                            rotation: [-0.0313578993, -0.0243380517, -0.203764737, 0.97821486]
+                                            scale: [1.00000024, 1.00000012, 0.99999994]
+                      - id: 16836914861813087654
+                        name: RightShoulder
+                        enabled: true
+                        parent_id: 10937275127668362104
+                        component:
+                          - id: 11829314773219420838
+                            type: 1
+                            enabled: true
+                            position: [-0.0840687901, 0.0291003603, 0.208373755]
+                            rotation: [0.675994515, 0.0326053798, 0.712583244, 0.184914842]
+                            scale: [1, 0.999999821, 1]
+                        child:
+                          - id: 6952740387062836366
+                            name: RightUpperArm
+                            enabled: true
+                            parent_id: 16836914861813087654
+                            component:
+                              - id: 11736129970498694966
+                                type: 1
+                                enabled: true
+                                position: [0.00310982065, -7.14350108e-06, -0.153202683]
+                                rotation: [0.586176932, 0.0398123153, 0.186336234, 0.787458181]
+                                scale: [0.99999994, 1, 0.999999821]
+                            child:
+                              - id: 12220914302201472995
+                                name: RightLowerArm
+                                enabled: true
+                                parent_id: 6952740387062836366
+                                component:
+                                  - id: 2402922817827503270
+                                    type: 1
+                                    enabled: true
+                                    position: [-1.44748967e-07, -6.19844798e-08, -0.149730876]
+                                    rotation: [0.406450689, 0.0955339596, -0.0376963429, 0.907882214]
+                                    scale: [0.999999821, 1, 1]
+                                child:
+                                  - id: 10266763776339895350
+                                    name: RightLowerArm2
+                                    enabled: true
+                                    parent_id: 12220914302201472995
+                                    component:
+                                      - id: 2835682401847170595
+                                        type: 1
+                                        enabled: true
+                                        position: [-4.52110925e-07, 2.80516055e-08, -0.0667146668]
+                                        rotation: [-1.73015214e-05, -0.00141922908, 9.76997278e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 13929558637378397396
+                                        name: RightWrist
+                                        enabled: true
+                                        parent_id: 10266763776339895350
+                                        component:
+                                          - id: 2799732497069935666
+                                            type: 1
+                                            enabled: true
+                                            position: [4.30715801e-07, -4.74185065e-08, -0.0686311871]
+                                            rotation: [0.165319517, -0.202760279, 0.434100717, 0.862040818]
+                                            scale: [1.00000012, 0.99999994, 0.999999881]
+                                        child:
+                                          - id: 2474035580948219513
+                                            name: RightHand1
+                                            enabled: true
+                                            parent_id: 13929558637378397396
+                                            component:
+                                              - id: 13338104083682060676
+                                                type: 1
+                                                enabled: true
+                                                position: [5.66382816e-08, -3.26737904e-07, -0.0905790702]
+                                                rotation: [0.11440254, -0.0292399283, -0.00240444229, 0.993001163]
+                                                scale: [1, 1, 0.999999821]
+                                            child:
+                                              - id: 12172382744526497086
+                                                name: RightHand2
+                                                enabled: true
+                                                parent_id: 2474035580948219513
+                                                component:
+                                                  - id: 4006124859238752822
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [2.56261039e-08, 2.19878302e-07, -0.0939888433]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                          - id: 14205503565553814733
+                                            name: RightThumb1
+                                            enabled: true
+                                            parent_id: 13929558637378397396
+                                            component:
+                                              - id: 7019293021268376854
+                                                type: 1
+                                                enabled: true
+                                                position: [0.075179942, 0.0166543406, -0.0396404006]
+                                                rotation: [0.241620138, -0.44144389, 0.223701283, 0.834688425]
+                                                scale: [1, 1.00000012, 1]
+                                            child:
+                                              - id: 5801924603238793013
+                                                name: RightThumb2
+                                                enabled: true
+                                                parent_id: 14205503565553814733
+                                                component:
+                                                  - id: 10939280825042673990
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [3.30097727e-08, 1.7018337e-07, -0.0496348217]
+                                                    rotation: [0.509321868, 0.0884056836, 0.252194256, 0.818030417]
+                                                    scale: [1, 1, 1]
+                          - id: 5643905138387440904
+                            name: RightUpperArm_FK
+                            enabled: true
+                            parent_id: 16836914861813087654
+                            component:
+                              - id: 7061924441378012147
+                                type: 1
+                                enabled: true
+                                position: [0.00310982065, -7.14350108e-06, -0.153202683]
+                                rotation: [0.0915522575, -0.0154325059, 0.000239908535, 0.995680749]
+                                scale: [1, 1, 0.99999994]
+                            child:
+                              - id: 2223156541597824856
+                                name: RightLowerArm_FK
+                                enabled: true
+                                parent_id: 5643905138387440904
+                                component:
+                                  - id: 10444477368589046745
+                                    type: 1
+                                    enabled: true
+                                    position: [-1.44748967e-07, -6.19844798e-08, -0.149730876]
+                                    rotation: [0.0210964512, 0.00583459018, -0.000148560197, 0.999760449]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 8354179252668597455
+                                    name: RightLowerArm2_FK
+                                    enabled: true
+                                    parent_id: 2223156541597824856
+                                    component:
+                                      - id: 16013201924223862853
+                                        type: 1
+                                        enabled: true
+                                        position: [-4.52110925e-07, 2.80516055e-08, -0.0667146668]
+                                        rotation: [-1.73015214e-05, -0.00141922908, 9.76997278e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 13959994978853251092
+                                        name: RightWrist_FK
+                                        enabled: true
+                                        parent_id: 8354179252668597455
+                                        component:
+                                          - id: 4771690373351847235
+                                            type: 1
+                                            enabled: true
+                                            position: [4.30715801e-07, -4.74185065e-08, -0.0686311871]
+                                            rotation: [-0.0403021984, -0.0956452936, 0.700494945, 0.706069827]
+                                            scale: [1.00000024, 1, 0.99999994]
+                          - id: 2657253414536068079
+                            name: RightUpperArm_IK
+                            enabled: true
+                            parent_id: 16836914861813087654
+                            component:
+                              - id: 4629759216823628877
+                                type: 1
+                                enabled: true
+                                position: [0.00310982065, -7.14350108e-06, -0.153202683]
+                                rotation: [0.586176932, 0.0398123153, 0.186336234, 0.787458181]
+                                scale: [0.99999994, 1, 0.999999821]
+                            child:
+                              - id: 12004767012447280995
+                                name: RightLowerArm_IK
+                                enabled: true
+                                parent_id: 2657253414536068079
+                                component:
+                                  - id: 15279162620107216931
+                                    type: 1
+                                    enabled: true
+                                    position: [-1.44748967e-07, -6.19844798e-08, -0.149730876]
+                                    rotation: [0.406450689, 0.0955339596, -0.0376963429, 0.907882214]
+                                    scale: [0.999999821, 1, 1]
+                                child:
+                                  - id: 16513726933775273902
+                                    name: RightLowerArm2_IK
+                                    enabled: true
+                                    parent_id: 12004767012447280995
+                                    component:
+                                      - id: 9635348814895618537
+                                        type: 1
+                                        enabled: true
+                                        position: [-4.52110925e-07, 2.80516055e-08, -0.0667146668]
+                                        rotation: [-1.73015214e-05, -0.00141922908, 9.76997278e-15, 0.999998987]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 12935008952709857544
+                                        name: RightWrist_IK
+                                        enabled: true
+                                        parent_id: 16513726933775273902
+                                        component:
+                                          - id: 4933782883677110334
+                                            type: 1
+                                            enabled: true
+                                            position: [4.30715801e-07, -4.74185065e-08, -0.0686311871]
+                                            rotation: [0.165319517, -0.202760279, 0.434100717, 0.862040818]
+                                            scale: [1.00000012, 0.99999994, 0.999999881]
+                  - id: 17297400641012381772
+                    name: HipSway
+                    enabled: true
+                    parent_id: 1539891621710463582
+                    component:
+                      - id: 749178951296388274
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0.689752758, -0.155553937, 0.0168149676, 0.706938088]
+                        scale: [1, 1, 0.99999994]
+                    child:
+                      - id: 16012717098794975447
+                        name: LeftLeg
+                        enabled: true
+                        parent_id: 17297400641012381772
+                        component:
+                          - id: 17340904232409063052
+                            type: 1
+                            enabled: true
+                            position: [0.165920451, 0.0380670838, 0.152263224]
+                            rotation: [0.083947666, -0.604888737, 0.789026082, -0.0670855418]
+                            scale: [1.00000024, 1.00000024, 1]
+                        child:
+                          - id: 7716739120207604919
+                            name: LeftToe
+                            enabled: true
+                            parent_id: 16012717098794975447
+                            component:
+                              - id: 9714475429451261814
+                                type: 1
+                                enabled: true
+                                position: [-7.1054272e-17, -2.30926381e-16, 0.123437747]
+                                rotation: [0.0825037062, -0.605834305, 0.788373828, 0.0680046901]
+                                scale: [0.999999881, 1, 1]
+                      - id: 2193737288045619792
+                        name: RightLeg
+                        enabled: true
+                        parent_id: 17297400641012381772
+                        component:
+                          - id: 2081657121163053740
+                            type: 1
+                            enabled: true
+                            position: [-0.168645471, -0.0123642171, 0.14716956]
+                            rotation: [-0.0871520564, -0.605207503, 0.788678467, 0.0641476363]
+                            scale: [1.00000012, 0.99999994, 1.00000012]
+                        child:
+                          - id: 17402892388347707046
+                            name: RightToe
+                            enabled: true
+                            parent_id: 2193737288045619792
+                            component:
+                              - id: 17222003041487931564
+                                type: 1
+                                enabled: true
+                                position: [3.5527136e-17, -1.06581408e-16, 0.123437747]
+                                rotation: [-0.0825037062, -0.605834305, 0.788373828, -0.0680046901]
+                                scale: [0.999999881, 1, 1]
+                  - id: 3538674598730075187
+                    name: Tail1
+                    enabled: true
+                    parent_id: 1539891621710463582
+                    component:
+                      - id: 9452824044604670984
+                        type: 1
+                        enabled: true
+                        position: [0.00095915742, 0.135089725, 0.0343153141]
+                        rotation: [-0.825078309, 0.000774299377, 0.00259354315, 0.565011978]
+                        scale: [0.999999881, 1, 1.00000012]
+                    child:
+                      - id: 12655195361182798727
+                        name: Tail2
+                        enabled: true
+                        parent_id: 3538674598730075187
+                        component:
+                          - id: 5291353579793036009
+                            type: 1
+                            enabled: true
+                            position: [-0.0220329333, 0.108267732, 0.0746028423]
+                            rotation: [-1.89244765e-05, 7.90842023e-05, -0.00227919989, 0.999997497]
+                            scale: [0.999999821, 1, 0.99999994]
+                        child:
+                          - id: 122098945055863191
+                            name: Tail3
+                            enabled: true
+                            parent_id: 12655195361182798727
+                            component:
+                              - id: 3146736543481861264
+                                type: 1
+                                enabled: true
+                                position: [5.15371988e-15, 1.6431301e-16, 0.172958225]
+                                rotation: [0.998642743, 0, 0, -0.0520847701]
+                                scale: [1, 1.00000024, 1.00000024]
+          - id: 6942790243704483980
+            name: Ctrl_Grp
+            enabled: true
+            parent_id: 16883041708449037114
+            component:
+              - id: 17415294793485335116
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 5780368591704255534
+                name: Gun001
+                enabled: true
+                parent_id: 6942790243704483980
+                component:
+                  - id: 15562696698248585337
+                    type: 1
+                    enabled: true
+                    position: [-0.40252617, 0.269102573, -0.180480406]
+                    rotation: [0.448298037, -0.448297977, 0.546835601, 0.546835244]
+                    scale: [1.00000012, 1.00000012, 1]
+                child:
+                  - id: 4340788252513998612
+                    name: GunBarrelStretch
+                    enabled: true
+                    parent_id: 5780368591704255534
+                    component:
+                      - id: 13049251001193474265
+                        type: 1
+                        enabled: true
+                        position: [0.293407023, -1.90734593e-08, 0.0201170109]
+                        rotation: [0, 0.633921862, 0, 0.773397088]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 5325640509177610042
+                        name: GunBarrelEnd
+                        enabled: true
+                        parent_id: 4340788252513998612
+                        component:
+                          - id: 6665338340879940243
+                            type: 1
+                            enabled: true
+                            position: [2.13162816e-16, -2.78177478e-14, 0.631401062]
+                            rotation: [-6.12991425e-05, 6.12991571e-05, -0.707106829, 0.707106829]
+                            scale: [0.999999881, 0.999999881, 1]
+      - id: 377367044572405076
+        name: Player
+        enabled: true
+        parent_id: 3657093189778022525
+        component:
+          - id: 4170412972798808638
+            type: 1
+            enabled: true
+            position: [0, 0.000282089546, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 16494015360363018294
+            type: 2
+            enabled: true
+            model_file_path: ""
+            model_name: Player
+            mesh_index: 1
+          - id: 14581132067168533438
+            type: 3
+            enabled: true
+            name: PlayerMaterial

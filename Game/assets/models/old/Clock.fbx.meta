@@ -1,0 +1,27 @@
+General:
+  id: 1785707597592438406
+  type: 3
+  last_write: [1277570561, 30955708]
+model_name: Clock
+material:
+  - id: 2742111758339062887
+    name: ClockMaterial
+  - id: 7805138182089273056
+    name: ClockGlassMaterial
+mesh:
+  - id: 5362848102583635529
+    material_index: 0
+  - id: 9823449149453353174
+    material_index: 1
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Clock
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0
+      - 1

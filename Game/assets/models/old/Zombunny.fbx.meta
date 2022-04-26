@@ -1,0 +1,196 @@
+General:
+  id: 5881114748887340253
+  type: 3
+  last_write: [1277819896, 30955708]
+model_name: Zombunny
+material:
+  - id: 2009353055586500850
+    name: ZombunnyMaterial
+  - id: 7102407836707903537
+    name: EyesMaterial
+mesh:
+  - id: 5236916172021466248
+    material_index: 0
+  - id: 14575740224757603796
+    material_index: 1
+name: RootNode
+position: [0, 0, 0]
+rotation: [0, 0, 0, 1]
+scale: [1, 1, 1]
+child:
+  - name: Zombunny
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    mesh_index:
+      - 0
+      - 1
+  - name: Ctrl_Grp
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+    child:
+      - name: Root
+        position: [0, 0, 0]
+        rotation: [0, 0, 0.707106769, 0.707106769]
+        scale: [0.99999994, 0.99999994, 1]
+        child:
+          - name: Hips
+            position: [0.290998369, 0.00272642844, 0.000208236452]
+            rotation: [0.534090281, -0.482415617, 0.475495905, -0.505891562]
+            scale: [0.99999994, 1, 1]
+            child:
+              - name: Spine
+                position: [0.000258133921, -5.96009959e-05, 0.194010273]
+                rotation: [0.0907030478, -0.114794515, 0.00386528927, 0.989232183]
+                scale: [1, 1, 0.99999994]
+                child:
+                  - name: Head
+                    position: [5.3290704e-17, 8.881784e-18, 0.230286196]
+                    rotation: [0.118906178, 0.0596477054, -0.0345506221, 0.990509808]
+                    scale: [1, 0.99999994, 0.999999881]
+                    child:
+                      - name: HeadEnd
+                        position: [1.6008797e-16, 4.00219924e-17, 0.36048606]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                      - name: LeftEar
+                        position: [0.339664906, 0.0694511235, 0.409042209]
+                        rotation: [-0.128133893, 0.460122168, 0.0368141569, 0.877789378]
+                        scale: [1, 0.999999881, 1]
+                        child:
+                          - name: LeftEarEnd
+                            position: [4.63612433e-17, 3.01980666e-16, 0.21373941]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                      - name: RightEar
+                        position: [-0.339664996, 0.0694510937, 0.409042537]
+                        rotation: [0.945294738, -0.0336602069, 0.297151327, 0.130331069]
+                        scale: [1, 1, 1.00000012]
+                        child:
+                          - name: RightEarEnd
+                            position: [-8.28529267e-07, -9.09704241e-08, -0.213738307]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                  - name: LeftUpperArm
+                    position: [0.172865421, 0.0691770837, 0.191902742]
+                    rotation: [0.37590313, 0.652264416, -0.356424749, 0.553361952]
+                    scale: [0.999999821, 1, 0.999999881]
+                    child:
+                      - name: LeftLowerArm
+                        position: [-1.52853167e-17, 1.57772178e-32, 0.251161069]
+                        rotation: [0.0115760677, -0.0296238549, -0.00839632004, 0.999458849]
+                        scale: [1, 1, 1]
+                        child:
+                          - name: LeftWrist
+                            position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
+                            rotation: [0, -0.0141496006, 0, 0.999899864]
+                            scale: [1, 1, 1]
+                            child:
+                              - name: LeftWristEnd
+                                position: [-9.32651435e-17, 6.3108871e-32, 0.10998556]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                  - name: LeftUpperArmFK
+                    position: [0.172865421, 0.0691770837, 0.191902742]
+                    rotation: [0.37590313, 0.652264416, -0.356424749, 0.553361952]
+                    scale: [0.999999821, 1, 0.999999881]
+                    child:
+                      - name: LeftLowerArmFK
+                        position: [-1.52853167e-17, 1.57772178e-32, 0.251161069]
+                        rotation: [0.0115760677, -0.0296238549, -0.00839632004, 0.999458849]
+                        scale: [1, 1, 1]
+                        child:
+                          - name: LeftWristFK
+                            position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
+                            rotation: [0, -0.0141496006, 0, 0.999899864]
+                            scale: [1, 1, 1]
+                  - name: LeftUpperArmIK
+                    position: [0.172865421, 0.0691770837, 0.191902742]
+                    rotation: [0.892768502, -0.0034948166, 0.450364649, 0.0111250281]
+                    scale: [1, 1.00000012, 0.99999994]
+                    child:
+                      - name: LeftLowerArmIK
+                        position: [-1.52853167e-17, 1.57772178e-32, 0.251161069]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                        child:
+                          - name: LeftWristIK
+                            position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
+                            rotation: [0.160602421, 0.0105729746, 0.984830737, 0.0648349077]
+                            scale: [1.00000012, 1.00000012, 1]
+                  - name: RightUpperArm
+                    position: [-0.172865003, 0.0691770986, 0.191902727]
+                    rotation: [0.523471594, 0.434141099, 0.642433584, -0.353239417]
+                    scale: [0.999999821, 0.999999881, 0.99999994]
+                    child:
+                      - name: RightLowerArm
+                        position: [-2.13162816e-16, -3.5527136e-17, -0.251161009]
+                        rotation: [-0.0197119303, 0.0335830748, 0.00686069857, 0.999217987]
+                        scale: [1, 0.99999994, 0.99999994]
+                        child:
+                          - name: RightWrist
+                            position: [-1.42108544e-16, -6.21724896e-17, -0.238029003]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                            child:
+                              - name: RightWristEnd
+                                position: [-7.1054272e-17, -2.6645352e-17, -0.109984994]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                  - name: RightUpperArmFK
+                    position: [-0.172865003, 0.0691770986, 0.191902727]
+                    rotation: [0.523471594, 0.434141099, 0.642433584, -0.353239417]
+                    scale: [0.999999821, 0.999999881, 0.99999994]
+                    child:
+                      - name: RightLowerArmFK
+                        position: [-2.13162816e-16, -3.5527136e-17, -0.251161009]
+                        rotation: [-0.0197119303, 0.0335830748, 0.00686069857, 0.999217987]
+                        scale: [1, 0.99999994, 0.99999994]
+                        child:
+                          - name: RightWristFK
+                            position: [-1.42108544e-16, -6.21724896e-17, -0.238029003]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                  - name: RightUpperArmIK
+                    position: [-0.172865003, 0.0691770986, 0.191902727]
+                    rotation: [-0.0287494902, -0.558962345, 0.00243623322, -0.828690886]
+                    scale: [0.99999994, 1, 0.99999994]
+                    child:
+                      - name: RightLowerArmIK
+                        position: [-2.13162816e-16, -3.5527136e-17, -0.251161009]
+                        rotation: [0, 0.48546949, 0, 0.874253631]
+                        scale: [1, 1, 1]
+                        child:
+                          - name: RightWristIK
+                            position: [-1.42108544e-16, -6.21724896e-17, -0.238029003]
+                            rotation: [-0.157288045, -0.0154862227, 0.982679844, 0.096752353]
+                            scale: [1, 1.00000012, 1]
+              - name: LeftLeg
+                position: [0.154882804, -0.129643455, 0.000197515576]
+                rotation: [0.999951005, 4.32722386e-10, 0.00989953429, -4.3709246e-08]
+                scale: [1, 1, 1]
+                child:
+                  - name: LeftFoot
+                    position: [0.0486446656, 0.0775691867, 0.12021666]
+                    rotation: [-0.5085271, -0.00852380879, -0.00503442809, 0.860989094]
+                    scale: [1, 1, 1]
+                    child:
+                      - name: LeftFootEnd
+                        position: [-7.29076793e-17, 0, 0.0599848554]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+              - name: RightLeg
+                position: [-0.154882997, -0.129642993, 0.000197387373]
+                rotation: [0, 0.00989953429, 0, 0.999951005]
+                scale: [1, 1, 1]
+                child:
+                  - name: RightFoot
+                    position: [-0.0098275803, 0.0917390585, -0.240331069]
+                    rotation: [-0.5085271, -0.00852380879, -0.00503442809, 0.860989094]
+                    scale: [1, 1, 1]
+                    child:
+                      - name: RightFootEnd
+                        position: [9.41469074e-16, -3.4134402e-07, -0.0599855408]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
