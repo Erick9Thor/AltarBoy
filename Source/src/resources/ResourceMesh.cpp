@@ -67,10 +67,11 @@ void Hachiko::ResourceMesh::GenerateAABB()
 void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
     assert(mesh->HasBones());
 
-    bones = std::make_unique<Bone[]>(mesh->mNumBones);
     num_bones = mesh->mNumBones;
+    bones = std::make_unique<Bone[]>(num_bones);
+    
 
-    for (unsigned i = 0; i < mesh->mNumBones; ++i)
+    for (unsigned i = 0; i < num_bones; ++i)
     {
         const aiBone* bone = mesh->mBones[i];
         Bone& dst_bone = bones[i];
@@ -158,6 +159,8 @@ void Hachiko::ResourceMesh::CleanUp()
         buffer_sizes[static_cast<int>(Buffers::NORMALS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::TEX_COORDS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::TANGENTS)] = 0;
+        buffer_sizes[static_cast<int>(Buffers::BONES)] = 0;
+
     }
     loaded = false;
 }

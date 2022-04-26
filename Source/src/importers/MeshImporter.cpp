@@ -34,7 +34,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)];
-    file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    file_size += sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
 
     const auto file_buffer = new char[file_size];
     char* cursor = file_buffer;
@@ -182,6 +182,11 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
     {
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = ai_mesh->mNumBones;
         mesh->GenerateBoneData(ai_mesh, 1);
+    }
+    else
+    {
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = 0;
+        mesh->bones = nullptr;
     }
 
     if (ai_mesh->HasNormals())
