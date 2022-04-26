@@ -105,6 +105,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             if (!child->meshes_index.empty())
             {
                 last_parent = CreateNewGameObject(parent, child->node_name.c_str());
+                last_parent->GetTransform()->SetLocalTransform(child->node_transform);
 
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
@@ -112,7 +113,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                     ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
                     component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
                     component->SetModelName(model->model_name);
-
+                    
                     component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
                     component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
 
