@@ -1,22 +1,18 @@
 General:
-  id: 18396532378913761735
+  id: 8493199492980756473
   type: 3
   last_write: [1080255475, 30955708]
 model_name: plantMushrooms_mesh
 material:
-  - id: 7144426367551347147
+  - id: 1432507502514963364
     name: baked_Tronco_mtl
 mesh:
-  - id: 15738789985111476458
+  - id: 632627725354254821
     material_index: 0
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: Vegetation
-    position: [-0.344800413, 0.333808631, 0.183616713]
-    rotation: [1.49011612e-07, 0, 0, 0.99999994]
-    scale: [1, 0.999999881, 0.999999881]
+    transform: [1, 0, 0, -0.344800413, 0, 0.999999762, -2.98023167e-07, 0.333808631, 0, 2.98023167e-07, 0.999999762, 0.183616713, 0, 0, 0, 1]
     mesh_index:
       - 0

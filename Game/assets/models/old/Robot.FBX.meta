@@ -1,22 +1,18 @@
 General:
-  id: 9248949642395964405
+  id: 12305544067450486652
   type: 3
   last_write: [1277770038, 30955708]
 model_name: Robot
 material:
-  - id: 1605566088315493688
+  - id: 4215995101759304495
     name: RobotMaterial
 mesh:
-  - id: 21829229396662337
+  - id: 5472037596778072882
     material_index: 0
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: Robot
-    position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [1, 1, 1]
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     mesh_index:
       - 0

@@ -1,22 +1,18 @@
 General:
-  id: 12847124404021596260
+  id: 1257103480881424238
   type: 3
   last_write: [1080335263, 30955708]
 model_name: tallRock_mesh
 material:
-  - id: 261065453579486843
+  - id: 9745105146462977374
     name: tallrock_LP_01
 mesh:
-  - id: 349916813757432283
+  - id: 9365726299371843256
     material_index: 0
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: tallrock_LP_01
-    position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [1, 1, 1]
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     mesh_index:
       - 0

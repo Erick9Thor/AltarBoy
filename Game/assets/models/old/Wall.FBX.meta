@@ -1,32 +1,26 @@
 General:
-  id: 498288178777866705
+  id: 1146712346220137787
   type: 3
   last_write: [1277789977, 30955708]
 model_name: Wall
 material:
-  - id: 8967488716241837012
+  - id: 10101986026904430806
     name: WallMaterial
-  - id: 9333368145729217417
+  - id: 15009776881109779411
     name: StarMaterial
 mesh:
-  - id: 18410610701918386279
+  - id: 16477316816182688886
     material_index: 0
-  - id: 75613105684169445
+  - id: 3666190428606940946
     material_index: 1
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: Wall
-    position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [1, 1, 1]
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     mesh_index:
       - 0
   - name: Stars
-    position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [1, 1, 1]
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
     mesh_index:
       - 1

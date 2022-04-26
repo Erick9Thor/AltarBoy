@@ -1,22 +1,18 @@
 General:
-  id: 821110940879653276
+  id: 8688827169881408481
   type: 3
   last_write: [1277799954, 30955708]
 model_name: WodenWacth
 material:
-  - id: 6293623731403426817
+  - id: 16285912254248069317
     name: watchtower
 mesh:
-  - id: 5398468602111483603
+  - id: 10453886060868661800
     material_index: 0
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: watchtowerHigh
-    position: [0, 0.67149967, 0]
-    rotation: [-0.707106829, 0, 0, 0.707106709]
-    scale: [100, 99.9999924, 99.9999924]
+    transform: [100, -0, 0, 0, 0, -1.1920928e-05, 99.9999847, 0.67149967, -0, -99.9999847, -1.1920928e-05, 0, 0, 0, 0, 1]
     mesh_index:
       - 0

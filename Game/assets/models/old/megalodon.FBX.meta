@@ -1,22 +1,18 @@
 General:
-  id: 18253978504829384326
+  id: 428810898869514291
   type: 3
   last_write: [1277829874, 30955708]
 model_name: megalodon
 material:
-  - id: 8543386154187292985
+  - id: 980909819994210771
     name: 01 - Default
 mesh:
-  - id: 10505891336944436125
+  - id: 6555602134591552452
     material_index: 0
 name: RootNode
-position: [0, 0, 0]
-rotation: [0, 0, 0, 1]
-scale: [1, 1, 1]
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: Shark_01SG1
-    position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [1, 0.999999881, 0.999999881]
+    transform: [1, 0, 0, 0, 0, 0.999999762, 0, 0, 0, 0, 0.999999762, 0, 0, 0, 0, 1]
     mesh_index:
       - 0
