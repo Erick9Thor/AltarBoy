@@ -46,6 +46,7 @@ void Hachiko::ModelImporter::ImportWithMeta(const char* path, YAML::Node& meta)
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
+        return;
     }
 
     // 2 - Import Meshes
