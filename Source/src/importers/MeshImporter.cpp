@@ -64,7 +64,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     memcpy(cursor, mesh->tangents, size_bytes);
     cursor += size_bytes;
 
-    size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    size_bytes = sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
     memcpy(cursor, mesh->bones.get(), size_bytes);
     cursor += size_bytes;
 
@@ -98,6 +98,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = header[2];
     sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = header[3];
     sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)] = header[4];
+    sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = header[5];
 
     size_bytes = sizeof(unsigned) * sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];
     mesh->indices = new unsigned[sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
@@ -144,15 +145,17 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     {
         mesh->tangents = nullptr;
     }   
-
-    // TODO: ANIMATIONS LOAD BONES FOR Resources
     if (sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] > 0)
     {
         mesh->bones = std::make_unique<Hachiko::ResourceMesh::Bone[]>(sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
-        size_bytes = sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+        size_bytes = sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
         memcpy(mesh->bones.get(), cursor, size_bytes);
         cursor += size_bytes;
     }
+    else
+    {
+        mesh->bones = nullptr;
+    } 
 
     mesh->GenerateBuffers();
     mesh->GenerateAABB();
@@ -177,6 +180,7 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
 
     if (ai_mesh->HasBones())
     {
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = ai_mesh->mNumBones;
         mesh->GenerateBoneData(ai_mesh, 1);
     }
 

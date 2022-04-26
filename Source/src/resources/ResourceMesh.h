@@ -59,10 +59,10 @@ namespace Hachiko
         float* tangents{};
 
         // BONES
-        std::unique_ptr<unsigned[]> src_bone_indices;
-        std::unique_ptr<float4[]> src_bone_weights;
+        std::unique_ptr<unsigned[]> src_bone_indices = nullptr;
+        std::unique_ptr<float4[]> src_bone_weights = nullptr;
 
         unsigned int num_bones = 0;
-        std::unique_ptr<Bone[]> bones;
+        std::unique_ptr<Bone[]> bones = nullptr;
     };
 }

@@ -67,10 +67,11 @@ void Hachiko::ComponentMesh::DrawGui()
             return;
         }
 
-        ImGui::Text("%d Triangles\n%d vertices\n%d indices",
+        ImGui::Text("%d Triangles\n%d vertices\n%d indices\n%d bones binded",
                     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] / 3,
                     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
-                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
+                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)],
+                    mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
         ImGui::Checkbox("Visible", &visible);
     }
 }
