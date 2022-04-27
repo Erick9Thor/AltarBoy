@@ -23,6 +23,5 @@ void Hachiko::Logger::log(const char file[], int line, const char* format, ...)
     for (const int new_size = buff.size(); old_size < new_size; old_size++)
         if (buff[old_size] == '\n')
             line_offsets.push_back(old_size + 1);
-    // TODO MONICA: Change this to work with unicode
-    //OutputDebugString(tmp_string2);
+    OutputDebugStringA(tmp_string2);
 }

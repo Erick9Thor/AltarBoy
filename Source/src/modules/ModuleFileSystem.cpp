@@ -136,8 +136,7 @@ void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
 
 void Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
 {
-    // TODO MONICA: Change this to work with unicode
-    //CopyFile(source_file_path, destination_file_path, false);
+    CopyFileA(source_file_path, destination_file_path, false);
 }
 
 void Hachiko::ModuleFileSystem::Delete(const char* file_path) const
