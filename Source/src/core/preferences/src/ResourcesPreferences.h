@@ -19,30 +19,38 @@ namespace Hachiko
         }
 
     private:
+        std::map<Resource::Type, std::string> assets_paths = {
+            {Resource::Type::SCENE, "assets/scenes/"}, 
+            {Resource::Type::MODEL, "assets/models/"},
+            {Resource::Type::MESH, "assets/meshes/"},
+            {Resource::Type::TEXTURE, "assets/textures/"},
+            {Resource::Type::AUDIO, "assets/audio/"},
+            {Resource::Type::VIDEO, "assets/video/"},
+            {Resource::Type::SCRIPT, "assets/scripts/"},
+            {Resource::Type::MATERIAL, "assets/materials/"},
+            {Resource::Type::SHADER, "assets/shaders/"},
+            {Resource::Type::ANIMATION, "assets/animations/"},
+            {Resource::Type::SKYBOX, "assets/skybox/"},
+            {Resource::Type::FONT, "library/fonts/"},
+            {Resource::Type::NAVMESH, "assets/navmesh/"},
+        };
+
+        std::map<Resource::Type, std::string> lib_paths = {
+            {Resource::Type::SCENE, "library/scenes/"},
+            {Resource::Type::MODEL, "library/models/"},
+            {Resource::Type::MESH, "library/meshes/"},
+            {Resource::Type::TEXTURE, "library/textures/"},
+            {Resource::Type::AUDIO, "library/audio/"},
+            {Resource::Type::VIDEO, "library/video/"},
+            {Resource::Type::SCRIPT, "library/scripts/"},
+            {Resource::Type::MATERIAL, "library/materials/"},
+            {Resource::Type::SHADER, "library/shaders/"},
+            {Resource::Type::ANIMATION, "library/animations/"},
+            {Resource::Type::SKYBOX, "library/skybox/"},
+            {Resource::Type::FONT, "library/fonts/"},
+            {Resource::Type::NAVMESH, "library/navmesh/"},
+        };
         std::string scene_name        = "UnnamedScene.scene";
         std::string scene_id;
-        std::string scenes_assets     = "assets/scenes/";
-        std::string models_assets     = "assets/models/";
-        std::string meshes_assets     = "assets/meshes/";
-        std::string textures_assets   = "assets/textures/";
-        std::string audio_assets      = "assets/audio/";
-        std::string video_assets      = "assets/video/";
-        std::string script_assets     = "assets/scripts/";
-        std::string materials_assets  = "assets/materials/";
-        std::string shaders_assets    = "assets/shaders/";
-        std::string animations_assets = "assets/animations/";
-        std::string skybox_assets     = "assets/skybox/";
-
-        std::string scenes_library     = "library/scenes/";
-        std::string models_library     = "library/models/";
-        std::string meshes_library     = "library/meshes/";
-        std::string textures_library   = "library/textures/";
-        std::string audio_library      = "library/audio/";
-        std::string video_library      = "library/video/";
-        std::string script_library     = "library/scripts/";
-        std::string materials_library  = "library/materials/";
-        std::string shaders_library    = "library/shaders/";
-        std::string animations_library = "library/animations/";
-        std::string skybox_library     = "library/skybox/";
     };
 }
