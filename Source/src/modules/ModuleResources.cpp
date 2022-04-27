@@ -147,9 +147,32 @@ void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::st
     }
 }
 
+// A WAY TO REMOVE ALL METAS
+void DeleteMetas(const PathNode& folder)
+{
+    for (PathNode path_node : folder.children)
+    {
+        if (path_node.isFile)
+        {
+            FileSystem::Delete(path_node.path.c_str());
+        }
+        else
+        {
+            DeleteMetas(path_node);
+        }
+    }
+}
+//
+
 void Hachiko::ModuleResources::AssetsLibraryCheck()
 {
     HE_LOG("Assets/Library check...");
+
+    // CAREFULL! A WAY TO REMOVE ALL METAS
+    //std::vector<std::string> meta_extension {"meta"};
+    //PathNode metas = FileSystem::GetAllFiles(ASSETS_FOLDER, &meta_extension, nullptr);
+    //DeleteMetas(metas);
+    //
 
     // TODO: use defined values, for extensions and assets
     std::vector<std::string> meta_ext {"meta", "scene"};

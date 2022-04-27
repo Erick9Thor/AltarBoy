@@ -54,6 +54,7 @@ void Hachiko::ComponentMesh::LoadMesh(UID mesh_id)
 
 void Hachiko::ComponentMesh::DrawGui()
 {
+    ImGui::PushID(this);
     if (ImGui::CollapsingHeader("Mesh", ImGuiTreeNodeFlags_DefaultOpen))
     {
         if (mesh == nullptr)
@@ -67,6 +68,7 @@ void Hachiko::ComponentMesh::DrawGui()
                     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]);
         ImGui::Checkbox("Visible", &visible);
     }
+    ImGui::PopID();
 }
 
 void Hachiko::ComponentMesh::Save(YAML::Node& node) const
