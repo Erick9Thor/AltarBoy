@@ -24,7 +24,6 @@ namespace Hachiko
 
         void SetResourceMaterial(ResourceMaterial* res)
         {
-            delete material;
             material = res;
         }
 

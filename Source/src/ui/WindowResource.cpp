@@ -5,6 +5,7 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
 #include "resources/ResourceModel.h"
+#include "resources/ResourceMaterial.h"
 
 Hachiko::WindowResource::WindowResource() : 
     Window("Resources", true)
@@ -82,9 +83,33 @@ void Hachiko::WindowResource::LoadResource(const std::string& path)
     HE_LOG("Resource file: %s", path.c_str());
     if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
-        Scene* scene = App->scene_manager->GetActiveScene();
+        
         YAML::Node node = YAML::LoadFile(path);
-        auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
-        scene->HandleInputModel(model_res);
+        Resource::Type type = static_cast<Resource::Type>(node[GENERAL_NODE][GENERAL_TYPE].as<unsigned>());
+        switch (type)
+        {
+        case Resource::Type::MODEL:
+            LoadModelIntoScene(node);
+            break;
+        case Resource::Type::MATERIAL:
+            //LoadMaterialIntoSelectedObject(node); // TODO: WIP
+            break;
+        }
     }
+}
+
+void Hachiko::WindowResource::LoadModelIntoScene(YAML::Node& node)
+{
+    HE_LOG("Adding a model into scene");
+    Scene* scene = App->scene_manager->GetActiveScene();
+    auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+    scene->HandleInputModel(model_res);
+}
+
+void Hachiko::WindowResource::LoadMaterialIntoSelectedObject(YAML::Node& node)
+{
+    HE_LOG("Adding a material into selected game object");
+    Scene* scene = App->scene_manager->GetActiveScene();
+    auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+    scene->HandleInputMaterial(material_res);
 }
