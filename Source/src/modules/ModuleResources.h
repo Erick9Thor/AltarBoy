@@ -28,12 +28,6 @@ namespace Hachiko
         void HandleResource(const std::filesystem::path& path);
 
     private:
-        // TODO: Use only loaded_resources map
-        std::map<std::string, ResourceModel*> models;
-        std::map<std::string, ResourceMaterial*> materials;
-        std::map<std::string, ResourceTexture*> textures;
-        std::map<UID, ResourceMesh*> meshes;
-
         std::map<UID, Resource*> loaded_resources;
 
         std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 

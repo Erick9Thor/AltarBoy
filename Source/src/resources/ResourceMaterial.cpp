@@ -12,7 +12,7 @@ Hachiko::ResourceMaterial::~ResourceMaterial()
 void Hachiko::ResourceMaterial::DrawGui() 
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-    ImGui::Text("Name", name, 64);
+    ImGui::Text("Material: %s", name.c_str());
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
         if (diffuse != nullptr)
