@@ -4,8 +4,6 @@
 
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleResources.h"
-
-#include "resources/ResourceMaterial.h"
 #include "importers/MaterialImporter.h"
 
 Hachiko::ComponentMaterial::ComponentMaterial(GameObject* container) 

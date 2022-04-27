@@ -92,7 +92,7 @@ void Hachiko::WindowResource::LoadResource(const std::string& path)
             LoadModelIntoScene(node);
             break;
         case Resource::Type::MATERIAL:
-            //LoadMaterialIntoSelectedObject(node); // TODO: WIP
+            LoadMaterialIntoSelectedObject(node);
             break;
         }
     }

@@ -1,11 +1,10 @@
 #pragma once
 
 #include "components/Component.h"
+#include "resources/ResourceMaterial.h"
 
 namespace Hachiko
 {
-    class ResourceMaterial;
-
     class ComponentMaterial : public Component
     {
     public:
@@ -25,6 +24,7 @@ namespace Hachiko
         void SetResourceMaterial(ResourceMaterial* res)
         {
             material = res;
+            SetID(material->GetID());
         }
 
         [[nodiscard]] const std::string& GetModelName() const
