@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\resources\ResourceNaveMesh.cpp" />
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
     <ClCompile Include="src\core\logging\ImGuiLogger.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
@@ -633,6 +634,7 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\resources\ResourceNaveMesh.h" />
     <ClInclude Include="src\core\ErrorHandler.h" />
     <ClInclude Include="src\core\logging\ConsoleLogger.h" />
     <ClInclude Include="src\core\logging\ImGuiLogger.h" />
