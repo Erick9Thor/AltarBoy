@@ -91,3 +91,37 @@ void Hachiko::ComponentMesh::Load(const YAML::Node& node)
     SetID(node[COMPONENT_ID].as<UID>());
     LoadMesh(node[COMPONENT_ID].as<UID>());
 }
+
+void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
+    const GameObject* root = GetGameObject();
+
+    while (root != nullptr)
+    {
+        root = root->parent;
+    }
+
+    if (mesh && mesh->num_bones > 0)
+    {
+        float4x4 rootT = root->GetTransform()->GetGlobalMatrix().Inverted();
+
+        for (unsigned i = 0; i < mesh->num_bones; ++i)
+        {
+            const ResourceMesh::Bone& bone = mesh->bones[i];
+            const GameObject* bone_node = node_cache[i];
+
+             if (bone_node == nullptr)
+             {
+                 bone_node = node_cache[i] = root ? root->GetFirstChildWithName(bone.name.c_str()) : nullptr;
+             }
+
+            if (bone_node)
+            {
+                palette[i] = rootT * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+            }
+            else
+            {
+                palette[i] = float4x4::identity;
+            }
+        }
+    }
+}
