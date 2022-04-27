@@ -7,6 +7,7 @@
 #include "TextureImporter.h"
 #include "MaterialImporter.h"
 #include "AnimationImporter.h"
+#include "FontImporter.h"
 
 using namespace Hachiko;
 
@@ -17,12 +18,14 @@ ImporterManager::ImporterManager()
     const auto texture = new TextureImporter();
     const auto material = new MaterialImporter();
     const auto animation = new AnimationImporter();
+    const auto font = new FontImporter();
 
     importers.emplace(model->GetType(), model);
     importers.emplace(mesh->GetType(), mesh);
     importers.emplace(texture->GetType(), texture);
     importers.emplace(material->GetType(), material);
     importers.emplace(animation->GetType(), animation);
+    importers.emplace(font->GetType(), font);
 }
 
 ImporterManager::~ImporterManager()
@@ -39,7 +42,15 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
     
     YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type);
     
-    GetImporter(asset_type)->Import(asset_path.string().c_str(), meta);
+    Importer* importer = GetImporter(asset_type);
+
+    if (!importer)
+    {
+        HE_LOG("No valid importer found for %s", asset_path.c_str());
+        return;
+    }
+
+    importer->Import(asset_path.string().c_str(), meta);
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
@@ -80,39 +91,43 @@ Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
 
 Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
 {
-    Importer::Type iType = Importer::Type::COUNT;
+    Importer::Type importer_type = Importer::Type::COUNT;
     switch (type)
     {
     case Resource::Type::MODEL:
-        iType = Importer::Type::MODEL;
+        importer_type = Importer::Type::MODEL;
         break;
 
     case Resource::Type::MESH:
-        iType = Importer::Type::MESH;
+        importer_type = Importer::Type::MESH;
         break;
 
     case Resource::Type::TEXTURE:
-        iType = Importer::Type::TEXTURE;
+        importer_type = Importer::Type::TEXTURE;
         break;
 
     case Resource::Type::MATERIAL:
-        iType = Importer::Type::MATERIAL;
+        importer_type = Importer::Type::MATERIAL;
         break;
     case Resource::Type::ANIMATION:
-        iType = Importer::Type::ANIMATION;
+        importer_type = Importer::Type::ANIMATION;
         break;
     case Resource::Type::SCENE:
-        iType = Importer::Type::SCENE;
+        importer_type = Importer::Type::SCENE;
+        break;
+    case Resource::Type::FONT:
+        importer_type = Importer::Type::FONT;
         break;
     case Resource::Type::AUDIO:
     case Resource::Type::VIDEO:
     case Resource::Type::SCRIPT:
     case Resource::Type::UNKNOWN:
+    default:
         // TODO: This is a hack. We need to implement our own assert with message
         assert(false && "Unhandled resource type");
     }
 
-    return iType;
+    return importer_type;
 }
 
 YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type) const
