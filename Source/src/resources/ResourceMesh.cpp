@@ -76,7 +76,7 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
         const aiBone* bone = mesh->mBones[i];
         Bone& dst_bone = bones[i];
 
-        dst_bone.name = bone->mName.C_Str();
+        strcpy(dst_bone.name, bone->mName.C_Str());
         dst_bone.bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
                                  float4(bone->mOffsetMatrix.a2, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.d2),
                                  float4(bone->mOffsetMatrix.a3, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.d3),
@@ -160,7 +160,6 @@ void Hachiko::ResourceMesh::CleanUp()
         buffer_sizes[static_cast<int>(Buffers::TEX_COORDS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::TANGENTS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::BONES)] = 0;
-
     }
     loaded = false;
 }

@@ -111,7 +111,7 @@ void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
 
              if (bone_node == nullptr)
              {
-                 bone_node = node_cache[i] = root ? root->GetFirstChildWithName(bone.name.c_str()) : nullptr;
+                 bone_node = node_cache[i] = root ? root->GetFirstChildWithName(bone.name) : nullptr;
              }
 
             if (bone_node)
