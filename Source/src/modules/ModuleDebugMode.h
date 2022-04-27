@@ -8,7 +8,7 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
-#include "RenderList.h"
+#include "core/rendering/RenderList.h"
 //Delete after  VS1
 #include "ModuleSceneManager.h"
 #include "components/ComponentTransform.h"
@@ -44,6 +44,9 @@ namespace Hachiko
 		[[nodiscard]] bool IsActive() const { return is_gui_active; }
 		void Toggle() { is_gui_active = !is_gui_active; }
 
+		// God mode
+		void SetLine(LineSegment newLine);
+
 	private:
 		void DrawGUI();
 		ImGuiWindowFlags SetupWindow();
@@ -63,6 +66,10 @@ namespace Hachiko
 		ImGuiWindowFlags window_flags;
 		//Deprecated after VS1
 		const GameObject* player;
+
+		// God mode
+        LineSegment line;
+        std::vector<float3> playerLocations;
 	};
 }
 
