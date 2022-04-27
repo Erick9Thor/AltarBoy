@@ -137,8 +137,9 @@ unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
     ILuint img_id; // The image name to return.
     ilGenImages(1, &img_id); // Grab a new image name.
     ilBindImage(img_id);
-    if (!ilLoadImage(path))
-        return 0;
+    // TODO MONICA: Change this to work with unicode
+    /*if (!ilLoadImage(path))
+        return 0;*/
     ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
     if (flip)
         iluFlipImage();

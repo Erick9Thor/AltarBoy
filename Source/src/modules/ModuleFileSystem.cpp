@@ -45,7 +45,8 @@ bool Hachiko::ModuleFileSystem::Init()
 void Hachiko::ModuleFileSystem::CreateContext()
 {
     char engine_path[MAX_PATH];
-    GetCurrentDirectory(MAX_PATH, engine_path);
+    // TODO MONICA: Change this to work with unicode
+    //GetCurrentDirectory(MAX_PATH, engine_path);
     working_directory = engine_path;
 
     HE_LOG("Engine context: %s", working_directory.c_str());
@@ -135,7 +136,8 @@ void Hachiko::ModuleFileSystem::CreateDir(const char* directory_path) const
 
 void Hachiko::ModuleFileSystem::Copy(const char* source_file_path, const char* destination_file_path)
 {
-    CopyFile(source_file_path, destination_file_path, false);
+    // TODO MONICA: Change this to work with unicode
+    //CopyFile(source_file_path, destination_file_path, false);
 }
 
 void Hachiko::ModuleFileSystem::Delete(const char* file_path) const
