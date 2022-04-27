@@ -47,7 +47,7 @@ written agreement between you and Audiokinetic Inc.
 #include "AkDefaultIOHookDeferred.h"
 #include <AK/SoundEngine/Common/AkMemoryMgr.h>
 #include "AkFileHelpers.h"
-
+#include "core/hepch.h"
 
 // Device info.
 #define WIN32_DEFERRED_DEVICE_NAME		(L"Win32 Deferred")	// Default deferred device name.

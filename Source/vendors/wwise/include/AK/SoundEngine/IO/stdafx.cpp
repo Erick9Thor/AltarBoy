@@ -14,6 +14,6 @@ written agreement between you and Audiokinetic Inc.
 *******************************************************************************/
 
 #include "stdafx.h"
-
+#include "core/hepch.h"
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file

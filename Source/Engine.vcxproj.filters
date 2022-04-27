@@ -420,6 +420,15 @@
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp">
       <Filter>Vendors\Wwise</Filter>
     </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1074,6 +1083,24 @@
       <Filter>Vendors\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFileHelpers.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIOBlocking.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIODeferred.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.h">
       <Filter>Vendors\Wwise</Filter>
     </ClInclude>
   </ItemGroup>

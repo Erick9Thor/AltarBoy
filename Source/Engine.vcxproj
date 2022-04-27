@@ -544,6 +544,9 @@
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\components\ComponentButton.h" />
@@ -729,6 +732,12 @@
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h" />
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h" />
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFileHelpers.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIOBlocking.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIODeferred.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\binary.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\anchordict.h" />

@@ -56,6 +56,11 @@
 #include <AK/SoundEngine/Common/AkFilePackage.h>
 #include <AK/SoundEngine/Common/AkFilePackageLUT.h>
 #include <AK/SoundEngine/Common/AkMultipleFileLocation.h>
+#include <AK/SoundEngine/IO/AkFileHelpers.h>
+#include "AK/SoundEngine/IO/AkDefaultIOHookBlocking.h"
+#include "AK/SoundEngine/IO/AkDefaultIOHookDeferred.h"
+#include "AK/SoundEngine/IO/stdafx.h"
+
 
 //project includes
 #include "Globals.h"

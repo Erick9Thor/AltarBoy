@@ -45,7 +45,7 @@ written agreement between you and Audiokinetic Inc.
 #include "stdafx.h"
 #include "AkDefaultIOHookBlocking.h"
 #include "AkFileHelpers.h"
-
+#include "core/hepch.h"
 
 #define WIN32_BLOCKING_DEVICE_NAME		(AKTEXT("Win32 Blocking"))	// Default blocking device name.
 
