@@ -60,6 +60,11 @@ namespace Hachiko
             return mesh->indices;
         }
 
+        [[nodiscard]] const float* GetNormals() const
+        {
+            return mesh->normals;
+        }
+
         [[nodiscard]] const std::string& GetResourcePath() const
         {
             return asset_path;
