@@ -23,7 +23,15 @@ bool Hachiko::ResourceNavMesh::Build(const ComponentMesh* terrainMesh)
 	const float* normals = terrainMesh->GetNormals();
 	const int nnorms = terrainMesh->GetBufferSize(Hachiko::ResourceMesh::Buffers::NORMALS);
 
-	
+	// Step 1. Initialize build config.
+	// Step 2. Rasterize input polygon soup.
+	// Step 3. Filter walkables surfaces.
+	// Step 4. Partition walkable surface to simple regions.
+	// Step 5. Trace and simplify region contours.
+	// Step 6. Build polygons mesh from contours.
+	// Step 7. Create detail mesh which allows to access approximate height on each polygon.
+	// (Optional) Step 8. Create Detour data from Recast poly mesh.
+	// Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp
 
 	return true;
 }
