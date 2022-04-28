@@ -42,6 +42,8 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
+
+        void ChangeMaterial();
         
     private:
         ResourceMaterial* material{};

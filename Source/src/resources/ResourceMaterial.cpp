@@ -81,6 +81,7 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
+    ImGui::DragFloat("Shininess", &shininess, 0.25f, 0.0f);
 }
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
