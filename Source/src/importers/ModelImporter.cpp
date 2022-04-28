@@ -195,54 +195,6 @@ void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, 
 
 void Hachiko::ModelImporter::Save(const Resource* resource) {}
 
-//Hachiko::Resource* Hachiko::ModelImporter::CherryImport(int mesh_index, const UID uid, const char* model_path)
-//{
-//    HE_LOG("ModelImporter::CherryImport");
-//    HE_LOG("Model path: %s", model_path);
-//    HE_LOG("UID: %ull", uid);
-//    HE_LOG("Mesh index: %d", mesh_index);
-//
-//    const std::filesystem::path model(model_path);
-//  
-//    // 1 - Open assimp model
-//    Assimp::Importer import;
-//    const aiScene* scene = nullptr;
-//    scene = import.ReadFile(model.string(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-//
-//    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-//    {
-//        HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
-//        return nullptr;
-//    }
-//
-//    // 2 - Open model meta if exists. If not, create one
-//    const std::string model_name = model.filename().replace_extension().string();
-//    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), model_name, META_EXTENSION);
-//    YAML::Node model_node;
-//
-//    if (!std::filesystem::exists(model_library_path))
-//    {
-//        model_node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
-//
-//        ImportNode(scene->mRootNode, model_node);
-//    }
-//    else
-//    {
-//        model_node = YAML::LoadFile(model_library_path);
-//    }
-//
-//    model_node[MODEL_MESH_NODE][mesh_index][MODEL_MESH_ID] = uid;
-//
-//    // 3 - Import Single Mesh
-//    MeshImporter mesh_importer;
-//    mesh_importer.Import(scene->mMeshes[mesh_index], uid);
-//
-//    // 4- If ok, save new model data
-//    FileSystem::Save(model_library_path.c_str(), model_node);
-//
-//    return mesh_importer.Load(uid);
-//}
-
 void Hachiko::ModelImporter::Delete(const YAML::Node& meta) 
 {
     for (unsigned i = 0; i < meta[MODEL_MESH_NODE].size(); ++i)
