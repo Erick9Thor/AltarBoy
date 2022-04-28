@@ -56,6 +56,8 @@ namespace Hachiko
         GameObject* Raycast(const float3& origin, const float3& destination);
         void SwitchTo(const char* file_path);
 
+        void ReloadScene();
+
         void OptionsMenu();
 
     private:
@@ -67,5 +69,7 @@ namespace Hachiko
         bool scene_ready_to_load = false;
         bool scene_autosave = false;
         std::string scene_to_load;
+
+        std::string currentScenePath;
     };
 } // namespace Hachiko
