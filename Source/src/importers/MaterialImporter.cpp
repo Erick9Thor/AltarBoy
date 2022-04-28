@@ -37,9 +37,12 @@ void Hachiko::MaterialImporter::ImportWithMeta(const char* path, YAML::Node& met
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-    const std::string material_asset_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION;
-    const std::string meta_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName() + MATERIAL_EXTENSION + META_EXTENSION;
-    const std::string material_library_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(material->GetID());
+    const std::string material_asset_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
+    const std::string meta_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(),  MATERIAL_EXTENSION, META_EXTENSION);
+    const std::string material_library_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), std::to_string(material->GetID()));
     
     YAML::Node meta_node;
     meta_node[GENERAL_NODE][GENERAL_ID] = material->GetID();
