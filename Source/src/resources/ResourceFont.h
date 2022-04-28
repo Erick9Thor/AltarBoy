@@ -3,7 +3,7 @@
 #include "Resource.h"
 #include <memory>
 
-class GLFont;
+#include "GLFont.h"
 
 namespace Hachiko
 {
