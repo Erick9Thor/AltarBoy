@@ -37,7 +37,8 @@ namespace Hachiko
             {Hachiko::Resource::Type::TEXTURE, ".tif"},
             {Hachiko::Resource::Type::MODEL, ".fbx"},
             {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
-            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION}
+            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION},
+            {Hachiko::Resource::Type::FONT, ".ttf"},
         };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;

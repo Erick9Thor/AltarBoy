@@ -86,30 +86,12 @@
 
 // Resources
 #define RESOURCES_NODE "resources"
+
 // Assets
-#define SCENE_ASSETS "scene_assets"
-#define MODELS_ASSETS "models_assets"
-#define MESHES_ASSETS "meshes_assets"
-#define TEXTURES_ASSETS "textures_assets"
-#define AUDIO_ASSETS "audio_assets"
-#define VIDEO_ASSETS "video_assets"
-#define SCRIPTS_ASSETS "scripts_assets"
-#define MATERIALS_ASSETS "materials_assets"
-#define SHADERS_ASSETS "shaders_assets"
-#define ANIMATIONS_ASSETS "animations_assets"
-#define SKYBOX_ASSETS "skybox_assets"
+#define ASSETS_COMMON_NAME "_assets"
+
 // Library
-#define SCENES_LIBRARY "scenes_library"
-#define MODELS_LIBRARY "models_library"
-#define MESHES_LIBRARY "meshes_library"
-#define TEXTURES_LIBRARY "textures_library"
-#define AUDIO_LIBRARY "audio_library"
-#define VIDEO_LIBRARY "video_library"
-#define SCRIPTS_LIBRARY "scripts_library"
-#define MATERIALS_LIBRARY "materials_library"
-#define SHADERS_LIBRARY "shaders_library"
-#define ANIMATIONS_LIBRARY "animations_library"
-#define SKYBOX_LIBRARY "skybox_library"
+#define LIBRARY_COMMON_NAME "_library"
 
 // Render
 #define RENDER_NODE "render"

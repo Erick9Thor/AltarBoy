@@ -498,6 +498,12 @@
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
+    <ClCompile Include="src\importers\FontImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2108,6 +2114,12 @@
     </ClInclude>
     <ClInclude Include="src\core\logging\ConsoleLogger.h">
       <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\FontImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceFont.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

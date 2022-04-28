@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\importers\FontImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceFont.cpp" />
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
     <ClCompile Include="src\core\logging\ImGuiLogger.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
@@ -633,6 +635,8 @@
     <ClCompile Include="src\ui\WindowTimers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\importers\FontImporter.h" />
+    <ClInclude Include="src\resources\ResourceFont.h" />
     <ClInclude Include="src\core\ErrorHandler.h" />
     <ClInclude Include="src\core\logging\ConsoleLogger.h" />
     <ClInclude Include="src\core\logging\ImGuiLogger.h" />

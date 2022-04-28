@@ -17,6 +17,7 @@ namespace Hachiko
             TEXTURE,
             MATERIAL,
             ANIMATION,
+            FONT,
             COUNT
         };
 
