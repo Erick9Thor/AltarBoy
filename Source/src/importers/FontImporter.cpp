@@ -32,7 +32,7 @@ void Hachiko::FontImporter::ImportWithMeta(const char* path, YAML::Node& meta)
 
 Hachiko::Resource* Hachiko::FontImporter::Load(UID id)
 {
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT), std::to_string(id));
+    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT) + std::to_string(id) + ".ttf";
     ResourceFont* font = new ResourceFont(id);
     font->gl_font = std::make_unique<GLFont>(file_path.c_str(), freetype_lib);
 
@@ -42,7 +42,8 @@ Hachiko::Resource* Hachiko::FontImporter::Load(UID id)
 void Hachiko::FontImporter::Save(const Resource* resource)
 {
     const ResourceFont* font = static_cast<const ResourceFont*>(resource);
-    const std::string lib_font_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT), std::to_string(font->GetID()));
+    // Freetype is dumb and needs the correct extension to work
+    const std::string lib_font_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT) + std::to_string(font->GetID()) + ".ttf";
 
     // Just use the original font file in lib
     FileSystem::Copy(font->gl_font->getFontFile(), lib_font_path.c_str());
