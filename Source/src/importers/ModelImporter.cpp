@@ -84,7 +84,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     while (dummy_node)
     {
         dummy_node = false;
-        if (node_name.find("_$AssimpFbx$_") != std::string::npos && assimp_node->mNumChildren == 1)
+        if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
         {
             assimp_node = assimp_node->mChildren[0];
             assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);

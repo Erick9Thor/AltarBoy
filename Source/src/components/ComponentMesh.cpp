@@ -2,8 +2,11 @@
 
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 
 #include "resources/ResourceMesh.h"
+
+#include "Application.h"
 
 #include "ComponentMesh.h"
 #include "ComponentCamera.h"
@@ -93,16 +96,11 @@ void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 }
 
 void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
-    const GameObject* root = GetGameObject();
+    const GameObject* root = App->scene_manager->GetRoot();
 
-    while (root != nullptr)
+    if (mesh && mesh->num_bones > 0 && root)
     {
-        root = root->parent;
-    }
-
-    if (mesh && mesh->num_bones > 0)
-    {
-        float4x4 rootT = root->GetTransform()->GetGlobalMatrix().Inverted();
+        float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
 
         for (unsigned i = 0; i < mesh->num_bones; ++i)
         {
@@ -116,7 +114,7 @@ void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
 
             if (bone_node)
             {
-                palette[i] = rootT * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+                palette[i] = root_transform * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
             }
             else
             {

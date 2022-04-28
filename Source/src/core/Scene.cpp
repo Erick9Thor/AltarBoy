@@ -122,7 +122,6 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 }
             }
             
-
             last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
 
             create_children_function(last_parent, child->children);

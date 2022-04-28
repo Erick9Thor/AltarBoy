@@ -8,7 +8,7 @@ namespace Hachiko
     public:
         struct Bone
         {
-            char name[100]; // TODO: find a better size
+            char name[PATH_MAX]; // TODO: find a better size
             float4x4 bind = float4x4::identity;
         };
 

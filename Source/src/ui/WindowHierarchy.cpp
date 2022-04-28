@@ -43,7 +43,7 @@ bool Hachiko::WindowHierarchy::RecursiveDraw(GameObject* game_object)
 {
     bool stop = false;
 
-    const char* str = strstr(game_object->name.c_str(), "$AssimpFbx$");
+    const char* str = strstr(game_object->name.c_str(), AUXILIAR_NODE);
     if (str != nullptr)
     {
         for (GameObject* go : game_object->children)

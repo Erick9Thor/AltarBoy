@@ -5,9 +5,11 @@
 
 #include "resources/ResourceAnimation.h"
 
-Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) {}
+Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
+{}
 
-void Hachiko::AnimationImporter::Import(const char* path) {
+void Hachiko::AnimationImporter::Import(const char* path) 
+{
 
     HE_LOG("Entering Animation Importer: %s", path);
     Assimp::Importer import;
@@ -22,7 +24,8 @@ void Hachiko::AnimationImporter::Import(const char* path) {
     Import(scene->mAnimations[0]);
 }
 
-void Hachiko::AnimationImporter::Save(const Resource* resource) {
+void Hachiko::AnimationImporter::Save(const Resource* resource) 
+{
 
     const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
     const std::string animation_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + animation->GetName();
@@ -47,6 +50,7 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(const char* animation_path)
     const auto animation = new ResourceAnimation(UUID::StringToUID(animation_id));
 
     /* TODO: ANIMATION add all info to charge the node into resource */
+    delete[] file_buffer;
 
     return animation;
 }
