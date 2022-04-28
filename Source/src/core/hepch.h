@@ -51,9 +51,20 @@
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
+#include <AK/SoundEngine/Common/AkDefaultLowLevelIODispatcher.h>
+#include <AK/SoundEngine/Common/AkFileLocationBase.h>
+#include <AK/SoundEngine/Common/AkFilePackage.h>
+#include <AK/SoundEngine/Common/AkFilePackageLUT.h>
+#include <AK/SoundEngine/Common/AkMultipleFileLocation.h>
+#include <AK/SoundEngine/IO/AkFileHelpers.h>
+#include <AK/SoundEngine/IO/AkDefaultIOHookBlocking.h>
+#include <AK/SoundEngine/IO/AkDefaultIOHookDeferred.h>
+#include <AK/SoundEngine/IO/stdafx.h>
+
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
 #include <assimp/include/assimp/postprocess.h>
+
 
 //project includes
 #include "Globals.h"

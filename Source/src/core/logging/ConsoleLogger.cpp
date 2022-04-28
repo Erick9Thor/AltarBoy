@@ -28,6 +28,6 @@ namespace Hachiko
     HACHIKO_API void ConsoleLogger::Log(const char* str, LogLevel& level)
     {
         //console logger currently does not care about log level, everything goes as a debug message
-        OutputDebugString(StringUtils::Concat(str, "\n").c_str());
+        OutputDebugStringA(StringUtils::Concat(str, "\n").c_str());
     }
 }
