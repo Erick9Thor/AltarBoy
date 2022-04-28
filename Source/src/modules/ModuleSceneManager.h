@@ -58,6 +58,8 @@ namespace Hachiko
 
         void ReloadScene();
 
+        void OptionsMenu();
+
     private:
         Scene* main_scene = nullptr;
         SceneSerializer* serializer = nullptr;
@@ -65,6 +67,7 @@ namespace Hachiko
 
 
         bool scene_ready_to_load = false;
+        bool scene_autosave = false;
         std::string scene_to_load;
 
         std::string currentScenePath;

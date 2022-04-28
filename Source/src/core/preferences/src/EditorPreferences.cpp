@@ -49,6 +49,11 @@ void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
         {
             vsync = it->second.as<int>();
         }
+
+        if (it->first.as<std::string>()._Equal(SCENE_AUTOSAVE))
+        {
+            scene_autosave = it->second.as<bool>();
+        }
     }
 }
 
@@ -60,4 +65,5 @@ void EditorPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][THEME] = Editor::Theme::ToString(theme);
     node[group_name][VSYNC] = vsync;
     node[group_name][SCENE_BACKGROUND_COLOR] = scene_background_color;
+    node[group_name][SCENE_AUTOSAVE] = scene_autosave;
 }

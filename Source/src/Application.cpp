@@ -9,23 +9,20 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleProgram.h"
-#include "modules/ModuleHardware.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleEvent.h"
-#include "modules/ModuleFileSystem.h"
 #include "modules/ModuleScriptingSystem.h"
 #include "Modules/ModuleResources.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
+#include "modules/ModuleAudio.h"
 
 #include "core/preferences/PreferenceManager.h"
 
 
 Hachiko::Application::Application()
 {
-    modules.push_back(hw = new ModuleHardware());
-    modules.push_back(file_sys = new ModuleFileSystem());
     modules.push_back(window = new ModuleWindow());
     modules.push_back(input = new ModuleInput());
     modules.push_back(scripting_system = new ModuleScriptingSystem());
@@ -40,8 +37,9 @@ Hachiko::Application::Application()
     modules.push_back(event = new ModuleEvent());
     modules.push_back(ui = new ModuleUserInterface()); 
     modules.push_back(debug_mode = new ModuleDebugMode());
-
+    modules.push_back(audio = new ModuleAudio());
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
+
 }
 
 Hachiko::Application::~Application()
@@ -56,6 +54,7 @@ Hachiko::Application::~Application()
 bool Hachiko::Application::Init()
 {
     bool ret = true;
+    file_system.Init();
 
     for (auto it = modules.begin(); it != modules.end() && ret; ++it)
     {

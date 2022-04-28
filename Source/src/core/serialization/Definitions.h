@@ -80,6 +80,7 @@
 #define THEME_LIGHT "light"
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
+#define SCENE_AUTOSAVE "scene_autosave"
 
 // Resources
 #define RESOURCES_NODE "resources"
@@ -96,6 +97,7 @@
 #define ANIMATIONS_ASSETS "animations_assets"
 #define SKYBOX_ASSETS "skybox_assets"
 // Library
+#define SCENES_LIBRARY "scenes_library"
 #define MODELS_LIBRARY "models_library"
 #define MESHES_LIBRARY "meshes_library"
 #define TEXTURES_LIBRARY "textures_library"
@@ -136,6 +138,7 @@
 #define SCENE_NAME "scene_name"
 #define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
+#define SCENE_TEMP_NAME "temp_scene"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"
@@ -192,6 +195,12 @@
 // Component Image
 #define IMAGE_PATH "image_path"
 #define HOVER_IMAGE_PATH "hover_image_path"
+
+// Component Text
+#define FONT_PATH "font_path"
+#define FONT_COLOR "color"
+#define FONT_SIZE "size"
+#define FONT_LABEL_TEXT "label_text"
 
 // Component Progress Bar
 #define BAR_PARAMS "params"

@@ -22,7 +22,7 @@ namespace Hachiko
 
 
         ComponentCanvas* FindClosestParentCanvas() const;
-        void Render(Program* program) const;
+        void Render(Program* img_program, Program* txt_program) const;
     };
 } // namespace Hachiko
 
