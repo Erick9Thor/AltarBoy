@@ -32,6 +32,7 @@ namespace Hachiko
         std::string shaders_assets    = "assets/shaders/";
         std::string animations_assets = "assets/animations/";
         std::string skybox_assets     = "assets/skybox/";
+        std::string state_machine_assets = "assets/state_machine/";
 
         std::string scenes_library     = "library/scenes/";
         std::string models_library     = "library/models/";
@@ -44,5 +45,6 @@ namespace Hachiko
         std::string shaders_library    = "library/shaders/";
         std::string animations_library = "library/animations/";
         std::string skybox_library     = "library/skybox/";
+        std::string state_machine_library = "library/state_machine/";
     };
 }

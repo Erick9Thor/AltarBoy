@@ -130,6 +130,7 @@ void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][SHADERS_ASSETS] = shaders_assets;
     node[group_name][ANIMATIONS_ASSETS] = animations_assets;
     node[group_name][SKYBOX_ASSETS] = skybox_assets;
+    node[group_name][STATE_MACHINE_ASSETS] = state_machine_assets;
 
     node[group_name][SCENES_LIBRARY] = scenes_library;
     node[group_name][MODELS_LIBRARY] = models_library;
@@ -142,6 +143,7 @@ void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][SHADERS_LIBRARY] = shaders_library;
     node[group_name][ANIMATIONS_LIBRARY] = animations_library;
     node[group_name][SKYBOX_LIBRARY] = skybox_library;
+    node[group_name][STATE_MACHINE_LIBRARY] = state_machine_library;
 }
 
 const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
@@ -170,6 +172,8 @@ const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
         return animations_assets.c_str();
     case Resource::Type::SKYBOX:
         return skybox_assets.c_str();
+    case Resource::Type::STATE_MACHINE:
+        return state_machine_assets.c_str();
     case Resource::Type::UNKNOWN:
     default:
         assert(false);
@@ -202,6 +206,8 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
         return animations_library.c_str();
     case Resource::Type::SKYBOX:
         return skybox_library.c_str();
+    case Resource::Type::STATE_MACHINE:
+        return state_machine_library.c_str();
     case Resource::Type::UNKNOWN:
     default:
         assert(false);

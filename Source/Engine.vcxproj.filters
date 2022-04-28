@@ -498,6 +498,7 @@
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
+    <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2112,6 +2113,7 @@
     <ClInclude Include="src\core\logging\ConsoleLogger.h">
       <Filter>Logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\resources\ResourceStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

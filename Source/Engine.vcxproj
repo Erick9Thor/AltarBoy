@@ -159,6 +159,7 @@
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
     <ClCompile Include="src\core\logging\ImGuiLogger.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
+    <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
@@ -640,6 +641,7 @@
     <ClInclude Include="src\events\SceneLoadEventPayload.h" />
     <ClInclude Include="src\Gameplay.h" />
     <ClInclude Include="src\HachikoApiDefine.h" />
+    <ClInclude Include="src\resources\ResourceStateMachine.h" />
     <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\scripting\Script.h" />

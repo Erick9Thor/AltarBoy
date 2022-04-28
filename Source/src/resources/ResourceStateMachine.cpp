@@ -1,0 +1,156 @@
+#include "core/hepch.h"
+#include "ResourceStateMachine.h"
+
+Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE) {}
+
+Hachiko::ResourceStateMachine::~ResourceStateMachine() {}
+
+void Hachiko::ResourceStateMachine::AddClip(const std::string& name, UID animation, bool loop)
+{
+    clips.push_back(Clip(name, animation, loop));
+}
+
+int Hachiko::ResourceStateMachine::FindClip(const std::string& name) const
+{
+    int index = 0;
+    for (index; index < clips.size(); ++index)
+    {
+        if (clips[index].name == name)
+            break;
+    }
+    return index;
+}
+
+void Hachiko::ResourceStateMachine::RemoveClip(const std::string& name)
+{
+    int index = FindClip(name);
+    if (index != clips.size())
+    {
+        // RemoveState?
+        clips.erase(clips.begin() + index);
+    }
+}
+
+void Hachiko::ResourceStateMachine::EditClipAnimation(const std::string& name, UID newAnimation) 
+{
+    int index = FindClip(name);
+    clips[index].animation = newAnimation;
+}
+
+void Hachiko::ResourceStateMachine::EditClipLoop(const std::string& name, bool newLoop) 
+{
+    int index = FindClip(name);
+    clips[index].loop = newLoop;
+}
+
+void Hachiko::ResourceStateMachine::AddState(const std::string& name, const std::string& clip)
+{
+    states.push_back(State(name, clip));
+}
+
+int Hachiko::ResourceStateMachine::FindState(const std::string& name) const 
+{
+    int index = 0;
+    for (index; index < states.size(); ++index)
+    {
+        if (states[index].name == name)
+            break;
+    }
+    return index;
+}
+
+std::vector<int> Hachiko::ResourceStateMachine::FindStateTransitions(const std::string& name) const
+{
+    std::vector<int> stateTransitionsIndex;
+    int index = 0;
+    for (index; index < transitions.size(); ++index)
+    {
+        if (transitions[index].source == name || transitions[index].target == name)
+            stateTransitionsIndex.push_back(index);
+    }
+    return stateTransitionsIndex;
+}
+
+void Hachiko::ResourceStateMachine::RemoveState(const std::string& name)
+{
+    int index = FindState(name);
+    if (index != states.size())
+    {
+        std::vector<int> stateTransitionsIndex = FindStateTransitions(name);
+        for (int i = 0; i < stateTransitionsIndex.size(); ++i)
+        {
+            transitions.erase(transitions.begin() + stateTransitionsIndex[i]);
+        }
+        states.erase(states.begin() + index);
+    }
+}
+
+void Hachiko::ResourceStateMachine::EditStateClip(const std::string& name, const std::string& newClip)
+{
+    int index = FindState(name);
+    states[index].clip = newClip;
+}
+
+void Hachiko::ResourceStateMachine::AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime)
+{
+    transitions.push_back(Transition(source, target, trigger, interpolationTime));
+}
+
+int Hachiko::ResourceStateMachine::FindTransition(const std::string& source, const std::string& trigger) const
+{
+    int index = 0;
+    for (index; index < transitions.size(); ++index)
+    {
+        if (transitions[index].source == source && transitions[index].trigger == trigger)
+            break;
+    }
+    return index;
+}
+
+void Hachiko::ResourceStateMachine::RemoveTransition(const std::string& source, const std::string& trigger)
+{
+    int index = FindTransition(source, trigger);
+    if (index != transitions.size())
+    {
+        transitions.erase(transitions.begin() + index);
+    }
+}
+
+void Hachiko::ResourceStateMachine::EditTransitionSource(const std::string& newSource, const std::string& target, const std::string& trigger)
+{
+    int index = 0;
+    for (index; index < transitions.size(); ++index)
+    {
+        if (transitions[index].target == target && transitions[index].trigger == trigger)
+            break;
+    }
+    transitions[index].source = newSource;
+}
+
+void Hachiko::ResourceStateMachine::EditTransitionTarget(const std::string& source, const std::string& newTarget, const std::string& trigger)
+{
+    int index = 0;
+    for (index; index < transitions.size(); ++index)
+    {
+        if (transitions[index].source == source && transitions[index].trigger == trigger)
+            break;
+    }
+    transitions[index].target = newTarget;
+}
+
+void Hachiko::ResourceStateMachine::EditTransitionTrigger(const std::string& source, const std::string& target, const std::string& newTrigger)
+{
+    int index = 0;
+    for (index; index < transitions.size(); ++index)
+    {
+        if (transitions[index].source == source && transitions[index].target == target)
+            break;
+    }
+    transitions[index].trigger = newTrigger;
+}
+
+void Hachiko::ResourceStateMachine::EditTransitionInterpolationTime(const std::string& source, const std::string& trigger, unsigned int newInterpolationTime)
+{
+    int index = FindTransition(source, trigger);
+    transitions[index].interpolationTime = newInterpolationTime;
+}

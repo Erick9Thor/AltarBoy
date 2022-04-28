@@ -96,6 +96,7 @@
 #define SHADERS_ASSETS "shaders_assets"
 #define ANIMATIONS_ASSETS "animations_assets"
 #define SKYBOX_ASSETS "skybox_assets"
+#define STATE_MACHINE_ASSETS "state_machine_assets"
 // Library
 #define SCENES_LIBRARY "scenes_library"
 #define MODELS_LIBRARY "models_library"
@@ -108,6 +109,7 @@
 #define SHADERS_LIBRARY "shaders_library"
 #define ANIMATIONS_LIBRARY "animations_library"
 #define SKYBOX_LIBRARY "skybox_library"
+#define STATE_MACHINE_LIBRARY "state_machine_library"
 
 // Render
 #define RENDER_NODE "render"
