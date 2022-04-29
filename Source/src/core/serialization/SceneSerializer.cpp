@@ -14,11 +14,6 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
     }
     preferences = App->preferences->GetResourcesPreference();
     const auto scene_output = new Scene();
-    
-    if (!scene_node[CHILD_NODE].IsDefined())
-    {
-        return scene_output;
-    }
 
     scene_output->Load(scene_node);
 
