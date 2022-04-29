@@ -69,7 +69,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         aiMaterial* material = scene->mMaterials[i];
         Hachiko::UID material_id = UUID::GenerateUID();
         node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
-        node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = scene->mMaterials[i]->GetName().C_Str();
+        node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = material->GetName().C_Str();
         material_importer.Import(material, material_id);
     }
 

@@ -24,6 +24,8 @@ namespace Hachiko
 
         Resource* GetResource(Resource::Type type, UID id);
         void CreateResource(Resource::Type type, const std::string& name) const;
+        void ReimportLibrary();
+        void ReimportAsset(std::string meta_path);
         void AssetsLibraryCheck();
         void HandleResource(const std::filesystem::path& path);
 

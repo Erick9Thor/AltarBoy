@@ -147,6 +147,28 @@ void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::st
     }
 }
 
+void Hachiko::ModuleResources::ReimportLibrary()
+{
+    FileSystem::Delete(LIBRARY_FOLDER);
+
+    AssetsLibraryCheck();
+
+    // RELOAD SCENE
+}
+
+void Hachiko::ModuleResources::ReimportAsset(std::string meta_path)
+{
+    YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+    Resource::Type type = static_cast<Resource::Type>(meta_node[GENERAL_NODE][GENERAL_TYPE].as<int>());
+    std::string asset_path = meta_path.substr(0, meta_path.length() - 5);
+
+    importer_manager.DeleteWithMeta(type, meta_node);
+    importer_manager.ImportWithMeta(std::filesystem::path(asset_path), type, meta_node);
+
+    // RELOAD SCENE
+}
+
 // A WAY TO REMOVE ALL METAS
 void DeleteMetas(const PathNode& folder)
 {

@@ -72,6 +72,21 @@ void Hachiko::WindowResource::Update()
                 filename.insert(0, current_directory.string().c_str());
                 LoadResource(filename);
             }
+
+            /* if (ImGui::IsMouseClicked(1))
+            {
+                ImGui::OpenPopup(filename.c_str());
+            }
+
+            if (ImGui::BeginPopup(filename.c_str()))
+            {
+                if (ImGui::MenuItem("Refresh asset"))
+                {
+                    App->resources->ReimportAsset(filename);
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            } */
         }
     }
 

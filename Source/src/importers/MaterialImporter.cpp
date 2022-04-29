@@ -109,7 +109,12 @@ void Hachiko::MaterialImporter::CreateMaterial(const std::string& name)
 void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id) 
 {  
     const auto material = new ResourceMaterial(id);
-    material->SetName(ai_material->GetName().C_Str());
+    std::string name = ai_material->GetName().C_Str();
+    if (name.find(':') != std::string::npos)
+    {
+        name.erase(remove(name.begin(), name.end(), ':'), name.end());
+    }
+    material->SetName(name);
     
     aiColor4D color;
     if (ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
