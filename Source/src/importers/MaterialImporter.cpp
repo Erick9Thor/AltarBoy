@@ -72,9 +72,8 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
-    material_node[MATERIAL_SHININESS] = material->shininess;
     material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
-    material_node[MATERIAL_METALNESS_VALUE] = material->metalness;
+    material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
     material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
 
     FileSystem::Save(material_library_path.c_str(), material_node);
@@ -93,7 +92,6 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
     material->SetName(node[MATERIAL_NAME].as<std::string>());
     material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
-    material->shininess = node[MATERIAL_SHININESS].as<float>();
     material->smoothness = node[MATERIAL_SMOOTHNESS].as<float>();
     material->metalness_value = node[MATERIAL_METALNESS_VALUE].as<float>();
     material->is_metallic = node[MATERIAL_IS_METALLIC].as<bool>();
@@ -140,8 +138,6 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id)
     {
         ColorCopy(color, material->specular_color);
     }
-
-    ai_material->Get(AI_MATKEY_SHININESS, material->shininess);
 
     material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);

@@ -48,7 +48,6 @@
 #define MATERIAL_METALNESS_PATH "metalness_path"
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
-#define MATERIAL_SHININESS "shininess"
 #define MATERIAL_SMOOTHNESS "smoothness"
 #define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"

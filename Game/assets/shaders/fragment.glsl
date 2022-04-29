@@ -58,9 +58,8 @@ layout(std140, binding = 1) uniform Material
     uint specular_flag;
     uint normal_flag;
     uint metallic_flag;
-    float shininess;
     float smoothness;
-    float metalness;
+    float metalness_value;
     uint is_metallic;
 } material;
 
@@ -229,18 +228,15 @@ void main()
         diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
     }
 
-    float shininess = material.shininess;
-
     vec3 f0;
     vec3 Cd;
-    float smoothness;
     
     if(material.is_metallic > 0)
     {
         //vec4 colorMetallic = texture(metallicMap, UV);
         //float metalnessMask = hasMetallicMap * colorMetallic.r + (1 - hasMetallicMap) * metalness;
-        Cd = diffuse_color * (1 - material.metalness);
-        f0 = vec3(0.04) * (1 - material.metalness) + diffuse_color * material.metalness;
+        Cd = diffuse_color * (1 - material.metalness_value);
+        f0 = vec3(0.04) * (1 - material.metalness_value) + diffuse_color * material.metalness_value;
     }
     else 
     {
@@ -255,20 +251,18 @@ void main()
             //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
         }
     }
-
-	float smoothness = material.smoothness;
     
     vec3 hdr_color = vec3(0.0);
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, material.smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, material.smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, material.smoothness);
         
     }   
     hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;

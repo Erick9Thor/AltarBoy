@@ -119,9 +119,8 @@ namespace Hachiko
         ResourceTexture* metalness = nullptr;
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
-        float shininess = 50.0f;
-        float smoothness = 50.0f;
-        float metalness_value = 50.0f;
+        float smoothness = 0.5f;
+        float metalness_value = 0.5f;
         bool is_metallic = false;
 
     private:

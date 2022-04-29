@@ -115,7 +115,6 @@ namespace Hachiko
             unsigned specular_flag{};
             unsigned normal_flag{};
             unsigned metalness_flag{};
-            float shininess{};
             float smoothness{};
             float metalness{};
             unsigned is_metallic{};
