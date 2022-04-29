@@ -1,6 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
-#include "PlayerCamera.h"
 #include "Scenes.h"
 
 #include <components/ComponentTransform.h>
@@ -20,16 +19,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
 	, _starting_position(math::float3::zero)
-	
-	// TODO: Delete these after testing the editor stuff ends:
-	, _double_field_test(0.0)
-	, _int_field_test(0)
-	, _unsigned_int_field_test(0)
-	, _float2_field_test(math::float2::zero)
-	, _float4_field_test(math::float4::zero)
-	, _string_field_test("")
-	, _game_object_field_test(nullptr)
-	, _component_button_test(nullptr)
 {
 }
 
@@ -176,10 +165,5 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 		// Make the player look the mouse:
 		transform->LookAtTarget(intersection_position);
-	}
-
-	if (_game_object_field_test != nullptr)
-	{
-		HE_LOG("Script has: %s", _game_object_field_test->GetName().c_str());
 	}
 }
