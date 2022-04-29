@@ -41,7 +41,7 @@ bool Hachiko::GetFileLastWriteTimestamp(const std::wstring& file_name,
 	SystemTimeToTzSpecificLocalTime(NULL, &utc_time, &local_time);
 
 	// Build a string showing the date and time.
-	timestamp_dword = StringCchPrintf(timestamp_buffer,
+	timestamp_dword = StringCchPrintfA(timestamp_buffer,
 		MAX_PATH,
 		"%02d/%02d/%d %02d:%02d:%02d ms%d",
 		local_time.wDay,

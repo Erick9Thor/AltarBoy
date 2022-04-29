@@ -183,19 +183,3 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		HE_LOG("Script has: %s", _game_object_field_test->GetName().c_str());
 	}
 }
-
-void Hachiko::Scripting::PlayerController::OnEditor(
-	ImGuiContext* context)
-{
-	Editor::Show("_int_field_test", _int_field_test);
-	Editor::Show("_unsigned_int_field_test", _unsigned_int_field_test);
-	Editor::Show("_double_field_test", _double_field_test);
-	Editor::Show("_is_falling", _is_falling);
-	Editor::Show("_movement_speed", _movement_speed);
-	Editor::Show("_starting_position", _starting_position);
-	Editor::Show("_float2_field_test", _float2_field_test);
-	Editor::Show("_float4_field_test", _float4_field_test);
-	Editor::Show("_string_field_test", _string_field_test);
-	Editor::Show("_game_object_field_test", &_game_object_field_test);
-	Editor::Show<ComponentButton>("_component_button_test", "ComponentButton*", &_component_button_test);
-}

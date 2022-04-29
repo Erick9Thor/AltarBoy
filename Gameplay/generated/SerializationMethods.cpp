@@ -349,6 +349,78 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 			_starting_position = std::any_cast<math::float3>(_starting_position_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_double_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _double_field_test_sf = serialized_fields["_double_field_test"];
+		if (_double_field_test_sf.type_name == "double")
+		{
+			_double_field_test = std::any_cast<double>(_double_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_int_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _int_field_test_sf = serialized_fields["_int_field_test"];
+		if (_int_field_test_sf.type_name == "int")
+		{
+			_int_field_test = std::any_cast<int>(_int_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_unsigned_int_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _unsigned_int_field_test_sf = serialized_fields["_unsigned_int_field_test"];
+		if (_unsigned_int_field_test_sf.type_name == "unsigned")
+		{
+			_unsigned_int_field_test = std::any_cast<unsigned>(_unsigned_int_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_float2_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _float2_field_test_sf = serialized_fields["_float2_field_test"];
+		if (_float2_field_test_sf.type_name == "math::float2")
+		{
+			_float2_field_test = std::any_cast<math::float2>(_float2_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_float4_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _float4_field_test_sf = serialized_fields["_float4_field_test"];
+		if (_float4_field_test_sf.type_name == "math::float4")
+		{
+			_float4_field_test = std::any_cast<math::float4>(_float4_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_string_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _string_field_test_sf = serialized_fields["_string_field_test"];
+		if (_string_field_test_sf.type_name == "std::string")
+		{
+			_string_field_test = std::any_cast<std::string>(_string_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_game_object_field_test") != serialized_fields.end())
+	{
+		const SerializedField& _game_object_field_test_sf = serialized_fields["_game_object_field_test"];
+		if (_game_object_field_test_sf.type_name == "GameObject*")
+		{
+			_game_object_field_test = std::any_cast<GameObject*>(_game_object_field_test_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_component_button_test") != serialized_fields.end())
+	{
+		const SerializedField& _component_button_test_sf = serialized_fields["_component_button_test"];
+		if (_component_button_test_sf.type_name == "ComponentButton*")
+		{
+			_component_button_test = std::any_cast<ComponentButton*>(_component_button_test_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -376,4 +448,20 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_speed_y"] = SerializedField(std::string("_speed_y"), std::make_any<float>(_speed_y), std::string("float"));
 
 	serialized_fields["_starting_position"] = SerializedField(std::string("_starting_position"), std::make_any<math::float3>(_starting_position), std::string("math::float3"));
+
+	serialized_fields["_double_field_test"] = SerializedField(std::string("_double_field_test"), std::make_any<double>(_double_field_test), std::string("double"));
+
+	serialized_fields["_int_field_test"] = SerializedField(std::string("_int_field_test"), std::make_any<int>(_int_field_test), std::string("int"));
+
+	serialized_fields["_unsigned_int_field_test"] = SerializedField(std::string("_unsigned_int_field_test"), std::make_any<unsigned>(_unsigned_int_field_test), std::string("unsigned"));
+
+	serialized_fields["_float2_field_test"] = SerializedField(std::string("_float2_field_test"), std::make_any<math::float2>(_float2_field_test), std::string("math::float2"));
+
+	serialized_fields["_float4_field_test"] = SerializedField(std::string("_float4_field_test"), std::make_any<math::float4>(_float4_field_test), std::string("math::float4"));
+
+	serialized_fields["_string_field_test"] = SerializedField(std::string("_string_field_test"), std::make_any<std::string>(_string_field_test), std::string("std::string"));
+
+	serialized_fields["_game_object_field_test"] = SerializedField(std::string("_game_object_field_test"), std::make_any<GameObject*>(_game_object_field_test), std::string("GameObject*"));
+
+	serialized_fields["_component_button_test"] = SerializedField(std::string("_component_button_test"), std::make_any<ComponentButton*>(_component_button_test), std::string("ComponentButton*"));
 }

@@ -21,7 +21,6 @@ public:
 	void OnAwake() override;
 	void OnStart() override;
 	void OnUpdate() override;
-	void OnEditor(ImGuiContext* context) override;
 
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
