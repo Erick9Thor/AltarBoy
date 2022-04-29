@@ -1,9 +1,11 @@
 #pragma once
+#include "core/logging/ConsoleLogger.h"
 
-__declspec(dllexport) void LogFunction(const char file[], int line, const char* format, ...);
+inline Hachiko::ConsoleLogger logger;
 
 #define __FILENAME__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-#define HE_LOG(format, ...) LogFunction(__FILENAME__, __LINE__, format, __VA_ARGS__)
+#define HE_LOG(format, ...) logger.Log(Hachiko::LogLevel::Debug, __FILENAME__, __LINE__, format, __VA_ARGS__)
+#define HE_ERROR(format, ...) logger.Log(Hachiko::LogLevel::Error, __FILENAME__, __LINE__, format, __VA_ARGS__)
 
 #define HACHIKO_PI 3.14159265358979323846
 constexpr float TO_RAD = static_cast<float>(HACHIKO_PI) / 180.0f;
@@ -80,6 +82,8 @@ enum class UpdateStatus
 #define MODEL_EXTENSION ".fbx"
 
 #define SKYBOX_EXTENSION ".hdr"
+
+#define AUXILIAR_NODE "_$AssimpFbx$_"
 
 // Defering for file system https://stackoverflow.com/questions/32432450/what-is-standard-defer-finalizer-implementation-in-c
 #ifndef defer

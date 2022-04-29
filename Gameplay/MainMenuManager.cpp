@@ -117,12 +117,12 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 
 	// TODO: Uncomment this in the next PR after adding the new scenes with
 	// YAML based serialization.
-	/*if (_button_play->IsSelected())
+	if (_button_play->IsSelected())
 	{
 		SceneManagement::SwitchScene(Scenes::GAME);
 
 		return;
-	}*/
+	}
 
 	if (_button_settings->IsSelected())
 	{

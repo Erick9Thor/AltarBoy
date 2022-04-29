@@ -128,25 +128,25 @@ namespace YAML
         {
             Node node;
 
-            node.push_back(rhs.scaleX);
-            node.push_back(rhs.shearXy);
-            node.push_back(rhs.shearXz);
-            node.push_back(rhs.x);
+            node.push_back(rhs[0][0]);
+            node.push_back(rhs[0][1]);
+            node.push_back(rhs[0][2]);
+            node.push_back(rhs[0][3]);
 
-            node.push_back(rhs.shearYx);
-            node.push_back(rhs.scaleY);
-            node.push_back(rhs.shearYz);
-            node.push_back(rhs.y);
+            node.push_back(rhs[1][0]);
+            node.push_back(rhs[1][1]);
+            node.push_back(rhs[1][2]);
+            node.push_back(rhs[1][3]);
 
-            node.push_back(rhs.shearZx);
-            node.push_back(rhs.shearZy);
-            node.push_back(rhs.scaleZ);
-            node.push_back(rhs.z);
+            node.push_back(rhs[2][0]);
+            node.push_back(rhs[2][1]);
+            node.push_back(rhs[2][2]);
+            node.push_back(rhs[2][3]);
 
-            node.push_back(rhs.shearWx);
-            node.push_back(rhs.shearWy);
-            node.push_back(rhs.shearWz);
-            node.push_back(rhs.w);
+            node.push_back(rhs[3][0]);
+            node.push_back(rhs[3][1]);
+            node.push_back(rhs[3][2]);
+            node.push_back(rhs[3][3]);
 
             node.SetStyle(EmitterStyle::Flow);
             return node;
@@ -155,33 +155,30 @@ namespace YAML
         static bool decode(const Node& node, float4x4& rhs)
         {
             if (!node.IsSequence() || 
-                (node[0].size() != 4 && 
-                 node[1].size() != 4 &&
-                 node[2].size() != 4 &&
-                 node[3].size() != 4))
+                node.size() != 16)
             {
                 return false;
             }
 
-            rhs.scaleX  = node[0][0].as<float>();
-            rhs.shearXy = node[0][1].as<float>();
-            rhs.shearXz = node[0][2].as<float>();
-            rhs.x       = node[0][3].as<float>();
+            rhs[0][0] = node[0].as<float>();
+            rhs[0][1] = node[1].as<float>();
+            rhs[0][2] = node[2].as<float>();
+            rhs[0][3] = node[3].as<float>();
 
-            rhs.shearYx = node[1][0].as<float>();
-            rhs.scaleY  = node[1][1].as<float>();
-            rhs.shearYz = node[1][2].as<float>();
-            rhs.y       = node[1][3].as<float>();
+            rhs[1][0] = node[4].as<float>();
+            rhs[1][1] = node[5].as<float>();
+            rhs[1][2] = node[6].as<float>();
+            rhs[1][3] = node[7].as<float>();
 
-            rhs.shearZx = node[2][0].as<float>();
-            rhs.shearZy = node[2][1].as<float>();
-            rhs.scaleZ  = node[2][2].as<float>();
-            rhs.z       = node[2][3].as<float>();
+            rhs[2][0] = node[8].as<float>();
+            rhs[2][1] = node[9].as<float>();
+            rhs[2][2] = node[10].as<float>();
+            rhs[2][3] = node[11].as<float>();
 
-            rhs.shearWx = node[3][0].as<float>();
-            rhs.shearWy = node[3][1].as<float>();
-            rhs.shearWz = node[3][2].as<float>();
-            rhs.w       = node[3][3].as<float>();
+            rhs[3][0] = node[12].as<float>();
+            rhs[3][1] = node[13].as<float>();
+            rhs[3][2] = node[14].as<float>();
+            rhs[3][3] = node[15].as<float>();
 
             return true;
         }

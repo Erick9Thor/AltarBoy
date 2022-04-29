@@ -249,7 +249,7 @@ void Hachiko::ComponentTransform::UpdateTransform()
 {
     if (dirty)
     {
-        matrix_local = matrix_local = float4x4::FromTRS(local_position, local_rotation, local_scale);
+        matrix_local = float4x4::FromTRS(local_position, local_rotation, local_scale);
 
         if (game_object->parent)
         {
@@ -367,3 +367,5 @@ void Hachiko::ComponentTransform::DrawGui()
         }
     }
 }
+
+
