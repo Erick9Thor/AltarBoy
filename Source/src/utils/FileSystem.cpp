@@ -2,6 +2,8 @@
 #include "FileSystem.h"
 #include "PathNode.h"
 
+#include "xxhash.h"
+
 Hachiko::FileSystem::FileSystem()
 {
     HE_LOG("Creating virtual file system");
@@ -44,7 +46,7 @@ void Hachiko::FileSystem::CreateContext()
     HE_LOG("Engine context: %s", working_directory.c_str());
 }
 
-char* Hachiko::FileSystem::Load(const char* file_path)
+char* Hachiko::FileSystem::Load(const char* file_path, size_t* file_size_bytes)
 {
     char* buffer = nullptr;
 
@@ -73,7 +75,17 @@ char* Hachiko::FileSystem::Load(const char* file_path)
     if (read < size)
     {
         HE_LOG("Error reading file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        if (file_size_bytes)
+        {
+            *file_size_bytes = 0;
+        }
         return nullptr;
+    }
+
+    // Provide file size if a pointer is passed
+    if (file_size_bytes)
+    {
+        *file_size_bytes = static_cast<size_t>(read);
     }
 
     return buffer;
@@ -329,4 +341,18 @@ bool Hachiko::FileSystem::HasExtension(const char* path, std::vector<std::string
         }
     }
     return false;
+}
+
+uint64_t Hachiko::FileSystem::HashFromBuffer(const char* bufer, const size_t& size_bytes)
+{
+    return XXH3_64bits(bufer, size_bytes);
+}
+
+uint64_t Hachiko::FileSystem::HashFromPath(const char* file_path)
+{
+    size_t size_bytes = 0;
+    const char* file_data = FileSystem::Load(file_path, &size_bytes);
+    uint64_t hash = XXH3_64bits(file_data, size_bytes);
+    delete file_data;
+    return hash;
 }

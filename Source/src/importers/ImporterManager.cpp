@@ -133,20 +133,17 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
 YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type) const
 {
     YAML::Node node;
-    std::string file_path(path);
-    auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
+    uint64_t file_hash = FileSystem::HashFromPath(path);
 
     node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
-    node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);
-    node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
+    node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);    
+    node[GENERAL_NODE][GENERAL_HASH] = file_hash;
     
     return node;
 }
 
 void Hachiko::ImporterManager::UpdateMeta(const char* path, YAML::Node& meta) const
 {
-    std::string file_path(path);
-    auto last_time_write = GetFileLastWriteTime(StringUtils::StringToWString(file_path));
-
-    meta[GENERAL_NODE][GENERAL_LAST_WRITE_TIME] = last_time_write;
+    uint64_t file_hash = FileSystem::HashFromPath(path);
+    meta[GENERAL_NODE][GENERAL_HASH] = file_hash;
 }

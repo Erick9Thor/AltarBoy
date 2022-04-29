@@ -1,7 +1,7 @@
 General:
   id: 10353801880779830034
   type: 3
-  last_write: [1080115848, 30955708]
+  hash: 11219040909193169022
 model_name: plant01_emission_mesh
 material:
   - id: 18136349640133405084

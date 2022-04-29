@@ -298,4 +298,24 @@ namespace YAML
             return true;
         }
     };
+
+
+    /* template<>
+    struct convert<uint64_t>
+    {
+        static Node encode(const uint64_t& rhs)
+        {
+            Node node;
+            node = static_cast<unsigned long long>(rhs);
+
+            return node;
+        }
+
+        static bool decode(const Node& node, uint64_t& rhs)
+        {
+            rhs = node.as<unsigned long long>();
+
+            return true;
+        }
+    };*/
 } // namespace YAML

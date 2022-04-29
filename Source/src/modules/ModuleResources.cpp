@@ -206,16 +206,15 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
                 // Extract data from meta
                 UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-                FILETIME meta_timestamp = meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].IsDefined() ?
-                    meta_node[GENERAL_NODE][GENERAL_LAST_WRITE_TIME].as<FILETIME>() : FILETIME();
+                uint64_t meta_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
                 
                 std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());
 
                 // Get the asset timestamp
-                FILETIME asset_timestamp = GetFileLastWriteTime(StringUtils::StringToWString(path_node.path));
+                uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
 
-                if (CompareFileTime(&meta_timestamp, &asset_timestamp) != 0)
+                if (meta_hash != asset_hash)
                 {
                     if (library_file_exists)
                     {
