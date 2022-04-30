@@ -4,12 +4,12 @@
 #include "resources/ResourceMesh.h"
 #include "components/ComponentMesh.h"
 
-#include "Recast/Recast.h"
-#include "DebugUtils/RecastDebugDraw.h"
+#include "Recast.h"
+#include "RecastDebugDraw.h"
 
-#include "Detour/DetourNavMesh.h"
-#include "Detour/DetourNavMeshBuilder.h"
-#include "DebugUtils/DetourDebugDraw.h"
+#include "DetourNavMesh.h"
+#include "DetourNavMeshBuilder.h"
+#include "DetourDebugDraw.h"
 
 namespace Hachiko
 {
