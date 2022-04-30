@@ -2,7 +2,7 @@
 #include "ComponentButton.h"
 #include "ComponentTransform2D.h"
 
-#include "core/rendering/Program.h"
+#include "Program.h"
 
 
 Hachiko::ComponentButton::ComponentButton(GameObject* container) 

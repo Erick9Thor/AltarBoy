@@ -300,7 +300,6 @@ void Hachiko::GameObject::DebugDrawAll()
 void Hachiko::GameObject::DebugDraw() const
 {
     DrawBoundingBox();
-    DrawBones();
     for (Component* component : components)
     {
         component->DebugDraw();
@@ -318,15 +317,6 @@ void Hachiko::GameObject::DrawBoundingBox() const
         p[i] = obb.CornerPoint(order[i]);
     }
     dd::box(p, dd::colors::White);
-}
-
-void Hachiko::GameObject::DrawBones() const
-{
-    if (parent != nullptr)
-    {
-        dd::line(this->GetTransform()->GetGlobalPosition(), parent->GetTransform()->GetGlobalPosition(), dd::colors::Blue);
-        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 1, 10);
-    }
 }
 
 void Hachiko::GameObject::UpdateBoundingBoxes()

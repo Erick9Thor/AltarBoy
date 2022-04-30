@@ -28,43 +28,27 @@ void Hachiko::WindowHierarchy::CleanUp()
 
 void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
 {
-    for (const auto go : game_object->children)
-    {
-       RecursiveDraw(go);
-    }
-
+    DrawChildren(game_object);
     if (!App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         dragged_object = nullptr;
     }
 }
 
-bool Hachiko::WindowHierarchy::RecursiveDraw(GameObject* game_object)
+void Hachiko::WindowHierarchy::DrawChildren(const GameObject* game_object)
 {
-    bool stop = false;
-
-    const char* str = strstr(game_object->name.c_str(), AUXILIAR_NODE);
-    if (str != nullptr)
+    for (const auto go : game_object->children)
     {
-        for (GameObject* go : game_object->children)
-        {
-            if ((stop = RecursiveDraw(go)) == true)
-            {
-                break;
-            }
-        }
+        ImGui::PushID(go);
+        DrawGameObject(go);
+        ImGui::PopID();
     }
-    else
-    {
-        stop = DrawGameObject(game_object, stop);
-    }
-
-    return stop;
 }
 
-bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop)
+// TODO: Refactor to simplify function
+void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
 {
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
 
     if (game_object->children.empty())
     {
@@ -108,12 +92,9 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
         }
     }
 
-    if (node_open && !game_object->children.empty() && !stop)
+    if (node_open && !game_object->children.empty())
     {
-        for (const auto go : game_object->children)
-        {
-            RecursiveDraw(go);
-        }
+        DrawChildren(game_object);
     }
 
     // TODO: Make robust to repeted game object names
@@ -147,8 +128,6 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
     }
 
     ImGui::PopStyleColor();
-
-    return stop;
 }
 
 void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)

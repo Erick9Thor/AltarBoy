@@ -25,6 +25,8 @@ namespace Hachiko
 
         void UpdatedGameObject(GameObject* go);
 
+        void Import(const aiScene* scene);
+
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;

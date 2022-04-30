@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/HachikoApiDefine.h"
+#include "HachikoApiDefine.h"
 #include "scripting/ScriptingMacros.h"
 #include "scripting/serialization/IRuntimeSerializable.h"
 #include "components/Component.h"

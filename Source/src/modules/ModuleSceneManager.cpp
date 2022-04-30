@@ -91,7 +91,6 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
     {
         scene_ready_to_load = false;
         LoadScene(scene_to_load.c_str());
-        currentScenePath = scene_to_load;
     }
 
     main_scene->Update();
@@ -128,8 +127,6 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
-
-    currentScenePath = "";
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
@@ -145,8 +142,6 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
-    
-    currentScenePath = file_path;
     
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -178,19 +173,6 @@ void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
-    currentScenePath = file_path;
-}
-
-void Hachiko::ModuleSceneManager::ReloadScene()
-{
-    if (std::filesystem::exists(currentScenePath))
-    {
-        LoadScene(currentScenePath.c_str());
-    }
-    else
-    {
-        CreateEmptyScene();
-    }
 }
 
 void Hachiko::ModuleSceneManager::OptionsMenu()

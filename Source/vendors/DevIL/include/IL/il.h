@@ -98,23 +98,22 @@ typedef long long unsigned int ILuint64;
 
 
 #include <limits.h>
-// This is commented to not refactor the entire engine to unicode and still continue using multibyte
-//#ifdef _UNICODE
-//	#ifndef _WIN32_WCE
-//		#include <wchar.h>
-//	#endif
-//	//if we use a define instead of a typedef,
-//	//ILconst_string works as intended
-//	#define ILchar wchar_t
-//	#define ILstring wchar_t*
-//	#define ILconst_string  wchar_t const *
-//#else
+#ifdef _UNICODE
+	#ifndef _WIN32_WCE
+		#include <wchar.h>
+	#endif
+	//if we use a define instead of a typedef,
+	//ILconst_string works as intended
+	#define ILchar wchar_t
+	#define ILstring wchar_t*
+	#define ILconst_string  wchar_t const *
+#else
 	//if we use a define instead of a typedef,
 	//ILconst_string works as intended
 	#define ILchar char
 	#define ILstring char*
 	#define ILconst_string char const *
-//#endif //_UNICODE
+#endif //_UNICODE
 
 #define IL_FALSE			0
 #define IL_TRUE				1

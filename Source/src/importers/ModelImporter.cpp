@@ -19,14 +19,10 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
     import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
     const aiScene* scene = nullptr;
 
-    const std::filesystem::path model_path(path);
-    meta[MODEL_NAME] = model_path.filename().replace_extension().string();
-    const std::string model_output_path = StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string());
-
-    unsigned flags = aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices | aiProcess_ImproveCacheLocality | aiProcess_LimitBoneWeights
-                     | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_SortByPType | aiProcess_FindDegenerates | aiProcess_FindInvalidData | 0;
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
     
-    scene = import.ReadFile(path, flags);
+    std::filesystem::path mp(path);
+    meta[MODEL_NAME] = mp.filename().replace_extension().string();
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
@@ -106,7 +102,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     while (dummy_node)
     {
         dummy_node = false;
-        if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
+        if (node_name.find("_$AssimpFbx$_") != std::string::npos && assimp_node->mNumChildren == 1)
         {
             assimp_node = assimp_node->mChildren[0];
             assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
@@ -130,10 +126,10 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
         node[NODE_MESH_INDEX][j] = assimp_node->mMeshes[j];
     }
 
+    auto child_node = assimp_node->mChildren;
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
-        auto child_node = assimp_node->mChildren[i];
-        ImportNode(child_node, node[NODE_CHILD][i]);
+        ImportNode(*child_node, node[NODE_CHILD][i]);
         ++child_node;
     }
 }

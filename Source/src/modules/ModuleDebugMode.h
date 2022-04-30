@@ -8,7 +8,7 @@
 #include "ModuleInput.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
-#include "core/rendering/RenderList.h"
+#include "RenderList.h"
 //Delete after  VS1
 #include "ModuleSceneManager.h"
 #include "components/ComponentTransform.h"

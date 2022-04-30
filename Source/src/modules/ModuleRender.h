@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Globals.h"
 
-#include "core/rendering/RenderList.h"
+#include "RenderList.h"
 
 #include <vector>
 

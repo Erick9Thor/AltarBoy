@@ -101,19 +101,11 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        // BONES
-
-        void UpdateSkinPalette(float4x4* palette) const;
-
     private:
         bool visible = true;
-
-        const GameObject** node_cache = nullptr;
-        
         int mesh_index;
         std::string asset_path;
         std::string model_name;
-
         ResourceMesh* mesh = nullptr;
     };
 }

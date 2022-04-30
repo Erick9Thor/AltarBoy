@@ -26,16 +26,12 @@ namespace Hachiko
             unsigned int num_rotations = 0;
         };
 
-        struct ValueWeights
-        {
-            unsigned int count = 0;
-            std::unique_ptr<std::pair<unsigned int, float>[]> value_weights;
-        };
-
         struct Node
         {
             Node() = default;
             Node(const std::string name, unsigned int index_parent) : name(name), index_parent(index_parent) {}
+
+            /* TODO: ADD transform and array od meshMat (¿point to resource?)*/
 
             std::string name;
             unsigned int index_parent;
@@ -45,13 +41,6 @@ namespace Hachiko
         ResourceAnimation(UID id);
         virtual ~ResourceAnimation();
 
-        // RESOURCE INFO
-        [[nodiscard]] std::string GetName() const
-        {
-            return name;
-        }
-
-        // ANIMATION CONTROLL
         unsigned int GetDuration() const
         {
             return duration;
@@ -85,7 +74,5 @@ namespace Hachiko
     private:
         std::vector<Node> nodes;
         unsigned int duration = 0;
-
-        std::string name;
     };
 } // namespace Hachiko
