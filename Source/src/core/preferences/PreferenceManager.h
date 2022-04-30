@@ -10,6 +10,7 @@ namespace Hachiko
     class CameraPreferences;
     class ResourcesPreferences;
 
+    // TODO: Use of each preference type without base class
     class PreferenceManager
     {
     public:

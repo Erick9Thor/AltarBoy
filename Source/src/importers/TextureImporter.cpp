@@ -12,27 +12,30 @@ Hachiko::TextureImporter::TextureImporter()
 {
 }
 
-void Hachiko::TextureImporter::Import(const char* path)
+void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 {
-    Hachiko::UID uid = Hachiko::UUID::GenerateUID();
-    Resource* texture = ImportTexture(path, uid);
+    Resource* texture = ImportTexture(path, meta[GENERAL_NODE][GENERAL_ID].as<UID>());
     delete texture;
 }
 
-Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
+void Hachiko::TextureImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
 {
-    const std::filesystem::path file_path(path);
-    if (!std::filesystem::exists(file_path))
-    {
-        return nullptr;
-    }
+    Import(path, meta);
+}
 
-    char* file_buffer = FileSystem::Load(file_path.string().c_str());
+Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
+{
+    assert(id && "Unable to load texture. Given an empty id");
+
+    const std::string file_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), std::to_string(id));
+
+    char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    auto texture = new ResourceTexture();
-    texture->SetName(file_path.filename().string());
+    auto texture = new ResourceTexture(id);
+
     unsigned header[9];
     size_bytes = sizeof(header);
     memcpy(header, cursor, size_bytes);
@@ -71,7 +74,9 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(const char* path)
 void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), texture->GetName());
+    const std::string file_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE),
+            std::to_string(texture->GetID()));
 
     unsigned header[9] = {
         texture->path.length(),
@@ -110,21 +115,10 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
     delete[] file_buffer;
 }
 
-Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID id)
+Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID uid)
 {
-    Hachiko::UID uid = id;
-    if (!id)
-    {
-        uid = Hachiko::UUID::GenerateUID();
-    }
-
-    // TODO: texture configuration to flip so this will not be needed
-    std::string str_path = std::string(path);
-    int extension_index = str_path.rfind('.');
-    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
-    //
-
-    ResourceTexture* texture = App->texture->ImportResource(uid, path, extension != "tif"); // TODO: could we extract ModuleTexture functionality to this importer?
+    std::string extension = FileSystem::GetFileExtension(path);
+    ResourceTexture* texture = App->texture->ImportResource(uid, path, extension != ".tif"); // TODO: could we extract ModuleTexture functionality to this importer?
 
     if (texture != nullptr)
     {

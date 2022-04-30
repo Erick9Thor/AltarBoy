@@ -498,6 +498,14 @@
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
+    <ClCompile Include="src\importers\FontImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\xxhash\xxhash.cpp">
+      <Filter>Vendors\Xxhash</Filter>
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp">
       <Filter>Vendors\Wwise</Filter>
     </ClCompile>
@@ -1071,9 +1079,6 @@
     </ClInclude>
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\serialization\TypeConverter.h">
-      <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\ModuleCamera.h">
       <Filter>Modules\Headers</Filter>
@@ -2136,6 +2141,14 @@
     <ClInclude Include="src\core\logging\ConsoleLogger.h">
       <Filter>Logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\importers\FontImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\xxhash\xxhash.h">
+      <Filter>Vendors\Xxhash</Filter>
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h">
       <Filter>Vendors\Wwise</Filter>
     </ClInclude>
@@ -2312,6 +2325,8 @@
     <Filter Include="Vendors\GLFont">
       <UniqueIdentifier>{5074120f-4569-457e-a5ab-72ebc083638a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Vendors\Xxhash">
+      <UniqueIdentifier>{bab2aa5b-ebb1-41a4-b931-374b629f9398}</UniqueIdentifier>
     <Filter Include="Vendors\Wwise">
       <UniqueIdentifier>{728a28e9-5f85-411c-82f8-e783080e9810}</UniqueIdentifier>
     </Filter>

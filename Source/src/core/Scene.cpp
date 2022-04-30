@@ -103,7 +103,8 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             GameObject* last_parent = parent;
 
             last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-
+            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
+            
             if (!child->meshes_index.empty())
             {
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
@@ -111,14 +112,16 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
                     ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
                     component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    component->SetResourcePath(model->model_path);
                     component->SetModelName(model->model_name);
-
+                    
                     component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(App->resources->GetMesh(mesh_info.mesh_id));
+                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
 
                     ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                    component_material->SetResourceMaterial(App->resources->GetMaterial(model->materials[mesh_info.material_index].material_name));
+                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
+                    component_material->SetID(mat_info.material_id);
+                    component_material->SetResourceMaterial(static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, 
+                        model->materials[mesh_info.material_index].material_id)));
                 }
             }
             
