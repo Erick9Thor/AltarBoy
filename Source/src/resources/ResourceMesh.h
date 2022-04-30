@@ -20,6 +20,8 @@ namespace Hachiko
             TEX_COORDS,
             TANGENTS,
             BONES,
+            BONES_INDICES,
+            BONES_WEIGHTS,
             COUNT,
         };
 

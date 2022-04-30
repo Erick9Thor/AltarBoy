@@ -51,6 +51,23 @@ void Hachiko::ResourceMesh::GenerateBuffers()
         glEnableVertexAttribArray(3);
     }
 
+    if (buffer_sizes[static_cast<int>(Buffers::BONES)] > 0)
+    {
+        // SRC_BONES_WEIGHTS
+        glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] * sizeof(float), src_bone_indices.get(), GL_STATIC_DRAW);
+        glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, sizeof(unsigned) * 4, static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(4);
+
+        // SRC_BONES_INEX
+        glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] * sizeof(float), src_bone_weights.get(), GL_STATIC_DRAW);
+        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(5);
+    }
+
     // Indices (1 value)
     glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::INDICES)]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::INDICES)]);
