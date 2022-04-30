@@ -76,6 +76,21 @@ void Hachiko::GameObject::RemoveChild(GameObject* game_object)
     children.erase(std::remove(children.begin(), children.end(), game_object), children.end());
 }
 
+Hachiko::GameObject* Hachiko::GameObject::CreateChild()
+{
+    GameObject* new_child = new GameObject(this);
+    // Ensure that child's scene_owner is same with this GameObject's 
+    // scene_owner:
+    new_child->scene_owner = scene_owner;
+
+    return new_child;
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Instantiate()
+{
+    return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
+}
+
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
 {
     if (new_parent == parent)
