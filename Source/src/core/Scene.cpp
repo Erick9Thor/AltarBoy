@@ -18,13 +18,13 @@
 #include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
-Hachiko::Scene::Scene() :
-    root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
-    skybox(new Skybox()),
-    quadtree(new Quadtree()),
-    loaded(false),
-    name(UNNAMED_SCENE)
+Hachiko::Scene::Scene()
+    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    , culling_camera(App->camera->GetMainCamera())
+    , skybox(new Skybox())
+    , quadtree(new Quadtree())
+    , loaded(false)
+    , name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
@@ -124,12 +124,13 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                         model->materials[mesh_info.material_index].material_id)));
                 }
             }
-
+            
             last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
 
             create_children_function(last_parent, child->children);
         }
     };
+
 
     create_children_function(game_object, model->child_nodes);
 }
