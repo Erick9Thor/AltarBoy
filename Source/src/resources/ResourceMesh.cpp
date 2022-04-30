@@ -91,7 +91,7 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
     for (unsigned i = 0; i < num_bones; ++i)
     {
         const aiBone* bone = mesh->mBones[i];
-        Bone& dst_bone = bones[i];
+        Bone dst_bone = bones[i];
 
         strcpy_s(dst_bone.name, bone->mName.C_Str());
         dst_bone.bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
@@ -108,7 +108,7 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
     for (unsigned i = 0; i < mesh->mNumVertices * 4; ++i)
     {
         bone_indices[i] = 0;
-        bone_weights[i] = 0.0f;
+        bone_weights[i] = 0;
     }
 
     for (unsigned i = 0; i < num_bones; ++i)
@@ -164,6 +164,8 @@ void Hachiko::ResourceMesh::CleanUp()
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::NORMALS)]);
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::TEX_COORDS)]);
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::TANGENTS)]);
+        glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
 
         delete[] indices;
         delete[] vertices;
@@ -177,6 +179,8 @@ void Hachiko::ResourceMesh::CleanUp()
         buffer_sizes[static_cast<int>(Buffers::TEX_COORDS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::TANGENTS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::BONES)] = 0;
+        buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] = 0;
+        buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] = 0;
     }
     loaded = false;
 }
