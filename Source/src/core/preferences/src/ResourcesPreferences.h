@@ -31,7 +31,7 @@ namespace Hachiko
             {Resource::Type::SHADER, "assets/shaders/"},
             {Resource::Type::ANIMATION, "assets/animations/"},
             {Resource::Type::SKYBOX, "assets/skybox/"},
-            {Resource::Type::FONT, "library/fonts/"},
+            {Resource::Type::FONT, "assets/fonts/"},
             {Resource::Type::NAVMESH, "assets/navmesh/"},
         };
 
