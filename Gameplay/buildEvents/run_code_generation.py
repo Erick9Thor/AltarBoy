@@ -27,20 +27,21 @@ engine_scripting_serialization_path = engine_scripting_path + 'serialization/'
 # Namespace that base Script class belongs to:
 scripting_namespace = 'Hachiko::Scripting::'
 
+# Include start:
+include_start = '#include \"'
+
 # Include statements for file serialization_cpp_path:
-generated_includes_serialization = ('#include <vector>\n' + 
-    '#include <string>\n'
-    '#include <unordered_map>\n'
-    '#include \"'+util_folder+'gameplaypch.h\"\n' 
-    # '#include \"'+engine_scripting_serialization_path+'ISerializable.h\"\n' 
-    # '#include \"'+engine_scripting_serialization_path+'SerializedField.h\"\n'
-    )
+generated_includes_serialization = ('#include <vector>\n' +
+    '#include <string>\n'+
+    '#include <unordered_map>\n'+
+    (include_start + util_folder + 'gameplaypch.h\"\n'))
+
 # Include statements for file script_factory_cpp_path:
 generated_includes_script_factory = ('#include \"'+util_folder+'gameplaypch.h\"\n' + 
-    '#include \"'+generated_folder+'Factory.h\"\n')
+    include_start + generated_folder + 'Factory.h\"\n')
 # Include statements for file editor_cpp_path:
 generated_includes_on_editor = (
-    '#include \"'+util_folder+'gameplaypch.h\"\n')
+    include_start + util_folder + 'gameplaypch.h\"\n')
 
 # Body containing all the methods inside the file serialization_cpp_path:
 generated_body_serialization = ''
@@ -159,7 +160,7 @@ for script_class in script_classes:
     # File content without spaces, tabs and new lines:
     header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
     # Include statement of the current script file from its file name:
-    current_include = '#include \"' + scripting_folder + script_class + '.h' + '\"\n'
+    current_include = include_start + scripting_folder + script_class + '.h' + '\"\n'
     # Generate include statements for GeneratedSerialization.cpp:
     generated_includes_serialization += current_include
     # Generate include statements for ScriptFactory.cpp:
