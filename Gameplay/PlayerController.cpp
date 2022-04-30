@@ -135,9 +135,18 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = !_is_falling;
 	}
 
+	static int times_hit_g = 0;
 	if (Input::GetKeyDown(Input::KeyCode::KEY_G))
 	{
-		GameObject::Instantiate();
+		std::string name = "GameObject ";
+		
+		name += std::to_string(times_hit_g);
+		
+		times_hit_g++;
+
+		GameObject* created_game_object = GameObject::Instantiate();
+
+		created_game_object->SetName(name);
 	}
 
 	// TODO: Uncomment this in the next PR after adding the new scenes with
