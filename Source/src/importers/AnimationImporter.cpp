@@ -7,18 +7,48 @@
 
 Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) {}
 
-void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) {}
+void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) 
+{
+    HE_LOG("Entering Animation Importer: %s", path);
+    Assimp::Importer import;
+
+    const aiScene* scene = nullptr;
+    const std::filesystem::path material_path(path);
+
+    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+
+    assert(scene->mNumAnimations == 1);
+
+    Import(scene->mAnimations[0], meta[GENERAL_NODE][GENERAL_ID].as<UID>());
+}
 
 void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
 {
-    // TODO: implement
+    Import(path, meta);
 }
 
-void Hachiko::AnimationImporter::Save(const Resource* resource) {}
+void Hachiko::AnimationImporter::Save(const Resource* resource) 
+{
+    const std::string animation_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + resource->GetID();
+
+    // TO IMPLEMENT
+}
 
 Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
-    return nullptr;
+    assert(id && "Unable to load module. Given an empty id");
+
+    const std::string animation_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(id));
+
+    char* file_buffer = FileSystem::Load(animation_library_path.c_str());
+
+    const auto animation = new ResourceAnimation(id);
+
+    /* TODO: ANIMATION add all info to charge the node into resource */
+
+    delete[] file_buffer;
+
+    return animation;
 }
 
 bool Hachiko::AnimationImporter::IsImported(const char* path)
@@ -26,19 +56,18 @@ bool Hachiko::AnimationImporter::IsImported(const char* path)
     return false;
 }
 
-Hachiko::ResourceAnimation* Hachiko::AnimationImporter::Import(const aiAnimation* animation)
+void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 {
-    const auto r_mesh = new ResourceAnimation(UUID::GenerateUID());
+    const auto r_animation = new ResourceAnimation(id);
 
-    // Convert to milliseconds
-    r_mesh->SetDuration(unsigned(1000 * animation->mDuration / animation->mTicksPerSecond));
+    r_animation->SetDuration(unsigned(1000 * animation->mDuration / animation->mTicksPerSecond));
 
-    r_mesh->channels.reserve(animation->mNumChannels);
+    r_animation->channels.reserve(animation->mNumChannels);
 
     for (unsigned i = 0; i < animation->mNumChannels; ++i)
     {
         const aiNodeAnim* node = animation->mChannels[i];
-        ResourceAnimation::Channel& channel = r_mesh->channels[std::string(node->mNodeName.C_Str())];
+        ResourceAnimation::Channel& channel = r_animation->channels[std::string(node->mNodeName.C_Str())];
 
         unsigned int pos_first = 0;
         unsigned int pos_last = 1;
@@ -76,5 +105,5 @@ Hachiko::ResourceAnimation* Hachiko::AnimationImporter::Import(const aiAnimation
         }
     }
 
-    return r_mesh;
+    Save(r_animation);
 }

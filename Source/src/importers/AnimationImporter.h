@@ -19,6 +19,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsImported(const char* path) override;
 
-        ResourceAnimation* Import(const aiAnimation* animation);
+    private:
+        void Import(const aiAnimation* animation, UID id);
     };
 } // namespace Hachiko
