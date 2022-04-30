@@ -51,6 +51,15 @@ void Hachiko::ResourceMesh::GenerateBuffers()
         glEnableVertexAttribArray(3);
     }
 
+    // BONES (4 values per coord)
+    if (buffer_sizes[static_cast<int>(Buffers::BONES)] > 0)
+    {
+        // glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, 4 * sizeof(unsigned) , ???);
+        // glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float) , ???);
+        glEnableVertexAttribArray(4);
+        glEnableVertexAttribArray(5);
+    }
+
     // Indices (1 value)
     glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::INDICES)]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::INDICES)]);
