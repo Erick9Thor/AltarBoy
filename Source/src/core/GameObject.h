@@ -72,20 +72,21 @@ namespace Hachiko
     void DebugDrawAll();
     void DebugDraw() const;
     void DrawBoundingBox() const;
+    void DrawBones() const;
     void UpdateBoundingBoxes();
 
-        [[nodiscard]] UID GetID() const
-        {
-            return uid;
-        }
+    [[nodiscard]] UID GetID() const
+    {
+        return uid;
+    }
 
-        void SetID(const UID new_id) 
-        {
-            uid = new_id;
-        }
+    void SetID(const UID new_id) 
+    {
+        uid = new_id;
+    }
 
-        void Save(YAML::Node& node) const;
-        void Load(const YAML::Node& node);
+    void Save(YAML::Node& node) const;
+    void Load(const YAML::Node& node);
 
     [[nodiscard]] const OBB& GetOBB() const
     {

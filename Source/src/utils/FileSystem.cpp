@@ -39,6 +39,7 @@ void Hachiko::FileSystem::CreateContext()
     wchar_t engine_path_w[MAX_PATH];
     GetCurrentDirectoryA(MAX_PATH, engine_path);
     GetCurrentDirectoryW(MAX_PATH, engine_path_w);
+
     working_directory = engine_path;
     working_directory_w = engine_path_w;
 
@@ -150,7 +151,7 @@ void Hachiko::FileSystem::CreateDir(const char* directory_path)
 
 bool Hachiko::FileSystem::Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist)
 {
-    return CopyFile(source_file_path, destination_file_path, fail_if_exist);
+    return CopyFileA(source_file_path, destination_file_path, fail_if_exist);
 }
 
 void Hachiko::FileSystem::Delete(const char* file_path)

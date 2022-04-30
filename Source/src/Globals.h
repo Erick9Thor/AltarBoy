@@ -83,6 +83,8 @@ enum class UpdateStatus
 
 #define SKYBOX_EXTENSION ".hdr"
 
+#define AUXILIAR_NODE "_$AssimpFbx$_"
+
 // Defering for file system https://stackoverflow.com/questions/32432450/what-is-standard-defer-finalizer-implementation-in-c
 #ifndef defer
 struct DeferDummy {};

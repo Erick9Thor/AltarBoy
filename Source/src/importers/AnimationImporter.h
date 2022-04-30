@@ -17,7 +17,10 @@ namespace Hachiko
         void Save(const Resource* resource) override;
         Resource* Load(UID id) override;
 
-        [[nodiscard]] bool IsImported(const char* path) override;
+        [[nodiscard]] bool IsImported(const char* path) override
+        {
+            return false;
+        }
 
     private:
         void Import(const aiAnimation* animation, UID id);

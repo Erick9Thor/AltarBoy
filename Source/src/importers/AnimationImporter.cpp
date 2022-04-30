@@ -5,7 +5,8 @@
 
 #include "resources/ResourceAnimation.h"
 
-Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) {}
+Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
+{}
 
 void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) 
 {
@@ -49,11 +50,6 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
     delete[] file_buffer;
 
     return animation;
-}
-
-bool Hachiko::AnimationImporter::IsImported(const char* path)
-{
-    return false;
 }
 
 void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
