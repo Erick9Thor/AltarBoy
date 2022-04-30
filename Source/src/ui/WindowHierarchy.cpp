@@ -71,8 +71,8 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
         flags |= ImGuiTreeNodeFlags_Leaf;
     }
 
-    bool isSelected = game_object == App->editor->GetSelectedGameObject();
-    if (isSelected)
+    bool is_selected = game_object == App->editor->GetSelectedGameObject();
+    if (is_selected)
     {
         flags |= ImGuiTreeNodeFlags_Selected;
     }
@@ -106,7 +106,7 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
             ImGui::OpenPopup(game_object->GetName().c_str());
         }
         
-        if (ImGui::IsMouseClicked(0) && isSelected)
+        if (ImGui::IsMouseClicked(0) && is_selected)
         {
             App->editor->SetSelectedGO(nullptr);
         }
