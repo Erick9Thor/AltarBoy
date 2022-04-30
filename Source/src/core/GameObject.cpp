@@ -242,6 +242,13 @@ void Hachiko::GameObject::Update()
         OnTransformUpdated();
     }
 
+    // NOTE: It is weird that a non-sense nullptr exception we were facing is 
+    // solved by converting the for loop for children vector to use the follow
+    // ing for loop instead of range based and iterator based ones. Thanks to 
+    // Vicenc for coming up with this approach. Maybe we should convert all 
+    // vector loops to be like the ones following.
+    // TODO: Ask this to the teachers.
+
     for (int i = 0; i < components.size(); ++i)
     {
         components[i]->Update();
