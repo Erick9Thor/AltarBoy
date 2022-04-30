@@ -89,7 +89,7 @@ Hachiko::GameObject* Hachiko::GameObject::CreateChild()
 Hachiko::GameObject* Hachiko::GameObject::Instantiate()
 {
     return App->scene_manager->GetActiveScene()->CreateNewGameObject(
-        App->scene_manager->GetActiveScene()->GetRoot(), "GameObject");
+        nullptr, "GameObject");
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
@@ -242,16 +242,16 @@ void Hachiko::GameObject::Update()
         OnTransformUpdated();
     }
 
-    for (Component* component : components)
+    for (int i = 0; i < components.size(); ++i)
     {
-        component->Update();
+        components[i]->Update();
     }
 
-    for (GameObject* child : children)
+    for (int i = 0; i < children.size(); ++i)
     {
-        if (child->IsActive())
+        if (children[i]->IsActive())
         {
-            child->Update();
+            children[i]->Update();
         }
     }
 }
