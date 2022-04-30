@@ -26,6 +26,9 @@ Hachiko::Scene::Scene()
     , loaded(false)
     , name(UNNAMED_SCENE)
 {
+    // Root's scene_owner should always be this scene:
+    root->scene_owner = this;
+
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
@@ -50,6 +53,7 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     {
         App->editor->SetSelectedGO(nullptr);
     }
+
     quadtree->Remove(game_object);
 }
 
@@ -87,10 +91,13 @@ void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) c
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)
 {
-    // It will insert itself into quadtree on first bounding box update
-    const auto game_object = new GameObject(parent ? parent : root, name);
-    game_object->scene_owner = this;
-    return game_object;
+    GameObject* final_parent = parent != nullptr ? parent : root;
+    GameObject* new_game_object = final_parent->CreateChild();
+
+    new_game_object->SetName(name);
+
+    // This will insert itself into quadtree on first bounding box update:
+    return new_game_object;
 }
 
 void Hachiko::Scene::HandleInputModel(ResourceModel* model)
