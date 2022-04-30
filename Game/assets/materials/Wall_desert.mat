@@ -1,0 +1,7 @@
+name: Wall_desert
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.149600014, 0.0555999987, 0.0373600014, 1]
+specular_color: [0.100000001, 0.100000001, 0.100000001, 0.100000001]
+shininess: 50

@@ -1,0 +1,7 @@
+name: DollhouseMaterial
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.588235319, 0.588235319, 0.588235319, 1]
+specular_color: [0.179999977, 0.179999977, 0.179999977, 1]
+shininess: 3.99999952
