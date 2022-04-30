@@ -22,6 +22,11 @@ bool Hachiko::ModuleSceneManager::Init()
         CreateEmptyScene();
     }
 
+    std::vector<float> scene_vertices;
+    std::vector<int> scene_triangles;
+    std::vector<float> scene_normals;
+    main_scene->GetNavmeshData(scene_vertices, scene_triangles, scene_normals);
+
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
     main_scene->Start();

@@ -19,14 +19,13 @@ namespace Hachiko
         ResourceNavMesh() = default;
         ~ResourceNavMesh() = default;
 
-        bool Build(const ComponentMesh* terrainMesh);    // Creates NavMesh for the scene level
+        bool Build(Scene* scene);    // Creates NavMesh for the scene level
         void DebugDraw();                               // Draw debug info
     private:
         void CleanUp();
 
         void SetupNavMeshParams();                      // Setup Params prior to nav mesh building
     private:
-
         dtNavMesh* navMesh;
     };
 }
