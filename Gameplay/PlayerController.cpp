@@ -135,6 +135,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		_is_falling = !_is_falling;
 	}
 
+	if (Input::GetKeyDown(Input::KeyCode::KEY_G))
+	{
+		GameObject::Instantiate();
+	}
+
 	// TODO: Uncomment this in the next PR after adding the new scenes with
 	// YAML based serialization.
 	/*if (current_position.y < -20)

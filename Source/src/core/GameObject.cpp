@@ -88,7 +88,8 @@ Hachiko::GameObject* Hachiko::GameObject::CreateChild()
 
 Hachiko::GameObject* Hachiko::GameObject::Instantiate()
 {
-    return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
+    return App->scene_manager->GetActiveScene()->CreateNewGameObject(
+        App->scene_manager->GetActiveScene()->GetRoot(), "GameObject");
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
