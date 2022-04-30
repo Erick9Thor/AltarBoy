@@ -353,6 +353,6 @@ uint64_t Hachiko::FileSystem::HashFromPath(const char* file_path)
     size_t size_bytes = 0;
     const char* file_data = FileSystem::Load(file_path, &size_bytes);
     uint64_t hash = XXH3_64bits(file_data, size_bytes);
-    delete file_data;
+    delete[] file_data;
     return hash;
 }
