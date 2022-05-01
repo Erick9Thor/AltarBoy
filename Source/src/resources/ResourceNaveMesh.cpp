@@ -8,7 +8,7 @@
 
 #include "DetourNavMesh.h"
 #include "DetourNavMeshBuilder.h"
-#include "InputGeom.h"
+#include "DetourNavMeshQuery.h"
 
 #include "SampleInterfaces.h"
 
@@ -59,7 +59,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     cfg.maxVertsPerPoly = static_cast<int>(max_vertices_per_poly);
     cfg.detailSampleDist = detail_sample_distance < 0.9f ? 0 : cell_size * detail_sample_distance;
     cfg.detailSampleMaxError = cell_height * detail_sample_max_error;
-    // Seen on other engine
+    // Seen on other engine, we dont use tiling atm
     /* cfg.tileSize = (int)tile_size;
     cfg.borderSize = cfg.walkableRadius + 3; // Reserve enough padding.
     cfg.width = cfg.tileSize + cfg.borderSize * 2;
@@ -267,35 +267,25 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     rcFreeContourSet(contour_set);
     contour_set = nullptr;
 
+    // At this point the navigation mesh data is ready
     // (Optional) Step 8. Create Detour data from Recast poly mesh.
-    
+    /*
     // Only build the detour navmesh if we do not exceed the limit.
-    /* if (m_cfg.maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
+    if (cfg.maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
     {
-        unsigned char* navData = 0;
-        int navDataSize = 0;
+        unsigned char* navigation_data = 0;
+        int navigation_data_size = 0;
 
         // Update poly flags from areas.
         for (int i = 0; i < poly_mesh->npolys; ++i)
         {
             if (poly_mesh->areas[i] == RC_WALKABLE_AREA)
+            {
                 poly_mesh->areas[i] = SAMPLE_POLYAREA_GROUND;
-
-            if (poly_mesh->areas[i] == SAMPLE_POLYAREA_GROUND || poly_mesh->areas[i] == SAMPLE_POLYAREA_GRASS || poly_mesh->areas[i] == SAMPLE_POLYAREA_ROAD)
-            {
                 poly_mesh->flags[i] = SAMPLE_POLYFLAGS_WALK;
-            }
-            else if (poly_mesh->areas[i] == SAMPLE_POLYAREA_WATER)
-            {
-                poly_mesh->flags[i] = SAMPLE_POLYFLAGS_SWIM;
-            }
-            else if (poly_mesh->areas[i] == SAMPLE_POLYAREA_DOOR)
-            {
-                poly_mesh->flags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
             }
         }
 
-        InputGeom a;
         dtNavMeshCreateParams params;
         memset(&params, 0, sizeof(params));
         params.verts = poly_mesh->verts;
@@ -310,67 +300,70 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
         params.detailVertsCount = detail_mesh->nverts;
         params.detailTris = detail_mesh->tris;
         params.detailTriCount = detail_mesh->ntris;
-        params.offMeshConVerts = m_geom->getOffMeshConnectionVerts();
-        params.offMeshConRad = m_geom->getOffMeshConnectionRads();
-        params.offMeshConDir = m_geom->getOffMeshConnectionDirs();
-        params.offMeshConAreas = m_geom->getOffMeshConnectionAreas();
-        params.offMeshConFlags = m_geom->getOffMeshConnectionFlags();
-        params.offMeshConUserID = m_geom->getOffMeshConnectionId();
-        params.offMeshConCount = m_geom->getOffMeshConnectionCount();
+        // TODO (optional): Pass Off mesh connections if needed (we dont build m geom so we would have to see how to get them)
+        // params.offMeshConVerts = m_geom->getOffMeshConnectionVerts();
+        // params.offMeshConRad = m_geom->getOffMeshConnectionRads();
+        // params.offMeshConDir = m_geom->getOffMeshConnectionDirs();
+        // params.offMeshConAreas = m_geom->getOffMeshConnectionAreas();
+        // params.offMeshConFlags = m_geom->getOffMeshConnectionFlags();
+        // params.offMeshConUserID = m_geom->getOffMeshConnectionId();
+        // params.offMeshConCount = m_geom->getOffMeshConnectionCount();
         params.walkableHeight = agent_height;
         params.walkableRadius = agent_radius;
         params.walkableClimb = agent_max_climb;
         rcVcopy(params.bmin, poly_mesh->bmin);
         rcVcopy(params.bmax, poly_mesh->bmax);
-        params.cs = m_cfg.cs;
-        params.ch = m_cfg.ch;
+        params.cs = cfg.cs;
+        params.ch = cfg.ch;
         params.buildBvTree = true;
 
-        if (!dtCreateNavMeshData(&params, &navData, &navDataSize))
+        if (!dtCreateNavMeshData(&params, &navigation_data, &navigation_data_size))
         {
-            m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
+            build_context->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
             return false;
         }
 
-        m_navMesh = dtAllocNavMesh();
-        if (!m_navMesh)
+        navmesh = dtAllocNavMesh();
+        if (!navmesh)
         {
-            dtFree(navData);
-            m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
+            dtFree(navigation_data);
+            build_context->log(RC_LOG_ERROR, "Could not create Detour navmesh");
             return false;
         }
 
         dtStatus status;
 
-        status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+        status = navmesh->init(navigation_data, navigation_data_size, DT_TILE_FREE_DATA);
         if (dtStatusFailed(status))
         {
-            dtFree(navData);
-            m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh");
+            dtFree(navigation_data);
+            build_context->log(RC_LOG_ERROR, "Could not init Detour navmesh");
             return false;
         }
 
-        status = m_navQuery->init(m_navMesh, 2048);
+        navigation_query = dtAllocNavMeshQuery();
+        status = navigation_query->init(navmesh, 2048);
         if (dtStatusFailed(status))
         {
-            m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh query");
+            build_context->log(RC_LOG_ERROR, "Could not init Detour navmesh query");
             return false;
         }
     }
-
     */
 
+    build_context->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", poly_mesh->nverts, poly_mesh->npolys);
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp
 
     return true;
 }
 
-void Hachiko::ResourceNavMesh::DebugDraw() {
-}
+void Hachiko::ResourceNavMesh::DebugDraw() {}
 
 void Hachiko::ResourceNavMesh::CleanUp()
 {
 	dtFreeNavMesh(navmesh);
 	navmesh = nullptr;
+    dtFreeNavMeshQuery(navigation_query);
+    navigation_query = nullptr;
 }
 

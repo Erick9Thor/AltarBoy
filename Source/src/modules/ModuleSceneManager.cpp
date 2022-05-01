@@ -26,7 +26,10 @@ bool Hachiko::ModuleSceneManager::Init()
     }
 
     ResourceNavMesh* navmesh = new ResourceNavMesh(0);
-    navmesh->Build(main_scene);
+    if (!navmesh->Build(main_scene))
+    {
+        HE_LOG("Failed to build navmesh uwu");
+    }
     RELEASE(navmesh);
 
 #ifdef PLAY_BUILD
