@@ -8,6 +8,7 @@
 
 #include "DetourNavMesh.h"
 #include "DetourNavMeshBuilder.h"
+#include "InputGeom.h"
 
 #include "SampleInterfaces.h"
 
@@ -126,13 +127,13 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // This will result more cache coherent data as well as the neighbours
     // between walkable cells will be calculated.
 
-    rcCompactHeightfield* chf = rcAllocCompactHeightfield();
-    if (!chf)
+    rcCompactHeightfield* compact_heightfield = rcAllocCompactHeightfield();
+    if (!compact_heightfield)
     {
         build_context->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'chf'.");
         return false;
     }
-    if (!rcBuildCompactHeightfield(build_context, chf->walkableHeight, chf->walkableClimb, *solid, *chf))
+    if (!rcBuildCompactHeightfield(build_context, compact_heightfield->walkableHeight, compact_heightfield->walkableClimb, *solid, *compact_heightfield))
     {
         build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build compact data.");
         return false;
@@ -140,10 +141,10 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 
     // Do not keep intermediate resources
     rcFreeHeightField(solid);
-    solid = 0;
+    solid = nullptr;
 
     // Erode the walkable area by agent radius.
-    if (!rcErodeWalkableArea(build_context, cfg.walkableRadius, *chf))
+    if (!rcErodeWalkableArea(build_context, cfg.walkableRadius, *compact_heightfield))
     {
         build_context->log(RC_LOG_ERROR, "buildNavigation: Could not erode.");
         return false;
@@ -184,14 +185,14 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     if (partition_type == SAMPLE_PARTITION_WATERSHED)
     {
         // Prepare for region partitioning, by calculating distance field along the walkable surface.
-        if (!rcBuildDistanceField(build_context, *chf))
+        if (!rcBuildDistanceField(build_context, *compact_heightfield))
         {
             build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build distance field.");
             return false;
         }
 
         // Partition the walkable surface into simple regions without holes.
-        if (!rcBuildRegions(build_context, *chf, 0, cfg.minRegionArea, cfg.mergeRegionArea))
+        if (!rcBuildRegions(build_context, *compact_heightfield, 0, cfg.minRegionArea, cfg.mergeRegionArea))
         {
             build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build watershed regions.");
             return false;
@@ -201,7 +202,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     {
         // Partition the walkable surface into simple regions without holes.
         // Monotone partitioning does not need distancefield.
-        if (!rcBuildRegionsMonotone(build_context, *chf, 0, cfg.minRegionArea, cfg.mergeRegionArea))
+        if (!rcBuildRegionsMonotone(build_context, *compact_heightfield, 0, cfg.minRegionArea, cfg.mergeRegionArea))
         {
             build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build monotone regions.");
             return false;
@@ -210,16 +211,155 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     else // SAMPLE_PARTITION_LAYERS
     {
         // Partition the walkable surface into simple regions without holes.
-        if (!rcBuildLayerRegions(build_context, *chf, 0, cfg.minRegionArea))
+        if (!rcBuildLayerRegions(build_context, *compact_heightfield, 0, cfg.minRegionArea))
         {
             build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build layer regions.");
             return false;
         }
     }
+
     // Step 5. Trace and simplify region contours.
+    
+    rcContourSet* contour_set = rcAllocContourSet();
+    contour_set = rcAllocContourSet();
+    if (!contour_set)
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'cset'.");
+        return false;
+    }
+    if (!rcBuildContours(build_context, *compact_heightfield, cfg.maxSimplificationError, cfg.maxEdgeLen, *contour_set))
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Could not create contours.");
+        return false;
+    }
+
     // Step 6. Build polygons mesh from contours.
+
+    rcPolyMesh* poly_mesh = rcAllocPolyMesh();
+    if (!poly_mesh)
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'pmesh'.");
+        return false;
+    }
+    if (!rcBuildPolyMesh(build_context, *contour_set, cfg.maxVertsPerPoly, *poly_mesh))
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Could not triangulate contours.");
+        return false;
+    }
+
     // Step 7. Create detail mesh which allows to access approximate height on each polygon.
+
+    rcPolyMeshDetail* detail_mesh = rcAllocPolyMeshDetail();
+    if (!detail_mesh)
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'pmdtl'.");
+        return false;
+    }
+
+    if (!rcBuildPolyMeshDetail(build_context, *poly_mesh, *compact_heightfield, cfg.detailSampleDist, cfg.detailSampleMaxError, *detail_mesh))
+    {
+        build_context->log(RC_LOG_ERROR, "buildNavigation: Could not build detail mesh.");
+        return false;
+    }
+
+    rcFreeCompactHeightfield(compact_heightfield);
+    compact_heightfield = nullptr;
+    rcFreeContourSet(contour_set);
+    contour_set = nullptr;
+
     // (Optional) Step 8. Create Detour data from Recast poly mesh.
+    
+    // Only build the detour navmesh if we do not exceed the limit.
+    /* if (m_cfg.maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
+    {
+        unsigned char* navData = 0;
+        int navDataSize = 0;
+
+        // Update poly flags from areas.
+        for (int i = 0; i < poly_mesh->npolys; ++i)
+        {
+            if (poly_mesh->areas[i] == RC_WALKABLE_AREA)
+                poly_mesh->areas[i] = SAMPLE_POLYAREA_GROUND;
+
+            if (poly_mesh->areas[i] == SAMPLE_POLYAREA_GROUND || poly_mesh->areas[i] == SAMPLE_POLYAREA_GRASS || poly_mesh->areas[i] == SAMPLE_POLYAREA_ROAD)
+            {
+                poly_mesh->flags[i] = SAMPLE_POLYFLAGS_WALK;
+            }
+            else if (poly_mesh->areas[i] == SAMPLE_POLYAREA_WATER)
+            {
+                poly_mesh->flags[i] = SAMPLE_POLYFLAGS_SWIM;
+            }
+            else if (poly_mesh->areas[i] == SAMPLE_POLYAREA_DOOR)
+            {
+                poly_mesh->flags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
+            }
+        }
+
+        InputGeom a;
+        dtNavMeshCreateParams params;
+        memset(&params, 0, sizeof(params));
+        params.verts = poly_mesh->verts;
+        params.vertCount = poly_mesh->nverts;
+        params.polys = poly_mesh->polys;
+        params.polyAreas = poly_mesh->areas;
+        params.polyFlags = poly_mesh->flags;
+        params.polyCount = poly_mesh->npolys;
+        params.nvp = poly_mesh->nvp;
+        params.detailMeshes = detail_mesh->meshes;
+        params.detailVerts = detail_mesh->verts;
+        params.detailVertsCount = detail_mesh->nverts;
+        params.detailTris = detail_mesh->tris;
+        params.detailTriCount = detail_mesh->ntris;
+        params.offMeshConVerts = m_geom->getOffMeshConnectionVerts();
+        params.offMeshConRad = m_geom->getOffMeshConnectionRads();
+        params.offMeshConDir = m_geom->getOffMeshConnectionDirs();
+        params.offMeshConAreas = m_geom->getOffMeshConnectionAreas();
+        params.offMeshConFlags = m_geom->getOffMeshConnectionFlags();
+        params.offMeshConUserID = m_geom->getOffMeshConnectionId();
+        params.offMeshConCount = m_geom->getOffMeshConnectionCount();
+        params.walkableHeight = agent_height;
+        params.walkableRadius = agent_radius;
+        params.walkableClimb = agent_max_climb;
+        rcVcopy(params.bmin, poly_mesh->bmin);
+        rcVcopy(params.bmax, poly_mesh->bmax);
+        params.cs = m_cfg.cs;
+        params.ch = m_cfg.ch;
+        params.buildBvTree = true;
+
+        if (!dtCreateNavMeshData(&params, &navData, &navDataSize))
+        {
+            m_ctx->log(RC_LOG_ERROR, "Could not build Detour navmesh.");
+            return false;
+        }
+
+        m_navMesh = dtAllocNavMesh();
+        if (!m_navMesh)
+        {
+            dtFree(navData);
+            m_ctx->log(RC_LOG_ERROR, "Could not create Detour navmesh");
+            return false;
+        }
+
+        dtStatus status;
+
+        status = m_navMesh->init(navData, navDataSize, DT_TILE_FREE_DATA);
+        if (dtStatusFailed(status))
+        {
+            dtFree(navData);
+            m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh");
+            return false;
+        }
+
+        status = m_navQuery->init(m_navMesh, 2048);
+        if (dtStatusFailed(status))
+        {
+            m_ctx->log(RC_LOG_ERROR, "Could not init Detour navmesh query");
+            return false;
+        }
+    }
+
+    */
+
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp
 
     return true;
