@@ -1,0 +1,18 @@
+General:
+  id: 7313303945099385747
+  type: 3
+  hash: 13499865366796566482
+model_name: rock01_mesh
+material:
+  - id: 1449254813634261547
+    name: lambert1
+mesh:
+  - id: 7546405980409637321
+    material_index: 0
+name: RootNode
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+child:
+  - name: rock01_mesh
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 0

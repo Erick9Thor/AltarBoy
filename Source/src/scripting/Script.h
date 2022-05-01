@@ -7,6 +7,8 @@
 
 #include <unordered_map>
 
+struct ImGuiContext;
+
 namespace Hachiko
 {
 class GameObject;
@@ -15,7 +17,7 @@ namespace Scripting
 {
 class HACHIKO_API Script : public Component, public IRuntimeSerializable
 {
-    SERIALIZATION_METHODS(true)
+    SCRIPTING_METHODS_BASE
 public:
     virtual ~Script() = default;
     
@@ -25,13 +27,13 @@ public:
 
     void Save(YAML::Node& node) const override;
     void Load(const YAML::Node& node) override;
+    void DrawGui() override;
 
     virtual void OnAwake() {};
     virtual void OnStart() {};
     virtual void OnUpdate() {};
     virtual void OnDisable() {};
     virtual void OnEnable() {};
-    void DrawGui() override;
 
     const std::string& GetName() const;
 

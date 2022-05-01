@@ -1,0 +1,7 @@
+name: Wall_in
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.0240240004, 0.0300605334, 0.0560000017, 1]
+specular_color: [0.100000001, 0.100000001, 0.100000001, 0.100000001]
+shininess: 50

@@ -16,10 +16,10 @@ namespace Hachiko
 
     private:
         void DrawHierarchyTree(const GameObject* game_object);
-
         bool RecursiveDraw(GameObject* game_object);
         bool DrawGameObject(GameObject* game_object, bool stop);
-        void DragAndDrop(GameObject* game_object);
+        bool DragAndDrop(GameObject* game_object);
+
 
         GameObject* dragged_object = nullptr;
     };

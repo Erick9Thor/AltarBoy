@@ -12,7 +12,7 @@ Hachiko::ResourceMaterial::~ResourceMaterial()
 void Hachiko::ResourceMaterial::DrawGui() 
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-    ImGui::Text("Name", name, 64);
+    ImGui::Text("Material: %s", name.c_str());
     ImGui::Checkbox("Metallic", &is_metallic);
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
@@ -58,6 +58,7 @@ void Hachiko::ResourceMaterial::DrawGui()
                 ImGui::SliderFloat("Metalness", &metalness_value, 0.0f, 1.0f, "%.2f", 1.0f);
                 AddTexture(ResourceTexture::Type::METALNESS);
             }
+            ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
             ImGui::TreePop();
         }
     }
@@ -84,6 +85,7 @@ void Hachiko::ResourceMaterial::DrawGui()
                 ImGui::ColorEdit4("Specular color", &specular_color[0]);
                 AddTexture(ResourceTexture::Type::SPECULAR);
             }
+            ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
             ImGui::TreePop();
         }
     }
@@ -109,7 +111,6 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
-    ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
 }
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
@@ -122,8 +123,8 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
         ImGuiFileDialog::Instance()->OpenDialog(
             title.c_str(),
             "Select Texture",
-            ".*",
-            "./library/textures/",
+            ".png,.tif,.jpg,.tga",
+            "./assets/textures/",
             1,
             nullptr,
               ImGuiFileDialogFlags_DontShowHiddenFiles 
@@ -136,9 +137,12 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
-            const std::filesystem::path texture_path = ImGuiFileDialog::Instance()->GetFilePathName().c_str();
-                        
-            res = App->resources->GetTexture(texture_path.filename().replace_extension().string().c_str());
+            std::string texture_path = ImGuiFileDialog::Instance()->GetFilePathName();
+            texture_path.append(META_EXTENSION);
+            YAML::Node texture_node = YAML::LoadFile(texture_path);
+
+            res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
+                texture_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
         }
 
         ImGuiFileDialog::Instance()->Close();

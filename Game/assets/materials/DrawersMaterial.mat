@@ -1,0 +1,7 @@
+name: DrawersMaterial
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [1, 1, 1, 1]
+specular_color: [0.269999981, 0.269999981, 0.269999981, 1]
+shininess: 7.99999809

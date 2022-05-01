@@ -1,0 +1,7 @@
+name: StarMaterial
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.835294187, 1, 0.517647088, 1]
+specular_color: [0, 0, 0, 1]
+shininess: 2

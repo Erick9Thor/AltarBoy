@@ -1,0 +1,7 @@
+name: ZombunnyMaterial
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.223529428, 0.223529428, 0.223529428, 1]
+specular_color: [0.0854657814, 0.0854657814, 0.0854657814, 1]
+shininess: 7.99999809

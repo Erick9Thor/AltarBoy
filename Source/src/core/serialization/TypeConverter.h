@@ -221,22 +221,22 @@ namespace YAML
             node[0].push_back(static_cast<float>(rhs.a2));
             node[0].push_back(static_cast<float>(rhs.a3));
             node[0].push_back(static_cast<float>(rhs.a4));
-            
+
             node[1].push_back(static_cast<float>(rhs.b1));
             node[1].push_back(static_cast<float>(rhs.b2));
             node[1].push_back(static_cast<float>(rhs.b3));
             node[1].push_back(static_cast<float>(rhs.b4));
-            
+
             node[2].push_back(static_cast<float>(rhs.c1));
             node[2].push_back(static_cast<float>(rhs.c2));
             node[2].push_back(static_cast<float>(rhs.c3));
             node[2].push_back(static_cast<float>(rhs.c4));
-            
+
             node[3].push_back(static_cast<float>(rhs.d1));
             node[3].push_back(static_cast<float>(rhs.d2));
             node[3].push_back(static_cast<float>(rhs.d3));
             node[3].push_back(static_cast<float>(rhs.d4));
-            
+
             node.SetStyle(EmitterStyle::Flow);
             return node;
         }
@@ -271,4 +271,51 @@ namespace YAML
             return true;
         }
     };
+    
+    template<>
+    struct convert<FILETIME>
+    {
+        static Node encode(const FILETIME& rhs)
+        {
+            Node node;
+            node.push_back(static_cast<DWORD>(rhs.dwLowDateTime));
+            node.push_back(static_cast<DWORD>(rhs.dwHighDateTime));
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+        
+        static bool decode(const Node& node, FILETIME& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 2)
+            {
+                return false;
+            }
+
+            rhs.dwLowDateTime = node[0].as<DWORD>();
+            rhs.dwHighDateTime = node[1].as<DWORD>();
+
+            return true;
+        }
+    };
+
+
+    /* template<>
+    struct convert<uint64_t>
+    {
+        static Node encode(const uint64_t& rhs)
+        {
+            Node node;
+            node = static_cast<unsigned long long>(rhs);
+
+            return node;
+        }
+
+        static bool decode(const Node& node, uint64_t& rhs)
+        {
+            rhs = node.as<unsigned long long>();
+
+            return true;
+        }
+    };*/
 } // namespace YAML

@@ -1,11 +1,10 @@
 #pragma once
 
 #include "components/Component.h"
+#include "resources/ResourceMaterial.h"
 
 namespace Hachiko
 {
-    class ResourceMaterial;
-
     class ComponentMaterial : public Component
     {
     public:
@@ -24,8 +23,8 @@ namespace Hachiko
 
         void SetResourceMaterial(ResourceMaterial* res)
         {
-            delete material;
             material = res;
+            SetID(material->GetID());
         }
 
         [[nodiscard]] const std::string& GetModelName() const
@@ -39,10 +38,12 @@ namespace Hachiko
         }
 
         void DrawGui() override;
-        void LoadMaterial(const std::string& material_path);
+        void LoadMaterial(UID id);
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
+
+        void ChangeMaterial();
         
     private:
         ResourceMaterial* material{};

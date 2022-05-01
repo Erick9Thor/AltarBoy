@@ -11,6 +11,7 @@ namespace Hachiko
     class GameObject;
 
     class ComponentTransform2D;
+    class ResourceFont;
     class Program;
 
     class ComponentText : public Component
@@ -37,16 +38,17 @@ namespace Hachiko
         }
 
     private:
+        void LoadFont(UID id);
         void RefreshLabel(ComponentTransform2D* transform);
-        
-        bool dirty = true;
         void BuildLabel(ComponentTransform2D* transform);
+        
+        bool dirty = true;        
 
-    private:
-        Font font;
+        ResourceFont* font = nullptr;
         std::unique_ptr<FTLabel> label = nullptr;
 
         std::string label_text = "Sample Text";
+
 
         float4 font_color = float4::one;
         float font_size = 28.f;

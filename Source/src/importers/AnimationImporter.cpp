@@ -8,9 +8,8 @@
 Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
 {}
 
-void Hachiko::AnimationImporter::Import(const char* path) 
+void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) 
 {
-
     HE_LOG("Entering Animation Importer: %s", path);
     Assimp::Importer import;
 
@@ -21,43 +20,41 @@ void Hachiko::AnimationImporter::Import(const char* path)
 
     assert(scene->mNumAnimations == 1);
 
-    Import(scene->mAnimations[0]);
+    Import(scene->mAnimations[0], meta[GENERAL_NODE][GENERAL_ID].as<UID>());
+}
+
+void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
+{
+    Import(path, meta);
 }
 
 void Hachiko::AnimationImporter::Save(const Resource* resource) 
 {
+    const std::string animation_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + resource->GetID();
 
-    const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
-    const std::string animation_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + animation->GetName();
-
-    
-    /* TODO: ANIMATION  Save animation as binary like mesh*/
-
-    // FileSystem::Save(animation_library_path.c_str(), animation_node);
+    // TO IMPLEMENT
 }
 
-Hachiko::Resource* Hachiko::AnimationImporter::Load(const char* animation_path)
+Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
-    if (FileSystem::Exists(animation_path))
-    {
-        return nullptr;
-    }
+    assert(id && "Unable to load module. Given an empty id");
 
-    char* file_buffer = FileSystem::Load(animation_path);
+    const std::string animation_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(id));
 
-    std::string animation_id = FileSystem::GetFileNameAndExtension(animation_path);
+    char* file_buffer = FileSystem::Load(animation_library_path.c_str());
 
-    const auto animation = new ResourceAnimation(UUID::StringToUID(animation_id));
+    const auto animation = new ResourceAnimation(id);
 
     /* TODO: ANIMATION add all info to charge the node into resource */
+
     delete[] file_buffer;
 
     return animation;
 }
 
-void Hachiko::AnimationImporter::Import(const aiAnimation* animation)
+void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 {
-    const auto r_animation = new ResourceAnimation(UUID::GenerateUID());
+    const auto r_animation = new ResourceAnimation(id);
 
     r_animation->SetDuration(unsigned(1000 * animation->mDuration / animation->mTicksPerSecond));
 
