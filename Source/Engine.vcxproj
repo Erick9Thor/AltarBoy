@@ -636,6 +636,8 @@
     <ClCompile Include="src\ui\WindowConsole.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\ui\WindowTimers.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\ConvexVolumeTool.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp" />
     <ClCompile Include="vendors\xxhash\xxhash.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp" />
@@ -1148,6 +1150,8 @@
     <ClInclude Include="src\ui\WindowConsole.h" />
     <ClInclude Include="src\utils\UUID.h" />
     <ClInclude Include="src\ui\WindowTimers.h" />
+    <ClInclude Include="vendors\recast\include\Recast\ConvexVolumeTool.h" />
+    <ClInclude Include="vendors\recast\include\Recast\InputGeom.h" />
     <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
     <ClInclude Include="vendors\xxhash\xxhash.h" />
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />
