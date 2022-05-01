@@ -21,7 +21,10 @@ Hachiko::ResourceNavMesh::ResourceNavMesh(UID uid) : Resource(uid, Type::NAVMESH
 }
 
 
-Hachiko::ResourceNavMesh::~ResourceNavMesh() {}
+Hachiko::ResourceNavMesh::~ResourceNavMesh()
+{
+    RELEASE(build_context);
+}
 
 bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 {
@@ -98,7 +101,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     memset(triangle_areas, 0, n_triangles * sizeof(unsigned char));
     int n_vertices = scene_vertices.size() / 3;
 
-    /*
+    
     rcMarkWalkableTriangles(build_context, cfg.walkableSlopeAngle, scene_vertices.data(), n_vertices, scene_triangles.data(), n_triangles, triangle_areas);
     if (!rcRasterizeTriangles(build_context, scene_vertices.data(), n_vertices, scene_triangles.data(), triangle_areas, n_triangles, *solid, cfg.walkableClimb))
     {
@@ -117,7 +120,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     rcFilterLedgeSpans(build_context, cfg.walkableHeight, cfg.walkableClimb, *solid);
     rcFilterWalkableLowHeightSpans(build_context, cfg.walkableHeight, *solid);
 
-    */
+    
     
 
     // Step 4. Partition walkable surface to simple regions.
@@ -137,6 +140,5 @@ void Hachiko::ResourceNavMesh::CleanUp()
 {
 	dtFreeNavMesh(navmesh);
 	navmesh = nullptr;
-    RELEASE(build_context);
 }
 
