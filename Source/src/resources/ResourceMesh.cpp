@@ -56,14 +56,14 @@ void Hachiko::ResourceMesh::GenerateBuffers()
         // SRC_BONES_WEIGHTS
         glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
         glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
-        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] * sizeof(float), src_bone_indices.get(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] * sizeof(unsigned), src_bone_indices.get(), GL_STATIC_DRAW);
         glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, sizeof(unsigned) * 4, static_cast<void*>(nullptr));
         glEnableVertexAttribArray(4);
 
         // SRC_BONES_INEX
         glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
         glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
-        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] * sizeof(float), src_bone_weights.get(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] * sizeof(float4), src_bone_weights.get(), GL_STATIC_DRAW);
         glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, static_cast<void*>(nullptr));
         glEnableVertexAttribArray(5);
     }
@@ -90,15 +90,14 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
     for (unsigned i = 0; i < num_bones; ++i)
     {
         const aiBone* bone = mesh->mBones[i];
-        Bone dst_bone = bones[i];
 
-        strcpy_s(dst_bone.name, bone->mName.C_Str());
-        dst_bone.bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
+        strcpy_s(bones[i].name, bone->mName.C_Str());
+        bones[i].bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
                                  float4(bone->mOffsetMatrix.a2, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.d2),
                                  float4(bone->mOffsetMatrix.a3, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.d3),
                                  float4(bone->mOffsetMatrix.a4, bone->mOffsetMatrix.b4, bone->mOffsetMatrix.c4, bone->mOffsetMatrix.d4));
 
-        dst_bone.bind.SetTranslatePart(dst_bone.bind.TranslatePart() * scale);
+        bones[i].bind.SetTranslatePart(bones[i].bind.TranslatePart() * scale);
     }
 
     std::unique_ptr<unsigned[]> bone_indices = std::make_unique<unsigned[]>(4 * mesh->mNumVertices);

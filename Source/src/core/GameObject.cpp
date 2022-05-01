@@ -526,5 +526,14 @@ Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(
         }
     }
 
+    for (GameObject* child : children)
+    {
+        GameObject* found_child = child->GetFirstChildWithName(child_name);
+        if (found_child != nullptr)
+        {
+            return found_child;
+        }
+    }
+
     return nullptr;
 }

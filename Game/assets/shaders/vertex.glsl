@@ -20,10 +20,12 @@ layout(std140, row_major, binding = 0) uniform Camera
 
 uniform mat4 model;
 
-layout(std140, row_major) uniform Skining
+/*layout(std140, row_major) uniform Skining
 {
     mat4 palette[MAX_BONES];
-};
+};*/
+
+uniform mat4 palette[MAX_BONES];
 
 // Outputs
 struct VertexData
@@ -52,7 +54,7 @@ void main()
     gl_Position = camera.proj * camera.view *  model * position;
 
     fragment.pos = vec3(model * position);
-    fragment.normal = normalize(transpose(inverse(mat3(model))) * in_normal.xyz);
+    fragment.normal = normalize(transpose(inverse(mat3(model))) * normal.xyz);
     fragment.tangent = transpose(inverse(mat3(model))) * in_tangent;
     fragment.tex_coord = in_tex_coord;
 }

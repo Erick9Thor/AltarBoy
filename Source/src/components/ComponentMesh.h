@@ -108,7 +108,7 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
         // BONES
-        void UpdateSkinPalette(float4x4* palette) const;
+        void UpdateSkinPalette(std::vector<float4x4>& palette) const;
 
     private:
         bool visible = true;
