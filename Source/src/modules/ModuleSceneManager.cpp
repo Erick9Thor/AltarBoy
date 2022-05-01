@@ -7,6 +7,9 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
 
+// TODO: Remove, added for easy testing
+#include "resources/ResourceNaveMesh.h"
+
 bool Hachiko::ModuleSceneManager::Init()
 { 
     serializer = new SceneSerializer();
@@ -21,6 +24,11 @@ bool Hachiko::ModuleSceneManager::Init()
     {
         CreateEmptyScene();
     }
+
+    /* ResourceNavMesh* navmesh = new ResourceNavMesh(0);
+    navmesh->Build(main_scene);
+    RELEASE(navmesh);
+    */
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();

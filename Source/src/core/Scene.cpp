@@ -235,21 +235,51 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     loaded = true;
 }
 
-void Hachiko::Scene::CreateLights()
+void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)
 {
-    GameObject* sun = CreateNewGameObject(root, "Sun");
-    sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
-    sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
-    sun->CreateComponent(Component::Type::DIRLIGHT);
+    // Ensure that all scene is fresh (bounding boxes were not updated if using right after loading scene)
+    root->Update();
+    // TODO: Have an array of meshes on scene to not make this recursive ?
+    scene_vertices.clear();
+    scene_triangles.clear();
+    scene_normals.clear();
+    scene_bounds.SetNegativeInfinity();
 
-    GameObject* spot = CreateNewGameObject(root, "Spot Light");
-    sun->GetTransform()->SetLocalPosition(float3(-1, 1, -1));
+    std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
+    {
+        ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
+        const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
+        // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
+        if (mesh)
+        {
+            const float* vertices = mesh->GetVertices();
+            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
+            {
+                float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
+                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
+            }
 
-    spot->CreateComponent(Component::Type::SPOTLIGHT);
+            const unsigned* indices = mesh->GetIndices();
+            int n_indices = mesh->GetBufferSize(ResourceMesh::Buffers::INDICES);
+            scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
 
-    GameObject* point = CreateNewGameObject(root, "Point Light");
-    sun->GetTransform()->SetLocalPosition(float3(0, 1, -1));
-    point->CreateComponent(Component::Type::POINTLIGHT);
+            const float* normals = mesh->GetNormals();
+            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::NORMALS); i +=3)
+            {
+                float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
+                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
+            }
+
+            scene_bounds.Enclose(go->GetAABB());
+        }
+
+        for (auto& child : go->children)
+        {
+            get_navmesh_data(child);
+        }
+    };
+
+    get_navmesh_data(root);
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()

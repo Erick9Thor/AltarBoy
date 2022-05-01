@@ -534,6 +534,15 @@
     <ClCompile Include="src\modules\ModuleAudio.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\resources\ResourceNaveMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleNavigation.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
+      <Filter>Vendors\Recast</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2190,6 +2199,13 @@
     <ClInclude Include="src\modules\ModuleAudio.h">
       <Filter>Modules\Source</Filter>
     </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
+    <ClInclude Include="src\resources\ResourceNaveMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleNavigation.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2332,6 +2348,9 @@
     </Filter>
     <Filter Include="Vendors\Wwise">
       <UniqueIdentifier>{728a28e9-5f85-411c-82f8-e783080e9810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Recast">
+      <UniqueIdentifier>{f458afc6-644a-4e89-af95-239e65537287}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
