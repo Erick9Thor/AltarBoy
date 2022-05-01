@@ -87,7 +87,6 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
     num_bones = mesh->mNumBones;
     bones = std::make_unique<Bone[]>(num_bones);
     
-
     for (unsigned i = 0; i < num_bones; ++i)
     {
         const aiBone* bone = mesh->mBones[i];

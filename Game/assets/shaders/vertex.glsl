@@ -9,7 +9,7 @@ layout(location=5) in vec4 in_bone_weights;
 
 #define MAX_BONES 64
 
-uniform bool hasBones;
+uniform bool has_bones;
 
 layout(std140, row_major, binding = 0) uniform Camera
 {
@@ -40,7 +40,7 @@ void main()
     vec4 position = vec4(in_position, 1.0);
     vec4 normal = vec4(in_normal, 0.0);
 
-    if (hasBones)
+    if (has_bones)
     { 
         mat4 skin_transform = palette[in_bone_indices[0]] * in_bone_weights[0] + palette[in_bone_indices[1]] * in_bone_weights[1] +
             palette[in_bone_indices[2]] * in_bone_weights[2] + palette[in_bone_indices[3]] * in_bone_weights[3];

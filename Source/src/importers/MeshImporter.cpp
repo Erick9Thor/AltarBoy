@@ -26,7 +26,8 @@ void Hachiko::MeshImporter::Save(const Resource* res)
         sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)],
         sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)],
         sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)],
-        sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]
+        sizes[static_cast<int>(ResourceMesh::Buffers::BONES)],
+        sizes[static_cast<int>(ResourceMesh::Buffers::BONES_SIZE)]
     };
 
     unsigned file_size = 0;
@@ -39,6 +40,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     file_size += sizeof(unsigned) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)];
     file_size += sizeof(float4) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)];
     file_size += sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    file_size += sizeof(unsigned int) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES_SIZE)];
 
     const auto file_buffer = new char[file_size];
     char* cursor = file_buffer;
@@ -113,6 +115,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] = header[5];
     sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] = header[6];
     sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = header[7];
+    sizes[static_cast<int>(ResourceMesh::Buffers::BONES_SIZE)] = header[8];
 
     size_bytes = sizeof(unsigned) * sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];
     mesh->indices = new unsigned[sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
@@ -187,10 +190,13 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
         size_bytes = sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
         memcpy(mesh->bones.get(), cursor, size_bytes);
         cursor += size_bytes;
+
+        mesh->num_bones = sizes[static_cast<int>(ResourceMesh::Buffers::BONES_SIZE)];
     }
     else
     {
         mesh->bones = nullptr;
+        mesh->num_bones = 0;
     } 
 
     mesh->GenerateBuffers();
@@ -220,13 +226,18 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
         mesh->GenerateBoneData(ai_mesh, 1);
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] = ai_mesh->mNumVertices;
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] = 4 * ai_mesh->mNumVertices;
+
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_SIZE)] = ai_mesh->mNumBones;
     }
     else
     {
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = 0;
-        mesh->bones = nullptr;
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] = 0;
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] = 0;
+        mesh->bones = nullptr;
+        mesh->num_bones = 0;
+        mesh->src_bone_indices = nullptr;
+        mesh->src_bone_weights = nullptr;
     }
 
     if (ai_mesh->HasNormals())

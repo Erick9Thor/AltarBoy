@@ -30,6 +30,7 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     }
     
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
+    // program->BindUniformBool("has_bones", mesh->num_bones > 0);
 
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
     App->program->UpdateMaterial(material);
