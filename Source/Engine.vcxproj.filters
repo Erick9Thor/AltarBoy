@@ -543,8 +543,6 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
-    <ClCompile Include="vendors\recast\include\Recast\ConvexVolumeTool.cpp" />
-    <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2201,15 +2199,15 @@
     <ClInclude Include="src\modules\ModuleAudio.h">
       <Filter>Modules\Source</Filter>
     </ClInclude>
-    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
     <ClInclude Include="src\resources\ResourceNaveMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="vendors\recast\include\Recast\ConvexVolumeTool.h" />
-    <ClInclude Include="vendors\recast\include\Recast\InputGeom.h" />
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h">
+      <Filter>Vendors\Recast</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

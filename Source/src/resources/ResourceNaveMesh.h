@@ -9,6 +9,13 @@ class BuildContext;
 
 namespace Hachiko
 {
+    enum SamplePartitionType
+    {
+        SAMPLE_PARTITION_WATERSHED,
+        SAMPLE_PARTITION_MONOTONE,
+        SAMPLE_PARTITION_LAYERS,
+    };
+
     class ResourceNavMesh : public Resource
     {
     public:
@@ -48,6 +55,9 @@ namespace Hachiko
         // Detail
         int detail_sample_distance = 6;
         int detail_sample_max_error = 1;
+
+        // Partition
+        SamplePartitionType partition_type = SAMPLE_PARTITION_WATERSHED;
 
         // Tiling? 
     };
