@@ -170,6 +170,8 @@ const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
         return animations_assets.c_str();
     case Resource::Type::SKYBOX:
         return skybox_assets.c_str();
+    case Resource::Type::NAVMESH:
+        return "assets/navmesh/";
     case Resource::Type::UNKNOWN:
     default:
         assert(false);
@@ -202,6 +204,8 @@ const char* ResourcesPreferences::GetLibraryPath(Resource::Type type) const
         return animations_library.c_str();
     case Resource::Type::SKYBOX:
         return skybox_library.c_str();
+    case Resource::Type::NAVMESH:
+        return "library/navmesh/";
     case Resource::Type::UNKNOWN:
     default:
         assert(false);

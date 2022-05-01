@@ -21,6 +21,7 @@ namespace Hachiko
             SCRIPT,
             VIDEO,
             SKYBOX,
+            NAVMESH,
             COUNT
         };
 

@@ -223,13 +223,15 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     loaded = true;
 }
 
-void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals)
+void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)
 {
-    
+    // Ensure that all scene is fresh (bounding boxes were not updated if using right after loading scene)
+    root->Update();
     // TODO: Have an array of meshes on scene to not make this recursive ?
     scene_vertices.clear();
     scene_triangles.clear();
     scene_normals.clear();
+    scene_bounds.SetNegativeInfinity();
 
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
@@ -255,6 +257,8 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
             }
+
+            scene_bounds.Enclose(go->GetAABB());
         }
 
         for (auto& child : go->children)

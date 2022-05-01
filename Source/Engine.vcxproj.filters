@@ -504,6 +504,7 @@
     <ClCompile Include="src\modules\ModuleNavigation.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2124,6 +2125,7 @@
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2260,6 +2262,9 @@
     </Filter>
     <Filter Include="Vendors\GLFont">
       <UniqueIdentifier>{5074120f-4569-457e-a5ab-72ebc083638a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Recast">
+      <UniqueIdentifier>{af5cdf13-494a-4ea9-9bd7-0e9665e3cfbf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
