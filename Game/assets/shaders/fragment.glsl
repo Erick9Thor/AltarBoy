@@ -271,6 +271,12 @@ void main()
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
     // Gamma correction & alpha from diffuse texture
-    //color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
-    color = vec4(hdr_color, 1.0);
+    if(material.diffuse_flag > 0)
+    {
+        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    }
+    else
+    {
+        color = vec4(pow(ldr_color.rgb, vec3(1.0,2.2)), material.diffuse_color.a);
+    }
 }
