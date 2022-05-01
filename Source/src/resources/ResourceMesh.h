@@ -6,6 +6,12 @@ namespace Hachiko
     class ResourceMesh : public Resource
     {
     public:
+        struct Bone
+        {
+            char name[PATH_MAX];
+            float4x4 bind = float4x4::identity;
+        };
+
         enum class Buffers
         {
             INDICES = 0,
@@ -13,6 +19,7 @@ namespace Hachiko
             NORMALS,
             TEX_COORDS,
             TANGENTS,
+            BONES,
             COUNT,
         };
 
@@ -24,10 +31,18 @@ namespace Hachiko
 
         ResourceMesh(UID id);
         ~ResourceMesh() override;
+
         void GenerateBuffers();
         void GenerateAABB();
 
+        void GenerateBoneData(const aiMesh* mesh, float scale);
+
         void CleanUp();
+
+        [[nodiscard]] unsigned int GetNumBones() const
+        {
+            return num_bones;
+        }
 
         bool loaded = false;
 
@@ -49,6 +64,13 @@ namespace Hachiko
         float* normals{};
         float* tex_coords{};
         float* tangents{};
+
+        // BONES
+        std::unique_ptr<unsigned[]> src_bone_indices = nullptr;
+        std::unique_ptr<float4[]> src_bone_weights = nullptr;
+
+        unsigned int num_bones = 0;
+        std::unique_ptr<Bone[]> bones = nullptr;
     };
 
     bool operator==(const ResourceMesh::Layout& l, const ResourceMesh::Layout& r);

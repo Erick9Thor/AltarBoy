@@ -5,6 +5,11 @@ Hachiko::ResourceTexture::ResourceTexture()
 	: Resource(Resource::Type::TEXTURE)
 {}
 
+Hachiko::ResourceTexture::ResourceTexture(UID id) 
+    : Resource(id, Resource::Type::TEXTURE)
+{
+}
+
 Hachiko::ResourceTexture::~ResourceTexture() 
 {
     if (id != 0)

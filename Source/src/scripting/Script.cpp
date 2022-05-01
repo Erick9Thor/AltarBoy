@@ -96,10 +96,9 @@ void Hachiko::Scripting::Script::DrawGui()
     
     if (ImGuiUtils::CollapsingHeader(game_object, this, name.c_str()))
     {
-        ImGui::Text(name.c_str());
-        ImGui::SameLine();
-        ImGui::Text("TO BE IMPLEMENTED.");
+        OnEditor();
     }
+
     ImGui::PopID();
 }
 

@@ -16,6 +16,8 @@ scripting_path = current_dir
 script_factory_cpp_path = generated_path + 'Factory.cpp'
 # Path to GeneratedSerialization.cpp:
 serialization_cpp_path = generated_path + 'SerializationMethods.cpp'
+# Path to GeneratedEditor.cpp:
+editor_cpp_path = generated_path + 'GeneratedEditor.cpp'
 # Name of all the files that are inside the scripts folder:
 files_in_directory = os.listdir(scripting_path)
 
@@ -24,21 +26,29 @@ engine_scripting_path = 'scripting/'
 engine_scripting_serialization_path = engine_scripting_path + 'serialization/'
 # Namespace that base Script class belongs to:
 scripting_namespace = 'Hachiko::Scripting::'
+
+# Include start:
+include_start = '#include \"'
+
 # Include statements for file serialization_cpp_path:
-generated_includes_serialization = ('#include <vector>\n' + 
-    '#include <string>\n'
-    '#include <unordered_map>\n'
-    '#include \"'+util_folder+'gameplaypch.h\"\n' 
-    # '#include \"'+engine_scripting_serialization_path+'ISerializable.h\"\n' 
-    # '#include \"'+engine_scripting_serialization_path+'SerializedField.h\"\n'
-    )
+generated_includes_serialization = ('#include <vector>\n' +
+    '#include <string>\n'+
+    '#include <unordered_map>\n'+
+    (include_start + util_folder + 'gameplaypch.h\"\n'))
+
 # Include statements for file script_factory_cpp_path:
 generated_includes_script_factory = ('#include \"'+util_folder+'gameplaypch.h\"\n' + 
-    '#include \"'+generated_folder+'Factory.h\"\n')
-# Body of the function InstantiateScript inside the file script_factory_cpp_path:
-generated_body_script_factory = scripting_namespace + 'Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)\n{'
+    include_start + generated_folder + 'Factory.h\"\n')
+# Include statements for file editor_cpp_path:
+generated_includes_on_editor = (
+    include_start + util_folder + 'gameplaypch.h\"\n')
+
 # Body containing all the methods inside the file serialization_cpp_path:
 generated_body_serialization = ''
+# Body of the function InstantiateScript inside the file script_factory_cpp_path:
+generated_body_script_factory = scripting_namespace + 'Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)\n{'
+# Body containing all OnEditor methods for scripts inside the editor_cpp_path:
+generated_body_editor = ''
 
 # Formatted string that generates SerializeTo method:
 serialize_method_format = ('{new_line}void {script_namespace}{script_class_name}::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)'
@@ -67,16 +77,67 @@ deserialize_method_if_format = (''
 + '{new_line}{tab}{tab}{right_curly}'     
 + '{new_line}{tab}{right_curly}')
 
+# Formatted string that generates Script::OnEditor for said script:
+on_editor_method_format = (
+    '{new_line}void {script_namespace}{script_class_name}::OnEditor()'
+    '{new_line}{left_curly}'
+    '{body}'
+    '{new_line}{right_curly}'
+)
+# Formatted string that generates Editor::Show for Default types:
+editor_show_default_format = (
+    '{new_line}{tab}Editor::Show(\"{field_name}\", {field_name});'
+)
+# Formatted string that generates Editor::Show for Components (and scripts):
+editor_show_components_format = (
+    '{new_line}{tab}Editor::Show<{non_ptr_field_type}>(\"{field_name}\", \"{field_type}\", {field_name});'
+)
+
+# Allowed editor types for scripts:
+editor_allowed_default_types = [
+    'int', 'unsigned int', 'unsigned', 'float', 
+    'double', 'bool', 'string', 'std::string', 
+    'math::float2', 'math::float3', 'math::float4',
+    'float2', 'float3', 'float4', 'GameObject*'
+]
+editor_allowed_component_types = [
+    'ComponentAnimation*', 'ComponentButton*',
+    'ComponentCamera*', 'ComponentCanvas*',
+    'ComponentCanvasRenderer*', 'ComponentDirLight*',
+    'ComponentDirLight*', 'ComponentImage*',
+    'ComponentMaterial*', 'ComponentMesh*',
+    'ComponentPointLight*', 'ComponentProgressBar*',
+    'ComponentSpotLight*', 'ComponentText*',
+    'ComponentTransform*', 'ComponentTransform2D*'
+]
+
+# This beautiful piece of function was found from stack overflow:
+def delete_comments_from_file(text):
+    def replacer(match):
+        s = match.group(0)
+        if s.startswith('/'):
+            return " "
+        else:
+            return s
+
+    pattern = re.compile(
+        r'//.*?$|/\*.*?\*/|\'(?:\\.|[^\\\'])*\'|"(?:\\.|[^\\"])*"',
+        re.DOTALL | re.MULTILINE
+    )
+    return re.sub(pattern, replacer, text)
+
 print("Running Pre-Build Event \"Create ScriptFactory & Serialization\"")
 print("Using header files:")
 
-first_script = True
-
+# Take all the script header files in the directory:
+script_classes = []
 for file_name in files_in_directory:
-    # Only chech header files:
+    # Only check header files:
     if file_name[-2:] == '.h':
         header_file = open(scripting_path+file_name)
         header_file_as_string = header_file.read()
+        header_file_as_string = (delete_comments_from_file(header_file_as_string))
+
         # File content without spaces, tabs and new lines:
         header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
         # Assume class name to be the same with the file name:
@@ -87,94 +148,152 @@ for file_name in files_in_directory:
 
         if is_script_file:
             print("Script: " + file_name)
+            script_classes.append(class_name)
 
-            # Include statement of the current script file from its file name:
-            current_include = '#include \"' + scripting_folder + file_name + '\"\n'
-            # Generate include statements for GeneratedSerialization.cpp:
-            generated_includes_serialization += current_include
-            # Generate include statements for ScriptFactory.cpp:
-            generated_includes_script_factory += current_include
+first_script = True
 
-            # Generate if statement inside the ScriptFactory::InstantiateScript function for current script:
-            generated_body_script_factory += '\n\tif (script_name == \"' + class_name + '\")\n\t{\n\t\treturn new ' + scripting_namespace + class_name + '(script_owner);\n\t}\n'
+for script_class in script_classes:
+    header_file = open(scripting_path + script_class + '.h')
+    header_file_as_string = header_file.read()
+    header_file_as_string = (delete_comments_from_file(header_file_as_string))
 
-            # Get all the SERIALIZE_FIELD statements in the current 
-            # header file:
-            serialize_fields = re.findall(re.escape('SERIALIZE_FIELD(')+'(.*?)'+re.escape(');'), header_file_as_string_without_spaces)
-            
-            # Get all the fields marked as SERIALIZE_FIELD, separate
-            # them to type and name, and put those into lists:
-            field_types = []
-            field_names = []
-            for serialize_field in serialize_fields:
-                # Find the comma that comes last, as a template type
-                # may have multiple commas in it. But for sure,
-                # the last comma will be the comma that separates
-                # type and name:
-                separator_comma_index = serialize_field.rfind(',')
+    # File content without spaces, tabs and new lines:
+    header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
+    # Include statement of the current script file from its file name:
+    current_include = include_start + scripting_folder + script_class + '.h' + '\"\n'
+    # Generate include statements for GeneratedSerialization.cpp:
+    generated_includes_serialization += current_include
+    # Generate include statements for ScriptFactory.cpp:
+    generated_includes_script_factory += current_include
+    # Generate include statements for GeneratedEditor.cpp:
+    generated_includes_on_editor += current_include
 
-                field_types.append(serialize_field[:separator_comma_index])
-                field_names.append(serialize_field[min(len(serialize_field) - 1, separator_comma_index + 1):])
+    # Generate if statement inside the ScriptFactory::InstantiateScript function for current script:
+    generated_body_script_factory += '\n\tif (script_name == \"' + script_class + '\")\n\t{\n\t\treturn new ' + scripting_namespace + script_class + '(script_owner);\n\t}\n'
 
-            # Generate DeserializeFrom and SerializeTo method bodies 
-            # from the serialize_fields for current class: 
-            deserialize_method_body = ''
-            serialize_method_body = ''
-            for i in range(len(field_names)):
-                current_name = field_names[i]
-                current_type = field_types[i]
+    # Get all the SERIALIZE_FIELD statements in the current 
+    # header file:
+    serialize_fields = re.findall(re.escape('SERIALIZE_FIELD(')+'(.*?)'+re.escape(');'), header_file_as_string_without_spaces)
+    
+    # Get all the fields marked as SERIALIZE_FIELD, separate
+    # them to type and name, and put those into lists:
+    field_types = []
+    field_names = []
+    for serialize_field in serialize_fields:
+        # Find the comma that comes last, as a template type
+        # may have multiple commas in it. But for sure,
+        # the last comma will be the comma that separates
+        # type and name:
+        separator_comma_index = serialize_field.rfind(',')
 
-                deserialize_method_body += '\n'
-                serialize_method_body += '\n'
+        field_types.append(serialize_field[:separator_comma_index])
+        field_names.append(serialize_field[min(len(serialize_field) - 1, separator_comma_index + 1):])
 
-                # Append the if statement for the current_name and current_type
-                # to be used inside deserialize method:
-                deserialize_method_body += deserialize_method_if_format.format(
-                    field_name = current_name,
-                    field_type = current_type,
-                    new_line = '\n',
-                    tab = '\t',
-                    left_curly = '{', 
-                    right_curly = '}'
-                )
-                # Append the statement for serializing the field corresponding
-                # to current_name and current_type, to be used inside 
-                # serialize method:
-                serialize_method_body += serialize_method_field_format.format(
-                    field_name = current_name,
-                    field_type = current_type,
-                    new_line = '\n',
-                    tab = '\t'
-                )
+    # Generate DeserializeFrom and SerializeTo method bodies 
+    # from the serialize_fields for current class: 
+    deserialize_method_body = ''
+    serialize_method_body = ''
+    # Generate OnEditor method bodues from the serialize_fields 
+    # for current class:
+    on_editor_method_body = ''
+    for i in range(len(field_names)):
+        current_name = field_names[i]
+        current_type = field_types[i]
 
-            # Generate DeserializeFrom method using the generated body:
-            current_deserialize_method = deserialize_method_format.format(
-                script_namespace = scripting_namespace, 
-                script_class_name = class_name, 
-                new_line = '\n', 
-                left_curly = '{', 
-                right_curly = '}', 
-                tab = '\t',
-                body = deserialize_method_body)
-            # Generate SerializeTo method using the generated body:
-            current_serialize_method = serialize_method_format.format(
-                script_namespace = scripting_namespace, 
-                script_class_name = class_name, 
-                new_line = '\n', 
-                left_curly = '{', 
-                right_curly = '}', 
-                tab = '\t',
-                body = serialize_method_body
+        deserialize_method_body += '\n'
+        serialize_method_body += '\n'
+
+        # Append the if statement for the current_name and current_type
+        # to be used inside deserialize method:
+        deserialize_method_body += deserialize_method_if_format.format(
+            field_name = current_name,
+            field_type = current_type,
+            new_line = '\n',
+            tab = '\t',
+            left_curly = '{', 
+            right_curly = '}'
+        )
+        # Append the statement for serializing the field corresponding
+        # to current_name and current_type, to be used inside 
+        # serialize method:
+        serialize_method_body += serialize_method_field_format.format(
+            field_name = current_name,
+            field_type = current_type,
+            new_line = '\n',
+            tab = '\t'
+        )
+
+        # OnEditor related:
+        if current_type in editor_allowed_default_types:
+            on_editor_method_body += editor_show_default_format.format(
+                field_name = current_name,
+                new_line = '\n',
+                tab = '\t'
             )
+        elif current_type in editor_allowed_component_types:
+            # As the types inside editor_allowed_component_types are typed by hand,
+            # we assume it has no * in somewhere nonsense, but at the end:
+            without_pointer = current_type[:-1]
+            on_editor_method_body += editor_show_components_format.format(
+                field_name = current_name,
+                field_type = current_type,
+                non_ptr_field_type = without_pointer,
+                new_line = '\n',
+                tab = '\t'
+            )
+        else:
+            # If the type has an asterisk at the end:
+            if current_type[-1] == '*':
+                # Get the type without asterisk:
+                without_pointer = current_type[:-1]
+                # If the type without pointer is a script:
+                if without_pointer in script_classes:
+                    on_editor_method_body += editor_show_components_format.format(
+                        field_name = current_name,
+                        field_type = current_type,
+                        non_ptr_field_type = without_pointer,
+                        new_line = '\n',
+                        tab = '\t'
+                    )
 
-            extra_new_line = '' if first_script == True else '\n'
-            first_script = False
+    # Generate OnEditor method using the generated body:
+    current_on_editor_method = on_editor_method_format.format(
+        script_namespace = scripting_namespace, 
+        script_class_name = script_class, 
+        new_line = '\n', 
+        left_curly = '{', 
+        right_curly = '}', 
+        body = on_editor_method_body
+    )
 
-            # Add the methods to the string that will be used to generate
-            # the file serialization_cpp_path:
-            generated_body_serialization += extra_new_line + current_deserialize_method
-            generated_body_serialization += '\n' + current_serialize_method
-            
+    # Generate DeserializeFrom method using the generated body:
+    current_deserialize_method = deserialize_method_format.format(
+        script_namespace = scripting_namespace, 
+        script_class_name = script_class, 
+        new_line = '\n', 
+        left_curly = '{', 
+        right_curly = '}', 
+        tab = '\t',
+        body = deserialize_method_body)
+    # Generate SerializeTo method using the generated body:
+    current_serialize_method = serialize_method_format.format(
+        script_namespace = scripting_namespace, 
+        script_class_name = script_class, 
+        new_line = '\n', 
+        left_curly = '{', 
+        right_curly = '}', 
+        tab = '\t',
+        body = serialize_method_body
+    )
+
+    extra_new_line = '' if first_script == True else '\n'
+    first_script = False
+
+    # Add the methods to the string that will be used to generate
+    # the file serialization_cpp_path:
+    generated_body_serialization += extra_new_line + current_deserialize_method
+    generated_body_serialization += '\n' + current_serialize_method
+    generated_body_editor += '\n' + current_on_editor_method
             
 
 generated_body_script_factory += '\n\treturn nullptr;\n}'
@@ -183,3 +302,6 @@ open(script_factory_cpp_path, 'w').write(generated_body_script_factory)
 
 generated_body_serialization = generated_includes_serialization + '\n' + generated_body_serialization
 open(serialization_cpp_path, 'w').write(generated_body_serialization)
+
+generated_body_editor = generated_includes_on_editor + generated_body_editor
+open(editor_cpp_path, 'w').write(generated_body_editor)

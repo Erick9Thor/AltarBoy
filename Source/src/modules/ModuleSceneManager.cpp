@@ -7,6 +7,9 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
 
+// TODO: Remove, added for easy testing
+#include "resources/ResourceNaveMesh.h"
+
 bool Hachiko::ModuleSceneManager::Init()
 { 
     serializer = new SceneSerializer();
@@ -21,6 +24,11 @@ bool Hachiko::ModuleSceneManager::Init()
     {
         CreateEmptyScene();
     }
+
+    /* ResourceNavMesh* navmesh = new ResourceNavMesh(0);
+    navmesh->Build(main_scene);
+    RELEASE(navmesh);
+    */
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -91,6 +99,7 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
     {
         scene_ready_to_load = false;
         LoadScene(scene_to_load.c_str());
+        currentScenePath = scene_to_load;
     }
 
     main_scene->Update();
@@ -123,10 +132,17 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 
     delete main_scene;
     main_scene = new Scene();
+    // Since the empty scene is already loaded, it's loaded flag must be set to
+    // true, for systems that need a "loaded" scene to function such as
+    // ModuleScriptingSystem which needs both engine to be in play mode and 
+    // current scene to be flagged as "loaded":
+    main_scene->loaded = true;
 
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
+
+    currentScenePath = "";
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
@@ -142,6 +158,8 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
+    
+    currentScenePath = file_path;
     
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -173,6 +191,19 @@ void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
 {
     scene_ready_to_load = true;
     scene_to_load = file_path;
+    currentScenePath = file_path;
+}
+
+void Hachiko::ModuleSceneManager::ReloadScene()
+{
+    if (std::filesystem::exists(currentScenePath))
+    {
+        LoadScene(currentScenePath.c_str());
+    }
+    else
+    {
+        CreateEmptyScene();
+    }
 }
 
 void Hachiko::ModuleSceneManager::OptionsMenu()

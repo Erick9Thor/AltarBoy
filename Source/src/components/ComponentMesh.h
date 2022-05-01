@@ -60,6 +60,11 @@ namespace Hachiko
             return mesh->indices;
         }
 
+        [[nodiscard]] const float* GetNormals() const
+        {
+            return mesh->normals;
+        }
+
         [[nodiscard]] const std::string& GetResourcePath() const
         {
             return asset_path;
@@ -100,18 +105,25 @@ namespace Hachiko
             return mesh;
         }
 
-        void LoadMesh(const char* mesh_path);
         void LoadMesh(UID mesh_id);
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
+        // BONES
+
+        void UpdateSkinPalette(float4x4* palette) const;
+
     private:
         bool visible = true;
+
+        const GameObject** node_cache = nullptr;
+        
         int mesh_index;
         std::string asset_path;
         std::string model_name;
+
         ResourceMesh* mesh = nullptr;
     };
 } // namespace Hachiko

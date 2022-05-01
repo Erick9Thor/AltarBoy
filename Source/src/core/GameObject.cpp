@@ -70,6 +70,21 @@ void Hachiko::GameObject::RemoveChild(GameObject* game_object)
     children.erase(std::remove(children.begin(), children.end(), game_object), children.end());
 }
 
+Hachiko::GameObject* Hachiko::GameObject::CreateChild()
+{
+    GameObject* new_child = new GameObject(this);
+    // Ensure that child's scene_owner is same with this GameObject's 
+    // scene_owner:
+    new_child->scene_owner = scene_owner;
+
+    return new_child;
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Instantiate()
+{
+    return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
+}
+
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
 {
     if (new_parent == parent)
@@ -219,16 +234,23 @@ void Hachiko::GameObject::Update()
         OnTransformUpdated();
     }
 
-    for (Component* component : components)
+    // NOTE: It is weird that a non-sense nullptr exception we were facing is 
+    // solved by converting the for loop for children vector to use the follow
+    // ing for loop instead of range based and iterator based ones. Thanks to 
+    // Vicenc for coming up with this approach. Maybe we should convert all 
+    // vector loops to be like the ones following.
+    // TODO: Ask this to the teachers.
+
+    for (int i = 0; i < components.size(); ++i)
     {
-        component->Update();
+        components[i]->Update();
     }
 
-    for (GameObject* child : children)
+    for (int i = 0; i < children.size(); ++i)
     {
-        if (child->IsActive())
+        if (children[i]->IsActive())
         {
-            child->Update();
+            children[i]->Update();
         }
     }
 }
@@ -293,6 +315,7 @@ void Hachiko::GameObject::DebugDrawAll()
 void Hachiko::GameObject::DebugDraw() const
 {
     DrawBoundingBox();
+    DrawBones();
     for (Component* component : components)
     {
         component->DebugDraw();
@@ -310,6 +333,15 @@ void Hachiko::GameObject::DrawBoundingBox() const
         p[i] = obb.CornerPoint(order[i]);
     }
     dd::box(p, dd::colors::White);
+}
+
+void Hachiko::GameObject::DrawBones() const
+{
+    if (parent != nullptr)
+    {
+        dd::line(this->GetTransform()->GetGlobalPosition(), parent->GetTransform()->GetGlobalPosition(), dd::colors::Blue);
+        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 1, 10);
+    }
 }
 
 void Hachiko::GameObject::UpdateBoundingBoxes()

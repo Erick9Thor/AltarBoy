@@ -32,6 +32,7 @@ bool Hachiko::ModuleTexture::CleanUp()
 
     // Release fonts library
     FT_Done_FreeType(freetype_lib);
+
     return true;
 }
 
@@ -45,8 +46,8 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const 
     {
         return nullptr;
     }
-
-    ResourceTexture* texture = new ResourceTexture();
+ 
+    ResourceTexture* texture = new ResourceTexture(uid);
     texture->path = path;
     texture->SetName(texture_path.filename().replace_extension().string().c_str());
     texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;

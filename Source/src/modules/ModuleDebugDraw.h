@@ -25,12 +25,7 @@ namespace Hachiko
         }
 
     public:
-        #ifdef PLAY_BUILD
         bool debug_draw = false;
-        #else
-        bool debug_draw = true;
-        #endif
-
         bool draw_quadtree = false;
 
     private:

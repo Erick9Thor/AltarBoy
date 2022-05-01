@@ -1,0 +1,26 @@
+General:
+  id: 1146712346220137787
+  type: 3
+  hash: 6710385004962545476
+model_name: Wall
+material:
+  - id: 10101986026904430806
+    name: WallMaterial
+  - id: 15009776881109779411
+    name: StarMaterial
+mesh:
+  - id: 16477316816182688886
+    material_index: 0
+  - id: 3666190428606940946
+    material_index: 1
+name: RootNode
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+child:
+  - name: Wall
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 0
+  - name: Stars
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 1

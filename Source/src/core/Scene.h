@@ -102,7 +102,8 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        void CreateLights();
+        void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
+        
         std::vector<ComponentDirLight*> dir_lights;
         std::vector<ComponentPointLight*> point_lights;
         std::vector<ComponentSpotLight*> spot_lights;

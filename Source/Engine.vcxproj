@@ -26,7 +26,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -79,9 +79,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);LOGGING_SUPPORT_DISABLED;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
@@ -91,12 +91,13 @@
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
       <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
+      <AdditionalOptions>/Zm1000 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -107,7 +108,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;LOGGING_SUPPORT_DISABLED;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
@@ -123,8 +124,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Play|x64'">
@@ -133,9 +134,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;LOGGING_SUPPORT_DISABLED;PLAY_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;LOGGING_SUPPORT_DISABLED;PLAY_BUILD;%(PreprocessorDefinitions);LOGGING_SUPPORT_DISABLED;AK_OPTIMIZED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
@@ -151,16 +152,21 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Batching\GeometryBatch.cpp" />
-    <ClCompile Include="src\Batching\BatchManager.cpp" />
-    <ClCompile Include="src\Batching\TextureBatch.cpp" />
+    <ClCompile Include="src\batching\GeometryBatch.cpp" />
+    <ClCompile Include="src\batching\BatchManager.cpp" />
+    <ClCompile Include="src\batching\TextureBatch.cpp" />
+    <ClCompile Include="src\modules\ModuleNavigation.cpp" />
+    <ClCompile Include="src\resources\ResourceNaveMesh.cpp" />
+    <ClCompile Include="src\importers\FontImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceFont.cpp" />
+    <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
+    <ClCompile Include="src\core\logging\ImGuiLogger.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
-    <ClCompile Include="src\LogFunction.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
@@ -191,6 +197,7 @@
     <ClCompile Include="src\components\ComponentProgressBar.cpp" />
     <ClCompile Include="src\components\ComponentText.cpp" />
     <ClCompile Include="src\components\ComponentTransform2D.cpp" />
+    <ClCompile Include="src\modules\ModuleAudio.cpp" />
     <ClCompile Include="src\modules\ModuleDebugMode.cpp" />
     <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
     <ClCompile Include="vendors\GLFont\FontAtlas.cpp" />
@@ -359,12 +366,11 @@
     <ClCompile Include="src\resources\Resource.cpp" />
     <ClCompile Include="src\ui\ImguiUtils.cpp" />
     <ClCompile Include="src\utils\JsonFormatterValue.cpp" />
-    <ClCompile Include="src\Quadtree.cpp" />
-    <ClCompile Include="src\RenderList.cpp" />
-    <ClCompile Include="src\Skybox.cpp" />
-    <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\core\rendering\Quadtree.cpp" />
+    <ClCompile Include="src\core\rendering\RenderList.cpp" />
+    <ClCompile Include="src\core\rendering\Skybox.cpp" />
+    <ClCompile Include="src\core\rendering\Program.cpp" />
     <ClCompile Include="src\ui\WindowProject.cpp" />
-    <ClCompile Include="src\utils\Logger.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\components\ComponentCamera.cpp" />
     <ClCompile Include="src\components\ComponentMaterial.cpp" />
@@ -633,15 +639,33 @@
     <ClCompile Include="src\ui\WindowConsole.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\ui\WindowTimers.cpp" />
+    <ClCompile Include="vendors\xxhash\xxhash.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.cpp" />
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Batching\DrawCommand.h" />
-    <ClInclude Include="src\Batching\GeometryBatch.h" />
-    <ClInclude Include="src\Batching\BatchManager.h" />
+    <ClInclude Include="src\batching\DrawCommand.h" />
+    <ClInclude Include="src\batching\GeometryBatch.h" />
+    <ClInclude Include="src\batching\BatchManager.h" />
+    <ClInclude Include="src\modules\ModuleNavigation.h" />
+    <ClInclude Include="src\resources\ResourceNaveMesh.h" />
+    <ClInclude Include="src\importers\FontImporter.h" />
+    <ClInclude Include="src\resources\ResourceFont.h" />
+    <ClInclude Include="src\core\ErrorHandler.h" />
+    <ClInclude Include="src\core\logging\ConsoleLogger.h" />
+    <ClInclude Include="src\core\logging\ImGuiLogger.h" />
+    <ClInclude Include="src\core\logging\Logger.h" />
     <ClInclude Include="src\events\GameStateEventPayload.h" />
     <ClInclude Include="src\events\SceneLoadEventPayload.h" />
     <ClInclude Include="src\Gameplay.h" />
-    <ClInclude Include="src\HachikoApiDefine.h" />
+    <ClInclude Include="src\core\HachikoApiDefine.h" />
     <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\scripting\Script.h" />
@@ -677,6 +701,7 @@
     <ClInclude Include="src\events\InputEventPayload.h" />
     <ClInclude Include="src\events\MouseEventPayload.h" />
     <ClInclude Include="src\instrumentation\MemoryLeaks.h" />
+    <ClInclude Include="src\modules\ModuleAudio.h" />
     <ClInclude Include="src\modules\ModuleScriptingSystem.h" />
     <ClInclude Include="src\scripting\ScriptingMacros.h" />
     <ClInclude Include="src\modules\ModuleDebugMode.h" />
@@ -684,7 +709,7 @@
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
-    <ClInclude Include="src\Batching\TextureBatch.h" />
+    <ClInclude Include="src\batching\TextureBatch.h" />
     <ClInclude Include="vendors\GLFont\FontAtlas.h" />
     <ClInclude Include="vendors\GLFont\FTLabel.h" />
     <ClInclude Include="vendors\GLFont\GLFont.h" />
@@ -1007,12 +1032,11 @@
     <ClInclude Include="src\resources\ResourceMaterial.h" />
     <ClInclude Include="src\resources\Resource.h" />
     <ClInclude Include="src\utils\JsonFormatterValue.h" />
-    <ClInclude Include="src\Quadtree.h" />
-    <ClInclude Include="src\RenderList.h" />
-    <ClInclude Include="src\Skybox.h" />
-    <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\core\rendering\Quadtree.h" />
+    <ClInclude Include="src\core\rendering\RenderList.h" />
+    <ClInclude Include="src\core\rendering\Skybox.h" />
+    <ClInclude Include="src\core\rendering\Program.h" />
     <ClInclude Include="src\ui\WindowProject.h" />
-    <ClInclude Include="src\utils\Logger.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\components\Component.h" />
     <ClInclude Include="src\components\ComponentCamera.h" />
@@ -1131,6 +1155,20 @@
     <ClInclude Include="src\ui\WindowConsole.h" />
     <ClInclude Include="src\utils\UUID.h" />
     <ClInclude Include="src\ui\WindowTimers.h" />
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
+    <ClInclude Include="vendors\xxhash\xxhash.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFileHelpers.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIOBlocking.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIODeferred.h" />
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\anchor.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\binary.h" />
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\anchordict.h" />

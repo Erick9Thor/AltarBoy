@@ -21,35 +21,33 @@ namespace Hachiko
 
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
         Hachiko::Resource::Type GetType(const std::filesystem::path& file);
-        
-        ResourceModel* GetModel(const std::string& name);
-        ResourceMesh* GetMesh(const UID uid, const std::string& model_path = std::string(), int mesh_index = -1);
-        ResourceMaterial* GetMaterial(const std::string& material_name);
-        ResourceTexture* GetTexture(const std::string& texture_name, const std::string& asset_path = std::string());
 
+        Resource* GetResource(Resource::Type type, UID id);
         void CreateResource(Resource::Type type, const std::string& name) const;
-
+        void ReimportLibrary();
+        void ReimportAsset(std::string meta_path);
+        void AssetsLibraryCheck();
+        void HandleResource(const std::filesystem::path& path);
 
     private:
-        std::map<std::string, ResourceModel*> models;
-        std::map<std::string, ResourceMaterial*> materials;
-        std::map<std::string, ResourceTexture*> textures;
-        std::map<UID, ResourceMesh*> meshes;
+        std::map<UID, Resource*> loaded_resources;
 
         std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
-        {{Hachiko::Resource::Type::TEXTURE, ".png"},
-        {Hachiko::Resource::Type::TEXTURE, ".tif"},
-        {Hachiko::Resource::Type::MODEL, ".fbx"},
-        {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
-        // Imported Resources
-        {Hachiko::Resource::Type::MODEL, MODEL_EXTENSION},
-        {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION}};
+        {
+            {Hachiko::Resource::Type::TEXTURE, ".png"},
+            {Hachiko::Resource::Type::TEXTURE, ".jpg"},
+            {Hachiko::Resource::Type::TEXTURE, ".tif"},
+            {Hachiko::Resource::Type::MODEL, ".fbx"},
+            {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
+            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION},
+            {Hachiko::Resource::Type::FONT, ".ttf"},
+        };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;
         Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path;
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
-        void HandleResource(const std::filesystem::path& path);
+        void GenerateLibrary(const PathNode& folder);
     };
 }
