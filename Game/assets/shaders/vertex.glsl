@@ -41,6 +41,7 @@ void main()
 {
     vec4 position = vec4(in_position, 1.0);
     vec4 normal = vec4(in_normal, 0.0);
+    vec4 tangent = vec4(in_tangent, 0.0);
 
     if (has_bones)
     { 
@@ -49,12 +50,13 @@ void main()
 
         position = (skin_transform*vec4(in_position, 1.0));
         normal = (skin_transform*vec4(in_normal, 0.0));
+        tangent = (skin_transform*vec4(in_tangent, 0.0));
     }
 
     gl_Position = camera.proj * camera.view *  model * position;
 
     fragment.pos = vec3(model * position);
     fragment.normal = normalize(transpose(inverse(mat3(model))) * normal.xyz);
-    fragment.tangent = transpose(inverse(mat3(model))) * in_tangent;
+    fragment.tangent = transpose(inverse(mat3(model))) * tangent.xyz;
     fragment.tex_coord = in_tex_coord;
 }
