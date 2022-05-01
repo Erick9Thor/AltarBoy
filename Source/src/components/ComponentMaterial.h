@@ -9,7 +9,7 @@ namespace Hachiko
     {
     public:
         ComponentMaterial(GameObject* container);
-        ~ComponentMaterial() override = default;
+        ~ComponentMaterial() override;
 
         static Type GetType()
         {

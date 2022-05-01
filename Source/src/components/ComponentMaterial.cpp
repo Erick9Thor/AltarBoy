@@ -9,6 +9,18 @@
 Hachiko::ComponentMaterial::ComponentMaterial(GameObject* container) 
     : Component(Type::MATERIAL, container) 
 {
+    if (container->scene_owner)
+    {
+        container->scene_owner->OnMeshesChanged();
+    }
+}
+
+Hachiko::ComponentMaterial::~ComponentMaterial() 
+{
+    if (game_object->scene_owner)
+    {
+        game_object->scene_owner->OnMeshesChanged();
+    }
 }
 
 void Hachiko::ComponentMaterial::Save(YAML::Node& node) const
