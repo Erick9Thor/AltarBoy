@@ -712,6 +712,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
+    <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
     <ClCompile Include="MainMenuManager.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />

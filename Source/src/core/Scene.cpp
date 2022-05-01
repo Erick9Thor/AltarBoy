@@ -211,6 +211,14 @@ void Hachiko::Scene::Save(YAML::Node& node) const
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
+    if (!node[CHILD_NODE].IsDefined())
+    {
+        // Loaded as an empty scene:
+        loaded = true;
+
+        return;
+    }
+
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     root->SetID(node[ROOT_ID].as<UID>());
     const YAML::Node children_node = node[CHILD_NODE];

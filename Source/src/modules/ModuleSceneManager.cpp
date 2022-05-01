@@ -124,6 +124,11 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 
     delete main_scene;
     main_scene = new Scene();
+    // Since the empty scene is already loaded, it's loaded flag must be set to
+    // true, for systems that need a "loaded" scene to function such as
+    // ModuleScriptingSystem which needs both engine to be in play mode and 
+    // current scene to be flagged as "loaded":
+    main_scene->loaded = true;
 
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
