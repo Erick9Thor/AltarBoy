@@ -269,7 +269,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 
     // At this point the navigation mesh data is ready
     // (Optional) Step 8. Create Detour data from Recast poly mesh.
-    /*
+    
     // Only build the detour navmesh if we do not exceed the limit.
     if (cfg.maxVertsPerPoly <= DT_VERTS_PER_POLYGON)
     {
@@ -349,7 +349,6 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
             return false;
         }
     }
-    */
 
     build_context->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", poly_mesh->nverts, poly_mesh->npolys);
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp

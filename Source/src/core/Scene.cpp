@@ -256,7 +256,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
         ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
-        const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
+        const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
         if (mesh)
         {
@@ -269,10 +269,8 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
             {
                 
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
-                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
-
-                
-                
+                // w is excluded, so we pass float 3 as desired
+                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.w);
             }
             
             const unsigned* indices = mesh->GetIndices();
@@ -284,8 +282,8 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
             for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::NORMALS); i +=3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
-                
-                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
+                // w is excluded, so we pass float 3 as desired
+                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
             scene_bounds.Enclose(go->GetAABB());
