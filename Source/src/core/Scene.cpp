@@ -17,6 +17,7 @@
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
+#include <algorithm>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
@@ -259,21 +260,31 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
         if (mesh)
         {
+            // Use previous amount of mesh vertices to point to the correct indices
+            // Divide size/3 because its a vector of floats not of float3
+            int indices_offset = scene_vertices.size() / 3;
+            
             const float* vertices = mesh->GetVertices();
             for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
             {
+                
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
                 scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
-            }
 
+                
+                
+            }
+            
             const unsigned* indices = mesh->GetIndices();
             int n_indices = mesh->GetBufferSize(ResourceMesh::Buffers::INDICES);
-            scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            auto inserted = scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            std::for_each(inserted, scene_triangles.end(), [&](int& v) { v += indices_offset; });
 
             const float* normals = mesh->GetNormals();
             for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::NORMALS); i +=3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
+                
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
             }
 
