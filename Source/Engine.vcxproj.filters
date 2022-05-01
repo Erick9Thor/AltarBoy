@@ -506,6 +506,7 @@
     </ClCompile>
     <ClCompile Include="vendors\xxhash\xxhash.cpp">
       <Filter>Vendors\Xxhash</Filter>
+    </ClCompile>
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp">
       <Filter>Vendors\Wwise</Filter>
     </ClCompile>
@@ -2149,6 +2150,7 @@
     </ClInclude>
     <ClInclude Include="vendors\xxhash\xxhash.h">
       <Filter>Vendors\Xxhash</Filter>
+    </ClInclude>
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h">
       <Filter>Vendors\Wwise</Filter>
     </ClInclude>
@@ -2327,6 +2329,7 @@
     </Filter>
     <Filter Include="Vendors\Xxhash">
       <UniqueIdentifier>{bab2aa5b-ebb1-41a4-b931-374b629f9398}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Vendors\Wwise">
       <UniqueIdentifier>{728a28e9-5f85-411c-82f8-e783080e9810}</UniqueIdentifier>
     </Filter>
