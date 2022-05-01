@@ -17,42 +17,53 @@
 
 namespace Hachiko
 {
-    class ComponentTransform;
-    class ComponentCamera;
-    class Program;
-    class Scene;
+class ComponentTransform;
+class ComponentCamera;
+class Program;
+class Scene;
 
-    class HACHIKO_API GameObject final : public ISerializable
-    {
-        friend class Component;
+class HACHIKO_API GameObject final : public ISerializable
+{
+    friend class Component;
 
-    public:
-        GameObject(const char* name = "Unnamed");
-        GameObject(GameObject* parent,
-                   const float4x4& transform, 
-                   const char* name = "Unnamed", 
-                   UID uid = UUID::GenerateUID());
-        GameObject(GameObject* parent,
-                   const char* name = "Unnamed",
-                   UID uid = UUID::GenerateUID(),
-                   const float3& translation = float3::zero,
-                   const Quat& rotation = Quat::identity,
-                   const float3& scale = float3::one);
-        virtual ~GameObject();
+public:
+    GameObject(const char* name = "Unnamed");
+    GameObject(GameObject* parent,
+                const float4x4& transform, 
+                const char* name = "Unnamed", 
+                UID uid = UUID::GenerateUID());
+    GameObject(GameObject* parent,
+                const char* name = "Unnamed",
+                UID uid = UUID::GenerateUID(),
+                const float3& translation = float3::zero,
+                const Quat& rotation = Quat::identity,
+                const float3& scale = float3::one);
+    virtual ~GameObject();
 
     void SetNewParent(GameObject* new_parent);
 
     void AddComponent(Component* component);
     bool AttemptRemoveComponent(Component* component);
-
-    Component* CreateComponent(Component::Type type);
     /// <summary>
-    /// Do not use this unless it's mandatory. Use AttemptRemoveComponent 
+    /// Do not use this unless it's mandatory. Use AttemptRemoveComponent
     /// instead.
     /// </summary>
     /// <param name="component">Component to be removed.</param>
     void ForceRemoveComponent(Component* component);
+
+    Component* CreateComponent(Component::Type type);
     void RemoveChild(GameObject* gameObject);
+
+    /// <summary>
+    /// Creates a new GameObject as child of the root of current Scene.
+    /// </summary>
+    /// <returns>Created GameObject.</returns>
+    static GameObject* Instantiate();
+    /// <summary>
+    /// Creates a new GameObject as child of this GameObject.
+    /// </summary>
+    /// <returns>Created GameObject.</returns>
+    GameObject* CreateChild();
 
     void Start();
     void Update();
