@@ -22,7 +22,6 @@ namespace Hachiko
             BONES_INDICES,
             BONES_WEIGHTS,
             BONES,
-            BONES_SIZE,
             COUNT,
         };
 
