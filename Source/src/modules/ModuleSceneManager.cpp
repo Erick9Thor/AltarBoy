@@ -25,10 +25,10 @@ bool Hachiko::ModuleSceneManager::Init()
         CreateEmptyScene();
     }
 
-    ResourceNavMesh* navmesh = new ResourceNavMesh(0);
+    /* ResourceNavMesh* navmesh = new ResourceNavMesh(0);
     navmesh->Build(main_scene);
-    int a = 1;
     RELEASE(navmesh);
+    */
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();

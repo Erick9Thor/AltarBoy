@@ -97,6 +97,8 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // the are type for each of the meshes and rasterize them.
     memset(triangle_areas, 0, n_triangles * sizeof(unsigned char));
     int n_vertices = scene_vertices.size() / 3;
+
+    /*
     rcMarkWalkableTriangles(build_context, cfg.walkableSlopeAngle, scene_vertices.data(), n_vertices, scene_triangles.data(), n_triangles, triangle_areas);
     if (!rcRasterizeTriangles(build_context, scene_vertices.data(), n_vertices, scene_triangles.data(), triangle_areas, n_triangles, *solid, cfg.walkableClimb))
     {
@@ -114,6 +116,8 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     rcFilterLowHangingWalkableObstacles(build_context, cfg.walkableClimb, *solid);
     rcFilterLedgeSpans(build_context, cfg.walkableHeight, cfg.walkableClimb, *solid);
     rcFilterWalkableLowHeightSpans(build_context, cfg.walkableHeight, *solid);
+
+    */
     
 
     // Step 4. Partition walkable surface to simple regions.
