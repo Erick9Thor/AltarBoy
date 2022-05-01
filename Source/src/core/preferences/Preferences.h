@@ -2,6 +2,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+// TODO: This class has to be removed as each preference type are different from eachother
 namespace Hachiko
 {
     class Preferences

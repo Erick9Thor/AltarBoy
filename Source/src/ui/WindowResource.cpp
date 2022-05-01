@@ -4,6 +4,8 @@
 #include "modules/ModuleResources.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
+#include "resources/ResourceModel.h"
+#include "resources/ResourceMaterial.h"
 
 Hachiko::WindowResource::WindowResource() : 
     Window("Resources", true)
@@ -70,6 +72,21 @@ void Hachiko::WindowResource::Update()
                 filename.insert(0, current_directory.string().c_str());
                 LoadResource(filename);
             }
+
+            /* if (ImGui::IsMouseClicked(1))
+            {
+                ImGui::OpenPopup(filename.c_str());
+            }
+
+            if (ImGui::BeginPopup(filename.c_str()))
+            {
+                if (ImGui::MenuItem("Refresh asset"))
+                {
+                    App->resources->ReimportAsset(filename);
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::EndPopup();
+            } */
         }
     }
 
@@ -79,19 +96,35 @@ void Hachiko::WindowResource::Update()
 void Hachiko::WindowResource::LoadResource(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
-    /* Hachiko::Event resource_file(Hachiko::Event::Type::FILE_ADDED);
-    resource_file.SetEventData<Hachiko::FileAddedEventPayload>(path.c_str());
-    App->event->Publish(resource_file);*/
-
-    //
-    std::string str_path = std::string(path);
-    int extension_index = str_path.rfind('.');
-    std::string extension = str_path.substr(extension_index + 1, str_path.length() - (extension_index + 1));
-    //
-
-    if (extension == "model")
+    if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
-        Scene* scene = App->scene_manager->GetActiveScene();
-        scene->HandleInputModel(App->resources->GetModel(path.c_str()));
+        
+        YAML::Node node = YAML::LoadFile(path);
+        Resource::Type type = static_cast<Resource::Type>(node[GENERAL_NODE][GENERAL_TYPE].as<unsigned>());
+        switch (type)
+        {
+        case Resource::Type::MODEL:
+            LoadModelIntoScene(node);
+            break;
+        case Resource::Type::MATERIAL:
+            LoadMaterialIntoSelectedObject(node);
+            break;
+        }
     }
+}
+
+void Hachiko::WindowResource::LoadModelIntoScene(YAML::Node& node)
+{
+    HE_LOG("Adding a model into scene");
+    Scene* scene = App->scene_manager->GetActiveScene();
+    auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+    scene->HandleInputModel(model_res);
+}
+
+void Hachiko::WindowResource::LoadMaterialIntoSelectedObject(YAML::Node& node)
+{
+    HE_LOG("Adding a material into selected game object");
+    Scene* scene = App->scene_manager->GetActiveScene();
+    auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+    scene->HandleInputMaterial(material_res);
 }
