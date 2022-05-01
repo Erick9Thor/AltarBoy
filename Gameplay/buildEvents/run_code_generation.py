@@ -266,8 +266,6 @@ for script_class in script_classes:
         body = on_editor_method_body
     )
 
-    print(current_on_editor_method)
-
     # Generate DeserializeFrom method using the generated body:
     current_deserialize_method = deserialize_method_format.format(
         script_namespace = scripting_namespace, 
