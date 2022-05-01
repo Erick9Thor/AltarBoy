@@ -44,10 +44,10 @@
 // Material
 #define MATERIAL_ID "id"
 #define MATERIAL_NAME "name"
-#define MATERIAL_DIFFUSE_NAME "diffuse"
-#define MATERIAL_SPECULAR_NAME "specular"
-#define MATERIAL_NORMALS_NAME "normals"
-#define MATERIAL_METALNESS_NAME "metalness"
+#define MATERIAL_DIFFUSE_ID "diffuse"
+#define MATERIAL_SPECULAR_ID "specular"
+#define MATERIAL_NORMALS_ID "normals"
+#define MATERIAL_METALNESS_ID "metalness"
 #define MATERIAL_DIFFUSE_PATH "diffuse_path"
 #define MATERIAL_SPECULAR_PATH "specular_path"
 #define MATERIAL_NORMALS_PATH "normals_path"
@@ -57,6 +57,7 @@
 #define MATERIAL_SMOOTHNESS "smoothness"
 #define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"
+#define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 
 //////////////////////////
 //						//

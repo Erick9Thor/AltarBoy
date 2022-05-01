@@ -121,12 +121,16 @@ namespace Hachiko
         float4 specular_color = float4::one / 10.0f;
         float smoothness = 0.5f;
         float metalness_value = 0.5f;
-        bool is_metallic = false;
+        unsigned is_metallic = 0;
+        unsigned smoothness_alpha = 0;
 
     private:
         void AddTexture(ResourceTexture::Type type);
         void RemoveTexture(ResourceTexture::Type type);
         void UpdateMaterial();
         std::string name;
+
+        std::vector<char*> material_types = {"Specular", "Metallic"};
+        std::vector<char*> alpha_channels = {"Diffuse", ""}; // The empty channel will have the selected name on materialTypes
     };
 }

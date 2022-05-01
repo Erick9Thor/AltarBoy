@@ -25,6 +25,8 @@ namespace Hachiko
 
         static void DisplayTooltip(const char* desc);
 
+        void Combo(const char* label, std::vector<char*> list, unsigned& index);
+
         ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
 
     }; // namespace ImGuiUtils

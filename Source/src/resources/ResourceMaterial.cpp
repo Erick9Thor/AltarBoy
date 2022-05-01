@@ -13,7 +13,9 @@ void Hachiko::ResourceMaterial::DrawGui()
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::Text("Material: %s", name.c_str());
-    ImGui::Checkbox("Metallic", &is_metallic);
+
+    ImGuiUtils::Combo("Material Type", material_types, is_metallic);
+
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
         if (diffuse != nullptr)
@@ -59,6 +61,10 @@ void Hachiko::ResourceMaterial::DrawGui()
                 AddTexture(ResourceTexture::Type::METALNESS);
             }
             ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
+
+            alpha_channels[1] = material_types[is_metallic];
+            ImGuiUtils::Combo("Alpha", alpha_channels, smoothness_alpha);
+
             ImGui::TreePop();
         }
     }
@@ -86,6 +92,10 @@ void Hachiko::ResourceMaterial::DrawGui()
                 AddTexture(ResourceTexture::Type::SPECULAR);
             }
             ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
+
+            alpha_channels[1] = material_types[is_metallic];
+            ImGuiUtils::Combo("Alpha", alpha_channels, smoothness_alpha);
+
             ImGui::TreePop();
         }
     }
@@ -112,6 +122,8 @@ void Hachiko::ResourceMaterial::DrawGui()
         ImGui::TreePop();
     }
 }
+
+
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
@@ -168,6 +180,9 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             break;
         case ResourceTexture::Type::NORMALS:
             normal = nullptr;
+            break;
+        case ResourceTexture::Type::METALNESS:
+            metalness = nullptr;
             break;
         }
     }

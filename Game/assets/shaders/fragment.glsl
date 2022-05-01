@@ -61,6 +61,7 @@ layout(std140, binding = 1) uniform Material
     float smoothness;
     float metalness_value;
     uint is_metallic;
+    uint smoothness_alpha;
 } material;
 
 layout(std140, binding = 2) uniform Lights
@@ -222,47 +223,45 @@ void main()
 
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-    vec3 diffuse_color = material.diffuse_color.rgb;
+    vec4 diffuse_color = material.diffuse_color;
     if (material.diffuse_flag > 0)
     {
-        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord), vec4(2.2));
     }
 
     vec3 f0;
     vec3 Cd;
+    float smoothness;
     
     if(material.is_metallic > 0)
     {
-        //vec4 colorMetallic = texture(metallicMap, UV);
-        //float metalnessMask = hasMetallicMap * colorMetallic.r + (1 - hasMetallicMap) * metalness;
-        Cd = diffuse_color * (1 - material.metalness_value);
-        f0 = vec3(0.04) * (1 - material.metalness_value) + diffuse_color * material.metalness_value;
+        vec4 texture_metal_color = texture(textures[METALLIC_SAMPLER], fragment.tex_coord);
+        float metalnessMask = material.metallic_flag * texture_metal_color.r + (1 - material.metallic_flag) * material.metalness_value;
+        Cd = diffuse_color.rgb * (1 - metalnessMask);
+        f0 = vec3(0.04) * (1 - metalnessMask) + diffuse_color.rgb * metalnessMask;
+        smoothness = material.smoothness * ((material.smoothness_alpha * texture_metal_color.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
     }
     else 
     {
-        Cd = diffuse_color;
-        f0 = material.specular_color.rgb;
-        if (material.specular_flag > 0)
-        {
-            // Should we gaMma correct specular?
-            // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-            f0 = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
-            // Use alpha as shininess?
-            //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
-        }
+        Cd = diffuse_color.rgb;
+        vec4 texture_spec_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord);
+        // If the flag is true (1) it will paint texture color, otherwise specular color
+        vec4 colorSpecular = (material.specular_flag * texture_spec_color) + ((1 - material.specular_flag) * material.specular_color);
+        f0 = colorSpecular.rgb;
+        smoothness = material.smoothness * ((material.smoothness_alpha * colorSpecular.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
     }
     
     vec3 hdr_color = vec3(0.0);
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, material.smoothness);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, material.smoothness);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, material.smoothness);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
         
     }   
     hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
@@ -277,6 +276,6 @@ void main()
     }
     else
     {
-        color = vec4(pow(ldr_color.rgb, vec3(1.0,2.2)), material.diffuse_color.a);
+        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), material.diffuse_color.a);
     }
 }
