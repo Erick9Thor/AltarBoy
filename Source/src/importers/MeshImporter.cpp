@@ -215,8 +215,8 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
     {
         mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = ai_mesh->mNumBones;
         mesh->GenerateBoneData(ai_mesh, 1);
-        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] = ai_mesh->mNumVertices;
-        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] = 4 * ai_mesh->mNumVertices;
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] = 4 * ai_mesh->mNumVertices;
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] = ai_mesh->mNumVertices;
     }
     else
     {
