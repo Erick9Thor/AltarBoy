@@ -8,10 +8,6 @@ Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
 {
 }
 
-void Hachiko::MeshImporter::Import(const char* path)
-{
-}
-
 void Hachiko::MeshImporter::Save(const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);
@@ -23,7 +19,8 @@ void Hachiko::MeshImporter::Save(const Resource* res)
         sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
         sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)], 
         sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)],
-        sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]
+        sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)],
+        sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]
     };
 
     unsigned file_size = 0;
@@ -33,6 +30,7 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)];
     file_size += sizeof(float) * sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)];
+    file_size += sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
 
     const auto file_buffer = new char[file_size];
     char* cursor = file_buffer;
@@ -62,24 +60,26 @@ void Hachiko::MeshImporter::Save(const Resource* res)
     memcpy(cursor, mesh->tangents, size_bytes);
     cursor += size_bytes;
 
+    size_bytes = sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+    memcpy(cursor, mesh->bones.get(), size_bytes);
+    cursor += size_bytes;
+
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
 }
 
-Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
+Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
 {
-    if (!std::filesystem::exists(file_path))
-    {
-        return nullptr;
-    }
+    assert(id && "Unable to load mesh. Given an empty id");
 
-    char* file_buffer = FileSystem::Load(file_path);
+    const std::string file_path = 
+        GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(id);
+    
+    char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    std::string mesh_id = FileSystem::GetFileNameAndExtension(file_path);
-
-    const auto mesh = new ResourceMesh(UUID::StringToUID(mesh_id));
+    const auto mesh = new ResourceMesh(id);
 
     unsigned header[static_cast<int>(ResourceMesh::Buffers::COUNT)];
     size_bytes = sizeof(header);
@@ -92,6 +92,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     sizes[static_cast<int>(ResourceMesh::Buffers::NORMALS)] = header[2];
     sizes[static_cast<int>(ResourceMesh::Buffers::TEX_COORDS)] = header[3];
     sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)] = header[4];
+    sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = header[5];
 
     size_bytes = sizeof(unsigned) * sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)];
     mesh->indices = new unsigned[sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
@@ -137,7 +138,18 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(const char* file_path)
     else
     {
         mesh->tangents = nullptr;
-    }    
+    }   
+    if (sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] > 0)
+    {
+        mesh->bones = std::make_unique<Hachiko::ResourceMesh::Bone[]>(sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
+        size_bytes = sizeof(Hachiko::ResourceMesh::Bone) * sizes[static_cast<int>(ResourceMesh::Buffers::BONES)];
+        memcpy(mesh->bones.get(), cursor, size_bytes);
+        cursor += size_bytes;
+    }
+    else
+    {
+        mesh->bones = nullptr;
+    } 
 
     mesh->GenerateBuffers();
     mesh->GenerateAABB();
@@ -159,6 +171,17 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
     mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
+
+    if (ai_mesh->HasBones())
+    {
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = ai_mesh->mNumBones;
+        mesh->GenerateBoneData(ai_mesh, 1);
+    }
+    else
+    {
+        mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)] = 0;
+        mesh->bones = nullptr;
+    }
 
     if (ai_mesh->HasNormals())
     {

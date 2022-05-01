@@ -71,6 +71,7 @@ StyleCopReport.xml
 *_h.h
 *.ilk
 *.meta
+!Game/assets/**/*.meta
 *.obj
 *.iobj
 *.pch
@@ -363,11 +364,16 @@ Source/.idea/
 # ImGui
 imgui.ini
 
+# Wwise
+!Source/vendors/wwise/x64_vc160/Debug/
+!Source/vendors/wwise/include/AK/Tools/Win32/
+
 # Hachiko Engine
 Source/VTune Profiler Results/
+Source/.idea/
+
 Game/gameplayBin
 Game/Gameplay*
 Game/Hachiko*
 Game/*.scene
 Game/library/*
-Game/settings/*

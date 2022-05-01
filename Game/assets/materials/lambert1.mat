@@ -1,0 +1,7 @@
+name: lambert1
+diffuse: 0
+specular: 0
+normals: 0
+diffuse_color: [0.400000006, 0.400000006, 0.400000006, 1]
+specular_color: [0.100000001, 0.100000001, 0.100000001, 0.100000001]
+shininess: 50

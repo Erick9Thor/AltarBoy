@@ -18,13 +18,13 @@
 #include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
-Hachiko::Scene::Scene() :
-    root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
-    skybox(new Skybox()),
-    quadtree(new Quadtree()),
-    loaded(false),
-    name(UNNAMED_SCENE)
+Hachiko::Scene::Scene()
+    : root(new GameObject(nullptr, float4x4::identity, "Root"))
+    , culling_camera(App->camera->GetMainCamera())
+    , skybox(new Skybox())
+    , quadtree(new Quadtree())
+    , loaded(false)
+    , name(UNNAMED_SCENE)
 {
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
@@ -103,7 +103,8 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             GameObject* last_parent = parent;
 
             last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-
+            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
+            
             if (!child->meshes_index.empty())
             {
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
@@ -111,22 +112,25 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
                     ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
                     component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    component->SetResourcePath(model->model_path);
                     component->SetModelName(model->model_name);
-
+                    
                     component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(App->resources->GetMesh(mesh_info.mesh_id));
+                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
 
                     ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                    component_material->SetResourceMaterial(App->resources->GetMaterial(model->materials[mesh_info.material_index].material_name));
+                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
+                    component_material->SetID(mat_info.material_id);
+                    component_material->SetResourceMaterial(static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, 
+                        model->materials[mesh_info.material_index].material_id)));
                 }
             }
-
+            
             last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
 
             create_children_function(last_parent, child->children);
         }
     };
+
 
     create_children_function(game_object, model->child_nodes);
 }
