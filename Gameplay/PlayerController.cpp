@@ -96,6 +96,15 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			current_position -= math::float3(1, 0, 0) * velocity;
 		}
 
+		if (Input::GetKey(Input::KeyCode::KEY_Q))
+		{
+			current_position += math::float3(0, 1, 0) * velocity;
+		}
+		else if (Input::GetKey(Input::KeyCode::KEY_E))
+		{
+			current_position -= math::float3(0, 1, 0) * velocity;
+		}
+
 		if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
 		{
 			_is_dashing = true;
@@ -116,22 +125,22 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
 	}
 
-	if (_is_falling)
-	{
-		_speed_y += 25.0f * delta_time;
-		current_position.y -= _speed_y * delta_time;
-	}
+	//if (_is_falling)
+	//{
+	//	_speed_y += 25.0f * delta_time;
+	//	current_position.y -= _speed_y * delta_time;
+	//}
 
-	// Reset falling:
-	if (Input::GetKeyDown(Input::KeyCode::KEY_P))
-	{
-		if (_is_falling)
-		{
-			_speed_y = 0;
-			current_position.y = _original_y;
-		}
-		_is_falling = !_is_falling;
-	}
+	//// Reset falling:
+	//if (Input::GetKeyDown(Input::KeyCode::KEY_P))
+	//{
+	//	if (_is_falling)
+	//	{
+	//		_speed_y = 0;
+	//		current_position.y = _original_y;
+	//	}
+	//	_is_falling = !_is_falling;
+	//}
 
 	static int times_hit_g = 0;
 	if (Input::GetKeyDown(Input::KeyCode::KEY_G))
