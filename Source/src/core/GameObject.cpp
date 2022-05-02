@@ -2,8 +2,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
@@ -148,10 +147,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         new_component = new ComponentAnimation(this);
         break;
     case (Component::Type::MESH):
-        new_component = new ComponentMesh(this);
+        new_component = new ComponentMeshRenderer(this);
         break;
     case (Component::Type::MATERIAL):
-        new_component = new ComponentMaterial(this);
+        //new_component = new ComponentMaterial(this);
         break;
     case (Component::Type::DIRLIGHT):
         new_component = new ComponentDirLight(this);
@@ -284,10 +283,10 @@ void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 
 void Hachiko::GameObject::DrawStencil(ComponentCamera* camera, Program* program)
 {
-    auto* mesh = GetComponent<ComponentMesh>();
-    if (mesh)
+    auto* mesh_renderer = GetComponent<ComponentMeshRenderer>();
+    if (mesh_renderer)
     {
-        mesh->DrawStencil(camera, program);
+        mesh_renderer->DrawStencil(camera, program);
     }
 }
 
@@ -353,10 +352,10 @@ void Hachiko::GameObject::DrawBones() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
-    ComponentMesh* component_mesh = GetComponent<ComponentMesh>();
-    if (component_mesh != nullptr)
+    ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
+    if (component_mesh_renderer != nullptr)
     {
-        obb = component_mesh->GetAABB();
+        obb = component_mesh_renderer->GetAABB();
         obb.Transform(transform->GetGlobalMatrix());
         // Enclose is accumulative, reset the box
         aabb.SetNegativeInfinity();

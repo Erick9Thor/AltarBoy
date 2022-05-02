@@ -3,8 +3,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
 #include "components/ComponentAnimation.h"
 
@@ -117,18 +116,14 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
-                    ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                    component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    component->SetModelName(model->model_name);
-                    
-                    component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
-
-                    ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
                     MaterialInfo mat_info = model->materials[mesh_info.material_index];
-                    component_material->SetID(mat_info.material_id);
-                    component_material->SetResourceMaterial(static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, 
-                        model->materials[mesh_info.material_index].material_id)));
+                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH));
+                    //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
+                    //component->SetModelName(model->model_name);
+                    
+                    //component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
+                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
+                    component->AddResourceMaterial(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, mat_info.material_id)));
                 }
             }
             
@@ -151,10 +146,10 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
         return;
     }
 
-    ComponentMaterial* component_material = game_object->GetComponent<ComponentMaterial>();
-    if (component_material != nullptr)
+    ComponentMeshRenderer* component_mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+    if (component_mesh_renderer != nullptr)
     {
-        component_material->SetResourceMaterial(material);
+        component_mesh_renderer->AddResourceMaterial(material);
     }
 }
 
@@ -174,16 +169,16 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 
     for (GameObject* game_object : game_objects)
     {
-        auto* mesh = game_object->GetComponent<ComponentMesh>();
-        if (mesh)
+        auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+        if (mesh_renderer)
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
             local_segment.Transform(game_object->GetTransform()->GetGlobalMatrix().Inverted());
 
-            const float* vertices = mesh->GetVertices();
-            const unsigned* indices = mesh->GetIndices();
-            for (unsigned i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
+            const float* vertices = mesh_renderer->GetVertices();
+            const unsigned* indices = mesh_renderer->GetIndices();
+            for (unsigned i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
             {
                 Triangle triangle;
                 triangle.a = vec(&vertices[indices[i] * 3]);
@@ -254,24 +249,24 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
 
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
-        ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
+        ComponentMeshRenderer* mesh_renderer = go->GetComponent<ComponentMeshRenderer>();        
         const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh)
+        if (mesh_renderer)
         {
-            const float* vertices = mesh->GetVertices();
-            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
+            const float* vertices = mesh_renderer->GetVertices();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
             {
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
                 scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
             }
 
-            const unsigned* indices = mesh->GetIndices();
-            int n_indices = mesh->GetBufferSize(ResourceMesh::Buffers::INDICES);
+            const unsigned* indices = mesh_renderer->GetIndices();
+            int n_indices = mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES);
             scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
 
-            const float* normals = mesh->GetNormals();
-            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::NORMALS); i +=3)
+            const float* normals = mesh_renderer->GetNormals();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::NORMALS); i += 3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);

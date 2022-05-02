@@ -2,7 +2,7 @@
 #include "RenderList.h"
 
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
+#include "components/ComponentMeshRenderer.h"
 
 void Hachiko::RenderList::PreUpdate()
 {
@@ -55,9 +55,9 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
                 CollectMesh(camera_pos, game_object);
             }
 
-            if (game_object->GetComponent<ComponentMesh>())
+            if (game_object->GetComponent<ComponentMeshRenderer>())
             {
-                polycount_total += game_object->GetComponent<ComponentMesh>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
+                polycount_total += game_object->GetComponent<ComponentMeshRenderer>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
             }
         }
         // Call for all children (What to do if it is duplicated when collecting)?
@@ -73,13 +73,13 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
 
 void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game_object)
 {
-    auto* mesh = game_object->GetComponent<ComponentMesh>();
-    if (mesh && mesh->IsVisible())
+    auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+    if (mesh_renderer && mesh_renderer->IsVisible())
     {
         RenderTarget target;
         target.name = game_object->GetName().c_str();
         target.game_object = game_object;
-        target.mesh = mesh;
+        target.mesh_renderer = mesh_renderer;
         target.distance = (game_object->GetOBB().CenterPoint() - camera_pos).LengthSq();
 
         // Get first element which distance is not less than current target one
@@ -90,6 +90,6 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
                                              return it_target.distance < new_target.distance;
                                          });
         nodes.insert(it, target);
-        polycount_rendered += game_object->GetComponent<ComponentMesh>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
+        polycount_rendered += game_object->GetComponent<ComponentMeshRenderer>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
     }
 }

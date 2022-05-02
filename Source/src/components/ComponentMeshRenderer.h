@@ -2,6 +2,7 @@
 #include "components/Component.h"
 
 #include "resources/ResourceMesh.h"
+#include "resources/ResourceMaterial.h"
 
 #include <MathGeoLib.h>
 
@@ -11,11 +12,11 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class ComponentMesh : public Component
+    class ComponentMeshRenderer : public Component
     {
     public:
-        ComponentMesh(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
-        ~ComponentMesh() override = default;
+        ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
+        ~ComponentMeshRenderer() override = default;
 
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
@@ -100,7 +101,18 @@ namespace Hachiko
             mesh = res;
         }
 
+        [[nodiscard]] const ResourceMaterial* GetMaterial() const
+        {
+            return material;
+        }
+
+        void AddResourceMaterial(ResourceMaterial* res)
+        {
+            material = res;
+        }
+
         void LoadMesh(UID mesh_id);
+        void LoadMaterial(UID material_id);
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
@@ -109,6 +121,8 @@ namespace Hachiko
         // BONES
 
         void UpdateSkinPalette(float4x4* palette) const;
+
+        void ChangeMaterial();
 
     private:
         bool visible = true;
@@ -120,5 +134,6 @@ namespace Hachiko
         std::string model_name;
 
         ResourceMesh* mesh = nullptr;
+        ResourceMaterial* material = nullptr;
     };
 }

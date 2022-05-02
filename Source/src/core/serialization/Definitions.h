@@ -54,6 +54,10 @@
 #define MATERIAL_SPECULAR_COLOR "specular_color"
 #define MATERIAL_SHININESS "shininess"
 
+// ComponentMeshRenderer
+#define RENDERER_MESH_ID "mesh_id"
+#define RENDERER_MATERIAL_ID "material_id"
+
 //////////////////////////
 //						//
 // Importer extensions  //

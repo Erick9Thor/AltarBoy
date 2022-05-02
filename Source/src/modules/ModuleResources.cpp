@@ -12,8 +12,7 @@
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
 
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
