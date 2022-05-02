@@ -122,11 +122,11 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 
     UID mesh_id = node[RENDERER_MESH_ID].as<UID>();
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
-    if (!mesh_id)
+    if (mesh_id)
     {
         LoadMesh(mesh_id);
     }
-    if (!material_id)
+    if (material_id)
     {
         LoadMaterial(material_id);
     }

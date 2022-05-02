@@ -15,7 +15,6 @@ namespace Hachiko
     {
         const char* name = nullptr;
         GameObject* game_object = nullptr;
-        ComponentMeshRenderer* mesh_renderer = nullptr;
         float distance = 0.0f;
     };
 
