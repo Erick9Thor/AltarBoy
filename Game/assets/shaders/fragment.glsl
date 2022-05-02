@@ -3,7 +3,8 @@
 #define DIFFUSE_SAMPLER 0
 #define SPECULAR_SAMPLER 1
 #define NORMAL_SAMPLER 2
-#define N_2D_SAMPLERS 3
+#define METALLIC_SAMPLER 3
+#define N_2D_SAMPLERS 4
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
@@ -56,7 +57,11 @@ layout(std140, binding = 1) uniform Material
     uint diffuse_flag;
     uint specular_flag;
     uint normal_flag;
-    float shininess;
+    uint metallic_flag;
+    float smoothness;
+    float metalness_value;
+    uint is_metallic;
+    uint smoothness_alpha;
 } material;
 
 layout(std140, binding = 2) uniform Lights
@@ -84,13 +89,33 @@ in VertexData fragment;
 // Outputs
 out vec4 color;
 
-vec3 SchlickFresnel(const vec3 f0, float cos_theta)
+vec3 SchlickFresnel(const vec3 f0, float half_vector)
 {
-    return f0 + (vec3(1.0) - f0) * pow(1.0 - cos_theta, 5.0);
+    return f0 + (vec3(1.0) - f0) * pow(1.0 - half_vector, 5.0);
+}
+
+float GGX(const vec3 normal, const vec3 halfway_dir, float roughness)
+{
+    float a2 = pow(roughness, 2.0);
+    float NdotH = max(dot(normal, halfway_dir), 0.0);
+    float NdotH2 = pow(NdotH, 2.0);
+    
+    float denom = PI * pow((NdotH2 * (a2 - 1.0) + 1.0), 2.0);
+
+    return  a2 / denom;
+}
+
+float SmithVisibilityFunction(const vec3 normal, const vec3 view_dir, const vec3 light_dir, float roughness)
+{
+    float NdotV = max(dot(normal, view_dir), 0.0);
+    float NdotL = max(dot(normal, light_dir), 0.0);
+
+    float denom = NdotL * (NdotV * (1 - roughness) + roughness) + NdotV * (NdotL * (1 - roughness) + roughness);
+    return 0.5 / denom;
 }
 
 vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const vec3 light_color,
-         const vec3 diffuse_color, const vec3 specular_color, float shininess, float attenuation)
+         const vec3 diffuse_color, const vec3 F0, float attenuation, float smoothness)
 {
     vec3 reflect_dir = reflect(-light_dir, normal);
     // Should equal cos theta
@@ -98,26 +123,31 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
     // Phong specular strength
     float VdR =  max(dot(view_dir, reflect_dir), 0.0001);
 
-    //vec3 halfway_dir = normalize(light_dir + view_dir);
-    //float cos_theta = max(dot(view_dir, halfway_dir), 0.0);   
-    //vec3 fresnel = SchlickFresnel(specular_color, cos_theta);
+    float roughness = pow((1.0 - smoothness), 2.0);
 
-    vec3 fresnel = SchlickFresnel(specular_color, NdL);
+    vec3 halfway_dir = normalize(light_dir + view_dir);
+    float VdotH = max(dot(view_dir, halfway_dir), 0.0);
+
+    float NDF =  GGX(normal, halfway_dir, roughness);
+    float SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);
+    vec3 fresnel = SchlickFresnel(F0, VdotH);
     
-    vec3 part1 = (diffuse_color * (vec3(1.0) - specular_color)) / PI;
-    vec3 part2 = ((shininess + 2.0) / (2.0 * PI)) * fresnel * pow(VdR, shininess);
+    vec3 part1 = diffuse_color * (vec3(1.0) - F0);
+    vec3 part2 = (fresnel*SVF*NDF)/4;
 
-    return light_color * (part1 + part2) * NdL * attenuation;
+    
+
+    return light_color * (diffuse_color * (vec3(1.0) - F0) + 0.25*fresnel*SVF*NDF) * NdL * attenuation;
 }
 
 vec3 DirectionalPBR(const vec3 normal, const vec3 view_dir, const DirLight light,
-                    const vec3 diffuse_color, const vec3 specular_color, float shininess)
+                    const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     vec3 L = normalize(-light.direction.xyz);
     
     float attenuation = 1.0;
     // Input dir goes from light to fragment, swap it for calculations
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation, smoothness) * light.intensity;
 }
 
 float Attenuation(float distance)
@@ -131,7 +161,7 @@ float EpicAttenuation(float distance, float radius)
 }
 
 vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const PointLight light, 
-                   const vec3 diffuse_color, const vec3 specular_color, float shininess)
+                   const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     vec3 L = light.position.xyz - frag_pos;
     float light_distance = length(L);
@@ -139,7 +169,7 @@ vec3 PositionalPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, 
 
     float radius = 250.0;
     float attenuation = EpicAttenuation(light_distance, light.radius);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation, smoothness) * light.intensity;
 }
 
 // TODO: Test more
@@ -162,7 +192,7 @@ float Cone(const vec3 L, const vec3 cone_direction, float inner, float outer)
 }
 
 vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const SpotLight light, 
-             const vec3 diffuse_color, const vec3 specular_color, float shininess)
+             const vec3 diffuse_color, const vec3 F0, float smoothness)
 {
     // Not the same as spot light direction (L)
     vec3 L = light.position.xyz - frag_pos;
@@ -171,7 +201,7 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
 
     float attenuation = SpotAttenuation(L, cone_direction, light.radius);
     float cone = Cone(L, cone_direction, light.inner, light.outer);
-    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, specular_color, shininess, attenuation * cone) * light.intensity;
+    return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation * cone, smoothness) * light.intensity;
 }
 
 mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
@@ -193,43 +223,59 @@ void main()
 
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-    vec3 diffuse_color = material.diffuse_color.rgb;
+    vec4 diffuse_color = material.diffuse_color;
     if (material.diffuse_flag > 0)
     {
-        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
+        diffuse_color = pow(texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord), vec4(2.2));
     }
 
-    float shininess = material.shininess;
-    vec3 specular_color = material.specular_color.rgb;
-    if (material.specular_flag > 0)
+    vec3 f0;
+    vec3 Cd;
+    float smoothness;
+    
+    if(material.is_metallic > 0)
     {
-        // Should we gaMma correct specular?
-        // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        specular_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb;
-        // Use alpha as shininess?
-        //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
+        vec4 texture_metal_color = texture(textures[METALLIC_SAMPLER], fragment.tex_coord);
+        float metalnessMask = material.metallic_flag * texture_metal_color.r + (1 - material.metallic_flag) * material.metalness_value;
+        Cd = diffuse_color.rgb * (1 - metalnessMask);
+        f0 = vec3(0.04) * (1 - metalnessMask) + diffuse_color.rgb * metalnessMask;
+        smoothness = material.smoothness * ((material.smoothness_alpha * texture_metal_color.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
     }
-
+    else 
+    {
+        Cd = diffuse_color.rgb;
+        vec4 texture_spec_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord);
+        // If the flag is true (1) it will paint texture color, otherwise specular color
+        vec4 colorSpecular = (material.specular_flag * texture_spec_color) + ((1 - material.specular_flag) * material.specular_color);
+        f0 = colorSpecular.rgb;
+        smoothness = material.smoothness * ((material.smoothness_alpha * colorSpecular.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
+    }
     
     vec3 hdr_color = vec3(0.0);
-
-    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, diffuse_color, specular_color, shininess);
+    hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], diffuse_color, specular_color, shininess);
+        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], diffuse_color, specular_color, shininess);
+        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
         
     }   
-    hdr_color += diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
+    hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
 
     // Reinhard tone mapping
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
     // Gamma correction & alpha from diffuse texture
-    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    if(material.diffuse_flag > 0)
+    {
+        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
+    }
+    else
+    {
+        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), material.diffuse_color.a);
+    }
 }
