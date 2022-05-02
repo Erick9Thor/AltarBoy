@@ -111,11 +111,9 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 		_is_dashing = (_dash_progress < 1.0f);
 
-		math::float3 _dash_end = current_position + 
-			current_front * _dash_distance;
+		math::float3 _dash_end = _dash_start + current_front * _dash_distance;
 
-		current_position = math::float3::Lerp(_dash_start, _dash_end, 
-			_dash_progress);
+		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
 	}
 
 	if (_is_falling)
