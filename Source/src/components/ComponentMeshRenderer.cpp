@@ -23,7 +23,7 @@ Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID
 
 void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* program)
 {
-    if (mesh == nullptr)
+    if (mesh == nullptr || !visible)
     {
         return;
     }
