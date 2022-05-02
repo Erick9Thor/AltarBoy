@@ -60,10 +60,10 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     cfg.detailSampleDist = detail_sample_distance < 0.9f ? 0 : cell_size * detail_sample_distance;
     cfg.detailSampleMaxError = cell_height * detail_sample_max_error;
     // Seen on other engine, we dont use tiling atm
-    /* cfg.tileSize = (int)tile_size;
+    cfg.tileSize = 1000;
     cfg.borderSize = cfg.walkableRadius + 3; // Reserve enough padding.
     cfg.width = cfg.tileSize + cfg.borderSize * 2;
-    cfg.height = cfg.tileSize + cfg.borderSize * 2;*/
+    cfg.height = cfg.tileSize + cfg.borderSize * 2;
 
     // Set the navigation were navigation will be built
     rcVcopy(cfg.bmin, scene_bounds.minPoint.ptr());
