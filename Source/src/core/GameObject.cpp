@@ -320,7 +320,10 @@ void Hachiko::GameObject::DebugDrawAll()
 
 void Hachiko::GameObject::DebugDraw() const
 {
-    DrawBoundingBox();
+    if (in_quadtree)
+    {
+        DrawBoundingBox();
+    }
     DrawBones();
     for (Component* component : components)
     {
@@ -352,6 +355,61 @@ void Hachiko::GameObject::DrawBones() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
+    in_quadtree = false;
+    
+    constexpr float default_bounding_size = 1.0f;
+    // If there is no mesh generate a default size
+    aabb.SetNegativeInfinity();
+    aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
+    obb = aabb;
+
+    bool mesh_renderer_found = false;
+    for (int i = 0; i < components.size(); ++i)
+    {
+        if (components[i]->GetType() == Component::Type::MESH)
+        {
+            ComponentMeshRenderer* component_mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
+            if (mesh_renderer_found)
+            {
+                math::OBB aux_obb = component_mesh_renderer->GetAABB();
+                aux_obb.Transform(transform->GetGlobalMatrix());
+                aabb.Enclose(aux_obb);
+
+                if (obb.Volume() < aux_obb.Volume())
+                {
+                    // TODO: keep the biggest obb
+                    obb = aux_obb;
+                }
+            }
+            else
+            {
+                mesh_renderer_found = true;
+
+                obb = component_mesh_renderer->GetAABB();
+                obb.Transform(transform->GetGlobalMatrix());
+                // Enclose is accumulative, reset the box
+                aabb.SetNegativeInfinity();
+                aabb.Enclose(obb);
+            }
+        }
+    }
+    // Without the check main camera crashes bcs there is no quadtree
+    if (scene_owner)
+    {
+        // TODO: only insert if there a mesh
+        const Quadtree* quadtree = scene_owner->GetQuadtree();
+        quadtree->Remove(this);
+        if (mesh_renderer_found)
+        {
+            in_quadtree = true;
+            quadtree->Insert(this);
+        }
+    }
+
+    ////////////////////
+    /*
+    in_quadtree = true;
+    
     ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
     if (component_mesh_renderer != nullptr)
     {
@@ -377,6 +435,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         quadtree->Remove(this);
         quadtree->Insert(this);
     }
+    */
 }
 
 bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
