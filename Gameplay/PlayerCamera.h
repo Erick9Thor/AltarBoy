@@ -20,8 +20,9 @@ public:
 	void OnUpdate() override;
 
 private:
-	SERIALIZE_FIELD(math::float3, _distance_to_player);
+	SERIALIZE_FIELD(math::float3, _relative_position_to_player);
 	SERIALIZE_FIELD(GameObject*, _player);
+	SERIALIZE_FIELD(float, _delay_amount);
 };
 } // namespace Scripting
 } // namespace Hachiko
