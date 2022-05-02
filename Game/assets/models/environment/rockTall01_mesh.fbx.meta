@@ -1,13 +1,13 @@
 General:
-  id: 788185479234709027
+  id: 7677755111055255062
   type: 3
   hash: 13499865366796566482
 model_name: rockTall01_mesh
 material:
-  - id: 15468964536818720419
+  - id: 15163456416631045986
     name: lambert1
 mesh:
-  - id: 18156862948268201073
+  - id: 6675667609930122508
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
