@@ -50,8 +50,8 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     // SKINING
-
-    if (palette.size() > 0)
+    
+    if (!palette.empty())
     {
         glUniformMatrix4fv(glGetUniformLocation(program->GetId(), "palette"), palette.size(), true, palette[0].ptr());
     }
@@ -119,7 +119,6 @@ void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 
 void Hachiko::ComponentMesh::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    //const GameObject* root = App->scene_manager->GetRoot();
     const GameObject* root = game_object->parent;
 
     if (mesh && mesh->num_bones > 0 && root)
