@@ -13,6 +13,9 @@ void Hachiko::ResourceMaterial::DrawGui()
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::Text("Material: %s", name.c_str());
+
+    ImGuiUtils::Combo("Material Type", material_types, is_metallic);
+
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
         if (diffuse != nullptr)
@@ -36,28 +39,65 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
-    if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
+    if (is_metallic)
     {
-        if (specular != nullptr)
+        if (ImGui::TreeNodeEx((void*)&metalness, texture_flags, "Metalness"))
         {
-            ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
-            ImGui::SameLine();
-            ImGui::BeginGroup();
-            ImGui::Text("%dx%d", specular->width, specular->height);
-            ImGui::Text("Path: %s", specular->path.c_str());
+            if (metalness != nullptr)
+            {
+                ImGui::Image(reinterpret_cast<void*>(metalness->GetId()), ImVec2(80, 80));
+                ImGui::SameLine();
+                ImGui::BeginGroup();
+                ImGui::Text("%dx%d", metalness->width, metalness->height);
+                ImGui::Text("Path: %s", metalness->path.c_str());
 
-            // TODO: textue configuration (maybe delegate to the ResourceTexture)
+                RemoveTexture(ResourceTexture::Type::METALNESS);
 
-            RemoveTexture(ResourceTexture::Type::SPECULAR);
+                ImGui::EndGroup();
+            }
+            else
+            {
+                ImGui::SliderFloat("Metalness", &metalness_value, 0.0f, 1.0f, "%.2f", 1.0f);
+                AddTexture(ResourceTexture::Type::METALNESS);
+            }
+            ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
 
-            ImGui::EndGroup();
+            alpha_channels[1] = material_types[is_metallic];
+            ImGuiUtils::Combo("Alpha", alpha_channels, smoothness_alpha);
+
+            ImGui::TreePop();
         }
-        else
+    }
+    else 
+    {
+        if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
         {
-            ImGui::ColorEdit4("Specular color", &specular_color[0]);
-            AddTexture(ResourceTexture::Type::SPECULAR);
+            if (specular != nullptr)
+            {
+                ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
+                ImGui::SameLine();
+                ImGui::BeginGroup();
+                ImGui::Text("%dx%d", specular->width, specular->height);
+                ImGui::Text("Path: %s", specular->path.c_str());
+
+                // TODO: textue configuration (maybe delegate to the ResourceTexture)
+
+                RemoveTexture(ResourceTexture::Type::SPECULAR);
+
+                ImGui::EndGroup();
+            }
+            else
+            {
+                ImGui::ColorEdit4("Specular color", &specular_color[0]);
+                AddTexture(ResourceTexture::Type::SPECULAR);
+            }
+            ImGui::SliderFloat("Smoothness", &smoothness, 0.0f, 1.0f, "%.2f", 1.0f);
+
+            alpha_channels[1] = material_types[is_metallic];
+            ImGuiUtils::Combo("Alpha", alpha_channels, smoothness_alpha);
+
+            ImGui::TreePop();
         }
-        ImGui::TreePop();
     }
     if (ImGui::TreeNodeEx((void*)&normal, texture_flags, "Normal"))
     {
@@ -81,8 +121,9 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
-    ImGui::DragFloat("Shininess", &shininess, 0.25f, 0.0f);
 }
+
+
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
@@ -139,6 +180,9 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             break;
         case ResourceTexture::Type::NORMALS:
             normal = nullptr;
+            break;
+        case ResourceTexture::Type::METALNESS:
+            metalness = nullptr;
             break;
         }
     }

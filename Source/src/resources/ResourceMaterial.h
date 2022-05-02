@@ -28,6 +28,11 @@ namespace Hachiko
             return normal != nullptr;
         }
 
+        [[nodiscard]] bool HasMetalness() const
+        {
+            return metalness != nullptr;
+        }
+
         [[nodiscard]] unsigned GetDiffuseId() const
         {
             if (diffuse != nullptr)
@@ -55,6 +60,15 @@ namespace Hachiko
             return 0;
         }
 
+        [[nodiscard]] unsigned GetMetalnessId() const
+        {
+            if (metalness != nullptr)
+            {
+                return metalness->GetId();
+            }
+            return 0;
+        }
+
         [[nodiscard]] std::string GetName() const
         {
             return name;
@@ -78,6 +92,9 @@ namespace Hachiko
             case ResourceTexture::Type::NORMALS:
                 normal = res;
                 break;
+            case ResourceTexture::Type::METALNESS:
+                metalness = res;
+                break;
             }
         }
 
@@ -91,20 +108,29 @@ namespace Hachiko
                 return "Specular";
             case ResourceTexture::Type::NORMALS:
                 return "Normals";
+            case ResourceTexture::Type::METALNESS:
+                return "Metalness";
             }
         }
 
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
         ResourceTexture* normal = nullptr;
+        ResourceTexture* metalness = nullptr;
         float4 diffuse_color = float4::one;
         float4 specular_color = float4::one / 10.0f;
-        float shininess = 50.0f;
+        float smoothness = 0.5f;
+        float metalness_value = 0.5f;
+        unsigned is_metallic = 0;
+        unsigned smoothness_alpha = 0;
 
     private:
         void AddTexture(ResourceTexture::Type type);
         void RemoveTexture(ResourceTexture::Type type);
         void UpdateMaterial();
         std::string name;
+
+        std::vector<std::string> material_types = {"Specular", "Metallic"};
+        std::vector<std::string> alpha_channels = {"Diffuse", ""}; // The empty channel will have the selected name on materialTypes
     };
 }

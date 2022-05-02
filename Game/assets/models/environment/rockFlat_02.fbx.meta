@@ -1,13 +1,13 @@
 General:
-  id: 8588887744675788595
+  id: 9881980012520656496
   type: 3
   hash: 11194219522087752910
 model_name: rockFlat_02
 material:
-  - id: 5039957936972499589
+  - id: 9705956365477348659
     name: DefaultMaterial
 mesh:
-  - id: 2379885520984826741
+  - id: 1728752732309341227
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

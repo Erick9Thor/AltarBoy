@@ -1,13 +1,13 @@
 General:
-  id: 10353801880779830034
+  id: 12360077384757558181
   type: 3
   hash: 11219040909193169022
 model_name: plant01_emission_mesh
 material:
-  - id: 18136349640133405084
+  - id: 17973283863490132281
     name: 01 - Default
 mesh:
-  - id: 2572743697726755223
+  - id: 13850313571325564120
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

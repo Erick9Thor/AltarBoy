@@ -139,6 +139,28 @@ static void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
     }
 }
 
+void Hachiko::ImGuiUtils::Combo(const char* label, std::vector<std::string> list, unsigned& index)
+{
+    if (ImGui::BeginCombo(label, list[index].c_str()))
+    {
+        for (int n = 0; n < list.size(); n++)
+        {
+            HE_LOG("MAT: %d", list.size());
+            const bool is_selected = (index == n);
+            if (ImGui::Selectable(list[n].c_str(), is_selected))
+            {
+                index = n;
+            }
+
+            if (is_selected)
+            {
+                ImGui::SetItemDefaultFocus();
+            }
+        }
+        ImGui::EndCombo();
+    }
+}
+
 ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
 {
     return {lhs.x + rhs.x, lhs.y + rhs.y};
