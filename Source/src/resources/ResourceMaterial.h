@@ -130,7 +130,7 @@ namespace Hachiko
         void UpdateMaterial();
         std::string name;
 
-        std::vector<char*> material_types = {"Specular", "Metallic"};
-        std::vector<char*> alpha_channels = {"Diffuse", ""}; // The empty channel will have the selected name on materialTypes
+        std::vector<std::string> material_types = {"Specular", "Metallic"};
+        std::vector<std::string> alpha_channels = {"Diffuse", ""}; // The empty channel will have the selected name on materialTypes
     };
 }
