@@ -24,8 +24,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 1.0f;
-	_dash_duration = 0.10f;
+	_dash_distance = 4.0f;
+	_dash_duration = 0.05f;
 	_movement_speed = 10.0f;
 	_rotation_speed = 2.5f;
 
