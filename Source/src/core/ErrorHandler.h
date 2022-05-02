@@ -86,11 +86,11 @@ namespace Hachiko
 
             if (severity == GL_DEBUG_SEVERITY_HIGH)
             {
-                HE_ERROR(msg.c_str());
+                //HE_ERROR(msg.c_str());
             }
             else
             {
-                HE_LOG(msg.c_str());
+                //HE_LOG(msg.c_str());
             }
         }
     };
