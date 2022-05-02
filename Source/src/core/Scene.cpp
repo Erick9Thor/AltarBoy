@@ -16,11 +16,12 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
-    , culling_camera(App->camera->GetMainCamera())
+    , culling_camera(App->camera->GetRenderingCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
     , loaded(false)
@@ -59,26 +60,16 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
-    return SearchMainCamera(root);
-}
+    // TODO: Implement GetComponentInDescendants.
 
-Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
-{
-    ComponentCamera* component_camera = nullptr;
-    component_camera = game_object->GetComponent<ComponentCamera>();
-    if (component_camera != nullptr)
+    std::vector<ComponentCamera*> camera_components 
+        = root->GetComponentsInDescendants<ComponentCamera>();
+
+    if (camera_components.size() != 0)
     {
-        return component_camera;
+        return camera_components[0];
     }
 
-    for (GameObject* child : game_object->children)
-    {
-        component_camera = SearchMainCamera(child);
-        if (component_camera != nullptr)
-        {
-            return component_camera;
-        }
-    }
     return nullptr;
 }
 

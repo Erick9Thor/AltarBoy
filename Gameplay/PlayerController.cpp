@@ -179,7 +179,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		math::float2 mouse_position_view = 
 			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
 		
-		math::LineSegment ray = Debug::GetEditorCamera()->Raycast(
+		math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
 			mouse_position_view.x, mouse_position_view.y);
 
 		math::float3 intersection_position = plane.ClosestPoint(ray);

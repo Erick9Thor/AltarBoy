@@ -54,6 +54,19 @@ void Hachiko::ModuleSceneManager::AttemptScenePause()
 
 void Hachiko::ModuleSceneManager::AttemptScenePlay()
 {
+    ComponentCamera* scene_camera = main_scene->GetMainCamera();
+
+    if (scene_camera == nullptr)
+    {
+        HE_LOG("Current scene does not have a CameraComponent inside."
+               " Therefore, cannot enter Play Mode.");
+        return;
+    }
+
+    main_scene->SetCullingCamera(scene_camera);
+
+    App->camera->SetRenderingCamera(scene_camera);
+    
     if (!GameTimer::running)
     {
         Event game_state(Event::Type::GAME_STATE);
@@ -81,6 +94,9 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
         App->event->Publish(game_state);
+
+        main_scene->SetCullingCamera(App->camera->GetEditorCamera());
+        App->camera->SetRenderingCamera(App->camera->GetEditorCamera());
 
         GameTimer::Stop();
 
