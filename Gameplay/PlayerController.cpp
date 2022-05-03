@@ -27,7 +27,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_distance = 4.0f;
 	_dash_duration = 0.05f;
 	_movement_speed = 10.0f;
-	_rotation_speed = 2.5f;
+	_rotation_speed = 1.5f;
 
 	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
@@ -50,6 +50,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	ComponentTransform* transform = game_object->GetTransform();
 	
 	math::float3 current_position = transform->GetGlobalPosition();
+	math::Quat current_rotation = transform->GetGlobalRotation();
 	math::float3 current_front = transform->GetFront();
 	math::float3 current_right = transform->GetRight();
 
@@ -58,6 +59,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	GameObject* raycast_hit = SceneManagement::Raycast(
 		current_position - math::float3(0.0f, 1.0f, 0.0f), current_position);
+
 
 	if (raycast_hit == nullptr || raycast_hit->name == "Player") 
 	{
@@ -78,20 +80,20 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (!_is_dashing)
 	{
-		math::Plane plane(
-			math::float3(0.0f, current_position.y, 0.0f),
-			math::float3(0.0f, 1.0f, 0.0f));
+		//math::Plane plane(
+		//	math::float3(0.0f, current_position.y, 0.0f),
+		//	math::float3(0.0f, 1.0f, 0.0f));
 
-		math::float2 mouse_position_view =
-			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
+		//math::float2 mouse_position_view =
+		//	ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
 
-		math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
-			mouse_position_view.x, mouse_position_view.y);
+		//math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
+		//	mouse_position_view.x, mouse_position_view.y);
 
-		math::float3 intersection_position = plane.ClosestPoint(ray);
+		//math::float3 intersection_position = plane.ClosestPoint(ray);
 
-		// Make the player look the mouse:
-		transform->LookAtTarget(intersection_position);
+		//// Make the player look the mouse:
+		//transform->LookAtTarget(intersection_position);
 	}
 
 	if (!_is_dashing && !_is_falling)
@@ -99,6 +101,8 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		math::float3 delta_z = transform->GetFront().Normalized() * velocity;
 		math::float3 delta_x = transform->GetRight().Normalized() * velocity;
 		math::float3 delta_y = math::float3::unitY * velocity;
+		
+		float delta_rotation_y = delta_time * _rotation_speed;
 
 		if (Input::GetKey(Input::KeyCode::KEY_W))
 		{
@@ -111,11 +115,13 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 		if (Input::GetKey(Input::KeyCode::KEY_D))
 		{
-			current_position -= delta_x;
+			current_rotation = 
+				current_rotation * Quat::RotateY(-delta_rotation_y);
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_A))
 		{
-			current_position += delta_x;
+			current_rotation =
+				current_rotation * Quat::RotateY(delta_rotation_y);
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_Q))
@@ -191,4 +197,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
+	// Apply the rotation:
+	transform->SetGlobalRotation(current_rotation);
 }
