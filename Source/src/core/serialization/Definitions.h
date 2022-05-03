@@ -59,6 +59,7 @@
 #define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
+#define MATERIAL_IS_TRANSPARENT "is_transparent"
 
 //////////////////////////
 //						//

@@ -62,6 +62,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
     material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
     material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
+    material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
 
     FileSystem::Save(meta_path.c_str(), meta_node);
     FileSystem::Save(material_asset_path.c_str(), material_node);
@@ -83,6 +84,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     material->metalness_value = node[MATERIAL_METALNESS_VALUE].as<float>();
     material->is_metallic = node[MATERIAL_IS_METALLIC].as<unsigned>();
     material->smoothness_alpha = node[MATERIAL_ALPHA_CHANNEL].as<unsigned>();
+    material->is_transparent = node[MATERIAL_IS_TRANSPARENT].as<unsigned>();
 
     UID texture_id = node[MATERIAL_DIFFUSE_ID].as<UID>();
     if (texture_id)

@@ -1,17 +1,17 @@
 General:
-  id: 15987253493662057310
+  id: 6760530604415404180
   type: 3
   hash: 202161490063747312
 model_name: Floor
 material:
-  - id: 14483614009257364013
+  - id: 6236568076000467280
     name: PlanksMaterial
 mesh:
-  - id: 5404251085548671583
+  - id: 12942843977497121788
     material_index: 0
-  - id: 3665118535164605506
+  - id: 2742618765273949911
     material_index: 0
-  - id: 11231549026827468731
+  - id: 17084335917860568784
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

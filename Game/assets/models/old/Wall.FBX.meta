@@ -1,17 +1,17 @@
 General:
-  id: 5972814133214877510
+  id: 15110658580144242921
   type: 3
   hash: 6710385004962545476
 model_name: Wall
 material:
-  - id: 9159210441486316992
+  - id: 2374260536136444432
     name: WallMaterial
-  - id: 3843909915379013074
+  - id: 16835411753994875106
     name: StarMaterial
 mesh:
-  - id: 7678130299311598660
+  - id: 3404641269419626778
     material_index: 0
-  - id: 326950951479840836
+  - id: 11452663270522550571
     material_index: 1
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
