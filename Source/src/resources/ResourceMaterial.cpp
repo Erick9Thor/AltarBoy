@@ -133,7 +133,7 @@ void Hachiko::ResourceMaterial::DrawGui()
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
-    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type));
+    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + this->name;
     ResourceTexture* res = nullptr;
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
