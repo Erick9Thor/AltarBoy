@@ -119,8 +119,6 @@ namespace Hachiko
         GameObject* game_object = nullptr;
         bool active = true;
         Type type = Type::UNKNOWN;
-
-    private:
         UID uid = 0;
     };
 }

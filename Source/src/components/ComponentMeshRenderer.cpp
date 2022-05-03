@@ -161,7 +161,6 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     }
 }
 
-
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
     const GameObject* root = game_object->parent;
@@ -196,9 +195,8 @@ void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& pa
 
 void Hachiko::ComponentMeshRenderer::ChangeMaterial() 
 {
-    const std::string title = "Select material";
-    ResourceMaterial* res = nullptr;
-
+    const std::string title = StringUtils::Concat("Select Material#", std::to_string(uid));
+    
     if (ImGui::Button("Select material"))
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
@@ -219,14 +217,14 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             material_path.append(META_EXTENSION);
             YAML::Node material_node = YAML::LoadFile(material_path);
 
-            res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+            if (res != nullptr)
+            {
+                // Unload material
+                material = res;
+            }
         }
 
         ImGuiFileDialog::Instance()->Close();
-    }
-    if (res != nullptr)
-    {
-        // Unload material
-        material = res;
     }
 }
