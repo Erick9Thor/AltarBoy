@@ -25,9 +25,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_dash_distance = 4.0f;
-	_dash_duration = 0.05f;
-	_movement_speed = 10.0f;
-	_rotation_speed = 1.5f;
+	_dash_duration = 0.15f;
+	_movement_speed = 5.0f;
+	_rotation_speed = 4.0f;
 
 	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
@@ -78,23 +78,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// YAML based serialization. For now, player is not falling by default.
 	_is_falling = false;
 
-	if (!_is_dashing)
-	{
-		//math::Plane plane(
-		//	math::float3(0.0f, current_position.y, 0.0f),
-		//	math::float3(0.0f, 1.0f, 0.0f));
-
-		//math::float2 mouse_position_view =
-		//	ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
-
-		//math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
-		//	mouse_position_view.x, mouse_position_view.y);
-
-		//math::float3 intersection_position = plane.ClosestPoint(ray);
-
-		//// Make the player look the mouse:
-		//transform->LookAtTarget(intersection_position);
-	}
 
 	if (!_is_dashing && !_is_falling)
 	{
@@ -199,4 +182,23 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	transform->SetGlobalPosition(current_position);
 	// Apply the rotation:
 	transform->SetGlobalRotation(current_rotation);
+
+	if (!_is_dashing && Input::GetMouseButton(Input::MouseButton::LEFT))
+	{
+		math::Plane plane(
+			math::float3(0.0f, current_position.y, 0.0f),
+			math::float3(0.0f, 1.0f, 0.0f));
+
+		math::float2 mouse_position_view =
+			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
+
+		math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
+			mouse_position_view.x, mouse_position_view.y);
+
+		math::float3 intersection_position = plane.ClosestPoint(ray);
+
+		// Make the player look the mouse:
+		transform->LookAtTarget(intersection_position);
+	}
+
 }

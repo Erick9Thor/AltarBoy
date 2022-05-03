@@ -12,11 +12,11 @@ Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerCamera::OnAwake()
 {
-	_relative_position_to_player = math::float3(0.0f, 12.0f, 11.0f);
+	_relative_position_to_player = math::float3(0.0f, 14.0f, 11.0f);
 
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
 
-	_delay_amount = 1.06f;
+	_delay_amount = 1.6f;
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
@@ -39,26 +39,27 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 			delayed_time);
 
 		math::float3 relative_position = final_position - current_position;
+		float clamp = 2.25f;
 		
-		if (relative_position.z > 5.0f)
+		if (relative_position.z > clamp)
 		{
-			current_position.z = final_position.z - 5.0f;
+			current_position.z = final_position.z - clamp;
 		}
-		if (relative_position.z < -5.0f)
+		if (relative_position.z < -clamp)
 		{
-			current_position.z = final_position.z + 5.0f;
+			current_position.z = final_position.z + clamp;
 		}
-		if (relative_position.x > 5.0f)
+		if (relative_position.x > clamp)
 		{
-			current_position.x = final_position.x - 5.0f;
+			current_position.x = final_position.x - clamp;
 		}
-		if (relative_position.x < -5.0f)
+		if (relative_position.x < -clamp)
 		{
-			current_position.x = final_position.x + 5.0f;
+			current_position.x = final_position.x + clamp;
 		}
 
 		transform->SetGlobalPosition(current_position);
 	}
 
-	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
+	//transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
