@@ -196,6 +196,7 @@ public:
         Component::Type type) const;
 
     GameObject* GetFirstChildWithName(const std::string& child_name) const;
+    Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
 
 public:
     std::string name;

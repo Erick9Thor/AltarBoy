@@ -22,6 +22,24 @@ Hachiko::ComponentMesh::ComponentMesh(GameObject* container, UID id, ResourceMes
     }
 }
 
+void Hachiko::ComponentMesh::Update() {
+    if (!mesh)
+        return;
+
+    if (palette.empty())
+    {
+        palette.resize(mesh->num_bones);
+        for (unsigned i = 0; i < mesh->num_bones; ++i)
+        {
+            palette[i] = float4x4::identity;
+        }
+    }
+
+    // SKINNIG PER FRAME
+
+    UpdateSkinPalette(palette);
+}
+
 void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
 {
     if (mesh == nullptr)
@@ -30,6 +48,15 @@ void Hachiko::ComponentMesh::Draw(ComponentCamera* camera, Program* program)
     }
     
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
+
+    // SKINING
+    
+    if (!palette.empty())
+    {
+        glUniformMatrix4fv(glGetUniformLocation(program->GetId(), "palette"), palette.size(), true, palette[0].ptr());
+    }
+    program->BindUniformBool("has_bones", mesh->num_bones > 0);
+
 
     const ComponentMaterial* material = game_object->GetComponent<ComponentMaterial>();
     App->program->UpdateMaterial(material);
@@ -90,8 +117,9 @@ void Hachiko::ComponentMesh::Load(const YAML::Node& node)
     LoadMesh(node[COMPONENT_ID].as<UID>());
 }
 
-void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
-    const GameObject* root = App->scene_manager->GetRoot();
+void Hachiko::ComponentMesh::UpdateSkinPalette(std::vector<float4x4>& palette) const
+{
+    const GameObject* root = game_object->parent;
 
     if (mesh && mesh->num_bones > 0 && root)
     {
@@ -100,16 +128,18 @@ void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
         for (unsigned i = 0; i < mesh->num_bones; ++i)
         {
             const ResourceMesh::Bone& bone = mesh->bones[i];
-            const GameObject* bone_node = node_cache[i];
+            /* const GameObject* bone_node = node_cache[i];
 
-             if (bone_node == nullptr)
-             {
-                 bone_node = node_cache[i] = root ? root->GetFirstChildWithName(bone.name) : nullptr;
-             }
+            if (bone_node == nullptr)
+            {
+                bone_node = node_cache[i] = root ? root->FindDescendantWithName(bone.name) : nullptr;
+            }*/
+
+            const GameObject* bone_node = root->FindDescendantWithName(bone.name);
 
             if (bone_node)
             {
-                palette[i] = root_transform * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+                palette[i] = bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
             }
             else
             {
@@ -118,3 +148,5 @@ void Hachiko::ComponentMesh::UpdateSkinPalette(float4x4* palette) const {
         }
     }
 }
+
+
