@@ -54,16 +54,6 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
             {
                 CollectMesh(camera_pos, game_object);
             }
-
-            const std::vector<Component*> components = game_object->GetComponents();
-            for (int i = 0; i < components.size(); ++i)
-            {
-                if (components[i]->GetType() == Component::Type::MESH)
-                {
-                    ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
-                    polycount_total += mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
-                }
-            }
         }
         // Call for all children (What to do if it is duplicated when collecting)?
         if (!quadtree->IsLeaf())

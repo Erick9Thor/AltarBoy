@@ -320,10 +320,10 @@ void Hachiko::GameObject::DebugDrawAll()
 
 void Hachiko::GameObject::DebugDraw() const
 {
-    if (in_quadtree)
-    {
+    //if (in_quadtree)
+    //{
         DrawBoundingBox();
-    }
+    //}
     DrawBones();
     for (Component* component : components)
     {
@@ -355,6 +355,7 @@ void Hachiko::GameObject::DrawBones() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
+    /* Improvement in quadtree: only add the ones with a mesh 
     in_quadtree = false;
     
     constexpr float default_bounding_size = 1.0f;
@@ -404,11 +405,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
             in_quadtree = true;
             quadtree->Insert(this);
         }
-    }
-
-    ////////////////////
-    /*
-    in_quadtree = true;
+    } */
     
     ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
     if (component_mesh_renderer != nullptr)
@@ -435,7 +432,6 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
         quadtree->Remove(this);
         quadtree->Insert(this);
     }
-    */
 }
 
 bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
