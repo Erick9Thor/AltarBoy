@@ -16,7 +16,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1797, 1110]
+        size: [1600, 1110]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -24,7 +24,7 @@ child:
       - id: 13622383456314143758
         type: 8
         enabled: true
-      - id: 13587497253184537647
+      - id: 13814661762631778151
         type: 15
         enabled: true
         class_name: MainMenuManager
@@ -296,3 +296,26 @@ child:
             enabled: true
             image_path: assets/textures//settings.png
             hover_image_path: ""
+  - id: 16296986021807777969
+    name: Main Camera
+    enabled: true
+    parent_id: 5235291340422193178
+    component:
+      - id: 3329250448132477598
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 9634702239668001984
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          type: 0
+          pinned_camera: [0, 0, 0]
