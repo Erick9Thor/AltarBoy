@@ -19,6 +19,8 @@ namespace Hachiko
             NORMALS,
             TEX_COORDS,
             TANGENTS,
+            BONES_INDICES,
+            BONES_WEIGHTS,
             BONES,
             COUNT,
         };

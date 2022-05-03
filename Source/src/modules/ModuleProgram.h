@@ -30,6 +30,7 @@ namespace Hachiko
             DIFFUSE = 0,
             SPECULAR,
             NORMAL,
+            METALNESS,
             COUNT,
         };
 
@@ -113,7 +114,12 @@ namespace Hachiko
             unsigned diffuse_flag{};
             unsigned specular_flag{};
             unsigned normal_flag{};
-            float shininess{};
+            unsigned metalness_flag{};
+            float smoothness{};
+            float metalness_value{};
+            unsigned is_metallic{};
+            unsigned smoothness_alpha{};
+            unsigned is_transparent{};
         };
 
         // Use float4 to prevent padding

@@ -2,6 +2,11 @@ name: EyesMaterial
 diffuse: 0
 specular: 0
 normals: 0
-diffuse_color: [1, 0, 0, 1]
+metalness: 0
+diffuse_color: [0.882353008, 0.882353008, 0.882353008, 1]
 specular_color: [0.539999962, 0.539999962, 0.539999962, 1]
-shininess: 15.9999962
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 0
+is_transparent: 0

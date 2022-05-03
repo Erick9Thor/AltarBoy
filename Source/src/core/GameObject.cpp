@@ -586,3 +586,25 @@ Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(
 
     return nullptr;
 }
+
+Hachiko::GameObject* Hachiko::GameObject::FindDescendantWithName(const std::string& child_name) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->name == child_name)
+        {
+            return child;
+        }
+    }
+
+    for (GameObject* child : children)
+    {
+        GameObject* found_child = child->FindDescendantWithName(child_name);
+        if (found_child != nullptr)
+        {
+            return found_child;
+        }
+    }
+
+    return nullptr;
+}

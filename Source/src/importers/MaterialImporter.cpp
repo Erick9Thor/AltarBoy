@@ -50,12 +50,19 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
     YAML::Node material_node;
     material_node[MATERIAL_NAME] = material->GetName();
+
     material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
     material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
     material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
+    material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
+
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
-    material_node[MATERIAL_SHININESS] = material->shininess;
+    material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
+    material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
+    material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
+    material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
+    material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
 
     FileSystem::Save(meta_path.c_str(), meta_node);
     FileSystem::Save(material_asset_path.c_str(), material_node);
@@ -73,7 +80,11 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     material->SetName(node[MATERIAL_NAME].as<std::string>());
     material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
-    material->shininess = node[MATERIAL_SHININESS].as<float>();
+    material->smoothness = node[MATERIAL_SMOOTHNESS].as<float>();
+    material->metalness_value = node[MATERIAL_METALNESS_VALUE].as<float>();
+    material->is_metallic = node[MATERIAL_IS_METALLIC].as<unsigned>();
+    material->smoothness_alpha = node[MATERIAL_ALPHA_CHANNEL].as<unsigned>();
+    material->is_transparent = node[MATERIAL_IS_TRANSPARENT].as<unsigned>();
 
     UID texture_id = node[MATERIAL_DIFFUSE_ID].as<UID>();
     if (texture_id)
@@ -91,6 +102,12 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     if (texture_id)
     {
         material->normal = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_METALNESS_ID].as<UID>();
+    if (texture_id)
+    {
+        material->metalness = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
     }
 
     return material;
@@ -126,17 +143,17 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id)
         ColorCopy(color, material->specular_color);
     }
 
-    ai_material->Get(AI_MATKEY_SHININESS, material->shininess);
-
     material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
     material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
-
+    material->metalness = ImportTexture(ai_material, aiTextureType_METALNESS);
+    
     Save(material);
 
     delete material->diffuse;
     delete material->specular;
     delete material->normal;
+    delete material->metalness;
     delete material;
 }
 
