@@ -94,6 +94,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             ImGui::CloseCurrentPopup();
             add_script = true;
         }
+
+        if (ImGui::MenuItem("Animation"))
+        {
+            game_object->CreateComponent(Component::Type::ANIMATION);
+            ImGui::CloseCurrentPopup();
+        }
            
 
         // TODO: Group these UI stuff in a parent UI MenuItem and select

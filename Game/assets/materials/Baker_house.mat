@@ -2,6 +2,11 @@ name: Baker_house
 diffuse: 15932358955819510919
 specular: 0
 normals: 0
+metalness: 0
 diffuse_color: [0.470400006, 0.470400006, 0.470400006, 1]
 specular_color: [0.899999976, 0.899999976, 0.899999976, 1]
-shininess: 1.96078432
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 0
+is_transparent: 0

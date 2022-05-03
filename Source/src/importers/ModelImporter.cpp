@@ -2,6 +2,7 @@
 #include "ModelImporter.h"
 #include "MeshImporter.h"
 #include "MaterialImporter.h"
+#include "AnimationImporter.h"
 
 #include "resources/ResourceModel.h"
 #include "core/preferences/src/ResourcesPreferences.h"
@@ -67,6 +68,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 {
     Hachiko::MeshImporter mesh_importer;
     Hachiko::MaterialImporter material_importer;
+    Hachiko::AnimationImporter animation_importer;
 
     for (unsigned i = 0; i < scene->mNumMaterials; ++i)
     {
@@ -84,6 +86,13 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
         node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX] = mesh->mMaterialIndex;
         mesh_importer.Import(mesh, mesh_id);
+    }
+
+    if (scene->HasAnimations())
+    {
+        Hachiko::UID animation_id = UUID::GenerateUID();
+        node[ANIMATIONS] = true;
+        // animation_importer.Import(scene->mAnimations, animation_id);
     }
 
     ImportNode(scene->mRootNode, node);
@@ -164,6 +173,11 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
         material_info.material_id = model_node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID].as<UID>();
         material_info.material_name = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME].as<std::string>();
         model_output->materials.push_back(material_info);
+    }
+
+    if (model_node[ANIMATIONS])
+    {
+        model_output->have_animation = true;
     }
 
     LoadChildren(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
