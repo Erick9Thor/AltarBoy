@@ -1,13 +1,13 @@
 General:
-  id: 110107063370551158
+  id: 18194814130591708402
   type: 3
   hash: 6231895992635079998
 model_name: plantMushrooms_mesh
 material:
-  - id: 11438010171247081455
+  - id: 7137998047973149489
     name: baked_Tronco_mtl
 mesh:
-  - id: 16528446570088814132
+  - id: 15791715775639270646
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

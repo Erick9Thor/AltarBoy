@@ -62,6 +62,7 @@ layout(std140, binding = 1) uniform Material
     float metalness_value;
     uint is_metallic;
     uint smoothness_alpha;
+    uint is_transparent;
 } material;
 
 layout(std140, binding = 2) uniform Lights
@@ -269,13 +270,6 @@ void main()
     // Reinhard tone mapping
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
 
-    // Gamma correction & alpha from diffuse texture
-    if(material.diffuse_flag > 0)
-    {
-        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), texture(textures[DIFFUSE_SAMPLER], fragment.tex_coord).a);
-    }
-    else
-    {
-        color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), material.diffuse_color.a);
-    }
+    // Gamma correction & alpha from diffuse texture if it is transparent
+    color = vec4(pow(ldr_color.rgb, vec3(1.0/2.2)), diffuse_color.a * material.is_transparent + (1 - material.is_transparent));
 }

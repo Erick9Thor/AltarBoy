@@ -119,6 +119,7 @@ namespace Hachiko
             float metalness_value{};
             unsigned is_metallic{};
             unsigned smoothness_alpha{};
+            unsigned is_transparent{};
         };
 
         // Use float4 to prevent padding

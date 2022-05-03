@@ -222,6 +222,7 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.metalness_flag = material->HasMetalness();
     material_data.is_metallic = material->is_metallic;
     material_data.smoothness_alpha = material->smoothness_alpha;
+    material_data.is_transparent = material->is_transparent;
 
     if (material_data.diffuse_flag)
     {
