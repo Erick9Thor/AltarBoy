@@ -158,7 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
-    <ClCompile Include="src\resources\ResourceNaveMesh.cpp" />
+    <ClCompile Include="src\resources\ResourceNavMesh.cpp" />
     <ClCompile Include="src\importers\FontImporter.cpp" />
     <ClCompile Include="src\resources\ResourceFont.cpp" />
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
@@ -649,7 +649,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\modules\ModuleNavigation.h" />
-    <ClInclude Include="src\resources\ResourceNaveMesh.h" />
+    <ClInclude Include="src\resources\ResourceNavMesh.h" />
     <ClInclude Include="src\importers\FontImporter.h" />
     <ClInclude Include="src\resources\ResourceFont.h" />
     <ClInclude Include="src\core\ErrorHandler.h" />

@@ -1,5 +1,5 @@
 #include "core/hepch.h"
-#include "ResourceNaveMesh.h"
+#include "ResourceNavMesh.h"
 
 #include "Recast.h"
 
@@ -12,8 +12,12 @@
 
 #include "SampleInterfaces.h"
 
-//#include "RecastDebugDraw.h"
-//#include "DetourDebugDraw.h"
+#include "DebugUtils/DebugDraw.h"
+#include "DebugUtils/RecastDebugDraw.h"
+#include "DebugUtils/DetourDebugDraw.h"
+
+#include "modules/ModuleCamera.h"
+#include "components/ComponentCamera.h"
 
 
 Hachiko::ResourceNavMesh::ResourceNavMesh(UID uid) : Resource(uid, Type::NAVMESH)
@@ -356,7 +360,39 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     return true;
 }
 
-void Hachiko::ResourceNavMesh::DebugDraw() {}
+void Hachiko::ResourceNavMesh::DebugDraw()
+{
+    if (navmesh)
+    {
+        unsigned char flags = DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST;
+        DebugDrawGL m_dd;
+        ComponentCamera* camera = App->camera->GetMainCamera();
+
+        glUseProgram(0);
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        constexpr bool transpose = true;
+        glLoadMatrixf(camera->GetProjectionMatrix(transpose).ptr());
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glLoadMatrixf(camera->GetViewMatrix(transpose).ptr());
+
+        glDepthMask(GL_FALSE);
+        duDebugDrawNavMeshWithClosedList(&m_dd, *navmesh, *navigation_query, flags);
+        glDepthMask(GL_TRUE);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+    }
+    
+}
 
 void Hachiko::ResourceNavMesh::CleanUp()
 {

@@ -16,6 +16,7 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceNavMesh.h"
 #include <debugdraw.h>
 #include <algorithm>
 
@@ -240,6 +241,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
+    BuildNavmesh();
+
     loaded = true;
 }
 
@@ -310,6 +313,20 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
+}
+
+bool Hachiko::Scene::BuildNavmesh()
+{
+    RELEASE(navmesh);
+    navmesh = new ResourceNavMesh(0);
+
+    bool result;
+    if (result = !navmesh->Build(this))
+    {
+        HE_LOG("Failed to build navmesh uwu");
+    }
+    
+    return result;
 }
 
 void Hachiko::Scene::Start() const

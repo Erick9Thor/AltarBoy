@@ -7,9 +7,6 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
 
-// TODO: Remove, added for easy testing
-#include "resources/ResourceNaveMesh.h"
-
 bool Hachiko::ModuleSceneManager::Init()
 { 
     serializer = new SceneSerializer();
@@ -24,13 +21,7 @@ bool Hachiko::ModuleSceneManager::Init()
     {
         CreateEmptyScene();
     }
-
-    ResourceNavMesh* navmesh = new ResourceNavMesh(0);
-    if (!navmesh->Build(main_scene))
-    {
-        HE_LOG("Failed to build navmesh uwu");
-    }
-    RELEASE(navmesh);
+    
 
 #ifdef PLAY_BUILD
     App->camera->ReturnPlayerCamera();
@@ -211,4 +202,8 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
+    if (ImGui::Button("Rebuild Navmesh"))
+    {
+        main_scene->BuildNavmesh();
+    }
 }

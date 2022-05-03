@@ -534,7 +534,7 @@
     <ClCompile Include="src\modules\ModuleAudio.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\ResourceNaveMesh.cpp">
+    <ClCompile Include="src\resources\ResourceNavMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleNavigation.cpp">
@@ -2199,7 +2199,7 @@
     <ClInclude Include="src\modules\ModuleAudio.h">
       <Filter>Modules\Source</Filter>
     </ClInclude>
-    <ClInclude Include="src\resources\ResourceNaveMesh.h">
+    <ClInclude Include="src\resources\ResourceNavMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\ModuleNavigation.h">

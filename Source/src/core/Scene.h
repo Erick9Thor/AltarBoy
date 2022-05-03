@@ -15,6 +15,7 @@ namespace Hachiko
     class Quadtree;
     class ResourceModel;
     class ResourceMaterial;
+    class ResourceNavMesh;
 
     class Scene : public ISerializable
     {
@@ -71,6 +72,13 @@ namespace Hachiko
             return skybox;
         }
 
+        bool BuildNavmesh();
+
+        [[nodiscard]] ResourceNavMesh* GetNavmesh() const
+        {
+            return navmesh;
+        }
+
         bool IsLoaded() const 
         {
             return loaded;
@@ -96,14 +104,17 @@ namespace Hachiko
         std::vector<ComponentPointLight*> point_lights;
         std::vector<ComponentSpotLight*> spot_lights;
 
+        
+
     private:
-        bool draw_all_bounding_boxes = false;
         std::string name;
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
         bool loaded = false;
 
-        Skybox* skybox;
+        Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
+        ResourceNavMesh* navmesh = nullptr;
+        
     };
 }
