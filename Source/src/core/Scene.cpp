@@ -46,6 +46,7 @@ void Hachiko::Scene::CleanScene()
     delete root;
     delete skybox;
     delete quadtree;
+    delete navmesh;
     loaded = false;
 }
 

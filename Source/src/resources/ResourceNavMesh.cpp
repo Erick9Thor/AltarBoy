@@ -29,6 +29,8 @@ Hachiko::ResourceNavMesh::ResourceNavMesh(UID uid) : Resource(uid, Type::NAVMESH
 Hachiko::ResourceNavMesh::~ResourceNavMesh()
 {
     RELEASE(build_context);
+    dtFreeNavMesh(navmesh);
+    dtFreeNavMeshQuery(navigation_query);
 }
 
 bool Hachiko::ResourceNavMesh::Build(Scene* scene)
@@ -225,7 +227,6 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // Step 5. Trace and simplify region contours.
     
     rcContourSet* contour_set = rcAllocContourSet();
-    contour_set = rcAllocContourSet();
     if (!contour_set)
     {
         build_context->log(RC_LOG_ERROR, "buildNavigation: Out of memory 'cset'.");
@@ -355,8 +356,12 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     }
 
     build_context->log(RC_LOG_PROGRESS, ">> Polymesh: %d vertices  %d polygons", poly_mesh->nverts, poly_mesh->npolys);
-    // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp
 
+
+    rcFreePolyMesh(poly_mesh);
+    rcFreePolyMeshDetail(detail_mesh);
+
+    // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_SoloMesh.cpp
     return true;
 }
 
