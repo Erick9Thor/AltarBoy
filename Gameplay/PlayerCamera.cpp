@@ -59,4 +59,6 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 		transform->SetGlobalPosition(current_position);
 	}
+
+	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
