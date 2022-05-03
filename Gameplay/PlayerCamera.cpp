@@ -12,11 +12,11 @@ Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerCamera::OnAwake()
 {
-	_relative_position_to_player = math::float3(0.0f, 19.7f, 20.5f);
+	_relative_position_to_player = math::float3(0.0f, 12.0f, 11.0f);
 
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
 
-	_delay_amount = 1.4f;
+	_delay_amount = 1.06f;
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()

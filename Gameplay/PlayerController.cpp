@@ -76,33 +76,55 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// YAML based serialization. For now, player is not falling by default.
 	_is_falling = false;
 
+	if (!_is_dashing)
+	{
+		math::Plane plane(
+			math::float3(0.0f, current_position.y, 0.0f),
+			math::float3(0.0f, 1.0f, 0.0f));
+
+		math::float2 mouse_position_view =
+			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
+
+		math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
+			mouse_position_view.x, mouse_position_view.y);
+
+		math::float3 intersection_position = plane.ClosestPoint(ray);
+
+		// Make the player look the mouse:
+		transform->LookAtTarget(intersection_position);
+	}
+
 	if (!_is_dashing && !_is_falling)
 	{
+		math::float3 delta_z = transform->GetFront().Normalized() * velocity;
+		math::float3 delta_x = transform->GetRight().Normalized() * velocity;
+		math::float3 delta_y = math::float3::unitY * velocity;
+
 		if (Input::GetKey(Input::KeyCode::KEY_W))
 		{
-			current_position -= math::float3(0, 0, 1) * velocity;
+			current_position += delta_z;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_S))
 		{
-			current_position += math::float3(0, 0, 1) * velocity;
+			current_position -= delta_z;
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_D))
 		{
-			current_position += math::float3(1, 0, 0) * velocity;
+			current_position -= delta_x;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_A))
 		{
-			current_position -= math::float3(1, 0, 0) * velocity;
+			current_position += delta_x;
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_Q))
 		{
-			current_position += math::float3(0, 1, 0) * velocity;
+			current_position += delta_y;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_E))
 		{
-			current_position -= math::float3(0, 1, 0) * velocity;
+			current_position -= delta_y;
 		}
 
 		if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
@@ -169,22 +191,4 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
-
-	if (!_is_dashing)
-	{
-		math::Plane plane(
-			math::float3(0.0f, current_position.y, 0.0f),
-			math::float3(0.0f, 1.0f, 0.0f));
-
-		math::float2 mouse_position_view = 
-			ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
-		
-		math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
-			mouse_position_view.x, mouse_position_view.y);
-
-		math::float3 intersection_position = plane.ClosestPoint(ray);
-
-		// Make the player look the mouse:
-		transform->LookAtTarget(intersection_position);
-	}
 }
