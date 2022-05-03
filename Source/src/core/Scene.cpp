@@ -261,7 +261,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
         ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
         const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh)
+        if (mesh && mesh->IsNavigable())
         {
             // Use previous amount of mesh vertices to point to the correct indices
             // Divide size/3 because its a vector of floats not of float3

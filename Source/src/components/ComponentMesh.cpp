@@ -71,21 +71,23 @@ void Hachiko::ComponentMesh::DrawGui()
                     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)],
                     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
         ImGui::Checkbox("Visible", &visible);
+        ImGui::Checkbox("Navigable", &navigable);
     }
     ImGui::PopID();
 }
 
 void Hachiko::ComponentMesh::Save(YAML::Node& node) const
 {
-    node[MODEL_FILE_PATH] = asset_path;
     node[MODEL_NAME] = model_name;
     node[NODE_MESH_INDEX] = mesh_index;
+    node[MESH_NAVIGABLE] = navigable;
 }
 
 void Hachiko::ComponentMesh::Load(const YAML::Node& node)
 {
     model_name = node[MODEL_NAME].as<std::string>();
     mesh_index = node[NODE_MESH_INDEX].as<int>();
+    navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
     SetID(node[COMPONENT_ID].as<UID>());
     LoadMesh(node[COMPONENT_ID].as<UID>());
 }
