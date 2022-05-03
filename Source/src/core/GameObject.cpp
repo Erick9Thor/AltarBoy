@@ -146,11 +146,8 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::ANIMATION):
         new_component = new ComponentAnimation(this);
         break;
-    case (Component::Type::MESH):
+    case (Component::Type::MESH_RENDERER):
         new_component = new ComponentMeshRenderer(this);
-        break;
-    case (Component::Type::MATERIAL):
-        //new_component = new ComponentMaterial(this);
         break;
     case (Component::Type::DIRLIGHT):
         new_component = new ComponentDirLight(this);

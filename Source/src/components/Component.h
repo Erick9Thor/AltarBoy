@@ -22,8 +22,8 @@ namespace Hachiko
         {
             NONE = 0,
             TRANSFORM = 1,
-            MESH = 2,
-            MATERIAL = 3,
+            MESH_RENDERER = 2,
+            //MATERIAL = 3,
             CAMERA = 4,
             DIRLIGHT = 5,
             POINTLIGHT = 6,

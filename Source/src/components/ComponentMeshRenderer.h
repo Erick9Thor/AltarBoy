@@ -24,7 +24,7 @@ namespace Hachiko
 
         static Type GetType()
         {
-            return Type::MESH;
+            return Type::MESH_RENDERER;
         }
 
         [[nodiscard]] bool IsLoaded() const

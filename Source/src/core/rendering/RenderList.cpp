@@ -72,7 +72,7 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
     const std::vector<Component*> components = game_object->GetComponents();
     for (int i = 0; i < components.size(); ++i)
     {
-        if (components[i]->GetType() == Component::Type::MESH)
+        if (components[i]->GetType() == Component::Type::MESH_RENDERER)
         {
             ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
             if (mesh_renderer->IsVisible())

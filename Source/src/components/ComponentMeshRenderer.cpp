@@ -13,7 +13,7 @@
 #include "ComponentTransform.h"
 
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
-    : Component(Type::MESH, container)
+    : Component(Type::MESH_RENDERER, container)
 {
     if (res != nullptr)
     {

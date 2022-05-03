@@ -122,7 +122,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
                     MaterialInfo mat_info = model->materials[mesh_info.material_index];
-                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH));
+                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH_RENDERER));
                     //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
                     //component->SetModelName(model->model_name);
                     
