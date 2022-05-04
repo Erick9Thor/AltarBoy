@@ -77,9 +77,8 @@ namespace Hachiko
         float agent_max_slope = 45.0f;
 
         // Rasterization
-        float cell_size = 0.5f;
+        float cell_size = 0.3f;
         float cell_height = 0.20f;
-        int tile_size = 1000; // Not sure it belongs to rasterization
 
         // Region
         int region_min_size = 8;
@@ -98,6 +97,9 @@ namespace Hachiko
         SamplePartitionType partition_type = SAMPLE_PARTITION_WATERSHED;
 
         // Tiling? 
+        int tile_size = 48;
+        int max_tiles = 0;
+        int max_polys_per_tile = 0;
     public:
         static const int EXPECTED_LAYERS_PER_TILE = 4;
         static const int MAX_LAYERS = 32;

@@ -22,14 +22,14 @@ child:
             type: 1
             enabled: true
             position: [-182.93988, -3.81469727e-06, 7.35212755]
-            rotation: [-0.52028507, -0.478856415, -0.478856415, 0.52028507]
-            scale: [0.99999994, 1, 0.99999994]
+            rotation: [-0.52028513, -0.478856504, -0.478856504, 0.520284951]
+            scale: [1, 1, 1]
           - id: 1834962961183084314
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 0
+            navigable: true
           - id: 12936876461911311385
             type: 3
             enabled: true
@@ -43,14 +43,14 @@ child:
             type: 1
             enabled: true
             position: [-39.1560211, 0.287836075, 16.3255844]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 14446829313385126438
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 1
+            navigable: false
           - id: 16402223940930198830
             type: 3
             enabled: true
@@ -69,9 +69,9 @@ child:
           - id: 15725057144616608824
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 2
+            navigable: true
           - id: 11574678853392733153
             type: 3
             enabled: true
@@ -85,14 +85,14 @@ child:
             type: 1
             enabled: true
             position: [-90.3453903, -0.119918823, 31.3772945]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 2334699628457703997
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 3
+            navigable: true
           - id: 13351322149292742207
             type: 3
             enabled: true
@@ -106,14 +106,14 @@ child:
             type: 1
             enabled: true
             position: [-87.3504562, -0.19118166, 32.5317459]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 12845107772270866463
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 4
+            navigable: false
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -127,14 +127,14 @@ child:
             type: 1
             enabled: true
             position: [-86.2611389, -15.9411554, 32.1033325]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 11936232630910115488
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 5
+            navigable: false
           - id: 14667787385237068663
             type: 3
             enabled: true
@@ -148,14 +148,14 @@ child:
             type: 1
             enabled: true
             position: [-102.053612, 7.79653215, 39.4971886]
-            rotation: [0.0461648069, 0.718358934, 0.692485332, -0.0478896797]
-            scale: [0.99999994, 0.999999821, 0.99999994]
+            rotation: [0.0461647995, 0.718358934, 0.692485332, -0.0478896759]
+            scale: [1.00000012, 0.999999762, 1]
           - id: 16594396340971477117
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 6
+            navigable: true
           - id: 9498638702331608543
             type: 3
             enabled: true
@@ -169,14 +169,14 @@ child:
             type: 1
             enabled: true
             position: [-78.4664001, 9.60068321, 80.3526306]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 7286039303254448219
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 7
+            navigable: false
           - id: 11574678853392733153
             type: 3
             enabled: true
@@ -190,14 +190,14 @@ child:
             type: 1
             enabled: true
             position: [14.5907269, 1.37610531, 23.0375156]
-            rotation: [-0.578337252, -0.406848937, -0.406848997, 0.578337312]
-            scale: [0.999999881, 0.99999994, 0.99999994]
+            rotation: [-0.578337371, -0.406849176, -0.406849086, 0.578336954]
+            scale: [1, 1.00000036, 1.00000024]
           - id: 461292964191903768
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 8
+            navigable: true
           - id: 15545075721065335375
             type: 3
             enabled: true
@@ -211,14 +211,14 @@ child:
             type: 1
             enabled: true
             position: [-71.2438507, 0.0654727444, 13.091033]
-            rotation: [0.476570129, 0.522380054, 0.522380054, -0.476570189]
-            scale: [0.999999881, 0.99999994, 0.99999994]
+            rotation: [0.4765701, 0.522379994, 0.522380233, -0.476570219]
+            scale: [1.00000036, 1.00000036, 1.00000024]
           - id: 5678568534207994447
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 9
+            navigable: true
           - id: 15545075721065335375
             type: 3
             enabled: true
@@ -232,14 +232,14 @@ child:
             type: 1
             enabled: true
             position: [-12.9543991, 4.88196182, 43.8235207]
-            rotation: [0.817285836, -0.0498337597, -0.569603145, -0.07150314]
-            scale: [0.999999881, 1, 1]
+            rotation: [0.817285836, -0.0498337746, -0.569603145, -0.0715031549]
+            scale: [0.999999881, 0.999999821, 0.999999821]
           - id: 10017374704279031512
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 10
+            navigable: true
           - id: 11574678853392733153
             type: 3
             enabled: true
@@ -253,14 +253,14 @@ child:
             type: 1
             enabled: true
             position: [26.714716, 1.37252998, 11.1704254]
-            rotation: [-0.52028507, -0.478856415, -0.478856415, 0.52028507]
-            scale: [0.99999994, 1, 0.99999994]
+            rotation: [-0.52028513, -0.478856504, -0.478856504, 0.520284951]
+            scale: [1, 1, 1]
           - id: 17051203075731377625
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 11
+            navigable: true
           - id: 12936876461911311385
             type: 3
             enabled: true
@@ -274,14 +274,14 @@ child:
             type: 1
             enabled: true
             position: [15.1621494, 1.4850142, 0.41014275]
-            rotation: [0.696631849, 0.696631908, -0.121260151, -0.121260211]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.696631849, 0.696631908, -0.121260151, -0.121260248]
+            scale: [0.99999994, 1, 0.999999821]
           - id: 11059718076146200302
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 12
+            navigable: true
           - id: 9498638702331608543
             type: 3
             enabled: true
@@ -295,14 +295,14 @@ child:
             type: 1
             enabled: true
             position: [27.778141, 1.35451698, 7.64872932]
-            rotation: [0.151531562, 0.690679491, 0.69067961, -0.151531577]
-            scale: [1.00000012, 1.00000012, 0.99999994]
+            rotation: [0.151531547, 0.69067955, 0.69067961, -0.151531592]
+            scale: [1.00000072, 1.00000048, 1.00000036]
           - id: 9744684186141076167
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 13
+            navigable: false
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -316,14 +316,14 @@ child:
             type: 1
             enabled: true
             position: [50.7527924, 1.33276582, -11.2024641]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 1456629841357839682
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 14
+            navigable: false
           - id: 16402223940930198830
             type: 3
             enabled: true
@@ -337,14 +337,14 @@ child:
             type: 1
             enabled: true
             position: [83.0101776, 1.0725441, -69.8480682]
-            rotation: [-0.52028507, -0.478856415, -0.478856415, 0.52028507]
-            scale: [0.99999994, 1, 0.99999994]
+            rotation: [-0.52028513, -0.478856504, -0.478856504, 0.520284951]
+            scale: [1, 1, 1]
           - id: 408057265927149198
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 15
+            navigable: true
           - id: 12936876461911311385
             type: 3
             enabled: true
@@ -358,14 +358,14 @@ child:
             type: 1
             enabled: true
             position: [94.3505249, 1.06349277, -79.0585861]
-            rotation: [-0.501095057, 0.498902529, 0.498902589, 0.501095057]
-            scale: [1, 1, 0.99999994]
+            rotation: [-0.501095116, 0.498902619, 0.498902678, 0.501094759]
+            scale: [1, 1, 1.00000012]
           - id: 689401231775273512
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 16
+            navigable: false
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -379,14 +379,14 @@ child:
             type: 1
             enabled: true
             position: [107.850494, 1.06346893, -78.9993973]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 2859347802250551607
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 17
+            navigable: false
           - id: 14667787385237068663
             type: 3
             enabled: true
@@ -400,14 +400,14 @@ child:
             type: 1
             enabled: true
             position: [121.296829, 0.984767914, -66.7902756]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 18198380485944664707
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 18
+            navigable: true
           - id: 13351322149292742207
             type: 3
             enabled: true
@@ -421,14 +421,14 @@ child:
             type: 1
             enabled: true
             position: [95.5535049, 2.94754434, -61.5705643]
-            rotation: [0.667515397, -0.286858827, 0.313051522, 0.611664891]
+            rotation: [0.667515457, -0.286858916, 0.313051581, 0.611664772]
             scale: [0.99999994, 1, 1.00000012]
           - id: 16698248851949825768
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 19
+            navigable: true
           - id: 9498638702331608543
             type: 3
             enabled: true
@@ -442,14 +442,14 @@ child:
             type: 1
             enabled: true
             position: [34.3559265, -10.4099808, -89.707222]
-            rotation: [0.581415296, 0.687562168, -0.0223529711, -0.434413373]
-            scale: [0.99999994, 0.99999994, 1]
+            rotation: [0.581415236, 0.687562287, -0.0223529711, -0.434413314]
+            scale: [1.00000012, 0.999999821, 0.99999994]
           - id: 16835540946720318744
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 20
+            navigable: false
           - id: 8881494492631853284
             type: 3
             enabled: true
@@ -463,14 +463,14 @@ child:
             type: 1
             enabled: true
             position: [57.2549515, -18.1689281, -83.0306549]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 1374105759201536549
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 21
+            navigable: false
           - id: 4776577543221832289
             type: 3
             enabled: true
@@ -484,14 +484,14 @@ child:
             type: 1
             enabled: true
             position: [178.222778, -23.8059006, -70.5695419]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 14279482366641697286
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 22
+            navigable: false
           - id: 16402223940930198830
             type: 3
             enabled: true
@@ -505,14 +505,14 @@ child:
             type: 1
             enabled: true
             position: [211.387848, -23.9674797, -87.39534]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 11810541362824244498
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 23
+            navigable: true
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -526,14 +526,14 @@ child:
             type: 1
             enabled: true
             position: [149.495285, -32.3704224, -89.7433243]
-            rotation: [0.382316619, -0.558123767, 0.322232962, 0.662191689]
-            scale: [1, 1, 0.999999881]
+            rotation: [0.382316738, -0.558123887, 0.322233081, 0.66219151]
+            scale: [1, 1, 0.99999994]
           - id: 7470434185524052249
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 24
+            navigable: false
           - id: 8881494492631853284
             type: 3
             enabled: true
@@ -547,14 +547,14 @@ child:
             type: 1
             enabled: true
             position: [-75.8515015, -27.4024105, 43.506424]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 8733953625520334170
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 25
+            navigable: false
           - id: 8881494492631853284
             type: 3
             enabled: true
@@ -568,14 +568,14 @@ child:
             type: 1
             enabled: true
             position: [177.254791, -23.8649197, -79.6189651]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 1142143869192683261
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 26
+            navigable: true
           - id: 15545075721065335375
             type: 3
             enabled: true
@@ -589,14 +589,14 @@ child:
             type: 1
             enabled: true
             position: [188.093689, -23.8568344, -71.0675278]
-            rotation: [-0.61159569, -0.354895294, -0.354895324, 0.61159575]
+            rotation: [-0.61159569, -0.354895383, -0.354895383, 0.61159569]
             scale: [1, 1, 0.99999994]
           - id: 18213084676266115432
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 27
+            navigable: false
           - id: 4776577543221832289
             type: 3
             enabled: true
@@ -610,14 +610,14 @@ child:
             type: 1
             enabled: true
             position: [191.595581, -23.9750099, -69.2723465]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.602617979]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 0.602618158]
           - id: 9259626304725923469
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 28
+            navigable: false
           - id: 16402223940930198830
             type: 3
             enabled: true
@@ -631,14 +631,14 @@ child:
             type: 1
             enabled: true
             position: [185.074173, -24.0343971, -75.3656464]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 12978658088476167522
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 29
+            navigable: false
           - id: 6655101424818335687
             type: 3
             enabled: true
@@ -652,14 +652,14 @@ child:
             type: 1
             enabled: true
             position: [-209.224808, -0.119914055, 7.81654263]
-            rotation: [0.7071051, 0.70710516, 0.00155048084, 0.00155047048]
-            scale: [0.99999994, 1, 1]
+            rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047025]
+            scale: [1.00000024, 1.00000036, 1.00000072]
           - id: 7291322929733498416
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 30
+            navigable: true
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -673,14 +673,14 @@ child:
             type: 1
             enabled: true
             position: [-58.335659, 0.158239305, 12.043292]
-            rotation: [0.49890241, 0.501095176, 0.501095176, -0.49890247]
-            scale: [1, 1, 0.99999994]
+            rotation: [0.49890238, 0.501095176, 0.501095355, -0.49890244]
+            scale: [1.00000024, 1.00000024, 1.00000024]
           - id: 9841911911296565324
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 31
+            navigable: false
           - id: 6655101424818335687
             type: 3
             enabled: true
@@ -694,14 +694,14 @@ child:
             type: 1
             enabled: true
             position: [-101.674332, 9.19902992, 42.9775047]
-            rotation: [-0.502057374, -0.394384384, -0.371341228, 0.674170017]
-            scale: [1, 1, 0.99999994]
+            rotation: [-0.502057374, -0.394384414, -0.371341228, 0.674169898]
+            scale: [1.00000012, 1.00000012, 1.00000012]
           - id: 13496658165372188397
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 32
+            navigable: false
           - id: 9786929231214626347
             type: 3
             enabled: true
@@ -715,14 +715,14 @@ child:
             type: 1
             enabled: true
             position: [12.92663, 1.33464193, 4.82154036]
-            rotation: [0.704549491, 0.704549491, -0.0600836426, -0.060083732]
-            scale: [1, 0.99999994, 0.999999881]
+            rotation: [0.704549491, 0.704549551, -0.0600836538, -0.0600837134]
+            scale: [1.00000036, 1.00000024, 1.00000072]
           - id: 10009301700005618188
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 33
+            navigable: true
           - id: 17314173146614363172
             type: 3
             enabled: true
@@ -736,14 +736,14 @@ child:
             type: 1
             enabled: true
             position: [66.6703262, -19.8274231, -64.6147614]
-            rotation: [0.476570129, 0.522380054, 0.522380054, -0.476570189]
-            scale: [0.999999881, 0.99999994, 0.99999994]
+            rotation: [0.4765701, 0.522379994, 0.522380233, -0.476570219]
+            scale: [1.00000036, 1.00000036, 1.00000024]
           - id: 10891175031030503294
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 34
+            navigable: false
           - id: 14667787385237068663
             type: 3
             enabled: true
@@ -757,14 +757,14 @@ child:
             type: 1
             enabled: true
             position: [-1.83259106, 4.04522896, 10.6180639]
-            rotation: [-0.00155046594, 0.7071051, 0.70710516, 0.0015504664]
-            scale: [0.45597592, 0.45597589, 0.45597586]
+            rotation: [-0.00155046559, 0.707104981, 0.70710516, 0.00155046606]
+            scale: [0.455976009, 0.45597589, 0.45597592]
           - id: 10089245940000791699
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 35
+            navigable: false
           - id: 16804301373993468705
             type: 3
             enabled: true
@@ -778,14 +778,14 @@ child:
             type: 1
             enabled: true
             position: [190.401871, 1.11125469, -90.6373978]
-            rotation: [-0.501095176, 0.498902351, 0.49890241, 0.501095235]
-            scale: [1, 1, 0.99999994]
+            rotation: [-0.501095176, 0.49890238, 0.49890244, 0.501095235]
+            scale: [0.99999994, 0.99999994, 0.99999994]
           - id: 4513815264202703982
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 36
+            navigable: false
           - id: 14667787385237068663
             type: 3
             enabled: true
@@ -799,14 +799,14 @@ child:
             type: 1
             enabled: true
             position: [181.786316, -21.0178604, -88.9938354]
-            rotation: [-0.7071051, -0.00155051961, -0.00155051996, 0.70710516]
-            scale: [0.45597589, 0.45597586, 0.45597586]
+            rotation: [-0.707105041, -0.00155052007, -0.00155052019, 0.70710516]
+            scale: [0.45597589, 0.455976039, 0.455976039]
           - id: 10563375292118737287
             type: 2
             enabled: true
-            model_file_path: ""
             model_name: Level_t3_binary
             mesh_index: 37
+            navigable: false
           - id: 16804301373993468705
             type: 3
             enabled: true

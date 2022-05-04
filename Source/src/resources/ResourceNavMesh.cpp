@@ -393,20 +393,16 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // Set the navigation were navigation will be built
     rcVcopy(cfg.bmin, scene_bounds.minPoint.ptr());
     rcVcopy(cfg.bmax, scene_bounds.maxPoint.ptr());
-
     // Build Tile Cache
-    const float* bmin = scene_bounds.minPoint.ptr();
-    const float* bmax = scene_bounds.maxPoint.ptr();
     int grid_width = 0, grid_height = 0;
-    rcCalcGridSize(bmin, bmax, cell_size, &grid_width, &grid_height);
-    const int tile_size = (int)tile_size;
+    rcCalcGridSize(scene_bounds.minPoint.ptr(), scene_bounds.maxPoint.ptr(), cell_size, &grid_width, &grid_height);
     const int tile_width = (grid_width + tile_size - 1) / tile_size;
     const int tile_height = (grid_height + tile_size - 1) / tile_size;
 
 
     dtTileCacheParams tcparams;
     memset(&tcparams, 0, sizeof(tcparams));
-    rcVcopy(tcparams.orig, bmin);
+    rcVcopy(tcparams.orig, scene_bounds.minPoint.ptr());
     tcparams.cs = cell_size;
     tcparams.ch = cell_height;
     tcparams.width = (int)tile_size;
@@ -422,6 +418,11 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     tcparams.maxObstacles = 128;
 
     tile_cache = dtAllocTileCache();
+    if (!tile_cache)
+    {
+        HE_LOG("buildTiledNavigation: Could not allocate tile cache.");
+        return false;
+    }
 
     dtStatus status;
 
@@ -442,7 +443,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 
     dtNavMeshParams params;
     memset(&params, 0, sizeof(params));
-    rcVcopy(params.orig, bmin);
+    rcVcopy(params.orig, scene_bounds.minPoint.ptr());
     params.tileWidth = tile_size * cell_size;
     params.tileHeight = tile_size * cell_size;
     params.maxTiles = max_tiles;
@@ -463,7 +464,8 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
         return false;
     }
 
-    // Init navigation query
+    // Alloc and Init navigation query
+    navigation_query = dtAllocNavMeshQuery();
     status = navigation_query->init(navmesh, 2048);
     if (dtStatusFailed(status))
     {
