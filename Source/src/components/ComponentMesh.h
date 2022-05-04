@@ -118,14 +118,12 @@ namespace Hachiko
     private:
         bool visible = true;
         bool navigable = false;
-        const GameObject** node_cache = nullptr;
         
         int mesh_index;
         std::string asset_path;
         std::string model_name;
       
         // SKINING
-
         const GameObject** node_cache = nullptr;
         std::vector<float4x4> palette;
 
