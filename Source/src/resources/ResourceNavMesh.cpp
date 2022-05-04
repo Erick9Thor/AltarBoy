@@ -346,11 +346,6 @@ Hachiko::ResourceNavMesh::~ResourceNavMesh()
 {
     CleanUp();
     RELEASE(build_context);
-    RELEASE(talloc);
-    RELEASE(tcomp);
-    RELEASE(tmproc);
-    dtFreeNavMesh(navmesh);
-    dtFreeNavMeshQuery(navigation_query);
 }
 
 bool Hachiko::ResourceNavMesh::Build(Scene* scene)
@@ -611,5 +606,10 @@ void Hachiko::ResourceNavMesh::CleanUp()
     navigation_query = nullptr;
     dtFreeTileCache(tile_cache);
     tile_cache = nullptr;
+
+
+    RELEASE(talloc);
+    RELEASE(tcomp);
+    RELEASE(tmproc);
 }
 
