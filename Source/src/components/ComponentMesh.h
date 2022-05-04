@@ -17,6 +17,7 @@ namespace Hachiko
         ComponentMesh(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
         ~ComponentMesh() override = default;
 
+        void Update() override;
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
 
@@ -112,8 +113,7 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
         // BONES
-
-        void UpdateSkinPalette(float4x4* palette) const;
+        void UpdateSkinPalette(std::vector<float4x4>& palette) const;
 
     private:
         bool visible = true;
@@ -123,6 +123,11 @@ namespace Hachiko
         int mesh_index;
         std::string asset_path;
         std::string model_name;
+      
+        // SKINING
+
+        const GameObject** node_cache = nullptr;
+        std::vector<float4x4> palette;
 
         ResourceMesh* mesh = nullptr;
     };
