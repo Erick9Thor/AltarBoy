@@ -27,11 +27,16 @@ private:
 	SERIALIZE_FIELD(bool, _is_dashing);
 	SERIALIZE_FIELD(float, _dash_progress);
 	SERIALIZE_FIELD(math::float3, _dash_start);
-	SERIALIZE_FIELD(float, _rotation_speed);
 	SERIALIZE_FIELD(bool, _is_falling);
 	SERIALIZE_FIELD(float, _original_y);
 	SERIALIZE_FIELD(float, _speed_y);
 	SERIALIZE_FIELD(math::float3, _starting_position);
+
+	SERIALIZE_FIELD(bool, _should_rotate);
+	SERIALIZE_FIELD(float, _rotation_progress);
+	SERIALIZE_FIELD(float, _rotation_duration);
+	SERIALIZE_FIELD(math::Quat, _rotation_start);
+	SERIALIZE_FIELD(math::Quat, _rotation_target);
 };
 } // namespace Scripting
 } // namespace Hachiko

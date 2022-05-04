@@ -14,20 +14,22 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _is_dashing(false)
 	, _dash_progress(0.0f)
 	, _dash_start(math::float3::zero)
-	, _rotation_speed(0.0f)
 	, _is_falling(false)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
 	, _starting_position(math::float3::zero)
+	, _rotation_progress(0.0f)
+	, _rotation_target(math::Quat::identity)
+	, _should_rotate(false)
 {
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 4.0f;
+	_dash_distance = 2.0f;
 	_dash_duration = 0.15f;
 	_movement_speed = 5.0f;
-	_rotation_speed = 4.0f;
+	_rotation_duration = 0.075f;
 
 	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
@@ -48,11 +50,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	}
 
 	ComponentTransform* transform = game_object->GetTransform();
-	
 	math::float3 current_position = transform->GetGlobalPosition();
-	math::Quat current_rotation = transform->GetGlobalRotation();
-	math::float3 current_front = transform->GetFront();
-	math::float3 current_right = transform->GetRight();
 
 	float delta_time = Time::DeltaTime();
 	float velocity = _movement_speed * delta_time;
@@ -81,30 +79,26 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (!_is_dashing && !_is_falling)
 	{
-		math::float3 delta_z = transform->GetFront().Normalized() * velocity;
-		math::float3 delta_x = transform->GetRight().Normalized() * velocity;
+		math::float3 delta_x = math::float3::unitX * velocity;
 		math::float3 delta_y = math::float3::unitY * velocity;
-		
-		float delta_rotation_y = delta_time * _rotation_speed;
+		math::float3 delta_z = math::float3::unitZ * velocity;
 
 		if (Input::GetKey(Input::KeyCode::KEY_W))
 		{
-			current_position += delta_z;
+			current_position -= delta_z;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_S))
 		{
-			current_position -= delta_z;
+			current_position += delta_z;
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_D))
 		{
-			current_rotation = 
-				current_rotation * Quat::RotateY(-delta_rotation_y);
+			current_position += delta_x;
 		}
 		else if (Input::GetKey(Input::KeyCode::KEY_A))
 		{
-			current_rotation =
-				current_rotation * Quat::RotateY(delta_rotation_y);
+			current_position -= delta_x;
 		}
 
 		if (Input::GetKey(Input::KeyCode::KEY_Q))
@@ -122,18 +116,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			_dash_progress = 0.0f;
 			_dash_start = current_position;
 		}
-	}
-
-	if (_is_dashing)
-	{
-		_dash_progress += delta_time / _dash_duration;
-		_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
-
-		_is_dashing = (_dash_progress < 1.0f);
-
-		math::float3 _dash_end = _dash_start + current_front * _dash_distance;
-
-		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
 	}
 
 	//if (_is_falling)
@@ -178,10 +160,61 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		SceneManagement::SwitchScene(Scenes::LOSE);
 	}*/
 
-	// Apply the position:
-	transform->SetGlobalPosition(current_position);
-	// Apply the rotation:
-	transform->SetGlobalRotation(current_rotation);
+	// If the player position is changed, check if rotation is needed:
+	if (!current_position.Equals(transform->GetGlobalPosition()))
+	{
+		// Get the position player should be looking at:
+		math::float3 look_at_position = current_position;
+		look_at_position.y = transform->GetGlobalPosition().y;
+
+		// Calculate the direction player should be looking at:
+		math::float3 look_at_direction = (transform->GetGlobalPosition() - look_at_position);
+		look_at_direction.Normalize();
+
+		// Get the rotation player is going to have:
+		math::Quat target_rotation = transform->SimulateLookAt(look_at_direction);
+
+		// If rotation is gonna be changed fire up the rotating process:
+		if (!target_rotation.Equals(transform->GetGlobalRotation()))
+		{
+			// Reset all the variables related to rotation lerp:
+			_rotation_progress = 0.0f;
+			_rotation_target = target_rotation;
+			_rotation_start = transform->GetGlobalRotation();
+			_should_rotate = true;
+		}
+	}
+
+	if (_should_rotate)
+	{
+		_rotation_progress += delta_time / _rotation_duration;
+		_rotation_progress = _rotation_progress > 1.0f ? 1.0f : _rotation_progress;
+
+		transform->SetGlobalRotation(
+			Quat::Lerp(_rotation_start, _rotation_target, _rotation_progress));
+
+		_should_rotate = _rotation_progress != 1.0f;
+
+		if (!_should_rotate)
+		{
+			_rotation_progress = 0.0f;
+			_rotation_target = math::Quat::identity;
+			_rotation_start = math::Quat::identity;
+			_should_rotate = false;
+		}
+	}
+
+	if (_is_dashing)
+	{
+		_dash_progress += delta_time / _dash_duration;
+		_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
+
+		_is_dashing = (_dash_progress < 1.0f);
+
+		math::float3 _dash_end = _dash_start + transform->GetFront() * _dash_distance;
+
+		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
+	}
 
 	if (!_is_dashing && Input::GetMouseButton(Input::MouseButton::LEFT))
 	{
@@ -201,4 +234,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		transform->LookAtTarget(intersection_position);
 	}
 
+	// Apply the position:
+	transform->SetGlobalPosition(current_position);
 }
