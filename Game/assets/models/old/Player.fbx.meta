@@ -1,18 +1,19 @@
 General:
-  id: 10381212507548947942
+  id: 739087995851394017
   type: 3
   hash: 16692071393325252352
 model_name: Player
 material:
-  - id: 8166581421604106552
+  - id: 9882246283790936480
     name: GunMaterial
-  - id: 6132495388571451466
+  - id: 8358202839313060509
     name: PlayerMaterial
 mesh:
-  - id: 4214606711624851624
+  - id: 2219957257628037641
     material_index: 0
-  - id: 17170936283721459429
+  - id: 2757482023914099398
     material_index: 1
+animations: true
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
