@@ -98,8 +98,7 @@ namespace Hachiko
 
         // Tiling? 
         int tile_size = 48;
-        int max_tiles = 0;
-        int max_polys_per_tile = 0;
+
     public:
         static const int EXPECTED_LAYERS_PER_TILE = 4;
         static const int MAX_LAYERS = 32;
