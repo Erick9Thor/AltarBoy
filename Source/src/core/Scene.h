@@ -72,13 +72,6 @@ namespace Hachiko
             return skybox;
         }
 
-        bool BuildNavmesh();
-
-        [[nodiscard]] ResourceNavMesh* GetNavmesh() const
-        {
-            return navmesh;
-        }
-
         bool IsLoaded() const 
         {
             return loaded;
@@ -114,7 +107,6 @@ namespace Hachiko
 
         Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
-        ResourceNavMesh* navmesh = nullptr;
         
     };
 }

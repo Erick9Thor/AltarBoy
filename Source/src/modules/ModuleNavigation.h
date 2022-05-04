@@ -14,8 +14,14 @@ namespace Hachiko
 
         bool Init() override;
         bool CleanUp() override;
+        bool BuildNavmesh(Scene* scene);
+        UpdateStatus Update(const float delta) override; // Update crowd
 
-        // TODO: Implement
-        void ChangeNavMesh();
+        void DebugDraw();
+        
+        float GetYFromPosition(const math::float3& position) const;
+
+    private:
+        ResourceNavMesh* navmesh = nullptr;
     };
 }

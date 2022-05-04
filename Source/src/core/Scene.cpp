@@ -13,10 +13,10 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleNavigation.h"
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
-#include "resources/ResourceNavMesh.h"
 #include <debugdraw.h>
 #include <algorithm>
 
@@ -25,7 +25,6 @@ Hachiko::Scene::Scene()
     , culling_camera(App->camera->GetMainCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
-    , navmesh(new ResourceNavMesh(0))
     , loaded(false)
     , name(UNNAMED_SCENE)
 {
@@ -47,7 +46,6 @@ void Hachiko::Scene::CleanScene()
     delete root;
     delete skybox;
     delete quadtree;
-    delete navmesh;
     loaded = false;
 }
 
@@ -247,7 +245,7 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
-    BuildNavmesh();
+    App->navigation->BuildNavmesh(this);
 
     loaded = true;
 }
@@ -319,20 +317,6 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
-}
-
-bool Hachiko::Scene::BuildNavmesh()
-{
-    delete navmesh;
-    navmesh = new ResourceNavMesh(0);
-
-    bool success = navmesh->Build(this);
-    if (!success)
-    {
-        HE_LOG("Failed to build navmesh uwu");
-    }
-    
-    return success;
 }
 
 void Hachiko::Scene::Start() const

@@ -10,6 +10,7 @@
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
 #include "ModuleUserInterface.h"
+#include "ModuleNavigation.h"
 
 #include "components/ComponentCamera.h"
 #include "resources/ResourceNavMesh.h"
@@ -179,7 +180,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
     if (draw_navmesh)
     {
-        active_scene->GetNavmesh()->DebugDraw();
+        App->navigation->DebugDraw();
     }
     
     App->ui->DrawUI(active_scene);

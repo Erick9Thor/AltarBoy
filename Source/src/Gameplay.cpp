@@ -3,7 +3,7 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
 #include "Gameplay.h"
-#include "resources/ResourceNavMesh.h"
+#include "modules/ModuleNavigation.h"
 
 
 /*TIME-----------------------------------------------------------------------*/
@@ -234,8 +234,7 @@ void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
 
 float Hachiko::Navigation::GetHeightFromPosition(const math::float3& position)
 {
-    return App->scene_manager->GetActiveScene()->GetNavmesh()
-        ->GetYFromPosition(position);
+    return App->navigation->GetYFromPosition(position);    
 }
 
 /*---------------------------------------------------------------------------*/

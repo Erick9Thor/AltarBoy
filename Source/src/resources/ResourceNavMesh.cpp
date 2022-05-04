@@ -622,23 +622,6 @@ void Hachiko::ResourceNavMesh::DebugDraw()
     
 }
 
-float Hachiko::ResourceNavMesh::GetYFromPosition(const math::float3& position) const
-{
-    float height = FLT_MAX;
-    float3 extents = float3(2, 4, 2);
-    
-    dtQueryFilter filter;
-    dtPolyRef reference;
-    
-    navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
-    
-    if (reference != NULL)
-    {
-        navigation_query->getPolyHeight(reference, position.ptr(), &height);
-    }
-
-    return height;
-}
 
 void Hachiko::ResourceNavMesh::CleanUp()
 {

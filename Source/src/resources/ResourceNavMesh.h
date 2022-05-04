@@ -48,12 +48,13 @@ namespace Hachiko
     class ResourceNavMesh : public Resource
     {
     public:
+        friend class ModuleNavigation;
         ResourceNavMesh(UID uid);
         ~ResourceNavMesh() override;
 
         bool Build(Scene* scene);    // Creates NavMesh for the scene level
         void DebugDraw();                               // Draw debug info
-        float GetYFromPosition(const math::float3& position) const;
+        
     private:
         void CleanUp();
 

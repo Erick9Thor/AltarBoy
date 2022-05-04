@@ -3,6 +3,7 @@
 
 #include "ModuleCamera.h"
 #include "ModuleEvent.h"
+#include "ModuleNavigation.h"
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
@@ -204,6 +205,6 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
     if (ImGui::Button("Rebuild Navmesh"))
     {
-        main_scene->BuildNavmesh();
+        App->navigation->BuildNavmesh(main_scene);
     }
 }
