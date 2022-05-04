@@ -544,6 +544,9 @@
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
     <ClCompile Include="vendors\recast\include\Recast\fastlz.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\MeshLoaderObj.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\ChunkyTriMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2210,6 +2213,9 @@
       <Filter>Vendors\Recast</Filter>
     </ClInclude>
     <ClInclude Include="vendors\recast\include\Recast\fastlz.h" />
+    <ClInclude Include="vendors\recast\include\Recast\InputGeom.h" />
+    <ClInclude Include="vendors\recast\include\Recast\MeshLoaderObj.h" />
+    <ClInclude Include="vendors\recast\include\Recast\ChunkyTriMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
