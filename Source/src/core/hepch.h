@@ -42,6 +42,7 @@
 #include <imgui_impl_sdl.h>
 #include <imgui_internal.h>
 #include <ImGuiFileDialog.h>
+#include <imgui_node_editor.h>
 
 #include <il.h>
 #include <ilu.h>
