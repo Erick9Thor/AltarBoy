@@ -160,6 +160,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		SceneManagement::SwitchScene(Scenes::LOSE);
 	}*/
 
+	float new_y = Navigation::GetHeightFromPosition(current_position);
+
+	current_position.y = new_y != FLT_MAX ? new_y : current_position.y;
+
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
 

@@ -24,6 +24,7 @@
 #define MODEL_MESH_NODE "mesh"
 #define MODEL_MATERIAL_ID "id"
 #define MODEL_MATERIAL_NODE "material"
+#define ANIMATIONS "animations"
 
 // Node
 #define NODE_NAME "name"
@@ -47,12 +48,18 @@
 #define MATERIAL_DIFFUSE_ID "diffuse"
 #define MATERIAL_SPECULAR_ID "specular"
 #define MATERIAL_NORMALS_ID "normals"
+#define MATERIAL_METALNESS_ID "metalness"
 #define MATERIAL_DIFFUSE_PATH "diffuse_path"
 #define MATERIAL_SPECULAR_PATH "specular_path"
 #define MATERIAL_NORMALS_PATH "normals_path"
+#define MATERIAL_METALNESS_PATH "metalness_path"
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
-#define MATERIAL_SHININESS "shininess"
+#define MATERIAL_SMOOTHNESS "smoothness"
+#define MATERIAL_METALNESS_VALUE "metalness_value"
+#define MATERIAL_IS_METALLIC "is_metallic"
+#define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
+#define MATERIAL_IS_TRANSPARENT "is_transparent"
 
 //////////////////////////
 //						//
@@ -154,6 +161,7 @@
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
+#define MESH_NAVIGABLE "navigable"
 
 // Component Lights
 #define LIGHT_TYPE "light_type"

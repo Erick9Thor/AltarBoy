@@ -1,18 +1,18 @@
 General:
-  id: 428810898869514291
+  id: 3487808450689339377
   type: 3
   hash: 2088427727269720742
 model_name: megalodon
 material:
-  - id: 980909819994210771
+  - id: 13603531582580582690
     name: 01 - Default
 mesh:
-  - id: 6555602134591552452
+  - id: 10163782647295624280
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
   - name: Shark_01SG1
-    transform: [1, 0, 0, 0, 0, 0.999999762, 0, 0, 0, 0, 0.999999762, 0, 0, 0, 0, 1]
+    transform: [1, 0, 0, 0, 0, 0.999999881, 0, 0, 0, 0, 0.999999881, 0, 0, 0, 0, 1]
     mesh_index:
       - 0

@@ -16,6 +16,7 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceNavMesh.h"
 #include <debugdraw.h>
 #include <algorithm>
 
@@ -45,6 +46,7 @@ void Hachiko::Scene::CleanScene()
     delete root;
     delete skybox;
     delete quadtree;
+    delete navmesh;
     loaded = false;
 }
 
@@ -105,6 +107,11 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
 
+    if (model->have_animation)
+    {
+        ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
+    }
+
     std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
         for (auto child : children)
         {
@@ -138,7 +145,6 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             create_children_function(last_parent, child->children);
         }
     };
-
 
     create_children_function(game_object, model->child_nodes);
 }
@@ -240,6 +246,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
+    BuildNavmesh();
+
     loaded = true;
 }
 
@@ -258,7 +266,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
         ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
         const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh)
+        if (mesh && mesh->IsNavigable())
         {
             // Use previous amount of mesh vertices to point to the correct indices
             // Divide size/3 because its a vector of floats not of float3
@@ -310,6 +318,20 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
     debug_camera->draw_frustum = true;
 
     return camera;
+}
+
+bool Hachiko::Scene::BuildNavmesh()
+{
+    RELEASE(navmesh);
+    navmesh = new ResourceNavMesh(0);
+
+    bool result;
+    if (result = !navmesh->Build(this))
+    {
+        HE_LOG("Failed to build navmesh uwu");
+    }
+    
+    return result;
 }
 
 void Hachiko::Scene::Start() const
