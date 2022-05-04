@@ -102,5 +102,6 @@ namespace Hachiko
     public:
         static const int EXPECTED_LAYERS_PER_TILE = 4;
         static const int MAX_LAYERS = 32;
+        static const int MAX_AGENTS = 128;
     };
 }

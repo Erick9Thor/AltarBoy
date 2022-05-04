@@ -13,6 +13,7 @@
 #include "DetourNavMeshQuery.h"
 #include "DetourTileCache.h"
 #include "DetourTileCacheBuilder.h"
+#include "DetourCrowd.h"
 
 #include "SampleInterfaces.h"
 
@@ -540,9 +541,50 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     }
     HE_LOG("navmeshMemUsage = %.1f kB", nav_mesh_memory_usage / 1024.0f);
 
+    // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_TempObstacles.cpp
+
+    // Crowd code based on CrowdTool.cpp from example
+
+    crowd = dtAllocCrowd();
+    crowd->init(MAX_AGENTS, agent_radius, navmesh);
+
+    // Setup local avoidance params to different qualities.
+    dtObstacleAvoidanceParams avoidance_params;
+    // Use mostly default settings, copy from dtCrowd.
+    memcpy(&params, crowd->getObstacleAvoidanceParams(0), sizeof(dtObstacleAvoidanceParams));
+
+    // Low (11)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 5;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 1;
+    crowd->setObstacleAvoidanceParams(0, &avoidance_params);
+
+    // Medium (22)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 5;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 2;
+    crowd->setObstacleAvoidanceParams(1, &avoidance_params);
+
+    // Good (45)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 7;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 3;
+    crowd->setObstacleAvoidanceParams(2, &avoidance_params);
+
+    // High (66)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 7;
+    avoidance_params.adaptiveRings = 3;
+    avoidance_params.adaptiveDepth = 3;
+
+    crowd->setObstacleAvoidanceParams(3, &avoidance_params);
+
     delete chunky_mesh;
 
-    // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_TempObstacles.cpp
+    
     return true;
 }
 
@@ -604,6 +646,8 @@ void Hachiko::ResourceNavMesh::CleanUp()
 	navmesh = nullptr;
     dtFreeNavMeshQuery(navigation_query);
     navigation_query = nullptr;
+    dtFreeCrowd(crowd);
+    crowd = nullptr;
     dtFreeTileCache(tile_cache);
     tile_cache = nullptr;
 
