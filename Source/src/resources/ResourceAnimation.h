@@ -26,12 +26,6 @@ namespace Hachiko
             unsigned int num_rotations = 0;
         };
 
-        struct ValueWeights
-        {
-            unsigned int count = 0;
-            std::unique_ptr<std::pair<unsigned int, float>[]> value_weights;
-        };
-
         struct Node
         {
             Node() = default;

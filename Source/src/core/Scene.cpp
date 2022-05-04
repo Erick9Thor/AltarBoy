@@ -106,7 +106,12 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 
     if (model->have_animation)
     {
-        ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
+        /* ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
+        for (unsigned i = 0; i < model->have_animation.size(); ++i)
+        {
+            //load resource
+            //component_animation.addanimaation(resource)
+        } */
     }
 
     std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {

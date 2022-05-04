@@ -139,7 +139,7 @@ void Hachiko::ComponentMesh::UpdateSkinPalette(std::vector<float4x4>& palette) c
 
             if (bone_node)
             {
-                palette[i] = bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+                palette[i] = root_transform * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
             }
             else
             {

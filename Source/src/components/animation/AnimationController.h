@@ -15,14 +15,10 @@ namespace Hachiko
             bool loop = true;
             float speed = 1.0;
 
-            Instance* next = nullptr;
+            Instance* previous = nullptr;
             unsigned fade_duration = 0;
             unsigned fade_time = 0;
         };
-
-        Instance* current = nullptr;
-
-        mutable std::vector<float> tmpWeights;
 
     public:
 
@@ -33,13 +29,15 @@ namespace Hachiko
         void Update(unsigned elapsed);
         void Stop();
 
-        bool GetTransform(const std::string& channel_name, math::float3& position, Quat& rotation) const;
+        bool GetTransform(Instance* instance, const std::string& channel_name, math::float3& position, Quat& rotation) const;
+
+        Instance* current = nullptr; // move to private
 
     private:
         // INTERPOLATION
         float Interpolate(float first, float second, float lambda);
-        float3 Interpolate(const float3& first, const float3& second, float lambda); 
-        Quat Interpolate(const Quat& first, const Quat& second, float lambda) const;
+        float3 Interpolate(float3& first, float3& second, float lambda) const; 
+        Quat Interpolate(Quat& first, Quat& second, float lambda) const;
 
         // MANAGE INSTANCES
         void UpdateInstance(Instance* instance, unsigned elapsed);
