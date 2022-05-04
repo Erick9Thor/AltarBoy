@@ -31,6 +31,8 @@ Hachiko::Scene::Scene()
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;
 
+    navmesh = new ResourceNavMesh(0);
+
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 }
