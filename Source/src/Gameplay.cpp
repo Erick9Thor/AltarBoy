@@ -3,6 +3,7 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
 #include "Gameplay.h"
+#include "resources/ResourceNavMesh.h"
 
 
 /*TIME-----------------------------------------------------------------------*/
@@ -225,6 +226,16 @@ void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
     bool changed = false;
 
     ShowGameObjectDragDropArea(field_name, "GameObject*", &field, changed);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*NAVIGATION-----------------------------------------------------------------*/
+
+float Hachiko::Navigation::GetHeightFromPosition(const math::float3& position)
+{
+    return App->scene_manager->GetActiveScene()->GetNavmesh()
+        ->GetYFromPosition(position);
 }
 
 /*---------------------------------------------------------------------------*/

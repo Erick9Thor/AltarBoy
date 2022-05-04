@@ -462,3 +462,8 @@ HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type,
     }
 }
 } // namespace Hachiko::Editor
+
+namespace Hachiko::Navigation
+{
+    HACHIKO_API float GetHeightFromPosition(const math::float3& position);
+} // namespace Hachiko::Navigation

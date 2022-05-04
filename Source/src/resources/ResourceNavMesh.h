@@ -47,6 +47,7 @@ namespace Hachiko
 
         bool Build(Scene* scene);    // Creates NavMesh for the scene level
         void DebugDraw();                               // Draw debug info
+        float GetYFromPosition(const math::float3& position) const;
     private:
         void CleanUp();
 
