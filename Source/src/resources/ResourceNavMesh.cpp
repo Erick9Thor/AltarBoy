@@ -344,7 +344,11 @@ Hachiko::ResourceNavMesh::ResourceNavMesh(UID uid) : Resource(uid, Type::NAVMESH
 
 Hachiko::ResourceNavMesh::~ResourceNavMesh()
 {
+    CleanUp();
     RELEASE(build_context);
+    RELEASE(talloc);
+    RELEASE(tcomp);
+    RELEASE(tmproc);
     dtFreeNavMesh(navmesh);
     dtFreeNavMeshQuery(navigation_query);
 }
@@ -540,6 +544,8 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
             nav_mesh_memory_usage += tile->dataSize;
     }
     HE_LOG("navmeshMemUsage = %.1f kB", nav_mesh_memory_usage / 1024.0f);
+
+    delete chunky_mesh;
 
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_TempObstacles.cpp
     return true;
