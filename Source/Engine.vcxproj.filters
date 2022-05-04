@@ -543,6 +543,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\fastlz.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2208,6 +2209,7 @@
     <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h">
       <Filter>Vendors\Recast</Filter>
     </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\fastlz.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

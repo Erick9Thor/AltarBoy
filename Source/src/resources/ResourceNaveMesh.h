@@ -4,10 +4,16 @@
 #include "resources/ResourceMesh.h"
 #include "components/ComponentMesh.h"
 
+
 class dtNavMesh;
 class dtNavMeshQuery;
 class dtCrowd;
+class dtTileCache;
 class BuildContext;
+class LinearAllocator;
+class FastLZCompressor;
+class MeshProcess;
+
 
 namespace Hachiko
 {
@@ -54,8 +60,13 @@ namespace Hachiko
     private:
         dtNavMesh* navmesh = nullptr;
         dtNavMeshQuery* navigation_query = nullptr;
+        dtTileCache* tile_cache = nullptr;
         dtCrowd* crowd = nullptr;
         BuildContext* build_context = nullptr;
+
+        LinearAllocator* talloc = nullptr;
+        FastLZCompressor* tcomp = nullptr;
+        MeshProcess* tmproc = nullptr;
 
         // Build Params
         // Agent
@@ -67,6 +78,7 @@ namespace Hachiko
         // Rasterization
         float cell_size = 0.5f;
         float cell_height = 0.20f;
+        int tile_size = 1000; // Not sure it belongs to rasterization
 
         // Region
         int region_min_size = 8;
@@ -85,5 +97,8 @@ namespace Hachiko
         SamplePartitionType partition_type = SAMPLE_PARTITION_WATERSHED;
 
         // Tiling? 
+    public:
+        static const int EXPECTED_LAYERS_PER_TILE = 4;
+        static const int MAX_LAYERS = 32;
     };
 }
