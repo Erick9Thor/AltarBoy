@@ -27,18 +27,18 @@
 
 struct FastLZCompressor : public dtTileCacheCompressor
 {
-    virtual int maxCompressedSize(const int bufferSize) override
+    int maxCompressedSize(const int bufferSize) override
     {
-        return (int)(bufferSize * 1.05f);
+        return static_cast<int>(static_cast<float>(bufferSize) * 1.05f);
     }
 
-    virtual dtStatus compress(const unsigned char* buffer, const int bufferSize, unsigned char* compressed, const int /*maxCompressedSize*/, int* compressedSize) override
+    dtStatus compress(const unsigned char* buffer, const int bufferSize, unsigned char* compressed, const int /*maxCompressedSize*/, int* compressedSize) override
     {
         *compressedSize = fastlz_compress((const void* const)buffer, bufferSize, compressed);
         return DT_SUCCESS;
     }
 
-    virtual dtStatus decompress(const unsigned char* compressed, const int compressedSize, unsigned char* buffer, const int maxBufferSize, int* bufferSize) override
+    dtStatus decompress(const unsigned char* compressed, const int compressedSize, unsigned char* buffer, const int maxBufferSize, int* bufferSize) override
     {
         *bufferSize = fastlz_decompress(compressed, compressedSize, buffer, maxBufferSize);
         return *bufferSize < 0 ? DT_FAILURE : DT_SUCCESS;
@@ -52,12 +52,15 @@ struct LinearAllocator : public dtTileCacheAlloc
     size_t top;
     size_t high;
 
-    LinearAllocator(const size_t cap) : buffer(0), capacity(0), top(0), high(0)
+    explicit LinearAllocator(const size_t cap) : buffer(nullptr)
     {
+        capacity = 0;
+        top = 0;
+        high = 0;
         resize(cap);
     }
 
-    ~LinearAllocator()
+    ~LinearAllocator() override
     {
         dtFree(buffer);
     }
@@ -70,24 +73,24 @@ struct LinearAllocator : public dtTileCacheAlloc
         capacity = cap;
     }
 
-    virtual void reset()
+    void reset() override
     {
         high = dtMax(high, top);
         top = 0;
     }
 
-    virtual void* alloc(const size_t size)
+    void* alloc(const size_t size) override
     {
         if (!buffer)
-            return 0;
+            return nullptr;
         if (top + size > capacity)
-            return 0;
+            return nullptr;
         unsigned char* mem = &buffer[top];
         top += size;
         return mem;
     }
 
-    virtual void free(void* /*ptr*/)
+    void free(void* /*ptr*/)
     {
         // Empty
     }

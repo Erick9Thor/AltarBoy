@@ -25,13 +25,12 @@ Hachiko::Scene::Scene()
     , culling_camera(App->camera->GetMainCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
+    , navmesh(new ResourceNavMesh(0))
     , loaded(false)
     , name(UNNAMED_SCENE)
 {
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;
-
-    navmesh = new ResourceNavMesh(0);
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
@@ -272,7 +271,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
         {
             // Use previous amount of mesh vertices to point to the correct indices
             // Divide size/3 because its a vector of floats not of float3
-            int indices_offset = scene_vertices.size() / 3;
+            int indices_offset = static_cast<int>(scene_vertices.size()) / 3;
             
             const float* vertices = mesh->GetVertices();
             for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
@@ -324,16 +323,16 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
 
 bool Hachiko::Scene::BuildNavmesh()
 {
-    RELEASE(navmesh);
+    delete navmesh;
     navmesh = new ResourceNavMesh(0);
 
-    bool result;
-    if (result = !navmesh->Build(this))
+    bool success = navmesh->Build(this);
+    if (!success)
     {
         HE_LOG("Failed to build navmesh uwu");
     }
     
-    return result;
+    return success;
 }
 
 void Hachiko::Scene::Start() const
