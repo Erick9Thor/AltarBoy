@@ -201,5 +201,10 @@
 #define BAR_FILLED "filled"
 #define BAR_DIRECTION "direction"
 
+// Component Agent
+#define MAX_SPEED "max_speed"
+#define MAX_ACCELERATION "max_acceleration"
+#define AVOID_OBSTACLES "avoid_obstacles"
+
 // Script
 #define SCRIPT_NAME "class_name"

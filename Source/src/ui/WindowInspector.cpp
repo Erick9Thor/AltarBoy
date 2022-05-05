@@ -95,6 +95,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             add_script = true;
         }
 
+        if (ImGui::MenuItem("Agent Component"))
+        {
+            game_object->CreateComponent(Component::Type::AGENT);
+            ImGui::CloseCurrentPopup();
+        }
+
         if (ImGui::MenuItem("Animation"))
         {
             game_object->CreateComponent(Component::Type::ANIMATION);

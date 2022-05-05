@@ -8,6 +8,7 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentAgent.h"
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -158,6 +159,9 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         break;
     case (Component::Type::POINTLIGHT):
         new_component = new ComponentPointLight(this);
+        break;
+    case (Component::Type::AGENT):
+        new_component = new ComponentAgent(this);
         break;
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);

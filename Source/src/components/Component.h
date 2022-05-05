@@ -37,6 +37,7 @@ namespace Hachiko
             ANIMATION = 14,
             SCRIPT = 15,
             TEXT = 16,
+            AGENT = 17,
             UNKNOWN
         };
 

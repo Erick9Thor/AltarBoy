@@ -547,6 +547,9 @@
     <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp" />
     <ClCompile Include="vendors\recast\include\Recast\MeshLoaderObj.cpp" />
     <ClCompile Include="vendors\recast\include\Recast\ChunkyTriMesh.cpp" />
+    <ClCompile Include="src\components\ComponentAgent.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2216,6 +2219,9 @@
     <ClInclude Include="vendors\recast\include\Recast\InputGeom.h" />
     <ClInclude Include="vendors\recast\include\Recast\MeshLoaderObj.h" />
     <ClInclude Include="vendors\recast\include\Recast\ChunkyTriMesh.h" />
+    <ClInclude Include="src\components\ComponentAgent.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

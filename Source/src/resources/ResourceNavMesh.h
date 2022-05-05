@@ -52,26 +52,14 @@ namespace Hachiko
         ResourceNavMesh(UID uid);
         ~ResourceNavMesh() override;
 
+        dtCrowd* GetCrowd() { return crowd; }
+
         bool Build(Scene* scene);    // Creates NavMesh for the scene level
         void DebugDraw();                               // Draw debug info
-        
-    private:
-        void CleanUp();
 
-        //void SetupNavMeshParams();                      // Setup Params prior to nav mesh building
-    private:
-        dtNavMesh* navmesh = nullptr;
-        dtNavMeshQuery* navigation_query = nullptr;
-        dtTileCache* tile_cache = nullptr;
-        dtCrowd* crowd = nullptr;
-        BuildContext* build_context = nullptr;
-
-        LinearAllocator* talloc = nullptr;
-        FastLZCompressor* tcomp = nullptr;
-        MeshProcess* tmproc = nullptr;
-
-        // Build Params
-        // Agent
+    public:
+       // Build Params
+       // Agent
         float agent_height = 2.0f;
         float agent_radius = 0.5f;
         float agent_max_climb = 0.9f;
@@ -93,6 +81,21 @@ namespace Hachiko
         // Detail
         int detail_sample_distance = 6;
         int detail_sample_max_error = 1;
+        
+    private:
+        void CleanUp();
+
+        //void SetupNavMeshParams();                      // Setup Params prior to nav mesh building
+    private:
+        dtNavMesh* navmesh = nullptr;
+        dtNavMeshQuery* navigation_query = nullptr;
+        dtTileCache* tile_cache = nullptr;
+        dtCrowd* crowd = nullptr;
+        BuildContext* build_context = nullptr;
+
+        LinearAllocator* talloc = nullptr;
+        FastLZCompressor* tcomp = nullptr;
+        MeshProcess* tmproc = nullptr;
 
         // Partition
         SamplePartitionType partition_type = SAMPLE_PARTITION_WATERSHED;

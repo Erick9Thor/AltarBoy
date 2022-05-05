@@ -16,6 +16,7 @@ namespace Hachiko
         bool CleanUp() override;
         bool BuildNavmesh(Scene* scene);
         UpdateStatus Update(const float delta) override; // Update crowd
+        ResourceNavMesh* GetNavMesh() const { return navmesh; };
 
         void DebugDraw();
         
