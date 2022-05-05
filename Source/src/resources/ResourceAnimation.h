@@ -44,6 +44,10 @@ namespace Hachiko
         {
             return name;
         }
+        void SetName(std::string new_name)
+        {
+            name = new_name;
+        }
 
         // ANIMATION CONTROLL
         unsigned int GetDuration() const
