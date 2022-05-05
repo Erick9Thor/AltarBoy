@@ -160,6 +160,8 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 {
     const auto r_animation = new ResourceAnimation(id);
 
+    r_animation->SetName(animation->mName.C_Str());
+
     r_animation->SetDuration(unsigned(1000 * animation->mDuration / animation->mTicksPerSecond));
 
     r_animation->channels.reserve(animation->mNumChannels);
