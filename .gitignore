@@ -368,7 +368,7 @@ imgui.ini
 !Source/vendors/wwise/include/AK/Tools/Win32/
 *.akd
 *.prof
-*.wsetting
+*.wsettings
 *.validationcache
 *.wem
 .backup/
