@@ -61,6 +61,13 @@ void Hachiko::ModelImporter::ImportWithMeta(const char* path, YAML::Node& meta)
         mesh_importer.Import(scene->mMeshes[i], meta[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>());
     }
 
+    // 3 - Import Animation
+    AnimationImporter animation_importer;
+    for (int i = 0; i < meta[ANIMATION_IDS].size(); ++i)
+    {
+        animation_importer.Import(scene->mAnimations[i], meta[ANIMATION_IDS][i].as<UID>());
+    }
+
     FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
 }
 
@@ -90,9 +97,13 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
 
     if (scene->HasAnimations())
     {
-        Hachiko::UID animation_id = UUID::GenerateUID();
         node[ANIMATIONS] = true;
-        // animation_importer.Import(scene->mAnimations, animation_id);
+        for (unsigned int i = 0; i < scene->mNumAnimations; ++i)
+        {
+            Hachiko::UID animation_id = UUID::GenerateUID();
+            node[ANIMATION_IDS][i] = animation_id;
+            animation_importer.Import(scene->mAnimations[i], animation_id);
+        }
     }
 
     ImportNode(scene->mRootNode, node);

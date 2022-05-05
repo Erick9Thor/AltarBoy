@@ -26,14 +26,14 @@ namespace Hachiko
             unsigned int num_rotations = 0;
         };
 
-        struct Node
+        /* struct Node
         {
             Node() = default;
             Node(const std::string name, unsigned int index_parent) : name(name), index_parent(index_parent) {}
 
             std::string name;
             unsigned int index_parent;
-        };
+        };*/
 
     public:
         ResourceAnimation(UID id);
@@ -63,7 +63,7 @@ namespace Hachiko
         const Channel* GetChannel(const std::string& name) const;
 
         // NODE MANAGE
-        void AddNode(const std::string& name);
+        /*void AddNode(const std::string& name);
         void RemoveNode(unsigned int index);
         const std::string& GetNodeName(unsigned int index) const
         {
@@ -72,12 +72,12 @@ namespace Hachiko
         unsigned int GetNumNodes() const
         {
             return unsigned int(nodes.size());
-        }
+        }*/
 
         std::unordered_map<std::string, Channel> channels;
 
     private:
-        std::vector<Node> nodes;
+        //std::vector<Node> nodes;
         unsigned int duration = 0;
 
         std::string name;

@@ -30,22 +30,126 @@ void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& me
 
 void Hachiko::AnimationImporter::Save(const Resource* resource) 
 {
-    const std::string animation_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + resource->GetID();
+    const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
+    const std::string file_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + resource->GetID();
 
-    // TO IMPLEMENT
+    unsigned file_size = 0;
+
+    unsigned header[3] = {
+        animation->GetDuration(),
+        animation->GetName().length(),
+        animation->channels.size()
+    };
+    file_size += sizeof(header) + animation->GetName().length();
+
+    std::vector<unsigned> second_header(3 * animation->channels.size());
+    file_size += animation->GetName().length();
+    unsigned i = 0;
+    for (auto it = animation->channels.begin(); it != animation->channels.end(); ++it)
+    {
+        second_header[i] = it->first.length();
+        second_header[i + 1] = it->second.num_positions;
+        second_header[i + 2] = it->second.num_rotations;
+        file_size += it->first.length() + sizeof(float3) * it->second.num_positions + sizeof(Quat) * it->second.num_rotations;
+        i += 3;
+    }
+    file_size += sizeof(unsigned) * second_header.size();
+    
+    const auto file_buffer = new char[file_size];
+    char* cursor = file_buffer;
+    unsigned size_bytes = 0;
+
+    size_bytes = sizeof(header);
+    memcpy(cursor, header, size_bytes);
+    cursor += size_bytes;
+
+    size_bytes = sizeof(unsigned) * second_header.size();
+    memcpy(cursor, &second_header[0], size_bytes);
+    cursor += size_bytes;
+
+    size_bytes = animation->GetName().length();
+    memcpy(cursor, animation->GetName().c_str(), size_bytes);
+    cursor += size_bytes;
+
+    i = 0;
+    for (auto it = animation->channels.begin(); it != animation->channels.end(); ++it)
+    {
+        size_bytes = it->first.length();
+        memcpy(cursor, it->first.c_str(), size_bytes);
+        cursor += size_bytes;
+
+        size_bytes = sizeof(float3) * it->second.num_positions;
+        memcpy(cursor, it->second.positions.get(), size_bytes);
+        cursor += size_bytes;
+
+        size_bytes = sizeof(Quat) * it->first.length();
+        memcpy(cursor, it->second.rotations.get(), size_bytes);
+        cursor += size_bytes;
+    }
+    
+    FileSystem::Save(file_path.c_str(), file_buffer, file_size);
+    delete[] file_buffer;
 }
 
 Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
     assert(id && "Unable to load module. Given an empty id");
 
-    const std::string animation_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(id));
+    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(id));
 
-    char* file_buffer = FileSystem::Load(animation_library_path.c_str());
+    char* file_buffer = FileSystem::Load(file_path.c_str());
+    char* cursor = file_buffer;
+    unsigned size_bytes = 0;
 
     const auto animation = new ResourceAnimation(id);
 
-    /* TODO: ANIMATION add all info to charge the node into resource */
+    unsigned header[3];
+    size_bytes = sizeof(header);
+    memcpy(header, cursor, size_bytes);
+    cursor += size_bytes;
+
+    //header[0] duration
+    //header[1] nameLength
+    //header[2] numChanels
+
+    animation->SetDuration(header[0]);
+
+    std::vector<unsigned> second_header(header[2]);
+    size_bytes = sizeof(header);
+    memcpy(&second_header[0], cursor, size_bytes);
+    cursor += size_bytes;
+
+    size_bytes = header[1];
+    std::string name = "";
+    for (unsigned i = 0; i < size_bytes; ++i)
+        name += cursor[i];
+    name += '\n';
+    cursor += size_bytes;
+
+    animation->channels.reserve(header[2]);
+    for (unsigned i = 0; i < header[2] * 3; i += 3)
+    {
+        size_bytes = second_header[i];
+        std::string chanel_name = "";
+        for (unsigned i = 0; i < size_bytes; ++i)
+            chanel_name += cursor[i];
+        chanel_name += '\n';
+        cursor += size_bytes;
+
+        ResourceAnimation::Channel& channel = animation->channels[chanel_name];
+        channel.num_positions = second_header[i + 1];
+        channel.num_rotations = second_header[i + 2];
+        channel.positions = std::make_unique<float3[]>(channel.num_positions);
+        channel.rotations = std::make_unique<Quat[]>(channel.num_rotations);
+
+        size_bytes = sizeof(float3) * channel.num_positions;
+        memcpy(channel.positions.get(), cursor, size_bytes);
+        cursor += size_bytes;
+
+        size_bytes = sizeof(Quat) * channel.num_rotations;
+        memcpy(channel.rotations.get(), cursor, size_bytes);
+        cursor += size_bytes;
+    }
 
     delete[] file_buffer;
 
@@ -102,4 +206,6 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
     }
 
     Save(r_animation);
+
+    delete r_animation;
 }
