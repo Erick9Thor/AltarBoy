@@ -37,6 +37,7 @@ namespace Hachiko
             ANIMATION = 14,
             SCRIPT = 15,
             TEXT = 16,
+            OBSTACLE = 18,
             UNKNOWN
         };
 
