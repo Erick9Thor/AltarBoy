@@ -1,13 +1,13 @@
 General:
-  id: 5740202726267613401
+  id: 10760246060058984563
   type: 3
   hash: 4082381603573674718
 model_name: SpinningTop
 material:
-  - id: 3564316015251269610
+  - id: 13471076209852451657
     name: SpinningTopMaterial
 mesh:
-  - id: 2598468199145874497
+  - id: 13785627402890089298
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

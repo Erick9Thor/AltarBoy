@@ -1,21 +1,21 @@
 General:
-  id: 5829384265761188916
+  id: 5339504264585727007
   type: 3
   hash: 5783012623464553218
 model_name: rockCrystal02_mesh
 material:
-  - id: 5982172045454946461
+  - id: 17070511810459146584
     name: DefaultMaterial
 mesh:
-  - id: 6815516838620851336
+  - id: 1769045156780302615
     material_index: 0
-  - id: 15569141388340099190
+  - id: 588668492599607966
     material_index: 0
-  - id: 18143939283291251476
+  - id: 7395622078444947400
     material_index: 0
-  - id: 9296955063907179242
+  - id: 1563974056834313702
     material_index: 0
-  - id: 1061479160533782971
+  - id: 3754113150310506066
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

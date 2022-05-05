@@ -1,13 +1,13 @@
 General:
-  id: 6535703721444987243
+  id: 14569933617402947858
   type: 3
   hash: 18228489236734780005
 model_name: tallRock_mesh
 material:
-  - id: 16794392939654501292
+  - id: 15150081582819479869
     name: tallrock_LP_01
 mesh:
-  - id: 2762715052660623941
+  - id: 11622047534691672290
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
