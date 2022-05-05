@@ -18,10 +18,12 @@
 #include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
-#include "imgui_node_editor.h"
+//#include "imgui_node_editor.h"
+#include "imnodes.h"
+#include "resources/ResourceStateMachine.h"
 
-namespace ed = ax::NodeEditor;
-static ed::EditorContext* g_Context = nullptr;
+//namespace ed = ax::NodeEditor;
+//static ed::EditorContext* g_Context = nullptr;
 
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
@@ -34,14 +36,16 @@ Hachiko::Scene::Scene() :
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
 
-    ed::Config config;
-    config.SettingsFile = "Simple.jasn";
-    g_Context = ed::CreateEditor(&config);
+    //ed::Config config;
+    //config.SettingsFile = "Simple.jasn";
+    //g_Context = ed::CreateEditor(&config);
+    ImNodes::CreateContext();
 }
 
 Hachiko::Scene::~Scene()
 {
-    ed::DestroyEditor(g_Context);
+    //ed::DestroyEditor(g_Context);
+    ImNodes::DestroyContext();
 
     CleanScene();
 }
@@ -283,6 +287,7 @@ void Hachiko::Scene::Update() const
 
     ImGui::Separator();
     */
+    /*
     ed::SetCurrentEditor(g_Context);
     ed::Begin("My Editor", ImVec2(500.0, 200.0f));
     int uniqueId = 1;
@@ -299,4 +304,100 @@ void Hachiko::Scene::Update() const
     ed::EndNode();
     ed::End();
     ed::SetCurrentEditor(nullptr);
+    */
+    
+    ResourceStateMachine sm = ResourceStateMachine(1);
+    sm.AddState("Idle", "clip1");
+    sm.AddState("Walking", "clip2");
+    sm.AddState("Running", "clip3");
+    sm.AddTransition("Idle", "Walking", "Pressed walk button", 1);
+    sm.AddTransition("Walking", "Running", "Pressed run button", 1);
+
+    struct Node
+    {
+        std::string name;
+        int inputIndex;
+        int outputIndex;
+
+        Node() {};
+        Node(const std::string& name, int inputIndex, int outputIndex) : name(name), inputIndex(inputIndex), outputIndex(outputIndex) {};
+    };
+
+    std::vector<Node> nodes;
+    
+    ImNodes::SetNodeGridSpacePos(1, ImVec2(200.0f, 200.0f));
+    ImGui::Begin("Node editor");
+    ImNodes::BeginNodeEditor();
+    
+    for (int i = 0; i < sm.states.size(); ++i)
+    {
+        int id = i * 3;
+        ImNodes::BeginNode(id + 1);
+
+        ImNodes::BeginNodeTitleBar();
+        ImGui::TextUnformatted(sm.states[i].name.c_str());
+        ImNodes::EndNodeTitleBar();
+
+        ImNodes::BeginInputAttribute(id + 2);
+        ImGui::Text(sm.states[i].clip.c_str());
+        ImNodes::EndInputAttribute();
+
+        ImNodes::BeginOutputAttribute(id + 3);
+        ImNodes::EndOutputAttribute();
+
+        ImNodes::EndNode();
+        nodes.push_back(Node(sm.states[i].name.c_str(), id + 2, id + 3));
+    }
+
+    for (int i = 0; i < sm.transitions.size(); ++i)
+    {
+        int start, end;
+        for (int j = 0; j < nodes.size(); ++j)
+        {
+            if (sm.transitions[i].source == nodes[j].name)
+            {
+                start = j;
+            }
+            if (sm.transitions[i].target == nodes[j].name)
+            {
+                end = j;
+            }
+        }
+        //ImNodes::Link(i + 1, start, end);
+
+    }
+
+    ImNodes::Link(1, 3, 5);
+    ImNodes::Link(2, 6, 8);
+    
+    /*
+    
+    ImNodes::BeginNode(10);
+
+    ImNodes::BeginNodeTitleBar();
+    ImGui::TextUnformatted("simple node :)");
+    ImNodes::EndNodeTitleBar();
+
+    ImNodes::BeginInputAttribute(2);
+    ImGui::Text("input");
+    ImNodes::EndInputAttribute();
+
+    ImNodes::BeginOutputAttribute(3);
+    ImGui::Indent(40);
+    ImGui::Text("output");
+    ImNodes::EndOutputAttribute();
+    
+
+    ImNodes::EndNode();
+    */
+
+    ImNodes::EndNodeEditor();
+    
+    ImGui::End();
+
+    
+    //example::NodeEditorInitialize();
+    //example::NodeEditorShow();
+    //example::NodeEditorShutdown();
+    
 }

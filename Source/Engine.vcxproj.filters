@@ -499,10 +499,8 @@
       <Filter>Logging</Filter>
     </ClCompile>
     <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
-    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor.cpp" />
-    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.cpp" />
-    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.cpp" />
-    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp" />
+    <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp" />
+    <ClCompile Include="vendors\imnodes-0.5\example\color_node_editor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2118,12 +2116,12 @@
       <Filter>Logging</Filter>
     </ClInclude>
     <ClInclude Include="src\resources\ResourceStateMachine.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Include\imgui_node_editor.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.h" />
-    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h" />
+    <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
+    <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h" />
+    <ClInclude Include="vendors\imnodes-0.5\dependencies\gl3w\include\GL\gl3w.h" />
+    <ClInclude Include="vendors\imnodes-0.5\dependencies\gl3w\include\GL\glcorearb.h" />
+    <ClInclude Include="vendors\imnodes-0.5\example\node_editor.h" />
+    <ClInclude Include="vendors\imnodes-0.5\example\graph.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2693,8 +2691,5 @@
     <None Include="vendors\glm\gtx\wrap.inl">
       <Filter>Vendors\Glm</Filter>
     </None>
-    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.inl" />
-    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.inl" />
-    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl" />
   </ItemGroup>
 </Project>
