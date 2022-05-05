@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\components\ComponentAgent.cpp" />
+    <ClCompile Include="src\components\ComponentObstacle.cpp" />
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
     <ClCompile Include="src\resources\ResourceNavMesh.cpp" />
     <ClCompile Include="src\importers\FontImporter.cpp" />
@@ -654,6 +655,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\components\ComponentAgent.h" />
+    <ClInclude Include="src\components\ComponentObstacle.h" />
     <ClInclude Include="src\modules\ModuleNavigation.h" />
     <ClInclude Include="src\resources\ResourceNavMesh.h" />
     <ClInclude Include="src\importers\FontImporter.h" />

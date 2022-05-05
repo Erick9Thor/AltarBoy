@@ -38,6 +38,7 @@ namespace Hachiko
             SCRIPT = 15,
             TEXT = 16,
             AGENT = 17,
+            OBSTACLE = 18,
             UNKNOWN
         };
 

@@ -106,6 +106,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             game_object->CreateComponent(Component::Type::ANIMATION);
             ImGui::CloseCurrentPopup();
         }
+
+        if (ImGui::MenuItem("Obstacle"))
+        {
+            game_object->CreateComponent(Component::Type::OBSTACLE);
+            ImGui::CloseCurrentPopup();
+        }
            
 
         // TODO: Group these UI stuff in a parent UI MenuItem and select
