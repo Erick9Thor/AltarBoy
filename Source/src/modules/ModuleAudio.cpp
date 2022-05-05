@@ -141,7 +141,7 @@ bool Hachiko::ModuleAudio::Init()
     AK::SoundEngine::RegisterGameObj(GAME_OBJECT_ID_TESTBGMUSIC, "Test");
 
     // Post this event using its name
-    AK::SoundEngine::PostEvent(L"Play_TestBGMusic", GAME_OBJECT_ID_TESTBGMUSIC);
+    //AK::SoundEngine::PostEvent(L"Play_TestBGMusic", GAME_OBJECT_ID_TESTBGMUSIC);
 
     return true;
 }
