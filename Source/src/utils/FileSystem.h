@@ -14,7 +14,7 @@ namespace Hachiko
 
         // --- CRUD --- //
         static void CreateDir(const char* directory_path);
-        static char* Load(const char* file_path);
+        static char* Load(const char* file_path, size_t* file_size_bytes = nullptr);
         static bool Save(const char* file_path, const void* buffer, unsigned int size, bool append = false);
         static bool Save(const char* path, const YAML::Node& node);
         static void Delete(const char* file_path);
@@ -31,6 +31,8 @@ namespace Hachiko
         static std::string GetFileExtension(const char* file_path);
         static bool HasExtension(const char* path);
         static bool HasExtension(const char* path, std::vector<std::string> extensions);
+        static uint64_t HashFromBuffer(const char* bufer, const size_t& size_bytes);
+        static uint64_t HashFromPath(const char* file_path);
 
         // --- Path utils --- //
         static PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext);

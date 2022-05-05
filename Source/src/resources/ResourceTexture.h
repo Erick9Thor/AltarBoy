@@ -9,13 +9,15 @@ namespace Hachiko
     {
     public:
         ResourceTexture();
+        ResourceTexture(UID id);
         ~ResourceTexture() override;
 
         enum class Type
         {
             DIFFUSE = 0,
             SPECULAR,
-            NORMALS
+            NORMALS,
+            METALNESS
         };
 
         void GenerateBuffer();

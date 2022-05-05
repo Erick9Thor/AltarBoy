@@ -1,0 +1,18 @@
+General:
+  id: 13574058935448018455
+  type: 3
+  hash: 2540204847863466931
+model_name: rockSmall01_mesh
+material:
+  - id: 17776735455639327241
+    name: DefaultMaterial
+mesh:
+  - id: 17562550790856621917
+    material_index: 0
+name: RootNode
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+child:
+  - name: Roca
+    transform: [1, 0, 0, 10.2421894, 0, 0.999999881, -1.7881392e-07, 12.4570417, 0, 1.7881392e-07, 0.999999881, 8.50073338, 0, 0, 0, 1]
+    mesh_index:
+      - 0

@@ -28,6 +28,13 @@ namespace Hachiko
             return out;
         }
 
+        static std::wstring StringToWString(const std::string& s)
+        {
+            std::wstring temp(s.length(), L' ');
+            std::copy(s.begin(), s.end(), temp.begin());
+            return temp;
+        }
+
     private:
         static size_t StrSize(const char* str)
         {

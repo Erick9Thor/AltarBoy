@@ -94,6 +94,7 @@
 #include "utils/UUID.h"
 #include "utils/StringUtils.h"
 #include "utils/FileSystem.h"
+#include "utils/WindowsFileUtil.h"
 
 #include "components/Component.h"
 #include "importers/Importer.h"
