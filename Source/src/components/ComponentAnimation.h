@@ -32,8 +32,9 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
     private:
-        AnimationController* controller = nullptr;
+        std::unique_ptr<AnimationController> controller = nullptr;
 
+        ResourceAnimation* current_animation = nullptr;
         std::vector<ResourceAnimation*> animations;
     };
 } // namespace Hachiko

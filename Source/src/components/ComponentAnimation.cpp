@@ -1,5 +1,9 @@
 #include "core/hepch.h"
 
+#include "Application.h"
+
+#include "modules/ModuleEditor.h"
+
 #include "ComponentAnimation.h"
 #include "ComponentTransform.h"
 
@@ -9,13 +13,11 @@
 
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
-    controller = new AnimationController();
+    controller = std::make_unique<AnimationController>();
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
-    delete controller;
-
     for (unsigned i = 0; i < animations.size(); ++i)
     {
         delete animations[i];
@@ -68,9 +70,21 @@ void Hachiko::ComponentAnimation::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
-        if (ImGui::Checkbox("Active Debug", &active))
+        for (unsigned i = 0; i < animations.size(); ++i)
         {
-            /* TODO */
+            if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, true, "Play"))
+            {
+                current_animation = animations[i];
+            }
+
+            ImGui::SameLine();
+
+            char animation_name[50];
+            strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
+            if (ImGui::InputText("###", animation_name, 50, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue))
+            {
+                // animations[i]->SetName(animation_name);
+            }
         }
     }
     ImGui::PopID();
