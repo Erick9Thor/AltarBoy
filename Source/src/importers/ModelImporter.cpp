@@ -188,6 +188,14 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
 
     model_output->have_animation = model_node[ANIMATIONS].as<int>();
 
+    model_output->materials.reserve(model_node[ANIMATIONS].as<int>());
+    for (unsigned i = 0; i < model_node[ANIMATIONS].as<int>(); ++i)
+    {
+        AnimationInfo animation_info;
+        animation_info.animation_id = model_node[ANIMATION_IDS][i].as<UID>();
+        model_output->animations.push_back(animation_info);
+    }
+
     LoadChildren(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
     return model_output;
 }

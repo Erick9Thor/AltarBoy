@@ -109,7 +109,7 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
         ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
         for (unsigned int i = 0; i < model->have_animation; ++i)
         {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, 0));
+            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, model->animations[i].animation_id));
             component_animation->animations.push_back(r_animation);
         }
     }
