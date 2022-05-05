@@ -5,6 +5,8 @@
 #include "ModuleSceneManager.h"
 #include "resources/ResourceNavMesh.h"
 #include "DetourNavMeshQuery.h"
+#include "DetourTileCache.h"
+#include "DetourCrowd.h"
 
 Hachiko::ModuleNavigation::ModuleNavigation() {}
 
@@ -39,7 +41,21 @@ bool Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
 
 UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
 {
+    if (!navmesh )
+    {
+        return UpdateStatus::UPDATE_CONTINUE;
+    }
+    
+    navmesh->tile_cache->update(delta, navmesh->navmesh);
+    // Note: We can add crowd debug info instead of nullptr
+    navmesh->crowd->update(delta, nullptr);
+
     return UpdateStatus::UPDATE_CONTINUE;
+}
+
+dtTileCache* Hachiko::ModuleNavigation::GetTileCache() const
+{
+    return navmesh ? navmesh->tile_cache : nullptr;
 }
 
 void Hachiko::ModuleNavigation::DebugDraw()

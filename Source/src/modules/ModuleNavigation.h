@@ -2,6 +2,8 @@
 
 #include "Module.h"
 
+class dtTileCache;
+
 namespace Hachiko
 {
     class ResourceNavmesh;
@@ -17,6 +19,7 @@ namespace Hachiko
         bool BuildNavmesh(Scene* scene);
         UpdateStatus Update(const float delta) override; // Update crowd
         ResourceNavMesh* GetNavMesh() const { return navmesh; };
+        dtTileCache* GetTileCache() const;
 
         void DebugDraw();
         
