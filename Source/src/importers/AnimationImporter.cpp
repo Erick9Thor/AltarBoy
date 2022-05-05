@@ -111,28 +111,29 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
     //header[1] nameLength
     //header[2] numChanels
 
+
     animation->SetDuration(header[0]);
 
-    std::vector<unsigned> second_header(header[2]);
-    size_bytes = sizeof(header);
+    std::vector<unsigned> second_header(header[2] * 3);
+    size_bytes = header[2] * 3 * sizeof(unsigned);
     memcpy(&second_header[0], cursor, size_bytes);
     cursor += size_bytes;
 
     size_bytes = header[1];
     std::string name = "";
-    for (unsigned i = 0; i < size_bytes; ++i)
-        name += cursor[i];
-    name += '\n';
+    for (unsigned z = 0; z < size_bytes; ++z)
+        name += cursor[z];
     cursor += size_bytes;
+
+    animation->SetName(name.c_str());
 
     animation->channels.reserve(header[2]);
     for (unsigned i = 0; i < header[2] * 3; i += 3)
     {
         size_bytes = second_header[i];
         std::string chanel_name = "";
-        for (unsigned i = 0; i < size_bytes; ++i)
-            chanel_name += cursor[i];
-        chanel_name += '\n';
+        for (unsigned j = 0; j < size_bytes; ++j)
+            chanel_name += cursor[j];
         cursor += size_bytes;
 
         ResourceAnimation::Channel& channel = animation->channels[chanel_name];
@@ -160,6 +161,7 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
     const auto r_animation = new ResourceAnimation(id);
 
     r_animation->SetName(animation->mName.C_Str());
+
     r_animation->SetDuration(unsigned(1000 * animation->mDuration / animation->mTicksPerSecond));
 
     r_animation->channels.reserve(animation->mNumChannels);

@@ -10,9 +10,11 @@ Hachiko::AnimationController::~AnimationController() {
     Stop();
 }
 
-void Hachiko::AnimationController::Play(UID clip, bool loop, unsigned fade_time) {
+void Hachiko::AnimationController::Play(ResourceAnimation* current_animation, bool loop, unsigned fade_time) 
+{
     Instance* new_instance = new Instance;
-    new_instance->clip = clip;
+
+    new_instance->current_animation = current_animation;
     new_instance->loop = loop;
     new_instance->fade_duration = fade_time;
     new_instance->previous = current;
@@ -20,7 +22,8 @@ void Hachiko::AnimationController::Play(UID clip, bool loop, unsigned fade_time)
     current = new_instance;
 }
 
-void Hachiko::AnimationController::Update(unsigned elapsed) {
+void Hachiko::AnimationController::Update(unsigned elapsed)
+{
     if (current != nullptr)
     {
         UpdateInstance(current, elapsed);
@@ -37,14 +40,13 @@ void Hachiko::AnimationController::Stop() {
 
 void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned elapsed) 
 {
-    //unload current_animation
-    ResourceAnimation* anim = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, current->clip));
+    
 
-    if (anim != nullptr && anim->GetDuration() > 0)
+    if (current->current_animation != nullptr && current->current_animation->GetDuration() > 0)
     {
         unsigned me_elapsed = unsigned(elapsed * instance->speed);
-        me_elapsed = me_elapsed % anim->GetDuration(); // REMOVE
-        unsigned to_end = anim->GetDuration() - instance->time;
+        me_elapsed = me_elapsed % current->current_animation->GetDuration(); // REMOVE
+        unsigned to_end = current->current_animation->GetDuration() - instance->time;
 
         if (me_elapsed <= to_end)
         {
@@ -56,10 +58,10 @@ void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned e
         }
         else
         {
-            instance->time = anim->GetDuration();
+            instance->time = current->current_animation->GetDuration();
         }
 
-        assert(instance->time <= anim->GetDuration());
+        assert(instance->time <= current->current_animation->GetDuration());
     }
 
     if (instance->previous != nullptr)
@@ -91,18 +93,16 @@ void Hachiko::AnimationController::ReleaseInstance(Instance* instance)
 
 bool Hachiko::AnimationController::GetTransform(Instance* instance, const std::string& channel_name, math::float3& position, Quat& rotation) const
 {
-    ResourceAnimation* animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, instance->clip));
-
-    if (animation != nullptr)
+    if (instance->current_animation != nullptr)
     {
-        const ResourceAnimation::Channel* channel = animation->GetChannel(channel_name);
+        const ResourceAnimation::Channel* channel = instance->current_animation->GetChannel(channel_name);
 
         if (channel != nullptr)
         {
-            assert(instance->time <= animation->GetDuration());
+            assert(instance->time <= instance->current_animation->GetDuration());
 
-            float pos_key = float(instance->time * (channel->num_positions - 1)) / float(animation->GetDuration());
-            float rot_key = float(instance->time * (channel->num_rotations - 1)) / float(animation->GetDuration());
+            float pos_key = float(instance->time * (channel->num_positions - 1)) / float(instance->current_animation->GetDuration());
+            float rot_key = float(instance->time * (channel->num_rotations - 1)) / float(instance->current_animation->GetDuration());
 
             unsigned pos_index = unsigned(pos_key);
             unsigned rot_index = unsigned(rot_key);

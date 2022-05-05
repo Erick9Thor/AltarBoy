@@ -13,7 +13,7 @@
 
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
-    controller = std::make_unique<AnimationController>();
+    controller = new AnimationController();
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
@@ -29,7 +29,7 @@ void Hachiko::ComponentAnimation::Start()
 {
     if (!animations.empty())
     {
-        controller->Play(animations[0]->GetID(), true, 0);
+        controller->Play(current_animation, true, 0);
     }
 }
 
@@ -40,11 +40,14 @@ void Hachiko::ComponentAnimation::Stop()
 
 void Hachiko::ComponentAnimation::Update()
 {
-    controller->Update(EngineTimer::delta_time); // TODO: change for GameTimer::delta_time
-
-    if (game_object != nullptr)
+    if (current_animation)
     {
-        UpdatedGameObject(game_object);
+        controller->Update(EngineTimer::delta_time); // TODO: change for GameTimer::delta_time
+
+        if (game_object != nullptr)
+        {
+            UpdatedGameObject(game_object);
+        }
     }
 }
 
@@ -52,6 +55,8 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
 {
     float3 position;
     Quat rotation;
+
+    HE_LOG(go->name.c_str());
 
     if (controller->GetTransform(controller->current, go->name.c_str(), position, rotation))
     {
@@ -68,24 +73,20 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
 void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
+    
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
         for (unsigned i = 0; i < animations.size(); ++i)
         {
-            if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_PLAY, true, "Play"))
-            {
-                current_animation = animations[i];
-            }
-
-            ImGui::SameLine();
-
             char animation_name[50];
             strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
-            if (ImGui::InputText("###", animation_name, 50, ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue))
+            if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name).c_str()))
             {
-                // animations[i]->SetName(animation_name);
+                current_animation = animations[i];
+                this->Start();
             }
         }
+
     }
     ImGui::PopID();
 }

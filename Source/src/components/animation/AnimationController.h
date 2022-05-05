@@ -1,5 +1,7 @@
 #pragma once
 
+#include "resources/ResourceAnimation.h"
+
 #include <Math.h>
 
 #include <vector>
@@ -10,7 +12,7 @@ namespace Hachiko
     {
         struct Instance
         {
-            UID clip = 0;
+            ResourceAnimation* current_animation = nullptr;
             unsigned time = 0;
             bool loop = true;
             float speed = 1.0;
@@ -25,7 +27,7 @@ namespace Hachiko
         AnimationController();
         ~AnimationController();
 
-        void Play(UID clip, bool loop, unsigned fade_time);
+        void Play(ResourceAnimation* current_animation, bool loop, unsigned fade_time);
         void Update(unsigned elapsed);
         void Stop();
 

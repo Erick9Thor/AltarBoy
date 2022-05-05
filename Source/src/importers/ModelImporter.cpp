@@ -106,10 +106,10 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         }
     }
 
-    ImportNode(scene->mRootNode, node);
+    ImportNode(scene->mRootNode, node, !scene->HasAnimations());
 }
 
-void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node)
+void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node, bool load_auxiliar)
 {
     std::string node_name = assimp_node->mName.C_Str();
 
@@ -126,20 +126,25 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     while (dummy_node)
     {
         dummy_node = false;
-        if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
+
+        if (load_auxiliar)
         {
-            assimp_node = assimp_node->mChildren[0];
-            assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+            if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
+            {
+                assimp_node = assimp_node->mChildren[0];
+                assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
 
-            pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
-            rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-            scale = float3(aiScale.x, aiScale.y, aiScale.z);
+                pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
+                rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+                scale = float3(aiScale.x, aiScale.y, aiScale.z);
 
-            transform = transform * float4x4::FromTRS(pos, rot, scale);;
+                transform = transform * float4x4::FromTRS(pos, rot, scale);;
 
-            node_name = assimp_node->mName.C_Str();
-            dummy_node = true;
+                node_name = assimp_node->mName.C_Str();
+                dummy_node = true;
+            }
         }
+
     }
 
     node[NODE_NAME] = assimp_node->mName.C_Str();
@@ -153,7 +158,7 @@ void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& n
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         auto child_node = assimp_node->mChildren[i];
-        ImportNode(child_node, node[NODE_CHILD][i]);
+        ImportNode(child_node, node[NODE_CHILD][i], load_auxiliar);
         ++child_node;
     }
 }

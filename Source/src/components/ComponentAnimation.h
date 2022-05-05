@@ -34,7 +34,8 @@ namespace Hachiko
         std::vector<ResourceAnimation*> animations;
 
     private:
-        std::unique_ptr<AnimationController> controller = nullptr;
+
+        AnimationController* controller = nullptr;
         ResourceAnimation* current_animation = nullptr;
     };
 } // namespace Hachiko

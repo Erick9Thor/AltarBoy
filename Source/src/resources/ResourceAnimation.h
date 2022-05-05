@@ -35,12 +35,6 @@ namespace Hachiko
         {
             return name;
         }
-        void SetName(std::string new_name)
-        {
-            name = new_name;
-        }
-
-        // RESOURCE INFO
         void SetName(const char* new_name)
         {
             name = new_name;
