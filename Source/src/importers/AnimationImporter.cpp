@@ -31,7 +31,7 @@ void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& me
 void Hachiko::AnimationImporter::Save(const Resource* resource) 
 {
     const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
-    const std::string file_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::ANIMATION) + resource->GetID();
+    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(resource->GetID()));
 
     unsigned file_size = 0;
 
@@ -43,7 +43,6 @@ void Hachiko::AnimationImporter::Save(const Resource* resource)
     file_size += sizeof(header) + animation->GetName().length();
 
     std::vector<unsigned> second_header(3 * animation->channels.size());
-    file_size += animation->GetName().length();
     unsigned i = 0;
     for (auto it = animation->channels.begin(); it != animation->channels.end(); ++it)
     {
@@ -82,7 +81,7 @@ void Hachiko::AnimationImporter::Save(const Resource* resource)
         memcpy(cursor, it->second.positions.get(), size_bytes);
         cursor += size_bytes;
 
-        size_bytes = sizeof(Quat) * it->first.length();
+        size_bytes = sizeof(Quat) * it->second.num_rotations;
         memcpy(cursor, it->second.rotations.get(), size_bytes);
         cursor += size_bytes;
     }
