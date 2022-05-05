@@ -14,6 +14,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _is_dashing(false)
 	, _dash_progress(0.0f)
 	, _dash_start(math::float3::zero)
+	, _dash_direction(math::float3::zero)
 	, _is_falling(false)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
@@ -26,7 +27,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 2.0f;
+	_dash_distance = 5.0f;
 	_dash_duration = 0.15f;
 	_movement_speed = 5.0f;
 	_rotation_duration = 0.075f;
@@ -115,6 +116,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 			_is_dashing = true;
 			_dash_progress = 0.0f;
 			_dash_start = current_position;
+
+			math::float3 dash_end = GetRaycastPositionBasedOnCurrent(_dash_start);
+			
+			_dash_direction = dash_end - _dash_start;
+			_dash_direction.Normalize();
 		}
 	}
 
@@ -160,6 +166,18 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		SceneManagement::SwitchScene(Scenes::LOSE);
 	}*/
 
+	if (_is_dashing)
+	{
+		_dash_progress += delta_time / _dash_duration;
+		_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
+
+		_is_dashing = (_dash_progress < 1.0f);
+
+		math::float3 _dash_end = _dash_start + _dash_direction * _dash_distance;
+
+		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
+	}
+
 	// If the player position is changed, check if rotation is needed:
 	if (!current_position.Equals(transform->GetGlobalPosition()))
 	{
@@ -204,18 +222,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		}
 	}
 
-	if (_is_dashing)
-	{
-		_dash_progress += delta_time / _dash_duration;
-		_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
-
-		_is_dashing = (_dash_progress < 1.0f);
-
-		math::float3 _dash_end = _dash_start + transform->GetFront() * _dash_distance;
-
-		current_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
-	}
-
 	if (!_is_dashing && Input::GetMouseButton(Input::MouseButton::LEFT))
 	{
 		math::Plane plane(
@@ -236,4 +242,20 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
+}
+
+math::float3 Hachiko::Scripting::PlayerController::GetRaycastPositionBasedOnCurrent(
+	const math::float3& current_position) const
+{
+	math::Plane plane(
+		math::float3(0.0f, current_position.y, 0.0f),
+		math::float3(0.0f, 1.0f, 0.0f));
+
+	math::float2 mouse_position_view =
+		ComponentCamera::ScreenPositionToView(Input::GetMousePosition());
+
+	math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
+		mouse_position_view.x, mouse_position_view.y);
+
+	return plane.ClosestPoint(ray);
 }

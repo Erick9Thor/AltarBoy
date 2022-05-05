@@ -21,12 +21,16 @@ public:
 	void OnUpdate() override;
 
 private:
+	math::float3 GetRaycastPositionBasedOnCurrent(const math::float3& current_position) const;
+
+private:
 	SERIALIZE_FIELD(float, _movement_speed);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(bool, _is_dashing);
 	SERIALIZE_FIELD(float, _dash_progress);
 	SERIALIZE_FIELD(math::float3, _dash_start);
+	SERIALIZE_FIELD(math::float3, _dash_direction);
 	SERIALIZE_FIELD(bool, _is_falling);
 	SERIALIZE_FIELD(float, _original_y);
 	SERIALIZE_FIELD(float, _speed_y);
