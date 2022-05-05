@@ -16,7 +16,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
 
-	_delay_amount = 1.6f;
+	_delay_amount = 1.0f;
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
@@ -35,27 +35,31 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 		float delayed_time = Time::DeltaTime() / _delay_amount;
 		Clamp<float>(delayed_time, 0.0f, 1.0f);
 
+		// Comment the following if you want z follow to be delayed as well:
+		current_position.z = final_position.z;
+
 		current_position = math::float3::Lerp(current_position, final_position, 
 			delayed_time);
 
 		math::float3 relative_position = final_position - current_position;
-		float clamp = 2.25f;
+		float x_clamp = 2.25f;
+		float z_clamp = 2.25f;
 		
-		if (relative_position.z > clamp)
+		if (relative_position.z > z_clamp)
 		{
-			current_position.z = final_position.z - clamp;
+			current_position.z = final_position.z - z_clamp;
 		}
-		if (relative_position.z < -clamp)
+		if (relative_position.z < -z_clamp)
 		{
-			current_position.z = final_position.z + clamp;
+			current_position.z = final_position.z + z_clamp;
 		}
-		if (relative_position.x > clamp)
+		if (relative_position.x > x_clamp)
 		{
-			current_position.x = final_position.x - clamp;
+			current_position.x = final_position.x - x_clamp;
 		}
-		if (relative_position.x < -clamp)
+		if (relative_position.x < -x_clamp)
 		{
-			current_position.x = final_position.x + clamp;
+			current_position.x = final_position.x + x_clamp;
 		}
 
 		transform->SetGlobalPosition(current_position);

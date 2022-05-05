@@ -15,6 +15,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_progress(0.0f)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
+	, _dash_indicator(nullptr)
 	, _is_falling(false)
 	, _original_y(0.0f)
 	, _speed_y(0.0f)
@@ -29,13 +30,15 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_dash_distance = 5.0f;
 	_dash_duration = 0.15f;
-	_movement_speed = 5.0f;
+	_movement_speed = 10.0f;
 	_rotation_duration = 0.075f;
 
 	_original_y = game_object->GetTransform()->GetGlobalPosition().y;
 	_speed_y = 0.0f;
 	
 	_starting_position = math::float3(0.0f, 1.0f, 0.0f);
+
+	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -124,23 +127,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		}
 	}
 
-	//if (_is_falling)
-	//{
-	//	_speed_y += 25.0f * delta_time;
-	//	current_position.y -= _speed_y * delta_time;
-	//}
-
-	//// Reset falling:
-	//if (Input::GetKeyDown(Input::KeyCode::KEY_P))
-	//{
-	//	if (_is_falling)
-	//	{
-	//		_speed_y = 0;
-	//		current_position.y = _original_y;
-	//	}
-	//	_is_falling = !_is_falling;
-	//}
-
 	static int times_hit_g = 0;
 	if (Input::GetKeyDown(Input::KeyCode::KEY_G))
 	{
@@ -154,17 +140,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 		created_game_object->SetName(name);
 	}
-
-	// TODO: Uncomment this in the next PR after adding the new scenes with
-	// YAML based serialization.
-	/*if (current_position.y < -20)
-	{
-		_speed_y = 0;
-		current_position = _starting_position;
-		_is_falling = false;
-
-		SceneManagement::SwitchScene(Scenes::LOSE);
-	}*/
 
 	if (_is_dashing)
 	{
@@ -240,9 +215,13 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		transform->LookAtTarget(intersection_position);
 	}
 
+
+	// Move the dash indicator:
+	MoveDashIndicator(current_position);
+
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
-}
+} 
 
 math::float3 Hachiko::Scripting::PlayerController::GetRaycastPositionBasedOnCurrent(
 	const math::float3& current_position) const
@@ -258,4 +237,19 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPositionBasedOnCurr
 		mouse_position_view.x, mouse_position_view.y);
 
 	return plane.ClosestPoint(ray);
+}
+
+void Hachiko::Scripting::PlayerController::MoveDashIndicator(
+	const math::float3& current_position) const
+{
+	math::float3 mouse_world_position = 
+		GetRaycastPositionBasedOnCurrent(current_position);
+
+	math::float3 direction = mouse_world_position- current_position;
+	direction.Normalize();
+
+	_dash_indicator->GetTransform()->SetGlobalPosition(current_position
+		+ direction);
+	_dash_indicator->GetTransform()->SetGlobalRotationEuler(
+		float3(90.0f, 0.0f, 0.0f));
 }
