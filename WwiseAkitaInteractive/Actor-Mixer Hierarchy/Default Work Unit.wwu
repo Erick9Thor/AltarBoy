@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{BB1563B0-CF31-4426-9B46-404BAF403696}" SchemaVersion="103">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{BB1563B0-CF31-4426-9B46-404BAF403696}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="TestBGMusic" ID="{01763466-E380-4180-AAE8-DC54CCCD22B2}" ShortID="864540044">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{49B790E7-C717-4B3C-A628-1EC37BAAA2D2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2C077D8D-BD26-424E-8757-C74E782FE679}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="TestBGMusic" ID="{1E6C2320-6CA2-4764-AA1B-5ABD44FDAE16}">
+							<Language>SFX</Language>
+							<AudioFile>TestBGMusic.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="78841658"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="TestBGMusic" ID="{1E6C2320-6CA2-4764-AA1B-5ABD44FDAE16}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>
