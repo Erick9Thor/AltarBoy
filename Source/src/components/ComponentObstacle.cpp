@@ -26,10 +26,25 @@ void Hachiko::ComponentObstacle::Stop()
     RemoveObstacle();
 }
 
+void Hachiko::ComponentObstacle::Update()
+{
+    if (dirty)
+    {
+        ++count_since_update;
+        if (count_since_update > update_freq)
+        {
+            RefreshObstacle();
+            dirty = false;
+            count_since_update = 0; 
+        }        
+    }
+}
+
 void Hachiko::ComponentObstacle::OnTransformUpdated()
 {
     // Disabled because it saturated navmesh updating on almost every frame
-    // RefreshObstacle();
+    dirty = true;
+    //RefreshObstacle();
 }
 
 void Hachiko::ComponentObstacle::DrawGui()
@@ -44,10 +59,6 @@ void Hachiko::ComponentObstacle::DrawGui()
         if (obstacle && ImGui::Button("Remove from navmesh"))
         {
             RemoveObstacle(); 
-        }
-        if (obstacle && ImGui::Button("Refresh Obstacle"))
-        {
-            RefreshObstacle();
         }
 
         if (obstacle_type == ObstacleType::DT_OBSTACLE_CYLINDER)
