@@ -7,6 +7,7 @@
 // CREDITS
 //   Written by Michal Cichon
 //------------------------------------------------------------------------------
+#include "core/hepch.h"
 # include "imgui_node_editor_internal.h"
 # include <algorithm>
 

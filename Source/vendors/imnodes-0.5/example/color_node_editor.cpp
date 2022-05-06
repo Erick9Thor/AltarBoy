@@ -1,3 +1,4 @@
+#include "core/hepch.h"
 #include "node_editor.h"
 #include "graph.h"
 

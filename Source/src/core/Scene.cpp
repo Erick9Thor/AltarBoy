@@ -24,6 +24,15 @@
 
 //namespace ed = ax::NodeEditor;
 //static ed::EditorContext* g_Context = nullptr;
+bool addNode = false;
+bool addClip = false;
+bool deleteClip = false;
+bool deleteNode = false;
+int nodeId = 0;
+bool started = false;
+int linkId = 0;
+bool deleteLink = false;
+Hachiko::ResourceStateMachine sm = Hachiko::ResourceStateMachine(1);
 
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
@@ -39,6 +48,12 @@ Hachiko::Scene::Scene() :
     //ed::Config config;
     //config.SettingsFile = "Simple.jasn";
     //g_Context = ed::CreateEditor(&config);
+    sm.AddState("Idle", "clip1");
+    sm.AddState("Walking", "clip2");
+    sm.AddState("Running", "clip3");
+    sm.AddState("Cry", "clip4");
+    sm.AddTransition("Idle", "Walking", "t", 1);
+    sm.AddTransition("Walking", "Running", "t", 1);
     ImNodes::CreateContext();
 }
 
@@ -278,54 +293,32 @@ void Hachiko::Scene::Update() const
 {
     root->Update();
 
-    /*
-    static ed::EditorContext* g_Context = nullptr;
-
-    auto& io = ImGui::GetIO();
-
-    ImGui::Text("FPS: %.2f (%.2gms)", io.Framerate, io.Framerate ? 1000.0f / io.Framerate : 0.0f);
-
-    ImGui::Separator();
-    */
-    /*
-    ed::SetCurrentEditor(g_Context);
-    ed::Begin("My Editor", ImVec2(500.0, 200.0f));
-    int uniqueId = 1;
-    // Start drawing nodes.
-    ed::BeginNode(uniqueId++);
-    ImGui::Text("Node A");
-    ed::BeginPin(uniqueId++, ed::PinKind::Input);
-    ImGui::Text("-> In");
-    ed::EndPin();
-    ImGui::SameLine();
-    ed::BeginPin(uniqueId++, ed::PinKind::Output);
-    ImGui::Text("Out ->");
-    ed::EndPin();
-    ed::EndNode();
-    ed::End();
-    ed::SetCurrentEditor(nullptr);
-    */
-    
-    ResourceStateMachine sm = ResourceStateMachine(1);
-    sm.AddState("Idle", "clip1");
-    sm.AddState("Walking", "clip2");
-    sm.AddState("Running", "clip3");
-    sm.AddTransition("Idle", "Walking", "Pressed walk button", 1);
-    sm.AddTransition("Walking", "Running", "Pressed run button", 1);
-
     struct Node
     {
         std::string name;
+        int nodeIndex;
         int inputIndex;
         int outputIndex;
 
         Node() {};
-        Node(const std::string& name, int inputIndex, int outputIndex) : name(name), inputIndex(inputIndex), outputIndex(outputIndex) {};
+        Node(const std::string& name, int nodeIndex, int inputIndex, int outputIndex) : name(name), nodeIndex(nodeIndex), inputIndex(inputIndex), outputIndex(outputIndex) {};
+    };
+    struct Link
+    {
+        int id;
+        int from;
+        int to;
+
+        Link() {};
+        Link(int id, int from, int to) : id(id), from(from), to(to) {};
     };
 
     std::vector<Node> nodes;
+    std::vector<Link> links;
     
-    ImNodes::SetNodeGridSpacePos(1, ImVec2(200.0f, 200.0f));
+
+    // Show node editor ------------------------------------------------------------------
+    ImNodes::SetNodeGridSpacePos(0, ImVec2(200.0f, 200.0f));
     ImGui::Begin("Node editor");
     ImNodes::BeginNodeEditor();
     
@@ -346,7 +339,7 @@ void Hachiko::Scene::Update() const
         ImNodes::EndOutputAttribute();
 
         ImNodes::EndNode();
-        nodes.push_back(Node(sm.states[i].name.c_str(), id + 2, id + 3));
+        nodes.push_back(Node(sm.states[i].name.c_str(), id + 1, id + 2, id + 3));
     }
 
     for (int i = 0; i < sm.transitions.size(); ++i)
@@ -356,48 +349,203 @@ void Hachiko::Scene::Update() const
         {
             if (sm.transitions[i].source == nodes[j].name)
             {
-                start = j;
+                start = nodes[j].outputIndex;
             }
             if (sm.transitions[i].target == nodes[j].name)
             {
-                end = j;
+                end = nodes[j].inputIndex;
             }
         }
-        //ImNodes::Link(i + 1, start, end);
+        ImNodes::Link(i + 1, start, end);
+        links.push_back(Link(i + 1, start, end));
+    }
+    // End of show node editor ------------------------------------------------------------------
 
+    // Show popup to create a node ------------------------------------------------------------------
+    const bool openPopup = ImNodes::IsEditorHovered() && ImGui::IsMouseClicked(1, false);
+
+    if (!ImGui::IsAnyItemHovered() && openPopup)
+    {
+        ImGui::OpenPopup("AddNode");
     }
 
-    ImNodes::Link(1, 3, 5);
-    ImNodes::Link(2, 6, 8);
-    
-    /*
-    
-    ImNodes::BeginNode(10);
 
-    ImNodes::BeginNodeTitleBar();
-    ImGui::TextUnformatted("simple node :)");
-    ImNodes::EndNodeTitleBar();
+    if (ImGui::BeginPopup("AddNode"))
+    {
+        if (ImGui::Button(" Add node "))
+        {
+            addNode = true;
+        }
 
-    ImNodes::BeginInputAttribute(2);
-    ImGui::Text("input");
-    ImNodes::EndInputAttribute();
+        if (addNode)
+        {
+            static char nodeName[128] = "";
+            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
+            {
+                addNode = false;
+                sm.AddState(nodeName, "");
+            }
+        }
 
-    ImNodes::BeginOutputAttribute(3);
-    ImGui::Indent(40);
-    ImGui::Text("output");
-    ImNodes::EndOutputAttribute();
-    
+        ImGui::EndPopup();
+    }
 
-    ImNodes::EndNode();
-    */
-
+    ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
     ImNodes::EndNodeEditor();
     
-    ImGui::End();
+    // End of show popup to create a node ------------------------------------------------------------------
+    
+
+
+
+
+
+
+    // Show popup to add a clip ------------------------------------------------------------------
+    for (int i = 0; i < nodes.size(); ++i)
+    {
+        if (ImNodes::IsNodeHovered(&i) && ImGui::IsMouseClicked(1, false))
+        {
+            nodeId = i;
+            ImGui::OpenPopup("EditNode");
+        }
+    }
+ 
+    if (ImGui::BeginPopup("EditNode"))
+    {
+        if (ImGui::Button(" Add clip "))
+        {
+            addClip = true;
+        }
+        else if (ImGui::Button(" Delete clip "))
+        {
+            deleteClip = true;
+        }
+        else if (ImGui::Button(" Delete node "))
+        {
+            deleteNode = true;
+        }
+
+        if (addClip)
+        {
+            static char clipName[128] = "";
+            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Clip name ", clipName, IM_ARRAYSIZE(clipName), nodeName_input_flags))
+            {
+                addClip = false;
+                for (int i = 0; i < nodes.size(); ++i)
+                {
+                    if (nodes[i].nodeIndex == nodeId)
+                    {
+                        sm.EditStateClip(nodes[i].name, clipName);
+                    }
+                }
+            }
+            ImGui::CloseCurrentPopup();
+        }
+        else if (deleteClip)
+        {
+            deleteClip = false;
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                if (nodes[i].nodeIndex == nodeId)
+                {
+                    sm.EditStateClip(nodes[i].name, "");
+                }
+            }
+            ImGui::CloseCurrentPopup();
+        }
+        else if (deleteNode)
+        {
+            deleteNode = false;
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                if (nodes[i].nodeIndex == nodeId)
+                {
+                    sm.RemoveState(nodes[i].name);
+                    nodes.erase(nodes.begin() + i);
+                }
+            }
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+    // End of show popup to add a clip ------------------------------------------------------------------
+    
+    
+
+    // Add a link ------------------------------------------------------------------
+    int start, end;
+    for (int i = 0; i < nodes.size(); ++i)
+    {
+        int pin = (i + 1) * 3;
+        if (ImNodes::IsLinkStarted(&pin))
+        {
+            start = pin;
+            started = true;
+        }
+    }
+
+    for (int i = 0; i < nodes.size(); ++i)
+    {
+        int end = i + 2;
+        if (started && ImNodes::IsLinkCreated(&start, &end, false))
+        {
+            std::string startName, endName;
+            for (int j = 0; j < nodes.size(); ++j)
+            {
+                if (nodes[j].outputIndex == start)
+                {
+                    startName = nodes[j].name;
+                }
+                if (nodes[j].inputIndex == end)
+                {
+                    endName = nodes[j].name;
+                }
+            }
+            sm.AddTransition(startName, endName, "", 3);
+        }
+    }
+    // End of add a link ------------------------------------------------------------------
 
     
-    //example::NodeEditorInitialize();
-    //example::NodeEditorShow();
-    //example::NodeEditorShutdown();
+    // Delete a link ------------------------------------------------------------------
+    for (int i = 0; i < links.size(); ++i)
+    {
+        if (ImNodes::IsLinkHovered(&links[i].id) && ImGui::IsMouseClicked(1, false))
+        {
+            linkId = links[i].id;
+            ImGui::OpenPopup("DeleteLink");
+        }
+    }
     
+    if (ImGui::BeginPopup("DeleteLink"))
+    {
+        if (ImGui::Button(" Delete link "))
+        {
+            deleteLink = true;
+        }
+
+        if (deleteLink)
+        {
+            deleteLink = false;
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                int a = links[linkId - 1].from;
+                int b = nodes[i].outputIndex;
+                if (links[linkId - 1].from == nodes[i].outputIndex)
+                {
+                    sm.RemoveTransition(nodes[i].name, "t");
+                    links.erase(links.begin() + linkId - 1);
+                    break;
+                }
+            }
+            ImGui::CloseCurrentPopup();
+        }
+
+        ImGui::EndPopup();
+    }
+    
+    ImGui::End();
 }
