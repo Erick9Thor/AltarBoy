@@ -22,7 +22,7 @@ public:
 private:
 	SERIALIZE_FIELD(math::float3, _relative_position_to_player);
 	SERIALIZE_FIELD(GameObject*, _player);
-	SERIALIZE_FIELD(float, _delay_amount);
+	SERIALIZE_FIELD(float, _follow_delay);
 };
 } // namespace Scripting
 } // namespace Hachiko
