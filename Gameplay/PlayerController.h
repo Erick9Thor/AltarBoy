@@ -17,29 +17,36 @@ public:
 	~PlayerController() override = default;
 
 	void OnAwake() override;
-	void OnStart() override;
 	void OnUpdate() override;
 
 private:
-	math::float3 GetRaycastPositionBasedOnCurrent(
+	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
+	
 	void MoveDashIndicator(const math::float3& current_position) const;
+	
+	void SpawnGameObject() const;
+	
+	void Attack(ComponentTransform* transform, 
+		const math::float3& current_position);
+
+	void Dash(math::float3& current_position);
+
+	void Rotate(ComponentTransform* transform, 
+		const math::float3& current_position);
+	
+	void HandleInput(math::float3& current_position);
 
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
 
+	SERIALIZE_FIELD(GameObject*, _dash_indicator);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
-	SERIALIZE_FIELD(bool, _is_dashing);
 	SERIALIZE_FIELD(float, _dash_progress);
+	SERIALIZE_FIELD(bool, _is_dashing);
 	SERIALIZE_FIELD(math::float3, _dash_start);
 	SERIALIZE_FIELD(math::float3, _dash_direction);
-	SERIALIZE_FIELD(GameObject*, _dash_indicator);
-
-	SERIALIZE_FIELD(bool, _is_falling);
-	SERIALIZE_FIELD(float, _original_y);
-	SERIALIZE_FIELD(float, _speed_y);
-	SERIALIZE_FIELD(math::float3, _starting_position);
 
 	SERIALIZE_FIELD(bool, _should_rotate);
 	SERIALIZE_FIELD(float, _rotation_progress);
