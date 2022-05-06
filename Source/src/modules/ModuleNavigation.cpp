@@ -9,6 +9,9 @@
 #include "DebugUtils/DebugDraw.h"
 #include "DebugUtils/DetourDebugDraw.h"
 
+#include "ModuleCamera.h"
+#include "components/ComponentCamera.h"
+
 Hachiko::ModuleNavigation::ModuleNavigation() {}
 
 Hachiko::ModuleNavigation::~ModuleNavigation() {}
@@ -102,8 +105,38 @@ void Hachiko::ModuleNavigation::DebugDraw()
     if (navmesh)
     {
         DebugDrawGL dd;
+
+        
+        ComponentCamera* camera = App->camera->GetMainCamera();
+
+        glUseProgram(0);
+        glBindVertexArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        constexpr bool transpose = true;
+        glLoadMatrixf(camera->GetProjectionMatrix(transpose).ptr());
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glLoadMatrixf(camera->GetViewMatrix(transpose).ptr());
+
+        glDepthMask(GL_FALSE);
+
+
         navmesh->DebugDraw(dd);
         RenderAgents(dd);
+
+
+        
+        glDepthMask(GL_TRUE);
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
     }
 }
 
@@ -205,9 +238,21 @@ void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
         }
     }
 
-    // TODO: Draw agents target ref, need tro retrieve each agents since example used a common one (maybe we could have an agent array)
-    // if (target_ref)
-    //     duDebugDrawCross(&dd, m_targetPos[0], m_targetPos[1] + 0.1f, m_targetPos[2], navmesh->agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
+    // Draw agents target ref (This is different from example code bcs it only had 1 target and was not obtained from agents)
+    if (target_ref)
+    {
+        for (int i = 0; i < crowd->getAgentCount(); i++)
+        {
+            if (show_details_all == false && i != agent_debug.idx)
+                continue;
+            const dtCrowdAgent* ag = crowd->getAgent(i);
+            if (!ag->active)
+                continue;
+            const float* target = ag->targetPos;
+            duDebugDrawCross(&dd, target[0], target[1] + 0.1f, target[2], navmesh->agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
+
+        }
+    }
 
     // Occupancy grid.
     if (show_grid)

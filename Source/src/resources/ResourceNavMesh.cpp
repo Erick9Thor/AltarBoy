@@ -629,40 +629,15 @@ void drawObstacles(duDebugDraw* dd, const dtTileCache* tc)
 
 void Hachiko::ResourceNavMesh::DebugDraw(DebugDrawGL& dd)
 {
+    static const unsigned char flags = DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST;
     if (navmesh)
     {
-        unsigned char flags = DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST;
-        ComponentCamera* camera = App->camera->GetMainCamera();
-
-        glUseProgram(0);
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        constexpr bool transpose = true;
-        glLoadMatrixf(camera->GetProjectionMatrix(transpose).ptr());
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glLoadMatrixf(camera->GetViewMatrix(transpose).ptr());
-
-        glDepthMask(GL_FALSE);
-
         // Draw Navmesh
         duDebugDrawNavMeshWithClosedList(&dd, *navmesh, *navigation_query, flags);
         // Draw Obstacles
         drawObstacles(&dd, tile_cache);
-
-        glDepthMask(GL_TRUE);
-
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-    }
-    
+        //duDebugDrawNavMeshPolysWithFlags(&dd, *navmesh, SAMPLE_POLYFLAGS_DISABLED, duRGBA(0, 0, 0, 128));
+    }   
 }
 
 
