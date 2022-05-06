@@ -550,6 +550,7 @@
     <ClCompile Include="src\components\ComponentAgent.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\ComponentObstacle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2222,6 +2223,7 @@
     <ClInclude Include="src\components\ComponentAgent.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\ComponentObstacle.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

@@ -53,6 +53,7 @@ namespace Hachiko
 		float max_acceleration;
 		bool avoid_obstacles;
 		bool join_crowd;
+		bool use_pathfinder;
 
 		bool is_game_running;
 	};

@@ -10,7 +10,12 @@ Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type:
 	max_speed = 5.0f;
 	max_acceleration = 2.0f;
 	avoid_obstacles = true;
+    join_crowd = true;
+    use_pathfinder = true;
     agent_id = -1;
+
+    // TODO: Remove this call when HE lifecycle is fixed
+    Start();
 }
 
 void Hachiko::ComponentAgent::Start()
@@ -28,14 +33,14 @@ void Hachiko::ComponentAgent::Start()
         }
     };
     App->event->Subscribe(Event::Type::GAME_STATE, handleGameStateChanges);
+    // TODO: REMOVE. ADDED FOR DEBUG PURPOUSES
+    AddToCrowd();
 }
 
 void Hachiko::ComponentAgent::Update()
 {
     // Is Game running?
     // ...
-    if (GameTimer::running)
-    {
         if (App->scene_manager->GetActiveScene() != GetGameObject()->scene_owner)    return;
         ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
         if (!navMesh)
@@ -52,18 +57,46 @@ void Hachiko::ComponentAgent::Update()
         const dtCrowdAgent* dt_agent = navMesh->GetCrowd()->getAgent(agent_id);
         ComponentTransform* agents_transform = GetGameObject()->GetComponent<ComponentTransform>();
         agents_transform->SetGlobalPosition(float3(dt_agent->npos));
-    }
 }
 
 void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
 {
+    if (agent_id == -1)  return;
 
+    ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
+    dtNavMeshQuery* navQuery = navMesh->GetQuery();
+    dtCrowd* crowd = navMesh->GetCrowd();
+    const dtQueryFilter* filter = crowd->getFilter(0);
+    const float* queryExtents = crowd->getQueryExtents();
+
+    if (use_pathfinder)
+    {
+        navQuery->findNearestPoly(target_pos.ptr(), queryExtents, filter, &target_poly, target_position.ptr());
+        const dtCrowdAgent* ag = crowd->getAgent(agent_id);
+        if (!ag) return;
+        if (ag->active)
+        {
+            crowd->requestMoveTarget(agent_id, target_poly, target_position.ptr());
+        }
+    }
+    else
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(agent_id);
+        if (!ag) return;
+        if (ag->active)
+        {
+            float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
+            float3 new_vel = new_dir * max_speed;
+            crowd->requestMoveVelocity(agent_id, new_vel.ptr());
+        }
+    }
 }
 
 void Hachiko::ComponentAgent::AddToCrowd()
 {
     join_crowd = true;
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
+    if (agent_id != -1)  return;
 
     // PARAMS INIT
     dtCrowdAgentParams ap;
@@ -100,7 +133,7 @@ void Hachiko::ComponentAgent::RemoveFromCrowd()
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
     if (!navMesh)    return;
 
-    navMesh->GetCrowd()->removeAgent(this->GetID());
+    navMesh->GetCrowd()->removeAgent(agent_id);
     agent_id = -1;
 }
 
@@ -111,10 +144,14 @@ void Hachiko::ComponentAgent::DrawGui()
     {
         ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f);
         ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f);
-        ImGui::Checkbox("Avoid obstacles", &avoid_obstacles);
+        ImGui::Checkbox("Use Pathfinding", &use_pathfinder);
+        ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles);
     }
     // TODO: Delete before VS2 this shit is just to test
     ImGui::DragFloat3("newTarget", target_position.ptr(), 1.0f, -inf, inf);
+    if (ImGui::Button("Feed position")) {
+        SetTargetPosition(target_position);
+    }
     ImGui::PopID();
 }
 

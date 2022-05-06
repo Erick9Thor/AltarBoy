@@ -52,7 +52,8 @@ namespace Hachiko
         ResourceNavMesh(UID uid);
         ~ResourceNavMesh() override;
 
-        dtCrowd* GetCrowd() { return crowd; }
+        dtCrowd* GetCrowd() const { return crowd; }
+        dtNavMeshQuery* GetQuery() const { return navigation_query; }
 
         bool Build(Scene* scene);    // Creates NavMesh for the scene level
         void DebugDraw();                               // Draw debug info
