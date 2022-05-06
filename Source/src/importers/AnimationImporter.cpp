@@ -158,6 +158,12 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 
 void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 {
+
+    unsigned int first = 0;
+    unsigned int last = UINT_MAX;
+
+    float scale = 1.0f;
+
     const auto r_animation = new ResourceAnimation(id);
 
     r_animation->SetName(animation->mName.C_Str());
@@ -179,14 +185,14 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 
         if (node->mNumPositionKeys > 1)
         {
-            pos_first = node->mNumPositionKeys;
-            pos_last = std::max(pos_first, node->mNumPositionKeys);
+            pos_first = std::min(first, node->mNumPositionKeys);
+            pos_last = std::max(pos_first, std::min(last, node->mNumPositionKeys));
         }
 
         if (node->mNumRotationKeys > 1)
         {
-            rot_first = node->mNumRotationKeys;
-            rot_last = std::max(rot_first, node->mNumRotationKeys);
+            rot_first = std::min(first, node->mNumRotationKeys);
+            rot_last = std::max(rot_first, std::min(last, node->mNumRotationKeys));
         }
 
         channel.num_positions = pos_last - pos_first;
@@ -197,7 +203,7 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
 
         for (unsigned j = 0; j < (pos_last - pos_first); ++j)
         {
-            channel.positions[j] = (*reinterpret_cast<math::float3*>(&node->mPositionKeys[j + pos_first].mValue)) * 1.0f;
+            channel.positions[j] = (*reinterpret_cast<math::float3*>(&node->mPositionKeys[j + pos_first].mValue)) * scale;
         }
 
         for (unsigned j = 0; j < (rot_last - rot_first); ++j)

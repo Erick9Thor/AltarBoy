@@ -56,8 +56,6 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
     float3 position;
     Quat rotation;
 
-    HE_LOG(go->name.c_str());
-
     if (controller->GetTransform(controller->current, go->name.c_str(), position, rotation))
     {
         go->GetTransform()->SetLocalPosition(position);
