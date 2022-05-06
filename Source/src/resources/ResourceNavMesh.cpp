@@ -588,6 +588,48 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     return true;
 }
 
+void drawObstacles(duDebugDraw* dd, const dtTileCache* tc)
+{
+    // Draw obstacles
+    for (int i = 0; i < tc->getObstacleCount(); ++i)
+    {
+        const dtTileCacheObstacle* ob = tc->getObstacle(i);
+        if (ob->state == DT_OBSTACLE_EMPTY)
+            continue;
+        float bmin[3], bmax[3];
+        tc->getObstacleBounds(ob, bmin, bmax);
+
+        unsigned int col = 0;
+        if (ob->state == DT_OBSTACLE_PROCESSING)
+            col = duRGBA(255, 255, 0, 128);
+        else if (ob->state == DT_OBSTACLE_PROCESSED)
+            col = duRGBA(255, 192, 0, 192);
+        else if (ob->state == DT_OBSTACLE_REMOVING)
+            col = duRGBA(220, 0, 0, 128);
+
+        switch (ob->type)
+        {
+        case DT_OBSTACLE_CYLINDER || DT_OBSTACLE_CYLINDER:
+            // There seems to be no way of debug draw oriented box in detour debug draw
+            duDebugDrawCylinder(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
+            duDebugDrawCylinderWire(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+            break;
+        case DT_OBSTACLE_BOX:
+            duDebugDrawBox(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], &col);
+            duDebugDrawBoxWire(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+            break;
+        case DT_OBSTACLE_ORIENTED_BOX:
+            // There seems to be no way of debug draw oriented box in detour debug draw
+            duDebugDrawCylinder(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
+            duDebugDrawCylinderWire(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+            break;
+        }
+        
+
+        //DT_OBSTACLE_CYLINDER
+    }
+}
+
 void Hachiko::ResourceNavMesh::DebugDraw()
 {
     if (navmesh)
@@ -610,7 +652,12 @@ void Hachiko::ResourceNavMesh::DebugDraw()
         glLoadMatrixf(camera->GetViewMatrix(transpose).ptr());
 
         glDepthMask(GL_FALSE);
+
+        // Draw Navmesh
         duDebugDrawNavMeshWithClosedList(&m_dd, *navmesh, *navigation_query, flags);
+        // Draw Obstacles
+        drawObstacles(&m_dd, tile_cache);
+
         glDepthMask(GL_TRUE);
 
         glMatrixMode(GL_PROJECTION);

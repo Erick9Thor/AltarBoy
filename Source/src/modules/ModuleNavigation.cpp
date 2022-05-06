@@ -46,8 +46,11 @@ UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
         return UpdateStatus::UPDATE_CONTINUE;
     }
     
-    navmesh->tile_cache->update(delta, navmesh->navmesh);
+    dtTileCache* tile_cache = navmesh->tile_cache;
+    tile_cache->update(delta, navmesh->navmesh);
     // Note: We can add crowd debug info instead of nullptr
+    UpdateObstacleStats(tile_cache);
+
     navmesh->crowd->update(delta, nullptr);
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -84,4 +87,31 @@ float Hachiko::ModuleNavigation::GetYFromPosition(const math::float3& position) 
     }
 
     return height;
+}
+
+void Hachiko::ModuleNavigation::UpdateObstacleStats(dtTileCache* tile_cache)
+{
+    total_obstacle_slots = tile_cache->getObstacleCount();
+    n_processing = 0;
+    n_processed = 0;
+    n_removing = 0;
+
+    for (int i = 0; i < total_obstacle_slots; ++i)
+    {
+        const dtTileCacheObstacle* ob = tile_cache->getObstacle(i);
+        switch (ob->state)
+        {
+        case DT_OBSTACLE_EMPTY:
+            break;
+        case DT_OBSTACLE_PROCESSED:
+            ++n_processed;
+            break;
+        case DT_OBSTACLE_PROCESSING:
+            ++n_processing;
+            break;
+        case DT_OBSTACLE_REMOVING:
+            ++n_removing;
+            break;
+        }
+    }
 }

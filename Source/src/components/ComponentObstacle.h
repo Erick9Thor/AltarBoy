@@ -18,6 +18,7 @@ namespace Hachiko
 
         void Start() override;
         void Stop() override;
+        virtual void Update() override;
         virtual void OnTransformUpdated() override;
 
         static Type GetType()
@@ -32,12 +33,14 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
         void DrawGui() override;        
     private:
+        static const int update_freq = 25;
+        int count_since_update = 0;
+        bool dirty = true;
         void AddObstacle();
         void RemoveObstacle();
+        void RefreshObstacle(); // Workaround manual refresh, If we call on each on transform updated the obstacle buffer saturates
         dtObstacleRef* obstacle = nullptr;	
         ObstacleType obstacle_type = ObstacleType::DT_OBSTACLE_CYLINDER;
         float3 size = float3::one;
-        //bool draw_gizmo = true;
-        //bool using_obstacle = false;       
     };
 } // namespace Hachiko
