@@ -4,16 +4,6 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
-	target_position = float3::zero;
-	target_poly = 0;
-
-	max_speed = 5.0f;
-	max_acceleration = 2.0f;
-	avoid_obstacles = true;
-    join_crowd = true;
-    use_pathfinder = true;
-    agent_id = -1;
-
     // TODO: Remove this call when HE lifecycle is fixed
     Start();
 }
@@ -41,22 +31,16 @@ void Hachiko::ComponentAgent::Update()
 {
     // Is Game running?
     // ...
-        if (App->scene_manager->GetActiveScene() != GetGameObject()->scene_owner)    return;
-        ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
-        if (!navMesh)
-        {
-            HE_LOG("NavMesh not built in this scene.");
-            return;
-        }
 
-        // Try to add agent to crowd
-        if(join_crowd)    AddToCrowd();
-        if (agent_id == -1)  return;
-
-        // Move agent through NavMesh
-        const dtCrowdAgent* dt_agent = navMesh->GetCrowd()->getAgent(agent_id);
-        ComponentTransform* agents_transform = GetGameObject()->GetComponent<ComponentTransform>();
-        agents_transform->SetGlobalPosition(float3(dt_agent->npos));
+    if (agent_id == -1)
+    {
+        // No agent no update
+        return;
+    }
+    // Move agent through NavMesh
+    const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
+    ComponentTransform* agents_transform = GetGameObject()->GetComponent<ComponentTransform>();
+    agents_transform->SetGlobalPosition(float3(dt_agent->npos));
 }
 
 void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
@@ -73,8 +57,7 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     {
         navQuery->findNearestPoly(target_pos.ptr(), queryExtents, filter, &target_poly, target_position.ptr());
         const dtCrowdAgent* ag = crowd->getAgent(agent_id);
-        if (!ag) return;
-        if (ag->active)
+        if (ag && ag->active)
         {
             crowd->requestMoveTarget(agent_id, target_poly, target_position.ptr());
         }
@@ -82,8 +65,7 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     else
     {
         const dtCrowdAgent* ag = crowd->getAgent(agent_id);
-        if (!ag) return;
-        if (ag->active)
+        if (ag && ag->active)
         {
             float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
             float3 new_vel = new_dir * max_speed;
@@ -94,9 +76,12 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
 
 void Hachiko::ComponentAgent::AddToCrowd()
 {
-    join_crowd = true;
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
-    if (agent_id != -1)  return;
+    if (agent_id != -1)
+    {
+        HE_LOG("Error: Tried to add an agent that was already in crowd");
+        return;
+    }
 
     // PARAMS INIT
     dtCrowdAgentParams ap;
@@ -128,7 +113,11 @@ void Hachiko::ComponentAgent::AddToCrowd()
 
 void Hachiko::ComponentAgent::RemoveFromCrowd()
 {
-    join_crowd = false;
+    if (agent_id < 0)
+    {
+        HE_LOG("Error: Tried to remove an agent that was not in crowd");
+        return;
+    }
 
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
     if (!navMesh)    return;

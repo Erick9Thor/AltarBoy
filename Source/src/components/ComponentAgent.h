@@ -45,17 +45,15 @@ namespace Hachiko
 
 		void DrawGui() override;
 	private:
-		float3 target_position;
-		unsigned int target_poly;
-		int agent_id;
+        float3 target_position = float3::zero;
+		unsigned int target_poly = 0;
+		int agent_id = -1;
 
-		float max_speed;
-		float max_acceleration;
-		bool avoid_obstacles;
-		bool join_crowd;
-		bool use_pathfinder;
+		float max_speed = 5.0f;
+		float max_acceleration = 2.0f;
+		bool avoid_obstacles = true;
+		bool use_pathfinder = true;
 
-		bool is_game_running;
 	};
 }
 

@@ -92,6 +92,11 @@ dtTileCache* Hachiko::ModuleNavigation::GetTileCache() const
     return navmesh ? navmesh->tile_cache : nullptr;
 }
 
+dtCrowd* Hachiko::ModuleNavigation::GetCrowd() const
+{
+    return navmesh ? navmesh->crowd : nullptr;
+}
+
 void Hachiko::ModuleNavigation::DebugDraw()
 {
     if (navmesh)

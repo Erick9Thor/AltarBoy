@@ -22,6 +22,7 @@ namespace Hachiko
         UpdateStatus Update(const float delta) override; // Update crowd
         ResourceNavMesh* GetNavMesh() const { return navmesh; };
         dtTileCache* GetTileCache() const;
+        dtCrowd* GetCrowd() const;
 
         void DebugDraw();
         
