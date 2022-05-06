@@ -3,10 +3,11 @@
 #include "ModuleNavigation.h"
 #include "core/Scene.h"
 #include "ModuleSceneManager.h"
-#include "resources/ResourceNavMesh.h"
 #include "DetourNavMeshQuery.h"
 #include "DetourTileCache.h"
-#include "DetourCrowd.h"
+#include "DetourCommon.h"
+#include "DebugUtils/DebugDraw.h"
+#include "DebugUtils/DetourDebugDraw.h"
 
 Hachiko::ModuleNavigation::ModuleNavigation() {}
 
@@ -21,6 +22,8 @@ bool Hachiko::ModuleNavigation::CleanUp()
 {
     // TODO: Manage as a resources aand not released here
     RELEASE(navmesh);
+    dtFreeObstacleAvoidanceDebugData(avoid_debug);
+    avoid_debug = nullptr;
     return true;
 }
 
@@ -35,6 +38,17 @@ bool Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
     {
         HE_LOG("Failed to build navmesh uwu");
     }
+
+    // Set agents debug data to clean state
+    memset(m_trails, 0, sizeof(m_trails));
+
+    avoid_debug = dtAllocObstacleAvoidanceDebugData();
+    avoid_debug->init(2048);
+
+    memset(&agent_debug, 0, sizeof(agent_debug));
+    // Idx is used to mark selected agent, unused atm
+    agent_debug.idx = -1;
+    agent_debug.vod = avoid_debug;
 
     return success;
 }
@@ -51,7 +65,24 @@ UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
     // Note: We can add crowd debug info instead of nullptr
     UpdateObstacleStats(tile_cache);
 
-    navmesh->crowd->update(delta, nullptr);
+    // Crowd update with debug data
+    dtCrowd* crowd = navmesh->crowd;
+    crowd->update(delta, &agent_debug);
+
+    // Update agent trails
+    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        AgentTrail* trail = &m_trails[i];
+        if (!ag->active)
+            continue;
+        // Update agent movement trail.
+        trail->htrail = (trail->htrail + 1) % ResourceNavMesh::AGENT_MAX_TRAIL;
+        dtVcopy(&trail->trail[trail->htrail * 3], ag->npos);
+    }
+
+    // Idk the reason behind thees, normalizes obstacle avoidance debug data?
+    agent_debug.vod->normalizeSamples();
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -65,7 +96,9 @@ void Hachiko::ModuleNavigation::DebugDraw()
 {
     if (navmesh)
     {
-        navmesh->DebugDraw();
+        DebugDrawGL dd;
+        navmesh->DebugDraw(dd);
+        RenderAgents(dd);
     }
 }
 
@@ -114,4 +147,322 @@ void Hachiko::ModuleNavigation::UpdateObstacleStats(dtTileCache* tile_cache)
             break;
         }
     }
+}
+
+
+
+// Obtained from crowdtool
+void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
+{
+
+    if (!navmesh || !navmesh->navmesh || !navmesh->crowd)
+        return;
+
+    dtNavMesh* nav = navmesh->navmesh;
+    dtCrowd* crowd = navmesh->crowd;
+
+    bool show_nodes = true;
+    bool show_path = true;
+    bool show_details_all = true;
+    bool target_ref = true;
+    bool show_grid = true;
+    bool show_corners = true;
+    bool show_collision_segments = true;
+    bool show_neis = true;
+    bool show_opt = true;
+    bool show_vo = true;
+
+    if (show_nodes && crowd->getPathQueue())
+    {
+        const dtNavMeshQuery* navquery = crowd->getPathQueue()->getNavQuery();
+        if (navquery)
+            duDebugDrawNavMeshNodes(&dd, *navquery);
+    }
+
+    dd.depthMask(false);
+
+    // Draw paths
+    
+    if (show_path)
+    {
+        
+        for (int i = 0; i < crowd->getAgentCount(); i++)
+        {
+            if (show_details_all == false && i != agent_debug.idx)
+                continue;
+            const dtCrowdAgent* ag = crowd->getAgent(i);
+            if (!ag->active)
+                continue;
+            const dtPolyRef* path = ag->corridor.getPath();
+            const int npath = ag->corridor.getPathCount();
+            for (int j = 0; j < npath; ++j)
+                duDebugDrawNavMeshPoly(&dd, *nav, path[j], duRGBA(255, 255, 255, 24));
+        }
+    }
+
+    // TODO: Draw agents target ref, need tro retrieve each agents since example used a common one (maybe we could have an agent array)
+    // if (target_ref)
+    //     duDebugDrawCross(&dd, m_targetPos[0], m_targetPos[1] + 0.1f, m_targetPos[2], navmesh->agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
+
+    // Occupancy grid.
+    if (show_grid)
+    {
+        float gridy = -FLT_MAX;
+        for (int i = 0; i < crowd->getAgentCount(); ++i)
+        {
+            const dtCrowdAgent* ag = crowd->getAgent(i);
+            if (!ag->active)
+                continue;
+            const float* pos = ag->corridor.getPos();
+            gridy = dtMax(gridy, pos[1]);
+        }
+        gridy += 1.0f;
+
+        dd.begin(DU_DRAW_QUADS);
+        const dtProximityGrid* grid = crowd->getGrid();
+        const int* bounds = grid->getBounds();
+        const float cs = grid->getCellSize();
+        for (int y = bounds[1]; y <= bounds[3]; ++y)
+        {
+            for (int x = bounds[0]; x <= bounds[2]; ++x)
+            {
+                const int count = grid->getItemCountAt(x, y);
+                if (!count)
+                    continue;
+                unsigned int col = duRGBA(128, 0, 0, dtMin(count * 40, 255));
+                dd.vertex(x * cs, gridy, y * cs, col);
+                dd.vertex(x * cs, gridy, y * cs + cs, col);
+                dd.vertex(x * cs + cs, gridy, y * cs + cs, col);
+                dd.vertex(x * cs + cs, gridy, y * cs, col);
+            }
+        }
+        dd.end();
+    }
+
+    // Trail
+    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        if (!ag->active)
+            continue;
+
+        const AgentTrail* trail = &m_trails[i];
+        const float* pos = ag->npos;
+
+        dd.begin(DU_DRAW_LINES, 3.0f);
+        float prev[3], preva = 1;
+        dtVcopy(prev, pos);
+        for (int j = 0; j < ResourceNavMesh::AGENT_MAX_TRAIL - 1; ++j)
+        {
+            const int idx = (trail->htrail + ResourceNavMesh::AGENT_MAX_TRAIL - j) % ResourceNavMesh::AGENT_MAX_TRAIL;
+            const float* v = &trail->trail[idx * 3];
+            float a = 1 - j / (float)ResourceNavMesh::AGENT_MAX_TRAIL;
+            dd.vertex(prev[0], prev[1] + 0.1f, prev[2], duRGBA(0, 0, 0, (int)(128 * preva)));
+            dd.vertex(v[0], v[1] + 0.1f, v[2], duRGBA(0, 0, 0, (int)(128 * a)));
+            preva = a;
+            dtVcopy(prev, v);
+        }
+        dd.end();
+    }
+
+    // Corners & co
+    for (int i = 0; i < crowd->getAgentCount(); i++)
+    {
+        if (show_details_all == false && i != agent_debug.idx)
+            continue;
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        if (!ag->active)
+            continue;
+
+        const float radius = ag->params.radius;
+        const float* pos = ag->npos;
+
+        if (show_corners)
+        {
+            if (ag->ncorners)
+            {
+                dd.begin(DU_DRAW_LINES, 2.0f);
+                for (int j = 0; j < ag->ncorners; ++j)
+                {
+                    const float* va = j == 0 ? pos : &ag->cornerVerts[(j - 1) * 3];
+                    const float* vb = &ag->cornerVerts[j * 3];
+                    dd.vertex(va[0], va[1] + radius, va[2], duRGBA(128, 0, 0, 192));
+                    dd.vertex(vb[0], vb[1] + radius, vb[2], duRGBA(128, 0, 0, 192));
+                }
+                if (ag->ncorners && ag->cornerFlags[ag->ncorners - 1] & DT_STRAIGHTPATH_OFFMESH_CONNECTION)
+                {
+                    const float* v = &ag->cornerVerts[(ag->ncorners - 1) * 3];
+                    dd.vertex(v[0], v[1], v[2], duRGBA(192, 0, 0, 192));
+                    dd.vertex(v[0], v[1] + radius * 2, v[2], duRGBA(192, 0, 0, 192));
+                }
+
+                dd.end();
+            }
+        }
+
+        if (show_collision_segments)
+        {
+            const float* center = ag->boundary.getCenter();
+            duDebugDrawCross(&dd, center[0], center[1] + radius, center[2], 0.2f, duRGBA(192, 0, 128, 255), 2.0f);
+            duDebugDrawCircle(&dd, center[0], center[1] + radius, center[2], ag->params.collisionQueryRange, duRGBA(192, 0, 128, 128), 2.0f);
+
+            dd.begin(DU_DRAW_LINES, 3.0f);
+            for (int j = 0; j < ag->boundary.getSegmentCount(); ++j)
+            {
+                const float* s = ag->boundary.getSegment(j);
+                unsigned int col = duRGBA(192, 0, 128, 192);
+                if (dtTriArea2D(pos, s, s + 3) < 0.0f)
+                    col = duDarkenCol(col);
+
+                duAppendArrow(&dd, s[0], s[1] + 0.2f, s[2], s[3], s[4] + 0.2f, s[5], 0.0f, 0.3f, col);
+            }
+            dd.end();
+        }
+
+        if (show_neis)
+        {
+            duDebugDrawCircle(&dd, pos[0], pos[1] + radius, pos[2], ag->params.collisionQueryRange, duRGBA(0, 192, 128, 128), 2.0f);
+
+            dd.begin(DU_DRAW_LINES, 2.0f);
+            for (int j = 0; j < ag->nneis; ++j)
+            {
+                // Get 'n'th active agent.
+                // TODO: fix this properly.
+                const dtCrowdAgent* nei = crowd->getAgent(ag->neis[j].idx);
+                if (nei)
+                {
+                    dd.vertex(pos[0], pos[1] + radius, pos[2], duRGBA(0, 192, 128, 128));
+                    dd.vertex(nei->npos[0], nei->npos[1] + radius, nei->npos[2], duRGBA(0, 192, 128, 128));
+                }
+            }
+            dd.end();
+        }
+
+        if (show_opt)
+        {
+            dd.begin(DU_DRAW_LINES, 2.0f);
+            dd.vertex(agent_debug.optStart[0], agent_debug.optStart[1] + 0.3f, agent_debug.optStart[2], duRGBA(0, 128, 0, 192));
+            dd.vertex(agent_debug.optEnd[0], agent_debug.optEnd[1] + 0.3f, agent_debug.optEnd[2], duRGBA(0, 128, 0, 192));
+            dd.end();
+        }
+    }
+
+    // Agent cylinders.
+    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        if (!ag->active)
+            continue;
+
+        const float radius = ag->params.radius;
+        const float* pos = ag->npos;
+
+        unsigned int col = duRGBA(0, 0, 0, 32);
+        if (agent_debug.idx == i)
+            col = duRGBA(255, 0, 0, 128);
+
+        duDebugDrawCircle(&dd, pos[0], pos[1], pos[2], radius, col, 2.0f);
+    }
+
+    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        if (!ag->active)
+            continue;
+
+        const float height = ag->params.height;
+        const float radius = ag->params.radius;
+        const float* pos = ag->npos;
+
+        unsigned int col = duRGBA(220, 220, 220, 128);
+        if (ag->targetState == DT_CROWDAGENT_TARGET_REQUESTING || ag->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+            col = duLerpCol(col, duRGBA(128, 0, 255, 128), 32);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+            col = duLerpCol(col, duRGBA(128, 0, 255, 128), 128);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_FAILED)
+            col = duRGBA(255, 32, 16, 128);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+            col = duLerpCol(col, duRGBA(64, 255, 0, 128), 128);
+
+        duDebugDrawCylinder(&dd, pos[0] - radius, pos[1] + radius * 0.1f, pos[2] - radius, pos[0] + radius, pos[1] + height, pos[2] + radius, col);
+    }
+
+    if (show_vo)
+    {
+        for (int i = 0; i < crowd->getAgentCount(); i++)
+        {
+            if (show_details_all == false && i != agent_debug.idx)
+                continue;
+            const dtCrowdAgent* ag = crowd->getAgent(i);
+            if (!ag->active)
+                continue;
+
+            // Draw detail about agent sela
+            const dtObstacleAvoidanceDebugData* vod = agent_debug.vod;
+
+            const float dx = ag->npos[0];
+            const float dy = ag->npos[1] + ag->params.height;
+            const float dz = ag->npos[2];
+
+            duDebugDrawCircle(&dd, dx, dy, dz, ag->params.maxSpeed, duRGBA(255, 255, 255, 64), 2.0f);
+
+            dd.begin(DU_DRAW_QUADS);
+            for (int j = 0; j < vod->getSampleCount(); ++j)
+            {
+                const float* p = vod->getSampleVelocity(j);
+                const float sr = vod->getSampleSize(j);
+                const float pen = vod->getSamplePenalty(j);
+                const float pen2 = vod->getSamplePreferredSidePenalty(j);
+                unsigned int col = duLerpCol(duRGBA(255, 255, 255, 220), duRGBA(128, 96, 0, 220), (int)(pen * 255));
+                col = duLerpCol(col, duRGBA(128, 0, 0, 220), (int)(pen2 * 128));
+                dd.vertex(dx + p[0] - sr, dy, dz + p[2] - sr, col);
+                dd.vertex(dx + p[0] - sr, dy, dz + p[2] + sr, col);
+                dd.vertex(dx + p[0] + sr, dy, dz + p[2] + sr, col);
+                dd.vertex(dx + p[0] + sr, dy, dz + p[2] - sr, col);
+            }
+            dd.end();
+        }
+    }
+
+    // Velocity stuff.
+    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    {
+        const dtCrowdAgent* ag = crowd->getAgent(i);
+        if (!ag->active)
+            continue;
+
+        const float radius = ag->params.radius;
+        const float height = ag->params.height;
+        const float* pos = ag->npos;
+        const float* vel = ag->vel;
+        const float* dvel = ag->dvel;
+
+        unsigned int col = duRGBA(220, 220, 220, 192);
+        if (ag->targetState == DT_CROWDAGENT_TARGET_REQUESTING || ag->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+            col = duLerpCol(col, duRGBA(128, 0, 255, 192), 32);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+            col = duLerpCol(col, duRGBA(128, 0, 255, 192), 128);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_FAILED)
+            col = duRGBA(255, 32, 16, 192);
+        else if (ag->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+            col = duLerpCol(col, duRGBA(64, 255, 0, 192), 128);
+
+        duDebugDrawCircle(&dd, pos[0], pos[1] + height, pos[2], radius, col, 2.0f);
+
+        duDebugDrawArrow(&dd,
+                         pos[0],
+                         pos[1] + height,
+                         pos[2],
+                         pos[0] + dvel[0],
+                         pos[1] + height + dvel[1],
+                         pos[2] + dvel[2],
+                         0.0f,
+                         0.4f,
+                         duRGBA(0, 192, 255, 192),
+                         (agent_debug.idx == i) ? 2.0f : 1.0f);
+
+        duDebugDrawArrow(&dd, pos[0], pos[1] + height, pos[2], pos[0] + vel[0], pos[1] + height + vel[1], pos[2] + vel[2], 0.0f, 0.4f, duRGBA(0, 0, 0, 160), 2.0f);
+    }
+
+    dd.depthMask(true);
 }

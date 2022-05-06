@@ -14,7 +14,6 @@
 #include "DetourTileCache.h"
 #include "DetourTileCacheBuilder.h"
 #include "DetourCrowd.h"
-
 #include "SampleInterfaces.h"
 
 #include "fastlz.h"
@@ -625,17 +624,14 @@ void drawObstacles(duDebugDraw* dd, const dtTileCache* tc)
             break;
         }
         
-
-        //DT_OBSTACLE_CYLINDER
     }
 }
 
-void Hachiko::ResourceNavMesh::DebugDraw()
+void Hachiko::ResourceNavMesh::DebugDraw(DebugDrawGL& dd)
 {
     if (navmesh)
     {
         unsigned char flags = DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST;
-        DebugDrawGL m_dd;
         ComponentCamera* camera = App->camera->GetMainCamera();
 
         glUseProgram(0);
@@ -654,9 +650,9 @@ void Hachiko::ResourceNavMesh::DebugDraw()
         glDepthMask(GL_FALSE);
 
         // Draw Navmesh
-        duDebugDrawNavMeshWithClosedList(&m_dd, *navmesh, *navigation_query, flags);
+        duDebugDrawNavMeshWithClosedList(&dd, *navmesh, *navigation_query, flags);
         // Draw Obstacles
-        drawObstacles(&m_dd, tile_cache);
+        drawObstacles(&dd, tile_cache);
 
         glDepthMask(GL_TRUE);
 
@@ -668,6 +664,7 @@ void Hachiko::ResourceNavMesh::DebugDraw()
     }
     
 }
+
 
 
 void Hachiko::ResourceNavMesh::CleanUp()

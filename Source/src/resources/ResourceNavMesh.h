@@ -13,6 +13,7 @@ class BuildContext;
 class LinearAllocator;
 class FastLZCompressor;
 class MeshProcess;
+class DebugDrawGL;
 
 
 namespace Hachiko
@@ -56,7 +57,7 @@ namespace Hachiko
         dtNavMeshQuery* GetQuery() const { return navigation_query; }
 
         bool Build(Scene* scene);    // Creates NavMesh for the scene level
-        void DebugDraw();                               // Draw debug info
+        void DebugDraw(DebugDrawGL& dd); // Draw debug info
 
     public:
        // Build Params
@@ -108,5 +109,6 @@ namespace Hachiko
         static const int EXPECTED_LAYERS_PER_TILE = 4;
         static const int MAX_LAYERS = 32;
         static const int MAX_AGENTS = 128;
+        static const int AGENT_MAX_TRAIL = 64;
     };
 }

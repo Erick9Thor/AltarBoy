@@ -162,9 +162,6 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::POINTLIGHT):
         new_component = new ComponentPointLight(this);
         break;
-    case (Component::Type::AGENT):
-        new_component = new ComponentAgent(this);
-        break;
     case (Component::Type::SPOTLIGHT):
         new_component = new ComponentSpotLight(this);
         break;
@@ -199,6 +196,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::OBSTACLE):
         if (!GetComponent<ComponentObstacle>())
             new_component = new ComponentObstacle(this);
+        break;
+    case (Component::Type::AGENT):
+        if (!GetComponent<ComponentAgent>())
+            new_component = new ComponentAgent(this);
         break;
     }
 
