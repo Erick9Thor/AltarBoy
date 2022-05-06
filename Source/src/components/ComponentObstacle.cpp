@@ -28,11 +28,8 @@ void Hachiko::ComponentObstacle::Stop()
 
 void Hachiko::ComponentObstacle::OnTransformUpdated()
 {
-    if (obstacle)
-    {
-        // Refesh the obstacle position if it exists
-        AddObstacle();
-    }
+    // Disabled because it saturated navmesh updating on almost every frame
+    // RefreshObstacle();
 }
 
 void Hachiko::ComponentObstacle::DrawGui()
@@ -48,6 +45,10 @@ void Hachiko::ComponentObstacle::DrawGui()
         {
             RemoveObstacle(); 
         }
+        if (obstacle && ImGui::Button("Refresh Obstacle"))
+        {
+            RefreshObstacle();
+        }
 
         if (obstacle_type == ObstacleType::DT_OBSTACLE_CYLINDER)
         {
@@ -62,8 +63,8 @@ void Hachiko::ComponentObstacle::DrawGui()
             {
                 SetSize(size);
             }
-        }        
-        
+        }
+
         ImGui::Text("Type");
         ImGui::RadioButton("Cylinder", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_CYLINDER));
         ImGui::SameLine();
@@ -109,9 +110,8 @@ void Hachiko::ComponentObstacle::AddObstacle()
     case ObstacleType::DT_OBSTACLE_BOX:
         {
             // This case needs a scope for initializing
-            const AABB& go_bb = game_object->GetAABB();
             AABB aabb;
-            aabb.SetFromCenterAndSize(go_bb.CenterPoint(), size);
+            aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), size);
             tile_cache->addBoxObstacle(aabb.minPoint.ptr(), aabb.maxPoint.ptr(), obstacle);
             break;
         }        
@@ -154,13 +154,19 @@ void Hachiko::ComponentObstacle::RemoveObstacle()
     RELEASE(obstacle);
 }
 
+void Hachiko::ComponentObstacle::RefreshObstacle()
+{
+    if (obstacle)
+    {
+        // Refesh the obstacle position if it exists
+        AddObstacle();
+    }
+}
+
 void Hachiko::ComponentObstacle::SetSize(const float3& new_size)
 {
     size = new_size;
-    if (obstacle)
-    {
-        AddObstacle();
-    }
+    RefreshObstacle();
 }
 
 void Hachiko::ComponentObstacle::Save(YAML::Node& node) const {}

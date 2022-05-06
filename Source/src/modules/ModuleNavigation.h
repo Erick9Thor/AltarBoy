@@ -26,6 +26,11 @@ namespace Hachiko
         float GetYFromPosition(const math::float3& position) const;
 
     private:
+        void UpdateObstacleStats(dtTileCache* tile_cache);
         ResourceNavMesh* navmesh = nullptr;
+        int total_obstacle_slots = 0;
+        int n_processing = 0;
+        int n_processed = 0;
+        int n_removing = 0;
     };
 }

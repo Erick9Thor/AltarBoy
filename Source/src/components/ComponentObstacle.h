@@ -31,9 +31,10 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
         void DrawGui() override;        
-    private:
+    private:        
         void AddObstacle();
         void RemoveObstacle();
+        void RefreshObstacle(); // Workaround manual refresh, If we call on each on transform updated the obstacle buffer saturates
         dtObstacleRef* obstacle = nullptr;	
         ObstacleType obstacle_type = ObstacleType::DT_OBSTACLE_CYLINDER;
         float3 size = float3::one;
