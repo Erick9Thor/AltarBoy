@@ -60,17 +60,17 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
-    // TODO: Implement GetComponentInDescendants.
+    // This will return the first camera it comes across in the hierarchy in a 
+    // depth-first manner:
 
-    std::vector<ComponentCamera*> camera_components 
-        = root->GetComponentsInDescendants<ComponentCamera>();
+    // TODO: This will be costly for any method that will call this on
+    // a method/function that is called each frame. Make this getter a cached 
+    // component camera that is only updated when a component camera is added/
+    // removed to the scene. Or have ComponentCamera have a property called 
+    // is_main, that will be set by making all other component cameras in scene
+    // is_main = false.
 
-    if (camera_components.size() != 0)
-    {
-        return camera_components[0];
-    }
-
-    return nullptr;
+    return root->GetComponentInDescendants<ComponentCamera>();
 }
 
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
