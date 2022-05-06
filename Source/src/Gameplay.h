@@ -413,7 +413,7 @@ HACHIKO_API GameObject* Raycast(const float3& origin,
 
 namespace Hachiko::Debug
 {
-HACHIKO_API const Hachiko::ComponentCamera* GetEditorCamera();
+HACHIKO_API const Hachiko::ComponentCamera* GetRenderingCamera();
 } // namespace Hachiko::Debug
 
 
