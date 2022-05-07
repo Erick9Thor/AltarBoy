@@ -62,11 +62,10 @@ int Hachiko::ResourceStateMachine::FindState(const std::string& name) const
 std::vector<int> Hachiko::ResourceStateMachine::FindStateTransitions(const std::string& name) const
 {
     std::vector<int> stateTransitionsIndex;
-    int index = 0;
-    for (index; index < transitions.size(); ++index)
+    for (int i = 0; i < transitions.size(); ++i)
     {
-        if (transitions[index].source == name || transitions[index].target == name)
-            stateTransitionsIndex.push_back(index);
+        if (transitions[i].source == name || transitions[i].target == name)
+            stateTransitionsIndex.push_back(i);
     }
     return stateTransitionsIndex;
 }
@@ -77,7 +76,7 @@ void Hachiko::ResourceStateMachine::RemoveState(const std::string& name)
     if (index != states.size())
     {
         std::vector<int> stateTransitionsIndex = FindStateTransitions(name);
-        for (int i = 0; i < stateTransitionsIndex.size(); ++i)
+        for (int i = stateTransitionsIndex.size() - 1; i >= 0; --i)
         {
             transitions.erase(transitions.begin() + stateTransitionsIndex[i]);
         }

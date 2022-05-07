@@ -20,10 +20,12 @@
 
 //#include "imgui_node_editor.h"
 #include "imnodes.h"
-#include "resources/ResourceStateMachine.h"
+//#include "resources/ResourceStateMachine.h"
+#include "ui/WindowStateMachine.h"
 
 //namespace ed = ax::NodeEditor;
 //static ed::EditorContext* g_Context = nullptr;
+
 bool addNode = false;
 bool addClip = false;
 bool deleteClip = false;
@@ -33,6 +35,8 @@ bool started = false;
 int linkId = 0;
 bool deleteLink = false;
 Hachiko::ResourceStateMachine sm = Hachiko::ResourceStateMachine(1);
+
+Hachiko::WindowStateMachine wsm;
 
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
@@ -48,13 +52,16 @@ Hachiko::Scene::Scene() :
     //ed::Config config;
     //config.SettingsFile = "Simple.jasn";
     //g_Context = ed::CreateEditor(&config);
+    
     sm.AddState("Idle", "clip1");
     sm.AddState("Walking", "clip2");
     sm.AddState("Running", "clip3");
     sm.AddState("Cry", "clip4");
     sm.AddTransition("Idle", "Walking", "t", 1);
     sm.AddTransition("Walking", "Running", "t", 1);
+    
     ImNodes::CreateContext();
+    wsm = Hachiko::WindowStateMachine();
 }
 
 Hachiko::Scene::~Scene()
@@ -292,7 +299,7 @@ void Hachiko::Scene::Start() const
 void Hachiko::Scene::Update() const
 {
     root->Update();
-
+    /*
     struct Node
     {
         std::string name;
@@ -405,7 +412,7 @@ void Hachiko::Scene::Update() const
     // Show popup to add a clip ------------------------------------------------------------------
     for (int i = 0; i < nodes.size(); ++i)
     {
-        if (ImNodes::IsNodeHovered(&i) && ImGui::IsMouseClicked(1, false))
+        if (ImGui::IsMouseClicked(1, false) && ImNodes::IsNodeHovered(&i))
         {
             nodeId = i;
             ImGui::OpenPopup("EditNode");
@@ -548,4 +555,7 @@ void Hachiko::Scene::Update() const
     }
     
     ImGui::End();
+    */
+
+    wsm.Update();
 }

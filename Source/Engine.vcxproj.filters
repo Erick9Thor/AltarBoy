@@ -501,6 +501,7 @@
     <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
     <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp" />
     <ClCompile Include="vendors\imnodes-0.5\example\color_node_editor.cpp" />
+    <ClCompile Include="src\ui\WindowStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2122,6 +2123,7 @@
     <ClInclude Include="vendors\imnodes-0.5\dependencies\gl3w\include\GL\glcorearb.h" />
     <ClInclude Include="vendors\imnodes-0.5\example\node_editor.h" />
     <ClInclude Include="vendors\imnodes-0.5\example\graph.h" />
+    <ClInclude Include="src\ui\WindowStateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
