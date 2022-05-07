@@ -232,6 +232,7 @@ private:
     bool started = false;
     std::vector<Component*> components;
     ComponentTransform* transform = nullptr;
+    //bool in_quadtree = false;
     AABB aabb;
     OBB obb;
     UID uid = 0;

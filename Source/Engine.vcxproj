@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\resources\ResourceNaveMesh.cpp" />
     <ClCompile Include="src\importers\FontImporter.cpp" />
     <ClCompile Include="src\resources\ResourceFont.cpp" />
@@ -370,8 +371,7 @@
     <ClCompile Include="src\ui\WindowProject.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\components\ComponentCamera.cpp" />
-    <ClCompile Include="src\components\ComponentMaterial.cpp" />
-    <ClCompile Include="src\components\ComponentMesh.cpp" />
+    <ClCompile Include="src\components\ComponentMeshRenderer.cpp" />
     <ClCompile Include="src\components\ComponentTransform.cpp" />
     <ClCompile Include="vendors\imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -499,7 +499,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\core\GameObject.cpp" />
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1033,8 +1032,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\components\Component.h" />
     <ClInclude Include="src\components\ComponentCamera.h" />
-    <ClInclude Include="src\components\ComponentMaterial.h" />
-    <ClInclude Include="src\components\ComponentMesh.h" />
+    <ClInclude Include="src\components\ComponentMeshRenderer.h" />
     <ClInclude Include="src\components\ComponentTransform.h" />
     <ClInclude Include="vendors\DebugDraw\debugdraw.h" />
     <ClInclude Include="vendors\DebugDraw\debug_draw.hpp" />
