@@ -42,7 +42,7 @@ void Hachiko::ComponentAnimation::Update()
 {
     if (current_animation)
     {
-        controller->Update(EngineTimer::delta_time); // TODO: change for GameTimer::delta_time
+        controller->Update(EngineTimer::delta_time * 1000); // TODO: change for GameTimer::delta_time
 
         if (game_object != nullptr)
         {

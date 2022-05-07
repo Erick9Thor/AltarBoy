@@ -7,7 +7,10 @@
 Hachiko::AnimationController::AnimationController() {}
 
 Hachiko::AnimationController::~AnimationController() {
-    Stop();
+    if (current != nullptr)
+    {
+        Stop();
+    }
 }
 
 void Hachiko::AnimationController::Play(ResourceAnimation* current_animation, bool loop, unsigned fade_time) 
@@ -40,8 +43,6 @@ void Hachiko::AnimationController::Stop() {
 
 void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned elapsed) 
 {
-    
-
     if (current->current_animation != nullptr && current->current_animation->GetDuration() > 0)
     {
         unsigned me_elapsed = unsigned(elapsed * instance->speed);
