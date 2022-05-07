@@ -1,17 +1,17 @@
 General:
-  id: 9976357560715169432
+  id: 1448145779742557794
   type: 3
   hash: 2104536046300317796
 model_name: Zombunny
 material:
-  - id: 11283622138791720291
+  - id: 1277104444368101156
     name: ZombunnyMaterial
-  - id: 14989430065209047887
+  - id: 2076914208516164543
     name: EyesMaterial
 mesh:
-  - id: 359710597436749006
+  - id: 18412284147871396269
     material_index: 0
-  - id: 12243909605984900355
+  - id: 18248516032904484895
     material_index: 1
 animations: true
 name: RootNode

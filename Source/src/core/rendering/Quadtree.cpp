@@ -104,7 +104,7 @@ void Hachiko::QuadtreeNode::CreateChildren()
 
 void Hachiko::QuadtreeNode::RearangeChildren()
 {
-    HE_LOG("Rearange Children %s", this);
+    //HE_LOG("Rearange Children %s", this);
     for (auto it = objects.begin(); it != objects.end();)
     {
         GameObject* game_object = *it;

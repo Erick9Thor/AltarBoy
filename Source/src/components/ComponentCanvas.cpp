@@ -38,7 +38,7 @@ void Hachiko::ComponentCanvas::DebugDraw()
 void Hachiko::ComponentCanvas::UpdateSize(bool force)
 {
     unsigned width, height;
-    App->camera->GetMainCamera()->GetResolution(width, height);
+    App->camera->GetRenderingCamera()->GetResolution(width, height);
     if (force || width != size_x || height != size_y)
     {
         ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();

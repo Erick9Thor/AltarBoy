@@ -15,11 +15,12 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
-    , culling_camera(App->camera->GetMainCamera())
+    , culling_camera(App->camera->GetRenderingCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
     , loaded(false)
@@ -58,27 +59,17 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
-    return SearchMainCamera(root);
-}
+    // This will return the first camera it comes across in the hierarchy in a 
+    // depth-first manner:
 
-Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
-{
-    ComponentCamera* component_camera = nullptr;
-    component_camera = game_object->GetComponent<ComponentCamera>();
-    if (component_camera != nullptr)
-    {
-        return component_camera;
-    }
+    // TODO: This will be costly for any method that will call this on
+    // a method/function that is called each frame. Make this getter a cached 
+    // component camera that is only updated when a component camera is added/
+    // removed to the scene. Or have ComponentCamera have a property called 
+    // is_main, that will be set by making all other component cameras in scene
+    // is_main = false.
 
-    for (GameObject* child : game_object->children)
-    {
-        component_camera = SearchMainCamera(child);
-        if (component_camera != nullptr)
-        {
-            return component_camera;
-        }
-    }
-    return nullptr;
+    return root->GetComponentInDescendants<ComponentCamera>();
 }
 
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const

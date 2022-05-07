@@ -55,7 +55,7 @@ char* Hachiko::FileSystem::Load(const char* file_path, size_t* file_size_bytes)
 
     if (!fs_file)
     {
-        HE_LOG("Error opening file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error opening file %s (%s).\n", file_path, PHYSFS_getLastError());
         return nullptr;
     }
     defer {
@@ -66,7 +66,7 @@ char* Hachiko::FileSystem::Load(const char* file_path, size_t* file_size_bytes)
 
     if (size < 0)
     {
-        HE_LOG("File size couldn't be determined for %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("File size couldn't be determined for %s (%s).\n", file_path, PHYSFS_getLastError());
         return nullptr;
     }
 
@@ -75,7 +75,7 @@ char* Hachiko::FileSystem::Load(const char* file_path, size_t* file_size_bytes)
 
     if (read < size)
     {
-        HE_LOG("Error reading file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error reading file %s (%s).\n", file_path, PHYSFS_getLastError());
         if (file_size_bytes)
         {
             *file_size_bytes = 0;
@@ -118,7 +118,7 @@ bool Hachiko::FileSystem::Save(const char* file_path, const void* buffer, unsign
     }
     else if (overwrite == false)
     {
-        HE_LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+        HE_LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file_path, size);
     }
     return true;
 }
