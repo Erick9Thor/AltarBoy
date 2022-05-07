@@ -347,7 +347,7 @@ void Hachiko::GameObject::DrawBones() const
     if (parent != nullptr)
     {
         dd::line(this->GetTransform()->GetGlobalPosition(), parent->GetTransform()->GetGlobalPosition(), dd::colors::Blue);
-        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 1, 10);
+        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 0.005f, 0.1f);
     }
 }
 

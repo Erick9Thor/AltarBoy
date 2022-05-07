@@ -162,7 +162,7 @@ void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
     unsigned int first = 0;
     unsigned int last = UINT_MAX;
 
-    float scale = 1.0f;
+    float scale = 1.0f; // TODO: This should be setable by param or maybe inspector var
 
     const auto r_animation = new ResourceAnimation(id);
 
