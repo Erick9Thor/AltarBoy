@@ -124,7 +124,7 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
     if (dirty)
     {
         unsigned windowWidth, windowHeight;
-        App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
+        App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
         label->setWindowSize(windowWidth, windowHeight);
         const float2& size = transform->GetSize();
         
@@ -140,7 +140,7 @@ void Hachiko::ComponentText::RefreshLabel(ComponentTransform2D* transform)
 void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
 {
     unsigned windowWidth, windowHeight;
-    App->camera->GetMainCamera()->GetResolution(windowWidth, windowHeight);
+    App->camera->GetRenderingCamera()->GetResolution(windowWidth, windowHeight);
 
     const float4x4& trf = transform->GetGlobalTransform();
     label = std::unique_ptr<FTLabel>(new FTLabel(font->gl_font.get(), // Font face handle

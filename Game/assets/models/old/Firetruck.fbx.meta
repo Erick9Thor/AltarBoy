@@ -1,13 +1,13 @@
 General:
-  id: 8365594173393346705
+  id: 4362607508457971281
   type: 3
   hash: 7149169053368156622
 model_name: Firetruck
 material:
-  - id: 17280381815711640961
+  - id: 5977667277271918892
     name: FiretruckMaterial
 mesh:
-  - id: 252230788123817200
+  - id: 466120229576541323
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

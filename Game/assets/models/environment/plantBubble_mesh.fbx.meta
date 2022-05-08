@@ -1,13 +1,13 @@
 General:
-  id: 519306061464203081
+  id: 3974389473497345326
   type: 3
   hash: 11778445362684670755
 model_name: plantBubble_mesh
 material:
-  - id: 17285201317752888656
+  - id: 2597344933073925709
     name: lambert1
 mesh:
-  - id: 3066846386046680070
+  - id: 14508403410279971323
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

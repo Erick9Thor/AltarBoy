@@ -2,7 +2,8 @@
 #include "Resource.h"
 
 #include "resources/ResourceMesh.h"
-#include "components/ComponentMesh.h"
+
+#include "components/ComponentMeshRenderer.h"
 
 class dtNavMesh;
 class BuildContext;

@@ -1,13 +1,13 @@
 General:
-  id: 1612638533882493601
+  id: 185186380138450693
   type: 3
   hash: 1123531692846640987
 model_name: Dollhouse
 material:
-  - id: 8077648660150645905
+  - id: 6051298395870820424
     name: DollhouseMaterial
 mesh:
-  - id: 6559992872841960101
+  - id: 8075239500322960232
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

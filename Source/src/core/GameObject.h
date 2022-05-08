@@ -99,20 +99,35 @@ public:
     void Save(YAML::Node& node) const;
     void Load(const YAML::Node& node);
 
-        [[nodiscard]] const OBB& GetOBB() const
-        {
-            return obb;
-        }
+    [[nodiscard]] const OBB& GetOBB() const
+    {
+        return obb;
+    }
 
-        const AABB& GetAABB()
-        {
-            return aabb;
-        }
+    const AABB& GetAABB()
+    {
+        return aabb;
+    }
 
-        [[nodiscard]] const std::vector<Component*>& GetComponents() const
-        {
-            return components;
-        }
+    [[nodiscard]] const std::vector<Component*>& GetComponents() const
+    {
+        return components;
+    }
+
+    [[nodiscard]] ComponentTransform* GetTransform() const 
+    {
+        return transform;
+    }
+
+    [[nodiscard]] const std::string& GetName() const
+    {
+        return name;
+    }
+
+    void SetName(const std::string& new_name)
+    {
+        name = new_name;
+    }
 
         [[nodiscard]] ComponentTransform* GetTransform() const
         {
@@ -153,57 +168,36 @@ public:
                     return static_cast<RetComponent*>(component);
                 }
             }
-
             return nullptr;
         }
 
-        template<typename RetComponent>
-        std::vector<RetComponent*> GetComponents() const
+    template<typename RetComponent>
+    RetComponent* GetComponentInDescendants() const
+    {
+        for (GameObject* child : children)
         {
-            std::vector<RetComponent*> components_of_type;
-
-            components_of_type.reserve(components.size());
-
-            for (Component* component : components)
+            RetComponent* component = child->GetComponent<RetComponent>();
+            
+            if (component != nullptr)
             {
-                if (typeid(*component) == typeid(RetComponent))
-                {
-                    components_of_type.push_back(static_cast<RetComponent*>(component));
-                }
+                return component;
             }
 
-            return components_of_type;
-        }
+            component = child->GetComponentInDescendants<RetComponent>();
 
-        template<typename RetComponent>
-        std::vector<RetComponent*> GetComponentsInDescendants() const
-        {
-            std::vector<RetComponent*> components_in_descendants;
-
-            for (GameObject* child : children)
+            if (component != nullptr)
             {
-                std::vector<RetComponent*> components_in_child = child->GetComponents<RetComponent>();
-
-                for (RetComponent* component_in_child : components_in_child)
-                {
-                    components_in_descendants.push_back(component_in_child);
-                }
-
-                std::vector<RetComponent*> components_in_childs_descendants = child->GetComponentsInDescendants<RetComponent>();
-
-                for (RetComponent* component_in_childs_descendants : components_in_childs_descendants)
-                {
-                    components_in_descendants.push_back(component_in_childs_descendants);
-                }
+                return component;
             }
-
-            return components_in_descendants;
         }
+        return nullptr;
+    }
 
-        std::vector<Component*> GetComponents(Component::Type type) const;
-        std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
+    std::vector<Component*> GetComponents(Component::Type type) const;
+    std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
 
-        GameObject* GetFirstChildWithName(const std::string& child_name) const;
+    GameObject* GetFirstChildWithName(const std::string& child_name) const;
+    Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
 
     public:
         std::string name;
@@ -212,12 +206,13 @@ public:
         std::vector<GameObject*> children;
         bool active = true;
 
-    private:
-        bool started = false;
-        std::vector<Component*> components;
-        ComponentTransform* transform = nullptr;
-        AABB aabb;
-        OBB obb;
-        UID uid = 0;
-    };
+private:
+    bool started = false;
+    std::vector<Component*> components;
+    ComponentTransform* transform = nullptr;
+    //bool in_quadtree = false;
+    AABB aabb;
+    OBB obb;
+    UID uid = 0;
+};
 } // namespace Hachiko

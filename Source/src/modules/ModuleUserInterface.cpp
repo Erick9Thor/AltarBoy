@@ -72,7 +72,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     unsigned width, height;
-    App->camera->GetMainCamera()->GetResolution(width, height);
+    App->camera->GetRenderingCamera()->GetResolution(width, height);
 
     ModuleProgram::CameraData camera_data;
     // position data is unused on the ui program

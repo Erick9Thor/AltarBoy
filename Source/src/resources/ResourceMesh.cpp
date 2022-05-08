@@ -51,6 +51,23 @@ void Hachiko::ResourceMesh::GenerateBuffers()
         glEnableVertexAttribArray(3);
     }
 
+    if (buffer_sizes[static_cast<int>(Buffers::BONES)] > 0)
+    {
+        // SRC_BONES_WEIGHTS
+        glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] * sizeof(unsigned), src_bone_indices.get(), GL_STATIC_DRAW);
+        glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, sizeof(unsigned) * 4, static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(4);
+
+        // SRC_BONES_INEX
+        glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
+        glBindBuffer(GL_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
+        glBufferData(GL_ARRAY_BUFFER, buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] * sizeof(float4), src_bone_weights.get(), GL_STATIC_DRAW);
+        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(5);
+    }
+
     // Indices (1 value)
     glGenBuffers(1, &buffer_ids[static_cast<int>(Buffers::INDICES)]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer_ids[static_cast<int>(Buffers::INDICES)]);
@@ -70,20 +87,18 @@ void Hachiko::ResourceMesh::GenerateBoneData(const aiMesh* mesh, float scale) {
 
     num_bones = mesh->mNumBones;
     bones = std::make_unique<Bone[]>(num_bones);
-    
 
     for (unsigned i = 0; i < num_bones; ++i)
     {
         const aiBone* bone = mesh->mBones[i];
-        Bone& dst_bone = bones[i];
 
-        strcpy_s(dst_bone.name, bone->mName.C_Str());
-        dst_bone.bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
+        strcpy_s(bones[i].name, bone->mName.C_Str());
+        bones[i].bind = float4x4(float4(bone->mOffsetMatrix.a1, bone->mOffsetMatrix.b1, bone->mOffsetMatrix.c1, bone->mOffsetMatrix.d1),
                                  float4(bone->mOffsetMatrix.a2, bone->mOffsetMatrix.b2, bone->mOffsetMatrix.c2, bone->mOffsetMatrix.d2),
                                  float4(bone->mOffsetMatrix.a3, bone->mOffsetMatrix.b3, bone->mOffsetMatrix.c3, bone->mOffsetMatrix.d3),
                                  float4(bone->mOffsetMatrix.a4, bone->mOffsetMatrix.b4, bone->mOffsetMatrix.c4, bone->mOffsetMatrix.d4));
 
-        dst_bone.bind.SetTranslatePart(dst_bone.bind.TranslatePart() * scale);
+        bones[i].bind.SetTranslatePart(bones[i].bind.TranslatePart() * scale);
     }
 
     std::unique_ptr<unsigned[]> bone_indices = std::make_unique<unsigned[]>(4 * mesh->mNumVertices);
@@ -148,6 +163,8 @@ void Hachiko::ResourceMesh::CleanUp()
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::NORMALS)]);
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::TEX_COORDS)]);
         glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::TANGENTS)]);
+        glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_INDICES)]);
+        glDeleteBuffers(1, &buffer_ids[static_cast<int>(Buffers::BONES_WEIGHTS)]);
 
         delete[] indices;
         delete[] vertices;
@@ -161,6 +178,8 @@ void Hachiko::ResourceMesh::CleanUp()
         buffer_sizes[static_cast<int>(Buffers::TEX_COORDS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::TANGENTS)] = 0;
         buffer_sizes[static_cast<int>(Buffers::BONES)] = 0;
+        buffer_sizes[static_cast<int>(Buffers::BONES_INDICES)] = 0;
+        buffer_sizes[static_cast<int>(Buffers::BONES_WEIGHTS)] = 0;
     }
     loaded = false;
 }

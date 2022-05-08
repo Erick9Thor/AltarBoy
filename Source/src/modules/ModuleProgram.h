@@ -13,7 +13,7 @@ namespace Hachiko
     class ComponentDirLight;
     class ComponentPointLight;
     class ComponentSpotLight;
-    class ComponentMaterial;
+    class ComponentMeshRenderer;
 
     class ModuleProgram : public Module
     {
@@ -32,6 +32,7 @@ namespace Hachiko
             DIFFUSE = 0,
             SPECULAR,
             NORMAL,
+            METALNESS,
             COUNT,
         };
 
@@ -76,7 +77,7 @@ namespace Hachiko
 
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const CameraData& camera) const;
-        void UpdateMaterial(const ComponentMaterial* material_comp) const;
+        void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
         void UpdateTransforms(const std::vector<float4x4>& transforms) const;
         void UpdateMaterials(const std::vector<TextureBatch::Material>& materials) const;
@@ -113,10 +114,15 @@ namespace Hachiko
         {
             float4 diffuse_color;
             float4 specular_color;
-            unsigned diffuse_flag {};
-            unsigned specular_flag {};
-            unsigned normal_flag {};
-            float shininess {};
+            unsigned diffuse_flag{};
+            unsigned specular_flag{};
+            unsigned normal_flag{};
+            unsigned metalness_flag{};
+            float smoothness{};
+            float metalness_value{};
+            unsigned is_metallic{};
+            unsigned smoothness_alpha{};
+            unsigned is_transparent{};
         };
 
         // Use float4 to prevent padding

@@ -5,7 +5,7 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 #include "Batching/TextureBatch.h"
 
@@ -204,12 +204,12 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
     UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*)&camera_data);
 }
 
-void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp) const
+void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
 {
     static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
-    const ResourceMaterial* material = material_comp->GetMaterial();
+    const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
 
     if (material == nullptr)
     {
@@ -220,9 +220,14 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     material_data.diffuse_color = material->diffuse_color;
     material_data.diffuse_flag = material->HasDiffuse();
     material_data.specular_color = material->specular_color;
+    material_data.smoothness = material->smoothness;
+    material_data.metalness_value = material->metalness_value;
     material_data.specular_flag = material->HasSpecular();
     material_data.normal_flag = material->HasNormal();
-    material_data.shininess = material->shininess;
+    material_data.metalness_flag = material->HasMetalness();
+    material_data.is_metallic = material->is_metallic;
+    material_data.smoothness_alpha = material->smoothness_alpha;
+    material_data.is_transparent = material->is_transparent;
 
     if (material_data.diffuse_flag)
     {
@@ -235,6 +240,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_co
     if (material_data.normal_flag)
     {
         ModuleTexture::Bind(material->GetNomalId(), static_cast<int>(TextureSlots::NORMAL));
+    }
+    if (material_data.metalness_flag)
+    {
+        ModuleTexture::Bind(material->GetMetalnessId(), static_cast<int>(TextureSlots::METALNESS));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);

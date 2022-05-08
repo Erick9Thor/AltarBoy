@@ -1,8 +1,6 @@
 #include "core/hepch.h"
 #include "ModuleTexture.h"
 
-#include "GLFont.h"
-#include "FTLabel.h"
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleResources.h"
 
