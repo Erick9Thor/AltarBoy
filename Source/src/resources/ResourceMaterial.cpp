@@ -138,14 +138,14 @@ void Hachiko::ResourceMaterial::DrawGui()
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
     const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + this->name;
-    
+    const char *filters = "Image files{.png,.tif,.jpg,.tga}";
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
     {
         ImGuiFileDialog::Instance()->OpenDialog(
             title.c_str(),
             "Select Texture",
-            ".png,.tif,.jpg,.tga",
+            filters,
             "./assets/textures/",
             1,
             nullptr,
