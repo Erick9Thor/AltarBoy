@@ -98,7 +98,7 @@ vec3 SchlickFresnel(const vec3 f0, float half_vector)
 float GGX(const vec3 normal, const vec3 halfway_dir, float roughness)
 {
     float a2 = pow(roughness, 2.0);
-    float NdotH = max(dot(normal, halfway_dir), 0.0);
+    float NdotH = max(dot(normal, halfway_dir), 0.00001);
     float NdotH2 = pow(NdotH, 2.0);
     
     float denom = PI * pow((NdotH2 * (a2 - 1.0) + 1.0), 2.0);
@@ -108,8 +108,8 @@ float GGX(const vec3 normal, const vec3 halfway_dir, float roughness)
 
 float SmithVisibilityFunction(const vec3 normal, const vec3 view_dir, const vec3 light_dir, float roughness)
 {
-    float NdotV = max(dot(normal, view_dir), 0.0);
-    float NdotL = max(dot(normal, light_dir), 0.0);
+    float NdotV = max(dot(normal, view_dir), 0.00001);
+    float NdotL = max(dot(normal, light_dir), 0.00001);
 
     float denom = NdotL * (NdotV * (1 - roughness) + roughness) + NdotV * (NdotL * (1 - roughness) + roughness);
     return 0.5 / denom;
@@ -120,14 +120,14 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
 {
     vec3 reflect_dir = reflect(-light_dir, normal);
     // Should equal cos theta
-    float NdL = max(dot(normal, light_dir), 0.0001);
+    float NdL = max(dot(normal, light_dir), 0.00001);
     // Phong specular strength
-    float VdR =  max(dot(view_dir, reflect_dir), 0.0001);
+    float VdR =  max(dot(view_dir, reflect_dir), 0.00001);
 
     float roughness = pow((1.0 - smoothness), 2.0);
 
     vec3 halfway_dir = normalize(light_dir + view_dir);
-    float VdotH = max(dot(view_dir, halfway_dir), 0.0);
+    float VdotH = max(dot(view_dir, halfway_dir), 0.00001);
 
     float NDF =  GGX(normal, halfway_dir, roughness);
     float SVF = SmithVisibilityFunction(normal, view_dir, light_dir, roughness);

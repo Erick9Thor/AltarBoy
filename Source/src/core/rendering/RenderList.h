@@ -7,7 +7,7 @@
 namespace Hachiko
 {
     class GameObject;
-    class ComponentMesh;
+    class ComponentMeshRenderer;
     class ComponentCamera;
     class QuadtreeNode;
 
@@ -15,7 +15,6 @@ namespace Hachiko
     {
         const char* name = nullptr;
         GameObject* game_object = nullptr;
-        ComponentMesh* mesh = nullptr;
         float distance = 0.0f;
     };
 

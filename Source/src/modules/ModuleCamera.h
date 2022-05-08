@@ -23,14 +23,19 @@ namespace Hachiko
         void Controller(float delta) const;
         void MovementController(float delta) const;
 
-        [[nodiscard]] ComponentCamera* GetMainCamera() 
+        [[nodiscard]] ComponentCamera* GetRenderingCamera() 
         {
-            return main_camera;
+            return rendering_camera;
+        }
+
+        [[nodiscard]] ComponentCamera* GetEditorCamera()
+        {
+            return camera_buffer[0];
         }
 
         void AddCameraComponent(ComponentCamera* camera);
         void RemoveCameraComponent(ComponentCamera* camera);
-        void SetMainCamera(ComponentCamera* camera);
+        void SetRenderingCamera(ComponentCamera* camera);
         void RestoreOriginCamera();
         void ReturnPlayerCamera();
 
@@ -44,8 +49,8 @@ namespace Hachiko
 
     private:
         
-        GameObject* main_camera_game_object = nullptr;
-        ComponentCamera* main_camera = nullptr;
+        GameObject* editor_camera_game_object = nullptr;
+        ComponentCamera* rendering_camera = nullptr;
 
         std::vector<ComponentCamera*> camera_buffer;
         unsigned int last_it = 0;

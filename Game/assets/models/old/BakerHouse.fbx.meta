@@ -1,15 +1,15 @@
 General:
-  id: 14925805987087243395
+  id: 13418598252312511338
   type: 3
   hash: 6159836605640719156
 model_name: BakerHouse
 material:
-  - id: 15266266736058682390
+  - id: 3066575776084033142
     name: Baker_house
 mesh:
-  - id: 701492416510438389
+  - id: 17202912007058041650
     material_index: 0
-  - id: 5471479355192054211
+  - id: 1226480219516193211
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

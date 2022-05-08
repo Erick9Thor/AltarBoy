@@ -97,9 +97,9 @@ Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin,
 
 /*DEBUG----------------------------------------------------------------------*/
 
-const Hachiko::ComponentCamera* Hachiko::Debug::GetEditorCamera() 
+const Hachiko::ComponentCamera* Hachiko::Debug::GetRenderingCamera() 
 {
-    return App->camera->GetMainCamera();
+    return App->camera->GetRenderingCamera();
 }
 
 /*---------------------------------------------------------------------------*/

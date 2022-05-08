@@ -62,6 +62,10 @@
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 #define MATERIAL_IS_TRANSPARENT "is_transparent"
 
+// ComponentMeshRenderer
+#define RENDERER_MESH_ID "mesh_id"
+#define RENDERER_MATERIAL_ID "material_id"
+
 //////////////////////////
 //						//
 // Importer extensions  //

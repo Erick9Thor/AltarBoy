@@ -123,13 +123,17 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
+    if (ImGui::SmallButton("Save"))
+    {
+        UpdateMaterial();
+    }
 }
 
 
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
-    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type));
+    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + this->name;
     ResourceTexture* res = nullptr;
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
@@ -188,6 +192,8 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             break;
         }
     }
+
+    UpdateMaterial();
 }
 
 void Hachiko::ResourceMaterial::UpdateMaterial()

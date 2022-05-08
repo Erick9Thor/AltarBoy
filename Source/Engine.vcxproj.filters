@@ -261,10 +261,7 @@
     <ClCompile Include="src\components\ComponentDirLight.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentMaterial.cpp">
-      <Filter>Core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\ComponentMesh.cpp">
+    <ClCompile Include="src\components\ComponentMeshRenderer.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentPointLight.cpp">
@@ -343,9 +340,6 @@
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleRender.cpp">
-      <Filter>Modules\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleTexture.cpp">
@@ -543,6 +537,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -895,10 +890,7 @@
     <ClInclude Include="src\components\ComponentDirLight.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentMaterial.h">
-      <Filter>Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\ComponentMesh.h">
+    <ClInclude Include="src\components\ComponentMeshRenderer.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ComponentPointLight.h">

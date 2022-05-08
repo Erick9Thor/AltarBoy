@@ -191,6 +191,29 @@ public:
         return components_in_descendants;
     }
 
+    template<typename RetComponent>
+    RetComponent* GetComponentInDescendants() const
+    {
+        for (GameObject* child : children)
+        {
+            RetComponent* component = child->GetComponent<RetComponent>();
+            
+            if (component != nullptr)
+            {
+                return component;
+            }
+
+            component = child->GetComponentInDescendants<RetComponent>();
+
+            if (component != nullptr)
+            {
+                return component;
+            }
+        }
+
+        return nullptr;
+    }
+
     std::vector<Component*> GetComponents(Component::Type type) const;
     std::vector<Component*> GetComponentsInDescendants(
         Component::Type type) const;
@@ -209,6 +232,7 @@ private:
     bool started = false;
     std::vector<Component*> components;
     ComponentTransform* transform = nullptr;
+    //bool in_quadtree = false;
     AABB aabb;
     OBB obb;
     UID uid = 0;
