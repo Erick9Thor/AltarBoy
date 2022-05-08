@@ -13,12 +13,17 @@ namespace Hachiko
             std::string name;
             int nodeIndex;
             int inputIndex;
-            int outputIndex;
-            //std::vector<int> outputIndex;
+            std::vector<int> outputIndex;
+            std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode;
 
             Node() {};
-            Node(const std::string& name, int nodeIndex, int inputIndex, int outputIndex) : name(name), nodeIndex(nodeIndex), inputIndex(inputIndex), outputIndex(outputIndex) {};
-            //Node(const std::string& name, int nodeIndex, int inputIndex, std::vector<int> outputIndex) : name(name), nodeIndex(nodeIndex), inputIndex(inputIndex), outputIndex(outputIndex) {};
+            //Node(const std::string& name, int nodeIndex, int inputIndex, int outputIndex) : name(name), nodeIndex(nodeIndex), inputIndex(inputIndex), outputIndex(outputIndex) {};
+            Node(const std::string& name, int nodeIndex, int inputIndex, std::vector<int> outputIndex, std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode) : 
+                name(name),
+                nodeIndex(nodeIndex),
+                inputIndex(inputIndex),
+                outputIndex(outputIndex),
+                transitionsFromNode(transitionsFromNode) {};
         };
         struct Link
         {
@@ -40,15 +45,14 @@ namespace Hachiko
         std::vector<Node> nodes;
         std::vector<Link> links;
 
-        int id = 0;
         char* trigger;
         bool addNode = false;
         bool addClip = false;
-        bool deleteClip = false;
-        bool deleteNode = false;
         int nodeId = 0;
         bool started = false;
         int linkId = 0;
+        bool editTrigger = false;
+        bool editIT = false;
         bool deleteLink = false;
         ResourceStateMachine sm = ResourceStateMachine(1);
         ImNodesContext* context = nullptr;

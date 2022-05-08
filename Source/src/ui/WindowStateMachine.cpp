@@ -10,8 +10,8 @@ Hachiko::WindowStateMachine::WindowStateMachine() : Window("Hierarchy", true)
     sm.AddState("Walking", "clip2");
     sm.AddState("Running", "clip3");
     sm.AddState("Cry", "clip4");
-    sm.AddTransition("Idle", "Walking", "", 1);
-    sm.AddTransition("Walking", "Running", "", 1);
+    sm.AddTransition("Idle", "Walking", "Arrow pressed", 1);
+    sm.AddTransition("Idle", "Running", "Shift pressed", 1);
     //ImNodes::CreateContext();
 }
 
@@ -24,14 +24,14 @@ void Hachiko::WindowStateMachine::Update()
 {
     // Show node editor ------------------------------------------------------------------
     //context = ImNodes::GetCurrentContext();
-    //ImNodes::SetNodeGridSpacePos(0, ImVec2(200.0f, 200.0f));
-    ImGui::Begin("Node editor - Press H for help");
+    ImGui::Begin("Node editor - Press Left Alt + H for help");
     ImNodes::BeginNodeEditor();
-    id = 0;
+    int id = 0;
     nodes.clear();
     links.clear();
     for (int i = 0; i < sm.states.size(); ++i)
     {
+        int initId = id;
         ImNodes::BeginNode(id++);
 
         ImNodes::BeginNodeTitleBar();
@@ -40,34 +40,62 @@ void Hachiko::WindowStateMachine::Update()
 
         ImNodes::BeginInputAttribute(id++);
         ImGui::Text(sm.states[i].clip.c_str());
+        ImGui::SameLine();
+        ImGui::Text("|");
+        ImGui::SameLine();
+        /*
+        if (sm.clips[sm.FindClip(sm.states[i].clip)].loop)
+        {
+            ImGui::Text("looping");
+        }
+        else
+        {
+            ImGui::Text("not looping");
+        }
+        */
         ImNodes::EndInputAttribute();
 
-        //std::vector<int> outputs;
+        std::vector<int> outputs;
+        std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromState = sm.FindTransitionsFromState(sm.states[i].name.c_str());
+        for (int j = 0; j < transitionsFromState.size(); ++j)
+        {
+            outputs.push_back(id);
+            ImNodes::BeginOutputAttribute(id++);
+            ImGui::Text(transitionsFromState[j].trigger.c_str());
+            ImGui::SameLine();
+            ImGui::Text("|");
+            ImGui::SameLine();
+            ImGui::Text(std::to_string(transitionsFromState[j].interpolationTime).c_str());
+            ImNodes::EndOutputAttribute();
+        }
+        outputs.push_back(id);
         ImNodes::BeginOutputAttribute(id++);
-        //ImGui::Text(trigger);
+        ImGui::Text("");
         ImNodes::EndOutputAttribute();
-        //outputs.push_back(id - 1);
+
+        //ImNodes::SetNodeGridSpacePos(initId, ImVec2(id * 10.0f, id * 10.0f));
+        //ImNodes::SetNodeDraggable(initId, true);
 
         ImNodes::EndNode();
-        nodes.push_back(Node(sm.states[i].name.c_str(), id - 3, id - 2, id - 1));
+        nodes.push_back(Node(sm.states[i].name.c_str(), initId, initId + 1, outputs, transitionsFromState));
     }
-
-    for (int i = 0; i < sm.transitions.size(); ++i)
+    
+    id = 0;
+    for (int i = 0; i < nodes.size(); ++i)
     {
-        int start, end;
-        for (int j = 0; j < nodes.size(); ++j)
+        for (int j = 0; j < nodes[i].transitionsFromNode.size(); ++j)
         {
-            if (sm.transitions[i].source == nodes[j].name)
+            for (int k = 0; k < nodes.size(); ++k)
             {
-                start = nodes[j].outputIndex;
+                if (i != k && nodes[k].name == nodes[i].transitionsFromNode[j].target)
+                {
+                    ImNodes::Link(id, nodes[i].outputIndex[j], nodes[k].inputIndex);
+                    links.push_back(Link(id, nodes[i].outputIndex[j], nodes[k].inputIndex));
+                    ++id;
+                }
             }
-            if (sm.transitions[i].target == nodes[j].name)
-            {
-                end = nodes[j].inputIndex;
-            }
+
         }
-        ImNodes::Link(i + 1, start, end);
-        links.push_back(Link(i + 1, start, end));
     }
     // End of show node editor ------------------------------------------------------------------
 
@@ -117,20 +145,46 @@ void Hachiko::WindowStateMachine::Update()
         {
             addClip = true;
         }
+        /*
+        else if (ImGui::Button(" edit looping "))
+        {
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                if (nodes[i].nodeIndex == nodeId)
+                {
+                    sm.EditClipLoop(nodes[i].name, !sm.clips[sm.FindClip(sm.states[i].clip)].loop);
+                }
+            }
+            ImGui::CloseCurrentPopup();
+        }*/
         else if (ImGui::Button(" Delete clip "))
         {
-            deleteClip = true;
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                if (nodes[i].nodeIndex == nodeId)
+                {
+                    sm.EditStateClip(nodes[i].name, "");
+                }
+            }
+            ImGui::CloseCurrentPopup();
         }
         else if (ImGui::Button(" Delete node "))
         {
-            deleteNode = true;
+            for (int i = 0; i < nodes.size(); ++i)
+            {
+                if (nodes[i].nodeIndex == nodeId)
+                {
+                    sm.RemoveState(nodes[i].name);
+                }
+            }
+            ImGui::CloseCurrentPopup();
         }
 
         if (addClip)
         {
             static char clipName[128] = "";
-            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(" Clip name ", clipName, IM_ARRAYSIZE(clipName), nodeName_input_flags))
+            const ImGuiInputTextFlags clipName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Clip name ", clipName, IM_ARRAYSIZE(clipName), clipName_input_flags))
             {
                 addClip = false;
                 for (int i = 0; i < nodes.size(); ++i)
@@ -143,30 +197,7 @@ void Hachiko::WindowStateMachine::Update()
                 }
             }
         }
-        else if (deleteClip)
-        {
-            deleteClip = false;
-            for (int i = 0; i < nodes.size(); ++i)
-            {
-                if (nodes[i].nodeIndex == nodeId)
-                {
-                    sm.EditStateClip(nodes[i].name, "");
-                }
-            }
-            ImGui::CloseCurrentPopup();
-        }
-        else if (deleteNode)
-        {
-            deleteNode = false;
-            for (int i = 0; i < nodes.size(); ++i)
-            {
-                if (nodes[i].nodeIndex == nodeId)
-                {
-                    sm.RemoveState(nodes[i].name);
-                }
-            }
-            ImGui::CloseCurrentPopup();
-        }
+        
         ImGui::EndPopup();
     }
     // End of show popup to edit a node ------------------------------------------------------------------
@@ -181,53 +212,130 @@ void Hachiko::WindowStateMachine::Update()
     if (started && ImNodes::IsLinkCreated(&start, &end, false))
     {
         std::string startName, endName;
-        for (int j = 0; j < nodes.size(); ++j)
+        for (int i = 0; i < nodes.size(); ++i)
         {
-            if (nodes[j].outputIndex == start)
+            for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
             {
-                startName = nodes[j].name;
+                if (start == nodes[i].outputIndex[j])
+                {
+                    startName = nodes[i].name;
+                }
             }
-            if (nodes[j].inputIndex == end)
+            if (end == nodes[i].inputIndex)
             {
-                endName = nodes[j].name;
+                endName = nodes[i].name;
             }
         }
-        sm.AddTransition(startName, endName, "", 3);
+        sm.AddTransition(startName, endName, "Set trigger", 0);
     }
     // End of add a link ------------------------------------------------------------------
 
     // Delete a link ------------------------------------------------------------------
     if (ImNodes::IsLinkHovered(&linkId) && ImGui::IsMouseClicked(1, false))
     {
-        ImGui::OpenPopup("DeleteLink");
+        ImGui::OpenPopup("EditLink");
     }
 
-    if (ImGui::BeginPopup("DeleteLink"))
+    if (ImGui::BeginPopup("EditLink"))
     {
-        if (ImGui::Button(" Delete link "))
+        if (ImGui::Button(" Edit trigger "))
         {
-            deleteLink = true;
+            editTrigger = true;
+            editIT = false;
         }
-
-        if (deleteLink)
+        else if (ImGui::Button(" Edit interpolation time "))
         {
-            deleteLink = false;
+            editIT = true;
+            editTrigger = false;
+        }
+        else if (ImGui::Button(" Delete link "))
+        {
+            std::string startName, endName;
             for (int i = 0; i < nodes.size(); ++i)
             {
-                if (links[linkId - 1].from == nodes[i].outputIndex)
+                for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
                 {
-                    sm.RemoveTransition(nodes[i].name, "");
+                    if (links[linkId].from == nodes[i].outputIndex[j])
+                    {
+                        startName = nodes[i].name;
+                        break;
+                    }
+                }
+                if (links[linkId].to == nodes[i].inputIndex)
+                {
+                    endName = nodes[i].name;
                     break;
                 }
             }
+            sm.RemoveTransitionWithTarget(startName, endName);
             ImGui::CloseCurrentPopup();
+        }
+
+        if (editTrigger)
+        {
+            
+            static char newTrigger[128] = "";
+            const ImGuiInputTextFlags editTrigger_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Edit trigger", newTrigger, IM_ARRAYSIZE(newTrigger), editTrigger_input_flags))
+            {
+                editTrigger = false;
+                std::string startName, endName;
+                for (int i = 0; i < nodes.size(); ++i)
+                {
+                    for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
+                    {
+                        if (links[linkId].from == nodes[i].outputIndex[j])
+                        {
+                            startName = nodes[i].name;
+                            break;
+                        }
+                    }
+                    if (links[linkId].to == nodes[i].inputIndex)
+                    {
+                        endName = nodes[i].name;
+                        break;
+                    }
+                }
+                sm.EditTransitionTrigger(startName, endName, newTrigger);
+                ImGui::CloseCurrentPopup();
+            }
+        }
+        
+        if (editIT)
+        {
+            static char newIT[128] = "";
+            const ImGuiInputTextFlags editIT_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Edit interpolation time", newIT, IM_ARRAYSIZE(newIT), editIT_input_flags))
+            {
+                editIT = false;
+                std::string startName, endName;
+                for (int i = 0; i < nodes.size(); ++i)
+                {
+                    for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
+                    {
+                        if (links[linkId].from == nodes[i].outputIndex[j])
+                        {
+                            startName = nodes[i].name;
+                            break;
+                        }
+                    }
+                    if (links[linkId].to == nodes[i].inputIndex)
+                    {
+                        endName = nodes[i].name;
+                        break;
+                    }
+                }
+                sm.EditTransitionInterpolationTime(startName, endName, std::stoi(newIT));
+                ImGui::CloseCurrentPopup();
+            }
         }
 
         ImGui::EndPopup();
     }
     // End of delete a link ------------------------------------------------------------------
-
-    if (ImGui::IsKeyPressed(SDL_SCANCODE_H, false))
+    
+    // Help section ------------------------------------------------------------------
+    if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) && ImGui::IsKeyPressed(SDL_SCANCODE_H, false))
     {
         ImGui::OpenPopup("Help");
     }
@@ -246,9 +354,15 @@ void Hachiko::WindowStateMachine::Update()
         ImGui::Text("   and release it in another pin to create it.");
         ImGui::Separator();
         ImGui::BulletText("Mouse right-clicking hovering a link to edit it.");
+        ImGui::Separator();
+        ImGui::Text("Node legend:");
+        ImGui::Text("                  Node name");
+        ImGui::Text("                Clip  | is it looping?");
+        ImGui::Text("              Trigger | interpolation time");
 
         ImGui::EndPopup();
     }
+    // End of help section ------------------------------------------------------------------
 
     ImGui::End();
 }

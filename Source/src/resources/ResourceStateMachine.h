@@ -49,13 +49,18 @@ namespace Hachiko
             Transition(const std::string& source, const std::string& target,const std::string& trigger, unsigned int interpolationTime) : source(source), target(target), trigger(trigger), interpolationTime(interpolationTime) {};
         };
 
+        Transition foo();
+
         void AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime);
-        int FindTransition(const std::string& source, const std::string& trigger) const;
-        void RemoveTransition(const std::string& source, const std::string& trigger);
+        int FindTransitionWithTrigger(const std::string& source, const std::string& trigger) const;
+        int FindTransitionWithTarget(const std::string& source, const std::string& target) const;
+        std::vector<struct Transition> FindTransitionsFromState(const std::string& name) const;
+        void RemoveTransitionWithTrigger(const std::string& source, const std::string& trigger);
+        void RemoveTransitionWithTarget(const std::string& source, const std::string& target);
         void EditTransitionSource(const std::string& newSource, const std::string& target, const std::string& trigger);
         void EditTransitionTarget(const std::string& source, const std::string& newTarget, const std::string& trigger);
         void EditTransitionTrigger(const std::string& source, const std::string& target, const std::string& newTrigger);
-        void EditTransitionInterpolationTime(const std::string& source, const std::string& trigger, unsigned int newInterpolationTime);
+        void EditTransitionInterpolationTime(const std::string& source, const std::string& target, unsigned int newInterpolationTime);
 
 
     public:
