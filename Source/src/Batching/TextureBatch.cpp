@@ -194,7 +194,7 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
     for (unsigned i = 0; i < components.size(); ++i)
     {
-        const ResourceMaterial* material = components[i]->GetMaterial();
+        const ResourceMaterial* material = components[i]->GetResourceMaterial();
 
         materials[i].diffuse_color = material->diffuse_color;
         materials[i].specular_color = material->specular_color;

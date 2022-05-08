@@ -67,49 +67,19 @@ namespace Hachiko
             return mesh->normals;
         }
 
-        [[nodiscard]] const std::string& GetResourcePath() const
-        {
-            return asset_path;
-        }
-
-        void SetResourcePath(const std::string& path)
-        {
-            asset_path = path;
-        }
-
-        [[nodiscard]] const std::string& GetModelName() const
-        {
-            return model_name;
-        }
-
-        void SetModelName(const std::string& name)
-        {
-            model_name = name;
-        }
-
-        [[nodiscard]] int GetMeshIndex() const
-        {
-            return mesh_index;
-        }
-
-        void SetMeshIndex(int index)
-        {
-            mesh_index = index;
-        }
-
-        void AddResourceMesh(ResourceMesh* res)
-        {
-            mesh = res;
-        }
-
-        [[nodiscard]] const ResourceMesh* GetResource() const
+        [[nodiscard]] const ResourceMesh* GetResourceMesh() const
         {
             return mesh;
         }
 
-        [[nodiscard]] const ResourceMaterial* GetMaterial() const
+        [[nodiscard]] const ResourceMaterial* GetResourceMaterial() const
         {
             return material;
+        }
+       
+        void AddResourceMesh(ResourceMesh* res)
+        {
+            mesh = res;
         }
 
         void AddResourceMaterial(ResourceMaterial* res)
@@ -131,11 +101,7 @@ namespace Hachiko
 
     private:
         bool visible = true;
-        
-        int mesh_index;
-        std::string asset_path;
-        std::string model_name;
-      
+              
         // SKINING
         const GameObject** node_cache = nullptr;
         std::vector<float4x4> palette;

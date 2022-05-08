@@ -33,9 +33,9 @@ Hachiko::GeometryBatch::~GeometryBatch() {
     RELEASE(texture_batch);
 }
 
-void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh)
+void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh_renderer)
 {
-    const ResourceMesh* resource = mesh->GetResource();
+    const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
     auto it = resources.find(resource);
 
     if (it == resources.end())
@@ -44,7 +44,7 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh)
         resources[resource] = new DrawCommand();
     }
 
-    texture_batch->AddMaterial(mesh->GetMaterial());
+    texture_batch->AddMaterial(mesh_renderer->GetResourceMaterial());
 }
 
 void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMeshRenderer* mesh)
@@ -192,7 +192,7 @@ void Hachiko::GeometryBatch::GenerateCommands()
     unsigned instance = 0;
     for (const ComponentMeshRenderer* component : components)
     {
-        const ResourceMesh* r = component->GetResource();
+        const ResourceMesh* r = component->GetResourceMesh();
         DrawCommand command = (*resources[r]);
         command.base_instance = instance;
         commands.emplace_back(command);

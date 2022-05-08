@@ -209,7 +209,7 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* compone
     static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
-    const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
+    const ResourceMaterial* material = component_mesh_renderer->GetResourceMaterial();
 
     if (material == nullptr)
     {

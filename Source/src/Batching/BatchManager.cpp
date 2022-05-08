@@ -35,7 +35,7 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
         if (components[i]->GetType() == Component::Type::MESH_RENDERER)
         {
             const ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
-            const ResourceMesh* resource = mesh_renderer->GetResource();
+            const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
 
             // Find matching batch to include the mesh
             for (GeometryBatch* geometry_batch : geometry_batches)
@@ -55,16 +55,16 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
     }
 }
 
-void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh)
+void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh_renderer)
 {
-    const ResourceMesh* resource = mesh->GetResource();
+    const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
 
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
         if (geometry_batch->batch->layout == resource->layout)
         {
             // We assume that the resource is already contained in the batch
-            geometry_batch->AddDrawComponent(mesh);
+            geometry_batch->AddDrawComponent(mesh_renderer);
             return;
         }
     }
