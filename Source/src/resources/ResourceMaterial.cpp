@@ -3,6 +3,9 @@
 #include "modules/ModuleResources.h"
 #include "importers/MaterialImporter.h"
 
+#include "modules/ModuleSceneManager.h"
+#include "core/Scene.h"
+
 Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}
 
@@ -135,7 +138,7 @@ void Hachiko::ResourceMaterial::DrawGui()
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
     const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + this->name;
-    ResourceTexture* res = nullptr;
+    
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
     {
@@ -160,16 +163,17 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
             texture_path.append(META_EXTENSION);
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 
-            res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
+            ResourceTexture* res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
                 texture_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+
+            if (res != nullptr)
+            {
+                SetTexture(res, type);
+                UpdateMaterial();
+            }
         }
 
         ImGuiFileDialog::Instance()->Close();
-    }
-    if (res != nullptr)
-    {
-        SetTexture(res, type);
-        UpdateMaterial();
     }
 }
 
@@ -192,13 +196,14 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             metalness = nullptr;
             break;
         }
+        UpdateMaterial();
     }
-
-    UpdateMaterial();
 }
 
 void Hachiko::ResourceMaterial::UpdateMaterial()
 {
     MaterialImporter material_importer;
     material_importer.Save(this);
+
+    App->scene_manager->GetActiveScene()->OnMeshesChanged();
 }

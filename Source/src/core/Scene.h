@@ -40,6 +40,8 @@ namespace Hachiko
         void HandleInputModel(ResourceModel* model);
         void HandleInputMaterial(ResourceMaterial* material);
 
+        void RebuildBatching();
+
         [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
         [[nodiscard]] GameObject* GetRoot() const
         {

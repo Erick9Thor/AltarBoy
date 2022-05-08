@@ -135,7 +135,8 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {    
     ComponentCamera* camera = App->camera->GetRenderingCamera();
-    const Scene* active_scene = App->scene_manager->GetActiveScene();   
+    Scene* active_scene = App->scene_manager->GetActiveScene();   
+    active_scene->RebuildBatching();
 
 #ifdef PLAY_BUILD
     int width, height;

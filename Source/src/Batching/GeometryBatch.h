@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Resources/ResourceMesh.h"
+#include "resources/ResourceMesh.h"
 #include "DrawCommand.h"
 
 #include <vector>

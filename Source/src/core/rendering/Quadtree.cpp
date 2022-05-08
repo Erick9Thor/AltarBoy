@@ -109,9 +109,14 @@ void Hachiko::QuadtreeNode::RearangeChildren()
     {
         GameObject* game_object = *it;
         bool intersects[static_cast<int>(Quadrants::COUNT)];
+        int intersections = 0;
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
             intersects[i] = children[i]->box.Intersects(game_object->GetAABB());
+            if (intersects[i])
+            {
+                intersections += 1;
+            }
         }
 
         // If it intersects all there is no point in moving downwards
@@ -120,6 +125,12 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             ++it;
             continue;
         }
+        if (intersections > 1)
+        {
+            ++it;
+            continue;
+        }
+
         it = objects.erase(it);
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {

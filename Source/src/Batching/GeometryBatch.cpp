@@ -142,7 +142,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
         {
             size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)];
             size_bytes = sizeof(unsigned) * size;
-            memcpy(&batch->tangents[bones_indices_offset], r->src_bone_indices.get(), size_bytes);
+            memcpy(&batch->src_bone_indices[bones_indices_offset], r->src_bone_indices.get(), size_bytes);
         }
         else
         {
@@ -154,7 +154,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
         {
             size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] * 4;
             size_bytes = sizeof(float) * size;
-            memcpy(&batch->tangents[bones_weights_offset], r->src_bone_indices.get(), size_bytes);
+            memcpy(&batch->src_bone_indices[bones_weights_offset], r->src_bone_indices.get(), size_bytes);
         }
         else
         {

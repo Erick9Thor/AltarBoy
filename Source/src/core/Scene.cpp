@@ -159,6 +159,17 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     }
 }
 
+void Hachiko::Scene::RebuildBatching() 
+{
+    if (rebuild_batch)
+    {
+        batch_manager->CleanUp();
+        batch_manager->CollectMeshes(root);
+        batch_manager->BuildBatches();
+        rebuild_batch = false;
+    }
+}
+
 Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
 {
     LineSegment line_seg(origin, destination);
@@ -312,11 +323,4 @@ void Hachiko::Scene::Start() const
 void Hachiko::Scene::Update()
 {
     root->Update();
-    if (rebuild_batch)
-    {
-        batch_manager->CleanUp();
-        batch_manager->CollectMeshes(root);
-        batch_manager->BuildBatches();
-        rebuild_batch = false;
-    }
-}
+} 
