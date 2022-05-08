@@ -2119,8 +2119,6 @@
     <ClInclude Include="src\resources\ResourceStateMachine.h" />
     <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
     <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h" />
-    <ClInclude Include="vendors\imnodes-0.5\dependencies\gl3w\include\GL\gl3w.h" />
-    <ClInclude Include="vendors\imnodes-0.5\dependencies\gl3w\include\GL\glcorearb.h" />
     <ClInclude Include="vendors\imnodes-0.5\example\node_editor.h" />
     <ClInclude Include="vendors\imnodes-0.5\example\graph.h" />
     <ClInclude Include="src\ui\WindowStateMachine.h" />

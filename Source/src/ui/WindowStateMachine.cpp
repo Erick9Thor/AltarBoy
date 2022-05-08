@@ -25,7 +25,7 @@ void Hachiko::WindowStateMachine::Update()
     // Show node editor ------------------------------------------------------------------
     //context = ImNodes::GetCurrentContext();
     //ImNodes::SetNodeGridSpacePos(0, ImVec2(200.0f, 200.0f));
-    ImGui::Begin("Node editor");
+    ImGui::Begin("Node editor - Press H for help");
     ImNodes::BeginNodeEditor();
     id = 0;
     nodes.clear();
@@ -226,6 +226,29 @@ void Hachiko::WindowStateMachine::Update()
         ImGui::EndPopup();
     }
     // End of delete a link ------------------------------------------------------------------
+
+    if (ImGui::IsKeyPressed(SDL_SCANCODE_H, false))
+    {
+        ImGui::OpenPopup("Help");
+    }
+
+    if (ImGui::BeginPopup("Help"))
+    {
+        ImGui::Text("Controls:");
+        ImGui::BulletText("Use the mouse wheel to move around the editor");
+        ImGui::Text("   or mouse left-clicking at the mini-map.");
+        ImGui::Separator();
+        ImGui::BulletText("Mouse right-clicking to add a node.");
+        ImGui::Separator();
+        ImGui::BulletText("Mouse right-clicking hovering a node to edit it.");
+        ImGui::Separator();
+        ImGui::BulletText("Mouse left-clicking hovering a pin to start a link");
+        ImGui::Text("   and release it in another pin to create it.");
+        ImGui::Separator();
+        ImGui::BulletText("Mouse right-clicking hovering a link to edit it.");
+
+        ImGui::EndPopup();
+    }
 
     ImGui::End();
 }
