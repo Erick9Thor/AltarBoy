@@ -84,9 +84,12 @@ struct Material {
     uint is_metallic;
     uint smoothness_alpha;
     uint is_transparent;
+    uint padding0;
+    uint padding1;
+    uint padding2;
 };
 
-readonly layout(std140, binding = 1) buffer Materials {
+readonly layout(std430, binding = 1) buffer Materials {
     Material materials[];
 } materialsBuffer;
 

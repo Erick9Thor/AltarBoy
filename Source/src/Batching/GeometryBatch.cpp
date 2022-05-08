@@ -258,7 +258,6 @@ void Hachiko::GeometryBatch::GenerateBuffers()
     glVertexAttribPointer(6, 1, GL_UNSIGNED_INT, GL_FALSE, sizeof(unsigned), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(6);
     glVertexAttribDivisor(6, 1); // advances divisor times per instance/draw command
-    
 
     // Indices (1 value)
     glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::INDICES)]);

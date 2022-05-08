@@ -40,6 +40,7 @@ namespace Hachiko
             unsigned is_metallic;
             unsigned smoothness_alpha;
             unsigned is_transparent;
+            unsigned padding[3];
         };
 
         TextureBatch();

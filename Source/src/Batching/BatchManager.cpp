@@ -87,7 +87,7 @@ void Hachiko::BatchManager::DrawBatches()
 
         // Binds meshes and transforms
         geometry_batch->UpdateWithTextureBatch();
-        App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
+        //App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
         // Bind texture batch
         // bind materials array
         auto& commands = geometry_batch->GetCommands();

@@ -77,11 +77,13 @@ Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
     return root->GetComponentInDescendants<ComponentCamera>();
 }
 
-void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
+void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent)
 {
     GameObject* new_parent = parent ? parent : root;
     new_parent->children.push_back(new_object);
     quadtree->Insert(new_object);
+
+    OnMeshesChanged();
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)
@@ -90,6 +92,8 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
     GameObject* new_game_object = final_parent->CreateChild();
 
     new_game_object->SetName(name);
+
+    OnMeshesChanged();
 
     // This will insert itself into quadtree on first bounding box update:
     return new_game_object;
@@ -134,8 +138,9 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
         }
     };
 
-
     create_children_function(game_object, model->child_nodes);
+
+    OnMeshesChanged();
 }
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
