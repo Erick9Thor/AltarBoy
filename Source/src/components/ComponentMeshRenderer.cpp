@@ -172,18 +172,16 @@ void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& pa
         for (unsigned i = 0; i < mesh->num_bones; ++i)
         {
             const ResourceMesh::Bone& bone = mesh->bones[i];
-            /* const GameObject* bone_node = node_cache[i];
+            const GameObject* bone_node = node_cache[i];
 
             if (bone_node == nullptr)
             {
                 bone_node = node_cache[i] = root ? root->FindDescendantWithName(bone.name) : nullptr;
-            }*/
-
-            const GameObject* bone_node = root->FindDescendantWithName(bone.name);
+            }
 
             if (bone_node)
             {
-                palette[i] = bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+                palette[i] = root_transform * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
             }
             else
             {
