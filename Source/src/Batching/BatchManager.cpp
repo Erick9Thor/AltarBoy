@@ -43,7 +43,7 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
                 if (geometry_batch->batch->layout == resource->layout)
                 {
                     geometry_batch->AddMesh(mesh_renderer);
-                    return;
+                    continue;
                 }
             }
 
