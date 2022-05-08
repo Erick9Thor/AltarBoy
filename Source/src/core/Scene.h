@@ -34,7 +34,7 @@ namespace Hachiko
         // --- GameObject Management --- //
         ComponentCamera* GetMainCamera() const;
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
-        void DestroyGameObject(GameObject* game_object) const;
+        void DestroyGameObject(GameObject* game_object);
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
         void HandleInputModel(ResourceModel* model);

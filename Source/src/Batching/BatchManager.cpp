@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "core/GameObject.h"
 #include "components/ComponentTransform.h"
-#include "components/ComponentMesh.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMesh.h"
 #include "modules/ModuleProgram.h"
 
@@ -29,30 +29,33 @@ void Hachiko::BatchManager::CollectMeshes(const GameObject* game_object)
 
 void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
 {
-    const ComponentMesh* mesh = game_object->GetComponent<ComponentMesh>();
-    if (mesh == nullptr)
+    const std::vector<Component*> components = game_object->GetComponents();
+    for (unsigned i = 0; i < components.size(); ++i)
     {
-        return;
-    }
-    const ResourceMesh* resource = mesh->GetResource();
-
-    // Find matching batch to include the mesh
-    for (GeometryBatch* geometry_batch : geometry_batches)
-    {
-        if (geometry_batch->batch->layout == resource->layout)
+        if (components[i]->GetType() == Component::Type::MESH_RENDERER)
         {
-            geometry_batch->AddMesh(mesh);
-            return;
-        }            
-    }
+            const ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
+            const ResourceMesh* resource = mesh_renderer->GetResource();
 
-    // Create new batch if there are no matching ones
-    GeometryBatch* new_batch = new GeometryBatch(resource->layout);
-    new_batch->AddMesh(mesh);
-    geometry_batches.push_back(new_batch);
+            // Find matching batch to include the mesh
+            for (GeometryBatch* geometry_batch : geometry_batches)
+            {
+                if (geometry_batch->batch->layout == resource->layout)
+                {
+                    geometry_batch->AddMesh(mesh_renderer);
+                    return;
+                }
+            }
+
+            // Create new batch if there are no matching ones
+            GeometryBatch* new_batch = new GeometryBatch(resource->layout);
+            new_batch->AddMesh(mesh_renderer);
+            geometry_batches.push_back(new_batch);
+        }
+    }
 }
 
-void Hachiko::BatchManager::AddDrawComponent(const ComponentMesh* mesh)
+void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh)
 {
     const ResourceMesh* resource = mesh->GetResource();
 

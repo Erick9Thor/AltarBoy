@@ -7,7 +7,7 @@
 
 namespace Hachiko
 {
-    class ComponentMesh;
+    class ComponentMeshRenderer;
     
     class BatchManager
     {
@@ -19,7 +19,7 @@ namespace Hachiko
 
         void CollectMesh(const GameObject* game_object);
 
-        void AddDrawComponent(const ComponentMesh* mesh);
+        void AddDrawComponent(const ComponentMeshRenderer* mesh);
 
         void BuildBatches();
         void DrawBatches();

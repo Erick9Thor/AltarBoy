@@ -50,21 +50,6 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-/*layout(std140, binding = 1) uniform Material
-{
-    vec4 diffuse_color;
-    vec4 specular_color;
-    uint diffuse_flag;
-    uint specular_flag;
-    uint normal_flag;
-    uint metallic_flag;
-    float smoothness;
-    float metalness_value;
-    uint is_metallic;
-    uint smoothness_alpha;
-    uint is_transparent;
-} material;*/
-
 layout(std140, binding = 2) uniform Lights
 {
     AmbientLight ambient;
@@ -84,20 +69,24 @@ struct TexAddress {
 };
 
 struct Material {
-    vec4 diffuseColor;
-    vec4 specularColor;
-    float shininess; // smoothness
-    int hasDiffuseMap;
-    int hasSpecularMap;
-    int hasNormalMap;
-    TexAddress diffuseMap;
-    TexAddress specularMap;
-    TexAddress normalMap;
-    int padding0;
-    int padding1;
+    vec4 diffuse_color;
+    vec4 specular_color;
+    uint diffuse_flag;
+    uint specular_flag;
+    uint normal_flag;
+    uint metallic_flag;
+    TexAddress diffuse_map;
+    TexAddress specular_map;
+    TexAddress normal_map;
+    TexAddress metallic_map;
+    float smoothness;
+    float metalness_value;
+    uint is_metallic;
+    uint smoothness_alpha;
+    uint is_transparent;
 };
 
-readonly layout(std430, binding = 1) buffer Materials {
+readonly layout(std140, binding = 1) buffer Materials {
     Material materials[];
 } materialsBuffer;
 
@@ -243,73 +232,42 @@ void main()
     vec3 norm = normalize(fragment.normal);
     vec3 view_dir = normalize(camera.pos - fragment.pos);
     
-/*
     Material material = materialsBuffer.materials[instance];
 
-    /*if (material.hasNormalMap > 0)
+    if (material.normal_flag > 0)
     {
         mat3 tbn = CreateTangentSpace(normalize(fragment.normal), normalize(fragment.tangent));
-	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normalMap.texIndex+1], vec3(fragment.tex_coord, material.normalMap.layerIndex)).xyz * 2.0 - 1.0);
+	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normal_map.texIndex+1], vec3(fragment.tex_coord, material.normal_map.layerIndex)).xyz * 2.0 - 1.0);
 	    norm = normalize(fragmentNormal);
-    }*/
-
-    vec3 diffuse_color = material.diffuseColor.rgb;
-    if (material.hasDiffuseMap > 0)
-    {
-        diffuse_color = pow(texture(allMyTextures[material.diffuseMap.texIndex+1], vec3(fragment.tex_coord, material.diffuseMap.layerIndex)).rgb, vec3(2.2));
     }
-
-    float shininess = material.shininess;
-    vec3 specular_color = material.specularColor.rgb;
-    if (material.hasSpecularMap > 0)
-    {
-        // Should we gaMma correct specular?
-        // specular_color = pow(texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).rgb, vec3(2.2));
-        specular_color = texture(allMyTextures[material.specularMap.texIndex+1], vec3(fragment.tex_coord, material.specularMap.layerIndex)).rgb;
-        specular_color = pow(specular_color, vec3(2.2));
-        // Use alpha as shininess?
-        //shininess = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord).a;
-    } 
-
-////////////////////////
-
-    Material material = materialsBuffer.materials[instance];
-
-    /*if (material.hasNormalMap > 0)
-    {
-        mat3 tbn = CreateTangentSpace(normalize(fragment.normal), normalize(fragment.tangent));
-	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normalMap.texIndex+1], vec3(fragment.tex_coord, material.normalMap.layerIndex)).xyz * 2.0 - 1.0);
-	    norm = normalize(fragmentNormal);
-    }*/
 
     vec4 diffuse_color = material.diffuse_color;
     if (material.diffuse_flag > 0)
     {
-        diffuse_color = pow(texture(allMyTextures[material.diffuseMap.texIndex+1], vec3(fragment.tex_coord, material.diffuseMap.layerIndex)).rgb, vec3(2.2));
+        diffuse_color = pow(texture(allMyTextures[material.diffuse_map.texIndex+1], vec3(fragment.tex_coord, material.diffuse_map.layerIndex)), vec4(2.2, 2.2, 2.2, 1.0));
     }
 
     vec3 f0;
     vec3 Cd;
     float smoothness;
-    
+
     if(material.is_metallic > 0)
     {
-        vec4 texture_metal_color = texture(textures[METALLIC_SAMPLER], fragment.tex_coord);
+        vec4 texture_metal_color = texture(allMyTextures[material.metallic_map.texIndex+1], vec3(fragment.tex_coord, material.metallic_map.layerIndex));
         float metalnessMask = material.metallic_flag * texture_metal_color.r + (1 - material.metallic_flag) * material.metalness_value;
         Cd = diffuse_color.rgb * (1 - metalnessMask);
         f0 = vec3(0.04) * (1 - metalnessMask) + diffuse_color.rgb * metalnessMask;
-        smoothness = material.smoothness * ((material.smoothness_alpha * texture_metal_color.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
+        smoothness = material.smoothness * ((material.smoothness_alpha * texture_metal_color.a) + ((1 - material.smoothness_alpha)* diffuse_color.a));
     }
     else 
     {
         Cd = diffuse_color.rgb;
-        vec4 texture_spec_color = texture(textures[SPECULAR_SAMPLER], fragment.tex_coord);
+        vec4 texture_spec_color = texture(allMyTextures[material.specular_map.texIndex+1], vec3(fragment.tex_coord, material.specular_map.layerIndex));
         // If the flag is true (1) it will paint texture color, otherwise specular color
         vec4 colorSpecular = (material.specular_flag * texture_spec_color) + ((1 - material.specular_flag) * material.specular_color);
         f0 = colorSpecular.rgb;
         smoothness = material.smoothness * ((material.smoothness_alpha * colorSpecular.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
     }
-*/
     
     vec3 hdr_color = vec3(0.0);
     hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);

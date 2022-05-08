@@ -12,6 +12,7 @@
 #include "ModuleUserInterface.h"
 
 #include "components/ComponentCamera.h"
+#include "components/ComponentMeshRenderer.h"
 
 #ifdef PLAY_BUILD
 #include "ModuleInput.h"
@@ -216,7 +217,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     {
         batch_manager->AddDrawComponent(target.mesh);
         // target.game_object->Draw(camera, program);
-        if (selected_go && target.game_object == selected_go)
+        if (selected_go && target.mesh->GetGameObject() == selected_go)
         {
             outline_target = &target;
         }
@@ -235,7 +236,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
         Program* outline_program = App->program->GetStencilProgram();
         outline_program->Activate();
-        outline_target->game_object->DrawStencil(camera, outline_program);
+        outline_target->mesh->GetGameObject()->DrawStencil(camera, outline_program);
         Program::Deactivate();
 
         glStencilMask(0XFF);

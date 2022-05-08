@@ -61,10 +61,10 @@ void main()
     }*/
 
     instance = gl_BaseInstance;
-    gl_Position = camera.proj * camera.view *  models[instance] * vec4(position, 1.0);
+    gl_Position = camera.proj * camera.view *  models[instance] * position;
 
     fragment.normal = transpose(inverse(mat3(models[instance]))) * normal.xyz;
     fragment.tangent = transpose(inverse(mat3(models[instance]))) * tangent.xyz;
-    fragment.pos = vec3(models[instance] * vec4(position, 1.0));
+    fragment.pos = vec3(models[instance] * position);
     fragment.tex_coord = in_tex_coord;
 }

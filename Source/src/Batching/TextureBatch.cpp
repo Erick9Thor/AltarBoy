@@ -2,8 +2,7 @@
 #include "TextureBatch.h"
 
 #include "core/GameObject.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 
 #include "Modules/ModuleProgram.h"
@@ -29,10 +28,8 @@ Hachiko::TextureBatch::~TextureBatch()
     texture_arrays.clear();
 }
 
-void Hachiko::TextureBatch::AddMaterial(const ComponentMaterial* material)
+void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_material)
 {
-    const ResourceMaterial* resource_material = material->GetMaterial();
-
     if (resource_material->HasDiffuse())
     {
         AddTexture(resource_material->diffuse);
@@ -184,43 +181,50 @@ void Hachiko::TextureBatch::GenerateBatch()
     }
 }
 
-void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMesh*>& components)
+void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components)
 {
     GenerateMaterials(components);
     UpdateTextureBatch();
     UpdateMaterials();
 }
 
-void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMesh*>& components)
+void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components)
 {
     materials.resize(components.size());
 
     for (unsigned i = 0; i < components.size(); ++i)
     {
-        const ComponentMaterial* material_comp = components[i]->GetGameObject()->GetComponent<ComponentMaterial>();
-
-        const ResourceMaterial* material = material_comp->GetMaterial();
+        const ResourceMaterial* material = components[i]->GetMaterial();
 
         materials[i].diffuse_color = material->diffuse_color;
         materials[i].specular_color = material->specular_color;
-        materials[i].shininess = material->shininess;
-        materials[i].has_diffuse_map = material->HasDiffuse();
-        materials[i].has_specular_map = material->HasSpecular();
-        materials[i].has_normal_map = material->HasNormal();
+        materials[i].diffuse_flag = material->HasDiffuse();
+        materials[i].specular_flag = material->HasSpecular();
+        materials[i].normal_flag = material->HasNormal();
+        materials[i].metallic_flag = material->HasMetalness();
 
-        if (materials[i].has_diffuse_map)
+        if (materials[i].diffuse_flag)
         {
             materials[i].diffuse_map = (*resources[material->diffuse]);
         }
-        if (materials[i].has_specular_map)
+        if (materials[i].specular_flag)
         {
             materials[i].specular_map = (*resources[material->specular]);
         }
-        if (materials[i].has_normal_map)
+        if (materials[i].normal_flag)
         {
             materials[i].normal_map = (*resources[material->normal]);
         }
-        //materials[i].padding = *resources[material->padding]);
+        if (materials[i].metallic_flag)
+        {
+            materials[i].metallic_map = (*resources[material->metalness]);
+        }
+
+        materials[i].smoothness = material->smoothness;
+        materials[i].metalness_value = material->metalness_value;
+        materials[i].is_metallic = material->is_metallic;
+        materials[i].smoothness_alpha = material->smoothness_alpha;
+        materials[i].is_transparent = material->is_transparent;
     }
 }
 

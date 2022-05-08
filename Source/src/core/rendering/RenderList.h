@@ -14,7 +14,7 @@ namespace Hachiko
     struct RenderTarget
     {
         const char* name = nullptr;
-        GameObject* game_object = nullptr;
+        ComponentMeshRenderer* mesh = nullptr;
         float distance = 0.0f;
     };
 

@@ -7,7 +7,7 @@
 
 namespace Hachiko
 {
-    class ComponentMesh;
+    class ComponentMeshRenderer;
     class TextureBatch;
 
     struct Material;
@@ -19,9 +19,9 @@ namespace Hachiko
         GeometryBatch(ResourceMesh::Layout batch_layout);
         ~GeometryBatch();
 
-        void AddMesh(const ComponentMesh* mesh);
+        void AddMesh(const ComponentMeshRenderer* mesh);
 
-        void AddDrawComponent(const ComponentMesh* mesh);
+        void AddDrawComponent(const ComponentMeshRenderer* mesh);
 
         void BuildBatch();
         void BatchMeshes();
@@ -42,7 +42,7 @@ namespace Hachiko
             return commands;
         }
         
-        std::vector<const ComponentMesh*> components; // contains all ComponentMeshes in the batch
+        std::vector<const ComponentMeshRenderer*> components; // contains all ComponentMeshes in the batch
         // Commands will be used as templates for the final command list
         std::unordered_map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
                 

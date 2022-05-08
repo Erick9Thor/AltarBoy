@@ -129,47 +129,32 @@ public:
         name = new_name;
     }
 
-        [[nodiscard]] ComponentTransform* GetTransform() const
+    template<typename RetComponent>
+    RetComponent* GetComponent()
+    {
+        for (Component* component : components)
         {
-            return transform;
-        }
-
-        [[nodiscard]] const std::string& GetName() const
-        {
-            return name;
-        }
-
-        void SetName(const std::string& new_name)
-        {
-            name = new_name;
-        }
-
-        template<typename RetComponent>
-        RetComponent* GetComponent()
-        {
-            for (Component* component : components)
+            if (typeid(*component) == typeid(RetComponent))
             {
-                if (typeid(*component) == typeid(RetComponent))
-                {
-                    return static_cast<RetComponent*>(component);
-                }
+                return static_cast<RetComponent*>(component);
             }
-
-            return nullptr;
         }
 
-        template<typename RetComponent>
-        const RetComponent* GetComponent() const
+        return nullptr;
+    }
+
+    template<typename RetComponent>
+    const RetComponent* GetComponent() const
+    {
+        for (Component* component : components)
         {
-            for (Component* component : components)
+            if (typeid(*component) == typeid(RetComponent))
             {
-                if (typeid(*component) == typeid(RetComponent))
-                {
-                    return static_cast<RetComponent*>(component);
-                }
+                return static_cast<RetComponent*>(component);
             }
-            return nullptr;
         }
+        return nullptr;
+    }
 
     template<typename RetComponent>
     RetComponent* GetComponentInDescendants() const
@@ -199,12 +184,12 @@ public:
     GameObject* GetFirstChildWithName(const std::string& child_name) const;
     Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
 
-    public:
-        std::string name;
-        Scene* scene_owner = nullptr;
-        GameObject* parent = nullptr;
-        std::vector<GameObject*> children;
-        bool active = true;
+public:
+    std::string name;
+    Scene* scene_owner = nullptr;
+    GameObject* parent = nullptr;
+    std::vector<GameObject*> children;
+    bool active = true;
 
 private:
     bool started = false;

@@ -68,7 +68,6 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
 
 void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game_object)
 {
-    bool has_mesh_renderer = false;
     const std::vector<Component*> components = game_object->GetComponents();
     for (int i = 0; i < components.size(); ++i)
     {
@@ -77,26 +76,22 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
             ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
             if (mesh_renderer->IsVisible())
             {
-                has_mesh_renderer = true;
+                RenderTarget target;
+                target.name = game_object->GetName().c_str();
+                target.mesh = mesh_renderer;
+                target.distance = (game_object->GetOBB().CenterPoint() - camera_pos).LengthSq();
+
+                // Get first element which distance is not less than current target one
+                const auto it = std::lower_bound(nodes.begin(), 
+                                                 nodes.end(), 
+                                                 target, 
+                                                 [](const RenderTarget& it_target, const RenderTarget& new_target) { 
+                                                     return it_target.distance < new_target.distance; 
+                                                 });
+                nodes.insert(it, target);
+
                 polycount_rendered += game_object->GetComponent<ComponentMeshRenderer>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
             }
         }
-    }
-
-    if (has_mesh_renderer)
-    {
-        RenderTarget target;
-        target.name = game_object->GetName().c_str();
-        target.game_object = game_object;
-        target.distance = (game_object->GetOBB().CenterPoint() - camera_pos).LengthSq();
-
-        // Get first element which distance is not less than current target one
-        const auto it = std::lower_bound(nodes.begin(),
-                                         nodes.end(),
-                                         target,
-                                         [](const RenderTarget& it_target, const RenderTarget& new_target) {
-                                             return it_target.distance < new_target.distance;
-                                         });
-        nodes.insert(it, target);
     }
 }

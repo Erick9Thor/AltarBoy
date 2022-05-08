@@ -4,6 +4,9 @@
 #include "resources/ResourceTexture.h"
 #include "modules/ModuleResources.h"
 
+#include "GLFont.h"
+#include "FTLabel.h"
+
 Hachiko::ModuleTexture::ModuleTexture() = default;
 
 Hachiko::ModuleTexture::~ModuleTexture() = default;

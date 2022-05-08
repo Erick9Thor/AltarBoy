@@ -22,7 +22,7 @@
 
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
+    culling_camera(App->camera->GetRenderingCamera()),
     skybox(new Skybox()),
     quadtree(new Quadtree()),
     batch_manager(new BatchManager()),
@@ -77,7 +77,7 @@ Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
     return root->GetComponentInDescendants<ComponentCamera>();
 }
 
-void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent)
+void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
 {
     GameObject* new_parent = parent ? parent : root;
     new_parent->children.push_back(new_object);

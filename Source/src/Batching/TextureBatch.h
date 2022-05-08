@@ -2,8 +2,8 @@
 
 namespace Hachiko
 {
-    class ComponentMesh;
-    class ComponentMaterial;
+    class ComponentMeshRenderer;
+    class ResourceMaterial;
 
     class TextureBatch
     {
@@ -27,27 +27,32 @@ namespace Hachiko
         {
             float4 diffuse_color;
             float4 specular_color;
-            float shininess; // float smoothness;
-            int has_diffuse_map;
-            int has_specular_map;
-            int has_normal_map;
+            unsigned diffuse_flag;
+            unsigned specular_flag;
+            unsigned normal_flag;
+            unsigned metallic_flag;
             TexAddress diffuse_map;
             TexAddress specular_map;
             TexAddress normal_map;
-            float2 padding = float2::zero;
+            TexAddress metallic_map;
+            float smoothness;
+            float metalness_value;
+            unsigned is_metallic;
+            unsigned smoothness_alpha;
+            unsigned is_transparent;
         };
 
         TextureBatch();
         ~TextureBatch();
 
-        void AddMaterial(const ComponentMaterial* material);
+        void AddMaterial(const ResourceMaterial* material);
         void AddTexture(const ResourceTexture* texture);
 
         void GenerateBatch();
 
-        void Draw(const std::vector<const ComponentMesh*>& components);
+        void Draw(const std::vector<const ComponentMeshRenderer*>& components);
 
-        void GenerateMaterials(const std::vector<const ComponentMesh*>& components);
+        void GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components);
 
         void UpdateTextureBatch();
         void UpdateMaterials();
