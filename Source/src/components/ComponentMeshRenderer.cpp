@@ -44,6 +44,8 @@ void Hachiko::ComponentMeshRenderer::Update() {
 
 void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* program)
 {
+    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+
     if (mesh == nullptr || !visible)
     {
         return;
