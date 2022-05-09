@@ -13,7 +13,8 @@ public:                                                                       \
     ) override;                                                               \
     virtual void DeserializeFrom(                                             \
         std::unordered_map<std::string, SerializedField>& serialized_fields   \
-    ) override;
+    ) override;                                                               \
+    virtual void OnEditor() override;
 #define SERIALIZATION_METHODS_false                                           \
 public:                                                                       \
     void SerializeTo(                                                         \
@@ -21,7 +22,18 @@ public:                                                                       \
     ) override;                                                               \
     void DeserializeFrom(                                                     \
         std::unordered_map<std::string, SerializedField>& serialized_fields   \
-    ) override;
+    ) override;                                                               \
+    void OnEditor() override;
+
+#define SCRIPTING_METHODS_BASE                                                \
+public:                                                                       \
+    virtual void SerializeTo(                                                 \
+        std::unordered_map<std::string, SerializedField>& serialized_fields   \
+    ) override;                                                               \
+    virtual void DeserializeFrom(                                             \
+        std::unordered_map<std::string, SerializedField>& serialized_fields   \
+    ) override;                                                               \
+    virtual void OnEditor() {};
 
 // This needs to be added to all script sub classes:
 #define SERIALIZATION_METHODS(is_virtual) SERIALIZATION_METHODS_##is_virtual

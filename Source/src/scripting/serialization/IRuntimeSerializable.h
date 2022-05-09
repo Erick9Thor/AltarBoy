@@ -1,4 +1,4 @@
-#include "HachikoApiDefine.h"
+#include "core/HachikoApiDefine.h"
 #include "scripting/serialization/SerializedField.h"
 #include <unordered_map>
 #include <string>
@@ -15,7 +15,5 @@ public:
     virtual void DeserializeFrom(
         std::unordered_map<std::string, SerializedField>& serialized_fields
     ) = 0;
-
-    virtual void ShowInEditor() {};
 };
 } // namespace Hachiko::Scripting

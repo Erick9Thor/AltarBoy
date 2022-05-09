@@ -1,0 +1,24 @@
+General:
+  id: 13418598252312511338
+  type: 3
+  hash: 6159836605640719156
+model_name: BakerHouse
+material:
+  - id: 3066575776084033142
+    name: Baker_house
+mesh:
+  - id: 17202912007058041650
+    material_index: 0
+  - id: 1226480219516193211
+    material_index: 0
+name: RootNode
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+child:
+  - name: Chimney
+    transform: [100, -0, 0, 0, 0, -1.1920929e-05, 99.9999924, 0, -0, -99.9999924, -1.1920929e-05, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 0
+  - name: Baker_house
+    transform: [100, -0, 0, 0, 0, -1.1920929e-05, 99.9999924, 0, -0, -99.9999924, -1.1920929e-05, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 1

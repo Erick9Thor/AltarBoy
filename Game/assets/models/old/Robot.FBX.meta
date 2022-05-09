@@ -1,0 +1,18 @@
+General:
+  id: 11347849314154577595
+  type: 3
+  hash: 8117235374607563533
+model_name: Robot
+material:
+  - id: 2578032323664521536
+    name: RobotMaterial
+mesh:
+  - id: 8746952640614063577
+    material_index: 0
+name: RootNode
+transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+child:
+  - name: Robot
+    transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
+    mesh_index:
+      - 0

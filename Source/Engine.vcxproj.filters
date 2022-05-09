@@ -261,10 +261,7 @@
     <ClCompile Include="src\components\ComponentDirLight.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentMaterial.cpp">
-      <Filter>Core\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\components\ComponentMesh.cpp">
+    <ClCompile Include="src\components\ComponentMeshRenderer.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentPointLight.cpp">
@@ -303,16 +300,16 @@
     <ClCompile Include="src\core\GameObject.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Quadtree.cpp">
+    <ClCompile Include="src\core\rendering\Quadtree.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\RenderList.cpp">
+    <ClCompile Include="src\core\rendering\RenderList.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Program.cpp">
+    <ClCompile Include="src\core\rendering\Program.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Skybox.cpp">
+    <ClCompile Include="src\core\rendering\Skybox.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\JsonFormatterValue.cpp">
@@ -343,9 +340,6 @@
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleRender.cpp">
-      <Filter>Modules\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleTexture.cpp">
@@ -498,6 +492,52 @@
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
+    <ClCompile Include="src\importers\FontImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceFont.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\xxhash\xxhash.cpp">
+      <Filter>Vendors\Xxhash</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.cpp">
+      <Filter>Vendors\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleAudio.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceNaveMesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleNavigation.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
+      <Filter>Vendors\Recast</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
     <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp" />
     <ClCompile Include="vendors\imnodes-0.5\example\color_node_editor.cpp" />
@@ -854,10 +894,7 @@
     <ClInclude Include="src\components\ComponentDirLight.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentMaterial.h">
-      <Filter>Core\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\ComponentMesh.h">
+    <ClInclude Include="src\components\ComponentMeshRenderer.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ComponentPointLight.h">
@@ -899,16 +936,16 @@
     <ClInclude Include="src\utils\PathNode.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quadtree.h">
+    <ClInclude Include="src\core\rendering\Quadtree.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\RenderList.h">
+    <ClInclude Include="src\core\rendering\RenderList.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Program.h">
+    <ClInclude Include="src\core\rendering\Program.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="src\Skybox.h">
+    <ClInclude Include="src\core\rendering\Skybox.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\JsonFormatterValue.h">
@@ -1048,9 +1085,6 @@
     </ClInclude>
     <ClInclude Include="vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\serialization\TypeConverter.h">
-      <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\ModuleCamera.h">
       <Filter>Modules\Headers</Filter>
@@ -1363,7 +1397,7 @@
     <ClInclude Include="vendors\glm\gtx\gradient_paint.hpp">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\HachikoApiDefine.h">
+    <ClInclude Include="src\core\HachikoApiDefine.h">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
     <ClInclude Include="vendors\glm\gtx\handed_coordinate_space.hpp">
@@ -2104,9 +2138,6 @@
     <ClInclude Include="src\utils\WindowsFileUtil.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\HachikoApiDefine.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\core\logging\Logger.h">
       <Filter>Logging</Filter>
     </ClInclude>
@@ -2115,6 +2146,61 @@
     </ClInclude>
     <ClInclude Include="src\core\logging\ConsoleLogger.h">
       <Filter>Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\FontImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceFont.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\xxhash\xxhash.h">
+      <Filter>Vendors\Xxhash</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookBlocking.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkDefaultIOHookDeferred.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFileHelpers.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackage.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLowLevelIO.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIOBlocking.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\AkFilePackageLowLevelIODeferred.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkFilePackageLUT.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkMultipleFileLocation.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.h">
+      <Filter>Vendors\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleAudio.h">
+      <Filter>Modules\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
+    <ClInclude Include="src\resources\ResourceNaveMesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleNavigation.h">
+      <Filter>Modules\Headers</Filter>
     </ClInclude>
     <ClInclude Include="src\resources\ResourceStateMachine.h" />
     <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
@@ -2258,6 +2344,15 @@
     </Filter>
     <Filter Include="Vendors\GLFont">
       <UniqueIdentifier>{5074120f-4569-457e-a5ab-72ebc083638a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Xxhash">
+      <UniqueIdentifier>{bab2aa5b-ebb1-41a4-b931-374b629f9398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Wwise">
+      <UniqueIdentifier>{728a28e9-5f85-411c-82f8-e783080e9810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\Recast">
+      <UniqueIdentifier>{f458afc6-644a-4e89-af95-239e65537287}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

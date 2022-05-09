@@ -21,82 +21,94 @@ Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIA
 {
 }
 
-void Hachiko::MaterialImporter::Import(const char* path)
+void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
     HE_LOG("Entering MaterialImporter: %s", path);
-    Assimp::Importer import;
-    //import.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, aiPrimitiveType_POINT | aiPrimitiveType_LINE);
-    const aiScene* scene = nullptr;
-    const std::filesystem::path material_path(path);
-    const std::string model_name = material_path.filename().replace_extension().string();
-    const std::string material_output_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + model_name + MATERIAL_EXTENSION;
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    YAML::Node material_node = YAML::LoadFile(path);
+    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL),
+        meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), material_node);
+}
 
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-    {
-        HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
-        return;
-    }
-
-    YAML::Node material_node;
-    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
-    {
-        aiMaterial* material = scene->mMaterials[i];
-        Hachiko::UID material_id = UUID::GenerateUID();
-        material_node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
-        Import(material, material_id);
-    }
-
-    FileSystem::Save(material_output_path.c_str(), material_node);
+void Hachiko::MaterialImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
+{
+    Import(path, meta);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-    const std::string material_library_path = GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL) + material->GetName();
+    const std::string material_asset_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
+    const std::string meta_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(),  MATERIAL_EXTENSION, META_EXTENSION);
+    const std::string material_library_path = 
+        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), std::to_string(material->GetID()));
+    
+    YAML::Node meta_node;
+    meta_node[GENERAL_NODE][GENERAL_ID] = material->GetID();
+    meta_node[GENERAL_NODE][GENERAL_TYPE] = (int)material->GetType();
 
     YAML::Node material_node;
-    material_node[MATERIAL_ID] = material->GetID();
-    material_node[GENERIC_TYPE] = static_cast<int>(material->GetType());
     material_node[MATERIAL_NAME] = material->GetName();
 
-    material_node[MATERIAL_DIFFUSE_NAME] = (material->HasDiffuse()) ? material->diffuse->GetName() : std::string();
-    material_node[MATERIAL_SPECULAR_NAME] = (material->HasSpecular()) ? material->specular->GetName() : std::string();
-    material_node[MATERIAL_NORMALS_NAME] = (material->HasNormal()) ? material->normal->GetName() : std::string();
-
-    material_node[MATERIAL_DIFFUSE_PATH] = (material->HasDiffuse()) ? material->diffuse->GetAssetPath() : std::string();
-    material_node[MATERIAL_SPECULAR_PATH] = (material->HasSpecular()) ? material->specular->GetAssetPath() : std::string();
-    material_node[MATERIAL_NORMALS_PATH] = (material->HasNormal()) ? material->normal->GetAssetPath() : std::string();
+    material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
+    material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
+    material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
+    material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
-    material_node[MATERIAL_SHININESS] = material->shininess;
+    material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
+    material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
+    material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
+    material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
+    material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
 
+    FileSystem::Save(meta_path.c_str(), meta_node);
+    FileSystem::Save(material_asset_path.c_str(), material_node);
     FileSystem::Save(material_library_path.c_str(), material_node);
 }
 
-Hachiko::Resource* Hachiko::MaterialImporter::Load(const char* material_path)
+Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
 {
-    if (!std::filesystem::exists(material_path))
-    {
-        return nullptr;
-    }
+    const std::string material_library_path = 
+        GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(id);
 
-    YAML::Node node = YAML::LoadFile(material_path);
-    Hachiko::ResourceMaterial* material = new ResourceMaterial(node[MATERIAL_ID].as<UID>());
+    YAML::Node node = YAML::LoadFile(material_library_path);
+    Hachiko::ResourceMaterial* material = new ResourceMaterial(id);
 
     material->SetName(node[MATERIAL_NAME].as<std::string>());
     material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
     material->specular_color = node[MATERIAL_SPECULAR_COLOR].as<float4>();
-    material->shininess = node[MATERIAL_SHININESS].as<float>();
+    material->smoothness = node[MATERIAL_SMOOTHNESS].as<float>();
+    material->metalness_value = node[MATERIAL_METALNESS_VALUE].as<float>();
+    material->is_metallic = node[MATERIAL_IS_METALLIC].as<unsigned>();
+    material->smoothness_alpha = node[MATERIAL_ALPHA_CHANNEL].as<unsigned>();
+    material->is_transparent = node[MATERIAL_IS_TRANSPARENT].as<unsigned>();
 
-    std::string diffuse_path = node[MATERIAL_DIFFUSE_PATH].as<std::string>();
-    std::string specular_path = node[MATERIAL_SPECULAR_PATH].as<std::string>();
-    std::string normals_path = node[MATERIAL_NORMALS_PATH].as<std::string>();
-    
-    material->diffuse = App->resources->GetTexture(node[MATERIAL_DIFFUSE_NAME].as<std::string>(), diffuse_path);
-    material->specular = App->resources->GetTexture(node[MATERIAL_SPECULAR_NAME].as<std::string>(), specular_path);
-    material->normal = App->resources->GetTexture(node[MATERIAL_NORMALS_NAME].as<std::string>(), normals_path);
+    UID texture_id = node[MATERIAL_DIFFUSE_ID].as<UID>();
+    if (texture_id)
+    {
+        material->diffuse = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_SPECULAR_ID].as<UID>();
+    if (texture_id)
+    {
+        material->specular = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_NORMALS_ID].as<UID>();
+    if (texture_id)
+    {
+        material->normal = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
+    texture_id = node[MATERIAL_METALNESS_ID].as<UID>();
+    if (texture_id)
+    {
+        material->metalness = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
 
     return material;
 }
@@ -111,15 +123,15 @@ void Hachiko::MaterialImporter::CreateMaterial(const std::string& name)
     delete material;
 }
 
-void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id) 
-{
-    if (!id)
-    {
-        const_cast<UID&>(id) = UUID::GenerateUID();
-    }
-    
+void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id) 
+{  
     const auto material = new ResourceMaterial(id);
-    material->SetName(ai_material->GetName().C_Str());
+    std::string name = ai_material->GetName().C_Str();
+    if (name.find(':') != std::string::npos)
+    {
+        name.erase(remove(name.begin(), name.end(), ':'), name.end());
+    }
+    material->SetName(name);
     
     aiColor4D color;
     if (ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
@@ -131,17 +143,17 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID& id)
         ColorCopy(color, material->specular_color);
     }
 
-    ai_material->Get(AI_MATKEY_SHININESS, material->shininess);
-
     material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
     material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
-
+    material->metalness = ImportTexture(ai_material, aiTextureType_METALNESS);
+    
     Save(material);
 
     delete material->diffuse;
     delete material->specular;
     delete material->normal;
+    delete material->metalness;
     delete material;
 }
 
@@ -163,26 +175,41 @@ Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMater
     const std::string model_texture_path(file.data);
     const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
     
+    std::string meta_path = asset_path + filename;
+    meta_path.append(META_EXTENSION);
+    YAML::Node text_node;
+    bool imported = false;
+
     search_paths.emplace_back(asset_path + filename);
     search_paths.emplace_back(model_path + "\\" + filename);
     search_paths.emplace_back(file.data);
 
-    for (std::string& path : search_paths)
+    if (!FileSystem::Exists(meta_path.c_str()))
     {
-        output_texture = static_cast<ResourceTexture*>(texture_importer.ImportTexture(path.c_str()));
-        if (output_texture == nullptr)
+        for (std::string& path : search_paths)
         {
-            continue;
-        }
-            
-        if (path != (asset_path + filename))
-        {
-            std::filesystem::copy_file(path.c_str(), (asset_path + filename),
-                std::filesystem::copy_options::skip_existing);
-            output_texture->SetAssetPath(asset_path + filename);
-        }
+            if (!std::filesystem::exists(path))
+            {
+                continue;
+            }
 
-        break;
+            App->resources->HandleResource(path);
+            text_node = YAML::LoadFile(meta_path);
+            imported = true;
+            break;
+        }
+    }
+    else
+    {
+        text_node = YAML::LoadFile(meta_path);
+        texture_importer.ImportWithMeta(search_paths[0].c_str(), text_node);
+        imported = true;
+    }
+
+    if (imported)
+    {
+        UID id = text_node[GENERAL_NODE][GENERAL_ID].as<UID>();
+        output_texture = static_cast<ResourceTexture*>(texture_importer.Load(id));
     }
 
     return output_texture;

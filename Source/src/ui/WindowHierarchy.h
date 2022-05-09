@@ -10,15 +10,17 @@ namespace Hachiko
     public:
         WindowHierarchy();
         ~WindowHierarchy() override;
-        void Update() override;
 
+        void Update() override;
         void CleanUp() override;
 
     private:
         void DrawHierarchyTree(const GameObject* game_object);
-        void DrawChildren(const GameObject* game_object);
-        void DrawGameObject(GameObject* game_object);
-        void DragAndDrop(GameObject* game_object);
+        bool RecursiveDraw(GameObject* game_object);
+        bool DrawGameObject(GameObject* game_object, bool stop);
+        bool DragAndDrop(GameObject* game_object);
+
+
         GameObject* dragged_object = nullptr;
     };
 }

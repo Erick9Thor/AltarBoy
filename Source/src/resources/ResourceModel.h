@@ -42,6 +42,8 @@ namespace Hachiko
         std::vector<MeshInfo> meshes {};
         std::vector<MaterialInfo> materials {};
 
+        bool have_animation = false;
+
         std::vector<ResourceNode*> child_nodes;
         std::string model_path;
         std::string material_path;

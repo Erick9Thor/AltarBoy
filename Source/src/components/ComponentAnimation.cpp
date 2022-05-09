@@ -18,7 +18,7 @@ Hachiko::ComponentAnimation::~ComponentAnimation()
 
 void Hachiko::ComponentAnimation::Start()
 {
-    controller->Play();
+    // controller->Play();
 }
 
 void Hachiko::ComponentAnimation::Stop()
@@ -28,7 +28,7 @@ void Hachiko::ComponentAnimation::Stop()
 
 void Hachiko::ComponentAnimation::Update()
 {
-    controller->Update();
+    // controller->Update();
 
     if (game_object != nullptr)
     {
@@ -51,12 +51,6 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
     {
         UpdatedGameObject(child);
     }
-}
-
-void Hachiko::ComponentAnimation::Import(const aiScene* scene)
-{
-    assert(scene->mNumAnimations == 1);
-    // resource = Hachiko::AnimationImporter::Import(scene->mAnimations[0]);
 }
 
 void Hachiko::ComponentAnimation::DrawGui()

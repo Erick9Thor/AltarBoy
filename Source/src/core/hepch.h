@@ -55,19 +55,30 @@
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
+#include <AK/SoundEngine/Common/AkDefaultLowLevelIODispatcher.h>
+#include <AK/SoundEngine/Common/AkFileLocationBase.h>
+#include <AK/SoundEngine/Common/AkFilePackage.h>
+#include <AK/SoundEngine/Common/AkFilePackageLUT.h>
+#include <AK/SoundEngine/Common/AkMultipleFileLocation.h>
+#include <AK/SoundEngine/IO/AkFileHelpers.h>
+#include <AK/SoundEngine/IO/AkDefaultIOHookBlocking.h>
+#include <AK/SoundEngine/IO/AkDefaultIOHookDeferred.h>
+#include <AK/SoundEngine/IO/stdafx.h>
+
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
 #include <assimp/include/assimp/postprocess.h>
+
 
 //project includes
 #include "Globals.h"
 #include "Gameplay.h"
 #include "Application.h"
 #include "modules/Module.h"
-#include "RenderList.h"
-#include "Program.h"
-#include "Quadtree.h"
-#include "Skybox.h"
+#include "core/rendering/RenderList.h"
+#include "core/rendering/Program.h"
+#include "core/rendering/Quadtree.h"
+#include "core/rendering/Skybox.h"
 
 #include "core/GameObject.h"
 #include "core/Scene.h"
@@ -87,6 +98,7 @@
 #include "utils/UUID.h"
 #include "utils/StringUtils.h"
 #include "utils/FileSystem.h"
+#include "utils/WindowsFileUtil.h"
 
 #include "components/Component.h"
 #include "importers/Importer.h"

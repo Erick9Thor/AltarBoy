@@ -28,35 +28,51 @@ void Hachiko::WindowHierarchy::CleanUp()
 
 void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
 {
-    DrawChildren(game_object);
+    for (const auto go : game_object->children)
+    {
+       RecursiveDraw(go);
+    }
+
     if (!App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         dragged_object = nullptr;
     }
 }
 
-void Hachiko::WindowHierarchy::DrawChildren(const GameObject* game_object)
+bool Hachiko::WindowHierarchy::RecursiveDraw(GameObject* game_object)
 {
-    for (const auto go : game_object->children)
+    bool stop = false;
+
+    const char* str = strstr(game_object->name.c_str(), AUXILIAR_NODE);
+    if (str != nullptr)
     {
-        ImGui::PushID(go);
-        DrawGameObject(go);
-        ImGui::PopID();
+        for (GameObject* go : game_object->children)
+        {
+            if ((stop = RecursiveDraw(go)) == true)
+            {
+                break;
+            }
+        }
     }
+    else
+    {
+        stop = DrawGameObject(game_object, stop);
+    }
+
+    return stop;
 }
 
-// TODO: Refactor to simplify function
-void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
+bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop)
 {
-    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_DefaultOpen;
+    ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
 
     if (game_object->children.empty())
     {
         flags |= ImGuiTreeNodeFlags_Leaf;
     }
 
-    int isSelected = flags + 1;
-    if (game_object == App->editor->GetSelectedGameObject())
+    bool is_selected = game_object == App->editor->GetSelectedGameObject();
+    if (is_selected)
     {
         flags |= ImGuiTreeNodeFlags_Selected;
     }
@@ -70,12 +86,16 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     ImGui::PushStyleColor(ImGuiCol_Text, node_color);
 
     const bool node_open = ImGui::TreeNodeEx(game_object, flags, game_object->name.c_str());
+
+    if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenBlockedByActiveItem) && dragged_object != nullptr)
+    {
+        App->editor->SetSelectedGO(game_object);
+    }
     
     DragAndDrop(game_object);
 
-    if (ImGui::IsItemHovered() && !ImGui::IsItemToggledOpen())
+    if (dragged_object == nullptr && ImGui::IsItemHovered() && !ImGui::IsItemToggledOpen())
     {
-
         if (ImGui::IsMouseClicked(0))
         {
             App->editor->SetSelectedGO(game_object);
@@ -86,15 +106,18 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
             ImGui::OpenPopup(game_object->GetName().c_str());
         }
         
-        if (ImGui::IsMouseClicked(0) && flags == isSelected)
+        if (ImGui::IsMouseClicked(0) && is_selected)
         {
             App->editor->SetSelectedGO(nullptr);
         }
     }
 
-    if (node_open && !game_object->children.empty())
+    if (node_open && !game_object->children.empty() && !stop)
     {
-        DrawChildren(game_object);
+        for (const auto go : game_object->children)
+        {
+            RecursiveDraw(go);
+        }
     }
 
     // TODO: Make robust to repeted game object names
@@ -128,16 +151,23 @@ void Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object)
     }
 
     ImGui::PopStyleColor();
+
+    return stop;
 }
 
-void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
+bool Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
 {
     if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
     {
         ImGui::SetDragDropPayload("GameObject", &game_object, sizeof(GameObject*));
         ImGui::Text("%s", game_object->name.c_str());
         ImGui::EndDragDropSource();
+
+        dragged_object = game_object;
+
+        return true;
     }
+
     if (ImGui::BeginDragDropTarget())
     {
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("GameObject"))
@@ -150,7 +180,7 @@ void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
                 if (parent_check == payload_n)
                 {
                     HE_LOG("Trying to move parent to its child! Operation aborted.");
-                    return;
+                    return false;
                 }
                 parent_check = parent_check->parent;
             }
@@ -158,4 +188,6 @@ void Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
         }
         ImGui::EndDragDropTarget();
     }
+
+    return false;
 }

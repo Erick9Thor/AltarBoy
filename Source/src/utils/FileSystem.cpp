@@ -2,6 +2,8 @@
 #include "FileSystem.h"
 #include "PathNode.h"
 
+#include "xxhash.h"
+
 Hachiko::FileSystem::FileSystem()
 {
     HE_LOG("Creating virtual file system");
@@ -37,6 +39,7 @@ void Hachiko::FileSystem::CreateContext()
     wchar_t engine_path_w[MAX_PATH];
     GetCurrentDirectoryA(MAX_PATH, engine_path);
     GetCurrentDirectoryW(MAX_PATH, engine_path_w);
+
     working_directory = engine_path;
     working_directory_w = engine_path_w;
 
@@ -44,7 +47,7 @@ void Hachiko::FileSystem::CreateContext()
     HE_LOG("Engine context: %s", working_directory.c_str());
 }
 
-char* Hachiko::FileSystem::Load(const char* file_path)
+char* Hachiko::FileSystem::Load(const char* file_path, size_t* file_size_bytes)
 {
     char* buffer = nullptr;
 
@@ -52,7 +55,7 @@ char* Hachiko::FileSystem::Load(const char* file_path)
 
     if (!fs_file)
     {
-        HE_LOG("Error opening file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error opening file %s (%s).\n", file_path, PHYSFS_getLastError());
         return nullptr;
     }
     defer {
@@ -63,7 +66,7 @@ char* Hachiko::FileSystem::Load(const char* file_path)
 
     if (size < 0)
     {
-        HE_LOG("File size couldn't be determined for %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("File size couldn't be determined for %s (%s).\n", file_path, PHYSFS_getLastError());
         return nullptr;
     }
 
@@ -72,8 +75,18 @@ char* Hachiko::FileSystem::Load(const char* file_path)
 
     if (read < size)
     {
-        HE_LOG("Error reading file %s (%s).\n", fs_file, PHYSFS_getLastError());
+        HE_LOG("Error reading file %s (%s).\n", file_path, PHYSFS_getLastError());
+        if (file_size_bytes)
+        {
+            *file_size_bytes = 0;
+        }
         return nullptr;
+    }
+
+    // Provide file size if a pointer is passed
+    if (file_size_bytes)
+    {
+        *file_size_bytes = static_cast<size_t>(read);
     }
 
     return buffer;
@@ -105,7 +118,7 @@ bool Hachiko::FileSystem::Save(const char* file_path, const void* buffer, unsign
     }
     else if (overwrite == false)
     {
-        HE_LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file, size);
+        HE_LOG("New file created [%s%s] of %u bytes", PHYSFS_getWriteDir(), file_path, size);
     }
     return true;
 }
@@ -138,7 +151,7 @@ void Hachiko::FileSystem::CreateDir(const char* directory_path)
 
 bool Hachiko::FileSystem::Copy(const char* source_file_path, const char* destination_file_path, bool fail_if_exist)
 {
-    return CopyFile(source_file_path, destination_file_path, fail_if_exist);
+    return CopyFileA(source_file_path, destination_file_path, fail_if_exist);
 }
 
 void Hachiko::FileSystem::Delete(const char* file_path)
@@ -179,10 +192,6 @@ std::string Hachiko::FileSystem::GetFileNameAndExtension(const char* file_path)
 
 std::string Hachiko::FileSystem::GetFileExtension(const char* file_path)
 {
-    const char* last_slash = strrchr(file_path, '/');
-    const char* last_backslash = strrchr(file_path, '\\');
-    const char* last_separator = last_slash >= last_backslash ? last_slash : last_backslash;
-
     const char* lastDot = strrchr(file_path, '.');
 
     auto extension = std::string(lastDot);
@@ -194,7 +203,7 @@ std::string Hachiko::FileSystem::GetFileExtension(const char* file_path)
 Hachiko::PathNode Hachiko::FileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext)
 {
     PathNode root;
-    if (Exists(directory))
+    if (!Exists(directory))
     {
         return root;
     }
@@ -243,7 +252,7 @@ Hachiko::PathNode Hachiko::FileSystem::GetAllFiles(const char* directory, std::v
 
 void Hachiko::FileSystem::SplitFilePath(const char* full_path, std::string* path, std::string* file, std::string* extension)
 {
-    if (full_path == nullptr || path == nullptr || file == nullptr || extension == nullptr)
+    if (full_path == nullptr)
     {
         return;
     }
@@ -251,31 +260,41 @@ void Hachiko::FileSystem::SplitFilePath(const char* full_path, std::string* path
     const std::string full(full_path);
     const size_t pos_separator = full.find_last_of("\\/");
     const size_t pos_dot = full.find_last_of('.');
-    if (pos_separator < full.length())
+
+    if (path != nullptr)
     {
-        *path = full.substr(0, pos_separator + 1);
-    }
-    else
-    {
-        path->clear();
+        if (pos_separator < full.length())
+        {
+            *path = full.substr(0, pos_separator + 1);
+        }
+        else
+        {
+            path->clear();
+        }
     }
 
-    if (pos_separator < full.length())
+    if (file != nullptr)
     {
-        *file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
-    }
-    else
-    {
-        *file = full.substr(0, pos_dot);
+        if (pos_separator < full.length())
+        {
+            *file = full.substr(pos_separator + 1, pos_dot - pos_separator - 1);
+        }
+        else
+        {
+            *file = full.substr(0, pos_dot);
+        }
     }
 
-    if (pos_dot < full.length())
+    if (extension != nullptr)
     {
-        *extension = full.substr(pos_dot + 1);
-    }
-    else
-    {
-        extension->clear();
+        if (pos_dot < full.length())
+        {
+            *extension = full.substr(pos_dot + 1);
+        }
+        else
+        {
+            extension->clear();
+        }
     }
 }
 
@@ -323,4 +342,18 @@ bool Hachiko::FileSystem::HasExtension(const char* path, std::vector<std::string
         }
     }
     return false;
+}
+
+uint64_t Hachiko::FileSystem::HashFromBuffer(const char* bufer, const size_t& size_bytes)
+{
+    return XXH3_64bits(bufer, size_bytes);
+}
+
+uint64_t Hachiko::FileSystem::HashFromPath(const char* file_path)
+{
+    size_t size_bytes = 0;
+    const char* file_data = FileSystem::Load(file_path, &size_bytes);
+    uint64_t hash = XXH3_64bits(file_data, size_bytes);
+    delete[] file_data;
+    return hash;
 }

@@ -31,7 +31,7 @@ void Hachiko::WindowConfiguration::Update()
         }
 
         //It is already a collapsing header
-        App->camera->GetMainCamera()->DrawGui();
+        App->camera->GetRenderingCamera()->DrawGui();
 
         if (ImGui::CollapsingHeader("Engine"))
         {

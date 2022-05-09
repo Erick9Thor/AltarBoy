@@ -12,8 +12,7 @@
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
 
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
@@ -31,6 +30,8 @@ bool ModuleResources::Init()
         FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
     }
 
+    AssetsLibraryCheck();
+
     std::function handleAddedFile = [&](Event& evt)
     {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
@@ -44,22 +45,7 @@ bool ModuleResources::Init()
 
 bool ModuleResources::CleanUp()
 {
-    for (auto& it : models)
-    {
-        RELEASE(it.second);
-    }
-
-    for (auto& it : meshes)
-    {
-        RELEASE(it.second);
-    }
-
-    for (auto& it : materials)
-    {
-        RELEASE(it.second);
-    }
-
-    for (auto& it : textures)
+    for (auto& it : loaded_resources)
     {
         RELEASE(it.second);
     }
@@ -82,14 +68,14 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         return;
     }
 
-    bool file_in_asset = path.string().find("assets\\") != std::string::npos;
-
+    size_t relative_pos = path.string().find("assets\\");
+    bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
     if (file_in_asset)
     {
         HE_LOG("Resource file in assets folder");
-        destination = path;
+        destination = std::filesystem::relative(path, path.string().substr(0, relative_pos));
     }
     else
     {
@@ -106,12 +92,6 @@ void ModuleResources::HandleResource(const std::filesystem::path& path)
         ImportResource(destination, type);
         HE_LOG("File destination: %s", destination.string().c_str());
     }
-
-    /* if (file_in_asset)
-    {
-        Scene* scene = App->scene_manager->GetActiveScene();
-        scene->HandleInputModel(GetModel(destination.string().c_str()));
-    }*/
 }
 
 Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
@@ -137,97 +117,21 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
     return Resource::Type::UNKNOWN;
 }
 
-ResourceModel* Hachiko::ModuleResources::GetModel(const std::string& name)
+Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
 {
-    auto it = models.find(name);
-    if (it != models.end())
-    {
-        return it->second;
-    }
-    // Use always .model extension for loading
-    std::filesystem::path model_path(name);
-    auto res = static_cast<ResourceModel*>( importer_manager.Load(Resource::Type::MODEL, 
-            StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string()).c_str()));
-
-    // TODO: This is a hack. We need to implement our own assert with message
-    assert(res != nullptr && "Unable to return a valid model resource");
-    models.emplace(name, res);
-
-    return res;
-}
-
-ResourceMesh* Hachiko::ModuleResources::GetMesh(const UID uid, const std::string& model_path, int mesh_index)
-{
-    // 1 - Find locally
-    auto it = meshes.find(uid);
-    if (it != meshes.end())
+    auto it = loaded_resources.find(id);
+    if (it != loaded_resources.end())
     {
         return it->second;
     }
 
-    // 2 - Import from disk
-    std::string mesh_path = preferences->GetLibraryPath(Resource::Type::MESH) + std::to_string(uid);
-    auto res = static_cast<ResourceMesh*>(importer_manager.Load(Resource::Type::MESH, mesh_path.c_str()));
-    
-    // 3 - Cherry Import
-    if (res == nullptr && !model_path.empty() && mesh_index > -1)
+    auto res = importer_manager.Load(type, id);
+    if (res != nullptr)
     {
-        ModelImporter* mod_importer = static_cast<ModelImporter*>(importer_manager.GetImporter(Resource::Type::MODEL));
-        res = static_cast<ResourceMesh*>(mod_importer->CherryImport(mesh_index, uid, model_path.c_str()));
+        return loaded_resources.emplace(id, res).first->second;
     }
 
-    // TODO: This is a hack. We need to implement our own assert with message
-    assert(res != nullptr && "Unable to return a valid mesh resource");
-    meshes.emplace(uid, res);
-    
-    return res;
-}
-
-ResourceMaterial* Hachiko::ModuleResources::GetMaterial(const std::string& material_name)
-{
-    auto it = materials.find(material_name);
-    if (it != materials.end())
-    {
-        return it->second;
-    }
-    std::string material_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::MATERIAL) + material_name;
-    auto res = static_cast<ResourceMaterial*>(importer_manager.Load(Resource::Type::MATERIAL, material_path.c_str()));
-    
-    // TODO: This is a hack. We need to implement our own assert with message
-    assert(res != nullptr && "Unable to return a valid material resource");
-    materials.emplace(material_name, res);
-
-    return res;
-}
-
-ResourceTexture* Hachiko::ModuleResources::GetTexture(const std::string& texture_name, const std::string& asset_path)
-{
-    if (texture_name.empty())
-    {
-        return nullptr;
-    }
-
-    auto it = textures.find(texture_name);
-    if (it != textures.end())
-    {
-        return it->second;
-    }
-
-    std::string texture_path = App->preferences->GetResourcesPreference()->GetLibraryPath(Resource::Type::TEXTURE) + texture_name;
-    auto res = static_cast<ResourceTexture*>(importer_manager.Load(Resource::Type::TEXTURE, texture_path.c_str()));
-    
-    if (res == nullptr && !asset_path.empty())
-    {
-        Hachiko::TextureImporter texture_importer;
-        res = static_cast<ResourceTexture*>(texture_importer.ImportTexture(asset_path.c_str())); 
-        res->GenerateBuffer();
-    }
-    
-    // TODO: This is a hack. We need to implement our own assert with message
-    assert(res != nullptr && "Unable to return a valid texture resource");
-    textures.emplace(texture_name, res);
-
-    return res;
+    return nullptr;
 }
 
 void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::string& name) const
@@ -238,6 +142,120 @@ void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::st
         {
             MaterialImporter material_importer;
             material_importer.CreateMaterial(name);
+        }
+    }
+}
+
+void Hachiko::ModuleResources::ReimportLibrary()
+{
+    FileSystem::Delete(LIBRARY_FOLDER);
+
+    AssetsLibraryCheck();
+
+    // RELOAD SCENE
+}
+
+void Hachiko::ModuleResources::ReimportAsset(std::string meta_path)
+{
+    YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+    Resource::Type type = static_cast<Resource::Type>(meta_node[GENERAL_NODE][GENERAL_TYPE].as<int>());
+    std::string asset_path = meta_path.substr(0, meta_path.length() - 5);
+
+    importer_manager.DeleteWithMeta(type, meta_node);
+    importer_manager.ImportWithMeta(std::filesystem::path(asset_path), type, meta_node);
+
+    // RELOAD SCENE
+}
+
+// A WAY TO REMOVE ALL METAS
+void DeleteMetas(const PathNode& folder)
+{
+    for (PathNode path_node : folder.children)
+    {
+        if (path_node.isFile)
+        {
+            FileSystem::Delete(path_node.path.c_str());
+        }
+        else
+        {
+            DeleteMetas(path_node);
+        }
+    }
+}
+//
+
+void Hachiko::ModuleResources::AssetsLibraryCheck()
+{
+    HE_LOG("Assets/Library check...");
+
+    // CAREFULL! A WAY TO REMOVE ALL METAS
+    //std::vector<std::string> meta_extension {"meta"};
+    //PathNode metas = FileSystem::GetAllFiles(ASSETS_FOLDER, &meta_extension, nullptr);
+    //DeleteMetas(metas);
+    //
+
+    // TODO: use defined values, for extensions and assets
+    std::vector<std::string> meta_ext {"meta", "scene"};
+    PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &meta_ext);
+    //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
+    // TODO: check library folder
+
+    GenerateLibrary(assets_folder); // TODO: Add preference for (de)activate this check
+
+    HE_LOG("Assets/Library check finished.");
+}
+
+void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
+{
+    for (PathNode path_node : folder.children)
+    {
+        if (path_node.isFile)
+        {
+            Resource::Type type = GetType(path_node.path);
+            
+            if (type == Resource::Type::UNKNOWN)
+            {
+                continue;
+            }
+
+            std::string meta_path = StringUtils::Concat(path_node.path, META_EXTENSION);
+
+            if (FileSystem::Exists(meta_path.c_str()))
+            {
+                YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+                // Extract data from meta
+                UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
+                uint64_t meta_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
+                
+                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
+                bool library_file_exists = FileSystem::Exists(library_path.c_str());
+
+                // Get the asset timestamp
+                uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
+
+                if (meta_hash != asset_hash)
+                {
+                    if (library_file_exists)
+                    {
+                        importer_manager.DeleteWithMeta(type, meta_node);
+                    }
+                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
+                }
+                else if (!library_file_exists)
+                {
+                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
+                }
+            }
+            else
+            {
+                importer_manager.Import(std::filesystem::path(path_node.path), type);
+            }
+        }
+        else
+        {
+            GenerateLibrary(path_node);
         }
     }
 }

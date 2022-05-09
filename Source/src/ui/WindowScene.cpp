@@ -114,7 +114,7 @@ void Hachiko::WindowScene::DrawScene()
         App->camera->OnResize(static_cast<unsigned>(texture_size.x), static_cast<unsigned>(texture_size.y));
     }
 
-    ComponentCamera* camera = App->camera->GetMainCamera();
+    ComponentCamera* camera = App->camera->GetRenderingCamera();
 
     // Top left corner of the image in imgui coords, top is y = 0
     guizmo_rect_origin = ImGui::GetCursorScreenPos();
@@ -151,7 +151,7 @@ void Hachiko::WindowScene::DrawScene()
     if (ImGui::IsWindowFocused())
     {
         float4x4 new_camera_view = view.InverseTransposed();
-        App->camera->GetMainCamera()->GetFrustum()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
+        App->camera->GetRenderingCamera()->GetFrustum()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
     }
 
     GameObject* selected_object = App->editor->GetSelectedGameObject();
@@ -188,7 +188,7 @@ void Hachiko::WindowScene::Controller() const
     if (!using_guizmo && focused && hovering && App->input->GetMouseButton(SDL_BUTTON_LEFT))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
-        GameObject* picked = SelectObject(App->camera->GetMainCamera(), scene);
+        GameObject* picked = SelectObject(App->camera->GetRenderingCamera(), scene);
         if (picked)
             App->editor->SetSelectedGO(picked);
     }

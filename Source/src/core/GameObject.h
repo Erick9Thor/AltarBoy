@@ -17,42 +17,53 @@
 
 namespace Hachiko
 {
-    class ComponentTransform;
-    class ComponentCamera;
-    class Program;
-    class Scene;
+class ComponentTransform;
+class ComponentCamera;
+class Program;
+class Scene;
 
-    class HACHIKO_API GameObject final : public ISerializable
-    {
-        friend class Component;
+class HACHIKO_API GameObject final : public ISerializable
+{
+    friend class Component;
 
-    public:
-        GameObject(const char* name = "Unnamed");
-        GameObject(GameObject* parent,
-                   const float4x4& transform, 
-                   const char* name = "Unnamed", 
-                   UID uid = UUID::GenerateUID());
-        GameObject(GameObject* parent,
-                   const char* name = "Unnamed",
-                   UID uid = UUID::GenerateUID(),
-                   const float3& translation = float3::zero,
-                   const Quat& rotation = Quat::identity,
-                   const float3& scale = float3::one);
-        virtual ~GameObject();
+public:
+    GameObject(const char* name = "Unnamed");
+    GameObject(GameObject* parent,
+                const float4x4& transform, 
+                const char* name = "Unnamed", 
+                UID uid = UUID::GenerateUID());
+    GameObject(GameObject* parent,
+                const char* name = "Unnamed",
+                UID uid = UUID::GenerateUID(),
+                const float3& translation = float3::zero,
+                const Quat& rotation = Quat::identity,
+                const float3& scale = float3::one);
+    virtual ~GameObject();
 
     void SetNewParent(GameObject* new_parent);
 
     void AddComponent(Component* component);
     bool AttemptRemoveComponent(Component* component);
-
-    Component* CreateComponent(Component::Type type);
     /// <summary>
-    /// Do not use this unless it's mandatory. Use AttemptRemoveComponent 
+    /// Do not use this unless it's mandatory. Use AttemptRemoveComponent
     /// instead.
     /// </summary>
     /// <param name="component">Component to be removed.</param>
     void ForceRemoveComponent(Component* component);
+
+    Component* CreateComponent(Component::Type type);
     void RemoveChild(GameObject* gameObject);
+
+    /// <summary>
+    /// Creates a new GameObject as child of the root of current Scene.
+    /// </summary>
+    /// <returns>Created GameObject.</returns>
+    static GameObject* Instantiate();
+    /// <summary>
+    /// Creates a new GameObject as child of this GameObject.
+    /// </summary>
+    /// <returns>Created GameObject.</returns>
+    GameObject* CreateChild();
 
     void Start();
     void Update();
@@ -72,20 +83,21 @@ namespace Hachiko
     void DebugDrawAll();
     void DebugDraw() const;
     void DrawBoundingBox() const;
+    void DrawBones() const;
     void UpdateBoundingBoxes();
 
-        [[nodiscard]] UID GetID() const
-        {
-            return uid;
-        }
+    [[nodiscard]] UID GetID() const
+    {
+        return uid;
+    }
 
-        void SetID(const UID new_id) 
-        {
-            uid = new_id;
-        }
+    void SetID(const UID new_id) 
+    {
+        uid = new_id;
+    }
 
-        void Save(YAML::Node& node) const;
-        void Load(const YAML::Node& node);
+    void Save(YAML::Node& node) const;
+    void Load(const YAML::Node& node);
 
     [[nodiscard]] const OBB& GetOBB() const
     {
@@ -179,11 +191,35 @@ namespace Hachiko
         return components_in_descendants;
     }
 
+    template<typename RetComponent>
+    RetComponent* GetComponentInDescendants() const
+    {
+        for (GameObject* child : children)
+        {
+            RetComponent* component = child->GetComponent<RetComponent>();
+            
+            if (component != nullptr)
+            {
+                return component;
+            }
+
+            component = child->GetComponentInDescendants<RetComponent>();
+
+            if (component != nullptr)
+            {
+                return component;
+            }
+        }
+
+        return nullptr;
+    }
+
     std::vector<Component*> GetComponents(Component::Type type) const;
     std::vector<Component*> GetComponentsInDescendants(
         Component::Type type) const;
 
     GameObject* GetFirstChildWithName(const std::string& child_name) const;
+    Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
 
 public:
     std::string name;
@@ -196,6 +232,7 @@ private:
     bool started = false;
     std::vector<Component*> components;
     ComponentTransform* transform = nullptr;
+    //bool in_quadtree = false;
     AABB aabb;
     OBB obb;
     UID uid = 0;

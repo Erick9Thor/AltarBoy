@@ -22,8 +22,8 @@ namespace Hachiko
         {
             NONE = 0,
             TRANSFORM = 1,
-            MESH = 2,
-            MATERIAL = 3,
+            MESH_RENDERER = 2,
+            //MATERIAL = 3,
             CAMERA = 4,
             DIRLIGHT = 5,
             POINTLIGHT = 6,
@@ -119,8 +119,6 @@ namespace Hachiko
         GameObject* game_object = nullptr;
         bool active = true;
         Type type = Type::UNKNOWN;
-
-    private:
         UID uid = 0;
     };
 }

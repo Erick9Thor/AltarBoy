@@ -24,10 +24,8 @@ void Hachiko::Scripting::BackToMainMenu::OnStart()
 
 void Hachiko::Scripting::BackToMainMenu::OnUpdate()
 {
-	// TODO: Uncomment this in the next PR after adding the new scenes with
-	// YAML based serialization.
-	/*if (_button_back->IsSelected())
+	if (_button_back->IsSelected())
 	{
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
-	}*/
+	}
 }

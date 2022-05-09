@@ -3,8 +3,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
 #include "components/ComponentAnimation.h"
 
@@ -16,6 +15,7 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 
 #include "imnodes.h"
@@ -26,12 +26,15 @@ Hachiko::WindowStateMachine wsm;
 
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
-    culling_camera(App->camera->GetMainCamera()),
+    culling_camera(App->camera->GetRenderingCamera()),
     skybox(new Skybox()),
     quadtree(new Quadtree()),
     loaded(false),
     name(UNNAMED_SCENE)
 {
+    // Root's scene_owner should always be this scene:
+    root->scene_owner = this;
+
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
    
@@ -61,32 +64,23 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     {
         App->editor->SetSelectedGO(nullptr);
     }
+
     quadtree->Remove(game_object);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
-    return SearchMainCamera(root);
-}
+    // This will return the first camera it comes across in the hierarchy in a 
+    // depth-first manner:
 
-Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
-{
-    ComponentCamera* component_camera = nullptr;
-    component_camera = game_object->GetComponent<ComponentCamera>();
-    if (component_camera != nullptr)
-    {
-        return component_camera;
-    }
+    // TODO: This will be costly for any method that will call this on
+    // a method/function that is called each frame. Make this getter a cached 
+    // component camera that is only updated when a component camera is added/
+    // removed to the scene. Or have ComponentCamera have a property called 
+    // is_main, that will be set by making all other component cameras in scene
+    // is_main = false.
 
-    for (GameObject* child : game_object->children)
-    {
-        component_camera = SearchMainCamera(child);
-        if (component_camera != nullptr)
-        {
-            return component_camera;
-        }
-    }
-    return nullptr;
+    return root->GetComponentInDescendants<ComponentCamera>();
 }
 
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
@@ -98,15 +92,23 @@ void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) c
 
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)
 {
-    // It will insert itself into quadtree on first bounding box update
-    const auto game_object = new GameObject(parent ? parent : root, name);
-    game_object->scene_owner = this;
-    return game_object;
+    GameObject* final_parent = parent != nullptr ? parent : root;
+    GameObject* new_game_object = final_parent->CreateChild();
+
+    new_game_object->SetName(name);
+
+    // This will insert itself into quadtree on first bounding box update:
+    return new_game_object;
 }
 
 void Hachiko::Scene::HandleInputModel(ResourceModel* model)
 {
     GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
+
+    if (model->have_animation)
+    {
+        ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
+    }
 
     std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
         for (auto child : children)
@@ -114,25 +116,24 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
             GameObject* last_parent = parent;
 
             last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-
+            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
+            
             if (!child->meshes_index.empty())
             {
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
-                    ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                    component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    component->SetResourcePath(model->model_path);
-                    component->SetModelName(model->model_name);
-
-                    component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(App->resources->GetMesh(mesh_info.mesh_id));
-
-                    ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
-                    component_material->SetResourceMaterial(App->resources->GetMaterial(model->materials[mesh_info.material_index].material_name));
+                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
+                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH_RENDERER));
+                    //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
+                    //component->SetModelName(model->model_name);
+                    
+                    //component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
+                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
+                    component->AddResourceMaterial(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, mat_info.material_id)));
                 }
             }
-
+            
             last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
 
             create_children_function(last_parent, child->children);
@@ -151,10 +152,10 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
         return;
     }
 
-    ComponentMaterial* component_material = game_object->GetComponent<ComponentMaterial>();
-    if (component_material != nullptr)
+    ComponentMeshRenderer* component_mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+    if (component_mesh_renderer != nullptr)
     {
-        component_material->SetResourceMaterial(material);
+        component_mesh_renderer->AddResourceMaterial(material);
     }
 }
 
@@ -174,16 +175,16 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 
     for (GameObject* game_object : game_objects)
     {
-        auto* mesh = game_object->GetComponent<ComponentMesh>();
-        if (mesh)
+        auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+        if (mesh_renderer)
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
             local_segment.Transform(game_object->GetTransform()->GetGlobalMatrix().Inverted());
 
-            const float* vertices = mesh->GetVertices();
-            const unsigned* indices = mesh->GetIndices();
-            for (unsigned i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
+            const float* vertices = mesh_renderer->GetVertices();
+            const unsigned* indices = mesh_renderer->GetIndices();
+            for (unsigned i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
             {
                 Triangle triangle;
                 triangle.a = vec(&vertices[indices[i] * 3]);
@@ -218,6 +219,14 @@ void Hachiko::Scene::Save(YAML::Node& node) const
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
+    if (!node[CHILD_NODE].IsDefined())
+    {
+        // Loaded as an empty scene:
+        loaded = true;
+
+        return;
+    }
+
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     root->SetID(node[ROOT_ID].as<UID>());
     const YAML::Node children_node = node[CHILD_NODE];
@@ -234,21 +243,51 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     loaded = true;
 }
 
-void Hachiko::Scene::CreateLights()
+void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)
 {
-    GameObject* sun = CreateNewGameObject(root, "Sun");
-    sun->GetTransform()->SetLocalPosition(float3(1, 1, -1));
-    sun->GetTransform()->LookAtTarget(float3(0, 0, 0));
-    sun->CreateComponent(Component::Type::DIRLIGHT);
+    // Ensure that all scene is fresh (bounding boxes were not updated if using right after loading scene)
+    root->Update();
+    // TODO: Have an array of meshes on scene to not make this recursive ?
+    scene_vertices.clear();
+    scene_triangles.clear();
+    scene_normals.clear();
+    scene_bounds.SetNegativeInfinity();
 
-    GameObject* spot = CreateNewGameObject(root, "Spot Light");
-    sun->GetTransform()->SetLocalPosition(float3(-1, 1, -1));
+    std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
+    {
+        ComponentMeshRenderer* mesh_renderer = go->GetComponent<ComponentMeshRenderer>();        
+        const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
+        // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
+        if (mesh_renderer)
+        {
+            const float* vertices = mesh_renderer->GetVertices();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
+            {
+                float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
+                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
+            }
 
-    spot->CreateComponent(Component::Type::SPOTLIGHT);
+            const unsigned* indices = mesh_renderer->GetIndices();
+            int n_indices = mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES);
+            scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
 
-    GameObject* point = CreateNewGameObject(root, "Point Light");
-    sun->GetTransform()->SetLocalPosition(float3(0, 1, -1));
-    point->CreateComponent(Component::Type::POINTLIGHT);
+            const float* normals = mesh_renderer->GetNormals();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::NORMALS); i += 3)
+            {
+                float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
+                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
+            }
+
+            scene_bounds.Enclose(go->GetAABB());
+        }
+
+        for (auto& child : go->children)
+        {
+            get_navmesh_data(child);
+        }
+    };
+
+    get_navmesh_data(root);
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()

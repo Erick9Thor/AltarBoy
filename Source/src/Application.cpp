@@ -16,6 +16,7 @@
 #include "Modules/ModuleResources.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
+#include "modules/ModuleAudio.h"
 
 #include "core/preferences/PreferenceManager.h"
 
@@ -36,8 +37,9 @@ Hachiko::Application::Application()
     modules.push_back(event = new ModuleEvent());
     modules.push_back(ui = new ModuleUserInterface()); 
     modules.push_back(debug_mode = new ModuleDebugMode());
-
+    modules.push_back(audio = new ModuleAudio());
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
+
 }
 
 Hachiko::Application::~Application()

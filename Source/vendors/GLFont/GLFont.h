@@ -11,6 +11,11 @@ public:
 
     void setFontFile(const char* fontFile, FT_Library& ft);
 
+    const char* getFontFile()
+    {
+        return _fontFile;
+    };
+
     FT_Face getFaceHandle();
 
 private:
