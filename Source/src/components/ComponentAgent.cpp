@@ -186,32 +186,43 @@ void Hachiko::ComponentAgent::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Agent Component"))
     {
-        ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f);
-        ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f);
-        ImGui::Checkbox("Use Pathfinding", &use_pathfinder);
-        ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles);
-    }
+        ImGui::DragFloat3("newTarget", target_position.ptr(), 1.0f, -inf, inf);
+        if (agent_id != -1)
+        {
+            if (ImGui::Button("Remove From Navmesh"))
+            {
+                RemoveFromCrowd();
+            }
+            
+            if (ImGui::Button("Feed position"))
+            {
+                SetTargetPosition(target_position);
+            }
+        }
 
-    if (agent_id != -1 && ImGui::Button("Remove From Navmesh"))
-    {
-        RemoveFromCrowd();
-    }
-    if (agent_id == -1 && ImGui::Button("Move To Nearest Navmesh Point"))
-    {
-        MoveToNearestNavmeshPoint();
-    }
-    if (agent_id == -1 && ImGui::Button("Add To Namesh"))
-    {
-        AddToCrowd();
-    }
-    // TODO: Delete before VS2 this shit is just to test
-    ImGui::DragFloat3("newTarget", target_position.ptr(), 1.0f, -inf, inf);
-    if (ImGui::Button("Feed position")) {
-        SetTargetPosition(target_position);
-    }
+        if (agent_id == -1)
+        {
+            if (ImGui::Button("Add To Namesh"))
+            {
+                AddToCrowd();
+            }
 
+            if (ImGui::Button("Move To Nearest Navmesh Point"))
+            {
+                MoveToNearestNavmeshPoint();
+            }
+
+            // Only edit when agent is not in navmesh for now
+            // TODO: Add a way to update those on an existing agent
+            ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f);
+            ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f);
+            ImGui::Checkbox("Use Pathfinding", &use_pathfinder);
+            ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles);      
+        }
+        DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+    }
     
-    DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+    
     ImGui::PopID();
 }
 

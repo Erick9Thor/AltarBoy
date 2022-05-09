@@ -54,7 +54,7 @@ namespace Hachiko
 
 		float max_speed = 5.0f;
 		float max_acceleration = 2.0f;
-		bool avoid_obstacles = true;
+		bool avoid_obstacles = false;
 		bool use_pathfinder = true;
 
 	};
