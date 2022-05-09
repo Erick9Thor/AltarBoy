@@ -47,6 +47,7 @@ namespace Hachiko
 
 		void DrawGui() override;
 	private:
+        float3 closest_point_half_range = float3(10.f, 10.f, 10.f);
         float3 target_position = float3::zero;
 		unsigned int target_poly = 0;
 		int agent_id = -1;

@@ -77,12 +77,11 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     dtNavMeshQuery* navQuery = navMesh->GetQuery();
     dtCrowd* crowd = navMesh->GetCrowd();
     const dtQueryFilter* filter = crowd->getFilter(0);
-    const float* queryExtents = crowd->getQueryExtents();
 
     if (use_pathfinder)
     {
         float3 corrected_target = target_pos;
-        navQuery->findNearestPoly(target_pos.ptr(), queryExtents, filter, &target_poly, corrected_target.ptr());
+        navQuery->findNearestPoly(target_pos.ptr(), closest_point_half_range.ptr(), filter, &target_poly, corrected_target.ptr());
         assert(target_poly != 0);
         target_position = corrected_target;
         const dtCrowdAgent* ag = crowd->getAgent(agent_id);
@@ -162,17 +161,15 @@ void Hachiko::ComponentAgent::MoveToNearestNavmeshPoint()
 
     
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
-    //dtNavMeshQuery* navQuery = navMesh->GetQuery();
     dtCrowd* crowd = navMesh->GetCrowd();
     dtNavMeshQuery* navQuery = navMesh->GetQuery();
     
     ComponentTransform* transform = game_object->GetTransform();
     
     const dtQueryFilter* filter = crowd->getFilter(0);
-    const float* queryExtents = crowd->getQueryExtents();
 
     float3 corrected_position = transform->GetGlobalPosition();
-    navQuery->findNearestPoly(transform->GetGlobalPosition().ptr(), queryExtents, filter, &target_poly, corrected_position.ptr());
+    navQuery->findNearestPoly(transform->GetGlobalPosition().ptr(), closest_point_half_range.ptr(), filter, &target_poly, corrected_position.ptr());
     if (target_poly != 0)
     {
         transform->SetGlobalPosition(corrected_position);
