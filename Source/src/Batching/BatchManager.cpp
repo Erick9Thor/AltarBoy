@@ -41,7 +41,7 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
             // Find matching batch to include the mesh
             for (GeometryBatch* geometry_batch : geometry_batches)
             {
-                if (geometry_batch->batch->layout == resource->layout)
+                if (geometry_batch->batch->layout.Equal(resource->layout))
                 {
                     geometry_batch->AddMesh(mesh_renderer);
                     batch_found = true;
@@ -66,7 +66,7 @@ void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh_r
 
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
-        if (geometry_batch->batch->layout == resource->layout)
+        if (geometry_batch->batch->layout.Equal(resource->layout))
         {
             // We assume that the resource is already contained in the batch
             geometry_batch->AddDrawComponent(mesh_renderer);
@@ -85,11 +85,26 @@ void Hachiko::BatchManager::BuildBatches()
 
 void Hachiko::BatchManager::DrawBatches()
 {
+    //
+    if (ImGui::Begin("GeometryBatch"))
+    {
+        for (GeometryBatch* geometry_batch : geometry_batches)
+        {
+            ImGui::Text(geometry_batch->batch->layout.bones ? "Bones = true; " : "Bones = false; ");
+            ImGui::SameLine();
+            ImGui::Text(geometry_batch->batch->layout.normals ? "Normals = true; " : "Normals = false; ");
+            ImGui::SameLine();
+            ImGui::Text(geometry_batch->batch->layout.text_coords ? "TexCoords = true; " : "TexCoords = false; ");
+
+            geometry_batch->ImGuiWindow(); // DEBUG
+            ImGui::Separator();
+        }
+    }
+    ImGui::End();
+    //
     static float4x4 identity = float4x4::identity;
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
-        geometry_batch->ImGuiWindow(); // DEBUG
-
         // Binds meshes and transforms
         geometry_batch->UpdateWithTextureBatch();
         //App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());

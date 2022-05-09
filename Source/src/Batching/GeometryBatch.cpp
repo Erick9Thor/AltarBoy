@@ -80,12 +80,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
         for (int buffer_type : buffer_types)
         {
             batch->buffer_sizes[buffer_type] += r->buffer_sizes[buffer_type];
-        }
-
-        batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] -= r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)];
-        batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] -= r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)];
-        batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] += (r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3) * 4;
-        batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] += (r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3) * 4;
+        }    
     }
 
     batch->indices = new unsigned[batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)]];
@@ -138,29 +133,18 @@ void Hachiko::GeometryBatch::BatchMeshes()
         memcpy(&batch->tangents[tangents_offset], r->tangents, size_bytes);
         tangents_offset += size;
 
-        if (r->num_bones > 0) // TODO: DIVIDE MESHES WITH BONES AND WITHOUT BONES
+        if (batch->layout.bones)
         {
             size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)];
             size_bytes = sizeof(unsigned) * size;
             memcpy(&batch->src_bone_indices[bones_indices_offset], r->src_bone_indices.get(), size_bytes);
-        }
-        else
-        {
-            size = (r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3) * 4;
-        }
-        bones_indices_offset += size;
+            bones_indices_offset += size;
 
-        if (r->num_bones > 0) // TODO: DIVIDE MESHES WITH BONES AND WITHOUT BONES
-        {
-            size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] * 4;
-            size_bytes = sizeof(float) * size;
-            memcpy(&batch->src_bone_indices[bones_weights_offset], r->src_bone_indices.get(), size_bytes);
+            size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)];
+            size_bytes = sizeof(float4) * size;
+            memcpy(&batch->src_bone_weights[bones_weights_offset], r->src_bone_weights.get(), size_bytes);
+            bones_weights_offset += size;
         }
-        else
-        {
-            size = (r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] / 3) * 4;
-        }
-        bones_weights_offset += size;
     }
 }
 
@@ -240,17 +224,20 @@ void Hachiko::GeometryBatch::GenerateBuffers()
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
     glEnableVertexAttribArray(3);
 
-    // Bones index (4 values per coord)
-    glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
-    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
-    glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, 4 * sizeof(unsigned), static_cast<void*>(nullptr));
-    glEnableVertexAttribArray(4);
+    if (batch->layout.bones)
+    {
+        // Bones index (4 values per coord)
+        glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
+        glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
+        glVertexAttribIPointer(4, 4, GL_UNSIGNED_INT, 4 * sizeof(unsigned), static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(4);
 
-    // Bones weights (4 values per coord)
-    glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
-    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
-    glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), static_cast<void*>(nullptr));
-    glEnableVertexAttribArray(5);
+        // Bones weights (4 values per coord)
+        glGenBuffers(1, &batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
+        glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
+        glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), static_cast<void*>(nullptr));
+        glEnableVertexAttribArray(5);
+    }
 
     // Instance indices (one per component to draw)
     glGenBuffers(1, &instance_indices_vbo);
@@ -286,11 +273,14 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
     glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::TANGENTS)]);
     glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::TANGENTS)] * sizeof(float), batch->tangents, GL_DYNAMIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
-    glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] * sizeof(unsigned), batch->src_bone_indices.get(), GL_DYNAMIC_DRAW);
+    if (batch->layout.bones)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)]);
+        glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_INDICES)] * sizeof(unsigned), batch->src_bone_indices.get(), GL_DYNAMIC_DRAW);
 
-    glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
-    glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] * sizeof(float4), batch->src_bone_weights.get(), GL_DYNAMIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)]);
+        glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)] * sizeof(float4), batch->src_bone_weights.get(), GL_DYNAMIC_DRAW);
+    }
 
     std::vector<unsigned> indices_vbo(components.size());
     std::iota(std::begin(indices_vbo), std::end(indices_vbo), 0);
@@ -306,13 +296,9 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
 
 void Hachiko::GeometryBatch::ImGuiWindow() 
 {
-    if (ImGui::Begin("GeometryBatch"))
+    for (unsigned i = 0; i < components.size(); ++i)
     {
-        for (unsigned i = 0; i < components.size(); ++i)
-        {
-            ImGui::Text(components[i]->GetGameObject()->name.c_str());
-        }
-        texture_batch->ImGuiWindow();
+        ImGui::Text(components[i]->GetGameObject()->name.c_str());
     }
-    ImGui::End();
+    texture_batch->ImGuiWindow();
 }

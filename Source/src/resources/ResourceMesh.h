@@ -29,6 +29,12 @@ namespace Hachiko
         {
             bool normals = false;
             bool text_coords = false;
+            bool bones = false;
+
+            bool Equal(Layout layout) 
+            {
+                return normals == layout.normals && text_coords == layout.text_coords && bones == layout.bones;
+            }
         };
 
         ResourceMesh(UID id);
