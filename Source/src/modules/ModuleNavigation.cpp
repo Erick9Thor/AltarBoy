@@ -58,7 +58,7 @@ bool Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
 
 UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
 {
-    if (!navmesh )
+    if (!navmesh)
     {
         return UpdateStatus::UPDATE_CONTINUE;
     }
@@ -219,8 +219,7 @@ void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
 
     dd.depthMask(false);
 
-    // Draw paths
-    
+    // Draw paths    
     if (show_path)
     {
         

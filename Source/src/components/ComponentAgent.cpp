@@ -29,8 +29,6 @@ void Hachiko::ComponentAgent::Start()
         }
     };
     App->event->Subscribe(Event::Type::GAME_STATE, handleGameStateChanges);
-    // TODO: REMOVE. ADDED FOR DEBUG PURPOUSES
-    AddToCrowd();
 }
 
 void Hachiko::ComponentAgent::Update()
@@ -45,10 +43,8 @@ void Hachiko::ComponentAgent::Update()
     }
     // Move agent through NavMesh
     const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
-    ComponentTransform* agents_transform = GetGameObject()->GetComponent<ComponentTransform>();
-    auto xd = float3(dt_agent->npos);
-    HE_LOG("aaaaaaaaaaaaaaaaaaaaaaaaa ", xd.x, xd.y, xd.z);
-    agents_transform->SetGlobalPosition(float3(dt_agent->npos));
+    ComponentTransform* transform = game_object->GetTransform();
+    transform->SetGlobalPosition(float3(dt_agent->npos));
 }
 
 void DebugAgentInfo(const dtCrowdAgent* ag)
@@ -61,10 +57,21 @@ void DebugAgentInfo(const dtCrowdAgent* ag)
     }
     ImGui::Text("Active %d", ag->active);
     ImGui::Text("State %d", ag->state);
-    ImGui::Text("Valid path %d", ag->partial);
-    ImGui::Text("New Pos %.2f, %.2f, %.2f", ag->npos[0], ag->npos[1], ag->npos[2]);
+    ImGui::Text("Parial Path %d", ag->partial);
+    ImGui::Text("N neighbors %d", ag->nneis);
+    ImGui::Text("Desired Speed %d", ag->desiredSpeed);
+    ImGui::Text("Current Pos %.2f, %.2f, %.2f", ag->npos[0], ag->npos[1], ag->npos[2]);
     ImGui::Text("Displacement %.2f, %.2f, %.2f", ag->disp[0], ag->disp[1], ag->disp[2]);
+    ImGui::Text("Desired Velocity %.2f, %.2f, %.2f", ag->dvel[0], ag->dvel[1], ag->dvel[2]);
+    ImGui::Text("Obstacle Adjusted Velocity %.2f, %.2f, %.2f", ag->nvel[0], ag->nvel[1], ag->nvel[2]);
+    ImGui::Text("Acc Constrained Velocity %.2f, %.2f, %.2f", ag->vel[0], ag->vel[1], ag->vel[2]);
+    ImGui::Separator();
+    ImGui::Text("Target Info");
+    ImGui::Text("Target State %d", ag->targetState);
+    ImGui::Text("Target targetRef %d", ag->targetState);
     ImGui::Text("Target Pos %.2f, %.2f, %.2f", ag->targetPos[0], ag->targetPos[1], ag->targetPos[2]);
+    ImGui::Text("Replaning %d", ag->targetReplan);
+    ImGui::Text("Replan Time %.5f", ag->targetReplanTime);
 
 
 }
@@ -134,9 +141,7 @@ void Hachiko::ComponentAgent::AddToCrowd()
     ap.separationWeight = 2;
 
     // Add to Crowd
-    agent_id = navMesh->GetCrowd()->addAgent(GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalPosition().ptr(), &ap);
-
-    //join_crowd = false;
+    agent_id = navMesh->GetCrowd()->addAgent(game_object->GetTransform()->GetGlobalMatrix().TranslatePart().ptr(), &ap);
 }
 
 void Hachiko::ComponentAgent::RemoveFromCrowd()
