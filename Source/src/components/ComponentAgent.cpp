@@ -4,8 +4,14 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
-    // TODO: Remove this call when HE lifecycle is fixed
-    Start();
+}
+
+Hachiko::ComponentAgent::~ComponentAgent()
+{
+    if (agent_id != -1)
+    {
+        RemoveFromCrowd();
+    }    
 }
 
 void Hachiko::ComponentAgent::Start()
@@ -149,6 +155,30 @@ void Hachiko::ComponentAgent::RemoveFromCrowd()
     agent_id = -1;
 }
 
+void Hachiko::ComponentAgent::MoveToNearestNavmeshPoint()
+{ 
+    // Only callable when agent is not in navmesh at the moment, we can add logic to refresh its navmesh status later
+    assert(agent_id == -1);
+
+    
+    ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
+    //dtNavMeshQuery* navQuery = navMesh->GetQuery();
+    dtCrowd* crowd = navMesh->GetCrowd();
+    dtNavMeshQuery* navQuery = navMesh->GetQuery();
+    
+    ComponentTransform* transform = game_object->GetTransform();
+    
+    const dtQueryFilter* filter = crowd->getFilter(0);
+    const float* queryExtents = crowd->getQueryExtents();
+
+    float3 corrected_position = transform->GetGlobalPosition();
+    navQuery->findNearestPoly(transform->GetGlobalPosition().ptr(), queryExtents, filter, &target_poly, corrected_position.ptr());
+    if (target_poly != 0)
+    {
+        transform->SetGlobalPosition(corrected_position);
+    }    
+}
+
 void Hachiko::ComponentAgent::DrawGui()
 {
     ImGui::PushID(this);
@@ -158,6 +188,19 @@ void Hachiko::ComponentAgent::DrawGui()
         ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f);
         ImGui::Checkbox("Use Pathfinding", &use_pathfinder);
         ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles);
+    }
+
+    if (agent_id != -1 && ImGui::Button("Remove From Navmesh"))
+    {
+        RemoveFromCrowd();
+    }
+    if (agent_id == -1 && ImGui::Button("Move To Nearest Navmesh Point"))
+    {
+        MoveToNearestNavmeshPoint();
+    }
+    if (agent_id == -1 && ImGui::Button("Add To Namesh"))
+    {
+        AddToCrowd();
     }
     // TODO: Delete before VS2 this shit is just to test
     ImGui::DragFloat3("newTarget", target_position.ptr(), 1.0f, -inf, inf);

@@ -18,7 +18,7 @@ namespace Hachiko
 
 	public:
 		ComponentAgent(GameObject* container);
-		~ComponentAgent() = default;
+		~ComponentAgent();
 
 		void Start() override;
 		void Update() override;
@@ -39,6 +39,8 @@ namespace Hachiko
 
 		void AddToCrowd();
 		void RemoveFromCrowd();
+
+		void MoveToNearestNavmeshPoint();		
 		
 		void Save(YAML::Node& node) const override;
 		void Load(const YAML::Node& node) override;
