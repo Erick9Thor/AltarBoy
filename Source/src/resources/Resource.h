@@ -42,6 +42,7 @@ namespace Hachiko
                 {Type::SKYBOX, "skybox"},
                 {Type::FONT, "fonts"},
                 {Type::NAVMESH, "navmesh"},
+                {Type::STATE_MACHINE, "state_machine"},
             };
 
             auto it = string_map.find(t);
