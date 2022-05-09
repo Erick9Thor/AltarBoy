@@ -1,0 +1,73 @@
+scene_name: UnnamedScene
+root_id: 16674239065015199730
+child:
+  - id: 18238704769298855812
+    name: PlayerC
+    enabled: true
+    parent_id: 16674239065015199730
+    component:
+      - id: 14952951725131321899
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 15209883454601459510
+        type: 15
+        enabled: true
+        class_name: PlayerController
+        "'_movement_speed@float'": 10
+        "'_dash_indicator@GameObject*'": 2759659446198202491
+        "'_dash_duration@float'": 0.150000006
+        "'_dash_distance@float'": 40.7999992
+        "'_dash_progress@float'": 27.2000008
+        "'_is_dashing@bool'": true
+        "'_dash_start@math::float3'": [19.2999992, 15.8999996, 11.8000002]
+        "'_dash_direction@math::float3'": [0, 5.4000001, 14]
+        "'_should_rotate@bool'": true
+        "'_rotation_progress@float'": 15.3000002
+        "'_rotation_duration@float'": 0.075000003
+        "'_rotation_start@math::Quat'": [0, 0, 0, 1]
+        "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+    child:
+      - id: 2759659446198202491
+        name: DashIndicator
+        enabled: true
+        parent_id: 18238704769298855812
+        component:
+          - id: 4595761994384306856
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+  - id: 15282050951172875229
+    name: MainCamera
+    enabled: true
+    parent_id: 16674239065015199730
+    component:
+      - id: 3862211055359064787
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 281047805139171921
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          type: 0
+          pinned_camera: [0, 0, 0]
+      - id: 3474767519169205493
+        type: 15
+        enabled: true
+        class_name: PlayerCamera
+        "'_relative_position_to_player@math::float3'": [0, 14, 11]
+        "'_player@GameObject*'": 18238704769298855812
+        "'_follow_delay@float'": 1.10000002
