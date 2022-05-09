@@ -93,6 +93,8 @@ void Hachiko::Scripting::Script::Load(const YAML::Node& node)
     // the nodes are stored inside ModuleScriptingSystem, and scripts don't care
     // about storing these:
     load_node = node;
+    // TODO: See if storing these in ModuleScriptingSystem is a better solution
+    // after VS2.
 }
 
 void Hachiko::Scripting::Script::DrawGui()
