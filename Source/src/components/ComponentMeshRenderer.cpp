@@ -165,8 +165,15 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    const GameObject* root = game_object->parent;
+    const GameObject* root = game_object;
 
+    while (root->GetID() != App->scene_manager->GetRoot()->GetID())
+    {
+        root = root->parent;
+    }
+
+    HE_LOG("Name of root: %s", root->name.c_str());
+    
     if (mesh && mesh->num_bones > 0 && root)
     {
         float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
