@@ -40,7 +40,27 @@ void Hachiko::ComponentAgent::Update()
     // Move agent through NavMesh
     const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
     ComponentTransform* agents_transform = GetGameObject()->GetComponent<ComponentTransform>();
+    auto xd = float3(dt_agent->npos);
+    HE_LOG("aaaaaaaaaaaaaaaaaaaaaaaaa ", xd.x, xd.y, xd.z);
     agents_transform->SetGlobalPosition(float3(dt_agent->npos));
+}
+
+void DebugAgentInfo(const dtCrowdAgent* ag)
+{
+    ImGui::Text("Debug info");
+    if (!ag)
+    {
+        ImGui::Text("No agent in navmesh");
+        return;
+    }
+    ImGui::Text("Active %d", ag->active);
+    ImGui::Text("State %d", ag->state);
+    ImGui::Text("Valid path %d", ag->partial);
+    ImGui::Text("New Pos %.2f, %.2f, %.2f", ag->npos[0], ag->npos[1], ag->npos[2]);
+    ImGui::Text("Displacement %.2f, %.2f, %.2f", ag->disp[0], ag->disp[1], ag->disp[2]);
+    ImGui::Text("Target Pos %.2f, %.2f, %.2f", ag->targetPos[0], ag->targetPos[1], ag->targetPos[2]);
+
+
 }
 
 void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
@@ -141,6 +161,9 @@ void Hachiko::ComponentAgent::DrawGui()
     if (ImGui::Button("Feed position")) {
         SetTargetPosition(target_position);
     }
+
+    
+    DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
     ImGui::PopID();
 }
 
