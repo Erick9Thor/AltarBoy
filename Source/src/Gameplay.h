@@ -409,6 +409,7 @@ namespace Hachiko::SceneManagement
 HACHIKO_API void SwitchScene(const char* name);
 HACHIKO_API GameObject* Raycast(const float3& origin, 
     const float3& destination);
+HACHIKO_API GameObject* FindInCurrentScene(unsigned long long id);
 } // namespace Hachiko::SceneManagement
 
 namespace Hachiko::Debug

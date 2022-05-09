@@ -93,6 +93,12 @@ Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin,
     return App->scene_manager->Raycast(origin, destination);
 }
 
+Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
+    unsigned long long id)
+{
+    return App->scene_manager->GetRoot()->Find(id);
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*DEBUG----------------------------------------------------------------------*/

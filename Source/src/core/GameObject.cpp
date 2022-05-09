@@ -497,10 +497,11 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         else
         {
             component = CreateComponent(type);
-            component->SetID(c_uid);
-            component->Load(components_node[i]);
-            active ? component->Enable() : component->Disable();
         }
+
+        component->SetID(c_uid);
+        component->Load(components_node[i]);
+        active ? component->Enable() : component->Disable();
     }
 
     const YAML::Node children_nodes = node[CHILD_NODE];
@@ -517,6 +518,26 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         child->scene_owner = scene_owner;
         child->Load(children_nodes[i]);
     }
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->uid == id)
+        {
+            return child;
+        }
+
+        GameObject* descendant = child->Find(id);
+
+        if (descendant != nullptr)
+        {
+            return descendant;
+        }
+    }
+
+    return nullptr;
 }
 
 std::vector<Hachiko::Component*> 

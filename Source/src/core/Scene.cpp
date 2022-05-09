@@ -154,6 +154,11 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3&
     return Raycast(line_seg);
 }
 
+Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
+{
+    return root->Find(id);
+}
+
 Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 {
     GameObject* selected = nullptr;
