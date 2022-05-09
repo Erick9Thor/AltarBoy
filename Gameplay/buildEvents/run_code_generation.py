@@ -145,18 +145,27 @@ save_component_ptr_body_format = (
 
 # Formatted string that generates load instruction for Default types except GameObject*:
 load_default_except_game_object_ptr_body_format = (
-    '{new_line}{tab}{field_name} = load_node[\"\'{field_name}@{field_type}\'\"].as<{field_type}>();' 
+    '{new_line}{tab}if (load_node[\"\'{field_name}@{field_type}\'\"].IsDefined())'
+    '{new_line}{tab}{left_curly}'
+    '{new_line}{tab}{tab}{field_name} = load_node[\"\'{field_name}@{field_type}\'\"].as<{field_type}>();' 
+    '{new_line}{tab}{right_curly}'
 )
 # Formatted string that generates load instruction for GameObject*:
 load_game_object_ptr_body_format = (
-    '{new_line}{tab}{field_name} = SceneManagement::FindInCurrentScene(load_node[\"\'{field_name}@{field_type}\'\"].as<unsigned long long>());'
+    '{new_line}{tab}if (load_node[\"\'{field_name}@{field_type}\'\"].IsDefined())'
+    '{new_line}{tab}{left_curly}'
+    '{new_line}{tab}{tab}{field_name} = SceneManagement::FindInCurrentScene(load_node[\"\'{field_name}@{field_type}\'\"].as<unsigned long long>());'
+    '{new_line}{tab}{right_curly}'
 )
 # Formatted string that generates load instruction for Component*:
 load_component_ptr_body_format = (
-    '{new_line}{tab}GameObject* {field_name}_owner__temp = SceneManagement::FindInCurrentScene(load_node[\"\'{field_name}@{field_type}\'\"].as<unsigned long long>());'
-    '{new_line}{tab}if ({field_name}_owner__temp != nullptr)'
+    '{new_line}{tab}if (load_node[\"\'{field_name}@{field_type}\'\"].IsDefined())'
     '{new_line}{tab}{left_curly}'
-    '{new_line}{tab}{tab}{field_name} = {field_name}_owner__temp->GetComponent<{non_ptr_field_type}>();' 
+    '{new_line}{tab}{tab}GameObject* {field_name}_owner__temp = SceneManagement::FindInCurrentScene(load_node[\"\'{field_name}@{field_type}\'\"].as<unsigned long long>());'
+    '{new_line}{tab}{tab}if ({field_name}_owner__temp != nullptr)'
+    '{new_line}{tab}{tab}{left_curly}'
+    '{new_line}{tab}{tab}{tab}{field_name} = {field_name}_owner__temp->GetComponent<{non_ptr_field_type}>();' 
+    '{new_line}{tab}{tab}{right_curly}'
     '{new_line}{tab}{right_curly}'
 )
 
@@ -277,9 +286,9 @@ for script_class in script_classes:
         deserialize_method_body += '\n'
         serialize_method_body += '\n'
         
+        save_load_line_break = ''
         if first_field == False:
-            on_save_method_body += '\n'
-            on_load_method_body += '\n'
+            save_load_line_break = '\n'
         first_field = False
 
         # Append the if statement for the current_name and current_type
@@ -310,6 +319,10 @@ for script_class in script_classes:
                 tab = '\t'
             )
             if current_type == "GameObject*":
+                
+                on_save_method_body += save_load_line_break
+                on_load_method_body += save_load_line_break
+
                 on_save_method_body += save_game_object_ptr_body_format.format(
                     field_name = current_name,
                     field_type = current_type,
@@ -321,10 +334,15 @@ for script_class in script_classes:
                 on_load_method_body += load_game_object_ptr_body_format.format(
                     field_name = current_name,
                     field_type = current_type,
+                    left_curly = '{',
+                    right_curly = '}',
                     new_line = '\n',
                     tab = '\t'
                 )
             else:
+                on_save_method_body += save_load_line_break
+                on_load_method_body += save_load_line_break
+
                 on_save_method_body += save_default_except_game_object_ptr_body_format.format(
                     field_name = current_name,
                     field_type = current_type,
@@ -334,6 +352,8 @@ for script_class in script_classes:
                 on_load_method_body += load_default_except_game_object_ptr_body_format.format(
                     field_name = current_name,
                     field_type = current_type,
+                    left_curly = '{',
+                    right_curly = '}',
                     new_line = '\n',
                     tab = '\t'
                 )
@@ -348,6 +368,10 @@ for script_class in script_classes:
                 new_line = '\n',
                 tab = '\t'
             )
+
+            on_save_method_body += save_load_line_break
+            on_load_method_body += save_load_line_break
+
             on_save_method_body += save_component_ptr_body_format.format(
                 field_name = current_name,
                 field_type = current_type,
