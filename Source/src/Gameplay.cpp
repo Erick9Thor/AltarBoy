@@ -212,6 +212,20 @@ void Hachiko::Editor::Show(const char* field_name, math::float4& field)
     ImGui::Text(" (float4)");
 }
 
+void Hachiko::Editor::Show(const char* field_name, math::Quat& field) 
+{
+    math::float3 degrees = RadToDeg(field.ToEulerXYZ());
+
+    if (ImGui::DragFloat3(field_name, degrees.ptr(), 0.1f, -inf, inf))
+    {
+        math::float3 radians = DegToRad(degrees);
+        field = Quat::FromEulerXYZ(radians.x, radians.y, radians.z).Normalized();
+    }
+
+    ImGui::SameLine();
+    ImGui::Text(" (Quat)");
+}
+
 void Hachiko::Editor::Show(const char* field_name, std::string& field)
 {
     ImGui::InputText(field_name, &field);

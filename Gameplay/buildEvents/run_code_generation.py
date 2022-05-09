@@ -95,10 +95,10 @@ editor_show_components_format = (
 
 # Allowed editor types for scripts:
 editor_allowed_default_types = [
-    'int', 'unsigned int', 'unsigned', 'float', 
+    'int', 'unsigned int', 'unsigned', 'uint', 'float', 
     'double', 'bool', 'string', 'std::string', 
-    'math::float2', 'math::float3', 'math::float4',
-    'float2', 'float3', 'float4', 'GameObject*'
+    'math::float2', 'math::float3', 'math::float4', 'math::Quat',
+    'float2', 'float3', 'float4', 'Quat', 'GameObject*'
 ]
 editor_allowed_component_types = [
     'ComponentAnimation*', 'ComponentButton*',

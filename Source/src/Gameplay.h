@@ -438,6 +438,7 @@ HACHIKO_API void Show(const char* field_name, bool& field);
 HACHIKO_API void Show(const char* field_name, math::float2& field);
 HACHIKO_API void Show(const char* field_name, math::float3& field);
 HACHIKO_API void Show(const char* field_name, math::float4& field);
+HACHIKO_API void Show(const char* field_name, math::Quat& field);
 HACHIKO_API void Show(const char* field_name, std::string& field);
 HACHIKO_API void Show(const char* field_name, GameObject*& field);
 
