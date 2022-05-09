@@ -75,7 +75,10 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
 
     if (use_pathfinder)
     {
-        navQuery->findNearestPoly(target_pos.ptr(), queryExtents, filter, &target_poly, target_position.ptr());
+        float3 corrected_target = target_pos;
+        navQuery->findNearestPoly(target_pos.ptr(), queryExtents, filter, &target_poly, corrected_target.ptr());
+        assert(target_poly != 0);
+        target_position = corrected_target;
         const dtCrowdAgent* ag = crowd->getAgent(agent_id);
         if (ag && ag->active)
         {
