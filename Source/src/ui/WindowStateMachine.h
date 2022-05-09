@@ -1,7 +1,6 @@
 #pragma once
 #include "Window.h"
 #include "resources/ResourceStateMachine.h"
-#include "imnodes.h"
 
 namespace Hachiko
 {
@@ -17,7 +16,6 @@ namespace Hachiko
             std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode;
 
             Node() {};
-            //Node(const std::string& name, int nodeIndex, int inputIndex, int outputIndex) : name(name), nodeIndex(nodeIndex), inputIndex(inputIndex), outputIndex(outputIndex) {};
             Node(const std::string& name, int nodeIndex, int inputIndex, std::vector<int> outputIndex, std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode) : 
                 name(name),
                 nodeIndex(nodeIndex),
