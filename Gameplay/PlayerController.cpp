@@ -84,8 +84,11 @@ void Hachiko::Scripting::PlayerController::MoveDashIndicator(
 	math::float3 direction = mouse_world_position- current_position;
 	direction.Normalize();
 
+	const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
+
 	_dash_indicator->GetTransform()->SetGlobalPosition(current_position
-		+ direction);
+		+ float3(mouse_direction.x, 0.0f, mouse_direction.y));
+
 	_dash_indicator->GetTransform()->SetGlobalRotationEuler(
 		float3(90.0f, 0.0f, 0.0f));
 }
@@ -264,10 +267,17 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_dash_progress = 0.0f;
 		_dash_start = current_position;
 
-		const math::float3 dash_end = GetRaycastPosition(
-			_dash_start);
-		
-		_dash_direction = dash_end - _dash_start;
+		//const math::float3 dash_end = GetRaycastPosition(
+		//	_dash_start);
+		//
+		const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
+
+		_dash_direction = float3(mouse_direction.x, 0.0f, mouse_direction.y);
 		_dash_direction.Normalize();
 	}
+}
+
+math::float2 Hachiko::Scripting::PlayerController::GetMouseDirectionRelativeToCenter() const
+{
+	return (Input::GetMousePosition() - float2(0.5f, 0.5f)).Normalized();
 }

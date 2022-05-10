@@ -37,6 +37,8 @@ private:
 	
 	void HandleInput(math::float3& current_position);
 
+	math::float2 GetMouseDirectionRelativeToCenter() const;
+
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
 
