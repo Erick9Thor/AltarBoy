@@ -52,25 +52,25 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 		math::float3 relative_position = final_position - current_position;
 
-		float x_clamp = 2.25f + abs(mouse_movement.x);
-		float z_clamp = 2.5f + abs(mouse_movement.y);
+		constexpr float x_clamp = 2.25f;
+		constexpr float z_clamp = 2.5f;
 
-		if (relative_position.z > z_clamp)
+		if (relative_position.z > z_clamp - mouse_movement.y)
 		{
-			current_position.z = final_position.z - z_clamp;
+			current_position.z = final_position.z - z_clamp + mouse_movement.y;
 		}
-		if (relative_position.z < -z_clamp)
+		if (relative_position.z < -z_clamp - mouse_movement.y)
 		{
-			current_position.z = final_position.z + z_clamp;
+			current_position.z = final_position.z + z_clamp + mouse_movement.y;
 		}
 
-		if (relative_position.x > x_clamp)
+		if (relative_position.x > x_clamp - mouse_movement.x)
 		{
-			current_position.x = final_position.x - x_clamp;
+			current_position.x = final_position.x - x_clamp + mouse_movement.x;
 		}
-		if (relative_position.x < -x_clamp)
+		if (relative_position.x < -x_clamp - mouse_movement.x)
 		{
-			current_position.x = final_position.x + x_clamp;
+			current_position.x = final_position.x + x_clamp + mouse_movement.x;
 		}
 
 		transform->SetGlobalPosition(current_position);
@@ -90,11 +90,21 @@ float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 	{
 		mouse_pos.x = 0;
 	}
+	else
+	{
+		mouse_pos.x += (mouse_pos.x > 0) ? -0.25f : +0.25f;
+	}
+
 	if (mouse_pos.y > -0.25f && mouse_pos.y < 0.25f)
 	{
 		mouse_pos.y = 0;
 	}
-	added_movement = mouse_pos * 3;
+	else
+	{
+		mouse_pos.y += (mouse_pos.y > 0) ? -0.25f : +0.25f;
+	}
+
+	added_movement = mouse_pos * 6;
 	return added_movement;
 }
 
