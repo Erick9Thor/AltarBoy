@@ -44,6 +44,8 @@ void Hachiko::ComponentMeshRenderer::Update() {
 
 void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* program)
 {
+    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+
     if (mesh == nullptr || !visible)
     {
         return;
@@ -163,8 +165,15 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    const GameObject* root = game_object->parent;
+    const GameObject* root = game_object;
 
+    while (root->GetID() != App->scene_manager->GetRoot()->GetID())
+    {
+        root = root->parent;
+    }
+
+    HE_LOG("Name of root: %s", root->name.c_str());
+    
     if (mesh && mesh->num_bones > 0 && root)
     {
         float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
@@ -172,18 +181,16 @@ void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& pa
         for (unsigned i = 0; i < mesh->num_bones; ++i)
         {
             const ResourceMesh::Bone& bone = mesh->bones[i];
-            /* const GameObject* bone_node = node_cache[i];
+            const GameObject* bone_node = node_cache[i];
 
             if (bone_node == nullptr)
             {
                 bone_node = node_cache[i] = root ? root->FindDescendantWithName(bone.name) : nullptr;
-            }*/
-
-            const GameObject* bone_node = root->FindDescendantWithName(bone.name);
+            }
 
             if (bone_node)
             {
-                palette[i] = bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
+                palette[i] = root_transform * bone_node->GetTransform()->GetGlobalMatrix() * bone.bind;
             }
             else
             {
