@@ -23,12 +23,16 @@ namespace Hachiko
         ResourceNavMesh* GetNavMesh() const { return navmesh; };
         dtTileCache* GetTileCache() const;
         dtCrowd* GetCrowd() const;
+        dtNavMeshQuery* GetNavQuery() const;
 
         void DebugDraw();
         void DrawOptionsGui();
         
         void CorrectPosition(math::float3& position, const math::float3& extents) const;
         float GetYFromPosition(const math::float3& position) const;
+
+        const dtCrowdAgent* GetAgent(int agent_id) const;
+        dtCrowdAgent* GetEditableAgent(int agent_id) const;
 
     private:
         void RenderAgents(duDebugDraw& dd);

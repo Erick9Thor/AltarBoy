@@ -205,10 +205,10 @@ static int RasterizeTileLayers(const int tx, const int ty, float* verts, int nVe
     // Allocate array that can hold triangle flags.
     // If you have multiple meshes you need to process, allocate
     // and array which can hold the max number of triangles you need to process.
-    rc.triareas = new unsigned char[nTris];
+    rc.triareas = new unsigned char[chunkyMesh->maxTrisPerChunk];
     if (!rc.triareas)
     {
-        HE_LOG("buildNavigation: Out of memory 'm_triareas' (%d).", nTris);
+        HE_LOG("buildNavigation: Out of memory 'm_triareas' (%d).", chunkyMesh->maxTrisPerChunk);
         return 0;
     }
 

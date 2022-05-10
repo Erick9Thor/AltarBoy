@@ -118,6 +118,11 @@ dtCrowd* Hachiko::ModuleNavigation::GetCrowd() const
     return navmesh ? navmesh->crowd : nullptr;
 }
 
+dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
+{
+    return navmesh ? navmesh->navigation_query : nullptr;
+}
+
 void Hachiko::ModuleNavigation::DebugDraw()
 {
     if (navmesh)
@@ -130,6 +135,7 @@ void Hachiko::ModuleNavigation::DebugDraw()
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glDisable(GL_TEXTURE_2D);
+        //glEnable(GL_COLOR_MATERIAL);
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -207,6 +213,28 @@ float Hachiko::ModuleNavigation::GetYFromPosition(const math::float3& position) 
     }
 
     return height;
+}
+
+const dtCrowdAgent* Hachiko::ModuleNavigation::GetAgent(int agent_id) const
+{
+    dtCrowd* crowd = GetCrowd();
+    if (!crowd)
+    {
+        HE_LOG("Error: Tried to get agent but crowd doesnt exist");
+        return nullptr;
+    }
+    return crowd->getAgent(agent_id);
+}
+
+dtCrowdAgent* Hachiko::ModuleNavigation::GetEditableAgent(int agent_id) const
+{
+    dtCrowd* crowd = GetCrowd();
+    if (!crowd)
+    {
+        HE_LOG("Error: Tried to get editable agent but crowd doesnt exist");
+        return nullptr;
+    }
+    return crowd->getEditableAgent(agent_id);
 }
 
 void Hachiko::ModuleNavigation::UpdateObstacleStats(dtTileCache* tile_cache)

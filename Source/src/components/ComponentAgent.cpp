@@ -49,7 +49,6 @@ void Hachiko::ComponentAgent::Update()
 
 void DebugAgentInfo(const dtCrowdAgent* ag)
 {
-    ImGui::Text("Debug info");
     if (!ag)
     {
         ImGui::Text("No agent in navmesh");
@@ -80,32 +79,76 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
 {
     if (agent_id == -1)  return;
 
-    ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
-    dtNavMeshQuery* navQuery = navMesh->GetQuery();
-    dtCrowd* crowd = navMesh->GetCrowd();
+    dtNavMeshQuery* navQuery = App->navigation->GetNavQuery();
+    dtCrowd* crowd = App->navigation->GetCrowd();
     const dtQueryFilter* filter = crowd->getFilter(0);
+    const dtCrowdAgent* ag = App->navigation->GetAgent(agent_id);
+
+    if (!ag || !ag->active)
+    {
+        return;
+    }
 
     if (use_pathfinder)
     {
         float3 corrected_target = target_pos;
         navQuery->findNearestPoly(target_pos.ptr(), closest_point_half_range.ptr(), filter, &target_poly, corrected_target.ptr());
-        assert(target_poly != 0);
-        target_position = corrected_target;
-        const dtCrowdAgent* ag = crowd->getAgent(agent_id);
-        if (ag && ag->active)
+        if (target_poly == 0)
         {
-            crowd->requestMoveTarget(agent_id, target_poly, target_position.ptr());
+            HE_LOG("Failed to find valid target position");
+            return;
         }
+        target_position = corrected_target;
+        crowd->requestMoveTarget(agent_id, target_poly, target_position.ptr());
     }
     else
     {
-        const dtCrowdAgent* ag = crowd->getAgent(agent_id);
-        if (ag && ag->active)
-        {
-            float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
-            float3 new_vel = new_dir * max_speed;
-            crowd->requestMoveVelocity(agent_id, new_vel.ptr());
-        }
+        float3 new_dir = (target_pos - float3(ag->npos)).Normalized();
+        float3 new_vel = new_dir * max_speed;
+        crowd->requestMoveVelocity(agent_id, new_vel.ptr());
+    }
+}
+
+void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
+{
+    max_speed = new_max_speed;
+
+    dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    if (!agent)
+    {
+        return;
+    }
+    agent->params.maxSpeed = max_speed;
+}
+
+void Hachiko::ComponentAgent::SetMaxAcceleration(float new_max_acceleration)
+{
+    max_acceleration = new_max_acceleration;
+
+    dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    if (!agent)
+    {
+        return;
+    }
+    agent->params.maxAcceleration = max_acceleration;
+}
+
+void Hachiko::ComponentAgent::SetObstacleAvoidance(bool obstacle_avoidance)
+{
+    avoid_obstacles = obstacle_avoidance;
+
+    dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    if (!agent)
+    {
+        return;
+    }
+    if (avoid_obstacles)
+    {
+        agent->params.updateFlags |= DT_CROWD_OBSTACLE_AVOIDANCE;
+    }
+    else
+    {
+        agent->params.updateFlags ^= DT_CROWD_OBSTACLE_AVOIDANCE;
     }
 }
 
@@ -186,21 +229,14 @@ void Hachiko::ComponentAgent::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Agent Component"))
     {
-        ImGui::DragFloat3("newTarget", target_position.ptr(), 1.0f, -inf, inf);
         if (agent_id != -1)
         {
             if (ImGui::Button("Remove From Navmesh"))
             {
                 RemoveFromCrowd();
             }
-            
-            if (ImGui::Button("Feed position"))
-            {
-                SetTargetPosition(target_position);
-            }
         }
-
-        if (agent_id == -1)
+        else
         {
             if (ImGui::Button("Add To Namesh"))
             {
@@ -210,19 +246,39 @@ void Hachiko::ComponentAgent::DrawGui()
             if (ImGui::Button("Move To Nearest Navmesh Point"))
             {
                 MoveToNearestNavmeshPoint();
-            }
-
-            // Only edit when agent is not in navmesh for now
-            // TODO: Add a way to update those on an existing agent
-            ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f);
-            ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f);
-            ImGui::Checkbox("Use Pathfinding", &use_pathfinder);
-            ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles);      
+            }    
         }
-        DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+
+        ImGui::DragFloat3("Target Position", target_position.ptr(), 1.0f, -inf, inf);
+        if (ImGui::Button("Feed position"))
+        {
+            SetTargetPosition(target_position);
+        }
+
+        if (ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f))
+        {
+            SetMaxSpeed(max_speed);
+        }
+        if (ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f))
+        {
+            SetMaxAcceleration(max_acceleration);
+        }
+        if (ImGui::Checkbox("Use Pathfinding", &use_pathfinder))
+        {
+            // Updates target wih new pathfinding value
+            SetTargetPosition(target_position);
+        }
+        if (ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles))
+        {
+            SetObstacleAvoidance(avoid_obstacles);
+        }
+
+        ImGui::Checkbox("Debug info", &show_debug_info);
+        if (show_debug_info)
+        {
+            DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+        }
     }
-    
-    
     ImGui::PopID();
 }
 

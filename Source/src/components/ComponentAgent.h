@@ -30,7 +30,7 @@ namespace Hachiko
 
 		void SetTargetPosition(const float3& target_pos);
 		void SetMaxSpeed(float new_max_speed);
-		void SetMaxAcceleration(float new_max_speed);
+		void SetMaxAcceleration(float new_max_acceleration);
 		void SetObstacleAvoidance(bool obstacle_avoidance);
 
 		float GetMaxSpeed() const { return max_speed; }
@@ -57,6 +57,7 @@ namespace Hachiko
 		bool avoid_obstacles = false;
 		bool use_pathfinder = true;
 
+		bool show_debug_info = false;
 	};
 }
 
