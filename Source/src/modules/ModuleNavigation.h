@@ -26,6 +26,7 @@ namespace Hachiko
 
         void DebugDraw();
         
+        void CorrectPosition(math::float3& position, const math::float3& extents) const;
         float GetYFromPosition(const math::float3& position) const;
 
     private:

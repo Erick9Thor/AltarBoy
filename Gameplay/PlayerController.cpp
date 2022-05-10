@@ -270,4 +270,9 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_dash_direction = dash_end - _dash_start;
 		_dash_direction.Normalize();
 	}
+
+	float current_y = current_position.y;
+
+	Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
+	current_position.y = current_position.y < current_y ? current_y : current_position.y;
 }

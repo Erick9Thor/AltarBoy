@@ -148,6 +148,21 @@ void Hachiko::ModuleNavigation::DebugDraw()
     }
 }
 
+void Hachiko::ModuleNavigation::CorrectPosition(math::float3& position, const math::float3& extents) const 
+{
+    dtQueryFilter filter;
+    dtPolyRef reference;
+
+    navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
+
+    if (reference != NULL)
+    {
+        float height = 0.0f;
+        navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
+        position.y = height;
+    }
+}
+
 float Hachiko::ModuleNavigation::GetYFromPosition(const math::float3& position) const
 {
     float height = FLT_MAX;
@@ -155,8 +170,6 @@ float Hachiko::ModuleNavigation::GetYFromPosition(const math::float3& position) 
 
     dtQueryFilter filter;
     dtPolyRef reference;
-
-    
 
     navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
 
