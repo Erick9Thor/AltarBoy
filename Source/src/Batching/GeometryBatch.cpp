@@ -150,7 +150,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
 
 void Hachiko::GeometryBatch::UpdateWithTextureBatch()
 {
-    BatchTransforms();
+    BatchData();
     GenerateCommands();
 
     glBindVertexArray(batch->vao);
@@ -160,12 +160,32 @@ void Hachiko::GeometryBatch::UpdateWithTextureBatch()
     texture_batch->Draw(components);
 }
 
-void Hachiko::GeometryBatch::BatchTransforms()
+void Hachiko::GeometryBatch::BatchData()
 {
     transforms.reserve(components.size());
-    for (const ComponentMeshRenderer* component : components)
+    if (batch->layout.bones)
     {
-        transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
+        //palettes.reserve(components.size());
+
+        //PalettePerInstance palete_per_instance;
+        //int palette_offeset = 0;
+        for (const ComponentMeshRenderer* component : components)
+        {
+            transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
+
+            /* palete_per_instance.numBones = component->GetResourceMesh()->num_bones;
+            palete_per_instance.paletteOffset = palette_offeset;
+            palettes.push_back(palete_per_instance); // bad
+
+            palette_offeset += palete_per_instance.numBones;*/
+        }
+    }
+    else
+    {
+        for (const ComponentMeshRenderer* component : components)
+        {
+            transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
+        }
     }
 }
 

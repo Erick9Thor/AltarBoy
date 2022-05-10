@@ -11,6 +11,13 @@ namespace Hachiko
     class TextureBatch;
 
     struct Material;
+
+    struct PalettePerInstance
+    {
+        unsigned numBones;
+        unsigned paletteOffset;
+        unsigned padding0, padding1;
+    };
     
     class GeometryBatch
     {
@@ -25,7 +32,7 @@ namespace Hachiko
 
         void BuildBatch();
         void BatchMeshes();
-        void BatchTransforms();
+        void BatchData();
 
         void UpdateWithTextureBatch();
 
@@ -50,6 +57,7 @@ namespace Hachiko
         ResourceMesh* batch = nullptr;
         unsigned instance_indices_vbo;
         std::vector<float4x4> transforms;
+        std::vector<PalettePerInstance> palettes;
         std::vector<DrawCommand> commands;
 
         TextureBatch* texture_batch = nullptr;
