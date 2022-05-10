@@ -75,23 +75,26 @@ UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
 
     // Crowd update with debug data
     dtCrowd* crowd = navmesh->crowd;
-    crowd->update(delta, &agent_debug);
-
-    // Update agent trails
-    for (int i = 0; i < crowd->getAgentCount(); ++i)
+    if (crowd != nullptr)
     {
-        const dtCrowdAgent* ag = crowd->getAgent(i);
-        AgentTrail* trail = &m_trails[i];
-        if (!ag->active)
-            continue;
-        // Update agent movement trail.
-        trail->htrail = (trail->htrail + 1) % ResourceNavMesh::AGENT_MAX_TRAIL;
-        dtVcopy(&trail->trail[trail->htrail * 3], ag->npos);
+        crowd->update(delta, &agent_debug);
+
+        // Update agent trails
+        for (int i = 0; i < crowd->getAgentCount(); ++i)
+        {
+            const dtCrowdAgent* ag = crowd->getAgent(i);
+            AgentTrail* trail = &m_trails[i];
+            if (!ag->active)
+                continue;
+            // Update agent movement trail.
+            trail->htrail = (trail->htrail + 1) % ResourceNavMesh::AGENT_MAX_TRAIL;
+            dtVcopy(&trail->trail[trail->htrail * 3], ag->npos);
+        }
+
+        // Idk the reason behind thees, normalizes obstacle avoidance debug data?
+        agent_debug.vod->normalizeSamples();
     }
-
-    // Idk the reason behind thees, normalizes obstacle avoidance debug data?
-    agent_debug.vod->normalizeSamples();
-
+    
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
