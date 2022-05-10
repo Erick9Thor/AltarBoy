@@ -6,10 +6,11 @@
 
 #include "modules/ModuleNavigation.h"
 #include "resources/ResourceNavMesh.h"
+#include "DetourTileCache/DetourTileCache.h"
 
-Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container)
-{
-}
+Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container), 
+obstacle_type(ObstacleType::DT_OBSTACLE_CYLINDER)
+{}
 
 Hachiko::ComponentObstacle::~ComponentObstacle()
 {
@@ -42,9 +43,19 @@ void Hachiko::ComponentObstacle::Update()
 
 void Hachiko::ComponentObstacle::OnTransformUpdated()
 {
-    // Disabled because it saturated navmesh updating on almost every frame
-    dirty = true;
-    //RefreshObstacle();
+    Invalidate();
+}
+
+void Hachiko::ComponentObstacle::SetType(ObstacleType new_type)
+{
+    obstacle_type = new_type;
+    Invalidate();
+}
+
+void Hachiko::ComponentObstacle::SetSize(const float3& new_size)
+{
+    size = new_size;
+    Invalidate();
 }
 
 void Hachiko::ComponentObstacle::DrawGui()
@@ -76,12 +87,19 @@ void Hachiko::ComponentObstacle::DrawGui()
             }
         }
 
+        bool changed_type = false;
         ImGui::Text("Type");
-        ImGui::RadioButton("Cylinder", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_CYLINDER));
+        changed_type |= ImGui::RadioButton("Cylinder", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_CYLINDER));
         ImGui::SameLine();
-        ImGui::RadioButton("Box", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_BOX));
+        changed_type |= ImGui::RadioButton("Box", (int*)&obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_BOX));
         ImGui::SameLine();
-        ImGui::RadioButton("Oriented Box", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_ORIENTED_BOX));
+        changed_type |= ImGui::RadioButton("Oriented Box", (int*)&obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_ORIENTED_BOX));
+        
+        if (changed_type)
+        {
+            SetType(obstacle_type); // Changes the obstacle type
+        }
+        
         ImGui::Text("Exists: %d", obstacle != nullptr);
     }
     ImGui::PopID();
@@ -89,13 +107,6 @@ void Hachiko::ComponentObstacle::DrawGui()
 
 void Hachiko::ComponentObstacle::AddObstacle()
 {
-    ResourceNavMesh* navmesh = App->navigation->GetNavMesh();
-    if (!navmesh)
-    {
-        HE_LOG("Failed to add obstacle on unexisting navmesh");
-        return;
-    }
-
     dtTileCache* tile_cache = App->navigation->GetTileCache();
     if (!tile_cache)
     {
@@ -147,13 +158,6 @@ void Hachiko::ComponentObstacle::RemoveObstacle()
         return;
     }
 
-    ResourceNavMesh* navmesh = App->navigation->GetNavMesh();
-    if (!navmesh)
-    {
-        HE_LOG("Failed to remove obstacle from unexisting navmesh");
-        return;
-    }
-
     dtTileCache* tile_cache = App->navigation->GetTileCache();
     if (!tile_cache)
     {
@@ -174,12 +178,14 @@ void Hachiko::ComponentObstacle::RefreshObstacle()
     }
 }
 
-void Hachiko::ComponentObstacle::SetSize(const float3& new_size)
+void Hachiko::ComponentObstacle::Save(YAML::Node& node) const
 {
-    size = new_size;
-    RefreshObstacle();
+    node[OBSTACLE_TYPE] = static_cast<unsigned int>(obstacle_type);
+    node[OBSTACLE_SIZE] = size;
 }
 
-void Hachiko::ComponentObstacle::Save(YAML::Node& node) const {}
-
-void Hachiko::ComponentObstacle::Load(const YAML::Node& node) {}
+void Hachiko::ComponentObstacle::Load(const YAML::Node& node)
+{
+    SetType(static_cast<ObstacleType>(node[OBSTACLE_TYPE].as<unsigned int>()));
+    SetSize(node[OBSTACLE_SIZE].as<float3>());
+}

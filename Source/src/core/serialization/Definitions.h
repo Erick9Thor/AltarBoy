@@ -205,6 +205,10 @@
 #define BAR_FILLED "filled"
 #define BAR_DIRECTION "direction"
 
+// Component Obstacle
+#define OBSTACLE_TYPE "type"
+#define OBSTACLE_SIZE "size"
+
 // Component Agent
 #define MAX_SPEED "max_speed"
 #define MAX_ACCELERATION "max_acceleration"

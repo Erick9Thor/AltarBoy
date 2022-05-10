@@ -2,7 +2,9 @@
 
 #include "components/Component.h"
 #include "Globals.h"
-#include "DetourTileCache/DetourTileCache.h"
+
+//enum ObstacleType;
+typedef unsigned int dtObstacleRef;
 
 namespace Hachiko
 {
@@ -10,37 +12,55 @@ namespace Hachiko
 
     class ComponentTransform2D;
 
-    class ComponentObstacle : public Component
+    class HACHIKO_API ComponentObstacle : public Component
     {
     public:
+
+        enum ObstacleType
+        {
+            DT_OBSTACLE_CYLINDER,
+            DT_OBSTACLE_BOX, // AABB
+            DT_OBSTACLE_ORIENTED_BOX, // OBB
+        };
+
+
         ComponentObstacle(GameObject* container);
         ~ComponentObstacle() override;
-
-        void Start() override;
-        void Stop() override;
-        virtual void Update() override;
-        virtual void OnTransformUpdated() override;
 
         static Type GetType()
         {
             return Type::OBSTACLE;
-        }        
+        }
+
+        void Start() override; // Call AddObstacle
+        void Stop() override; // Call RemoveObstacle
+        virtual void Update() override; // Updates the obstacle (if dirty) every x ticks to prevent tile cache collapse
+        virtual void OnTransformUpdated() override; // Sets the obstacle as dirty        
+
+        void AddObstacle(); // Adds the obstacle if tile cache exists
+        void RemoveObstacle(); // Removes the obstacle if it exists in tile cache
         
-        // TODO: Add debugdraw
-        void SetSize(const float3& new_size); // Reminder: Cylinder will ignore z value
+        void SetSize(const float3& new_size); // Changes the obstacle size
+        // Reminder: Cylinder will ignore z value
+
+        void SetType(ObstacleType new_type); // Changes the obstacle type
+
+        void DrawGui() override;  
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
-        void DrawGui() override;        
+              
     private:
+        void Invalidate()
+        {
+            dirty = true;
+        }
+        void RefreshObstacle();
         static const int update_freq = 25;
         int count_since_update = 0;
-        bool dirty = true;
-        void AddObstacle();
-        void RemoveObstacle();
-        void RefreshObstacle(); // Workaround manual refresh, If we call on each on transform updated the obstacle buffer saturates
+        bool dirty = true;        
         dtObstacleRef* obstacle = nullptr;	
-        ObstacleType obstacle_type = ObstacleType::DT_OBSTACLE_CYLINDER;
+        ObstacleType obstacle_type;
         float3 size = float3::one;
     };
 } // namespace Hachiko

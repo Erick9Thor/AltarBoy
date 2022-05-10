@@ -9,11 +9,9 @@
 
 #include "components/ComponentTransform.h"
 
-#include "DetourCrowd.h"
-
 namespace Hachiko
 {
-	class ComponentAgent : public Component
+    class HACHIKO_API ComponentAgent : public Component
 	{
 
 	public:
