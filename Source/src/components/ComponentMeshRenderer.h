@@ -16,7 +16,7 @@ namespace Hachiko
     {
     public:
         ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
-        ~ComponentMeshRenderer() override = default;
+        ~ComponentMeshRenderer() override;
 
         void Update() override;
         void Draw(ComponentCamera* camera, Program* program) override;
@@ -109,12 +109,12 @@ namespace Hachiko
 
         void ChangeMaterial();
 
+        std::vector<float4x4> palette; // TODO: MOVE TO PRIVATE AGAIN
     private:
         bool visible = true;
               
         // SKINING
         const GameObject** node_cache = nullptr;
-        std::vector<float4x4> palette;
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;

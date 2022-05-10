@@ -19,6 +19,7 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
+    delete controller;
     animations.clear();
 }
 
