@@ -647,6 +647,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\events\EditorActionPayload.h" />
     <ClInclude Include="src\modules\ModuleNavigation.h" />
     <ClInclude Include="src\resources\ResourceNaveMesh.h" />
     <ClInclude Include="src\importers\FontImporter.h" />

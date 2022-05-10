@@ -10,6 +10,7 @@
 
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform.h"
+#include "modules/ModuleEvent.h"
 
 #include "modules/ModuleWindow.h"
 
@@ -18,6 +19,19 @@
 Hachiko::WindowScene::WindowScene() : Window("Scene", true) {}
 
 Hachiko::WindowScene::~WindowScene() = default;
+
+void Hachiko::WindowScene::Init()
+{
+    std::function updateViewportSize = [&](Event& evt) {
+        auto action = evt.GetEventData<EditorActionPayload>().GetAction();
+        if (action == EditorActionPayload::Action::PLAY)
+        {
+            DrawScene();
+        }
+    };
+    App->event->Subscribe(Event::Type::EDITOR_ACTION, updateViewportSize);
+}
+
 
 void Hachiko::WindowScene::Update()
 {
