@@ -673,6 +673,11 @@ void Hachiko::ResourceNavMesh::DrawOptionsGui()
     ImGui::Text("Detail");
     ImGui::DragInt("Sample Distance", &build_params.detail_sample_distance, speed_i);
     ImGui::DragInt("Sample Max Error", &build_params.detail_sample_max_error, speed_i);
+
+    if (ImGui::Button("Reset Params"))
+    {
+        build_params = NavmeshParams();
+    }
 }
 
 void Hachiko::ResourceNavMesh::CleanUp()
