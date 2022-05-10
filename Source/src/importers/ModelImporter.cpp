@@ -96,9 +96,9 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         mesh_importer.Import(mesh, mesh_id);
     }
 
+    node[ANIMATIONS] = scene->mNumAnimations;
     if (scene->HasAnimations())
     {
-        node[ANIMATIONS] = scene->mNumAnimations;
         for (unsigned int i = 0; i < scene->mNumAnimations; ++i)
         {
             Hachiko::UID animation_id = UUID::GenerateUID();
@@ -192,9 +192,9 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
         model_output->materials.push_back(material_info);
     }
 
-    model_output->have_animation = model_node[ANIMATIONS].as<int>();
+    model_output->num_animation = model_node[ANIMATIONS].as<int>();
 
-    model_output->materials.reserve(model_node[ANIMATIONS].as<int>());
+    model_output->materials.reserve(model_output->num_animation);
     for (unsigned i = 0; i < model_node[ANIMATIONS].as<int>(); ++i)
     {
         AnimationInfo animation_info;

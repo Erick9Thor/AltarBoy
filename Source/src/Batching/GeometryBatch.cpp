@@ -156,6 +156,7 @@ void Hachiko::GeometryBatch::UpdateWithTextureBatch()
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
     App->program->UpdateTransforms(transforms);
+    App->program->UpdatePalettes(palettes, palettes_per_instance);
 
     texture_batch->Draw(components);
 }

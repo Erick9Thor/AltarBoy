@@ -24,6 +24,23 @@ readonly layout(std430, row_major, binding = 3) buffer Transforms
  mat4 models[];
 };
 
+readonly layout(std430, row_major, binding = 4) buffer Palettes
+{
+ mat4 palettes[];
+};
+
+struct PalettePerInstance {
+    uint  numBones;
+    uint  paletteOffset;
+    uint  padding0, padding1;
+};
+
+readonly layout(std430, row_major, binding = 5) buffer PalettesPerInstances
+{
+ PalettePerInstance paletteInstanceInfo[];
+};
+
+
 uniform mat4 model;
 
 /*layout(std140, row_major) uniform Skining
@@ -51,13 +68,14 @@ void main()
     vec4 tangent = vec4(in_tangent, 0.0);
 
     if (has_bones)
-    { 
-        /*mat4 skin_transform = palette[in_bone_indices[0]] * in_bone_weights[0] + palette[in_bone_indices[1]] * in_bone_weights[1] +
-            palette[in_bone_indices[2]] * in_bone_weights[2] + palette[in_bone_indices[3]] * in_bone_weights[3];
+    {
+        PalettePerInstance palette_per_instance = paletteInstanceInfo[instance];
+        mat4 skin_transform = palettes[palette_per_instance.paletteOffset + in_bone_indices[0]] * in_bone_weights[0] + palettes[palette_per_instance.paletteOffset + in_bone_indices[1]] * in_bone_weights[1] +
+            palettes[palette_per_instance.paletteOffset + in_bone_indices[2]] * in_bone_weights[2] + palettes[palette_per_instance.paletteOffset + in_bone_indices[3]] * in_bone_weights[3];
 
         position = (skin_transform*vec4(in_position, 1.0));
         normal = (skin_transform*vec4(in_normal, 0.0));
-        tangent = (skin_transform*vec4(in_tangent, 0.0));*/
+        //tangent = (skin_transform*vec4(in_tangent, 0.0));
     }
 
     instance = gl_BaseInstance;

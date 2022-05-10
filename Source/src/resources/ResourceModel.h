@@ -49,7 +49,7 @@ namespace Hachiko
         std::vector<MaterialInfo> materials {};
         std::vector<AnimationInfo> animations {};
 
-        unsigned int have_animation = 0;
+        unsigned int num_animation = 0;
 
         std::vector<ResourceNode*> child_nodes;
         std::string model_path;

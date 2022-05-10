@@ -180,12 +180,19 @@ Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root)
 
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    const GameObject* root = GetRoot(game_object);
-
-    HE_LOG("Name of root: %s", root->name.c_str());
-    
-    if (mesh && mesh->num_bones > 0 && root)
+    if (mesh && mesh->num_bones > 0)
     {
+        const GameObject* root = GetRoot(game_object);
+
+        if (!root)
+        {
+            HE_LOG("Root not found");
+            return;
+        }
+
+        HE_LOG("Name of root: %s", root->name.c_str());
+        
+
         float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
 
         for (unsigned i = 0; i < mesh->num_bones; ++i)

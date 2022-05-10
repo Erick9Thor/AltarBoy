@@ -7,7 +7,8 @@
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
-#include "Batching/TextureBatch.h"
+#include "batching/GeometryBatch.h"
+#include "batching/TextureBatch.h"
 
 Hachiko::ModuleProgram::ModuleProgram() = default;
 
@@ -29,7 +30,8 @@ bool Hachiko::ModuleProgram::Init()
     CreateSSBO(UBOPoints::MATERIAL, 0);
     CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
     CreateSSBO(UBOPoints::TRANSFORMS, 0);
-
+    CreateSSBO(UBOPoints::PALETTES_PER_INSTANCE, 0);
+    CreateSSBO(UBOPoints::PALETTES, 0);
 
     return true;
 }
@@ -309,6 +311,12 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
 void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const
 {
     UpdateSSBO(UBOPoints::TRANSFORMS, transforms.size() * sizeof(float) * 16, (void*)transforms.data());
+}
+
+void Hachiko::ModuleProgram::UpdatePalettes(const std::vector<float4x4>& palettes, const std::vector<PalettePerInstance>& palettes_per_instance) const
+{
+    UpdateSSBO(UBOPoints::PALETTES, palettes.size() * sizeof(float4x4), (void*)palettes.data());
+    UpdateSSBO(UBOPoints::PALETTES_PER_INSTANCE, palettes_per_instance.size() * sizeof(PalettePerInstance), (void*)palettes_per_instance.data());
 }
 
 void Hachiko::ModuleProgram::UpdateMaterials(const std::vector<Hachiko::TextureBatch::Material>& materials) const
