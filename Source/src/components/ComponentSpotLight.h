@@ -11,11 +11,6 @@ namespace Hachiko
         ComponentSpotLight(GameObject* conatiner);
         ~ComponentSpotLight() override;
 
-        static Type GetType()
-        {
-            return Type::SPOTLIGHT;
-        }
-
         void DebugDraw() override;
 
         [[nodiscard]] bool IsActive() const

@@ -15,8 +15,6 @@ namespace Hachiko
         ComponentCanvas(GameObject* container);
         ~ComponentCanvas() override;
 
-        static Type GetType();
-
         void Update() override;
 
         void DrawGui() override;
@@ -31,8 +29,3 @@ namespace Hachiko
         unsigned size_y = 0;
     };
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentCanvas::GetType()
-{
-    return Type::CANVAS;
-}

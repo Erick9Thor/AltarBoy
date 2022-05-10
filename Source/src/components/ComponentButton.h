@@ -18,16 +18,9 @@ namespace Hachiko
         
         void Activate() override {}
 
-        static Type GetType();
-
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
     };
-    
-    inline Component::Type Hachiko::ComponentButton::GetType()
-    {
-        return Type::BUTTON;
-    }
 } // namespace Hachiko

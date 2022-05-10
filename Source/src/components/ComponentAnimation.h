@@ -14,11 +14,6 @@ namespace Hachiko
         ComponentAnimation(GameObject* container);
         ~ComponentAnimation() override;
 
-        static Type GetType()
-        {
-            return Type::ANIMATION;
-        }
-
         void Start() override;
         void Stop() override;
         void Update() override;

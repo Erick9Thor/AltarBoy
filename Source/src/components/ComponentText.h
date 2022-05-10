@@ -20,11 +20,6 @@ namespace Hachiko
         ComponentText(GameObject* container);
         ~ComponentText() override = default;
 
-        static Type GetType()
-        {
-            return Type::TEXT;
-        }
-
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program);
 

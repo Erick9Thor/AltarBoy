@@ -25,8 +25,3 @@ namespace Hachiko
         void Render(Program* img_program, Program* txt_program) const;
     };
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentCanvasRenderer::GetType()
-{
-    return Type::CANVAS_RENDERER;
-}
