@@ -38,9 +38,19 @@ bool Hachiko::ModuleNavigation::CleanUp()
 bool Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
 {
     HE_LOG("Building Navmesh");
+
+    ResourceNavMesh::NavmeshParams initial_params;
+    if (navmesh)
+    {
+        // Keep previous params if we had an already created navmesh 
+        initial_params = navmesh->build_params;
+    }
+
     RELEASE(navmesh);
 
     navmesh = new ResourceNavMesh(0);
+    navmesh->build_params = initial_params;
+
     bool success = navmesh->Build(scene);
     if (!success)
     {
@@ -145,6 +155,24 @@ void Hachiko::ModuleNavigation::DebugDraw()
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+    }
+}
+
+void Hachiko::ModuleNavigation::DrawOptionsGui()
+{
+    if (navmesh)
+    {
+        ImGui::Separator();
+        ImGui::Text("Navmesh Editor");       
+        if (ImGui::Button("Rebuild Navmesh"))
+        {
+            App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
+        }
+        
+        if (ImGui::CollapsingHeader("Params"))
+        {
+            navmesh->DrawOptionsGui();
+        }        
     }
 }
 
@@ -269,7 +297,7 @@ void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
             if (!ag->active)
                 continue;
             const float* target = ag->targetPos;
-            duDebugDrawCross(&dd, target[0], target[1] + 0.1f, target[2], navmesh->agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
+            duDebugDrawCross(&dd, target[0], target[1] + 0.1f, target[2], navmesh->build_params.agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
 
         }
     }

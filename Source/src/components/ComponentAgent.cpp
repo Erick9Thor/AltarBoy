@@ -121,8 +121,8 @@ void Hachiko::ComponentAgent::AddToCrowd()
     // PARAMS INIT
     dtCrowdAgentParams ap;
     memset(&ap, 0, sizeof(ap));
-    ap.radius = navMesh->agent_radius;
-    ap.height = navMesh->agent_height;
+    ap.radius = navMesh->build_params.agent_radius;
+    ap.height = navMesh->build_params.agent_height;
     ap.maxAcceleration = max_acceleration;
     ap.maxSpeed = max_speed;
     ap.collisionQueryRange = ap.radius * 12.0f;

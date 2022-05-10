@@ -226,9 +226,9 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
+    
+    
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
-    if (ImGui::Button("Rebuild Navmesh"))
-    {
-        App->navigation->BuildNavmesh(main_scene);
-    }
+
+    App->navigation->DrawOptionsGui();
 }

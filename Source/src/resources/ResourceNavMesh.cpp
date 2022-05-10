@@ -374,19 +374,19 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // Step 1. Initialize generation config.
     rcConfig cfg;
     memset(&cfg, 0, sizeof(cfg));
-    cfg.cs = cell_size;
-    cfg.ch = cell_height;
-    cfg.walkableSlopeAngle = agent_max_slope;
-    cfg.walkableHeight = static_cast<int>(ceilf(agent_height / cfg.ch));
-    cfg.walkableClimb = static_cast<int>(floorf(agent_max_climb / cfg.ch));
-    cfg.walkableRadius = static_cast<int>(ceilf(agent_radius / cfg.cs));
-    cfg.maxEdgeLen = static_cast<int>(edge_max_length / cell_size);
-    cfg.maxSimplificationError = edge_max_error;
-    cfg.minRegionArea = static_cast<int>(rcSqr(region_min_size)); // Note: area = size*size
-    cfg.mergeRegionArea = static_cast<int>(rcSqr(region_merge_size)); // Note: area = size*size
-    cfg.maxVertsPerPoly = static_cast<int>(max_vertices_per_poly);
-    cfg.detailSampleDist = detail_sample_distance < 0.9f ? 0 : cell_size * detail_sample_distance;
-    cfg.detailSampleMaxError = cell_height * detail_sample_max_error;
+    cfg.cs = build_params.cell_size;
+    cfg.ch = build_params.cell_height;
+    cfg.walkableSlopeAngle = build_params.agent_max_slope;
+    cfg.walkableHeight = static_cast<int>(ceilf(build_params.agent_height / cfg.ch));
+    cfg.walkableClimb = static_cast<int>(floorf(build_params.agent_max_climb / cfg.ch));
+    cfg.walkableRadius = static_cast<int>(ceilf(build_params.agent_radius / cfg.cs));
+    cfg.maxEdgeLen = static_cast<int>(build_params.edge_max_length / build_params.cell_size);
+    cfg.maxSimplificationError = build_params.edge_max_error;
+    cfg.minRegionArea = static_cast<int>(rcSqr(build_params.region_min_size)); // Note: area = size*size
+    cfg.mergeRegionArea = static_cast<int>(rcSqr(build_params.region_merge_size)); // Note: area = size*size
+    cfg.maxVertsPerPoly = static_cast<int>(build_params.max_vertices_per_poly);
+    cfg.detailSampleDist = build_params.detail_sample_distance < 0.9f ? 0 : build_params.cell_size * build_params.detail_sample_distance;
+    cfg.detailSampleMaxError = build_params.cell_height * build_params.detail_sample_max_error;
     cfg.tileSize = tile_size; // Adjust this one maybe
     cfg.borderSize = cfg.walkableRadius + 3; // Reserve enough padding.
     cfg.width = cfg.tileSize + cfg.borderSize * 2;
@@ -397,7 +397,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     rcVcopy(cfg.bmax, scene_bounds.maxPoint.ptr());
     // Build Tile Cache
     int grid_width = 0, grid_height = 0;
-    rcCalcGridSize(scene_bounds.minPoint.ptr(), scene_bounds.maxPoint.ptr(), cell_size, &grid_width, &grid_height);
+    rcCalcGridSize(scene_bounds.minPoint.ptr(), scene_bounds.maxPoint.ptr(), build_params.cell_size, &grid_width, &grid_height);
     const int tile_width = (grid_width + tile_size - 1) / tile_size;
     const int tile_height = (grid_height + tile_size - 1) / tile_size;
 
@@ -405,14 +405,14 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     dtTileCacheParams tcparams;
     memset(&tcparams, 0, sizeof(tcparams));
     rcVcopy(tcparams.orig, scene_bounds.minPoint.ptr());
-    tcparams.cs = cell_size;
-    tcparams.ch = cell_height;
+    tcparams.cs = build_params.cell_size;
+    tcparams.ch = build_params.cell_height;
     tcparams.width = (int)tile_size;
     tcparams.height = (int)tile_size;
-    tcparams.walkableHeight = agent_height;
-    tcparams.walkableRadius = agent_radius;
-    tcparams.walkableClimb = agent_max_climb;
-    tcparams.maxSimplificationError = edge_max_error;
+    tcparams.walkableHeight = build_params.agent_height;
+    tcparams.walkableRadius = build_params.agent_radius;
+    tcparams.walkableClimb = build_params.agent_max_climb;
+    tcparams.maxSimplificationError = build_params.edge_max_error;
     // This value specifies how many layers (or "floors") each navmesh tile is expected to have.
     // TODO: Adjust properly
     static const int EXPECTED_LAYERS_PER_TILE = 4;
@@ -446,8 +446,8 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     dtNavMeshParams params;
     memset(&params, 0, sizeof(params));
     rcVcopy(params.orig, scene_bounds.minPoint.ptr());
-    params.tileWidth = tile_size * cell_size;
-    params.tileHeight = tile_size * cell_size;
+    params.tileWidth = tile_size * build_params.cell_size;
+    params.tileHeight = tile_size * build_params.cell_size;
     params.maxTiles = max_tiles;
     params.maxPolys = max_polys_per_tile;
 
@@ -545,7 +545,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // Crowd code based on CrowdTool.cpp from example
 
     crowd = dtAllocCrowd();
-    crowd->init(MAX_AGENTS, agent_radius, navmesh);
+    crowd->init(MAX_AGENTS, build_params.agent_radius, navmesh);
 
     // Setup local avoidance params to different qualities.
     dtObstacleAvoidanceParams avoidance_params;
@@ -641,6 +641,39 @@ void Hachiko::ResourceNavMesh::DebugDraw(DebugDrawGL& dd)
 }
 
 
+
+void Hachiko::ResourceNavMesh::DrawOptionsGui()
+{
+    constexpr float speed_f = 0.5f;
+    constexpr int speed_i = 1;
+    ImGui::Separator();
+    ImGui::Text("Agent");
+    ImGui::DragFloat("Height", &build_params.agent_height, speed_f);
+    ImGui::DragFloat("Radius", &build_params.agent_radius, speed_f);
+    ImGui::DragFloat("Max Climb", &build_params.agent_max_climb, speed_f);
+    ImGui::DragFloat("Max Slope", &build_params.agent_max_slope, speed_f);
+
+    ImGui::Separator();
+    ImGui::Text("Rasterization");
+    ImGui::DragFloat("Cell Size", &build_params.cell_size, speed_f);
+    ImGui::DragFloat("Cell Height", &build_params.cell_height, speed_f);
+
+    ImGui::Separator();
+    ImGui::Text("Region");
+    ImGui::DragInt("Region Min Size", &build_params.region_min_size, speed_i);
+    ImGui::DragInt("Region Merge Size", &build_params.region_merge_size, speed_i);
+
+    ImGui::Separator();
+    ImGui::Text("Polygonization");
+    ImGui::DragInt("Edge Max Length", &build_params.edge_max_length, speed_i);
+    ImGui::DragInt("Edge Max Error", &build_params.edge_max_error, speed_i);
+    ImGui::DragInt("Max Vertices Per Poly", &build_params.max_vertices_per_poly, speed_i);
+
+    ImGui::Separator();
+    ImGui::Text("Detail");
+    ImGui::DragInt("Sample Distance", &build_params.detail_sample_distance, speed_i);
+    ImGui::DragInt("Sample Max Error", &build_params.detail_sample_max_error, speed_i);
+}
 
 void Hachiko::ResourceNavMesh::CleanUp()
 {

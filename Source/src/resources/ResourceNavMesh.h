@@ -61,28 +61,34 @@ namespace Hachiko
 
     public:
        // Build Params
-       // Agent
-        float agent_height = 2.0f;
-        float agent_radius = 0.5f;
-        float agent_max_climb = 0.9f;
-        float agent_max_slope = 45.0f;
+        struct NavmeshParams
+        {
+            // Agent
+            float agent_height = 2.0f;
+            float agent_radius = 0.5f;
+            float agent_max_climb = 0.9f;
+            float agent_max_slope = 45.0f;
 
-        // Rasterization
-        float cell_size = 0.3f;
-        float cell_height = 0.20f;
+            // Rasterization
+            float cell_size = 0.3f;
+            float cell_height = 0.20f;
 
-        // Region
-        int region_min_size = 8;
-        int region_merge_size = 20;
+            // Region
+            int region_min_size = 8;
+            int region_merge_size = 20;
 
-        // Polygonization
-        int edge_max_length = 12;
-        int edge_max_error = 1.3f;
-        int max_vertices_per_poly = 6;
+            // Polygonization
+            int edge_max_length = 12;
+            int edge_max_error = 1.3f;
+            int max_vertices_per_poly = 6;
 
-        // Detail
-        int detail_sample_distance = 6;
-        int detail_sample_max_error = 1;
+            // Detail
+            int detail_sample_distance = 6;
+            int detail_sample_max_error = 1;
+        };
+
+        NavmeshParams build_params;
+        void DrawOptionsGui();
         
     private:
         void CleanUp();

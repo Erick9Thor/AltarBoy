@@ -25,6 +25,7 @@ namespace Hachiko
         dtCrowd* GetCrowd() const;
 
         void DebugDraw();
+        void DrawOptionsGui();
         
         void CorrectPosition(math::float3& position, const math::float3& extents) const;
         float GetYFromPosition(const math::float3& position) const;
