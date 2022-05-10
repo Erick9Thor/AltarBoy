@@ -102,8 +102,8 @@ float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 	{
 		mouse_pos.y += (mouse_pos.y > 0) ? -0.25f : +0.25f;
 	}
-
-	added_movement = mouse_pos * 6;
+	// First number to set it to 0-1 scale, second one sets the movement distance
+	added_movement = mouse_pos * 4.0f * 1.2f;
 	return added_movement;
 }
 
