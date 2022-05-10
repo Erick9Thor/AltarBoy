@@ -2,8 +2,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
@@ -150,11 +149,8 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::ANIMATION):
         new_component = new ComponentAnimation(this);
         break;
-    case (Component::Type::MESH):
-        new_component = new ComponentMesh(this);
-        break;
-    case (Component::Type::MATERIAL):
-        new_component = new ComponentMaterial(this);
+    case (Component::Type::MESH_RENDERER):
+        new_component = new ComponentMeshRenderer(this);
         break;
     case (Component::Type::DIRLIGHT):
         new_component = new ComponentDirLight(this);
@@ -295,10 +291,10 @@ void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 
 void Hachiko::GameObject::DrawStencil(ComponentCamera* camera, Program* program)
 {
-    auto* mesh = GetComponent<ComponentMesh>();
-    if (mesh)
+    auto* mesh_renderer = GetComponent<ComponentMeshRenderer>();
+    if (mesh_renderer)
     {
-        mesh->DrawStencil(camera, program);
+        mesh_renderer->DrawStencil(camera, program);
     }
 }
 
@@ -332,7 +328,10 @@ void Hachiko::GameObject::DebugDrawAll()
 
 void Hachiko::GameObject::DebugDraw() const
 {
-    DrawBoundingBox();
+    //if (in_quadtree)
+    //{
+        DrawBoundingBox();
+    //}
     DrawBones();
     for (Component* component : components)
     {
@@ -364,10 +363,62 @@ void Hachiko::GameObject::DrawBones() const
 
 void Hachiko::GameObject::UpdateBoundingBoxes()
 {
-    ComponentMesh* component_mesh = GetComponent<ComponentMesh>();
-    if (component_mesh != nullptr)
+    /* Improvement in quadtree: only add the ones with a mesh 
+    in_quadtree = false;
+    
+    constexpr float default_bounding_size = 1.0f;
+    // If there is no mesh generate a default size
+    aabb.SetNegativeInfinity();
+    aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
+    obb = aabb;
+
+    bool mesh_renderer_found = false;
+    for (int i = 0; i < components.size(); ++i)
     {
-        obb = component_mesh->GetAABB();
+        if (components[i]->GetType() == Component::Type::MESH)
+        {
+            ComponentMeshRenderer* component_mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
+            if (mesh_renderer_found)
+            {
+                math::OBB aux_obb = component_mesh_renderer->GetAABB();
+                aux_obb.Transform(transform->GetGlobalMatrix());
+                aabb.Enclose(aux_obb);
+
+                if (obb.Volume() < aux_obb.Volume())
+                {
+                    // TODO: keep the biggest obb
+                    obb = aux_obb;
+                }
+            }
+            else
+            {
+                mesh_renderer_found = true;
+
+                obb = component_mesh_renderer->GetAABB();
+                obb.Transform(transform->GetGlobalMatrix());
+                // Enclose is accumulative, reset the box
+                aabb.SetNegativeInfinity();
+                aabb.Enclose(obb);
+            }
+        }
+    }
+    // Without the check main camera crashes bcs there is no quadtree
+    if (scene_owner)
+    {
+        // TODO: only insert if there a mesh
+        const Quadtree* quadtree = scene_owner->GetQuadtree();
+        quadtree->Remove(this);
+        if (mesh_renderer_found)
+        {
+            in_quadtree = true;
+            quadtree->Insert(this);
+        }
+    } */
+    
+    ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
+    if (component_mesh_renderer != nullptr)
+    {
+        obb = component_mesh_renderer->GetAABB();
         obb.Transform(transform->GetGlobalMatrix());
         // Enclose is accumulative, reset the box
         aabb.SetNegativeInfinity();
@@ -457,10 +508,11 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         else
         {
             component = CreateComponent(type);
-            component->SetID(c_uid);
-            component->Load(components_node[i]);
-            active ? component->Enable() : component->Disable();
         }
+
+        component->SetID(c_uid);
+        component->Load(components_node[i]);
+        active ? component->Enable() : component->Disable();
     }
 
     const YAML::Node children_nodes = node[CHILD_NODE];
@@ -477,6 +529,26 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         child->scene_owner = scene_owner;
         child->Load(children_nodes[i]);
     }
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->uid == id)
+        {
+            return child;
+        }
+
+        GameObject* descendant = child->Find(id);
+
+        if (descendant != nullptr)
+        {
+            return descendant;
+        }
+    }
+
+    return nullptr;
 }
 
 std::vector<Hachiko::Component*> 

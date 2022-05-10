@@ -33,7 +33,6 @@ namespace Hachiko
 
         // --- GameObject Management --- //
         ComponentCamera* GetMainCamera() const;
-        ComponentCamera* SearchMainCamera(GameObject* game_object) const;
         void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
@@ -81,7 +80,10 @@ namespace Hachiko
         {
             return name.c_str();
         }
+        
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
+
+        GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
         {

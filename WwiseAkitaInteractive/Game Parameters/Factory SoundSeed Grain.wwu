@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0BCBBD97-7751-4A77-85BB-6AC940F8CC3F}" SchemaVersion="103">
+	<GameParameters>
+		<WorkUnit Name="Factory SoundSeed Grain" ID="{0BCBBD97-7751-4A77-85BB-6AC940F8CC3F}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="Simulation_FA_SSGrain" ID="{71905071-0A79-42FE-9CD6-C631171DC3A4}">
+					<Comment>Simulation RTPC concerns presets that show what SoundSeed Grain can do.</Comment>
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Proximity_FA_SSGrain" ID="{05F1ABB4-7338-42BC-A378-B1E2B12EE3CB}">
+					<Comment>Proximity refers to distance variation between the listener and the emitter. </Comment>
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+						<Property Name="SlewRateDown" Type="Real64" Value="85"/>
+						<Property Name="SlewRateUp" Type="Real64" Value="90"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Instrument_FA_SSGrain" ID="{6279AF44-C082-4608-981E-9A63D1EE7555}">
+					<PropertyList>
+						<Property Name="FilterTimeDown" Type="Real64" Value="1"/>
+						<Property Name="FilterTimeUp" Type="Real64" Value="1"/>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="RTPCRamping" Type="int16" Value="2"/>
+						<Property Name="SlewRateDown" Type="Real64" Value="100"/>
+						<Property Name="SlewRateUp" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="RPM_FA_SSGrain" ID="{C092E65B-E5C4-4C55-8A68-576E98BBFF39}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="10000"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+						<Property Name="SlewRateDown" Type="Real64" Value="10000"/>
+						<Property Name="SlewRateUp" Type="Real64" Value="10000"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Immersion_FA_SSGrain" ID="{3F41E622-166C-4532-BEF7-1DC9FF7EAB94}">
+					<Comment>Immersion is best experienced with presets using 7.1 output configuration. </Comment>
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+						<Property Name="SlewRateDown" Type="Real64" Value="85"/>
+						<Property Name="SlewRateUp" Type="Real64" Value="90"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Density_FA_SSGrain" ID="{63B3F29E-04F3-4887-BA1A-4D7694644B24}">
+					<Comment>Density is used on certain presets modulating grain emission.</Comment>
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="RTPCRamping" Type="int16" Value="1"/>
+						<Property Name="SlewRateDown" Type="Real64" Value="85"/>
+						<Property Name="SlewRateUp" Type="Real64" Value="90"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

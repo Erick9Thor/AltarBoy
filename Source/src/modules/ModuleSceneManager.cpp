@@ -25,7 +25,6 @@ bool Hachiko::ModuleSceneManager::Init()
     
 
 #ifdef PLAY_BUILD
-    App->camera->ReturnPlayerCamera();
     main_scene->Start();
 #endif
 
@@ -48,6 +47,19 @@ void Hachiko::ModuleSceneManager::AttemptScenePause()
 
 void Hachiko::ModuleSceneManager::AttemptScenePlay()
 {
+    ComponentCamera* scene_camera = main_scene->GetMainCamera();
+
+    if (scene_camera == nullptr)
+    {
+        HE_LOG("Current scene does not have a CameraComponent inside."
+               " Therefore, cannot enter Play Mode.");
+        return;
+    }
+
+    main_scene->SetCullingCamera(scene_camera);
+
+    App->camera->SetRenderingCamera(scene_camera);
+    
     if (!GameTimer::running)
     {
         Event game_state(Event::Type::GAME_STATE);
@@ -75,6 +87,9 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
         App->event->Publish(game_state);
+
+        main_scene->SetCullingCamera(App->camera->GetEditorCamera());
+        App->camera->SetRenderingCamera(App->camera->GetEditorCamera());
 
         GameTimer::Stop();
 
@@ -149,16 +164,25 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 
     delete main_scene;
     main_scene = serializer->Load(file_path);
-
+   
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
     
     currentScenePath = file_path;
     
+    // TODO: If we make empty scenes have a game object with a camera component
+    // attached by default, add the following lines to CreateEmptyScene as well
 #ifdef PLAY_BUILD
-    App->camera->ReturnPlayerCamera();
     main_scene->Start();
-#endif
+    App->camera->SetRenderingCamera(main_scene->GetMainCamera());
+    main_scene->SetCullingCamera(main_scene->GetMainCamera());
+#else
+    if (IsScenePlaying())
+    {
+        App->camera->SetRenderingCamera(main_scene->GetMainCamera());
+        main_scene->SetCullingCamera(main_scene->GetMainCamera());
+    }
+#endif // PLAY_MODE
 }
 
 void Hachiko::ModuleSceneManager::SaveScene()

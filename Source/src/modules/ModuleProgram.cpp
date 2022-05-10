@@ -5,7 +5,7 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 
 Hachiko::ModuleProgram::ModuleProgram() = default;
@@ -199,12 +199,12 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
     UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*) &camera_data);
 }
 
-void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMaterial* material_comp) const
+void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
 {
     static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
-    const ResourceMaterial* material = material_comp->GetMaterial();
+    const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
 
     if (material == nullptr)
     {

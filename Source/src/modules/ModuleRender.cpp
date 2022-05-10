@@ -135,7 +135,7 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {    
-    ComponentCamera* camera = App->camera->GetMainCamera();
+    ComponentCamera* camera = App->camera->GetRenderingCamera();
     const Scene* active_scene = App->scene_manager->GetActiveScene();   
 
 #ifdef PLAY_BUILD
@@ -165,7 +165,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     App->program->UpdateCamera(camera);
 
 #ifdef PLAY_BUILD
-    ComponentCamera* culling = App->camera->GetMainCamera();
+    ComponentCamera* culling = App->camera->GetRenderingCamera();
 #else
     ComponentCamera* culling = active_scene->GetCullingCamera();
 #endif

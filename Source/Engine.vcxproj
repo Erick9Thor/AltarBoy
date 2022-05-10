@@ -124,8 +124,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Release;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cpp.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Play|x64'">
@@ -160,6 +160,7 @@
     <ClCompile Include="src\components\ComponentAgent.cpp" />
     <ClCompile Include="src\components\ComponentObstacle.cpp" />
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\resources\ResourceNavMesh.cpp" />
     <ClCompile Include="src\importers\FontImporter.cpp" />
     <ClCompile Include="src\resources\ResourceFont.cpp" />
@@ -372,8 +373,7 @@
     <ClCompile Include="src\ui\WindowProject.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\components\ComponentCamera.cpp" />
-    <ClCompile Include="src\components\ComponentMaterial.cpp" />
-    <ClCompile Include="src\components\ComponentMesh.cpp" />
+    <ClCompile Include="src\components\ComponentMeshRenderer.cpp" />
     <ClCompile Include="src\components\ComponentTransform.cpp" />
     <ClCompile Include="vendors\imgui\imgui.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -501,7 +501,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\core\GameObject.cpp" />
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="vendors\MathGeoLib\Algorithm\GJK.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -1041,8 +1040,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\components\Component.h" />
     <ClInclude Include="src\components\ComponentCamera.h" />
-    <ClInclude Include="src\components\ComponentMaterial.h" />
-    <ClInclude Include="src\components\ComponentMesh.h" />
+    <ClInclude Include="src\components\ComponentMeshRenderer.h" />
     <ClInclude Include="src\components\ComponentTransform.h" />
     <ClInclude Include="vendors\DebugDraw\debugdraw.h" />
     <ClInclude Include="vendors\DebugDraw\debug_draw.hpp" />

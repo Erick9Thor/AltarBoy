@@ -36,7 +36,7 @@ Hachiko::ComponentCamera::~ComponentCamera()
         App->camera->RestoreOriginCamera();
         if (game_object->scene_owner->GetCullingCamera() == this)
         {
-            game_object->scene_owner->SetCullingCamera(App->camera->GetMainCamera());
+            game_object->scene_owner->SetCullingCamera(App->camera->GetRenderingCamera());
         }
     }
 }
@@ -213,7 +213,7 @@ void Hachiko::ComponentCamera::DrawGui()
             ImGui::Checkbox("Preview Camera", &preview_cam);
             if (preview_cam)
             {
-                App->camera->SetMainCamera(this);
+                App->camera->SetRenderingCamera(this);
             }
             else
                 App->camera->RestoreOriginCamera();
@@ -266,7 +266,7 @@ void Hachiko::ComponentCamera::DrawGui()
             ImGui::Text("Fov (H, V): %.2f, %.2f", RadToDeg(frustum.HorizontalFov()), RadToDeg(frustum.VerticalFov()));
             ImGui::Text("Aspect Ratio: %.2f", frustum.AspectRatio());
             ImGui::Text("Camera Type: %s", GetCameraTypeString(camera_type).c_str());
-            ImGui::Text("Distance from initial point: %f", App->camera->GetMainCamera()->camera_pinned_pos.Distance(App->camera->GetMainCamera()->GetGameObject()->GetTransform()->GetGlobalPosition()));
+            ImGui::Text("Distance from initial point: %f", App->camera->GetRenderingCamera()->camera_pinned_pos.Distance(App->camera->GetRenderingCamera()->GetGameObject()->GetTransform()->GetGlobalPosition()));
         }
         
     }

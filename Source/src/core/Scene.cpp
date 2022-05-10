@@ -3,8 +3,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
-#include "components/ComponentMesh.h"
-#include "components/ComponentMaterial.h"
+#include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
 #include "components/ComponentAnimation.h"
 
@@ -17,12 +16,13 @@
 
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceMaterial.h"
 #include <debugdraw.h>
 #include <algorithm>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
-    , culling_camera(App->camera->GetMainCamera())
+    , culling_camera(App->camera->GetRenderingCamera())
     , skybox(new Skybox())
     , quadtree(new Quadtree())
     , loaded(false)
@@ -61,27 +61,17 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
-    return SearchMainCamera(root);
-}
+    // This will return the first camera it comes across in the hierarchy in a 
+    // depth-first manner:
 
-Hachiko::ComponentCamera* Hachiko::Scene::SearchMainCamera(GameObject* game_object) const
-{
-    ComponentCamera* component_camera = nullptr;
-    component_camera = game_object->GetComponent<ComponentCamera>();
-    if (component_camera != nullptr)
-    {
-        return component_camera;
-    }
+    // TODO: This will be costly for any method that will call this on
+    // a method/function that is called each frame. Make this getter a cached 
+    // component camera that is only updated when a component camera is added/
+    // removed to the scene. Or have ComponentCamera have a property called 
+    // is_main, that will be set by making all other component cameras in scene
+    // is_main = false.
 
-    for (GameObject* child : game_object->children)
-    {
-        component_camera = SearchMainCamera(child);
-        if (component_camera != nullptr)
-        {
-            return component_camera;
-        }
-    }
-    return nullptr;
+    return root->GetComponentInDescendants<ComponentCamera>();
 }
 
 void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
@@ -124,18 +114,14 @@ void Hachiko::Scene::HandleInputModel(ResourceModel* model)
                 for (unsigned i = 0; i < child->meshes_index.size(); ++i)
                 {
                     MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
-                    ComponentMesh* component = static_cast<ComponentMesh*>(last_parent->CreateComponent(Component::Type::MESH));
-                    component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    component->SetModelName(model->model_name);
-                    
-                    component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
-
-                    ComponentMaterial* component_material = static_cast<ComponentMaterial*>(last_parent->CreateComponent(Component::Type::MATERIAL));
                     MaterialInfo mat_info = model->materials[mesh_info.material_index];
-                    component_material->SetID(mat_info.material_id);
-                    component_material->SetResourceMaterial(static_cast<ResourceMaterial*> (App->resources->GetResource(Resource::Type::MATERIAL, 
-                        model->materials[mesh_info.material_index].material_id)));
+                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH_RENDERER));
+                    //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
+                    //component->SetModelName(model->model_name);
+                    
+                    //component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
+                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
+                    component->AddResourceMaterial(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, mat_info.material_id)));
                 }
             }
             
@@ -157,10 +143,10 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
         return;
     }
 
-    ComponentMaterial* component_material = game_object->GetComponent<ComponentMaterial>();
-    if (component_material != nullptr)
+    ComponentMeshRenderer* component_mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+    if (component_mesh_renderer != nullptr)
     {
-        component_material->SetResourceMaterial(material);
+        component_mesh_renderer->AddResourceMaterial(material);
     }
 }
 
@@ -168,6 +154,11 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3&
 {
     LineSegment line_seg(origin, destination);
     return Raycast(line_seg);
+}
+
+Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
+{
+    return root->Find(id);
 }
 
 Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
@@ -180,16 +171,16 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 
     for (GameObject* game_object : game_objects)
     {
-        auto* mesh = game_object->GetComponent<ComponentMesh>();
-        if (mesh)
+        auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
+        if (mesh_renderer)
         {
             // Transform ray to mesh space, more efficient
             LineSegment local_segment(segment);
             local_segment.Transform(game_object->GetTransform()->GetGlobalMatrix().Inverted());
 
-            const float* vertices = mesh->GetVertices();
-            const unsigned* indices = mesh->GetIndices();
-            for (unsigned i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
+            const float* vertices = mesh_renderer->GetVertices();
+            const unsigned* indices = mesh_renderer->GetIndices();
+            for (unsigned i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
             {
                 Triangle triangle;
                 triangle.a = vec(&vertices[indices[i] * 3]);
@@ -262,17 +253,17 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
 
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
-        ComponentMesh* mesh = go->GetComponent<ComponentMesh>();        
+        ComponentMeshRenderer* mesh_renderer = go->GetComponent<ComponentMeshRenderer>();        
         const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh && mesh->IsNavigable())
+        if (mesh_renderer && mesh_renderer->IsNavigable())
         {
             // Use previous amount of mesh vertices to point to the correct indices
             // Divide size/3 because its a vector of floats not of float3
             int indices_offset = static_cast<int>(scene_vertices.size()) / 3;
             
-            const float* vertices = mesh->GetVertices();
-            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
+            const float* vertices = mesh_renderer->GetVertices();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
             {
                 
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
@@ -280,13 +271,13 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
                 scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.w);
             }
             
-            const unsigned* indices = mesh->GetIndices();
-            int n_indices = mesh->GetBufferSize(ResourceMesh::Buffers::INDICES);
+            const unsigned* indices = mesh_renderer->GetIndices();
+            int n_indices = mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES);
             auto inserted = scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
             std::for_each(inserted, scene_triangles.end(), [&](int& v) { v += indices_offset; });
 
-            const float* normals = mesh->GetNormals();
-            for (int i = 0; i < mesh->GetBufferSize(ResourceMesh::Buffers::NORMALS); i +=3)
+            const float* normals = mesh_renderer->GetNormals();
+            for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::NORMALS); i += 3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
                 // w is excluded, so we pass float 3 as desired
