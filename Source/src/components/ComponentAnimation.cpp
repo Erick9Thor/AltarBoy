@@ -1,8 +1,14 @@
 #include "core/hepch.h"
 
+#include "Application.h"
+
+#include "modules/ModuleEditor.h"
+#include "modules/ModuleResources.h"
+
 #include "ComponentAnimation.h"
 #include "ComponentTransform.h"
 
+#include "resources/ResourceAnimation.h"
 #include "animation/AnimationController.h"
 #include "importers/AnimationImporter.h"
 
@@ -13,12 +19,15 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
-    delete controller;
+    animations.clear();
 }
 
 void Hachiko::ComponentAnimation::Start()
 {
-    // controller->Play();
+    if (!animations.empty())
+    {
+        controller->Play(current_animation, true, 0);
+    }
 }
 
 void Hachiko::ComponentAnimation::Stop()
@@ -28,11 +37,14 @@ void Hachiko::ComponentAnimation::Stop()
 
 void Hachiko::ComponentAnimation::Update()
 {
-    // controller->Update();
-
-    if (game_object != nullptr)
+    if (current_animation)
     {
-        UpdatedGameObject(game_object);
+        controller->Update(EngineTimer::delta_time * 1000); // TODO: change for GameTimer::delta_time
+
+        if (game_object != nullptr)
+        {
+            UpdatedGameObject(game_object);
+        }
     }
 }
 
@@ -41,7 +53,7 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
     float3 position;
     Quat rotation;
 
-    if (controller->GetTransform(go->name.c_str(), position, rotation))
+    if (controller->GetTransform(controller->current, go->name.c_str(), position, rotation))
     {
         go->GetTransform()->SetLocalPosition(position);
         go->GetTransform()->SetLocalRotation(rotation);
@@ -56,16 +68,37 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
 void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
+    
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
-        if (ImGui::Checkbox("Active Debug", &active))
+        for (unsigned i = 0; i < animations.size(); ++i)
         {
-            /* TODO */
+            char animation_name[50];
+            strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
+            if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name).c_str()))
+            {
+                current_animation = animations[i];
+                this->Start();
+            }
         }
+
     }
     ImGui::PopID();
 }
 
-void Hachiko::ComponentAnimation::Save(YAML::Node& node) const {}
+void Hachiko::ComponentAnimation::Save(YAML::Node& node) const 
+{
+    for (unsigned i = 0; i < animations.size(); ++i)
+    {
+        node["animarions"][i] = animations[i]->GetID();
+    }
+}
 
-void Hachiko::ComponentAnimation::Load(const YAML::Node& node) {}
+void Hachiko::ComponentAnimation::Load(const YAML::Node& node) 
+{
+    for (unsigned i = 0; i < node["animarions"].size(); ++i)
+    {
+        ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node["animarions"][i].as<UID>()));
+        animations.push_back(r_animation);
+    }
+}

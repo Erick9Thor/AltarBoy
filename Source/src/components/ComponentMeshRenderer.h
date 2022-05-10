@@ -80,6 +80,16 @@ namespace Hachiko
         void AddResourceMesh(ResourceMesh* res)
         {
             mesh = res;
+
+            if (mesh->num_bones > 0)
+            {
+                node_cache = new const GameObject*[mesh->num_bones];
+
+                for (unsigned int i = 0; i < mesh->num_bones; ++i)
+                {
+                    node_cache[i] = nullptr;
+                }
+            }
         }
 
         void AddResourceMaterial(ResourceMaterial* res)
