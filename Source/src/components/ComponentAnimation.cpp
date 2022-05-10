@@ -80,9 +80,43 @@ void Hachiko::ComponentAnimation::DrawGui()
                 current_animation = animations[i];
                 this->Start();
             }
+
+            // TODO: ADD STOP
+        }
+
+        const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
+
+        if (ImGui::Button("Select animation"))
+        {
+            ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                    "Select Animation",
+                                                    ".*",
+                                                    "./library/animations/",
+                                                    1,
+                                                    nullptr,
+                                                    ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
+                                                        | ImGuiFileDialogFlags_HideColumnDate);
+        }
+
+        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                std::string filename = ImGuiFileDialog::Instance()->GetCurrentFileName();
+                const std::string uid = filename.substr(0, filename.find(".*"));
+
+                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, Hachiko::UUID::StringToUID(uid)));
+                if (res != nullptr) // TODO: ADD CHECK FOR ADDED
+                {
+                    animations.push_back(res);
+                }
+            }
+
+            ImGuiFileDialog::Instance()->Close();
         }
 
     }
+   
     ImGui::PopID();
 }
 
