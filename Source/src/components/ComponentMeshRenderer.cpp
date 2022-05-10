@@ -8,6 +8,7 @@
 
 #include "Application.h"
 
+#include "ComponentAnimation.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
@@ -17,7 +18,7 @@ Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID
 {
     if (res != nullptr)
     {
-        mesh = res;
+        AddResourceMesh(res);
     }
 }
 
@@ -81,7 +82,7 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
 
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
-    mesh = static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id));
+    AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
@@ -163,14 +164,18 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     }
 }
 
+Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 
+{
+    if (posible_root->GetComponent<Hachiko::ComponentAnimation>())
+    {
+        return posible_root;
+    }
+    GetRoot(posible_root->parent);
+}
+
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    const GameObject* root = game_object;
-
-    while (root->GetID() != App->scene_manager->GetRoot()->GetID())
-    {
-        root = root->parent;
-    }
+    const GameObject* root = GetRoot(game_object);
 
     HE_LOG("Name of root: %s", root->name.c_str());
     

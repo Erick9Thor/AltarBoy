@@ -3,6 +3,7 @@
 #include "Application.h"
 
 #include "modules/ModuleEditor.h"
+#include "modules/ModuleResources.h"
 
 #include "ComponentAnimation.h"
 #include "ComponentTransform.h"
@@ -18,10 +19,6 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
-    for (unsigned i = 0; i < animations.size(); ++i)
-    {
-        delete animations[i];
-    }
     animations.clear();
 }
 
@@ -89,6 +86,19 @@ void Hachiko::ComponentAnimation::DrawGui()
     ImGui::PopID();
 }
 
-void Hachiko::ComponentAnimation::Save(YAML::Node& node) const {}
+void Hachiko::ComponentAnimation::Save(YAML::Node& node) const 
+{
+    for (unsigned i = 0; i < animations.size(); ++i)
+    {
+        node["animarions"][i] = animations[i]->GetID();
+    }
+}
 
-void Hachiko::ComponentAnimation::Load(const YAML::Node& node) {}
+void Hachiko::ComponentAnimation::Load(const YAML::Node& node) 
+{
+    for (unsigned i = 0; i < node["animarions"].size(); ++i)
+    {
+        ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node["animarions"][i].as<UID>()));
+        animations.push_back(r_animation);
+    }
+}
