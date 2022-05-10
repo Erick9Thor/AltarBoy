@@ -123,13 +123,13 @@ void Hachiko::ModuleNavigation::DebugDraw()
     if (navmesh)
     {
         DebugDrawGL dd;
-
-        
         ComponentCamera* camera = App->camera->GetRenderingCamera();
 
         glUseProgram(0);
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glDisable(GL_TEXTURE_2D);
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -145,8 +145,6 @@ void Hachiko::ModuleNavigation::DebugDraw()
 
         navmesh->DebugDraw(dd);
         RenderAgents(dd);
-
-
         
         glDepthMask(GL_TRUE);
 
@@ -155,6 +153,8 @@ void Hachiko::ModuleNavigation::DebugDraw()
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+
+        glEnable(GL_TEXTURE_2D);
     }
 }
 
