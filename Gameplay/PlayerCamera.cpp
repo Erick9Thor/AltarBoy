@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerCamera.h"
+#include "PlayerController.h"
 #include <components/ComponentTransform.h>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
@@ -18,7 +19,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// script needs to be a direct child of scene root, and there must
 	// be a GameObject of name "PlayerC" which is our player.
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
-
+	player_ctrl = _player->GetComponent<PlayerController>();
 	_follow_delay = 0.8f;
 }
 
@@ -36,9 +37,16 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 	ScrollWheelZoom(&_relative_position_to_player);
 
+	float delay = _follow_delay;
+
+	if (player_ctrl->isDashing())
+	{
+		delay = 0.05;
+	}
+
 	if (!current_position.Equals(final_position))
 	{
-		const float delayed_time = Time::DeltaTime() / _follow_delay;
+		const float delayed_time = Time::DeltaTime() / delay;
 		Clamp<float>(delayed_time, 0.0f, 1.0f);
 
 		// Comment the following if you want z follow to be delayed as well:
@@ -121,4 +129,14 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 		cam_pos->y = cam_pos->y + 0.5f;
 		cam_pos->z = cam_pos->z + 0.3f;
 	}
+}
+
+bool Hachiko::Scripting::PlayerCamera::isPlayerDashing()
+{
+	
+}
+
+void Hachiko::Scripting::PlayerCamera::onPlayerMoving()
+{
+
 }

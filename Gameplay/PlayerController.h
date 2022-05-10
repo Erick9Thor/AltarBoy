@@ -55,6 +55,12 @@ private:
 	SERIALIZE_FIELD(float, _rotation_duration);
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
+
+	bool is_moving = false;
+
+public:
+	bool isDashing() { return _is_dashing; };
+	bool isMoving() { return is_moving; };
 };
 } // namespace Scripting
 } // namespace Hachiko

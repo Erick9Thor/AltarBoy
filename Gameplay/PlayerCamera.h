@@ -7,6 +7,7 @@ namespace Hachiko
 class GameObject;
 namespace Scripting
 {
+class PlayerController;
 class PlayerCamera : public Script
 {
 	SERIALIZATION_METHODS(false)
@@ -24,8 +25,12 @@ private:
 	SERIALIZE_FIELD(GameObject*, _player);
 	SERIALIZE_FIELD(float, _follow_delay);
 
+	PlayerController* player_ctrl;
+
 	float2 MoveCameraWithMouse();
 	void ScrollWheelZoom(float3* cam_pos);
+	bool isPlayerDashing();
+	void onPlayerMoving();
 };
 } // namespace Scripting
 } // namespace Hachiko

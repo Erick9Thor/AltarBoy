@@ -217,6 +217,7 @@ void Hachiko::Scripting::PlayerController::Rotate(
 void Hachiko::Scripting::PlayerController::HandleInput(
 	math::float3& current_position)
 {
+	is_moving = false;
 	// Ignore the inputs if engine camera input is taken:
 	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
 	{
@@ -237,19 +238,23 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	if (Input::GetKey(Input::KeyCode::KEY_W))
 	{
 		current_position -= delta_z;
+		is_moving = true;
 	}
 	else if (Input::GetKey(Input::KeyCode::KEY_S))
 	{
 		current_position += delta_z;
+		is_moving = true;
 	}
 
 	if (Input::GetKey(Input::KeyCode::KEY_D))
 	{
 		current_position += delta_x;
+		is_moving = true;
 	}
 	else if (Input::GetKey(Input::KeyCode::KEY_A))
 	{
 		current_position -= delta_x;
+		is_moving = true;
 	}
 
 	if (Input::GetKey(Input::KeyCode::KEY_Q))
