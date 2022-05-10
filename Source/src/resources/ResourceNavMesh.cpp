@@ -608,7 +608,7 @@ void drawObstacles(duDebugDraw* dd, const dtTileCache* tc)
 
         switch (ob->type)
         {
-        case DT_OBSTACLE_CYLINDER || DT_OBSTACLE_CYLINDER:
+        case DT_OBSTACLE_CYLINDER:
             // There seems to be no way of debug draw oriented box in detour debug draw
             duDebugDrawCylinder(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
             duDebugDrawCylinderWire(dd, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
