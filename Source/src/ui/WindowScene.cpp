@@ -23,13 +23,13 @@ Hachiko::WindowScene::~WindowScene() = default;
 void Hachiko::WindowScene::Init()
 {
     std::function updateViewportSize = [&](Event& evt) {
-        auto action = evt.GetEventData<EditorActionPayload>().GetAction();
-        if (action == EditorActionPayload::Action::PLAY)
+        const auto state = evt.GetEventData<GameStateEventPayload>().GetState();
+        if (state == GameStateEventPayload::State::STARTED)
         {
             DrawScene();
         }
     };
-    App->event->Subscribe(Event::Type::EDITOR_ACTION, updateViewportSize);
+    App->event->Subscribe(Event::Type::GAME_STATE, updateViewportSize);
 }
 
 

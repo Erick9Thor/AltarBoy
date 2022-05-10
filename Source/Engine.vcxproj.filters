@@ -2198,9 +2198,6 @@
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\events\EditorActionPayload.h">
-      <Filter>Core\Events\Payload</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
