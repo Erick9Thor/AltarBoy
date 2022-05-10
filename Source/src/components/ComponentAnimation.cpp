@@ -75,7 +75,7 @@ void Hachiko::ComponentAnimation::DrawGui()
         {
             char animation_name[50];
             strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
-            if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name).c_str()))
+            if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name, std::to_string(i)).c_str()))
             {
                 current_animation = animations[i];
                 this->Start();
@@ -108,6 +108,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, Hachiko::UUID::StringToUID(uid)));
                 if (res != nullptr) // TODO: ADD CHECK FOR ADDED
                 {
+                    HE_LOG(res->GetName().c_str());
                     animations.push_back(res);
                 }
             }
