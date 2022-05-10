@@ -216,6 +216,8 @@ void Hachiko::GeometryBatch::ClearDrawList()
     components.clear();
     transforms.clear();
     //TODO: clear texture batch
+    palettes.clear();
+    palettes_per_instance.clear();
 }
 
 void Hachiko::GeometryBatch::GenerateBuffers()
