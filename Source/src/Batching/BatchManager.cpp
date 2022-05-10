@@ -111,6 +111,9 @@ void Hachiko::BatchManager::DrawBatches()
         // Bind texture batch
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
+
+        App->program->GetMainProgram()->BindUniformBool("has_bones", geometry_batch->batch->layout.bones);
+
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
     }
 }

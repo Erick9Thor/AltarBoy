@@ -50,15 +50,15 @@ void main()
     vec4 normal = vec4(in_normal, 0.0);
     vec4 tangent = vec4(in_tangent, 0.0);
 
-    /*if (has_bones)
+    if (has_bones)
     { 
-        mat4 skin_transform = palette[in_bone_indices[0]] * in_bone_weights[0] + palette[in_bone_indices[1]] * in_bone_weights[1] +
+        /*mat4 skin_transform = palette[in_bone_indices[0]] * in_bone_weights[0] + palette[in_bone_indices[1]] * in_bone_weights[1] +
             palette[in_bone_indices[2]] * in_bone_weights[2] + palette[in_bone_indices[3]] * in_bone_weights[3];
 
         position = (skin_transform*vec4(in_position, 1.0));
         normal = (skin_transform*vec4(in_normal, 0.0));
-        tangent = (skin_transform*vec4(in_tangent, 0.0));
-    }*/
+        tangent = (skin_transform*vec4(in_tangent, 0.0));*/
+    }
 
     instance = gl_BaseInstance;
     gl_Position = camera.proj * camera.view *  models[instance] * position;
