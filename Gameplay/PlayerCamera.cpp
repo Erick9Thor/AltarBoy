@@ -1,7 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerCamera.h"
 #include <components/ComponentTransform.h>
-#include <debugdraw.h>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
