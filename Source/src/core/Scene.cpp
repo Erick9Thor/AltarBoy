@@ -19,7 +19,7 @@
 #include <debugdraw.h>
 
 #include "imnodes.h"
-#include "example/node_editor.h"
+
 #include "ui/WindowStateMachine.h"
 
 Hachiko::WindowStateMachine wsm;

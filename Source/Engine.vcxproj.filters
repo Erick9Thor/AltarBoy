@@ -538,10 +538,15 @@
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
-    <ClCompile Include="src\resources\ResourceStateMachine.cpp" />
-    <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp" />
-    <ClCompile Include="vendors\imnodes-0.5\example\color_node_editor.cpp" />
-    <ClCompile Include="src\ui\WindowStateMachine.cpp" />
+    <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp">
+      <Filter>Vendors\imnodes-0.5</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\WindowStateMachine.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceStateMachine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1397,9 +1402,6 @@
     <ClInclude Include="vendors\glm\gtx\gradient_paint.hpp">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\HachikoApiDefine.h">
-      <Filter>Vendors\Glm</Filter>
-    </ClInclude>
     <ClInclude Include="vendors\glm\gtx\handed_coordinate_space.hpp">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
@@ -2202,12 +2204,18 @@
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\resources\ResourceStateMachine.h" />
-    <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
-    <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h" />
-    <ClInclude Include="vendors\imnodes-0.5\example\node_editor.h" />
-    <ClInclude Include="vendors\imnodes-0.5\example\graph.h" />
-    <ClInclude Include="src\ui\WindowStateMachine.h" />
+    <ClInclude Include="vendors\imnodes-0.5\imnodes.h">
+      <Filter>Vendors\imnodes-0.5</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h">
+      <Filter>Vendors\imnodes-0.5</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\WindowStateMachine.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceStateMachine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2353,6 +2361,9 @@
     </Filter>
     <Filter Include="Vendors\Recast">
       <UniqueIdentifier>{f458afc6-644a-4e89-af95-239e65537287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\imnodes-0.5">
+      <UniqueIdentifier>{d7b39f92-ff0d-40a4-8ed2-8e410c879765}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

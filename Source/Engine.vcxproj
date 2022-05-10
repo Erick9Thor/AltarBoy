@@ -248,9 +248,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendors\imnodes-0.5\example\color_node_editor.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -666,7 +663,6 @@
     <ClInclude Include="src\events\GameStateEventPayload.h" />
     <ClInclude Include="src\events\SceneLoadEventPayload.h" />
     <ClInclude Include="src\Gameplay.h" />
-    <ClInclude Include="src\HachikoApiDefine.h" />
     <ClInclude Include="src\resources\ResourceStateMachine.h" />
     <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
@@ -1022,8 +1018,6 @@
     <ClInclude Include="vendors\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendors\imGuizmo\ImSequencer.h" />
     <ClInclude Include="vendors\imGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="vendors\imnodes-0.5\example\graph.h" />
-    <ClInclude Include="vendors\imnodes-0.5\example\node_editor.h" />
     <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
     <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs.h" />
