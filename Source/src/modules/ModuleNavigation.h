@@ -43,6 +43,6 @@ namespace Hachiko
         };
         AgentTrail m_trails[ResourceNavMesh::MAX_AGENTS];
         dtCrowdAgentDebugInfo agent_debug;
-        dtObstacleAvoidanceDebugData* avoid_debug;
+        dtObstacleAvoidanceDebugData* avoid_debug = nullptr;
     };
 }

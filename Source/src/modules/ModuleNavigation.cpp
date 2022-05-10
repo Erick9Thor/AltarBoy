@@ -25,8 +25,13 @@ bool Hachiko::ModuleNavigation::CleanUp()
 {
     // TODO: Manage as a resources aand not released here
     RELEASE(navmesh);
-    dtFreeObstacleAvoidanceDebugData(avoid_debug);
-    avoid_debug = nullptr;
+
+    if (avoid_debug != nullptr)
+    {
+        dtFreeObstacleAvoidanceDebugData(avoid_debug);
+        avoid_debug = nullptr;
+    }
+
     return true;
 }
 
@@ -107,7 +112,7 @@ void Hachiko::ModuleNavigation::DebugDraw()
         DebugDrawGL dd;
 
         
-        ComponentCamera* camera = App->camera->GetMainCamera();
+        ComponentCamera* camera = App->camera->GetRenderingCamera();
 
         glUseProgram(0);
         glBindVertexArray(0);
