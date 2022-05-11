@@ -7,6 +7,12 @@ Hachiko::Scripting::PlayerAnimationManager::PlayerAnimationManager(GameObject* g
 	, _player_controller(nullptr)
 	, _previous_state(PlayerState::INVALID)
 	, _state_string("")
+	, _animator(nullptr)
+	, _idle_index(0)
+	, _walking_index(1)
+	, _melee_index(2)
+	, _ranged_index(3)
+	, _dashing_index(4)
 {
 }
 
@@ -18,7 +24,6 @@ void Hachiko::Scripting::PlayerAnimationManager::OnAwake()
 void Hachiko::Scripting::PlayerAnimationManager::OnStart()
 {
 }
-
 
 void Hachiko::Scripting::PlayerAnimationManager::OnUpdate()
 {
@@ -36,18 +41,23 @@ void Hachiko::Scripting::PlayerAnimationManager::OnUpdate()
 	{
 	case PlayerState::IDLE:
 		_state_string = "Play Idle Animation.";
+		_animator->StartAnimating(_idle_index, true, 200);
 		break;
 	case PlayerState::WALKING:
 		_state_string = "Play Walking Animation.";
+		_animator->StartAnimating(_walking_index, true, 200);
 		break;
 	case PlayerState::MELEE_ATTACKING:
 		_state_string = "Play Melee Attacking Animation.";
+		_animator->StartAnimating(_melee_index, true, 200);
 		break;
 	case PlayerState::RANGED_ATTACKING:
 		_state_string = "Play Ranged Attacking Animation.";
+		_animator->StartAnimating(_ranged_index, true, 200);
 		break;
 	case PlayerState::DASHING:
 		_state_string = "Play Dashing Animation.";
+		_animator->StartAnimating(_dashing_index, true, 200);
 		break;
 	
 	case PlayerState::INVALID:

@@ -7,6 +7,7 @@ namespace Hachiko
 {
 
 class GameObject;
+class ComponentAnimation;
 
 namespace Scripting
 {
@@ -28,8 +29,14 @@ public:
 private:
 	PlayerController* _player_controller;
 
+	SERIALIZE_FIELD(ComponentAnimation*, _animator);
 	SERIALIZE_FIELD(PlayerState, _previous_state);
 	SERIALIZE_FIELD(std::string, _state_string);
+	SERIALIZE_FIELD(unsigned, _idle_index);
+	SERIALIZE_FIELD(unsigned, _walking_index);
+	SERIALIZE_FIELD(unsigned, _dashing_index);
+	SERIALIZE_FIELD(unsigned, _melee_index);
+	SERIALIZE_FIELD(unsigned, _ranged_index);
 };
 }
 } // namespace Hachiko
