@@ -550,7 +550,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
     // Setup local avoidance params to different qualities.
     dtObstacleAvoidanceParams avoidance_params;
     // Use mostly default settings, copy from dtCrowd.
-    memcpy(&params, crowd->getObstacleAvoidanceParams(0), sizeof(dtObstacleAvoidanceParams));
+    memcpy(&avoidance_params, crowd->getObstacleAvoidanceParams(0), sizeof(dtObstacleAvoidanceParams));
 
     // Low (11)
     avoidance_params.velBias = 0.5f;
