@@ -26,6 +26,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_duration(0.0f)
 	, _rotation_target(math::Quat::identity)
 	, _rotation_start(math::Quat::identity)
+	, _state(PlayerState::IDLE)
 {
 }
 
@@ -48,6 +49,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
 
+	// Set state to idle, it will be overriden if there is a movement:
+	_state = PlayerState::IDLE;
+
+	// Attack:
+	Attack(transform, current_position);
+
 	// Handle all the input:
 	HandleInput(current_position);
 
@@ -60,15 +67,19 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Move the dash indicator:
 	MoveDashIndicator(current_position);
 
-	// Attack:
-	Attack(transform, current_position);
-
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
 
 	// Instantiate GameObject in current scene test:
 	SpawnGameObject();
-} 
+
+	CheckGoal(current_position);
+}
+
+PlayerState Hachiko::Scripting::PlayerController::GetState() const
+{
+	return _state;
+}
 
 math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 	const math::float3& current_position) const
@@ -94,13 +105,13 @@ void Hachiko::Scripting::PlayerController::MoveDashIndicator(
 	math::float3 direction = mouse_world_position- current_position;
 	direction.Normalize();
 
-	const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
+	//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
 
-	_dash_indicator->GetTransform()->SetGlobalPosition(current_position
-		+ float3(mouse_direction.x, 0.0f, mouse_direction.y));
+	//_dash_indicator->GetTransform()->SetGlobalPosition(current_position
+	//	+ float3(mouse_direction.x, 0.0f, mouse_direction.y));
 
-	_dash_indicator->GetTransform()->SetGlobalRotationEuler(
-		float3(90.0f, 0.0f, 0.0f));
+	//_dash_indicator->GetTransform()->SetGlobalRotationEuler(
+	//	float3(90.0f, 0.0f, 0.0f));
 }
 
 void Hachiko::Scripting::PlayerController::SpawnGameObject() const
@@ -138,6 +149,9 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
+
+	// Set player state to melee attacking:
+	_state = PlayerState::MELEE_ATTACKING;
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
@@ -184,6 +198,9 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 	{
 		return;
 	}
+
+	// Set state to dashing:
+	_state = PlayerState::DASHING;
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
@@ -267,6 +284,14 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		return;
 	}
 
+	// Lock the player movement while attacking, this is gonna be 
+	// probably changed after root motion anims are implemented:
+	if (_state == PlayerState::MELEE_ATTACKING ||
+		_state == PlayerState::RANGED_ATTACKING)
+	{
+		return;
+	}
+
 	const float velocity = _movement_speed * Time::DeltaTime();
 	const math::float3 delta_x = math::float3::unitX * velocity;
 	const math::float3 delta_y = math::float3::unitY * velocity;
@@ -275,23 +300,23 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	if (Input::GetKey(Input::KeyCode::KEY_W))
 	{
 		current_position -= delta_z;
-		is_moving = true;
+		_state = PlayerState::WALKING;
 	}
 	else if (Input::GetKey(Input::KeyCode::KEY_S))
 	{
 		current_position += delta_z;
-		is_moving = true;
+		_state = PlayerState::WALKING;
 	}
 
 	if (Input::GetKey(Input::KeyCode::KEY_D))
 	{
 		current_position += delta_x;
-		is_moving = true;
+		_state = PlayerState::WALKING;
 	}
 	else if (Input::GetKey(Input::KeyCode::KEY_A))
 	{
 		current_position -= delta_x;
-		is_moving = true;
+		_state = PlayerState::WALKING;
 	}
 
 	if (Input::GetKey(Input::KeyCode::KEY_Q))
@@ -325,7 +350,12 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	}
 }
 
-math::float2 Hachiko::Scripting::PlayerController::GetMouseDirectionRelativeToCenter() const
+void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)
 {
-	return (Input::GetMousePosition() - float2(0.5f, 0.5f)).Normalized();
+	const float3 goal_position = _goal->GetTransform()->GetGlobalPosition();
+
+	if (Distance(current_position, goal_position) < 0.5f)
+	{
+		SceneManagement::SwitchScene(Scenes::WIN);
+	}
 }

@@ -16,7 +16,7 @@ namespace Hachiko
     {
     public:
         ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
-        ~ComponentMeshRenderer() override = default;
+        ~ComponentMeshRenderer() override;
 
         void Update() override;
         void Draw(ComponentCamera* camera, Program* program) override;
@@ -100,6 +100,16 @@ namespace Hachiko
         void AddResourceMesh(ResourceMesh* res)
         {
             mesh = res;
+
+            if (mesh->num_bones > 0)
+            {
+                node_cache = new const GameObject*[mesh->num_bones];
+
+                for (unsigned int i = 0; i < mesh->num_bones; ++i)
+                {
+                    node_cache[i] = nullptr;
+                }
+            }
         }
 
         [[nodiscard]] const ResourceMaterial* GetMaterial() const
