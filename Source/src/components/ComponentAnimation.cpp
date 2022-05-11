@@ -12,7 +12,8 @@
 #include "animation/AnimationController.h"
 #include "importers/AnimationImporter.h"
 
-Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
+Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) 
+    : Component(Type::ANIMATION, container)
 {
     controller = new AnimationController();
 }
@@ -23,11 +24,23 @@ Hachiko::ComponentAnimation::~ComponentAnimation()
     animations.clear();
 }
 
-void Hachiko::ComponentAnimation::StartAnimating(bool on_loop = true)
+void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms) 
+{
+    if (animation_index >= animations.size())
+    {
+        return;
+    }
+
+    current_animation = animations[animation_index];
+
+    StartAnimating(on_loop, fade_in_time_ms);
+}
+
+void Hachiko::ComponentAnimation::StartAnimating(bool on_loop, unsigned int fade_in_time_ms)
 {
     if (!animations.empty())
     {
-        controller->Play(current_animation, on_loop, 0);
+        controller->Play(current_animation, on_loop, fade_in_time_ms);
     }
 }
 
