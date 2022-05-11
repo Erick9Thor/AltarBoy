@@ -279,12 +279,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	if (Input::GetKey(Input::KeyCode::KEY_Q))
 	{
 		current_position += delta_y;
-		_state = PlayerState::WALKING;
 	}
 	else if (Input::GetKey(Input::KeyCode::KEY_E))
 	{
 		current_position -= delta_y;
-		_state = PlayerState::WALKING;
 	}
 
 	if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
