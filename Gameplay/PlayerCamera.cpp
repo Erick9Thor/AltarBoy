@@ -130,13 +130,3 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 		cam_pos->z = cam_pos->z + 0.3f;
 	}
 }
-
-bool Hachiko::Scripting::PlayerCamera::isPlayerDashing()
-{
-	
-}
-
-void Hachiko::Scripting::PlayerCamera::onPlayerMoving()
-{
-
-}
