@@ -21,6 +21,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _has_cooldown(false)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
+	, _attack_radius(0.0f)
 	, _should_rotate(false)
 	, _rotation_progress(0.0f)
 	, _rotation_duration(0.0f)
@@ -36,6 +37,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_duration = 0.15f;
 	_dash_cooldown = 2.00f;
 	_dash_timer = 0.0f;
+	_attack_radius = 4.0f;
 	_dash_count = 2;
 	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
@@ -55,25 +57,25 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Attack:
 	Attack(transform, current_position);
 
-	// Handle all the input:
-	HandleInput(current_position);
+// Handle all the input:
+HandleInput(current_position);
 
-	// Dash:
-	Dash(current_position);
+// Dash:
+Dash(current_position);
 
-	// Rotate player to the necessary direction:
-	Rotate(transform, current_position);
+// Rotate player to the necessary direction:
+Rotate(transform, current_position);
 
-	// Move the dash indicator:
-	MoveDashIndicator(current_position);
+// Move the dash indicator:
+MoveDashIndicator(current_position);
 
-	// Apply the position:
-	transform->SetGlobalPosition(current_position);
+// Apply the position:
+transform->SetGlobalPosition(current_position);
 
-	// Instantiate GameObject in current scene test:
-	SpawnGameObject();
+// Instantiate GameObject in current scene test:
+SpawnGameObject();
 
-	CheckGoal(current_position);
+//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -99,10 +101,10 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 void Hachiko::Scripting::PlayerController::MoveDashIndicator(
 	const math::float3& current_position) const
 {
-	const math::float3 mouse_world_position = 
+	const math::float3 mouse_world_position =
 		GetRaycastPosition(current_position);
 
-	math::float3 direction = mouse_world_position- current_position;
+	math::float3 direction = mouse_world_position - current_position;
 	direction.Normalize();
 
 	//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
@@ -117,16 +119,16 @@ void Hachiko::Scripting::PlayerController::MoveDashIndicator(
 void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 {
 	static int times_hit_g = 0;
-	
+
 	if (!Input::GetKeyDown(Input::KeyCode::KEY_G))
 	{
 		return;
 	}
 
 	std::string name = "GameObject ";
-		
+
 	name += std::to_string(times_hit_g);
-		
+
 	times_hit_g++;
 
 	GameObject* created_game_object = GameObject::Instantiate();
@@ -140,8 +142,6 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// For now this only makes player look at to the direction to the mouse
 	// on left mouse button is clicked, can be used as a base to build the 
 	// actual combat upon.
-	// TODO: Improve this method and implement actual attacking.
-	
 	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT))
 	{
 		return;
@@ -150,6 +150,26 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
 
+	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
+	std::vector<GameObject*> enemies_hit = {};
+	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
+
+	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		if (_attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+		{
+			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
+			math::float3 rel_translate, rel_scale;
+			math::Quat rel_rotation;
+			relative_matrix.Decompose(rel_translate, rel_rotation, rel_scale);
+			float dot_product = transform->GetRight().Dot(rel_translate);
+			if (dot_product > 0)
+			{
+				enemies_hit.push_back(enemies[i]);
+			}
+		}
+	}
 	// Set player state to melee attacking:
 	_state = PlayerState::MELEE_ATTACKING;
 }
@@ -271,7 +291,6 @@ void Hachiko::Scripting::PlayerController::Rotate(
 void Hachiko::Scripting::PlayerController::HandleInput(
 	math::float3& current_position)
 {
-	is_moving = false;
 	// Ignore the inputs if engine camera input is taken:
 	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
 	{

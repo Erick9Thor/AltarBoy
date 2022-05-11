@@ -1,7 +1,9 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerCamera.h"
+#include "PlayerState.h"
 #include "PlayerController.h"
 #include <components/ComponentTransform.h>
+#include <core/Scene.h>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
@@ -37,7 +39,7 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 	float delay = _follow_delay;
 
-	if (_player_ctrl->IsMoving())
+	if (_player_ctrl->_state == PlayerState::WALKING)
 	{
 		const float look_ahead_time = Time::DeltaTime() / 0.8f;
 		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
