@@ -197,12 +197,7 @@ bool Hachiko::ModuleAudio::CleanUp()
 
 
 // TODO: Monica will change this after VS2
-void Hachiko::ModuleAudio::PlayFootstep()
+void Hachiko::ModuleAudio::Play(const wchar_t* name_event) const
 {
-    AK::SoundEngine::PostEvent(L"Play_Footstep", GAME_OBJECT_ID_PLAYER);
-}
-
-void Hachiko::ModuleAudio::PlayMeleeAttack()
-{
-    AK::SoundEngine::PostEvent(L"Play_MeleeAttack", GAME_OBJECT_ID_PLAYER);
+    AK::SoundEngine::PostEvent(name_event, GAME_OBJECT_ID_PLAYER);
 }

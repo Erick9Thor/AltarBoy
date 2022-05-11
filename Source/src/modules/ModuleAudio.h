@@ -30,8 +30,7 @@ namespace Hachiko
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
-        void PlayFootstep();
-        void PlayMeleeAttack();
+        void Play(const wchar_t* name_event) const;
 
     private:
         // We're using the default Low-Level I/O implementation that's part
