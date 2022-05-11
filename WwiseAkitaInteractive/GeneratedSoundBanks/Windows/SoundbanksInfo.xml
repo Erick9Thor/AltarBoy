@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="222553517">
+		<SoundBank Id="626769978" Language="SFX" Hash="3169189895">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -31,7 +31,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="3889482222">
+		<SoundBank Id="2385628198" Language="SFX" Hash="1919384736">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -275,7 +275,7 @@
 							<Path>SFX\Steps\Gravel\Step_58Gravel_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
-					<DefaultSwitchValue>{38BC02AE-8819-4B46-84AC-3924F97044ED}</DefaultSwitchValue>
+					<DefaultSwitchValue>{693468F3-289E-4F01-A732-1B85BDC61C65}</DefaultSwitchValue>
 					<SwitchContainers>
 						<SwitchContainer SwitchValue="{16900F2B-47CB-4EF4-9293-A9B4948DC096}">
 							<Media>
@@ -376,7 +376,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="91445448">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3601965357">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
