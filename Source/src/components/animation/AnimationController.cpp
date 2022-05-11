@@ -15,7 +15,7 @@ Hachiko::AnimationController::~AnimationController() {
 
 void Hachiko::AnimationController::Play(ResourceAnimation* current_animation, bool loop, unsigned fade_time) 
 {
-    Instance* new_instance = new Instance;
+    Instance* new_instance = new Instance();
 
     new_instance->current_animation = current_animation;
     new_instance->loop = loop;
@@ -33,7 +33,8 @@ void Hachiko::AnimationController::Update(unsigned elapsed)
     }
 }
 
-void Hachiko::AnimationController::Stop() {
+void Hachiko::AnimationController::Stop() 
+{
     if (current != nullptr)
     {
         ReleaseInstance(current);
@@ -89,12 +90,13 @@ void Hachiko::AnimationController::ReleaseInstance(Instance* instance)
         Instance* next = instance->previous;
         delete instance;
         instance = next;
-    } while (instance != nullptr);
+    } 
+    while (instance != nullptr);
 }
 
 bool Hachiko::AnimationController::GetTransform(Instance* instance, const std::string& channel_name, math::float3& position, Quat& rotation) const
 {
-    if (instance->current_animation != nullptr)
+    if (instance != nullptr && instance->current_animation != nullptr)
     {
         const ResourceAnimation::Channel* channel = instance->current_animation->GetChannel(channel_name);
 
