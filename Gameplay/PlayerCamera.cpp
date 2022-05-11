@@ -19,7 +19,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// be a GameObject of name "PlayerC" which is our player.
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
 	_player_ctrl = _player->GetComponent<PlayerController>();
-	_follow_delay = 0.8f;
+	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
 }
 
@@ -29,15 +29,20 @@ void Hachiko::Scripting::PlayerCamera::OnStart()
 
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
 {
-	float2 mouse_movement = MoveCameraWithMouse();
+	// TODO: set some camera offset
+
+	const math::float2 mouse_movement_x_z = MoveCameraWithMouse();
+	const math::float3 mouse_movement = float3(mouse_movement_x_z.x, 0.0f, mouse_movement_x_z.y);
 	ScrollWheelZoom(&_relative_position_to_player);
 
+	float delay = _follow_delay;
 
 	if (_player_ctrl->IsMoving())
 	{
-		const float look_ahead_time = Time::DeltaTime() / 0.7f;
+		const float look_ahead_time = Time::DeltaTime() / 0.8f;
 		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
-		_look_ahead = math::float3::Lerp(_look_ahead, _player->GetTransform()->GetFront() * 7, look_ahead_time);
+		_look_ahead = math::float3::Lerp(_look_ahead, _player->GetTransform()->GetFront() * 4, look_ahead_time);
+		delay *= 0.25f;
 	}
 	else
 	{
@@ -45,55 +50,18 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 	}
 
 	const math::float3 final_position = _player->GetTransform()->GetGlobalPosition()
-		+ _relative_position_to_player + float3(mouse_movement.x, 0.0f, mouse_movement.y) + _look_ahead;
+		+ _relative_position_to_player + _look_ahead + mouse_movement;
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
 
-	float delay = 0.3f;
+	const float delayed_time = Time::DeltaTime() / delay;
+	Clamp<float>(delayed_time, 0.0f, 1.0f);
 
-	if (_player_ctrl->IsDashing())
-	{
-		delay = 0.05f;
-	}
+	// Lerp to the pre-defined relative position to the player with a delay: 
+	current_position = math::float3::Lerp(current_position, final_position,
+		delayed_time);
 
-	if (!current_position.Equals(final_position))
-	{
-		const float delayed_time = Time::DeltaTime() / delay;
-		Clamp<float>(delayed_time, 0.0f, 1.0f);
-
-		// Comment the following if you want z follow to be delayed as well:
-		//current_position.z = final_position.z;
-
-		// Lerp to the pre-defined relative position to the player with a delay: 
-		current_position = math::float3::Lerp(current_position, final_position,
-			delayed_time);
-
-
-		math::float3 relative_position = final_position - current_position;
-
-		constexpr float x_clamp = 4.5f;
-		constexpr float z_clamp = 5.0f;
-
-		/*if (relative_position.z > z_clamp - mouse_movement.y)
-		{
-			current_position.z = math::Lerp(current_position.z, final_position.z - z_clamp + mouse_movement.y, 0.1f);
-		}
-		if (relative_position.z < -z_clamp - mouse_movement.y)
-		{
-			current_position.z = math::Lerp(current_position.z, final_position.z + z_clamp + mouse_movement.y, 0.1f);
-		}
-
-		if (relative_position.x > x_clamp - mouse_movement.x)
-		{
-			current_position.x = math::Lerp(current_position.x, final_position.x - x_clamp + mouse_movement.x, 0.1f);
-		}
-		if (relative_position.x < -x_clamp - mouse_movement.x)
-		{
-			current_position.x = math::Lerp(current_position.x, final_position.x + x_clamp + mouse_movement.x, 0.1f);
-		}*/
-
-		transform->SetGlobalPosition(current_position);
-	}
+	transform->SetGlobalPosition(current_position);
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
@@ -123,7 +91,7 @@ float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 		mouse_pos.y += (mouse_pos.y > 0) ? -0.25f : +0.25f;
 	}
 	// First number to set it to 0-1 scale, second one sets the movement distance
-	added_movement = mouse_pos * 4.0f * 1.2f;
+	added_movement = mouse_pos * 4.0f * 3.0f;
 	return added_movement;
 }
 
