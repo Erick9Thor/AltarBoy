@@ -1,31 +1,72 @@
 Event	ID	Name			Wwise Object Path	Notes
-	1866025847	Footstep			\Default Work Unit\Footstep	
+	1602358412	Play_Footstep			\Default Work Unit\Play_Footstep	
 
 Switch Group	ID	Name			Wwise Object Path	Notes
-	1866025847	Footstep			\Default Work Unit\Footstep	
+	2385628198	Footsteps			\Default Work Unit\Footsteps	
 
 Switch	ID	Name	Switch Group			Notes
-	2058049674	Wood	Footstep			
-	2185786256	Gravel	Footstep			
-	2195636714	Dirt	Footstep			
-	2473969246	Metal	Footstep			
+	2058049674	Wood	Footsteps			
+	2185786256	Gravel	Footsteps			
+	3025917178	Standard	Footsteps			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	74441592	Footstep_Walking_Hardwood_03	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\WoodSolid\Footstep_Walking_Hardwood_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\WoodSolid\Footstep_Walking_Hardwood_03		24892
-	87009026	FS_Dirt_03	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Dirt\FS_Dirt_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Dirt\FS_Dirt_03		43432
-	103564743	Footstep_Walking_Hardmetal_01	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_01		29880
-	136853107	Footstep_Walking_Hardwood_01	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\WoodSolid\Footstep_Walking_Hardwood_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\WoodSolid\Footstep_Walking_Hardwood_01		22572
-	175276784	AK_FS_Run_Gravel_02	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Gravel\AK_FS_Run_Gravel_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Gravel\AK_FS_Run_Gravel_02		25634
-	213876299	Footstep_Walking_Hardmetal_02	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_02		24148
-	261350202	Footstep_Walking_Hardwood_04	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\WoodSolid\Footstep_Walking_Hardwood_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\WoodSolid\Footstep_Walking_Hardwood_04		21766
-	317648712	Footstep_Walking_Hardwood_05	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\WoodSolid\Footstep_Walking_Hardwood_05_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\WoodSolid\Footstep_Walking_Hardwood_05		28428
-	346449625	Footstep_Walking_Hardmetal_05	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_05_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_05		33764
-	414487061	Footstep_Walking_Hardmetal_03	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_03		37608
-	579989905	FS_Dirt_02	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Dirt\FS_Dirt_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Dirt\FS_Dirt_02		42518
-	616198941	Footstep_Walking_Hardwood_02	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\WoodSolid\Footstep_Walking_Hardwood_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\WoodSolid\Footstep_Walking_Hardwood_02		24892
-	663194463	FS_Dirt_04	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Dirt\FS_Dirt_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Dirt\FS_Dirt_04		40334
-	814729179	AK_FS_Run_Gravel_03	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Gravel\AK_FS_Run_Gravel_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Gravel\AK_FS_Run_Gravel_03		24506
-	825172646	FS_Dirt_01	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Dirt\FS_Dirt_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Dirt\FS_Dirt_01		35712
-	906099798	AK_FS_Run_Gravel_01	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\Gravel\AK_FS_Run_Gravel_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\Gravel\AK_FS_Run_Gravel_01		24616
-	1004824509	Footstep_Walking_Hardmetal_04	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footsteps\MetalSheet\Footstep_Walking_Hardmetal_04		29612
+	20016976	Step_11Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_11Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_11Wood		110392
+	56859746	Step_36Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_36Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_36Gravel		77320
+	69431295	Step_56Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_56Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_56Gravel		57932
+	87495782	Step_42Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_42Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_42Gravel		77320
+	97824947	Step_21Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_21Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_21Standard		77316
+	98992547	Step_18Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_18Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_18Standard		77320
+	100635686	Step_13Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_13Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_13Wood		110396
+	105177954	Step_08Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_08Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_08Wood		110392
+	156875225	Step_41Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_41Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_41Gravel		77316
+	167375841	Step_16Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_16Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_16Standard		77316
+	174951554	Step_39Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_39Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_39Gravel		77316
+	183038149	Step_35Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_35Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_35Gravel		77320
+	190713750	Step_24Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_24Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_24Standard		77316
+	201905499	Step_46Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_46Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_46Gravel		57936
+	235227121	Step_28Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_28Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_28Standard		77320
+	257948856	Step_17Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_17Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_17Standard		77316
+	295320444	Step_34Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_34Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_34Gravel		77320
+	296265334	Step_53Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_53Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_53Gravel		57936
+	324303071	Step_59Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_59Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_59Gravel		57936
+	335989826	Step_52Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_52Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_52Gravel		57932
+	351056974	Step_29Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_29Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_29Gravel		77316
+	353862506	Step_33Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_33Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_33Gravel		77320
+	410193696	Step_38Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_38Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_38Gravel		77320
+	417550850	Step_43Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_43Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_43Gravel		77316
+	427725298	Step_04Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_04Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_04Wood		110396
+	449887668	Step_06Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_06Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_06Wood		110392
+	454742174	Step_45Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_45Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_45Gravel		57936
+	458941736	Step_40Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_40Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_40Gravel		77316
+	468653136	Step_48Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_48Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_48Gravel		57932
+	475465590	Step_30Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_30Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_30Gravel		77320
+	551431231	Step_19Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_19Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_19Standard		77320
+	556784718	Step_27Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_27Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_27Standard		77320
+	599012154	Step_15Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_15Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_15Wood		110396
+	613685403	Step_20Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_20Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_20Standard		77320
+	614109330	Step_51Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_51Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_51Gravel		57936
+	624244384	Step_25Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_25Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_25Standard		77316
+	650862752	Step_44Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_44Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_44Gravel		57932
+	659456264	Step_09Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_09Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_09Wood		110392
+	679340995	Step_54Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_54Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_54Gravel		57932
+	680027792	Step_37Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_37Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_37Gravel		77316
+	764821679	Step_55Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_55Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_55Gravel		57932
+	780285679	Step_26Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_26Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_26Standard		77320
+	787929078	Step_02Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_02Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_02Wood		110392
+	834318284	Step_57Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_57Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_57Gravel		57932
+	855832004	Step_31Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_31Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_31Gravel		77320
+	859649073	Step_14Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_14Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_14Wood		110392
+	897582463	Step_05Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_05Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_05Wood		110392
+	898310855	Step_07Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_07Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_07Wood		110392
+	917462272	Step_10Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_10Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_10Wood		110396
+	919428248	Step_49Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_49Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_49Gravel		57932
+	936991196	Step_50Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_50Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_50Gravel		57932
+	940611582	Step_12Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_12Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_12Wood		110392
+	963866020	Step_23Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_23Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_23Standard		77320
+	972766023	Step_32Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_32Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_32Gravel		77320
+	1001043539	Step_47Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_47Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_47Gravel		57932
+	1030532589	Step_22Standard	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Standard\Step_22Standard_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Standard\Step_22Standard		77316
+	1034345274	Step_01Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_01Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_01Wood		110392
+	1063109083	Step_03Wood	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Wood\Step_03Wood_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Wood\Step_03Wood		110392
+	1063422961	Step_58Gravel	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\Steps\Gravel\Step_58Gravel_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Footstep\Gravel\Step_58Gravel		57936
 
