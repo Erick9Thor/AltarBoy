@@ -40,10 +40,13 @@ private:
 	
 	void HandleInput(math::float3& current_position);
 
+	void CheckGoal(const float3& current_position);
+
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
 
 	SERIALIZE_FIELD(GameObject*, _dash_indicator);
+	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_progress);
