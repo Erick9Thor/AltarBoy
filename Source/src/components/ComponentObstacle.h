@@ -26,12 +26,7 @@ namespace Hachiko
 
         ComponentObstacle(GameObject* container);
         ~ComponentObstacle() override;
-
-        static Type GetType()
-        {
-            return Type::OBSTACLE;
-        }
-
+        
         void Start() override; // Call AddObstacle
         void Stop() override; // Call RemoveObstacle
         virtual void Update() override; // Updates the obstacle (if dirty) every x ticks to prevent tile cache collapse
@@ -60,7 +55,7 @@ namespace Hachiko
         int count_since_update = 0;
         bool dirty = true;        
         dtObstacleRef* obstacle = nullptr;	
-        ObstacleType obstacle_type;
+        ObstacleType obstacle_type = DT_OBSTACLE_CYLINDER;
         float3 size = float3::one;
     };
 } // namespace Hachiko

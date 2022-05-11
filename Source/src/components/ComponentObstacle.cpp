@@ -8,8 +8,7 @@
 #include "resources/ResourceNavMesh.h"
 #include "DetourTileCache/DetourTileCache.h"
 
-Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container), 
-obstacle_type(ObstacleType::DT_OBSTACLE_CYLINDER)
+Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container)
 {}
 
 Hachiko::ComponentObstacle::~ComponentObstacle()

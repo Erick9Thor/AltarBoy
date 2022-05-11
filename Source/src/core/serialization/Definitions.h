@@ -206,8 +206,8 @@
 #define BAR_DIRECTION "direction"
 
 // Component Obstacle
-#define OBSTACLE_TYPE "type"
-#define OBSTACLE_SIZE "size"
+#define OBSTACLE_TYPE "obstacle_type"
+#define OBSTACLE_SIZE "obstacle_size"
 
 // Component Agent
 #define MAX_SPEED "max_speed"

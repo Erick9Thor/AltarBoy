@@ -16,16 +16,11 @@ namespace Hachiko
 
 	public:
 		ComponentAgent(GameObject* container);
-		~ComponentAgent();
+		~ComponentAgent() override;
 
 		void Start() override;
 		void Update() override;
-
-		static Type GetType()
-        {
-            return Type::AGENT;
-        }
-
+		
 		void SetTargetPosition(const float3& target_pos);
 		void SetMaxSpeed(float new_max_speed);
 		void SetMaxAcceleration(float new_max_acceleration);
