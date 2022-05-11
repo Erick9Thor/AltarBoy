@@ -22,6 +22,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
 	, _attack_radius(0.0f)
+	, _attack_cooldown(0.0f)
 	, _should_rotate(false)
 	, _rotation_progress(0.0f)
 	, _rotation_duration(0.0f)
@@ -38,6 +39,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_cooldown = 2.00f;
 	_dash_timer = 0.0f;
 	_attack_radius = 4.0f;
+	_attack_cooldown = 0.5f;
 	_dash_count = 2;
 	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
@@ -142,10 +144,13 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// For now this only makes player look at to the direction to the mouse
 	// on left mouse button is clicked, can be used as a base to build the 
 	// actual combat upon.
-	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT))
+	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT) || (attack_current_cd > 0.0f) )
 	{
+		attack_current_cd -= Time::DeltaTime();
 		return;
 	}
+
+	attack_current_cd = _attack_cooldown;
 
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));

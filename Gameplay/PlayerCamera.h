@@ -30,7 +30,6 @@ private:
 	SERIALIZE_FIELD(float, _follow_delay);
 
 	math::float3 _look_ahead;
-	float _dynamic_delay;
 	PlayerController* _player_ctrl;
 };
 } // namespace Scripting

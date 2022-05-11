@@ -59,11 +59,14 @@ private:
 	SERIALIZE_FIELD(math::float3, _dash_start);
 	SERIALIZE_FIELD(math::float3, _dash_direction);
 	SERIALIZE_FIELD(float, _attack_radius);
+	SERIALIZE_FIELD(float, _attack_cooldown);
 	SERIALIZE_FIELD(bool, _should_rotate);
 	SERIALIZE_FIELD(float, _rotation_progress);
 	SERIALIZE_FIELD(float, _rotation_duration);
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
+
+	float attack_current_cd = 0.0f;
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 };
