@@ -128,15 +128,18 @@ void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
     for (unsigned i = 0; i < animations.size(); ++i)
     {
-        node["animarions"][i] = animations[i]->GetID();
+        node[ANIMATIONS][i] = animations[i]->GetID();
     }
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node) 
 {
-    for (unsigned i = 0; i < node["animarions"].size(); ++i)
+    if (node[ANIMATIONS].IsDefined())
     {
-        ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node["animarions"][i].as<UID>()));
-        animations.push_back(r_animation);
+        for (unsigned i = 0; i < node[ANIMATIONS].size(); ++i)
+        {
+            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node[ANIMATIONS][i].as<UID>()));
+            animations.push_back(r_animation);
+        }
     }
 }
