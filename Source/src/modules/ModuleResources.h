@@ -48,6 +48,6 @@ namespace Hachiko
         std::filesystem::path last_resource_path;
 
         void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
-        void GenerateLibrary(const PathNode& folder, bool force = false);
+        void GenerateLibrary(const PathNode& folder);
     };
 }

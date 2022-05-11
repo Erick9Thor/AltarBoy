@@ -206,7 +206,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     HE_LOG("Assets/Library check finished.");
 }
 
-void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder, bool force) 
+void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
 {
     for (PathNode path_node : folder.children)
     {
@@ -235,23 +235,9 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder, bool forc
                 // Get the asset hash
                 uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
                 
-                //uint64_t meta_hash = FileSystem::HashFromPath(meta_path.c_str());
-                /* if (meta_hash != previous_meta_hash)
-                {
-                    // Keep id and regenerate meta and all
-                    if (library_file_exists)
-                    {
-                        importer_manager.DeleteWithMeta(type, meta_node);
-                    }
-                    
-                }*/
 
-                
-                if (false)
-                {
-                    importer_manager.Import(std::filesystem::path(path_node.path), type, meta_uid);
-                }              
-                else if (previous_asset_hash != asset_hash)
+                          
+                if (previous_asset_hash != asset_hash)
                 {
                     // Keep meta and regenerate
                     if (library_file_exists)
