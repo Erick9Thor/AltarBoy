@@ -376,11 +376,19 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3601965357">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2401461938">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
 			<IncludedEvents>
+				<Event Id="2211787386" Name="Play_Dash" ObjectPath="\Events\Default Work Unit\Play_Dash">
+					<IncludedMemoryFiles>
+						<File Id="484362913" Language="SFX">
+							<ShortName>Dash.wav</ShortName>
+							<Path>SFX\Dash_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="2988676654" Name="Play_MeleeAttack" ObjectPath="\Events\Default Work Unit\Play_MeleeAttack">
 					<IncludedMemoryFiles>
 						<File Id="152095099" Language="SFX">
