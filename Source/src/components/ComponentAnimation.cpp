@@ -85,16 +85,34 @@ void Hachiko::ComponentAnimation::DrawGui()
     
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
+        constexpr int NO_DELETION = -1;
+        int removed_index = NO_DELETION;
         for (unsigned i = 0; i < animations.size(); ++i)
         {
             char animation_name[50];
             strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
+            
             if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name, std::to_string(i)).c_str()))
             {
                 current_animation = animations[i];
-                this->StartAnimating();
+                this->StartAnimating(true, 200);
             }
+
+            ImGui::SameLine();
+
+            ImGui::PushID(StringUtils::Concat(std::to_string(i), "##animation").c_str());
+            if (ImGui::Button(ICON_FA_TRASH))
+            {
+                removed_index = i;   
+            }
+            ImGui::PopID();
         }
+
+        if (removed_index != NO_DELETION)
+        {
+            animations.erase(animations.begin() + removed_index);
+        }
+        
 
         const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
 
