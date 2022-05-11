@@ -320,6 +320,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="PlayerAnimationManager.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="PlayerSoundManager.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
@@ -722,6 +723,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="PlayerAnimationManager.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="PlayerSoundManager.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

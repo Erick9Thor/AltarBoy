@@ -303,10 +303,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)
 {
-	const float3 goal_position = _goal->GetTransform()->GetGlobalPosition();
+	/*const float3 goal_position = _goal->GetTransform()->GetGlobalPosition();
 
 	if (Distance(current_position, goal_position) < 0.5f)
 	{
 		SceneManagement::SwitchScene(Scenes::WIN);
-	}
+	}*/
 }
