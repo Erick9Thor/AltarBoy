@@ -35,7 +35,7 @@
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{49B790E7-C717-4B3C-A628-1EC37BAAA2D2}"/>
 						</Reference>
 						<Reference Name="DefaultSwitchOrState">
-							<ObjectRef Name="Standard" ID="{38BC02AE-8819-4B46-84AC-3924F97044ED}" WorkUnitID="{D1765702-10CC-4AE6-9393-A05E842B8CA1}"/>
+							<ObjectRef Name="Wood" ID="{693468F3-289E-4F01-A732-1B85BDC61C65}" WorkUnitID="{D1765702-10CC-4AE6-9393-A05E842B8CA1}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2C077D8D-BD26-424E-8757-C74E782FE679}"/>
