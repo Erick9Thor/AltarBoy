@@ -1,17 +1,17 @@
 General:
-  id: 7844527608673296863
+  id: 17462901674098034811
   type: 3
   hash: 1782035057310088985
 model_name: Gunplay
 material:
-  - id: 4161271229208671627
+  - id: 1887553717096318740
     name: mcLow
 mesh:
-  - id: 2121926814940909765
+  - id: 9987564549706463755
     material_index: 0
 animations: 1
 animation_id:
-  - 9816231572376920710
+  - 11183133630025251503
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
