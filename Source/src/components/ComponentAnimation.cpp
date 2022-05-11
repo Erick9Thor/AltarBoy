@@ -22,15 +22,15 @@ Hachiko::ComponentAnimation::~ComponentAnimation()
     animations.clear();
 }
 
-void Hachiko::ComponentAnimation::Start()
+void Hachiko::ComponentAnimation::StartAnimating(bool on_loop = true)
 {
     if (!animations.empty())
     {
-        controller->Play(current_animation, true, 0);
+        controller->Play(current_animation, on_loop, 0);
     }
 }
 
-void Hachiko::ComponentAnimation::Stop()
+void Hachiko::ComponentAnimation::StopAnimating()
 {
     controller->Stop();
 }
@@ -78,10 +78,8 @@ void Hachiko::ComponentAnimation::DrawGui()
             if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name, std::to_string(i)).c_str()))
             {
                 current_animation = animations[i];
-                this->Start();
+                this->StartAnimating();
             }
-
-            // TODO: ADD STOP
         }
 
         const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
@@ -116,6 +114,10 @@ void Hachiko::ComponentAnimation::DrawGui()
             ImGuiFileDialog::Instance()->Close();
         }
 
+        if (current_animation != nullptr && ImGui::Button(StringUtils::Concat(ICON_FA_STOP, " ", current_animation->GetName().c_str()).c_str()))
+        {
+            StopAnimating();
+        }
     }
    
     ImGui::PopID();

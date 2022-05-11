@@ -19,9 +19,10 @@ namespace Hachiko
         {
             return Type::ANIMATION;
         }
-
-        void Start() override;
-        void Stop() override;
+        
+        void StartAnimating(bool on_loop);
+        void StopAnimating();
+        
         void Update() override;
 
         void UpdatedGameObject(GameObject* go);
