@@ -2,6 +2,7 @@
 #include "modules/ModuleInput.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
+#include "modules/ModuleAudio.h"
 #include "Gameplay.h"
 
 
@@ -245,6 +246,15 @@ void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
     bool changed = false;
 
     ShowGameObjectDragDropArea(field_name, "GameObject*", &field, changed);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*AUDIO----------------------------------------------------------------------*/
+
+HACHIKO_API void Hachiko::Audio::Play(const wchar_t* name)
+{
+    return App->audio->Play(name);
 }
 
 /*---------------------------------------------------------------------------*/
