@@ -29,7 +29,9 @@ private:
 	SERIALIZE_FIELD(GameObject*, _player);
 	SERIALIZE_FIELD(float, _follow_delay);
 
-	PlayerController* player_ctrl;
+	math::float3 _look_ahead;
+	float _dynamic_delay;
+	PlayerController* _player_ctrl;
 };
 } // namespace Scripting
 } // namespace Hachiko

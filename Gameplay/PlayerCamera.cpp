@@ -14,13 +14,13 @@ Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 void Hachiko::Scripting::PlayerCamera::OnAwake()
 {
 	_relative_position_to_player = math::float3(0.0f, 15.0f, 10.0f);
-
 	// This is until we have saving for scripts. Because of this, this
 	// script needs to be a direct child of scene root, and there must
 	// be a GameObject of name "PlayerC" which is our player.
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
-	player_ctrl = _player->GetComponent<PlayerController>();
+	_player_ctrl = _player->GetComponent<PlayerController>();
 	_follow_delay = 0.8f;
+	_look_ahead = float3::zero;
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
@@ -30,18 +30,30 @@ void Hachiko::Scripting::PlayerCamera::OnStart()
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
 {
 	float2 mouse_movement = MoveCameraWithMouse();
+	ScrollWheelZoom(&_relative_position_to_player);
+
+
+	if (_player_ctrl->IsMoving())
+	{
+		const float look_ahead_time = Time::DeltaTime() / 0.7f;
+		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
+		_look_ahead = math::float3::Lerp(_look_ahead, _player->GetTransform()->GetFront() * 7, look_ahead_time);
+	}
+	else
+	{
+		_look_ahead = float3::zero;
+	}
+
 	const math::float3 final_position = _player->GetTransform()->GetGlobalPosition()
-		+ _relative_position_to_player + float3(mouse_movement.x, 0.0f, mouse_movement.y);
+		+ _relative_position_to_player + float3(mouse_movement.x, 0.0f, mouse_movement.y) + _look_ahead;
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
 
-	ScrollWheelZoom(&_relative_position_to_player);
+	float delay = 0.3f;
 
-	float delay = _follow_delay;
-
-	if (player_ctrl->isDashing())
+	if (_player_ctrl->IsDashing())
 	{
-		delay = 0.05;
+		delay = 0.05f;
 	}
 
 	if (!current_position.Equals(final_position))
@@ -59,26 +71,26 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 		math::float3 relative_position = final_position - current_position;
 
-		constexpr float x_clamp = 2.25f;
-		constexpr float z_clamp = 2.5f;
+		constexpr float x_clamp = 4.5f;
+		constexpr float z_clamp = 5.0f;
 
-		if (relative_position.z > z_clamp - mouse_movement.y)
+		/*if (relative_position.z > z_clamp - mouse_movement.y)
 		{
-			current_position.z = final_position.z - z_clamp + mouse_movement.y;
+			current_position.z = math::Lerp(current_position.z, final_position.z - z_clamp + mouse_movement.y, 0.1f);
 		}
 		if (relative_position.z < -z_clamp - mouse_movement.y)
 		{
-			current_position.z = final_position.z + z_clamp + mouse_movement.y;
+			current_position.z = math::Lerp(current_position.z, final_position.z + z_clamp + mouse_movement.y, 0.1f);
 		}
 
 		if (relative_position.x > x_clamp - mouse_movement.x)
 		{
-			current_position.x = final_position.x - x_clamp + mouse_movement.x;
+			current_position.x = math::Lerp(current_position.x, final_position.x - x_clamp + mouse_movement.x, 0.1f);
 		}
 		if (relative_position.x < -x_clamp - mouse_movement.x)
 		{
-			current_position.x = final_position.x + x_clamp + mouse_movement.x;
-		}
+			current_position.x = math::Lerp(current_position.x, final_position.x + x_clamp + mouse_movement.x, 0.1f);
+		}*/
 
 		transform->SetGlobalPosition(current_position);
 	}

@@ -59,8 +59,8 @@ private:
 	bool is_moving = false;
 
 public:
-	bool isDashing() { return _is_dashing; };
-	bool isMoving() { return is_moving; };
+	bool IsDashing() { return _is_dashing; };
+	bool IsMoving() { return is_moving; };
 };
 } // namespace Scripting
 } // namespace Hachiko
