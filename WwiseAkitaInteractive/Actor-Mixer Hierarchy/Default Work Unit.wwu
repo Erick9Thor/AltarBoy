@@ -1631,6 +1631,29 @@
 					</ChildrenList>
 					<ObjectLists/>
 				</RandomSequenceContainer>
+				<Sound Name="RangedAttack" ID="{D3B0F1BA-676B-47F4-8BFB-5DA6D9CAF2A5}" ShortID="328484644">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{49B790E7-C717-4B3C-A628-1EC37BAAA2D2}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{2C077D8D-BD26-424E-8757-C74E782FE679}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="weapons-plasma-shot" ID="{A339E074-E91C-4A76-9938-B354F2AB3C8F}">
+							<Language>SFX</Language>
+							<AudioFile>weapons-plasma-shot.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="153684140"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="weapons-plasma-shot" ID="{A339E074-E91C-4A76-9938-B354F2AB3C8F}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
