@@ -4,10 +4,10 @@ General:
   hash: 12545098321352830148
 model_name: Drawers
 material:
-  - id: 16442301243870202175
+  - id: 12136192547179918388
     name: DrawersMaterial
 mesh:
-  - id: 9001195255013565790
+  - id: 12136192547179819388
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

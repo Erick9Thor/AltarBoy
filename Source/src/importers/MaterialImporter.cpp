@@ -64,9 +64,11 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
     material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
 
-    FileSystem::Save(meta_path.c_str(), meta_node);
+    
     FileSystem::Save(material_asset_path.c_str(), material_node);
     FileSystem::Save(material_library_path.c_str(), material_node);
+    meta_node[GENERAL_NODE][GENERAL_HASH] = FileSystem::HashFromPath(material_asset_path.c_str());
+    FileSystem::Save(meta_path.c_str(), meta_node);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)

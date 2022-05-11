@@ -4,10 +4,10 @@ General:
   hash: 11219040909193169022
 model_name: plant01_emission_mesh
 material:
-  - id: 9037922764857537672
+  - id: 972886106209163721
     name: 01 - Default
 mesh:
-  - id: 5146943753653481189
+  - id: 972886106209064721
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

@@ -4,14 +4,14 @@ General:
   hash: 7360938489393507728
 model_name: Running
 material:
-  - id: 8403439053189948202
+  - id: 13705430445024056752
     name: mcLow
 mesh:
-  - id: 5184994660648086362
+  - id: 13705430445023957752
     material_index: 0
 animations: 1
 animation_id:
-  - 1505438662424225416
+  - 13705430445033956752
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:

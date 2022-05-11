@@ -227,21 +227,25 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
                 // Extract data from meta
                 UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-                uint64_t meta_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
+                uint64_t previous_asset_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
                 
                 std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());
 
-                // Get the asset timestamp
+                // Get the asset hash
                 uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
+                
 
-                if (meta_hash != asset_hash)
+                          
+                if (previous_asset_hash != asset_hash)
                 {
+                    // Keep meta and regenerate
                     if (library_file_exists)
                     {
                         importer_manager.DeleteWithMeta(type, meta_node);
                     }
                     importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
+
                 }
                 else if (!library_file_exists)
                 {

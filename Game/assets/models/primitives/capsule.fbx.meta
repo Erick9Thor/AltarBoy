@@ -4,10 +4,10 @@ General:
   hash: 7006234088666238769
 model_name: capsule
 material:
-  - id: 5614469339356137633
+  - id: 13620119391704834395
     name: DefaultMaterial
 mesh:
-  - id: 12445546451817017520
+  - id: 13620119391704735395
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

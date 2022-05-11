@@ -4,14 +4,14 @@ General:
   hash: 17415922266449071907
 model_name: Melee_slash
 material:
-  - id: 3242397285974011341
+  - id: 6985859324272716045
     name: mcLow
 mesh:
-  - id: 4654894963238354183
+  - id: 6985859324272617045
     material_index: 0
 animations: 1
 animation_id:
-  - 14662950253274496028
+  - 6985859324282616045
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
