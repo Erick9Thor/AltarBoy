@@ -63,7 +63,10 @@ void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned e
             instance->time = current->current_animation->GetDuration();
         }
 
-        assert(instance->time <= current->current_animation->GetDuration());
+        instance->time = instance->time > current->current_animation->GetDuration() ? current->current_animation->GetDuration() : instance->time;
+
+
+        //assert(instance->time <= current->current_animation->GetDuration());
     }
 
     if (instance->previous != nullptr)
@@ -102,7 +105,10 @@ bool Hachiko::AnimationController::GetTransform(Instance* instance, const std::s
 
         if (channel != nullptr)
         {
-            assert(instance->time <= instance->current_animation->GetDuration());
+
+            instance->time = instance->time > instance->current_animation->GetDuration() ? instance->current_animation->GetDuration() : instance->time;
+
+            //assert(instance->time <= instance->current_animation->GetDuration());
 
             float pos_key = float(instance->time * (channel->num_positions - 1)) / float(instance->current_animation->GetDuration());
             float rot_key = float(instance->time * (channel->num_rotations - 1)) / float(instance->current_animation->GetDuration());
