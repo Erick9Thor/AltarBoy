@@ -16,6 +16,7 @@ namespace AK
         static const AkUniqueID PLAY_BACKGROUNDMUSIC = 548088167U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_MELEEATTACK = 2988676654U;
+        static const AkUniqueID PLAY_RANGEDATTACK = 3766948527U;
         static const AkUniqueID PLAY_TESTBGMUSIC = 2552552352U;
     } // namespace EVENTS
 
@@ -60,9 +61,9 @@ namespace AK
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
+        static const AkUniqueID ATTACKS = 3768541028U;
         static const AkUniqueID BACKGROUNDMUSIC = 626769978U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;
-        static const AkUniqueID MELEEATTACK = 1135984499U;
         static const AkUniqueID TESTBGMUSIC = 3746363493U;
     } // namespace BANKS
 

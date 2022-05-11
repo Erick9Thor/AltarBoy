@@ -26,37 +26,6 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1135984499" Language="SFX" Hash="45160725">
-			<ObjectPath>\SoundBanks\Default Work Unit\MeleeAttack</ObjectPath>
-			<ShortName>MeleeAttack</ShortName>
-			<Path>MeleeAttack.bnk</Path>
-			<IncludedEvents>
-				<Event Id="2988676654" Name="Play_MeleeAttack" ObjectPath="\Events\Default Work Unit\Play_MeleeAttack">
-					<IncludedMemoryFiles>
-						<File Id="152095099" Language="SFX">
-							<ShortName>Melee\Meele_05.wav</ShortName>
-							<Path>SFX\Melee\Meele_05_10C4C929.wem</Path>
-						</File>
-						<File Id="435894412" Language="SFX">
-							<ShortName>Melee\Meele_01.wav</ShortName>
-							<Path>SFX\Melee\Meele_01_10C4C929.wem</Path>
-						</File>
-						<File Id="490622193" Language="SFX">
-							<ShortName>Melee\Meele_02.wav</ShortName>
-							<Path>SFX\Melee\Meele_02_10C4C929.wem</Path>
-						</File>
-						<File Id="843682026" Language="SFX">
-							<ShortName>Melee\Meele_04.wav</ShortName>
-							<Path>SFX\Melee\Meele_04_10C4C929.wem</Path>
-						</File>
-						<File Id="949172856" Language="SFX">
-							<ShortName>Melee\Meele_03.wav</ShortName>
-							<Path>SFX\Melee\Meele_03_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-			</IncludedEvents>
-		</SoundBank>
 		<SoundBank Id="1355168291" Language="SFX" Hash="2919414088">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
@@ -402,6 +371,45 @@
 						<File Id="78841658" Language="SFX">
 							<ShortName>TestBGMusic.wav</ShortName>
 							<Path>SFX\TestBGMusic_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+			</IncludedEvents>
+		</SoundBank>
+		<SoundBank Id="3768541028" Language="SFX" Hash="91445448">
+			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
+			<ShortName>Attacks</ShortName>
+			<Path>Attacks.bnk</Path>
+			<IncludedEvents>
+				<Event Id="2988676654" Name="Play_MeleeAttack" ObjectPath="\Events\Default Work Unit\Play_MeleeAttack">
+					<IncludedMemoryFiles>
+						<File Id="152095099" Language="SFX">
+							<ShortName>Melee\Meele_05.wav</ShortName>
+							<Path>SFX\Melee\Meele_05_10C4C929.wem</Path>
+						</File>
+						<File Id="435894412" Language="SFX">
+							<ShortName>Melee\Meele_01.wav</ShortName>
+							<Path>SFX\Melee\Meele_01_10C4C929.wem</Path>
+						</File>
+						<File Id="490622193" Language="SFX">
+							<ShortName>Melee\Meele_02.wav</ShortName>
+							<Path>SFX\Melee\Meele_02_10C4C929.wem</Path>
+						</File>
+						<File Id="843682026" Language="SFX">
+							<ShortName>Melee\Meele_04.wav</ShortName>
+							<Path>SFX\Melee\Meele_04_10C4C929.wem</Path>
+						</File>
+						<File Id="949172856" Language="SFX">
+							<ShortName>Melee\Meele_03.wav</ShortName>
+							<Path>SFX\Melee\Meele_03_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3766948527" Name="Play_RangedAttack" ObjectPath="\Events\Default Work Unit\Play_RangedAttack">
+					<IncludedMemoryFiles>
+						<File Id="153684140" Language="SFX">
+							<ShortName>weapons-plasma-shot.wav</ShortName>
+							<Path>SFX\weapons-plasma-shot_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
