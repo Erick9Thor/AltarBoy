@@ -324,6 +324,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
+    <ClInclude Include="Sounds.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">

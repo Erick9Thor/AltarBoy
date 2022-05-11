@@ -507,6 +507,7 @@
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="PlayerAnimationManager.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="Sounds.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
