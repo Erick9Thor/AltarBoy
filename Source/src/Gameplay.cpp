@@ -100,6 +100,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     return App->scene_manager->GetRoot()->Find(id);
 }
 
+HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
+{
+    delete game_object;
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*DEBUG----------------------------------------------------------------------*/
