@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
+#include "PlayerState.h"
 
 namespace Hachiko
 { 
@@ -18,6 +19,8 @@ public:
 
 	void OnAwake() override;
 	void OnUpdate() override;
+
+	PlayerState GetState() const;
 
 private:
 	math::float3 GetRaycastPosition(
@@ -53,6 +56,8 @@ private:
 	SERIALIZE_FIELD(float, _rotation_duration);
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
+
+	SERIALIZE_FIELD(PlayerState, _state);
 };
 } // namespace Scripting
 } // namespace Hachiko
