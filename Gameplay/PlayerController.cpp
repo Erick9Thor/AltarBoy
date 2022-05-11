@@ -42,6 +42,9 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Set state to idle, it will be overriden if there is a movement:
 	_state = PlayerState::IDLE;
 
+	// Attack:
+	Attack(transform, current_position);
+
 	// Handle all the input:
 	HandleInput(current_position);
 
@@ -53,9 +56,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Move the dash indicator:
 	MoveDashIndicator(current_position);
-
-	// Attack:
-	Attack(transform, current_position);
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
@@ -237,6 +237,14 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 	// Dashing locks player from submitting new commands on input:
 	if (_is_dashing)
+	{
+		return;
+	}
+
+	// Lock the player movement while attacking, this is gonna be 
+	// probably changed after root motion anims are implemented:
+	if (_state == PlayerState::MELEE_ATTACKING ||
+		_state == PlayerState::RANGED_ATTACKING)
 	{
 		return;
 	}
