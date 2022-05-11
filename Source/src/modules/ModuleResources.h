@@ -19,15 +19,16 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
+        // TODO: Remove this should not exist
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
-        Hachiko::Resource::Type GetType(const std::filesystem::path& file);
+
+
+        Hachiko::Resource::Type GetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
-        void CreateResource(Resource::Type type, const std::string& name) const;
-        void ReimportLibrary();
-        void ReimportAsset(std::string meta_path);
+        void CreateAsset(Resource::Type type, const std::string& name) const;
         void AssetsLibraryCheck();
-        void HandleResource(const std::filesystem::path& path);
+        void HandleAssetFromAnyPath(const std::filesystem::path& path);
 
     private:
         std::map<UID, Resource*> loaded_resources;
@@ -47,7 +48,8 @@ namespace Hachiko
         Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path;
 
-        void ImportResource(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type);
         void GenerateLibrary(const PathNode& folder);
+        void HandleAssetInCorrectPath(const std::string& asset_path);
+        void ImportResourceFromAsset(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type, UID uid = 0);       
     };
 }

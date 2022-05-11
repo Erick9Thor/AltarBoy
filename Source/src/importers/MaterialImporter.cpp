@@ -29,11 +29,6 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
         meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), material_node);
 }
 
-void Hachiko::MaterialImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
-{
-    Import(path, meta);
-}
-
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
@@ -195,7 +190,7 @@ Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMater
                 continue;
             }
 
-            App->resources->HandleResource(path);
+            App->resources->HandleAssetFromAnyPath(path);
             text_node = YAML::LoadFile(meta_path);
             imported = true;
             break;
@@ -204,7 +199,7 @@ Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMater
     else
     {
         text_node = YAML::LoadFile(meta_path);
-        texture_importer.ImportWithMeta(search_paths[0].c_str(), text_node);
+        texture_importer.Import(search_paths[0].c_str(), text_node);
         imported = true;
     }
 

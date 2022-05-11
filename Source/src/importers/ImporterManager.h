@@ -18,10 +18,7 @@ namespace Hachiko
         // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
         void Import(const std::filesystem::path& asset_path, Resource::Type asset_type, UID id = 0);
         Resource* Load(Resource::Type type, UID id);
-        bool IsImported(const char* path, Resource::Type type) const;
-
-        void ImportWithMeta(const std::filesystem::path& asset_path, Resource::Type asset_type, YAML::Node& meta) const;
-        void DeleteWithMeta(Resource::Type asset_type, const YAML::Node& meta) const;
+        void Delete(UID uid, Resource::Type resource_type) const;
 
         Importer* GetImporter(Resource::Type type) const;
         Importer::Type ToImporterType(Resource::Type type) const;

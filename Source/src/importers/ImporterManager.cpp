@@ -40,7 +40,7 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
 {
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
     
-    // If the id is 0 a new one is generated
+    // If the id passed is 0 (default) a new id is generated
     YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type, id);   
     
     Importer* importer = GetImporter(asset_type);
@@ -62,26 +62,9 @@ Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID id)
     return GetImporter(type)->Load(id);
 }
 
-bool Hachiko::ImporterManager::IsImported(const char* path, Resource::Type type) const
+void Hachiko::ImporterManager::Delete(UID uid, Resource::Type resource_type) const
 {
-    return GetImporter(type)->IsImported(path);
-}
-
-void Hachiko::ImporterManager::ImportWithMeta(const std::filesystem::path& asset_path, Resource::Type asset_type, YAML::Node& meta) const 
-{
-    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-
-    UpdateMeta(asset_path.string().c_str(), meta);
-
-    GetImporter(asset_type)->ImportWithMeta(asset_path.string().c_str(), meta);
-
-    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
-    FileSystem::Save(meta_path.c_str(), meta);
-}
-
-void Hachiko::ImporterManager::DeleteWithMeta(Resource::Type asset_type, const YAML::Node& meta) const 
-{
-    GetImporter(asset_type)->Delete(meta);
+    GetImporter(resource_type)->Delete(uid, resource_type);
 }
 
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const

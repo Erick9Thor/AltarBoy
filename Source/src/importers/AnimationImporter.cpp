@@ -23,11 +23,6 @@ void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta)
     Import(scene->mAnimations[0], meta[GENERAL_NODE][GENERAL_ID].as<UID>());
 }
 
-void Hachiko::AnimationImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
-{
-    Import(path, meta);
-}
-
 void Hachiko::AnimationImporter::Save(const Resource* resource) 
 {
     const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);

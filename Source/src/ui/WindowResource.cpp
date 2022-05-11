@@ -33,7 +33,7 @@ void Hachiko::WindowResource::Update()
         ImGui::InputText("Name", &auxiliary_name[0], 64);
         if (ImGui::Button("Create material"))
         {
-            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliary_name);
+            App->resources->CreateAsset(Resource::Type::MATERIAL, auxiliary_name);
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
@@ -72,21 +72,6 @@ void Hachiko::WindowResource::Update()
                 filename.insert(0, current_directory.string().c_str());
                 LoadResource(filename);
             }
-
-            /* if (ImGui::IsMouseClicked(1))
-            {
-                ImGui::OpenPopup(filename.c_str());
-            }
-
-            if (ImGui::BeginPopup(filename.c_str()))
-            {
-                if (ImGui::MenuItem("Refresh asset"))
-                {
-                    App->resources->ReimportAsset(filename);
-                    ImGui::CloseCurrentPopup();
-                }
-                ImGui::EndPopup();
-            } */
         }
     }
 

@@ -25,11 +25,6 @@ void Hachiko::FontImporter::Import(const char* path, YAML::Node& meta)
     delete font;
 }
 
-void Hachiko::FontImporter::ImportWithMeta(const char* path, YAML::Node& meta)
-{
-    Import(path, meta);
-}
-
 Hachiko::Resource* Hachiko::FontImporter::Load(UID id)
 {
     const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT) + std::to_string(id) + ".ttf";

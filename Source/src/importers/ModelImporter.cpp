@@ -254,9 +254,3 @@ void Hachiko::ModelImporter::Delete(const YAML::Node& meta)
 
     Importer::Delete(meta);
 }
-
-bool Hachiko::ModelImporter::IsImported(const char* path)
-{
-    const std::filesystem::path model(path);
-    return std::filesystem::exists(StringUtils::Concat(model.parent_path().string(), "\\", model.filename().replace_extension(META_EXTENSION).string()));
-}
