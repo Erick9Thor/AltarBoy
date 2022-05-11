@@ -6,8 +6,11 @@
 Hachiko::Scripting::PlayerSoundManager::PlayerSoundManager(Hachiko::GameObject* game_object)
 	: Script(game_object, "PlayerSoundManager")
 	, _player_controller(nullptr)
-	, _step_timer(0.0f)
+	, _timer(0.0f)
 	, _step_frequency(0.0f)
+	, _melee_frequency(0.0f)
+	, _ranged_frequency(0.0f)
+	, _previous_state(PlayerState::INVALID)
 {
 }
 
@@ -19,35 +22,68 @@ void Hachiko::Scripting::PlayerSoundManager::OnAwake()
 void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 {
 	PlayerState state = _player_controller->GetState();
+
+	bool state_changed = _previous_state != state;
+	_previous_state = state;
+
 	float delta_time = Time::DeltaTime();
+
+	if (state_changed)
+	{
+		_timer = 0.0f;
+	}
 
 	switch (state)
 	{
 	case PlayerState::IDLE:
-		_step_timer = 0.0f;
+		_timer = 0.0f;
 		break;
-	case PlayerState::WALKING:
-		_step_timer += delta_time;
 
-		if (_step_timer >= _step_frequency)
+	case PlayerState::WALKING:
+		_current_frequency = _step_frequency;
+
+		if (_timer == 0.0f)
 		{
-			_step_timer = 0.0f;
 			Audio::Play(Sounds::FOOTSTEP);
 		}
 
 		break;
+
 	case PlayerState::MELEE_ATTACKING:
-		_step_timer = 0.0f;
+		_current_frequency = _melee_frequency;
+
+		if (_timer == 0.0f)
+		{
+			Audio::Play(Sounds::MELEE_ATTACK);
+		}
+
 		break;
 	case PlayerState::RANGED_ATTACKING:
-		_step_timer = 0.0f;
+		_current_frequency = _ranged_frequency;
+
+		if (_timer == 0.0f)
+		{
+			Audio::Play(Sounds::RANGED_ATTACK);
+		}
+
 		break;
 	case PlayerState::DASHING:
-		_step_timer = 0.0f;
+		if (state_changed)
+		{
+			Audio::Play(Sounds::DASH);
+		}
+		_timer = 0.0f;
 		break;
 	case PlayerState::INVALID:
 	default:
-		_step_timer = 0.0f;
+		_timer = 0.0f;
 		break;
+	}
+
+	_timer += delta_time;
+
+	if (_timer >= _step_frequency)
+	{
+		_timer = 0.0f;
 	}
 }

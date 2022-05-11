@@ -1,6 +1,6 @@
 #pragma once
 #include <scripting/Script.h>
-
+#include "PlayerState.h"
 
 namespace Hachiko
 {
@@ -27,8 +27,13 @@ public:
 private:
 	PlayerController* _player_controller;
 
-	SERIALIZE_FIELD(float, _step_timer);
 	SERIALIZE_FIELD(float, _step_frequency);
+	SERIALIZE_FIELD(float, _melee_frequency);
+	SERIALIZE_FIELD(float, _ranged_frequency);
+	SERIALIZE_FIELD(float, _timer);
+	SERIALIZE_FIELD(PlayerState, _previous_state);
+
+	float _current_frequency;
 };
 } // namespace Scripting
 } // namespace Hachiko
