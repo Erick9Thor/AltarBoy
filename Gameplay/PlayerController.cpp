@@ -13,7 +13,12 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_progress(0.0f)
+	, _dash_cooldown(0.0f)
+	, _dash_timer(0.0f)
+	, _dash_count(0)
+	, _max_dash_count(0)
 	, _is_dashing(false)
+	, _has_cooldown(false)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
 	, _should_rotate(false)
@@ -26,11 +31,16 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 5.0f;
+	_dash_distance = 6.0f;
 	_dash_duration = 0.15f;
-	_movement_speed = 10.0f;
+	_dash_cooldown = 2.00f;
+	_dash_timer = 0.0f;
+	_dash_count = 2;
+	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
 	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
+	_dash_timer = 0.0f;
+	_max_dash_count = _dash_count;
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -142,6 +152,33 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 	// 3. Instead of approaching to _dash_end linearly, dash must have some sort
 	//    of an acceleration.
 	// TODO: Address the issues above. 
+	if (_dash_timer > 0.0f)
+	{
+		_dash_timer += Time::DeltaTime();
+	}
+
+	if (_dash_timer >= _dash_cooldown)
+	{
+		if (_dash_count < _max_dash_count)
+		{
+			_dash_timer = 0.0001f;
+			_dash_count += 1;
+		}
+		else if (_dash_count == _max_dash_count)
+		{
+			_dash_timer = 0.0f;
+		}
+
+	}
+	else
+	{
+		if (_dash_count == _max_dash_count)
+		{
+			_dash_timer = 0.0f;
+		}
+	}
+
+	_has_cooldown = (_dash_count <= 0);
 
 	if (!_is_dashing)
 	{
@@ -268,16 +305,22 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 	if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
 	{
+		_has_cooldown = (_dash_count <= 0);
+		if (_has_cooldown)
+		{
+			return;
+		}
+		_dash_count -= 1;
 		_is_dashing = true;
 		_dash_progress = 0.0f;
 		_dash_start = current_position;
+		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
+		const math::float3 dash_end = GetRaycastPosition(
+			_dash_start);
+		
+		//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
 
-		//const math::float3 dash_end = GetRaycastPosition(
-		//	_dash_start);
-		//
-		const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
-
-		_dash_direction = float3(mouse_direction.x, 0.0f, mouse_direction.y);
+		_dash_direction = dash_end - _dash_start;
 		_dash_direction.Normalize();
 	}
 }
