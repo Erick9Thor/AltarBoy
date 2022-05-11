@@ -166,20 +166,31 @@ void Hachiko::ModuleNavigation::DebugDraw()
 
 void Hachiko::ModuleNavigation::DrawOptionsGui()
 {
+    ImGui::Separator();
+    ImGui::Text("Navmesh Editor");       
+    if (ImGui::Button("Rebuild Navmesh"))
+    {
+        App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
+    }
+        
     if (navmesh)
     {
-        ImGui::Separator();
-        ImGui::Text("Navmesh Editor");       
-        if (ImGui::Button("Rebuild Navmesh"))
-        {
-            App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
-        }
-        
         if (ImGui::CollapsingHeader("Params"))
         {
             navmesh->DrawOptionsGui();
-        }        
+        }
     }
+}
+
+float3 Hachiko::ModuleNavigation::GetCorrectedPosition(math::float3& position, const math::float3& extents) const
+{
+    dtQueryFilter filter;
+    dtPolyRef reference;
+    float nearestPt[3];
+
+    navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, nearestPt);
+
+    return float3(nearestPt[0], nearestPt[1], nearestPt[2]);
 }
 
 void Hachiko::ModuleNavigation::CorrectPosition(math::float3& position, const math::float3& extents) const 
@@ -191,7 +202,7 @@ void Hachiko::ModuleNavigation::CorrectPosition(math::float3& position, const ma
 
     if (reference != NULL)
     {
-        float height = 0.0f;
+        float height = 1000.0f;
         navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
         position.y = height;
     }

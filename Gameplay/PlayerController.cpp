@@ -220,9 +220,32 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		return;
 	}
 
+	if (_is_falling) 
+	{
+		current_position.y -= 0.25f;
+
+		if (current_position.y < -20.0f) 
+		{
+			SceneManagement::SwitchScene(Scenes::LOSE);
+		}
+		return;
+	}
+
 	// Dashing locks player from submitting new commands on input:
 	if (_is_dashing)
 	{
+		// check if in navmesh
+		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+
+		if (Distance(corrected_position, current_position) >= 1.0f)
+		{
+			_is_falling = true;
+		}
+		else 
+		{
+			current_position = corrected_position;
+		}
+
 		return;
 	}
 
@@ -271,8 +294,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_dash_direction.Normalize();
 	}
 
-	float current_y = current_position.y;
+	//float current_y = current_position.y;
 
-	Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
-	current_position.y = current_position.y < current_y ? current_y : current_position.y;
+	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
+	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
+
+	current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
 }

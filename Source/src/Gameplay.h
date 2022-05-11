@@ -468,5 +468,6 @@ HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type,
 namespace Hachiko::Navigation
 {
     HACHIKO_API float GetHeightFromPosition(const math::float3& position);
+    HACHIKO_API math::float3 GetCorrectedPosition(math::float3& position, const math::float3& extents);
     HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
 } // namespace Hachiko::Navigation
