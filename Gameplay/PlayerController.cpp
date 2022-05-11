@@ -21,6 +21,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_duration(0.0f)
 	, _rotation_target(math::Quat::identity)
 	, _rotation_start(math::Quat::identity)
+	, _raycast_min_range(0.001)
+	, _raycast_max_range(15.f)
 {
 }
 
@@ -118,13 +120,27 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// actual combat upon.
 	// TODO: Improve this method and implement actual attacking.
 	
-	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT))
+	if (_is_dashing)
 	{
 		return;
 	}
 
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
+
+	// RANGE
+	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
+	{
+		const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
+		GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range, 
+			forward * _raycast_max_range + current_position);
+
+		if (hit_game_object)
+		{
+			HE_LOG("enemy hit");
+		}
+	}
+	
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)

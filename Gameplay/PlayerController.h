@@ -49,6 +49,9 @@ private:
 	SERIALIZE_FIELD(math::float3, _dash_start);
 	SERIALIZE_FIELD(math::float3, _dash_direction);
 
+	SERIALIZE_FIELD(float, _raycast_min_range);
+	SERIALIZE_FIELD(float, _raycast_max_range);
+
 	SERIALIZE_FIELD(bool, _should_rotate);
 	SERIALIZE_FIELD(float, _rotation_progress);
 	SERIALIZE_FIELD(float, _rotation_duration);
