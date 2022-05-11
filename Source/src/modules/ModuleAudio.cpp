@@ -153,6 +153,8 @@ bool Hachiko::ModuleAudio::Init()
 
     // Post this event using its name
     AK::SoundEngine::PostEvent(L"Play_BackgroundMusic", GAME_OBJECT_ID_BGMUSIC);
+    AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_BGMUSIC, MY_DEFAULT_LISTENER, 0.1f);
+    AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_PLAYER, MY_DEFAULT_LISTENER, 0.3f);
 
     return true;
 }
