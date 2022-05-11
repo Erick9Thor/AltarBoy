@@ -206,7 +206,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
     HE_LOG("Assets/Library check finished.");
 }
 
-void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
+void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder, bool force) 
 {
     for (PathNode path_node : folder.children)
     {
@@ -227,21 +227,39 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
                 // Extract data from meta
                 UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-                uint64_t meta_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
+                uint64_t previous_asset_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
                 
                 std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
                 bool library_file_exists = FileSystem::Exists(library_path.c_str());
 
-                // Get the asset timestamp
+                // Get the asset hash
                 uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
-
-                if (meta_hash != asset_hash)
+                
+                //uint64_t meta_hash = FileSystem::HashFromPath(meta_path.c_str());
+                /* if (meta_hash != previous_meta_hash)
                 {
+                    // Keep id and regenerate meta and all
+                    if (library_file_exists)
+                    {
+                        importer_manager.DeleteWithMeta(type, meta_node);
+                    }
+                    
+                }*/
+
+                
+                if (false)
+                {
+                    importer_manager.Import(std::filesystem::path(path_node.path), type, meta_uid);
+                }              
+                else if (previous_asset_hash != asset_hash)
+                {
+                    // Keep meta and regenerate
                     if (library_file_exists)
                     {
                         importer_manager.DeleteWithMeta(type, meta_node);
                     }
                     importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
+
                 }
                 else if (!library_file_exists)
                 {
