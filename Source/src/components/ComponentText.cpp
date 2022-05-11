@@ -77,8 +77,6 @@ void Hachiko::ComponentText::DrawGui()
         }
 
         ImGui::Text("No text = size is too small, nothing can be drawn");
-        ImGui::Text("Font loaded: %d", font != nullptr);
-        ImGui::Text("Label Generated: %d", label != nullptr);
 	}
     ImGui::PopID();
 }
