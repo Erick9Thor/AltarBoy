@@ -1,13 +1,13 @@
 General:
-  id: 13125691401013944958
+  id: 8494690404409901170
   type: 3
   hash: 17988356073997400933
 model_name: Hearse
 material:
-  - id: 13125691401014044958
+  - id: 8494690404410001170
     name: HearseMaterial
 mesh:
-  - id: 13125691401013945958
+  - id: 8494690404409902170
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

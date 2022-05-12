@@ -315,6 +315,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="DynamicCamera.h" />
+    <ClInclude Include="EnemyController.h" />
     <ClInclude Include="generated\Factory.h" />
     <ClInclude Include="MainMenuManager.h" />
     <ClInclude Include="PlayerAnimationManager.h" />
@@ -325,6 +326,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
+    <ClInclude Include="Stats.h" />
     <ClInclude Include="Sounds.h" />
   </ItemGroup>
   <ItemGroup>
@@ -715,6 +717,7 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
+    <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SaveAndLoadMethods.cpp" />
@@ -729,6 +732,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Geometry\KDTree.inl" />

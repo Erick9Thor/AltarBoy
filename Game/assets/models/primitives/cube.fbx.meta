@@ -1,13 +1,13 @@
 General:
-  id: 2642438144854273684
+  id: 15256354291694338724
   type: 3
   hash: 2921237583184484729
 model_name: cube
 material:
-  - id: 2642438144854373684
+  - id: 15256354291694438724
     name: DefaultMaterial
 mesh:
-  - id: 2642438144854274684
+  - id: 15256354291694339724
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

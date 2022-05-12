@@ -111,6 +111,7 @@ void Hachiko::ComponentMeshRenderer::DrawGui()
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)],
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
                 ImGui::Checkbox("Visible", &visible);
+                ImGui::Checkbox("Navigable", &navigable);
             }
             ImGui::TreePop();
         }
@@ -137,10 +138,16 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     if (mesh != nullptr)
     {
         node[RENDERER_MESH_ID] = mesh->GetID();
+        node[MODEL_NAME] = model_name;
+        node[NODE_MESH_INDEX] = mesh_index;
+        node[MESH_NAVIGABLE] = navigable;
     }
     else
     {
         node[RENDERER_MESH_ID] = 0;
+        node[MODEL_NAME] = 0;
+        node[NODE_MESH_INDEX] = 0;
+        node[MESH_NAVIGABLE] = 0;
     }
 
     if (material != nullptr)
@@ -161,6 +168,10 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
     if (mesh_id)
     {
+        model_name = node[MODEL_NAME].as<std::string>();
+        mesh_index = node[NODE_MESH_INDEX].as<int>();
+        navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
+
         LoadMesh(mesh_id);
     }
     if (material_id)

@@ -95,6 +95,7 @@ namespace Hachiko
 
         // float4 clear_color;
         bool draw_skybox = true;
+        bool draw_navmesh = false;
         bool outline_selection = true;
 
         GpuData gpu{};

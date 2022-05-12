@@ -410,6 +410,7 @@ HACHIKO_API void SwitchScene(const char* name);
 HACHIKO_API GameObject* Raycast(const float3& origin, 
     const float3& destination);
 HACHIKO_API GameObject* FindInCurrentScene(unsigned long long id);
+HACHIKO_API void Destroy(GameObject* game_object);
 } // namespace Hachiko::SceneManagement
 
 namespace Hachiko::Debug
@@ -464,6 +465,13 @@ HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type,
     }
 }
 } // namespace Hachiko::Editor
+
+namespace Hachiko::Navigation
+{
+    HACHIKO_API float GetHeightFromPosition(const math::float3& position);
+    HACHIKO_API math::float3 GetCorrectedPosition(math::float3& position, const math::float3& extents);
+    HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
+} // namespace Hachiko::Navigation
 
 namespace Hachiko::Audio
 {

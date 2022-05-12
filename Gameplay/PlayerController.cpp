@@ -28,6 +28,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_duration(0.0f)
 	, _rotation_target(math::Quat::identity)
 	, _rotation_start(math::Quat::identity)
+	, _raycast_min_range(0.001)
+	, _raycast_max_range(15.f)
+	, _stats(1, 2, 10, 10)
 	, _state(PlayerState::IDLE)
 {
 }
@@ -59,25 +62,25 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Attack:
 	Attack(transform, current_position);
 
-// Handle all the input:
-HandleInput(current_position);
+	// Handle all the input:
+	HandleInput(current_position);
 
-// Dash:
-Dash(current_position);
+	// Dash:
+	Dash(current_position);
 
-// Rotate player to the necessary direction:
-Rotate(transform, current_position);
+	// Rotate player to the necessary direction:
+	Rotate(transform, current_position);
 
-// Move the dash indicator:
-MoveDashIndicator(current_position);
+	// Move the dash indicator:
+	MoveDashIndicator(current_position);
 
-// Apply the position:
-transform->SetGlobalPosition(current_position);
+	// Apply the position:
+	transform->SetGlobalPosition(current_position);
 
-// Instantiate GameObject in current scene test:
-SpawnGameObject();
+	// Instantiate GameObject in current scene test:
+	SpawnGameObject();
 
-//CheckGoal(current_position);
+	//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -155,6 +158,19 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
 
+	// RANGE
+	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
+	{
+		const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
+		GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range, 
+			forward * _raycast_max_range + current_position);
+
+		if (hit_game_object)
+		{
+			HE_LOG("enemy hit");
+		}
+	}
+	
 	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
 	std::vector<GameObject*> enemies_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
@@ -302,9 +318,32 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		return;
 	}
 
+	if (_is_falling) 
+	{
+		current_position.y -= 0.25f;
+
+		if (current_position.y < -20.0f) 
+		{
+			SceneManagement::SwitchScene(Scenes::LOSE);
+		}
+		return;
+	}
+
 	// Dashing locks player from submitting new commands on input:
 	if (_is_dashing)
 	{
+		// check if in navmesh
+		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+
+		if (Distance(corrected_position, current_position) >= 1.0f)
+		{
+			_is_falling = true;
+		}
+		else 
+		{
+			current_position = corrected_position;
+		}
+
 		return;
 	}
 
@@ -372,6 +411,13 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_dash_direction = dash_end - _dash_start;
 		_dash_direction.Normalize();
 	}
+
+	//float current_y = current_position.y;
+
+	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
+	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
+
+	current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
 }
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)

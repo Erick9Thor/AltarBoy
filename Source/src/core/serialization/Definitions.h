@@ -167,6 +167,7 @@
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
+#define MESH_NAVIGABLE "navigable"
 
 // Component Lights
 #define LIGHT_TYPE "light_type"
@@ -205,6 +206,15 @@
 #define BAR_MAX "max"
 #define BAR_FILLED "filled"
 #define BAR_DIRECTION "direction"
+
+// Component Obstacle
+#define OBSTACLE_TYPE "obstacle_type"
+#define OBSTACLE_SIZE "obstacle_size"
+
+// Component Agent
+#define MAX_SPEED "max_speed"
+#define MAX_ACCELERATION "max_acceleration"
+#define AVOID_OBSTACLES "avoid_obstacles"
 
 // Script
 #define SCRIPT_NAME "class_name"

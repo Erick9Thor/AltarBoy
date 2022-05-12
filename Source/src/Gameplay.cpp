@@ -4,6 +4,8 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
 #include "Gameplay.h"
+#include "modules/ModuleNavigation.h"
+#include "components/ComponentAgent.h"
 
 
 /*TIME-----------------------------------------------------------------------*/
@@ -98,6 +100,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     unsigned long long id)
 {
     return App->scene_manager->GetRoot()->Find(id);
+}
+
+HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
+{
+    delete game_object;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -246,6 +253,25 @@ void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
     bool changed = false;
 
     ShowGameObjectDragDropArea(field_name, "GameObject*", &field, changed);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*NAVIGATION-----------------------------------------------------------------*/
+
+float Hachiko::Navigation::GetHeightFromPosition(const math::float3& position)
+{
+    return App->navigation->GetYFromPosition(position);    
+}
+
+math::float3 Hachiko::Navigation::GetCorrectedPosition(math::float3& position, const math::float3& extents)
+{
+    return App->navigation->GetCorrectedPosition(position, extents);
+}
+
+void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::float3& extents)
+{
+    return App->navigation->CorrectPosition(position, extents);
 }
 
 /*---------------------------------------------------------------------------*/

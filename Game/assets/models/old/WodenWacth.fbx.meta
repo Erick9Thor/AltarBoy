@@ -1,13 +1,13 @@
 General:
-  id: 6534318053261519635
+  id: 4641724489658618919
   type: 3
   hash: 5039055398334658057
 model_name: WodenWacth
 material:
-  - id: 6534318053261619635
+  - id: 4641724489658718919
     name: watchtower
 mesh:
-  - id: 6534318053261520635
+  - id: 4641724489658619919
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

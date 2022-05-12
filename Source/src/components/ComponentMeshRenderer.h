@@ -37,6 +37,11 @@ namespace Hachiko
             return visible;
         }
 
+        [[nodiscard]] bool IsNavigable() const
+        {
+            return navigable;
+        }
+
         [[nodiscard]] AABB GetAABB() const
         {
             return mesh->bounding_box;
@@ -136,13 +141,13 @@ namespace Hachiko
 
     private:
         bool visible = true;
+        bool navigable = false;
         
         int mesh_index;
         std::string asset_path;
         std::string model_name;
       
         // SKINING
-
         const GameObject** node_cache = nullptr;
         std::vector<float4x4> palette;
 

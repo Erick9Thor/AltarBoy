@@ -7,6 +7,9 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentAgent.h"
+#include "components/ComponentObstacle.h"
+
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -185,6 +188,14 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::TEXT):
         if (!GetComponent<ComponentProgressBar>())
             new_component = new ComponentText(this);
+        break;
+    case (Component::Type::OBSTACLE):
+        if (!GetComponent<ComponentObstacle>())
+            new_component = new ComponentObstacle(this);
+        break;
+    case (Component::Type::AGENT):
+        if (!GetComponent<ComponentAgent>())
+            new_component = new ComponentAgent(this);
         break;
     }
 

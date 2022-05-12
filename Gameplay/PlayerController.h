@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
+#include "Stats.h"
 #include "PlayerState.h"
 
 namespace Hachiko
@@ -40,6 +41,8 @@ private:
 	
 	void HandleInput(math::float3& current_position);
 
+public:
+	SERIALIZE_FIELD(Stats, _stats);
 	void CheckGoal(const float3& current_position);
 
 private:
@@ -56,10 +59,15 @@ private:
 	SERIALIZE_FIELD(int, _max_dash_count);
 	SERIALIZE_FIELD(bool, _is_dashing);
 	SERIALIZE_FIELD(bool, _has_cooldown);
+	SERIALIZE_FIELD(bool, _is_falling);
 	SERIALIZE_FIELD(math::float3, _dash_start);
 	SERIALIZE_FIELD(math::float3, _dash_direction);
+
+	SERIALIZE_FIELD(float, _raycast_min_range);
+	SERIALIZE_FIELD(float, _raycast_max_range);
 	SERIALIZE_FIELD(float, _attack_radius);
 	SERIALIZE_FIELD(float, _attack_cooldown);
+
 	SERIALIZE_FIELD(bool, _should_rotate);
 	SERIALIZE_FIELD(float, _rotation_progress);
 	SERIALIZE_FIELD(float, _rotation_duration);
