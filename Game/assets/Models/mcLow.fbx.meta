@@ -4,10 +4,10 @@ General:
   hash: 4694614161417673051
 model_name: mcLow
 material:
-  - id: 15367293323454320240
+  - id: 8190521204912797069
     name: mcLow
 mesh:
-  - id: 7042293601264350759
+  - id: 8190521204912698069
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
