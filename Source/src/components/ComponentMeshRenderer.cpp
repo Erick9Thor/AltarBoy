@@ -141,13 +141,14 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
         node[MODEL_NAME] = model_name;
         node[NODE_MESH_INDEX] = mesh_index;
         node[MESH_NAVIGABLE] = navigable;
+        node["Visible"] = visible;
     }
     else
     {
         node[RENDERER_MESH_ID] = 0;
         node[MODEL_NAME] = 0;
         node[NODE_MESH_INDEX] = 0;
-        node[MESH_NAVIGABLE] = 0;
+        node["Visible"] = true;
     }
 
     if (material != nullptr)
@@ -171,6 +172,7 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
         model_name = node[MODEL_NAME].as<std::string>();
         mesh_index = node[NODE_MESH_INDEX].as<int>();
         navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
+        visible = node["Visible"].IsDefined() ? node["Visible"].as<bool>() : true;
 
         LoadMesh(mesh_id);
     }
