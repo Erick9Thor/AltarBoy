@@ -1,6 +1,14 @@
 #include "core/hepch.h"
 #include "ComponentAgent.h"
 
+#include "modules/ModuleSceneManager.h"
+#include "modules/ModuleNavigation.h"
+#include "modules/ModuleEvent.h"
+
+#include "resources/ResourceNavMesh.h"
+
+#include "components/ComponentTransform.h"
+
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {

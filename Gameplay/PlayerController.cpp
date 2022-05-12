@@ -23,6 +23,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_start(math::Quat::identity)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
+	, _stats(1, 2, 10, 10)
 {
 }
 
@@ -265,7 +266,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		return;
 	}
 
-	const float velocity = _movement_speed * Time::DeltaTime();
+	const float velocity = _stats._move_speed * Time::DeltaTime();
 	const math::float3 delta_x = math::float3::unitX * velocity;
 	const math::float3 delta_y = math::float3::unitY * velocity;
 	const math::float3 delta_z = math::float3::unitZ * velocity;

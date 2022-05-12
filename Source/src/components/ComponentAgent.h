@@ -1,13 +1,5 @@
 #pragma once
 
-#include "Application.h"
-#include "modules/ModuleSceneManager.h"
-#include "modules/ModuleNavigation.h"
-#include "modules/ModuleEvent.h"
-
-#include "resources/ResourceNavMesh.h"
-
-#include "components/ComponentTransform.h"
 
 namespace Hachiko
 {

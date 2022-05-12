@@ -4,6 +4,7 @@
 #include "modules/ModuleCamera.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
+#include "components/ComponentAgent.h"
 
 
 /*TIME-----------------------------------------------------------------------*/
@@ -271,5 +272,4 @@ void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::fl
 {
     return App->navigation->CorrectPosition(position, extents);
 }
-
 /*---------------------------------------------------------------------------*/

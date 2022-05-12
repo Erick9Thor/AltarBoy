@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
+#include <Stats.h>
 
 namespace Hachiko
 { 
@@ -37,6 +38,8 @@ private:
 	
 	void HandleInput(math::float3& current_position);
 
+public:
+	SERIALIZE_FIELD(Stats, _stats);
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
 
