@@ -464,3 +464,8 @@ HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type,
     }
 }
 } // namespace Hachiko::Editor
+
+namespace Hachiko::Audio
+{
+    HACHIKO_API void Play(const wchar_t* name);
+} // namespace Hachiko::Audio

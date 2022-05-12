@@ -2,5 +2,5 @@ Event	ID	Name			Wwise Object Path	Notes
 	2552552352	Play_TestBGMusic			\Default Work Unit\Play_TestBGMusic	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	78841658	TestBGMusic	C:\Users\MO\Documents\WwiseProjects\AkitaInteractive\.cache\Windows\SFX\TestBGMusic_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\TestBGMusic		11423808
+	78841658	TestBGMusic	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\TestBGMusic_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\TestBGMusic		11423808
 
