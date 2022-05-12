@@ -83,7 +83,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
-	//CheckGoal(current_position);
+	CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -462,10 +462,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)
 {
-	/*const float3 goal_position = _goal->GetTransform()->GetGlobalPosition();
+	const float3 goal_position = _goal->GetTransform()->GetGlobalPosition();
 
-	if (Distance(current_position, goal_position) < 0.5f)
+	if (Distance(current_position, goal_position) < 10.0f)
 	{
 		SceneManagement::SwitchScene(Scenes::WIN);
-	}*/
+	}
 }
