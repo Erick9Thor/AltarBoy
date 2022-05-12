@@ -51,13 +51,13 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
 	_dash_timer = 0.0f;
 	_max_dash_count = _dash_count;
+	_is_god_mode = false;
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
-	_attack_radius = _stats._current_hp;
 	if (_stats._current_hp <= 0)
 	{
 		SceneManagement::SwitchScene(Scenes::LOSE);
@@ -352,7 +352,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		return;
 	}
 
-	if (_is_falling) 
+	if (!_is_god_mode && _is_falling)
 	{
 		current_position.y -= 0.25f;
 
@@ -374,6 +374,11 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	// Dashing locks player from submitting new commands on input:
 	if (_is_dashing)
 	{
+		if (_is_god_mode)
+		{
+			return;
+		}
+
 		// check if in navmesh
 		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
 
@@ -424,11 +429,11 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_state = PlayerState::WALKING;
 	}
 
-	if (Input::GetKey(Input::KeyCode::KEY_Q))
+	if (_is_god_mode && Input::GetKey(Input::KeyCode::KEY_Q))
 	{
 		current_position += delta_y;
 	}
-	else if (Input::GetKey(Input::KeyCode::KEY_E))
+	else if (_is_god_mode && Input::GetKey(Input::KeyCode::KEY_E))
 	{
 		current_position -= delta_y;
 	}
@@ -454,11 +459,16 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 		_dash_direction.Normalize();
 	}
 
+	if (Input::GetKeyDown(Input::KeyCode::KEY_G))
+	{
+		_is_god_mode = !_is_god_mode;
+		_stats._god_mode = _is_god_mode;
+	}
 	//float current_y = current_position.y;
 
 	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
 	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
-	if (_state == PlayerState::WALKING)
+	if (!_is_god_mode && _state == PlayerState::WALKING)
 	{
 		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
 	}

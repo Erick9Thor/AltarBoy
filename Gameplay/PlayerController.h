@@ -81,6 +81,8 @@ private:
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
 
 	float attack_current_cd = 0.0f;
+
+	bool _is_god_mode = false;
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 };

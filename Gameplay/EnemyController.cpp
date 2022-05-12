@@ -2,6 +2,7 @@
 #include "scriptingUtil/gameplaypch.h"
 
 #include "EnemyController.h"
+#include "Scenes.h"
 #include <PlayerController.h>
 #include <Stats.h>
 #include <components/ComponentTransform.h>
@@ -10,7 +11,7 @@
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
-	, _attack_range(1.0f)
+	, _attack_range(1.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _stats(2, 2, 5, 10)
 {
@@ -19,6 +20,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
+	_attack_range = 1.5f;
 }
 
 void Hachiko::Scripting::EnemyController::OnStart()
@@ -35,7 +37,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
-	float dist_to_player = _player_pos.Distance(game_object->GetTransform()->GetGlobalPosition());
+	float dist_to_player = _current_pos.Distance(_player_pos);
 	if (dist_to_player <= _aggro_range)
 	{
 		if (dist_to_player <= _attack_range)
