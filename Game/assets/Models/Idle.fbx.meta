@@ -4,14 +4,14 @@ General:
   hash: 13722861381008344952
 model_name: Idle
 material:
-  - id: 11632425779209048713
+  - id: 18073408412781646668
     name: mcLow
 mesh:
-  - id: 8378810280512556078
+  - id: 18073408412781547668
     material_index: 0
 animations: 1
 animation_id:
-  - 17560074585713775926
+  - 18073408412791546668
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:

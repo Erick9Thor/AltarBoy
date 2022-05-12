@@ -1,12 +1,12 @@
 name: crystalTall_02
-diffuse: 0
-specular: 0
-normals: 0
+diffuse: 2758872789365698461
+specular: 16259860366260462915
+normals: 10847921901539265345
 metalness: 0
 diffuse_color: [0.588, 0.588, 0.588, 1]
-specular_color: [0.899999976, 0.899999976, 0.899999976, 1]
-smoothness: 0.5
+specular_color: [0, 0, 0, 1]
+smoothness: 1
 metalness_value: 0.5
 is_metallic: 0
-smoothness_alpha: 0
+smoothness_alpha: 1
 is_transparent: 0

@@ -13,9 +13,16 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_progress(0.0f)
+	, _dash_cooldown(0.0f)
+	, _dash_timer(0.0f)
+	, _dash_count(0)
+	, _max_dash_count(0)
 	, _is_dashing(false)
+	, _has_cooldown(false)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
+	, _attack_radius(0.0f)
+	, _attack_cooldown(0.0f)
 	, _should_rotate(false)
 	, _rotation_progress(0.0f)
 	, _rotation_duration(0.0f)
@@ -27,11 +34,18 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 5.0f;
+	_dash_distance = 6.0f;
 	_dash_duration = 0.15f;
-	_movement_speed = 10.0f;
+	_dash_cooldown = 2.00f;
+	_dash_timer = 0.0f;
+	_attack_radius = 4.0f;
+	_attack_cooldown = 0.5f;
+	_dash_count = 2;
+	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
 	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
+	_dash_timer = 0.0f;
+	_max_dash_count = _dash_count;
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -45,25 +59,25 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Attack:
 	Attack(transform, current_position);
 
-	// Handle all the input:
-	HandleInput(current_position);
+// Handle all the input:
+HandleInput(current_position);
 
-	// Dash:
-	Dash(current_position);
+// Dash:
+Dash(current_position);
 
-	// Rotate player to the necessary direction:
-	Rotate(transform, current_position);
+// Rotate player to the necessary direction:
+Rotate(transform, current_position);
 
-	// Move the dash indicator:
-	MoveDashIndicator(current_position);
+// Move the dash indicator:
+MoveDashIndicator(current_position);
 
-	// Apply the position:
-	transform->SetGlobalPosition(current_position);
+// Apply the position:
+transform->SetGlobalPosition(current_position);
 
-	// Instantiate GameObject in current scene test:
-	SpawnGameObject();
+// Instantiate GameObject in current scene test:
+SpawnGameObject();
 
-	CheckGoal(current_position);
+//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -89,31 +103,34 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 void Hachiko::Scripting::PlayerController::MoveDashIndicator(
 	const math::float3& current_position) const
 {
-	const math::float3 mouse_world_position = 
+	const math::float3 mouse_world_position =
 		GetRaycastPosition(current_position);
 
-	math::float3 direction = mouse_world_position- current_position;
+	math::float3 direction = mouse_world_position - current_position;
 	direction.Normalize();
 
-	_dash_indicator->GetTransform()->SetGlobalPosition(current_position
-		+ direction);
-	_dash_indicator->GetTransform()->SetGlobalRotationEuler(
-		float3(90.0f, 0.0f, 0.0f));
+	//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
+
+	//_dash_indicator->GetTransform()->SetGlobalPosition(current_position
+	//	+ float3(mouse_direction.x, 0.0f, mouse_direction.y));
+
+	//_dash_indicator->GetTransform()->SetGlobalRotationEuler(
+	//	float3(90.0f, 0.0f, 0.0f));
 }
 
 void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 {
 	static int times_hit_g = 0;
-	
+
 	if (!Input::GetKeyDown(Input::KeyCode::KEY_G))
 	{
 		return;
 	}
 
 	std::string name = "GameObject ";
-		
+
 	name += std::to_string(times_hit_g);
-		
+
 	times_hit_g++;
 
 	GameObject* created_game_object = GameObject::Instantiate();
@@ -127,16 +144,37 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// For now this only makes player look at to the direction to the mouse
 	// on left mouse button is clicked, can be used as a base to build the 
 	// actual combat upon.
-	// TODO: Improve this method and implement actual attacking.
-	
-	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT))
+	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT) || (attack_current_cd > 0.0f) )
 	{
+		attack_current_cd -= Time::DeltaTime();
 		return;
 	}
+
+	attack_current_cd = _attack_cooldown;
 
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
 
+	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
+	std::vector<GameObject*> enemies_hit = {};
+	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
+
+	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		if (_attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+		{
+			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
+			math::float3 rel_translate, rel_scale;
+			math::Quat rel_rotation;
+			relative_matrix.Decompose(rel_translate, rel_rotation, rel_scale);
+			float dot_product = transform->GetRight().Dot(rel_translate);
+			if (dot_product > 0)
+			{
+				enemies_hit.push_back(enemies[i]);
+			}
+		}
+	}
 	// Set player state to melee attacking:
 	_state = PlayerState::MELEE_ATTACKING;
 }
@@ -153,6 +191,33 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 	// 3. Instead of approaching to _dash_end linearly, dash must have some sort
 	//    of an acceleration.
 	// TODO: Address the issues above. 
+	if (_dash_timer > 0.0f)
+	{
+		_dash_timer += Time::DeltaTime();
+	}
+
+	if (_dash_timer >= _dash_cooldown)
+	{
+		if (_dash_count < _max_dash_count)
+		{
+			_dash_timer = 0.0001f;
+			_dash_count += 1;
+		}
+		else if (_dash_count == _max_dash_count)
+		{
+			_dash_timer = 0.0f;
+		}
+
+	}
+	else
+	{
+		if (_dash_count == _max_dash_count)
+		{
+			_dash_timer = 0.0f;
+		}
+	}
+
+	_has_cooldown = (_dash_count <= 0);
 
 	if (!_is_dashing)
 	{
@@ -289,13 +354,21 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 	if (Input::GetKeyDown(Input::KeyCode::KEY_SPACE))
 	{
+		_has_cooldown = (_dash_count <= 0);
+		if (_has_cooldown)
+		{
+			return;
+		}
+		_dash_count -= 1;
 		_is_dashing = true;
 		_dash_progress = 0.0f;
 		_dash_start = current_position;
-
+		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
 		const math::float3 dash_end = GetRaycastPosition(
 			_dash_start);
 		
+		//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
+
 		_dash_direction = dash_end - _dash_start;
 		_dash_direction.Normalize();
 	}

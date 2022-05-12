@@ -78,10 +78,13 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
     Hachiko::MaterialImporter material_importer;
     Hachiko::AnimationImporter animation_importer;
 
+    auto base_mesh_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 1000;
+    auto base_material_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 100000;
+    auto base_animation_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 10000000;
     for (unsigned i = 0; i < scene->mNumMaterials; ++i)
     {
         aiMaterial* material = scene->mMaterials[i];
-        Hachiko::UID material_id = UUID::GenerateUID();
+        Hachiko::UID material_id = base_material_id + i;
         node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
         node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = material->GetName().C_Str();
         material_importer.Import(material, material_id);
@@ -90,7 +93,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
     {
         aiMesh* mesh = scene->mMeshes[i];
-        Hachiko::UID mesh_id = UUID::GenerateUID();
+        Hachiko::UID mesh_id = base_mesh_id + i;
         node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
         node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX] = mesh->mMaterialIndex;
         mesh_importer.Import(mesh, mesh_id);
@@ -101,7 +104,7 @@ void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
         node[ANIMATIONS] = scene->mNumAnimations;
         for (unsigned int i = 0; i < scene->mNumAnimations; ++i)
         {
-            Hachiko::UID animation_id = UUID::GenerateUID();
+            Hachiko::UID animation_id = base_animation_id + i;
             node[ANIMATION_IDS][i] = animation_id;
             animation_importer.Import(scene->mAnimations[i], animation_id);
         }

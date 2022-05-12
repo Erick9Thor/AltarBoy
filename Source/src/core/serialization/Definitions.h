@@ -11,6 +11,7 @@
 #define GENERAL_ID "id"
 #define GENERAL_TYPE "type"
 #define GENERAL_HASH "hash"
+#define META_HASH "meta_hash"
 
 // Texture
 #define TEXTURE_ID "id"

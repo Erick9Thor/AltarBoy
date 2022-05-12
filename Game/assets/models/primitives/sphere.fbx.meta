@@ -4,10 +4,10 @@ General:
   hash: 14431016664718813603
 model_name: sphere
 material:
-  - id: 9234475820254915276
+  - id: 16483543554264166734
     name: DefaultMaterial
 mesh:
-  - id: 6111700358156225143
+  - id: 16483543554264067734
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
