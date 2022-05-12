@@ -67,7 +67,7 @@ namespace Hachiko
             float agent_height = 2.0f;
             float agent_radius = 0.5f;
             float agent_max_climb = 0.9f;
-            float agent_max_slope = 45.0f;
+            float agent_max_slope = 60.0f;
 
             // Rasterization
             float cell_size = 0.3f;

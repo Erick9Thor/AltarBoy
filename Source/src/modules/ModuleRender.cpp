@@ -193,7 +193,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
 void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
 {
-    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+    //OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
     if (draw_skybox)
     {

@@ -83,7 +83,7 @@ void Hachiko::ComponentText::DrawGui()
 
 void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* program)
 {   
-    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+    //OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
     if (!label)
     {

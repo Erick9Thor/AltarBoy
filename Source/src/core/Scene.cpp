@@ -324,6 +324,6 @@ void Hachiko::Scene::Start() const
 
 void Hachiko::Scene::Update() const
 {
-    OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
+    //OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
 }

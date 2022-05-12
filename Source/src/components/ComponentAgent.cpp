@@ -103,7 +103,7 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
         navQuery->findNearestPoly(target_pos.ptr(), closest_point_half_range.ptr(), filter, &target_poly, corrected_target.ptr());
         if (target_poly == 0)
         {
-            HE_LOG("Failed to find valid target position");
+            // HE_LOG("Failed to find valid target position");
             return;
         }
         target_position = corrected_target;
