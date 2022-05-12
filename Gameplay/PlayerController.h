@@ -34,6 +34,12 @@ private:
 	void Attack(ComponentTransform* transform, 
 		const math::float3& current_position);
 
+	void MeleeAttack(ComponentTransform* transform,
+		const math::float3& current_position);
+
+	void RangedAttack(ComponentTransform* transform,
+		const math::float3& current_position);
+
 	void Dash(math::float3& current_position);
 
 	void Rotate(ComponentTransform* transform, 

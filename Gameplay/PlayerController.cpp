@@ -1,10 +1,13 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
 #include "Scenes.h"
+#include "Stats.h"
+#include "EnemyController.h"
 
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
+#include <core/GameObject.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -30,7 +33,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_start(math::Quat::identity)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
-	, _stats(1, 2, 10, 10)
+	, _stats(5, 2, 10, 10)
 	, _state(PlayerState::IDLE)
 {
 }
@@ -147,30 +150,37 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	// For now this only makes player look at to the direction to the mouse
 	// on left mouse button is clicked, can be used as a base to build the 
 	// actual combat upon.
-	if (_is_dashing || !Input::GetMouseButton(Input::MouseButton::LEFT) || (attack_current_cd > 0.0f) )
+	if (_is_dashing || (attack_current_cd > 0.0f) )
 	{
 		attack_current_cd -= Time::DeltaTime();
 		return;
 	}
 
-	attack_current_cd = _attack_cooldown;
-
 	// Make the player look the mouse:
 	transform->LookAtTarget(GetRaycastPosition(current_position));
 
-	// RANGE
 	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
 	{
-		const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
-		GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range, 
-			forward * _raycast_max_range + current_position);
+		_state = PlayerState::RANGED_ATTACKING;
+		RangedAttack(transform, current_position);
 
-		if (hit_game_object)
-		{
-			HE_LOG("enemy hit");
-		}
+		attack_current_cd = _stats._attack_cd;
 	}
 	
+	if (Input::GetMouseButton(Input::MouseButton::LEFT))
+	{
+		_state = PlayerState::MELEE_ATTACKING;
+		MeleeAttack(transform, current_position);
+
+		attack_current_cd = _stats._attack_cd;
+	}
+	
+}
+
+void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* transform,
+	const math::float3& current_position)
+{
+	// MELEE
 	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
 	std::vector<GameObject*> enemies_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
@@ -180,6 +190,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	{
 		if (_attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 		{
+			// VS2: EXCEPTION ON QUAD.CPP
 			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
 			math::float3 rel_translate, rel_scale;
 			math::Quat rel_rotation;
@@ -191,8 +202,29 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 			}
 		}
 	}
-	// Set player state to melee attacking:
-	_state = PlayerState::MELEE_ATTACKING;
+
+	//loop in enemies hit
+	for (Hachiko::GameObject* enemy : enemies_hit)
+	{
+		enemy->GetComponent<EnemyController>()->_stats.RecieveDamage(_stats._attack_power);
+	}
+}
+
+void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
+	const math::float3& current_position)
+{
+	const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
+	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
+		forward * _raycast_max_range + current_position);
+
+	if (hit_game_object)
+	{
+		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
+		if (!enemy)	return;
+
+		HE_LOG("enemy hit");
+		enemy->_stats.RecieveDamage(_stats._attack_power);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)

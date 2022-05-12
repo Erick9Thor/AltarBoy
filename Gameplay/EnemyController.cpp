@@ -23,7 +23,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	_player = game_object->parent->GetFirstChildWithName("PlayerC");
+	_player = SceneManagement::FindInCurrentScene(17321034392790928344);
 	_player_controller = _player->GetComponent<PlayerController>();
 	transform = game_object->GetComponent<ComponentTransform>();
 }
@@ -52,16 +52,24 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		GoBack();
 	}
 
-	if (!_stats.IsAlive())
+	if (_stats._current_hp <= 0)
 	{
 		DestroyEntity();
+		_stats._is_alive = false;
 	}
 	
 }
 
 void Hachiko::Scripting::EnemyController::Attack()
 {
+	if (_attack_cooldown > 0)
+	{
+		_attack_cooldown -= Time::DeltaTime();
+		return;
+	}
+
 	_player_controller->_stats.RecieveDamage(_stats._attack_power);
+	_attack_cooldown = _stats._attack_cd;
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
@@ -94,6 +102,6 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	// Check if someone has reference to this object prior to destruction if possible
-	//game_object->SetActive(false);
+	game_object->SetActive(false);
 	//SceneManagement::Destroy(game_object);
 }

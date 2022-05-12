@@ -17,7 +17,7 @@ namespace Hachiko
             bool IsAlive();
         public:
             int _attack_power;
-            int _attack_speed;
+            int _attack_cd;
             float _move_speed;
 
             int _max_hp;
