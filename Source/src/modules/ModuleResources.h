@@ -48,8 +48,14 @@ namespace Hachiko
         Hachiko::ImporterManager importer_manager;
         std::filesystem::path last_resource_path;
 
+        // Checks the current assets folder states and sets library to a valid state
         void GenerateLibrary(const PathNode& folder);
-        void HandleAssetInCorrectPath(const std::string& asset_path);
-        void ImportResourceFromAsset(const std::filesystem::path& asset, Hachiko::Resource::Type asset_type, UID uid = 0);       
+        // Gets an asset file and returns its related resources
+        void ImportAssetResources(const std::string& asset_path);
+        // From an asset file creates its resources and sets the corresponding ids and types on meta
+        // Keeps Previously existing ids if they can be matched
+        void CreateAssetFromFile(const std::filesystem::path& asset, YAML::Node& meta);
+        // Checks if all the asset resource files exist in library
+        bool ValidateAssetResources(const YAML::Node& meta) const;
     };
 }

@@ -12,9 +12,9 @@ Hachiko::TextureImporter::TextureImporter()
 {
 }
 
-void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
+void Hachiko::TextureImporter::Import(const char* path, UID uid)
 {
-    Resource* texture = ImportTexture(path, meta[GENERAL_NODE][GENERAL_ID].as<UID>());
+    Resource* texture = ImportTexture(path, uid);
     delete texture;
 }
 
@@ -113,7 +113,7 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID uid)
 {
     std::string extension = FileSystem::GetFileExtension(path);
-    ResourceTexture* texture = App->texture->ImportResourceFromAsset(uid, path, extension != ".tif"); // TODO: could we extract ModuleTexture functionality to this importer?
+    ResourceTexture* texture = App->texture->CreateAssetFromFile(uid, path, extension != ".tif"); // TODO: could we extract ModuleTexture functionality to this importer?
 
     if (texture != nullptr)
     {

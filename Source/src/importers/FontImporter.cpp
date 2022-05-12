@@ -19,9 +19,9 @@ Hachiko::FontImporter::~FontImporter()
     FT_Done_FreeType(freetype_lib);
 }
 
-void Hachiko::FontImporter::Import(const char* path, YAML::Node& meta)
+void Hachiko::FontImporter::Import(const char* path, UID uid)
 {
-    Resource* font = ImportFont(path, meta[GENERAL_NODE][GENERAL_ID].as<UID>());
+    Resource* font = ImportFont(path, uid);
     delete font;
 }
 

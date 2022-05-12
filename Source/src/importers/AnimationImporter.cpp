@@ -8,7 +8,7 @@
 Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
 {}
 
-void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta) 
+void Hachiko::AnimationImporter::Import(const char* path, UID uid)
 {
     HE_LOG("Entering Animation Importer: %s", path);
     Assimp::Importer import;
@@ -20,7 +20,7 @@ void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta)
 
     assert(scene->mNumAnimations == 1);
 
-    Import(scene->mAnimations[0], meta[GENERAL_NODE][GENERAL_ID].as<UID>());
+    ImportSingleAnimation(scene->mAnimations[0], uid);
 }
 
 void Hachiko::AnimationImporter::Save(const Resource* resource) 
@@ -150,7 +150,7 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
     return animation;
 }
 
-void Hachiko::AnimationImporter::Import(const aiAnimation* animation, UID id)
+void Hachiko::AnimationImporter::ImportSingleAnimation(const aiAnimation* animation, UID id)
 {
 
     unsigned int first = 0;

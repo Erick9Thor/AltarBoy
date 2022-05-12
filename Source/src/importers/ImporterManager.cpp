@@ -41,7 +41,7 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
     
     // If the id passed is 0 (default) a new id is generated
-    YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type, id);   
+    YAML::Node meta = CreateMetaWithAssetHash(asset_path.string().c_str(), asset_type, id);   
     
     Importer* importer = GetImporter(asset_type);
 
@@ -51,7 +51,7 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
         return;
     }
 
-    importer->Import(asset_path.string().c_str(), meta);
+    importer->Import(asset_path.string().c_str(), id);
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
@@ -114,26 +114,16 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     return importer_type;
 }
 
-YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type, UID id) const
+YAML::Node Hachiko::ImporterManager::CreateMetaWithAssetHash(const char* asset_path) const
 {
     YAML::Node node;
-    uint64_t file_hash = FileSystem::HashFromPath(path);
-    if (id != 0)
-    {
-        node[GENERAL_NODE][GENERAL_ID] = id;
-    }
-    else
-    {
-        node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
-    }    
-    node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);    
-    node[GENERAL_NODE][GENERAL_HASH] = file_hash;
-    
+    uint64_t asset_file_hash = FileSystem::HashFromPath(asset_path);
+    node[ASSET_HASH] = asset_file_hash;    
     return node;
 }
 
-void Hachiko::ImporterManager::UpdateMeta(const char* path, YAML::Node& meta) const
+void Hachiko::ImporterManager::UpdateMetaHash(const char* path, YAML::Node& meta) const
 {
     uint64_t file_hash = FileSystem::HashFromPath(path);
-    meta[GENERAL_NODE][GENERAL_HASH] = file_hash;
+    meta[ASSET_HASH] = file_hash;
 }

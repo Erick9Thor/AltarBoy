@@ -86,7 +86,7 @@ void ModuleResources::HandleAssetFromAnyPath(const std::filesystem::path& path)
     }
 
     // Handle asset when it is in correct path
-    HandleAssetInCorrectPath(destination.string())
+    ImportAssetResources(destination.string());
 }
 
 Resource::Type ModuleResources::GetTypeFromPath(const std::filesystem::path& path)
@@ -164,11 +164,11 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
             GenerateLibrary(path_node);
             continue;
         }
-        HandleAssetInCorrectPath(path_node.path);
+        ImportAssetResources(path_node.path);
     }
 }
 
-void Hachiko::ModuleResources::HandleAssetInCorrectPath(const std::string& asset_path)
+void Hachiko::ModuleResources::ImportAssetResources(const std::string& asset_path)
 {
     Resource::Type type = GetTypeFromPath(asset_path);
 
@@ -184,36 +184,51 @@ void Hachiko::ModuleResources::HandleAssetInCorrectPath(const std::string& asset
     if (!FileSystem::Exists(meta_path.c_str()))
     {
         // If it doesnt have meta import from scratch, dont pass uid so it generates a new one
-        ImportResourceFromAsset(std::filesystem::path(asset_path), type);
+        YAML::Node meta_node = importer_manager.CreateMetaWithAssetHash(asset_path.c_str());
+        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
         return;
     }
 
     // If it has meta align on library and refresh if necessary
     YAML::Node meta_node = YAML::LoadFile(meta_path);
 
-    // Extract data from meta
-    UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-    uint64_t previous_asset_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
-
-    std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
-    bool library_file_exists = FileSystem::Exists(library_path.c_str());
-
-    // Get the asset hash and reimport if it has changed or if it is not in lib
+    // Do validations over meta information
+    uint64_t previous_asset_hash = meta_node[ASSET_HASH].IsDefined() ? meta_node[ASSET_HASH].as<uint64_t>() : 0;
     uint64_t asset_hash = FileSystem::HashFromPath(asset_path.c_str());
-    if (previous_asset_hash != asset_hash || !library_file_exists)
+
+    // Get the asset hash and reimport if it has changed
+    if (previous_asset_hash != asset_hash)
     {
-        // Remove previous lib version if it exists
-        if (library_file_exists)
-        {
-            importer_manager.Delete(meta_uid, type);
-        }
-        // Pass uid so it is maintained
-        ImportResourceFromAsset(std::filesystem::path(asset_path), type, meta_uid);
+        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
+        return;
     }
+    
+    // Reimport if any lib file is missing
+    bool valid_lib = ValidateAssetResources(meta_node);
+    if (!valid_lib)
+    {
+        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
+        return;
+    }
+
+    // If it exists and has a valid lib do nothing
 }
 
-void ModuleResources::ImportResourceFromAsset(const std::filesystem::path& asset_path, const Resource::Type asset_type, UID uid)
+void ModuleResources::CreateAssetFromFile(const std::filesystem::path& asset_path, YAML::Node& meta)
 {
-    // If passed uid is 0 (default) it will generate a new one
+    // Import resources from an asset and its metadata, if there are existing resource ids maintain them
     importer_manager.Import(asset_path.string(), asset_type, uid);
+}
+
+
+bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) const
+{
+    for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+    {
+        UID resource_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+        Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+        std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(resource_uid));
+        if (!FileSystem::Exists(library_path.c_str())) return false;
+    }
+    return true;
 }

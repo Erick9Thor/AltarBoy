@@ -7,11 +7,11 @@
 //////////////////////////
 
 // General
-#define GENERAL_NODE "General"
-#define GENERAL_ID "id"
-#define GENERAL_TYPE "type"
-#define GENERAL_HASH "hash"
-#define META_HASH "meta_hash"
+//#define GENERAL_ID "id"
+#define RESOURCES "resources"
+#define RESOURCE_TYPE "resource_type"
+#define RESOURCE_ID "resource_id"
+#define ASSET_HASH "asset_hash"
 
 // Texture
 #define TEXTURE_ID "id"

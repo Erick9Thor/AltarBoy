@@ -22,8 +22,8 @@ namespace Hachiko
 
         Importer* GetImporter(Resource::Type type) const;
         Importer::Type ToImporterType(Resource::Type type) const;
-        // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
-        YAML::Node CreateMeta(const char* path, const Resource::Type resource_type, UID id = 0) const;
-        void UpdateMeta(const char* path, YAML::Node& meta) const;
+        // From an asset path create initial meta node
+        YAML::Node CreateMetaWithAssetHash(const char* path) const;
+        void UpdateMetaHash(const char* path, YAML::Node& meta) const;
     };
 }

@@ -16,7 +16,7 @@ namespace Hachiko
         FontImporter();
         ~FontImporter() override;
 
-        void Import(const char* path, YAML::Node& meta) override;
+        void Import(const char* path, UID uid) override;
         Resource* Load(UID id) override;
 
         void Save(const Resource* resource) override;
