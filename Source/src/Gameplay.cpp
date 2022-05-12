@@ -2,6 +2,7 @@
 #include "modules/ModuleInput.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
+#include "modules/ModuleAudio.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -272,4 +273,14 @@ void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::fl
 {
     return App->navigation->CorrectPosition(position, extents);
 }
+
+/*---------------------------------------------------------------------------*/
+
+/*AUDIO----------------------------------------------------------------------*/
+
+HACHIKO_API void Hachiko::Audio::Play(const wchar_t* name)
+{
+    return App->audio->Play(name);
+}
+
 /*---------------------------------------------------------------------------*/

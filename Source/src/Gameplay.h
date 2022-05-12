@@ -472,3 +472,8 @@ namespace Hachiko::Navigation
     HACHIKO_API math::float3 GetCorrectedPosition(math::float3& position, const math::float3& extents);
     HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
 } // namespace Hachiko::Navigation
+
+namespace Hachiko::Audio
+{
+    HACHIKO_API void Play(const wchar_t* name);
+} // namespace Hachiko::Audio

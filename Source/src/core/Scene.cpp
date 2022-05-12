@@ -17,6 +17,7 @@
 #include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceAnimation.h"
 #include <debugdraw.h>
 #include <algorithm>
 
