@@ -75,13 +75,13 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	Rotate(transform, current_position);
 
 	// Move the dash indicator:
-	MoveDashIndicator(current_position);
+	//MoveDashIndicator(current_position);
 
 	// Apply the position:
 	transform->SetGlobalPosition(current_position);
 
 	// Instantiate GameObject in current scene test:
-	SpawnGameObject();
+	//SpawnGameObject();
 
 	//CheckGoal(current_position);
 }
@@ -166,8 +166,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 
 		attack_current_cd = _stats._attack_cd;
 	}
-	
-	if (Input::GetMouseButton(Input::MouseButton::LEFT))
+	else if (Input::GetMouseButton(Input::MouseButton::LEFT))
 	{
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::MELEE_ATTACKING;
@@ -353,6 +352,14 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 	{
 		current_position.y -= 0.25f;
 
+		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+		_state = PlayerState::FALLING;
+		if (Distance(corrected_position, current_position) < 1.0f)
+		{
+			current_position = corrected_position;
+			_is_falling = false;
+		}
+
 		if (current_position.y < -20.0f) 
 		{
 			SceneManagement::SwitchScene(Scenes::LOSE);
@@ -447,8 +454,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(
 
 	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
 	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
-
-	current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+	if (_state == PlayerState::WALKING)
+	{
+		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+	}
 }
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)

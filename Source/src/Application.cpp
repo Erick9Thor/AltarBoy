@@ -73,7 +73,7 @@ bool Hachiko::Application::Init()
 
 UpdateStatus Hachiko::Application::Update()
 {
-    OPTICK_EVENT();
+    //OPTICK_EVENT();
     delta = EngineTimer::Update();
     GameTimer::Update();
 

@@ -58,7 +58,7 @@ void Hachiko::ComponentImage::DrawGui()
 
 void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* program) const
 {
-    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+    //OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
 	// Bind matrix
     program->Activate();

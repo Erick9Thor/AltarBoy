@@ -10,7 +10,7 @@
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
-	, _attack_range(0.5)
+	, _attack_range(1.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _stats()
 {
@@ -18,12 +18,12 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	
+	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 }
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	_player = SceneManagement::FindInCurrentScene(17321034392790928344);
+	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
 	_player_controller = _player->GetComponent<PlayerController>();
 	transform = game_object->GetComponent<ComponentTransform>();
 }
@@ -32,10 +32,10 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	if (!_stats.IsAlive())	return;
 
-	_player_pos = _player->GetComponent<ComponentTransform>()->GetGlobalPosition();
+	_player_pos = _player->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
-	float dist_to_player = (_player_pos - game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()).Length();
+	float dist_to_player = _player_pos.Distance(game_object->GetTransform()->GetGlobalPosition());
 	if (dist_to_player <= _aggro_range)
 	{
 		if (dist_to_player <= _attack_range)
@@ -75,6 +75,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 void Hachiko::Scripting::EnemyController::ChasePlayer()
 {
 	_target_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
+	transform->LookAtTarget(_target_pos);
 	MoveInNavmesh();
 }
 
