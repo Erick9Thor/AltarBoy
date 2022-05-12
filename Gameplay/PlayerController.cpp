@@ -156,11 +156,11 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		return;
 	}
 
-	// Make the player look the mouse:
-	transform->LookAtTarget(GetRaycastPosition(current_position));
 
 	if (Input::GetMouseButton(Input::MouseButton::RIGHT))
 	{
+		// Make the player look the mouse:
+		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::RANGED_ATTACKING;
 		RangedAttack(transform, current_position);
 
@@ -169,6 +169,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	
 	if (Input::GetMouseButton(Input::MouseButton::LEFT))
 	{
+		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 
@@ -221,8 +222,6 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-
-		HE_LOG("enemy hit");
 		enemy->_stats.RecieveDamage(_stats._attack_power);
 	}
 }
