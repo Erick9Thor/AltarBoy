@@ -12,7 +12,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _aggro_range(4)
 	, _attack_range(1.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
-	, _stats()
+	, _stats(2, 2, 5, 10)
 {
 }
 

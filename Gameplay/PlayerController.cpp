@@ -43,9 +43,8 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_distance = 6.0f;
 	_dash_duration = 0.15f;
 	_dash_cooldown = 2.00f;
-	_dash_timer = 0.0f;
 	_attack_radius = 4.0f;
-	_attack_cooldown = 0.5f;
+	_attack_cooldown = 0.2f;
 	_dash_count = 2;
 	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
@@ -58,6 +57,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
+	_attack_radius = _stats._current_hp;
+	if (_stats._current_hp <= 0)
+	{
+		SceneManagement::SwitchScene(Scenes::LOSE);
+	}
 
 	// Set state to idle, it will be overriden if there is a movement:
 	_state = PlayerState::IDLE;
