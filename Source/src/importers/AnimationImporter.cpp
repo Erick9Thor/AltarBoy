@@ -8,7 +8,7 @@
 Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
 {}
 
-void Hachiko::AnimationImporter::Import(const char* path, UID uid)
+void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta)
 {
     HE_LOG("Entering Animation Importer: %s", path);
     Assimp::Importer import;

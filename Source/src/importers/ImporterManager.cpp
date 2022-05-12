@@ -20,12 +20,12 @@ ImporterManager::ImporterManager()
     const auto animation = new AnimationImporter();
     const auto font = new FontImporter();
 
-    importers.emplace(model->GetType(), model);
-    importers.emplace(mesh->GetType(), mesh);
-    importers.emplace(texture->GetType(), texture);
-    importers.emplace(material->GetType(), material);
-    importers.emplace(animation->GetType(), animation);
-    importers.emplace(font->GetType(), font);
+    importers.emplace(Resource::Type::MODEL, model);
+    importers.emplace(Resource::Type::MESH, mesh);
+    importers.emplace(Resource::Type::TEXTURE, texture);
+    importers.emplace(Resource::Type::MATERIAL, material);
+    importers.emplace(Resource::Type::ANIMATION, animation);
+    importers.emplace(Resource::Type::FONT, font);
 }
 
 ImporterManager::~ImporterManager()
@@ -36,13 +36,10 @@ ImporterManager::~ImporterManager()
     }
 }
 
-void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type, UID id)
+void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type, YAML::Node& meta)
 {
-    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
-    
-    // If the id passed is 0 (default) a new id is generated
-    YAML::Node meta = CreateMetaWithAssetHash(asset_path.string().c_str(), asset_type, id);   
-    
+    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");  
+
     Importer* importer = GetImporter(asset_type);
 
     if (!importer)
@@ -51,7 +48,7 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
         return;
     }
 
-    importer->Import(asset_path.string().c_str(), id);
+    importer->Import(asset_path.string().c_str(), meta);
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
@@ -69,61 +66,7 @@ void Hachiko::ImporterManager::Delete(UID uid, Resource::Type resource_type) con
 
 Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
 {
-    auto it = importers.find(ToImporterType(type));
+    auto it = importers.find(type);
     return it->second;
 }
 
-Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
-{
-    Importer::Type importer_type = Importer::Type::COUNT;
-    switch (type)
-    {
-    case Resource::Type::MODEL:
-        importer_type = Importer::Type::MODEL;
-        break;
-
-    case Resource::Type::MESH:
-        importer_type = Importer::Type::MESH;
-        break;
-
-    case Resource::Type::TEXTURE:
-        importer_type = Importer::Type::TEXTURE;
-        break;
-
-    case Resource::Type::MATERIAL:
-        importer_type = Importer::Type::MATERIAL;
-        break;
-    case Resource::Type::ANIMATION:
-        importer_type = Importer::Type::ANIMATION;
-        break;
-    case Resource::Type::SCENE:
-        importer_type = Importer::Type::SCENE;
-        break;
-    case Resource::Type::FONT:
-        importer_type = Importer::Type::FONT;
-        break;
-    case Resource::Type::AUDIO:
-    case Resource::Type::VIDEO:
-    case Resource::Type::SCRIPT:
-    case Resource::Type::UNKNOWN:
-    default:
-        // TODO: This is a hack. We need to implement our own assert with message
-        assert(false && "Unhandled resource type");
-    }
-
-    return importer_type;
-}
-
-YAML::Node Hachiko::ImporterManager::CreateMetaWithAssetHash(const char* asset_path) const
-{
-    YAML::Node node;
-    uint64_t asset_file_hash = FileSystem::HashFromPath(asset_path);
-    node[ASSET_HASH] = asset_file_hash;    
-    return node;
-}
-
-void Hachiko::ImporterManager::UpdateMetaHash(const char* path, YAML::Node& meta) const
-{
-    uint64_t file_hash = FileSystem::HashFromPath(path);
-    meta[ASSET_HASH] = file_hash;
-}

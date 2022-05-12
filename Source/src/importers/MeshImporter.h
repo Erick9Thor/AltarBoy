@@ -15,6 +15,6 @@ namespace Hachiko
         void Save(const Resource* mesh) override;
         Resource* Load(UID id) override;
     private:
-        void Import(const aiMesh* ai_mesh, const UID& id = 0);
+        void Import(const aiMesh* ai_mesh, YAML::Node& meta);
     };
 }

@@ -24,7 +24,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::CreateAssetFromFile(UID uid, const char* path, bool flip)
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid, const char* path, bool flip)
 {
     std::filesystem::path texture_path = path;
 

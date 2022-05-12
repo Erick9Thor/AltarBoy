@@ -54,8 +54,16 @@ namespace Hachiko
         void ImportAssetResources(const std::string& asset_path);
         // From an asset file creates its resources and sets the corresponding ids and types on meta
         // Keeps Previously existing ids if they can be matched
-        void CreateAssetFromFile(const std::filesystem::path& asset, YAML::Node& meta);
+        void ImportAssetResources(const std::filesystem::path& asset, YAML::Node& meta);
         // Checks if all the asset resource files exist in library
-        bool ValidateAssetResources(const YAML::Node& meta) const;
+        bool ValidateAssetResources(Resource::Type resource_type, const YAML::Node& meta) const;
+
+    public:
+        // Create a clean initial meta node
+        YAML::Node CreateMeta();
+        // Add asset hash value to any meta
+        void UpdateAssetHash(const char* path, YAML::Node& meta) const;
+        // With current meta state and resource index returns an existing eid of a new one if it doesnt exist
+        UID ManageResourceUID(unsigned int resource_index, YAML::Node& meta);
     };
 }

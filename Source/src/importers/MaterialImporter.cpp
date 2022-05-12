@@ -23,28 +23,26 @@ Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIA
 
 void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
-    HE_LOG("Entering MaterialImporter: %s", path);
+    // Only 1 material will exist
+    static const int resource_index = 0;
+    UID uid = App->resources->ManageResourceUID(resource_index, meta);
+
     YAML::Node material_node = YAML::LoadFile(path);
     FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL),
-        meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), material_node);
+        uid).c_str(), material_node);
 }
 
 void Hachiko::MaterialImporter::Save(const Resource* res) 
 {
+    // Material changes are also reflected in the asset file
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
     const std::string material_asset_path = 
         StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
-    const std::string meta_path = 
-        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(),  MATERIAL_EXTENSION, META_EXTENSION);
     const std::string material_library_path = 
         StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), std::to_string(material->GetID()));
-    
-    YAML::Node meta_node;
-    meta_node[GENERAL_NODE][GENERAL_ID] = material->GetID();
-    meta_node[GENERAL_NODE][GENERAL_TYPE] = (int)material->GetType();
 
     YAML::Node material_node;
-    material_node[MATERIAL_NAME] = material->GetName();
+    material_node[MATERIAL_NAME] = material->GetName();    
 
     material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
     material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
@@ -62,8 +60,6 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     
     FileSystem::Save(material_asset_path.c_str(), material_node);
     FileSystem::Save(material_library_path.c_str(), material_node);
-    meta_node[GENERAL_NODE][GENERAL_HASH] = FileSystem::HashFromPath(material_asset_path.c_str());
-    FileSystem::Save(meta_path.c_str(), meta_node);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
@@ -120,7 +116,7 @@ void Hachiko::MaterialImporter::CreateMaterial(const std::string& name)
     delete material;
 }
 
-void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id) 
+void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, YAML::Node& meta)
 {  
     const auto material = new ResourceMaterial(id);
     std::string name = ai_material->GetName().C_Str();

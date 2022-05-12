@@ -8,17 +8,14 @@
 
 // General
 //#define GENERAL_ID "id"
-#define RESOURCES "resources"
-#define RESOURCE_TYPE "resource_type"
+#define RESOURCES "resources" // Resources that asset is responsible of generating
 #define RESOURCE_ID "resource_id"
 #define ASSET_HASH "asset_hash"
 
 // Texture
-#define TEXTURE_ID "id"
 #define TEXTURE_FILE_PATH "file_path"
 
 // Model
-#define MODEL_ID "id"
 #define MODEL_NAME "model_name"
 #define MODEL_FILE_PATH "model_file_path"
 #define MODEL_MESH_ID "id"
@@ -36,7 +33,6 @@
 #define NODE_MATERIAL_INDEX "material_index"
 
 // Mesh
-#define MESH_ID "mesh_id"
 #define MIN_POINT "min_point"
 #define MAX_POINT "max_point"
 #define VERTICES_NODE "vertices"
@@ -45,7 +41,6 @@
 #define TEXTURE_COORDS_NODE "texture_coords"
 
 // Material
-#define MATERIAL_ID "id"
 #define MATERIAL_NAME "name"
 #define MATERIAL_DIFFUSE_ID "diffuse"
 #define MATERIAL_SPECULAR_ID "specular"

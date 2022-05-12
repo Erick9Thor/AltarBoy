@@ -177,7 +177,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
     return mesh;
 }
 
-void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, const UID& id)
+void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, YAML::Node& meta)
 {
     if (!id)
     {

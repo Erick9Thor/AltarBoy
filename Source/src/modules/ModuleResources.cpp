@@ -184,8 +184,9 @@ void Hachiko::ModuleResources::ImportAssetResources(const std::string& asset_pat
     if (!FileSystem::Exists(meta_path.c_str()))
     {
         // If it doesnt have meta import from scratch, dont pass uid so it generates a new one
-        YAML::Node meta_node = importer_manager.CreateMetaWithAssetHash(asset_path.c_str());
-        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
+        YAML::Node meta_node = CreateMeta();
+        UpdateAssetHash(asset_path.c_str(), meta_node);
+        ImportAssetResources(std::filesystem::path(asset_path), meta_node);
         return;
     }
 
@@ -199,36 +200,60 @@ void Hachiko::ModuleResources::ImportAssetResources(const std::string& asset_pat
     // Get the asset hash and reimport if it has changed
     if (previous_asset_hash != asset_hash)
     {
-        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
+        UpdateAssetHash(asset_path.c_str(), meta_node);
+        ImportAssetResources(std::filesystem::path(asset_path), meta_node);
         return;
     }
     
     // Reimport if any lib file is missing
-    bool valid_lib = ValidateAssetResources(meta_node);
+    bool valid_lib = ValidateAssetResources(type, meta_node);
     if (!valid_lib)
     {
-        CreateAssetFromFile(std::filesystem::path(asset_path), meta_node);
+        ImportAssetResources(std::filesystem::path(asset_path), meta_node);
         return;
     }
-
     // If it exists and has a valid lib do nothing
 }
 
-void ModuleResources::CreateAssetFromFile(const std::filesystem::path& asset_path, YAML::Node& meta)
+void ModuleResources::ImportAssetResources(const std::filesystem::path& asset_path, YAML::Node& meta)
 {
     // Import resources from an asset and its metadata, if there are existing resource ids maintain them
-    importer_manager.Import(asset_path.string(), asset_type, uid);
+    Resource::Type asset_type = GetTypeFromPath(asset_path);
+    importer_manager.Import(asset_path.string(), asset_type, meta);
 }
 
 
-bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) const
+bool Hachiko::ModuleResources::ValidateAssetResources(Resource::Type resource_type, const YAML::Node& meta) const
 {
+    // Validate the resources direcly handled by that asset
+    // It might refer to other resources on the meta definition but he is not in charge of maintaining them
     for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
     {
         UID resource_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-        Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
         std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(resource_uid));
         if (!FileSystem::Exists(library_path.c_str())) return false;
     }
     return true;
+}
+
+
+YAML::Node Hachiko::ModuleResources::CreateMeta()
+{
+    return YAML::Node();
+}
+
+void Hachiko::ModuleResources::UpdateAssetHash(const char* path, YAML::Node& meta) const
+{
+    uint64_t file_hash = FileSystem::HashFromPath(path);
+    meta[ASSET_HASH] = file_hash;
+}
+
+UID ModuleResources::ManageResourceUID(unsigned int resource_index, YAML::Node& meta)
+{
+    // If an id already keep it
+    if (!meta[RESOURCES].IsDefined() || !meta[RESOURCES].IsSequence() || !meta[RESOURCES].size() > resource_index)
+    {
+        meta[RESOURCES][resource_index] = UUID::GenerateUID();
+    }
+    return meta[RESOURCES][resource_index].as<UID>();
 }

@@ -12,9 +12,20 @@ Hachiko::TextureImporter::TextureImporter()
 {
 }
 
-void Hachiko::TextureImporter::Import(const char* path, UID uid)
+void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 {
-    Resource* texture = ImportTexture(path, uid);
+    // Only 1 texture will exist
+    static const int resource_index = 0;
+    UID uid = App->resources->ManageResourceUID(resource_index, meta);
+    std::string extension = FileSystem::GetFileExtension(path);
+    // TODO: could we extract ModuleTexture functionality to this importer?
+
+    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, extension != ".tif");
+     
+    if (texture != nullptr)
+    {
+        Save(texture);
+    }
     delete texture;
 }
 
@@ -22,8 +33,7 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
     assert(id && "Unable to load texture. Given an empty id");
 
-    const std::string file_path = 
-        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), std::to_string(id));
+    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::TEXTURE), std::to_string(id));
 
     char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
@@ -108,17 +118,4 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
 
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
-}
-
-Hachiko::Resource* Hachiko::TextureImporter::ImportTexture(const char* path, UID uid)
-{
-    std::string extension = FileSystem::GetFileExtension(path);
-    ResourceTexture* texture = App->texture->CreateAssetFromFile(uid, path, extension != ".tif"); // TODO: could we extract ModuleTexture functionality to this importer?
-
-    if (texture != nullptr)
-    {
-        Save(texture);
-    }
-
-    return texture;
 }

@@ -16,13 +16,12 @@ namespace Hachiko
         FontImporter();
         ~FontImporter() override;
 
-        void Import(const char* path, UID uid) override;
+        void Import(const char* path, YAML::Node& meta) override;
         Resource* Load(UID id) override;
 
         void Save(const Resource* resource) override;
 
     private:
-        Resource* ImportFont(const char* path, UID uid);
         FT_Library freetype_lib;
     };
 } // namespace Hachiko
