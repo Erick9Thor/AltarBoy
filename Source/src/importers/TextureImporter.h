@@ -18,8 +18,7 @@ namespace Hachiko
         Resource* Load(UID id) override;
 
         void Save(const Resource* resource) override;
-
+        ResourceTexture* CreateTextureAssetFromAssimp(const std::string& model_path, const aiMaterial* ai_material, aiTextureType type);
     private:
-        Resource* ImportTexture(const char* path, UID uid);
     };
 }

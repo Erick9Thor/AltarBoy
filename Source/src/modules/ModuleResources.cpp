@@ -136,7 +136,7 @@ void Hachiko::ModuleResources::CreateAsset(Resource::Type type, const std::strin
     case Resource::Type::MATERIAL:
         {
             MaterialImporter material_importer;
-            material_importer.CreateMaterial(name);
+            material_importer.CreateEmptyMaterial(name);
         }
     }
 }

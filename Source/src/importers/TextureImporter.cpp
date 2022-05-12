@@ -119,3 +119,62 @@ void Hachiko::TextureImporter::Save(const Hachiko::Resource* res)
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
 }
+
+
+Hachiko::ResourceTexture* Hachiko::TextureImporter::CreateTextureAssetFromAssimp(const std::string& model_path, const aiMaterial* ai_material, aiTextureType type)
+{
+    static const int index = 0;
+    aiString file;
+    aiReturn ai_ret = ai_material->GetTexture(type, index, &file);
+    if (ai_ret == AI_FAILURE || ai_ret == AI_OUTOFMEMORY)
+    {
+        return nullptr;
+    }
+
+    ResourceTexture* output_texture = nullptr;
+    
+    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
+    std::vector<std::string> search_paths;
+    const std::string model_texture_path(file.data);
+    const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
+
+    // Check if that texture asset already exists
+    std::string meta_path = asset_path + filename;
+    meta_path.append(META_EXTENSION);
+    YAML::Node text_node;
+    bool imported = false;
+
+    search_paths.emplace_back(asset_path + filename);
+    search_paths.emplace_back(model_path + "\\" + filename);
+    search_paths.emplace_back(file.data);
+
+    if (!FileSystem::Exists(meta_path.c_str()))
+    {
+        for (std::string& path : search_paths)
+        {
+            if (!std::filesystem::exists(path))
+            {
+                continue;
+            }
+
+            App->resources->HandleAssetFromAnyPath(path);
+            text_node = YAML::LoadFile(meta_path);
+            imported = true;
+            break;
+        }
+    }
+    else
+    {
+        text_node = YAML::LoadFile(meta_path);
+        Import(search_paths[0].c_str(), text_node);
+        imported = true;
+    }
+
+    if (imported)
+    {
+        UID id = text_node[GENERAL_NODE][GENERAL_ID].as<UID>();
+        output_texture = static_cast<ResourceTexture*>(Load(id));
+    }
+
+    return output_texture;
+}

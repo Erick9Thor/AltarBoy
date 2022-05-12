@@ -106,7 +106,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     return material;
 }
 
-void Hachiko::MaterialImporter::CreateMaterial(const std::string& name) 
+void Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& name) 
 {
     ResourceMaterial* material = new ResourceMaterial(Hachiko::UUID::GenerateUID());
     material->SetName(name);
@@ -116,9 +116,9 @@ void Hachiko::MaterialImporter::CreateMaterial(const std::string& name)
     delete material;
 }
 
-void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, YAML::Node& meta)
+void Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material, UID uid)
 {  
-    const auto material = new ResourceMaterial(id);
+    const auto material = new ResourceMaterial(uid);
     std::string name = ai_material->GetName().C_Str();
     if (name.find(':') != std::string::npos)
     {
@@ -136,10 +136,11 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, YAML::Node& meta
         ColorCopy(color, material->specular_color);
     }
 
-    material->diffuse = ImportTexture(ai_material, aiTextureType_DIFFUSE);
-    material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
-    material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
-    material->metalness = ImportTexture(ai_material, aiTextureType_METALNESS);
+    Hachiko::TextureImporter texture_importer;
+    material->diffuse = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_DIFFUSE);
+    material->specular = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_SPECULAR);
+    material->normal = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_NORMALS);
+    material->metalness = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_METALNESS);
     
     Save(material);
 
@@ -148,62 +149,4 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, YAML::Node& meta
     delete material->normal;
     delete material->metalness;
     delete material;
-}
-
-Hachiko::ResourceTexture* Hachiko::MaterialImporter::ImportTexture(const aiMaterial* ai_material, aiTextureType type)
-{
-    static const int index = 0;
-    aiString file;
-    aiReturn ai_ret = ai_material->GetTexture(type, index, &file); 
-    if ( ai_ret == AI_FAILURE || ai_ret == AI_OUTOFMEMORY)
-    {
-        return nullptr;
-    }
-
-    ResourceTexture* output_texture = nullptr;
-    Hachiko::TextureImporter texture_importer;
-    const std::string model_path = App->resources->GetLastResourceLoadedPath().u8string();
-    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
-    std::vector<std::string> search_paths;
-    const std::string model_texture_path(file.data);
-    const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
-    
-    std::string meta_path = asset_path + filename;
-    meta_path.append(META_EXTENSION);
-    YAML::Node text_node;
-    bool imported = false;
-
-    search_paths.emplace_back(asset_path + filename);
-    search_paths.emplace_back(model_path + "\\" + filename);
-    search_paths.emplace_back(file.data);
-
-    if (!FileSystem::Exists(meta_path.c_str()))
-    {
-        for (std::string& path : search_paths)
-        {
-            if (!std::filesystem::exists(path))
-            {
-                continue;
-            }
-
-            App->resources->HandleAssetFromAnyPath(path);
-            text_node = YAML::LoadFile(meta_path);
-            imported = true;
-            break;
-        }
-    }
-    else
-    {
-        text_node = YAML::LoadFile(meta_path);
-        texture_importer.Import(search_paths[0].c_str(), text_node);
-        imported = true;
-    }
-
-    if (imported)
-    {
-        UID id = text_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-        output_texture = static_cast<ResourceTexture*>(texture_importer.Load(id));
-    }
-
-    return output_texture;
 }
