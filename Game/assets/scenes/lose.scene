@@ -1,0 +1,143 @@
+scene_name: UnnamedScene
+root_id: 9130115808634899498
+child:
+  - id: 4050080003910958210
+    name: Canvas
+    enabled: true
+    parent_id: 9130115808634899498
+    component:
+      - id: 1853127290247637028
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 14934305546392401022
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1376, 912]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - id: 4730544171898315404
+        type: 8
+        enabled: true
+    child:
+      - id: 11096872445131628030
+        name: Background
+        enabled: true
+        parent_id: 4050080003910958210
+        component:
+          - id: 18405655734033187487
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 16355738230604146657
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [20000, 20000]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 15012020967158876746
+            type: 9
+            enabled: true
+          - id: 8305510145856380266
+            type: 11
+            enabled: true
+            image_path: assets/textures//button_whitebackground.png
+            hover_image_path: ""
+        child:
+          - id: 10187046046144926210
+            name: Text
+            enabled: true
+            parent_id: 11096872445131628030
+            component:
+              - id: 2996689569717411047
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 14613680063410565430
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [807, 182]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - id: 16009788445284511570
+                type: 9
+                enabled: true
+              - id: 6122322246693934819
+                type: 11
+                enabled: true
+                image_path: assets/textures//lose.png
+                hover_image_path: ""
+          - id: 17580471657242806506
+            name: Button
+            enabled: true
+            parent_id: 11096872445131628030
+            component:
+              - id: 12039541713989159547
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 14126103886816408099
+                type: 10
+                enabled: true
+                position: [0, -120, 0]
+                size: [420, 129]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - id: 17319755635405111077
+                type: 9
+                enabled: true
+              - id: 9042314417611210208
+                type: 11
+                enabled: true
+                image_path: assets/textures//button_back.png
+                hover_image_path: assets/textures//button_back_selected.png
+              - id: 23456970702198256
+                type: 12
+                enabled: true
+              - id: 6532571211019184292
+                type: 15
+                enabled: true
+                class_name: BackToMainMenu
+                "'_button_back@ComponentButton*'": 17580471657242806506
+  - id: 1440560441127263574
+    name: Camera
+    enabled: true
+    parent_id: 9130115808634899498
+    component:
+      - id: 5640243966948625031
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 10669271053587597109
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          type: 0
+          pinned_camera: [0, 0, 0]
