@@ -94,7 +94,7 @@
       <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib;$(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;$(SolutionDir)vendors\yaml-cpp\lib\x64\Debug</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
+      <Command>call "$(ProjectDir)buildEvents\generate_code.bat";</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy "$(TargetDir)\$(TargetName).exp" "$(TargetDir)..\" /Y
