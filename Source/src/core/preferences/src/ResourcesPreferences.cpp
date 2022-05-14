@@ -72,7 +72,7 @@ void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
     }
 }
 
-const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
+const char* ResourcesPreferences::GetAssetsPath(Resource::AssetType type)
 {
     auto it = assets_paths.find(type);
     if (it == assets_paths.end())

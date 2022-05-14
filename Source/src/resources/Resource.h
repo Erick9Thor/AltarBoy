@@ -7,23 +7,40 @@ namespace Hachiko
     class Resource
     {
     public:
+        
         enum class Type
+        {
+            UNKNOWN = 0,
+            MATERIAL = 1,
+            TEXTURE = 2,
+            MODEL = 3,
+            MESH = 4,
+            SCENE = 5,
+            SHADER = 6,
+            AUDIO = 7,
+            ANIMATION = 8,
+            SCRIPT = 9,
+            VIDEO = 10,
+            SKYBOX = 11,
+            FONT = 12,
+            NAVMESH = 13,
+            PREFAB = 14,
+            COUNT,
+        };
+
+        enum class AssetType
         {
             UNKNOWN,
             MATERIAL,
             TEXTURE,
             MODEL,
-            MESH,
             SCENE,
             SHADER,
             AUDIO,
-            ANIMATION,
-            SCRIPT,
             VIDEO,
             SKYBOX,
             FONT,
-            NAVMESH,
-            COUNT
+            COUNT,
         };
 
         static std::string TypeString(const Type& t) {

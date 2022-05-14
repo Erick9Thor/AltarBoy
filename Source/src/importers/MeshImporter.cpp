@@ -4,10 +4,6 @@
 #include "resources/ResourceMesh.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 
-Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
-{
-}
-
 void Hachiko::MeshImporter::Save(UID id, const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);

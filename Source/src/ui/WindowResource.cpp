@@ -4,7 +4,6 @@
 #include "modules/ModuleResources.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEvent.h"
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 
 Hachiko::WindowResource::WindowResource() : 
@@ -96,14 +95,6 @@ void Hachiko::WindowResource::LoadResource(const std::string& path)
             break;
         }
     }
-}
-
-void Hachiko::WindowResource::LoadModelIntoScene(YAML::Node& node)
-{
-    HE_LOG("Adding a model into scene");
-    Scene* scene = App->scene_manager->GetActiveScene();
-    auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
-    scene->HandleInputModel(model_res);
 }
 
 void Hachiko::WindowResource::LoadMaterialIntoSelectedObject(YAML::Node& node)

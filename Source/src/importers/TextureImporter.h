@@ -11,7 +11,7 @@ namespace Hachiko
         friend class ModuleResources;
 
     public:
-        TextureImporter();
+        TextureImporter() = default;
         ~TextureImporter() override = default;
 
         void Import(const char* path, YAML::Node& meta) override;

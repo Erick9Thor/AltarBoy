@@ -13,7 +13,6 @@ namespace Hachiko
     class ComponentSpotLight;
     class Skybox;
     class Quadtree;
-    class ResourceModel;
     class ResourceMaterial;
 
     class Scene : public ISerializable

@@ -27,7 +27,7 @@ class HACHIKO_API GameObject final : public ISerializable
     friend class Component;
 
 public:
-    GameObject(const char* name = "Unnamed");
+    GameObject(const char* name = "Unnamed", UID uid = UUID::GenerateUID());
     GameObject(GameObject* parent,
                 const float4x4& transform, 
                 const char* name = "Unnamed", 

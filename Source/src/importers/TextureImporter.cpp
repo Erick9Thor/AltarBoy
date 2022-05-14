@@ -7,16 +7,11 @@
 #include "modules/ModuleTexture.h"
 #include "modules/ModuleResources.h"
 
-Hachiko::TextureImporter::TextureImporter() 
-	: Importer(Importer::Type::TEXTURE)
-{
-}
-
 void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 texture will exist
     static const int resource_index = 0;
-    UID uid = App->resources->ManageResourceUID(Resource::Type::TEXTURE, resource_index, meta);
+    UID uid = ManageResourceUID(Resource::Type::TEXTURE, resource_index, meta);
     std::string extension = FileSystem::GetFileExtension(path);
     // TODO: could we extract ModuleTexture functionality to this importer?
 
@@ -131,7 +126,7 @@ Hachiko::ResourceTexture* Hachiko::TextureImporter::CreateTextureAssetFromAssimp
 
     ResourceTexture* output_texture = nullptr;
     
-    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::TEXTURE);
+    const char* asset_path = App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::AssetType::TEXTURE);
     std::vector<std::string> search_paths;
     const std::string model_texture_path(file.data);
     const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);

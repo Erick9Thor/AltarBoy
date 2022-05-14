@@ -375,9 +375,6 @@
     <ClCompile Include="src\Resources\ResourceTexture.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\ResourceModel.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
     <ClCompile Include="src\importers\ImporterManager.cpp">
       <Filter>Importers</Filter>
     </ClCompile>
@@ -538,6 +535,10 @@
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
+    <ClCompile Include="src\resources\ResourcePrefab.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\PrefabImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1149,9 +1150,6 @@
       <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\Resources\ResourceTexture.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resources\ResourceModel.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\importers\ImporterManager.h">
@@ -2198,6 +2196,10 @@
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="src\resources\ResourcePrefab.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

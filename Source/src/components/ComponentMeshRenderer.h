@@ -14,8 +14,9 @@ namespace Hachiko
 
     class ComponentMeshRenderer : public Component
     {
+        friend class ModelImporter;
     public:
-        ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
+        ComponentMeshRenderer(GameObject* container, UID id = UUID::GenerateUID(), ResourceMesh* res = nullptr);
         ~ComponentMeshRenderer() override;
 
         void Update() override;

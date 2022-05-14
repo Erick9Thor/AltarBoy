@@ -6,7 +6,6 @@
 
 namespace Hachiko
 {
-    class ResourceModel;
     class ResourceMesh;
     class ResourceMaterial;
     class ResourceTexture;
@@ -23,7 +22,7 @@ namespace Hachiko
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
 
 
-        Hachiko::Resource::Type GetTypeFromPath(const std::filesystem::path& file);
+        Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
         void CreateAsset(Resource::Type type, const std::string& name) const;
@@ -33,15 +32,15 @@ namespace Hachiko
     private:
         std::map<UID, Resource*> loaded_resources;
 
-        std::vector<std::pair<Hachiko::Resource::Type, std::string>> supported_extensions = 
+        std::vector<std::pair<Hachiko::Resource::AssetType, std::string>> supported_extensions = 
         {
-            {Hachiko::Resource::Type::TEXTURE, ".png"},
-            {Hachiko::Resource::Type::TEXTURE, ".jpg"},
-            {Hachiko::Resource::Type::TEXTURE, ".tif"},
-            {Hachiko::Resource::Type::MODEL, ".fbx"},
-            {Hachiko::Resource::Type::SCENE, SCENE_EXTENSION},
-            {Hachiko::Resource::Type::MATERIAL, MATERIAL_EXTENSION},
-            {Hachiko::Resource::Type::FONT, ".ttf"},
+            {Hachiko::Resource::AssetType::TEXTURE, ".png"},
+            {Hachiko::Resource::AssetType::TEXTURE, ".jpg"},
+            {Hachiko::Resource::AssetType::TEXTURE, ".tif"},
+            {Hachiko::Resource::AssetType::MODEL, ".fbx"},
+            {Hachiko::Resource::AssetType::SCENE, SCENE_EXTENSION},
+            {Hachiko::Resource::AssetType::MATERIAL, MATERIAL_EXTENSION},
+            {Hachiko::Resource::AssetType::FONT, ".ttf"},
         };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;

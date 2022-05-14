@@ -13,13 +13,15 @@ namespace Hachiko
     private:
         ImporterManager();
 
-        std::map<Resource::Type, Importer*> importers;
+        std::map<Resource::AssetType, Importer*> importers;
+        std::map<Resource::Type, Importer*> resource_importers;
         
         // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
-        void Import(const std::filesystem::path& asset_path, Resource::Type asset_type, YAML::Node& meta);
-        Resource* Load(Resource::Type type, UID id);
-        void Delete(UID uid, Resource::Type resource_type) const;
+        void ImportAsset(const std::filesystem::path& asset_path, Resource::AssetType asset_type, YAML::Node& meta);
+        Resource* LoadResource(Resource::Type type, UID id);
+        void DeleteResource(UID uid, Resource::Type resource_type) const;
 
-        Importer* GetImporter(Resource::Type type) const;
+        Importer* GetAssetImporter(Resource::AssetType type) const;
+        Importer* GetResourceImporter(Resource::Type type) const;
     };
 } // namespace Hachiko

@@ -11,7 +11,7 @@ namespace Hachiko
         ~ResourcesPreferences() override = default;
         void LoadConfigurationData(const YAML::Node& node) override;
         void SaveConfigurationData(YAML::Node& node) override;
-        [[nodiscard]] const char* GetAssetsPath(Resource::Type type);
+        [[nodiscard]] const char* GetAssetsPath(Resource::AssetType type);
         [[nodiscard]] const char* GetLibraryPath(Resource::Type type) const;
         [[nodiscard]] const char* GetSceneName() const
         {
@@ -20,19 +20,15 @@ namespace Hachiko
 
     private:
         std::map<Resource::Type, std::string> assets_paths = {
-            {Resource::Type::SCENE, "assets/scenes/"}, 
-            {Resource::Type::MODEL, "assets/models/"},
-            {Resource::Type::MESH, "assets/meshes/"},
-            {Resource::Type::TEXTURE, "assets/textures/"},
-            {Resource::Type::AUDIO, "assets/audio/"},
-            {Resource::Type::VIDEO, "assets/video/"},
-            {Resource::Type::SCRIPT, "assets/scripts/"},
-            {Resource::Type::MATERIAL, "assets/materials/"},
-            {Resource::Type::SHADER, "assets/shaders/"},
-            {Resource::Type::ANIMATION, "assets/animations/"},
-            {Resource::Type::SKYBOX, "assets/skybox/"},
-            {Resource::Type::FONT, "assets/fonts/"},
-            {Resource::Type::NAVMESH, "assets/navmesh/"},
+            {Resource::AssetType::SCENE, "assets/scenes/"}, 
+            {Resource::AssetType::MODEL, "assets/models/"},
+            {Resource::AssetType::TEXTURE, "assets/textures/"},
+            {Resource::AssetType::AUDIO, "assets/audio/"},
+            {Resource::AssetType::VIDEO, "assets/video/"},
+            {Resource::AssetType::MATERIAL, "assets/materials/"},
+            {Resource::AssetType::SHADER, "assets/shaders/"},
+            {Resource::AssetType::SKYBOX, "assets/skybox/"},
+            {Resource::AssetType::FONT, "assets/fonts/"},
         };
 
         std::map<Resource::Type, std::string> lib_paths = {
@@ -50,7 +46,7 @@ namespace Hachiko
             {Resource::Type::FONT, "library/fonts/"},
             {Resource::Type::NAVMESH, "library/navmesh/"},
         };
-        std::string scene_name        = "UnnamedScene.scene";
+        std::string scene_name = "UnnamedScene.scene";
         std::string scene_id;
     };
 }

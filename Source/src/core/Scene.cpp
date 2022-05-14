@@ -13,7 +13,6 @@
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleResources.h"
 
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"

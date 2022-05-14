@@ -13,7 +13,6 @@
 #include "importers/ModelImporter.h"
 
 #include "components/ComponentMeshRenderer.h"
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
 
@@ -27,7 +26,12 @@ bool ModuleResources::Init()
     for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
         FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
+        
+    }
+
+    for (int i = 1; i < static_cast<int>(Resource::AssetType::COUNT); ++i)
+    {
+        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::AssetType>(i)));
     }
 
     AssetsLibraryCheck();
@@ -60,9 +64,9 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
 
 void ModuleResources::HandleAssetFromAnyPath(const std::filesystem::path& path)
 {
-    Resource::Type type = GetTypeFromPath(path);
+    Resource::AssetType type = GetAssetTypeFromPath(path);
     
-    if (type == Resource::Type::UNKNOWN)
+    if (type == Resource::AssetType::UNKNOWN)
     {
         HE_LOG("Unknown resource type recevied, nothing to be done");
         return;
@@ -89,11 +93,11 @@ void ModuleResources::HandleAssetFromAnyPath(const std::filesystem::path& path)
     ImportAssetResources(destination.string());
 }
 
-Resource::Type ModuleResources::GetTypeFromPath(const std::filesystem::path& path)
+Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
 {
     if (!path.has_extension())
     {
-        return Resource::Type::UNKNOWN;
+        return Resource::AssetType::UNKNOWN;
     }
     const std::filesystem::path extension = path.extension();
 
@@ -109,7 +113,7 @@ Resource::Type ModuleResources::GetTypeFromPath(const std::filesystem::path& pat
     {
         return it->first;
     }
-    return Resource::Type::UNKNOWN;
+    return Resource::AssetType::UNKNOWN;
 }
 
 Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
@@ -170,9 +174,9 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 
 void Hachiko::ModuleResources::ImportAssetResources(const std::string& asset_path)
 {
-    Resource::Type type = GetTypeFromPath(asset_path);
+    Resource::AssetType type = GetAssetTypeFromPath(asset_path);
 
-    if (type == Resource::Type::UNKNOWN)
+    if (type == Resource::AssetType::UNKNOWN)
     {
         // Discard unrecognised types
         return;
@@ -219,8 +223,8 @@ void ModuleResources::ImportAssetResources(const std::filesystem::path& asset_pa
 {
     // If meta exists, import resources from the asset resources list
     // If the meta resources list is empty create all the resources it can from that asset
-    Resource::Type asset_type = GetTypeFromPath(asset_path);
-    importer_manager.Import(asset_path.string(), asset_type, meta);
+    Resource::AssetType asset_type = GetAssetTypeFromPath(asset_path);
+    importer_manager.ImportAsset(asset_path.string(), asset_type, meta);
 }
 
 

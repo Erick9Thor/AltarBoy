@@ -5,24 +5,6 @@
 
 #include "resources/ResourceAnimation.h"
 
-Hachiko::AnimationImporter::AnimationImporter() : Importer(Importer::Type::ANIMATION) 
-{}
-
-void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta)
-{
-    HE_LOG("Entering Animation Importer: %s", path);
-    Assimp::Importer import;
-
-    const aiScene* scene = nullptr;
-    const std::filesystem::path material_path(path);
-
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-
-    assert(scene->mNumAnimations == 1);
-
-    ImportSingleAnimation(scene->mAnimations[0], uid);
-}
-
 void Hachiko::AnimationImporter::Save(UID id, const Resource* resource)
 {
     const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
@@ -204,7 +186,7 @@ void Hachiko::AnimationImporter::CreateAnimationFromAssimp(const aiAnimation* an
         }
     }
 
-    Save(r_animation);
+    Save(id, r_animation);
 
     delete r_animation;
 }

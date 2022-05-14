@@ -24,8 +24,9 @@
 
 #include <debugdraw.h>
 
-Hachiko::GameObject::GameObject(const char* name) :
-    name(name)
+Hachiko::GameObject::GameObject(const char* name, UID uid) :
+    name(name),
+    uid(uid)
 {
     AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }

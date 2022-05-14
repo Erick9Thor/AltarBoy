@@ -12,6 +12,7 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
+#define PREFAB_ID "prefab_id"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"

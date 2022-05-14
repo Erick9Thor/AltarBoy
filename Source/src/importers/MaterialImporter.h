@@ -12,7 +12,8 @@ namespace Hachiko
         friend class ModelImporter;
 
     public:
-        MaterialImporter();
+        MaterialImporter() = default;
+        ~MaterialImporter() override = default;
 
         // Copies the material file to lib
         void Import(const char* path, YAML::Node& meta) override;

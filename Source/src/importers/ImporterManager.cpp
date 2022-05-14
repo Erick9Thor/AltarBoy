@@ -17,18 +17,23 @@ ImporterManager::ImporterManager()
     const auto model = new ModelImporter();
     const auto texture = new TextureImporter();
     const auto material = new MaterialImporter();
-    const auto animation = new AnimationImporter();
     const auto font = new FontImporter();
 
-    importers.emplace(Resource::Type::MODEL, model);
-    importers.emplace(Resource::Type::TEXTURE, texture);
-    importers.emplace(Resource::Type::MATERIAL, material);
-    importers.emplace(Resource::Type::ANIMATION, animation);
-    importers.emplace(Resource::Type::FONT, font);
+    importers.emplace(Resource::AssetType::MODEL, model);
+    importers.emplace(Resource::AssetType::TEXTURE, texture);
+    importers.emplace(Resource::AssetType::MATERIAL, material);
+    importers.emplace(Resource::AssetType::FONT, font);
 
-    // Mesh resource imports are handled by model assets
-    // const auto mesh = new MeshImporter();
-    // importers.emplace(Resource::Type::MESH, mesh);
+    const auto animation = new AnimationImporter();
+    const auto mesh = new MeshImporter();
+
+    resource_importers.emplace(Resource::Type::MODEL, model);
+    resource_importers.emplace(Resource::Type::TEXTURE, texture);
+    resource_importers.emplace(Resource::Type::MATERIAL, material);
+    resource_importers.emplace(Resource::Type::FONT, font);
+    resource_importers.emplace(Resource::Type::ANIMATION, animation);
+    resource_importers.emplace(Resource::Type::MESH, mesh);
+
 }
 
 ImporterManager::~ImporterManager()
@@ -39,10 +44,10 @@ ImporterManager::~ImporterManager()
     }
 }
 
-void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type, YAML::Node& meta)
+void ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
 {
     // Find the corresponding importer for an asset, delegate import to it and them store the resulting meta
-    Importer* importer = GetImporter(asset_type);
+    Importer* importer = GetAssetImporter(asset_type);
 
     if (!importer)
     {
@@ -56,19 +61,33 @@ void ImporterManager::Import(const std::filesystem::path& asset_path, const Reso
     FileSystem::Save(meta_path.c_str(), meta);
 }
 
-Resource* Hachiko::ImporterManager::Load(Resource::Type type, UID id)
+Resource* Hachiko::ImporterManager::LoadResource(Resource::Type type, UID id)
 {
-    return GetImporter(type)->Load(id);
+    return GetResourceImporter(type)->Load(id);
 }
 
-void Hachiko::ImporterManager::Delete(UID uid, Resource::Type resource_type) const
+void Hachiko::ImporterManager::DeleteResource(UID uid, Resource::Type resource_type) const
 {
-    GetImporter(resource_type)->Delete(uid, resource_type);
+    GetResourceImporter(resource_type)->Delete(uid, resource_type);
 }
 
-Importer* Hachiko::ImporterManager::GetImporter(Resource::Type type) const
+Importer* Hachiko::ImporterManager::GetAssetImporter(Resource::AssetType type) const
 {
     auto it = importers.find(type);
-    return it->second;
+    if (it != importers.end())
+    {
+        return it->second;
+    }
+    return nullptr;
+}
+
+Importer* Hachiko::ImporterManager::GetResourceImporter(Resource::Type type) const
+{
+    auto it = resource_importers.find(type);
+    if (it != resource_importers.end())
+    {
+        return it->second;
+    }
+    return nullptr;    
 }
 

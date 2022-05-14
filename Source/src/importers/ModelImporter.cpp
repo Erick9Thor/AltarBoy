@@ -4,9 +4,9 @@
 #include "MaterialImporter.h"
 #include "AnimationImporter.h"
 
-#include "resources/ResourceModel.h"
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
+#include "components/ComponentMeshRenderer.h"
 
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
@@ -109,10 +109,17 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         }
     }
 
-    ImportNode(path, scene->mRootNode, meta, !scene->HasAnimations());
+    // Import scene tree into gameobjects
+    GameObject* model_root = new GameObject("Model Root");
+    ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
+
+    UID prefab_uid = meta[PREFAB_ID].IsDefined() ? meta[PREFAB_ID].as<UID>() : UUID::GenerateUID();
+    // TODO: Create prefab resource type and asset
+    model_root->Save(meta["PREFAB"]);
+    AddResource(prefab_uid, Resource::Type::PREFAB, meta);
 }
 
-void Hachiko::ModelImporter::ImportNode(const char* path, const aiNode* assimp_node, YAML::Node& node, bool load_auxiliar)
+void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar)
 {
     std::string node_name = assimp_node->mName.C_Str();
 
@@ -150,30 +157,40 @@ void Hachiko::ModelImporter::ImportNode(const char* path, const aiNode* assimp_n
 
     }
 
-    node[NODE_NAME] = assimp_node->mName.C_Str();
-    node[NODE_TRANSFORM] = transform;
+    // Create go
+    GameObject* go = new GameObject(parent, transform, assimp_node->mName.C_Str());
+    Hachiko::MeshImporter mesh_importer;
+    Hachiko::MaterialImporter material_importer;
 
+    // Load resources as components    
     for (unsigned int j = 0; j < assimp_node->mNumMeshes; ++j)
     {
-        node[NODE_MESH_INDEX][j] = assimp_node->mMeshes[j];
+        unsigned mesh_idx = assimp_node->mMeshes[j];
+        const aiMesh* assimp_mesh = scene->mMeshes[assimp_node->mMeshes[j]];
+        unsigned material_idx = assimp_mesh->mMaterialIndex;
+        ComponentMeshRenderer* mesh_renderer = new ComponentMeshRenderer(go);
+        ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(mesh_importer.Load(meta[MESHES][mesh_idx].as<UID>()));
+        ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(material_importer.Load(meta[MATERIALS][material_idx].as<UID>()));
+        mesh_renderer->AddResourceMesh(mesh_resource);     
+        mesh_renderer->AddResourceMaterial(material_resource);
     }
 
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         auto child_node = assimp_node->mChildren[i];
-        ImportNode(child_node, node[NODE_CHILD][i], load_auxiliar);
-        ++child_node;
+        ImportNode(go, scene, child_node, meta, load_auxiliar);
     }
 }
 
 Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
 {
-    assert(id && "Unable to load module. Given an empty id");
+    assert(false && "Model importer will never load, since model is only an asset and not a resource");
 
     const std::string model_library_path = GetResourcePath(Resource::Type::MODEL, id);
 
     YAML::Node model_node = YAML::LoadFile(model_library_path);
-    Hachiko::ResourceModel* model_output = new ResourceModel(model_node[GENERAL_NODE][GENERAL_ID].as<UID>());
+
+   
     
     model_output->model_name = model_node[MODEL_NAME].as<std::string>();
     model_output->meshes.reserve(model_node[MODEL_MESH_NODE].size());
@@ -239,7 +256,10 @@ void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, 
     }
 }
 
-void Hachiko::ModelImporter::Save(UID id, const Resource* resource) {}
+void Hachiko::ModelImporter::Save(UID id, const Resource* resource)
+{
+    // All model necessary stuff is saved by mesh, material, animation and its respective meta
+}
 
 void Hachiko::ModelImporter::Delete(const YAML::Node& meta) 
 {

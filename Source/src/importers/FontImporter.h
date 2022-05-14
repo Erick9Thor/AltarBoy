@@ -18,7 +18,6 @@ namespace Hachiko
 
         void Import(const char* path, YAML::Node& meta) override;
         Resource* Load(UID id) override;
-
         void Save(UID id, const Resource* resource) override;
 
     private:
