@@ -1,7 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include <Stats.h>
+#include "Stats.h"
 
 namespace Hachiko
 {
@@ -21,6 +21,10 @@ namespace Hachiko
             void OnAwake() override;
             void OnStart() override;
             void OnUpdate() override;
+
+            Stats& GetStats();
+            void ReceiveDamage(int damage);
+
         private:
             void Attack();
             void ChasePlayer();
@@ -30,11 +34,12 @@ namespace Hachiko
             void MoveInNavmesh();
 
             void DestroyEntity();
+
         private:
+            SERIALIZE_FIELD(Stats, _stats);
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
-            SERIALIZE_FIELD(Stats, _stats);
 
             GameObject* _player;
             PlayerController* _player_controller;
@@ -42,6 +47,7 @@ namespace Hachiko
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;
+            float _attack_cooldown;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

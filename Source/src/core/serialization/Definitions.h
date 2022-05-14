@@ -168,6 +168,7 @@
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
 #define MESH_NAVIGABLE "navigable"
+#define MESH_VISIBLE "visible"
 
 // Component Lights
 #define LIGHT_TYPE "light_type"

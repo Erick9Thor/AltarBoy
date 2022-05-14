@@ -1,17 +1,17 @@
 General:
-  id: 7992600262483374874
+  id: 9525604728703514102
   type: 3
   hash: 13722861381008344952
 model_name: Idle
 material:
-  - id: 7992600262483474874
+  - id: 9525604728703614102
     name: mcLow
 mesh:
-  - id: 7992600262483375874
+  - id: 9525604728703515102
     material_index: 0
 animations: 1
 animation_id:
-  - 7992600262493374874
+  - 9525604728713514102
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:

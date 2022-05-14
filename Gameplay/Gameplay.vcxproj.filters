@@ -509,6 +509,8 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="PlayerSoundManager.h" />
+    <ClInclude Include="EnemyController.h" />
+    <ClInclude Include="Stats.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -767,6 +769,8 @@
     </ClCompile>
     <ClCompile Include="PlayerAnimationManager.cpp" />
     <ClCompile Include="PlayerSoundManager.cpp" />
+    <ClCompile Include="EnemyController.cpp" />
+    <ClCompile Include="Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

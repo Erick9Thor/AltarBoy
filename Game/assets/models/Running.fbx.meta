@@ -1,17 +1,17 @@
 General:
-  id: 14855142946409507027
+  id: 2979609338946256849
   type: 3
   hash: 7360938489393507728
 model_name: Running
 material:
-  - id: 14855142946409607027
+  - id: 2979609338946356849
     name: mcLow
 mesh:
-  - id: 14855142946409508027
+  - id: 2979609338946257849
     material_index: 0
 animations: 1
 animation_id:
-  - 14855142946419507027
+  - 2979609338956256849
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
 child:
