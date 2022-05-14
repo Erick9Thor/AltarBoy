@@ -28,7 +28,7 @@ bool Hachiko::Scripting::Stats::IsAlive()
 	return _is_alive;
 }
 
-void Hachiko::Scripting::Stats::RecieveDamage(int damage)
+void Hachiko::Scripting::Stats::ReceiveDamage(int damage)
 {
 	if (_god_mode)	return;
 

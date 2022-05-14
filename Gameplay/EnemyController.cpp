@@ -1,10 +1,9 @@
 
 #include "scriptingUtil/gameplaypch.h"
-
 #include "EnemyController.h"
 #include "Scenes.h"
-#include <PlayerController.h>
-#include <Stats.h>
+#include "PlayerController.h"
+#include "Stats.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
 
@@ -25,6 +24,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
+	// TODO: Find by name in scene.
 	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
 	_player_controller = _player->GetComponent<PlayerController>();
 	transform = game_object->GetComponent<ComponentTransform>();
@@ -32,7 +32,10 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
-	if (!_stats.IsAlive())	return;
+	if (!_stats.IsAlive())
+	{
+		return;
+	}
 
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
@@ -62,15 +65,27 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	
 }
 
+Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
+{
+	return _stats;
+}
+
+void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage)
+{
+	_stats.ReceiveDamage(damage);
+}
+
 void Hachiko::Scripting::EnemyController::Attack()
 {
-	if (_attack_cooldown > 0)
+	_attack_cooldown -= Time::DeltaTime();
+	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
+
+	if (_attack_cooldown > 0.0f)
 	{
-		_attack_cooldown -= Time::DeltaTime();
 		return;
 	}
 
-	_player_controller->_stats.RecieveDamage(_stats._attack_power);
+	_player_controller->_stats.ReceiveDamage(_stats._attack_power);
 	_attack_cooldown = _stats._attack_cd;
 }
 
@@ -104,7 +119,5 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
-	// Check if someone has reference to this object prior to destruction if possible
 	game_object->SetActive(false);
-	//SceneManagement::Destroy(game_object);
 }

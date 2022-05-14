@@ -13,7 +13,7 @@ namespace Hachiko
             Stats(int _ap, int _as, int _ms, int _maxhp);
             ~Stats() = default;
 
-            void RecieveDamage(int _damage);
+            void ReceiveDamage(int _damage);
             bool IsAlive();
         public:
             int _attack_power;

@@ -210,7 +210,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	//loop in enemies hit
 	for (Hachiko::GameObject* enemy : enemies_hit)
 	{
-		enemy->GetComponent<EnemyController>()->_stats.RecieveDamage(_stats._attack_power);
+		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power);
 	}
 }
 
@@ -225,7 +225,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-		enemy->_stats.RecieveDamage(_stats._attack_power);
+		enemy->ReceiveDamage(_stats._attack_power);
 	}
 }
 
