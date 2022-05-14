@@ -14,12 +14,12 @@ namespace Hachiko
         ~ModelImporter() override = default;
         
         void Import(const char* path, YAML::Node& meta) override;
-        void Save(const Resource* resource) override;
+        void Save(UID id, const Resource* resource) override;
         Resource* Load(UID id) override;
 
     private:
-        void ImportModel(const aiScene* scene, YAML::Node& ticket);
-        void ImportNode(const aiNode* assimp_node, YAML::Node& node, bool load_auxiliar);
+        void ImportModel(const char* path, const aiScene* scene, YAML::Node& meta);
+        void ImportNode(const char* path, const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar);
         void LoadChildren(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& children);
     };
 }

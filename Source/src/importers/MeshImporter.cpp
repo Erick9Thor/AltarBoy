@@ -8,10 +8,10 @@ Hachiko::MeshImporter::MeshImporter() : Importer(Importer::Type::MESH)
 {
 }
 
-void Hachiko::MeshImporter::Save(const Resource* res)
+void Hachiko::MeshImporter::Save(UID id, const Resource* res)
 {
     const ResourceMesh* mesh = static_cast<const ResourceMesh*>(res);
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(mesh->GetID());
+    const std::string file_path = GetResourcePath(Resource::Type::MESH, id);
 
     const unsigned* sizes = mesh->buffer_sizes;
     unsigned header[static_cast<int>(ResourceMesh::Buffers::COUNT)] = {
@@ -84,8 +84,7 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
 {
     assert(id && "Unable to load mesh. Given an empty id");
 
-    const std::string file_path = 
-        GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH) + std::to_string(id);
+    const std::string file_path = GetResourcePath(Resource::Type::MESH, id);
     
     char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
@@ -177,14 +176,9 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
     return mesh;
 }
 
-void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, YAML::Node& meta)
+void Hachiko::MeshImporter::ImportFromAssimp(UID uid, const aiMesh* ai_mesh)
 {
-    if (!id)
-    {
-        const_cast<UID&>(id) = UUID::GenerateUID();
-    }
-
-    const auto mesh = new ResourceMesh(id);
+    const auto mesh = new ResourceMesh(uid);
     mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] = ai_mesh->mNumVertices * 3;
     mesh->vertices = new float[mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)]];
     memcpy(mesh->vertices, ai_mesh->mVertices, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float));
@@ -250,7 +244,7 @@ void Hachiko::MeshImporter::Import(const aiMesh* ai_mesh, YAML::Node& meta)
     mesh->GenerateAABB();
     mesh->loaded = true;
 
-    Save(mesh);
+    Save(uid, mesh);
 
     delete mesh;
 }

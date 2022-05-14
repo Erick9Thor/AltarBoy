@@ -11,10 +11,13 @@ namespace Hachiko
         friend class ModelImporter;
     public:
         MeshImporter();
-        void Import(const char* path, YAML::Node& meta) override {};
-        void Save(const Resource* mesh) override;
+        void Import(const char* path, YAML::Node& meta) override
+        { 
+            assert(false && "This should not be called");
+        };
+        void Save(UID id, const Resource* mesh) override;
         Resource* Load(UID id) override;
     private:
-        void Import(const aiMesh* ai_mesh, YAML::Node& meta);
+        void ImportFromAssimp(UID uid, const aiMesh* ai_mesh);
     };
 }

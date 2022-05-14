@@ -6,6 +6,7 @@
 
 #include "resources/ResourceModel.h"
 #include "core/preferences/src/ResourcesPreferences.h"
+#include "modules/ModuleResources.h"
 
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
@@ -22,7 +23,6 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
 
     const std::filesystem::path model_path(path);
     meta[MODEL_NAME] = model_path.filename().replace_extension().string();
-    const std::string model_output_path = StringUtils::Concat(model_path.parent_path().string(), "\\", model_path.filename().replace_extension(MODEL_EXTENSION).string());
 
     unsigned flags = aiProcess_CalcTangentSpace | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices | aiProcess_ImproveCacheLocality | aiProcess_LimitBoneWeights
                      | aiProcess_SplitLargeMeshes | aiProcess_Triangulate | aiProcess_GenUVCoords | aiProcess_SortByPType | aiProcess_FindDegenerates | aiProcess_FindInvalidData 
@@ -36,84 +36,83 @@ void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
         return;
     }
 
-    ImportModel(scene, meta);
-    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
+    ImportModel(path, scene, meta);
 }
 
-void Hachiko::ModelImporter::ImportWithMeta(const char* path, YAML::Node& meta) 
-{
-    const std::filesystem::path model(path);
 
-    // 1 - Open assimp model
-    Assimp::Importer import;
-    const aiScene* scene = nullptr;
-    scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GlobalScale | aiProcess_CalcTangentSpace);
 
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-    {
-        HE_LOG("ERROR::ASSIMP::%c", import.GetErrorString());
-        return;
-    }
-
-    // 2 - Import Meshes
-    MeshImporter mesh_importer;
-    for (int i = 0; i < meta[MODEL_MESH_NODE].size(); ++i)
-    {
-        mesh_importer.Import(scene->mMeshes[i], meta[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>());
-    }
-
-    // 3 - Import Animation
-    AnimationImporter animation_importer;
-    for (int i = 0; i < meta[ANIMATION_IDS].size(); ++i)
-    {
-        animation_importer.Import(scene->mAnimations[i], meta[ANIMATION_IDS][i].as<UID>());
-    }
-
-    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), meta[GENERAL_NODE][GENERAL_ID].as<std::string>()).c_str(), meta);
-}
-
-void Hachiko::ModelImporter::ImportModel(const aiScene* scene, YAML::Node& node)
+void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene, YAML::Node& meta)
 {
     Hachiko::MeshImporter mesh_importer;
     Hachiko::MaterialImporter material_importer;
     Hachiko::AnimationImporter animation_importer;
 
-    auto base_mesh_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 1000;
-    auto base_material_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 100000;
-    auto base_animation_id = node[GENERAL_NODE][GENERAL_ID].as<UID>() + 10000000;
-    for (unsigned i = 0; i < scene->mNumMaterials; ++i)
+    unsigned imported_materials = 0;
+    unsigned imported_meshes = 0;
+    unsigned imported_animaitons = 0;
+
+    // Reset resources array
+    meta.remove(RESOURCES);
+        
+    for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
     {
-        aiMaterial* material = scene->mMaterials[i];
-        Hachiko::UID material_id = base_material_id + i;
-        node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID] = material_id;
-        node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME] = material->GetName().C_Str();
-        material_importer.Import(material, material_id);
+        Hachiko::UID mesh_id;
+        if (ExistsInMetaArray(meta[MESHES], mesh_index))
+        {
+            mesh_id = meta[MESHES][mesh_index].as<UID>();
+        }
+        else
+        {
+            mesh_id = UUID::GenerateUID();
+            meta[MESHES] = mesh_id;
+        }
+        aiMesh* mesh = scene->mMeshes[mesh_index];
+        mesh_importer.ImportFromAssimp(mesh_id, mesh);
+        AddResource(mesh_id, Resource::Type::MESH, meta);
     }
 
-    for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
+    for (unsigned material_index = 0; material_index < scene->mNumMaterials; ++material_index)
     {
-        aiMesh* mesh = scene->mMeshes[i];
-        Hachiko::UID mesh_id = base_mesh_id + i;
-        node[MODEL_MESH_NODE][i][MODEL_MESH_ID] = mesh_id;
-        node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX] = mesh->mMaterialIndex;
-        mesh_importer.Import(mesh, mesh_id);
+        // Model importer decides theuid of new materials to keep them under control
+        Hachiko::UID material_id;
+        if (ExistsInMetaArray(meta[MATERIALS], material_index))
+        {
+            material_id = meta[MATERIALS][material_index].as<UID>();
+        }
+        else
+        {
+            material_id = UUID::GenerateUID();
+            meta[MATERIALS] = material_id;
+        }
+        aiMaterial* material = scene->mMaterials[material_index];
+        material_importer.CreateMaterialAssetFromAssimp(path, material, material_id);
+        AddResource(material_id, Resource::Type::MATERIAL, meta);
     }
 
     if (scene->HasAnimations())
     {
-        node[ANIMATIONS] = scene->mNumAnimations;
-        for (unsigned int i = 0; i < scene->mNumAnimations; ++i)
+        for (unsigned animation_index; animation_index < scene->mNumAnimations; ++animation_index)
         {
-            Hachiko::UID animation_id = base_animation_id + i;
-            node[ANIMATION_IDS][i] = animation_id;
-            animation_importer.Import(scene->mAnimations[i], animation_id);
+            Hachiko::UID animaiton_id;
+            if (ExistsInMetaArray(meta[ANIMATIONS], animation_index))
+            {
+                animaiton_id = meta[ANIMATIONS][animation_index].as<UID>();
+            }
+            else
+            {
+                animaiton_id = UUID::GenerateUID();
+                meta[ANIMATIONS] = animaiton_id;
+            }
+            aiAnimation* animation = scene->mAnimations[animation_index];
+            animation_importer.CreateAnimationFromAssimp(animation, animaiton_id);
+            AddResource(animaiton_id, Resource::Type::ANIMATION, meta);
         }
     }
 
-    ImportNode(scene->mRootNode, node, !scene->HasAnimations());
+    ImportNode(path, scene->mRootNode, meta, !scene->HasAnimations());
 }
 
-void Hachiko::ModelImporter::ImportNode(const aiNode* assimp_node, YAML::Node& node, bool load_auxiliar)
+void Hachiko::ModelImporter::ImportNode(const char* path, const aiNode* assimp_node, YAML::Node& node, bool load_auxiliar)
 {
     std::string node_name = assimp_node->mName.C_Str();
 
@@ -171,8 +170,8 @@ Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
 {
     assert(id && "Unable to load module. Given an empty id");
 
-    const std::string model_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MODEL), std::to_string(id));
-    
+    const std::string model_library_path = GetResourcePath(Resource::Type::MODEL, id);
+
     YAML::Node model_node = YAML::LoadFile(model_library_path);
     Hachiko::ResourceModel* model_output = new ResourceModel(model_node[GENERAL_NODE][GENERAL_ID].as<UID>());
     
@@ -240,7 +239,7 @@ void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, 
     }
 }
 
-void Hachiko::ModelImporter::Save(const Resource* resource) {}
+void Hachiko::ModelImporter::Save(UID id, const Resource* resource) {}
 
 void Hachiko::ModelImporter::Delete(const YAML::Node& meta) 
 {

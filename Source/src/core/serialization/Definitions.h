@@ -10,20 +10,18 @@
 //#define GENERAL_ID "id"
 #define RESOURCES "resources" // Resources that asset is responsible of generating
 #define RESOURCE_ID "resource_id"
+#define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
 
 // Model
-#define MODEL_NAME "model_name"
-#define MODEL_FILE_PATH "model_file_path"
-#define MODEL_MESH_ID "id"
-#define MODEL_MESH_NODE "mesh"
-#define MODEL_MATERIAL_ID "id"
-#define MODEL_MATERIAL_NODE "material"
+#define MATERIALS "materials"
+#define MESHES "meshes"
 #define ANIMATIONS "animations"
-#define ANIMATION_IDS "animation_id"
+#define MODEL_NAME "model_name"
+#define ASSIMP_INDEX "assimp_index"
 
 // Node
 #define NODE_NAME "name"

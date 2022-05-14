@@ -19,7 +19,7 @@ namespace Hachiko
         void Import(const char* path, YAML::Node& meta) override;
         Resource* Load(UID id) override;
 
-        void Save(const Resource* resource) override;
+        void Save(UID id, const Resource* resource) override;
 
     private:
         FT_Library freetype_lib;

@@ -25,21 +25,19 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 material will exist
     static const int resource_index = 0;
-    UID uid = App->resources->ManageResourceUID(resource_index, meta);
+    UID uid = ManageResourceUID(Resource::Type::MATERIAL, resource_index, meta);
 
-    YAML::Node material_node = YAML::LoadFile(path);
-    FileSystem::Save(StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL),
-        uid).c_str(), material_node);
+    YAML::Node material_node = YAML::LoadFile(path);    
+    FileSystem::Save(GetResourcePath(Resource::Type::MATERIAL, uid).c_str(), material_node);
 }
 
-void Hachiko::MaterialImporter::Save(const Resource* res) 
+void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
 {
-    // Material changes are also reflected in the asset file
+    // Material changes are also reflected in the asset file since they are an asset we can edit from engine
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
     const std::string material_asset_path = 
         StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
-    const std::string material_library_path = 
-        StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL), std::to_string(material->GetID()));
+    const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
     YAML::Node material_node;
     material_node[MATERIAL_NAME] = material->GetName();    
@@ -56,7 +54,6 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
     material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
     material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
-
     
     FileSystem::Save(material_asset_path.c_str(), material_node);
     FileSystem::Save(material_library_path.c_str(), material_node);
@@ -64,8 +61,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
 {
-    const std::string material_library_path = 
-        GetResourcesPreferences()->GetLibraryPath(Resource::Type::MATERIAL) + std::to_string(id);
+    const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
     YAML::Node node = YAML::LoadFile(material_library_path);
     Hachiko::ResourceMaterial* material = new ResourceMaterial(id);
@@ -110,8 +106,7 @@ void Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& name)
 {
     ResourceMaterial* material = new ResourceMaterial(Hachiko::UUID::GenerateUID());
     material->SetName(name);
-
-    Save(material);
+    Save(material->GetID(), material);
 
     delete material;
 }
@@ -142,7 +137,7 @@ void Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string&
     material->normal = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_NORMALS);
     material->metalness = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_METALNESS);
     
-    Save(material);
+    Save(uid, material);
 
     delete material->diffuse;
     delete material->specular;

@@ -23,10 +23,10 @@ void Hachiko::AnimationImporter::Import(const char* path, YAML::Node& meta)
     ImportSingleAnimation(scene->mAnimations[0], uid);
 }
 
-void Hachiko::AnimationImporter::Save(const Resource* resource) 
+void Hachiko::AnimationImporter::Save(UID id, const Resource* resource)
 {
     const ResourceAnimation* animation = static_cast<const ResourceAnimation*>(resource);
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(resource->GetID()));
+    const std::string file_path = GetResourcePath(Resource::Type::ANIMATION, id).c_str();
 
     unsigned file_size = 0;
 
@@ -87,10 +87,7 @@ void Hachiko::AnimationImporter::Save(const Resource* resource)
 Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
     assert(id && "Unable to load module. Given an empty id");
-
-    const std::string file_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::ANIMATION), std::to_string(id));
-
-    char* file_buffer = FileSystem::Load(file_path.c_str());
+    char* file_buffer = FileSystem::Load(GetResourcePath(Resource::Type::ANIMATION, id).c_str());
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -150,7 +147,7 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
     return animation;
 }
 
-void Hachiko::AnimationImporter::ImportSingleAnimation(const aiAnimation* animation, UID id)
+void Hachiko::AnimationImporter::CreateAnimationFromAssimp(const aiAnimation* animation, UID id)
 {
 
     unsigned int first = 0;

@@ -17,7 +17,7 @@ namespace Hachiko
         // Copies the material file to lib
         void Import(const char* path, YAML::Node& meta) override;
         // Stores current material resource state to assets and lib
-        void Save(const Resource* material) override;
+        void Save(UID id, const Resource* material) override;
         Resource* Load(UID id) override;
         // Create new material
         void CreateEmptyMaterial(const std::string& name);

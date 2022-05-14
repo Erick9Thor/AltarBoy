@@ -24,7 +24,7 @@ void Hachiko::FontImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 font will exist
     static const int resource_index = 0;
-    ResourceFont* font = new ResourceFont(App->resources->ManageResourceUID(resource_index, meta));
+    ResourceFont* font = new ResourceFont(ManageResourceUID(Resource::Type::FONT,resource_index, meta));
     font->gl_font = std::make_unique<GLFont>(path, freetype_lib);
 
     if (font != nullptr)
@@ -36,18 +36,18 @@ void Hachiko::FontImporter::Import(const char* path, YAML::Node& meta)
 
 Hachiko::Resource* Hachiko::FontImporter::Load(UID id)
 {
-    const std::string file_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT) + std::to_string(id) + ".ttf";
+    const std::string file_path = GetResourcePath(Resource::Type::ANIMATION, id) +".ttf";
     ResourceFont* font = new ResourceFont(id);
     font->gl_font = std::make_unique<GLFont>(file_path.c_str(), freetype_lib);
 
     return font;
 }
 
-void Hachiko::FontImporter::Save(const Resource* resource)
+void Hachiko::FontImporter::Save(UID id, const Resource* resource)
 {
     const ResourceFont* font = static_cast<const ResourceFont*>(resource);
     // Freetype is dumb and needs the correct extension to work
-    const std::string lib_font_path = GetResourcesPreferences()->GetLibraryPath(Resource::Type::FONT) + std::to_string(font->GetID()) + ".ttf";
+    const std::string lib_font_path = GetResourcePath(Resource::Type::ANIMATION, id) + ".ttf";
 
     // Just use the original font file in lib
     FileSystem::Copy(font->gl_font->getFontFile(), lib_font_path.c_str());

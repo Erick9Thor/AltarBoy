@@ -14,10 +14,10 @@ namespace Hachiko
         ~AnimationImporter() override = default;
 
         void Import(const char* path, YAML::Node& meta) override;
-        void Save(const Resource* resource) override;
+        void Save(UID id, const Resource* resource) override;
         Resource* Load(UID id) override;
 
     private:
-        void ImportSingleAnimation(const aiAnimation* animation, UID id);
+        void CreateAnimationFromAssimp(const aiAnimation* animation, UID id);
     };
 } // namespace Hachiko

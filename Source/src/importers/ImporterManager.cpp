@@ -13,7 +13,7 @@ using namespace Hachiko;
 
 ImporterManager::ImporterManager()
 {
-    const auto mesh = new MeshImporter();
+    
     const auto model = new ModelImporter();
     const auto texture = new TextureImporter();
     const auto material = new MaterialImporter();
@@ -21,11 +21,14 @@ ImporterManager::ImporterManager()
     const auto font = new FontImporter();
 
     importers.emplace(Resource::Type::MODEL, model);
-    importers.emplace(Resource::Type::MESH, mesh);
     importers.emplace(Resource::Type::TEXTURE, texture);
     importers.emplace(Resource::Type::MATERIAL, material);
     importers.emplace(Resource::Type::ANIMATION, animation);
     importers.emplace(Resource::Type::FONT, font);
+
+    // Mesh resource imports are handled by model assets
+    // const auto mesh = new MeshImporter();
+    // importers.emplace(Resource::Type::MESH, mesh);
 }
 
 ImporterManager::~ImporterManager()
@@ -38,8 +41,7 @@ ImporterManager::~ImporterManager()
 
 void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type, YAML::Node& meta)
 {
-    assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");  
-
+    // Find the corresponding importer for an asset, delegate import to it and them store the resulting meta
     Importer* importer = GetImporter(asset_type);
 
     if (!importer)
