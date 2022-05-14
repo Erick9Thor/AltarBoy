@@ -91,7 +91,7 @@ namespace Hachiko
             }
             else
             {
-                // HE_LOG(msg.c_str());
+                HE_LOG(msg.c_str());
             }
         }
 #endif // PLAY_BUILD
