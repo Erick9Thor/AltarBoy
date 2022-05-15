@@ -156,7 +156,10 @@ void Hachiko::GeometryBatch::UpdateWithTextureBatch()
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
     App->program->UpdateTransforms(transforms);
-    App->program->UpdatePalettes(palettes, palettes_per_instance);
+    if (batch->layout.bones)
+    {
+        App->program->UpdatePalettes(palettes, palettes_per_instance);
+    }
 
     texture_batch->Draw(components);
 }
@@ -168,20 +171,20 @@ void Hachiko::GeometryBatch::BatchData()
     {
         palettes_per_instance.reserve(components.size());
 
-        PalettePerInstance palete_per_instance;
-        int palette_offeset = 0;
+        PalettePerInstance palette_per_instance;
+        int palette_offset = 0;
         for (const ComponentMeshRenderer* component : components)
         {
             transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
 
-            palete_per_instance.numBones = component->GetResourceMesh()->num_bones;
-            palete_per_instance.paletteOffset = palette_offeset;
-            palettes_per_instance.push_back(palete_per_instance);
+            palette_per_instance.numBones = component->GetResourceMesh()->num_bones;
+            palette_per_instance.paletteOffset = palette_offset;
+            palettes_per_instance.push_back(palette_per_instance);
 
-            palettes.resize(palette_offeset + palete_per_instance.numBones);
-            memcpy(&palettes[palette_offeset], &component->palette[0], sizeof(float4x4) * palete_per_instance.numBones);
+            palettes.resize(palette_offset + palette_per_instance.numBones);
+            memcpy(&palettes[palette_offset], &component->palette[0], sizeof(float4x4) * palette_per_instance.numBones);
 
-            palette_offeset += palete_per_instance.numBones;
+            palette_offset += palette_per_instance.numBones;
         }
     }
     else

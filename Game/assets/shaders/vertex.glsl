@@ -40,16 +40,6 @@ readonly layout(std430, row_major, binding = 5) buffer PalettesPerInstances
  PalettePerInstance paletteInstanceInfo[];
 };
 
-
-uniform mat4 model;
-
-/*layout(std140, row_major) uniform Skining
-{
-    mat4 palette[MAX_BONES];
-};*/
-
-uniform mat4 palette[MAX_BONES];
-
 // Outputs
 struct VertexData
 {
@@ -67,6 +57,8 @@ void main()
     vec4 normal = vec4(in_normal, 0.0);
     vec4 tangent = vec4(in_tangent, 0.0);
 
+    instance = gl_BaseInstance;
+
     if (has_bones)
     {
         PalettePerInstance palette_per_instance = paletteInstanceInfo[instance];
@@ -78,7 +70,6 @@ void main()
         //tangent = (skin_transform*vec4(in_tangent, 0.0));
     }
 
-    instance = gl_BaseInstance;
     gl_Position = camera.proj * camera.view *  models[instance] * position;
 
     fragment.normal = transpose(inverse(mat3(models[instance]))) * normal.xyz;

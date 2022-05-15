@@ -86,7 +86,7 @@ void Hachiko::BatchManager::BuildBatches()
 void Hachiko::BatchManager::DrawBatches()
 {
     //
-    if (ImGui::Begin("GeometryBatch"))
+    if (ImGui::Begin("GeometryBatch", 0, ImGuiWindowFlags_NoNavInputs))
     {
         for (GeometryBatch* geometry_batch : geometry_batches)
         {
