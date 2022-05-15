@@ -28,7 +28,7 @@ namespace Hachiko
 
         bool ExistsInMetaArray(YAML::Node& node, unsigned index)
         {
-            if (node.IsDefined() || !node.IsSequence() || !node.size() > index)
+            if (node.IsDefined() || !node.size() > index)
             {
                 return false;
             }

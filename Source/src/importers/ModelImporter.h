@@ -22,6 +22,7 @@ namespace Hachiko
         Resource* Load(UID id) override
         {
             assert(false && "Model importer will never load, since model is only an asset and not a resource");
+            return nullptr;
         };
 
     private:

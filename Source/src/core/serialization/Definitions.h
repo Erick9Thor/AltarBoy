@@ -23,6 +23,9 @@
 #define MODEL_NAME "model_name"
 #define PREFAB_ID "prefab_id"
 
+// Prefab
+#define PREFAB_NAME "prefab_name"
+
 // Node
 #define NODE_NAME "name"
 #define NODE_CHILD "child"

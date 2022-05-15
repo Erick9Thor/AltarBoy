@@ -160,7 +160,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 
             res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
-                texture_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+                texture_node[RESOURCES][0].as<UID>()));
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -199,5 +199,5 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
 void Hachiko::ResourceMaterial::UpdateMaterial()
 {
     MaterialImporter material_importer;
-    material_importer.Save(this);
+    material_importer.Save(GetID(), this);
 }

@@ -59,7 +59,7 @@ std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset
     if (!importer)
     {
         HE_LOG("No valid importer found for %s", asset_path.c_str());
-        return;
+        return std::vector<UID>();
     }
 
     importer->Import(asset_path.string().c_str(), meta);

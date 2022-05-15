@@ -19,7 +19,7 @@ void ColorCopy(const aiColor4D& assimp_color, float4& color)
 
 void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
-    // Only 1 material will exist
+    // Only 1 material per material asset will exist
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::MATERIAL, resource_index, meta);
 
@@ -45,7 +45,7 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
     YAML::Node node = YAML::LoadFile(material_library_path);
-    Hachiko::ResourceMaterial* material = new ResourceMaterial(id);
+    ResourceMaterial* material = new ResourceMaterial(id);
 
     material->SetName(node[MATERIAL_NAME].as<std::string>());
     material->diffuse_color = node[MATERIAL_DIFFUSE_COLOR].as<float4>();
@@ -93,7 +93,7 @@ Hachiko::UID Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& n
     const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
         material->GetName(), MATERIAL_EXTENSION);
 
-    UID material_uid = App->resources->HandleAssetFromAnyPath(material_path)[0];
+    UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
 
     delete material;
     return material_uid;
@@ -129,7 +129,7 @@ Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std:
     GenerateMaterialAssetFile(material);
     
     const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
-    UID material_uid = App->resources->HandleAssetFromAnyPath(material_path)[0];
+    UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
 
     delete material->diffuse;
     delete material->specular;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/UUID.h"
 
 namespace Hachiko
 {
@@ -30,11 +31,9 @@ namespace Hachiko
 
         // --- GameObject Management --- //
         ComponentCamera* GetMainCamera() const;
-        void AddGameObject(GameObject* new_object, GameObject* parent = nullptr) const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
-        void HandleInputModel(ResourceModel* model);
         void HandleInputMaterial(ResourceMaterial* material);
 
         [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
@@ -87,8 +86,8 @@ namespace Hachiko
             name = new_name;
         }
 
-        void Save(YAML::Node& node) const override;
-        void Load(const YAML::Node& node) override;
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
         

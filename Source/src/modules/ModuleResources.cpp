@@ -41,7 +41,7 @@ bool ModuleResources::Init()
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
         std::filesystem::path file = e.GetPath();
         HE_LOG("Handling dropped file: %s", file.string().c_str());
-        HandleAssetFromAnyPath(file);
+        ImportAssetFromAnyPath(file);
     };
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
     return true;
@@ -62,14 +62,14 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
     return last_resource_path.parent_path();
 }
 
-std::vector<UID> ModuleResources::HandleAssetFromAnyPath(const std::filesystem::path& path)
+std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path)
 {
     Resource::AssetType type = GetAssetTypeFromPath(path);
     
     if (type == Resource::AssetType::UNKNOWN)
     {
         HE_LOG("Unknown resource type recevied, nothing to be done");
-        return;
+        return std::vector<UID>();
     }
 
     size_t relative_pos = path.string().find("assets\\");
@@ -90,7 +90,7 @@ std::vector<UID> ModuleResources::HandleAssetFromAnyPath(const std::filesystem::
     }
 
     // Handle asset when it is in correct path
-    ImportAssetResources(destination.string());
+    ImportAsset(destination.string());
 }
 
 Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
@@ -101,7 +101,7 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
     }
     const std::filesystem::path extension = path.extension();
 
-    auto isValidExtension = [&](const std::pair<Resource::Type, std::string>& element)
+    auto isValidExtension = [&](const std::pair<Resource::AssetType, std::string>& element)
     {
         return element.second.size() == extension.string().size() &&
             std::equal(element.second.begin(), element.second.end(), extension.string().begin(),
@@ -118,13 +118,14 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
 
 Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
 {
+    // If resource already loaded return
     auto it = loaded_resources.find(id);
     if (it != loaded_resources.end())
     {
         return it->second;
     }
-
-    auto res = importer_manager.Load(type, id);
+    // If not loaded try to load and return
+    auto res = importer_manager.LoadResource(type, id);
     if (res != nullptr)
     {
         return loaded_resources.emplace(id, res).first->second;
@@ -146,6 +147,47 @@ std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, cons
         }
     }
     return new_resources;
+}
+
+void Hachiko::ModuleResources::LoadAsset(const std::string& path)
+{
+    Resource::AssetType asset_type = GetAssetTypeFromPath(path);
+    
+
+    if (asset_type != Resource::AssetType::UNKNOWN)
+    {
+        // Infer meta path from the asset name, it should always already exist since everything gets imported on start
+        std::string meta_path = StringUtils::Concat(path, META_EXTENSION);
+
+        YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+        // If its a model or a prefab load them into scene, load already does so internally
+        switch (asset_type)
+        {
+        case Resource::AssetType::MODEL:
+            {
+                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
+                importer->Load(meta_node[PREFAB_ID].as<UID>());
+                break;
+            }
+            
+        case Resource::AssetType::PREFAB:
+            {
+                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
+                // Prefab asset only contains a single prefab resource
+                importer->Load(meta_node[RESOURCES][0].as<UID>());
+                break;
+            }
+        case Resource::AssetType::MATERIAL:
+            {
+                Scene* scene = App->scene_manager->GetActiveScene();
+                // Material asset only contains a single material resource
+                auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
+                scene->HandleInputMaterial(material_res);
+                break;
+            }            
+        }
+    }
 }
 
 void Hachiko::ModuleResources::AssetsLibraryCheck()

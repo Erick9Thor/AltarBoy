@@ -8,6 +8,9 @@
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
 #include "components/ComponentMeshRenderer.h"
+#include "components/ComponentAnimation.h"
+
+#include "resources/ResourceAnimation.h"
 
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
@@ -45,10 +48,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     Hachiko::MeshImporter mesh_importer;
     Hachiko::MaterialImporter material_importer;
     Hachiko::AnimationImporter animation_importer;
-
-    unsigned imported_materials = 0;
-    unsigned imported_meshes = 0;
-    unsigned imported_animaitons = 0;
+    PrefabImporter prefab_importer;
 
     // Reset resources array
     meta.remove(RESOURCES);
@@ -108,8 +108,18 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
     ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
 
+    // Import animations
+    if (meta[ANIMATIONS].IsDefined())
+    {
+        ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->CreateComponent(Component::Type::ANIMATION));
+        for (int i = 0; i < meta[ANIMATIONS].size(); i++)
+        {
+            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, meta[ANIMATIONS][i].as<UID>()));
+            animation->animations.push_back(r_animation);
+        }
+    }
+
     // TODO: Create prefab resource type and asset
-    PrefabImporter prefab_importer;
     UID prefab_uid =prefab_importer.CreatePrefabAsset(model_root->name.c_str(), model_root);
     meta[PREFAB_ID] = prefab_uid;
     AddResource(prefab_uid, Resource::Type::PREFAB, meta);
@@ -164,8 +174,8 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         const aiMesh* assimp_mesh = scene->mMeshes[assimp_node->mMeshes[j]];
         unsigned material_idx = assimp_mesh->mMaterialIndex;
         ComponentMeshRenderer* mesh_renderer = new ComponentMeshRenderer(go);
-        ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(mesh_importer.Load(meta[MESHES][mesh_idx].as<UID>()));
-        ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(material_importer.Load(meta[MATERIALS][material_idx].as<UID>()));
+        ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, meta[MESHES][mesh_idx].as<UID>()));
+        ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta[MATERIALS][material_idx].as<UID>()));
         mesh_renderer->AddResourceMesh(mesh_resource);     
         mesh_renderer->AddResourceMaterial(material_resource);
     }

@@ -15,7 +15,7 @@ namespace Hachiko
             CAMERA,
             GAME,
             RENDER,
-            RESOURCES,
+            RESOURCE_PREFS,
             COUNT // to know how many they are
         };
 

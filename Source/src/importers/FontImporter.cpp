@@ -5,7 +5,7 @@
 #include "resources/ResourceFont.h"
 #include "ImporterManager.h"
 
-Hachiko::FontImporter::FontImporter() : Importer(Importer::Type::FONT)
+Hachiko::FontImporter::FontImporter()
 {
     // Initialize fonts library
     if (FT_Init_FreeType(&freetype_lib))
@@ -24,12 +24,13 @@ void Hachiko::FontImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 font will exist
     static const int resource_index = 0;
-    ResourceFont* font = new ResourceFont(ManageResourceUID(Resource::Type::FONT,resource_index, meta));
+    UID font_uid = ManageResourceUID(Resource::Type::FONT, resource_index, meta);
+    ResourceFont* font = new ResourceFont();
     font->gl_font = std::make_unique<GLFont>(path, freetype_lib);
 
     if (font != nullptr)
     {
-        Save(font);
+        Save(font_uid, font);
     }
     delete font;
 }

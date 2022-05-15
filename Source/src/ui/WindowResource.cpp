@@ -69,7 +69,7 @@ void Hachiko::WindowResource::Update()
             {
                 filename.insert(0, "\\");
                 filename.insert(0, current_directory.string().c_str());
-                LoadResource(filename);
+                LoadAsset(filename);
             }
         }
     }
@@ -77,30 +77,11 @@ void Hachiko::WindowResource::Update()
     ImGui::End();
 }
 
-void Hachiko::WindowResource::LoadResource(const std::string& path)
+void Hachiko::WindowResource::LoadAsset(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
     if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
-        
-        YAML::Node node = YAML::LoadFile(path);
-        Resource::Type type = static_cast<Resource::Type>(node[GENERAL_NODE][GENERAL_TYPE].as<unsigned>());
-        switch (type)
-        {
-        case Resource::Type::MODEL:
-            LoadModelIntoScene(node);
-            break;
-        case Resource::Type::MATERIAL:
-            LoadMaterialIntoSelectedObject(node);
-            break;
-        }
+        App->resources->LoadAsset(path);
     }
-}
-
-void Hachiko::WindowResource::LoadMaterialIntoSelectedObject(YAML::Node& node)
-{
-    HE_LOG("Adding a material into selected game object");
-    Scene* scene = App->scene_manager->GetActiveScene();
-    auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
-    scene->HandleInputMaterial(material_res);
 }

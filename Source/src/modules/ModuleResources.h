@@ -25,9 +25,11 @@ namespace Hachiko
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
-        std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
+        
         void AssetsLibraryCheck();
-        std::vector<UID> HandleAssetFromAnyPath(const std::filesystem::path& path);
+        std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
+        std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
+        void LoadAsset(const std::string& path);
 
     private:
         std::map<UID, Resource*> loaded_resources;

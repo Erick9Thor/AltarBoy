@@ -13,18 +13,17 @@ namespace Hachiko
             UNKNOWN = 0,
             MATERIAL = 1,
             TEXTURE = 2,
-            MODEL = 3,
-            MESH = 4,
-            SCENE = 5,
-            SHADER = 6,
-            AUDIO = 7,
-            ANIMATION = 8,
-            SCRIPT = 9,
-            VIDEO = 10,
-            SKYBOX = 11,
+            MESH = 3,
+            SCENE = 4,
+            SHADER = 5,
+            AUDIO = 6,
+            ANIMATION = 7,
+            SCRIPT = 8,
+            VIDEO = 9,
+            SKYBOX = 10,
             FONT = 12,
-            NAVMESH = 13,
-            PREFAB = 14,
+            NAVMESH = 12,
+            PREFAB = 13,
             COUNT,
         };
 
@@ -44,11 +43,10 @@ namespace Hachiko
             COUNT,
         };
 
-        static std::string TypeString(const Type& t) {
+        static std::string ResourceTypeString(const Type& t) {
             static const std::map<Type, std::string> string_map = {
                 {Type::MATERIAL, "materials"},
                 {Type::TEXTURE, "textures"},
-                {Type::MODEL, "models"},
                 {Type::MESH, "meshes"},
                 {Type::SCENE, "scene"},
                 {Type::SHADER, "shaders"},
@@ -59,6 +57,29 @@ namespace Hachiko
                 {Type::SKYBOX, "skybox"},
                 {Type::FONT, "fonts"},
                 {Type::NAVMESH, "navmesh"},
+                {Type::PREFAB, "prefab"},
+            };
+
+            auto it = string_map.find(t);
+            if (it != string_map.end())
+            {
+                return it->second;
+            }
+            return "";
+        }
+
+        static std::string AssetTypeString(const AssetType& t)
+        {
+            static const std::map<AssetType, std::string> string_map = {
+                {AssetType::MATERIAL, "materials"},
+                {AssetType::MATERIAL, "textures"},
+                {AssetType::MODEL, "models"},
+                {AssetType::SCENE, "scene"},
+                {AssetType::SHADER, "shaders"},
+                {AssetType::AUDIO, "audio"},
+                {AssetType::SKYBOX, "skybox"},
+                {AssetType::FONT, "fonts"},
+                {AssetType::PREFAB, "prefab"},
             };
 
             auto it = string_map.find(t);

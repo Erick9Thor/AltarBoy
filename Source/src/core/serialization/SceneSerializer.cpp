@@ -27,7 +27,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* scene_path)
     std::ofstream fout;
     if (!scene_path)
     {
-        fout.open(StringUtils::Concat(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
+        fout.open(StringUtils::Concat(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::AssetType::SCENE), scene->GetName(), SCENE_EXTENSION));
     }
     else
     {

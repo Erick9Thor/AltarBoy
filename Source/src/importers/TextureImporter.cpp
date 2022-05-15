@@ -132,42 +132,23 @@ Hachiko::ResourceTexture* Hachiko::TextureImporter::CreateTextureAssetFromAssimp
     const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
 
     // Check if that texture asset already exists
-    std::string meta_path = asset_path + filename;
-    meta_path.append(META_EXTENSION);
-    YAML::Node text_node;
-    bool imported = false;
+    //meta_path.append(META_EXTENSION);
 
     search_paths.emplace_back(asset_path + filename);
     search_paths.emplace_back(model_path + "\\" + filename);
     search_paths.emplace_back(file.data);
 
-    if (!FileSystem::Exists(meta_path.c_str()))
+
+    for (std::string& path : search_paths)
     {
-        for (std::string& path : search_paths)
+        if (!std::filesystem::exists(path))
         {
-            if (!std::filesystem::exists(path))
-            {
-                continue;
-            }
-
-            App->resources->HandleAssetFromAnyPath(path);
-            text_node = YAML::LoadFile(meta_path);
-            imported = true;
-            break;
+            continue;
         }
-    }
-    else
-    {
-        text_node = YAML::LoadFile(meta_path);
-        Import(search_paths[0].c_str(), text_node);
-        imported = true;
-    }
 
-    if (imported)
-    {
-        UID id = text_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-        output_texture = static_cast<ResourceTexture*>(Load(id));
+        UID id = App->resources->ImportAssetFromAnyPath(path)[0];
+        output_texture = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, id));        
+        break;
     }
-
     return output_texture;
 }
