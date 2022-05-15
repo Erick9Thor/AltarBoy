@@ -7,6 +7,9 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentAgent.h"
+#include "components/ComponentObstacle.h"
+
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -186,6 +189,14 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::TEXT):
         if (!GetComponent<ComponentProgressBar>())
             new_component = new ComponentText(this);
+        break;
+    case (Component::Type::OBSTACLE):
+        if (!GetComponent<ComponentObstacle>())
+            new_component = new ComponentObstacle(this);
+        break;
+    case (Component::Type::AGENT):
+        if (!GetComponent<ComponentAgent>())
+            new_component = new ComponentAgent(this);
         break;
     }
 
@@ -519,9 +530,12 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
             component = CreateComponent(type);
         }
 
-        component->SetID(component_id);
-        component->Load(components_node[i]);
-        active ? component->Enable() : component->Disable();
+        if (component != nullptr)
+        {
+            component->SetID(component_id);
+            component->Load(components_node[i]);
+            active ? component->Enable() : component->Disable();
+        }
     }
 
     const YAML::Node children_nodes = node[CHILD_NODE];

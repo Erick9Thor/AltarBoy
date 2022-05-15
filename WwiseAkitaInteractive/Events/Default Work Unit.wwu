@@ -14,6 +14,61 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Footstep" ID="{D19F2277-F79F-4388-A954-211E86C4B9F2}">
+					<ChildrenList>
+						<Action Name="" ID="{A47D91E5-444B-4B7F-BD08-5B063AEBD86D}" ShortID="830063513">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Footstep" ID="{A77018EE-118B-48A1-928D-54F0A1ECC6DF}" WorkUnitID="{BB1563B0-CF31-4426-9B46-404BAF403696}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_BackgroundMusic" ID="{12295168-EF4C-464C-B823-8E44A77DC028}">
+					<ChildrenList>
+						<Action Name="" ID="{766DE1EC-622D-4E32-81FF-4C89F36B05E8}" ShortID="660541326">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroundMusic" ID="{5EAE95F9-91AA-483D-B9CD-50AA7837F5C7}" WorkUnitID="{BB1563B0-CF31-4426-9B46-404BAF403696}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MeleeAttack" ID="{EF059311-33E9-4A5C-B383-E64442C6ADC9}">
+					<ChildrenList>
+						<Action Name="" ID="{C8AAAD44-E3E8-45BA-9D3E-14CBE27CFB4A}" ShortID="877354169">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MeleeAttack" ID="{336284EC-7693-4256-AC3C-9E4DC2CD562D}" WorkUnitID="{BB1563B0-CF31-4426-9B46-404BAF403696}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RangedAttack" ID="{0FF8A339-3E6B-4AC8-BBCF-B7F4E36D4DD1}">
+					<ChildrenList>
+						<Action Name="" ID="{832CE7D5-228B-4EA3-885A-4F01ED7E828B}" ShortID="829412043">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RangedAttack" ID="{D3B0F1BA-676B-47F4-8BFB-5DA6D9CAF2A5}" WorkUnitID="{BB1563B0-CF31-4426-9B46-404BAF403696}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Dash" ID="{259E6781-A552-4756-BC3B-32E8B5A281AD}">
+					<ChildrenList>
+						<Action Name="" ID="{146EB094-FFF9-45F4-BC91-5CD70D4CCA90}" ShortID="719366923">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dash" ID="{E84392C4-FDC4-43A3-AFDB-9E0CF0A57066}" WorkUnitID="{BB1563B0-CF31-4426-9B46-404BAF403696}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -10,8 +10,10 @@
 #include "ModuleSceneManager.h"
 #include "ModuleEditor.h"
 #include "ModuleUserInterface.h"
+#include "ModuleNavigation.h"
 
 #include "components/ComponentCamera.h"
+#include "resources/ResourceNavMesh.h"
 
 #ifdef PLAY_BUILD
 #include "ModuleInput.h"
@@ -175,6 +177,11 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
 
     Draw(App->scene_manager->GetActiveScene(), camera, culling);
+
+    if (draw_navmesh)
+    {
+        App->navigation->DebugDraw();
+    }
     
     App->ui->DrawUI(active_scene);
 
@@ -263,8 +270,9 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
     ImGui::Checkbox("Debug Draw", &App->debug_draw->debug_draw);
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
-
     ImGui::Checkbox("Skybox", &draw_skybox);
+    ImGui::Checkbox("Navmesh", &draw_navmesh);
+
     if (!draw_skybox)
     {
         ImGuiUtils::CompactColorPicker("Background Color", App->editor->scene_background.ptr());

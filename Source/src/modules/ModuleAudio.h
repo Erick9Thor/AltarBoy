@@ -30,9 +30,15 @@ namespace Hachiko
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
+        void Play(const wchar_t* name_event) const;
+
     private:
         // We're using the default Low-Level I/O implementation that's part
         // of the SDK's sample code, with the file package extension
         CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+
+        // TODO: Monica will change this after VS2
+        const AkGameObjectID GAME_OBJECT_ID_BGMUSIC = 1001;
+        const AkGameObjectID GAME_OBJECT_ID_PLAYER = 1002;
     };
 } // namespace Hachiko

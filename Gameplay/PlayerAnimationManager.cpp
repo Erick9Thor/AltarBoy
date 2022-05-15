@@ -59,6 +59,10 @@ void Hachiko::Scripting::PlayerAnimationManager::OnUpdate()
 		_state_string = "Play Dashing Animation.";
 		_animator->StartAnimating(_dashing_index, true, 200);
 		break;
+	case PlayerState::FALLING:
+		_state_string = "Play Falling Animation.";
+		_animator->StartAnimating(_dashing_index, false, 200);
+		break;
 	
 	case PlayerState::INVALID:
 	default:

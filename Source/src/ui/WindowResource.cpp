@@ -3,6 +3,7 @@
 #include "events/Event.h"
 #include "modules/ModuleResources.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleEditor.h"
 #include "modules/ModuleEvent.h"
 #include "resources/ResourceMaterial.h"
 
@@ -13,8 +14,8 @@ Hachiko::WindowResource::WindowResource() :
 
 void Hachiko::WindowResource::Update()
 {
-    ImGui::SetNextWindowSize(ImVec2(1100, 170), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin(StringUtils::Concat(ICON_FA_IMAGES, " ", name).c_str(), &active))
+    ImGui::SetNextWindowDockID(App->editor->dock_down_id, ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin(StringUtils::Concat(ICON_FA_IMAGES, " ", name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
     {
         ImGui::End();
         return;
@@ -76,7 +77,6 @@ void Hachiko::WindowResource::Update()
             }            
         }
     }
-
     ImGui::End();
 }
 

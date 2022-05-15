@@ -525,7 +525,7 @@
     <ClCompile Include="src\modules\ModuleAudio.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\resources\ResourceNaveMesh.cpp">
+    <ClCompile Include="src\resources\ResourceNavMesh.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\modules\ModuleNavigation.cpp">
@@ -534,11 +534,27 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
-    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
-    <ClCompile Include="src\resources\ResourcePrefab.cpp">
-      <Filter>Resources</Filter>
+    <ClCompile Include="src\components\ComponentAgent.cpp">
+      <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\importers\PrefabImporter.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\ChunkyTriMesh.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentObstacle.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\fastlz.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\recast\include\Recast\MeshLoaderObj.cpp">
+      <Filter>Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp">
+      <Filter>Modules\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -1194,7 +1210,6 @@
     <ClInclude Include="src\components\ISelectable.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\modules\ModuleDebugMode.h">
@@ -2183,20 +2198,42 @@
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\IO\stdafx.h">
       <Filter>Vendors\Wwise</Filter>
     </ClInclude>
-    <ClInclude Include="src\modules\ModuleAudio.h">
-      <Filter>Modules\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
-    <ClInclude Include="src\resources\ResourceNaveMesh.h">
+    <ClInclude Include="src\resources\ResourceNavMesh.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="src\resources\ResourcePrefab.h">
-      <Filter>Resources</Filter>
+    <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h">
+      <Filter>Vendors\Recast</Filter>
     </ClInclude>
-    <ClInclude Include="src\importers\PrefabImporter.h" />
+    <ClInclude Include="src\components\ComponentAgent.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\ChunkyTriMesh.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentObstacle.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\fastlz.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\InputGeom.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\recast\include\Recast\MeshLoaderObj.h">
+      <Filter>Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\serialization\TypeConverter.h">
+      <Filter>Core\Serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="src\modules\ModuleAudio.h">
+      <Filter>Modules\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Cache.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2342,6 +2379,9 @@
     </Filter>
     <Filter Include="Vendors\Recast">
       <UniqueIdentifier>{f458afc6-644a-4e89-af95-239e65537287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Navigation">
+      <UniqueIdentifier>{2ebe7408-ab70-48e9-833b-0e4f88246553}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

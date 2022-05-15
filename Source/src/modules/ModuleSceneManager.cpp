@@ -3,12 +3,10 @@
 
 #include "ModuleCamera.h"
 #include "ModuleEvent.h"
+#include "ModuleNavigation.h"
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
-
-// TODO: Remove, added for easy testing
-#include "resources/ResourceNaveMesh.h"
 
 bool Hachiko::ModuleSceneManager::Init()
 { 
@@ -24,11 +22,7 @@ bool Hachiko::ModuleSceneManager::Init()
     {
         CreateEmptyScene();
     }
-
-    /* ResourceNavMesh* navmesh = new ResourceNavMesh(0);
-    navmesh->Build(main_scene);
-    RELEASE(navmesh);
-    */
+    
 
 #ifdef PLAY_BUILD
     main_scene->Start();
@@ -232,5 +226,9 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
+    
+    
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
+
+    App->navigation->DrawOptionsGui();
 }

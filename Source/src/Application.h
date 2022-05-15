@@ -26,6 +26,7 @@ namespace Hachiko
     class ModuleUserInterface;
     class ModuleDebugMode;
     class ModuleAudio;
+    class ModuleNavigation;
     class PreferenceManager;
     class Program;
     class AppLog;
@@ -59,6 +60,7 @@ namespace Hachiko
         ModuleUserInterface* ui = nullptr;
         ModuleDebugMode* debug_mode = nullptr;
         ModuleAudio* audio = nullptr;
+        ModuleNavigation* navigation = nullptr;
 
         PreferenceManager* preferences = nullptr;
         FileSystem file_system;

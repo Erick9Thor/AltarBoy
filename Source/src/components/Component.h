@@ -37,6 +37,8 @@ namespace Hachiko
             ANIMATION = 14,
             SCRIPT = 15,
             TEXT = 16,
+            AGENT = 17,
+            OBSTACLE = 18,
             UNKNOWN
         };
 
@@ -46,9 +48,9 @@ namespace Hachiko
 
         // --- COMPONENT EVENTS --- //
 
-        virtual void Start() { }
-        virtual void Stop() {};
-        virtual void Update() { }
+        virtual void Start() {}
+        virtual void Stop() {}
+        virtual void Update() {}
         virtual void OnTransformUpdated() {}
 
         [[nodiscard]] Type GetType() const

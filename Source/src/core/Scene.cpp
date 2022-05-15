@@ -12,11 +12,13 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleNavigation.h"
 
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
 #include <debugdraw.h>
+#include <algorithm>
 
 Hachiko::Scene::Scene()
     : root(new GameObject(nullptr, float4x4::identity, "Root"))
@@ -31,6 +33,7 @@ Hachiko::Scene::Scene()
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
+    App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -188,6 +191,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
+    App->navigation->BuildNavmesh(this);
+
     loaded = true;
 }
 
@@ -204,26 +209,34 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
         ComponentMeshRenderer* mesh_renderer = go->GetComponent<ComponentMeshRenderer>();        
-        const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
+        const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh_renderer)
+        if (mesh_renderer && mesh_renderer->IsNavigable())
         {
+            // Use previous amount of mesh vertices to point to the correct indices
+            // Divide size/3 because its a vector of floats not of float3
+            int indices_offset = static_cast<int>(scene_vertices.size()) / 3;
+            
             const float* vertices = mesh_renderer->GetVertices();
             for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
             {
+                
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
-                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
+                // w is excluded, so we pass float 3 as desired
+                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.w);
             }
-
+            
             const unsigned* indices = mesh_renderer->GetIndices();
             int n_indices = mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES);
-            scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            auto inserted = scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            std::for_each(inserted, scene_triangles.end(), [&](int& v) { v += indices_offset; });
 
             const float* normals = mesh_renderer->GetNormals();
             for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::NORMALS); i += 3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
-                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
+                // w is excluded, so we pass float 3 as desired
+                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
             scene_bounds.Enclose(go->GetAABB());
