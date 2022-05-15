@@ -1,0 +1,542 @@
+prefab_name: Level_t3_binary
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: MainPath_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-182.93988, -3.81469727e-06, 7.35212755]
+        rotation: [-0.52028513, -0.478856474, -0.478856444, 0.52028501]
+        scale: [0.99999994, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 16727819403464433870
+        navigable: false
+        visible: true
+        material_id: 14108146766103615846
+  - name: Player_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-39.1560211, 0.287836075, 16.3255844]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 3087978636044401329
+        navigable: false
+        visible: true
+        material_id: 16580535911053015616
+  - name: CrstalPlatform_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-45.7510834, -0.376915574, -0.684082091]
+        rotation: [-0.580115855, 0.404308736, 0.404308796, 0.580115914]
+        scale: [0.999999881, 0.99999994, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 9529373263903677724
+        navigable: false
+        visible: true
+        material_id: 4833804432224708035
+  - name: Platforms_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-90.3453903, -0.119918823, 31.3772945]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 5061033078501404378
+        navigable: false
+        visible: true
+        material_id: 7959852721518399418
+  - name: Structure_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-87.3504562, -0.19118166, 32.5317459]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 16983096998039837012
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: Column_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-86.2611389, -15.9411554, 32.1033325]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 1297691918493828358
+        navigable: false
+        visible: true
+        material_id: 16383258702156113103
+  - name: RocksPath_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-102.053612, 7.79653215, 39.4971886]
+        rotation: [0.0461647995, 0.718358874, 0.692485332, -0.0478896685]
+        scale: [1.00000012, 0.999999881, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 15639215157249466861
+        navigable: false
+        visible: true
+        material_id: 11374701589660893631
+  - name: Oassis_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-78.4664001, 9.60068321, 80.3526306]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 16633399640906359327
+        navigable: false
+        visible: true
+        material_id: 4833804432224708035
+  - name: QuickSand_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [14.5907269, 1.37610531, 23.0375156]
+        rotation: [-0.578337252, -0.406849027, -0.406848997, 0.578337193]
+        scale: [0.99999994, 1.00000012, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 10862041464620063402
+        navigable: false
+        visible: true
+        material_id: 17740572802068720816
+  - name: QuickSand_02
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-71.2438507, 0.0654727444, 13.091033]
+        rotation: [0.476570159, 0.522380054, 0.522380114, -0.476570249]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 11913370834696124659
+        navigable: false
+        visible: true
+        material_id: 17740572802068720816
+  - name: CrystalPlatform_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-12.9543991, 4.88196182, 43.8235207]
+        rotation: [0.817285836, -0.0498337671, -0.569603145, -0.0715031475]
+        scale: [0.999999881, 0.99999994, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 7142652144326698634
+        navigable: false
+        visible: true
+        material_id: 4833804432224708035
+  - name: Main_Path01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [26.714716, 1.37252998, 11.1704254]
+        rotation: [-0.52028513, -0.478856474, -0.478856444, 0.52028501]
+        scale: [0.99999994, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 8803453656065726784
+        navigable: false
+        visible: true
+        material_id: 14108146766103615846
+  - name: RockPath_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [15.1621494, 1.4850142, 0.41014275]
+        rotation: [0.696631849, 0.696631908, -0.121260151, -0.121260218]
+        scale: [0.99999994, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 12218186810253710773
+        navigable: false
+        visible: true
+        material_id: 11374701589660893631
+  - name: Structure_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [27.778141, 1.35451698, 7.64872932]
+        rotation: [0.151531562, 0.690679491, 0.69067961, -0.151531592]
+        scale: [1.00000024, 1.00000024, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 1225551361740266482
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: Player_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [50.7527924, 1.33276582, -11.2024641]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 14528216883999821190
+        navigable: false
+        visible: true
+        material_id: 16580535911053015616
+  - name: MainPath_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [83.0101776, 1.0725441, -69.8480682]
+        rotation: [-0.52028513, -0.478856474, -0.478856444, 0.52028501]
+        scale: [0.99999994, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 7003723556567947787
+        navigable: false
+        visible: true
+        material_id: 14108146766103615846
+  - name: Structure_01002
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [94.3505249, 1.06349277, -79.0585861]
+        rotation: [-0.501095116, 0.498902559, 0.498902619, 0.501094997]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 14596567658968629764
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: Column_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [107.850494, 1.06346893, -78.9993973]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 8667209641974331060
+        navigable: false
+        visible: true
+        material_id: 16383258702156113103
+  - name: Platform_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [121.296829, 0.984767914, -66.7902756]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 1850808852660069604
+        navigable: false
+        visible: true
+        material_id: 7959852721518399418
+  - name: RocksPath_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [95.5535049, 2.94754434, -61.5705643]
+        rotation: [0.667515397, -0.286858827, 0.313051552, 0.611664891]
+        scale: [0.99999994, 0.99999994, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 8562840427600158610
+        navigable: false
+        visible: true
+        material_id: 11374701589660893631
+  - name: TerrainDesert_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [34.3559265, -10.4099808, -89.707222]
+        rotation: [0.581415236, 0.687562168, -0.0223529711, -0.434413284]
+        scale: [1.00000012, 1, 1.00000012]
+      - type: 2
+        enabled: true
+        mesh_id: 10257933387792395793
+        navigable: false
+        visible: true
+        material_id: 10582927894019845012
+  - name: TerrainWater_02
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [57.2549515, -18.1689281, -83.0306549]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 2900015403981409469
+        navigable: false
+        visible: true
+        material_id: 6957142792968399138
+  - name: Player_01002
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [178.222778, -23.8059006, -70.5695419]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 7960165763964247662
+        navigable: false
+        visible: true
+        material_id: 16580535911053015616
+  - name: FloorTile_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [211.387848, -23.9674797, -87.39534]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 8571649275295089531
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: TerrainDesert_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [149.495285, -32.3704224, -89.7433243]
+        rotation: [0.382316649, -0.558123827, 0.322232991, 0.662191629]
+        scale: [1, 1, 0.999999881]
+      - type: 2
+        enabled: true
+        mesh_id: 1202057702318686549
+        navigable: false
+        visible: true
+        material_id: 10582927894019845012
+  - name: TerreinDesert_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-75.8515015, -27.4024105, 43.506424]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 6682161141364458092
+        navigable: false
+        visible: true
+        material_id: 10582927894019845012
+  - name: QuickSand_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [177.254791, -23.8649197, -79.6189651]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 11859339773960342558
+        navigable: false
+        visible: true
+        material_id: 17740572802068720816
+  - name: Oasis
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [188.093689, -23.8568344, -71.0675278]
+        rotation: [-0.61159569, -0.354895324, -0.354895353, 0.61159575]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 9128518915165733804
+        navigable: false
+        visible: true
+        material_id: 6957142792968399138
+  - name: Plants_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [191.595581, -23.9750099, -69.2723465]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.602617979]
+      - type: 2
+        enabled: true
+        mesh_id: 15537487308211727452
+        navigable: false
+        visible: true
+        material_id: 16580535911053015616
+  - name: CrystalsR_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [185.074173, -24.0343971, -75.3656464]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 17827002794777987665
+        navigable: false
+        visible: true
+        material_id: 17923788158781202285
+  - name: FloorTile_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-209.224808, -0.119914055, 7.81654263]
+        rotation: [0.707105041, 0.707105219, 0.00155048096, 0.00155047036]
+        scale: [1, 1.00000012, 1.00000024]
+      - type: 2
+        enabled: true
+        mesh_id: 10554552894466783230
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: CrystalR_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-58.335659, 0.158239305, 12.043292]
+        rotation: [0.49890244, 0.501095235, 0.501095235, -0.4989025]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 11512361263267043285
+        navigable: false
+        visible: true
+        material_id: 17923788158781202285
+  - name: CrystalB_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-101.674332, 9.19902992, 42.9775047]
+        rotation: [-0.502057374, -0.394384414, -0.371341228, 0.674169898]
+        scale: [1.00000012, 1.00000012, 1.00000012]
+      - type: 2
+        enabled: true
+        mesh_id: 17823432863141470455
+        navigable: false
+        visible: true
+        material_id: 7777927448805380530
+  - name: FloorTile_01002
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [12.92663, 1.33464193, 4.82154036]
+        rotation: [0.704549491, 0.704549551, -0.0600836501, -0.0600837357]
+        scale: [1.00000012, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 1568833521461983329
+        navigable: false
+        visible: true
+        material_id: 7530284411347125881
+  - name: Columns_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [66.6703262, -19.8274231, -64.6147614]
+        rotation: [0.476570159, 0.522380054, 0.522380114, -0.476570249]
+        scale: [1, 1, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 348649139878729842
+        navigable: false
+        visible: true
+        material_id: 16383258702156113103
+  - name: Totem_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-1.83259106, 4.04522896, 10.6180639]
+        rotation: [-0.00155046536, 0.707104981, 0.70710516, 0.00155046617]
+        scale: [0.455976069, 0.45597595, 0.45597592]
+      - type: 2
+        enabled: true
+        mesh_id: 7390755299770798012
+        navigable: false
+        visible: true
+        material_id: 18334433344911655046
+  - name: StructureOrb_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [190.401871, 1.11125469, -90.6373978]
+        rotation: [-0.501095176, 0.49890238, 0.49890244, 0.501095235]
+        scale: [0.99999994, 0.99999994, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 9855986427349448629
+        navigable: false
+        visible: true
+        material_id: 16383258702156113103
+  - name: Totem_01001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [181.786316, -21.0178604, -88.9938354]
+        rotation: [-0.7071051, -0.00155051972, -0.00155051996, 0.70710516]
+        scale: [0.45597589, 0.45597592, 0.45597592]
+      - type: 2
+        enabled: true
+        mesh_id: 16206760409722322785
+        navigable: false
+        visible: true
+        material_id: 18334433344911655046
