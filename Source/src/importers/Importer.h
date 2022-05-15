@@ -28,11 +28,11 @@ namespace Hachiko
 
         bool ExistsInMetaArray(YAML::Node& node, unsigned index)
         {
-            if (node.IsDefined() || !node.size() > index)
+            if (node.IsDefined() && node.size() > index)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         // With current meta state and resource it aligns the meta and returns the corresponding uid
@@ -46,7 +46,7 @@ namespace Hachiko
                 meta[RESOURCES][resource_index][RESOURCE_TYPE] = static_cast<int>(type);
             }
             // Resource reference changed type
-            else if (static_cast<Resource::Type>(meta[RESOURCES][resource_index[RESOURCE_TYPE]].as<int>()) != type)
+            else if (static_cast<Resource::Type>(meta[RESOURCES][resource_index][RESOURCE_TYPE].as<int>()) != type)
             {
                 meta[RESOURCES][resource_index][RESOURCE_ID] = UUID::GenerateUID();
                 meta[RESOURCES][resource_index][RESOURCE_TYPE] = static_cast<int>(type);

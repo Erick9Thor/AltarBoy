@@ -285,6 +285,7 @@ bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) co
     for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
     {
         UID resource_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+        auto b = meta[RESOURCES][i][RESOURCE_TYPE].as<int>();
         Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
         std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(resource_uid));
         if (!FileSystem::Exists(library_path.c_str())) return false;
