@@ -73,6 +73,9 @@ namespace Hachiko
         float* tex_coords{};
         float* tangents{};
 
+        // UID of the model
+        UID model_id; // TODO: USE IT
+
         // BONES
         std::unique_ptr<unsigned[]> src_bone_indices = nullptr;
         std::unique_ptr<float4[]> src_bone_weights = nullptr;

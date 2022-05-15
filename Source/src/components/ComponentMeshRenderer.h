@@ -118,9 +118,7 @@ namespace Hachiko
     private:
         bool visible = true;
         bool navigable = false;
-        
-        std::string asset_path; // TODO: replace it with the UID model
-      
+              
         // SKINING
         const GameObject** node_cache = nullptr;
 
