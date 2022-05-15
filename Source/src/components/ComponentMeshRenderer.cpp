@@ -242,7 +242,7 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             material_path.append(META_EXTENSION);
             YAML::Node material_node = YAML::LoadFile(material_path);
 
-            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0].as<UID>()));
+            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
                 // Unload material

@@ -160,7 +160,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 
             res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
-                texture_node[RESOURCES][0].as<UID>()));
+                texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
         }
 
         ImGuiFileDialog::Instance()->Close();

@@ -70,7 +70,7 @@ void Hachiko::ComponentText::DrawGui()
                 std::string font_path = ImGuiFileDialog::Instance()->GetFilePathName();
                 font_path.append(META_EXTENSION);
                 YAML::Node font_node = YAML::LoadFile(font_path);              
-                LoadFont(font_node[RESOURCES][0].as<UID>());
+                LoadFont(font_node[RESOURCES][0][RESOURCE_ID].as<UID>());
             }
 
             ImGuiFileDialog::Instance()->Close();
