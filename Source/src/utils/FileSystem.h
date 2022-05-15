@@ -29,6 +29,7 @@ namespace Hachiko
         static void SplitFilePath(const char* full_path, std::string* path, std::string* file = nullptr, std::string* extension = nullptr);
         static std::string GetFileNameAndExtension(const char* file_path);
         static std::string GetFileExtension(const char* file_path);
+        static std::string GetFileName(const char* file_path);
         static bool HasExtension(const char* path);
         static bool HasExtension(const char* path, std::vector<std::string> extensions);
         static uint64_t HashFromBuffer(const char* bufer, const size_t& size_bytes);

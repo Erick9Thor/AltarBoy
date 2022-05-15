@@ -1,0 +1,23 @@
+scene_name: UnnamedScene
+root_id: 6309415739637348974
+child:
+  - id: 2957049173701561441
+    name: GameObject
+    enabled: true
+    component:
+      - id: 13096618610502333362
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 11831292319352198260
+        type: 7
+        enabled: true
+        light_type: 7
+        color: [1, 1, 1, 1]
+        inner: 15
+        outer: 30
+        intensity: 1
+        radius: 250
+        draw_cone: false

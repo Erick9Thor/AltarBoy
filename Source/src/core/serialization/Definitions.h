@@ -30,8 +30,6 @@
 #define NODE_NAME "name"
 #define NODE_CHILD "child"
 #define NODE_TRANSFORM "transform"
-#define NODE_MESH_INDEX "mesh_index"
-#define NODE_MATERIAL_INDEX "material_index"
 
 // Mesh
 #define MIN_POINT "min_point"

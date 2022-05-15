@@ -1,0 +1,34 @@
+prefab_name: BakerHouse
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: Chimney
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0.707106829, 0, 0, 0.707106709]
+        scale: [100, 99.9999771, 99.9999771]
+      - type: 2
+        enabled: true
+        mesh_id: 7544551443759936381
+        material_id: 7765775954106249835
+  - name: Baker_house
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0.707106829, 0, 0, 0.707106709]
+        scale: [100, 99.9999771, 99.9999771]
+      - type: 2
+        enabled: true
+        mesh_id: 3581704332068092856
+        material_id: 7765775954106249835

@@ -119,8 +119,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         }
     }
 
-    // TODO: Create prefab resource type and asset
-    UID prefab_uid =prefab_importer.CreatePrefabAsset(model_root->name.c_str(), model_root);
+    // Create prefab
+    UID prefab_uid = prefab_importer.CreatePrefabAsset(FileSystem::GetFileName(path).c_str(), model_root->children[0]);
     meta[PREFAB_ID] = prefab_uid;
     AddResource(prefab_uid, Resource::Type::PREFAB, meta);
 }
