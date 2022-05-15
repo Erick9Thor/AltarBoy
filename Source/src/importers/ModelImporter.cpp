@@ -85,7 +85,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     if (scene->HasAnimations())
     {
-        for (unsigned animation_index; animation_index < scene->mNumAnimations; ++animation_index)
+        for (unsigned animation_index = 0; animation_index < scene->mNumAnimations; ++animation_index)
         {
             Hachiko::UID animaiton_id;
             if (ExistsInMetaArray(meta[ANIMATIONS], animation_index))
