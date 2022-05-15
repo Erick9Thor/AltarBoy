@@ -175,7 +175,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
             {
                 Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
                 // Prefab asset only contains a single prefab resource
-                importer->Load(meta_node[RESOURCES][0].as<UID>());
+                importer->Load(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
                 break;
             }
         case Resource::AssetType::MATERIAL:

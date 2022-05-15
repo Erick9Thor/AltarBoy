@@ -64,13 +64,16 @@ void Hachiko::WindowResource::Update()
         }
         else
         {
-            auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
-            if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
+            if (FileSystem::GetFileExtension(filename.c_str()) != ".meta")
             {
-                filename.insert(0, "\\");
-                filename.insert(0, current_directory.string().c_str());
-                LoadAsset(filename);
-            }
+                auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
+                if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
+                {
+                    filename.insert(0, "\\");
+                    filename.insert(0, current_directory.string().c_str());
+                    LoadAsset(filename);
+                }
+            }            
         }
     }
 
