@@ -4,6 +4,8 @@
 #include <memory>
 
 #include "GLFont.h"
+#include "yaml-cpp/node/node.h"
+
 
 namespace Hachiko
 {
@@ -13,5 +15,7 @@ namespace Hachiko
         ResourcePrefab();
         ResourcePrefab(UID id);
         ~ResourcePrefab() override = default;
+        YAML::Node prefab_data;
+        std::string name;
     };
 } // namespace Hachiko

@@ -8,43 +8,50 @@
 #include "MaterialImporter.h"
 #include "AnimationImporter.h"
 #include "FontImporter.h"
+#include "PrefabImporter.h"
 
 using namespace Hachiko;
 
 ImporterManager::ImporterManager()
 {
-    
-    const auto model = new ModelImporter();
-    const auto texture = new TextureImporter();
+    // They exist both as assets and as resources
     const auto material = new MaterialImporter();
+    const auto texture = new TextureImporter();    
     const auto font = new FontImporter();
+    const auto prefab = new PrefabImporter();
 
-    importers.emplace(Resource::AssetType::MODEL, model);
-    importers.emplace(Resource::AssetType::TEXTURE, texture);
-    importers.emplace(Resource::AssetType::MATERIAL, material);
-    importers.emplace(Resource::AssetType::FONT, font);
+    // It doesnt have its own resource type (we use prefabs)
+    const auto model = new ModelImporter();    
 
+    // They dont have their own asset type
     const auto animation = new AnimationImporter();
     const auto mesh = new MeshImporter();
 
-    resource_importers.emplace(Resource::Type::MODEL, model);
+    // Importers used to generate resources from asset types
+    asset_importers.emplace(Resource::AssetType::TEXTURE, texture);
+    asset_importers.emplace(Resource::AssetType::MATERIAL, material);
+    asset_importers.emplace(Resource::AssetType::FONT, font);
+    asset_importers.emplace(Resource::AssetType::PREFAB, prefab);
+    asset_importers.emplace(Resource::AssetType::MODEL, model);    
+
+    // Importers used to save and load the different resource types
     resource_importers.emplace(Resource::Type::TEXTURE, texture);
     resource_importers.emplace(Resource::Type::MATERIAL, material);
     resource_importers.emplace(Resource::Type::FONT, font);
-    resource_importers.emplace(Resource::Type::ANIMATION, animation);
+    resource_importers.emplace(Resource::Type::PREFAB, prefab);
     resource_importers.emplace(Resource::Type::MESH, mesh);
-
+    resource_importers.emplace(Resource::Type::ANIMATION, animation);
 }
 
 ImporterManager::~ImporterManager()
 {
-    for (auto it : importers)
+    for (auto it : asset_importers)
     {
         delete it.second;
     }
 }
 
-void ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
+std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
 {
     // Find the corresponding importer for an asset, delegate import to it and them store the resulting meta
     Importer* importer = GetAssetImporter(asset_type);
@@ -59,6 +66,12 @@ void ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const
 
     std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
     FileSystem::Save(meta_path.c_str(), meta);
+    std::vector<UID> generated_resource_ids;
+    for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+    {
+        generated_resource_ids.push_back(meta[RESOURCES][i].as<UID>());
+    }
+    return generated_resource_ids;
 }
 
 Resource* Hachiko::ImporterManager::LoadResource(Resource::Type type, UID id)
@@ -73,8 +86,8 @@ void Hachiko::ImporterManager::DeleteResource(UID uid, Resource::Type resource_t
 
 Importer* Hachiko::ImporterManager::GetAssetImporter(Resource::AssetType type) const
 {
-    auto it = importers.find(type);
-    if (it != importers.end())
+    auto it = asset_importers.find(type);
+    if (it != asset_importers.end())
     {
         return it->second;
     }

@@ -17,10 +17,6 @@ void ColorCopy(const aiColor4D& assimp_color, float4& color)
     color.w = assimp_color.a;
 }
 
-Hachiko::MaterialImporter::MaterialImporter() : Importer(Importer::Type::MATERIAL)
-{
-}
-
 void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 material will exist
@@ -35,28 +31,13 @@ void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
 {
     // Material changes are also reflected in the asset file since they are an asset we can edit from engine
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-    const std::string material_asset_path = 
-        StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::Type::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
+
     const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
-    YAML::Node material_node;
-    material_node[MATERIAL_NAME] = material->GetName();    
-
-    material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
-    material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
-    material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
-    material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
-
-    material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
-    material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
-    material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
-    material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
-    material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
-    material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
-    material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
-    
-    FileSystem::Save(material_asset_path.c_str(), material_node);
-    FileSystem::Save(material_library_path.c_str(), material_node);
+    GenerateMaterialAssetFile(material);
+    const std::string material_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
+        material->GetName(), MATERIAL_EXTENSION);
+    FileSystem::Copy(material_asset_path.c_str(), material_library_path.c_str());
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
@@ -102,18 +83,26 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
     return material;
 }
 
-void Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& name) 
+Hachiko::UID Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& name)
 {
-    ResourceMaterial* material = new ResourceMaterial(Hachiko::UUID::GenerateUID());
+    // This uid wont be used
+    ResourceMaterial* material = new ResourceMaterial(0);
     material->SetName(name);
-    Save(material->GetID(), material);
+    GenerateMaterialAssetFile(material);
+
+    const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
+        material->GetName(), MATERIAL_EXTENSION);
+
+    UID material_uid = App->resources->HandleAssetFromAnyPath(material_path)[0];
 
     delete material;
+    return material_uid;
 }
 
-void Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material, UID uid)
+Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material)
 {  
-    const auto material = new ResourceMaterial(uid);
+    // This uid wont be used
+    const auto material = new ResourceMaterial(0);
     std::string name = ai_material->GetName().C_Str();
     if (name.find(':') != std::string::npos)
     {
@@ -136,12 +125,40 @@ void Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string&
     material->specular = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_SPECULAR);
     material->normal = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_NORMALS);
     material->metalness = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_METALNESS);
+
+    GenerateMaterialAssetFile(material);
     
-    Save(uid, material);
+    const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
+    UID material_uid = App->resources->HandleAssetFromAnyPath(material_path)[0];
 
     delete material->diffuse;
     delete material->specular;
     delete material->normal;
     delete material->metalness;
     delete material;
+
+    return material_uid;
+}
+
+void Hachiko::MaterialImporter::GenerateMaterialAssetFile(const ResourceMaterial* material)
+{
+    const std::string material_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
+        material->GetName(), MATERIAL_EXTENSION);
+    
+    YAML::Node material_node;
+    material_node[MATERIAL_NAME] = material->GetName();
+
+    material_node[MATERIAL_DIFFUSE_ID] = (material->HasDiffuse()) ? material->diffuse->GetID() : 0;
+    material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
+    material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
+    material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
+
+    material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
+    material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
+    material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
+    material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
+    material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
+    material_node[MATERIAL_ALPHA_CHANNEL] = material->smoothness_alpha;
+    material_node[MATERIAL_IS_TRANSPARENT] = material->is_transparent;
+    FileSystem::Save(material_asset_path.c_str(), material_node);
 }

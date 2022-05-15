@@ -25,9 +25,9 @@ namespace Hachiko
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
-        void CreateAsset(Resource::Type type, const std::string& name) const;
+        std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void AssetsLibraryCheck();
-        void HandleAssetFromAnyPath(const std::filesystem::path& path);
+        std::vector<UID> HandleAssetFromAnyPath(const std::filesystem::path& path);
 
     private:
         std::map<UID, Resource*> loaded_resources;
@@ -50,10 +50,10 @@ namespace Hachiko
         // Checks the current assets folder states and sets library to a valid state
         void GenerateLibrary(const PathNode& folder);
         // Gets an asset file and returns its related resources
-        void ImportAssetResources(const std::string& asset_path);
+        std::vector<UID> ImportAsset(const std::string& asset_path);
         // From an asset file creates its resources and sets the corresponding ids and types on meta
         // Keeps Previously existing ids if they can be matched
-        void ImportAssetResources(const std::filesystem::path& asset, YAML::Node& meta);
+        std::vector<UID> ImportAssetResources(const std::filesystem::path& asset, YAML::Node& meta);
         // Checks if all the asset resource files exist in library
         bool ValidateAssetResources(const YAML::Node& meta) const;
 

@@ -30,16 +30,17 @@ namespace Hachiko
 
         enum class AssetType
         {
-            UNKNOWN,
-            MATERIAL,
-            TEXTURE,
-            MODEL,
-            SCENE,
-            SHADER,
-            AUDIO,
-            VIDEO,
-            SKYBOX,
-            FONT,
+            UNKNOWN = 0,
+            MATERIAL = 1,
+            TEXTURE = 2,
+            MODEL = 3,
+            SCENE = 4,
+            SHADER = 5,
+            AUDIO = 6,
+            VIDEO = 7,
+            SKYBOX = 8,
+            FONT = 9,
+            PREFAB = 10,
             COUNT,
         };
 

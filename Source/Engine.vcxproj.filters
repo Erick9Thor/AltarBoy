@@ -1146,9 +1146,6 @@
     <ClInclude Include="src\Core\serialization\SceneSerializer.h">
       <Filter>Core\Serialization</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\serialization\ISerializable.h">
-      <Filter>Core\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="src\Resources\ResourceTexture.h">
       <Filter>Resources</Filter>
     </ClInclude>

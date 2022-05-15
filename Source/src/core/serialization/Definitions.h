@@ -12,17 +12,16 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
-#define PREFAB_ID "prefab_id"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
 
 // Model
-#define MATERIALS "materials"
 #define MESHES "meshes"
+#define MATERIALS "materials"
 #define ANIMATIONS "animations"
 #define MODEL_NAME "model_name"
-#define ASSIMP_INDEX "assimp_index"
+#define PREFAB_ID "prefab_id"
 
 // Node
 #define NODE_NAME "name"

@@ -678,7 +678,6 @@
     <ClInclude Include="src\core\preferences\Preferences.h" />
     <ClInclude Include="src\core\serialization\Definitions.h" />
     <ClInclude Include="src\core\serialization\SceneSerializer.h" />
-    <ClInclude Include="src\core\serialization\ISerializable.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\importers\Importer.h" />
     <ClInclude Include="src\importers\ModelImporter.h" />

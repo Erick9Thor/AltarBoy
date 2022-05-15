@@ -9,29 +9,8 @@ namespace Hachiko
     class Importer
     {
     public:
-        enum class Type
-        {
-            SCENE = 0,
-            MODEL,
-            MESH,
-            TEXTURE,
-            MATERIAL,
-            ANIMATION,
-            FONT,
-            COUNT
-        };
-
-        Importer(const Type type) : type(type)
-        {
-        }
-
+        Importer() = default;
         virtual ~Importer() = default;
-
-        [[nodiscard]] Type GetType() const
-        {
-            return type;
-        }
-
 
         virtual void Import(const char* path, YAML::Node& meta) = 0;
         virtual void Save(UID id, const Resource* resource) = 0;
@@ -94,7 +73,6 @@ namespace Hachiko
 
 
     protected:
-        Type type;
         [[nodiscard]] ResourcesPreferences* GetResourcesPreferences()
         {
             if (preferences == nullptr)

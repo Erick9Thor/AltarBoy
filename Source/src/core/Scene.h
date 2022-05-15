@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
 
 namespace Hachiko
 {
@@ -15,7 +14,7 @@ namespace Hachiko
     class Quadtree;
     class ResourceMaterial;
 
-    class Scene : public ISerializable
+    class Scene
     {
         friend class ModuleSceneManager;
 

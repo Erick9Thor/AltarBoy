@@ -1,6 +1,5 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
 #include "utils/UUID.h"
 
 #if defined(HACHIKO_API)
@@ -15,7 +14,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class HACHIKO_API Component : public ISerializable
+    class HACHIKO_API Component
     {
     public:
         enum class Type

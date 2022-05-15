@@ -3,6 +3,7 @@
 #include "MeshImporter.h"
 #include "MaterialImporter.h"
 #include "AnimationImporter.h"
+#include "PrefabImporter.h"
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
@@ -11,8 +12,6 @@
 #include <assimp/cimport.h>
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
-
-Hachiko::ModelImporter::ModelImporter() : Importer(Importer::Type::MODEL) {}
 
 void Hachiko::ModelImporter::Import(const char* path, YAML::Node& meta)
 {
@@ -67,6 +66,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
             meta[MESHES] = mesh_id;
         }
         aiMesh* mesh = scene->mMeshes[mesh_index];
+        // Create mesh from assimp and since its not a separate asset manage its id.
         mesh_importer.ImportFromAssimp(mesh_id, mesh);
         AddResource(mesh_id, Resource::Type::MESH, meta);
     }
@@ -75,18 +75,12 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     {
         // Model importer decides theuid of new materials to keep them under control
         Hachiko::UID material_id;
-        if (ExistsInMetaArray(meta[MATERIALS], material_index))
-        {
-            material_id = meta[MATERIALS][material_index].as<UID>();
-        }
-        else
-        {
-            material_id = UUID::GenerateUID();
-            meta[MATERIALS] = material_id;
-        }
         aiMaterial* material = scene->mMaterials[material_index];
-        material_importer.CreateMaterialAssetFromAssimp(path, material, material_id);
-        AddResource(material_id, Resource::Type::MATERIAL, meta);
+        // Create material from assimp and generate it as an asset, if it already exists its data is refreshed
+        UID material_uid = material_importer.CreateMaterialAssetFromAssimp(path, material);
+        // Since it is its own asset we dont decide its id
+        meta[MATERIALS][material_index] = material_uid;
+        AddResource(material_uid, Resource::Type::MATERIAL, meta);
     }
 
     if (scene->HasAnimations())
@@ -104,18 +98,20 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
                 meta[ANIMATIONS] = animaiton_id;
             }
             aiAnimation* animation = scene->mAnimations[animation_index];
+            // Create animation from assimp, since its not a separate asset manage its id
             animation_importer.CreateAnimationFromAssimp(animation, animaiton_id);
             AddResource(animaiton_id, Resource::Type::ANIMATION, meta);
         }
     }
 
     // Import scene tree into gameobjects
-    GameObject* model_root = new GameObject("Model Root");
+    GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
     ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
 
-    UID prefab_uid = meta[PREFAB_ID].IsDefined() ? meta[PREFAB_ID].as<UID>() : UUID::GenerateUID();
     // TODO: Create prefab resource type and asset
-    model_root->Save(meta["PREFAB"]);
+    PrefabImporter prefab_importer;
+    UID prefab_uid =prefab_importer.CreatePrefabAsset(model_root->name.c_str(), model_root);
+    meta[PREFAB_ID] = prefab_uid;
     AddResource(prefab_uid, Resource::Type::PREFAB, meta);
 }
 
@@ -154,13 +150,12 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
                 dummy_node = true;
             }
         }
-
     }
 
     // Create go
     GameObject* go = new GameObject(parent, transform, assimp_node->mName.C_Str());
-    Hachiko::MeshImporter mesh_importer;
-    Hachiko::MaterialImporter material_importer;
+    MeshImporter mesh_importer;
+    MaterialImporter material_importer;
 
     // Load resources as components    
     for (unsigned int j = 0; j < assimp_node->mNumMeshes; ++j)
@@ -180,96 +175,4 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         auto child_node = assimp_node->mChildren[i];
         ImportNode(go, scene, child_node, meta, load_auxiliar);
     }
-}
-
-Hachiko::Resource* Hachiko::ModelImporter::Load(UID id)
-{
-    assert(false && "Model importer will never load, since model is only an asset and not a resource");
-
-    const std::string model_library_path = GetResourcePath(Resource::Type::MODEL, id);
-
-    YAML::Node model_node = YAML::LoadFile(model_library_path);
-
-   
-    
-    model_output->model_name = model_node[MODEL_NAME].as<std::string>();
-    model_output->meshes.reserve(model_node[MODEL_MESH_NODE].size());
-    for (unsigned i = 0; i < model_node[MODEL_MESH_NODE].size(); ++i)
-    {
-        MeshInfo mesh_info;
-        mesh_info.mesh_id = model_node[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>();
-        mesh_info.material_index = model_node[MODEL_MESH_NODE][i][NODE_MATERIAL_INDEX].as<int>();
-        model_output->meshes.push_back(mesh_info);
-    }
-
-    model_output->materials.reserve(model_node[MODEL_MATERIAL_NODE].size());
-    for (unsigned i = 0; i < model_node[MODEL_MATERIAL_NODE].size(); ++i)
-    {
-        MaterialInfo material_info;
-        material_info.material_id = model_node[MODEL_MATERIAL_NODE][i][MODEL_MATERIAL_ID].as<UID>();
-        material_info.material_name = model_node[MODEL_MATERIAL_NODE][i][MATERIAL_NAME].as<std::string>();
-        model_output->materials.push_back(material_info);
-    }
-
-    if (model_node[ANIMATIONS].IsDefined())
-    {
-        model_output->have_animation = model_node[ANIMATIONS].as<unsigned int>();
-
-        model_output->materials.reserve(model_output->have_animation);
-
-        for (unsigned i = 0; i < model_output->have_animation; ++i)
-        {
-            AnimationInfo animation_info;
-            animation_info.animation_id = model_node[ANIMATION_IDS][i].as<UID>();
-            model_output->animations.push_back(animation_info);
-        }
-    }
-
-    LoadChildren(model_node[NODE_CHILD], model_node[MODEL_MESH_NODE], model_node[MODEL_MATERIAL_NODE], model_output->child_nodes);
-    return model_output;
-}
-
-void Hachiko::ModelImporter::LoadChildren(YAML::Node& node, YAML::Node& meshes, YAML::Node& materials, std::vector<ResourceNode*>& children)
-{
-    children.reserve(node.size());
-    for (int i = 0; i < node.size(); ++i)
-    {
-        ResourceNode* resource_node = new ResourceNode();
-        resource_node->node_name = node[i][NODE_NAME].as<std::string>();
-        resource_node->node_transform = node[i][NODE_TRANSFORM].as<float4x4>();
-        //resource_node->node_transform = float4x4::FromTRS(node[i][TRANSFORM_POSITION].as<float3>(), node[i][TRANSFORM_ROTATION].as<Quat>(), node[i][TRANSFORM_SCALE].as<float3>());
-
-        for (int j = 0; j < node[i][NODE_MESH_INDEX].size(); ++j)
-        {
-            int mesh_idx = node[i][NODE_MESH_INDEX][0].as<int>();
-            int material_idx = meshes[mesh_idx][NODE_MATERIAL_INDEX].as<int>();
-
-            resource_node->meshes_index.push_back(node[i][NODE_MESH_INDEX][j].as<int>());
-        }
-
-        if (node[i][NODE_CHILD].IsDefined())
-        {
-            LoadChildren(node[i][NODE_CHILD], meshes, materials, resource_node->children);
-        }
-
-        children.emplace_back(resource_node);
-    }
-}
-
-void Hachiko::ModelImporter::Save(UID id, const Resource* resource)
-{
-    // All model necessary stuff is saved by mesh, material, animation and its respective meta
-}
-
-void Hachiko::ModelImporter::Delete(const YAML::Node& meta) 
-{
-    for (unsigned i = 0; i < meta[MODEL_MESH_NODE].size(); ++i)
-    {
-        UID mesh_uid = meta[MODEL_MESH_NODE][i][MODEL_MESH_ID].as<UID>();
-        std::string mesh_library_path = StringUtils::Concat(GetResourcesPreferences()->GetLibraryPath(Resource::Type::MESH), std::to_string(mesh_uid));
-
-        FileSystem::Delete(mesh_library_path.c_str());
-    }
-
-    Importer::Delete(meta);
 }
