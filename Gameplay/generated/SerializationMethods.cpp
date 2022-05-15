@@ -4,10 +4,12 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
 #include "DynamicCamera.h"
+#include "EnemyController.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
 #include "PlayerController.h"
+#include "PlayerSoundManager.h"
 
 
 void Hachiko::Scripting::BackToMainMenu::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -83,6 +85,60 @@ void Hachiko::Scripting::DynamicCamera::SerializeTo(std::unordered_map<std::stri
 	serialized_fields["_speed"] = SerializedField(std::string("_speed"), std::make_any<float>(_speed), std::string("float"));
 
 	serialized_fields["_lerp_position"] = SerializedField(std::string("_lerp_position"), std::make_any<float>(_lerp_position), std::string("float"));
+}
+
+void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_stats") != serialized_fields.end())
+	{
+		const SerializedField& _stats_sf = serialized_fields["_stats"];
+		if (_stats_sf.type_name == "Stats")
+		{
+			_stats = std::any_cast<Stats>(_stats_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_aggro_range") != serialized_fields.end())
+	{
+		const SerializedField& _aggro_range_sf = serialized_fields["_aggro_range"];
+		if (_aggro_range_sf.type_name == "int")
+		{
+			_aggro_range = std::any_cast<int>(_aggro_range_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attack_range") != serialized_fields.end())
+	{
+		const SerializedField& _attack_range_sf = serialized_fields["_attack_range"];
+		if (_attack_range_sf.type_name == "int")
+		{
+			_attack_range = std::any_cast<int>(_attack_range_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_spawn_pos") != serialized_fields.end())
+	{
+		const SerializedField& _spawn_pos_sf = serialized_fields["_spawn_pos"];
+		if (_spawn_pos_sf.type_name == "float3")
+		{
+			_spawn_pos = std::any_cast<float3>(_spawn_pos_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
+
+	serialized_fields["_aggro_range"] = SerializedField(std::string("_aggro_range"), std::make_any<int>(_aggro_range), std::string("int"));
+
+	serialized_fields["_attack_range"] = SerializedField(std::string("_attack_range"), std::make_any<int>(_attack_range), std::string("int"));
+
+	serialized_fields["_spawn_pos"] = SerializedField(std::string("_spawn_pos"), std::make_any<float3>(_spawn_pos), std::string("float3"));
 }
 
 void Hachiko::Scripting::MainMenuManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -361,6 +417,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
+	if(serialized_fields.find("_stats") != serialized_fields.end())
+	{
+		const SerializedField& _stats_sf = serialized_fields["_stats"];
+		if (_stats_sf.type_name == "Stats")
+		{
+			_stats = std::any_cast<Stats>(_stats_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_movement_speed") != serialized_fields.end())
 	{
 		const SerializedField& _movement_speed_sf = serialized_fields["_movement_speed"];
@@ -415,12 +480,66 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_dash_cooldown") != serialized_fields.end())
+	{
+		const SerializedField& _dash_cooldown_sf = serialized_fields["_dash_cooldown"];
+		if (_dash_cooldown_sf.type_name == "float")
+		{
+			_dash_cooldown = std::any_cast<float>(_dash_cooldown_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_dash_timer") != serialized_fields.end())
+	{
+		const SerializedField& _dash_timer_sf = serialized_fields["_dash_timer"];
+		if (_dash_timer_sf.type_name == "float")
+		{
+			_dash_timer = std::any_cast<float>(_dash_timer_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_dash_count") != serialized_fields.end())
+	{
+		const SerializedField& _dash_count_sf = serialized_fields["_dash_count"];
+		if (_dash_count_sf.type_name == "int")
+		{
+			_dash_count = std::any_cast<int>(_dash_count_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_max_dash_count") != serialized_fields.end())
+	{
+		const SerializedField& _max_dash_count_sf = serialized_fields["_max_dash_count"];
+		if (_max_dash_count_sf.type_name == "int")
+		{
+			_max_dash_count = std::any_cast<int>(_max_dash_count_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_is_dashing") != serialized_fields.end())
 	{
 		const SerializedField& _is_dashing_sf = serialized_fields["_is_dashing"];
 		if (_is_dashing_sf.type_name == "bool")
 		{
 			_is_dashing = std::any_cast<bool>(_is_dashing_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_has_cooldown") != serialized_fields.end())
+	{
+		const SerializedField& _has_cooldown_sf = serialized_fields["_has_cooldown"];
+		if (_has_cooldown_sf.type_name == "bool")
+		{
+			_has_cooldown = std::any_cast<bool>(_has_cooldown_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_is_falling") != serialized_fields.end())
+	{
+		const SerializedField& _is_falling_sf = serialized_fields["_is_falling"];
+		if (_is_falling_sf.type_name == "bool")
+		{
+			_is_falling = std::any_cast<bool>(_is_falling_sf.copy);
 		}
 	}
 
@@ -439,6 +558,42 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		if (_dash_direction_sf.type_name == "math::float3")
 		{
 			_dash_direction = std::any_cast<math::float3>(_dash_direction_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_raycast_min_range") != serialized_fields.end())
+	{
+		const SerializedField& _raycast_min_range_sf = serialized_fields["_raycast_min_range"];
+		if (_raycast_min_range_sf.type_name == "float")
+		{
+			_raycast_min_range = std::any_cast<float>(_raycast_min_range_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_raycast_max_range") != serialized_fields.end())
+	{
+		const SerializedField& _raycast_max_range_sf = serialized_fields["_raycast_max_range"];
+		if (_raycast_max_range_sf.type_name == "float")
+		{
+			_raycast_max_range = std::any_cast<float>(_raycast_max_range_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attack_radius") != serialized_fields.end())
+	{
+		const SerializedField& _attack_radius_sf = serialized_fields["_attack_radius"];
+		if (_attack_radius_sf.type_name == "float")
+		{
+			_attack_radius = std::any_cast<float>(_attack_radius_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attack_cooldown") != serialized_fields.end())
+	{
+		const SerializedField& _attack_cooldown_sf = serialized_fields["_attack_cooldown"];
+		if (_attack_cooldown_sf.type_name == "float")
+		{
+			_attack_cooldown = std::any_cast<float>(_attack_cooldown_sf.copy);
 		}
 	}
 
@@ -501,6 +656,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
+	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
+
 	serialized_fields["_movement_speed"] = SerializedField(std::string("_movement_speed"), std::make_any<float>(_movement_speed), std::string("float"));
 
 	serialized_fields["_dash_indicator"] = SerializedField(std::string("_dash_indicator"), std::make_any<GameObject*>(_dash_indicator), std::string("GameObject*"));
@@ -513,11 +670,31 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_dash_progress"] = SerializedField(std::string("_dash_progress"), std::make_any<float>(_dash_progress), std::string("float"));
 
+	serialized_fields["_dash_cooldown"] = SerializedField(std::string("_dash_cooldown"), std::make_any<float>(_dash_cooldown), std::string("float"));
+
+	serialized_fields["_dash_timer"] = SerializedField(std::string("_dash_timer"), std::make_any<float>(_dash_timer), std::string("float"));
+
+	serialized_fields["_dash_count"] = SerializedField(std::string("_dash_count"), std::make_any<int>(_dash_count), std::string("int"));
+
+	serialized_fields["_max_dash_count"] = SerializedField(std::string("_max_dash_count"), std::make_any<int>(_max_dash_count), std::string("int"));
+
 	serialized_fields["_is_dashing"] = SerializedField(std::string("_is_dashing"), std::make_any<bool>(_is_dashing), std::string("bool"));
+
+	serialized_fields["_has_cooldown"] = SerializedField(std::string("_has_cooldown"), std::make_any<bool>(_has_cooldown), std::string("bool"));
+
+	serialized_fields["_is_falling"] = SerializedField(std::string("_is_falling"), std::make_any<bool>(_is_falling), std::string("bool"));
 
 	serialized_fields["_dash_start"] = SerializedField(std::string("_dash_start"), std::make_any<math::float3>(_dash_start), std::string("math::float3"));
 
 	serialized_fields["_dash_direction"] = SerializedField(std::string("_dash_direction"), std::make_any<math::float3>(_dash_direction), std::string("math::float3"));
+
+	serialized_fields["_raycast_min_range"] = SerializedField(std::string("_raycast_min_range"), std::make_any<float>(_raycast_min_range), std::string("float"));
+
+	serialized_fields["_raycast_max_range"] = SerializedField(std::string("_raycast_max_range"), std::make_any<float>(_raycast_max_range), std::string("float"));
+
+	serialized_fields["_attack_radius"] = SerializedField(std::string("_attack_radius"), std::make_any<float>(_attack_radius), std::string("float"));
+
+	serialized_fields["_attack_cooldown"] = SerializedField(std::string("_attack_cooldown"), std::make_any<float>(_attack_cooldown), std::string("float"));
 
 	serialized_fields["_should_rotate"] = SerializedField(std::string("_should_rotate"), std::make_any<bool>(_should_rotate), std::string("bool"));
 
@@ -530,4 +707,69 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_rotation_target"] = SerializedField(std::string("_rotation_target"), std::make_any<math::Quat>(_rotation_target), std::string("math::Quat"));
 
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<PlayerState>(_state), std::string("PlayerState"));
+}
+
+void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_step_frequency") != serialized_fields.end())
+	{
+		const SerializedField& _step_frequency_sf = serialized_fields["_step_frequency"];
+		if (_step_frequency_sf.type_name == "float")
+		{
+			_step_frequency = std::any_cast<float>(_step_frequency_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_melee_frequency") != serialized_fields.end())
+	{
+		const SerializedField& _melee_frequency_sf = serialized_fields["_melee_frequency"];
+		if (_melee_frequency_sf.type_name == "float")
+		{
+			_melee_frequency = std::any_cast<float>(_melee_frequency_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_ranged_frequency") != serialized_fields.end())
+	{
+		const SerializedField& _ranged_frequency_sf = serialized_fields["_ranged_frequency"];
+		if (_ranged_frequency_sf.type_name == "float")
+		{
+			_ranged_frequency = std::any_cast<float>(_ranged_frequency_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_timer") != serialized_fields.end())
+	{
+		const SerializedField& _timer_sf = serialized_fields["_timer"];
+		if (_timer_sf.type_name == "float")
+		{
+			_timer = std::any_cast<float>(_timer_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_previous_state") != serialized_fields.end())
+	{
+		const SerializedField& _previous_state_sf = serialized_fields["_previous_state"];
+		if (_previous_state_sf.type_name == "PlayerState")
+		{
+			_previous_state = std::any_cast<PlayerState>(_previous_state_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerSoundManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_step_frequency"] = SerializedField(std::string("_step_frequency"), std::make_any<float>(_step_frequency), std::string("float"));
+
+	serialized_fields["_melee_frequency"] = SerializedField(std::string("_melee_frequency"), std::make_any<float>(_melee_frequency), std::string("float"));
+
+	serialized_fields["_ranged_frequency"] = SerializedField(std::string("_ranged_frequency"), std::make_any<float>(_ranged_frequency), std::string("float"));
+
+	serialized_fields["_timer"] = SerializedField(std::string("_timer"), std::make_any<float>(_timer), std::string("float"));
+
+	serialized_fields["_previous_state"] = SerializedField(std::string("_previous_state"), std::make_any<PlayerState>(_previous_state), std::string("PlayerState"));
 }

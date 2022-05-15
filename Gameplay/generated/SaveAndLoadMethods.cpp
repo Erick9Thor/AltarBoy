@@ -3,10 +3,12 @@
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
 #include "DynamicCamera.h"
+#include "EnemyController.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
 #include "PlayerController.h"
+#include "PlayerSoundManager.h"
 
 
 
@@ -65,6 +67,35 @@ void Hachiko::Scripting::DynamicCamera::OnLoad()
 	if (load_node["'_lerp_position@float'"].IsDefined())
 	{
 		_lerp_position = load_node["'_lerp_position@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
+{
+
+	node["'_aggro_range@int'"] = _aggro_range;
+
+	node["'_attack_range@int'"] = _attack_range;
+
+	node["'_spawn_pos@float3'"] = _spawn_pos;
+}
+
+void Hachiko::Scripting::EnemyController::OnLoad()
+{
+
+	if (load_node["'_aggro_range@int'"].IsDefined())
+	{
+		_aggro_range = load_node["'_aggro_range@int'"].as<int>();
+	}
+
+	if (load_node["'_attack_range@int'"].IsDefined())
+	{
+		_attack_range = load_node["'_attack_range@int'"].as<int>();
+	}
+
+	if (load_node["'_spawn_pos@float3'"].IsDefined())
+	{
+		_spawn_pos = load_node["'_spawn_pos@float3'"].as<float3>();
 	}
 }
 
@@ -331,6 +362,7 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 
 void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 {
+
 	node["'_movement_speed@float'"] = _movement_speed;
 
 	if (_dash_indicator != nullptr)
@@ -357,11 +389,31 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_progress@float'"] = _dash_progress;
 
+	node["'_dash_cooldown@float'"] = _dash_cooldown;
+
+	node["'_dash_timer@float'"] = _dash_timer;
+
+	node["'_dash_count@int'"] = _dash_count;
+
+	node["'_max_dash_count@int'"] = _max_dash_count;
+
 	node["'_is_dashing@bool'"] = _is_dashing;
+
+	node["'_has_cooldown@bool'"] = _has_cooldown;
+
+	node["'_is_falling@bool'"] = _is_falling;
 
 	node["'_dash_start@math::float3'"] = _dash_start;
 
 	node["'_dash_direction@math::float3'"] = _dash_direction;
+
+	node["'_raycast_min_range@float'"] = _raycast_min_range;
+
+	node["'_raycast_max_range@float'"] = _raycast_max_range;
+
+	node["'_attack_radius@float'"] = _attack_radius;
+
+	node["'_attack_cooldown@float'"] = _attack_cooldown;
 
 	node["'_should_rotate@bool'"] = _should_rotate;
 
@@ -376,6 +428,7 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerController::OnLoad()
 {
+
 	if (load_node["'_movement_speed@float'"].IsDefined())
 	{
 		_movement_speed = load_node["'_movement_speed@float'"].as<float>();
@@ -406,9 +459,39 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_progress = load_node["'_dash_progress@float'"].as<float>();
 	}
 
+	if (load_node["'_dash_cooldown@float'"].IsDefined())
+	{
+		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
+	}
+
+	if (load_node["'_dash_timer@float'"].IsDefined())
+	{
+		_dash_timer = load_node["'_dash_timer@float'"].as<float>();
+	}
+
+	if (load_node["'_dash_count@int'"].IsDefined())
+	{
+		_dash_count = load_node["'_dash_count@int'"].as<int>();
+	}
+
+	if (load_node["'_max_dash_count@int'"].IsDefined())
+	{
+		_max_dash_count = load_node["'_max_dash_count@int'"].as<int>();
+	}
+
 	if (load_node["'_is_dashing@bool'"].IsDefined())
 	{
 		_is_dashing = load_node["'_is_dashing@bool'"].as<bool>();
+	}
+
+	if (load_node["'_has_cooldown@bool'"].IsDefined())
+	{
+		_has_cooldown = load_node["'_has_cooldown@bool'"].as<bool>();
+	}
+
+	if (load_node["'_is_falling@bool'"].IsDefined())
+	{
+		_is_falling = load_node["'_is_falling@bool'"].as<bool>();
 	}
 
 	if (load_node["'_dash_start@math::float3'"].IsDefined())
@@ -419,6 +502,26 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_dash_direction@math::float3'"].IsDefined())
 	{
 		_dash_direction = load_node["'_dash_direction@math::float3'"].as<math::float3>();
+	}
+
+	if (load_node["'_raycast_min_range@float'"].IsDefined())
+	{
+		_raycast_min_range = load_node["'_raycast_min_range@float'"].as<float>();
+	}
+
+	if (load_node["'_raycast_max_range@float'"].IsDefined())
+	{
+		_raycast_max_range = load_node["'_raycast_max_range@float'"].as<float>();
+	}
+
+	if (load_node["'_attack_radius@float'"].IsDefined())
+	{
+		_attack_radius = load_node["'_attack_radius@float'"].as<float>();
+	}
+
+	if (load_node["'_attack_cooldown@float'"].IsDefined())
+	{
+		_attack_cooldown = load_node["'_attack_cooldown@float'"].as<float>();
 	}
 
 	if (load_node["'_should_rotate@bool'"].IsDefined())
@@ -444,5 +547,39 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_rotation_target@math::Quat'"].IsDefined())
 	{
 		_rotation_target = load_node["'_rotation_target@math::Quat'"].as<math::Quat>();
+	}
+}
+
+void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
+{
+	node["'_step_frequency@float'"] = _step_frequency;
+
+	node["'_melee_frequency@float'"] = _melee_frequency;
+
+	node["'_ranged_frequency@float'"] = _ranged_frequency;
+
+	node["'_timer@float'"] = _timer;
+}
+
+void Hachiko::Scripting::PlayerSoundManager::OnLoad()
+{
+	if (load_node["'_step_frequency@float'"].IsDefined())
+	{
+		_step_frequency = load_node["'_step_frequency@float'"].as<float>();
+	}
+
+	if (load_node["'_melee_frequency@float'"].IsDefined())
+	{
+		_melee_frequency = load_node["'_melee_frequency@float'"].as<float>();
+	}
+
+	if (load_node["'_ranged_frequency@float'"].IsDefined())
+	{
+		_ranged_frequency = load_node["'_ranged_frequency@float'"].as<float>();
+	}
+
+	if (load_node["'_timer@float'"].IsDefined())
+	{
+		_timer = load_node["'_timer@float'"].as<float>();
 	}
 }
