@@ -52,6 +52,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     // Reset resources array
     meta.remove(RESOURCES);
+    // Ensure resources is still at the beginning of yaml file
+    meta[RESOURCES][0][RESOURCE_ID] = 0;
         
     for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
     {
