@@ -63,7 +63,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         else
         {
             mesh_id = UUID::GenerateUID();
-            meta[MESHES] = mesh_id;
+            meta[MESHES][mesh_index] = mesh_id;
         }
         aiMesh* mesh = scene->mMeshes[mesh_index];
         // Create mesh from assimp and since its not a separate asset manage its id.
@@ -95,7 +95,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
             else
             {
                 animaiton_id = UUID::GenerateUID();
-                meta[ANIMATIONS] = animaiton_id;
+                meta[ANIMATIONS][animation_index] = animaiton_id;
             }
             aiAnimation* animation = scene->mAnimations[animation_index];
             // Create animation from assimp, since its not a separate asset manage its id
@@ -173,7 +173,8 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         unsigned mesh_idx = assimp_node->mMeshes[j];
         const aiMesh* assimp_mesh = scene->mMeshes[assimp_node->mMeshes[j]];
         unsigned material_idx = assimp_mesh->mMaterialIndex;
-        ComponentMeshRenderer* mesh_renderer = new ComponentMeshRenderer(go);
+        
+        ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(go->CreateComponent(Component::Type::MESH_RENDERER));
         ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, meta[MESHES][mesh_idx].as<UID>()));
         ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta[MATERIALS][material_idx].as<UID>()));
         mesh_renderer->AddResourceMesh(mesh_resource);     

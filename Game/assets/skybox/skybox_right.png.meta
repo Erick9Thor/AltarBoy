@@ -1,4 +1,4 @@
-General:
-  id: 5706104047421085790
-  type: 2
-  hash: 10328698478596099464
+asset_hash: 10328698478596099464
+resources:
+  - resource_id: 6671098021422074145
+    resource_type: 2

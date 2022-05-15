@@ -41,10 +41,11 @@ namespace Hachiko
             {Resource::Type::MATERIAL, "library/materials/"},
             {Resource::Type::SHADER, "library/shaders/"},
             {Resource::Type::ANIMATION, "library/animations/"},
+            {Resource::Type::SCRIPT, "library/scripts/"},
             {Resource::Type::SKYBOX, "library/skybox/"},
             {Resource::Type::FONT, "library/fonts/"},
             {Resource::Type::NAVMESH, "library/navmesh/"},
-            {Resource::Type::PREFAB, "assets/prefabs/"},
+            {Resource::Type::PREFAB, "library/prefabs/"},
         };
         std::string scene_name = "UnnamedScene.scene";
         std::string scene_id;

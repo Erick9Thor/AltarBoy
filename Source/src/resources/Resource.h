@@ -21,7 +21,7 @@ namespace Hachiko
             SCRIPT = 8,
             VIDEO = 9,
             SKYBOX = 10,
-            FONT = 12,
+            FONT = 11,
             NAVMESH = 12,
             PREFAB = 13,
             COUNT,

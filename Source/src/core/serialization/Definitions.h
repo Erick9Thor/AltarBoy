@@ -74,6 +74,7 @@
 #define MESH_EXTENSION ".mesh"
 #define MATERIAL_EXTENSION ".mat"
 #define META_EXTENSION ".meta"
+#define PREFAB_EXTENSION ".prefab"
  
 //////////////////////////
 //						//

@@ -43,6 +43,7 @@ namespace Hachiko
             {Hachiko::Resource::AssetType::SCENE, SCENE_EXTENSION},
             {Hachiko::Resource::AssetType::MATERIAL, MATERIAL_EXTENSION},
             {Hachiko::Resource::AssetType::FONT, ".ttf"},
+            {Hachiko::Resource::AssetType::PREFAB, PREFAB_EXTENSION},
         };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;

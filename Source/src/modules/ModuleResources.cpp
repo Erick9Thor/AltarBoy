@@ -26,7 +26,6 @@ bool ModuleResources::Init()
     for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
         FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        
     }
 
     for (int i = 1; i < static_cast<int>(Resource::AssetType::COUNT); ++i)
@@ -72,14 +71,14 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
         return std::vector<UID>();
     }
 
-    size_t relative_pos = path.string().find("assets\\");
+    size_t relative_pos = path.string().find("assets");
     bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
     if (file_in_asset)
     {
         HE_LOG("File in assets folder");
-        destination = std::filesystem::relative(path, path.string().substr(0, relative_pos));
+        destination = path;
     }
     else
     {
@@ -90,7 +89,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
     }
 
     // Handle asset when it is in correct path
-    ImportAsset(destination.string());
+    return ImportAsset(destination.string());
 }
 
 Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
@@ -167,6 +166,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
         case Resource::AssetType::MODEL:
             {
                 Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
+                auto a = meta_node[PREFAB_ID].as<UID>();
                 importer->Load(meta_node[PREFAB_ID].as<UID>());
                 break;
             }
@@ -206,7 +206,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
 void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
 {
     // Iterate all files found in assets except metas and scene
-    for (PathNode path_node : folder.children)
+    for (const PathNode& path_node : folder.children)
     {
         if (!path_node.isFile)
         {
@@ -258,7 +258,14 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     {
         return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
     }
-    // If it exists and has a valid lib do nothing
+    
+    // If it exists and has a valid lib just collect the resource ids to return them
+    std::vector<UID> resource_ids = std::vector<UID>();
+    for (unsigned i = 0; i < meta_node[RESOURCES].size(); ++i)
+    {
+        resource_ids.push_back(meta_node[RESOURCES][i][RESOURCE_ID].as<UID>());
+    }
+    return resource_ids;
 }
 
 std::vector<UID> ModuleResources::ImportAssetResources(const std::filesystem::path& asset_path, YAML::Node& meta)

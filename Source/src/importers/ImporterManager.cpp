@@ -69,7 +69,7 @@ std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset
     std::vector<UID> generated_resource_ids;
     for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
     {
-        generated_resource_ids.push_back(meta[RESOURCES][i].as<UID>());
+        generated_resource_ids.push_back(meta[RESOURCES][i][RESOURCE_ID].as<UID>());
     }
     return generated_resource_ids;
 }

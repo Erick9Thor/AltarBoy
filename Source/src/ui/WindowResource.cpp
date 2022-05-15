@@ -80,7 +80,7 @@ void Hachiko::WindowResource::Update()
 void Hachiko::WindowResource::LoadAsset(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
-    if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
+    if (!FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
         App->resources->LoadAsset(path);
     }

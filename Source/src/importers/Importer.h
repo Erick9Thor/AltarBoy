@@ -42,21 +42,21 @@ namespace Hachiko
             // Resource Reference doesnt exist
             if (!ExistsInMetaArray(meta[RESOURCES], resource_index))
             {
-                meta[RESOURCES][RESOURCE_ID][resource_index] = UUID::GenerateUID();
-                meta[RESOURCES][RESOURCE_TYPE][resource_index] = static_cast<int>(type);
+                meta[RESOURCES][resource_index][RESOURCE_ID] = UUID::GenerateUID();
+                meta[RESOURCES][resource_index][RESOURCE_TYPE] = static_cast<int>(type);
             }
             // Resource reference changed type
-            else if (static_cast<Resource::Type>(meta[RESOURCES][RESOURCE_TYPE][resource_index].as<int>()) != type)
+            else if (static_cast<Resource::Type>(meta[RESOURCES][resource_index[RESOURCE_TYPE]].as<int>()) != type)
             {
-                meta[RESOURCES][RESOURCE_ID][resource_index] = UUID::GenerateUID();
-                meta[RESOURCES][RESOURCE_TYPE][resource_index] = static_cast<int>(type);
+                meta[RESOURCES][resource_index][RESOURCE_ID] = UUID::GenerateUID();
+                meta[RESOURCES][resource_index][RESOURCE_TYPE] = static_cast<int>(type);
             }
-            return meta[RESOURCES][resource_index].as<UID>();
+            return meta[RESOURCES][resource_index][RESOURCE_ID].as<UID>();
         }
         Resource::Type GetResourceTypeFromMeta(unsigned int resource_index, YAML::Node& meta)
         {
             // Assumes the resource definition exists
-            return static_cast<Resource::Type>(meta[RESOURCES][RESOURCE_TYPE].as<int>());
+            return static_cast<Resource::Type>(meta[RESOURCES][resource_index][RESOURCE_TYPE].as<int>());
         }
 
         void AddResource(UID uid, Resource::Type type, YAML::Node& meta)
@@ -66,8 +66,8 @@ namespace Hachiko
             {
                 new_index = meta[RESOURCES].size();
             }
-            meta[RESOURCES][RESOURCE_ID][new_index] = UUID::GenerateUID();
-            meta[RESOURCES][RESOURCE_TYPE][new_index] = static_cast<int>(type);
+            meta[RESOURCES][new_index][RESOURCE_ID] = uid;
+            meta[RESOURCES][new_index][RESOURCE_TYPE] = static_cast<int>(type);
         }
 
 
