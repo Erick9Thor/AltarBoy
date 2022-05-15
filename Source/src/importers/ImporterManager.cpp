@@ -36,11 +36,12 @@ ImporterManager::~ImporterManager()
     }
 }
 
-void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type)
+void ImporterManager::Import(const std::filesystem::path& asset_path, const Resource::Type asset_type, UID id)
 {
     assert(!asset_path.empty() && "Module Import abort - Given an empty asset path");
     
-    YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type);
+    // If the id is 0 a new one is generated
+    YAML::Node meta = CreateMeta(asset_path.string().c_str(), asset_type, id);   
     
     Importer* importer = GetImporter(asset_type);
 
@@ -130,12 +131,18 @@ Importer::Type ImporterManager::ToImporterType(const Resource::Type type) const
     return importer_type;
 }
 
-YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type) const
+YAML::Node Hachiko::ImporterManager::CreateMeta(const char* path, const Resource::Type resource_type, UID id) const
 {
     YAML::Node node;
     uint64_t file_hash = FileSystem::HashFromPath(path);
-
-    node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
+    if (id != 0)
+    {
+        node[GENERAL_NODE][GENERAL_ID] = id;
+    }
+    else
+    {
+        node[GENERAL_NODE][GENERAL_ID] = UUID::GenerateUID();
+    }    
     node[GENERAL_NODE][GENERAL_TYPE] = static_cast<int>(resource_type);    
     node[GENERAL_NODE][GENERAL_HASH] = file_hash;
     

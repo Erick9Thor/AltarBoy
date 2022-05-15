@@ -1,13 +1,13 @@
 General:
-  id: 5740180245311474441
+  id: 13049034675329142228
   type: 3
   hash: 2682614729444318254
 model_name: ramp
 material:
-  - id: 9556992844129427800
+  - id: 13049034675329242228
     name: DefaultMaterial
 mesh:
-  - id: 7782309624633537954
+  - id: 13049034675329143228
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

@@ -1,13 +1,13 @@
 General:
-  id: 18345521067606189366
+  id: 10634973488813602724
   type: 3
   hash: 18155678859365038655
 model_name: stairs
 material:
-  - id: 163200424199238595
+  - id: 10634973488813702724
     name: DefaultMaterial
 mesh:
-  - id: 5516661746455163706
+  - id: 10634973488813603724
     material_index: 0
 name: RootNode
 transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]

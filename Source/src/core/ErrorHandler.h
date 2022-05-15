@@ -6,6 +6,7 @@ namespace Hachiko
     class ErrorHandler
     {
     public:
+#ifndef PLAY_BUILD
         static void HandleOpenGlError(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
         {
             auto tmp_source = "", tmp_type = "", tmp_severity = "";
@@ -28,7 +29,7 @@ namespace Hachiko
                 tmp_source = "Application";
                 break;
             case GL_DEBUG_SOURCE_OTHER:
-            default: 
+            default:
                 tmp_source = "Other";
                 break;
             }
@@ -93,5 +94,6 @@ namespace Hachiko
                 HE_LOG(msg.c_str());
             }
         }
+#endif // PLAY_BUILD
     };
 }

@@ -13,10 +13,12 @@ Hachiko::WindowHierarchy::~WindowHierarchy() = default;
 void Hachiko::WindowHierarchy::Update()
 {
     ImGui::SetNextWindowDockID(App->editor->dock_left_id, ImGuiCond_FirstUseEver);
-    if (ImGui::Begin((std::string(ICON_FA_SITEMAP " ") + name).c_str(), &active))
+    if (!ImGui::Begin((std::string(ICON_FA_SITEMAP " ") + name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
     {
-        DrawHierarchyTree(App->scene_manager->GetRoot());
+        ImGui::End();
+        return;
     }
+    DrawHierarchyTree(App->scene_manager->GetRoot());
     ImGui::End();
 }
 
@@ -33,7 +35,7 @@ void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
        RecursiveDraw(go);
     }
 
-    if (!App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (!App->input->IsMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         dragged_object = nullptr;
     }

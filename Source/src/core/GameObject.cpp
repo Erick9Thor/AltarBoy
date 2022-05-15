@@ -7,6 +7,9 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentAgent.h"
+#include "components/ComponentObstacle.h"
+
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -179,6 +182,14 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::TEXT):
         if (!GetComponent<ComponentProgressBar>())
             new_component = new ComponentText(this);
+        break;
+    case (Component::Type::OBSTACLE):
+        if (!GetComponent<ComponentObstacle>())
+            new_component = new ComponentObstacle(this);
+        break;
+    case (Component::Type::AGENT):
+        if (!GetComponent<ComponentAgent>())
+            new_component = new ComponentAgent(this);
         break;
     }
 
@@ -489,6 +500,10 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         else
         {
             component = CreateComponent(type);
+        }
+
+        if (component != nullptr)
+        {
             component->SetID(c_uid);
             component->Load(components_node[i]);
             active ? component->Enable() : component->Disable();
@@ -509,6 +524,26 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
         child->scene_owner = scene_owner;
         child->Load(children_nodes[i]);
     }
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
+{
+    for (GameObject* child : children)
+    {
+        if (child->uid == id)
+        {
+            return child;
+        }
+
+        GameObject* descendant = child->Find(id);
+
+        if (descendant != nullptr)
+        {
+            return descendant;
+        }
+    }
+
+    return nullptr;
 }
 
 std::vector<Hachiko::Component*> Hachiko::GameObject::GetComponents(Component::Type type) const

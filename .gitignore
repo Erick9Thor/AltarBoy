@@ -367,6 +367,12 @@ imgui.ini
 # Wwise
 !Source/vendors/wwise/x64_vc160/Debug/
 !Source/vendors/wwise/include/AK/Tools/Win32/
+*.akd
+*.prof
+*.wsettings
+*.validationcache
+*.wem
+.backup/
 
 # Hachiko Engine
 Source/VTune Profiler Results/
@@ -377,3 +383,4 @@ Game/Gameplay*
 Game/Hachiko*
 Game/*.scene
 Game/library/*
+Game/settings/he.cfg

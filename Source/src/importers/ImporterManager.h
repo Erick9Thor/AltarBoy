@@ -15,7 +15,8 @@ namespace Hachiko
 
         std::map<Importer::Type, Importer*> importers;
         
-        void Import(const std::filesystem::path& asset_path, Resource::Type asset_type);
+        // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
+        void Import(const std::filesystem::path& asset_path, Resource::Type asset_type, UID id = 0);
         Resource* Load(Resource::Type type, UID id);
         bool IsImported(const char* path, Resource::Type type) const;
 
@@ -24,7 +25,8 @@ namespace Hachiko
 
         Importer* GetImporter(Resource::Type type) const;
         Importer::Type ToImporterType(Resource::Type type) const;
-        YAML::Node CreateMeta(const char* path, const Resource::Type resource_type) const;
+        // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
+        YAML::Node CreateMeta(const char* path, const Resource::Type resource_type, UID id = 0) const;
         void UpdateMeta(const char* path, YAML::Node& meta) const;
     };
 }

@@ -1,10 +1,10 @@
 name: rockSmall4
-diffuse: 0
+diffuse: 850700840986885768
 specular: 0
-normals: 0
+normals: 6109179731843097445
 metalness: 0
-diffuse_color: [0.5, 0.5, 0.5, 1]
-specular_color: [1, 1, 1, 1]
+diffuse_color: [0.588, 0.588, 0.588, 1]
+specular_color: [0, 0, 0, 1]
 smoothness: 0.5
 metalness_value: 0.5
 is_metallic: 0

@@ -20,6 +20,8 @@ void Hachiko::Scripting::Script::Update()
         return;
     }
 	
+
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnUpdate();
@@ -32,15 +34,19 @@ void Hachiko::Scripting::Script::Update()
 
         HE_LOG("Therefore, scripts are paused.");
     }
+#else
+    OnUpdate();
+#endif // SCRIPTING_UNSAFE
 }
 
-void Hachiko::Scripting::Script::Start() 
+void Hachiko::Scripting::Script::Start()
 {
-	if (!App->scripting_system->ShouldExecuteScripts())
+    if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
 
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnStart();
@@ -53,16 +59,19 @@ void Hachiko::Scripting::Script::Start()
 
         HE_LOG("Therefore, scripts are paused.");
     }
-	
+#else
+    OnStart();
+#endif // SCRIPTING_UNSAFE
 }
 
-void Hachiko::Scripting::Script::Awake() 
+void Hachiko::Scripting::Script::Awake()
 {
     if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
 
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnAwake();
@@ -75,19 +84,29 @@ void Hachiko::Scripting::Script::Awake()
 
         HE_LOG("Therefore, scripts are paused.");
     }
+#else
+    OnAwake();
+#endif // SCRIPTING_UNSAFE
 }
 
 void Hachiko::Scripting::Script::Save(YAML::Node& node) const
 {
     node[SCRIPT_NAME] = name;
-
-    // TODO: Will be generalized to all scripts using the SerializedField dict
-    // we can get from Script::SerializeTo and Script::DeserializeFrom.
+    
+    OnSave(node);
 }
 
 void Hachiko::Scripting::Script::Load(const YAML::Node& node)
 {
-    // TODO: Will be implemented after the first merge.
+    // Copy the node so we can defer the loading process of the scripts to the 
+    // time when all the scene is loaded. So that scripts are loaded after 
+    // everything else and any attached component or gameobject is already 
+    // created at the load time of the script. This may be improved so that 
+    // the nodes are stored inside ModuleScriptingSystem, and scripts don't care
+    // about storing these:
+    load_node = node;
+    // TODO: See if storing these in ModuleScriptingSystem is a better solution
+    // after VS2.
 }
 
 void Hachiko::Scripting::Script::DrawGui()

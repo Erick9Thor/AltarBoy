@@ -54,7 +54,7 @@ void Hachiko::AnimationImporter::Save(const Resource* resource)
     }
     file_size += sizeof(unsigned) * second_header.size();
     
-    const auto file_buffer = new char[file_size];
+    char* file_buffer = new char[file_size];
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
@@ -70,7 +70,6 @@ void Hachiko::AnimationImporter::Save(const Resource* resource)
     memcpy(cursor, animation->GetName().c_str(), size_bytes);
     cursor += size_bytes;
 
-    i = 0;
     for (auto it = animation->channels.begin(); it != animation->channels.end(); ++it)
     {
         size_bytes = it->first.length();

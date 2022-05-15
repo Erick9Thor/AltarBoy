@@ -15,6 +15,7 @@ namespace Hachiko
     class Quadtree;
     class ResourceModel;
     class ResourceMaterial;
+    class ResourceNavMesh;
     class BatchManager;
 
     class Scene : public ISerializable
@@ -93,7 +94,10 @@ namespace Hachiko
         {
             return name.c_str();
         }
+        
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
+
+        GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
         {
@@ -109,14 +113,15 @@ namespace Hachiko
         std::vector<ComponentPointLight*> point_lights;
         std::vector<ComponentSpotLight*> spot_lights;
 
+        
+
     private:
-        bool draw_all_bounding_boxes = false;
         std::string name;
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
         bool loaded = false;
 
-        Skybox* skybox;
+        Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
 
         bool rebuild_batch = true;

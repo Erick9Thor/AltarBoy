@@ -10,6 +10,7 @@
 #include "batching/GeometryBatch.h"
 #include "batching/TextureBatch.h"
 
+//TODO centralize cache on module program
 Hachiko::ModuleProgram::ModuleProgram() = default;
 
 Hachiko::ModuleProgram::~ModuleProgram() = default;
