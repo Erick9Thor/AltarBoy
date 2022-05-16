@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
@@ -108,6 +109,10 @@ bool Hachiko::ModuleEditor::Init()
             panel->Init();
         }
     }
+
+    editor_prefs = App->preferences->GetEditorPreference();
+    theme = editor_prefs->GetTheme();
+    UpdateTheme();
 
     return true;
 }
@@ -434,5 +439,6 @@ bool Hachiko::ModuleEditor::CleanUp()
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
+    editor_prefs->SetTheme(theme);
     return true;
 }

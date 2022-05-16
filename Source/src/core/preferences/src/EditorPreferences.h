@@ -24,16 +24,6 @@ namespace Hachiko
             return display_debug_draw;
         }
 
-        void SetSceneBackgroundColor(const float3& sceneBackgroundColor)
-        {
-            scene_background_color = sceneBackgroundColor;
-        }
-
-        [[nodiscard]] const float3& GetSceneBackgroundColor() const
-        {
-            return scene_background_color;
-        }
-
         [[nodiscard]] float GetMaxFPS() const
         {
             return max_fps;
@@ -113,7 +103,6 @@ namespace Hachiko
 
     private:
         bool display_debug_draw = false;
-        float3 scene_background_color = float3(0.9f);
 
         //TODO remove this property in favor of the camera component
         bool display_camera_settings = false;

@@ -39,12 +39,6 @@ void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
             continue;
         }
 
-        if (it->first.as<std::string>()._Equal(SCENE_BACKGROUND_COLOR))
-        {
-            scene_background_color = it->second.as<float3>();
-            continue;
-        }
-
         if (it->first.as<std::string>()._Equal(VSYNC))
         {
             vsync = it->second.as<bool>();
@@ -69,7 +63,6 @@ void EditorPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][DISPLAY_DEBUG_DRAW] = display_debug_draw;
     node[group_name][THEME] = Editor::Theme::ToString(theme);
     node[group_name][VSYNC] = vsync;
-    node[group_name][SCENE_BACKGROUND_COLOR] = scene_background_color;
     node[group_name][SCENE_AUTOSAVE] = scene_autosave;
     node[group_name][RESIZABLE] = resizable;
 }
