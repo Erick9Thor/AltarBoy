@@ -18,6 +18,11 @@ namespace Hachiko
             return scene_name.c_str();
         }
 
+        void SetSceneName(const char* name) 
+        {
+            scene_name = name;
+        }
+
     private:
         std::map<Resource::Type, std::string> assets_paths = {
             {Resource::Type::SCENE, "assets/scenes/"}, 
