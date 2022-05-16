@@ -124,6 +124,11 @@
 #define TITLE_NODE "title"
 #define VERSION_NODE "version"
 
+// Audio
+#define AUDIO_NODE "audio"
+#define SFX_VOLUME "sfx_volume"
+#define MUSIC_VOLUME "music_volume"
+
 //////////////////////////
 //						//
 // Scene Serialization  //
