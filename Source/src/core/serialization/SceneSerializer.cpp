@@ -38,7 +38,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* scene_path)
         output_path = scene_path;
     }
 
-    FileSystem::Save(scene_path, scene_data);
+    FileSystem::Save(output_path.c_str(), scene_data);
 
     return true;
 }
