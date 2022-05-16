@@ -23,17 +23,22 @@ Hachiko::Scene* Hachiko::SceneSerializer::Load(const char* path)
 bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* scene_path)
 {
     YAML::Node scene_data;
+    std::string output_path;
+
     scene->Save(scene_data);
-    std::ofstream fout;
+
     if (!scene_path)
     {
-        fout.open(StringUtils::Concat(App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::SCENE), scene->GetName(), SCENE_EXTENSION));
+        output_path = StringUtils::Concat(
+            App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::SCENE),
+            scene->GetName(), SCENE_EXTENSION);
     }
     else
     {
-        fout.open(scene_path);
+        output_path = scene_path;
     }
-    fout << scene_data;
-    fout.close();
+
+    FileSystem::Save(scene_path, scene_data);
+
     return true;
 }

@@ -200,7 +200,7 @@ void Hachiko::ModuleSceneManager::SaveScene()
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer->Save(main_scene, file_path); // TODO: Take into account temporal scenes
+    serializer->Save(main_scene, file_path);
 }
 
 Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
