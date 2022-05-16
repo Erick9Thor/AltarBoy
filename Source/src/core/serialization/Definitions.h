@@ -118,6 +118,7 @@
 #define ORBIT_SPEED "orbit_speed"
 #define ZOOM_SPEED "zoom_speed"
 #define FOV "fov"
+#define CAMERA_POS "position"
 
 // Globals
 #define GLOBAL_NODE "globals"
