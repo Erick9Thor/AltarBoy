@@ -19,6 +19,8 @@ child:
       - type: 2
         enabled: true
         mesh_id: 7544551443759936381
+        navigable: false
+        visible: true
         material_id: 7765775954106249835
   - name: Baker_house
     enabled: true
@@ -31,4 +33,6 @@ child:
       - type: 2
         enabled: true
         mesh_id: 3581704332068092856
+        navigable: false
+        visible: true
         material_id: 7765775954106249835

@@ -118,12 +118,13 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         {
             ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, meta[ANIMATIONS][i].as<UID>()));
             animation->animations.push_back(r_animation);
-
         }
     }
 
     // Create prefab
     UID prefab_uid = prefab_importer.CreatePrefabAsset(FileSystem::GetFileName(path).c_str(), model_root->children[0]);
+    delete model_root;
+
     meta[PREFAB_ID] = prefab_uid;
     SetResource(prefab_uid, Resource::Type::PREFAB, total_resources, meta);
     ++total_resources;
