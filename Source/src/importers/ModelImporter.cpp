@@ -50,8 +50,11 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     Hachiko::AnimationImporter animation_importer;
     PrefabImporter prefab_importer;
     
-    unsigned total_resources = 0;
-        
+    //unsigned total_resources = 0;
+    meta.remove(RESOURCES);
+    auto resource_ids = std::vector<UID>();
+    auto resource_types = std::vector<Resource::Type>();
+    
     for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
     {
         Hachiko::UID mesh_id;
@@ -67,8 +70,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         aiMesh* mesh = scene->mMeshes[mesh_index];
         // Create mesh from assimp and since its not a separate asset manage its id.
         mesh_importer.ImportFromAssimp(mesh_id, mesh);
-        SetResource(mesh_id, Resource::Type::MESH, total_resources, meta);
-        ++total_resources;
+        resource_ids.push_back(mesh_id);
+        resource_types.push_back(Resource::Type::MESH);
     }
 
     for (unsigned material_index = 0; material_index < scene->mNumMaterials; ++material_index)
@@ -80,8 +83,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         UID material_uid = material_importer.CreateMaterialAssetFromAssimp(path, material);
         // Since it is its own asset we dont decide its id
         meta[MATERIALS][material_index] = material_uid;
-        SetResource(material_uid, Resource::Type::MATERIAL, total_resources, meta);
-        ++total_resources;
+        resource_ids.push_back(material_uid);
+        resource_types.push_back(Resource::Type::MATERIAL);
     }
 
     if (scene->HasAnimations())
@@ -101,8 +104,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
             aiAnimation* animation = scene->mAnimations[animation_index];
             // Create animation from assimp, since its not a separate asset manage its id
             animation_importer.CreateAnimationFromAssimp(animation, animaiton_id);
-            SetResource(animaiton_id, Resource::Type::ANIMATION, total_resources, meta);
-            ++total_resources;
+            resource_ids.push_back(animaiton_id);
+            resource_types.push_back(Resource::Type::ANIMATION);
         }
     }
 
@@ -124,13 +127,15 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     // Create prefab
     UID prefab_uid = prefab_importer.CreatePrefabAsset(FileSystem::GetFileName(path).c_str(), model_root->children[0]);
     delete model_root;
-
     meta[PREFAB_ID] = prefab_uid;
-    SetResource(prefab_uid, Resource::Type::PREFAB, total_resources, meta);
-    ++total_resources;
+
+    for (unsigned i = 0; i < resource_ids.size(); ++i)
+    {
+        AddResource(resource_ids[i], resource_types[i], meta);
+    }    
+    AddResource(prefab_uid, Resource::Type::PREFAB, meta);
 
     // Remove extra resources if the amount of resources has decreased
-    RemoveResourcesOverIndex(total_resources, meta);
 }
 
 void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar)
