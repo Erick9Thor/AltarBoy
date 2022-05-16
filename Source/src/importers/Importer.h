@@ -70,6 +70,23 @@ namespace Hachiko
             meta[RESOURCES][new_index][RESOURCE_TYPE] = static_cast<int>(type);
         }
 
+        void SetResource(UID uid, Resource::Type type, unsigned resource_index, YAML::Node& meta)
+        {
+            meta[RESOURCES][resource_index][RESOURCE_ID] = uid;
+            meta[RESOURCES][resource_index][RESOURCE_TYPE] = static_cast<int>(type);
+        }
+
+        void RemoveResourcesOverIndex(unsigned resource_index, YAML::Node& meta)
+        {
+            if (meta[RESOURCES].IsDefined())
+            {
+                for (unsigned i = resource_index; i < meta[RESOURCES].size(); ++i)
+                {
+                    meta[RESOURCES].remove(i);
+                }
+            }
+        }
+
 
 
     protected:
