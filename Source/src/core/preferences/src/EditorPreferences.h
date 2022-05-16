@@ -56,17 +56,27 @@ namespace Hachiko
             return fullscreen;
         }
 
+        void SetResizable(const bool val)
+        {
+            resizable = val;
+        }
+
+        [[nodiscard]] bool IsResizable() const
+        {
+            return resizable;
+        }
+
         void SetFullscreen(const bool fullscreen)
         {
             this->fullscreen = fullscreen;
         }
 
-        void SetVsync(const int vsync)
+        void SetVsync(const bool val)
         {
-            this->vsync = vsync;
+            vsync = val;
         }
 
-        [[nodiscard]] int GetVsync() const
+        [[nodiscard]] bool IsVsyncActive() const
         {
             return vsync;
         }
@@ -111,7 +121,8 @@ namespace Hachiko
         float max_fps = 250.0f;
         bool fullscreen = false;
         bool scene_autosave = false;
-        int vsync = 0;
+        bool vsync = true;
+        bool resizable = false;
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };

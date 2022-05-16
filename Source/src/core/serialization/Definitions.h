@@ -92,6 +92,7 @@
 #define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
+#define RESIZABLE "resizable"
 #define THEME_LIGHT "light"
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
