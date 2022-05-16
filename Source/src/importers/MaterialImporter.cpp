@@ -102,7 +102,7 @@ Hachiko::UID Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& n
 Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material)
 {  
     // This uid wont be used
-    const auto material = new ResourceMaterial(0);
+    ResourceMaterial* material = new ResourceMaterial(0);
     std::string name = ai_material->GetName().C_Str();
     if (name.find(':') != std::string::npos)
     {
@@ -131,10 +131,11 @@ Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std:
     const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
     UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
 
-    delete material->diffuse;
-    delete material->specular;
-    delete material->normal;
-    delete material->metalness;
+    RELEASE(material->diffuse);
+    RELEASE(material->specular);
+    RELEASE(material->normal);
+    RELEASE(material->metalness);
+
     delete material;
 
     return material_uid;

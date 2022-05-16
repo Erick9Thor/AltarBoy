@@ -9,6 +9,7 @@
 #include "modules/ModuleResources.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentTransform.h"
 
 #include "resources/ResourceAnimation.h"
 
@@ -109,6 +110,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         }
     }
 
+    std::string filename = FileSystem::GetFileName(path);
+
     // Import scene tree into gameobjects
     GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
     ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
@@ -116,7 +119,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     // Import animations
     if (meta[ANIMATIONS].IsDefined())
     {
-        ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->CreateComponent(Component::Type::ANIMATION));
+        ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->children[0]->CreateComponent(Component::Type::ANIMATION));
         for (int i = 0; i < meta[ANIMATIONS].size(); i++)
         {
             ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, meta[ANIMATIONS][i].as<UID>()));
@@ -125,7 +128,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     }
 
     // Create prefab
-    UID prefab_uid = prefab_importer.CreatePrefabAsset(FileSystem::GetFileName(path).c_str(), model_root->children[0]);
+    UID prefab_uid = prefab_importer.CreatePrefabAsset(filename.c_str(), model_root->children[0]);
     delete model_root;
     meta[PREFAB_ID] = prefab_uid;
 
@@ -176,7 +179,7 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     }
 
     // Create go
-    GameObject* go = new GameObject(parent, transform, assimp_node->mName.C_Str());
+    GameObject* go = new GameObject(parent, assimp_node->mName.C_Str());
     MeshImporter mesh_importer;
     MaterialImporter material_importer;
 
@@ -194,9 +197,11 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         mesh_renderer->AddResourceMaterial(material_resource);
     }
 
+    go->GetTransform()->SetLocalTransform(transform);
+
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         auto child_node = assimp_node->mChildren[i];
         ImportNode(go, scene, child_node, meta, load_auxiliar);
-    }
+    }    
 }

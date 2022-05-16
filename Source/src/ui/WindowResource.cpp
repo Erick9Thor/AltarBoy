@@ -38,7 +38,6 @@ void Hachiko::WindowResource::Update()
         }
         ImGui::EndPopup();
     }
-    //
 
     std::filesystem::path library_path("./");
 

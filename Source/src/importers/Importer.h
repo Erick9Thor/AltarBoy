@@ -87,8 +87,6 @@ namespace Hachiko
             }
         }
 
-
-
     protected:
         [[nodiscard]] ResourcesPreferences* GetResourcesPreferences()
         {
