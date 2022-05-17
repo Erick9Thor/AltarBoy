@@ -1,18 +1,14 @@
-General:
-  id: 6481285259037750281
-  type: 3
-  hash: 3240750227861920051
+asset_hash: 3240750227861920051
 model_name: plane
-material:
-  - id: 6481285259037850281
-    name: DefaultMaterial
-mesh:
-  - id: 6481285259037751281
-    material_index: 0
-name: RootNode
-transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-child:
-  - name: Plane001
-    transform: [1, 0, 0, 0, 0, 5.96046448e-08, 0.99999994, 0, 0, -0.99999994, 5.96046448e-08, 0, 0, 0, 0, 1]
-    mesh_index:
-      - 0
+meshes:
+  - 4601319148081155683
+materials:
+  - 6750369022920963075
+prefab_id: 4747286747250177425
+resources:
+  - resource_id: 4601319148081155683
+    resource_type: 3
+  - resource_id: 6750369022920963075
+    resource_type: 1
+  - resource_id: 4747286747250177425
+    resource_type: 13

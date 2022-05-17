@@ -13,7 +13,7 @@ bool Hachiko::ModuleSceneManager::Init()
     serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
     std::string scene_path = 
-        StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE),
+        StringUtils::Concat(preferences->GetAssetsPath(Resource::AssetType::SCENE),
         preferences->GetSceneName());
     
     if (std::filesystem::exists(scene_path))

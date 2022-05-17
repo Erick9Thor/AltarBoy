@@ -7,36 +7,31 @@
 //////////////////////////
 
 // General
-#define GENERAL_NODE "General"
-#define GENERAL_ID "id"
-#define GENERAL_TYPE "type"
-#define GENERAL_HASH "hash"
-#define META_HASH "meta_hash"
+//#define GENERAL_ID "id"
+#define RESOURCES "resources" // Resources that asset is responsible of generating
+#define RESOURCE_ID "resource_id"
+#define RESOURCE_TYPE "resource_type"
+#define ASSET_HASH "asset_hash"
 
 // Texture
-#define TEXTURE_ID "id"
 #define TEXTURE_FILE_PATH "file_path"
 
 // Model
-#define MODEL_ID "id"
-#define MODEL_NAME "model_name"
-#define MODEL_FILE_PATH "model_file_path"
-#define MODEL_MESH_ID "id"
-#define MODEL_MESH_NODE "mesh"
-#define MODEL_MATERIAL_ID "id"
-#define MODEL_MATERIAL_NODE "material"
+#define MESHES "meshes"
+#define MATERIALS "materials"
 #define ANIMATIONS "animations"
-#define ANIMATION_IDS "animation_id"
+#define MODEL_NAME "model_name"
+#define PREFAB_ID "prefab_id"
+
+// Prefab
+#define PREFAB_NAME "prefab_name"
 
 // Node
 #define NODE_NAME "name"
 #define NODE_CHILD "child"
 #define NODE_TRANSFORM "transform"
-#define NODE_MESH_INDEX "mesh_index"
-#define NODE_MATERIAL_INDEX "material_index"
 
 // Mesh
-#define MESH_ID "mesh_id"
 #define MIN_POINT "min_point"
 #define MAX_POINT "max_point"
 #define VERTICES_NODE "vertices"
@@ -45,7 +40,6 @@
 #define TEXTURE_COORDS_NODE "texture_coords"
 
 // Material
-#define MATERIAL_ID "id"
 #define MATERIAL_NAME "name"
 #define MATERIAL_DIFFUSE_ID "diffuse"
 #define MATERIAL_SPECULAR_ID "specular"
@@ -78,6 +72,7 @@
 #define MESH_EXTENSION ".mesh"
 #define MATERIAL_EXTENSION ".mat"
 #define META_EXTENSION ".meta"
+#define PREFAB_EXTENSION ".prefab"
  
 //////////////////////////
 //						//

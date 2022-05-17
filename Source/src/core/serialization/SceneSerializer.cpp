@@ -30,7 +30,7 @@ bool Hachiko::SceneSerializer::Save(const Scene* scene, const char* scene_path)
     if (!scene_path)
     {
         output_path = StringUtils::Concat(
-            App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::Type::SCENE),
+            App->preferences->GetResourcesPreference()->GetAssetsPath(Resource::AssetType::SCENE),
             scene->GetName(), SCENE_EXTENSION);
     }
     else

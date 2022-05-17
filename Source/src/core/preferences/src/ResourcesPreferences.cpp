@@ -6,7 +6,7 @@
 using namespace Hachiko;
 
 ResourcesPreferences::ResourcesPreferences()
-    : Preferences(Type::RESOURCES)
+    : Preferences(Type::RESOURCE_PREFS)
 {
     group_name = RESOURCES_NODE;
 }
@@ -30,9 +30,22 @@ void ResourcesPreferences::LoadConfigurationData(const YAML::Node& node)
 void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
 {
     node[group_name][SCENE_NAME] = scene_name + SCENE_EXTENSION;
+    node[group_name][SCENE_ID] = scene_id;
+    // We skip unkwnown type
+    for (int type_val = 1; type_val != static_cast<int>(Resource::AssetType::COUNT); ++type_val)
+    {
+        Resource::AssetType asset_type = static_cast<Resource::AssetType>(type_val);
+        node[group_name][Resource::AssetTypeString(static_cast<Resource::AssetType>(asset_type)) + ASSETS_COMMON_NAME] = assets_paths[asset_type];
+    }
+
+    for (int type_val = 1; type_val != static_cast<int>(Resource::Type::COUNT); ++type_val)
+    {
+        Resource::Type resource_type = static_cast<Resource::Type>(type_val);
+        node[group_name][Resource::ResourceTypeString(static_cast<Resource::Type>(resource_type)) + LIBRARY_COMMON_NAME] = lib_paths[resource_type];
+    }
 }
 
-const char* ResourcesPreferences::GetAssetsPath(Resource::Type type)
+const char* ResourcesPreferences::GetAssetsPath(Resource::AssetType type)
 {
     auto it = assets_paths.find(type);
     if (it == assets_paths.end())
