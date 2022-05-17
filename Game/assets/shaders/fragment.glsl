@@ -55,6 +55,7 @@ layout(std140, binding = 1) uniform Material
 {
     vec4 diffuse_color;
     vec4 specular_color;
+    vec4 emissive_color;
     uint diffuse_flag;
     uint specular_flag;
     uint normal_flag;
@@ -270,7 +271,13 @@ void main()
     hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
 
     // Emissive map
-    hdr_color += texture(textures[EMISSIVE_SAMPLER], fragment.tex_coord).rgb * material.emissive_flag;
+    vec3 emissive = material.emissive_color.rgb;
+    if(material.emissive_flag != 0)
+    {
+        emissive *= texture(textures[EMISSIVE_SAMPLER], fragment.tex_coord).rgb;
+    }
+
+    hdr_color += emissive * material.emissive_color.a;
 
     // Reinhard tone mapping
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));

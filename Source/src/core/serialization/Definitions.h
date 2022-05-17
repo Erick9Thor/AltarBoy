@@ -59,6 +59,7 @@
 #define MATERIAL_EMISSIVE_PATH "emissive_path"
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
+#define MATERIAL_EMISSIVE_COLOR "emissive_color"
 #define MATERIAL_SMOOTHNESS "smoothness"
 #define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"

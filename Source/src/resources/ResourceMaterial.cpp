@@ -135,12 +135,14 @@ void Hachiko::ResourceMaterial::DrawGui()
 
             // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
             RemoveTexture(ResourceTexture::Type::EMISSIVE);
 
             ImGui::EndGroup();
         }
         else
         {
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
             AddTexture(ResourceTexture::Type::EMISSIVE);
         }
         ImGui::TreePop();
