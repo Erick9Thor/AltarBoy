@@ -143,9 +143,8 @@ void Hachiko::ComponentAnimation::DrawGui()
                     {
                         UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
                         ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
-                        if (res != nullptr) // TODO: ADD CHECK FOR ADDED
+                        if (res != nullptr)
                         {
-                            HE_LOG(res->GetName().c_str());
                             animations.push_back(res);
                         }
                     }

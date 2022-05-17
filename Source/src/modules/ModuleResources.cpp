@@ -67,7 +67,6 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
     
     if (type == Resource::AssetType::UNKNOWN)
     {
-        HE_LOG("Unknown resource type recevied, nothing to be done");
         return std::vector<UID>();
     }
 
@@ -77,12 +76,10 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
 
     if (file_in_asset)
     {
-        HE_LOG("File in assets folder");
         destination = path;
     }
     else
     {
-        HE_LOG("File outside the assets folder");
         destination = preferences->GetAssetsPath(type);
         destination.append(path.filename().c_str());
         FileSystem::Copy(path.string().c_str(), destination.string().c_str(), true);

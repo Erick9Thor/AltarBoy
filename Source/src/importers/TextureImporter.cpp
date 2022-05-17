@@ -131,13 +131,10 @@ Hachiko::ResourceTexture* Hachiko::TextureImporter::CreateTextureAssetFromAssimp
     const std::string model_texture_path(file.data);
     const std::string filename = model_texture_path.substr(model_texture_path.find_last_of("/\\") + 1);
 
-    // Check if that texture asset already exists
-    //meta_path.append(META_EXTENSION);
     std::string texture_path = asset_path + filename;
 
     search_paths.emplace_back(texture_path);
     search_paths.emplace_back(file.data);
-
 
     for (std::string& path : search_paths)
     {

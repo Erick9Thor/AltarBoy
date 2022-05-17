@@ -2,21 +2,22 @@
 
 #include "importers/Importer.h"
 
+#include "MeshImporter.h"
+#include "ModelImporter.h"
+#include "TextureImporter.h"
+#include "MaterialImporter.h"
+#include "AnimationImporter.h"
+#include "FontImporter.h"
+#include "PrefabImporter.h"
+
 namespace Hachiko
 {
-    class MaterialImporter;
-    class TextureImporter;
-    class FontImporter;
-    class PrefabImporter;
-    class ModelImporter;
-    class AnimationImporter;
-    class MeshImporter;
 
     class ImporterManager
     {
         friend class ModuleResources;
     public:
-        ~ImporterManager();
+        ~ImporterManager() = default;
 
     private:
         ImporterManager();
@@ -34,16 +35,16 @@ namespace Hachiko
 
 
         // They exist both as assets and as resources
-        MaterialImporter* material = nullptr;
-        TextureImporter* texture = nullptr;
-        FontImporter* font = nullptr;
-        PrefabImporter* prefab = nullptr;
+        MaterialImporter material;
+        TextureImporter texture;
+        FontImporter font;
+        PrefabImporter prefab;
 
         // It doesnt have its own resource type (we use prefabs)
-        ModelImporter* model = nullptr;
+        ModelImporter model;
 
         // They dont have their own asset type
-        AnimationImporter* animation = nullptr;
-        MeshImporter* mesh = nullptr;
+        AnimationImporter animation;
+        MeshImporter mesh;
     };
 } // namespace Hachiko

@@ -2,57 +2,25 @@
 
 #include "ImporterManager.h"
 
-#include "MeshImporter.h"
-#include "ModelImporter.h"
-#include "TextureImporter.h"
-#include "MaterialImporter.h"
-#include "AnimationImporter.h"
-#include "FontImporter.h"
-#include "PrefabImporter.h"
-
 using namespace Hachiko;
 
 ImporterManager::ImporterManager()
 {
 
-    // They exist both as assets and as resources
-    material = new MaterialImporter();
-    texture = new TextureImporter();
-    font = new FontImporter();
-    prefab = new PrefabImporter();
-
-    // It doesnt have its own resource type (we use prefabs)
-    model = new ModelImporter();
-
-    // They dont have their own asset type
-    animation = new AnimationImporter();
-    mesh = new MeshImporter();
-
     // Importers used to generate resources from asset types
-    asset_importers.emplace(Resource::AssetType::TEXTURE, texture);
-    asset_importers.emplace(Resource::AssetType::MATERIAL, material);
-    asset_importers.emplace(Resource::AssetType::FONT, font);
-    asset_importers.emplace(Resource::AssetType::PREFAB, prefab);
-    asset_importers.emplace(Resource::AssetType::MODEL, model);    
+    asset_importers.emplace(Resource::AssetType::TEXTURE, &texture);
+    asset_importers.emplace(Resource::AssetType::MATERIAL, &material);
+    asset_importers.emplace(Resource::AssetType::FONT, &font);
+    asset_importers.emplace(Resource::AssetType::PREFAB, &prefab);
+    asset_importers.emplace(Resource::AssetType::MODEL, &model);    
 
     // Importers used to save and load the different resource types
-    resource_importers.emplace(Resource::Type::TEXTURE, texture);
-    resource_importers.emplace(Resource::Type::MATERIAL, material);
-    resource_importers.emplace(Resource::Type::FONT, font);
-    resource_importers.emplace(Resource::Type::PREFAB, prefab);
-    resource_importers.emplace(Resource::Type::MESH, mesh);
-    resource_importers.emplace(Resource::Type::ANIMATION, animation);
-}
-
-ImporterManager::~ImporterManager()
-{
-    delete material;
-    delete texture;
-    delete font;
-    delete prefab;
-    delete model;
-    delete animation;
-    delete mesh;
+    resource_importers.emplace(Resource::Type::TEXTURE, &texture);
+    resource_importers.emplace(Resource::Type::MATERIAL, &material);
+    resource_importers.emplace(Resource::Type::FONT, &font);
+    resource_importers.emplace(Resource::Type::PREFAB, &prefab);
+    resource_importers.emplace(Resource::Type::MESH, &mesh);
+    resource_importers.emplace(Resource::Type::ANIMATION, &animation);
 }
 
 std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
