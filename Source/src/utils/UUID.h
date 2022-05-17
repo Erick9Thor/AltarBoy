@@ -3,6 +3,12 @@
 #include <string>
 #include <random>
 
+#if defined(HACHIKO_API)
+// Do Nothing
+#elif defined(_MSC_VER)
+#define HACHIKO_API __declspec(dllexport)
+#endif
+
 namespace Hachiko
 {
     using UID = unsigned long long; //64 bits positive number (size_t)
@@ -26,7 +32,7 @@ namespace Hachiko
     //Variant used is 2. The binary equivalent of 'a' (10xx), this goes from 1000 to 1011 (8 to 11) (0x8 to 0xB)
     static std::uniform_int_distribution<> uuid_variant_distribution(8, 11);
 
-    class UUID
+    class HACHIKO_API UUID
     {
     public:
         UUID() = delete;

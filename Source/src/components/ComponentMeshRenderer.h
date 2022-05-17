@@ -14,8 +14,9 @@ namespace Hachiko
 
     class ComponentMeshRenderer : public Component
     {
+        friend class ModelImporter;
     public:
-        ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
+        ComponentMeshRenderer(GameObject* container, UID id = UUID::GenerateUID(), ResourceMesh* res = nullptr);
         ~ComponentMeshRenderer() override;
 
         void Update() override;
@@ -72,36 +73,6 @@ namespace Hachiko
             return mesh->normals;
         }
 
-        [[nodiscard]] const std::string& GetResourcePath() const
-        {
-            return asset_path;
-        }
-
-        void SetResourcePath(const std::string& path)
-        {
-            asset_path = path;
-        }
-
-        [[nodiscard]] const std::string& GetModelName() const
-        {
-            return model_name;
-        }
-
-        void SetModelName(const std::string& name)
-        {
-            model_name = name;
-        }
-
-        [[nodiscard]] int GetMeshIndex() const
-        {
-            return mesh_index;
-        }
-
-        void SetMeshIndex(int index)
-        {
-            mesh_index = index;
-        }
-
         void AddResourceMesh(ResourceMesh* res)
         {
             mesh = res;
@@ -140,12 +111,8 @@ namespace Hachiko
         void ChangeMaterial();
 
     private:
-        bool visible = true;
-        bool navigable = false;
-        
-        int mesh_index;
-        std::string asset_path;
-        std::string model_name;
+        bool visible = true;       
+        bool navigable = false;        
       
         // SKINING
         const GameObject** node_cache = nullptr;

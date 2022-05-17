@@ -1,13 +1,13 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
-#include "utils/UUID.h"
-
 #if defined(HACHIKO_API)
 // Do Nothing
 #elif defined(_MSC_VER)
 #define HACHIKO_API __declspec(dllexport)
 #endif
+
+#include "utils/UUID.h"
+#include "yaml-cpp/yaml.h"
 
 namespace Hachiko
 {
@@ -15,7 +15,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class HACHIKO_API Component : public ISerializable
+    class HACHIKO_API Component
     {
     public:
         enum class Type

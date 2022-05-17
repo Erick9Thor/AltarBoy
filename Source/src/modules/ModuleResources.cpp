@@ -13,7 +13,6 @@
 #include "importers/ModelImporter.h"
 
 #include "components/ComponentMeshRenderer.h"
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
 
@@ -27,7 +26,11 @@ bool ModuleResources::Init()
     for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
     {
         FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
-        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::Type>(i)));
+    }
+
+    for (int i = 1; i < static_cast<int>(Resource::AssetType::COUNT); ++i)
+    {
+        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::AssetType>(i)));
     }
 
     AssetsLibraryCheck();
@@ -37,7 +40,7 @@ bool ModuleResources::Init()
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
         std::filesystem::path file = e.GetPath();
         HE_LOG("Handling dropped file: %s", file.string().c_str());
-        HandleResource(file);
+        ImportAssetFromAnyPath(file);
     };
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
     return true;
@@ -58,51 +61,43 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
     return last_resource_path.parent_path();
 }
 
-void ModuleResources::HandleResource(const std::filesystem::path& path)
+std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path)
 {
-    Resource::Type type = GetType(path);
+    Resource::AssetType type = GetAssetTypeFromPath(path);
     
-    if (type == Resource::Type::UNKNOWN)
+    if (type == Resource::AssetType::UNKNOWN)
     {
-        HE_LOG("Unknown resource type recevied, nothing to be done");
-        return;
+        return std::vector<UID>();
     }
 
-    size_t relative_pos = path.string().find("assets\\");
+    size_t relative_pos = path.string().find("assets");
     bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
     if (file_in_asset)
     {
-        HE_LOG("Resource file in assets folder");
-        destination = std::filesystem::relative(path, path.string().substr(0, relative_pos));
+        destination = path;
     }
     else
     {
-        HE_LOG("Resource file outside the assets folder");
         destination = preferences->GetAssetsPath(type);
         destination.append(path.filename().c_str());
         FileSystem::Copy(path.string().c_str(), destination.string().c_str(), true);
     }
 
-    // Import asset
-    if (!importer_manager.IsImported(path.string().c_str(), type))
-    {
-        last_resource_path = path; // We may need this to import more assets from this path
-        ImportResource(destination, type);
-        HE_LOG("File destination: %s", destination.string().c_str());
-    }
+    // Handle asset when it is in correct path
+    return ImportAsset(destination.string());
 }
 
-Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
+Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
 {
     if (!path.has_extension())
     {
-        return Resource::Type::UNKNOWN;
+        return Resource::AssetType::UNKNOWN;
     }
     const std::filesystem::path extension = path.extension();
 
-    auto isValidExtension = [&](const std::pair<Resource::Type, std::string>& element)
+    auto isValidExtension = [&](const std::pair<Resource::AssetType, std::string>& element)
     {
         return element.second.size() == extension.string().size() &&
             std::equal(element.second.begin(), element.second.end(), extension.string().begin(),
@@ -114,18 +109,19 @@ Resource::Type ModuleResources::GetType(const std::filesystem::path& path)
     {
         return it->first;
     }
-    return Resource::Type::UNKNOWN;
+    return Resource::AssetType::UNKNOWN;
 }
 
 Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
 {
+    // If resource already loaded return
     auto it = loaded_resources.find(id);
     if (it != loaded_resources.end())
     {
         return it->second;
     }
-
-    auto res = importer_manager.Load(type, id);
+    // If not loaded try to load and return
+    auto res = importer_manager.LoadResource(type, id);
     if (res != nullptr)
     {
         return loaded_resources.emplace(id, res).first->second;
@@ -134,137 +130,174 @@ Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
     return nullptr;
 }
 
-void Hachiko::ModuleResources::CreateResource(Resource::Type type, const std::string& name) const
+std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, const std::string& name) const
 {
+    std::vector<UID> new_resources = std::vector<UID>();
     switch (type)
     {
     case Resource::Type::MATERIAL:
         {
             MaterialImporter material_importer;
-            material_importer.CreateMaterial(name);
+            new_resources.emplace_back(material_importer.CreateEmptyMaterial(name));
+            break;
         }
     }
+    return new_resources;
 }
 
-void Hachiko::ModuleResources::ReimportLibrary()
+void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 {
-    FileSystem::Delete(LIBRARY_FOLDER);
+    Resource::AssetType asset_type = GetAssetTypeFromPath(path);
+    
 
-    AssetsLibraryCheck();
-
-    // RELOAD SCENE
-}
-
-void Hachiko::ModuleResources::ReimportAsset(std::string meta_path)
-{
-    YAML::Node meta_node = YAML::LoadFile(meta_path);
-
-    Resource::Type type = static_cast<Resource::Type>(meta_node[GENERAL_NODE][GENERAL_TYPE].as<int>());
-    std::string asset_path = meta_path.substr(0, meta_path.length() - 5);
-
-    importer_manager.DeleteWithMeta(type, meta_node);
-    importer_manager.ImportWithMeta(std::filesystem::path(asset_path), type, meta_node);
-
-    // RELOAD SCENE
-}
-
-// A WAY TO REMOVE ALL METAS
-void DeleteMetas(const PathNode& folder)
-{
-    for (PathNode path_node : folder.children)
+    if (asset_type != Resource::AssetType::UNKNOWN)
     {
-        if (path_node.isFile)
+        // Infer meta path from the asset name, it should always already exist since everything gets imported on start
+        std::string meta_path = StringUtils::Concat(path, META_EXTENSION);
+
+        YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+        // If its a model or a prefab load them into scene, load already does so internally
+        switch (asset_type)
         {
-            FileSystem::Delete(path_node.path.c_str());
-        }
-        else
-        {
-            DeleteMetas(path_node);
+        case Resource::AssetType::MODEL:
+            {
+                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
+                auto a = meta_node[PREFAB_ID].as<UID>();
+                importer->Load(meta_node[PREFAB_ID].as<UID>());
+                break;
+            }
+            
+        case Resource::AssetType::PREFAB:
+            {
+                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
+                // Prefab asset only contains a single prefab resource
+                importer->Load(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
+                break;
+            }
+        case Resource::AssetType::MATERIAL:
+            {
+                Scene* scene = App->scene_manager->GetActiveScene();
+                // Material asset only contains a single material resource
+                auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
+                scene->HandleInputMaterial(material_res);
+                break;
+            }            
         }
     }
 }
-//
 
 void Hachiko::ModuleResources::AssetsLibraryCheck()
 {
     HE_LOG("Assets/Library check...");
 
-    // CAREFULL! A WAY TO REMOVE ALL METAS
-    //std::vector<std::string> meta_extension {"meta"};
-    //PathNode metas = FileSystem::GetAllFiles(ASSETS_FOLDER, &meta_extension, nullptr);
-    //DeleteMetas(metas);
-    //
-
-    // TODO: use defined values, for extensions and assets
-    std::vector<std::string> meta_ext {"meta", "scene"};
-    PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &meta_ext);
-    //PathNode assets_folder = FileSystem::GetAllFiles("assets", &meta_ext, nullptr); // TODO: check that all meta has its asset
-    // TODO: check library folder
-
-    GenerateLibrary(assets_folder); // TODO: Add preference for (de)activate this check
+    // Ignores files that dont need any short of importing themselves
+    // Metas are searched for based on what's on assets
+    std::vector<std::string> ignore_extensions {"meta", "scene"};
+    PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_extensions);
+    GenerateLibrary(assets_folder);
 
     HE_LOG("Assets/Library check finished.");
 }
 
 void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder) 
 {
-    for (PathNode path_node : folder.children)
+    // Iterate all files found in assets except metas and scene
+    for (const PathNode& path_node : folder.children)
     {
-        if (path_node.isFile)
-        {
-            Resource::Type type = GetType(path_node.path);
-            
-            if (type == Resource::Type::UNKNOWN)
-            {
-                continue;
-            }
-
-            std::string meta_path = StringUtils::Concat(path_node.path, META_EXTENSION);
-
-            if (FileSystem::Exists(meta_path.c_str()))
-            {
-                YAML::Node meta_node = YAML::LoadFile(meta_path);
-
-                // Extract data from meta
-                UID meta_uid = meta_node[GENERAL_NODE][GENERAL_ID].as<UID>();
-                uint64_t previous_asset_hash = meta_node[GENERAL_NODE][GENERAL_HASH].IsDefined() ? meta_node[GENERAL_NODE][GENERAL_HASH].as<uint64_t>() : 0;
-                
-                std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(type), std::to_string(meta_uid));
-                bool library_file_exists = FileSystem::Exists(library_path.c_str());
-
-                // Get the asset hash
-                uint64_t asset_hash = FileSystem::HashFromPath(path_node.path.c_str());
-                
-
-                          
-                if (previous_asset_hash != asset_hash)
-                {
-                    // Keep meta and regenerate
-                    if (library_file_exists)
-                    {
-                        importer_manager.DeleteWithMeta(type, meta_node);
-                    }
-                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
-
-                }
-                else if (!library_file_exists)
-                {
-                    importer_manager.ImportWithMeta(std::filesystem::path(path_node.path), type, meta_node);
-                }
-            }
-            else
-            {
-                importer_manager.Import(std::filesystem::path(path_node.path), type);
-            }
-        }
-        else
+        if (!path_node.isFile)
         {
             GenerateLibrary(path_node);
+            continue;
         }
+        ImportAsset(path_node.path);
     }
 }
 
-void ModuleResources::ImportResource(const std::filesystem::path& asset_path, const Resource::Type asset_type)
+std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path)
 {
-    importer_manager.Import(asset_path.string(), asset_type);
+    Resource::AssetType type = GetAssetTypeFromPath(asset_path);
+
+    if (type == Resource::AssetType::UNKNOWN)
+    {
+        // Discard unrecognised types
+        return std::vector<UID>();
+    }
+
+    // Infer meta path from the asset name
+    std::string meta_path = StringUtils::Concat(asset_path, META_EXTENSION);
+
+    if (!FileSystem::Exists(meta_path.c_str()))
+    {
+        // If it doesnt have meta create asset from scratch, pass empty meta resources list to do so
+        YAML::Node meta_node = CreateMeta();
+        UpdateAssetHash(asset_path.c_str(), meta_node);
+        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+    }
+
+    // If it has meta align on library and refresh if necessary
+    YAML::Node meta_node = YAML::LoadFile(meta_path);
+
+    // Do validations over meta information
+    uint64_t previous_asset_hash = meta_node[ASSET_HASH].IsDefined() ? meta_node[ASSET_HASH].as<uint64_t>() : 0;
+    uint64_t asset_hash = FileSystem::HashFromPath(asset_path.c_str());
+
+    // Get the asset hash and reimport if it has changed
+    if (previous_asset_hash != asset_hash)
+    {
+        UpdateAssetHash(asset_path.c_str(), meta_node);
+        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+    }
+    
+    // Reimport if any lib file is missing
+    bool valid_lib = ValidateAssetResources(meta_node);
+    if (!valid_lib)
+    {
+        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+    }
+    
+    // If it exists and has a valid lib just collect the resource ids to return them
+    std::vector<UID> resource_ids = std::vector<UID>();
+    for (unsigned i = 0; i < meta_node[RESOURCES].size(); ++i)
+    {
+        resource_ids.push_back(meta_node[RESOURCES][i][RESOURCE_ID].as<UID>());
+    }
+    return resource_ids;
+}
+
+std::vector<UID> ModuleResources::ImportAssetResources(const std::filesystem::path& asset_path, YAML::Node& meta)
+{
+    // If meta exists, import resources from the asset resources list
+    // If the meta resources list is empty create all the resources it can from that asset
+    Resource::AssetType asset_type = GetAssetTypeFromPath(asset_path);
+    // Returns all the generated resources uids
+    return importer_manager.ImportAsset(asset_path.string(), asset_type, meta);
+}
+
+
+bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) const
+{
+    // Validate the resources direcly handled by that asset (on the resources list)
+    // It might refer to other resources on the meta definition but he is not in charge of maintaining them
+    for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+    {
+        UID resource_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+        auto b = meta[RESOURCES][i][RESOURCE_TYPE].as<int>();
+        Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+        std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(resource_uid));
+        if (!FileSystem::Exists(library_path.c_str())) return false;
+    }
+    return true;
+}
+
+
+YAML::Node Hachiko::ModuleResources::CreateMeta()
+{
+    return YAML::Node();
+}
+
+void Hachiko::ModuleResources::UpdateAssetHash(const char* path, YAML::Node& meta) const
+{
+    uint64_t file_hash = FileSystem::HashFromPath(path);
+    meta[ASSET_HASH] = file_hash;
 }

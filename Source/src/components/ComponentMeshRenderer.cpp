@@ -138,8 +138,6 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     if (mesh != nullptr)
     {
         node[RENDERER_MESH_ID] = mesh->GetID();
-        node[MODEL_NAME] = model_name;
-        node[NODE_MESH_INDEX] = mesh_index;
         node[MESH_NAVIGABLE] = navigable;
         node[MESH_VISIBLE] = visible;
     }
@@ -147,7 +145,6 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     {
         node[RENDERER_MESH_ID] = 0;
         node[MODEL_NAME] = 0;
-        node[NODE_MESH_INDEX] = 0;
         node[MESH_VISIBLE] = true;
     }
 
@@ -163,14 +160,10 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
 
 void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 {
-    SetID(node[COMPONENT_ID].as<UID>());
-
     UID mesh_id = node[RENDERER_MESH_ID].as<UID>();
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
     if (mesh_id)
     {
-        model_name = node[MODEL_NAME].as<std::string>();
-        mesh_index = node[NODE_MESH_INDEX].as<int>();
         navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
         visible = node[MESH_VISIBLE].IsDefined() ? node[MESH_VISIBLE].as<bool>() : true;
 
@@ -249,7 +242,7 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             material_path.append(META_EXTENSION);
             YAML::Node material_node = YAML::LoadFile(material_path);
 
-            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
                 // Unload material

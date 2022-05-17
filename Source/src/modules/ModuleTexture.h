@@ -34,7 +34,7 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        static ResourceTexture* ImportResource(UID uid, const char* path, bool flip = true);
+        static ResourceTexture* ImportTextureResource(UID uid, const char* path, bool flip = true);
 
         [[deprecated]]
         static Texture Load(const char* path, bool flip = true);

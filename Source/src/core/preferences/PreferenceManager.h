@@ -9,6 +9,7 @@ namespace Hachiko
     class RenderPreferences;
     class CameraPreferences;
     class ResourcesPreferences;
+    class AudioPreferences;
 
     // TODO: Use of each preference type without base class
     class PreferenceManager
@@ -34,6 +35,10 @@ namespace Hachiko
             return camera;
         }
 
+        [[nodiscard]] AudioPreferences* GetAudioPreference() const
+        {
+            return audio;
+        }
     private:
         std::vector<Preferences*> preferences{};
         std::vector<YAML::Node> nodes_vec{};
@@ -44,5 +49,6 @@ namespace Hachiko
         RenderPreferences* render = nullptr;
         CameraPreferences* camera = nullptr;
         ResourcesPreferences* resources = nullptr;
+        AudioPreferences* audio = nullptr;
     };
 }

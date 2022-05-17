@@ -41,6 +41,11 @@ void CameraPreferences::LoadConfigurationData(const YAML::Node& node)
         {
             fov = it->second.as<float>();
         }
+
+        if (it->first.as<std::string>()._Equal(CAMERA_POS))
+        {
+            position = it->second.as<float3>();
+        }
     }
 }
 
@@ -51,4 +56,5 @@ void CameraPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][ORBIT_SPEED] = orbit_speed;
     node[group_name][ZOOM_SPEED] = zoom_speed;
     node[group_name][FOV] = fov;
+    node[group_name][CAMERA_POS] = position;
 }
