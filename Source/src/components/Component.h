@@ -1,13 +1,13 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
-#include "utils/UUID.h"
-
 #if defined(HACHIKO_API)
 // Do Nothing
 #elif defined(_MSC_VER)
 #define HACHIKO_API __declspec(dllexport)
 #endif
+
+#include "utils/UUID.h"
+#include "yaml-cpp/yaml.h"
 
 namespace Hachiko
 {
@@ -15,7 +15,7 @@ namespace Hachiko
     class ComponentCamera;
     class Program;
 
-    class HACHIKO_API Component : public ISerializable
+    class HACHIKO_API Component
     {
     public:
         enum class Type
@@ -37,6 +37,8 @@ namespace Hachiko
             ANIMATION = 14,
             SCRIPT = 15,
             TEXT = 16,
+            AGENT = 17,
+            OBSTACLE = 18,
             UNKNOWN
         };
 
@@ -46,9 +48,9 @@ namespace Hachiko
 
         // --- COMPONENT EVENTS --- //
 
-        virtual void Start() { }
-        virtual void Stop() {};
-        virtual void Update() { }
+        virtual void Start() {}
+        virtual void Stop() {}
+        virtual void Update() {}
         virtual void OnTransformUpdated() {}
 
         [[nodiscard]] Type GetType() const

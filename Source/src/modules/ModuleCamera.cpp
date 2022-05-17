@@ -10,6 +10,8 @@
 
 #include "ui/WindowScene.h"
 
+#include "core/preferences/src/CameraPreferences.h"
+
 
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
@@ -25,9 +27,11 @@ bool Hachiko::ModuleCamera::Init()
 
     camera_buffer.clear();
     camera_buffer.push_back(rendering_camera);
-    
     rendering_camera->SetCameraType(ComponentCamera::CameraType::GOD);
-    editor_camera_game_object->GetTransform()->SetGlobalPosition(float3(0.0f, 8.0f, 10.0f));
+
+    camera_prefs = App->preferences->GetCameraPreference();
+
+    editor_camera_game_object->GetTransform()->SetGlobalPosition(camera_prefs->GetPosition());
     editor_camera_game_object->GetTransform()->LookAtTarget(float3::zero);
     editor_camera_game_object->Update();
 
@@ -37,7 +41,7 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
-    if (App->input->GetKey(SDL_SCANCODE_C) == KeyState::KEY_DOWN)
+    if (App->input->IsKeyDown(SDL_SCANCODE_C))
     {
         int buffer_size = camera_buffer.size();
         if (last_it < buffer_size)
@@ -61,6 +65,9 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 
 bool Hachiko::ModuleCamera::CleanUp()
 {
+    // Save to prefs
+    camera_prefs->SetPosition(editor_camera_game_object->GetTransform()->GetGlobalPosition());
+
     camera_buffer.erase(camera_buffer.begin());
     delete editor_camera_game_object;
     camera_buffer.clear();
@@ -84,19 +91,20 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
 #ifndef PLAY_BUILD
     if (!App->editor->GetSceneWindow()->IsHovering())
+    {
         return;
+    }
 #endif  
     if (rendering_camera->GetCameraType() != ComponentCamera::CameraType::GOD)
     {
         return;
     }
     // Keyboard movement ---------------
-    if (App->input->GetMouseButton(SDL_BUTTON_RIGHT))
+    if (App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT))
     {
-        int moved_x, moved_y;
-        App->input->GetMouseDelta(moved_x, moved_y);
+        const float2 moved = App->input->GetMousePixelsMotion();
 
-        Rotate(-static_cast<float>(moved_x) * delta * rot_speed, static_cast<float>(moved_y) * delta * rot_speed);
+        Rotate(-moved.x * delta * rot_speed, moved.y * delta * rot_speed);
         MovementController(delta);
     }
 
@@ -104,15 +112,16 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
     const int scrolled_y = App->input->GetScrollDelta();
     if (scrolled_y != 0)
-        Zoom(static_cast<float>(scrolled_y) * zoom_speed);
-
-    if (App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_REPEAT)
     {
-        int moved_x, moved_y;
-        App->input->GetMouseDelta(moved_x, moved_y);
-        Orbit(moved_x * 1.5f, moved_y * 1.5f);
+        Zoom(static_cast<float>(scrolled_y) * zoom_speed);
     }
-    if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)
+
+    if (App->input->IsKeyPressed(SDL_SCANCODE_LALT))
+    {
+        const float2 moved = App->input->GetMousePixelsMotion();
+        Orbit(moved.x * 1.5f, moved.y * 1.5f);
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_F))
     {
         const float distance = (rendering_camera->reference_point - rendering_camera->GetGameObject()->GetTransform()->GetLocalPosition()).Length();
         GameObject* go = App->editor->GetSelectedGameObject();
@@ -121,12 +130,11 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
             FocusOnModel(go->GetTransform()->GetLocalPosition(), distance);
         }
     }
-    if (App->input->GetMouseButton(SDL_BUTTON_MIDDLE))
+    if (App->input->IsMouseButtonPressed(SDL_BUTTON_MIDDLE))
     {
-        int moved_x, moved_y;
-        App->input->GetMouseDelta(moved_x, moved_y);
+        const float2 moved = App->input->GetMousePixelsMotion();
 
-        PerpendicularMovement((float)moved_x * delta * perpendicular_movement_speed, (float)moved_y * delta * perpendicular_movement_speed);
+        PerpendicularMovement(moved.x * delta * perpendicular_movement_speed, moved.y * delta * perpendicular_movement_speed);
     }
 }
 
@@ -146,7 +154,7 @@ void Hachiko::ModuleCamera::SetRenderingCamera(ComponentCamera* camera)
     editor_camera_game_object = camera->GetGameObject();
 }
 
-void Hachiko::ModuleCamera::RestoreOriginCamera() 
+void Hachiko::ModuleCamera::RestoreOriginCamera()
 {
     if (rendering_camera->GetCameraType() == ComponentCamera::CameraType::DYNAMIC) //Return Dynamic camera to pinned position
     {
@@ -198,24 +206,38 @@ void Hachiko::ModuleCamera::MovementController(const float delta) const
     static const float speed_modifier = 2.0f;
 
     float effective_speed = move_speed;
-    if (App->input->GetKeyMod(KMOD_SHIFT))
+    if (App->input->IsModifierPressed(KMOD_SHIFT))
+    {
         effective_speed *= speed_modifier;
+    }
 
     auto* transform = rendering_camera->GetGameObject()->GetTransform();
     float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
 
-    if (App->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT)
+    if (App->input->IsKeyPressed(SDL_SCANCODE_W))
+    {
         deltaFwd += transform->GetFront() * delta * effective_speed;
-    if (App->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_REPEAT)
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_S))
+    {
         deltaFwd -= transform->GetFront() * delta * effective_speed;
-    if (App->input->GetKey(SDL_SCANCODE_A) == KeyState::KEY_REPEAT)
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_A))
+    {
         deltaRight += transform->GetRight() * delta * effective_speed;
-    if (App->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_REPEAT)
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_D))
+    {
         deltaRight -= transform->GetRight() * delta * effective_speed;
-    if (App->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_REPEAT)
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_Q))
+    {
         deltaUp += float3::unitY * delta * effective_speed;
-    if (App->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT)
+    }
+    if (App->input->IsKeyPressed(SDL_SCANCODE_E))
+    {
         deltaUp -= float3::unitY * delta * effective_speed;
+    }
 
     transform->SetGlobalPosition(transform->GetGlobalPosition() + deltaFwd + deltaRight + deltaUp);
     rendering_camera->GetGameObject()->Update();
@@ -270,8 +292,8 @@ void Hachiko::ModuleCamera::RunDynamicScript(const float delta)
         static const float max_distance = 25.0f;
         float effective_speed = move_speed;
 
-
         auto* transform = rendering_camera->GetGameObject()->GetTransform();
+
         float3 deltaRight = float3::zero, deltaUp = float3::zero, deltaFwd = float3::zero;
         const float distanceFromReference = rendering_camera->camera_pinned_pos.Distance(transform->GetLocalPosition());
         if (distanceFromReference < max_distance)
@@ -280,9 +302,8 @@ void Hachiko::ModuleCamera::RunDynamicScript(const float delta)
             transform->SetLocalPosition(transform->GetGlobalPosition() + deltaFwd + deltaRight + deltaUp);
         }
         else
+        {
             transform->SetLocalPosition(rendering_camera->camera_pinned_pos);
-
-
+        }
     }
-    
 }

@@ -19,6 +19,8 @@
 
 namespace Hachiko
 {
+    class EditorPreferences;
+
     class ModuleEditor : public Module
     {
     public:
@@ -27,6 +29,7 @@ namespace Hachiko
         bool Init() override;
         UpdateStatus PreUpdate(float delta) override;
         UpdateStatus Update(float delta) override;
+        UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
         void UpdateTheme() const;
@@ -85,7 +88,6 @@ namespace Hachiko
         mutable float4 scene_background{0.1f, 0.1f, 0.1f, 0.1f};
 
     private:
-        static void RenderGui();
         void GenerateDockingSpace();
 
         // Main menu bar
@@ -110,6 +112,7 @@ namespace Hachiko
         WindowTimers w_timers;
         WindowProject w_project;
 
+        EditorPreferences* editor_prefs = nullptr;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };
 }

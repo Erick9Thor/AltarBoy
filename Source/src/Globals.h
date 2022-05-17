@@ -70,11 +70,6 @@ enum class UpdateStatus
 #define JPG_TEXTURE_EXTENSION ".jpg"
 #define PNG_TEXTURE_EXTENSION ".png"
 
-#define MATERIAL_EXTENSION ".mat"
-#define SCENE_EXTENSION ".scene"
-#define PREFAB_EXTENSION ".prefab"
-#define META_EXTENSION ".meta"
-
 #define FRAGMENT_SHADER_EXTENSION ".frag"
 #define VERTEX_SHADER_EXTENSION ".vert"
 #define DEFAULT_SHADER_EXTENSION ".glsl"

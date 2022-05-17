@@ -8,21 +8,19 @@ namespace Hachiko
 
     class AnimationImporter final : public Importer
     {
+        friend class ModelImporter;
     public:
-        AnimationImporter();
+        AnimationImporter() = default;
         ~AnimationImporter() override = default;
 
-        void Import(const char* path, YAML::Node& meta) override;
-        void ImportWithMeta(const char* path, YAML::Node& meta) override;
-        void Save(const Resource* resource) override;
+        void Import(const char* path, YAML::Node& meta) override
+        {
+            assert(false && "This should not be called since we dont have animation assets");
+        }
+        void Save(UID id, const Resource* resource) override;
         Resource* Load(UID id) override;
 
-        [[nodiscard]] bool IsImported(const char* path) override
-        {
-            return false;
-        }
-
     private:
-        void Import(const aiAnimation* animation, UID id);
+        void CreateAnimationFromAssimp(const aiAnimation* animation, UID id);
     };
 } // namespace Hachiko

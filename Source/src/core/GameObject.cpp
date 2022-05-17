@@ -7,6 +7,9 @@
 #include "components/ComponentPointLight.h"
 #include "components/ComponentSpotLight.h"
 #include "components/ComponentAnimation.h"
+#include "components/ComponentAgent.h"
+#include "components/ComponentObstacle.h"
+
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -24,8 +27,9 @@
 
 #include <debugdraw.h>
 
-Hachiko::GameObject::GameObject(const char* name) :
-    name(name)
+Hachiko::GameObject::GameObject(const char* name, UID uid) :
+    name(name),
+    uid(uid)
 {
     AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
@@ -186,6 +190,14 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         if (!GetComponent<ComponentProgressBar>())
             new_component = new ComponentText(this);
         break;
+    case (Component::Type::OBSTACLE):
+        if (!GetComponent<ComponentObstacle>())
+            new_component = new ComponentObstacle(this);
+        break;
+    case (Component::Type::AGENT):
+        if (!GetComponent<ComponentAgent>())
+            new_component = new ComponentAgent(this);
+        break;
     }
 
 
@@ -260,6 +272,8 @@ void Hachiko::GameObject::Update()
 
 void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) const
 {
+    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+
     // Draw yourself
     Draw(camera, program);
     // Draw children recursively
@@ -271,6 +285,7 @@ void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) con
 
 void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 {
+    OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
     // Call draw on all components
     for (Component* component : components)
     {
@@ -346,7 +361,7 @@ void Hachiko::GameObject::DrawBones() const
     if (parent != nullptr)
     {
         dd::line(this->GetTransform()->GetGlobalPosition(), parent->GetTransform()->GetGlobalPosition(), dd::colors::Blue);
-        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 1, 10);
+        dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 0.005f, 0.1f);
     }
 }
 
@@ -448,16 +463,23 @@ void Hachiko::GameObject::ForceRemoveComponent(Component* component)
     components.erase(std::remove(components.begin(), components.end(), component));
 }
 
-void Hachiko::GameObject::Save(YAML::Node& node) const
+void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
 {
-    node[GAME_OBJECT_ID] = uid;
+    if (!as_prefab)
+    {
+        node[GAME_OBJECT_ID] = uid;
+    }
+    
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
-    node[GAME_OBJECT_PARENT_ID] = parent != nullptr ? parent->uid : 0;
    
     for (unsigned i = 0; i < components.size(); ++i)
     {
-        node[COMPONENT_NODE][i][COMPONENT_ID] = static_cast<size_t>(components[i]->GetID());
+        if (!as_prefab)
+        {
+            node[COMPONENT_NODE][i][COMPONENT_ID] = static_cast<size_t>(components[i]->GetID());
+        }
+
         node[COMPONENT_NODE][i][COMPONENT_TYPE] = static_cast<int>(components[i]->GetType());
         node[COMPONENT_NODE][i][COMPONENT_ENABLED] = components[i]->IsActive();
         components[i]->Save(node[COMPONENT_NODE][i]);
@@ -465,17 +487,26 @@ void Hachiko::GameObject::Save(YAML::Node& node) const
 
     for (unsigned i = 0; i < children.size(); ++i)
     {
-        children[i]->Save(node[CHILD_NODE][i]);
+        children[i]->Save(node[CHILD_NODE][i], as_prefab);
     }
 }
 
-void Hachiko::GameObject::Load(const YAML::Node& node)
-{
+void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
+{   
     const YAML::Node components_node = node[COMPONENT_NODE];
     for (unsigned i = 0; i < components_node.size(); ++i)
     {
 
-        UID c_uid = components_node[i][COMPONENT_ID].as<UID>();
+        UID component_id;
+        if (!as_prefab)
+        {
+            component_id = components_node[i][COMPONENT_ID].as<UID>();
+        }
+        else
+        {
+            component_id = UUID::GenerateUID();
+        }
+        
         bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
         const auto type = static_cast<Component::Type>(
             components_node[i][COMPONENT_TYPE].as<int>());
@@ -499,9 +530,12 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
             component = CreateComponent(type);
         }
 
-        component->SetID(c_uid);
-        component->Load(components_node[i]);
-        active ? component->Enable() : component->Disable();
+        if (component != nullptr)
+        {
+            component->SetID(component_id);
+            component->Load(components_node[i]);
+            active ? component->Enable() : component->Disable();
+        }
     }
 
     const YAML::Node children_nodes = node[CHILD_NODE];
@@ -513,10 +547,19 @@ void Hachiko::GameObject::Load(const YAML::Node& node)
     for (unsigned i = 0; i < children_nodes.size(); ++i)
     {
         std::string child_name = children_nodes[i][GAME_OBJECT_NAME].as<std::string>();
-        UID child_uid = children_nodes[i][GAME_OBJECT_ID].as<unsigned long long>();
+        UID child_uid;
+        if (!as_prefab)
+        {
+            child_uid = children_nodes[i][GAME_OBJECT_ID].as<UID>();
+        }
+        else
+        {
+            child_uid = UUID::GenerateUID();
+        }
+        
         const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(children_nodes[i]);
+        child->Load(children_nodes[i], as_prefab);
     }
 }
 

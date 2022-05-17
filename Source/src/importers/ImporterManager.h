@@ -2,29 +2,49 @@
 
 #include "importers/Importer.h"
 
+#include "MeshImporter.h"
+#include "ModelImporter.h"
+#include "TextureImporter.h"
+#include "MaterialImporter.h"
+#include "AnimationImporter.h"
+#include "FontImporter.h"
+#include "PrefabImporter.h"
+
 namespace Hachiko
 {
+
     class ImporterManager
     {
         friend class ModuleResources;
     public:
-        ~ImporterManager();
+        ~ImporterManager() = default;
 
     private:
         ImporterManager();
 
-        std::map<Importer::Type, Importer*> importers;
+        std::map<Resource::AssetType, Importer*> asset_importers;
+        std::map<Resource::Type, Importer*> resource_importers;
         
-        void Import(const std::filesystem::path& asset_path, Resource::Type asset_type);
-        Resource* Load(Resource::Type type, UID id);
-        bool IsImported(const char* path, Resource::Type type) const;
+        // If any id is defined it will be assigned to the resource, used to keep meta id but regenerate it
+        std::vector<UID> ImportAsset(const std::filesystem::path& asset_path, Resource::AssetType asset_type, YAML::Node& meta);
+        Resource* LoadResource(Resource::Type type, UID id);
+        void DeleteResource(UID uid, Resource::Type resource_type) const;
 
-        void ImportWithMeta(const std::filesystem::path& asset_path, Resource::Type asset_type, YAML::Node& meta) const;
-        void DeleteWithMeta(Resource::Type asset_type, const YAML::Node& meta) const;
+        Importer* GetAssetImporter(Resource::AssetType type) const;
+        Importer* GetResourceImporter(Resource::Type type) const;
 
-        Importer* GetImporter(Resource::Type type) const;
-        Importer::Type ToImporterType(Resource::Type type) const;
-        YAML::Node CreateMeta(const char* path, const Resource::Type resource_type) const;
-        void UpdateMeta(const char* path, YAML::Node& meta) const;
+
+        // They exist both as assets and as resources
+        MaterialImporter material;
+        TextureImporter texture;
+        FontImporter font;
+        PrefabImporter prefab;
+
+        // It doesnt have its own resource type (we use prefabs)
+        ModelImporter model;
+
+        // They dont have their own asset type
+        AnimationImporter animation;
+        MeshImporter mesh;
     };
-}
+} // namespace Hachiko

@@ -20,6 +20,8 @@ void Hachiko::Scripting::Script::Update()
         return;
     }
 	
+
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnUpdate();
@@ -32,15 +34,19 @@ void Hachiko::Scripting::Script::Update()
 
         HE_LOG("Therefore, scripts are paused.");
     }
+#else
+    OnUpdate();
+#endif // SCRIPTING_UNSAFE
 }
 
-void Hachiko::Scripting::Script::Start() 
+void Hachiko::Scripting::Script::Start()
 {
-	if (!App->scripting_system->ShouldExecuteScripts())
+    if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
 
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnStart();
@@ -53,16 +59,19 @@ void Hachiko::Scripting::Script::Start()
 
         HE_LOG("Therefore, scripts are paused.");
     }
-	
+#else
+    OnStart();
+#endif // SCRIPTING_UNSAFE
 }
 
-void Hachiko::Scripting::Script::Awake() 
+void Hachiko::Scripting::Script::Awake()
 {
     if (!App->scripting_system->ShouldExecuteScripts())
     {
         return;
     }
 
+#ifndef SCRIPTING_UNSAFE
     __try
     {
         OnAwake();
@@ -75,6 +84,9 @@ void Hachiko::Scripting::Script::Awake()
 
         HE_LOG("Therefore, scripts are paused.");
     }
+#else
+    OnAwake();
+#endif // SCRIPTING_UNSAFE
 }
 
 void Hachiko::Scripting::Script::Save(YAML::Node& node) const

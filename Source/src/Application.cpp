@@ -17,6 +17,7 @@
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleDebugMode.h"
 #include "modules/ModuleAudio.h"
+#include "modules/ModuleNavigation.h"
 
 #include "core/preferences/PreferenceManager.h"
 
@@ -38,6 +39,7 @@ Hachiko::Application::Application()
     modules.push_back(ui = new ModuleUserInterface()); 
     modules.push_back(debug_mode = new ModuleDebugMode());
     modules.push_back(audio = new ModuleAudio());
+    modules.push_back(navigation = new ModuleNavigation());
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 
 }
@@ -71,6 +73,7 @@ bool Hachiko::Application::Init()
 
 UpdateStatus Hachiko::Application::Update()
 {
+    OPTICK_EVENT();
     delta = EngineTimer::Update();
     GameTimer::Update();
 

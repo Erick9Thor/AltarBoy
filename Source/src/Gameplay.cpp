@@ -2,7 +2,10 @@
 #include "modules/ModuleInput.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
+#include "modules/ModuleAudio.h"
 #include "Gameplay.h"
+#include "modules/ModuleNavigation.h"
+#include "components/ComponentAgent.h"
 
 
 /*TIME-----------------------------------------------------------------------*/
@@ -19,27 +22,39 @@ float Hachiko::Time::DeltaTime()
 
 /*INPUT----------------------------------------------------------------------*/
 
-bool Hachiko::Input::GetKeyUp(KeyCode key)
+bool Hachiko::Input::IsKeyPressed(KeyCode key)
 {
-    return App->input->GetKey(static_cast<SDL_Scancode>(key)) 
-        == KeyState::KEY_UP;
+    return App->input->IsKeyPressed(static_cast<int>(key));
 }
 
-bool Hachiko::Input::GetKey(KeyCode key)
+bool Hachiko::Input::IsKeyUp(KeyCode key)
 {
-    return App->input->GetKey(static_cast<SDL_Scancode>(key)) 
-        == KeyState::KEY_REPEAT;
+    return App->input->IsKeyUp(static_cast<SDL_Scancode>(key));
 }
 
-bool Hachiko::Input::GetKeyDown(KeyCode key)
+bool Hachiko::Input::IsKeyDown(KeyCode key)
 {
-    return App->input->GetKey(static_cast<SDL_Scancode>(key)) 
-        == KeyState::KEY_DOWN;
+    return App->input->GetKey(static_cast<SDL_Scancode>(key)) == KeyState::KEY_DOWN;
 }
 
-bool Hachiko::Input::GetMouseButton(MouseButton mouse_button)
+bool Hachiko::Input::IsModifierPressed(KeyCode modifier)
 {
-    return App->input->GetMouseButton(static_cast<int>(mouse_button));
+    return App->input->IsModifierPressed(static_cast<SDL_Keymod>(modifier));
+}
+
+bool Hachiko::Input::IsMouseButtonPressed(MouseButton mouse_button)
+{
+    return App->input->IsMouseButtonPressed(static_cast<int>(mouse_button));
+}
+
+bool Hachiko::Input::IsMouseButtonUp(MouseButton mouse_button)
+{
+    return App->input->IsMouseButtonUp(static_cast<int>(mouse_button));
+}
+
+bool Hachiko::Input::IsMouseButtonDown(MouseButton mouse_button)
+{
+    return App->input->IsMouseButtonDown(static_cast<int>(mouse_button)); 
 }
 
 int Hachiko::Input::GetScrollWheelDelta()
@@ -47,35 +62,26 @@ int Hachiko::Input::GetScrollWheelDelta()
     return App->input->GetScrollDelta();
 }
 
-math::float2 Hachiko::Input::GetMouseDelta()
+const float2& Hachiko::Input::GetMouseNormalizedMotion()
 {
-    float delta_x = 0;
-    float delta_y = 0;
-
-    App->input->GetMouseDeltaRelative(delta_x, delta_y);
-
-    return math::float2(delta_x, delta_y);
+    return App->input->GetMouseNormalizedMotion();
 }
 
-math::float2 Hachiko::Input::GetMousePosition()
+HACHIKO_API const float2& Hachiko::Input::GetMousePixelsMotion()
 {
-    float position_x = 0;
-    float position_y = 0;
-
-    App->input->GetMousePositionRelative(position_x, position_y);
-
-    return math::float2(position_x, position_y);
+    return App->input->GetMousePixelsMotion();
 }
 
-void Hachiko::Input::GetMouseDeltaPixels(int& out_delta_x, int& out_delta_y) 
+const float2& Hachiko::Input::GetMousePixelPosition()
 {
-    App->input->GetMouseDelta(out_delta_x, out_delta_y);
+    return App->input->GetMousePixelPosition();
 }
 
-void Hachiko::Input::GetMousePositionPixels(int& out_position_x, 
-    int& out_position_y) 
+HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
 {
-    App->input->GetMousePosition(out_position_x, out_position_y);
+    HE_LOG("Position got as: %f, %f", App->input->GetMouseNormalizedPosition().x, App->input->GetMouseNormalizedPosition().y);
+    
+    return App->input->GetMouseNormalizedPosition();
 }
 
 /*---------------------------------------------------------------------------*/
@@ -97,6 +103,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     unsigned long long id)
 {
     return App->scene_manager->GetRoot()->Find(id);
+}
+
+HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
+{
+    delete game_object;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -245,6 +256,34 @@ void Hachiko::Editor::Show(const char* field_name, GameObject*& field)
     bool changed = false;
 
     ShowGameObjectDragDropArea(field_name, "GameObject*", &field, changed);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*NAVIGATION-----------------------------------------------------------------*/
+
+float Hachiko::Navigation::GetHeightFromPosition(const math::float3& position)
+{
+    return App->navigation->GetYFromPosition(position);    
+}
+
+math::float3 Hachiko::Navigation::GetCorrectedPosition(math::float3& position, const math::float3& extents)
+{
+    return App->navigation->GetCorrectedPosition(position, extents);
+}
+
+void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::float3& extents)
+{
+    return App->navigation->CorrectPosition(position, extents);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*AUDIO----------------------------------------------------------------------*/
+
+HACHIKO_API void Hachiko::Audio::Play(const wchar_t* name)
+{
+    return App->audio->Play(name);
 }
 
 /*---------------------------------------------------------------------------*/

@@ -7,8 +7,9 @@
 
 
 namespace Hachiko
-{   
-    using Uint8 = unsigned __int8;
+{
+    constexpr int MAX_KEYS = 300;
+    constexpr int NUM_MOUSE_BUTTONS = 5;
 
     enum class KeyState
     {
@@ -28,19 +29,51 @@ namespace Hachiko
         UpdateStatus PreUpdate(float delta) override;
         bool CleanUp() override;
 
+        //general function to get the state of a key
         [[nodiscard]] KeyState GetKey(SDL_Scancode key) const
         {
             return keyboard[key];
         }
 
-        [[nodiscard]] bool GetKeyMod(SDL_Keymod modifier) const
+        //general function to get the state of a mouse button
+        [[nodiscard]] KeyState GetMouseButton(const int id) const
         {
-            return (keymods & modifier);
+            return mouse[id - 1];
         }
 
-        [[nodiscard]] bool GetMouseButton(int button) const
+        [[nodiscard]] bool IsModifierPressed(SDL_Keymod modifier) const
         {
-            return (mouse & SDL_BUTTON(button));
+            return (SDL_GetModState() & modifier);
+        }
+
+        [[nodiscard]] bool IsKeyPressed(const int id) const
+        {
+            return keyboard[id] == KeyState::KEY_DOWN || keyboard[id] == KeyState::KEY_REPEAT;
+        }
+
+        [[nodiscard]] bool IsKeyDown(const int id) const
+        {
+            return keyboard[id] == KeyState::KEY_DOWN;
+        }
+
+        [[nodiscard]] bool IsKeyUp(const int id) const
+        {
+            return keyboard[id] == KeyState::KEY_UP;
+        }
+
+        [[nodiscard]] bool IsMouseButtonPressed(const int id) const
+        {
+            return mouse[id - 1] == KeyState::KEY_DOWN || mouse[id - 1] == KeyState::KEY_REPEAT;
+        }
+
+        [[nodiscard]] bool IsMouseButtonUp(const int id) const
+        {
+            return mouse[id - 1] == KeyState::KEY_UP;
+        }
+
+        [[nodiscard]] bool IsMouseButtonDown(const int id) const
+        {
+            return mouse[id - 1] == KeyState::KEY_DOWN;
         }
 
         [[nodiscard]] int GetScrollDelta() const
@@ -48,32 +81,24 @@ namespace Hachiko
             return scroll_delta;
         }
 
-        // TODO: Rename to GetMouseDeltaPixels.
-        void GetMouseDelta(int& x, int& y) const
+        [[nodiscard]] const float2& GetMousePixelPosition() const
         {
-            x = mouse_delta_x;
-            y = mouse_delta_y;
+            return mouse_pixel_position;
         }
 
-        // TODO: Rename to GetMouseDelta.
-        void GetMouseDeltaRelative(float& x, float& y) const
+        [[nodiscard]] const float2& GetMouseNormalizedPosition() const
         {
-            x = _mouse_delta_x_relative;
-            y = _mouse_delta_y_relative;
+            return mouse_normalized_position;
         }
 
-        // TODO: Rename to GetMousePositionPixels.
-        void GetMousePosition(int& x, int& y) const
+        [[nodiscard]] const float2& GetMouseNormalizedMotion() const
         {
-            x = mouse_x;
-            y = mouse_y;
+            return mouse_normalized_motion;
         }
 
-        // TODO: Rename to GetPosition.
-        void GetMousePositionRelative(float& x, float& y) const
+        [[nodiscard]] const float2& GetMousePixelsMotion() const
         {
-            x = _mouse_x_relative;
-            y = _mouse_y_relative;
+            return mouse_pixels_motion;
         }
 
     private:
@@ -85,18 +110,14 @@ namespace Hachiko
 
     private:
         KeyState* keyboard = nullptr;
-        Uint32 mouse{};
-        SDL_Keymod keymods{};
+        KeyState mouse[NUM_MOUSE_BUTTONS]{};
+        float2 mouse_pixel_position = float2::zero;
+        float2 mouse_normalized_position = float2::zero;
+        float2 mouse_normalized_motion = float2::zero;
+        float2 mouse_pixels_motion = float2::zero;
+        int scroll_delta{};
 
-        int mouse_x{}, mouse_y{};
-        int mouse_delta_x{}, mouse_delta_y{};
-
-        float _mouse_x_relative{};
-        float _mouse_y_relative{};
-        float _mouse_delta_x_relative{};
-        float _mouse_delta_y_relative{};
         float _window_width_inverse{};
         float _window_height_inverse{};
-        int scroll_delta{};
     };
 }
