@@ -23,8 +23,8 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::MATERIAL, resource_index, meta);
 
-    YAML::Node material_node = YAML::LoadFile(path);    
-    FileSystem::Save(GetResourcePath(Resource::Type::MATERIAL, uid).c_str(), material_node);
+    YAML::Node material_node = YAML::LoadFile(path);   
+    FileSystem::Copy(path, GetResourcePath(Resource::Type::MATERIAL, uid).c_str());
 }
 
 void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
