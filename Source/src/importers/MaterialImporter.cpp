@@ -131,11 +131,6 @@ Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std:
     const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
     UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
 
-    RELEASE(material->diffuse);
-    RELEASE(material->specular);
-    RELEASE(material->normal);
-    RELEASE(material->metalness);
-
     delete material;
 
     return material_uid;

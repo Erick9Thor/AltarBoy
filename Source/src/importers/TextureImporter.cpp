@@ -147,7 +147,7 @@ Hachiko::ResourceTexture* Hachiko::TextureImporter::CreateTextureAssetFromAssimp
         }
 
         UID id = App->resources->ImportAssetFromAnyPath(path)[0];
-        output_texture = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, id));        
+        output_texture = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, id)); 
         break;
     }
     return output_texture;
