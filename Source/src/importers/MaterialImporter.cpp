@@ -55,6 +55,7 @@ void Hachiko::MaterialImporter::Save(const Resource* res)
     material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
     material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
     material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
+    material_node[MATERIAL_EMISSIVE_ID] = (material->HasEmissive()) ? material->emissive->GetID() : 0;
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
@@ -112,6 +113,12 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
         material->metalness = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
     }
 
+    texture_id = node[MATERIAL_EMISSIVE_ID].as<UID>();
+    if (texture_id)
+    {
+        material->emissive = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+
     return material;
 }
 
@@ -149,6 +156,7 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id)
     material->specular = ImportTexture(ai_material, aiTextureType_SPECULAR);
     material->normal = ImportTexture(ai_material, aiTextureType_NORMALS);
     material->metalness = ImportTexture(ai_material, aiTextureType_METALNESS);
+    material->emissive = ImportTexture(ai_material, aiTextureType_EMISSIVE);
     
     Save(material);
 
@@ -156,6 +164,7 @@ void Hachiko::MaterialImporter::Import(aiMaterial* ai_material, const UID id)
     delete material->specular;
     delete material->normal;
     delete material->metalness;
+    delete material->emissive;
     delete material;
 }
 

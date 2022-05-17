@@ -4,7 +4,8 @@
 #define SPECULAR_SAMPLER 1
 #define NORMAL_SAMPLER 2
 #define METALLIC_SAMPLER 3
-#define N_2D_SAMPLERS 4
+#define EMISSIVE_SAMPLER 4
+#define N_2D_SAMPLERS 5
 
 #define MAX_POINT_LIGHTS 4
 #define MAX_SPOT_LIGHTS 4
@@ -58,6 +59,7 @@ layout(std140, binding = 1) uniform Material
     uint specular_flag;
     uint normal_flag;
     uint metallic_flag;
+    uint emissive_flag;
     float smoothness;
     float metalness_value;
     uint is_metallic;
@@ -266,6 +268,9 @@ void main()
         
     }   
     hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
+
+    // Emissive map
+    hdr_color += texture(textures[EMISSIVE_SAMPLER], fragment.tex_coord).rgb * material.emissive_flag;
 
     // Reinhard tone mapping
     vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
