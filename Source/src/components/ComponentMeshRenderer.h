@@ -23,11 +23,6 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
 
-        static Type GetType()
-        {
-            return Type::MESH_RENDERER;
-        }
-
         [[nodiscard]] bool IsLoaded() const
         {
             return mesh != nullptr;

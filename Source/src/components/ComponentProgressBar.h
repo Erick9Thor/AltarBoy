@@ -22,8 +22,6 @@ namespace Hachiko
         ComponentProgressBar(GameObject* container);
         ~ComponentProgressBar() override = default;
 
-        static Type GetType();
-
         void Update() override;
         void DrawGui() override;
 
@@ -83,8 +81,3 @@ namespace Hachiko
         inline static const char* filling_directions[] {"Left to right", "Right to Left", "Bottom to top", "Top to bottom"};
     };
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentProgressBar::GetType()
-{
-    return Type::PROGRESS_BAR;
-}

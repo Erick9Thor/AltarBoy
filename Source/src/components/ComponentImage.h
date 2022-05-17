@@ -18,8 +18,6 @@ namespace Hachiko
         ComponentImage(GameObject* container);
         ~ComponentImage() override = default;
 
-        static Type GetType();
-
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program) const;
 
@@ -41,8 +39,3 @@ namespace Hachiko
         bool use_hover_image = false;
     };
 } // namespace Hachiko
-
-inline Hachiko::Component::Type Hachiko::ComponentImage::GetType()
-{
-    return Type::IMAGE;
-}
