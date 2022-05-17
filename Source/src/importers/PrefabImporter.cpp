@@ -58,5 +58,6 @@ Hachiko::UID Hachiko::PrefabImporter::CreatePrefabAsset(const char* name, GameOb
     const std::string prefab_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::PREFAB), prefab->name, PREFAB_EXTENSION);
     FileSystem::Save(prefab_asset_path.c_str(), prefab->prefab_data);
     UID prefab_uid = App->resources->ImportAssetFromAnyPath(prefab_asset_path)[0];
+    delete prefab;
     return prefab_uid;
 }
