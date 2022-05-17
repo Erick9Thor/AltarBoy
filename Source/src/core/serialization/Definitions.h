@@ -73,6 +73,13 @@
 #define MATERIAL_EXTENSION ".mat"
 #define META_EXTENSION ".meta"
 #define PREFAB_EXTENSION ".prefab"
+#define JPG_TEXTURE_EXTENSION ".jpg"
+#define PNG_TEXTURE_EXTENSION ".png"
+#define TIF_TEXTURE_EXTENSION ".tif"
+#define DEFAULT_SHADER_EXTENSION ".glsl"
+#define MODEL_EXTENSION ".fbx"
+#define SKYBOX_EXTENSION ".hdr"
+#define FONT_EXTENSION ".ttf"
  
 //////////////////////////
 //						//

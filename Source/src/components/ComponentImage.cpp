@@ -27,7 +27,7 @@ void Hachiko::ComponentImage::DrawGui()
         if (ImGui::InputText("Image File", image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(image);
-            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + image_filename_buffer;
+            std::string destination = std::string(ASSETS_FOLDER_TEXTURE) + "/" + image_filename_buffer;
             image = ModuleTexture::Load(destination.c_str());
         }
 
@@ -41,7 +41,7 @@ void Hachiko::ComponentImage::DrawGui()
         if (ImGui::InputText("Hover Image File", hover_image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             ModuleTexture::Unload(hover_image);
-            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + hover_image_filename_buffer;
+            std::string destination = std::string(ASSETS_FOLDER_TEXTURE) + "/" + hover_image_filename_buffer;
             hover_image = ModuleTexture::Load(destination.c_str());
         }
 

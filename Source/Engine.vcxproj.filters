@@ -561,7 +561,6 @@
     <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
     <ClCompile Include="src\importers\SceneImporter.cpp" />
-    <ClCompile Include="src\importers\ShaderImporter.cpp" />
     <ClCompile Include="src\importers\VideoImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -2248,7 +2247,6 @@
     <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\resources\ResourcePrefab.h" />
     <ClInclude Include="src\importers\SceneImporter.h" />
-    <ClInclude Include="src\importers\ShaderImporter.h" />
     <ClInclude Include="src\importers\VideoImporter.h" />
   </ItemGroup>
   <ItemGroup>

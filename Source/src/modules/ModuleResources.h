@@ -36,13 +36,13 @@ namespace Hachiko
 
         std::vector<std::pair<Hachiko::Resource::AssetType, std::string>> supported_extensions = 
         {
-            {Hachiko::Resource::AssetType::TEXTURE, ".png"},
-            {Hachiko::Resource::AssetType::TEXTURE, ".jpg"},
-            {Hachiko::Resource::AssetType::TEXTURE, ".tif"},
-            {Hachiko::Resource::AssetType::MODEL, ".fbx"},
+            {Hachiko::Resource::AssetType::TEXTURE, PNG_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::TEXTURE, JPG_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::TEXTURE, TIF_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::MODEL, MODEL_EXTENSION},
             {Hachiko::Resource::AssetType::SCENE, SCENE_EXTENSION},
             {Hachiko::Resource::AssetType::MATERIAL, MATERIAL_EXTENSION},
-            {Hachiko::Resource::AssetType::FONT, ".ttf"},
+            {Hachiko::Resource::AssetType::FONT, FONT_EXTENSION},
             {Hachiko::Resource::AssetType::PREFAB, PREFAB_EXTENSION},
         };
         

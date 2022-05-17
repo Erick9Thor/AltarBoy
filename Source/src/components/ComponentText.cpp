@@ -55,8 +55,8 @@ void Hachiko::ComponentText::DrawGui()
         {
             ImGuiFileDialog::Instance()->OpenDialog(title,
                                                     "Select Font",
-                                                    ".ttf,",
-                                                    "./assets/fonts/",
+                                                    FONT_EXTENSION,
+                                                    ASSETS_FOLDER_FONT,
                                                     1,
                                                     nullptr,
                                                     ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType

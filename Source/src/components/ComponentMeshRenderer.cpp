@@ -226,8 +226,8 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Material",
-                                                ".mat",
-                                                "./assets/materials/",
+                                                MATERIAL_EXTENSION,
+                                                ASSETS_FOLDER_MATERIAL,
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType

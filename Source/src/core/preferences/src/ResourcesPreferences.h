@@ -11,13 +11,13 @@ namespace Hachiko
         ~ResourcesPreferences() override = default;
         void LoadConfigurationData(const YAML::Node& node) override;
         void SaveConfigurationData(YAML::Node& node) override;
-        [[nodiscard]] const char* GetAssetsPath(Resource::AssetType type) const;
-        [[nodiscard]] const char* GetLibraryPath(Resource::Type type) const;
-        const std::map<Resource::AssetType, std::string>& GetAssetsPathsMap()
+        [[nodiscard]] static const char* GetAssetsPath(Resource::AssetType type);
+        [[nodiscard]] static const char* GetLibraryPath(Resource::Type type);
+        static const std::map<Resource::AssetType, std::string>& GetAssetsPathsMap()
         {
             return assets_paths;
         };
-        const std::map<Resource::Type, std::string>& GetLibraryPathsMap()
+        static const std::map<Resource::Type, std::string>& GetLibraryPathsMap()
         {
             return lib_paths;
         };
@@ -31,34 +31,11 @@ namespace Hachiko
             scene_name = name;
         }
 
-    private:
-        std::map<Resource::AssetType, std::string> assets_paths = {
-            {Resource::AssetType::SCENE, "assets/scenes/"}, 
-            {Resource::AssetType::MODEL, "assets/models/"},
-            {Resource::AssetType::TEXTURE, "assets/textures/"},
-            {Resource::AssetType::VIDEO, "assets/video/"},
-            {Resource::AssetType::MATERIAL, "assets/materials/"},
-            {Resource::AssetType::SHADER, "assets/shaders/"},
-            {Resource::AssetType::SKYBOX, "assets/skybox/"},
-            {Resource::AssetType::FONT, "assets/fonts/"},
-            {Resource::AssetType::PREFAB, "assets/prefabs/"},
-        };
 
-        std::map<Resource::Type, std::string> lib_paths = {
-            {Resource::Type::SCENE, "library/scenes/"},
-            {Resource::Type::MESH, "library/meshes/"},
-            {Resource::Type::TEXTURE, "library/textures/"},
-            {Resource::Type::VIDEO, "library/video/"},
-            {Resource::Type::MATERIAL, "library/materials/"},
-            {Resource::Type::SHADER, "library/shaders/"},
-            {Resource::Type::ANIMATION, "library/animations/"},
-            {Resource::Type::SCRIPT, "library/scripts/"},
-            {Resource::Type::SKYBOX, "library/skybox/"},
-            {Resource::Type::FONT, "library/fonts/"},
-            {Resource::Type::NAVMESH, "library/navmesh/"},
-            {Resource::Type::PREFAB, "library/prefabs/"},
-        };
+    private:
+        static const std::map<Resource::AssetType, std::string> assets_paths;
+        static const std::map<Resource::Type, std::string> lib_paths;
         std::string scene_name = "UnnamedScene.scene";
-        std::string scene_id;
+        UID scene_id;
     };
 }
