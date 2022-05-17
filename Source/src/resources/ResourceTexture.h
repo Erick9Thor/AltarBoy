@@ -17,7 +17,8 @@ namespace Hachiko
             DIFFUSE = 0,
             SPECULAR,
             NORMALS,
-            METALNESS
+            METALNESS,
+            EMISSIVE
         };
 
         void GenerateBuffer();

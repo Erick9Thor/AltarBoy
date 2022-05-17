@@ -202,7 +202,11 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
 
 void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
 {
-    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
+    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE),
+                                                                       static_cast<int>(TextureSlots::SPECULAR),
+                                                                       static_cast<int>(TextureSlots::NORMAL),
+                                                                       static_cast<int>(TextureSlots::METALNESS),
+                                                                       static_cast<int>(TextureSlots::EMISSIVE)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
     const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
@@ -221,6 +225,8 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* compone
     material_data.specular_flag = material->HasSpecular();
     material_data.normal_flag = material->HasNormal();
     material_data.metalness_flag = material->HasMetalness();
+    material_data.emissive_flag = material->HasEmissive();
+    material_data.emissive_color = material->emissive_color;
     material_data.is_metallic = material->is_metallic;
     material_data.smoothness_alpha = material->smoothness_alpha;
     material_data.is_transparent = material->is_transparent;
@@ -240,6 +246,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* compone
     if (material_data.metalness_flag)
     {
         ModuleTexture::Bind(material->GetMetalnessId(), static_cast<int>(TextureSlots::METALNESS));
+    }
+    if (material_data.emissive_flag)
+    {
+        ModuleTexture::Bind(material->GetEmissiveId(), static_cast<int>(TextureSlots::EMISSIVE));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);
