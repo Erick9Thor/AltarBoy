@@ -12,7 +12,9 @@ bool Hachiko::ModuleSceneManager::Init()
 { 
     serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
-    std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
+    std::string scene_path = 
+        StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE),
+        preferences->GetSceneName());
     
     if (std::filesystem::exists(scene_path))
     {
@@ -28,8 +30,8 @@ bool Hachiko::ModuleSceneManager::Init()
     main_scene->Start();
 #endif
 
-    EditorPreferences* pref = App->preferences->GetEditorPreference();
-    scene_autosave = pref->GetAutosave();
+    EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
+    scene_autosave = editor_prefs->GetAutosave();
     return true;
 }
 
@@ -122,9 +124,10 @@ bool Hachiko::ModuleSceneManager::CleanUp()
         SaveScene();
     }
 
-    EditorPreferences* pref = App->preferences->GetEditorPreference();
-    pref->SetAutosave(scene_autosave);
-    
+    EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
+    editor_prefs->SetAutosave(scene_autosave);
+    preferences->SetSceneName(main_scene->GetName());
+
     // TODO: Remove temp_scene.scene from disk
     RELEASE(main_scene);
     RELEASE(serializer);
@@ -197,7 +200,7 @@ void Hachiko::ModuleSceneManager::SaveScene()
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer->Save(main_scene, file_path); // TODO: Take into account temporal scenes
+    serializer->Save(main_scene, file_path);
 }
 
 Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
@@ -226,9 +229,13 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
-    
-    
+    char scene_name[50];
+    strcpy_s(scene_name, 50, main_scene->GetName());
+    const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+    if (ImGui::InputText("###", scene_name, 50, name_input_flags))
+    {
+        main_scene->SetName(scene_name);
+    }
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
-
     App->navigation->DrawOptionsGui();
 }

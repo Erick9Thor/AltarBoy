@@ -92,6 +92,7 @@
 #define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
+#define RESIZABLE "resizable"
 #define THEME_LIGHT "light"
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
@@ -118,11 +119,17 @@
 #define ORBIT_SPEED "orbit_speed"
 #define ZOOM_SPEED "zoom_speed"
 #define FOV "fov"
+#define CAMERA_POS "position"
 
 // Globals
 #define GLOBAL_NODE "globals"
 #define TITLE_NODE "title"
 #define VERSION_NODE "version"
+
+// Audio
+#define AUDIO_NODE "audio"
+#define SFX_VOLUME "sfx_volume"
+#define MUSIC_VOLUME "music_volume"
 
 //////////////////////////
 //						//
