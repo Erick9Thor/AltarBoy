@@ -51,7 +51,6 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     Hachiko::AnimationImporter animation_importer;
     PrefabImporter prefab_importer;
     
-    //unsigned total_resources = 0;
     meta.remove(RESOURCES);
     auto resource_ids = std::vector<UID>();
     auto resource_types = std::vector<Resource::Type>();
