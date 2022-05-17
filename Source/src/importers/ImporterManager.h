@@ -4,6 +4,14 @@
 
 namespace Hachiko
 {
+    class MaterialImporter;
+    class TextureImporter;
+    class FontImporter;
+    class PrefabImporter;
+    class ModelImporter;
+    class AnimationImporter;
+    class MeshImporter;
+
     class ImporterManager
     {
         friend class ModuleResources;
@@ -23,5 +31,19 @@ namespace Hachiko
 
         Importer* GetAssetImporter(Resource::AssetType type) const;
         Importer* GetResourceImporter(Resource::Type type) const;
+
+
+        // They exist both as assets and as resources
+        MaterialImporter* material = nullptr;
+        TextureImporter* texture = nullptr;
+        FontImporter* font = nullptr;
+        PrefabImporter* prefab = nullptr;
+
+        // It doesnt have its own resource type (we use prefabs)
+        ModelImporter* model = nullptr;
+
+        // They dont have their own asset type
+        AnimationImporter* animation = nullptr;
+        MeshImporter* mesh = nullptr;
     };
 } // namespace Hachiko

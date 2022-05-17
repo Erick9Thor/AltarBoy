@@ -14,18 +14,19 @@ using namespace Hachiko;
 
 ImporterManager::ImporterManager()
 {
+
     // They exist both as assets and as resources
-    const auto material = new MaterialImporter();
-    const auto texture = new TextureImporter();    
-    const auto font = new FontImporter();
-    const auto prefab = new PrefabImporter();
+    material = new MaterialImporter();
+    texture = new TextureImporter();
+    font = new FontImporter();
+    prefab = new PrefabImporter();
 
     // It doesnt have its own resource type (we use prefabs)
-    const auto model = new ModelImporter();    
+    model = new ModelImporter();
 
     // They dont have their own asset type
-    const auto animation = new AnimationImporter();
-    const auto mesh = new MeshImporter();
+    animation = new AnimationImporter();
+    mesh = new MeshImporter();
 
     // Importers used to generate resources from asset types
     asset_importers.emplace(Resource::AssetType::TEXTURE, texture);
@@ -45,10 +46,13 @@ ImporterManager::ImporterManager()
 
 ImporterManager::~ImporterManager()
 {
-    for (auto it : asset_importers)
-    {
-        delete it.second;
-    }
+    delete material;
+    delete texture;
+    delete font;
+    delete prefab;
+    delete model;
+    delete animation;
+    delete mesh;
 }
 
 std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
