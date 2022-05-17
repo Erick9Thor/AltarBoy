@@ -34,7 +34,7 @@ namespace Hachiko
         void BatchMeshes();
         void BatchData();
 
-        void UpdateWithTextureBatch();
+        void UpdateWithTextureBatch(bool use_first_segment);
 
         void ClearDrawList();
 
@@ -54,6 +54,7 @@ namespace Hachiko
         std::unordered_map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
                 
         // We can use resource mesh to contain a concatenation of all original meshes
+        unsigned component_count = 0;
         ResourceMesh* batch = nullptr;
         unsigned instance_indices_vbo;
         std::vector<float4x4> transforms;
@@ -63,6 +64,13 @@ namespace Hachiko
 
         TextureBatch* texture_batch = nullptr;
         unsigned indirect_buffer_id;
+        unsigned transform_buffer;
+        unsigned palettes_buffer;
+        unsigned palettes_per_instances_buffer;
+
+        float4x4* transform_buffer_data = nullptr;
+        float4x4* palettes_buffer_data = nullptr;
+        PalettePerInstance* palettes_per_instances_buffer_data = nullptr;
     };
 
 } // namespace Hachiko

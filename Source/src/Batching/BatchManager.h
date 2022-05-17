@@ -30,5 +30,8 @@ namespace Hachiko
         unsigned material_ssbo;
         // One GeometryBatch per attribute layout
         std::vector<GeometryBatch*> geometry_batches;
+
+        // Indicates if the first or the second segment of the persistent buffers are begin used
+        bool use_first_segment = true;
     };
 } // namespace Hachiko

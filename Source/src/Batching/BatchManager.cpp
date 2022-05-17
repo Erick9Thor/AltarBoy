@@ -106,16 +106,20 @@ void Hachiko::BatchManager::DrawBatches()
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
         // Binds meshes and transforms
-        geometry_batch->UpdateWithTextureBatch();
+        geometry_batch->UpdateWithTextureBatch(use_first_segment);
         //App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
         // Bind texture batch
         // bind materials array
         auto& commands = geometry_batch->GetCommands();
 
         App->program->GetMainProgram()->BindUniformBool("has_bones", geometry_batch->batch->layout.bones);
+        int persistent_offset = (use_first_segment) ? 0 : geometry_batch->component_count;
+        App->program->GetMainProgram()->BindUniformInts("persistent_offset", 1, &persistent_offset);
 
         glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
     }
+
+    use_first_segment = !use_first_segment;
 }
 
 void Hachiko::BatchManager::ClearBatchesDrawList()

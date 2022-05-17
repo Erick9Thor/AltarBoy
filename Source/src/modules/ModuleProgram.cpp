@@ -30,9 +30,6 @@ bool Hachiko::ModuleProgram::Init()
     CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
     CreateSSBO(UBOPoints::MATERIAL, 0);
     CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
-    CreateSSBO(UBOPoints::TRANSFORMS, 0);
-    CreateSSBO(UBOPoints::PALETTES_PER_INSTANCE, 0);
-    CreateSSBO(UBOPoints::PALETTES, 0);
 
     return true;
 }
@@ -176,6 +173,16 @@ void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, 
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
+void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, unsigned binding_point, unsigned size)
+{
+    glGenBuffers(1, &buffer_id);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+    unsigned flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+    glBufferStorage(GL_ARRAY_BUFFER, size, 0, flags);
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, static_cast<int>(binding_point), buffer_id); // CHECK THIS
+    return glMapBufferRange(GL_ARRAY_BUFFER, 0, size, flags);
+}
+
 bool Hachiko::ModuleProgram::CleanUp()
 {
     main_program->CleanUp();
@@ -309,20 +316,8 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
 }
 
-void Hachiko::ModuleProgram::UpdateTransforms(const std::vector<float4x4>& transforms) const
-{
-    UpdateSSBO(UBOPoints::TRANSFORMS, transforms.size() * sizeof(float) * 16, (void*)transforms.data());
-}
-
-void Hachiko::ModuleProgram::UpdatePalettes(const std::vector<float4x4>& palettes, const std::vector<PalettePerInstance>& palettes_per_instance) const
-{
-    UpdateSSBO(UBOPoints::PALETTES, palettes.size() * sizeof(float4x4), (void*)palettes.data());
-    UpdateSSBO(UBOPoints::PALETTES_PER_INSTANCE, palettes_per_instance.size() * sizeof(PalettePerInstance), (void*)palettes_per_instance.data());
-}
-
 void Hachiko::ModuleProgram::UpdateMaterials(const std::vector<Hachiko::TextureBatch::Material>& materials) const
 {
-
     if (materials.size() <= 0)
     {
         UpdateSSBO(UBOPoints::MATERIAL, 0, nullptr);

@@ -25,9 +25,6 @@ namespace Hachiko
             CAMERA = 0,
             MATERIAL,
             LIGHTS,
-            TRANSFORMS,
-            PALETTES,
-            PALETTES_PER_INSTANCE,
             COUNT,
         };
 
@@ -83,11 +80,11 @@ namespace Hachiko
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
-        void UpdateTransforms(const std::vector<float4x4>& transforms) const;
-        void UpdatePalettes(const std::vector<float4x4>& palettes, const std::vector<PalettePerInstance>& palettes_per_instance) const;
         void UpdateMaterials(const std::vector<TextureBatch::Material>& materials) const;
 
         void OptionsMenu();
+
+        void* CreatePersistentBuffers(unsigned& buffer_id, unsigned binding_point, unsigned size);
 
     private:
         static char* LoadShaderSource(const char* shader_file_name);
