@@ -11,8 +11,16 @@ namespace Hachiko
         ~ResourcesPreferences() override = default;
         void LoadConfigurationData(const YAML::Node& node) override;
         void SaveConfigurationData(YAML::Node& node) override;
-        [[nodiscard]] const char* GetAssetsPath(Resource::AssetType type);
+        [[nodiscard]] const char* GetAssetsPath(Resource::AssetType type) const;
         [[nodiscard]] const char* GetLibraryPath(Resource::Type type) const;
+        const std::map<Resource::AssetType, std::string>& GetAssetsPathsMap()
+        {
+            return assets_paths;
+        };
+        const std::map<Resource::Type, std::string>& GetLibraryPathsMap()
+        {
+            return lib_paths;
+        };
         [[nodiscard]] const char* GetSceneName() const
         {
             return scene_name.c_str();
@@ -28,7 +36,6 @@ namespace Hachiko
             {Resource::AssetType::SCENE, "assets/scenes/"}, 
             {Resource::AssetType::MODEL, "assets/models/"},
             {Resource::AssetType::TEXTURE, "assets/textures/"},
-            {Resource::AssetType::AUDIO, "assets/audio/"},
             {Resource::AssetType::VIDEO, "assets/video/"},
             {Resource::AssetType::MATERIAL, "assets/materials/"},
             {Resource::AssetType::SHADER, "assets/shaders/"},
@@ -41,7 +48,6 @@ namespace Hachiko
             {Resource::Type::SCENE, "library/scenes/"},
             {Resource::Type::MESH, "library/meshes/"},
             {Resource::Type::TEXTURE, "library/textures/"},
-            {Resource::Type::AUDIO, "library/audio/"},
             {Resource::Type::VIDEO, "library/video/"},
             {Resource::Type::MATERIAL, "library/materials/"},
             {Resource::Type::SHADER, "library/shaders/"},

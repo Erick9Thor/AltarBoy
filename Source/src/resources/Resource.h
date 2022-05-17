@@ -16,7 +16,7 @@ namespace Hachiko
             MESH = 3,
             SCENE = 4,
             SHADER = 5,
-            AUDIO = 6,
+            // AUDIO = 6,
             ANIMATION = 7,
             SCRIPT = 8,
             VIDEO = 9,
@@ -24,7 +24,6 @@ namespace Hachiko
             FONT = 11,
             NAVMESH = 12,
             PREFAB = 13,
-            COUNT,
         };
 
         enum class AssetType
@@ -35,12 +34,11 @@ namespace Hachiko
             MODEL = 3,
             SCENE = 4,
             SHADER = 5,
-            AUDIO = 6,
+            // AUDIO = 6,
             VIDEO = 7,
             SKYBOX = 8,
             FONT = 9,
             PREFAB = 10,
-            COUNT,
         };
 
         static std::string ResourceTypeString(const Type& t) {
@@ -50,7 +48,6 @@ namespace Hachiko
                 {Type::MESH, "meshes"},
                 {Type::SCENE, "scene"},
                 {Type::SHADER, "shaders"},
-                {Type::AUDIO, "audio"},
                 {Type::ANIMATION, "animations"},
                 {Type::SCRIPT, "scripts"},
                 {Type::VIDEO, "video"},
@@ -76,7 +73,6 @@ namespace Hachiko
                 {AssetType::MODEL, "models"},
                 {AssetType::SCENE, "scene"},
                 {AssetType::SHADER, "shaders"},
-                {AssetType::AUDIO, "audio"},
                 {AssetType::SKYBOX, "skybox"},
                 {AssetType::FONT, "fonts"},
                 {AssetType::PREFAB, "prefab"},

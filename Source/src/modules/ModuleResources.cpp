@@ -23,14 +23,15 @@ bool ModuleResources::Init()
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
-    for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
+
+    for (auto& lib_path : preferences->GetLibraryPathsMap())
     {
-        FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(lib_path.second.c_str());
     }
 
-    for (int i = 1; i < static_cast<int>(Resource::AssetType::COUNT); ++i)
+    for (auto& asset_path : preferences->GetAssetsPathsMap())
     {
-        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::AssetType>(i)));
+        FileSystem::CreateDir(asset_path.second.c_str());
     }
 
     AssetsLibraryCheck();

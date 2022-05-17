@@ -32,20 +32,18 @@ void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][SCENE_NAME] = scene_name + SCENE_EXTENSION;
     node[group_name][SCENE_ID] = scene_id;
     // We skip unkwnown type
-    for (int type_val = 1; type_val != static_cast<int>(Resource::AssetType::COUNT); ++type_val)
+    for (auto& asset_type : GetAssetsPathsMap())
     {
-        Resource::AssetType asset_type = static_cast<Resource::AssetType>(type_val);
-        node[group_name][Resource::AssetTypeString(static_cast<Resource::AssetType>(asset_type)) + ASSETS_COMMON_NAME] = assets_paths[asset_type];
+        node[group_name][Resource::AssetTypeString(static_cast<Resource::AssetType>(asset_type.first)) + ASSETS_COMMON_NAME] = asset_type.second;
     }
 
-    for (int type_val = 1; type_val != static_cast<int>(Resource::Type::COUNT); ++type_val)
+    for (auto& resource_type : GetLibraryPathsMap())
     {
-        Resource::Type resource_type = static_cast<Resource::Type>(type_val);
-        node[group_name][Resource::ResourceTypeString(static_cast<Resource::Type>(resource_type)) + LIBRARY_COMMON_NAME] = lib_paths[resource_type];
+        node[group_name][Resource::ResourceTypeString(static_cast<Resource::Type>(resource_type.first)) + LIBRARY_COMMON_NAME] = resource_type.second;
     }
 }
 
-const char* ResourcesPreferences::GetAssetsPath(Resource::AssetType type)
+const char* ResourcesPreferences::GetAssetsPath(Resource::AssetType type) const
 {
     auto it = assets_paths.find(type);
     if (it == assets_paths.end())
