@@ -19,6 +19,8 @@
 
 namespace Hachiko
 {
+    class EditorPreferences;
+
     class ModuleEditor : public Module
     {
     public:
@@ -110,6 +112,7 @@ namespace Hachiko
         WindowTimers w_timers;
         WindowProject w_project;
 
+        EditorPreferences* editor_prefs = nullptr;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };
 }

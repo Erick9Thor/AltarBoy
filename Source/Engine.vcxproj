@@ -106,7 +106,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-  <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;LOGGING_SUPPORT_DISABLED;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;NDEBUG;_CONSOLE;LOGGING_SUPPORT_DISABLED;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
+    <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp" />
     <ClCompile Include="src\components\ComponentAgent.cpp" />
     <ClCompile Include="src\components\ComponentObstacle.cpp" />
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
@@ -656,6 +657,7 @@
   <ItemGroup>
     <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\resources\ResourcePrefab.h" />
+    <ClInclude Include="src\core\preferences\src\AudioPreferences.h" />
     <ClInclude Include="src\components\ComponentAgent.h" />
     <ClInclude Include="src\components\ComponentObstacle.h" />
     <ClInclude Include="src\modules\ModuleNavigation.h" />

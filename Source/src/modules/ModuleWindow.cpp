@@ -2,6 +2,7 @@
 
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleWindow::ModuleWindow() = default;
 
@@ -13,10 +14,12 @@ bool Hachiko::ModuleWindow::Init()
     width = static_cast<int>(max_width * WINDOWED_RATIO);
     height = static_cast<int>(max_height * WINDOWED_RATIO);
 
-    fullscreen = FULLSCREEN;
-    resizable = RESIZABLE;
-    vsync = true;
+    editor_prefs = App->preferences->GetEditorPreference();
 
+    fullscreen = editor_prefs->IsFullscreen();
+    resizable = editor_prefs->IsResizable();
+    vsync = editor_prefs->IsVsyncActive();
+ 
     HE_LOG("Init SDL window & surface");
     bool ret = true;
 
@@ -62,6 +65,10 @@ bool Hachiko::ModuleWindow::Init()
 bool Hachiko::ModuleWindow::CleanUp()
 {
     HE_LOG("Destroying SDL window and quitting all SDL systems");
+    
+    editor_prefs->SetFullscreen(fullscreen);
+    editor_prefs->SetResizable(resizable);
+    editor_prefs->SetVsync(vsync);
 
     //Destroy window
     if (window != nullptr)

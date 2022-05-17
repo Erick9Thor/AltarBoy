@@ -555,6 +555,9 @@
     <ClCompile Include="src\modules\ModuleSceneManager.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp">
+      <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2233,6 +2236,9 @@
     </ClInclude>
     <ClInclude Include="src\utils\Cache.h">
       <Filter>Core\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\preferences\src\AudioPreferences.h">
+      <Filter>Core\Preferences\Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

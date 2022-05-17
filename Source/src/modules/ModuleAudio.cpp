@@ -1,5 +1,6 @@
 #include "core/hepch.h"
 #include "ModuleAudio.h"
+#include "core/preferences/src/AudioPreferences.h"
 
 // Bank file names
 constexpr wchar_t* BANKNAME_INIT = L"Init.bnk";
@@ -105,9 +106,6 @@ bool Hachiko::ModuleAudio::Init()
     HE_LOG("Wwise: Communications initialized");
 #endif // AK_OPTIMIZED
 
-    // Test
-    AkGameObjectID MY_DEFAULT_LISTENER = 0;
-
     // Register the main listener.
     AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, "My Default Listener");
 
@@ -151,10 +149,14 @@ bool Hachiko::ModuleAudio::Init()
     AK::SoundEngine::RegisterGameObj(GAME_OBJECT_ID_BGMUSIC, "BGMusic");
     AK::SoundEngine::RegisterGameObj(GAME_OBJECT_ID_PLAYER, "Player");
 
+    audio_prefs = App->preferences->GetAudioPreference();
+
     // Post this event using its name
     AK::SoundEngine::PostEvent(L"Play_BackgroundMusic", GAME_OBJECT_ID_BGMUSIC);
-    AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_BGMUSIC, MY_DEFAULT_LISTENER, 0.1f);
-    AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_PLAYER, MY_DEFAULT_LISTENER, 0.3f);
+    SetSFXVolume(audio_prefs->GetSFXVolume());
+    SetMusicVolume(audio_prefs->GetMusicVolume());
+    //AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_BGMUSIC, MY_DEFAULT_LISTENER, audio_prefs->GetMusicVolume());
+    //AK::SoundEngine::SetGameObjectOutputBusVolume(GAME_OBJECT_ID_PLAYER, MY_DEFAULT_LISTENER, audio_prefs->GetSFXVolume());
 
     return true;
 }
@@ -194,6 +196,9 @@ bool Hachiko::ModuleAudio::CleanUp()
     // Terminate the Memory Manager
     AK::MemoryMgr::Term();
 
+    audio_prefs->SetSFXVolume(sfx_volume);
+    audio_prefs->SetMusicVolume(music_volume);
+
     return true;
 }
 
@@ -202,4 +207,32 @@ bool Hachiko::ModuleAudio::CleanUp()
 void Hachiko::ModuleAudio::Play(const wchar_t* name_event) const
 {
     AK::SoundEngine::PostEvent(name_event, GAME_OBJECT_ID_PLAYER);
+}
+
+void Hachiko::ModuleAudio::SetSFXVolume(const float value)
+{
+    sfx_volume = value;
+    SetGameObjectOutputBusVolume(GAME_OBJECT_ID_PLAYER, MY_DEFAULT_LISTENER, sfx_volume);
+}
+
+void Hachiko::ModuleAudio::SetMusicVolume(const float value)
+{
+    music_volume = value;
+    SetGameObjectOutputBusVolume(GAME_OBJECT_ID_BGMUSIC, MY_DEFAULT_LISTENER, music_volume);
+}
+
+void Hachiko::ModuleAudio::OptionsMenu()
+{
+    ImGui::Text("Audio");
+    int volume = sfx_volume * 10;
+    if (ImGui::SliderInt("Sounds", &volume, 0, 10))
+    {
+        SetSFXVolume(volume * 0.1);
+    }
+
+    volume = music_volume * 10;
+    if (ImGui::SliderInt("Music", &volume, 0, 10))
+    {
+        SetMusicVolume(volume * 0.1);
+    }
 }

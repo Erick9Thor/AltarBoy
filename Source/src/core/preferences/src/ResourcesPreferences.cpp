@@ -24,39 +24,12 @@ void ResourcesPreferences::LoadConfigurationData(const YAML::Node& node)
             scene_name = std::move(node_value);
             continue;
         }
-
-        if (node_name._Equal(SCENE_ID))
-        {
-            scene_id = std::move(node_value);
-            continue;
-        }
-
-        // Assets paths
-        for (auto& asset_it = assets_paths.begin(); asset_it != assets_paths.end(); ++asset_it)
-        {
-            if (node_name._Equal(asset_it->second))
-            {
-                assets_paths[asset_it->first] = node_value;
-                continue;
-            }
-        }
-
-        // Library paths
-        for (auto& library_it = lib_paths.begin(); library_it != lib_paths.end(); ++library_it)
-        {
-            if (node_name._Equal(library_it->second))
-            {
-                lib_paths[library_it->first] = node_value;
-                continue;
-            }
-        }
-
     }
 }
 
 void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)
 {
-    node[group_name][SCENE_NAME] = scene_name;
+    node[group_name][SCENE_NAME] = scene_name + SCENE_EXTENSION;
     node[group_name][SCENE_ID] = scene_id;
     // We skip unkwnown type
     for (int type_val = 1; type_val != static_cast<int>(Resource::AssetType::COUNT); ++type_val)

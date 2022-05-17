@@ -19,6 +19,7 @@ namespace Hachiko
         [[nodiscard]] float GetFOV() const { return fov; }
         [[nodiscard]] float GetNearDistance() const { return near_distance; }
         [[nodiscard]] float GetFarDistance() const { return far_distance; }
+        [[nodiscard]] float3 GetPosition() const { return position; }
 
         void SetMoveSpeed(unsigned int moveSpeed) { move_speed = moveSpeed; }
         void SetRotationSpeed(unsigned int rotationSpeed) { rotation_speed = rotationSpeed; }
@@ -27,6 +28,7 @@ namespace Hachiko
         void SetFOV(float fov) { this->fov = fov; }
         void SetNearDistance(float nearDistance) { near_distance = nearDistance; }
         void SetFarDistance(float farDistance) { far_distance = farDistance; }
+        void SetPosition(const float3 pos) { position = pos; }
 
     private:
         unsigned int move_speed = 15;
@@ -36,5 +38,6 @@ namespace Hachiko
         float fov = 90.0;
         float near_distance = 0.1;
         float far_distance = 500.0;
+        float3 position {0.0f, 8.0f, 10.0f};
     };
 }
