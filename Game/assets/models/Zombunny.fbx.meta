@@ -1,0 +1,24 @@
+asset_hash: 2104536046300317796
+model_name: Zombunny
+meshes:
+  - 4657792022921634311
+  - 282215514867166725
+materials:
+  - 6404025130868057127
+  - 9577815112474161680
+animations:
+  - 4720233982978660920
+prefab_id: 832193211990564987
+resources:
+  - resource_id: 4657792022921634311
+    resource_type: 3
+  - resource_id: 282215514867166725
+    resource_type: 3
+  - resource_id: 6404025130868057127
+    resource_type: 1
+  - resource_id: 9577815112474161680
+    resource_type: 1
+  - resource_id: 4720233982978660920
+    resource_type: 7
+  - resource_id: 832193211990564987
+    resource_type: 13

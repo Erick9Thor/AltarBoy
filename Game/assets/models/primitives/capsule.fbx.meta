@@ -3,12 +3,12 @@ model_name: capsule
 meshes:
   - 1309944288732959230
 materials:
-  - 6750369022920963075
+  - 14284934860888829777
 prefab_id: 12073972053588366504
 resources:
   - resource_id: 1309944288732959230
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 14284934860888829777
     resource_type: 1
   - resource_id: 12073972053588366504
     resource_type: 13

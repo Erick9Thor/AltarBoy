@@ -159,9 +159,11 @@ void Hachiko::MaterialImporter::GenerateMaterialAssetFile(const ResourceMaterial
     material_node[MATERIAL_SPECULAR_ID] = (material->HasSpecular()) ? material->specular->GetID() : 0;
     material_node[MATERIAL_NORMALS_ID] = (material->HasNormal()) ? material->normal->GetID() : 0;
     material_node[MATERIAL_METALNESS_ID] = (material->HasMetalness()) ? material->metalness->GetID() : 0;
+    material_node[MATERIAL_EMISSIVE_ID] = (material->HasEmissive()) ? material->emissive->GetID() : 0;
 
     material_node[MATERIAL_DIFFUSE_COLOR] = material->diffuse_color;
     material_node[MATERIAL_SPECULAR_COLOR] = material->specular_color;
+    material_node[MATERIAL_EMISSIVE_COLOR] = material->emissive_color;
     material_node[MATERIAL_SMOOTHNESS] = material->smoothness;
     material_node[MATERIAL_METALNESS_VALUE] = material->metalness_value;
     material_node[MATERIAL_IS_METALLIC] = material->is_metallic;
