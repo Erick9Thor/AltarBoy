@@ -14,3 +14,17 @@ Hachiko::ComponentAudioSource::~ComponentAudioSource()
 {
 
 }
+
+/**     GUI     **/
+
+void Hachiko::ComponentAudioSource::DrawGui()
+{
+    ImGui::PushID(this);
+
+
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Audio Source"))
+    {
+        ImGui::Text("Holi");
+    }
+    ImGui::PopID();
+}

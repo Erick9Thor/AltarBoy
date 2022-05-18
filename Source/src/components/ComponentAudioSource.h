@@ -12,5 +12,7 @@ namespace Hachiko
         ComponentAudioSource(GameObject* conatiner);
         ~ComponentAudioSource() override;
 
+        void DrawGui() override;
+
     };
 } // namespace Hachiko
