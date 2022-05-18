@@ -31,6 +31,8 @@ void Hachiko::ComponentAudioListener::OnTransformUpdated()
                            up.x, up.y, up.z
     );
 
+    AK::SoundEngine::SetPosition(MY_DEFAULT_LISTENER, listener_transform);
+
 }
 
 /**     GUI     **/
