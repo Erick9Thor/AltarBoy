@@ -558,6 +558,9 @@
     <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp">
       <Filter>Core\Preferences\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\importers\PrefabImporter.cpp" />
+    <ClCompile Include="src\resources\ResourcePrefab.cpp" />
+    <ClCompile Include="src\components\ComponentAudioListener.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2240,6 +2243,9 @@
     <ClInclude Include="src\core\preferences\src\AudioPreferences.h">
       <Filter>Core\Preferences\Source</Filter>
     </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h" />
+    <ClInclude Include="src\resources\ResourcePrefab.h" />
+    <ClInclude Include="src\components\ComponentAudioListener.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
