@@ -35,6 +35,14 @@ void Hachiko::ComponentAudioListener::OnTransformUpdated()
 
 /**     GUI     **/
 
-void Hachiko::ComponentAudioListener::DrawGui() {
+void Hachiko::ComponentAudioListener::DrawGui() 
+{
+    ImGui::PushID(this);
 
+
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Audio Listener"))
+    {
+        ImGui::Text("Holi");
+    }
+    ImGui::PopID();
 }
