@@ -10,7 +10,7 @@ Hachiko::ComponentAudioSource::ComponentAudioSource(GameObject* container)
     GAME_OBJECT_SOURCE = GetID();
     AK::SoundEngine::RegisterGameObj(GAME_OBJECT_SOURCE, game_object->GetName().c_str());
     OnTransformUpdated();
-    Play(L"Play_BackgroundMusic"); // Unncoment this to test, should be erased at the final version
+    //PostEvent(L"Play_BackgroundMusic"); // Unncoment this to test, should be erased at the final version
 }
 
 Hachiko::ComponentAudioSource::~ComponentAudioSource()
