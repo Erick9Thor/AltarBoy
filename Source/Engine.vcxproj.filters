@@ -562,6 +562,7 @@
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
     <ClCompile Include="src\importers\SceneImporter.cpp" />
     <ClCompile Include="src\importers\VideoImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2248,6 +2249,7 @@
     <ClInclude Include="src\resources\ResourcePrefab.h" />
     <ClInclude Include="src\importers\SceneImporter.h" />
     <ClInclude Include="src\importers\VideoImporter.h" />
+    <ClInclude Include="src\resources\ResourceScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

@@ -37,8 +37,8 @@ ResourcesPreferences::ResourcesPreferences()
 
 void ResourcesPreferences::LoadConfigurationData(const YAML::Node& node)
 {
-    scene_name = node[SCENE_NAME].as<std::string>();
-    scene_id = node[SCENE_ID].as<UID>();
+    scene_name = node[SCENE_NAME].IsDefined() ? node[SCENE_NAME].as<std::string>() : 0;
+    scene_id = node[SCENE_ID].IsDefined() ? node[SCENE_ID].as<UID>() : 0;
 }
 
 void ResourcesPreferences::SaveConfigurationData(YAML::Node& node)

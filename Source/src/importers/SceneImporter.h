@@ -1,7 +1,11 @@
 #pragma once
 
+#include "Importer.h"
+
 namespace Hachiko
 {
+    class Scene;
+    class ResourceScene;
     class SceneImporter : public Importer
     {
     public:
@@ -13,8 +17,10 @@ namespace Hachiko
         // Stores current scene resource state to assets and lib (since is an asset we edit in engine)
         void Save(UID id, const Resource* material) override;
         Resource* Load(UID id) override;
-        // Create new material
-        UID CreateEmptyScene(const std::string& name);
+        // Create new scene asset
+        UID CreateSceneAsset(Scene* scene);
+        // Create new scene resource without loading from an asset
+        ResourceScene* CreateSceneResource(Scene* scene);
     private:
     };
 } // namespace Hachiko

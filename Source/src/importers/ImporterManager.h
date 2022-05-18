@@ -9,6 +9,7 @@
 #include "AnimationImporter.h"
 #include "FontImporter.h"
 #include "PrefabImporter.h"
+#include "SceneImporter.h"
 
 namespace Hachiko
 {
@@ -39,6 +40,7 @@ namespace Hachiko
         TextureImporter texture;
         FontImporter font;
         PrefabImporter prefab;
+        SceneImporter scene;
 
         // It doesnt have its own resource type (we use prefabs)
         ModelImporter model;

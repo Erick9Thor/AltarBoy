@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
 #include "core/preferences/src/EditorPreferences.h"
+#include "ModuleResources.h"
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
@@ -149,7 +150,8 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
             const std::string file_path = std::string(ASSETS_FOLDER_SCENE) + "/" + file_name_extension;
 
             HE_LOG("Loading scene: %s", file_path_name.c_str());
-            App->scene_manager->LoadScene(file_path.c_str());
+            //App->scene_manager->LoadScene(file_path.c_str());
+            App->resources->LoadAsset(file_path);
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -294,9 +296,8 @@ void Hachiko::ModuleEditor::FileMenu() const
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
-        // TODO: Change for current scene
-        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENE) + "/" + UNNAMED_SCENE + SCENE_EXTENSION;
-        App->scene_manager->SaveScene(temp_scene_file_path.c_str());
+        // TODO: Add the option to specify a name (no name uses scene internal name)
+        App->scene_manager->SaveScene();
     }
     if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
     {

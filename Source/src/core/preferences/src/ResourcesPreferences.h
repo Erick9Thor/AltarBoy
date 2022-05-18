@@ -21,21 +21,31 @@ namespace Hachiko
         {
             return lib_paths;
         };
+
+        [[nodiscard]] UID GetSceneUID() const
+        {
+            return scene_id;
+        }
+
+        void SetSceneUID(UID uid)
+        {
+            scene_id = uid;
+        }
+
         [[nodiscard]] const char* GetSceneName() const
         {
             return scene_name.c_str();
         }
 
-        void SetSceneName(const char* name) 
+        void SetSceneName(const char* name)
         {
             scene_name = name;
         }
 
-
     private:
         static const std::map<Resource::AssetType, std::string> assets_paths;
         static const std::map<Resource::Type, std::string> lib_paths;
-        std::string scene_name = "UnnamedScene.scene";
-        UID scene_id;
+        std::string scene_name = "";
+        UID scene_id = 0;
     };
 }

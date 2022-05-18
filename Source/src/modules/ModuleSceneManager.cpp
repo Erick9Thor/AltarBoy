@@ -5,26 +5,30 @@
 #include "ModuleEvent.h"
 #include "ModuleNavigation.h"
 
+#include "resources/ResourceScene.h"
+#include "ModuleResources.h"
+
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
+#include "importers/SceneImporter.h"
+
+#include <iostream>
+#include <iomanip>
+#include <ctime>
 
 bool Hachiko::ModuleSceneManager::Init()
 { 
     serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
-    std::string scene_path = 
-        StringUtils::Concat(preferences->GetAssetsPath(Resource::AssetType::SCENE),
-        preferences->GetSceneName());
-    
-    if (std::filesystem::exists(scene_path))
-    {
-        LoadScene(scene_path.c_str());
-    }
-    else
+
+    if (preferences->GetSceneUID() == 0)
     {
         CreateEmptyScene();
     }
-    
+    else
+    {
+        LoadScene(preferences->GetSceneUID());
+    }   
 
 #ifdef PLAY_BUILD
     main_scene->Start();
@@ -64,11 +68,13 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
     
     if (!GameTimer::running)
     {
+        RefreshTemporaryScene();
+
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+        //SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
         
         GameTimer::Start();
     }
@@ -95,7 +101,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         GameTimer::Stop();
 
-        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+        ReloadScene();
     }
 }
 
@@ -109,8 +115,7 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
     if (scene_ready_to_load)
     {
         scene_ready_to_load = false;
-        LoadScene(scene_to_load.c_str());
-        currentScenePath = scene_to_load;
+        LoadScene(scene_to_load_id);
     }
 
     main_scene->Update();
@@ -126,53 +131,128 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
-    preferences->SetSceneName(main_scene->GetName());
+    // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
+    preferences->SetSceneUID(scene_resource->GetID());
+    preferences->SetSceneName(scene_resource->name.c_str());
 
-    // TODO: Remove temp_scene.scene from disk
+
     RELEASE(main_scene);
+    // Release because not owned by RM
+    RELEASE(temporary_scene_resource);
     RELEASE(serializer);
+    
     return true;
 }
 
-void Hachiko::ModuleSceneManager::CreateEmptyScene()
+void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
 {
     Event scene_load(Event::Type::SCENE_LOADED);
 
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::NOT_LOADED);
-    App->event->Publish(scene_load);
+    App->event->Publish(scene_load);  
 
     delete main_scene;
     main_scene = new Scene();
+    
+    if (name)
+    {
+        main_scene->name = name;
+    }
+    else
+    {
+        // Default name with timestamp for new empt unnamed scenes
+        auto t = std::time(nullptr);
+        auto tm = *std::localtime(&t);
+        std::ostringstream oss;
+        oss << "unnamed_scene_" << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+        main_scene->name = oss.str().c_str();
+    }
+    
     // Since the empty scene is already loaded, it's loaded flag must be set to
     // true, for systems that need a "loaded" scene to function such as
     // ModuleScriptingSystem which needs both engine to be in play mode and 
     // current scene to be flagged as "loaded":
     main_scene->loaded = true;
 
+    // Create a scene resource not related to an asset to reload the scene as any other
+    SceneImporter scene_importer;
+    SetSceneResource(scene_importer.CreateSceneResource(main_scene));
+    SaveScene();
+
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
-
-    currentScenePath = "";
 }
 
-void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
+void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id)
+{
+    LoadScene(static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id)));
+}
+
+void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
+{
+    if (IsScenePlaying())
+    {
+        AttemptSceneStop();
+        ReloadScene();
+    }
+    
+    if (save_name)
+    {
+        main_scene->name = save_name;
+    }
+    SceneImporter scene_importer;
+    UID saved_scene_uid = scene_importer.CreateSceneAsset(main_scene);
+    scene_resource = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, saved_scene_uid));
+    // Maybe we need to load the scene after changing the resource? I dont think so for now
+}
+
+Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
+{
+    return main_scene->Raycast(origin, destination);
+}
+
+void Hachiko::ModuleSceneManager::SwitchTo(UID new_scene_id)
+{
+    scene_ready_to_load = true;
+    scene_to_load_id = new_scene_id;
+}
+
+void Hachiko::ModuleSceneManager::ReloadScene()
+{
+    LoadScene(scene_resource);
+}
+
+void Hachiko::ModuleSceneManager::OptionsMenu()
+{
+    char scene_name[50];
+    strcpy_s(scene_name, 50, main_scene->GetName());
+    const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+    if (ImGui::InputText("###", scene_name, 50, name_input_flags))
+    {
+        main_scene->SetName(scene_name);
+    }
+    ImGui::Checkbox("Autosave Scene", &scene_autosave);
+    App->navigation->DrawOptionsGui();
+}
+
+void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
 {
     Event scene_load(Event::Type::SCENE_LOADED);
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::NOT_LOADED);
+    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);
 
-    delete main_scene;
-    main_scene = serializer->Load(file_path);
-   
+    RELEASE(main_scene);
+
+    SetSceneResource(new_resource);
+
+    main_scene = new Scene();
+    main_scene->Load(scene_resource->scene_data);
+
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
-    
-    currentScenePath = file_path;
-    
+
     // TODO: If we make empty scenes have a game object with a camera component
     // attached by default, add the following lines to CreateEmptyScene as well
 #ifdef PLAY_BUILD
@@ -188,54 +268,19 @@ void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 #endif // PLAY_MODE
 }
 
-void Hachiko::ModuleSceneManager::SaveScene()
+void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* scene)
 {
-    if (IsScenePlaying())
+    if (scene_resource && scene != scene_resource && scene_resource->GetID() == 0)
     {
-        LoadScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
+        // Only delete if it exists its diferent and its not loaded by resource manager (id 0)
+        delete scene_resource;
     }
-
-    serializer->Save(main_scene);
+    scene_resource = scene;
 }
 
-void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
+void Hachiko::ModuleSceneManager::RefreshTemporaryScene()
 {
-    serializer->Save(main_scene, file_path);
-}
-
-Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
-{
-    return main_scene->Raycast(origin, destination);
-}
-
-void Hachiko::ModuleSceneManager::SwitchTo(const char* file_path)
-{
-    scene_ready_to_load = true;
-    scene_to_load = file_path;
-    currentScenePath = file_path;
-}
-
-void Hachiko::ModuleSceneManager::ReloadScene()
-{
-    if (std::filesystem::exists(currentScenePath))
-    {
-        LoadScene(currentScenePath.c_str());
-    }
-    else
-    {
-        CreateEmptyScene();
-    }
-}
-
-void Hachiko::ModuleSceneManager::OptionsMenu()
-{
-    char scene_name[50];
-    strcpy_s(scene_name, 50, main_scene->GetName());
-    const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
-    if (ImGui::InputText("###", scene_name, 50, name_input_flags))
-    {
-        main_scene->SetName(scene_name);
-    }
-    ImGui::Checkbox("Autosave Scene", &scene_autosave);
-    App->navigation->DrawOptionsGui();
+    delete temporary_scene_resource;
+    SceneImporter scene_importer;
+    temporary_scene_resource = scene_importer.CreateSceneResource(main_scene);
 }

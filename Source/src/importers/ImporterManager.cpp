@@ -12,7 +12,8 @@ ImporterManager::ImporterManager()
     asset_importers.emplace(Resource::AssetType::MATERIAL, &material);
     asset_importers.emplace(Resource::AssetType::FONT, &font);
     asset_importers.emplace(Resource::AssetType::PREFAB, &prefab);
-    asset_importers.emplace(Resource::AssetType::MODEL, &model);    
+    asset_importers.emplace(Resource::AssetType::MODEL, &model);
+    asset_importers.emplace(Resource::AssetType::SCENE, &scene);
 
     // Importers used to save and load the different resource types
     resource_importers.emplace(Resource::Type::TEXTURE, &texture);
@@ -21,6 +22,7 @@ ImporterManager::ImporterManager()
     resource_importers.emplace(Resource::Type::PREFAB, &prefab);
     resource_importers.emplace(Resource::Type::MESH, &mesh);
     resource_importers.emplace(Resource::Type::ANIMATION, &animation);
+    resource_importers.emplace(Resource::Type::SCENE, &scene);
 }
 
 std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
