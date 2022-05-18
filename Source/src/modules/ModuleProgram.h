@@ -20,6 +20,14 @@ namespace Hachiko
     class ModuleProgram : public Module
     {
     public:
+        enum class BINDING
+        {
+            MATERIAL = 1,
+            MODEL = 3,
+            PALETTE = 4,
+            PALETTE_PER_INSTANCE = 5,
+        };
+
         enum class UBOPoints
         {
             CAMERA = 0,
@@ -80,11 +88,10 @@ namespace Hachiko
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
-        void UpdateMaterials(const std::vector<TextureBatch::Material>& materials) const;
 
         void OptionsMenu();
 
-        void* CreatePersistentBuffers(unsigned& buffer_id, unsigned binding_point, unsigned size);
+        void* CreatePersistentBuffers(unsigned& buffer_id, int binding_point, unsigned size);
 
     private:
         static char* LoadShaderSource(const char* shader_file_name);

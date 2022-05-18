@@ -28,7 +28,6 @@ bool Hachiko::ModuleProgram::Init()
     }
 
     CreateUBO(UBOPoints::CAMERA, sizeof(CameraData));
-    CreateSSBO(UBOPoints::MATERIAL, 0);
     CreateUBO(UBOPoints::LIGHTS, sizeof(Lights));
 
     return true;
@@ -173,13 +172,14 @@ void Hachiko::ModuleProgram::UpdateSSBO(UBOPoints binding_point, unsigned size, 
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 }
 
-void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, unsigned binding_point, unsigned size)
+void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, int binding_point, unsigned size)
 {
+    const unsigned flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
+
     glGenBuffers(1, &buffer_id);
     glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
-    unsigned flags = GL_MAP_WRITE_BIT | GL_MAP_PERSISTENT_BIT | GL_MAP_COHERENT_BIT;
     glBufferStorage(GL_ARRAY_BUFFER, size, 0, flags);
-    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, static_cast<int>(binding_point), buffer_id); // CHECK THIS
+    glBindBufferBase(GL_SHADER_STORAGE_BUFFER, binding_point, buffer_id); // CHECK THIS
     return glMapBufferRange(GL_ARRAY_BUFFER, 0, size, flags);
 }
 
@@ -314,18 +314,6 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
         }
     }
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
-}
-
-void Hachiko::ModuleProgram::UpdateMaterials(const std::vector<Hachiko::TextureBatch::Material>& materials) const
-{
-    if (materials.size() <= 0)
-    {
-        UpdateSSBO(UBOPoints::MATERIAL, 0, nullptr);
-    }
-    else
-    {
-        UpdateSSBO(UBOPoints::MATERIAL, materials.size() * sizeof(TextureBatch::Material), (void*)materials.data());
-    }
 }
 
 void Hachiko::ModuleProgram::OptionsMenu()

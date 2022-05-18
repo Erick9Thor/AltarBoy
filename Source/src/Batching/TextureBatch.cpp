@@ -82,7 +82,7 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
     }
 }
 
-void Hachiko::TextureBatch::GenerateBatch() 
+void Hachiko::TextureBatch::GenerateBatch(unsigned component_count) 
 {
     // TODO: improve performance (for inside for)
 
@@ -179,13 +179,17 @@ void Hachiko::TextureBatch::GenerateBatch()
 
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
+
+    material_buffer_data = static_cast<Material*>(
+        App->program->CreatePersistentBuffers(material_buffer, static_cast<int>(ModuleProgram::BINDING::MATERIAL), 2 * component_count * sizeof(Material))
+    );
 }
 
-void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components)
+void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
 {
     GenerateMaterials(components);
     UpdateTextureBatch();
-    UpdateMaterials();
+    UpdateMaterials(components, use_first_segment, component_count);
 }
 
 void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components)
@@ -228,7 +232,21 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
     }
 }
 
-void Hachiko::TextureBatch::UpdateTextureBatch() 
+void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_count)
+{
+    if (use_first_segment)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, material_buffer);
+        glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MATERIAL), material_buffer, 0, component_count * sizeof(Material));
+    }
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, material_buffer);
+        glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MATERIAL), material_buffer, component_count * sizeof(Material), component_count * sizeof(Material));
+    }
+}
+
+void Hachiko::TextureBatch::UpdateTextureBatch()
 {
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
@@ -239,9 +257,16 @@ void Hachiko::TextureBatch::UpdateTextureBatch()
     }
 }
 
-void Hachiko::TextureBatch::UpdateMaterials()
+void Hachiko::TextureBatch::UpdateMaterials(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
 {
-    App->program->UpdateMaterials(materials);
+    if (use_first_segment)
+    {
+        memcpy(material_buffer_data, materials.data(), materials.size() * sizeof(Material));
+    }
+    else
+    {
+        memcpy(&material_buffer_data[component_count], materials.data(), materials.size() * sizeof(Material));
+    }
 }
 
 void Hachiko::TextureBatch::ImGuiWindow()

@@ -18,7 +18,7 @@ namespace Hachiko
         unsigned paletteOffset;
         unsigned padding0, padding1;
     };
-    
+
     class GeometryBatch
     {
     public:
@@ -38,6 +38,7 @@ namespace Hachiko
 
         void ClearDrawList();
 
+        void BindBuffers(bool use_first_segment);
         void GenerateBuffers();
         void UpdateBuffers();
         void GenerateCommands();        

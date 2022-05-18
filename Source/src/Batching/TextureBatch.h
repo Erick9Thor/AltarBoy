@@ -49,14 +49,15 @@ namespace Hachiko
         void AddMaterial(const ResourceMaterial* material);
         void AddTexture(const ResourceTexture* texture);
 
-        void GenerateBatch();
+        void GenerateBatch(unsigned component_count);
 
-        void Draw(const std::vector<const ComponentMeshRenderer*>& components);
+        void Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
 
         void GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components);
 
+        void BindBuffers(bool use_first_segment, int component_count);
         void UpdateTextureBatch();
-        void UpdateMaterials();
+        void UpdateMaterials(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
 
         void ImGuiWindow(); // Debug window
 
@@ -69,6 +70,11 @@ namespace Hachiko
         std::vector<TextureArray*> texture_arrays; // contains all the texture arrays
 
         std::vector<Material> materials;
+
+        unsigned material_buffer;
+
+        Material* material_buffer_data = nullptr;
+
 
         bool loaded = false;
     };
