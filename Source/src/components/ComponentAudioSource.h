@@ -14,7 +14,7 @@ namespace Hachiko
 
         void OnTransformUpdated() override;
 
-        void Play(const wchar_t* name_event) const;
+        void PostEvent(const wchar_t* name_event) const;
 
         void DrawGui() override;
 
