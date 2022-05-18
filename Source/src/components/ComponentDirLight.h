@@ -11,11 +11,6 @@ namespace Hachiko
         ComponentDirLight(GameObject* conatiner);
         ~ComponentDirLight() override;
 
-        static Type GetType()
-        {
-            return Type::DIRLIGHT;
-        }
-
         void DebugDraw() override;
 
         [[nodiscard]] bool IsActive() const

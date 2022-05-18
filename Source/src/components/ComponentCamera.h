@@ -23,7 +23,7 @@ namespace Hachiko
     {
     public:
         enum class CameraType
-        {   
+        {
             STATIC,
             DYNAMIC,
             GOD,
@@ -34,12 +34,6 @@ namespace Hachiko
         ~ComponentCamera() override;
 
         void OnTransformUpdated() override;
-
-        static Type GetType()
-        {
-            return Type::CAMERA;
-        }
-
 
         [[nodiscard]] float4x4 GetViewMatrix(bool transpose = false) const;
         [[nodiscard]] float4x4 GetProjectionMatrix(bool transpose = false) const;
@@ -80,7 +74,7 @@ namespace Hachiko
         bool draw_frustum = false;
         bool preview_cam = false;
         float3 camera_pinned_pos = float3::zero;
-        
+
     private:
         float horizontal_fov;
         Frustum frustum;

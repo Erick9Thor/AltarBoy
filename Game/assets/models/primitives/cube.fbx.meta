@@ -3,12 +3,12 @@ model_name: cube
 meshes:
   - 1654487118907036717
 materials:
-  - 6750369022920963075
+  - 14284934860888829777
 prefab_id: 2133411952837815245
 resources:
   - resource_id: 1654487118907036717
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 14284934860888829777
     resource_type: 1
   - resource_id: 2133411952837815245
     resource_type: 13

@@ -1,0 +1,14 @@
+name: ZombunnyMaterial
+diffuse: 10449090331811663625
+specular: 9414301409247529758
+normals: 15354609342405736275
+metalness: 0
+emissive: 1519895565612778432
+diffuse_color: [0.223529428, 0.223529428, 0.223529428, 1]
+specular_color: [0.0854657814, 0.0854657814, 0.0854657814, 1]
+emissive_color: [1, 1, 1, 1]
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 0
+is_transparent: 0

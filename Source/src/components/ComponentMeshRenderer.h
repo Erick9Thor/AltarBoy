@@ -23,11 +23,6 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
 
-        static Type GetType()
-        {
-            return Type::MESH_RENDERER;
-        }
-
         [[nodiscard]] bool IsLoaded() const
         {
             return mesh != nullptr;
@@ -116,7 +111,7 @@ namespace Hachiko
       
         // SKINING
         const GameObject** node_cache = nullptr;
-        std::vector<float4x4> palette;
+        std::vector<float4x4> palette{};
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;

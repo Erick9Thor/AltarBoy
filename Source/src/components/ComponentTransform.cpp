@@ -1,6 +1,8 @@
 #include "core/hepch.h"
 #include "ComponentTransform.h"
 
+#include "modules/ModuleEvent.h"
+
 /**     CONSTRUCTORS    **/
 
 Hachiko::ComponentTransform::ComponentTransform(GameObject* container) 
@@ -319,35 +321,65 @@ void Hachiko::ComponentTransform::DrawGui()
         {
             SetLocalPosition(position_local_editor);
         }
+        //this checks on the previous item, so we need the check after every DragFloat3
+        CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
         if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, -inf, inf))
         {
             SetLocalRotationEuler(rotation_local_editor);
         }
+        CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
         if (ImGui::DragFloat3("Local Scale", scale_local_editor.ptr(), 0.1f, 0.0001f, inf, "%.3f", ImGuiSliderFlags_AlwaysClamp))
         {
             SetLocalScale(scale_local_editor);
         }
+        CREATE_HISTORY_ENTRY_AFTER_EDIT()
+        
 
         ImGui::Checkbox("Debug Transforms", &debug_transforms);
         if (debug_transforms)
         {
-            math::float3 position_editor = position;
-            math::float3 rotation_editor = rotation_euler;
-            math::float3 scale_editor = scale;
+            float3 position_editor = position;
+            float3 rotation_editor = rotation_euler;
+            float3 scale_editor = scale;
 
             ImGui::Separator();
             if (ImGui::DragFloat3("Position", position_editor.ptr(), 0.1f, -inf, inf))
             {
                 SetGlobalPosition(position_editor);
             }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
+            if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, -inf, inf))
+            {
+                SetLocalRotationEuler(rotation_local_editor);
+            }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
             if (ImGui::DragFloat3("Rotation", rotation_editor.ptr(), 0.1f, -inf, inf))
             {
                 SetGlobalRotationEuler(rotation_editor);
             }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
+            if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, -inf, inf))
+            {
+                SetLocalRotationEuler(rotation_local_editor);
+            }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
             if (ImGui::DragFloat3("Scale", scale_editor.ptr(), 0.1f, 0.0001f, inf, "%.3f", ImGuiSliderFlags_AlwaysClamp))
             {
                 SetGlobalScale(scale_editor);
             }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
+
+            if (ImGui::DragFloat3("Local Rotation", rotation_local_editor.ptr(), 0.1f, -inf, inf))
+            {
+                SetLocalRotationEuler(rotation_local_editor);
+            }
+            CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
             ImGui::Separator();
             ImGui::Text("Local");

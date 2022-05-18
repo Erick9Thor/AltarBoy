@@ -11,6 +11,12 @@
 
 namespace Hachiko
 {
+#define CREATE_HISTORY_ENTRY_AFTER_EDIT()                               \
+    if (ImGui::IsItemDeactivatedAfterEdit())                            \
+    {                                                                   \
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);  \
+    }
+
     class GameObject;
     class ComponentCamera;
     class Program;
@@ -44,16 +50,27 @@ namespace Hachiko
             UNKNOWN
         };
 
-        Component(const Type type, GameObject* container, UID id = 0);
+        Component(Type type, GameObject* container, UID id = 0);
 
         virtual ~Component() = default;
 
         // --- COMPONENT EVENTS --- //
 
-        virtual void Start() {}
-        virtual void Stop() {}
-        virtual void Update() {}
-        virtual void OnTransformUpdated() {}
+        virtual void Start()
+        {
+        }
+
+        virtual void Stop()
+        {
+        }
+
+        virtual void Update()
+        {
+        }
+
+        virtual void OnTransformUpdated()
+        {
+        }
 
         [[nodiscard]] Type GetType() const
         {
@@ -100,21 +117,31 @@ namespace Hachiko
             game_object = container;
         }
 
-        virtual void DrawGui() {}
+        virtual void DrawGui()
+        {
+        }
 
-        virtual void Draw(ComponentCamera* camera, Program* program) {}
+        virtual void Draw(ComponentCamera* camera, Program* program)
+        {
+        }
 
-        virtual void DebugDraw() {}
+        virtual void DebugDraw()
+        {
+        }
 
-        virtual void Save(YAML::Node& node) const {}
+        virtual void Save(YAML::Node& node) const
+        {
+        }
 
-        virtual void Load(const YAML::Node& node) {}
+        virtual void Load(const YAML::Node& node)
+        {
+        }
 
-        virtual bool CanBeRemoved() const;
+        [[nodiscard]] virtual bool CanBeRemoved() const;
         virtual bool HasDependentComponents(GameObject* game_object) const;
 
     protected:
-        void OverrideUID(UID new_uid) 
+        void OverrideUID(UID new_uid)
         {
             uid = new_uid;
         }

@@ -1,4 +1,4 @@
-asset_hash: 11205838680474160323
-resources:
-  - resource_id: 10582927894019845012
-    resource_type: 1
+General:
+  id: 4666987135202919552
+  type: 1
+  hash: 11205838680474160323

@@ -6,7 +6,7 @@
 namespace Hachiko
 {
     class GameObject;
-    
+
     class ComponentCanvas : public Component
     {
     public:
@@ -22,7 +22,7 @@ namespace Hachiko
         void DrawGui() override;
         void DebugDraw() override;
 
-        void UpdateSize(bool force=false);
+        void UpdateSize(bool force = false);
 
         virtual bool HasDependentComponents(GameObject* game_object) const override;
 
