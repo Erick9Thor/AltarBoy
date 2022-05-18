@@ -12,7 +12,12 @@ namespace Hachiko
         ComponentAudioSource(GameObject* conatiner);
         ~ComponentAudioSource() override;
 
+        void OnTransformUpdated() override;
+
         void DrawGui() override;
 
+    private:
+        AkTransform source_transform;
+        AkGameObjectID GAME_OBJECT_ID_ = 1000;
     };
 } // namespace Hachiko
