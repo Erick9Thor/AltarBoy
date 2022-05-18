@@ -7,12 +7,16 @@
 Hachiko::ComponentAudioSource::ComponentAudioSource(GameObject* container)
     : Component(Type::AUDIO_SOURCE, container)
 {
-
+    GAME_OBJECT_SOURCE = GetID();
+    AK::SoundEngine::RegisterGameObj(GAME_OBJECT_SOURCE, game_object->GetName().c_str());
+    OnTransformUpdated();
+    //Play(L"Play_BackgroundMusic"); // Unncoment this to test, should be erased at the final version
 }
 
 Hachiko::ComponentAudioSource::~ComponentAudioSource()
 {
-
+    AK::SoundEngine::StopAll(GAME_OBJECT_SOURCE);
+    AK::SoundEngine::UnregisterGameObj(GAME_OBJECT_SOURCE);
 }
 
 void Hachiko::ComponentAudioSource::OnTransformUpdated()
@@ -28,6 +32,13 @@ void Hachiko::ComponentAudioSource::OnTransformUpdated()
                          up.x, up.y, up.z
     );
 
+    AK::SoundEngine::SetPosition(GAME_OBJECT_SOURCE, source_transform);
+
+}
+
+void Hachiko::ComponentAudioSource::Play(const wchar_t* name_event) const
+{
+    AK::SoundEngine::PostEvent(name_event, GAME_OBJECT_SOURCE);
 }
 
 /**     GUI     **/
@@ -36,10 +47,9 @@ void Hachiko::ComponentAudioSource::DrawGui()
 {
     ImGui::PushID(this);
 
-
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Audio Source"))
     {
-        ImGui::Text("Holi");
+        ImGui::Text("Now you can call events to be played ^-^");
     }
     ImGui::PopID();
 }
