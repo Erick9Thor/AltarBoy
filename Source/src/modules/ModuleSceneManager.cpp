@@ -18,7 +18,6 @@
 
 bool Hachiko::ModuleSceneManager::Init()
 { 
-    serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
 
     // If uid is not found it will load an empty scene
@@ -126,8 +125,8 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
     // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
-    preferences->SetSceneUID(scene_resource->GetID());
-    preferences->SetSceneName(scene_resource->name.c_str());
+    preferences->SetSceneUID(scene_resource ? scene_resource->GetID() : 0);
+    preferences->SetSceneName(scene_resource ? scene_resource->name.c_str() : "");
 
     App->resources->ReleaseResource(scene_resource);
 
@@ -135,7 +134,6 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     RELEASE(main_scene);
     // Release because not owned by RM
     RELEASE(temporary_scene_resource);
-    RELEASE(serializer);
     
     return true;
 }
@@ -150,8 +148,6 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
 
 
     LoadScene(nullptr);
-    main_scene->name = name;
-    
     if (name)
     {
         main_scene->name = name;

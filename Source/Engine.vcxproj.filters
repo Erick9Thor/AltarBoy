@@ -369,9 +369,6 @@
     <ClCompile Include="src\Modules\ModuleResources.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
-      <Filter>Core\Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="src\Resources\ResourceTexture.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
@@ -1166,9 +1163,6 @@
     </ClInclude>
     <ClInclude Include="src\Importers\Importer.h">
       <Filter>Importers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\serialization\SceneSerializer.h">
-      <Filter>Core\Serialization</Filter>
     </ClInclude>
     <ClInclude Include="src\Resources\ResourceTexture.h">
       <Filter>Resources</Filter>

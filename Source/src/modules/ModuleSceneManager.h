@@ -2,7 +2,6 @@
 #include "Module.h"
 
 #include "core/Scene.h"
-#include "core/serialization/SceneSerializer.h"
 
 namespace Hachiko
 {
@@ -66,7 +65,6 @@ namespace Hachiko
         void SetSceneResource(ResourceScene* scene);
         void RefreshTemporaryScene();
         Scene* main_scene = nullptr;
-        SceneSerializer* serializer = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
 
