@@ -450,7 +450,12 @@ bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
     //TODO: Should I delete the component?
     if (component->CanBeRemoved())
     {
-        components.erase(std::remove(components.begin(), components.end(), component));
+        auto it = std::find(components.begin(), components.end(), component);
+        if (it != components.end())
+        {
+            delete *it;
+            components.erase(it);
+        }
         return true;
     }
     
