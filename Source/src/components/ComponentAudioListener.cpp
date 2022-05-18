@@ -7,6 +7,7 @@
 Hachiko::ComponentAudioListener::ComponentAudioListener(GameObject* container) 
     : Component(Type::AUDIO_LISTENER, container)
 {
+    MY_DEFAULT_LISTENER = GetID();
     AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, game_object->GetName().c_str());
     AK::SoundEngine::SetDefaultListeners(&MY_DEFAULT_LISTENER, 1);
     OnTransformUpdated();
@@ -41,10 +42,9 @@ void Hachiko::ComponentAudioListener::DrawGui()
 {
     ImGui::PushID(this);
 
-
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Audio Listener"))
     {
-        ImGui::Text("Holi");
+        ImGui::Text("Now you can listen your game ^-^");
     }
     ImGui::PopID();
 }

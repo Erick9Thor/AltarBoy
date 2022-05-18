@@ -18,7 +18,7 @@ namespace Hachiko
 
     private:
         AkTransform listener_transform;
-        AkGameObjectID MY_DEFAULT_LISTENER = 0;
+        AkGameObjectID MY_DEFAULT_LISTENER;
 
     };
 } // namespace Hachiko
