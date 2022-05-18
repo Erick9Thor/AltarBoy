@@ -45,17 +45,17 @@ void Hachiko::ResourceStateMachine::EditClipLoop(const std::string& name, bool n
     clips[index].loop = newLoop;
 }
 
-void Hachiko::ResourceStateMachine::AddState(const std::string& name, const std::string& clip)
+void Hachiko::ResourceStateMachine::AddNode(const std::string& name, const std::string& clip)
 {
-    states.push_back(State(name, clip));
+    nodes.push_back(Node(name, clip));
 }
 
-int Hachiko::ResourceStateMachine::FindState(const std::string& name) const 
+int Hachiko::ResourceStateMachine::FindNode(const std::string& name) const 
 {
     int index = 0;
-    for (index; index < states.size(); ++index)
+    for (index; index < nodes.size(); ++index)
     {
-        if (states[index].name == name)
+        if (nodes[index].name == name)
         {
             break;
         }
@@ -63,7 +63,7 @@ int Hachiko::ResourceStateMachine::FindState(const std::string& name) const
     return index;
 }
 
-std::vector<int> Hachiko::ResourceStateMachine::FindStateTransitions(const std::string& name) const
+std::vector<int> Hachiko::ResourceStateMachine::FindNodeTransitions(const std::string& name) const
 {
     std::vector<int> stateTransitionsIndex;
     for (int i = 0; i < transitions.size(); ++i)
@@ -76,24 +76,24 @@ std::vector<int> Hachiko::ResourceStateMachine::FindStateTransitions(const std::
     return stateTransitionsIndex;
 }
 
-void Hachiko::ResourceStateMachine::RemoveState(const std::string& name)
+void Hachiko::ResourceStateMachine::RemoveNode(const std::string& name)
 {
-    int index = FindState(name);
-    if (index != states.size())
+    int index = FindNode(name);
+    if (index != nodes.size())
     {
-        std::vector<int> stateTransitionsIndex = FindStateTransitions(name);
+        std::vector<int> stateTransitionsIndex = FindNodeTransitions(name);
         for (int i = stateTransitionsIndex.size() - 1; i >= 0; --i)
         {
             transitions.erase(transitions.begin() + stateTransitionsIndex[i]);
         }
-        states.erase(states.begin() + index);
+        nodes.erase(nodes.begin() + index);
     }
 }
 
-void Hachiko::ResourceStateMachine::EditStateClip(const std::string& name, const std::string& newClip)
+void Hachiko::ResourceStateMachine::EditNodeClip(const std::string& name, const std::string& newClip)
 {
-    int index = FindState(name);
-    states[index].clip = newClip;
+    int index = FindNode(name);
+    nodes[index].clip = newClip;
 }
 
 void Hachiko::ResourceStateMachine::AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime)
@@ -127,7 +127,7 @@ int Hachiko::ResourceStateMachine::FindTransitionWithTarget(const std::string& s
     return index;
 }
 
-std::vector<Hachiko::ResourceStateMachine::Transition> Hachiko::ResourceStateMachine::FindTransitionsFromState(const std::string& name) const
+std::vector<Hachiko::ResourceStateMachine::Transition> Hachiko::ResourceStateMachine::FindTransitionsFromNode(const std::string& name) const
 {
     std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromState;
     for (int i = 0; i < transitions.size(); ++i)

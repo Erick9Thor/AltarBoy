@@ -7,31 +7,7 @@ namespace Hachiko
     class WindowStateMachine final : public Window
     {
     public:
-        struct Node
-        {
-            std::string name;
-            int nodeIndex;
-            int inputIndex;
-            std::vector<int> outputIndex;
-            std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode;
-
-            Node() {};
-            Node(const std::string& name, int nodeIndex, int inputIndex, std::vector<int> outputIndex, std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromNode) : 
-                name(name),
-                nodeIndex(nodeIndex),
-                inputIndex(inputIndex),
-                outputIndex(outputIndex),
-                transitionsFromNode(transitionsFromNode) {};
-        };
-        struct Link
-        {
-            int id;
-            int from;
-            int to;
-
-            Link() {};
-            Link(int id, int from, int to) : id(id), from(from), to(to) {};
-        };
+        
 
         WindowStateMachine();
         ~WindowStateMachine() override;
@@ -39,16 +15,25 @@ namespace Hachiko
         void Update() override;
         void CleanUp() override;
 
-    private:
-        std::vector<Node> nodes;
-        std::vector<Link> links;
+        void showCreatePopUp();
 
-        char* trigger;
-        bool addNode = false;
-        bool addClip = false;
-        int nodeId = 0;
+        void showEditPopUp();
+
+        void showAddLink();
+        void showDeleteLink();
+
+        void showHelpLink();
+
+    private:
+
+        char* trigger = nullptr;
+        bool add_node = false;
+        bool add_clip = false;
+
+        int node_id = 0;
         bool started = false;
-        int linkId = 0;
+        int link_id = 0;
+
         bool editTrigger = false;
         bool editIT = false;
         bool deleteLink = false;

@@ -34,8 +34,7 @@ namespace Hachiko
             {Resource::AssetType::SHADER, "assets/shaders/"},
             {Resource::AssetType::SKYBOX, "assets/skybox/"},
             {Resource::AssetType::FONT, "assets/fonts/"},
-            {Resource::Type::STATE_MACHINE, "assets/state_machine/"},
-            {Resource::AssetType::PREFAB, "assets/prefabs/"},
+            {Resource::AssetType::PREFAB, "assets/prefabs/"}
         };
 
         std::map<Resource::Type, std::string> lib_paths = {

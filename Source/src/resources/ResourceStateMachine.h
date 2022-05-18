@@ -23,20 +23,23 @@ namespace Hachiko
         void EditClipAnimation(const std::string& name, UID newAnimation);
         void EditClipLoop(const std::string& name, bool newLoop);
 
-        struct State
+        struct Node
         {
             std::string name;
             std::string clip;
 
-            State() {};
-            State(const std::string& name, const std::string& clip) : name(name), clip(clip) {};
+            int nodeIndex;
+            int inputIndex;
+
+            Node() {};
+            Node(const std::string& name, const std::string& clip) : name(name), clip(clip) {};
         };
 
-        void AddState(const std::string& name, const std::string& clip);
-        int FindState(const std::string& name) const;
-        std::vector<int> FindStateTransitions(const std::string& name) const;
-        void RemoveState(const std::string& name);
-        void EditStateClip(const std::string& name, const std::string& newClip);
+        void AddNode(const std::string& name, const std::string& clip);
+        int FindNode(const std::string& name) const;
+        std::vector<int> FindNodeTransitions(const std::string& name) const;
+        void RemoveNode(const std::string& name);
+        void EditNodeClip(const std::string& name, const std::string& newClip);
 
         struct Transition
         {
@@ -49,12 +52,10 @@ namespace Hachiko
             Transition(const std::string& source, const std::string& target,const std::string& trigger, unsigned int interpolationTime) : source(source), target(target), trigger(trigger), interpolationTime(interpolationTime) {};
         };
 
-        Transition foo();
-
         void AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime);
         int FindTransitionWithTrigger(const std::string& source, const std::string& trigger) const;
         int FindTransitionWithTarget(const std::string& source, const std::string& target) const;
-        std::vector<struct Transition> FindTransitionsFromState(const std::string& name) const;
+        std::vector<struct Transition> FindTransitionsFromNode(const std::string& name) const;
         void RemoveTransitionWithTrigger(const std::string& source, const std::string& trigger);
         void RemoveTransitionWithTarget(const std::string& source, const std::string& target);
         void EditTransitionSource(const std::string& newSource, const std::string& target, const std::string& trigger);
@@ -68,7 +69,7 @@ namespace Hachiko
         ~ResourceStateMachine() override;
 
         std::vector<Clip> clips;
-        std::vector<State> states;
+        std::vector<Node> nodes;
         std::vector<Transition> transitions;
     };
 } // namespace Hachiko

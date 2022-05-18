@@ -7,6 +7,7 @@ namespace Hachiko
     class GameObject;
     class AnimationController;
     class ResourceAnimation;
+    class ResourceStateMachine;
 
     class ComponentAnimation : public Component
     {
@@ -30,8 +31,8 @@ namespace Hachiko
         std::vector<ResourceAnimation*> animations;
 
     private:
-
         AnimationController* controller = nullptr;
         ResourceAnimation* current_animation = nullptr;
+        ResourceStateMachine* state_machine = nullptr;
     };
 } // namespace Hachiko
