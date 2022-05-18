@@ -7,7 +7,8 @@ Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
     Resource(uid, Type::MATERIAL) {}
 
 Hachiko::ResourceMaterial::~ResourceMaterial()
-{}
+{
+}
 
 void Hachiko::ResourceMaterial::DrawGui() 
 {
@@ -130,6 +131,44 @@ void Hachiko::ResourceMaterial::DrawGui()
 }
 
 
+
+void Hachiko::ResourceMaterial::SetTexture(ResourceTexture* res, ResourceTexture::Type type)
+{
+    switch (type)
+    {
+    case ResourceTexture::Type::DIFFUSE:
+        App->resources->ReleaseResource(diffuse);
+        diffuse = res;
+        break;
+    case ResourceTexture::Type::SPECULAR:
+        App->resources->ReleaseResource(specular);
+        specular = res;
+        break;
+    case ResourceTexture::Type::NORMALS:
+        App->resources->ReleaseResource(normal);
+        normal = res;
+        break;
+    case ResourceTexture::Type::METALNESS:
+        App->resources->ReleaseResource(metalness);
+        metalness = res;
+        break;
+    }
+}
+
+std::string Hachiko::ResourceMaterial::TypeToString(ResourceTexture::Type type)
+{
+    switch (type)
+    {
+    case ResourceTexture::Type::DIFFUSE:
+        return "Diffuse";
+    case ResourceTexture::Type::SPECULAR:
+        return "Specular";
+    case ResourceTexture::Type::NORMALS:
+        return "Normals";
+    case ResourceTexture::Type::METALNESS:
+        return "Metalness";
+    }
+}
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {

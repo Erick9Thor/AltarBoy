@@ -79,39 +79,9 @@ namespace Hachiko
             name = new_name;
         }
 
-        void SetTexture(ResourceTexture* res, ResourceTexture::Type type)
-        {
-            switch (type)
-            {
-            case ResourceTexture::Type::DIFFUSE:
-                diffuse = res;
-                break;            
-            case ResourceTexture::Type::SPECULAR:
-                specular = res;
-                break;            
-            case ResourceTexture::Type::NORMALS:
-                normal = res;
-                break;
-            case ResourceTexture::Type::METALNESS:
-                metalness = res;
-                break;
-            }
-        }
+        void SetTexture(ResourceTexture* res, ResourceTexture::Type type);
 
-        std::string TypeToString(ResourceTexture::Type type)
-        {
-            switch (type)
-            {
-            case ResourceTexture::Type::DIFFUSE:
-                return "Diffuse";
-            case ResourceTexture::Type::SPECULAR:
-                return "Specular";
-            case ResourceTexture::Type::NORMALS:
-                return "Normals";
-            case ResourceTexture::Type::METALNESS:
-                return "Metalness";
-            }
-        }
+        std::string TypeToString(ResourceTexture::Type type);
 
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;

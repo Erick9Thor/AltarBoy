@@ -28,6 +28,10 @@ Hachiko::Resource* Hachiko::SceneImporter::Load(UID id)
 {
     // TODO: Make it go through the normal resource load pipeline and free afterwards
     const std::string scene_resource_path = GetResourcePath(Resource::Type::SCENE, id);
+    if (!FileSystem::Exists(scene_resource_path.c_str()))
+    {
+        return nullptr;
+    }
     YAML::Node node = YAML::LoadFile(scene_resource_path);    
     ResourceScene* scene_resource = new ResourceScene(id);
     scene_resource->scene_data = node;

@@ -73,6 +73,7 @@ namespace Hachiko
         bool scene_ready_to_load = false;
         bool scene_autosave = false;
         ResourceScene* scene_resource;
+        // Fake resource, does not go through the manager
         ResourceScene* temporary_scene_resource;
         UID scene_to_load_id;
     };

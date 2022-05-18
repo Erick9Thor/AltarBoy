@@ -18,7 +18,7 @@ namespace Hachiko
     {
     public:
         ComponentText(GameObject* container);
-        ~ComponentText() override = default;
+        ~ComponentText() override;
 
         static Type GetType()
         {

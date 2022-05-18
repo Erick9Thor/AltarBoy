@@ -51,7 +51,8 @@ bool ModuleResources::CleanUp()
 {
     for (auto& it : loaded_resources)
     {
-        RELEASE(it.second);
+        HE_LOG("Removing unreleased resources (fbi coming)");
+        delete it.second.resource;
     }
 
     return true;
@@ -119,16 +120,40 @@ Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
     auto it = loaded_resources.find(id);
     if (it != loaded_resources.end())
     {
-        return it->second;
+        it->second.n_users += 1;
+        return it->second.resource;
     }
     // If not loaded try to load and return
     auto res = importer_manager.LoadResource(type, id);
     if (res != nullptr)
     {
-        return loaded_resources.emplace(id, res).first->second;
+        ResourceInstance& resource_instance = loaded_resources.emplace(id, ResourceInstance {res, 1}).first->second;
+        return resource_instance.resource;
     }
-
     return nullptr;
+}
+
+void Hachiko::ModuleResources::ReleaseResource(Resource* resource)
+{
+    if (resource)
+    {
+        ReleaseResource(resource->GetID());
+    }
+}
+
+void Hachiko::ModuleResources::ReleaseResource(UID id)
+{
+    auto it = loaded_resources.find(id);
+    if (it != loaded_resources.end())
+    {
+        ResourceInstance& res_instance = it->second;
+        res_instance.n_users -= 1;
+        if (res_instance.n_users == 0)
+        {
+            delete res_instance.resource;
+            loaded_resources.erase(id);
+        }
+    }
 }
 
 std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, const std::string& name) const
@@ -180,7 +205,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
             {
                 Scene* scene = App->scene_manager->GetActiveScene();
                 // Material asset only contains a single material resource
-                auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
+                ResourceMaterial* material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
                 scene->HandleInputMaterial(material_res);
                 break;
             }
@@ -222,7 +247,7 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path)
 {
     Resource::AssetType type = GetAssetTypeFromPath(asset_path);
-
+    
     if (type == Resource::AssetType::UNKNOWN)
     {
         // Discard unrecognised types

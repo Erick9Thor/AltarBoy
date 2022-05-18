@@ -21,14 +21,8 @@ bool Hachiko::ModuleSceneManager::Init()
     serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
 
-    if (preferences->GetSceneUID() == 0)
-    {
-        CreateEmptyScene();
-    }
-    else
-    {
-        LoadScene(preferences->GetSceneUID());
-    }   
+    // If uid is not found it will load an empty scene
+    LoadScene(preferences->GetSceneUID());
 
 #ifdef PLAY_BUILD
     main_scene->Start();
@@ -135,7 +129,9 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     preferences->SetSceneUID(scene_resource->GetID());
     preferences->SetSceneName(scene_resource->name.c_str());
 
+    App->resources->ReleaseResource(scene_resource);
 
+    scene_resource = nullptr;
     RELEASE(main_scene);
     // Release because not owned by RM
     RELEASE(temporary_scene_resource);
@@ -152,8 +148,9 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
         SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);  
 
-    delete main_scene;
-    main_scene = new Scene();
+
+    LoadScene(nullptr);
+    main_scene->name = name;
     
     if (name)
     {
@@ -178,7 +175,6 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
     // Create a scene resource not related to an asset to reload the scene as any other
     SceneImporter scene_importer;
     SetSceneResource(scene_importer.CreateSceneResource(main_scene));
-    SaveScene();
 
     scene_load.SetEventData<SceneLoadEventPayload>(
         SceneLoadEventPayload::State::LOADED);
@@ -187,6 +183,7 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
 
 void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id)
 {
+    App->resources->ReleaseResource(scene_resource);
     LoadScene(static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id)));
 }
 
@@ -204,8 +201,6 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
     }
     SceneImporter scene_importer;
     UID saved_scene_uid = scene_importer.CreateSceneAsset(main_scene);
-    scene_resource = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, saved_scene_uid));
-    // Maybe we need to load the scene after changing the resource? I dont think so for now
 }
 
 Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
@@ -239,6 +234,8 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
 {
+    // Loads scene if a pointer is passed, nullpointer creates empty scene
+    
     Event scene_load(Event::Type::SCENE_LOADED);
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);
@@ -248,7 +245,10 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
     SetSceneResource(new_resource);
 
     main_scene = new Scene();
-    main_scene->Load(scene_resource->scene_data);
+    if (new_resource)
+    {
+        main_scene->Load(scene_resource->scene_data);
+    }    
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
@@ -272,7 +272,7 @@ void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* scene)
 {
     if (scene_resource && scene != scene_resource && scene_resource->GetID() == 0)
     {
-        // Only delete if it exists its diferent and its not loaded by resource manager (id 0)
+        // Only delete if it exists, its not the same resource and its not loaded by resource manager (id 0)
         delete scene_resource;
     }
     scene_resource = scene;

@@ -13,7 +13,11 @@
 
 
 Hachiko::ComponentText::ComponentText(GameObject* container) 
-	: Component(Type::TEXT, container) {
+	: Component(Type::TEXT, container) {}
+
+Hachiko::ComponentText::~ComponentText()
+{
+    App->resources->ReleaseResource(font);
 }
 
 
@@ -141,6 +145,7 @@ void Hachiko::ComponentText::LoadFont(UID id)
 {
     try
     {
+        App->resources->ReleaseResource(font);
         font = static_cast<ResourceFont*>(App->resources->GetResource(Resource::Type::FONT, id));
         BuildLabel(game_object->GetComponent<ComponentTransform2D>());
         // TODO: Fix how this works, right now it uses component id to find font
