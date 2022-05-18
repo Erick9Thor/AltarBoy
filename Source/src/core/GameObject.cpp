@@ -9,6 +9,7 @@
 #include "components/ComponentAnimation.h"
 #include "components/ComponentAgent.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAudioListener.h"
 
 
 // UI
@@ -197,6 +198,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::AGENT):
         if (!GetComponent<ComponentAgent>())
             new_component = new ComponentAgent(this);
+        break;
+    case (Component::Type::AUDIO_LISTENER):
+        if (!GetComponent<ComponentAudioListener>())
+            new_component = new ComponentAudioListener(this);
         break;
     }
 
