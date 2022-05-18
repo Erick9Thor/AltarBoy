@@ -107,10 +107,10 @@ bool Hachiko::ModuleAudio::Init()
 #endif // AK_OPTIMIZED
 
     // Register the main listener.
-    AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, "My Default Listener");
+    //AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, "My Default Listener");
 
     // Set one listener as the default.
-    AK::SoundEngine::SetDefaultListeners(&MY_DEFAULT_LISTENER, 1);
+    //AK::SoundEngine::SetDefaultListeners(&MY_DEFAULT_LISTENER, 1);
 
     // Register a game object for playing sounds
     //AkGameObjectID MY_EMITTER = 1;
@@ -120,7 +120,7 @@ bool Hachiko::ModuleAudio::Init()
     AkTransform listenerTransform;
     listenerTransform.SetPosition(0,0,0);
 
-    AK::SoundEngine::SetPosition(MY_DEFAULT_LISTENER, listenerTransform);
+    //AK::SoundEngine::SetPosition(MY_DEFAULT_LISTENER, listenerTransform);
     //AK::SoundEngine::SetPosition(MY_EMITTER, listenerTransform);
 
     // At this point "My Emitter" has 1 listener, "My Default Listener", because we designated it as the default listener.
