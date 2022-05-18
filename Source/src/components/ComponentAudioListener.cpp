@@ -14,7 +14,7 @@ Hachiko::ComponentAudioListener::ComponentAudioListener(GameObject* container)
 
 Hachiko::ComponentAudioListener::~ComponentAudioListener()
 {
-
+    AK::SoundEngine::UnregisterGameObj(MY_DEFAULT_LISTENER);
 }
 
 
