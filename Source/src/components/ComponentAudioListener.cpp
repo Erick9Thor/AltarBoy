@@ -7,7 +7,7 @@
 Hachiko::ComponentAudioListener::ComponentAudioListener(GameObject* container) 
     : Component(Type::AUDIO_LISTENER, container)
 {
-    AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, "My Default Listener");
+    AK::SoundEngine::RegisterGameObj(MY_DEFAULT_LISTENER, game_object->GetName().c_str());
     AK::SoundEngine::SetDefaultListeners(&MY_DEFAULT_LISTENER, 1);
     OnTransformUpdated();
 }
