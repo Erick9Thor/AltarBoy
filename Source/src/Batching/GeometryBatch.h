@@ -55,6 +55,8 @@ namespace Hachiko
                 
         // We can use resource mesh to contain a concatenation of all original meshes
         unsigned component_count = 0;
+        unsigned component_palette_count = 0;
+
         ResourceMesh* batch = nullptr;
         unsigned instance_indices_vbo;
         std::vector<float4x4> transforms;

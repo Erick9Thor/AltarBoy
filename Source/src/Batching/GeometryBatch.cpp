@@ -38,7 +38,6 @@ Hachiko::GeometryBatch::~GeometryBatch() {
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh_renderer)
 {
-    component_count += 1;
 
     const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
     auto it = resources.find(resource);
@@ -50,6 +49,12 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh_renderer)
     }
 
     texture_batch->AddMaterial(mesh_renderer->GetResourceMaterial());
+
+    component_count += 1;
+    if (resource->num_bones > 0)
+    {
+        component_palette_count += resource->num_bones;
+    }
 }
 
 void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMeshRenderer* mesh)
@@ -341,7 +346,7 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
     glBindVertexArray(0);
 
     transform_buffer_data = static_cast<float4x4*>(App->program->CreatePersistentBuffers(transform_buffer, 3, 2 * component_count * sizeof(float4x4)));
-    palettes_buffer_data = static_cast<float4x4*>(App->program->CreatePersistentBuffers(palettes_buffer, 4, 2 * component_count * sizeof(float4x4)));
+    palettes_buffer_data = static_cast<float4x4*>(App->program->CreatePersistentBuffers(palettes_buffer, 4, 2 * component_palette_count * sizeof(float4x4)));
     palettes_per_instances_buffer_data = static_cast<PalettePerInstance*>(App->program->CreatePersistentBuffers(palettes_per_instances_buffer, 5, 2 * component_count * sizeof(PalettePerInstance)));
 }
 
