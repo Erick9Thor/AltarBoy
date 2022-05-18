@@ -9,7 +9,8 @@ namespace Hachiko
     class ComponentAudioSource : public Component
     {
     public:
-
+        ComponentAudioSource(GameObject* conatiner);
+        ~ComponentAudioSource() override;
 
     };
 } // namespace Hachiko
