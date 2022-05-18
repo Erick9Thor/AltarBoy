@@ -12,5 +12,13 @@ namespace Hachiko
         ComponentAudioListener(GameObject* conatiner);
         ~ComponentAudioListener() override;
         
+        void OnTransformUpdated() override;
+
+        void DrawGui() override;  
+
+    private:
+        AkTransform listener_transform;
+        AkGameObjectID MY_DEFAULT_LISTENER = 0;
+
     };
 } // namespace Hachiko
