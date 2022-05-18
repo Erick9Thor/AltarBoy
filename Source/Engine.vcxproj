@@ -152,14 +152,19 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)vendors\glew-2.1.0\lib;$(ProjectDir)vendors\DevIL\lib;$(ProjectDir)vendors\SDL\lib;$(ProjectDir)vendors\assimp\lib;$(ProjectDir)vendors\optick\lib;$(ProjectDir)vendors\freetype\lib;$(ProjectDir)vendors\yaml-cpp\lib\x64\Debug;$(ProjectDir)vendors\wwise\x64_vc160\Debug\lib;$(ProjectDir)vendors\recast\lib\x64\Release</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;freetype.lib;yaml-cppd.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;CommunicationCentral.lib;ws2_32.lib;DebugUtils.lib;Detour.lib;DetourCrowd.lib;DetourTileCache.lib;Recast.Lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\importers\PrefabImporter.cpp" />
+    <ClCompile Include="src\resources\ResourcePrefab.cpp" />
+    <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp" />
+    <ClCompile Include="src\components\ComponentAgent.cpp" />
+    <ClCompile Include="src\components\ComponentObstacle.cpp" />
     <ClCompile Include="src\modules\ModuleNavigation.cpp" />
     <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
-    <ClCompile Include="src\resources\ResourceNaveMesh.cpp" />
+    <ClCompile Include="src\resources\ResourceNavMesh.cpp" />
     <ClCompile Include="src\importers\FontImporter.cpp" />
     <ClCompile Include="src\resources\ResourceFont.cpp" />
     <ClCompile Include="src\core\logging\ConsoleLogger.cpp" />
@@ -187,7 +192,6 @@
     <ClCompile Include="src\modules\ModuleResources.cpp" />
     <ClCompile Include="src\importers\TextureImporter.cpp" />
     <ClCompile Include="src\resources\ResourceTexture.cpp" />
-    <ClCompile Include="src\resources\ResourceModel.cpp" />
     <ClCompile Include="src\ui\WindowResource.cpp" />
     <ClCompile Include="src\components\Component.cpp" />
     <ClCompile Include="src\components\ComponentButton.cpp" />
@@ -640,6 +644,10 @@
     <ClCompile Include="src\ui\WindowConsole.cpp" />
     <ClCompile Include="src\utils\UUID.cpp" />
     <ClCompile Include="src\ui\WindowTimers.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\ChunkyTriMesh.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\fastlz.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\InputGeom.cpp" />
+    <ClCompile Include="vendors\recast\include\Recast\MeshLoaderObj.cpp" />
     <ClCompile Include="vendors\xxhash\xxhash.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp" />
     <ClCompile Include="vendors\wwise\include\AK\SoundEngine\Common\AkFileLocationBase.cpp" />
@@ -652,8 +660,13 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\importers\PrefabImporter.h" />
+    <ClInclude Include="src\resources\ResourcePrefab.h" />
+    <ClInclude Include="src\core\preferences\src\AudioPreferences.h" />
+    <ClInclude Include="src\components\ComponentAgent.h" />
+    <ClInclude Include="src\components\ComponentObstacle.h" />
     <ClInclude Include="src\modules\ModuleNavigation.h" />
-    <ClInclude Include="src\resources\ResourceNaveMesh.h" />
+    <ClInclude Include="src\resources\ResourceNavMesh.h" />
     <ClInclude Include="src\importers\FontImporter.h" />
     <ClInclude Include="src\resources\ResourceFont.h" />
     <ClInclude Include="src\core\ErrorHandler.h" />
@@ -680,14 +693,12 @@
     <ClInclude Include="src\core\preferences\Preferences.h" />
     <ClInclude Include="src\core\serialization\Definitions.h" />
     <ClInclude Include="src\core\serialization\SceneSerializer.h" />
-    <ClInclude Include="src\core\serialization\ISerializable.h" />
     <ClInclude Include="src\core\serialization\TypeConverter.h" />
     <ClInclude Include="src\importers\Importer.h" />
     <ClInclude Include="src\importers\ModelImporter.h" />
     <ClInclude Include="src\importers\ImporterManager.h" />
     <ClInclude Include="src\modules\ModuleResources.h" />
     <ClInclude Include="src\resources\ResourceTexture.h" />
-    <ClInclude Include="src\resources\ResourceModel.h" />
     <ClInclude Include="src\components\ComponentButton.h" />
     <ClInclude Include="src\components\ComponentCanvas.h" />
     <ClInclude Include="src\components\ComponentCanvasRenderer.h" />
@@ -707,6 +718,7 @@
     <ClInclude Include="src\ui\editor\Theme.h" />
     <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\ui\WindowStateMachine.h" />
+    <ClInclude Include="src\utils\Cache.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="vendors\GLFont\FontAtlas.h" />
     <ClInclude Include="vendors\GLFont\FTLabel.h" />
@@ -1154,6 +1166,10 @@
     <ClInclude Include="src\ui\WindowConsole.h" />
     <ClInclude Include="src\utils\UUID.h" />
     <ClInclude Include="src\ui\WindowTimers.h" />
+    <ClInclude Include="vendors\recast\include\Recast\ChunkyTriMesh.h" />
+    <ClInclude Include="vendors\recast\include\Recast\fastlz.h" />
+    <ClInclude Include="vendors\recast\include\Recast\InputGeom.h" />
+    <ClInclude Include="vendors\recast\include\Recast\MeshLoaderObj.h" />
     <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h" />
     <ClInclude Include="vendors\xxhash\xxhash.h" />
     <ClInclude Include="vendors\wwise\include\AK\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h" />

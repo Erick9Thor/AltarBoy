@@ -4,6 +4,7 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
@@ -109,6 +110,10 @@ bool Hachiko::ModuleEditor::Init()
         }
     }
 
+    editor_prefs = App->preferences->GetEditorPreference();
+    theme = editor_prefs->GetTheme();
+    UpdateTheme();
+
     return true;
 }
 
@@ -162,8 +167,23 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
         }
     }
 
-    //RenderGui();
     return retval;
+}
+
+UpdateStatus Hachiko::ModuleEditor::PostUpdate(const float delta)
+{
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    ImGuiIO& io = ImGui::GetIO();
+
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
+    }
+    return UpdateStatus::UPDATE_CONTINUE;
 }
 
 UpdateStatus Hachiko::ModuleEditor::MainMenuBar()
@@ -226,17 +246,11 @@ void Hachiko::ModuleEditor::GenerateDockingSpace()
     ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_PassthruCentralNode;
     ImGuiWindowFlags host_window_flags = 0;
     host_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoDocking;
-    host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+    host_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoNavInputs;
     if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode)
     {
         host_window_flags |= ImGuiWindowFlags_NoBackground;
     }
-
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-    ImGui::Begin("DockSpace Window", nullptr, host_window_flags);
-    ImGui::PopStyleVar(3);
 
     const ImGuiID dockspace_id = ImGui::GetID("DockSpace");
 
@@ -253,8 +267,16 @@ void Hachiko::ModuleEditor::GenerateDockingSpace()
         dock_left_id = ImGui::DockBuilderSplitNode(dock_main_id, ImGuiDir_Left, 0.25f, nullptr, &dock_main_id);
     }
 
-    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags, nullptr);
-    ImGui::End();
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    if (ImGui::Begin("DockSpace Window", nullptr, host_window_flags))
+    {
+        ImGui::PopStyleVar(3);
+        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags, nullptr);
+        ImGui::End();
+    }
 }
 
 void Hachiko::ModuleEditor::FileMenu() const
@@ -401,16 +423,6 @@ void Hachiko::ModuleEditor::GoMenu() const
     ImGui::EndMenu();
 }
 
-void Hachiko::ModuleEditor::RenderGui()
-{
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-    ImGui::UpdatePlatformWindows();
-    ImGui::RenderPlatformWindowsDefault();
-    SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
-}
-
 bool Hachiko::ModuleEditor::CleanUp()
 {
     HE_LOG("Cleaning windows");
@@ -427,5 +439,6 @@ bool Hachiko::ModuleEditor::CleanUp()
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
+    editor_prefs->SetTheme(theme);
     return true;
 }

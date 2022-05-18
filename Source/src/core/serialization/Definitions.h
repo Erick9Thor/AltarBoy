@@ -7,35 +7,31 @@
 //////////////////////////
 
 // General
-#define GENERAL_NODE "General"
-#define GENERAL_ID "id"
-#define GENERAL_TYPE "type"
-#define GENERAL_HASH "hash"
+//#define GENERAL_ID "id"
+#define RESOURCES "resources" // Resources that asset is responsible of generating
+#define RESOURCE_ID "resource_id"
+#define RESOURCE_TYPE "resource_type"
+#define ASSET_HASH "asset_hash"
 
 // Texture
-#define TEXTURE_ID "id"
 #define TEXTURE_FILE_PATH "file_path"
 
 // Model
-#define MODEL_ID "id"
-#define MODEL_NAME "model_name"
-#define MODEL_FILE_PATH "model_file_path"
-#define MODEL_MESH_ID "id"
-#define MODEL_MESH_NODE "mesh"
-#define MODEL_MATERIAL_ID "id"
-#define MODEL_MATERIAL_NODE "material"
+#define MESHES "meshes"
+#define MATERIALS "materials"
 #define ANIMATIONS "animations"
-#define ANIMATION_IDS "animation_id"
+#define MODEL_NAME "model_name"
+#define PREFAB_ID "prefab_id"
+
+// Prefab
+#define PREFAB_NAME "prefab_name"
 
 // Node
 #define NODE_NAME "name"
 #define NODE_CHILD "child"
 #define NODE_TRANSFORM "transform"
-#define NODE_MESH_INDEX "mesh_index"
-#define NODE_MATERIAL_INDEX "material_index"
 
 // Mesh
-#define MESH_ID "mesh_id"
 #define MIN_POINT "min_point"
 #define MAX_POINT "max_point"
 #define VERTICES_NODE "vertices"
@@ -44,18 +40,20 @@
 #define TEXTURE_COORDS_NODE "texture_coords"
 
 // Material
-#define MATERIAL_ID "id"
 #define MATERIAL_NAME "name"
 #define MATERIAL_DIFFUSE_ID "diffuse"
 #define MATERIAL_SPECULAR_ID "specular"
 #define MATERIAL_NORMALS_ID "normals"
 #define MATERIAL_METALNESS_ID "metalness"
+#define MATERIAL_EMISSIVE_ID "emissive"
 #define MATERIAL_DIFFUSE_PATH "diffuse_path"
 #define MATERIAL_SPECULAR_PATH "specular_path"
 #define MATERIAL_NORMALS_PATH "normals_path"
 #define MATERIAL_METALNESS_PATH "metalness_path"
+#define MATERIAL_EMISSIVE_PATH "emissive_path"
 #define MATERIAL_DIFFUSE_COLOR "diffuse_color"
 #define MATERIAL_SPECULAR_COLOR "specular_color"
+#define MATERIAL_EMISSIVE_COLOR "emissive_color"
 #define MATERIAL_SMOOTHNESS "smoothness"
 #define MATERIAL_METALNESS_VALUE "metalness_value"
 #define MATERIAL_IS_METALLIC "is_metallic"
@@ -77,6 +75,7 @@
 #define MESH_EXTENSION ".mesh"
 #define MATERIAL_EXTENSION ".mat"
 #define META_EXTENSION ".meta"
+#define PREFAB_EXTENSION ".prefab"
  
 //////////////////////////
 //						//
@@ -91,6 +90,7 @@
 #define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
+#define RESIZABLE "resizable"
 #define THEME_LIGHT "light"
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
@@ -117,11 +117,17 @@
 #define ORBIT_SPEED "orbit_speed"
 #define ZOOM_SPEED "zoom_speed"
 #define FOV "fov"
+#define CAMERA_POS "position"
 
 // Globals
 #define GLOBAL_NODE "globals"
 #define TITLE_NODE "title"
 #define VERSION_NODE "version"
+
+// Audio
+#define AUDIO_NODE "audio"
+#define SFX_VOLUME "sfx_volume"
+#define MUSIC_VOLUME "music_volume"
 
 //////////////////////////
 //						//
@@ -166,6 +172,8 @@
 #define MESH_ENABLED "enabled"
 #define MESH_TEXTURE "texture_file_name"
 #define MESH_TEXTURE_TYPE "texture_type"
+#define MESH_NAVIGABLE "navigable"
+#define MESH_VISIBLE "visible"
 
 // Component Lights
 #define LIGHT_TYPE "light_type"
@@ -204,6 +212,15 @@
 #define BAR_MAX "max"
 #define BAR_FILLED "filled"
 #define BAR_DIRECTION "direction"
+
+// Component Obstacle
+#define OBSTACLE_TYPE "obstacle_type"
+#define OBSTACLE_SIZE "obstacle_size"
+
+// Component Agent
+#define MAX_SPEED "max_speed"
+#define MAX_ACCELERATION "max_acceleration"
+#define AVOID_OBSTACLES "avoid_obstacles"
 
 // Script
 #define SCRIPT_NAME "class_name"

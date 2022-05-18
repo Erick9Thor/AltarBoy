@@ -19,6 +19,7 @@
 namespace Hachiko
 {
     //class ComponentAudioSource;
+    class AudioPreferences;
 
     class ModuleAudio : public Module
     {
@@ -30,9 +31,28 @@ namespace Hachiko
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
+        void Play(const wchar_t* name_event) const;
+        void SetSFXVolume(const float value);
+        void SetMusicVolume(const float value);
+        void OptionsMenu();
+
     private:
         // We're using the default Low-Level I/O implementation that's part
         // of the SDK's sample code, with the file package extension
         CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
+
+        // TODO: Monica will change this after VS2
+        const AkGameObjectID GAME_OBJECT_ID_BGMUSIC = 1001;
+        const AkGameObjectID GAME_OBJECT_ID_PLAYER = 1002;
+        AkGameObjectID MY_DEFAULT_LISTENER = 0;
+
+        float sfx_volume = 0.0f;
+        float music_volume = 0.0f;
+        AudioPreferences* audio_prefs = nullptr;
+
+        void SetGameObjectOutputBusVolume(const AkGameObjectID emitter, const AkGameObjectID listener, const float value)
+        {
+            AK::SoundEngine::SetGameObjectOutputBusVolume(emitter, listener, value);
+        }
     };
 } // namespace Hachiko

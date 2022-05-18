@@ -123,6 +123,30 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
+    if (ImGui::TreeNodeEx((void*)&emissive, texture_flags, "Emissive"))
+    {
+        if (emissive != nullptr)
+        {
+            ImGui::Image(reinterpret_cast<void*>(emissive->GetId()), ImVec2(80, 80));
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("%dx%d", emissive->width, emissive->height);
+            ImGui::Text("Path: %s", emissive->path.c_str());
+
+            // TODO: textue configuration (maybe delegate to the ResourceTexture)
+
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
+            RemoveTexture(ResourceTexture::Type::EMISSIVE);
+
+            ImGui::EndGroup();
+        }
+        else
+        {
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
+            AddTexture(ResourceTexture::Type::EMISSIVE);
+        }
+        ImGui::TreePop();
+    }
     if (ImGui::SmallButton("Save"))
     {
         UpdateMaterial();
@@ -160,7 +184,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 
             res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
-                texture_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+                texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -190,6 +214,9 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
         case ResourceTexture::Type::METALNESS:
             metalness = nullptr;
             break;
+        case ResourceTexture::Type::EMISSIVE:
+            emissive = nullptr;
+            break;
         }
     }
 
@@ -199,5 +226,5 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
 void Hachiko::ResourceMaterial::UpdateMaterial()
 {
     MaterialImporter material_importer;
-    material_importer.Save(this);
+    material_importer.Save(GetID(), this);
 }

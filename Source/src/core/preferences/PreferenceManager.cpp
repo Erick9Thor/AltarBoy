@@ -6,6 +6,7 @@
 #include "src/GlobalPreferences.h"
 #include "src/RenderPreferences.h"
 #include "src/ResourcesPreferences.h"
+#include "src/AudioPreferences.h"
 
 using namespace Hachiko;
 
@@ -15,6 +16,7 @@ PreferenceManager::PreferenceManager(const char* cfg)
     , render(new RenderPreferences())
     , camera(new CameraPreferences())
     , resources(new ResourcesPreferences())
+    , audio(new AudioPreferences())
     , config_file(cfg)
 {
     preferences.reserve(static_cast<size_t>(Preferences::Type::COUNT));
@@ -24,6 +26,7 @@ PreferenceManager::PreferenceManager(const char* cfg)
     preferences.emplace_back(editor);
     preferences.emplace_back(camera);
     preferences.emplace_back(resources);
+    preferences.emplace_back(audio);
 
     if (std::filesystem::exists(config_file.c_str()))
     {

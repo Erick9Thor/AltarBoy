@@ -389,19 +389,19 @@ enum class HACHIKO_API MouseButton
     RIGHT = 3
 };
 
-HACHIKO_API bool GetKeyUp(KeyCode key);
-HACHIKO_API bool GetKey(KeyCode key);
-HACHIKO_API bool GetKeyDown(KeyCode key);
+HACHIKO_API bool IsKeyPressed(KeyCode key);
+HACHIKO_API bool IsKeyUp(KeyCode key);
+HACHIKO_API bool IsKeyDown(KeyCode key);
+HACHIKO_API bool IsModifierPressed(KeyCode modifier);
 
-// TODO: Add MouseButtonDown and MouseButtonUp.
-
-HACHIKO_API bool GetMouseButton(MouseButton mouse_button); 
+HACHIKO_API bool IsMouseButtonPressed(MouseButton mouse_button);
+HACHIKO_API bool IsMouseButtonUp(MouseButton mouse_button);
+HACHIKO_API bool IsMouseButtonDown(MouseButton mouse_button);
 HACHIKO_API int GetScrollWheelDelta();
-HACHIKO_API math::float2 GetMouseDelta();
-HACHIKO_API math::float2 GetMousePosition();
-HACHIKO_API void GetMouseDeltaPixels(int& out_delta_x, int& out_delta_y);
-HACHIKO_API void GetMousePositionPixels(int& out_position_x, 
-    int& out_position_y);
+HACHIKO_API const float2& GetMouseNormalizedMotion();
+HACHIKO_API const float2& GetMousePixelsMotion();
+HACHIKO_API const float2& GetMousePixelPosition();
+HACHIKO_API const float2& GetMouseNormalizedPosition();
 } // namespace Hachiko::Input
 
 namespace Hachiko::SceneManagement
@@ -409,6 +409,8 @@ namespace Hachiko::SceneManagement
 HACHIKO_API void SwitchScene(const char* name);
 HACHIKO_API GameObject* Raycast(const float3& origin, 
     const float3& destination);
+HACHIKO_API GameObject* FindInCurrentScene(unsigned long long id);
+HACHIKO_API void Destroy(GameObject* game_object);
 } // namespace Hachiko::SceneManagement
 
 namespace Hachiko::Debug
@@ -438,6 +440,7 @@ HACHIKO_API void Show(const char* field_name, bool& field);
 HACHIKO_API void Show(const char* field_name, math::float2& field);
 HACHIKO_API void Show(const char* field_name, math::float3& field);
 HACHIKO_API void Show(const char* field_name, math::float4& field);
+HACHIKO_API void Show(const char* field_name, math::Quat& field);
 HACHIKO_API void Show(const char* field_name, std::string& field);
 HACHIKO_API void Show(const char* field_name, GameObject*& field);
 
@@ -462,3 +465,15 @@ HACHIKO_API_COMPONENT_VOID Show(const char* field_name, const char* field_type,
     }
 }
 } // namespace Hachiko::Editor
+
+namespace Hachiko::Navigation
+{
+    HACHIKO_API float GetHeightFromPosition(const math::float3& position);
+    HACHIKO_API math::float3 GetCorrectedPosition(math::float3& position, const math::float3& extents);
+    HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
+} // namespace Hachiko::Navigation
+
+namespace Hachiko::Audio
+{
+    HACHIKO_API void Play(const wchar_t* name);
+} // namespace Hachiko::Audio

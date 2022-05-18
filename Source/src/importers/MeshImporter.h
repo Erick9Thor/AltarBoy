@@ -10,17 +10,16 @@ namespace Hachiko
     {
         friend class ModelImporter;
     public:
-        MeshImporter();
-        void Import(const char* path, YAML::Node& meta) override {};
-        void ImportWithMeta(const char* path, YAML::Node& meta) override {};
-        void Save(const Resource* mesh) override;
-        Resource* Load(UID id) override;
-        bool IsImported(const char* path) override
-        {
-            return false;
-        }
+        MeshImporter() = default;
+        ~MeshImporter() override = default;
 
+        void Import(const char* path, YAML::Node& meta) override
+        { 
+            assert(false && "This should not be called since it is not an asset");
+        };
+        void Save(UID id, const Resource* mesh) override;
+        Resource* Load(UID id) override;
     private:
-        void Import(const aiMesh* ai_mesh, const UID& id = 0);
+        void ImportFromAssimp(UID uid, const aiMesh* ai_mesh);
     };
 }

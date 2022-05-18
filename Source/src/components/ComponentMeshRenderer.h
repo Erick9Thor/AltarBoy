@@ -14,18 +14,14 @@ namespace Hachiko
 
     class ComponentMeshRenderer : public Component
     {
+        friend class ModelImporter;
     public:
-        ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
-        ~ComponentMeshRenderer() override = default;
+        ComponentMeshRenderer(GameObject* container, UID id = UUID::GenerateUID(), ResourceMesh* res = nullptr);
+        ~ComponentMeshRenderer() override;
 
         void Update() override;
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
-
-        static Type GetType()
-        {
-            return Type::MESH_RENDERER;
-        }
 
         [[nodiscard]] bool IsLoaded() const
         {
@@ -35,6 +31,11 @@ namespace Hachiko
         [[nodiscard]] bool IsVisible() const
         {
             return visible;
+        }
+
+        [[nodiscard]] bool IsNavigable() const
+        {
+            return navigable;
         }
 
         [[nodiscard]] AABB GetAABB() const
@@ -65,36 +66,6 @@ namespace Hachiko
         [[nodiscard]] const float* GetNormals() const
         {
             return mesh->normals;
-        }
-
-        [[nodiscard]] const std::string& GetResourcePath() const
-        {
-            return asset_path;
-        }
-
-        void SetResourcePath(const std::string& path)
-        {
-            asset_path = path;
-        }
-
-        [[nodiscard]] const std::string& GetModelName() const
-        {
-            return model_name;
-        }
-
-        void SetModelName(const std::string& name)
-        {
-            model_name = name;
-        }
-
-        [[nodiscard]] int GetMeshIndex() const
-        {
-            return mesh_index;
-        }
-
-        void SetMeshIndex(int index)
-        {
-            mesh_index = index;
         }
 
         void AddResourceMesh(ResourceMesh* res)
@@ -135,14 +106,10 @@ namespace Hachiko
         void ChangeMaterial();
 
     private:
-        bool visible = true;
-        
-        int mesh_index;
-        std::string asset_path;
-        std::string model_name;
+        bool visible = true;       
+        bool navigable = false;        
       
         // SKINING
-
         const GameObject** node_cache = nullptr;
         std::vector<float4x4> palette;
 

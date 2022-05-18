@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	548088167	Play_BackgroundMusic			\Default Work Unit\Play_BackgroundMusic	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	218383355	BackgroundMusic	C:\Users\MO\Documents\Hachiko-Engine\WwiseAkitaInteractive\.cache\Windows\SFX\BackgroundMusic_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\BackgroundMusic		23357852
+

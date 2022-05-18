@@ -12,9 +12,7 @@ namespace Hachiko
 
         void Update() override;
     private:
-        void LoadResource(const std::string& path);
-        void LoadModelIntoScene(YAML::Node& node);
-        void LoadMaterialIntoSelectedObject(YAML::Node& node);
+        void LoadAsset(const std::string& path);
         std::filesystem::path current_directory = "./assets";
         std::string auxiliary_name;
 

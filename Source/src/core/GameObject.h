@@ -6,7 +6,6 @@
 #include <typeinfo>
 
 #include "utils/UUID.h"
-#include "core/serialization/ISerializable.h"
 #include "components/Component.h"
 
 #if defined(HACHIKO_API)
@@ -22,12 +21,12 @@ class ComponentCamera;
 class Program;
 class Scene;
 
-class HACHIKO_API GameObject final : public ISerializable
+class HACHIKO_API GameObject final
 {
     friend class Component;
 
 public:
-    GameObject(const char* name = "Unnamed");
+    GameObject(const char* name = "Unnamed", UID uid = UUID::GenerateUID());
     GameObject(GameObject* parent,
                 const float4x4& transform, 
                 const char* name = "Unnamed", 
@@ -96,8 +95,8 @@ public:
         uid = new_id;
     }
 
-    void Save(YAML::Node& node) const;
-    void Load(const YAML::Node& node);
+    void Save(YAML::Node& node, bool as_prefab = false) const;    
+    void Load(const YAML::Node& node, bool as_prefab = false);
 
     [[nodiscard]] const OBB& GetOBB() const
     {
@@ -128,6 +127,8 @@ public:
     {
         name = new_name;
     }
+
+    GameObject* Find(UID id) const;
 
     template<typename RetComponent>
     RetComponent* GetComponent()

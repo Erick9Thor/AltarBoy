@@ -8,6 +8,7 @@
 
 #include "Application.h"
 
+#include "ComponentAnimation.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
@@ -17,8 +18,13 @@ Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID
 {
     if (res != nullptr)
     {
-        mesh = res;
+        AddResourceMesh(res);
     }
+}
+
+Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
+{
+    delete[] node_cache;
 }
 
 void Hachiko::ComponentMeshRenderer::Update() {
@@ -81,7 +87,7 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
 
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
-    mesh = static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id));
+    AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
@@ -105,6 +111,7 @@ void Hachiko::ComponentMeshRenderer::DrawGui()
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)],
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
                 ImGui::Checkbox("Visible", &visible);
+                ImGui::Checkbox("Navigable", &navigable);
             }
             ImGui::TreePop();
         }
@@ -131,10 +138,14 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     if (mesh != nullptr)
     {
         node[RENDERER_MESH_ID] = mesh->GetID();
+        node[MESH_NAVIGABLE] = navigable;
+        node[MESH_VISIBLE] = visible;
     }
     else
     {
         node[RENDERER_MESH_ID] = 0;
+        node[MODEL_NAME] = 0;
+        node[MESH_VISIBLE] = true;
     }
 
     if (material != nullptr)
@@ -149,12 +160,13 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
 
 void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 {
-    SetID(node[COMPONENT_ID].as<UID>());
-
     UID mesh_id = node[RENDERER_MESH_ID].as<UID>();
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
     if (mesh_id)
     {
+        navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
+        visible = node[MESH_VISIBLE].IsDefined() ? node[MESH_VISIBLE].as<bool>() : true;
+
         LoadMesh(mesh_id);
     }
     if (material_id)
@@ -163,19 +175,25 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     }
 }
 
+Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 
+{
+    if (posible_root->GetComponent<Hachiko::ComponentAnimation>())
+    {
+        return posible_root;
+    }
+    GetRoot(posible_root->parent);
+}
+
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    const GameObject* root = game_object;
-
-    while (root->GetID() != App->scene_manager->GetRoot()->GetID())
-    {
-        root = root->parent;
-    }
-
-    HE_LOG("Name of root: %s", root->name.c_str());
     
-    if (mesh && mesh->num_bones > 0 && root)
+    if (mesh && mesh->num_bones > 0)
     {
+        const GameObject* root = GetRoot(game_object);
+
+        if (!root)
+            return;
+
         float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
 
         for (unsigned i = 0; i < mesh->num_bones; ++i)
@@ -224,7 +242,7 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             material_path.append(META_EXTENSION);
             YAML::Node material_node = YAML::LoadFile(material_path);
 
-            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
                 // Unload material

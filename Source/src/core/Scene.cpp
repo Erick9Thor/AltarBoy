@@ -12,11 +12,13 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleDebugDraw.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleNavigation.h"
 
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceMaterial.h"
+#include "resources/ResourceAnimation.h"
 #include <debugdraw.h>
+#include <algorithm>
 
 #include "imnodes.h"
 
@@ -40,6 +42,7 @@ Hachiko::Scene::Scene() :
    
     ImNodes::CreateContext();
     wsm = Hachiko::WindowStateMachine();
+    App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -83,13 +86,6 @@ Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
     return root->GetComponentInDescendants<ComponentCamera>();
 }
 
-void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
-{
-    GameObject* new_parent = parent ? parent : root;
-    new_parent->children.push_back(new_object);
-    quadtree->Insert(new_object);
-}
-
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)
 {
     GameObject* final_parent = parent != nullptr ? parent : root;
@@ -101,55 +97,9 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
     return new_game_object;
 }
 
-void Hachiko::Scene::HandleInputModel(ResourceModel* model)
-{
-    GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
-
-    if (model->have_animation > 0)
-    {
-        ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
-        for (unsigned int i = 0; i < model->have_animation; ++i)
-        {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, model->animations[i].animation_id));
-            component_animation->animations.push_back(r_animation);
-        }
-    }
-
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
-        for (auto child : children)
-        {
-            GameObject* last_parent = parent;
-
-            last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
-            
-            if (!child->meshes_index.empty())
-            {
-                for (unsigned i = 0; i < child->meshes_index.size(); ++i)
-                {
-                    MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
-                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
-                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH_RENDERER));
-                    //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    //component->SetModelName(model->model_name);
-                    
-                    //component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
-                    component->AddResourceMaterial(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, mat_info.material_id)));
-                }
-            }
-            
-            last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
-
-            create_children_function(last_parent, child->children);
-        }
-    };
-
-    create_children_function(game_object, model->child_nodes);
-}
-
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
+    // TODO: Change the location of this, it has no reason to be here
     GameObject* game_object = App->editor->GetSelectedGameObject();
     if (game_object == nullptr)
     {
@@ -161,13 +111,20 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     if (component_mesh_renderer != nullptr)
     {
         component_mesh_renderer->AddResourceMaterial(material);
+        return;
     }
+    // TODO: If the material is not used decrease reference count
 }
 
 Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
 {
     LineSegment line_seg(origin, destination);
     return Raycast(line_seg);
+}
+
+Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
+{
+    return root->Find(id);
 }
 
 Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
@@ -245,6 +202,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
+    App->navigation->BuildNavmesh(this);
+
     loaded = true;
 }
 
@@ -261,26 +220,34 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
     std::function<void(GameObject*)> get_navmesh_data = [&](GameObject* go)
     {
         ComponentMeshRenderer* mesh_renderer = go->GetComponent<ComponentMeshRenderer>();        
-        const float4x4 global_transform = go->GetTransform()->GetGlobalMatrix();
+        const float4x4& global_transform = go->GetTransform()->GetGlobalMatrix();
         // TODO: Add a distinction to filter out meshes that are not part of navigation (navigable flag or not static objects, also flag?)
-        if (mesh_renderer)
+        if (mesh_renderer && mesh_renderer->IsNavigable())
         {
+            // Use previous amount of mesh vertices to point to the correct indices
+            // Divide size/3 because its a vector of floats not of float3
+            int indices_offset = static_cast<int>(scene_vertices.size()) / 3;
+            
             const float* vertices = mesh_renderer->GetVertices();
             for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::VERTICES); i += 3)
             {
+                
                 float4 global_vertex = global_transform * float4(vertices[i], vertices[i + 1], vertices[i + 2], 1.0f);
-                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.z);
+                // w is excluded, so we pass float 3 as desired
+                scene_vertices.insert(scene_vertices.end(), &global_vertex.x, &global_vertex.w);
             }
-
+            
             const unsigned* indices = mesh_renderer->GetIndices();
             int n_indices = mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES);
-            scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            auto inserted = scene_triangles.insert(scene_triangles.end(), indices, indices + n_indices);
+            std::for_each(inserted, scene_triangles.end(), [&](int& v) { v += indices_offset; });
 
             const float* normals = mesh_renderer->GetNormals();
             for (int i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::NORMALS); i += 3)
             {
                 float4 global_normal = global_transform * float4(normals[i], normals[i + 1], normals[i + 2], 1.0f);
-                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.z);
+                // w is excluded, so we pass float 3 as desired
+                scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
             scene_bounds.Enclose(go->GetAABB());

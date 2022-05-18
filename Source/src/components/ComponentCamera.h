@@ -35,12 +35,6 @@ namespace Hachiko
 
         void OnTransformUpdated() override;
 
-        static Type GetType()
-        {
-            return Type::CAMERA;
-        }
-
-
         [[nodiscard]] float4x4 GetViewMatrix(bool transpose = false) const;
         [[nodiscard]] float4x4 GetProjectionMatrix(bool transpose = false) const;
 

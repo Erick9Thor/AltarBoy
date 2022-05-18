@@ -43,7 +43,6 @@ namespace Hachiko
         void SetGlobalRotationEuler(const float3& new_rotation_euler);
         
 
-        static Type GetType() { return Type::TRANSFORM; };
         [[nodiscard]] bool IsDirty() const { return dirty; }
         [[nodiscard]] bool HasChanged() const { return changed; }        
 

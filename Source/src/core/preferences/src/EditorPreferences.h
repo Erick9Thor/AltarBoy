@@ -24,16 +24,6 @@ namespace Hachiko
             return display_debug_draw;
         }
 
-        void SetSceneBackgroundColor(const float3& sceneBackgroundColor)
-        {
-            scene_background_color = sceneBackgroundColor;
-        }
-
-        [[nodiscard]] const float3& GetSceneBackgroundColor() const
-        {
-            return scene_background_color;
-        }
-
         [[nodiscard]] float GetMaxFPS() const
         {
             return max_fps;
@@ -56,17 +46,27 @@ namespace Hachiko
             return fullscreen;
         }
 
+        void SetResizable(const bool val)
+        {
+            resizable = val;
+        }
+
+        [[nodiscard]] bool IsResizable() const
+        {
+            return resizable;
+        }
+
         void SetFullscreen(const bool fullscreen)
         {
             this->fullscreen = fullscreen;
         }
 
-        void SetVsync(const int vsync)
+        void SetVsync(const bool val)
         {
-            this->vsync = vsync;
+            vsync = val;
         }
 
-        [[nodiscard]] int GetVsync() const
+        [[nodiscard]] bool IsVsyncActive() const
         {
             return vsync;
         }
@@ -103,7 +103,6 @@ namespace Hachiko
 
     private:
         bool display_debug_draw = false;
-        float3 scene_background_color = float3(0.9f);
 
         //TODO remove this property in favor of the camera component
         bool display_camera_settings = false;
@@ -111,7 +110,8 @@ namespace Hachiko
         float max_fps = 250.0f;
         bool fullscreen = false;
         bool scene_autosave = false;
-        int vsync = 0;
+        bool vsync = true;
+        bool resizable = false;
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };

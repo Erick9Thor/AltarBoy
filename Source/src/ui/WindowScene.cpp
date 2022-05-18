@@ -10,42 +10,69 @@
 
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform.h"
+#include "modules/ModuleEvent.h"
 
 #include "modules/ModuleWindow.h"
 
 #include "ui/ImGuiUtils.h"
 
-Hachiko::WindowScene::WindowScene() : Window("Scene", true) {}
+Hachiko::WindowScene::WindowScene() :
+    Window("Scene", true)
+{
+}
 
 Hachiko::WindowScene::~WindowScene() = default;
 
-void Hachiko::WindowScene::Update()
+void Hachiko::WindowScene::Init()
 {
-    if (!App->input->GetMouseButton(SDL_BUTTON_RIGHT))
-    {
-        if (App->input->GetKey(SDL_SCANCODE_W) == KeyState::KEY_REPEAT)
-            guizmo_operation = ImGuizmo::TRANSLATE;
-        if (App->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_REPEAT)
-            guizmo_operation = ImGuizmo::ROTATE;
-        if (App->input->GetKey(SDL_SCANCODE_R) == KeyState::KEY_REPEAT)
-            guizmo_operation = ImGuizmo::SCALE;
-    }
-    ImGui::SetNextWindowDockID(App->editor->dock_main_id, ImGuiCond_FirstUseEver);
-    if (ImGui::Begin((std::string(ICON_FA_GLOBE " ") + name).c_str(), &active))
-    {
-        focused = ImGui::IsWindowFocused();
-        GuizmoOptionsController();
-        ImGui::SameLine();
-        ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
-        ImGui::SameLine();
-        ToolbarMenu();
-        DrawScene();
-        Controller();
-        ImGui::End();
-    }
+    std::function updateViewportSize = [&](Event& evt) {
+        const auto state = evt.GetEventData<GameStateEventPayload>().GetState();
+        if (state == GameStateEventPayload::State::STARTED)
+        {
+            DrawScene();
+        }
+    };
+    App->event->Subscribe(Event::Type::GAME_STATE, updateViewportSize);
 }
 
-void Hachiko::WindowScene::CleanUp() {}
+
+void Hachiko::WindowScene::Update()
+{
+    if (focused && App->editor->GetSelectedGameObject())
+    {
+        if (App->input->IsKeyPressed(SDL_SCANCODE_W))
+        {
+            guizmo_operation = ImGuizmo::TRANSLATE;
+        }
+        if (App->input->IsKeyPressed(SDL_SCANCODE_E))
+        {
+            guizmo_operation = ImGuizmo::ROTATE;
+        }
+        if (App->input->IsKeyPressed(SDL_SCANCODE_R))
+        {
+            guizmo_operation = ImGuizmo::SCALE;
+        }
+    }
+    ImGui::SetNextWindowDockID(App->editor->dock_main_id, ImGuiCond_FirstUseEver);
+    if (!ImGui::Begin((std::string(ICON_FA_GLOBE " ") + name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
+    {
+        ImGui::End();
+        return;
+    }
+    focused = ImGui::IsWindowFocused();
+    GuizmoOptionsController();
+    ImGui::SameLine();
+    ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
+    ImGui::SameLine();
+    ToolbarMenu();
+    DrawScene();
+    Controller();
+    ImGui::End();
+}
+
+void Hachiko::WindowScene::CleanUp()
+{
+}
 
 void Hachiko::WindowScene::GuizmoOptionsController()
 {
@@ -121,7 +148,7 @@ void Hachiko::WindowScene::DrawScene()
     // Bottom left corner in opengl coordinates, bottom is y = 0
     texture_position = float2(guizmo_rect_origin.x, static_cast<float>(App->window->GetHeight()) - guizmo_rect_origin.y - texture_size.y);
 
-    ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2 {0, 1}, ImVec2 {1, 0});
+    ImGui::Image((void*)static_cast<intptr_t>(App->renderer->GetTextureId()), size, ImVec2{0, 1}, ImVec2{1, 0});
     // Checking hover on image for more intuitive controls
     hovering = ImGui::IsItemHovered();
 
@@ -138,7 +165,7 @@ void Hachiko::WindowScene::DrawScene()
     // TO AVOID Camera orbit
     if (ImGui::IsWindowFocused())
     {
-        bool guizmo_enabled = !(App->input->GetMouseButton(SDL_BUTTON_RIGHT) || App->input->GetKey(SDL_SCANCODE_LALT) == KeyState::KEY_DOWN);
+        bool guizmo_enabled = !(App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT) || App->input->IsKeyPressed(SDL_SCANCODE_LALT));
         ImGuizmo::Enable(guizmo_enabled);
     }
 
@@ -156,7 +183,9 @@ void Hachiko::WindowScene::DrawScene()
 
     GameObject* selected_object = App->editor->GetSelectedGameObject();
     if (!selected_object)
+    {
         return;
+    }
 
     if (selected_object)
     {
@@ -185,12 +214,14 @@ void Hachiko::WindowScene::DrawScene()
 
 void Hachiko::WindowScene::Controller() const
 {
-    if (!using_guizmo && focused && hovering && App->input->GetMouseButton(SDL_BUTTON_LEFT))
+    if (!using_guizmo && focused && hovering && App->input->IsMouseButtonPressed(SDL_BUTTON_LEFT))
     {
         Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetRenderingCamera(), scene);
         if (picked)
+        {
             App->editor->SetSelectedGO(picked);
+        }
     }
 }
 

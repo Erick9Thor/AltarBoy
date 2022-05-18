@@ -12,17 +12,20 @@ namespace Hachiko
         friend class ModelImporter;
 
     public:
-        MaterialImporter();
+        MaterialImporter() = default;
+        ~MaterialImporter() override = default;
 
+        // Copies the material file to lib
         void Import(const char* path, YAML::Node& meta) override;
-        void ImportWithMeta(const char* path, YAML::Node& meta) override;
-        void Save(const Resource* material) override;
+        // Stores current material resource state to assets and lib
+        void Save(UID id, const Resource* material) override;
         Resource* Load(UID id) override;
-        [[nodiscard]] bool IsImported(const char* path) override { return false; }
-        void CreateMaterial(const std::string& name);
-    
+        // Create new material
+        UID CreateEmptyMaterial(const std::string& name);        
+        UID CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material);
+        void GenerateMaterialAssetFile(const ResourceMaterial* material);
     private:
-        void Import(aiMaterial* ai_material, const UID id);
-        ResourceTexture* ImportTexture(const aiMaterial* ai_material, aiTextureType type);
+        
+        
     };
 }

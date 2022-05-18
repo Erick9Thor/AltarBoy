@@ -15,8 +15,6 @@ namespace Hachiko
         ComponentTransform2D(GameObject* container);
         ~ComponentTransform2D() override = default;
 
-        static Type GetType();
-
         void DrawGui() override;
         void DebugDraw() override;
 
@@ -92,9 +90,3 @@ namespace Hachiko
         bool dirty = true;
     };
 }
-
-inline Hachiko::Component::Type Hachiko::ComponentTransform2D::GetType()
-{
-    return Component::Type::TRANSFORM_2D;
-}
-
