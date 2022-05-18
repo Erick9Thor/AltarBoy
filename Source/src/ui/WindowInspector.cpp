@@ -165,6 +165,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             ImGui::CloseCurrentPopup();
         }
 
+        if (ImGui::MenuItem("Audio Listener"))
+        {
+            game_object->CreateComponent(Component::Type::AUDIO_LISTENER);
+            ImGui::CloseCurrentPopup();
+        }
+
         ImGui::EndPopup();
     }
 
