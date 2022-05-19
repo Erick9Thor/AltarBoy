@@ -144,7 +144,7 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryProgram()
 {
     deferred_geometry_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_geometry.glsl");
-    return ui_text_program;
+    return deferred_geometry_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -190,6 +190,8 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete ui_image_program;
     ui_text_program->CleanUp();
     delete ui_text_program;
+    deferred_geometry_program->CleanUp();
+    delete deferred_geometry_program;
     return true;
 }
 

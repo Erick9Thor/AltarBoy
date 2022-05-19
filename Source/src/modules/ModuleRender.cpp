@@ -212,7 +212,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
 #else
-    glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
     ManageResolution(camera);
     
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
@@ -271,11 +271,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     // Clear default frame buffer:
     //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Geometry pass:
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, g_buffer);
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //glStencilMask(0XFF);
 
@@ -288,6 +283,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     Program* program = App->program->GetDeferredGeometryProgram();
     
     program->Activate();
+
+    // Geometry pass:
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, g_buffer);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
@@ -302,8 +302,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     
     //Program::Deactivate();
 
-   /*glActiveTexture(GL_TEXTURE0);
-   glBindTexture(GL_TEXTURE_2D, g_buffer_position);*/
+   //glActiveTexture(GL_TEXTURE0);
+   //glBindTexture(GL_TEXTURE_2D, g_buffer_position);
    
    /* glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
@@ -314,8 +314,10 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     GLint half_height = (GLint)(fb_height / 2.0f);
 
     // Light Pass:
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
 
     glReadBuffer(GL_COLOR_ATTACHMENT0);
@@ -458,6 +460,11 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
 bool Hachiko::ModuleRender::CleanUp()
 {
     //HE_LOG("Destroying renderer");
+
+    glDeleteTextures(1, &g_buffer_albedo_specular);
+    glDeleteTextures(1, &g_buffer_position);
+    glDeleteTextures(1, &g_buffer_normal);
+
     SDL_GL_DeleteContext(context);
 
     return true;
