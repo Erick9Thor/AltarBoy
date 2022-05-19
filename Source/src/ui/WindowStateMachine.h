@@ -15,18 +15,17 @@ namespace Hachiko
         void Update() override;
         void CleanUp() override;
 
-        void showCreatePopUp();
+        void showAddNodePopup();
+        void showEditNodePopup();
 
-        void showEditPopUp();
+        void addLink();
+        void showDeleteLinkPopup();
 
-        void showAddLink();
-        void showDeleteLink();
-
-        void showHelpLink();
+        void showHelp();
 
     private:
 
-        char* trigger = nullptr;
+        //char* trigger = nullptr;
         bool add_node = false;
         bool add_clip = false;
 
@@ -34,8 +33,8 @@ namespace Hachiko
         bool started = false;
         int link_id = 0;
 
-        bool editTrigger = false;
-        bool editIT = false;
+        //bool editTrigger = false;
+        //bool editIT = false;
         bool deleteLink = false;
 
         ResourceStateMachine sm = ResourceStateMachine(1);

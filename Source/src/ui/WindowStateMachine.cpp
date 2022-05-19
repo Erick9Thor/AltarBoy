@@ -18,7 +18,7 @@ Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor
 
 Hachiko::WindowStateMachine::~WindowStateMachine()
 {
-    delete trigger;
+    //delete trigger;
 }
 
 void Hachiko::WindowStateMachine::Update()
@@ -60,20 +60,7 @@ void Hachiko::WindowStateMachine::Update()
         }
 
         ImNodes::EndInputAttribute();
-        /*
-        std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromState = sm.FindTransitionsFromNode(node.name.c_str());
-        for (int j = 0; j < transitionsFromState.size(); ++j)
-        {
-            ImNodes::BeginOutputAttribute(id++);
-            ImGui::Text(transitionsFromState[j].trigger.c_str());
-            ImGui::SameLine();
-            ImGui::Text("|");
-            ImGui::SameLine();
-            ImGui::Text(std::to_string(transitionsFromState[j].interpolationTime).c_str());
-            ImNodes::EndOutputAttribute();
-        }
-        */
-        // OUTPUT BY TRIGGER
+
         ImNodes::BeginOutputAttribute(i * 3 + 2);
         ImGui::Text("");
         ImNodes::EndOutputAttribute();
@@ -84,25 +71,30 @@ void Hachiko::WindowStateMachine::Update()
     id = 0;
     for (const Hachiko::ResourceStateMachine::Transition& transition : sm.transitions)
     {
-        ImNodes::Link(id, sm.FindNode(transition.source) * 3 + 2, sm.FindNode(transition.target) * 3 + 1);
+        int sourceID = sm.FindNode(transition.source);
+        int targetID = sm.FindNode(transition.target);
+        id = sourceID * 100 + targetID;
+        ImNodes::Link(id, sourceID * 3 + 2, targetID * 3 + 1);
+        //ImNodes::Link(id, sm.FindNode(transition.source) * 3 + 2, sm.FindNode(transition.target) * 3 + 1);
         ++id;
     }
 
-
-    showCreatePopUp();
+    showAddNodePopup();
 
     ImNodes::EndNodeEditor();
 
-    // showEditPopUp();
+    showEditNodePopup();
 
-    showAddLink();
-    // showDeleteLink();
-    // showHelpLink();
+    addLink();
+    showDeleteLinkPopup();
+
+    showHelp();
+
     ImGui::End();
 }
 
 
-void Hachiko::WindowStateMachine::showCreatePopUp() 
+void Hachiko::WindowStateMachine::showAddNodePopup() 
 {
     const bool openPopup = ImNodes::IsEditorHovered() && ImGui::IsMouseClicked(1, false);
 
@@ -136,7 +128,7 @@ void Hachiko::WindowStateMachine::showCreatePopUp()
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
 }
 
-void Hachiko::WindowStateMachine::showEditPopUp() 
+void Hachiko::WindowStateMachine::showEditNodePopup() 
 {
     if (ImNodes::IsNodeHovered(&node_id) && ImGui::IsMouseClicked(1, false))
     {
@@ -206,7 +198,7 @@ void Hachiko::WindowStateMachine::showEditPopUp()
     }
 }
 
-void Hachiko::WindowStateMachine::showAddLink() 
+void Hachiko::WindowStateMachine::addLink() 
 {
     int start, end;
     if (ImNodes::IsLinkStarted(&start))
@@ -220,15 +212,16 @@ void Hachiko::WindowStateMachine::showAddLink()
     }
 }
 
-void Hachiko::WindowStateMachine::showDeleteLink() 
+void Hachiko::WindowStateMachine::showDeleteLinkPopup() 
 {
-    /* if (ImNodes::IsLinkHovered(&linkId) && ImGui::IsMouseClicked(1, false))
+    if (ImNodes::IsLinkHovered(&link_id) && ImGui::IsMouseClicked(1, false))
     {
         ImGui::OpenPopup("EditLink");
     }
 
     if (ImGui::BeginPopup("EditLink"))
     {
+        /*
         if (ImGui::Button(" Edit trigger "))
         {
             editTrigger = true;
@@ -267,7 +260,16 @@ void Hachiko::WindowStateMachine::showDeleteLink()
             sm.RemoveTransitionWithTarget(startName, endName);
             ImGui::CloseCurrentPopup();
         }
+        */
 
+        if (ImGui::Button(" Delete link "))
+        {
+            sm.RemoveTransitionWithTarget(sm.nodes[link_id / 100].name, sm.nodes[link_id % 100].name);
+            ImGui::CloseCurrentPopup();
+        }
+
+
+        /*
         if (editTrigger)
         {
             static char newTrigger[128] = "";
@@ -337,12 +339,12 @@ void Hachiko::WindowStateMachine::showDeleteLink()
                 ImGui::CloseCurrentPopup();
             }
         }
-
+        */
         ImGui::EndPopup();
-    }*/
+    }
 }
 
-void Hachiko::WindowStateMachine::showHelpLink() 
+void Hachiko::WindowStateMachine::showHelp() 
 {
     if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) && ImGui::IsKeyPressed(SDL_SCANCODE_H, false))
     {
@@ -362,12 +364,11 @@ void Hachiko::WindowStateMachine::showHelpLink()
         ImGui::BulletText("Mouse left-clicking hovering a pin to start a link");
         ImGui::Text("   and release it in another pin to create it.");
         ImGui::Separator();
-        ImGui::BulletText("Mouse right-clicking hovering a link to edit it.");
-        ImGui::Separator();
+        //ImGui::BulletText("Mouse right-clicking hovering a link to edit it.");
+        //ImGui::Separator();
         ImGui::Text("Node legend:");
         ImGui::Text("                  Node name");
         ImGui::Text("                Clip  | is it looping?");
-        ImGui::Text("              Trigger | interpolation time");
 
         ImGui::EndPopup();
     }
