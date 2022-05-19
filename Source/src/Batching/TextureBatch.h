@@ -44,7 +44,6 @@ namespace Hachiko
             unsigned smoothness_alpha;
             unsigned is_transparent;
             //unsigned padding[3];
-            unsigned padding[1];
         };
 
         TextureBatch();
