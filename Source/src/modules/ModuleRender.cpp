@@ -81,71 +81,103 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
 
 void Hachiko::ModuleRender::GenerateGBuffer() 
 {
+    // Default texture sizes, these will be resized whenever the scene window or the window
+    // is resized:
+    constexpr const unsigned int default_width = 800;
+    constexpr const unsigned int default_height = 600;
+
     // Generate and bind G buffer that will be used for deferred rendering:
     glGenFramebuffers(1, &g_buffer);
     glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
     
+    // Generate diffuse color buffer as texture:
+    glGenTextures(1, &g_buffer_diffuse);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_diffuse);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_diffuse, 0);    
+
+    //// Generate specular & smoothness color buffer as texture:
+    glGenTextures(1, &g_buffer_specular_smoothness);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_specular_smoothness);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, g_buffer_specular_smoothness, 0);
+
+    // Generate normal color buffer as texture:
+    // This can also be encoded using RGB8 like normal maps, and it would save us some memory.
+    // Also if we do this improvement, we need to map [-1,1] range to [0,1] range in the shader. (*0.5+0.5)
+    // TODO: Do this.
+    glGenTextures(1, &g_buffer_normal);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_normal, 0);
+    
     // Generate position color buffer as texture:
     glGenTextures(1, &g_buffer_position);
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_position, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, g_buffer_position, 0);
 
-    // Generate normal color buffer as texture:
-    glGenTextures(1, &g_buffer_normal);
-    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    // Generate depth color buffer as texture:
+    glGenTextures(1, &g_buffer_depth);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_depth);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, default_width, default_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, g_buffer_normal, 0);
-    
-    // Generate albedo & specular color buffer as texture:
-    glGenTextures(1, &g_buffer_albedo_specular);
-    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, g_buffer_albedo_specular, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, g_buffer_depth, 0);
     
     // Pass the color attachments we're gonna use for g_buffer frame buffer to opengl:
-    unsigned int attachments[3] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
-    glDrawBuffers(3, attachments);
-
-    //unsigned int rboDepth;
-    //glGenRenderbuffers(1, &rboDepth);
-    //glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-    //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, fb_width, fb_height);
-    //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+    constexpr size_t attachments_length = 4;
+    unsigned int attachments[attachments_length] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, 
+                                                    GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3};
+    glDrawBuffers(attachments_length, attachments);
 
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 
     if (status != GL_FRAMEBUFFER_COMPLETE)
     {
-        HE_LOG("FB error, status: 0x%x\n", status);
+        HE_ERROR("An error occured while creating G Buffer, status: 0x%x\n", status);
         return;
     }
 }
 
 void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
 {
+    // Frame buffer texture:
     glBindTexture(GL_TEXTURE_2D, fb_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     
-    glBindTexture(GL_TEXTURE_2D, g_buffer_position);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    // Diffuse color texture stored in g buffer:
+    glBindTexture(GL_TEXTURE_2D, g_buffer_diffuse);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, heigth, width, 0, GL_RGB, GL_FLOAT, NULL);
     
+    // Specular color (rgb) and smoothness color (a) textures stored in g buffer:
+    glBindTexture(GL_TEXTURE_2D, g_buffer_specular_smoothness);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    
+    // Normal color texture stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
-    
-    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 
+    // Position color stored in g buffer:
+    glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+
+    // Depth color stored in g buffer:
+    glBindTexture(GL_TEXTURE_2D, g_buffer_depth);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, heigth, width, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    
+    // Unbind:
     glBindTexture(GL_TEXTURE_2D, 0);
 
     // TODO: Do we need this for G buffer as well? If so, do it.
-
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -320,14 +352,17 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
 
-    glReadBuffer(GL_COLOR_ATTACHMENT0);
+    glReadBuffer(GL_COLOR_ATTACHMENT2);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, half_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     
-    glReadBuffer(GL_COLOR_ATTACHMENT1);
+    glReadBuffer(GL_COLOR_ATTACHMENT0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, half_height, half_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     
-    glReadBuffer(GL_COLOR_ATTACHMENT2);
+    glReadBuffer(GL_COLOR_ATTACHMENT1);
     glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, half_height, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+    glReadBuffer(GL_DEPTH_ATTACHMENT);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
     /*if (outline_selection && outline_target)
     {
@@ -344,8 +379,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }*/
-
-    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
@@ -461,7 +494,10 @@ bool Hachiko::ModuleRender::CleanUp()
 {
     //HE_LOG("Destroying renderer");
 
-    glDeleteTextures(1, &g_buffer_albedo_specular);
+    // TODO: Should i delete depth?
+
+    glDeleteTextures(1, &g_buffer_diffuse);
+    glDeleteTextures(1, &g_buffer_specular_smoothness);
     glDeleteTextures(1, &g_buffer_position);
     glDeleteTextures(1, &g_buffer_normal);
 

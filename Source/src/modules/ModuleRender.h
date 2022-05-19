@@ -96,9 +96,11 @@ namespace Hachiko
 
         // Deferred rendering buffers:
         unsigned g_buffer = 0;
-        unsigned g_buffer_position = 0;
+        unsigned g_buffer_diffuse = 0;
+        unsigned g_buffer_specular_smoothness = 0;
         unsigned g_buffer_normal = 0;
-        unsigned g_buffer_albedo_specular = 0;
+        unsigned g_buffer_position = 0;
+        unsigned g_buffer_depth = 0;
 
         // float4 clear_color;
         bool draw_skybox = true;
