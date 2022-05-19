@@ -74,6 +74,7 @@ namespace Hachiko
 
     private:
         void GenerateFrameBuffer();
+        void GenerateGBuffer();
         void ResizeFrameBuffer(int heigth, int width) const;
         void ManageResolution(ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
@@ -92,6 +93,12 @@ namespace Hachiko
         unsigned fb_texture = 0;
         unsigned fb_height = 0;
         unsigned fb_width = 0;
+
+        // Deferred rendering buffers:
+        unsigned g_buffer = 0;
+        unsigned g_buffer_position = 0;
+        unsigned g_buffer_normal = 0;
+        unsigned g_buffer_albedo_specular = 0;
 
         // float4 clear_color;
         bool draw_skybox = true;

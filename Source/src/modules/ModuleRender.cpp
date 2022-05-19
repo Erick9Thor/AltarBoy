@@ -73,15 +73,78 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
         HE_LOG("Error creating frame buffer");
     }
 
+    GenerateGBuffer();
+
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Hachiko::ModuleRender::GenerateGBuffer() 
+{
+    // Generate and bind G buffer that will be used for deferred rendering:
+    glGenFramebuffers(1, &g_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
+    
+    // Generate position color buffer as texture:
+    glGenTextures(1, &g_buffer_position);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_position, 0);
+
+    // Generate normal color buffer as texture:
+    glGenTextures(1, &g_buffer_normal);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 800, 600, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, g_buffer_normal, 0);
+    
+    // Generate albedo & specular color buffer as texture:
+    glGenTextures(1, &g_buffer_albedo_specular);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, g_buffer_albedo_specular, 0);
+    
+    // Pass the color attachments we're gonna use for g_buffer frame buffer to opengl:
+    unsigned int attachments[3] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2};
+    glDrawBuffers(3, attachments);
+
+    //unsigned int rboDepth;
+    //glGenRenderbuffers(1, &rboDepth);
+    //glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+    //glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, fb_width, fb_height);
+    //glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+
+    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+    if (status != GL_FRAMEBUFFER_COMPLETE)
+    {
+        HE_LOG("FB error, status: 0x%x\n", status);
+        return;
+    }
 }
 
 void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
 {
     glBindTexture(GL_TEXTURE_2D, fb_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    
+    glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    
+    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    
+    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    // TODO: Do we need this for G buffer as well? If so, do it.
 
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
@@ -96,8 +159,8 @@ void Hachiko::ModuleRender::ManageResolution(ComponentCamera* camera)
     {
         ResizeFrameBuffer(res_x, res_y);
         glViewport(0, 0, res_x, res_y);
-        fb_height = res_x;
-        fb_width = res_y;
+        fb_height = res_y;
+        fb_width = res_x;
     }
 }
 
@@ -149,7 +212,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
     glStencilMask(0x00); // Prevent background from filling stencil
 #else
-    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
     ManageResolution(camera);
     
     glStencilFunc(GL_ALWAYS, 1, 0XFF);
@@ -178,10 +241,10 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
     Draw(App->scene_manager->GetActiveScene(), camera, culling);
 
-    if (draw_navmesh)
-    {
-        App->navigation->DebugDraw();
-    }
+    //if (draw_navmesh)
+    //{
+    //    App->navigation->DebugDraw();
+    //}
     
     App->ui->DrawUI(active_scene);
 
@@ -195,25 +258,35 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-    if (draw_skybox)
-    {
-        scene->GetSkybox()->Draw(camera);
-    }
-    else
-    {
-        const auto& clear_color = App->editor->scene_background;
-        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-    }
+    //if (draw_skybox)
+    //{
+    //    scene->GetSkybox()->Draw(camera);
+    //}
+    //else
+    //{
+    //    const auto& clear_color = App->editor->scene_background;
+    //    glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+    //}
 
-    glStencilMask(0XFF);
+    // Clear default frame buffer:
+    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
+    // Geometry pass:
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, g_buffer);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //glStencilMask(0XFF);
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
+
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
-    Program* program = App->program->GetMainProgram();
+    Program* program = App->program->GetDeferredGeometryProgram();
+    
     program->Activate();
 
     GameObject* selected_go = App->editor->GetSelectedGameObject();
@@ -226,9 +299,35 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
             outline_target = &target;
         }
     }
-    Program::Deactivate();
+    
+    //Program::Deactivate();
 
-    if (outline_selection && outline_target)
+   /*glActiveTexture(GL_TEXTURE0);
+   glBindTexture(GL_TEXTURE_2D, g_buffer_position);*/
+   
+   /* glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);*/
+
+    GLint half_width = (GLint)(fb_width / 2.0f);
+    GLint half_height = (GLint)(fb_height / 2.0f);
+
+    // Light Pass:
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
+
+    glReadBuffer(GL_COLOR_ATTACHMENT0);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, half_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    
+    glReadBuffer(GL_COLOR_ATTACHMENT1);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, half_height, half_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    
+    glReadBuffer(GL_COLOR_ATTACHMENT2);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, half_height, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+
+    /*if (outline_selection && outline_target)
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
         glStencilMask(0X00);
@@ -242,7 +341,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glStencilMask(0XFF);
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
-    }
+    }*/
+
+    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
