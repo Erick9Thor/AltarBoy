@@ -19,7 +19,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// This is until we have saving for scripts. Because of this, this
 	// script needs to be a direct child of scene root, and there must
 	// be a GameObject of name "PlayerC" which is our player.
-	_player = game_object->parent->GetFirstChildWithName("PlayerC");
+	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
 	_player_ctrl = _player->GetComponent<PlayerController>();
 	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
@@ -111,4 +111,10 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 		cam_pos->y = cam_pos->y + 0.5f;
 		cam_pos->z = cam_pos->z + 0.3f;
 	}
+}
+
+void Hachiko::Scripting::PlayerCamera::Shake(float time, float intesity)
+{
+	float3 originalPos = game_object->GetTransform()->GetGlobalPosition();
+
 }

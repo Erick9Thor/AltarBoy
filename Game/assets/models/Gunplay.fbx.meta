@@ -1,0 +1,18 @@
+asset_hash: 1782035057310088985
+model_name: Gunplay
+meshes:
+  - 7155964069784133170
+materials:
+  - 15737844490852114836
+animations:
+  - 12902740560060457373
+prefab_id: 15994823307885098367
+resources:
+  - resource_id: 7155964069784133170
+    resource_type: 3
+  - resource_id: 15737844490852114836
+    resource_type: 1
+  - resource_id: 12902740560060457373
+    resource_type: 7
+  - resource_id: 15994823307885098367
+    resource_type: 13

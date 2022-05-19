@@ -20,6 +20,8 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
+	void Shake(float time, float intesity);
+
 private:
 	float2 MoveCameraWithMouse();
 	void ScrollWheelZoom(float3* cam_pos);

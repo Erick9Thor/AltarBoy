@@ -25,13 +25,13 @@ child:
         mesh_id: 4657792022921634311
         navigable: false
         visible: true
-        material_id: 6404025130868057127
+        material_id: 750264189281571905
       - type: 2
         enabled: true
         mesh_id: 282215514867166725
         navigable: false
         visible: true
-        material_id: 9577815112474161680
+        material_id: 9591045720590550693
   - name: Ctrl_Grp
     enabled: true
     component:

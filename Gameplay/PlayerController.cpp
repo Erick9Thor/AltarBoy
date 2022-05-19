@@ -3,7 +3,7 @@
 #include "Scenes.h"
 #include "Stats.h"
 #include "EnemyController.h"
-
+#include "PlayerCamera.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
@@ -35,6 +35,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _raycast_max_range(15.f)
 	, _stats(5, 2, 10, 10)
 	, _state(PlayerState::IDLE)
+	, _camera(nullptr)
 {
 }
 
@@ -60,7 +61,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	math::float3 current_position = transform->GetGlobalPosition();
 	if (_stats._current_hp <= 0)
 	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
+		//SceneManagement::SwitchScene(Scenes::LOSE);
 	}
 
 	// Set state to idle, it will be overriden if there is a movement:
@@ -87,7 +88,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
-	CheckGoal(current_position);
+	//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -209,6 +210,10 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	for (Hachiko::GameObject* enemy : enemies_hit)
 	{
 		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power);
+	}
+	if (enemies_hit.size() > 0)
+	{
+		_camera->Shake(0.2f, 0.5f);
 	}
 }
 
