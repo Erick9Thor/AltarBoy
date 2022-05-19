@@ -111,6 +111,19 @@ namespace Hachiko
         void ChangeMaterial();
 
         std::vector<float4x4> palette{}; // TODO: MOVE TO PRIVATE AGAIN
+
+        // Scripting
+        [[nodiscard]] bool OverrideMaterialActive() const
+        {
+            return override_material;
+        }
+        void OverrideEmissive(float4 color, float time);
+
+        [[nodiscard]] float4 GetOverrideEmissiveColor() const
+        {
+            return override_emissive;
+        }
+
     private:
         bool visible = true;       
         bool navigable = false;        
@@ -121,5 +134,11 @@ namespace Hachiko
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
+
+        // Scripting
+        bool override_material = false;
+        float override_timer = 0;
+        float4 override_emissive;
+
     };
 } // namespace Hachiko

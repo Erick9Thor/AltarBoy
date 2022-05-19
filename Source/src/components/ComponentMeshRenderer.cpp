@@ -36,6 +36,17 @@ void Hachiko::ComponentMeshRenderer::Update() {
 
     }
 
+    // Material override
+    if (override_material)
+    {
+        override_timer -= GameTimer::delta_time;
+        if (override_timer <= 0)
+        {
+            override_material = false;
+            override_timer = 0;
+        }
+    }
+
     if (palette.empty())
     {
         palette.resize(mesh->num_bones);
@@ -262,4 +273,11 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
 
         ImGuiFileDialog::Instance()->Close();
     }
+}
+
+void Hachiko::ComponentMeshRenderer::OverrideEmissive(float4 color, float time) 
+{
+    override_material = true;
+    override_timer = time;
+    override_emissive = color;
 }
