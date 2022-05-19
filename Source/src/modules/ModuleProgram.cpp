@@ -20,7 +20,10 @@ bool Hachiko::ModuleProgram::Init()
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program)
+    CreateDeferredGeometryProgram();
+
+    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || 
+        !deferred_geometry_program)
     {
         return false;
     }
@@ -135,6 +138,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceImageProgram()
 Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 {
     ui_text_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_font.glsl", ASSETS_FOLDER "/Shaders/fragment_font.glsl");
+    return ui_text_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryProgram()
+{
+    deferred_geometry_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_geometry.glsl");
     return ui_text_program;
 }
 

@@ -53,6 +53,11 @@ namespace Hachiko
         {
             return main_program;
         }
+        
+        [[nodiscard]] Program* GetDeferredGeometryProgram() const
+        {
+            return deferred_geometry_program;
+        }
 
         [[nodiscard]] Program* GetSkyboxProgram() const
         {
@@ -92,8 +97,10 @@ namespace Hachiko
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
+        Program* CreateDeferredGeometryProgram();
 
         Program* main_program = nullptr;
+        Program* deferred_geometry_program = nullptr;
         Program* skybox_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
