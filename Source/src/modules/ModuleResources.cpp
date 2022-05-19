@@ -29,6 +29,7 @@ bool ModuleResources::Init()
         FileSystem::CreateDir(lib_path.second.c_str());
     }
 
+#ifndef PLAY_BUILD
     for (auto& asset_path : preferences->GetAssetsPathsMap())
     {
         FileSystem::CreateDir(asset_path.second.c_str());
@@ -36,14 +37,16 @@ bool ModuleResources::Init()
 
     AssetsLibraryCheck();
 
-    std::function handleAddedFile = [&](Event& evt)
-    {
+    std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
         std::filesystem::path file = e.GetPath();
         HE_LOG("Handling dropped file: %s", file.string().c_str());
         ImportAssetFromAnyPath(file);
     };
+
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
+#endif
+
     return true;
 }
 

@@ -246,9 +246,10 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
     else
     {
         // This removes current navmesh
+        GameObject* camera_go = main_scene->CreateNewGameObject(main_scene->GetRoot(), "Main Camera");
+        camera_go->CreateComponent(Component::Type::CAMERA);
         App->navigation->SetNavmesh(0);
     }
-
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
@@ -257,8 +258,9 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
     // attached by default, add the following lines to CreateEmptyScene as well
 #ifdef PLAY_BUILD
     main_scene->Start();
-    App->camera->SetRenderingCamera(main_scene->GetMainCamera());
-    main_scene->SetCullingCamera(main_scene->GetMainCamera());
+    ComponentCamera* main_camera = main_scene->GetMainCamera();
+    App->camera->SetRenderingCamera(main_camera);
+    main_scene->SetCullingCamera(main_camera);
 #else
     if (IsScenePlaying())
     {
