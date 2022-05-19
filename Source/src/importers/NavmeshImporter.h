@@ -13,6 +13,8 @@ namespace Hachiko
     {
     public:
 
+        friend class SceneImporter;
+
         struct TileCacheSetHeader
         {
             int magic;

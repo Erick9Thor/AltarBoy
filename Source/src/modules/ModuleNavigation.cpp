@@ -13,10 +13,6 @@
 #include "ModuleCamera.h"
 #include "components/ComponentCamera.h"
 
-Hachiko::ModuleNavigation::ModuleNavigation() {}
-
-Hachiko::ModuleNavigation::~ModuleNavigation() {}
-
 bool Hachiko::ModuleNavigation::Init()
 {
     return true;
@@ -125,8 +121,10 @@ dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
     return scene_navmesh ? scene_navmesh->navigation_query : nullptr;
 }
 
-void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* navmesh)
+void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 {
+    App->resources->ReleaseResource(scene_navmesh);
+    scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
 }
 
 void Hachiko::ModuleNavigation::DebugDraw()

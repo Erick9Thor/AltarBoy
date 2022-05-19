@@ -13,8 +13,8 @@ namespace Hachiko
     class ModuleNavigation : public Module
     {
     public:
-        ModuleNavigation();
-        ~ModuleNavigation() override;
+        ModuleNavigation() = default;
+        ~ModuleNavigation() override = default;
 
         bool Init() override;
         bool CleanUp() override;
@@ -28,7 +28,7 @@ namespace Hachiko
         dtCrowd* GetCrowd() const;
         dtNavMeshQuery* GetNavQuery() const;
 
-        void SetNavmesh(ResourceNavMesh* navmesh);
+        void SetNavmesh(UID uid);
         ResourceNavMesh* BuildNavmesh(Scene* scene);
 
         void DebugDraw();

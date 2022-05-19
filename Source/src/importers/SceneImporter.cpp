@@ -4,13 +4,26 @@
 #include "resources/ResourceScene.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleResources.h"
+#include "NavmeshImporter.h"
 
 void Hachiko::SceneImporter::Import(const char* path, YAML::Node& meta)
 {
     // Only 1 scene per scene asset will exist
-    static const int resource_index = 0;
-    UID uid = ManageResourceUID(Resource::Type::SCENE, resource_index, meta);    
-    FileSystem::Copy(path, GetResourcePath(Resource::Type::SCENE, uid).c_str());
+    static const int scene_resource_index = 0;
+    static const int navmesh_resource_index = 1;
+    UID scene_uid = ManageResourceUID(Resource::Type::SCENE, scene_resource_index, meta);    
+    FileSystem::Copy(path, GetResourcePath(Resource::Type::SCENE, scene_uid).c_str());
+
+
+    UID navmesh_uid = ManageResourceUID(Resource::Type::SCENE, navmesh_resource_index, meta);  
+    NavmeshImporter navmesh_importer;
+
+    Scene* temp_scene = new Scene();
+     
+    const ResourceScene* scene = static_cast<const ResourceScene*>(Load(scene_uid));
+    temp_scene->Load(scene->scene_data);
+    navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_uid);
+    delete scene;
 }
 
 void Hachiko::SceneImporter::Save(UID id, const Resource* resource)
