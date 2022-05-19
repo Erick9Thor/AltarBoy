@@ -57,10 +57,6 @@
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 #define MATERIAL_IS_TRANSPARENT "is_transparent"
 
-// ComponentMeshRenderer
-#define RENDERER_MESH_ID "mesh_id"
-#define RENDERER_MATERIAL_ID "material_id"
-
 //////////////////////////
 //						//
 // Importer extensions  //
@@ -201,11 +197,13 @@
 #define PINNED_CAMERA "pinned_camera"
 
 // Component Image
-#define IMAGE_PATH "image_path"
-#define HOVER_IMAGE_PATH "hover_image_path"
+#define IMAGE_IMAGE_ID "image_id"
+#define IMAGE_HOVER_IMAGE_ID "hover_image_id"
+#define USE_IMAGE "use_image"
+#define USE_HOVER_IMAGE "use_hover_image"
 
 // Component Text
-#define FONT_PATH "font_path"
+#define FONT_ID "font_id"
 #define FONT_COLOR "color"
 #define FONT_SIZE "size"
 #define FONT_LABEL_TEXT "label_text"
@@ -225,6 +223,10 @@
 #define MAX_SPEED "max_speed"
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
+
+// ComponentMeshRenderer
+#define RENDERER_MESH_ID "mesh_id"
+#define RENDERER_MATERIAL_ID "material_id"
 
 // Script
 #define SCRIPT_NAME "class_name"

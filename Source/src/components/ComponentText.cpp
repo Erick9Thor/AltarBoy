@@ -10,7 +10,7 @@
 #include "modules/ModuleResources.h"
 
 #include "core/rendering/Program.h"
-
+#include "modules/ModuleResources.h"
 
 Hachiko::ComponentText::ComponentText(GameObject* container) 
 	: Component(Type::TEXT, container) {}
@@ -103,6 +103,7 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
 
 void Hachiko::ComponentText::Save(YAML::Node& node) const
 {    
+    node[FONT_ID] = font ? font->GetID() : 0;
     node[FONT_COLOR] = font_color;
     node[FONT_SIZE] = font_size;
     node[FONT_LABEL_TEXT] = label_text;
@@ -110,11 +111,10 @@ void Hachiko::ComponentText::Save(YAML::Node& node) const
 
 void Hachiko::ComponentText::Load(const YAML::Node& node)
 {
-    SetID(node[COMPONENT_ID].as<UID>());   
     font_color = node[FONT_COLOR].as<float4>();
     font_size = node[FONT_SIZE].as<float>();
     label_text = node[FONT_LABEL_TEXT].as<std::string>();
-    LoadFont(node[COMPONENT_ID].as<UID>());
+    LoadFont(node[FONT_ID].as<UID>());
 }
 
 void Hachiko::ComponentText::SetText(const char* new_text)
@@ -147,9 +147,10 @@ void Hachiko::ComponentText::LoadFont(UID id)
     {
         App->resources->ReleaseResource(font);
         font = static_cast<ResourceFont*>(App->resources->GetResource(Resource::Type::FONT, id));
-        BuildLabel(game_object->GetComponent<ComponentTransform2D>());
-        // TODO: Fix how this works, right now it uses component id to find font
-        SetID(id);
+        if (font)
+        {
+            BuildLabel(game_object->GetComponent<ComponentTransform2D>());
+        }
     }
     catch (std::exception& e)
     {
