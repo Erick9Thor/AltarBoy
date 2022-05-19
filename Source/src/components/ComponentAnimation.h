@@ -14,11 +14,6 @@ namespace Hachiko
         ComponentAnimation(GameObject* container);
         ~ComponentAnimation() override;
 
-        static Type GetType()
-        {
-            return Type::ANIMATION;
-        }
-        
         HACHIKO_API void StartAnimating(unsigned int animation_index, bool on_loop = true, unsigned int fade_in_time_ms = 0);
         HACHIKO_API void StartAnimating(bool on_loop = true, unsigned int fade_in_time_ms = 0);
         HACHIKO_API void StopAnimating();

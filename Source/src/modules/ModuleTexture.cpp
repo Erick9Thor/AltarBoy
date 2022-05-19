@@ -37,7 +37,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const char* path, bool flip)
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid, const char* path, bool flip)
 {
     std::filesystem::path texture_path = path;
 
@@ -135,7 +135,7 @@ Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(const char* paths[6])
                      0,
                      ilGetInteger(IL_IMAGE_FORMAT), //ilGetInteger(IL_IMAGE_BPP),
                      cube.widths[i] = ilGetInteger(IL_IMAGE_WIDTH),
-                     cube.heighths[i] = ilGetInteger(IL_IMAGE_HEIGHT),
+                     cube.heights[i] = ilGetInteger(IL_IMAGE_HEIGHT),
                      0,
                      ilGetInteger(IL_IMAGE_FORMAT),
                      GL_UNSIGNED_BYTE,

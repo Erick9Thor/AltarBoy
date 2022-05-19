@@ -1,0 +1,17 @@
+asset_hash: 6159836605640719156
+model_name: BakerHouse
+meshes:
+  - 7544551443759936381
+  - 3581704332068092856
+materials:
+  - 3869827490542517799
+prefab_id: 6456279534359088235
+resources:
+  - resource_id: 7544551443759936381
+    resource_type: 3
+  - resource_id: 3581704332068092856
+    resource_type: 3
+  - resource_id: 3869827490542517799
+    resource_type: 1
+  - resource_id: 6456279534359088235
+    resource_type: 13

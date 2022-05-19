@@ -4,6 +4,8 @@
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleSceneManager.h"
+#include "ModuleEvent.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
@@ -109,6 +111,28 @@ bool Hachiko::ModuleEditor::Init()
         }
     }
 
+    editor_prefs = App->preferences->GetEditorPreference();
+    theme = editor_prefs->GetTheme();
+    UpdateTheme();
+
+#ifndef PLAY_BUILD
+    std::function create_history_entry = [&](Event& evt) {
+        CreateSnapshot();
+    };
+    App->event->Subscribe(Event::Type::CREATE_EDITOR_HISTORY_ENTRY, create_history_entry);
+
+    std::function enable_history = [&](Event& evt) {
+        const auto state = evt.GetEventData<GameStateEventPayload>().GetState();
+        history_enabled = state == GameStateEventPayload::State::STOPPED;
+    };
+    App->event->Subscribe(Event::Type::GAME_STATE, enable_history);
+#endif
+    return true;
+}
+
+bool Hachiko::ModuleEditor::Start()
+{
+    history.Init();
     return true;
 }
 
@@ -144,7 +168,10 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
             const std::string file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_extension;
 
             HE_LOG("Loading scene: %s", file_path_name.c_str());
+
+            history.CleanUp();
             App->scene_manager->LoadScene(file_path.c_str());
+            history.Init();
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -152,7 +179,6 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
 
     GenerateDockingSpace();
 #endif
-
 
     for (Window* panel : windows)
     {
@@ -188,7 +214,7 @@ UpdateStatus Hachiko::ModuleEditor::MainMenuBar()
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 4));
     if (ImGui::BeginMainMenuBar())
     {
-        FileMenu();
+        status = FileMenu();
         EditMenu();
         GoMenu();
         ThemeMenu();
@@ -214,11 +240,6 @@ UpdateStatus Hachiko::ModuleEditor::MainMenuBar()
             if (ImGui::MenuItem("Download source!"))
             {
                 Application::RequestBrowser("https://github.com/AkitaInteractive/Hachiko-Engine/archive/refs/heads/main.zip");
-            }
-
-            if (ImGui::MenuItem("Quit"))
-            {
-                status = UpdateStatus::UPDATE_STOP;
             }
 
             ImGui::EndMenu();
@@ -274,18 +295,21 @@ void Hachiko::ModuleEditor::GenerateDockingSpace()
     }
 }
 
-void Hachiko::ModuleEditor::FileMenu() const
+UpdateStatus Hachiko::ModuleEditor::FileMenu()
 {
+    auto status = UpdateStatus::UPDATE_CONTINUE;
     // TODO: shortcuts
     Scene* current_scene = App->scene_manager->GetActiveScene();
 
     if (!ImGui::BeginMenu("File"))
     {
-        return;
+        return UpdateStatus::UPDATE_CONTINUE;
     }
     if (ImGui::MenuItem(ICON_FA_PLUS "New"))
     {
+        history.CleanUp();
         App->scene_manager->CreateEmptyScene();
+        history.Init();
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
@@ -296,10 +320,17 @@ void Hachiko::ModuleEditor::FileMenu() const
     {
         ImGui::OpenPopup("Save scene");
     }
+
     ImGui::Separator();
     if (ImGui::MenuItem("Load"))
     {
         ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ASSETS_FOLDER_SCENES);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem("Exit"))
+    {
+        status = UpdateStatus::UPDATE_STOP;
     }
 
     ImGui::EndMenu();
@@ -323,6 +354,8 @@ void Hachiko::ModuleEditor::FileMenu() const
         }
         ImGui::EndPopup();
     }
+
+    return status;
 }
 
 void Hachiko::ModuleEditor::ViewMenu()
@@ -371,21 +404,55 @@ void Hachiko::ModuleEditor::ThemeMenu() const
     }
 }
 
-void Hachiko::ModuleEditor::EditMenu() const
+void Hachiko::ModuleEditor::CreateSnapshot()
 {
-    // TODO: shortcuts
+    history.Save(App->scene_manager->GetActiveScene()->CreateSnapshot());
+}
+
+void Hachiko::ModuleEditor::Undo()
+{
+    const auto memento = history.Undo();
+    if (memento)
+    {
+        App->scene_manager->GetActiveScene()->Restore(memento);
+    }
+}
+
+void Hachiko::ModuleEditor::Redo()
+{
+    const auto memento = history.Redo();
+    if (memento)
+    {
+        App->scene_manager->GetActiveScene()->Restore(memento);
+    }
+}
+
+void Hachiko::ModuleEditor::EditMenu()
+{
+    if (App->input->IsModifierPressed(KMOD_CTRL) && App->input->IsKeyDown(SDL_SCANCODE_Z))
+    {
+        Undo();
+    }
+
+    if (App->input->IsModifierPressed(KMOD_CTRL) && App->input->IsKeyDown(SDL_SCANCODE_Y))
+    {
+        Redo();
+    }
+
     const bool is_go_selected = GetSelectedGameObject() != nullptr;
 
     if (!ImGui::BeginMenu("Edit"))
+    {
         return;
-
-    if (ImGui::MenuItem(ICON_FA_UNDO "Undo", nullptr, false, CanUndo()))
-    {
-        //TODO:
     }
-    if (ImGui::MenuItem(ICON_FA_REDO "Redo", nullptr, false, CanRedo()))
+
+    if (ImGui::MenuItem(ICON_FA_UNDO "Undo", "CTRL+Z", false, CanUndo()))
     {
-        //TODO:
+        Undo();
+    }
+    if (ImGui::MenuItem(ICON_FA_REDO "Redo", "CTRL+Y", false, CanRedo()))
+    {
+        Redo();
     }
     ImGui::Separator();
     if (ImGui::MenuItem(ICON_FA_CLIPBOARD "Copy", nullptr, false, is_go_selected))
@@ -413,6 +480,7 @@ void Hachiko::ModuleEditor::GoMenu() const
     if (ImGui::MenuItem("Add GameObject"))
     {
         App->scene_manager->GetActiveScene()->CreateNewGameObject(App->scene_manager->GetActiveScene()->GetRoot(), "GameObject");
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
     }
 
     ImGui::EndMenu();
@@ -430,9 +498,76 @@ bool Hachiko::ModuleEditor::CleanUp()
         }
     }
 
+    history_enabled = true; //ensure history is enabled so we can clear it
+    history.CleanUp();
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL2_Shutdown();
     ImGui::DestroyContext();
 
+    editor_prefs->SetTheme(theme);
     return true;
+}
+
+
+Hachiko::Scene::Memento* Hachiko::ModuleEditor::History::Undo()
+{
+    if (CanUndo())
+    {
+        return mementos[--current_position - 1].get();
+    }
+    return nullptr;
+}
+
+Hachiko::Scene::Memento* Hachiko::ModuleEditor::History::Redo()
+{
+    if (CanRedo())
+    {
+        return mementos[current_position++].get();
+    }
+    return nullptr;
+}
+
+void Hachiko::ModuleEditor::History::Save(Scene::Memento* memento)
+{
+    if (history_enabled)
+    {
+        if (CanRedo())
+        {
+            //remove unused mementos branch
+            const auto it = mementos.begin() + current_position;
+            mementos.erase(it, mementos.end());
+        }
+        current_position++;
+        mementos.emplace_back(memento);
+    }
+}
+
+bool Hachiko::ModuleEditor::History::CanUndo() const
+{
+    return history_enabled && current_position > 1;
+}
+
+bool Hachiko::ModuleEditor::History::CanRedo() const
+{
+    return history_enabled && current_position < mementos.size();
+}
+
+void Hachiko::ModuleEditor::History::Init()
+{
+    if (history_enabled)
+    {
+        current_position = 0;
+        Save(App->scene_manager->GetActiveScene()->CreateSnapshot());
+    }
+}
+
+void Hachiko::ModuleEditor::History::CleanUp()
+{
+    if (history_enabled)
+    {
+        HE_LOG("Clearing action history");
+        mementos.erase(mementos.begin(), mementos.end());
+        mementos.clear();
+    }
 }

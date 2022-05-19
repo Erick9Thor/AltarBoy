@@ -1,18 +1,14 @@
-General:
-  id: 1668025779356396082
-  type: 3
-  hash: 230705047336641219
+asset_hash: 230705047336641219
 model_name: cylinder
-material:
-  - id: 1668025779356496082
-    name: DefaultMaterial
-mesh:
-  - id: 1668025779356397082
-    material_index: 0
-name: RootNode
-transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-child:
-  - name: Cylinder001
-    transform: [1, 0, 0, 0, 0, 5.96046448e-08, 0.99999994, 0, 0, -0.99999994, 5.96046448e-08, 0, 0, 0, 0, 1]
-    mesh_index:
-      - 0
+meshes:
+  - 10210867973034302559
+materials:
+  - 14284934860888829777
+prefab_id: 5482645476422140435
+resources:
+  - resource_id: 10210867973034302559
+    resource_type: 3
+  - resource_id: 14284934860888829777
+    resource_type: 1
+  - resource_id: 5482645476422140435
+    resource_type: 13

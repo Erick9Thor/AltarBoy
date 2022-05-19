@@ -7,6 +7,7 @@
 namespace Hachiko
 {
     class ComponentCamera;
+    class CameraPreferences;
 
     class ModuleCamera : public Module
     {
@@ -51,6 +52,7 @@ namespace Hachiko
         
         GameObject* editor_camera_game_object = nullptr;
         ComponentCamera* rendering_camera = nullptr;
+        CameraPreferences* camera_prefs = nullptr;
 
         std::vector<ComponentCamera*> camera_buffer;
         unsigned int last_it = 0;

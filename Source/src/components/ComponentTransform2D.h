@@ -45,7 +45,7 @@ namespace Hachiko
         {
             return scale;
         }
-        
+
         [[nodiscard]] float3 GetPivotOffsetFromParent() const;
         [[nodiscard]] float3 GetPivotScreenPosition() const;
 
@@ -82,7 +82,7 @@ namespace Hachiko
         // Check if needed (GO already has his own)
         float4x4 local_transform = float4x4::identity;
         float4x4 global_transform = float4x4::identity;
-        
+
         // Used to check click intersections
         AABB2D aabb = {{0, 0}, {0, 0}};
 
@@ -97,4 +97,3 @@ inline Hachiko::Component::Type Hachiko::ComponentTransform2D::GetType()
 {
     return Component::Type::TRANSFORM_2D;
 }
-

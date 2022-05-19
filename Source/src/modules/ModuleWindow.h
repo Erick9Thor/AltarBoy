@@ -6,6 +6,7 @@
 namespace Hachiko
 {
     class Application;
+    class EditorPreferences;
 
     class ModuleWindow : public Module
     {
@@ -59,6 +60,7 @@ namespace Hachiko
 
         SDL_Window* window = nullptr;
         SDL_Surface* screen_surface = nullptr;
+        EditorPreferences* editor_prefs = nullptr;
 
         bool fullscreen{};
         bool resizable{};

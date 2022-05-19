@@ -1,6 +1,7 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
+#include "utils/UUID.h"
+#include <utility>
 
 namespace Hachiko
 {
@@ -13,12 +14,11 @@ namespace Hachiko
     class ComponentSpotLight;
     class Skybox;
     class Quadtree;
-    class ResourceModel;
     class ResourceMaterial;
     class ResourceNavMesh;
     class BatchManager;
 
-    class Scene : public ISerializable
+    class Scene
     {
         friend class ModuleSceneManager;
 
@@ -33,17 +33,16 @@ namespace Hachiko
         void Update();
 
         // --- GameObject Management --- //
-        ComponentCamera* GetMainCamera() const;
-        void AddGameObject(GameObject* new_object, GameObject* parent = nullptr);
-        void DestroyGameObject(GameObject* game_object);
+        [[nodiscard]] ComponentCamera* GetMainCamera() const;
+        void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
-        void HandleInputModel(ResourceModel* model);
         void HandleInputMaterial(ResourceMaterial* material);
 
         void RebuildBatching();
 
         [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
+
         [[nodiscard]] GameObject* GetRoot() const
         {
             return root;
@@ -85,7 +84,7 @@ namespace Hachiko
             return skybox;
         }
 
-        bool IsLoaded() const
+        [[nodiscard]] bool IsLoaded() const
         {
             return loaded;
         }
@@ -94,24 +93,24 @@ namespace Hachiko
         {
             return name.c_str();
         }
-        
+
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
-        GameObject* Find(UID id) const;
+        [[nodiscard]] GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
         {
             name = new_name;
         }
 
-        void Save(YAML::Node& node) const override;
-        void Load(const YAML::Node& node) override;
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
-        
-        std::vector<ComponentDirLight*> dir_lights;
-        std::vector<ComponentPointLight*> point_lights;
-        std::vector<ComponentSpotLight*> spot_lights;
+
+        std::vector<ComponentDirLight*> dir_lights{};
+        std::vector<ComponentPointLight*> point_lights{};
+        std::vector<ComponentSpotLight*> spot_lights{};
 
         
 
@@ -126,5 +125,29 @@ namespace Hachiko
 
         bool rebuild_batch = true;
         BatchManager* batch_manager = nullptr;
+
+    public:
+        class Memento
+        {
+        public:
+            Memento(std::string content) :
+                // content(std::move(content))
+            content(std::move(content))
+            {
+            }
+
+            ~Memento() = default;
+
+            [[nodiscard]] std::string GetContent() const
+            {
+                return content;
+            }
+            
+        private:
+            std::string content;
+        };
+
+        [[nodiscard]] Memento* CreateSnapshot() const;
+        void Restore(const Memento*) const;
     };
 } // namespace Hachiko

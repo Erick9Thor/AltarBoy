@@ -1,18 +1,14 @@
-General:
-  id: 11859354783047509899
-  type: 3
-  hash: 14431016664718813603
+asset_hash: 14431016664718813603
 model_name: sphere
-material:
-  - id: 11859354783047609899
-    name: DefaultMaterial
-mesh:
-  - id: 11859354783047510899
-    material_index: 0
-name: RootNode
-transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-child:
-  - name: Sphere001
-    transform: [1, 0, 0, 0, 0, 5.96046448e-08, 0.99999994, 0, 0, -0.99999994, 5.96046448e-08, 0, 0, 0, 0, 1]
-    mesh_index:
-      - 0
+meshes:
+  - 9734251747031717595
+materials:
+  - 14284934860888829777
+prefab_id: 15917384532975208959
+resources:
+  - resource_id: 9734251747031717595
+    resource_type: 3
+  - resource_id: 14284934860888829777
+    resource_type: 1
+  - resource_id: 15917384532975208959
+    resource_type: 13

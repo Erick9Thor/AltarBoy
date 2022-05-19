@@ -1,18 +1,14 @@
-General:
-  id: 15256354291694338724
-  type: 3
-  hash: 2921237583184484729
+asset_hash: 2921237583184484729
 model_name: cube
-material:
-  - id: 15256354291694438724
-    name: DefaultMaterial
-mesh:
-  - id: 15256354291694339724
-    material_index: 0
-name: RootNode
-transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-child:
-  - name: Box001
-    transform: [1, 0, 0, 0, 0, 5.96046448e-08, 0.99999994, 0, 0, -0.99999994, 5.96046448e-08, 0, 0, 0, 0, 1]
-    mesh_index:
-      - 0
+meshes:
+  - 1654487118907036717
+materials:
+  - 14284934860888829777
+prefab_id: 2133411952837815245
+resources:
+  - resource_id: 1654487118907036717
+    resource_type: 3
+  - resource_id: 14284934860888829777
+    resource_type: 1
+  - resource_id: 2133411952837815245
+    resource_type: 13

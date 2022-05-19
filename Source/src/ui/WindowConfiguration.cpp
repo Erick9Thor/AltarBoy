@@ -6,6 +6,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleWindow.h"
 #include "modules/ModuleSceneManager.h"
+#include "modules/ModuleAudio.h"
 
 #include "components/ComponentCamera.h"
 #include "core/preferences/src/EditorPreferences.h"
@@ -25,14 +26,19 @@ void Hachiko::WindowConfiguration::Update()
     }
     if (ImGui::CollapsingHeader("Scene"))
     {
-        App->renderer->OptionsMenu();
-        ImGui::Separator();
         App->scene_manager->OptionsMenu();
+        ImGui::Separator();
+        App->renderer->OptionsMenu();
         ImGui::Separator();
         ImGui::Text("Shader Options");
         App->program->OptionsMenu();
     }
-
+    
+    if (ImGui::CollapsingHeader("Audio"))
+    {
+        App->audio->OptionsMenu();
+    }
+    
     //It is already a collapsing header
     App->camera->GetRenderingCamera()->DrawGui();
 
@@ -40,6 +46,7 @@ void Hachiko::WindowConfiguration::Update()
     {
         App->window->OptionsMenu();
         App->renderer->PerformanceMenu();
+
     }
     ImGui::End();
 }

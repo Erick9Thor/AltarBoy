@@ -5,7 +5,6 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleEvent.h"
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 
 Hachiko::WindowResource::WindowResource() : 
@@ -34,12 +33,11 @@ void Hachiko::WindowResource::Update()
         ImGui::InputText("Name", &auxiliary_name[0], 64);
         if (ImGui::Button("Create material"))
         {
-            App->resources->CreateResource(Resource::Type::MATERIAL, auxiliary_name);
+            App->resources->CreateAsset(Resource::Type::MATERIAL, auxiliary_name);
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
     }
-    //
 
     std::filesystem::path library_path("./");
 
@@ -66,65 +64,27 @@ void Hachiko::WindowResource::Update()
         }
         else
         {
-            auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
-            if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
+            if (FileSystem::GetFileExtension(filename.c_str()) != ".meta")
             {
-                filename.insert(0, "\\");
-                filename.insert(0, current_directory.string().c_str());
-                LoadResource(filename);
-            }
-
-            /* if (ImGui::IsMouseClicked(1))
-            {
-                ImGui::OpenPopup(filename.c_str());
-            }
-
-            if (ImGui::BeginPopup(filename.c_str()))
-            {
-                if (ImGui::MenuItem("Refresh asset"))
+                auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
+                if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
                 {
-                    App->resources->ReimportAsset(filename);
-                    ImGui::CloseCurrentPopup();
+                    filename.insert(0, "\\");
+                    filename.insert(0, current_directory.string().c_str());
+                    LoadAsset(filename);
+                    App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
                 }
-                ImGui::EndPopup();
-            } */
+            }            
         }
     }
     ImGui::End();
 }
 
-void Hachiko::WindowResource::LoadResource(const std::string& path)
+void Hachiko::WindowResource::LoadAsset(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
-    if (FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
+    if (!FileSystem::GetFileExtension(path.c_str())._Equal(META_EXTENSION))
     {
-        
-        YAML::Node node = YAML::LoadFile(path);
-        Resource::Type type = static_cast<Resource::Type>(node[GENERAL_NODE][GENERAL_TYPE].as<unsigned>());
-        switch (type)
-        {
-        case Resource::Type::MODEL:
-            LoadModelIntoScene(node);
-            break;
-        case Resource::Type::MATERIAL:
-            LoadMaterialIntoSelectedObject(node);
-            break;
-        }
+        App->resources->LoadAsset(path);
     }
-}
-
-void Hachiko::WindowResource::LoadModelIntoScene(YAML::Node& node)
-{
-    HE_LOG("Adding a model into scene");
-    Scene* scene = App->scene_manager->GetActiveScene();
-    auto model_res = static_cast<ResourceModel*>(App->resources->GetResource(Resource::Type::MODEL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
-    scene->HandleInputModel(model_res);
-}
-
-void Hachiko::WindowResource::LoadMaterialIntoSelectedObject(YAML::Node& node)
-{
-    HE_LOG("Adding a material into selected game object");
-    Scene* scene = App->scene_manager->GetActiveScene();
-    auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, node[GENERAL_NODE][GENERAL_ID].as<UID>()));
-    scene->HandleInputMaterial(material_res);
 }

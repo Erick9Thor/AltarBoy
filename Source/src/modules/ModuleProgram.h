@@ -42,6 +42,7 @@ namespace Hachiko
             SPECULAR,
             NORMAL,
             METALNESS,
+            EMISSIVE,
             COUNT,
         };
 
@@ -123,10 +124,12 @@ namespace Hachiko
         {
             float4 diffuse_color;
             float4 specular_color;
+            float4 emissive_color;
             unsigned diffuse_flag{};
             unsigned specular_flag{};
             unsigned normal_flag{};
             unsigned metalness_flag{};
+            unsigned emissive_flag{};
             float smoothness{};
             float metalness_value{};
             unsigned is_metallic{};

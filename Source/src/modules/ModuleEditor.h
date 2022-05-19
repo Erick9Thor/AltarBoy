@@ -19,28 +19,32 @@
 
 namespace Hachiko
 {
+    class EditorPreferences;
+
     class ModuleEditor : public Module
     {
     public:
         ModuleEditor();
 
         bool Init() override;
+        bool Start() override;
         UpdateStatus PreUpdate(float delta) override;
         UpdateStatus Update(float delta) override;
         UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
+
         void UpdateTheme() const;
 
         //Edit actions
-        static bool CanUndo()
+        bool CanUndo() const
         {
-            return false;
+            return history.CanUndo();
         }
 
-        static bool CanRedo()
+        bool CanRedo() const
         {
-            return false;
+            return history.CanRedo();
         }
 
         static bool CanPaste()
@@ -90,11 +94,15 @@ namespace Hachiko
 
         // Main menu bar
         UpdateStatus MainMenuBar();
-        void FileMenu() const;
-        void EditMenu() const;
+        UpdateStatus FileMenu();
+        void EditMenu();
         void GoMenu() const;
         void ViewMenu();
         void ThemeMenu() const;
+
+        void CreateSnapshot();
+        void Undo();
+        void Redo();
 
         GameObject* selected_go = nullptr;
 
@@ -110,6 +118,31 @@ namespace Hachiko
         WindowTimers w_timers;
         WindowProject w_project;
 
+        EditorPreferences* editor_prefs = nullptr;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
+
+        class History
+        {
+        public:
+            Scene::Memento* Undo();
+            Scene::Memento* Redo();
+            void Save(Scene::Memento*);
+            [[nodiscard]] bool CanUndo() const;
+            [[nodiscard]] bool CanRedo() const;
+
+            void Init();
+            void CleanUp();
+
+        private:
+            size_t current_position = 0;
+            std::vector<std::shared_ptr<Scene::Memento>> mementos {};
+        };
+
+        History history;
+#ifndef PLAY_BUILD
+        inline static bool history_enabled = true;
+#else
+        inline static bool history_enabled = false;
+#endif
     };
 }

@@ -9,11 +9,11 @@
 #include "core/preferences/src/EditorPreferences.h"
 
 bool Hachiko::ModuleSceneManager::Init()
-{ 
+{
     serializer = new SceneSerializer();
     preferences = App->preferences->GetResourcesPreference();
-    std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::Type::SCENE), preferences->GetSceneName());
-    
+    std::string scene_path = StringUtils::Concat(preferences->GetAssetsPath(Resource::AssetType::SCENE), preferences->GetSceneName());
+
     if (std::filesystem::exists(scene_path))
     {
         LoadScene(scene_path.c_str());
@@ -24,12 +24,19 @@ bool Hachiko::ModuleSceneManager::Init()
     }
     
 
+    std::function handleSceneSwapping = [&](Event& evt)
+    {
+        auto scene = evt.GetEventData<EditorHistoryEntryRestore>().GetScene();
+        SwapScene(scene);
+    };
+    App->event->Subscribe(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY, handleSceneSwapping);
+
 #ifdef PLAY_BUILD
     main_scene->Start();
 #endif
 
-    EditorPreferences* pref = App->preferences->GetEditorPreference();
-    scene_autosave = pref->GetAutosave();
+    EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
+    scene_autosave = editor_prefs->GetAutosave();
     return true;
 }
 
@@ -52,14 +59,14 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
     if (scene_camera == nullptr)
     {
         HE_LOG("Current scene does not have a CameraComponent inside."
-               " Therefore, cannot enter Play Mode.");
+            " Therefore, cannot enter Play Mode.");
         return;
     }
 
     main_scene->SetCullingCamera(scene_camera);
 
     App->camera->SetRenderingCamera(scene_camera);
-    
+
     if (!GameTimer::running)
     {
         Event game_state(Event::Type::GAME_STATE);
@@ -67,7 +74,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         App->event->Publish(game_state);
 
         SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
-        
+
         GameTimer::Start();
     }
     else if (GameTimer::paused)
@@ -75,7 +82,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::RESUMED);
         App->event->Publish(game_state);
-        
+
         GameTimer::Resume();
     }
 }
@@ -122,9 +129,10 @@ bool Hachiko::ModuleSceneManager::CleanUp()
         SaveScene();
     }
 
-    EditorPreferences* pref = App->preferences->GetEditorPreference();
-    pref->SetAutosave(scene_autosave);
-    
+    EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
+    editor_prefs->SetAutosave(scene_autosave);
+    preferences->SetSceneName(main_scene->GetName());
+
     // TODO: Remove temp_scene.scene from disk
     RELEASE(main_scene);
     RELEASE(serializer);
@@ -156,34 +164,10 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene()
 
 void Hachiko::ModuleSceneManager::LoadScene(const char* file_path)
 {
-    Event scene_load(Event::Type::SCENE_LOADED);
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::NOT_LOADED);
-    App->event->Publish(scene_load);
-
-    delete main_scene;
-    main_scene = serializer->Load(file_path);
-   
-    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
-    App->event->Publish(scene_load);
-    
+    Scene* scene = serializer->Load(file_path);
     currentScenePath = file_path;
-    
-    // TODO: If we make empty scenes have a game object with a camera component
-    // attached by default, add the following lines to CreateEmptyScene as well
 
-#ifdef PLAY_BUILD
-    main_scene->Start();
-    App->camera->SetRenderingCamera(main_scene->GetMainCamera());
-    main_scene->SetCullingCamera(main_scene->GetMainCamera());
-#else
-    if (IsScenePlaying())
-    {
-        App->camera->SetRenderingCamera(main_scene->GetMainCamera());
-        main_scene->SetCullingCamera(main_scene->GetMainCamera());
-    }
-#endif // PLAY_MODE
+    SwapScene(scene);
 }
 
 void Hachiko::ModuleSceneManager::SaveScene()
@@ -198,7 +182,7 @@ void Hachiko::ModuleSceneManager::SaveScene()
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* file_path)
 {
-    serializer->Save(main_scene, file_path); // TODO: Take into account temporal scenes
+    serializer->Save(main_scene, file_path);
 }
 
 Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
@@ -227,9 +211,41 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
 {
-    
-    
+    char scene_name[50];
+    strcpy_s(scene_name, 50, main_scene->GetName());
+    const ImGuiInputTextFlags name_input_flags = ImGuiInputTextFlags_AutoSelectAll | ImGuiInputTextFlags_EnterReturnsTrue;
+    if (ImGui::InputText("###", scene_name, 50, name_input_flags))
+    {
+        main_scene->SetName(scene_name);
+    }
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
-
     App->navigation->DrawOptionsGui();
+}
+
+void Hachiko::ModuleSceneManager::SwapScene(Scene* scene)
+{
+    Event scene_load(Event::Type::SCENE_LOADED);
+
+    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
+    App->event->Publish(scene_load);
+
+    delete main_scene;
+    main_scene = scene;
+
+    scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
+    App->event->Publish(scene_load);
+
+    // TODO: If we make empty scenes have a game object with a camera component
+    // attached by default, add the following lines to CreateEmptyScene as well
+#ifdef PLAY_BUILD
+    main_scene->Start();
+    App->camera->SetRenderingCamera(main_scene->GetMainCamera());
+    main_scene->SetCullingCamera(main_scene->GetMainCamera());
+#else
+    if (IsScenePlaying())
+    {
+        App->camera->SetRenderingCamera(main_scene->GetMainCamera());
+        main_scene->SetCullingCamera(main_scene->GetMainCamera());
+    }
+#endif // PLAY_MODE
 }

@@ -10,6 +10,8 @@
 
 #include "ui/WindowScene.h"
 
+#include "core/preferences/src/CameraPreferences.h"
+
 
 Hachiko::ModuleCamera::ModuleCamera() = default;
 
@@ -25,9 +27,11 @@ bool Hachiko::ModuleCamera::Init()
 
     camera_buffer.clear();
     camera_buffer.push_back(rendering_camera);
-    
     rendering_camera->SetCameraType(ComponentCamera::CameraType::GOD);
-    editor_camera_game_object->GetTransform()->SetGlobalPosition(float3(0.0f, 8.0f, 10.0f));
+
+    camera_prefs = App->preferences->GetCameraPreference();
+
+    editor_camera_game_object->GetTransform()->SetGlobalPosition(camera_prefs->GetPosition());
     editor_camera_game_object->GetTransform()->LookAtTarget(float3::zero);
     editor_camera_game_object->Update();
 
@@ -61,6 +65,9 @@ UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 
 bool Hachiko::ModuleCamera::CleanUp()
 {
+    // Save to prefs
+    camera_prefs->SetPosition(editor_camera_game_object->GetTransform()->GetGlobalPosition());
+
     camera_buffer.erase(camera_buffer.begin());
     delete editor_camera_game_object;
     camera_buffer.clear();

@@ -22,9 +22,9 @@ namespace Hachiko
     struct TextureCube // TODO: removed
     {
         bool loaded = false;
-        unsigned id {};
-        unsigned widths[6] {};
-        unsigned heighths[6] {};
+        unsigned id{};
+        unsigned widths[6]{};
+        unsigned heights[6]{};
     };
 
     struct Font
@@ -45,7 +45,7 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        static ResourceTexture* ImportResource(UID uid, const char* path, bool flip = true);
+        static ResourceTexture* ImportTextureResource(UID uid, const char* path, bool flip = true);
 
         [[deprecated]] static Texture Load(const char* path, bool flip = true);
         [[deprecated]] static void Unload(Texture& texture);

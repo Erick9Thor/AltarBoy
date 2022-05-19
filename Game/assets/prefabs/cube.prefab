@@ -1,0 +1,24 @@
+prefab_name: cube
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: Box001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0.707106709, 0, 0, 0.707106829]
+        scale: [1, 0.99999994, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 1654487118907036717
+        navigable: false
+        visible: true
+        material_id: 14284934860888829777

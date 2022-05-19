@@ -14,18 +14,14 @@ namespace Hachiko
 
     class ComponentMeshRenderer : public Component
     {
+        friend class ModelImporter;
     public:
-        ComponentMeshRenderer(GameObject* container, UID id = 0, ResourceMesh* res = nullptr);
+        ComponentMeshRenderer(GameObject* container, UID id = UUID::GenerateUID(), ResourceMesh* res = nullptr);
         ~ComponentMeshRenderer() override;
 
         void Update() override;
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
-
-        static Type GetType()
-        {
-            return Type::MESH_RENDERER;
-        }
 
         [[nodiscard]] bool IsLoaded() const
         {
@@ -114,13 +110,14 @@ namespace Hachiko
 
         void ChangeMaterial();
 
-        std::vector<float4x4> palette; // TODO: MOVE TO PRIVATE AGAIN
+        std::vector<float4x4> palette{}; // TODO: MOVE TO PRIVATE AGAIN
     private:
-        bool visible = true;
-        bool navigable = false;
-              
+        bool visible = true;       
+        bool navigable = false;        
+      
         // SKINING
         const GameObject** node_cache = nullptr;
+        //std::vector<float4x4> palette{};
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
