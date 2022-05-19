@@ -1,143 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceNavMesh.h"
 
-#include "Recast.h"
-#include "InputGeom.h"
-#include "RecastAlloc.h"
-#include "RecastAssert.h"
 
-
-#include "DetourCommon.h"
-#include "DetourNavMesh.h"
-#include "DetourNavMeshBuilder.h"
-#include "DetourNavMeshQuery.h"
-#include "DetourTileCache.h"
-#include "DetourTileCacheBuilder.h"
-#include "DetourCrowd.h"
-#include "SampleInterfaces.h"
-
-#include "fastlz.h"
-
-#include "DebugUtils/DebugDraw.h"
-#include "DebugUtils/RecastDebugDraw.h"
-#include "DebugUtils/DetourDebugDraw.h"
-
-#include "modules/ModuleCamera.h"
-#include "components/ComponentCamera.h"
-
-struct FastLZCompressor : public dtTileCacheCompressor
-{
-    int maxCompressedSize(const int bufferSize) override
-    {
-        return static_cast<int>(static_cast<float>(bufferSize) * 1.05f);
-    }
-
-    dtStatus compress(const unsigned char* buffer, const int bufferSize, unsigned char* compressed, const int /*maxCompressedSize*/, int* compressedSize) override
-    {
-        *compressedSize = fastlz_compress((const void* const)buffer, bufferSize, compressed);
-        return DT_SUCCESS;
-    }
-
-    dtStatus decompress(const unsigned char* compressed, const int compressedSize, unsigned char* buffer, const int maxBufferSize, int* bufferSize) override
-    {
-        *bufferSize = fastlz_decompress(compressed, compressedSize, buffer, maxBufferSize);
-        return *bufferSize < 0 ? DT_FAILURE : DT_SUCCESS;
-    }
-};
-
-struct LinearAllocator : public dtTileCacheAlloc
-{
-    unsigned char* buffer;
-    size_t capacity;
-    size_t top;
-    size_t high;
-
-    explicit LinearAllocator(const size_t cap) : buffer(nullptr)
-    {
-        capacity = 0;
-        top = 0;
-        high = 0;
-        resize(cap);
-    }
-
-    ~LinearAllocator() override
-    {
-        dtFree(buffer);
-    }
-
-    void resize(const size_t cap)
-    {
-        if (buffer)
-            dtFree(buffer);
-        buffer = (unsigned char*)dtAlloc(cap, DT_ALLOC_PERM);
-        capacity = cap;
-    }
-
-    void reset() override
-    {
-        high = dtMax(high, top);
-        top = 0;
-    }
-
-    void* alloc(const size_t size) override
-    {
-        if (!buffer)
-            return nullptr;
-        if (top + size > capacity)
-            return nullptr;
-        unsigned char* mem = &buffer[top];
-        top += size;
-        return mem;
-    }
-
-    void free(void* /*ptr*/)
-    {
-        // Empty
-    }
-};
-
-struct MeshProcess : public dtTileCacheMeshProcess
-{
-    InputGeom* m_geom;
-
-    inline MeshProcess() : m_geom(0) {}
-
-    inline void init(InputGeom* geom)
-    {
-        m_geom = geom;
-    }
-
-    virtual void process(struct dtNavMeshCreateParams* params, unsigned char* polyAreas, unsigned short* polyFlags)
-    {
-        // Update poly flags from areas.
-        for (int i = 0; i < params->polyCount; ++i)
-        {
-            if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
-            {
-                polyAreas[i] = Hachiko::SAMPLE_POLYAREA_GROUND;
-                polyFlags[i] = Hachiko::SAMPLE_POLYFLAGS_WALK;
-            }                
-        }
-
-        // Pass in off-mesh connections.
-        if (m_geom)
-        {
-            params->offMeshConVerts = m_geom->getOffMeshConnectionVerts();
-            params->offMeshConRad = m_geom->getOffMeshConnectionRads();
-            params->offMeshConDir = m_geom->getOffMeshConnectionDirs();
-            params->offMeshConAreas = m_geom->getOffMeshConnectionAreas();
-            params->offMeshConFlags = m_geom->getOffMeshConnectionFlags();
-            params->offMeshConUserID = m_geom->getOffMeshConnectionId();
-            params->offMeshConCount = m_geom->getOffMeshConnectionCount();
-        }
-    }
-};
-
-struct TileCacheData
-{
-    unsigned char* data;
-    int dataSize;
-};
 
 struct RasterizationContext
 {
@@ -542,48 +406,7 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_TempObstacles.cpp
 
-    // Crowd code based on CrowdTool.cpp from example
-
-    crowd = dtAllocCrowd();
-    crowd->init(MAX_AGENTS, build_params.agent_radius, navmesh);
-
-    // Setup local avoidance params to different qualities.
-    dtObstacleAvoidanceParams avoidance_params;
-    // Use mostly default settings, copy from dtCrowd.
-    memcpy(&avoidance_params, crowd->getObstacleAvoidanceParams(0), sizeof(dtObstacleAvoidanceParams));
-
-    // Low (11)
-    avoidance_params.velBias = 0.5f;
-    avoidance_params.adaptiveDivs = 5;
-    avoidance_params.adaptiveRings = 2;
-    avoidance_params.adaptiveDepth = 1;
-    crowd->setObstacleAvoidanceParams(0, &avoidance_params);
-
-    // Medium (22)
-    avoidance_params.velBias = 0.5f;
-    avoidance_params.adaptiveDivs = 5;
-    avoidance_params.adaptiveRings = 2;
-    avoidance_params.adaptiveDepth = 2;
-    crowd->setObstacleAvoidanceParams(1, &avoidance_params);
-
-    // Good (45)
-    avoidance_params.velBias = 0.5f;
-    avoidance_params.adaptiveDivs = 7;
-    avoidance_params.adaptiveRings = 2;
-    avoidance_params.adaptiveDepth = 3;
-    crowd->setObstacleAvoidanceParams(2, &avoidance_params);
-
-    // High (66)
-    avoidance_params.velBias = 0.5f;
-    avoidance_params.adaptiveDivs = 7;
-    avoidance_params.adaptiveRings = 3;
-    avoidance_params.adaptiveDepth = 3;
-
-    crowd->setObstacleAvoidanceParams(3, &avoidance_params);
-
-    delete chunky_mesh;
-
-    
+    InitCrowd();    
     return true;
 }
 
@@ -695,5 +518,49 @@ void Hachiko::ResourceNavMesh::CleanUp()
     RELEASE(talloc);
     RELEASE(tcomp);
     RELEASE(tmproc);
+}
+
+void Hachiko::ResourceNavMesh::InitCrowd()
+{
+    // Crowd code based on CrowdTool.cpp from example
+
+    crowd = dtAllocCrowd();
+    crowd->init(MAX_AGENTS, build_params.agent_radius, navmesh);
+
+    // Setup local avoidance params to different qualities.
+    dtObstacleAvoidanceParams avoidance_params;
+    // Use mostly default settings, copy from dtCrowd.
+    memcpy(&avoidance_params, crowd->getObstacleAvoidanceParams(0), sizeof(dtObstacleAvoidanceParams));
+
+    // Low (11)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 5;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 1;
+    crowd->setObstacleAvoidanceParams(0, &avoidance_params);
+
+    // Medium (22)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 5;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 2;
+    crowd->setObstacleAvoidanceParams(1, &avoidance_params);
+
+    // Good (45)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 7;
+    avoidance_params.adaptiveRings = 2;
+    avoidance_params.adaptiveDepth = 3;
+    crowd->setObstacleAvoidanceParams(2, &avoidance_params);
+
+    // High (66)
+    avoidance_params.velBias = 0.5f;
+    avoidance_params.adaptiveDivs = 7;
+    avoidance_params.adaptiveRings = 3;
+    avoidance_params.adaptiveDepth = 3;
+
+    crowd->setObstacleAvoidanceParams(3, &avoidance_params);
+
+    delete chunky_mesh;
 }
 

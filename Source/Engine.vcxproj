@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\importers\NavmeshImporter.cpp" />
     <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\importers\SceneImporter.cpp" />
     <ClCompile Include="src\importers\VideoImporter.cpp" />
@@ -657,6 +658,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\importers\NavmeshImporter.h" />
     <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\importers\SceneImporter.h" />
     <ClInclude Include="src\importers\VideoImporter.h" />

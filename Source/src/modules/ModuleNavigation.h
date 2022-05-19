@@ -18,12 +18,18 @@ namespace Hachiko
 
         bool Init() override;
         bool CleanUp() override;
-        bool BuildNavmesh(Scene* scene);
+        
         UpdateStatus Update(const float delta) override; // Update crowd
-        ResourceNavMesh* GetNavMesh() const { return navmesh; };
+        ResourceNavMesh* GetNavMesh() const
+        {
+            return scene_navmesh;
+        };
         dtTileCache* GetTileCache() const;
         dtCrowd* GetCrowd() const;
         dtNavMeshQuery* GetNavQuery() const;
+
+        void SetNavmesh(ResourceNavMesh* navmesh);
+        ResourceNavMesh* BuildNavmesh(Scene* scene);
 
         void DebugDraw();
         void DrawOptionsGui();
@@ -38,7 +44,7 @@ namespace Hachiko
     private:
         void RenderAgents(duDebugDraw& dd);
         void UpdateObstacleStats(dtTileCache* tile_cache);
-        ResourceNavMesh* navmesh = nullptr;
+        ResourceNavMesh* scene_navmesh = nullptr;
         int total_obstacle_slots = 0;
         int n_processing = 0;
         int n_processed = 0;
