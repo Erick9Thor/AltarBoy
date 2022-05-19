@@ -160,7 +160,8 @@ void Hachiko::ImGuiUtils::Combo(const char* label, std::vector<std::string> list
     }
 }
 
+/*
 ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
 {
     return {lhs.x + rhs.x, lhs.y + rhs.y};
-}
+}*/

@@ -37,6 +37,7 @@ namespace Hachiko
         bool editTrigger = false;
         bool editIT = false;
         bool deleteLink = false;
+
         ResourceStateMachine sm = ResourceStateMachine(1);
         ImNodesContext* context = nullptr;
     };

@@ -84,7 +84,8 @@ void Hachiko::WindowStateMachine::Update()
     id = 0;
     for (const Hachiko::ResourceStateMachine::Transition& transition : sm.transitions)
     {
-        ImNodes::Link(id, sm.FindNode(transition.source), sm.FindNode(transition.target));
+        //ImNodes::Link(id, sm.FindNode(transition.source), sm.FindNode(transition.target));
+        ImNodes::Link(id, 0, 5);
         ++id;
     }
 

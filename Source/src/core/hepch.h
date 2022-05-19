@@ -36,11 +36,12 @@
 #include <glew.h>
 #include <optick.h>
 
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui_internal.h>
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
-#include <imgui_internal.h>
 #include <ImGuiFileDialog.h>
 
 #include <imnodes.h>
