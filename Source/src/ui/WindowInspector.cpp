@@ -178,6 +178,18 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
+        if (ImGui::MenuItem("Audio Listener"))
+        {
+            game_object->CreateComponent(Component::Type::AUDIO_LISTENER);
+            ImGui::CloseCurrentPopup();
+        }
+
+        if (ImGui::MenuItem("Audio Source"))
+        {
+            game_object->CreateComponent(Component::Type::AUDIO_SOURCE);
+            ImGui::CloseCurrentPopup();
+        }
+
         ImGui::EndPopup();
     }
 
