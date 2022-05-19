@@ -11,7 +11,6 @@
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
 
-#include "resources/ResourceModel.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
 
@@ -25,7 +24,8 @@ Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
     culling_camera(App->camera->GetRenderingCamera()),
     skybox(new Skybox()),
-    quadtree(new Quadtree())
+    quadtree(new Quadtree()),
+    batch_manager(new BatchManager())
 {
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;

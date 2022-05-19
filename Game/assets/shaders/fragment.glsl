@@ -51,7 +51,7 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-// DEPRECATED
+/* DEPRECATED
 layout(std140, binding = 1) uniform Material
 {
     vec4 diffuse_color;
@@ -68,7 +68,7 @@ layout(std140, binding = 1) uniform Material
     uint smoothness_alpha;
     uint is_transparent;
 } material;
-//
+*/
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -91,22 +91,23 @@ struct TexAddress {
 struct Material {
     vec4 diffuse_color;
     vec4 specular_color;
+    vec4 emissive_color;
     uint diffuse_flag;
     uint specular_flag;
     uint normal_flag;
     uint metallic_flag;
+    uint emissive_flag;
     TexAddress diffuse_map;
     TexAddress specular_map;
     TexAddress normal_map;
     TexAddress metallic_map;
+    TexAddress emissive_map;
     float smoothness;
     float metalness_value;
     uint is_metallic;
     uint smoothness_alpha;
     uint is_transparent;
     uint padding0;
-    uint padding1;
-    uint padding2;
 };
 
 readonly layout(std430, binding = 1) buffer Materials {
@@ -311,7 +312,7 @@ void main()
     vec3 emissive = material.emissive_color.rgb;
     if(material.emissive_flag != 0)
     {
-        emissive *= texture(textures[EMISSIVE_SAMPLER], fragment.tex_coord).rgb;
+        emissive *= texture(allMyTextures[material.emissive_map.texIndex+1], vec3(fragment.tex_coord, material.emissive_map.layerIndex)).rgb;
     }
 
     hdr_color += emissive * material.emissive_color.a;

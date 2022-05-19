@@ -27,20 +27,24 @@ namespace Hachiko
         {
             float4 diffuse_color;
             float4 specular_color;
+            float4 emissive_color;
             unsigned diffuse_flag;
             unsigned specular_flag;
             unsigned normal_flag;
             unsigned metallic_flag;
+            unsigned emissive_flag;
             TexAddress diffuse_map;
             TexAddress specular_map;
             TexAddress normal_map;
             TexAddress metallic_map;
+            TexAddress emissive_map;
             float smoothness;
             float metalness_value;
             unsigned is_metallic;
             unsigned smoothness_alpha;
             unsigned is_transparent;
-            unsigned padding[3];
+            //unsigned padding[3];
+            unsigned padding[1];
         };
 
         TextureBatch();

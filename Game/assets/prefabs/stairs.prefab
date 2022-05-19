@@ -1,6 +1,7 @@
 prefab_name: stairs
 name: RootNode
 enabled: true
+parent_id: 17500480263794013455
 component:
   - type: 1
     enabled: true
@@ -10,6 +11,7 @@ component:
 child:
   - name: StraightStair001
     enabled: true
+    parent_id: 5771888747721778258
     component:
       - type: 1
         enabled: true

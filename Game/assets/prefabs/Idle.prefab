@@ -1,6 +1,7 @@
 prefab_name: Idle
 name: RootNode
 enabled: true
+parent_id: 10134628311402272544
 component:
   - type: 1
     enabled: true
@@ -14,6 +15,7 @@ component:
 child:
   - name: Legs_low_$AssimpFbx$_PreRotation
     enabled: true
+    parent_id: 11063335914568925485
     component:
       - type: 1
         enabled: true
@@ -23,6 +25,7 @@ child:
     child:
       - name: Legs_low_$AssimpFbx$_Scaling
         enabled: true
+        parent_id: 4000916949149732553
         component:
           - type: 1
             enabled: true
@@ -32,6 +35,7 @@ child:
         child:
           - name: Legs_low_$AssimpFbx$_GeometricTranslation
             enabled: true
+            parent_id: 5821487589972460896
             component:
               - type: 1
                 enabled: true
@@ -41,6 +45,7 @@ child:
             child:
               - name: Legs_low
                 enabled: true
+                parent_id: 11044877626123426649
                 component:
                   - type: 1
                     enabled: true
@@ -55,6 +60,7 @@ child:
                     material_id: 15737844490852114836
   - name: mixamorig:Hips
     enabled: true
+    parent_id: 11063335914568925485
     component:
       - type: 1
         enabled: true
@@ -64,6 +70,7 @@ child:
     child:
       - name: mixamorig:Spine_$AssimpFbx$_Translation
         enabled: true
+        parent_id: 12248799391183522575
         component:
           - type: 1
             enabled: true
@@ -73,6 +80,7 @@ child:
         child:
           - name: mixamorig:Spine_$AssimpFbx$_PreRotation
             enabled: true
+            parent_id: 3327384114602911889
             component:
               - type: 1
                 enabled: true
@@ -82,6 +90,7 @@ child:
             child:
               - name: mixamorig:Spine_$AssimpFbx$_Rotation
                 enabled: true
+                parent_id: 861079680876682506
                 component:
                   - type: 1
                     enabled: true
@@ -91,6 +100,7 @@ child:
                 child:
                   - name: mixamorig:Spine
                     enabled: true
+                    parent_id: 17878213689194232367
                     component:
                       - type: 1
                         enabled: true
@@ -100,6 +110,7 @@ child:
                     child:
                       - name: mixamorig:Spine1
                         enabled: true
+                        parent_id: 1631416194523136964
                         component:
                           - type: 1
                             enabled: true
@@ -109,6 +120,7 @@ child:
                         child:
                           - name: mixamorig:Spine2
                             enabled: true
+                            parent_id: 12281233846850312510
                             component:
                               - type: 1
                                 enabled: true
@@ -118,6 +130,7 @@ child:
                             child:
                               - name: mixamorig:Neck_$AssimpFbx$_Translation
                                 enabled: true
+                                parent_id: 672451823230081334
                                 component:
                                   - type: 1
                                     enabled: true
@@ -127,6 +140,7 @@ child:
                                 child:
                                   - name: mixamorig:Neck_$AssimpFbx$_PreRotation
                                     enabled: true
+                                    parent_id: 1429237511739320311
                                     component:
                                       - type: 1
                                         enabled: true
@@ -136,6 +150,7 @@ child:
                                     child:
                                       - name: mixamorig:Neck_$AssimpFbx$_Rotation
                                         enabled: true
+                                        parent_id: 12758544682710784750
                                         component:
                                           - type: 1
                                             enabled: true
@@ -145,6 +160,7 @@ child:
                                         child:
                                           - name: mixamorig:Neck
                                             enabled: true
+                                            parent_id: 15717037100237231676
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -154,6 +170,7 @@ child:
                                             child:
                                               - name: mixamorig:Head
                                                 enabled: true
+                                                parent_id: 9468268404632517728
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -163,6 +180,7 @@ child:
                                                 child:
                                                   - name: mixamorig:HeadTop_End
                                                     enabled: true
+                                                    parent_id: 3640660600008295271
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -171,6 +189,7 @@ child:
                                                         scale: [1, 1, 1]
                               - name: mixamorig:LeftShoulder_$AssimpFbx$_Translation
                                 enabled: true
+                                parent_id: 672451823230081334
                                 component:
                                   - type: 1
                                     enabled: true
@@ -180,6 +199,7 @@ child:
                                 child:
                                   - name: mixamorig:LeftShoulder_$AssimpFbx$_PreRotation
                                     enabled: true
+                                    parent_id: 4430754215486744280
                                     component:
                                       - type: 1
                                         enabled: true
@@ -189,6 +209,7 @@ child:
                                     child:
                                       - name: mixamorig:LeftShoulder_$AssimpFbx$_Rotation
                                         enabled: true
+                                        parent_id: 9956516530540853106
                                         component:
                                           - type: 1
                                             enabled: true
@@ -198,6 +219,7 @@ child:
                                         child:
                                           - name: mixamorig:LeftShoulder
                                             enabled: true
+                                            parent_id: 1067094201711461554
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -207,6 +229,7 @@ child:
                                             child:
                                               - name: mixamorig:LeftArm_$AssimpFbx$_Translation
                                                 enabled: true
+                                                parent_id: 14881188793955229288
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -216,6 +239,7 @@ child:
                                                 child:
                                                   - name: mixamorig:LeftArm_$AssimpFbx$_PreRotation
                                                     enabled: true
+                                                    parent_id: 10516663325598989032
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -225,6 +249,7 @@ child:
                                                     child:
                                                       - name: mixamorig:LeftArm_$AssimpFbx$_Rotation
                                                         enabled: true
+                                                        parent_id: 9451160439602554633
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -234,6 +259,7 @@ child:
                                                         child:
                                                           - name: mixamorig:LeftArm
                                                             enabled: true
+                                                            parent_id: 5520611024888167409
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -243,6 +269,7 @@ child:
                                                             child:
                                                               - name: mixamorig:LeftForeArm_$AssimpFbx$_Translation
                                                                 enabled: true
+                                                                parent_id: 14589658643746619539
                                                                 component:
                                                                   - type: 1
                                                                     enabled: true
@@ -252,6 +279,7 @@ child:
                                                                 child:
                                                                   - name: mixamorig:LeftForeArm_$AssimpFbx$_PreRotation
                                                                     enabled: true
+                                                                    parent_id: 4720578460652176602
                                                                     component:
                                                                       - type: 1
                                                                         enabled: true
@@ -261,6 +289,7 @@ child:
                                                                     child:
                                                                       - name: mixamorig:LeftForeArm_$AssimpFbx$_Rotation
                                                                         enabled: true
+                                                                        parent_id: 18388781771378111406
                                                                         component:
                                                                           - type: 1
                                                                             enabled: true
@@ -270,6 +299,7 @@ child:
                                                                         child:
                                                                           - name: mixamorig:LeftForeArm
                                                                             enabled: true
+                                                                            parent_id: 4926814263799119819
                                                                             component:
                                                                               - type: 1
                                                                                 enabled: true
@@ -279,6 +309,7 @@ child:
                                                                             child:
                                                                               - name: mixamorig:LeftHand_$AssimpFbx$_Translation
                                                                                 enabled: true
+                                                                                parent_id: 15645731406555155665
                                                                                 component:
                                                                                   - type: 1
                                                                                     enabled: true
@@ -288,6 +319,7 @@ child:
                                                                                 child:
                                                                                   - name: mixamorig:LeftHand_$AssimpFbx$_PreRotation
                                                                                     enabled: true
+                                                                                    parent_id: 2194167089404184595
                                                                                     component:
                                                                                       - type: 1
                                                                                         enabled: true
@@ -297,6 +329,7 @@ child:
                                                                                     child:
                                                                                       - name: mixamorig:LeftHand_$AssimpFbx$_Rotation
                                                                                         enabled: true
+                                                                                        parent_id: 14582195218020118132
                                                                                         component:
                                                                                           - type: 1
                                                                                             enabled: true
@@ -306,6 +339,7 @@ child:
                                                                                         child:
                                                                                           - name: mixamorig:LeftHand
                                                                                             enabled: true
+                                                                                            parent_id: 10064218778327297678
                                                                                             component:
                                                                                               - type: 1
                                                                                                 enabled: true
@@ -315,6 +349,7 @@ child:
                                                                                             child:
                                                                                               - name: mixamorig:LeftHandThumb1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 12338422208468377664
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -324,6 +359,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:LeftHandThumb1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 17643471066088741968
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -333,6 +369,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:LeftHandThumb1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 3531590856029804769
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -342,6 +379,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:LeftHandThumb1
                                                                                                             enabled: true
+                                                                                                            parent_id: 11473615181325984202
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -351,6 +389,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:LeftHandThumb2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 11213821726937031377
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -360,6 +399,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:LeftHandThumb2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 300859710183913389
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -369,6 +409,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:LeftHandThumb2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 7010247964639034488
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -378,6 +419,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:LeftHandThumb2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 4655017480455427565
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -387,6 +429,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:LeftHandThumb3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 16115255346132319874
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -396,6 +439,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:LeftHandThumb3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 15894799482459282134
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -405,6 +449,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:LeftHandThumb3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 821008751230302712
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -414,6 +459,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:LeftHandThumb3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 7179212665614826062
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -423,6 +469,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:LeftHandThumb4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 7207528625672334742
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -431,6 +478,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
                                                                                               - name: mixamorig:LeftHandIndex1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 12338422208468377664
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -440,6 +488,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:LeftHandIndex1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 8793568814224672298
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -449,6 +498,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:LeftHandIndex1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 2984129805666248392
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -458,6 +508,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:LeftHandIndex1
                                                                                                             enabled: true
+                                                                                                            parent_id: 15880356692493985317
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -467,6 +518,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:LeftHandIndex2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 10191030467020045422
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -476,6 +528,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:LeftHandIndex2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 18323243594568528582
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -485,6 +538,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:LeftHandIndex2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 2276933543155088585
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -494,6 +548,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:LeftHandIndex2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 2320074840510222057
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -503,6 +558,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:LeftHandIndex3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 12777087512512742855
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -512,6 +568,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:LeftHandIndex3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 15762637360836754186
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -521,6 +578,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:LeftHandIndex3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 11556350981599055473
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -530,6 +588,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:LeftHandIndex3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 13444175870181793043
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -539,6 +598,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:LeftHandIndex4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 7078250099777445224
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -547,6 +607,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
                                                                                               - name: mixamorig:LeftHandMiddle1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 12338422208468377664
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -556,6 +617,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:LeftHandMiddle1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 17717787662330380870
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -565,6 +627,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:LeftHandMiddle1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 7318695500525055589
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -574,6 +637,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:LeftHandMiddle1
                                                                                                             enabled: true
+                                                                                                            parent_id: 1469543686124907071
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -583,6 +647,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:LeftHandMiddle2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 5662335378577162381
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -592,6 +657,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:LeftHandMiddle2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 15353432712358797542
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -601,6 +667,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:LeftHandMiddle2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 7710600170444954328
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -610,6 +677,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:LeftHandMiddle2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 13990755013272456373
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -619,6 +687,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:LeftHandMiddle3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 508229419489332230
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -628,6 +697,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:LeftHandMiddle3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 7572569803650346140
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -637,6 +707,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:LeftHandMiddle3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 10213243009505760513
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -646,6 +717,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:LeftHandMiddle3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 3780479111120744127
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -655,6 +727,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:LeftHandMiddle4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 15269520268185251232
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -663,6 +736,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
                               - name: mixamorig:RightShoulder_$AssimpFbx$_Translation
                                 enabled: true
+                                parent_id: 672451823230081334
                                 component:
                                   - type: 1
                                     enabled: true
@@ -672,6 +746,7 @@ child:
                                 child:
                                   - name: mixamorig:RightShoulder_$AssimpFbx$_PreRotation
                                     enabled: true
+                                    parent_id: 12301536342262662254
                                     component:
                                       - type: 1
                                         enabled: true
@@ -681,6 +756,7 @@ child:
                                     child:
                                       - name: mixamorig:RightShoulder_$AssimpFbx$_Rotation
                                         enabled: true
+                                        parent_id: 7064095648318549166
                                         component:
                                           - type: 1
                                             enabled: true
@@ -690,6 +766,7 @@ child:
                                         child:
                                           - name: mixamorig:RightShoulder
                                             enabled: true
+                                            parent_id: 3913839302124877233
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -699,6 +776,7 @@ child:
                                             child:
                                               - name: mixamorig:RightArm_$AssimpFbx$_Translation
                                                 enabled: true
+                                                parent_id: 14026416038133556579
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -708,6 +786,7 @@ child:
                                                 child:
                                                   - name: mixamorig:RightArm_$AssimpFbx$_PreRotation
                                                     enabled: true
+                                                    parent_id: 7871978942754054899
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -717,6 +796,7 @@ child:
                                                     child:
                                                       - name: mixamorig:RightArm_$AssimpFbx$_Rotation
                                                         enabled: true
+                                                        parent_id: 9839657319808052261
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -726,6 +806,7 @@ child:
                                                         child:
                                                           - name: mixamorig:RightArm
                                                             enabled: true
+                                                            parent_id: 5550017967402818430
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -735,6 +816,7 @@ child:
                                                             child:
                                                               - name: mixamorig:RightForeArm_$AssimpFbx$_Translation
                                                                 enabled: true
+                                                                parent_id: 18075605635207075657
                                                                 component:
                                                                   - type: 1
                                                                     enabled: true
@@ -744,6 +826,7 @@ child:
                                                                 child:
                                                                   - name: mixamorig:RightForeArm_$AssimpFbx$_PreRotation
                                                                     enabled: true
+                                                                    parent_id: 6907808367958446585
                                                                     component:
                                                                       - type: 1
                                                                         enabled: true
@@ -753,6 +836,7 @@ child:
                                                                     child:
                                                                       - name: mixamorig:RightForeArm_$AssimpFbx$_Rotation
                                                                         enabled: true
+                                                                        parent_id: 17140055882253921595
                                                                         component:
                                                                           - type: 1
                                                                             enabled: true
@@ -762,6 +846,7 @@ child:
                                                                         child:
                                                                           - name: mixamorig:RightForeArm
                                                                             enabled: true
+                                                                            parent_id: 9320790339587970716
                                                                             component:
                                                                               - type: 1
                                                                                 enabled: true
@@ -771,6 +856,7 @@ child:
                                                                             child:
                                                                               - name: mixamorig:RightHand_$AssimpFbx$_Translation
                                                                                 enabled: true
+                                                                                parent_id: 10551327271022609045
                                                                                 component:
                                                                                   - type: 1
                                                                                     enabled: true
@@ -780,6 +866,7 @@ child:
                                                                                 child:
                                                                                   - name: mixamorig:RightHand_$AssimpFbx$_PreRotation
                                                                                     enabled: true
+                                                                                    parent_id: 5463698588722184303
                                                                                     component:
                                                                                       - type: 1
                                                                                         enabled: true
@@ -789,6 +876,7 @@ child:
                                                                                     child:
                                                                                       - name: mixamorig:RightHand_$AssimpFbx$_Rotation
                                                                                         enabled: true
+                                                                                        parent_id: 3746111441222062669
                                                                                         component:
                                                                                           - type: 1
                                                                                             enabled: true
@@ -798,6 +886,7 @@ child:
                                                                                         child:
                                                                                           - name: mixamorig:RightHand
                                                                                             enabled: true
+                                                                                            parent_id: 2768871518939389363
                                                                                             component:
                                                                                               - type: 1
                                                                                                 enabled: true
@@ -807,6 +896,7 @@ child:
                                                                                             child:
                                                                                               - name: mixamorig:RightHandThumb1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 16637303598400846685
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -816,6 +906,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:RightHandThumb1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 10134197162789356417
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -825,6 +916,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:RightHandThumb1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 18180782200863325118
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -834,6 +926,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:RightHandThumb1
                                                                                                             enabled: true
+                                                                                                            parent_id: 18438255101686184549
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -843,6 +936,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:RightHandThumb2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 8681267336849520005
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -852,6 +946,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:RightHandThumb2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 15380504626132110630
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -861,6 +956,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:RightHandThumb2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 16116272301986912853
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -870,6 +966,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:RightHandThumb2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 10228306126497125614
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -879,6 +976,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:RightHandThumb3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 348595930887296238
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -888,6 +986,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:RightHandThumb3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 9124632410753233465
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -897,6 +996,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:RightHandThumb3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 15271640019709439862
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -906,6 +1006,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:RightHandThumb3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 18338129696044839762
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -915,6 +1016,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:RightHandThumb4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 18131303563689228426
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -923,6 +1025,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
                                                                                               - name: mixamorig:RightHandIndex1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 16637303598400846685
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -932,6 +1035,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:RightHandIndex1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 2868930937329169423
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -941,6 +1045,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:RightHandIndex1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 6533279021653925969
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -950,6 +1055,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:RightHandIndex1
                                                                                                             enabled: true
+                                                                                                            parent_id: 96397316104257748
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -959,6 +1065,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:RightHandIndex2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 8958938635222613935
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -968,6 +1075,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:RightHandIndex2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 320139490534996641
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -977,6 +1085,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:RightHandIndex2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 11268013063359691098
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -986,6 +1095,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:RightHandIndex2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 6772846960042251268
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -995,6 +1105,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:RightHandIndex3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 1952696475622096081
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -1004,6 +1115,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:RightHandIndex3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 992991512619463568
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -1013,6 +1125,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:RightHandIndex3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 1764148183898950359
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -1022,6 +1135,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:RightHandIndex3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 7860830540451216603
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -1031,6 +1145,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:RightHandIndex4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 15049209692957020604
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -1039,6 +1154,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
                                                                                               - name: mixamorig:RightHandMiddle1_$AssimpFbx$_Translation
                                                                                                 enabled: true
+                                                                                                parent_id: 16637303598400846685
                                                                                                 component:
                                                                                                   - type: 1
                                                                                                     enabled: true
@@ -1048,6 +1164,7 @@ child:
                                                                                                 child:
                                                                                                   - name: mixamorig:RightHandMiddle1_$AssimpFbx$_PreRotation
                                                                                                     enabled: true
+                                                                                                    parent_id: 15120020099833232132
                                                                                                     component:
                                                                                                       - type: 1
                                                                                                         enabled: true
@@ -1057,6 +1174,7 @@ child:
                                                                                                     child:
                                                                                                       - name: mixamorig:RightHandMiddle1_$AssimpFbx$_Rotation
                                                                                                         enabled: true
+                                                                                                        parent_id: 10763982494100957301
                                                                                                         component:
                                                                                                           - type: 1
                                                                                                             enabled: true
@@ -1066,6 +1184,7 @@ child:
                                                                                                         child:
                                                                                                           - name: mixamorig:RightHandMiddle1
                                                                                                             enabled: true
+                                                                                                            parent_id: 13231489326848432607
                                                                                                             component:
                                                                                                               - type: 1
                                                                                                                 enabled: true
@@ -1075,6 +1194,7 @@ child:
                                                                                                             child:
                                                                                                               - name: mixamorig:RightHandMiddle2_$AssimpFbx$_Translation
                                                                                                                 enabled: true
+                                                                                                                parent_id: 9661517199389752884
                                                                                                                 component:
                                                                                                                   - type: 1
                                                                                                                     enabled: true
@@ -1084,6 +1204,7 @@ child:
                                                                                                                 child:
                                                                                                                   - name: mixamorig:RightHandMiddle2_$AssimpFbx$_PreRotation
                                                                                                                     enabled: true
+                                                                                                                    parent_id: 9029624872515709748
                                                                                                                     component:
                                                                                                                       - type: 1
                                                                                                                         enabled: true
@@ -1093,6 +1214,7 @@ child:
                                                                                                                     child:
                                                                                                                       - name: mixamorig:RightHandMiddle2_$AssimpFbx$_Rotation
                                                                                                                         enabled: true
+                                                                                                                        parent_id: 18311701385556054214
                                                                                                                         component:
                                                                                                                           - type: 1
                                                                                                                             enabled: true
@@ -1102,6 +1224,7 @@ child:
                                                                                                                         child:
                                                                                                                           - name: mixamorig:RightHandMiddle2
                                                                                                                             enabled: true
+                                                                                                                            parent_id: 11097539896436821227
                                                                                                                             component:
                                                                                                                               - type: 1
                                                                                                                                 enabled: true
@@ -1111,6 +1234,7 @@ child:
                                                                                                                             child:
                                                                                                                               - name: mixamorig:RightHandMiddle3_$AssimpFbx$_Translation
                                                                                                                                 enabled: true
+                                                                                                                                parent_id: 7968779252403722645
                                                                                                                                 component:
                                                                                                                                   - type: 1
                                                                                                                                     enabled: true
@@ -1120,6 +1244,7 @@ child:
                                                                                                                                 child:
                                                                                                                                   - name: mixamorig:RightHandMiddle3_$AssimpFbx$_PreRotation
                                                                                                                                     enabled: true
+                                                                                                                                    parent_id: 7737969976281550511
                                                                                                                                     component:
                                                                                                                                       - type: 1
                                                                                                                                         enabled: true
@@ -1129,6 +1254,7 @@ child:
                                                                                                                                     child:
                                                                                                                                       - name: mixamorig:RightHandMiddle3_$AssimpFbx$_Rotation
                                                                                                                                         enabled: true
+                                                                                                                                        parent_id: 2637009139843274780
                                                                                                                                         component:
                                                                                                                                           - type: 1
                                                                                                                                             enabled: true
@@ -1138,6 +1264,7 @@ child:
                                                                                                                                         child:
                                                                                                                                           - name: mixamorig:RightHandMiddle3
                                                                                                                                             enabled: true
+                                                                                                                                            parent_id: 17485338685914811452
                                                                                                                                             component:
                                                                                                                                               - type: 1
                                                                                                                                                 enabled: true
@@ -1147,6 +1274,7 @@ child:
                                                                                                                                             child:
                                                                                                                                               - name: mixamorig:RightHandMiddle4
                                                                                                                                                 enabled: true
+                                                                                                                                                parent_id: 10698588964317876703
                                                                                                                                                 component:
                                                                                                                                                   - type: 1
                                                                                                                                                     enabled: true
@@ -1155,6 +1283,7 @@ child:
                                                                                                                                                     scale: [1, 1, 1]
       - name: mixamorig:LeftUpLeg_$AssimpFbx$_Translation
         enabled: true
+        parent_id: 12248799391183522575
         component:
           - type: 1
             enabled: true
@@ -1164,6 +1293,7 @@ child:
         child:
           - name: mixamorig:LeftUpLeg_$AssimpFbx$_PreRotation
             enabled: true
+            parent_id: 9042653765646071938
             component:
               - type: 1
                 enabled: true
@@ -1173,6 +1303,7 @@ child:
             child:
               - name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
                 enabled: true
+                parent_id: 11520878490934958610
                 component:
                   - type: 1
                     enabled: true
@@ -1182,6 +1313,7 @@ child:
                 child:
                   - name: mixamorig:LeftUpLeg
                     enabled: true
+                    parent_id: 1912459258273941313
                     component:
                       - type: 1
                         enabled: true
@@ -1191,6 +1323,7 @@ child:
                     child:
                       - name: mixamorig:LeftLeg_$AssimpFbx$_Translation
                         enabled: true
+                        parent_id: 3365361915968907589
                         component:
                           - type: 1
                             enabled: true
@@ -1200,6 +1333,7 @@ child:
                         child:
                           - name: mixamorig:LeftLeg_$AssimpFbx$_PreRotation
                             enabled: true
+                            parent_id: 9589564309839851284
                             component:
                               - type: 1
                                 enabled: true
@@ -1209,6 +1343,7 @@ child:
                             child:
                               - name: mixamorig:LeftLeg_$AssimpFbx$_Rotation
                                 enabled: true
+                                parent_id: 9901550313075883068
                                 component:
                                   - type: 1
                                     enabled: true
@@ -1218,6 +1353,7 @@ child:
                                 child:
                                   - name: mixamorig:LeftLeg
                                     enabled: true
+                                    parent_id: 6275144594110167756
                                     component:
                                       - type: 1
                                         enabled: true
@@ -1227,6 +1363,7 @@ child:
                                     child:
                                       - name: mixamorig:LeftFoot_$AssimpFbx$_Translation
                                         enabled: true
+                                        parent_id: 15192590624111088518
                                         component:
                                           - type: 1
                                             enabled: true
@@ -1236,6 +1373,7 @@ child:
                                         child:
                                           - name: mixamorig:LeftFoot_$AssimpFbx$_PreRotation
                                             enabled: true
+                                            parent_id: 3539500821425437550
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -1245,6 +1383,7 @@ child:
                                             child:
                                               - name: mixamorig:LeftFoot_$AssimpFbx$_Rotation
                                                 enabled: true
+                                                parent_id: 9612684865061823661
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -1254,6 +1393,7 @@ child:
                                                 child:
                                                   - name: mixamorig:LeftFoot
                                                     enabled: true
+                                                    parent_id: 17032131790161911683
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -1263,6 +1403,7 @@ child:
                                                     child:
                                                       - name: mixamorig:LeftToeBase_$AssimpFbx$_Translation
                                                         enabled: true
+                                                        parent_id: 13575617034120094400
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -1272,6 +1413,7 @@ child:
                                                         child:
                                                           - name: mixamorig:LeftToeBase_$AssimpFbx$_PreRotation
                                                             enabled: true
+                                                            parent_id: 796005253392536875
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -1281,6 +1423,7 @@ child:
                                                             child:
                                                               - name: mixamorig:LeftToeBase_$AssimpFbx$_Rotation
                                                                 enabled: true
+                                                                parent_id: 8647521532327695903
                                                                 component:
                                                                   - type: 1
                                                                     enabled: true
@@ -1290,6 +1433,7 @@ child:
                                                                 child:
                                                                   - name: mixamorig:LeftToeBase
                                                                     enabled: true
+                                                                    parent_id: 16725110885770347845
                                                                     component:
                                                                       - type: 1
                                                                         enabled: true
@@ -1299,6 +1443,7 @@ child:
                                                                     child:
                                                                       - name: mixamorig:LeftToe_End
                                                                         enabled: true
+                                                                        parent_id: 14041375467095646575
                                                                         component:
                                                                           - type: 1
                                                                             enabled: true
@@ -1307,6 +1452,7 @@ child:
                                                                             scale: [1, 1, 1]
       - name: mixamorig:RightUpLeg_$AssimpFbx$_Translation
         enabled: true
+        parent_id: 12248799391183522575
         component:
           - type: 1
             enabled: true
@@ -1316,6 +1462,7 @@ child:
         child:
           - name: mixamorig:RightUpLeg_$AssimpFbx$_PreRotation
             enabled: true
+            parent_id: 5113415717284622422
             component:
               - type: 1
                 enabled: true
@@ -1325,6 +1472,7 @@ child:
             child:
               - name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
                 enabled: true
+                parent_id: 13032067349092906227
                 component:
                   - type: 1
                     enabled: true
@@ -1334,6 +1482,7 @@ child:
                 child:
                   - name: mixamorig:RightUpLeg
                     enabled: true
+                    parent_id: 239793281213964159
                     component:
                       - type: 1
                         enabled: true
@@ -1343,6 +1492,7 @@ child:
                     child:
                       - name: mixamorig:RightLeg_$AssimpFbx$_Translation
                         enabled: true
+                        parent_id: 10418717149923162296
                         component:
                           - type: 1
                             enabled: true
@@ -1352,6 +1502,7 @@ child:
                         child:
                           - name: mixamorig:RightLeg_$AssimpFbx$_PreRotation
                             enabled: true
+                            parent_id: 17445262887228892708
                             component:
                               - type: 1
                                 enabled: true
@@ -1361,6 +1512,7 @@ child:
                             child:
                               - name: mixamorig:RightLeg_$AssimpFbx$_Rotation
                                 enabled: true
+                                parent_id: 8677970814485116569
                                 component:
                                   - type: 1
                                     enabled: true
@@ -1370,6 +1522,7 @@ child:
                                 child:
                                   - name: mixamorig:RightLeg
                                     enabled: true
+                                    parent_id: 12751188628884381652
                                     component:
                                       - type: 1
                                         enabled: true
@@ -1379,6 +1532,7 @@ child:
                                     child:
                                       - name: mixamorig:RightFoot_$AssimpFbx$_Translation
                                         enabled: true
+                                        parent_id: 6334837729892742424
                                         component:
                                           - type: 1
                                             enabled: true
@@ -1388,6 +1542,7 @@ child:
                                         child:
                                           - name: mixamorig:RightFoot_$AssimpFbx$_PreRotation
                                             enabled: true
+                                            parent_id: 2615280314989386867
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -1397,6 +1552,7 @@ child:
                                             child:
                                               - name: mixamorig:RightFoot_$AssimpFbx$_Rotation
                                                 enabled: true
+                                                parent_id: 7199505584431364423
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -1406,6 +1562,7 @@ child:
                                                 child:
                                                   - name: mixamorig:RightFoot
                                                     enabled: true
+                                                    parent_id: 15229386618900458569
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -1415,6 +1572,7 @@ child:
                                                     child:
                                                       - name: mixamorig:RightToeBase_$AssimpFbx$_Translation
                                                         enabled: true
+                                                        parent_id: 7235422960776685064
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -1424,6 +1582,7 @@ child:
                                                         child:
                                                           - name: mixamorig:RightToeBase_$AssimpFbx$_PreRotation
                                                             enabled: true
+                                                            parent_id: 12292809994409690714
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -1433,6 +1592,7 @@ child:
                                                             child:
                                                               - name: mixamorig:RightToeBase_$AssimpFbx$_Rotation
                                                                 enabled: true
+                                                                parent_id: 4460848437095459964
                                                                 component:
                                                                   - type: 1
                                                                     enabled: true
@@ -1442,6 +1602,7 @@ child:
                                                                 child:
                                                                   - name: mixamorig:RightToeBase
                                                                     enabled: true
+                                                                    parent_id: 11843110041864834438
                                                                     component:
                                                                       - type: 1
                                                                         enabled: true
@@ -1451,6 +1612,7 @@ child:
                                                                     child:
                                                                       - name: mixamorig:RightToe_End
                                                                         enabled: true
+                                                                        parent_id: 2205440834130605646
                                                                         component:
                                                                           - type: 1
                                                                             enabled: true

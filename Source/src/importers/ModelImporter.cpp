@@ -87,7 +87,6 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
         resource_types.push_back(Resource::Type::MATERIAL);
     }
 
-    node[ANIMATIONS] = scene->mNumAnimations;
     if (scene->HasAnimations())
     {
         for (unsigned animation_index = 0; animation_index < scene->mNumAnimations; ++animation_index)

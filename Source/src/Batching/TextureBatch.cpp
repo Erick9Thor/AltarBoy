@@ -42,6 +42,10 @@ void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_materia
     {
         AddTexture(resource_material->normal);
     }
+    if (resource_material->HasEmissive())
+    {
+        AddTexture(resource_material->emissive);
+    }
 }
 
 void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture) 
@@ -202,10 +206,12 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
         materials[i].diffuse_color = material->diffuse_color;
         materials[i].specular_color = material->specular_color;
+        materials[i].emissive_color = material->emissive_color;
         materials[i].diffuse_flag = material->HasDiffuse();
         materials[i].specular_flag = material->HasSpecular();
         materials[i].normal_flag = material->HasNormal();
         materials[i].metallic_flag = material->HasMetalness();
+        materials[i].emissive_flag = material->HasEmissive();
 
         if (materials[i].diffuse_flag)
         {
@@ -222,6 +228,10 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
         if (materials[i].metallic_flag)
         {
             materials[i].metallic_map = (*resources[material->metalness]);
+        }
+        if (materials[i].emissive_flag)
+        {
+            materials[i].emissive_map = (*resources[material->emissive]);
         }
 
         materials[i].smoothness = material->smoothness;

@@ -1,6 +1,7 @@
 prefab_name: Zombunny
 name: RootNode
 enabled: true
+parent_id: 3277957087538041745
 component:
   - type: 1
     enabled: true
@@ -14,6 +15,7 @@ component:
 child:
   - name: Zombunny
     enabled: true
+    parent_id: 3155650775257297548
     component:
       - type: 1
         enabled: true
@@ -25,15 +27,16 @@ child:
         mesh_id: 4657792022921634311
         navigable: false
         visible: true
-        material_id: 6404025130868057127
+        material_id: 5360393174607439872
       - type: 2
         enabled: true
         mesh_id: 282215514867166725
         navigable: false
         visible: true
-        material_id: 9577815112474161680
+        material_id: 9257035072564277370
   - name: Ctrl_Grp
     enabled: true
+    parent_id: 3155650775257297548
     component:
       - type: 1
         enabled: true
@@ -43,6 +46,7 @@ child:
     child:
       - name: Root_$AssimpFbx$_PreRotation
         enabled: true
+        parent_id: 14011516837092455608
         component:
           - type: 1
             enabled: true
@@ -52,6 +56,7 @@ child:
         child:
           - name: Root
             enabled: true
+            parent_id: 8487557654257279079
             component:
               - type: 1
                 enabled: true
@@ -61,6 +66,7 @@ child:
             child:
               - name: Hips_$AssimpFbx$_Translation
                 enabled: true
+                parent_id: 15394503963756934103
                 component:
                   - type: 1
                     enabled: true
@@ -70,6 +76,7 @@ child:
                 child:
                   - name: Hips_$AssimpFbx$_PreRotation
                     enabled: true
+                    parent_id: 2680691398777233264
                     component:
                       - type: 1
                         enabled: true
@@ -79,6 +86,7 @@ child:
                     child:
                       - name: Hips_$AssimpFbx$_Rotation
                         enabled: true
+                        parent_id: 5478311142185495685
                         component:
                           - type: 1
                             enabled: true
@@ -88,6 +96,7 @@ child:
                         child:
                           - name: Hips
                             enabled: true
+                            parent_id: 943077977538149109
                             component:
                               - type: 1
                                 enabled: true
@@ -97,6 +106,7 @@ child:
                             child:
                               - name: Spine
                                 enabled: true
+                                parent_id: 12616237667564099254
                                 component:
                                   - type: 1
                                     enabled: true
@@ -106,6 +116,7 @@ child:
                                 child:
                                   - name: Head
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -115,6 +126,7 @@ child:
                                     child:
                                       - name: HeadEnd
                                         enabled: true
+                                        parent_id: 6384913682045482454
                                         component:
                                           - type: 1
                                             enabled: true
@@ -123,6 +135,7 @@ child:
                                             scale: [1, 1, 1]
                                       - name: LeftEar_$AssimpFbx$_Translation
                                         enabled: true
+                                        parent_id: 6384913682045482454
                                         component:
                                           - type: 1
                                             enabled: true
@@ -132,6 +145,7 @@ child:
                                         child:
                                           - name: LeftEar_$AssimpFbx$_PreRotation
                                             enabled: true
+                                            parent_id: 12018107414548634286
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -141,6 +155,7 @@ child:
                                             child:
                                               - name: LeftEar_$AssimpFbx$_Rotation
                                                 enabled: true
+                                                parent_id: 15280536176273058032
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -150,6 +165,7 @@ child:
                                                 child:
                                                   - name: LeftEar
                                                     enabled: true
+                                                    parent_id: 6153965498962122684
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -159,6 +175,7 @@ child:
                                                     child:
                                                       - name: LeftEarEnd
                                                         enabled: true
+                                                        parent_id: 18132480954284209935
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -167,6 +184,7 @@ child:
                                                             scale: [1, 1, 1]
                                       - name: RightEar_$AssimpFbx$_Translation
                                         enabled: true
+                                        parent_id: 6384913682045482454
                                         component:
                                           - type: 1
                                             enabled: true
@@ -176,6 +194,7 @@ child:
                                         child:
                                           - name: RightEar_$AssimpFbx$_PreRotation
                                             enabled: true
+                                            parent_id: 16452975038707665118
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -185,6 +204,7 @@ child:
                                             child:
                                               - name: RightEar_$AssimpFbx$_Rotation
                                                 enabled: true
+                                                parent_id: 15251017658819425280
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -194,6 +214,7 @@ child:
                                                 child:
                                                   - name: RightEar
                                                     enabled: true
+                                                    parent_id: 4790336264111874425
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -203,6 +224,7 @@ child:
                                                     child:
                                                       - name: RightEarEnd
                                                         enabled: true
+                                                        parent_id: 17714555178208255402
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -211,6 +233,7 @@ child:
                                                             scale: [1, 1, 1]
                                   - name: LeftUpperArm_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -220,6 +243,7 @@ child:
                                     child:
                                       - name: LeftUpperArm_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 10851127695934526590
                                         component:
                                           - type: 1
                                             enabled: true
@@ -229,6 +253,7 @@ child:
                                         child:
                                           - name: LeftUpperArm_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 7088281933461340879
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -238,6 +263,7 @@ child:
                                             child:
                                               - name: LeftUpperArm
                                                 enabled: true
+                                                parent_id: 13904550978721092259
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -247,6 +273,7 @@ child:
                                                 child:
                                                   - name: LeftLowerArm
                                                     enabled: true
+                                                    parent_id: 5073494531071971643
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -256,6 +283,7 @@ child:
                                                     child:
                                                       - name: LeftWrist
                                                         enabled: true
+                                                        parent_id: 6641344375276271072
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -265,6 +293,7 @@ child:
                                                         child:
                                                           - name: LeftWristEnd
                                                             enabled: true
+                                                            parent_id: 9626674054015436090
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -273,6 +302,7 @@ child:
                                                                 scale: [1, 1, 1]
                                   - name: LeftUpperArmFK_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -282,6 +312,7 @@ child:
                                     child:
                                       - name: LeftUpperArmFK_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 4391613402431937284
                                         component:
                                           - type: 1
                                             enabled: true
@@ -291,6 +322,7 @@ child:
                                         child:
                                           - name: LeftUpperArmFK_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 17051164948972264184
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -300,6 +332,7 @@ child:
                                             child:
                                               - name: LeftUpperArmFK
                                                 enabled: true
+                                                parent_id: 3813380338042869427
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -309,6 +342,7 @@ child:
                                                 child:
                                                   - name: LeftLowerArmFK
                                                     enabled: true
+                                                    parent_id: 16435810225114397156
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -318,6 +352,7 @@ child:
                                                     child:
                                                       - name: LeftWristFK
                                                         enabled: true
+                                                        parent_id: 17139211831929795996
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -326,6 +361,7 @@ child:
                                                             scale: [1, 1, 1]
                                   - name: LeftUpperArmIK_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -335,6 +371,7 @@ child:
                                     child:
                                       - name: LeftUpperArmIK_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 13553894792931928601
                                         component:
                                           - type: 1
                                             enabled: true
@@ -344,6 +381,7 @@ child:
                                         child:
                                           - name: LeftUpperArmIK_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 14696558217104255748
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -353,6 +391,7 @@ child:
                                             child:
                                               - name: LeftUpperArmIK
                                                 enabled: true
+                                                parent_id: 7273627167960995883
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -362,6 +401,7 @@ child:
                                                 child:
                                                   - name: LeftLowerArmIK
                                                     enabled: true
+                                                    parent_id: 11161269003725358662
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -371,6 +411,7 @@ child:
                                                     child:
                                                       - name: LeftWristIK
                                                         enabled: true
+                                                        parent_id: 8700661569700558485
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -379,6 +420,7 @@ child:
                                                             scale: [1.00000024, 1.00000024, 1]
                                   - name: RightUpperArm_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -388,6 +430,7 @@ child:
                                     child:
                                       - name: RightUpperArm_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 2499393311422082355
                                         component:
                                           - type: 1
                                             enabled: true
@@ -397,6 +440,7 @@ child:
                                         child:
                                           - name: RightUpperArm_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 10047612461931857631
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -406,6 +450,7 @@ child:
                                             child:
                                               - name: RightUpperArm
                                                 enabled: true
+                                                parent_id: 14018875756467954593
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -415,6 +460,7 @@ child:
                                                 child:
                                                   - name: RightLowerArm
                                                     enabled: true
+                                                    parent_id: 2849076831241020924
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -424,6 +470,7 @@ child:
                                                     child:
                                                       - name: RightWrist
                                                         enabled: true
+                                                        parent_id: 6313250297354828838
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -433,6 +480,7 @@ child:
                                                         child:
                                                           - name: RightWristEnd
                                                             enabled: true
+                                                            parent_id: 9428578793992419682
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -441,6 +489,7 @@ child:
                                                                 scale: [1, 1, 1]
                                   - name: RightUpperArmFK_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -450,6 +499,7 @@ child:
                                     child:
                                       - name: RightUpperArmFK_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 2940920576858139013
                                         component:
                                           - type: 1
                                             enabled: true
@@ -459,6 +509,7 @@ child:
                                         child:
                                           - name: RightUpperArmFK_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 12655649851577681986
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -468,6 +519,7 @@ child:
                                             child:
                                               - name: RightUpperArmFK
                                                 enabled: true
+                                                parent_id: 275081672592667480
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -477,6 +529,7 @@ child:
                                                 child:
                                                   - name: RightLowerArmFK
                                                     enabled: true
+                                                    parent_id: 7889619060442149126
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -486,6 +539,7 @@ child:
                                                     child:
                                                       - name: RightWristFK
                                                         enabled: true
+                                                        parent_id: 16097613522663488695
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -494,6 +548,7 @@ child:
                                                             scale: [1, 1, 1]
                                   - name: RightUpperArmIK_$AssimpFbx$_Translation
                                     enabled: true
+                                    parent_id: 15012988384848325025
                                     component:
                                       - type: 1
                                         enabled: true
@@ -503,6 +558,7 @@ child:
                                     child:
                                       - name: RightUpperArmIK_$AssimpFbx$_PreRotation
                                         enabled: true
+                                        parent_id: 5958394844894981390
                                         component:
                                           - type: 1
                                             enabled: true
@@ -512,6 +568,7 @@ child:
                                         child:
                                           - name: RightUpperArmIK_$AssimpFbx$_Rotation
                                             enabled: true
+                                            parent_id: 12154612458633874198
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -521,6 +578,7 @@ child:
                                             child:
                                               - name: RightUpperArmIK
                                                 enabled: true
+                                                parent_id: 11154510274010993240
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -530,6 +588,7 @@ child:
                                                 child:
                                                   - name: RightLowerArmIK
                                                     enabled: true
+                                                    parent_id: 10657642717629563244
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -539,6 +598,7 @@ child:
                                                     child:
                                                       - name: RightWristIK
                                                         enabled: true
+                                                        parent_id: 13789943314408886026
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -547,6 +607,7 @@ child:
                                                             scale: [1.00000012, 1.00000012, 1]
                               - name: LeftLeg_$AssimpFbx$_Translation
                                 enabled: true
+                                parent_id: 12616237667564099254
                                 component:
                                   - type: 1
                                     enabled: true
@@ -556,6 +617,7 @@ child:
                                 child:
                                   - name: LeftLeg_$AssimpFbx$_PreRotation
                                     enabled: true
+                                    parent_id: 18411756947385976580
                                     component:
                                       - type: 1
                                         enabled: true
@@ -565,6 +627,7 @@ child:
                                     child:
                                       - name: LeftLeg
                                         enabled: true
+                                        parent_id: 4667450639996762874
                                         component:
                                           - type: 1
                                             enabled: true
@@ -574,6 +637,7 @@ child:
                                         child:
                                           - name: LeftFoot_$AssimpFbx$_Translation
                                             enabled: true
+                                            parent_id: 1755604333626114570
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -583,6 +647,7 @@ child:
                                             child:
                                               - name: LeftFoot_$AssimpFbx$_PreRotation
                                                 enabled: true
+                                                parent_id: 13908046631903758722
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -592,6 +657,7 @@ child:
                                                 child:
                                                   - name: LeftFoot_$AssimpFbx$_Rotation
                                                     enabled: true
+                                                    parent_id: 16910215679357592974
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -601,6 +667,7 @@ child:
                                                     child:
                                                       - name: LeftFoot
                                                         enabled: true
+                                                        parent_id: 12647756888297351509
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -610,6 +677,7 @@ child:
                                                         child:
                                                           - name: LeftFootEnd
                                                             enabled: true
+                                                            parent_id: 62442100503067937
                                                             component:
                                                               - type: 1
                                                                 enabled: true
@@ -618,6 +686,7 @@ child:
                                                                 scale: [1, 1, 1]
                               - name: RightLeg_$AssimpFbx$_Translation
                                 enabled: true
+                                parent_id: 12616237667564099254
                                 component:
                                   - type: 1
                                     enabled: true
@@ -627,6 +696,7 @@ child:
                                 child:
                                   - name: RightLeg_$AssimpFbx$_PreRotation
                                     enabled: true
+                                    parent_id: 7874056769780148885
                                     component:
                                       - type: 1
                                         enabled: true
@@ -636,6 +706,7 @@ child:
                                     child:
                                       - name: RightLeg
                                         enabled: true
+                                        parent_id: 271454796999971944
                                         component:
                                           - type: 1
                                             enabled: true
@@ -645,6 +716,7 @@ child:
                                         child:
                                           - name: RightFoot_$AssimpFbx$_Translation
                                             enabled: true
+                                            parent_id: 11505566952461976360
                                             component:
                                               - type: 1
                                                 enabled: true
@@ -654,6 +726,7 @@ child:
                                             child:
                                               - name: RightFoot_$AssimpFbx$_PreRotation
                                                 enabled: true
+                                                parent_id: 175898607306543180
                                                 component:
                                                   - type: 1
                                                     enabled: true
@@ -663,6 +736,7 @@ child:
                                                 child:
                                                   - name: RightFoot_$AssimpFbx$_Rotation
                                                     enabled: true
+                                                    parent_id: 5552700738362147008
                                                     component:
                                                       - type: 1
                                                         enabled: true
@@ -672,6 +746,7 @@ child:
                                                     child:
                                                       - name: RightFoot
                                                         enabled: true
+                                                        parent_id: 7727606374735157391
                                                         component:
                                                           - type: 1
                                                             enabled: true
@@ -681,6 +756,7 @@ child:
                                                         child:
                                                           - name: RightFootEnd
                                                             enabled: true
+                                                            parent_id: 16960771149560229236
                                                             component:
                                                               - type: 1
                                                                 enabled: true
