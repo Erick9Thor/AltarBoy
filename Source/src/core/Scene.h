@@ -77,6 +77,16 @@ namespace Hachiko
         {
             return name.c_str();
         }
+
+        [[nodiscard]] UID GetNavmeshID() const
+        {
+            return navmesh_id;
+        }
+
+        void SetNavmeshID(UID new_navmesh_id)
+        {
+            navmesh_id = new_navmesh_id;
+        }
         
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
@@ -87,7 +97,7 @@ namespace Hachiko
             name = new_name;
         }
 
-        void Save(YAML::Node& node) const;
+        void Save(YAML::Node& node);
         void Load(const YAML::Node& node);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
@@ -103,6 +113,8 @@ namespace Hachiko
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
         bool loaded = false;
+
+        UID navmesh_id = 0;
 
         Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;

@@ -42,8 +42,12 @@ Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
         // Keep previous params if we had an already created navmesh 
         initial_params = scene_navmesh->build_params;
     }
+    
+    // If id is defined reuse it, if not generate new one
+    UID navmesh_id = scene->GetNavmeshID() ? scene->GetNavmeshID() : UUID::GenerateUID();
+    ResourceNavMesh* navmesh = new ResourceNavMesh(navmesh_id);
+    scene->SetNavmeshID(navmesh_id);
 
-    ResourceNavMesh* navmesh = new ResourceNavMesh(0);
     navmesh->build_params = initial_params;
 
     bool success = navmesh->Build(scene);
@@ -123,7 +127,7 @@ dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
 
 void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 {
-    App->resources->ReleaseResource(scene_navmesh);
+    App->resources->ReleaseResource(scene_navmesh);    
     scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
 }
 

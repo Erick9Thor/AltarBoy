@@ -144,7 +144,7 @@
 #define SCENE_NAME "scene_name"
 #define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
-#define SCENE_TEMP_NAME "temp_scene"
+#define NAVMESH_ID "navmesh_id"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"

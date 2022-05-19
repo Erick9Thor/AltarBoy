@@ -7,19 +7,27 @@
 void Hachiko::NavmeshImporter::Save(UID id, const Resource* resource)
 {
     const ResourceNavMesh* navmesh = static_cast<const ResourceNavMesh*>(resource);
-    const std::string file_path = GetResourcePath(Resource::Type::NAVMESH, id);
+    const std::string file_path = GetResourcePath(Resource::Type::NAVMESH, id);  
+
     
-    if (!navmesh->tile_cache)
+    TileCacheSetHeader header;
+     unsigned file_size = sizeof(TileCacheSetHeader);
+
+    if (!resource ||!navmesh->tile_cache)
     {
         // Store empty file which means no navmes or return 0 which also will mean no navmesh
+        header.numTiles = 0;
+        const auto file_buffer = new char[file_size];
+        memcpy(file_buffer, &header, sizeof(TileCacheSetHeader));
+        FileSystem::Save(file_path.c_str(), file_buffer, file_size);
+        delete[] file_buffer;        
+        return;
     }
 
-    unsigned file_size = 0;
     dtTileCache* tiles = navmesh->tile_cache;
-    TileCacheSetHeader header;
 
     // Compute total file size
-    file_size += sizeof(TileCacheSetHeader);
+    
     for (unsigned i = 0; i < tiles->getTileCount(); ++i)
     {
         const dtCompressedTile* tile = tiles->getTile(i);
@@ -81,6 +89,12 @@ Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
     TileCacheSetHeader header;
     size_bytes = sizeof(TileCacheSetHeader);
     memcpy(&header, cursor, size_bytes);
+
+    if (header.numTiles == 0)
+    {
+        delete navmesh;
+        return nullptr;
+    }
     cursor += size_bytes;
 
     navmesh->navmesh = dtAllocNavMesh();

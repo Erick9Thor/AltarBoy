@@ -3,6 +3,7 @@
 #include <cassert>
 #include "Importer.h"
 #include "DetourTileCache.h"
+#include "DetourNavMesh.h"
 
 namespace Hachiko
 {

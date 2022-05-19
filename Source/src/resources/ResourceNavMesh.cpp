@@ -406,7 +406,9 @@ bool Hachiko::ResourceNavMesh::Build(Scene* scene)
 
     // Info on: https://github.com/recastnavigation/recastnavigation/blob/master/RecastDemo/Source/Sample_TempObstacles.cpp
 
-    InitCrowd();    
+    InitCrowd();
+    delete chunky_mesh;
+
     return true;
 }
 
@@ -560,7 +562,5 @@ void Hachiko::ResourceNavMesh::InitCrowd()
     avoidance_params.adaptiveDepth = 3;
 
     crowd->setObstacleAvoidanceParams(3, &avoidance_params);
-
-    delete chunky_mesh;
 }
 

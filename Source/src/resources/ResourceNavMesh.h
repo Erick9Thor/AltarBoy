@@ -131,8 +131,8 @@ struct MeshProcess : public dtTileCacheMeshProcess
         {
             if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
             {
-                polyAreas[i] = Hachiko::SAMPLE_POLYAREA_GROUND;
-                polyFlags[i] = Hachiko::SAMPLE_POLYFLAGS_WALK;
+                polyAreas[i] = 0;
+                polyFlags[i] = 1;
             }
         }
 

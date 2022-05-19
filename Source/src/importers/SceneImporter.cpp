@@ -14,15 +14,16 @@ void Hachiko::SceneImporter::Import(const char* path, YAML::Node& meta)
     UID scene_uid = ManageResourceUID(Resource::Type::SCENE, scene_resource_index, meta);    
     FileSystem::Copy(path, GetResourcePath(Resource::Type::SCENE, scene_uid).c_str());
 
-
-    UID navmesh_uid = ManageResourceUID(Resource::Type::SCENE, navmesh_resource_index, meta);  
+    YAML::Node node = YAML::LoadFile(path);
+    UID navmesh_id = node[NAVMESH_ID].as<UID>();
+    SetResource(navmesh_id, Resource::Type::NAVMESH, navmesh_resource_index, meta);
     NavmeshImporter navmesh_importer;
 
     Scene* temp_scene = new Scene();
-     
+    // Cant load a scene that is not imported yet
     const ResourceScene* scene = static_cast<const ResourceScene*>(Load(scene_uid));
     temp_scene->Load(scene->scene_data);
-    navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_uid);
+    navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_id);
     delete scene;
 }
 
@@ -76,6 +77,7 @@ Hachiko::ResourceScene* Hachiko::SceneImporter::CreateSceneResource(Scene* scene
     std::string output_path;
     scene->Save(scene_data);
     scene_resource->scene_data = scene_data;
+    // Create navmesh here?
 
     return scene_resource;
 }

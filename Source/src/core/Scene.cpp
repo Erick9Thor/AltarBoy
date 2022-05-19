@@ -33,7 +33,7 @@ Hachiko::Scene::Scene()
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
-    App->navigation->BuildNavmesh(this);
+    //App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -158,9 +158,14 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
     return selected;
 }
 
-void Hachiko::Scene::Save(YAML::Node& node) const
+void Hachiko::Scene::Save(YAML::Node& node)
 {
     node[SCENE_NAME] = GetName();
+    if (!navmesh_id)
+    {
+        SetNavmeshID(UUID::GenerateUID());
+    }
+    node[NAVMESH_ID] = navmesh_id;
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -174,12 +179,13 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     {
         // Loaded as an empty scene:
         loaded = true;
-
         return;
     }
 
     SetName(node[SCENE_NAME].as<std::string>().c_str());
+    navmesh_id = node[NAVMESH_ID].as<UID>();
     root->SetID(node[ROOT_ID].as<UID>());
+
     const YAML::Node children_node = node[CHILD_NODE];
 
     for (unsigned i = 0; i < children_node.size(); ++i)
@@ -191,7 +197,8 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
-    App->navigation->BuildNavmesh(this);
+    //App->navigation->BuildNavmesh(this);
+    App->navigation->SetNavmesh(navmesh_id);
 
     loaded = true;
 }

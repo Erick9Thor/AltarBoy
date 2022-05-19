@@ -23,6 +23,7 @@ ImporterManager::ImporterManager()
     resource_importers.emplace(Resource::Type::MESH, &mesh);
     resource_importers.emplace(Resource::Type::ANIMATION, &animation);
     resource_importers.emplace(Resource::Type::SCENE, &scene);
+    resource_importers.emplace(Resource::Type::NAVMESH, &navmesh);
 }
 
 std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)

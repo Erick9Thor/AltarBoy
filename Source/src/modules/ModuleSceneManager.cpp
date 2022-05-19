@@ -67,8 +67,6 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
 
-        //SaveScene(StringUtils::Concat(preferences->GetLibraryPath(Resource::Type::SCENE), SCENE_TEMP_NAME, SCENE_EXTENSION).c_str());
-        
         GameTimer::Start();
     }
     else if (GameTimer::paused)
@@ -230,8 +228,7 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
 {
-    // Loads scene if a pointer is passed, nullpointer creates empty scene
-    
+    // Loads scene if a pointer is passed, nullpointer creates empty scene    
     Event scene_load(Event::Type::SCENE_LOADED);
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);
@@ -244,7 +241,9 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
     if (new_resource)
     {
         main_scene->Load(scene_resource->scene_data);
-    }    
+        App->navigation->SetNavmesh(main_scene->navmesh_id);
+    }
+
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
@@ -264,14 +263,14 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
 #endif // PLAY_MODE
 }
 
-void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* scene)
+void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)
 {
-    if (scene_resource && scene != scene_resource && scene_resource->GetID() == 0)
+    if (scene_resource && new_scene_resource != scene_resource && scene_resource->GetID() == 0)
     {
         // Only delete if it exists, its not the same resource and its not loaded by resource manager (id 0)
         delete scene_resource;
     }
-    scene_resource = scene;
+    scene_resource = new_scene_resource;
 }
 
 void Hachiko::ModuleSceneManager::RefreshTemporaryScene()

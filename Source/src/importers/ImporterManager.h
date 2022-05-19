@@ -10,6 +10,7 @@
 #include "FontImporter.h"
 #include "PrefabImporter.h"
 #include "SceneImporter.h"
+#include "NavmeshImporter.h"
 
 namespace Hachiko
 {
@@ -48,5 +49,6 @@ namespace Hachiko
         // They dont have their own asset type
         AnimationImporter animation;
         MeshImporter mesh;
+        NavmeshImporter navmesh;
     };
 } // namespace Hachiko
