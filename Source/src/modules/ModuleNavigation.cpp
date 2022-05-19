@@ -59,16 +59,7 @@ Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
         
     }
 
-    // Set agents debug data to clean state
-    memset(m_trails, 0, sizeof(m_trails));
-
-    avoid_debug = dtAllocObstacleAvoidanceDebugData();
-    avoid_debug->init(2048);
-
-    memset(&agent_debug, 0, sizeof(agent_debug));
-    // Idx is used to mark selected agent, unused atm
-    agent_debug.idx = -1;
-    agent_debug.vod = avoid_debug;
+    SetDebugData();
 
     return navmesh;
 }
@@ -129,6 +120,10 @@ void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 {
     App->resources->ReleaseResource(scene_navmesh);    
     scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
+    if (scene_navmesh)
+    {
+        SetDebugData();
+    }
 }
 
 void Hachiko::ModuleNavigation::DebugDraw()
@@ -284,6 +279,25 @@ void Hachiko::ModuleNavigation::UpdateObstacleStats(dtTileCache* tile_cache)
 }
 
 
+
+void Hachiko::ModuleNavigation::SetDebugData()
+{
+    if (avoid_debug != nullptr)
+    {
+        dtFreeObstacleAvoidanceDebugData(avoid_debug);
+    }
+    
+    // Set agents debug data to clean state
+    memset(m_trails, 0, sizeof(m_trails));
+
+    avoid_debug = dtAllocObstacleAvoidanceDebugData();
+    avoid_debug->init(2048);
+
+    memset(&agent_debug, 0, sizeof(agent_debug));
+    // Idx is used to mark selected agent, unused atm
+    agent_debug.idx = -1;
+    agent_debug.vod = avoid_debug;
+}
 
 // Obtained from crowdtool
 void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)

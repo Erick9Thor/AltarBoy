@@ -175,16 +175,17 @@ void Hachiko::Scene::Save(YAML::Node& node)
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
-    if (!node[CHILD_NODE].IsDefined())
-    {
-        // Loaded as an empty scene:
-        loaded = true;
-        return;
-    }
-
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     navmesh_id = node[NAVMESH_ID].as<UID>();
     root->SetID(node[ROOT_ID].as<UID>());
+
+    if (!node[CHILD_NODE].IsDefined())
+    {
+        // Loaded as an empty scene:
+        App->navigation->SetNavmesh(navmesh_id);
+        loaded = true;
+        return;
+    }
 
     const YAML::Node children_node = node[CHILD_NODE];
 
@@ -199,7 +200,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 
     //App->navigation->BuildNavmesh(this);
     App->navigation->SetNavmesh(navmesh_id);
-
     loaded = true;
 }
 

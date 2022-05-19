@@ -243,6 +243,11 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
         main_scene->Load(scene_resource->scene_data);
         App->navigation->SetNavmesh(main_scene->navmesh_id);
     }
+    else
+    {
+        // This removes current navmesh
+        App->navigation->SetNavmesh(0);
+    }
 
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);

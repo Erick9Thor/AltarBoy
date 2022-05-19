@@ -42,6 +42,7 @@ namespace Hachiko
         dtCrowdAgent* GetEditableAgent(int agent_id) const;
 
     private:
+        void SetDebugData();
         void RenderAgents(duDebugDraw& dd);
         void UpdateObstacleStats(dtTileCache* tile_cache);
         ResourceNavMesh* scene_navmesh = nullptr;

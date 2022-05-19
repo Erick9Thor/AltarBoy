@@ -24,6 +24,7 @@ void Hachiko::SceneImporter::Import(const char* path, YAML::Node& meta)
     const ResourceScene* scene = static_cast<const ResourceScene*>(Load(scene_uid));
     temp_scene->Load(scene->scene_data);
     navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_id);
+    delete temp_scene;
     delete scene;
 }
 

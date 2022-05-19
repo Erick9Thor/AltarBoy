@@ -9,14 +9,20 @@ void Hachiko::NavmeshImporter::Save(UID id, const Resource* resource)
     const ResourceNavMesh* navmesh = static_cast<const ResourceNavMesh*>(resource);
     const std::string file_path = GetResourcePath(Resource::Type::NAVMESH, id);  
 
+    // Idk the point of this variable, taken from example
+    static constexpr int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'TSET';
+    static constexpr int TILECACHESET_VERSION = 1;
     
     TileCacheSetHeader header;
+    header.magic = TILECACHESET_MAGIC;
+    header.version = TILECACHESET_VERSION;
+    header.numTiles = 0;
+
      unsigned file_size = sizeof(TileCacheSetHeader);
 
     if (!resource ||!navmesh->tile_cache)
     {
         // Store empty file which means no navmes or return 0 which also will mean no navmesh
-        header.numTiles = 0;
         const auto file_buffer = new char[file_size];
         memcpy(file_buffer, &header, sizeof(TileCacheSetHeader));
         FileSystem::Save(file_path.c_str(), file_buffer, file_size);
@@ -76,6 +82,11 @@ void Hachiko::NavmeshImporter::Save(UID id, const Resource* resource)
 Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
 {
     const std::string file_path = GetResourcePath(Resource::Type::NAVMESH, id);
+
+    if (!FileSystem::Exists(file_path.c_str()))
+    {
+        return nullptr;
+    }
 
     char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
@@ -140,6 +151,8 @@ Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
     navmesh->navigation_query->init(navmesh->navmesh, 2048);
 
     navmesh->InitCrowd();
+
+    delete[] file_buffer;
     
     return navmesh;
 }
