@@ -34,17 +34,17 @@ void Hachiko::WindowStateMachine::Update()
 
     unsigned int id = 0;
 
-    for (Hachiko::ResourceStateMachine::Node& node : sm.nodes)
+    for (int i = 0; i < sm.nodes.size(); ++i)
     {
 
-        ImNodes::BeginNode(id);
+        ImNodes::BeginNode(i*3);
 
         ImNodes::BeginNodeTitleBar();
-        ImGui::TextUnformatted(node.name.c_str());
+        ImGui::TextUnformatted(sm.nodes[i].name.c_str());
         ImNodes::EndNodeTitleBar();
 
-        ImNodes::BeginInputAttribute(id++);
-        ImGui::Text(node.clip.c_str());
+        ImNodes::BeginInputAttribute(i * 3 + 1);
+        ImGui::Text(sm.nodes[i].clip.c_str());
         ImGui::SameLine();
         ImGui::Text("|");
         ImGui::SameLine();
@@ -60,7 +60,7 @@ void Hachiko::WindowStateMachine::Update()
         }
 
         ImNodes::EndInputAttribute();
-
+        /*
         std::vector<Hachiko::ResourceStateMachine::Transition> transitionsFromState = sm.FindTransitionsFromNode(node.name.c_str());
         for (int j = 0; j < transitionsFromState.size(); ++j)
         {
@@ -72,9 +72,9 @@ void Hachiko::WindowStateMachine::Update()
             ImGui::Text(std::to_string(transitionsFromState[j].interpolationTime).c_str());
             ImNodes::EndOutputAttribute();
         }
-
+        */
         // OUTPUT BY TRIGGER
-        ImNodes::BeginOutputAttribute(id++);
+        ImNodes::BeginOutputAttribute(i * 3 + 2);
         ImGui::Text("");
         ImNodes::EndOutputAttribute();
 
@@ -84,8 +84,7 @@ void Hachiko::WindowStateMachine::Update()
     id = 0;
     for (const Hachiko::ResourceStateMachine::Transition& transition : sm.transitions)
     {
-        //ImNodes::Link(id, sm.FindNode(transition.source), sm.FindNode(transition.target));
-        ImNodes::Link(id, 0, 5);
+        ImNodes::Link(id, sm.FindNode(transition.source) * 3 + 2, sm.FindNode(transition.target) * 3 + 1);
         ++id;
     }
 
@@ -96,9 +95,8 @@ void Hachiko::WindowStateMachine::Update()
 
     // showEditPopUp();
 
-    // showAddLink();
+    showAddLink();
     // showDeleteLink();
-    // showEditLink();
     // showHelpLink();
     ImGui::End();
 }
@@ -218,25 +216,7 @@ void Hachiko::WindowStateMachine::showAddLink()
 
     if (started && ImNodes::IsLinkCreated(&start, &end, false))
     {
-        std::string startName, endName;
-        /* for (int i = 0; i < nodes.size(); ++i)
-        {
-            if (startName == "")
-            {
-                for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
-                {
-                    if (start == nodes[i].outputIndex[j])
-                    {
-                        startName = nodes[i].name;
-                    }
-                }
-            }
-            if (end == nodes[i].inputIndex)
-            {
-                endName = nodes[i].name;
-            }
-        }*/
-        sm.AddTransition(startName, endName, "Set trigger", 0);
+        sm.AddTransition(sm.nodes[(start - 2) / 3].name, sm.nodes[(end - 1) / 3].name, "", 0);
     }
 }
 
