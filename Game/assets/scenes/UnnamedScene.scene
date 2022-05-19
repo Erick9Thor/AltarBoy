@@ -1,0 +1,1832 @@
+scene_name: UnnamedScene
+root_id: 12788681713988098913
+child:
+  - id: 10617423249702914606
+    name: BakerHouse
+    enabled: true
+    component:
+      - id: 14522573291065786048
+        type: 1
+        enabled: true
+        position: [0, 3.69700003, 0.600000024]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 6065568219117241378
+        name: Chimney
+        enabled: true
+        component:
+          - id: 9106821873541405957
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.707106829, 0, 0, 0.707106709]
+            scale: [100, 99.9999771, 99.9999771]
+          - id: 8288596059045724768
+            type: 2
+            enabled: true
+            mesh_id: 7544551443759936381
+            navigable: false
+            visible: true
+            material_id: 3869827490542517799
+      - id: 13221102067360269065
+        name: Baker_house
+        enabled: true
+        component:
+          - id: 6214145946754167187
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.707106829, 0, 0, 0.707106709]
+            scale: [100, 99.9999771, 99.9999771]
+          - id: 12736969589733000637
+            type: 2
+            enabled: true
+            mesh_id: 3581704332068092856
+            navigable: false
+            visible: true
+            material_id: 3869827490542517799
+  - id: 14210740570379712723
+    name: Idle
+    enabled: true
+    component:
+      - id: 9036967550929424263
+        type: 1
+        enabled: true
+        position: [6.48330069, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 15775295673406247835
+        type: 14
+        enabled: true
+        animations:
+          - 1246325987446287226
+    child:
+      - id: 15482327052193709287
+        name: Legs_low_$AssimpFbx$_PreRotation
+        enabled: true
+        component:
+          - id: 15618789564878446493
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999881, 0.999999881]
+        child:
+          - id: 104576407853293410
+            name: Legs_low_$AssimpFbx$_Scaling
+            enabled: true
+            component:
+              - id: 9740306539845856837
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [2.00019312, 2.00019312, 2.00019312]
+            child:
+              - id: 12300920460700392497
+                name: Legs_low_$AssimpFbx$_GeometricTranslation
+                enabled: true
+                component:
+                  - id: 4948328916804961472
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0.291661114]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 3364161194767328958
+                    name: Legs_low
+                    enabled: true
+                    component:
+                      - id: 3667113793348693585
+                        type: 1
+                        enabled: true
+                        position: [0, 1.49691737, -5.36441803e-07]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                      - id: 14512868109750619281
+                        type: 2
+                        enabled: true
+                        mesh_id: 12123928845219701760
+                        navigable: false
+                        visible: true
+                        material_id: 15737844490852114836
+      - id: 17537710144773174920
+        name: mixamorig:Hips
+        enabled: true
+        component:
+          - id: 17239004960551728322
+            type: 1
+            enabled: true
+            position: [-0.000116705894, 1.08103967, -0.124549024]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 6712820676114955231
+            name: mixamorig:Spine_$AssimpFbx$_Translation
+            enabled: true
+            component:
+              - id: 18296910511783390337
+                type: 1
+                enabled: true
+                position: [0, 0.0964034796, -0.0270344093]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 15060100010091560120
+                name: mixamorig:Spine_$AssimpFbx$_PreRotation
+                enabled: true
+                component:
+                  - id: 18128595047349787440
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0.136278108, 0, 0, 0.990670621]
+                    scale: [1, 0.99999994, 0.99999994]
+                child:
+                  - id: 11780315313513721855
+                    name: mixamorig:Spine_$AssimpFbx$_Rotation
+                    enabled: true
+                    component:
+                      - id: 1634461098010408345
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 5878523703528235730
+                        name: mixamorig:Spine
+                        enabled: true
+                        component:
+                          - id: 10722415198616477083
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 8566313221630779105
+                            name: mixamorig:Spine1
+                            enabled: true
+                            component:
+                              - id: 17658264441096324213
+                                type: 1
+                                enabled: true
+                                position: [0, 0.11680945, 0]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 16174321385867563022
+                                name: mixamorig:Spine2
+                                enabled: true
+                                component:
+                                  - id: 8847843096823155954
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0.133496433, 0]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 8286829546918535500
+                                    name: mixamorig:Neck_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - id: 2945891384547783373
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0.150183499, 4.92966166e-08]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 10718337216067798413
+                                        name: mixamorig:Neck_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - id: 6410245459146004971
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0.136278406, 0, 0, 0.990670681]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 16573744055131763715
+                                            name: mixamorig:Neck_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - id: 6497291290033584189
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 10374782281680762645
+                                                name: mixamorig:Neck
+                                                enabled: true
+                                                component:
+                                                  - id: 16435204228540731617
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 14860833738371189124
+                                                    name: mixamorig:Head
+                                                    enabled: true
+                                                    component:
+                                                      - id: 258885179047580039
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0.0631763935, -0.208886743]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 3497201082773980792
+                                                        name: mixamorig:HeadTop_End
+                                                        enabled: true
+                                                        component:
+                                                          - id: 6918256872964379295
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0.0981135368, -0.324403048]
+                                                            rotation: [0, 0, 0, 1]
+                                                            scale: [1, 1, 1]
+                                  - id: 7664624375042861405
+                                    name: mixamorig:LeftShoulder_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - id: 13669336632936840627
+                                        type: 1
+                                        enabled: true
+                                        position: [0.0594616793, 0.131379768, -0.00486380374]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 5084037144792638040
+                                        name: mixamorig:LeftShoulder_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - id: 12130295789637694867
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [-0.54609102, -0.435423434, 0.59239912, -0.401564866]
+                                            scale: [1, 0.999999881, 1]
+                                        child:
+                                          - id: 18282997182207372570
+                                            name: mixamorig:LeftShoulder_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - id: 18371514584048033786
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 16091938426471848240
+                                                name: mixamorig:LeftShoulder
+                                                enabled: true
+                                                component:
+                                                  - id: 15637027709398229136
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 12699535962513549780
+                                                    name: mixamorig:LeftArm_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 7190410871057500885
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [-2.77555756e-17, 0.128983155, 2.22044605e-16]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 11415676752753774450
+                                                        name: mixamorig:LeftArm_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 10775933499879639042
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0.295808047, 0.305395901, -0.1004292, 0.899524868]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - id: 1942721932431134900
+                                                            name: mixamorig:LeftArm_$AssimpFbx$_Rotation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 17073973731331887591
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - id: 6771371816234914472
+                                                                name: mixamorig:LeftArm
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 8072913202284651214
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 2798331549534167355
+                                                                    name: mixamorig:LeftForeArm_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 8932889717193229424
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0.383070499, 2.22044605e-16]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 4867876005482267118
+                                                                        name: mixamorig:LeftForeArm_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 14574812489315948791
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0.019902477, 0.00394614134, 0.194447815, 0.980702996]
+                                                                            scale: [1, 0.999999881, 0.999999821]
+                                                                        child:
+                                                                          - id: 8436015477730588006
+                                                                            name: mixamorig:LeftForeArm_$AssimpFbx$_Rotation
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 8782200325393852255
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - id: 6099601825148001630
+                                                                                name: mixamorig:LeftForeArm
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - id: 18225540762460973543
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0, 0, 0]
+                                                                                    rotation: [0, 0, 0, 1]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - id: 1897193369972812266
+                                                                                    name: mixamorig:LeftHand_$AssimpFbx$_Translation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - id: 15939008164488176559
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0, 0.278943509, 1.11022302e-16]
+                                                                                        rotation: [0, 0, 0, 1]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - id: 1232642577814897688
+                                                                                        name: mixamorig:LeftHand_$AssimpFbx$_PreRotation
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - id: 8527138061417596325
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [0.0611661598, -0.0593188033, 0.0664327741, 0.994146228]
+                                                                                            scale: [0.999999821, 1, 0.999999881]
+                                                                                        child:
+                                                                                          - id: 14691753549320174213
+                                                                                            name: mixamorig:LeftHand_$AssimpFbx$_Rotation
+                                                                                            enabled: true
+                                                                                            component:
+                                                                                              - id: 10038174596965846542
+                                                                                                type: 1
+                                                                                                enabled: true
+                                                                                                position: [0, 0, 0]
+                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                scale: [1, 1, 1]
+                                                                                            child:
+                                                                                              - id: 1218399364586271655
+                                                                                                name: mixamorig:LeftHand
+                                                                                                enabled: true
+                                                                                                component:
+                                                                                                  - id: 5323283069384679288
+                                                                                                    type: 1
+                                                                                                    enabled: true
+                                                                                                    position: [0, 0, 0]
+                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    scale: [1, 1, 1]
+                                                                                                child:
+                                                                                                  - id: 13811965957742376805
+                                                                                                    name: mixamorig:LeftHandThumb1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 4716548073383521676
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [-0.053343486, 0.076285027, 0.03685835]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 8314526598572532162
+                                                                                                        name: mixamorig:LeftHandThumb1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 12676895210565722649
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.181871757, 0.0481044836, 0.251138002, 0.949493766]
+                                                                                                            scale: [1, 1, 1]
+                                                                                                        child:
+                                                                                                          - id: 8311243622866447298
+                                                                                                            name: mixamorig:LeftHandThumb1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 4208824875314424796
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 12731527344205312401
+                                                                                                                name: mixamorig:LeftHandThumb1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 5961620479454681880
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 2075394792513216126
+                                                                                                                    name: mixamorig:LeftHandThumb2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 4973158583685137671
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [-0.00692164013, 0.0797941759, 0]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 18265415356467437368
+                                                                                                                        name: mixamorig:LeftHandThumb2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 15578854265989341196
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.105893888, 0, 0, 0.994377434]
+                                                                                                                            scale: [1, 1, 1]
+                                                                                                                        child:
+                                                                                                                          - id: 12703194895547127302
+                                                                                                                            name: mixamorig:LeftHandThumb2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 3412066360470517642
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 13626674970868429492
+                                                                                                                                name: mixamorig:LeftHandThumb2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 16345505894619293202
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 16422383980768213419
+                                                                                                                                    name: mixamorig:LeftHandThumb3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 236389299583547273
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [-0.0026363472, 0.0745722055, 5.55111512e-17]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 12190497573394393335
+                                                                                                                                        name: mixamorig:LeftHandThumb3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 7263424101257797741
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.0317776278, 0, 0, 0.99949497]
+                                                                                                                                            scale: [1, 0.999999821, 0.999999821]
+                                                                                                                                        child:
+                                                                                                                                          - id: 18363674882938985712
+                                                                                                                                            name: mixamorig:LeftHandThumb3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 17171475834385795654
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 15295167225270075400
+                                                                                                                                                name: mixamorig:LeftHandThumb3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 8345260147098272244
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 2543235642992849344
+                                                                                                                                                    name: mixamorig:LeftHandThumb4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 2787661724862174462
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [0.00955798756, 0.0572722852, 0]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+                                                                                                  - id: 306280161894800267
+                                                                                                    name: mixamorig:LeftHandIndex1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 17215664642831274448
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [-0.0447757728, 0.222784594, -1.84366371e-08]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 3136642232482865486
+                                                                                                        name: mixamorig:LeftHandIndex1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 14470589237524384886
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.186710045, -0.00981403422, -0.051564917, 0.981011868]
+                                                                                                            scale: [1, 0.99999994, 1]
+                                                                                                        child:
+                                                                                                          - id: 8147950904267897816
+                                                                                                            name: mixamorig:LeftHandIndex1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 4163537813413119125
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 7408804695786415030
+                                                                                                                name: mixamorig:LeftHandIndex1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 1363171177704755657
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 14406553231541758647
+                                                                                                                    name: mixamorig:LeftHandIndex2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 11043273273478621988
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [-0.000241805945, 0.0498678945, -1.11022302e-16]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 13540711672868047459
+                                                                                                                        name: mixamorig:LeftHandIndex2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 1198636283987099448
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.0942146257, 0, 0, 0.995551944]
+                                                                                                                            scale: [1, 1, 1]
+                                                                                                                        child:
+                                                                                                                          - id: 6848633123252756805
+                                                                                                                            name: mixamorig:LeftHandIndex2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 15867212071666762488
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 14011732349286117377
+                                                                                                                                name: mixamorig:LeftHandIndex2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 16565613580445218707
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 15526603407892541172
+                                                                                                                                    name: mixamorig:LeftHandIndex3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 16462409908545569565
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [0.00014197886, 0.0483793467, -5.55111512e-17]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 3327051132543681959
+                                                                                                                                        name: mixamorig:LeftHandIndex3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 4642461974322376747
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.00420477148, 0, 0, 0.999991179]
+                                                                                                                                            scale: [1, 1, 1]
+                                                                                                                                        child:
+                                                                                                                                          - id: 17292210929715116417
+                                                                                                                                            name: mixamorig:LeftHandIndex3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 5256374045818461575
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 1447671081795182513
+                                                                                                                                                name: mixamorig:LeftHandIndex3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 18110813349849957693
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 3988777122919726098
+                                                                                                                                                    name: mixamorig:LeftHandIndex4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 9057405449057992903
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [9.98270771e-05, 0.0350007527, 1.11022302e-16]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+                                                                                                  - id: 7877063534784975531
+                                                                                                    name: mixamorig:LeftHandMiddle1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 5808182987908285532
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0.0447757728, 0.216162562, -1.29238558e-08]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 10694677248229284317
+                                                                                                        name: mixamorig:LeftHandMiddle1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 4313165968606957433
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.150886223, -0.0015027565, -0.00984500814, 0.988501072]
+                                                                                                            scale: [1, 1, 0.999999881]
+                                                                                                        child:
+                                                                                                          - id: 1723201987912410331
+                                                                                                            name: mixamorig:LeftHandMiddle1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 5866917327103313125
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 3810510980615473948
+                                                                                                                name: mixamorig:LeftHandMiddle1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 977794211645811226
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 14447362258882263408
+                                                                                                                    name: mixamorig:LeftHandMiddle2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 5264127336787848744
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [0.000180147865, 0.0442693383, -1.11022302e-16]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 16886572731635433204
+                                                                                                                        name: mixamorig:LeftHandMiddle2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 10385996992588534354
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.121910192, 0, 0, 0.992541134]
+                                                                                                                            scale: [1, 0.999999881, 0.999999881]
+                                                                                                                        child:
+                                                                                                                          - id: 12834345543587681234
+                                                                                                                            name: mixamorig:LeftHandMiddle2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 577579878673111170
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 12201869991734528276
+                                                                                                                                name: mixamorig:LeftHandMiddle2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 2607927162415087659
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 2288467412805448944
+                                                                                                                                    name: mixamorig:LeftHandMiddle3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 6585275251015058461
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [-6.31338189e-05, 0.0478285924, 0]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 18159163987733164833
+                                                                                                                                        name: mixamorig:LeftHandMiddle3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 3574645601575503096
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.0745367557, 0, 0, 0.997218251]
+                                                                                                                                            scale: [1, 1, 1]
+                                                                                                                                        child:
+                                                                                                                                          - id: 9613261316988697629
+                                                                                                                                            name: mixamorig:LeftHandMiddle3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 7086487646443015579
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 3716948909427267005
+                                                                                                                                                name: mixamorig:LeftHandMiddle3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 10595256920841338419
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 9163234939764856196
+                                                                                                                                                    name: mixamorig:LeftHandMiddle4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 5828513255295291476
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [-0.000117014053, 0.0326296613, -1.11022302e-16]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+                                  - id: 9387703893628590360
+                                    name: mixamorig:RightShoulder_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - id: 16208583108271626520
+                                        type: 1
+                                        enabled: true
+                                        position: [-0.0594616793, 0.131592587, -0.00562270964]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 7034395218190204230
+                                        name: mixamorig:RightShoulder_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - id: 10629011185085990710
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0.541706741, -0.438875973, 0.595025897, 0.399857342]
+                                            scale: [1, 0.99999994, 1]
+                                        child:
+                                          - id: 13231056378473334419
+                                            name: mixamorig:RightShoulder_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - id: 16955518170973888709
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 7811070399002949896
+                                                name: mixamorig:RightShoulder
+                                                enabled: true
+                                                component:
+                                                  - id: 3117832671046891012
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 16044543387189466876
+                                                    name: mixamorig:RightArm_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 15686180147444327089
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [2.77555756e-17, 0.128983155, 2.22044605e-16]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 11081975897480902183
+                                                        name: mixamorig:RightArm_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 14467869875611429732
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0.294226885, -0.296972901, 0.0967355445, 0.903260708]
+                                                            scale: [1, 0.99999994, 1]
+                                                        child:
+                                                          - id: 10599789593076051764
+                                                            name: mixamorig:RightArm_$AssimpFbx$_Rotation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 14221319716824407457
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - id: 13707967432918074280
+                                                                name: mixamorig:RightArm
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 910344739422283173
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 12171940212240432225
+                                                                    name: mixamorig:RightForeArm_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 9990724631369644530
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0.382695258, -2.22044605e-16]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 12304858051730097613
+                                                                        name: mixamorig:RightForeArm_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 10989676138292978719
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0.0250878353, -0.00491658319, -0.192253664, 0.981012225]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 15044495174347951209
+                                                                            name: mixamorig:RightForeArm_$AssimpFbx$_Rotation
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 6897901915862680256
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - id: 4110578244789976339
+                                                                                name: mixamorig:RightForeArm
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - id: 14839333851081775447
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0, 0, 0]
+                                                                                    rotation: [0, 0, 0, 1]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - id: 2204173211614553408
+                                                                                    name: mixamorig:RightHand_$AssimpFbx$_Translation
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - id: 5496807310511504429
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [-1.11022302e-16, 0.278990597, -1.11022302e-16]
+                                                                                        rotation: [0, 0, 0, 1]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - id: 8512267732164905544
+                                                                                        name: mixamorig:RightHand_$AssimpFbx$_PreRotation
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - id: 16591734887498900063
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0, 0, 0]
+                                                                                            rotation: [0.0534112863, 0.0426997207, -0.0672407672, 0.995390713]
+                                                                                            scale: [0.999999821, 1, 0.999999821]
+                                                                                        child:
+                                                                                          - id: 9046519224600458460
+                                                                                            name: mixamorig:RightHand_$AssimpFbx$_Rotation
+                                                                                            enabled: true
+                                                                                            component:
+                                                                                              - id: 6428301398403720117
+                                                                                                type: 1
+                                                                                                enabled: true
+                                                                                                position: [0, 0, 0]
+                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                scale: [1, 1, 1]
+                                                                                            child:
+                                                                                              - id: 15713227854834833031
+                                                                                                name: mixamorig:RightHand
+                                                                                                enabled: true
+                                                                                                component:
+                                                                                                  - id: 13715872264010128549
+                                                                                                    type: 1
+                                                                                                    enabled: true
+                                                                                                    position: [0, 0, 0]
+                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                    scale: [1, 1, 1]
+                                                                                                child:
+                                                                                                  - id: 10309481106001550576
+                                                                                                    name: mixamorig:RightHandThumb1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 17342031835002941893
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0.0535528697, 0.0759843439, 0.0360457785]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 17746458167062163365
+                                                                                                        name: mixamorig:RightHandThumb1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 2345205738560398339
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.177955538, -0.0485253185, -0.258563012, 0.948220611]
+                                                                                                            scale: [0.99999994, 1.00000012, 1]
+                                                                                                        child:
+                                                                                                          - id: 15335248558888660952
+                                                                                                            name: mixamorig:RightHandThumb1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 7306639583292380148
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 9468964610036012852
+                                                                                                                name: mixamorig:RightHandThumb1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 3616741057769815677
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 594367641807982612
+                                                                                                                    name: mixamorig:RightHandThumb2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 7045838565875484787
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [0.00605515391, 0.0795328394, 0]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 563363386221178263
+                                                                                                                        name: mixamorig:RightHandThumb2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 1368691846554383433
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.12879625, 0, 0, 0.991671085]
+                                                                                                                            scale: [1, 0.999999821, 0.999999821]
+                                                                                                                        child:
+                                                                                                                          - id: 9370295146695098991
+                                                                                                                            name: mixamorig:RightHandThumb2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 14042622943778353968
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 8617856656988512160
+                                                                                                                                name: mixamorig:RightHandThumb2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 10474644400243858220
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 2624211199197704523
+                                                                                                                                    name: mixamorig:RightHandThumb3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 14169858053592226974
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [0.00237939064, 0.0758680776, -5.55111512e-17]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 100347588467180843
+                                                                                                                                        name: mixamorig:RightHandThumb3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 15923363504001584118
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.0811609253, 0, 0, 0.996701002]
+                                                                                                                                            scale: [1, 1, 1]
+                                                                                                                                        child:
+                                                                                                                                          - id: 13392516128648736797
+                                                                                                                                            name: mixamorig:RightHandThumb3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 6361361196105229742
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 18338999184465427025
+                                                                                                                                                name: mixamorig:RightHandThumb3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 17377923116997011297
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 9982721331782007542
+                                                                                                                                                    name: mixamorig:RightHandThumb4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 8515058514967476577
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [-0.00843454432, 0.0573376454, 0]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+                                                                                                  - id: 4947925332529561647
+                                                                                                    name: mixamorig:RightHandIndex1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 8617448018184525623
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [0.0450529009, 0.221204713, 1.49813566e-08]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 3218312346169330551
+                                                                                                        name: mixamorig:RightHandIndex1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 1490345341867139176
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.186462209, 0.0127588091, 0.0670632049, 0.980087638]
+                                                                                                            scale: [1, 1, 1]
+                                                                                                        child:
+                                                                                                          - id: 17042522256301966692
+                                                                                                            name: mixamorig:RightHandIndex1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 13628722270487639669
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 4226761450149976292
+                                                                                                                name: mixamorig:RightHandIndex1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 829892758346964947
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 8828296827440056529
+                                                                                                                    name: mixamorig:RightHandIndex2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 4049733779012344093
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [0.0003477711, 0.0524144508, 0]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 15082931517895022632
+                                                                                                                        name: mixamorig:RightHandIndex2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 4754320977210623590
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.143911123, 0, 0, 0.989590645]
+                                                                                                                            scale: [1, 0.999999881, 0.999999881]
+                                                                                                                        child:
+                                                                                                                          - id: 4787405511563665188
+                                                                                                                            name: mixamorig:RightHandIndex2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 2194900873018970062
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 9564304269328188986
+                                                                                                                                name: mixamorig:RightHandIndex2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 17207103098323282872
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 15448362300826409318
+                                                                                                                                    name: mixamorig:RightHandIndex3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 10344488696867626021
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [-0.00030199677, 0.0498834811, -5.55111512e-17]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 1096489757234607642
+                                                                                                                                        name: mixamorig:RightHandIndex3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 1150294217992851088
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.0635815635, 0, 0, 0.997976661]
+                                                                                                                                            scale: [1, 1, 1]
+                                                                                                                                        child:
+                                                                                                                                          - id: 1339220310415872247
+                                                                                                                                            name: mixamorig:RightHandIndex3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 11793507868105097427
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 6485539391631613061
+                                                                                                                                                name: mixamorig:RightHandIndex3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 6220237063018320902
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 17631406535019280586
+                                                                                                                                                    name: mixamorig:RightHandIndex4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 1125910241308536142
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [-4.57743336e-05, 0.0345025249, 0]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+                                                                                                  - id: 16015224866378445473
+                                                                                                    name: mixamorig:RightHandMiddle1_$AssimpFbx$_Translation
+                                                                                                    enabled: true
+                                                                                                    component:
+                                                                                                      - id: 10836864981876378669
+                                                                                                        type: 1
+                                                                                                        enabled: true
+                                                                                                        position: [-0.0450529009, 0.218050987, 1.53885846e-08]
+                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                        scale: [1, 1, 1]
+                                                                                                    child:
+                                                                                                      - id: 14518315192225690399
+                                                                                                        name: mixamorig:RightHandMiddle1_$AssimpFbx$_PreRotation
+                                                                                                        enabled: true
+                                                                                                        component:
+                                                                                                          - id: 14363605168162326442
+                                                                                                            type: 1
+                                                                                                            enabled: true
+                                                                                                            position: [0, 0, 0]
+                                                                                                            rotation: [0.204945758, 0.0084123211, 0.0401400104, 0.977913737]
+                                                                                                            scale: [1, 1, 1]
+                                                                                                        child:
+                                                                                                          - id: 17803891549985800932
+                                                                                                            name: mixamorig:RightHandMiddle1_$AssimpFbx$_Rotation
+                                                                                                            enabled: true
+                                                                                                            component:
+                                                                                                              - id: 15786897418194714766
+                                                                                                                type: 1
+                                                                                                                enabled: true
+                                                                                                                position: [0, 0, 0]
+                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                scale: [1, 1, 1]
+                                                                                                            child:
+                                                                                                              - id: 16901502194491033739
+                                                                                                                name: mixamorig:RightHandMiddle1
+                                                                                                                enabled: true
+                                                                                                                component:
+                                                                                                                  - id: 4245843947045100435
+                                                                                                                    type: 1
+                                                                                                                    enabled: true
+                                                                                                                    position: [0, 0, 0]
+                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                    scale: [1, 1, 1]
+                                                                                                                child:
+                                                                                                                  - id: 2406575737371621379
+                                                                                                                    name: mixamorig:RightHandMiddle2_$AssimpFbx$_Translation
+                                                                                                                    enabled: true
+                                                                                                                    component:
+                                                                                                                      - id: 11564814261289782362
+                                                                                                                        type: 1
+                                                                                                                        enabled: true
+                                                                                                                        position: [-0.000118747215, 0.0473678, -1.11022302e-16]
+                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                        scale: [1, 1, 1]
+                                                                                                                    child:
+                                                                                                                      - id: 8749160728810898809
+                                                                                                                        name: mixamorig:RightHandMiddle2_$AssimpFbx$_PreRotation
+                                                                                                                        enabled: true
+                                                                                                                        component:
+                                                                                                                          - id: 11514658003143912028
+                                                                                                                            type: 1
+                                                                                                                            enabled: true
+                                                                                                                            position: [0, 0, 0]
+                                                                                                                            rotation: [0.0837859958, 0, 0, 0.996483862]
+                                                                                                                            scale: [1, 1, 1]
+                                                                                                                        child:
+                                                                                                                          - id: 4241438948003415588
+                                                                                                                            name: mixamorig:RightHandMiddle2_$AssimpFbx$_Rotation
+                                                                                                                            enabled: true
+                                                                                                                            component:
+                                                                                                                              - id: 1574645711393153073
+                                                                                                                                type: 1
+                                                                                                                                enabled: true
+                                                                                                                                position: [0, 0, 0]
+                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                scale: [1, 1, 1]
+                                                                                                                            child:
+                                                                                                                              - id: 16037203740442178947
+                                                                                                                                name: mixamorig:RightHandMiddle2
+                                                                                                                                enabled: true
+                                                                                                                                component:
+                                                                                                                                  - id: 12972181847514563590
+                                                                                                                                    type: 1
+                                                                                                                                    enabled: true
+                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                child:
+                                                                                                                                  - id: 3160681285979987988
+                                                                                                                                    name: mixamorig:RightHandMiddle3_$AssimpFbx$_Translation
+                                                                                                                                    enabled: true
+                                                                                                                                    component:
+                                                                                                                                      - id: 13579668661675531009
+                                                                                                                                        type: 1
+                                                                                                                                        enabled: true
+                                                                                                                                        position: [7.63639327e-05, 0.0464377292, 0]
+                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                        scale: [1, 1, 1]
+                                                                                                                                    child:
+                                                                                                                                      - id: 17621414920929687766
+                                                                                                                                        name: mixamorig:RightHandMiddle3_$AssimpFbx$_PreRotation
+                                                                                                                                        enabled: true
+                                                                                                                                        component:
+                                                                                                                                          - id: 6083056447174689056
+                                                                                                                                            type: 1
+                                                                                                                                            enabled: true
+                                                                                                                                            position: [0, 0, 0]
+                                                                                                                                            rotation: [-0.232565761, 0, 0, 0.972580791]
+                                                                                                                                            scale: [1, 1, 1]
+                                                                                                                                        child:
+                                                                                                                                          - id: 17409110631287894255
+                                                                                                                                            name: mixamorig:RightHandMiddle3_$AssimpFbx$_Rotation
+                                                                                                                                            enabled: true
+                                                                                                                                            component:
+                                                                                                                                              - id: 10787659940394647030
+                                                                                                                                                type: 1
+                                                                                                                                                enabled: true
+                                                                                                                                                position: [0, 0, 0]
+                                                                                                                                                rotation: [0, 0, 0, 1]
+                                                                                                                                                scale: [1, 1, 1]
+                                                                                                                                            child:
+                                                                                                                                              - id: 3102857521180780948
+                                                                                                                                                name: mixamorig:RightHandMiddle3
+                                                                                                                                                enabled: true
+                                                                                                                                                component:
+                                                                                                                                                  - id: 4492525689306697739
+                                                                                                                                                    type: 1
+                                                                                                                                                    enabled: true
+                                                                                                                                                    position: [0, 0, 0]
+                                                                                                                                                    rotation: [0, 0, 0, 1]
+                                                                                                                                                    scale: [1, 1, 1]
+                                                                                                                                                child:
+                                                                                                                                                  - id: 5441416536578525937
+                                                                                                                                                    name: mixamorig:RightHandMiddle4
+                                                                                                                                                    enabled: true
+                                                                                                                                                    component:
+                                                                                                                                                      - id: 7327556932282870773
+                                                                                                                                                        type: 1
+                                                                                                                                                        enabled: true
+                                                                                                                                                        position: [4.23832898e-05, 0.0278354324, 0]
+                                                                                                                                                        rotation: [0, 0, 0, 1]
+                                                                                                                                                        scale: [1, 1, 1]
+          - id: 7175066101815929084
+            name: mixamorig:LeftUpLeg_$AssimpFbx$_Translation
+            enabled: true
+            component:
+              - id: 7285979242858099004
+                type: 1
+                enabled: true
+                position: [0.144798845, -0.0536571741, -0.00154960901]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 7140258233228720819
+                name: mixamorig:LeftUpLeg_$AssimpFbx$_PreRotation
+                enabled: true
+                component:
+                  - id: 9085446884371209720
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0.00104823837, 0.00960198231, 0.994047463, -0.108519033]
+                    scale: [1.00000012, 1.00000012, 0.999999821]
+                child:
+                  - id: 16840967201314024032
+                    name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
+                    enabled: true
+                    component:
+                      - id: 15808943065988538535
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 5780737778892990896
+                        name: mixamorig:LeftUpLeg
+                        enabled: true
+                        component:
+                          - id: 4554586447309955522
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 14585418723730716404
+                            name: mixamorig:LeftLeg_$AssimpFbx$_Translation
+                            enabled: true
+                            component:
+                              - id: 17591554254215253134
+                                type: 1
+                                enabled: true
+                                position: [-5.55111512e-17, 0.468049526, -1.38777878e-17]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 6479806768534086895
+                                name: mixamorig:LeftLeg_$AssimpFbx$_PreRotation
+                                enabled: true
+                                component:
+                                  - id: 6579700537331556407
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0.188785151, 0.00525386818, -0.0273184869, 0.981624305]
+                                    scale: [1, 0.99999994, 1]
+                                child:
+                                  - id: 1410152416203365848
+                                    name: mixamorig:LeftLeg_$AssimpFbx$_Rotation
+                                    enabled: true
+                                    component:
+                                      - id: 9598398409306216638
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0, 0]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 14252433550749715170
+                                        name: mixamorig:LeftLeg
+                                        enabled: true
+                                        component:
+                                          - id: 9961835386241229173
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0, 0, 0, 1]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 6167401181946916725
+                                            name: mixamorig:LeftFoot_$AssimpFbx$_Translation
+                                            enabled: true
+                                            component:
+                                              - id: 13771598835621264814
+                                                type: 1
+                                                enabled: true
+                                                position: [-5.55111512e-17, 0.417528808, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 12374940343135309187
+                                                name: mixamorig:LeftFoot_$AssimpFbx$_PreRotation
+                                                enabled: true
+                                                component:
+                                                  - id: 11218789676132283853
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0.569579959, 0.0639659762, -0.0445273332, 0.818232477]
+                                                    scale: [0.999999821, 0.99999994, 1]
+                                                child:
+                                                  - id: 5189614943077686968
+                                                    name: mixamorig:LeftFoot_$AssimpFbx$_Rotation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 9119658282729315147
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0, 0]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 6451202222244129717
+                                                        name: mixamorig:LeftFoot
+                                                        enabled: true
+                                                        component:
+                                                          - id: 17060937390655162199
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0, 0, 0, 1]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - id: 15088175382169009934
+                                                            name: mixamorig:LeftToeBase_$AssimpFbx$_Translation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 12956334626106675445
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [-5.55111512e-17, 0.285990655, 1.38777878e-17]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - id: 3654739752098114473
+                                                                name: mixamorig:LeftToeBase_$AssimpFbx$_PreRotation
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 3720284118829293896
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0.352499872, 0.00516502373, -0.00194558478, 0.935795605]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 4907134468207570316
+                                                                    name: mixamorig:LeftToeBase_$AssimpFbx$_Rotation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 8085146788401610728
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0, 0]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 12904878355544229641
+                                                                        name: mixamorig:LeftToeBase
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 17039895860942563764
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0, 0, 0, 1]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 1764823791766212934
+                                                                            name: mixamorig:LeftToe_End
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 8163198238165201323
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0.107648462, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+          - id: 222949153445568478
+            name: mixamorig:RightUpLeg_$AssimpFbx$_Translation
+            enabled: true
+            component:
+              - id: 9584969473139506200
+                type: 1
+                enabled: true
+                position: [-0.144798845, -0.0536571741, -0.00349355489]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 10478416940675880001
+                name: mixamorig:RightUpLeg_$AssimpFbx$_PreRotation
+                enabled: true
+                component:
+                  - id: 2450519685192590071
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0.00105062081, 0.00962382182, 0.994047284, 0.108518943]
+                    scale: [1.00000024, 1.00000024, 1]
+                child:
+                  - id: 16306840500569594401
+                    name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
+                    enabled: true
+                    component:
+                      - id: 9841663520987051831
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 4196945499455099392
+                        name: mixamorig:RightUpLeg
+                        enabled: true
+                        component:
+                          - id: 4294855721073938206
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 4408100212431386586
+                            name: mixamorig:RightLeg_$AssimpFbx$_Translation
+                            enabled: true
+                            component:
+                              - id: 15204205118970308502
+                                type: 1
+                                enabled: true
+                                position: [5.55111512e-17, 0.468049884, -1.38777878e-17]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8371596017781976975
+                                name: mixamorig:RightLeg_$AssimpFbx$_PreRotation
+                                enabled: true
+                                component:
+                                  - id: 12165657981552405483
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [-0.187133014, -0.00520872371, 0.0273316614, 0.981940508]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 7316460653178987988
+                                    name: mixamorig:RightLeg_$AssimpFbx$_Rotation
+                                    enabled: true
+                                    component:
+                                      - id: 13525456443862080565
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0, 0]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 4676027778483897381
+                                        name: mixamorig:RightLeg
+                                        enabled: true
+                                        component:
+                                          - id: 9667103915694849819
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0, 0, 0, 1]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 6668397801187803308
+                                            name: mixamorig:RightFoot_$AssimpFbx$_Translation
+                                            enabled: true
+                                            component:
+                                              - id: 3413844525198253213
+                                                type: 1
+                                                enabled: true
+                                                position: [-5.55111512e-17, 0.417005241, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 2903974588849818943
+                                                name: mixamorig:RightFoot_$AssimpFbx$_PreRotation
+                                                enabled: true
+                                                component:
+                                                  - id: 7587874197010214201
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0.573203862, -0.0626934022, 0.0440488979, 0.815822661]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 13523898281923936377
+                                                    name: mixamorig:RightFoot_$AssimpFbx$_Rotation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 7682134047037126054
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0, 0]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 11160785923460303164
+                                                        name: mixamorig:RightFoot
+                                                        enabled: true
+                                                        component:
+                                                          - id: 14652420418606771353
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0, 0, 0, 1]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - id: 6232923350848301179
+                                                            name: mixamorig:RightToeBase_$AssimpFbx$_Translation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 3682438434851753005
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0.290065467, -2.77555756e-17]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - id: 17186456027172505343
+                                                                name: mixamorig:RightToeBase_$AssimpFbx$_PreRotation
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 16374380618771921777
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0.346824527, -0.00623858627, 0.00230694027, 0.937906444]
+                                                                    scale: [0.999999821, 1, 0.999999881]
+                                                                child:
+                                                                  - id: 8063075210396444499
+                                                                    name: mixamorig:RightToeBase_$AssimpFbx$_Rotation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 9738035690403478850
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0, 0]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 9575468088896276548
+                                                                        name: mixamorig:RightToeBase
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 5830264004736628970
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0, 0, 0, 1]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 10895452010262591293
+                                                                            name: mixamorig:RightToe_End
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 7174251767934094703
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [-1.11022302e-16, 0.108303487, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
