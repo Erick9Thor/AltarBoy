@@ -112,18 +112,18 @@ void Hachiko::ModuleRender::GenerateGBuffer()
     // TODO: Do this.
     glGenTextures(1, &g_buffer_normal);
     glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, default_width, default_height, 0, GL_RGB, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_normal, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, g_buffer_normal, 0);
     
     // Generate position color buffer as texture:
     glGenTextures(1, &g_buffer_position);
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, default_width, default_height, 0, GL_RGB, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, g_buffer_position, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, g_buffer_position, 0);
 
     // Generate depth color buffer as texture:
     glGenTextures(1, &g_buffer_depth);
@@ -164,11 +164,11 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
     
     // Normal color texture stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, heigth, width, 0, GL_RGB, GL_FLOAT, NULL);
 
     // Position color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, heigth, width, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, heigth, width, 0, GL_RGB, GL_FLOAT, NULL);
 
     // Depth color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_depth);
@@ -352,17 +352,17 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
 
-    glReadBuffer(GL_COLOR_ATTACHMENT2);
+    glReadBuffer(GL_COLOR_ATTACHMENT0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, half_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     
-    glReadBuffer(GL_COLOR_ATTACHMENT0);
+    glReadBuffer(GL_COLOR_ATTACHMENT1);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, half_height, half_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
     
-    glReadBuffer(GL_COLOR_ATTACHMENT1);
+    glReadBuffer(GL_COLOR_ATTACHMENT2);
     glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, half_height, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-    glReadBuffer(GL_DEPTH_ATTACHMENT);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
+    glReadBuffer(GL_COLOR_ATTACHMENT3);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
     /*if (outline_selection && outline_target)
     {
