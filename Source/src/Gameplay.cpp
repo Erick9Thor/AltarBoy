@@ -278,12 +278,3 @@ void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::fl
 }
 
 /*---------------------------------------------------------------------------*/
-
-/*AUDIO----------------------------------------------------------------------*/
-
-HACHIKO_API void Hachiko::Audio::Play(const wchar_t* name)
-{
-    return App->audio->Play(name);
-}
-
-/*---------------------------------------------------------------------------*/
