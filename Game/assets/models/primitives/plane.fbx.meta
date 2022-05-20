@@ -1,14 +1,14 @@
 asset_hash: 3240750227861920051
 model_name: plane
 meshes:
-  - 4601319148081155683
+  - 7530477617889998077
 materials:
-  - 6071956473852597203
+  - 2099559487253863335
 prefab_id: 10264864447537540677
 resources:
-  - resource_id: 4601319148081155683
+  - resource_id: 7530477617889998077
     resource_type: 3
-  - resource_id: 6071956473852597203
+  - resource_id: 2099559487253863335
     resource_type: 1
   - resource_id: 10264864447537540677
     resource_type: 13

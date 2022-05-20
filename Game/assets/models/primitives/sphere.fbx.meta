@@ -1,14 +1,14 @@
 asset_hash: 14431016664718813603
 model_name: sphere
 meshes:
-  - 9734251747031717595
+  - 5312188597213050095
 materials:
-  - 6071956473852597203
+  - 2099559487253863335
 prefab_id: 11467081903164240407
 resources:
-  - resource_id: 9734251747031717595
+  - resource_id: 5312188597213050095
     resource_type: 3
-  - resource_id: 6071956473852597203
+  - resource_id: 2099559487253863335
     resource_type: 1
   - resource_id: 11467081903164240407
     resource_type: 13

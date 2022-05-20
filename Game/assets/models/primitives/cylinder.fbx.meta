@@ -1,14 +1,14 @@
 asset_hash: 230705047336641219
 model_name: cylinder
 meshes:
-  - 10210867973034302559
+  - 1412977896489654633
 materials:
-  - 6071956473852597203
+  - 2099559487253863335
 prefab_id: 12937311226185250952
 resources:
-  - resource_id: 10210867973034302559
+  - resource_id: 1412977896489654633
     resource_type: 3
-  - resource_id: 6071956473852597203
+  - resource_id: 2099559487253863335
     resource_type: 1
   - resource_id: 12937311226185250952
     resource_type: 13
