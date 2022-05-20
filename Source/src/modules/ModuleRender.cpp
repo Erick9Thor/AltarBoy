@@ -311,6 +311,12 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     //glEnable(GL_BLEND);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+
+    // Disable blending for deferred rendering as the meshes with transparent 
+    // materials are gonna be rendered with forward rendering after the 
+    // deferred lighting pass:
+    glDisable(GL_BLEND);
+
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     Program* program = App->program->GetDeferredGeometryProgram();
     
