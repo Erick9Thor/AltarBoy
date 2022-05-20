@@ -166,7 +166,7 @@ void Hachiko::Scene::Save(YAML::Node& node)
     for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
     {
         std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
-        node[SKYBOX][side_name] = cube.uids[i];
+        node[SKYBOX_NODE][side_name] = cube.uids[i];
     }
 
 
@@ -190,7 +190,7 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     {
         std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
         // Store UID 0 if no resource is present
-        cube.uids[i] = node[SKYBOX][side_name].as<UID>();
+        cube.uids[i] = node[SKYBOX_NODE][side_name].as<UID>();
     }
     // Pass skybox with used uids to be loaded
     skybox = new Skybox(cube);

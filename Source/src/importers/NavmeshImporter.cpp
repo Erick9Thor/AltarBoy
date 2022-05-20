@@ -104,6 +104,7 @@ Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
     if (header.numTiles == 0)
     {
         delete navmesh;
+        delete[] file_buffer;
         return nullptr;
     }
     cursor += size_bytes;
@@ -151,9 +152,8 @@ Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
     navmesh->navigation_query->init(navmesh->navmesh, 2048);
 
     navmesh->InitCrowd();
-
     delete[] file_buffer;
-    
+
     return navmesh;
 }
 
