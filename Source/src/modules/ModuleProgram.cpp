@@ -20,10 +20,11 @@ bool Hachiko::ModuleProgram::Init()
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    CreateDeferredGeometryProgram();
+    CreateDeferredGeometryPassProgram();
+    CreateDeferredLightingPassProgram();
 
     if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || 
-        !deferred_geometry_program)
+        !deferred_geometry_program || !deferred_lighting_program)
     {
         return false;
     }
@@ -141,10 +142,16 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
     return ui_text_program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryProgram()
+Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryPassProgram()
 {
     deferred_geometry_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_geometry.glsl");
     return deferred_geometry_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
+{
+    deferred_lighting_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_deferred_lighting.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_lighting.glsl");
+    return deferred_lighting_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -182,16 +189,25 @@ bool Hachiko::ModuleProgram::CleanUp()
 {
     main_program->CleanUp();
     delete main_program;
+    
     skybox_program->CleanUp();
     delete skybox_program;
+    
     stencil_program->CleanUp();
     delete stencil_program;
+    
     ui_image_program->CleanUp();
     delete ui_image_program;
+    
     ui_text_program->CleanUp();
     delete ui_text_program;
+    
     deferred_geometry_program->CleanUp();
     delete deferred_geometry_program;
+    
+    deferred_lighting_program->CleanUp();
+    delete deferred_lighting_program;
+    
     return true;
 }
 
