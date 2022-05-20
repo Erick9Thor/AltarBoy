@@ -10,10 +10,13 @@ namespace Hachiko
         
 
         WindowStateMachine();
+        WindowStateMachine(std::string name);
         ~WindowStateMachine() override;
 
         void Update() override;
         void CleanUp() override;
+
+        void SetStateMachine(ResourceStateMachine& resourceStateMachine);
 
         void showAddNodePopup();
         void showEditNodePopup();
@@ -37,7 +40,8 @@ namespace Hachiko
         //bool editIT = false;
         bool deleteLink = false;
 
-        ResourceStateMachine sm = ResourceStateMachine(1);
+        //ResourceStateMachine sm = ResourceStateMachine(1);
+        ResourceStateMachine* sm = nullptr;
         ImNodesContext* context = nullptr;
     };
 } // namespace Hachiko

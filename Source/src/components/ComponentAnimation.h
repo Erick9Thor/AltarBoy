@@ -8,6 +8,7 @@ namespace Hachiko
     class AnimationController;
     class ResourceAnimation;
     class ResourceStateMachine;
+    class WindowStateMachine;
 
     class ComponentAnimation : public Component
     {
@@ -34,5 +35,7 @@ namespace Hachiko
         AnimationController* controller = nullptr;
         ResourceAnimation* current_animation = nullptr;
         ResourceStateMachine* state_machine = nullptr;
+        WindowStateMachine* stateMachineWindow = nullptr;
+        bool showStateMachine = false;
     };
 } // namespace Hachiko

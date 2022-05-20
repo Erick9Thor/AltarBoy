@@ -22,10 +22,6 @@
 
 #include "imnodes.h"
 
-#include "ui/WindowStateMachine.h"
-
-Hachiko::WindowStateMachine wsm;
-
 Hachiko::Scene::Scene() :
     root(new GameObject(nullptr, float4x4::identity, "Root")),
     culling_camera(App->camera->GetRenderingCamera()),
@@ -41,7 +37,6 @@ Hachiko::Scene::Scene() :
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
    
     ImNodes::CreateContext();
-    wsm = Hachiko::WindowStateMachine();
     App->navigation->BuildNavmesh(this);
 }
 
@@ -286,5 +281,4 @@ void Hachiko::Scene::Update() const
     OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
 
-    wsm.Update();
 }

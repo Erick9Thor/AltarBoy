@@ -12,14 +12,23 @@
 #include "animation/AnimationController.h"
 #include "importers/AnimationImporter.h"
 
+#include "ui/WindowStateMachine.h"
+
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) 
     : Component(Type::ANIMATION, container)
 {
     controller = new AnimationController();
+    state_machine = new ResourceStateMachine(5);
+
+    stateMachineWindow = new WindowStateMachine();
+    //stateMachineWindow = new WindowStateMachine(GetGameObject()->name);
+    stateMachineWindow->SetStateMachine(*state_machine);
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
+    delete stateMachineWindow;
+    delete state_machine;
     delete controller;
     animations.clear();
 }
@@ -159,6 +168,16 @@ void Hachiko::ComponentAnimation::DrawGui()
         {
             StopAnimating();
         }
+
+        if (ImGui::Button("Show state machine"))
+        {
+            showStateMachine = !showStateMachine;
+        }
+
+        if (showStateMachine)
+        {
+            stateMachineWindow->Update();
+        }
     }
    
     ImGui::PopID();
@@ -181,5 +200,10 @@ void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
             ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node[ANIMATIONS][i].as<UID>()));
             animations.push_back(r_animation);
         }
+    }
+
+    for (ResourceAnimation* animation : animations)
+    {
+        state_machine->AddNode(animation->GetName(), "");
     }
 }

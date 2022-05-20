@@ -6,14 +6,10 @@
 
 Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor - Press Left Alt + H for help", false)
 {
-    // ADD example
+}
 
-    sm.AddNode("Idle", "clip1");
-    sm.AddNode("Walking", "clip2");
-    sm.AddNode("Running", "clip3");
-    sm.AddNode("Cry", "clip4");
-    sm.AddTransition("Idle", "Walking", "Arrow pressed", 1);
-    sm.AddTransition("Idle", "Running", "Shift pressed", 1);
+Hachiko::WindowStateMachine::WindowStateMachine(std::string name) : Window(std::string(name + std::string(" State Machine editor - Press Left Alt + H for help")).c_str(), false)
+{
 }
 
 Hachiko::WindowStateMachine::~WindowStateMachine()
@@ -34,17 +30,17 @@ void Hachiko::WindowStateMachine::Update()
 
     unsigned int id = 0;
 
-    for (int i = 0; i < sm.nodes.size(); ++i)
+    for (int i = 0; i < sm->nodes.size(); ++i)
     {
 
         ImNodes::BeginNode(i*3);
 
         ImNodes::BeginNodeTitleBar();
-        ImGui::TextUnformatted(sm.nodes[i].name.c_str());
+        ImGui::TextUnformatted(sm->nodes[i].name.c_str());
         ImNodes::EndNodeTitleBar();
 
         ImNodes::BeginInputAttribute(i * 3 + 1);
-        ImGui::Text(sm.nodes[i].clip.c_str());
+        ImGui::Text(sm->nodes[i].clip.c_str());
         ImGui::SameLine();
         ImGui::Text("|");
         ImGui::SameLine();
@@ -68,15 +64,15 @@ void Hachiko::WindowStateMachine::Update()
         ImNodes::EndNode();
     }
 
-    id = 0;
-    for (const Hachiko::ResourceStateMachine::Transition& transition : sm.transitions)
+    //id = 0;
+    for (const Hachiko::ResourceStateMachine::Transition& transition : sm->transitions)
     {
-        int sourceID = sm.FindNode(transition.source);
-        int targetID = sm.FindNode(transition.target);
+        int sourceID = sm->FindNode(transition.source);
+        int targetID = sm->FindNode(transition.target);
         id = sourceID * 100 + targetID;
         ImNodes::Link(id, sourceID * 3 + 2, targetID * 3 + 1);
         //ImNodes::Link(id, sm.FindNode(transition.source) * 3 + 2, sm.FindNode(transition.target) * 3 + 1);
-        ++id;
+        //++id;
     }
 
     showAddNodePopup();
@@ -117,7 +113,7 @@ void Hachiko::WindowStateMachine::showAddNodePopup()
             if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
             {
                 add_node = false;
-                sm.AddNode(nodeName, "");
+                sm->AddNode(nodeName, "");
                 ImGui::CloseCurrentPopup();
             }
         }
@@ -155,24 +151,29 @@ void Hachiko::WindowStateMachine::showEditNodePopup()
             }*/
         else if (ImGui::Button(" Delete clip "))
         {
-            for (int i = 0; i < sm.nodes.size(); ++i)
+            /*
+            for (int i = 0; i < sm->nodes.size(); ++i)
             {
-                if (sm.nodes[i].nodeIndex == node_id)
+                if (sm->nodes[i].nodeIndex == node_id)
                 {
                     // sm.EditStateClip(sm.nodes[i].name, "");
                 }
             }
+            */
             ImGui::CloseCurrentPopup();
         }
         else if (ImGui::Button(" Delete node "))
         {
-            for (int i = 0; i < sm.nodes.size(); ++i)
+            /*
+            for (int i = 0; i < sm->nodes.size(); ++i)
             {
-                if (sm.nodes[i].nodeIndex == node_id)
+                if (sm->nodes[i].nodeIndex == node_id)
                 {
                     // sm.RemoveState(nodes[i].name);
                 }
             }
+            */
+            sm->RemoveNode(sm->nodes[node_id / 3].name);
             ImGui::CloseCurrentPopup();
         }
 
@@ -183,9 +184,9 @@ void Hachiko::WindowStateMachine::showEditNodePopup()
             if (ImGui::InputText(" Clip name ", clipName, IM_ARRAYSIZE(clipName), clipName_input_flags))
             {
                 add_clip = false;
-                for (int i = 0; i < sm.nodes.size(); ++i)
+                for (int i = 0; i < sm->nodes.size(); ++i)
                 {
-                    if (sm.nodes[i].nodeIndex == node_id)
+                    if (sm->nodes[i].nodeIndex == node_id)
                     {
                         // sm.EditStateClip(sm.nodes[i].name, clipName);
                         ImGui::CloseCurrentPopup();
@@ -208,7 +209,7 @@ void Hachiko::WindowStateMachine::addLink()
 
     if (started && ImNodes::IsLinkCreated(&start, &end, false))
     {
-        sm.AddTransition(sm.nodes[(start - 2) / 3].name, sm.nodes[(end - 1) / 3].name, "", 0);
+        sm->AddTransition(sm->nodes[(start - 2) / 3].name, sm->nodes[(end - 1) / 3].name, "", 0);
     }
 }
 
@@ -264,7 +265,7 @@ void Hachiko::WindowStateMachine::showDeleteLinkPopup()
 
         if (ImGui::Button(" Delete link "))
         {
-            sm.RemoveTransitionWithTarget(sm.nodes[link_id / 100].name, sm.nodes[link_id % 100].name);
+            sm->RemoveTransitionWithTarget(sm->nodes[link_id / 100].name, sm->nodes[link_id % 100].name);
             ImGui::CloseCurrentPopup();
         }
 
@@ -373,6 +374,12 @@ void Hachiko::WindowStateMachine::showHelp()
         ImGui::EndPopup();
     }
 }
+
+void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine& resourceStateMachine) 
+{
+    sm = &resourceStateMachine;
+}
+
 
 void Hachiko::WindowStateMachine::CleanUp()
 {
