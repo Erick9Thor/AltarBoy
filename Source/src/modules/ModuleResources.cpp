@@ -226,7 +226,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
 
     // Ignores files that dont need any short of importing themselves
     // Metas are searched for based on what's on assets
-    std::vector<std::string> ignore_extensions {"meta", "scene"};
+    std::vector<std::string> ignore_extensions {"meta"};
     PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_extensions);
     GenerateLibrary(assets_folder);
 
@@ -256,7 +256,7 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
         // Discard unrecognised types
         return std::vector<UID>();
     }
-
+    
     // Infer meta path from the asset name
     std::string meta_path = StringUtils::Concat(asset_path, META_EXTENSION);
 

@@ -154,11 +154,22 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
 void Hachiko::Scene::Save(YAML::Node& node)
 {
     node[SCENE_NAME] = GetName();
+    // Navmesh
     if (!navmesh_id)
     {
         SetNavmeshID(UUID::GenerateUID());
     }
     node[NAVMESH_ID] = navmesh_id;
+
+    // Skybox
+    const TextureCube& cube = skybox->GetCube();
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        node[SKYBOX][side_name] = cube.uids[i];
+    }
+
+
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -172,14 +183,26 @@ void Hachiko::Scene::Load(const YAML::Node& node)
     navmesh_id = node[NAVMESH_ID].as<UID>();
     root->SetID(node[ROOT_ID].as<UID>());
 
+    RELEASE(skybox);
+
+    TextureCube cube;
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        // Store UID 0 if no resource is present
+        cube.uids[i] = node[SKYBOX][side_name].as<UID>();
+    }
+    // Pass skybox with used uids to be loaded
+    skybox = new Skybox(cube);
+
+
     if (!node[CHILD_NODE].IsDefined())
     {
         // Loaded as an empty scene:
-        App->navigation->SetNavmesh(navmesh_id);
         loaded = true;
         return;
     }
-
+    
     const YAML::Node children_node = node[CHILD_NODE];
 
     for (unsigned i = 0; i < children_node.size(); ++i)
@@ -191,7 +214,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
-    //App->navigation->BuildNavmesh(this);
     App->navigation->SetNavmesh(navmesh_id);
     loaded = true;
 }

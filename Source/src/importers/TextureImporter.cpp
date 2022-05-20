@@ -26,7 +26,11 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
-    assert(id && "Unable to load texture. Given an empty id");
+    if (!id)
+    {
+        // No id defaults to no resource
+        return nullptr;
+    }
 
     const std::string file_path = GetResourcePath(Resource::Type::TEXTURE, id);
 

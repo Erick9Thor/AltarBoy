@@ -42,7 +42,7 @@ namespace Hachiko
         {
             if (diffuse != nullptr)
             {
-                return diffuse->GetId();
+                return diffuse->GetImageId();
             }
             return 0;
         }
@@ -51,7 +51,7 @@ namespace Hachiko
         {
             if (specular != nullptr)
             {
-                return specular->GetId();
+                return specular->GetImageId();
             }
             return 0;
         }
@@ -60,7 +60,7 @@ namespace Hachiko
         {
             if (normal != nullptr)
             {
-                return normal->GetId();
+                return normal->GetImageId();
             }
             return 0;
         }
@@ -69,7 +69,7 @@ namespace Hachiko
         {
             if (metalness != nullptr)
             {
-                return metalness->GetId();
+                return metalness->GetImageId();
             }
             return 0;
         }
@@ -78,7 +78,7 @@ namespace Hachiko
         {
             if (emissive != nullptr)
             {
-                return emissive->GetId();
+                return emissive->GetImageId();
             }
             return 0;
         }

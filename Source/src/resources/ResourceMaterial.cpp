@@ -20,7 +20,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (diffuse != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(diffuse->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(diffuse->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", diffuse->width, diffuse->height);
@@ -45,7 +45,7 @@ void Hachiko::ResourceMaterial::DrawGui()
         {
             if (metalness != nullptr)
             {
-                ImGui::Image(reinterpret_cast<void*>(metalness->GetId()), ImVec2(80, 80));
+                ImGui::Image(reinterpret_cast<void*>(metalness->GetImageId()), ImVec2(80, 80));
                 ImGui::SameLine();
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", metalness->width, metalness->height);
@@ -74,7 +74,7 @@ void Hachiko::ResourceMaterial::DrawGui()
         {
             if (specular != nullptr)
             {
-                ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
+                ImGui::Image(reinterpret_cast<void*>(specular->GetImageId()), ImVec2(80, 80));
                 ImGui::SameLine();
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", specular->width, specular->height);
@@ -103,7 +103,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (normal != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(normal->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(normal->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", normal->width, normal->height);
@@ -125,7 +125,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (emissive != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(emissive->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(emissive->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", emissive->width, emissive->height);

@@ -1,0 +1,33 @@
+scene_name: skybox_test
+navmesh_id: 17061674138956787296
+skybox:
+  right_cube_id: 17476158828083105361
+  left_cube_id: 17476158828083105361
+  top_cube_id: 17476158828083105361
+  bottom_cube_id: 17476158828083105361
+  center_cube_id: 17476158828083105361
+  back_cube_id: 17476158828083105361
+root_id: 12140782261084320883
+child:
+  - id: 10975885172196684923
+    name: Main Camera
+    enabled: true
+    component:
+      - id: 1743340939787544045
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 14990744334046851246
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          type: 0
+          pinned_camera: [0, 0, 0]

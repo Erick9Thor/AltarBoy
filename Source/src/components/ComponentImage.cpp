@@ -125,7 +125,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 
     program->BindUniformBool("diffuse_flag", img_to_draw && render_img);
     program->BindUniformFloat4("img_color", render_color->ptr());
-    ModuleTexture::Bind(img_to_draw? img_to_draw->GetId(): 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    ModuleTexture::Bind(img_to_draw? img_to_draw->GetImageId(): 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
