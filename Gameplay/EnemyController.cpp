@@ -13,6 +13,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _attack_range(1.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _stats(2, 2, 5, 10)
+	, _player(nullptr)
 {
 }
 
@@ -25,9 +26,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
-	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
 	_player_controller = _player->GetComponent<PlayerController>();
-	transform = game_object->GetComponent<ComponentTransform>();
+	transform = game_object->GetTransform();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()

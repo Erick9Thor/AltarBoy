@@ -40,8 +40,8 @@ namespace Hachiko
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
+            SERIALIZE_FIELD(GameObject*, _player);
 
-            GameObject* _player;
             PlayerController* _player_controller;
             ComponentTransform* transform;
             math::float3 _player_pos;
