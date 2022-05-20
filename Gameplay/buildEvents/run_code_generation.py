@@ -184,7 +184,8 @@ editor_allowed_component_types = [
     'ComponentMaterial*', 'ComponentMesh*',
     'ComponentPointLight*', 'ComponentProgressBar*',
     'ComponentSpotLight*', 'ComponentText*',
-    'ComponentTransform*', 'ComponentTransform2D*'
+    'ComponentTransform*', 'ComponentTransform2D*',
+    'ComponentAudioSource*', 'ComponentAudioListener*'
 ]
 
 # This beautiful piece of function was found from stack overflow:
