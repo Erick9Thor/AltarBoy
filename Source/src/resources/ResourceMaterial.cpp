@@ -124,6 +124,30 @@ void Hachiko::ResourceMaterial::DrawGui()
         }
         ImGui::TreePop();
     }
+    if (ImGui::TreeNodeEx((void*)&emissive, texture_flags, "Emissive"))
+    {
+        if (emissive != nullptr)
+        {
+            ImGui::Image(reinterpret_cast<void*>(emissive->GetId()), ImVec2(80, 80));
+            ImGui::SameLine();
+            ImGui::BeginGroup();
+            ImGui::Text("%dx%d", emissive->width, emissive->height);
+            ImGui::Text("Path: %s", emissive->path.c_str());
+
+            // TODO: textue configuration (maybe delegate to the ResourceTexture)
+
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
+            RemoveTexture(ResourceTexture::Type::EMISSIVE);
+
+            ImGui::EndGroup();
+        }
+        else
+        {
+            ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
+            AddTexture(ResourceTexture::Type::EMISSIVE);
+        }
+        ImGui::TreePop();
+    }
     if (ImGui::SmallButton("Save"))
     {
         UpdateMaterial();
@@ -228,6 +252,9 @@ void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
             break;
         case ResourceTexture::Type::METALNESS:
             metalness = nullptr;
+            break;
+        case ResourceTexture::Type::EMISSIVE:
+            emissive = nullptr;
             break;
         }
     }

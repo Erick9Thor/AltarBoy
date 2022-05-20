@@ -3,12 +3,12 @@ model_name: cylinder
 meshes:
   - 10210867973034302559
 materials:
-  - 6750369022920963075
-prefab_id: 5482645476422140435
+  - 6071956473852597203
+prefab_id: 12937311226185250952
 resources:
   - resource_id: 10210867973034302559
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 6071956473852597203
     resource_type: 1
-  - resource_id: 5482645476422140435
+  - resource_id: 12937311226185250952
     resource_type: 13

@@ -33,6 +33,11 @@ namespace Hachiko
             return metalness != nullptr;
         }
 
+        [[nodiscard]] bool HasEmissive() const
+        {
+            return emissive != nullptr;
+        }
+
         [[nodiscard]] unsigned GetDiffuseId() const
         {
             if (diffuse != nullptr)
@@ -69,12 +74,21 @@ namespace Hachiko
             return 0;
         }
 
+        [[nodiscard]] unsigned GetEmissiveId() const
+        {
+            if (emissive != nullptr)
+            {
+                return emissive->GetId();
+            }
+            return 0;
+        }
+
         [[nodiscard]] std::string GetName() const
         {
             return name;
         }
 
-        void SetName(const std::string& new_name) 
+        void SetName(const std::string& new_name)
         {
             name = new_name;
         }
@@ -87,8 +101,10 @@ namespace Hachiko
         ResourceTexture* specular = nullptr;
         ResourceTexture* normal = nullptr;
         ResourceTexture* metalness = nullptr;
+        ResourceTexture* emissive = nullptr;
         float4 diffuse_color = float4::one;
-        float4 specular_color = float4::one / 10.0f;
+        float4 specular_color = float4::zero;
+        float4 emissive_color = float4::zero;
         float smoothness = 0.5f;
         float metalness_value = 0.5f;
         unsigned is_metallic = 0;

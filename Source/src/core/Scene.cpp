@@ -5,28 +5,24 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
-#include "components/ComponentAnimation.h"
 
-#include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleCamera.h"
-#include "modules/ModuleDebugDraw.h"
-#include "modules/ModuleResources.h"
+#include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
 
 #include "resources/ResourceMaterial.h"
-#include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
+
 #include <debugdraw.h>
 #include <algorithm>
 
-Hachiko::Scene::Scene()
-    : root(new GameObject(nullptr, float4x4::identity, "Root"))
-    , culling_camera(App->camera->GetRenderingCamera())
-    , skybox(new Skybox())
-    , quadtree(new Quadtree())
-    , loaded(false)
-    , name(UNNAMED_SCENE)
+Hachiko::Scene::Scene() :
+    name(UNNAMED_SCENE),
+    root(new GameObject(nullptr, float4x4::identity, "Root")),
+    culling_camera(App->camera->GetRenderingCamera()),
+    skybox(new Skybox()),
+    quadtree(new Quadtree())
 {
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;
@@ -88,7 +84,6 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
 {
-    // TODO: Change the location of this, it has no reason to be here
     GameObject* game_object = App->editor->GetSelectedGameObject();
     if (game_object == nullptr)
     {
@@ -100,9 +95,7 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     if (component_mesh_renderer != nullptr)
     {
         component_mesh_renderer->AddResourceMaterial(material);
-        return;
     }
-    // TODO: If the material is not used decrease reference count
 }
 
 Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
@@ -281,4 +274,25 @@ void Hachiko::Scene::Update() const
 {
     OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
+}
+
+Hachiko::Scene::Memento* Hachiko::Scene::CreateSnapshot()
+{
+    YAML::Node scene_data;
+    Save(scene_data);
+    std::stringstream stream;
+    stream << scene_data;
+    return new Memento(stream.str());
+}
+
+void Hachiko::Scene::Restore(const Memento* memento) const
+{
+    //we are swapping the whole scene with a new one (ModuleSceneManager handles that using event data)
+    const YAML::Node scene_data = YAML::Load(memento->GetContent());
+    const auto scene = new Scene();
+    scene->Load(scene_data);
+    Event e(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY);
+    e.SetEventData<EditorHistoryEntryRestore>(scene);
+    App->event->Publish(e);
+    App->editor->SetSelectedGO(nullptr);
 }

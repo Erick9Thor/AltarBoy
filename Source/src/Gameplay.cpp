@@ -90,7 +90,7 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
 
 void Hachiko::SceneManagement::SwitchScene(UID scene_uid)
 {
-    App->scene_manager->SwitchTo(scene_uid);
+    App->scene_manager->ChangeSceneById(scene_uid);
 }
 
 Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin, 

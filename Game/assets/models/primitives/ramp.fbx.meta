@@ -3,12 +3,12 @@ model_name: ramp
 meshes:
   - 2805095063483466115
 materials:
-  - 6750369022920963075
-prefab_id: 1609264827053970015
+  - 6071956473852597203
+prefab_id: 2077091811774122005
 resources:
   - resource_id: 2805095063483466115
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 6071956473852597203
     resource_type: 1
-  - resource_id: 1609264827053970015
+  - resource_id: 2077091811774122005
     resource_type: 13

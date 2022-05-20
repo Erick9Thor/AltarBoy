@@ -10,14 +10,15 @@
 #include "InputEventPayload.h"
 #include "GameStateEventPayload.h"
 #include "SceneLoadEventPayload.h"
+#include "EditorHistoryEntryRestore.h"
 
 namespace Hachiko
 {
     //std::monostate is added just so we can have an empty std::variant
-    using EventData = std::variant<std::monostate, 
-        SelectionChangedEventPayload, FileAddedEventPayload, 
-        AssetsAddedEventPayload, MouseEventPayload, InputEventPayload, 
-        GameStateEventPayload, SceneLoadEventPayload>;
+    using EventData = std::variant<std::monostate,
+                                   SelectionChangedEventPayload, FileAddedEventPayload,
+                                   AssetsAddedEventPayload, MouseEventPayload, InputEventPayload,
+                                   GameStateEventPayload, SceneLoadEventPayload, EditorHistoryEntryRestore>;
 
     class Event
     {
@@ -34,6 +35,8 @@ namespace Hachiko
             INPUT,
             GAME_STATE,
             SCENE_LOADED,
+            CREATE_EDITOR_HISTORY_ENTRY,
+            RESTORE_EDITOR_HISTORY_ENTRY,
             COUNT
         };
 

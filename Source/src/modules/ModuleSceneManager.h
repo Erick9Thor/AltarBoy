@@ -53,7 +53,7 @@ namespace Hachiko
         void SaveScene(const char* file_path = nullptr);
 
         GameObject* Raycast(const float3& origin, const float3& destination);
-        void SwitchTo(UID new_scene_id);
+        void ChangeSceneById(UID new_scene_id);
 
         void ReloadScene();
 
@@ -61,6 +61,7 @@ namespace Hachiko
 
     private:
         void LoadScene(ResourceScene* scene);
+        void ChangeMainScene(Scene* new_scene);
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
         void RefreshTemporaryScene();

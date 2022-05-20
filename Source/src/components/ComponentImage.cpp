@@ -10,7 +10,7 @@
 #include "resources/ResourceTexture.h"
 
 #include "core/rendering/Program.h"
-
+#include "modules/ModuleEvent.h"
 
 
 Hachiko::ComponentImage::ComponentImage(GameObject* container) 
@@ -50,6 +50,7 @@ void Hachiko::ComponentImage::DrawGui()
                 font_path.append(META_EXTENSION);
                 YAML::Node font_node = YAML::LoadFile(font_path);
                 LoadImageResource(font_node[RESOURCES][0][RESOURCE_ID].as<UID>(), !is_hover_image);
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -61,7 +62,6 @@ void Hachiko::ComponentImage::DrawGui()
         }
 
         ImGui::Text("Hover Image");
-        ImGui::Checkbox("Use Hover Image", &use_hover_image);
 
         const std::string hover_title = "Select Hover Image";
         if (ImGui::Button(hover_title.c_str()))
@@ -84,6 +84,7 @@ void Hachiko::ComponentImage::DrawGui()
                 font_path.append(META_EXTENSION);
                 YAML::Node font_node = YAML::LoadFile(font_path);
                 LoadImageResource(font_node[RESOURCES][0][RESOURCE_ID].as<UID>(), is_hover_image);
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
 
             ImGuiFileDialog::Instance()->Close();

@@ -3,12 +3,12 @@ model_name: stairs
 meshes:
   - 17848185007529198354
 materials:
-  - 6750369022920963075
-prefab_id: 6955111794612492348
+  - 6071956473852597203
+prefab_id: 17374366329366734918
 resources:
   - resource_id: 17848185007529198354
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 6071956473852597203
     resource_type: 1
-  - resource_id: 6955111794612492348
+  - resource_id: 17374366329366734918
     resource_type: 13

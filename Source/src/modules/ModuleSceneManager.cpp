@@ -23,6 +23,13 @@ bool Hachiko::ModuleSceneManager::Init()
     // If uid is not found it will load an empty scene
     LoadScene(preferences->GetSceneUID());
 
+    std::function handleSceneSwapping = [&](Event& evt)
+    {
+        auto scene = evt.GetEventData<EditorHistoryEntryRestore>().GetScene();
+        ChangeMainScene(scene);
+    };
+    App->event->Subscribe(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY, handleSceneSwapping);
+
 #ifdef PLAY_BUILD
     main_scene->Start();
 #endif
@@ -51,14 +58,14 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
     if (scene_camera == nullptr)
     {
         HE_LOG("Current scene does not have a CameraComponent inside."
-               " Therefore, cannot enter Play Mode.");
+            " Therefore, cannot enter Play Mode.");
         return;
     }
 
     main_scene->SetCullingCamera(scene_camera);
 
     App->camera->SetRenderingCamera(scene_camera);
-    
+
     if (!GameTimer::running)
     {
         RefreshTemporaryScene();
@@ -74,7 +81,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::RESUMED);
         App->event->Publish(game_state);
-        
+
         GameTimer::Resume();
     }
 }
@@ -202,7 +209,7 @@ Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, 
     return main_scene->Raycast(origin, destination);
 }
 
-void Hachiko::ModuleSceneManager::SwitchTo(UID new_scene_id)
+void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
 {
     scene_ready_to_load = true;
     scene_to_load_id = new_scene_id;
@@ -228,28 +235,35 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
 {
-    // Loads scene if a pointer is passed, nullpointer creates empty scene    
+    SetSceneResource(new_resource);
+
+    Scene* new_scene = new Scene();
+    if (scene_resource)
+    {
+        new_scene->Load(scene_resource->scene_data);
+        App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
+    }
+    else
+    {
+        // This removes current navmesh
+        GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
+        camera_go->CreateComponent(Component::Type::CAMERA);
+        App->navigation->SetNavmesh(0);
+    }
+
+
+    ChangeMainScene(new_scene);
+}
+
+void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
+{
+    // Loads scene if a pointer is passed, nullpointer creates empty scene
     Event scene_load(Event::Type::SCENE_LOADED);
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);
 
     RELEASE(main_scene);
-
-    SetSceneResource(new_resource);
-
-    main_scene = new Scene();
-    if (new_resource)
-    {
-        main_scene->Load(scene_resource->scene_data);
-        App->navigation->SetNavmesh(main_scene->navmesh_id);
-    }
-    else
-    {
-        // This removes current navmesh
-        GameObject* camera_go = main_scene->CreateNewGameObject(main_scene->GetRoot(), "Main Camera");
-        camera_go->CreateComponent(Component::Type::CAMERA);
-        App->navigation->SetNavmesh(0);
-    }
+    main_scene = new_scene;
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);

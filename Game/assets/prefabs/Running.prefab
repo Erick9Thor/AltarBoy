@@ -52,7 +52,7 @@ child:
                     mesh_id: 12267903123424216882
                     navigable: false
                     visible: true
-                    material_id: 12924252210591909690
+                    material_id: 5081224029991468805
   - name: mixamorig:Hips
     enabled: true
     component:

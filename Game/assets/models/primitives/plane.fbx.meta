@@ -3,12 +3,12 @@ model_name: plane
 meshes:
   - 4601319148081155683
 materials:
-  - 6750369022920963075
-prefab_id: 4747286747250177425
+  - 6071956473852597203
+prefab_id: 10264864447537540677
 resources:
   - resource_id: 4601319148081155683
     resource_type: 3
-  - resource_id: 6750369022920963075
+  - resource_id: 6071956473852597203
     resource_type: 1
-  - resource_id: 4747286747250177425
+  - resource_id: 10264864447537540677
     resource_type: 13
