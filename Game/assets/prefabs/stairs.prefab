@@ -18,7 +18,7 @@ child:
         scale: [1, 0.99999994, 0.99999994]
       - type: 2
         enabled: true
-        mesh_id: 3025251002119983819
+        mesh_id: 17848185007529198354
         navigable: false
         visible: true
-        material_id: 2099559487253863335
+        material_id: 6750369022920963075
