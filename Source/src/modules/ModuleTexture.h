@@ -20,7 +20,7 @@ namespace Hachiko
         bool loaded = false;
         unsigned id{};
         unsigned widths[6]{};
-        unsigned heighths[6]{};
+        unsigned heights[6]{};
     };
     
     class ResourceTexture;

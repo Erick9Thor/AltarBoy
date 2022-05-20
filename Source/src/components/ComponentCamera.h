@@ -23,7 +23,7 @@ namespace Hachiko
     {
     public:
         enum class CameraType
-        {   
+        {
             STATIC,
             DYNAMIC,
             GOD,
@@ -74,7 +74,7 @@ namespace Hachiko
         bool draw_frustum = false;
         bool preview_cam = false;
         float3 camera_pinned_pos = float3::zero;
-        
+
     private:
         float horizontal_fov;
         Frustum frustum;

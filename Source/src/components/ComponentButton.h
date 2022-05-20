@@ -15,8 +15,10 @@ namespace Hachiko
     public:
         ComponentButton(GameObject* container);
         ~ComponentButton() override = default;
-        
-        void Activate() override {}
+
+        void Activate() override
+        {
+        }
 
         void DrawGui() override;
 

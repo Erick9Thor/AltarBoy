@@ -6,7 +6,7 @@
 namespace Hachiko
 {
     class GameObject;
-    
+
     class ComponentCanvas : public Component
     {
     public:
@@ -15,12 +15,14 @@ namespace Hachiko
         ComponentCanvas(GameObject* container);
         ~ComponentCanvas() override;
 
+        static Type GetType();
+
         void Update() override;
 
         void DrawGui() override;
         void DebugDraw() override;
 
-        void UpdateSize(bool force=false);
+        void UpdateSize(bool force = false);
 
         virtual bool HasDependentComponents(GameObject* game_object) const override;
 
@@ -29,3 +31,8 @@ namespace Hachiko
         unsigned size_y = 0;
     };
 } // namespace Hachiko
+
+inline Hachiko::Component::Type Hachiko::ComponentCanvas::GetType()
+{
+    return Type::CANVAS;
+}

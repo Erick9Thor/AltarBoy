@@ -111,7 +111,7 @@ namespace Hachiko
       
         // SKINING
         const GameObject** node_cache = nullptr;
-        std::vector<float4x4> palette;
+        std::vector<float4x4> palette{};
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;

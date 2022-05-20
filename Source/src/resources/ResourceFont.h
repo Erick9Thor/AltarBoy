@@ -7,7 +7,6 @@
 
 namespace Hachiko
 {
-       
     class ResourceFont : public Resource
     {
     public:

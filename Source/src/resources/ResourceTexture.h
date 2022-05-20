@@ -35,11 +35,11 @@ namespace Hachiko
             return path;
         }
 
-        void SetAssetPath(const std::string& new_path) 
+        void SetAssetPath(const std::string& new_path)
         {
             path = new_path;
         }
-        
+
         [[nodiscard]] std::string GetName() const
         {
             return name;

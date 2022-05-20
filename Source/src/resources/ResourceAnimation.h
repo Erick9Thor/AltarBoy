@@ -15,9 +15,7 @@ namespace Hachiko
         struct Channel
         {
             Channel() = default;
-            Channel(const Channel& o) = default;
             Channel(Channel&& o) = default;
-            Channel& operator=(const Channel& o) = default;
             Channel& operator=(Channel&& o) = default;
 
             std::unique_ptr<float3[]> positions;
@@ -45,17 +43,19 @@ namespace Hachiko
         {
             return duration;
         }
+
         void SetDuration(unsigned int i_duration)
         {
             duration = i_duration;
         }
 
         // CHANEL MANAGE
-        unsigned int GetNumChannels() const
+        [[nodiscard]] unsigned int GetNumChannels() const
         {
-            return unsigned int(channels.size());
+            return static_cast<unsigned>(channels.size());
         }
-        const Channel* GetChannel(const std::string& name) const;
+
+        [[nodiscard]] const Channel* GetChannel(const std::string& name) const;
 
 
         std::unordered_map<std::string, Channel> channels;

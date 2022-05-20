@@ -88,7 +88,7 @@ namespace Hachiko
             return name;
         }
 
-        void SetName(const std::string& new_name) 
+        void SetName(const std::string& new_name)
         {
             name = new_name;
         }
@@ -99,10 +99,10 @@ namespace Hachiko
             {
             case ResourceTexture::Type::DIFFUSE:
                 diffuse = res;
-                break;            
+                break;
             case ResourceTexture::Type::SPECULAR:
                 specular = res;
-                break;            
+                break;
             case ResourceTexture::Type::NORMALS:
                 normal = res;
                 break;
