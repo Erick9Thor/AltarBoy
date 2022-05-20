@@ -6,6 +6,7 @@ namespace Hachiko
 {
 
 class GameObject;
+class ComponentAudioSource;
 
 namespace Scripting
 {
@@ -27,6 +28,7 @@ public:
 private:
 	PlayerController* _player_controller;
 
+	SERIALIZE_FIELD(ComponentAudioSource*, _audio_source);
 	SERIALIZE_FIELD(float, _step_frequency);
 	SERIALIZE_FIELD(float, _melee_frequency);
 	SERIALIZE_FIELD(float, _ranged_frequency);
