@@ -23,8 +23,10 @@ namespace Hachiko
         {
             RIGHT,
             LEFT,
-            TOP,
+            // Order between top and bottom is swaped from opengl
+            // Because we flip the y to correct not properly flipped resources
             BOTTOM,
+            TOP,            
             CENTER,
             BACK,
             COUNT
