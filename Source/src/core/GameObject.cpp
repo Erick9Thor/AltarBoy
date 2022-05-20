@@ -9,6 +9,8 @@
 #include "components/ComponentAnimation.h"
 #include "components/ComponentAgent.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAudioListener.h"
+#include "components/ComponentAudioSource.h"
 
 
 // UI
@@ -71,6 +73,7 @@ Hachiko::GameObject::~GameObject()
     {
         RELEASE(component);
     }
+    scene_owner = nullptr;
 }
 
 void Hachiko::GameObject::RemoveChild(GameObject* game_object)
@@ -164,31 +167,45 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         break;
     case (Component::Type::CANVAS):
         if (!GetComponent<ComponentCanvas>())
+        {
             new_component = new ComponentCanvas(this);
+        }
         break;
     case (Component::Type::CANVAS_RENDERER):
         if (!GetComponent<ComponentCanvasRenderer>())
+        {
             new_component = new ComponentCanvasRenderer(this);
+        }
         break;
     case (Component::Type::TRANSFORM_2D):
         if (!GetComponent<ComponentTransform2D>())
+        {
             new_component = new ComponentTransform2D(this);
+        }
         break;
     case (Component::Type::IMAGE):
         if (!GetComponent<ComponentImage>())
+        {
             new_component = new ComponentImage(this);
+        }
         break;
     case (Component::Type::BUTTON):
         if (!GetComponent<ComponentButton>())
+        {
             new_component = new ComponentButton(this);
+        }
         break;
     case (Component::Type::PROGRESS_BAR):
         if (!GetComponent<ComponentProgressBar>())
+        {
             new_component = new ComponentProgressBar(this);
+        }
         break;
     case (Component::Type::TEXT):
         if (!GetComponent<ComponentProgressBar>())
+        {
             new_component = new ComponentText(this);
+        }
         break;
     case (Component::Type::OBSTACLE):
         if (!GetComponent<ComponentObstacle>())
@@ -198,8 +215,15 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         if (!GetComponent<ComponentAgent>())
             new_component = new ComponentAgent(this);
         break;
+    case (Component::Type::AUDIO_LISTENER):
+        if (!GetComponent<ComponentAudioListener>())
+            new_component = new ComponentAudioListener(this);
+        break;
+    case (Component::Type::AUDIO_SOURCE):
+        if (!GetComponent<ComponentAudioSource>())
+            new_component = new ComponentAudioSource(this);
+        break;
     }
-
 
     if (new_component != nullptr)
     {
@@ -221,7 +245,7 @@ void Hachiko::GameObject::SetActive(bool set_active)
     active = set_active;
 }
 
-void Hachiko::GameObject::Start() 
+void Hachiko::GameObject::Start()
 {
     if (!started)
     {
@@ -239,7 +263,7 @@ void Hachiko::GameObject::Start()
             }
         }
         started = true;
-    }  
+    }
 }
 
 void Hachiko::GameObject::Update()
@@ -334,7 +358,7 @@ void Hachiko::GameObject::DebugDraw() const
 {
     //if (in_quadtree)
     //{
-        DrawBoundingBox();
+    DrawBoundingBox();
     //}
     DrawBones();
     for (Component* component : components)
@@ -418,7 +442,7 @@ void Hachiko::GameObject::UpdateBoundingBoxes()
             quadtree->Insert(this);
         }
     } */
-    
+
     ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
     if (component_mesh_renderer != nullptr)
     {
@@ -451,10 +475,15 @@ bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
     //TODO: Should I delete the component?
     if (component->CanBeRemoved())
     {
-        components.erase(std::remove(components.begin(), components.end(), component));
+        auto it = std::find(components.begin(), components.end(), component);
+        if (it != components.end())
+        {
+            delete *it;
+            components.erase(it);
+        }
         return true;
     }
-    
+
     return false;
 }
 
@@ -515,7 +544,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
 
         if (type == Component::Type::SCRIPT)
         {
-            std::string script_name = 
+            std::string script_name =
                 components_node[i][SCRIPT_NAME].as<std::string>();
             component = (Component*)(
                 App->scripting_system->InstantiateScript(script_name, this));
@@ -601,14 +630,14 @@ Hachiko::GameObject::GetComponents(Component::Type type) const
     return components_of_type;
 }
 
-std::vector<Hachiko::Component*> 
+std::vector<Hachiko::Component*>
 Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
 {
     std::vector<Component*> components_in_descendants;
 
     for (GameObject* child : children)
     {
-        std::vector<Component*> components_in_child = 
+        std::vector<Component*> components_in_child =
             child->GetComponents(type);
 
         for (Component* component_in_child : components_in_child)
@@ -616,11 +645,11 @@ Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
             components_in_descendants.push_back(component_in_child);
         }
 
-        std::vector<Component*> components_in_childs_descendants = 
+        std::vector<Component*> components_in_childs_descendants =
             child->GetComponentsInDescendants(type);
 
-        for (Component* component_in_childs_descendants : 
-            components_in_childs_descendants)
+        for (Component* component_in_childs_descendants :
+             components_in_childs_descendants)
         {
             components_in_descendants.push_back(
                 component_in_childs_descendants);

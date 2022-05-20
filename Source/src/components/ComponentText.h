@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "Globals.h"
 
-#include "modules/ModuleTexture.h"
+#include "resources/ResourceFont.h"
 #include "FTLabel.h"
 
 namespace Hachiko
@@ -11,7 +11,6 @@ namespace Hachiko
     class GameObject;
 
     class ComponentTransform2D;
-    class ResourceFont;
     class Program;
 
     class HACHIKO_API ComponentText : public Component
@@ -29,7 +28,6 @@ namespace Hachiko
         void SetText(const char* new_text);
         void SetFontSize(int new_size);
         void SetFontColor(const float4& new_color);
-        
 
         void Invalidate()
         {
@@ -40,8 +38,8 @@ namespace Hachiko
         void LoadFont(UID id);
         void RefreshLabel(ComponentTransform2D* transform);
         void BuildLabel(ComponentTransform2D* transform);
-        
-        bool dirty = true;        
+
+        bool dirty = true;
 
         ResourceFont* font = nullptr;
         std::unique_ptr<FTLabel> label = nullptr;

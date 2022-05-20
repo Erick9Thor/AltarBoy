@@ -23,8 +23,8 @@ namespace Hachiko
             active = is_active;
         }
 
-        float3 GetPosition() const;
-        float3 GetDirection() const;
+        [[nodiscard]] float3 GetPosition() const;
+        [[nodiscard]] float3 GetDirection() const;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;

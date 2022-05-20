@@ -1,6 +1,7 @@
 #pragma once
 
 #include "utils/UUID.h"
+#include <utility>
 
 namespace Hachiko
 {
@@ -14,7 +15,6 @@ namespace Hachiko
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
-    class ResourceNavMesh;
 
     class Scene
     {
@@ -31,13 +31,14 @@ namespace Hachiko
         void Update() const;
 
         // --- GameObject Management --- //
-        ComponentCamera* GetMainCamera() const;
+        [[nodiscard]] ComponentCamera* GetMainCamera() const;
         void DestroyGameObject(GameObject* game_object) const;
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
         void HandleInputMaterial(ResourceMaterial* material);
 
         [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
+
         [[nodiscard]] GameObject* GetRoot() const
         {
             return root;
@@ -68,19 +69,19 @@ namespace Hachiko
             return skybox;
         }
 
-        bool IsLoaded() const 
+        [[nodiscard]] bool IsLoaded() const
         {
             return loaded;
         }
 
-        [[nodiscard]] const char* GetName() const 
+        [[nodiscard]] const char* GetName() const
         {
             return name.c_str();
         }
-        
+
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
-        GameObject* Find(UID id) const;
+        [[nodiscard]] GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
         {
@@ -91,10 +92,10 @@ namespace Hachiko
         void Load(const YAML::Node& node);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
-        
-        std::vector<ComponentDirLight*> dir_lights;
-        std::vector<ComponentPointLight*> point_lights;
-        std::vector<ComponentSpotLight*> spot_lights;
+
+        std::vector<ComponentDirLight*> dir_lights{};
+        std::vector<ComponentPointLight*> point_lights{};
+        std::vector<ComponentSpotLight*> spot_lights{};
 
         
 
@@ -106,6 +107,29 @@ namespace Hachiko
 
         Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
-        
+
+    public:
+        class Memento
+        {
+        public:
+            Memento(std::string content) :
+                // content(std::move(content))
+            content(std::move(content))
+            {
+            }
+
+            ~Memento() = default;
+
+            [[nodiscard]] std::string GetContent() const
+            {
+                return content;
+            }
+            
+        private:
+            std::string content;
+        };
+
+        [[nodiscard]] Memento* CreateSnapshot() const;
+        void Restore(const Memento*) const;
     };
 }
