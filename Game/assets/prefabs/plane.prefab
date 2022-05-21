@@ -1,7 +1,6 @@
 prefab_name: plane
 name: RootNode
 enabled: true
-parent_id: 10512922824005132329
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Plane001
     enabled: true
-    parent_id: 11853175509082768758
     component:
       - type: 1
         enabled: true

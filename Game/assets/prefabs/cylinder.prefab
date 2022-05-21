@@ -1,7 +1,6 @@
 prefab_name: cylinder
 name: RootNode
 enabled: true
-parent_id: 17163401750133939981
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Cylinder001
     enabled: true
-    parent_id: 11759293712718156598
     component:
       - type: 1
         enabled: true

@@ -26,13 +26,13 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
-    if (!id)
-    {
-        // No id defaults to no resource
-        return nullptr;
-    }
 
     const std::string file_path = GetResourcePath(Resource::Type::TEXTURE, id);
+
+    if (!FileSystem::Exists(file_path.c_str()))
+    {
+        return nullptr;
+    }
 
     char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;

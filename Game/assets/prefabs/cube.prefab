@@ -1,7 +1,6 @@
 prefab_name: cube
 name: RootNode
 enabled: true
-parent_id: 13388879670609132501
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Box001
     enabled: true
-    parent_id: 10846860267881384010
     component:
       - type: 1
         enabled: true

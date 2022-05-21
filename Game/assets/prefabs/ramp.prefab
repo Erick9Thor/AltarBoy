@@ -1,7 +1,6 @@
 prefab_name: ramp
 name: RootNode
 enabled: true
-parent_id: 8369675738911991452
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Ramp001
     enabled: true
-    parent_id: 3386932181641618176
     component:
       - type: 1
         enabled: true

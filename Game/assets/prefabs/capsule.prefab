@@ -1,7 +1,6 @@
 prefab_name: capsule
 name: RootNode
 enabled: true
-parent_id: 4685093608123909633
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Capsule001
     enabled: true
-    parent_id: 2296691396849716790
     component:
       - type: 1
         enabled: true

@@ -1,7 +1,6 @@
 prefab_name: BakerHouse
 name: RootNode
 enabled: true
-parent_id: 7044139651720380812
 component:
   - type: 1
     enabled: true
@@ -11,7 +10,6 @@ component:
 child:
   - name: Chimney
     enabled: true
-    parent_id: 1249419995691287527
     component:
       - type: 1
         enabled: true
@@ -26,7 +24,6 @@ child:
         material_id: 7765775954106249835
   - name: Baker_house
     enabled: true
-    parent_id: 1249419995691287527
     component:
       - type: 1
         enabled: true
