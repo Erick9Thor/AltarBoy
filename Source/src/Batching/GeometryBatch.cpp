@@ -66,7 +66,7 @@ void Hachiko::GeometryBatch::BuildBatch() {
     BatchMeshes();
     UpdateBuffers();
 
-    texture_batch->GenerateBatch(component_count);
+    texture_batch->BuildBatch(component_count);
 }
 
 void Hachiko::GeometryBatch::BatchMeshes()
@@ -249,8 +249,6 @@ void Hachiko::GeometryBatch::ClearDrawList()
 
 void Hachiko::GeometryBatch::BindBuffers(bool use_first_segment)
 {
-    texture_batch->BindBuffers(use_first_segment, component_count);
-
     if (use_first_segment)
     {
         glBindBuffer(GL_ARRAY_BUFFER, transform_buffer);

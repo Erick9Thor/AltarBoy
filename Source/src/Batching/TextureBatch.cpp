@@ -8,10 +8,6 @@
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleTexture.h"
 
-Hachiko::TextureBatch::TextureBatch() 
-{
-}
-
 Hachiko::TextureBatch::~TextureBatch() 
 {
     for (auto& resource : resources)
@@ -26,6 +22,8 @@ Hachiko::TextureBatch::~TextureBatch()
         delete textureArray;
     }
     texture_arrays.clear();
+
+    glDeleteBuffers(1, &material_buffer);
 }
 
 void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_material)
@@ -86,11 +84,11 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
     }
 }
 
-void Hachiko::TextureBatch::GenerateBatch(unsigned component_count) 
+void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
 {
     // TODO: improve performance (for inside for)
 
-    int maxLayers; // maximum number of array texture layers 
+    int maxLayers; // maximum number of array texture layers
     int maxUnits; // maximum number of texture units
     glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &maxLayers);
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxUnits);
@@ -136,18 +134,17 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
                 std::string extension = resource.first->path.substr(resource.first->path.find_last_of(".") + 1);
                 unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str(), extension != "tif");
 
-                glTexSubImage3D(
-                    GL_TEXTURE_2D_ARRAY, // target
-                    0, // level
-                    0, // xoffset
-                    0, // yoffset
-                    depth, // zoffset
-                    texture_arrays[i]->width, // width
-                    texture_arrays[i]->height, // height
-                    1, // depth
-                    texture_arrays[i]->format, // format
-                    GL_UNSIGNED_BYTE, // type
-                    ModuleTexture::GetData() // texture_data
+                glTexSubImage3D(GL_TEXTURE_2D_ARRAY, // target
+                                0, // level
+                                0, // xoffset
+                                0, // yoffset
+                                depth, // zoffset
+                                texture_arrays[i]->width, // width
+                                texture_arrays[i]->height, // height
+                                1, // depth
+                                texture_arrays[i]->format, // format
+                                GL_UNSIGNED_BYTE, // type
+                                ModuleTexture::GetData() // texture_data
                 );
 
                 ModuleTexture::DeleteImg(imgId);
@@ -168,16 +165,54 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
 
-    material_buffer_data = static_cast<Material*>(
-        App->program->CreatePersistentBuffers(material_buffer, static_cast<int>(ModuleProgram::BINDING::MATERIAL), 2 * component_count * sizeof(Material))
-    );
+    material_buffer_data = static_cast<Material*>(App->program->CreatePersistentBuffers(material_buffer, static_cast<int>(ModuleProgram::BINDING::MATERIAL), 2 * component_count * sizeof(Material)));
+
+    loaded = true;
 }
 
 void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
 {
     GenerateMaterials(components);
-    UpdateTextureBatch();
-    UpdateMaterials(components, use_first_segment, component_count);
+    UpdateBuffers(use_first_segment, component_count);
+
+    BindTextures();
+    BindBuffers(use_first_segment, component_count);
+}
+
+void Hachiko::TextureBatch::ImGuiWindow()
+{
+    ImGui::Text("TEXTURE_BATCH");
+
+    for (unsigned i = 0; i < texture_arrays.size(); ++i)
+    {
+        ImGui::BulletText("TextureArray ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(i).c_str());
+
+        ImGui::Text("Depth (number of textures): ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->depth).c_str());
+
+        ImGui::Text("Width: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->width).c_str());
+
+        ImGui::Text("Height: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->height).c_str());
+
+        ImGui::Text("Format: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->format).c_str());
+
+        for (auto& resource : resources)
+        {
+            if (EqualLayout(*texture_arrays[i], *resource.first))
+            {
+                ImGui::Text(resource.first->path.c_str());
+            }
+        }
+    }
 }
 
 void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components)
@@ -231,6 +266,31 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
     }
 }
 
+void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned component_count)
+{
+    if (use_first_segment)
+    {
+        memcpy(material_buffer_data, materials.data(), materials.size() * sizeof(Material));
+    }
+    else
+    {
+        memcpy(&material_buffer_data[component_count], materials.data(), materials.size() * sizeof(Material));
+    }
+}
+
+void Hachiko::TextureBatch::BindTextures()
+{
+    //glEnable(GL_TEXTURE_2D_ARRAY);
+    for (unsigned i = 0; i < texture_arrays.size(); ++i)
+    {
+        glUniform1i(1 + i, 1 + i);
+        glActiveTexture(GL_TEXTURE1 + i);
+        //glEnable(GL_TEXTURE_2D_ARRAY);
+        glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
+        //glDisable(GL_TEXTURE_2D_ARRAY);
+    }
+}
+
 void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_count)
 {
     if (use_first_segment)
@@ -244,68 +304,6 @@ void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_co
         glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MATERIAL), material_buffer, component_count * sizeof(Material), component_count * sizeof(Material));
     }
 }
-
-void Hachiko::TextureBatch::UpdateTextureBatch()
-{
-    //glEnable(GL_TEXTURE_2D_ARRAY);
-    for (unsigned i = 0; i < texture_arrays.size(); ++i)
-    {
-        glUniform1i(1 + i, 1 + i);
-        glActiveTexture(GL_TEXTURE1 + i);
-        //glEnable(GL_TEXTURE_2D_ARRAY);
-        glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
-        //glDisable(GL_TEXTURE_2D_ARRAY);
-    }
-}
-
-void Hachiko::TextureBatch::UpdateMaterials(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
-{
-    if (use_first_segment)
-    {
-        memcpy(material_buffer_data, materials.data(), materials.size() * sizeof(Material));
-    }
-    else
-    {
-        memcpy(&material_buffer_data[component_count], materials.data(), materials.size() * sizeof(Material));
-    }
-}
-
-void Hachiko::TextureBatch::ImGuiWindow()
-{
-    ImGui::Text("TEXTURE_BATCH");
-
-    for (unsigned i = 0; i < texture_arrays.size(); ++i)
-    {
-        ImGui::BulletText("TextureArray ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(i).c_str());
-
-        ImGui::Text("Depth (number of textures): ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->depth).c_str());
-
-        ImGui::Text("Width: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->width).c_str());
-
-        ImGui::Text("Height: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->height).c_str());
-
-        ImGui::Text("Format: ");
-        ImGui::SameLine();
-        ImGui::Text(std::to_string(texture_arrays[i]->format).c_str());
-
-        for (auto& resource : resources)
-        {
-            if (EqualLayout(*texture_arrays[i], *resource.first))
-            {
-                ImGui::Text(resource.first->path.c_str());
-            }
-        }
-    }
-}
-
 
 bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texture_layout, const ResourceTexture& texture)
 {
