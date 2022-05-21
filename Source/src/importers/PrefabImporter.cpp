@@ -18,8 +18,9 @@ void Hachiko::PrefabImporter::Import(const char* path, YAML::Node& meta)
 
 void Hachiko::PrefabImporter::Save(UID id, const Resource* prefab)
 {
-    const std::string resource_path = GetResourcePath(Resource::Type::PREFAB, id);
     const ResourcePrefab* resource = static_cast<const ResourcePrefab*>(prefab);
+    
+    const std::string resource_path = GetResourcePath(Resource::Type::PREFAB, id);    
     const std::string prefab_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::PREFAB), resource->name, PREFAB_EXTENSION);
     FileSystem::Save(resource_path.c_str(), resource->prefab_data);
     FileSystem::Save(prefab_asset_path.c_str(), resource->prefab_data);

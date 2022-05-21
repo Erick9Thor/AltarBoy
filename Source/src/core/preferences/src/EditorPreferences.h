@@ -111,7 +111,7 @@ namespace Hachiko
         bool fullscreen = false;
         bool scene_autosave = false;
         bool vsync = true;
-        bool resizable = false;
+        bool resizable = true;
         float fps_threshold = 1000.0f / max_fps;
         Editor::Theme::Type theme = Editor::Theme::Type::DARK;
     };
