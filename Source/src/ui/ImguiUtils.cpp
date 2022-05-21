@@ -127,7 +127,7 @@ bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_ico
     return active;
 }
 
-static void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
+void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
 {
     if (ImGui::IsItemHovered())
     {

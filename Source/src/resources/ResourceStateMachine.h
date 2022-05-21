@@ -22,6 +22,14 @@ namespace Hachiko
         void RemoveClip(const std::string& name);
         void EditClipAnimation(const std::string& name, UID newAnimation);
         void EditClipLoop(const std::string& name, bool newLoop);
+        void SetClipName(unsigned int index, const std::string& name)
+        {
+            clips[index].name = name;
+        }
+        UID GetClipRes(unsigned int index) const
+        {
+            return clips[index].animation;
+        }
 
         struct Node
         {
@@ -67,6 +75,8 @@ namespace Hachiko
     public:
         ResourceStateMachine(UID uid);
         ~ResourceStateMachine() override;
+
+        std::string state_m_name;
 
         std::vector<Clip> clips;
         std::vector<Node> nodes;

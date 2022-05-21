@@ -14,26 +14,19 @@
 
 #include "ui/WindowStateMachine.h"
 
-Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) 
-    : Component(Type::ANIMATION, container)
+Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
     controller = new AnimationController();
-    state_machine = new ResourceStateMachine(5);
-
-    stateMachineWindow = new WindowStateMachine();
-    //stateMachineWindow = new WindowStateMachine(GetGameObject()->name);
-    stateMachineWindow->SetStateMachine(*state_machine);
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
-    delete stateMachineWindow;
     delete state_machine;
     delete controller;
     animations.clear();
 }
 
-void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms) 
+void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms)
 {
     if (animation_index >= animations.size())
     {
@@ -91,8 +84,8 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
 void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
-    
-    if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
+
+    /* if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
         constexpr int NO_DELETION = -1;
         int removed_index = NO_DELETION;
@@ -109,11 +102,24 @@ void Hachiko::ComponentAnimation::DrawGui()
 
             ImGui::SameLine();
 
+
+            if (ImGui::Button(ICON_FA_STOP))
+            {
+                StopAnimating();
+            }
+
+            ImGuiUtils::DisplayTooltip("Pause");
+
+            ImGui::SameLine();
+
             ImGui::PushID(StringUtils::Concat(std::to_string(i), "##animation").c_str());
             if (ImGui::Button(ICON_FA_TRASH))
             {
                 removed_index = i;   
             }
+
+            ImGuiUtils::DisplayTooltip("Delete");
+
             ImGui::PopID();
         }
 
@@ -122,7 +128,7 @@ void Hachiko::ComponentAnimation::DrawGui()
             animations.erase(animations.begin() + removed_index);
         }
         
-
+        // Animator selector
         const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
 
         if (ImGui::Button("Select animation"))
@@ -164,26 +170,185 @@ void Hachiko::ComponentAnimation::DrawGui()
             ImGuiFileDialog::Instance()->Close();
         }
 
-        if (current_animation != nullptr && ImGui::Button(StringUtils::Concat(ICON_FA_STOP, " ", current_animation->GetName().c_str()).c_str()))
+        // State machine displayer
+
+        if (animations.size() > 0)
         {
-            StopAnimating();
+            stateMachineWindow = new WindowStateMachine(game_object->name);
+        }
+    }*/
+
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
+    {
+        /* LOAD STATE MACHINE */
+
+        const std::string title = StringUtils::Concat("State Machine Selector#", std::to_string(uid));
+        if (ImGui::Button("Select State machine"))
+        {
+            ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                    "Select State Machine",
+                                                    ".yml",
+                                                    "./library/state_machine/",
+                                                    1,
+                                                    nullptr,
+                                                    ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
+        }
+        
+        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                /* std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
+                YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
+
+                for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+                {
+                    Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+                    if (type == Resource::Type::ANIMATION)
+                    {
+                        UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+                        ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
+                        if (res != nullptr)
+                        {
+                            animations.push_back(res);
+                        }
+                    }
+                }*/
+
+                state_machine = new ResourceStateMachine(UUID::GenerateUID());
+            }
+
+            ImGuiFileDialog::Instance()->Close();
         }
 
-        if (ImGui::Button("Show state machine"))
+        /* CREATE NEW STATE MACHINE */
+
+        ImGui::SameLine();
+        std::string auxiliary_name;
+
+        if (ImGui::Button("New State machine"))
         {
-            showStateMachine = !showStateMachine;
+            ImGui::OpenPopup("NewStateMachine");
         }
 
-        if (showStateMachine)
+        if (ImGui::BeginPopup("NewStateMachine"))
         {
-            stateMachineWindow->Update();
+            auxiliary_name = game_object->name;
+            ImGui::InputText("Name", &auxiliary_name, ImGuiInputTextFlags_EnterReturnsTrue);
+            if (ImGui::Button("Create State Machine"))
+            {
+                // TODO ADD A resource creation for state machine.
+                // ResourceStateMachine* res = static_cast<ResourceStateMachine*>(App->resources->CreateAsset(Resource::Type::STATE_MACHINE, auxiliary_name));
+
+                state_machine = new ResourceStateMachine(UUID::GenerateUID());
+                state_machine->state_m_name = auxiliary_name;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+
+        if (state_machine != nullptr)
+        {
+            char name[128];
+
+            if (ImGui::InputText("Resource name", name, 128))
+            {
+                state_machine->state_m_name = name;
+                // state_machine->Save();
+            }
+
+            if (ImGui::Button("Add clip"))
+            {
+                state_machine->AddClip("noname", 0, true);
+                // state_machine->Save();
+            }
+
+            ImGui::Separator();
+
+            unsigned int i = 0;
+            while (i < state_machine->clips.size())
+            {
+                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i)));
+
+                strcpy_s(name, state_machine->clips[i].name.c_str());
+
+                ImGui::PushID(i);
+                if (ImGui::InputText("Clip name", name, 128))
+                {
+                    state_machine->SetClipName(i, name);
+                    // state_machine->Save();
+                }
+
+                ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
+                ImGui::SameLine();
+                if (ImGui::ArrowButton("resource", ImGuiDir_Right))
+                {
+                    ImGui::OpenPopup("Select");
+                }
+
+                /*UID new_res = OpenResourceModal(Resource::animation, "Select");
+
+                if (new_res > 0)
+                {
+                    state_machine->SetClipRes(i, new_res);
+                    state_machine->Save();
+
+                    App->resources->Get(new_res)->LoadToMemory();
+                }
+
+                bool loop = state_machine->GetClipLoop(i);
+                if (ImGui::Checkbox("Loop", &loop))
+                {
+                    state_machine->SetClipLoop(i, loop);
+                    state_machine->Save();
+                }
+
+                ImGui::SameLine();
+                if (ImGui::Button("Remove"))
+                {
+                    state_machine->RemoveClip(i);
+                    state_machine->Save();
+                }
+                else
+                {
+                    ++i;
+                }
+
+                ImGui::Separator();
+                ImGui::PopID();
+            }
+
+            if (App->GetState() != Application::stop)
+            {
+                if (ImGui::CollapsingHeader("Animation triggers", ImGuiTreeNodeFlags_DefaultOpen))
+                {
+                    HashString active_node = component->GetActiveNode();
+
+                    for (uint i = 0; i < state_machine->GetNumTransitions(); ++i)
+                    {
+                        if (state_machine->GetTransitionSource(i) == active_node)
+                        {
+                            HashString trigger = state_machine->GetTransitionTrigger(i);
+                            if (trigger && ImGui::Button(trigger.C_str()))
+                            {
+                                component->SendTrigger(trigger);
+                            }
+                        }
+                    }
+
+                    if (ImGui::Button("Reset state"))
+                    {
+                        component->ResetState();
+                    }
+                }*/
+            }
         }
     }
-   
+
     ImGui::PopID();
 }
 
-void Hachiko::ComponentAnimation::Save(YAML::Node& node) const 
+void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
     for (unsigned i = 0; i < animations.size(); ++i)
     {
@@ -191,7 +356,7 @@ void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
     }
 }
 
-void Hachiko::ComponentAnimation::Load(const YAML::Node& node) 
+void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
     if (node[ANIMATIONS].IsDefined())
     {
@@ -200,10 +365,5 @@ void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
             ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node[ANIMATIONS][i].as<UID>()));
             animations.push_back(r_animation);
         }
-    }
-
-    for (ResourceAnimation* animation : animations)
-    {
-        state_machine->AddNode(animation->GetName(), "");
     }
 }

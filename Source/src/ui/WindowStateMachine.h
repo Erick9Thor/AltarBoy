@@ -7,10 +7,10 @@ namespace Hachiko
     class WindowStateMachine final : public Window
     {
     public:
-        
 
         WindowStateMachine();
         WindowStateMachine(std::string name);
+
         ~WindowStateMachine() override;
 
         void Update() override;
@@ -40,7 +40,6 @@ namespace Hachiko
         //bool editIT = false;
         bool deleteLink = false;
 
-        //ResourceStateMachine sm = ResourceStateMachine(1);
         ResourceStateMachine* sm = nullptr;
         ImNodesContext* context = nullptr;
     };
