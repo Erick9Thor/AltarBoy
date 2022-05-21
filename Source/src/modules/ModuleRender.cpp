@@ -33,6 +33,8 @@ bool Hachiko::ModuleRender::Init()
     RetrieveLibVersions();
 
     SetGLOptions();
+
+    GenerateDeferredQuad();
     GenerateFrameBuffer();
 
 #ifdef _DEBUG
@@ -247,8 +249,8 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
     ManageResolution(camera);
     
-    glStencilFunc(GL_ALWAYS, 1, 0XFF);
-    glStencilMask(0x00); // Prevent background from filling stencil
+    //glStencilFunc(GL_ALWAYS, 1, 0XFF);
+    //glStencilMask(0x00); // Prevent background from filling stencil
 #endif
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
 
@@ -323,8 +325,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     program->Activate();
 
     // Geometry pass:
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, g_buffer);
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     GameObject* selected_go = App->editor->GetSelectedGameObject();
@@ -338,7 +340,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         }
     }
     
-    //Program::Deactivate();
+    Program::Deactivate();
+
 
    //glActiveTexture(GL_TEXTURE0);
    //glBindTexture(GL_TEXTURE_2D, g_buffer_position);
@@ -348,15 +351,48 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);*/
 
+    /*
+    uniform sampler2D g_diffuse;
+    uniform sampler2D g_specular_smoothness;
+    uniform sampler2D g_normal;
+    uniform sampler2D g_position;
+    */
+
+    /*
     GLint half_width = (GLint)(fb_width / 2.0f);
     GLint half_height = (GLint)(fb_height / 2.0f);
+    */
 
     // Light Pass:
-    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
+    // Use Deferred rendering lighting pass program:
+    program = App->program->GetDeferredLightingProgram();
+    program->Activate();
+
+    // Bind specular & smoothness texture:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_specular_smoothness);
+    // Bind diffuse texture:
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_diffuse);
+    // Bind normal texture:
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
+    // Bind position texture:
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    
+    
+    program->BindUniformInts("mode", 1, &deferred_mode);
+    
+    RenderDeferredQuad();
+
+    Program::Deactivate();
+
+
+    /*glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
 
     glReadBuffer(GL_COLOR_ATTACHMENT0);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, half_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
@@ -368,7 +404,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, half_height, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
     glReadBuffer(GL_COLOR_ATTACHMENT3);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);*/
 
     /*if (outline_selection && outline_target)
     {
@@ -414,6 +450,10 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
     ImGui::Checkbox("Skybox", &draw_skybox);
     ImGui::Checkbox("Navmesh", &draw_navmesh);
+
+    // TODO: Delete this if not needed:
+    ImGui::InputInt("Deferred Mode", &deferred_mode);
+    deferred_mode = deferred_mode % 5;
 
     if (!draw_skybox)
     {
@@ -496,6 +536,56 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     gpu.vram_budget_mb = static_cast<float>(vram_budget) / 1024.0f;
 }
 
+void Hachiko::ModuleRender::GenerateDeferredQuad() 
+{
+    constexpr const float vertices[] = {
+        1.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top right
+        1.0f,  -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
+        -1.0f, 1.0f,  0.0f, 0.0f, 1.0f // top left
+    };
+    constexpr unsigned int indices[] = {2, 1, 0, 0, 3, 2};
+
+    glGenVertexArrays(1, &deferred_quad_vao);
+    glGenBuffers(1, &deferred_quad_vbo);
+    glGenBuffers(1, &deferred_quad_ebo);
+
+    glBindVertexArray(deferred_quad_vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, deferred_quad_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, deferred_quad_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // Vertices:
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // Texture coordinates:
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    glBindVertexArray(0);
+}
+
+void Hachiko::ModuleRender::RenderDeferredQuad() const 
+{
+    glBindVertexArray(deferred_quad_vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+}
+
+void Hachiko::ModuleRender::FreeDeferredQuad() 
+{
+    glBindVertexArray(deferred_quad_vao);
+    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+    glDeleteBuffers(1, &deferred_quad_ebo);
+    glDeleteBuffers(1, &deferred_quad_vbo);
+    glDeleteVertexArrays(1, &deferred_quad_vao);
+    glBindVertexArray(0);
+}
+
 bool Hachiko::ModuleRender::CleanUp()
 {
     //HE_LOG("Destroying renderer");
@@ -506,6 +596,8 @@ bool Hachiko::ModuleRender::CleanUp()
     glDeleteTextures(1, &g_buffer_specular_smoothness);
     glDeleteTextures(1, &g_buffer_position);
     glDeleteTextures(1, &g_buffer_normal);
+
+    FreeDeferredQuad();
 
     SDL_GL_DeleteContext(context);
 

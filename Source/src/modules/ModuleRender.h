@@ -84,6 +84,10 @@ namespace Hachiko
         void RetrieveLibVersions();
         void RetrieveGpuInfo();
 
+        void GenerateDeferredQuad();
+        void RenderDeferredQuad() const;
+        void FreeDeferredQuad();
+
         void* context{};
 
         RenderList render_list;
@@ -101,11 +105,18 @@ namespace Hachiko
         unsigned g_buffer_normal = 0;
         unsigned g_buffer_position = 0;
         unsigned g_buffer_depth = 0;
+        // Deferred rendering quad:
+        unsigned deferred_quad_vao = 0;
+        unsigned deferred_quad_vbo = 0;
+        unsigned deferred_quad_ebo = 0;
 
         // float4 clear_color;
         bool draw_skybox = true;
         bool draw_navmesh = false;
         bool outline_selection = true;
+
+        // Deferred rendering draw mode:
+        int deferred_mode = 0;
 
         GpuData gpu{};
         GlVersion gl{};
