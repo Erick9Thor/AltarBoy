@@ -17,7 +17,7 @@ namespace Hachiko
     {
     public:
         ComponentText(GameObject* container);
-        ~ComponentText() override = default;
+        ~ComponentText() override;
 
         void DrawGui() override;
         void Draw(ComponentTransform2D* transform, Program* program);

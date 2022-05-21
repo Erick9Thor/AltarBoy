@@ -6,6 +6,7 @@
 #include "ModuleSceneManager.h"
 #include "ModuleEvent.h"
 #include "core/preferences/src/EditorPreferences.h"
+#include "ModuleResources.h"
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
@@ -165,12 +166,12 @@ UpdateStatus Hachiko::ModuleEditor::Update(const float delta)
             //TODO: Make a function inside file sys to get relative path Assets/Scenes/X.scene
             const std::string file_name_extension = FileSystem::GetFileNameAndExtension(file_path_name.c_str());
 
-            const std::string file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_extension;
+            const std::string file_path = std::string(ASSETS_FOLDER_SCENE) + "/" + file_name_extension;
 
             HE_LOG("Loading scene: %s", file_path_name.c_str());
 
             history.CleanUp();
-            App->scene_manager->LoadScene(file_path.c_str());
+            App->resources->LoadAsset(file_path);
             history.Init();
         }
 
@@ -313,8 +314,8 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
-        const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + UNNAMED_SCENE + SCENE_EXTENSION;
-        App->scene_manager->SaveScene(temp_scene_file_path.c_str());
+        // TODO: Add the option to specify a name (no name uses scene internal name)
+        App->scene_manager->SaveScene();
     }
     if (ImGui::MenuItem("Save as", nullptr, false, true)) // TODO: Use internal timer
     {
@@ -324,7 +325,7 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     ImGui::Separator();
     if (ImGui::MenuItem("Load"))
     {
-        ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ASSETS_FOLDER_SCENES);
+        ImGuiFileDialog::Instance()->OpenDialog("LoadScene", "Load Scene", ".scene", ASSETS_FOLDER_SCENE);
     }
 
     ImGui::Separator();
@@ -343,7 +344,7 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
         if (ImGui::Button("Save"))
         {
             HE_LOG("Saving Scene");
-            const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENES) + "/" + file_name_buffer + SCENE_EXTENSION;
+            const std::string temp_scene_file_path = std::string(ASSETS_FOLDER_SCENE) + "/" + file_name_buffer + SCENE_EXTENSION;
             App->scene_manager->SaveScene(temp_scene_file_path.c_str());
             ImGui::CloseCurrentPopup();
         }

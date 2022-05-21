@@ -25,6 +25,8 @@ namespace Hachiko
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
+        void ReleaseResource(Resource* resource);
+        void ReleaseResource(UID id);
         
         void AssetsLibraryCheck();
         std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
@@ -32,17 +34,22 @@ namespace Hachiko
         void LoadAsset(const std::string& path);
 
     private:
-        std::map<UID, Resource*> loaded_resources{};
+        struct ResourceInstance
+        {
+            Resource* resource = nullptr;
+            unsigned n_users = 0;
+        };
+        std::map<UID, ResourceInstance> loaded_resources;
 
         std::vector<std::pair<Hachiko::Resource::AssetType, std::string>> supported_extensions = 
         {
-            {Hachiko::Resource::AssetType::TEXTURE, ".png"},
-            {Hachiko::Resource::AssetType::TEXTURE, ".jpg"},
-            {Hachiko::Resource::AssetType::TEXTURE, ".tif"},
-            {Hachiko::Resource::AssetType::MODEL, ".fbx"},
+            {Hachiko::Resource::AssetType::TEXTURE, PNG_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::TEXTURE, JPG_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::TEXTURE, TIF_TEXTURE_EXTENSION},
+            {Hachiko::Resource::AssetType::MODEL, MODEL_EXTENSION},
             {Hachiko::Resource::AssetType::SCENE, SCENE_EXTENSION},
             {Hachiko::Resource::AssetType::MATERIAL, MATERIAL_EXTENSION},
-            {Hachiko::Resource::AssetType::FONT, ".ttf"},
+            {Hachiko::Resource::AssetType::FONT, FONT_EXTENSION},
             {Hachiko::Resource::AssetType::PREFAB, PREFAB_EXTENSION},
         };
         

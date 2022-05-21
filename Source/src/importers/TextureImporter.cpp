@@ -15,7 +15,7 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
     std::string extension = FileSystem::GetFileExtension(path);
     // TODO: could we extract ModuleTexture functionality to this importer?
 
-    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, extension != ".tif");
+    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, extension != TIF_TEXTURE_EXTENSION);
      
     if (texture != nullptr)
     {
@@ -26,7 +26,11 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
-    assert(id && "Unable to load texture. Given an empty id");
+    if (!id)
+    {
+        // No id defaults to no resource
+        return nullptr;
+    }
 
     const std::string file_path = GetResourcePath(Resource::Type::TEXTURE, id);
 

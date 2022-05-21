@@ -21,7 +21,10 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container)
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
     delete controller;
-    animations.clear();
+    for (auto& animation : animations)
+    {
+        App->resources->ReleaseResource(animation);
+    }
 }
 
 void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms) 

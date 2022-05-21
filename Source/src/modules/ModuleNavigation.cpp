@@ -8,13 +8,10 @@
 #include "DetourCommon.h"
 #include "DebugUtils/DebugDraw.h"
 #include "DebugUtils/DetourDebugDraw.h"
+#include "ModuleResources.h"
 
 #include "ModuleCamera.h"
 #include "components/ComponentCamera.h"
-
-Hachiko::ModuleNavigation::ModuleNavigation() {}
-
-Hachiko::ModuleNavigation::~ModuleNavigation() {}
 
 bool Hachiko::ModuleNavigation::Init()
 {
@@ -23,8 +20,8 @@ bool Hachiko::ModuleNavigation::Init()
 
 bool Hachiko::ModuleNavigation::CleanUp()
 {
-    // TODO: Manage as a resources aand not released here
-    RELEASE(navmesh);
+    App->resources->ReleaseResource(scene_navmesh);
+    scene_navmesh = nullptr;
 
     if (avoid_debug != nullptr)
     {
@@ -35,56 +32,52 @@ bool Hachiko::ModuleNavigation::CleanUp()
     return true;
 }
 
-bool Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
+Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
 {
     HE_LOG("Building Navmesh");
 
     ResourceNavMesh::NavmeshParams initial_params;
-    if (navmesh)
+    if (scene_navmesh)
     {
         // Keep previous params if we had an already created navmesh 
-        initial_params = navmesh->build_params;
+        initial_params = scene_navmesh->build_params;
     }
+    
+    // If id is defined reuse it, if not generate new one
+    UID navmesh_id = scene->GetNavmeshID() ? scene->GetNavmeshID() : UUID::GenerateUID();
+    ResourceNavMesh* navmesh = new ResourceNavMesh(navmesh_id);
+    scene->SetNavmeshID(navmesh_id);
 
-    CleanUp();
-
-    navmesh = new ResourceNavMesh(0);
     navmesh->build_params = initial_params;
 
     bool success = navmesh->Build(scene);
     if (!success)
     {
         HE_LOG("Failed to build navmesh uwu");
+        delete navmesh;
+        return nullptr;
+        
     }
 
-    // Set agents debug data to clean state
-    memset(m_trails, 0, sizeof(m_trails));
+    SetDebugData();
 
-    avoid_debug = dtAllocObstacleAvoidanceDebugData();
-    avoid_debug->init(2048);
-
-    memset(&agent_debug, 0, sizeof(agent_debug));
-    // Idx is used to mark selected agent, unused atm
-    agent_debug.idx = -1;
-    agent_debug.vod = avoid_debug;
-
-    return success;
+    return navmesh;
 }
 
 UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
 {
-    if (!navmesh)
+    if (!scene_navmesh)
     {
         return UpdateStatus::UPDATE_CONTINUE;
     }
     
-    dtTileCache* tile_cache = navmesh->tile_cache;
-    tile_cache->update(delta, navmesh->navmesh);
+    dtTileCache* tile_cache = scene_navmesh->tile_cache;
+    tile_cache->update(delta, scene_navmesh->navmesh);
     // Note: We can add crowd debug info instead of nullptr
     UpdateObstacleStats(tile_cache);
 
     // Crowd update with debug data
-    dtCrowd* crowd = navmesh->crowd;
+    dtCrowd* crowd = scene_navmesh->crowd;
     if (crowd != nullptr)
     {
         crowd->update(delta, &agent_debug);
@@ -110,22 +103,32 @@ UpdateStatus Hachiko::ModuleNavigation::Update(const float delta)
 
 dtTileCache* Hachiko::ModuleNavigation::GetTileCache() const
 {
-    return navmesh ? navmesh->tile_cache : nullptr;
+    return scene_navmesh ? scene_navmesh->tile_cache : nullptr;
 }
 
 dtCrowd* Hachiko::ModuleNavigation::GetCrowd() const
 {
-    return navmesh ? navmesh->crowd : nullptr;
+    return scene_navmesh ? scene_navmesh->crowd : nullptr;
 }
 
 dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
 {
-    return navmesh ? navmesh->navigation_query : nullptr;
+    return scene_navmesh ? scene_navmesh->navigation_query : nullptr;
+}
+
+void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
+{
+    App->resources->ReleaseResource(scene_navmesh);    
+    scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
+    if (scene_navmesh)
+    {
+        SetDebugData();
+    }
 }
 
 void Hachiko::ModuleNavigation::DebugDraw()
 {
-    if (navmesh)
+    if (scene_navmesh)
     {
         DebugDrawGL dd;
         ComponentCamera* camera = App->camera->GetRenderingCamera();
@@ -149,7 +152,7 @@ void Hachiko::ModuleNavigation::DebugDraw()
         glDepthMask(GL_FALSE);
 
 
-        navmesh->DebugDraw(dd);
+        scene_navmesh->DebugDraw(dd);
         RenderAgents(dd);
         
         glDepthMask(GL_TRUE);
@@ -173,11 +176,11 @@ void Hachiko::ModuleNavigation::DrawOptionsGui()
         App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
     }
         
-    if (navmesh)
+    if (scene_navmesh)
     {
         if (ImGui::CollapsingHeader("Params"))
         {
-            navmesh->DrawOptionsGui();
+            scene_navmesh->DrawOptionsGui();
         }
     }
 }
@@ -188,7 +191,7 @@ float3 Hachiko::ModuleNavigation::GetCorrectedPosition(math::float3& position, c
     dtPolyRef reference;
     float nearestPt[3];
 
-    navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, nearestPt);
+    scene_navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, nearestPt);
 
     return float3(nearestPt[0], nearestPt[1], nearestPt[2]);
 }
@@ -198,12 +201,12 @@ void Hachiko::ModuleNavigation::CorrectPosition(math::float3& position, const ma
     dtQueryFilter filter;
     dtPolyRef reference;
 
-    navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
+    scene_navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
 
     if (reference != NULL)
     {
         float height = 1000.0f;
-        navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
+        scene_navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
         position.y = height;
     }
 }
@@ -216,11 +219,11 @@ float Hachiko::ModuleNavigation::GetYFromPosition(const math::float3& position) 
     dtQueryFilter filter;
     dtPolyRef reference;
 
-    navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
+    scene_navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, 0);
 
     if (reference != NULL)
     {
-        navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
+        scene_navmesh->navigation_query->getPolyHeight(reference, position.ptr(), &height);
     }
 
     return height;
@@ -277,15 +280,34 @@ void Hachiko::ModuleNavigation::UpdateObstacleStats(dtTileCache* tile_cache)
 
 
 
+void Hachiko::ModuleNavigation::SetDebugData()
+{
+    if (avoid_debug != nullptr)
+    {
+        dtFreeObstacleAvoidanceDebugData(avoid_debug);
+    }
+    
+    // Set agents debug data to clean state
+    memset(m_trails, 0, sizeof(m_trails));
+
+    avoid_debug = dtAllocObstacleAvoidanceDebugData();
+    avoid_debug->init(2048);
+
+    memset(&agent_debug, 0, sizeof(agent_debug));
+    // Idx is used to mark selected agent, unused atm
+    agent_debug.idx = -1;
+    agent_debug.vod = avoid_debug;
+}
+
 // Obtained from crowdtool
 void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
 {
 
-    if (!navmesh || !navmesh->navmesh || !navmesh->crowd)
+    if (!scene_navmesh || !scene_navmesh->navmesh || !scene_navmesh->crowd)
         return;
 
-    dtNavMesh* nav = navmesh->navmesh;
-    dtCrowd* crowd = navmesh->crowd;
+    dtNavMesh* nav = scene_navmesh->navmesh;
+    dtCrowd* crowd = scene_navmesh->crowd;
 
     bool show_nodes = true;
     bool show_path = true;
@@ -336,7 +358,7 @@ void Hachiko::ModuleNavigation::RenderAgents(duDebugDraw& dd)
             if (!ag->active)
                 continue;
             const float* target = ag->targetPos;
-            duDebugDrawCross(&dd, target[0], target[1] + 0.1f, target[2], navmesh->build_params.agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
+            duDebugDrawCross(&dd, target[0], target[1] + 0.1f, target[2], scene_navmesh->build_params.agent_radius, duRGBA(255, 255, 255, 192), 2.0f);
 
         }
     }
