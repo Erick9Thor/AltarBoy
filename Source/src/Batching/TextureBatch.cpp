@@ -98,7 +98,7 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
     // Security check, amount of texture units
     if (texture_arrays.size() > maxUnits - 8)
     {
-        HE_LOG("[Error] TextureBatch: there are more texture units than the maximum.");
+        HE_ERROR("There are more texture units than the maximum.");
     }
 
     unsigned index = 0;
@@ -107,7 +107,7 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
         // Security check, amount of layers in a texture array
         if (texture_arrays[i]->depth > maxLayers)
         {
-            HE_LOG("[Error] TextureBatch: there are layers in a texture array than the maximum.");
+            HE_ERROR("There are layers in a texture array than the maximum.");
         }
 
         glGenTextures(1, &texture_arrays[i]->id);
@@ -125,7 +125,6 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
         }
 
         glTexStorage3D(GL_TEXTURE_2D_ARRAY, 3, sizedFormat, texture_arrays[i]->width, texture_arrays[i]->height, texture_arrays[i]->depth);
-        //glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, sizedFormat, textureArrays[i]->width, textureArrays[i]->height, textureArrays[i]->depth);
         unsigned depth = 0;
         for (auto& resource : resources)
         {
@@ -133,19 +132,6 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
             {
                 resource.second->texIndex = i;
                 resource.second->layerIndex = depth;
-
-                //unsigned size = resource.first->width * resource.first->height * resource.first->bpp;
-                //byte* new_array = new byte[size];
-
-                //glEnable(GL_TEXTURE_2D);
-                //glBindTexture(GL_TEXTURE_2D, resource.first->id);
-                //glGetTexImage(GL_TEXTURE_2D, 0, textureArray->format, GL_UNSIGNED_BYTE, (void*)(new_array));
-                //glBindTexture(GL_TEXTURE_2D, 0);
-
-                //glGetTextureImage(resource.first->id, 0, textureArray->format, GL_UNSIGNED_BYTE, size, new_array);
-
-                //ImGui::Image(&new_array[0], ImVec2(100, 100));
-                //ImGui::Image((void*)resource.first->id, ImVec2(100, 100));
 
                 std::string extension = resource.first->path.substr(resource.first->path.find_last_of(".") + 1);
                 unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str(), extension != "tif");
@@ -165,7 +151,6 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
                 );
 
                 ModuleTexture::DeleteImg(imgId);
-                //delete[] new_array;
                 ++depth;
             }
         }
@@ -176,7 +161,6 @@ void Hachiko::TextureBatch::GenerateBatch(unsigned component_count)
         glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
 
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        //glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -263,12 +247,14 @@ void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_co
 
 void Hachiko::TextureBatch::UpdateTextureBatch()
 {
+    //glEnable(GL_TEXTURE_2D_ARRAY);
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
-        //glEnable(GL_TEXTURE_2D);
-        glActiveTexture(GL_TEXTURE0 + i);
+        glUniform1i(1 + i, 1 + i);
+        glActiveTexture(GL_TEXTURE1 + i);
+        //glEnable(GL_TEXTURE_2D_ARRAY);
         glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
-        glUniform1i(1 + i, i);
+        //glDisable(GL_TEXTURE_2D_ARRAY);
     }
 }
 

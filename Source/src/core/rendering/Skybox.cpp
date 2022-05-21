@@ -47,7 +47,9 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     program->Activate();
     // Draw skybox
     glBindVertexArray(vao);
+    glUniform1i(0, 0);
     glActiveTexture(GL_TEXTURE0);
+    //glEnable(GL_TEXTURE_CUBE_MAP);
     glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);

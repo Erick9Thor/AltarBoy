@@ -38,7 +38,6 @@ Hachiko::GeometryBatch::~GeometryBatch() {
 
 void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh_renderer)
 {
-
     const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
     auto it = resources.find(resource);
 
