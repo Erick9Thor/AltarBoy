@@ -25,7 +25,7 @@ namespace Hachiko
 
         void DrawGui();
 
-        [[nodiscard]] unsigned GetId() const
+        [[nodiscard]] unsigned GetImageId() const
         {
             return id;
         }

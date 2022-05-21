@@ -9,6 +9,8 @@
 #include "components/ComponentAnimation.h"
 #include "components/ComponentAgent.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAudioListener.h"
+#include "components/ComponentAudioSource.h"
 
 
 // UI
@@ -207,6 +209,14 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::AGENT):
         if (!GetComponent<ComponentAgent>())
             new_component = new ComponentAgent(this);
+        break;
+    case (Component::Type::AUDIO_LISTENER):
+        if (!GetComponent<ComponentAudioListener>())
+            new_component = new ComponentAudioListener(this);
+        break;
+    case (Component::Type::AUDIO_SOURCE):
+        if (!GetComponent<ComponentAudioSource>())
+            new_component = new ComponentAudioSource(this);
         break;
     }
 
@@ -460,7 +470,12 @@ bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
     //TODO: Should I delete the component?
     if (component->CanBeRemoved())
     {
-        components.erase(std::remove(components.begin(), components.end(), component));
+        auto it = std::find(components.begin(), components.end(), component);
+        if (it != components.end())
+        {
+            delete *it;
+            components.erase(it);
+        }
         return true;
     }
 
@@ -481,7 +496,6 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
-    node[GAME_OBJECT_PARENT_ID] = parent != nullptr ? parent->uid : 0;
 
     for (unsigned i = 0; i < components.size(); ++i)
     {

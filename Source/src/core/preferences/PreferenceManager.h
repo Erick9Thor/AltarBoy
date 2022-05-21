@@ -39,9 +39,10 @@ namespace Hachiko
         {
             return audio;
         }
+
     private:
-        std::vector<Preferences*> preferences{};
-        std::vector<YAML::Node> nodes_vec{};
+        std::vector<Preferences*> preferences {};
+        std::vector<YAML::Node> nodes_vec {};
         std::string config_file;
 
         GlobalPreferences* globals = nullptr;
@@ -51,4 +52,4 @@ namespace Hachiko
         ResourcesPreferences* resources = nullptr;
         AudioPreferences* audio = nullptr;
     };
-}
+} // namespace Hachiko
