@@ -72,13 +72,17 @@ Hachiko::UID Hachiko::SceneImporter::CreateSceneAsset(Scene* scene)
 Hachiko::ResourceScene* Hachiko::SceneImporter::CreateSceneResource(Scene* scene)
 {
     ResourceScene* scene_resource = new ResourceScene(0);
-    scene_resource->name = scene->GetName();
+    
+    RefreshSceneResource(scene_resource, scene);
+    return scene_resource;
+}
+
+void Hachiko::SceneImporter::RefreshSceneResource(ResourceScene* resource, Scene* scene)
+{
+    resource->name = scene->GetName();
 
     YAML::Node scene_data;
     std::string output_path;
     scene->Save(scene_data);
-    scene_resource->scene_data = scene_data;
-    // Create navmesh here?
-
-    return scene_resource;
+    resource->scene_data = scene_data;
 }

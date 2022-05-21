@@ -64,7 +64,7 @@ namespace Hachiko
         void ChangeMainScene(Scene* new_scene);
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
-        void RefreshTemporaryScene();
+        void RefreshSceneResource();
         Scene* main_scene = nullptr;
         ResourcesPreferences* preferences = nullptr;
 
@@ -72,8 +72,6 @@ namespace Hachiko
         bool scene_ready_to_load = false;
         bool scene_autosave = false;
         ResourceScene* scene_resource;
-        // Fake resource, does not go through the manager
-        ResourceScene* temporary_scene_resource;
         UID scene_to_load_id;
     };
 } // namespace Hachiko

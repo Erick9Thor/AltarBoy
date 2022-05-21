@@ -68,7 +68,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
 
     if (!GameTimer::running)
     {
-        RefreshTemporaryScene();
+        RefreshSceneResource();
 
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
@@ -130,28 +130,19 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
     // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
-    preferences->SetSceneUID(scene_resource ? scene_resource->GetID() : 0);
-    preferences->SetSceneName(scene_resource ? scene_resource->name.c_str() : "");
+    preferences->SetSceneUID(scene_resource->GetID());
+    preferences->SetSceneName(scene_resource->name.c_str());
 
-    App->resources->ReleaseResource(scene_resource);
+    SetSceneResource(nullptr);
 
-    scene_resource = nullptr;
     RELEASE(main_scene);
     // Release because not owned by RM
-    RELEASE(temporary_scene_resource);
     
     return true;
 }
 
 void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
 {
-    Event scene_load(Event::Type::SCENE_LOADED);
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::NOT_LOADED);
-    App->event->Publish(scene_load);  
-
-
     LoadScene(nullptr);
     if (name)
     {
@@ -176,16 +167,19 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
     // Create a scene resource not related to an asset to reload the scene as any other
     SceneImporter scene_importer;
     SetSceneResource(scene_importer.CreateSceneResource(main_scene));
-
-    scene_load.SetEventData<SceneLoadEventPayload>(
-        SceneLoadEventPayload::State::LOADED);
-    App->event->Publish(scene_load);
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id)
 {
-    App->resources->ReleaseResource(scene_resource);
-    LoadScene(static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id)));
+    ResourceScene* scene_resource = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id));
+    if (scene_resource)
+    {
+        LoadScene(scene_resource);
+    }
+    else
+    {
+        CreateEmptyScene();
+    }
 }
 
 void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
@@ -193,7 +187,6 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
     if (IsScenePlaying())
     {
         AttemptSceneStop();
-        ReloadScene();
     }
     
     if (save_name)
@@ -217,6 +210,8 @@ void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
 
 void Hachiko::ModuleSceneManager::ReloadScene()
 {
+    // Use the scene resource refreshed when play is pressed to restore og state
+    // Basically scene serialized in memory
     LoadScene(scene_resource);
 }
 
@@ -250,7 +245,6 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
         camera_go->CreateComponent(Component::Type::CAMERA);
         App->navigation->SetNavmesh(0);
     }
-
 
     ChangeMainScene(new_scene);
 }
@@ -286,17 +280,23 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
 
 void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)
 {
-    if (scene_resource && new_scene_resource != scene_resource && scene_resource->GetID() == 0)
+    if (scene_resource != new_scene_resource)
     {
         // Only delete if it exists, its not the same resource and its not loaded by resource manager (id 0)
-        delete scene_resource;
+        if (scene_resource && scene_resource->GetID() == 0)
+        {
+            delete scene_resource;
+        }
+        else
+        {
+            App->resources->ReleaseResource(scene_resource);
+        }
     }
     scene_resource = new_scene_resource;
 }
 
-void Hachiko::ModuleSceneManager::RefreshTemporaryScene()
+void Hachiko::ModuleSceneManager::RefreshSceneResource()
 {
-    delete temporary_scene_resource;
     SceneImporter scene_importer;
-    temporary_scene_resource = scene_importer.CreateSceneResource(main_scene);
+    scene_importer.RefreshSceneResource(scene_resource, main_scene);
 }

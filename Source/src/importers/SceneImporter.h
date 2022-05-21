@@ -21,6 +21,7 @@ namespace Hachiko
         UID CreateSceneAsset(Scene* scene);
         // Create new scene resource without loading from an asset
         ResourceScene* CreateSceneResource(Scene* scene);
+        void RefreshSceneResource(ResourceScene* resource, Scene* scene);
     private:
     };
 } // namespace Hachiko
