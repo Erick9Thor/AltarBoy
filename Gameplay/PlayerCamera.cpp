@@ -4,11 +4,13 @@
 #include "PlayerController.h"
 #include <components/ComponentTransform.h>
 #include <core/Scene.h>
+#include <thread>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
 	, _relative_position_to_player(math::float3::zero)
 	, _player(nullptr)
+	, _camera(nullptr)
 	, _follow_delay(0.0f)
 {
 }
@@ -113,8 +115,26 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 	}
 }
 
-void Hachiko::Scripting::PlayerCamera::Shake(float time, float intesity)
+void Hachiko::Scripting::PlayerCamera::Shake(float time, float intensity)
 {
-	float3 originalPos = game_object->GetTransform()->GetGlobalPosition();
+	std::thread shake_thread(&PlayerCamera::ShakeThread, this, time, intensity, _camera);
+	shake_thread.detach();
+}
 
+void Hachiko::Scripting::PlayerCamera::ShakeThread(float time, float intesity, GameObject* camera)
+{
+	float elapsed = 0.0f;
+	float currentMagnitude = 1.0f;
+
+	while (elapsed < time)
+	{
+		float x = (rand() - 0.5f) * currentMagnitude * intesity;
+		float y = (rand() - 0.5f) * currentMagnitude * intesity;
+
+		camera->GetTransform()->SetLocalPosition(float3(x, y, 0));
+		elapsed += Time::DeltaTime();
+		currentMagnitude = (1 - (elapsed / time)) * (1 - (elapsed / time));
+	}
+
+	camera->GetTransform()->SetLocalPosition(float3::zero);
 }

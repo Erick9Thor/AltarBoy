@@ -213,8 +213,9 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	}
 	if (enemies_hit.size() > 0)
 	{
-		_camera->Shake(0.2f, 0.5f);
+		//_camera->Shake(1.0f, 2.5f);
 	}
+	_camera->Shake(2.0f, 10.5f);
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
