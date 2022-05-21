@@ -85,23 +85,6 @@ void Hachiko::BatchManager::BuildBatches()
 
 void Hachiko::BatchManager::DrawBatches()
 {
-    //
-    if (ImGui::Begin("GeometryBatch", 0, ImGuiWindowFlags_NoNavInputs))
-    {
-        for (GeometryBatch* geometry_batch : geometry_batches)
-        {
-            ImGui::Text(geometry_batch->batch->layout.bones ? "Bones = true; " : "Bones = false; ");
-            ImGui::SameLine();
-            ImGui::Text(geometry_batch->batch->layout.normals ? "Normals = true; " : "Normals = false; ");
-            ImGui::SameLine();
-            ImGui::Text(geometry_batch->batch->layout.text_coords ? "TexCoords = true; " : "TexCoords = false; ");
-
-            geometry_batch->ImGuiWindow(); // DEBUG
-            ImGui::Separator();
-        }
-    }
-    ImGui::End();
-    //
     static float4x4 identity = float4x4::identity;
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
@@ -140,4 +123,19 @@ void Hachiko::BatchManager::CleanUp()
     geometry_batches.clear();
 
     //glDeleteBuffers(1, &material_ssbo);
+}
+
+void Hachiko::BatchManager::DebugMenu() 
+{
+    for (GeometryBatch* geometry_batch : geometry_batches)
+    {
+        ImGui::Text(geometry_batch->batch->layout.bones ? "Bones = true; " : "Bones = false; ");
+        ImGui::SameLine();
+        ImGui::Text(geometry_batch->batch->layout.normals ? "Normals = true; " : "Normals = false; ");
+        ImGui::SameLine();
+        ImGui::Text(geometry_batch->batch->layout.text_coords ? "TexCoords = true; " : "TexCoords = false; ");
+
+        geometry_batch->ImGuiWindow();
+        ImGui::Separator();
+    }
 }

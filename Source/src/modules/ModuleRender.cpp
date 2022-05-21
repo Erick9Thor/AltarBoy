@@ -222,6 +222,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     BatchManager* batch_manager = scene->GetBatchManager();
 
+    batch_manager->ClearBatchesDrawList();
     for (RenderTarget& target : render_list.GetNodes())
     {
         batch_manager->AddDrawComponent(target.mesh);
@@ -233,8 +234,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     }
 
     batch_manager->DrawBatches();
-    batch_manager->ClearBatchesDrawList();
-
+    
     Program::Deactivate();
 
     if (outline_selection && outline_target)
