@@ -61,7 +61,7 @@ namespace Hachiko
 
         [[nodiscard]] Program* GetDeferredLightingProgram() const
         {
-            return deferred_geometry_program;
+            return deferred_lighting_program;
         }
 
         [[nodiscard]] Program* GetSkyboxProgram() const
