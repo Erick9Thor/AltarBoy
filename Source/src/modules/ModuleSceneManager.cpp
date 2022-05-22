@@ -188,6 +188,8 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
     {
         AttemptSceneStop();
     }
+
+    RefreshSceneResource();
     
     if (save_name)
     {

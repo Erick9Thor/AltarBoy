@@ -20,8 +20,15 @@ bool Hachiko::ModuleNavigation::Init()
 
 bool Hachiko::ModuleNavigation::CleanUp()
 {
-    App->resources->ReleaseResource(scene_navmesh);
-    scene_navmesh = nullptr;
+    if (scene_navmesh && scene_navmesh->GetID() == 0)
+    {
+        delete scene_navmesh;
+        scene_navmesh = nullptr;
+    }
+    else
+    {
+        App->resources->ReleaseResource(scene_navmesh);
+    }  
 
     if (avoid_debug != nullptr)
     {
@@ -58,8 +65,6 @@ Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmeshResource(Scene*
         return nullptr;
         
     }
-
-    SetDebugData();
 
     return navmesh;
 }
@@ -118,7 +123,7 @@ dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
 
 void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 {
-    App->resources->ReleaseResource(scene_navmesh);    
+    CleanUp();      
     scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
     if (scene_navmesh)
     {
@@ -128,8 +133,12 @@ void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 
 void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* new_reosurce)
 {
-    App->resources->ReleaseResource(scene_navmesh);
+    CleanUp();   
     scene_navmesh = new_reosurce;
+    if (scene_navmesh)
+    {
+        SetDebugData();
+    }
 }
 
 void Hachiko::ModuleNavigation::RebuildCurrentNavmesh(Scene* scene)
