@@ -369,20 +369,12 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     Program::Deactivate();
 
-
-    /*glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
-
-    glReadBuffer(GL_COLOR_ATTACHMENT0);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, half_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    
-    glReadBuffer(GL_COLOR_ATTACHMENT1);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, half_height, half_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-    
-    glReadBuffer(GL_COLOR_ATTACHMENT2);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, half_height, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
-
-    glReadBuffer(GL_COLOR_ATTACHMENT3);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, half_width, 0, fb_width, half_height, GL_COLOR_BUFFER_BIT, GL_LINEAR);*/
+    // Blit g_buffer depth buffer to frame_buffer to be used for forward 
+    // rendering pass:
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
+    glReadBuffer(GL_DEPTH_ATTACHMENT);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
     /*if (outline_selection && outline_target)
     {
