@@ -213,7 +213,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
-    App->navigation->SetNavmesh(navmesh_id);
     loaded = true;
 }
 
