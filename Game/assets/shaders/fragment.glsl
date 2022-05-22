@@ -215,8 +215,25 @@ mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
 	return mat3(tangent, bitangent, normal);
 }
 
+// TODO: Be sure that this is correct.
+vec3 CalculateNormal(uint normal_flag, vec3 texture_normal_coords, vec3 fragment_normal_coords, vec3 fragment_tangent)
+{
+    vec3 normal = normalize(fragment_normal_coords);
+
+    if (normal_flag > 0)
+    {
+        mat3 tbn = CreateTangentSpace(normal, normalize(fragment_tangent));
+        vec3 texture_normal = normalize(texture_normal_coords.xyz);
+	    vec3 fragment_normal = tbn * (texture_normal * 2.0 - 1.0);
+	    normal = normalize(fragment_normal);
+    }
+
+    return normal;
+}
+
 void main()
 {
+    // TODO: Use CalculateNormal instead after moving it to a single file.
     vec3 norm = normalize(fragment.normal);
     if (material.normal_flag > 0)
     {
@@ -225,8 +242,6 @@ void main()
 	    norm = normalize(fragmentNormal);
     }
 
-    vec3 view_dir = normalize(camera.pos - fragment.pos);
-    
     vec4 diffuse_color = material.diffuse_color;
     if (material.diffuse_flag > 0)
     {
@@ -254,6 +269,8 @@ void main()
         f0 = colorSpecular.rgb;
         smoothness = material.smoothness * ((material.smoothness_alpha * colorSpecular.a) + ((1 - material.smoothness_alpha)* diffuse_color.a ));
     }
+
+    vec3 view_dir = normalize(camera.pos - fragment.pos);
     
     vec3 hdr_color = vec3(0.0);
     hdr_color += DirectionalPBR(norm, view_dir, lights.directional, Cd, f0, smoothness);
