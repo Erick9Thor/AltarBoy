@@ -158,23 +158,23 @@ void Hachiko::ResourceMaterial::SetTexture(ResourceTexture* res, ResourceTexture
     switch (type)
     {
     case ResourceTexture::Type::DIFFUSE:
-        App->resources->ReleaseResource(diffuse);
+        //App->resources->ReleaseResource(diffuse);
         diffuse = res;
         break;
     case ResourceTexture::Type::SPECULAR:
-        App->resources->ReleaseResource(specular);
+        //App->resources->ReleaseResource(specular);
         specular = res;
         break;
     case ResourceTexture::Type::NORMALS:
-        App->resources->ReleaseResource(normal);
+        //App->resources->ReleaseResource(normal);
         normal = res;
         break;
     case ResourceTexture::Type::METALNESS:
-        App->resources->ReleaseResource(metalness);
+        //App->resources->ReleaseResource(metalness);
         metalness = res;
         break;
     case ResourceTexture::Type::EMISSIVE:
-        App->resources->ReleaseResource(emissive);
+        //App->resources->ReleaseResource(emissive);
         emissive = res;
         break;
     }

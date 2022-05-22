@@ -135,7 +135,7 @@ Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(TextureCube& cube)
         // iluFlipImage();
         // Take advantage of opengl enum with index
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                     0, cube_face->bpp, cube_face->width, cube_face->height,
+                     0, cube_face->format, cube_face->width, cube_face->height,//0, cube_face->bpp, cube_face->width, cube_face->height,
                      0, cube_face->format, GL_UNSIGNED_BYTE, cube_face->data);
     }
 
@@ -144,6 +144,8 @@ Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(TextureCube& cube)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
     return cube;
 }

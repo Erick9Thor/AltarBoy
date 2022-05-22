@@ -81,7 +81,7 @@ layout(std140, binding = 2) uniform Lights
 } lights;
 
 // Texture Batching
-layout(binding = 1) uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
+uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
 
 struct TexAddress {
     int texIndex;
@@ -261,14 +261,14 @@ void main()
     if (material.normal_flag > 0)
     {
         mat3 tbn = CreateTangentSpace(normalize(fragment.normal), normalize(fragment.tangent));
-	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normal_map.texIndex+1], vec3(fragment.tex_coord, material.normal_map.layerIndex)).xyz * 2.0 - 1.0);
+	    vec3 fragmentNormal = tbn * (texture(allMyTextures[material.normal_map.texIndex], vec3(fragment.tex_coord, material.normal_map.layerIndex)).xyz * 2.0 - 1.0);
 	    norm = normalize(fragmentNormal);
     }
 
     vec4 diffuse_color = material.diffuse_color;
     if (material.diffuse_flag > 0)
     {
-        diffuse_color = pow(texture(allMyTextures[material.diffuse_map.texIndex+1], vec3(fragment.tex_coord, material.diffuse_map.layerIndex)), vec4(2.2, 2.2, 2.2, 1.0));
+        diffuse_color = pow(texture(allMyTextures[material.diffuse_map.texIndex], vec3(fragment.tex_coord, material.diffuse_map.layerIndex)), vec4(2.2, 2.2, 2.2, 1.0));
     }
 
     vec3 f0;
@@ -277,7 +277,7 @@ void main()
 
     if(material.is_metallic > 0)
     {
-        vec4 texture_metal_color = texture(allMyTextures[material.metallic_map.texIndex+1], vec3(fragment.tex_coord, material.metallic_map.layerIndex));
+        vec4 texture_metal_color = texture(allMyTextures[material.metallic_map.texIndex], vec3(fragment.tex_coord, material.metallic_map.layerIndex));
         float metalnessMask = material.metallic_flag * texture_metal_color.r + (1 - material.metallic_flag) * material.metalness_value;
         Cd = diffuse_color.rgb * (1 - metalnessMask);
         f0 = vec3(0.04) * (1 - metalnessMask) + diffuse_color.rgb * metalnessMask;
@@ -286,7 +286,7 @@ void main()
     else 
     {
         Cd = diffuse_color.rgb;
-        vec4 texture_spec_color = texture(allMyTextures[material.specular_map.texIndex+1], vec3(fragment.tex_coord, material.specular_map.layerIndex));
+        vec4 texture_spec_color = texture(allMyTextures[material.specular_map.texIndex], vec3(fragment.tex_coord, material.specular_map.layerIndex));
         // If the flag is true (1) it will paint texture color, otherwise specular color
         vec4 colorSpecular = (material.specular_flag * texture_spec_color) + ((1 - material.specular_flag) * material.specular_color);
         f0 = colorSpecular.rgb;
@@ -312,7 +312,7 @@ void main()
     vec3 emissive = material.emissive_color.rgb;
     if(material.emissive_flag != 0)
     {
-        emissive *= texture(allMyTextures[material.emissive_map.texIndex+1], vec3(fragment.tex_coord, material.emissive_map.layerIndex)).rgb;
+        emissive *= texture(allMyTextures[material.emissive_map.texIndex], vec3(fragment.tex_coord, material.emissive_map.layerIndex)).rgb;
     }
 
     hdr_color += emissive * material.emissive_color.a;

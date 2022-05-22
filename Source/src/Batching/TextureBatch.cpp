@@ -131,9 +131,6 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
                 resource.second->texIndex = i;
                 resource.second->layerIndex = depth;
 
-                std::string extension = resource.first->path.substr(resource.first->path.find_last_of(".") + 1);
-                unsigned imgId = ModuleTexture::LoadImg(resource.first->path.c_str(), extension != "tif");
-
                 glTexSubImage3D(GL_TEXTURE_2D_ARRAY, // target
                                 0, // level
                                 0, // xoffset
@@ -144,10 +141,9 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
                                 1, // depth
                                 texture_arrays[i]->format, // format
                                 GL_UNSIGNED_BYTE, // type
-                                ModuleTexture::GetData() // texture_data
+                                resource.first->data // texture_data
                 );
 
-                ModuleTexture::DeleteImg(imgId);
                 ++depth;
             }
         }
@@ -280,14 +276,16 @@ void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned compo
 
 void Hachiko::TextureBatch::BindTextures()
 {
+    const std::vector<int> texture_slots = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+    App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
+
     //glEnable(GL_TEXTURE_2D_ARRAY);
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
-        glUniform1i(1 + i, 1 + i);
-        glActiveTexture(GL_TEXTURE1 + i);
+        //glUniform1i(1 + i, 1 + i);
         //glEnable(GL_TEXTURE_2D_ARRAY);
+        glActiveTexture(GL_TEXTURE1 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
-        //glDisable(GL_TEXTURE_2D_ARRAY);
     }
 }
 
