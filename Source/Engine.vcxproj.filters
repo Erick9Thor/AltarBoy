@@ -576,6 +576,10 @@
     <ClCompile Include="src\components\ComponentAudioSource.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2278,6 +2282,12 @@
     <ClInclude Include="src\components\ComponentAudioSource.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Include\imgui_node_editor.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2862,5 +2872,8 @@
     <None Include="vendors\glm\gtx\wrap.inl">
       <Filter>Vendors\Glm</Filter>
     </None>
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.inl" />
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.inl" />
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl" />
   </ItemGroup>
 </Project>

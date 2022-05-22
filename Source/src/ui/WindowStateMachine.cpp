@@ -2,7 +2,10 @@
 #include "WindowStateMachine.h"
 
 #include "imnodes.h"
+#include "imgui_node_editor.h"
 #include "modules/ModuleEditor.h"
+
+using namespace ax;
 
 Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor - Press Left Alt + H for help", false)
 {
@@ -14,6 +17,8 @@ Hachiko::WindowStateMachine::WindowStateMachine(std::string name) : Window(std::
 
 Hachiko::WindowStateMachine::~WindowStateMachine()
 {
+    delete sm;
+    delete context;
     //delete trigger;
 }
 
@@ -26,6 +31,7 @@ void Hachiko::WindowStateMachine::Update()
         return;
     }
 
+    /*
     ImNodes::BeginNodeEditor();
 
     unsigned int id = 0;
@@ -78,13 +84,51 @@ void Hachiko::WindowStateMachine::Update()
     showAddNodePopup();
 
     ImNodes::EndNodeEditor();
+    
 
     showEditNodePopup();
 
     addLink();
     showDeleteLinkPopup();
+    */
+
+    context = NodeEditor::CreateEditor();
+    NodeEditor::SetCurrentEditor(context);
+    NodeEditor::Begin("State Machine Editor", ImVec2(0.0, 0.0f));
+
+    NodeEditor::BeginNode(1);
+    ImGui::TextColored(ImVec4(255, 255, 0, 255), "Default state");
+    ImVec2 size = NodeEditor::GetNodeSize(1);
+
+
+    // In Pin
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 8.0f);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 8.0f);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinRadius, 10.0f);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
+    NodeEditor::BeginPin(2, NodeEditor::PinKind::Input);
+    ImGui::Text("In");
+    NodeEditor::EndPin();
+    NodeEditor::PopStyleVar(4);
+
+    // Out Pin
+    ImGui::SameLine(size.x - 40);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 0.0f);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 0.0f);
+    NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
+    NodeEditor::BeginPin(3, NodeEditor::PinKind::Output);
+    ImGui::Text("Out");
+    NodeEditor::EndPin();
+
+    NodeEditor::EndNode();
+
+    NodeEditor::PopStyleVar(2);
 
     showHelp();
+
+    NodeEditor::End();
+    NodeEditor::SetCurrentEditor(nullptr);
+    NodeEditor::DestroyEditor(context);
 
     ImGui::End();
 }

@@ -81,7 +81,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);LOGGING_SUPPORT_DISABLED</PreprocessorDefinitions>
       <ConformanceMode>Default</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash;$(ProjectDir)vendors\imnodes-0.5</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)vendors\SDL\include;$(ProjectDir)vendors\glew-2.1.0\include\GL;$(ProjectDir)vendors\imgui;$(ProjectDir)vendors\MathGeoLib;$(ProjectDir)vendors\DevIL\include\IL;$(ProjectDir)vendors\DebugDraw;$(ProjectDir)vendors\assimp\include;$(ProjectDir)vendors\ImGuiFileDialog-0.6.3;$(ProjectDir)vendors\ImGuizmo;$(ProjectDir)vendors\rapidjson\include;$(ProjectDir)vendors\optick\include;$(ProjectDir)vendors\PhysicsFS;$(ProjectDir)vendors\yaml-cpp\include;$(ProjectDir)vendors\freetype\include;$(ProjectDir)vendors\GLFont;$(ProjectDir)vendors\freetype\include\freetype;$(ProjectDir)vendors\recast\include\Recast;$(ProjectDir)vendors\recast\include\Detour;$(ProjectDir)vendors\recast\include;$(ProjectDir)vendors\recast\include\DetourCrowd;$(ProjectDir)vendors\recast\include\DetourTileCache;$(ProjectDir)vendors\wwise\include;$(ProjectDir)vendors\wwise\include\AK\Tools\Win32;$(ProjectDir)vendors\wwise\include\AK;$(ProjectDir)vendors\wwise\include\AK\SoundEngine\IO;$(ProjectDir)vendors\xxhash;$(ProjectDir)vendors\imnodes-0.5;$(ProjectDir)vendors\imgui-node-editor-0.9\NodeEditor\Include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>core/hepch.h</PrecompiledHeaderFile>
@@ -210,6 +210,10 @@
     <ClCompile Include="vendors\GLFont\FTLabel.cpp" />
     <ClCompile Include="vendors\GLFont\GLFont.cpp" />
     <ClCompile Include="vendors\glm\detail\glm.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp" />
     <ClCompile Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -1012,6 +1016,12 @@
     <ClInclude Include="vendors\glm\vector_relational.hpp" />
     <ClInclude Include="src\utils\WindowsFileUtil.h" />
     <ClInclude Include="src\importers\TextureImporter.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Include\imgui_node_editor.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\dirent\dirent.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
@@ -1365,6 +1375,9 @@
     <None Include="vendors\glm\gtx\vector_angle.inl" />
     <None Include="vendors\glm\gtx\vector_query.inl" />
     <None Include="vendors\glm\gtx\wrap.inl" />
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.inl" />
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.inl" />
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl" />
     <None Include="vendors\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="vendors\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

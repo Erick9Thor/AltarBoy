@@ -17,10 +17,13 @@
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
     controller = new AnimationController();
+
+    windowStateMachine = new WindowStateMachine(game_object->name); // TODO: Revise
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
+    //delete windowStateMachine;
     delete state_machine;
     delete controller;
     animations.clear();
@@ -252,8 +255,11 @@ void Hachiko::ComponentAnimation::DrawGui()
 
             if (state_machine->clips.size() > 0)
             {
-                windowStateMachine = new WindowStateMachine(game_object->name);
+                ; // TODO: Revise
             }
+            
+            windowStateMachine->SetStateMachine(*state_machine); // Add a breakpoint in this line to make it work properly // TODO: Revise
+            windowStateMachine->Update(); // TODO: Revise
 
             char name[128];
             strcpy_s(name, state_machine->state_m_name.c_str());

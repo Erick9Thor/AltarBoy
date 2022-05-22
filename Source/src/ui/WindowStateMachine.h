@@ -41,6 +41,7 @@ namespace Hachiko
         bool deleteLink = false;
 
         ResourceStateMachine* sm = nullptr;
-        ImNodesContext* context = nullptr;
+        ImNodesContext* context0 = nullptr;
+        ax::NodeEditor::EditorContext* context = nullptr;
     };
 } // namespace Hachiko
