@@ -236,4 +236,6 @@ void main()
     {
         fragment_color = vec4(fragment_position, 1.0f);
     }
+
+    // TODO: Add emissive.
 }

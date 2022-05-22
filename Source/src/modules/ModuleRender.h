@@ -48,6 +48,7 @@ namespace Hachiko
         }
 
         void OptionsMenu();
+        void DeferredOptions();
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);

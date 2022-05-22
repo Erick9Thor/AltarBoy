@@ -449,15 +449,59 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
     ImGui::Checkbox("Skybox", &draw_skybox);
     ImGui::Checkbox("Navmesh", &draw_navmesh);
-
-    // TODO: Delete this if not needed:
-    ImGui::InputInt("Deferred Mode", &deferred_mode);
-    deferred_mode = (deferred_mode + 6) % 6;
+    
+    DeferredOptions();
 
     if (!draw_skybox)
     {
         ImGuiUtils::CompactColorPicker("Background Color", App->editor->scene_background.ptr());
     }
+}
+
+void Hachiko::ModuleRender::DeferredOptions() 
+{
+    ImGui::NewLine();
+
+    ImGui::Text("Deferred Rendering Options");
+    ImGui::Separator();
+
+    ImGui::PushID("Deferred Options");
+
+    if (ImGui::RadioButton("Lighting Pass", deferred_mode == 0))
+    {
+        deferred_mode = 0;
+    }
+
+    if (ImGui::RadioButton("Diffuse", deferred_mode == 1))
+    {
+        deferred_mode = 1;
+    }
+
+    if (ImGui::RadioButton("Specular", deferred_mode == 2))
+    {
+        deferred_mode = 2;
+    }
+    
+    if (ImGui::RadioButton("Smoothness", deferred_mode == 3))
+    {
+        deferred_mode = 3;
+    }
+    
+    if (ImGui::RadioButton("Normal", deferred_mode == 4))
+    {
+        deferred_mode = 4;
+    }
+
+    if (ImGui::RadioButton("Position", deferred_mode == 5))
+    {
+        deferred_mode = 5;
+    }
+
+    // TODO: Add emissive.
+
+    ImGui::NewLine();
+
+    ImGui::PopID();
 }
 
 void Hachiko::ModuleRender::PerformanceMenu()
