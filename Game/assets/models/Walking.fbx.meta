@@ -3,14 +3,14 @@ model_name: Walking
 meshes:
   - 18241797358392418392
 materials:
-  - 15737844490852114836
+  - 12924252210591909690
 animations:
   - 12602930324647617019
 prefab_id: 14896501200889361382
 resources:
   - resource_id: 18241797358392418392
     resource_type: 3
-  - resource_id: 15737844490852114836
+  - resource_id: 12924252210591909690
     resource_type: 1
   - resource_id: 12602930324647617019
     resource_type: 7

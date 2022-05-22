@@ -3,14 +3,14 @@ model_name: Melee_slash
 meshes:
   - 12083743106267372984
 materials:
-  - 15737844490852114836
+  - 12924252210591909690
 animations:
   - 13905665799612516323
 prefab_id: 4952275707383826671
 resources:
   - resource_id: 12083743106267372984
     resource_type: 3
-  - resource_id: 15737844490852114836
+  - resource_id: 12924252210591909690
     resource_type: 1
   - resource_id: 13905665799612516323
     resource_type: 7

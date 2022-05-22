@@ -81,7 +81,7 @@ private:
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
 
-	SERIALIZE_FIELD(PlayerCamera*, _camera);
+	SERIALIZE_FIELD(GameObject*, _camera);
 
 	float attack_current_cd = 0.0f;
 

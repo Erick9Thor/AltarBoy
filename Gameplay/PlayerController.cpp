@@ -209,13 +209,14 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	//loop in enemies hit
 	for (Hachiko::GameObject* enemy : enemies_hit)
 	{
-		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power);
+		float3 relative_dir = enemy->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 	}
 	if (enemies_hit.size() > 0)
 	{
-		//_camera->Shake(1.0f, 2.5f);
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.1f);
 	}
-	_camera->Shake(2.0f, 10.5f);
+	
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
@@ -229,7 +230,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-		enemy->ReceiveDamage(_stats._attack_power);
+		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 	}
 }
 

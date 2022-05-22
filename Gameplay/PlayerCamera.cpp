@@ -10,7 +10,6 @@ Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
 	, _relative_position_to_player(math::float3::zero)
 	, _player(nullptr)
-	, _camera(nullptr)
 	, _follow_delay(0.0f)
 {
 }
@@ -25,6 +24,8 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	_player_ctrl = _player->GetComponent<PlayerController>();
 	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
+	// Seed the rand()
+	srand(static_cast <unsigned> (time(0)));
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
@@ -65,7 +66,11 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 	current_position = math::float3::Lerp(current_position, final_position,
 		delayed_time);
 
-	transform->SetGlobalPosition(current_position);
+	float3 shake_offset = float3::zero;
+
+	shake_offset = Shake();
+
+	transform->SetGlobalPosition(current_position + shake_offset);
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
@@ -117,24 +122,29 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 
 void Hachiko::Scripting::PlayerCamera::Shake(float time, float intensity)
 {
-	std::thread shake_thread(&PlayerCamera::ShakeThread, this, time, intensity, _camera);
-	shake_thread.detach();
+	shake_time = time;
+	shake_elapsed = 0.0f;
+	shake_intensity = intensity;
+	shake_magnitude = 1.0f;
 }
 
-void Hachiko::Scripting::PlayerCamera::ShakeThread(float time, float intesity, GameObject* camera)
+float3 Hachiko::Scripting::PlayerCamera::Shake()
 {
-	float elapsed = 0.0f;
-	float currentMagnitude = 1.0f;
-
-	while (elapsed < time)
+	if (shake_elapsed < shake_time)
 	{
-		float x = (rand() - 0.5f) * currentMagnitude * intesity;
-		float y = (rand() - 0.5f) * currentMagnitude * intesity;
+		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float x = (r - 0.5f) * shake_magnitude * shake_intensity;
+		r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float z = (r - 0.5f) * shake_magnitude * shake_intensity;
 
-		camera->GetTransform()->SetLocalPosition(float3(x, y, 0));
-		elapsed += Time::DeltaTime();
-		currentMagnitude = (1 - (elapsed / time)) * (1 - (elapsed / time));
+		shake_elapsed += Time::DeltaTime();
+		shake_magnitude = (1 - (shake_elapsed / shake_time)) * (1 - (shake_elapsed / shake_time));
+		return float3(x, 0, z);
+	} 
+	else
+	{
+		shake_time = 0.0f;
+		shake_elapsed = 0.0f;
+		return float3::zero;
 	}
-
-	camera->GetTransform()->SetLocalPosition(float3::zero);
 }

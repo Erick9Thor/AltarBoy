@@ -126,6 +126,15 @@ void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std
 			_spawn_pos = std::any_cast<float3>(_spawn_pos_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_player") != serialized_fields.end())
+	{
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
+		{
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -139,6 +148,8 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_attack_range"] = SerializedField(std::string("_attack_range"), std::make_any<int>(_attack_range), std::string("int"));
 
 	serialized_fields["_spawn_pos"] = SerializedField(std::string("_spawn_pos"), std::make_any<float3>(_spawn_pos), std::string("float3"));
+
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::MainMenuManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -645,9 +656,9 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 	if(serialized_fields.find("_camera") != serialized_fields.end())
 	{
 		const SerializedField& _camera_sf = serialized_fields["_camera"];
-		if (_camera_sf.type_name == "PlayerCamera*")
+		if (_camera_sf.type_name == "GameObject*")
 		{
-			_camera = std::any_cast<PlayerCamera*>(_camera_sf.copy);
+			_camera = std::any_cast<GameObject*>(_camera_sf.copy);
 		}
 	}
 
@@ -715,7 +726,7 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_rotation_target"] = SerializedField(std::string("_rotation_target"), std::make_any<math::Quat>(_rotation_target), std::string("math::Quat"));
 
-	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<PlayerCamera*>(_camera), std::string("PlayerCamera*"));
+	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<GameObject*>(_camera), std::string("GameObject*"));
 
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<PlayerState>(_state), std::string("PlayerState"));
 }

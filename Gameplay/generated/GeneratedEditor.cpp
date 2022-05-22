@@ -27,6 +27,7 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("_aggro_range", _aggro_range);
 	Editor::Show("_attack_range", _attack_range);
 	Editor::Show("_spawn_pos", _spawn_pos);
+	Editor::Show("_player", _player);
 }
 
 void Hachiko::Scripting::MainMenuManager::OnEditor()
@@ -87,7 +88,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("_rotation_duration", _rotation_duration);
 	Editor::Show("_rotation_start", _rotation_start);
 	Editor::Show("_rotation_target", _rotation_target);
-	Editor::Show<PlayerCamera>("_camera", "PlayerCamera*", _camera);
+	Editor::Show("_camera", _camera);
 }
 
 void Hachiko::Scripting::PlayerSoundManager::OnEditor()

@@ -10,7 +10,7 @@ component:
   - type: 14
     enabled: true
     animations:
-      - 4720233982978660920
+      - 15120133045193763383
 child:
   - name: Zombunny
     enabled: true
@@ -22,13 +22,13 @@ child:
         scale: [1, 1, 1]
       - type: 2
         enabled: true
-        mesh_id: 4657792022921634311
+        mesh_id: 3807674282780176471
         navigable: false
         visible: true
         material_id: 750264189281571905
       - type: 2
         enabled: true
-        mesh_id: 282215514867166725
+        mesh_id: 11286526276065641145
         navigable: false
         visible: true
         material_id: 9591045720590550693

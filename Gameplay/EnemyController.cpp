@@ -69,9 +69,10 @@ Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 	return _stats;
 }
 
-void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage)
+void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage, float3 direction)
 {
 	_stats.ReceiveDamage(damage);
+	transform->SetGlobalPosition(transform->GetGlobalPosition() - direction * 5);
 }
 
 void Hachiko::Scripting::EnemyController::Attack()

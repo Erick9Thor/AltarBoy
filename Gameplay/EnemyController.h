@@ -23,7 +23,7 @@ namespace Hachiko
             void OnUpdate() override;
 
             Stats& GetStats();
-            void ReceiveDamage(int damage);
+            void ReceiveDamage(int damage, math::float3 direction);
 
         private:
             void Attack();

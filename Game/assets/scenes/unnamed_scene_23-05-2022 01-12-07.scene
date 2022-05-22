@@ -1,0 +1,264 @@
+scene_name: unnamed_scene_23-05-2022 01-12-07
+navmesh_id: 6067372042166806657
+skybox:
+  right_cube_id: 0
+  left_cube_id: 0
+  bottom_cube_id: 0
+  top_cube_id: 0
+  center_cube_id: 0
+  back_cube_id: 0
+root_id: 6189640754174881522
+child:
+  - id: 14768641887594033600
+    name: Main Camera
+    enabled: true
+    component:
+      - id: 9091390374714086911
+        type: 1
+        enabled: true
+        position: [0, 17.5, 14.3000002]
+        rotation: [-3.87724768e-08, 0.887010932, -0.46174866, -2.01836627e-08]
+        scale: [1.00000095, 1.00000024, 1.0000006]
+      - id: 5889823181790414616
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 17.5, 14.3000002]
+          front: [1.77635786e-14, -0.819152713, -0.573577166]
+          up: [-8.7422805e-08, 0.57357645, -0.819152415]
+          type: 3
+          pinned_camera: [0, 0, 0]
+      - id: 7381371340780713814
+        type: 15
+        enabled: true
+        class_name: PlayerCamera
+        "'_relative_position_to_player@math::float3'": [0, 0, 0]
+        "'_player@GameObject*'": 14818382519511671753
+        "'_follow_delay@float'": 0
+  - id: 5493006972239335133
+    name: cube
+    enabled: true
+    component:
+      - id: 13326688472028024697
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [28.3478603, 1, 31.9514675]
+    child:
+      - id: 4172032297148443670
+        name: Box001
+        enabled: true
+        component:
+          - id: 6079942198549039258
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999225, 0.999999225]
+          - id: 4106271598831486558
+            type: 2
+            enabled: true
+            mesh_id: 1654487118907036717
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+  - id: 10979748054317581080
+    name: DirLight
+    enabled: true
+    component:
+      - id: 12593619237314707674
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0.798701465, 0, 0, 0.601727486]
+        scale: [1, 1.00000167, 1.00000167]
+      - id: 6763930941921172971
+        type: 5
+        enabled: true
+        light_type: 5
+        color: [1, 1, 1, 1]
+        intensity: 1
+        draw_direction: false
+  - id: 14818382519511671753
+    name: PlayerC
+    enabled: true
+    component:
+      - id: 16730668904765673779
+        type: 1
+        enabled: true
+        position: [0, 1.65130103, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 4392243296870301746
+        type: 15
+        enabled: true
+        class_name: PlayerController
+        "'_movement_speed@float'": 0
+        "'_dash_indicator@GameObject*'": 11958795440563041269
+        "'_goal@GameObject*'": 11250741770684060965
+        "'_dash_duration@float'": 0
+        "'_dash_distance@float'": 0
+        "'_dash_progress@float'": 0
+        "'_dash_cooldown@float'": 0
+        "'_dash_timer@float'": 0
+        "'_dash_count@int'": 0
+        "'_max_dash_count@int'": 0
+        "'_is_dashing@bool'": false
+        "'_has_cooldown@bool'": false
+        "'_is_falling@bool'": false
+        "'_dash_start@math::float3'": [0, 0, 0]
+        "'_dash_direction@math::float3'": [0, 0, 0]
+        "'_raycast_min_range@float'": 0.00100000005
+        "'_raycast_max_range@float'": 15
+        "'_attack_radius@float'": 0
+        "'_attack_cooldown@float'": 0
+        "'_should_rotate@bool'": false
+        "'_rotation_progress@float'": 0
+        "'_rotation_duration@float'": 0
+        "'_rotation_start@math::Quat'": [0, 0, 0, 1]
+        "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+        "'_camera@GameObject*'": 14768641887594033600
+    child:
+      - id: 2536470458380001076
+        name: Legs_low
+        enabled: true
+        component:
+          - id: 10839270751541882421
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [2.00019312, 2.00019002, 2.00019002]
+          - id: 2525095089402999567
+            type: 2
+            enabled: true
+            mesh_id: 8423440843867290643
+            navigable: false
+            visible: true
+            material_id: 15290504283960228232
+          - id: 4512056555594067671
+            type: 2
+            enabled: true
+            mesh_id: 1119675387283013084
+            navigable: false
+            visible: true
+            material_id: 16986423740163290191
+          - id: 11520372546179377460
+            type: 2
+            enabled: true
+            mesh_id: 11322888504701892458
+            navigable: false
+            visible: true
+            material_id: 5808338921622117034
+          - id: 10737812693273964160
+            type: 2
+            enabled: true
+            mesh_id: 13501166671557405458
+            navigable: false
+            visible: true
+            material_id: 15290504283960228232
+          - id: 14746388746568449413
+            type: 2
+            enabled: true
+            mesh_id: 9276696853152820699
+            navigable: false
+            visible: true
+            material_id: 15290504283960228232
+          - id: 16735582558812415752
+            type: 2
+            enabled: true
+            mesh_id: 4098046208273859946
+            navigable: false
+            visible: true
+            material_id: 7726662488496225977
+          - id: 11723486078092829489
+            type: 2
+            enabled: true
+            mesh_id: 12011194831651727356
+            navigable: false
+            visible: true
+            material_id: 5808338921622117034
+          - id: 9130067211289648201
+            type: 2
+            enabled: true
+            mesh_id: 10820329579185120070
+            navigable: false
+            visible: true
+            material_id: 15290504283960228232
+      - id: 11958795440563041269
+        name: DashIndicator
+        enabled: true
+        component:
+          - id: 9022041094797593234
+            type: 1
+            enabled: true
+            position: [0, -1.65130103, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+  - id: 4244109116820812148
+    name: Enemies
+    enabled: true
+    component:
+      - id: 6197422228064075161
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 3777721528073270474
+        name: sphere
+        enabled: true
+        component:
+          - id: 1777303704541104493
+            type: 1
+            enabled: true
+            position: [0, 0.775403261, -14.5390348]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 10591730362983818841
+            name: Sphere001
+            enabled: true
+            component:
+              - id: 15392302624190111912
+                type: 1
+                enabled: true
+                position: [0, 0.22459656, 0]
+                rotation: [-0.70710665, 0, 0, 0.707106888]
+                scale: [1, 0.999901593, 0.999901593]
+              - id: 5293905961827522689
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 2076595662150033348
+              - id: 1103736290882939575
+                type: 17
+                enabled: true
+                max_speed: 5
+                max_acceleration: 2
+                avoid_obstacles: false
+              - id: 9449761326978835232
+                type: 15
+                enabled: true
+                class_name: EnemyController
+                "'_aggro_range@int'": 4
+                "'_attack_range@int'": 1
+                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_player@GameObject*'": 14818382519511671753
+  - id: 11250741770684060965
+    name: Goal
+    enabled: true
+    component:
+      - id: 13772124049174230604
+        type: 1
+        enabled: true
+        position: [-39.2236595, 3.05175781e-05, -2.8910706]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
