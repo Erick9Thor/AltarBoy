@@ -29,7 +29,6 @@ Hachiko::Scene::Scene() :
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
-    //App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()

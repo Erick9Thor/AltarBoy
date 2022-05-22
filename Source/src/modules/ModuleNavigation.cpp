@@ -32,7 +32,7 @@ bool Hachiko::ModuleNavigation::CleanUp()
     return true;
 }
 
-Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
+Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmeshResource(Scene* scene)
 {
     HE_LOG("Building Navmesh");
 
@@ -126,6 +126,19 @@ void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
     }
 }
 
+void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* new_reosurce)
+{
+    App->resources->ReleaseResource(scene_navmesh);
+    scene_navmesh = new_reosurce;
+}
+
+void Hachiko::ModuleNavigation::RebuildCurrentNavmesh(Scene* scene)
+{
+    // Builds navmesh without getting it from library
+    ResourceNavMesh* resource_navmesh = App->navigation->BuildNavmeshResource(scene);
+    App->navigation->SetNavmesh(resource_navmesh);
+}
+
 void Hachiko::ModuleNavigation::DebugDraw()
 {
     if (scene_navmesh)
@@ -173,7 +186,7 @@ void Hachiko::ModuleNavigation::DrawOptionsGui()
     ImGui::Text("Navmesh Editor");       
     if (ImGui::Button("Rebuild Navmesh"))
     {
-        App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
+        RebuildCurrentNavmesh(App->scene_manager->GetActiveScene());
     }
         
     if (scene_navmesh)

@@ -243,7 +243,7 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
         // This removes current navmesh
         GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
         camera_go->CreateComponent(Component::Type::CAMERA);
-        App->navigation->SetNavmesh(0);
+        App->navigation->SetNavmesh(nullptr);
     }
 
     ChangeMainScene(new_scene);
