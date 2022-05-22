@@ -308,8 +308,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     
     //glStencilMask(0XFF);
 
-    // ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
-
     //glEnable(GL_BLEND);
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -339,30 +337,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
             outline_target = &target;
         }
     }
-    
+
     Program::Deactivate();
 
-
-   //glActiveTexture(GL_TEXTURE0);
-   //glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
    
-   /* glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, g_buffer_albedo_specular);*/
-
-    /*
-    uniform sampler2D g_diffuse;
-    uniform sampler2D g_specular_smoothness;
-    uniform sampler2D g_normal;
-    uniform sampler2D g_position;
-    */
-
-    /*
-    GLint half_width = (GLint)(fb_width / 2.0f);
-    GLint half_height = (GLint)(fb_height / 2.0f);
-    */
-
     // Light Pass:
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
