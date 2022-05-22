@@ -28,8 +28,12 @@ namespace Hachiko
         dtCrowd* GetCrowd() const;
         dtNavMeshQuery* GetNavQuery() const;
 
+        
+        void RebuildCurrentNavmesh(Scene* scene);
         void SetNavmesh(UID uid);
-        ResourceNavMesh* BuildNavmesh(Scene* scene);
+        // Useful from the navmesh does not come from library (rebuilds on unsaved scene)
+        void SetNavmesh(ResourceNavMesh* new_reosurce); 
+        ResourceNavMesh* BuildNavmeshResource(Scene* scene);
 
         void DebugDraw();
         void DrawOptionsGui();
