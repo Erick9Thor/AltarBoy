@@ -249,7 +249,14 @@ void Hachiko::ComponentAnimation::DrawGui()
 
         if (state_machine != nullptr)
         {
+
+            if (state_machine->clips.size() > 0)
+            {
+                windowStateMachine = new WindowStateMachine(game_object->name);
+            }
+
             char name[128];
+            strcpy_s(name, state_machine->state_m_name.c_str());
 
             if (ImGui::InputText("Resource name", name, 128))
             {
@@ -281,14 +288,45 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                 ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
                 ImGui::SameLine();
-                if (ImGui::ArrowButton("resource", ImGuiDir_Right))
+                
+                // CLIP selector
+
+                const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
+                if (ImGui::Button("Select animation"))
                 {
-                    ImGui::OpenPopup("Select");
+                    ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                            "Select Animation",
+                                                            ".fbx",
+                                                            "./assets/models/",
+                                                            1,
+                                                            nullptr,
+                                                            ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
                 }
 
-                /*UID new_res = OpenResourceModal(Resource::animation, "Select");
+                if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+                {
+                    if (ImGuiFileDialog::Instance()->IsOk())
+                    {
+                        std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
+                        YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
 
-                if (new_res > 0)
+                        for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+                        {
+                            Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+                            if (type == Resource::Type::ANIMATION)
+                            {
+                                UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+                                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
+                                if (res != nullptr)
+                                {
+                                    state_machine->AddClip("None", res->GetID(), true);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                /*if (new_res > 0)
                 {
                     state_machine->SetClipRes(i, new_res);
                     state_machine->Save();
