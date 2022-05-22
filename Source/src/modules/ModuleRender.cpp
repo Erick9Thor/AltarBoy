@@ -384,7 +384,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glActiveTexture(GL_TEXTURE3);
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
     
-    
     program->BindUniformInts("mode", 1, &deferred_mode);
     
     RenderDeferredQuad();
@@ -453,7 +452,7 @@ void Hachiko::ModuleRender::OptionsMenu()
 
     // TODO: Delete this if not needed:
     ImGui::InputInt("Deferred Mode", &deferred_mode);
-    deferred_mode = deferred_mode % 5;
+    deferred_mode = (deferred_mode + 6) % 6;
 
     if (!draw_skybox)
     {
