@@ -15,7 +15,8 @@ namespace Hachiko
         VERTICAL
     };
 
-    enum class RenderMode
+    // TODO: Send this to ComponentMeshRenderer or ResourceMesh
+    enum class BillboardRenderMode
     {
         B_ADDITIVE,
         B_TRANSPARENT
@@ -25,12 +26,15 @@ namespace Hachiko
     {
     public:
         ComponentBillboard(GameObject* container, UID id = 0);
-        ~ComponentBillboard() override = default;
-
-        void Save(YAML::Node& node) const override {};
-        void Load(const YAML::Node& node) override {};
+        ~ComponentBillboard() override;
         
-        void DrawGui() override {};
+        void Update() override;
+
+        void Save(YAML::Node& node) const override;
+        void Load(const YAML::Node& node) override;
+        
+        void DrawGui() override;
+        void Draw(ComponentCamera* camera, Program* program) override;
 
     private:
         float4x4 modelStretch = float4x4::identity;
@@ -50,16 +54,17 @@ namespace Hachiko
 
         // Render
         BillboardType billboardType = BillboardType::NORMAL;
-        RenderMode renderMode = RenderMode::B_ADDITIVE;
+        BillboardRenderMode renderMode = BillboardRenderMode::B_ADDITIVE;
         UID textureID = 0; // ID of the image
         float3 textureIntensity = {1.0f, 1.0f, 1.0f};
+        ResourceTexture* texture = nullptr;
 
         bool isHorizontalOrientation = false;
         bool flipTexture[2] = {false, false};
 
         // Texture Sheet Animation
-        unsigned Xtiles = 1;
-        unsigned Ytiles = 1;
+        int Xtiles = 1;
+        int Ytiles = 1;
         float animationCycles = 1.0f;
         bool animationLoop = true;
 
@@ -70,5 +75,15 @@ namespace Hachiko
         ImGradient* gradient = nullptr;
         ImGradientMark* draggingGradient = nullptr;
         ImGradientMark* selectedGradient = nullptr;
+
+        // DEBUG
+        unsigned int vao;
+        unsigned int vbo;
+        unsigned int ebo;
+        void CreateSquare();
+
+
+        void AddTexture();
+        void RemoveTexture();
     };
 }

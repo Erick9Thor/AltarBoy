@@ -190,6 +190,12 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             ImGui::CloseCurrentPopup();
         }
 
+        if (ImGui::MenuItem("Billboard"))
+        {
+            game_object->CreateComponent(Component::Type::BILLBOARD);
+            ImGui::CloseCurrentPopup();
+        }
+
         ImGui::EndPopup();
     }
 

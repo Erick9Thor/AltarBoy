@@ -222,5 +222,9 @@
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
 
+// Component Billboard
+
+#define BILLBOARD_TEXTURE_ID "texture_id"
+
 // Script
 #define SCRIPT_NAME "class_name"

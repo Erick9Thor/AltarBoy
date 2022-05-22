@@ -566,7 +566,10 @@
     <ClCompile Include="src\components\ComponentAudioSource.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\ComponentBillboard.cpp" />
+    <ClCompile Include="src\components\ComponentBillboard.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2260,7 +2263,10 @@
     <ClInclude Include="src\components\ComponentAudioSource.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\components\ComponentBillboard.h" />
+    <ClInclude Include="src\components\ComponentBillboard.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_color_gradient.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
