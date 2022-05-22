@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "CrystalExplotion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -31,6 +32,60 @@ void Hachiko::Scripting::BackToMainMenu::SerializeTo(std::unordered_map<std::str
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
+}
+
+void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_animator") != serialized_fields.end())
+	{
+		const SerializedField& _animator_sf = serialized_fields["_animator"];
+		if (_animator_sf.type_name == "ComponentAnimation*")
+		{
+			_animator = std::any_cast<ComponentAnimation*>(_animator_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_state") != serialized_fields.end())
+	{
+		const SerializedField& _state_sf = serialized_fields["_state"];
+		if (_state_sf.type_name == "CristalState")
+		{
+			_state = std::any_cast<CristalState>(_state_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_crashing_index") != serialized_fields.end())
+	{
+		const SerializedField& _crashing_index_sf = serialized_fields["_crashing_index"];
+		if (_crashing_index_sf.type_name == "unsigned")
+		{
+			_crashing_index = std::any_cast<unsigned>(_crashing_index_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_stats") != serialized_fields.end())
+	{
+		const SerializedField& _stats_sf = serialized_fields["_stats"];
+		if (_stats_sf.type_name == "Stats")
+		{
+			_stats = std::any_cast<Stats>(_stats_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::CrystalExplotion::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_animator"] = SerializedField(std::string("_animator"), std::make_any<ComponentAnimation*>(_animator), std::string("ComponentAnimation*"));
+
+	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<CristalState>(_state), std::string("CristalState"));
+
+	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
+
+	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

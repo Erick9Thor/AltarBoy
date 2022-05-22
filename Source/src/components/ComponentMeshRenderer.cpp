@@ -49,7 +49,11 @@ void Hachiko::ComponentMeshRenderer::Update() {
 
     // SKINNIG PER FRAME
 
-    UpdateSkinPalette(palette);
+    if (GameTimer::running)
+    {
+        UpdateSkinPalette(palette);
+    }
+
 }
 
 void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* program)

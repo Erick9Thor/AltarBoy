@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "CrystalExplotion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -12,6 +13,12 @@
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
 {
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
+}
+
+void Hachiko::Scripting::CrystalExplotion::OnEditor()
+{
+	Editor::Show<ComponentAnimation>("_animator", "ComponentAnimation*", _animator);
+	Editor::Show("_crashing_index", _crashing_index);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

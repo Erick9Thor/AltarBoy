@@ -2,6 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
+#include "CrystalExplotion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -33,6 +34,37 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 		{
 			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
 		}
+	}
+}
+
+void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
+{
+	if (_animator != nullptr && _animator->GetGameObject() != nullptr)
+	{
+		node["'_animator@ComponentAnimation*'"] = _animator->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_animator@ComponentAnimation*'"] = 0;
+	}
+
+	node["'_crashing_index@unsigned'"] = _crashing_index;
+}
+
+void Hachiko::Scripting::CrystalExplotion::OnLoad()
+{
+	if (load_node["'_animator@ComponentAnimation*'"].IsDefined())
+	{
+		GameObject* _animator_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_animator@ComponentAnimation*'"].as<unsigned long long>());
+		if (_animator_owner__temp != nullptr)
+		{
+			_animator = _animator_owner__temp->GetComponent<ComponentAnimation>();
+		}
+	}
+
+	if (load_node["'_crashing_index@unsigned'"].IsDefined())
+	{
+		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
 	}
 }
 

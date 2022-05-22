@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "generated/Factory.h"
 #include "BackToMainMenu.h"
+#include "CrystalExplotion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -15,6 +16,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "BackToMainMenu")
 	{
 		return new Hachiko::Scripting::BackToMainMenu(script_owner);
+	}
+
+	if (script_name == "CrystalExplotion")
+	{
+		return new Hachiko::Scripting::CrystalExplotion(script_owner);
 	}
 
 	if (script_name == "DynamicCamera")
