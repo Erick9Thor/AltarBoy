@@ -20,8 +20,15 @@ bool Hachiko::ModuleNavigation::Init()
 
 bool Hachiko::ModuleNavigation::CleanUp()
 {
-    App->resources->ReleaseResource(scene_navmesh);
-    scene_navmesh = nullptr;
+    if (scene_navmesh && scene_navmesh->GetID() == 0)
+    {
+        delete scene_navmesh;
+        scene_navmesh = nullptr;
+    }
+    else
+    {
+        App->resources->ReleaseResource(scene_navmesh);
+    }  
 
     if (avoid_debug != nullptr)
     {
@@ -32,7 +39,7 @@ bool Hachiko::ModuleNavigation::CleanUp()
     return true;
 }
 
-Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
+Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmeshResource(Scene* scene)
 {
     HE_LOG("Building Navmesh");
 
@@ -58,8 +65,6 @@ Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmesh(Scene* scene)
         return nullptr;
         
     }
-
-    SetDebugData();
 
     return navmesh;
 }
@@ -118,12 +123,29 @@ dtNavMeshQuery* Hachiko::ModuleNavigation::GetNavQuery() const
 
 void Hachiko::ModuleNavigation::SetNavmesh(UID uid)
 {
-    App->resources->ReleaseResource(scene_navmesh);    
+    CleanUp();      
     scene_navmesh = static_cast<ResourceNavMesh*>(App->resources->GetResource(Resource::Type::NAVMESH, uid));
     if (scene_navmesh)
     {
         SetDebugData();
     }
+}
+
+void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* new_reosurce)
+{
+    CleanUp();   
+    scene_navmesh = new_reosurce;
+    if (scene_navmesh)
+    {
+        SetDebugData();
+    }
+}
+
+void Hachiko::ModuleNavigation::RebuildCurrentNavmesh(Scene* scene)
+{
+    // Builds navmesh without getting it from library
+    ResourceNavMesh* resource_navmesh = App->navigation->BuildNavmeshResource(scene);
+    App->navigation->SetNavmesh(resource_navmesh);
 }
 
 void Hachiko::ModuleNavigation::DebugDraw()
@@ -173,7 +195,7 @@ void Hachiko::ModuleNavigation::DrawOptionsGui()
     ImGui::Text("Navmesh Editor");       
     if (ImGui::Button("Rebuild Navmesh"))
     {
-        App->navigation->BuildNavmesh(App->scene_manager->GetActiveScene());
+        RebuildCurrentNavmesh(App->scene_manager->GetActiveScene());
     }
         
     if (scene_navmesh)

@@ -23,6 +23,10 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
 
+        void DebugDraw() override;
+
+        void OnTransformUpdated() override;
+
         [[nodiscard]] bool IsLoaded() const
         {
             return mesh != nullptr;
@@ -38,9 +42,19 @@ namespace Hachiko
             return navigable;
         }
 
-        [[nodiscard]] AABB GetAABB() const
+        [[nodiscard]] AABB GetMeshAABB() const
         {
             return mesh->bounding_box;
+        }
+
+        [[nodiscard]] const OBB& GetOBB() const
+        {
+            return obb;
+        }
+
+        const AABB& GetAABB()
+        {
+            return aabb;
         }
 
         [[nodiscard]] unsigned GetBufferSize(ResourceMesh::Buffers buffer) const
@@ -68,30 +82,7 @@ namespace Hachiko
             return mesh->normals;
         }
 
-        [[nodiscard]] const ResourceMesh* GetResourceMesh() const
-        {
-            return mesh;
-        }
-
-        [[nodiscard]] const ResourceMaterial* GetResourceMaterial() const
-        {
-            return material;
-        }
-       
-        void AddResourceMesh(ResourceMesh* res)
-        {
-            mesh = res;
-
-            if (mesh->num_bones > 0)
-            {
-                node_cache = new const GameObject*[mesh->num_bones];
-
-                for (unsigned int i = 0; i < mesh->num_bones; ++i)
-                {
-                    node_cache[i] = nullptr;
-                }
-            }
-        }
+        void SetResourceMesh(ResourceMesh* res);
 
         void AddResourceMaterial(ResourceMaterial* res)
         {
@@ -125,8 +116,12 @@ namespace Hachiko
         }
 
     private:
+        void UpdateBoundingBoxes();
         bool visible = true;       
-        bool navigable = false;        
+        bool navigable = false;
+
+        AABB aabb;
+        OBB obb;
       
         // SKINING
         const GameObject** node_cache = nullptr;

@@ -14,6 +14,7 @@ namespace Hachiko
     struct RenderTarget
     {
         const char* name = nullptr;
+        GameObject* game_object = nullptr;
         ComponentMeshRenderer* mesh = nullptr;
         float distance = 0.0f;
     };
@@ -46,9 +47,10 @@ namespace Hachiko
         }
 
     private:
-        void CollectObjects(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
-        void CollectObjects(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
+        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
+        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
         void CollectMesh(const float3& camera_pos, GameObject* game_object);
+        void CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh);
 
         std::vector<RenderTarget> nodes;
         unsigned polycount_rendered = 0, polycount_total = 0;

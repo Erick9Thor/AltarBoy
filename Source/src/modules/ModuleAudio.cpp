@@ -2,6 +2,19 @@
 #include "ModuleAudio.h"
 #include "core/preferences/src/AudioPreferences.h"
 
+#include <AK/SoundEngine/Common/AkMemoryMgr.h> // Memory Manager interface
+#include <AK/SoundEngine/Common/AkModule.h> // Default memory manager
+#include <AK/SoundEngine/Common/IAkStreamMgr.h> // Streaming Manager
+#include <AK/Tools/Common/AkPlatformFuncs.h> // Thread defines
+#include <AK/SoundEngine/Common/AkSoundEngine.h> // Sound engine
+#include <AK/MusicEngine/Common/AkMusicEngine.h> // Music Engine
+#include <AK/SpatialAudio/Common/AkSpatialAudio.h> // Spatial Audio
+
+// Include for communication between Wwise and the game -- Not needed in the release version
+#ifndef AK_OPTIMIZED
+#include <AK/Comm/AkCommunication.h>
+#endif // AK_OPTIMIZED
+
 // Bank file names
 constexpr wchar_t* BANKNAME_INIT = L"Init.bnk";
 constexpr wchar_t* BANKNAME_TEST = L"TestBGMusic.bnk";
@@ -49,7 +62,7 @@ bool Hachiko::ModuleAudio::Init()
     // CAkFilePackageLowLevelIOBlocking::Init() creates a streaming device
     // in the Stream Manager, and registers itself as the File Location Resolver.
 
-    if (g_lowLevelIO.Init(deviceSettings) != AK_Success)
+    if (low_level_io.Init(deviceSettings) != AK_Success)
     {
         assert(!"Could not create the streaming device and Low-Level I/O system");
         return false;
@@ -106,7 +119,7 @@ bool Hachiko::ModuleAudio::Init()
     HE_LOG("Wwise: Communications initialized");
 #endif // AK_OPTIMIZED
 
-    g_lowLevelIO.SetBasePath(AKTEXT("../Game/WwiseAkitaInteractive/GeneratedSoundBanks/Windows"));
+    low_level_io.SetBasePath(AKTEXT("../Game/WwiseAkitaInteractive/GeneratedSoundBanks/Windows"));
 
     AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
@@ -159,7 +172,7 @@ bool Hachiko::ModuleAudio::CleanUp()
     // Terminate the streaming device and streaming manager
     // CAkFilePackageLowLevelIOBlocking::Term() destroys its associated streaming device
     // that lives in the Stream Manager, and unregisters itself as the File Location Resolver.
-    g_lowLevelIO.Term();
+    low_level_io.Term();
 
     if (AK::IAkStreamMgr::Get())
     {
@@ -173,13 +186,6 @@ bool Hachiko::ModuleAudio::CleanUp()
     audio_prefs->SetMusicVolume(music_volume);
 
     return true;
-}
-
-
-// TODO: Monica: Baran Help me erase this from gameplay related files
-void Hachiko::ModuleAudio::Play(const wchar_t* name_event) const
-{
-
 }
 
 // TODO: Change this to be able to work with components
@@ -209,4 +215,9 @@ void Hachiko::ModuleAudio::OptionsMenu()
     {
         SetMusicVolume(volume * 0.1);
     }
+}
+
+void Hachiko::ModuleAudio::SetGameObjectOutputBusVolume(AkGameObjectID emitter, AkGameObjectID listener, float value) const 
+{
+    AK::SoundEngine::SetGameObjectOutputBusVolume(emitter, listener, value);
 }

@@ -14,24 +14,29 @@
 #include "ComponentTransform.h"
 
 #include "modules/ModuleEvent.h"
+#include "modules/ModuleResources.h"
+
+#include <debugdraw.h>
 
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH_RENDERER, container)
 {
-    if (res != nullptr)
-    {
-        AddResourceMesh(res);
-    }
+    SetResourceMesh(res);
 }
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
 {
     App->resources->ReleaseResource(mesh);
     App->resources->ReleaseResource(material);
+    if (game_object->scene_owner)
+    {
+        game_object->scene_owner->GetQuadtree()->Remove(this);
+    }
     delete[] node_cache;
 }
 
-void Hachiko::ComponentMeshRenderer::Update() {
+void Hachiko::ComponentMeshRenderer::Update()
+{
     if (mesh == nullptr)
     {
         return;
@@ -100,10 +105,49 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
     glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
+void Hachiko::ComponentMeshRenderer::DebugDraw()
+{
+    ddVec3 p[8];
+    // This order was pure trial and error, i dont know how to really do it
+    // Using center and points does not show the rotation
+    static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+    for (int i = 0; i < 8; ++i)
+    {
+        p[i] = obb.CornerPoint(order[i]);
+    }
+    dd::box(p, dd::colors::White);
+}
+
+void Hachiko::ComponentMeshRenderer::OnTransformUpdated()
+{
+    UpdateBoundingBoxes();
+}
+
+void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
+{
+    App->resources->ReleaseResource(mesh);
+    mesh = res;
+
+    if (!mesh)
+    {
+        return;
+    }
+
+    if (mesh->num_bones > 0)
+    {
+        node_cache = new const GameObject*[mesh->num_bones];
+
+        for (unsigned int i = 0; i < mesh->num_bones; ++i)
+        {
+            node_cache[i] = nullptr;
+        }
+    }
+}
+
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
     App->resources->ReleaseResource(mesh);
-    AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
+    SetResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
@@ -284,4 +328,23 @@ void Hachiko::ComponentMeshRenderer::OverrideEmissive(float4 color, float time)
     override_material = true;
     override_timer = time;
     override_emissive = color;
+}
+
+void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
+{
+    obb = GetMeshAABB();
+    obb.Transform(game_object->GetTransform()->GetGlobalMatrix());
+    // Enclose is accumulative, reset the box
+    aabb.SetNegativeInfinity();
+    aabb.Enclose(obb);
+
+    // Without the check main camera crashes bcs there is no quadtree
+    Scene* scene = game_object->scene_owner;
+    if (scene)
+    {
+        const Quadtree* quadtree = scene->GetQuadtree();
+        quadtree->Remove(this);
+        quadtree->Insert(this);
+    }
+
 }
