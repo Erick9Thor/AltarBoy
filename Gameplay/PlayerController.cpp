@@ -229,11 +229,11 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->ReceiveDamage(_stats._attack_power);
+			enemy_controller->_stats.ReceiveDamage(_stats._attack_power);
 		}
 		else if (crystal_controller != nullptr)
 		{
-			crystal_controller->ReceiveDamage(_stats._attack_power);
+			crystal_controller->_stats.ReceiveDamage(_stats._attack_power);
 		}
 	}
 }

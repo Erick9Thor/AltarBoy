@@ -7,7 +7,7 @@
 
 Hachiko::Scripting::CrystalExplotion::CrystalExplotion(GameObject* game_object)
 	: Script(game_object, "CrystalExplotion")
-	, _stats(0, 0, 0, 10)
+	, _stats(0, 0, 0, 5)
 {
 }
 

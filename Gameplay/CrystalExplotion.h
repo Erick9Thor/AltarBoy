@@ -33,12 +33,10 @@ namespace Hachiko
 			void DestroyCristall();
 
 		public:
+			SERIALIZE_FIELD(Stats, _stats);
 			SERIALIZE_FIELD(ComponentAnimation*, _animator);
 			SERIALIZE_FIELD(CristalState, _state);
 			SERIALIZE_FIELD(unsigned, _crashing_index);
-
-			SERIALIZE_FIELD(Stats, _stats);
-
 		};
 	}
 }

@@ -35,8 +35,10 @@ namespace Hachiko
 
             void DestroyEntity();
 
-        private:
+        public: 
             SERIALIZE_FIELD(Stats, _stats);
+
+        private:
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
