@@ -19,7 +19,7 @@ Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container, UID id)
 	: Component(Component::Type::BILLBOARD, container, id) 
 {
     gradient = new ImGradient();
-    //CreateSquare();
+    CreateSquare();
 }
 
 Hachiko::ComponentBillboard::~ComponentBillboard() 
@@ -38,127 +38,133 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     //billboard_program->Activate();
 
-    //glActiveTexture(GL_TEXTURE0);
-    //int glTexture = 0;
-    //if (texture != nullptr)
+    glActiveTexture(GL_TEXTURE0);
+    int glTexture = 0;
+    if (texture != nullptr)
+    {
+        glTexture = texture->GetId();
+        Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    }
+    int hasDiffuseMap = texture ? 1 : 0;
+
+    glDepthFunc(GL_ALWAYS);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+    glBegin(GL_LINES);
+    glVertex2f(0.5, 0.5);
+    glVertex2f(-0.5, -0.5);
+    glEnd();
+
+    //glDepthMask(GL_FALSE);
+    //glEnable(GL_BLEND);
+    //glBlendEquation(GL_FUNC_ADD);
+    //if (renderMode == BillboardRenderMode::B_ADDITIVE)
     //{
-    //    glTexture = texture->GetId();
-    //    Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    //    glBlendFunc(GL_ONE, GL_ONE);
     //}
-    //int hasDiffuseMap = texture ? 1 : 0;
-
-    ////glDepthFunc(GL_ALWAYS);
-    ////glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    ////glDepthMask(GL_FALSE);
-    ////glEnable(GL_BLEND);
-    ////glBlendEquation(GL_FUNC_ADD);
-    ////if (renderMode == BillboardRenderMode::B_ADDITIVE)
-    ////{
-    ////    glBlendFunc(GL_ONE, GL_ONE);
-    ////}
-    ////else
-    ////{
-    ////    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    ////}
+    //else
+    //{
+    //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //}
     //glBindVertexArray(vao);
-    ////glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    ///*
-    //ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
+    /*
+    ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
 
-    //float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
-    //float3 position = transform->GetGlobalPosition();
-    //float4x4 modelMatrix = transform->GetGlobalMatrix();
-    //float3 scale = transform->GetGlobalScale();
+    float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
+    float3 position = transform->GetGlobalPosition();
+    float4x4 modelMatrix = transform->GetGlobalMatrix();
+    float3 scale = transform->GetGlobalScale();
 
-    //Frustum* frustum = camera->GetFrustum();
-    //float4x4* proj = &camera->GetProjectionMatrix();
-    //float4x4* view = &camera->GetViewMatrix();
+    Frustum* frustum = camera->GetFrustum();
+    float4x4* proj = &camera->GetProjectionMatrix();
+    float4x4* view = &camera->GetViewMatrix();
 
-    //float4x4 newModelMatrix;
+    float4x4 newModelMatrix;
 
-    //if (billboardType == BillboardType::NORMAL)
-    //{
-    //    newModelMatrix = modelMatrix.LookAt(rotatePart.Col(2), -frustum->Front(), rotatePart.Col(1), float3::unitY);
-    //    newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart() * rotatePart, scale);
-    //}
-    //else if (billboardType == BillboardType::STRETCH)
-    //{
-    //    float3 cameraPos = camera->GetFrustum()->Pos();
-    //    float3 cameraDir = (cameraPos - position).Normalized();
-    //    float3 upDir = Cross(direction, cameraDir);
-    //    float3 newCameraDir = Cross(direction, upDir);
+    if (billboardType == BillboardType::NORMAL)
+    {
+        newModelMatrix = modelMatrix.LookAt(rotatePart.Col(2), -frustum->Front(), rotatePart.Col(1), float3::unitY);
+        newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart() * rotatePart, scale);
+    }
+    else if (billboardType == BillboardType::STRETCH)
+    {
+        float3 cameraPos = camera->GetFrustum()->Pos();
+        float3 cameraDir = (cameraPos - position).Normalized();
+        float3 upDir = Cross(direction, cameraDir);
+        float3 newCameraDir = Cross(direction, upDir);
 
-    //    float3x3 newRotation;
-    //    newRotation.SetCol(0, upDir);
-    //    newRotation.SetCol(1, direction);
-    //    newRotation.SetCol(2, newCameraDir);
+        float3x3 newRotation;
+        newRotation.SetCol(0, upDir);
+        newRotation.SetCol(1, direction);
+        newRotation.SetCol(2, newCameraDir);
 
-    //    newModelMatrix = float4x4::FromTRS(position, newRotation * modelStretch, scale);
-    //}
-    //else if (billboardType == BillboardType::HORIZONTAL)
-    //{
-    //    if (isHorizontalOrientation)
-    //    {
-    //        float3 direction = transform->GetGlobalRotation().WorldZ();
-    //        float3 projection = position + direction - direction.y * float3::unitY;
-    //        direction = (projection - position).Normalized();
-    //        float3 right = Cross(float3::unitY, direction);
+        newModelMatrix = float4x4::FromTRS(position, newRotation * modelStretch, scale);
+    }
+    else if (billboardType == BillboardType::HORIZONTAL)
+    {
+        if (isHorizontalOrientation)
+        {
+            float3 direction = transform->GetGlobalRotation().WorldZ();
+            float3 projection = position + direction - direction.y * float3::unitY;
+            direction = (projection - position).Normalized();
+            float3 right = Cross(float3::unitY, direction);
 
-    //        float3x3 newRotation;
-    //        newRotation.SetCol(1, right);
-    //        newRotation.SetCol(2, float3::unitY);
-    //        newRotation.SetCol(0, direction);
+            float3x3 newRotation;
+            newRotation.SetCol(1, right);
+            newRotation.SetCol(2, float3::unitY);
+            newRotation.SetCol(0, direction);
 
-    //        newModelMatrix = float4x4::FromTRS(position, newRotation, scale);
-    //    }
-    //    else
-    //    {
-    //        newModelMatrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
-    //        newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
-    //    }
-    //}
-    //else if (billboardType == BillboardType::VERTICAL)
-    //{
-    //    float3 cameraPos = camera->GetFrustum()->Pos();
-    //    float3 cameraDir = (float3(cameraPos.x, position.y, cameraPos.z) - position).Normalized();
-    //    newModelMatrix = float4x4::LookAt(float3::unitZ, cameraDir, float3::unitY, float3::unitY);
-    //    newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
-    //}
+            newModelMatrix = float4x4::FromTRS(position, newRotation, scale);
+        }
+        else
+        {
+            newModelMatrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
+            newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
+        }
+    }
+    else if (billboardType == BillboardType::VERTICAL)
+    {
+        float3 cameraPos = camera->GetFrustum()->Pos();
+        float3 cameraDir = (float3(cameraPos.x, position.y, cameraPos.z) - position).Normalized();
+        newModelMatrix = float4x4::LookAt(float3::unitZ, cameraDir, float3::unitY, float3::unitY);
+        newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
+    }
 
-    //program->BindUniformFloat4x4("model" , newModelMatrix.ptr());
-    //program->BindUniformFloat4x4("view", view->ptr());
-    //program->BindUniformFloat4x4("proj", proj->ptr());
+    program->BindUniformFloat4x4("model" , newModelMatrix.ptr());
+    program->BindUniformFloat4x4("view", view->ptr());
+    program->BindUniformFloat4x4("proj", proj->ptr());
 
-    //float4 color = float4::one;
-    //if (colorOverLifetime)
-    //{
-    //    gradient->getColorAt(colorFrame, color.ptr());
-    //}
+    float4 color = float4::one;
+    if (colorOverLifetime)
+    {
+        gradient->getColorAt(colorFrame, color.ptr());
+    }
 
-    //program->BindUniformInts("diffuseMap", 1, &glTexture);
-    //program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
-    //program->BindUniformFloat4("inputColor", color.ptr());
-    //program->BindUniformFloat3("intensity", textureIntensity.ptr());
-    //program->BindUniformFloat("currentFrame", &currentFrame);
-    //program->BindUniformInts("Xtiles", 1, &Xtiles);
-    //program->BindUniformInts("Ytiles", 1, &Ytiles);
+    program->BindUniformInts("diffuseMap", 1, &glTexture);
+    program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
+    program->BindUniformFloat4("inputColor", color.ptr());
+    program->BindUniformFloat3("intensity", textureIntensity.ptr());
+    program->BindUniformFloat("currentFrame", &currentFrame);
+    program->BindUniformInts("Xtiles", 1, &Xtiles);
+    program->BindUniformInts("Ytiles", 1, &Ytiles);
 
-    //int flip_x = flipTexture[0] ? 1 : 0;
-    //int flip_y = flipTexture[1] ? 1 : 0;
-    //program->BindUniformInts("flipX", 1, &flip_x);
-    //program->BindUniformInts("flipY", 1, &flip_y);
-    //*/
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, glTexture);
+    int flip_x = flipTexture[0] ? 1 : 0;
+    int flip_y = flipTexture[1] ? 1 : 0;
+    program->BindUniformInts("flipX", 1, &flip_x);
+    program->BindUniformInts("flipY", 1, &flip_y);
+    */
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, glTexture);
 
+    glDrawBuffer(GL_DYNAMIC_DRAW);
     //glDrawArrays(GL_TRIANGLES, 0, 4);
-    //glBindTexture(GL_TEXTURE_2D, 0);
-    //glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //glDepthFunc(GL_LESS);
-    ////glDisable(GL_BLEND);
-    ////glDepthMask(GL_TRUE);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDepthFunc(GL_LESS);
+    //glDisable(GL_BLEND);
+    //glDepthMask(GL_TRUE);
     //billboard_program->Deactivate();
 }
 

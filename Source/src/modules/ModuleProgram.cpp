@@ -20,7 +20,8 @@ bool Hachiko::ModuleProgram::Init()
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program)
+    CreateBillboardProgram();
+    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || !billboard_program)
     {
         return false;
     }
@@ -138,6 +139,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
     return ui_text_program;
 }
 
+Hachiko::Program* Hachiko::ModuleProgram::CreateBillboardProgram()
+{
+    billboard_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_billboard.glsl", ASSETS_FOLDER "/shaders/fragment_billboard.glsl");
+    return billboard_program;
+}
+
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {
     glGenBuffers(1, &ubos[static_cast<int>(binding_point)]);
@@ -181,6 +188,8 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete ui_image_program;
     ui_text_program->CleanUp();
     delete ui_text_program;
+    billboard_program->CleanUp();
+    delete billboard_program;
     return true;
 }
 

@@ -74,6 +74,11 @@ namespace Hachiko
             return ui_text_program;
         }
 
+        [[nodiscard]] Program* GetBillboardProgram() const
+        {
+            return billboard_program;
+        }
+
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
@@ -92,12 +97,14 @@ namespace Hachiko
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
+        Program* CreateBillboardProgram();
 
         Program* main_program = nullptr;
         Program* skybox_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
+        Program* billboard_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);
