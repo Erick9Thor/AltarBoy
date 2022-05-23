@@ -320,15 +320,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     //     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
     // }
 
-    // Clear default frame buffer:
-    // glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    // glStencilMask(0XFF);
-
-    // glEnable(GL_BLEND);
-    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
@@ -347,6 +338,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     // deferred lighting pass:
     glDisable(GL_BLEND);
 
+    // TODO: Add proper way of distinction between transparent and opaque game
+    // objects by separating them into different render_lists maybe.
     for (RenderTarget& target : render_list.GetNodes())
     {
         if (target.game_object->GetName() == "experiment") 
@@ -406,11 +399,17 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
         GL_DEPTH_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // Forward rendering pass for transparent game objects:
     program = App->program->GetMainProgram();
 
     program->Activate();
 
+
+    // TODO: Add proper forward pass with opaque objects only.  
     for (RenderTarget& target : render_list.GetNodes())
     {
         if (target.game_object->GetName() != "experiment")
@@ -428,21 +427,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
-    // if (outline_selection && outline_target)
-    // {
-    //     glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
-    //     glStencilMask(0X00);
-    //     glDisable(GL_DEPTH_TEST);
+     /*if (outline_selection && outline_target)
+     {
+         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
+         glStencilMask(0X00);
+         glDisable(GL_DEPTH_TEST);
 
-    //     Program* outline_program = App->program->GetStencilProgram();
-    //     outline_program->Activate();
-    //     outline_target->game_object->DrawStencil(camera, outline_program);
-    //     Program::Deactivate();
+         Program* outline_program = App->program->GetStencilProgram();
+         outline_program->Activate();
+         outline_target->game_object->DrawStencil(camera, outline_program);
+         Program::Deactivate();
 
-    //     glStencilMask(0XFF);
-    //     glStencilFunc(GL_ALWAYS, 0, 0xFF);
-    //     glEnable(GL_DEPTH_TEST);
-    // }
+         glStencilMask(0XFF);
+         glStencilFunc(GL_ALWAYS, 0, 0xFF);
+         glEnable(GL_DEPTH_TEST);
+     }*/
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
