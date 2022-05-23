@@ -64,7 +64,7 @@ void Hachiko::WindowResource::Update()
         }
         else
         {
-            if (FileSystem::GetFileExtension(filename.c_str()) != ".meta")
+            if (FileSystem::GetFileExtension(filename.c_str()) != META_EXTENSION)
             {
                 auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
                 if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())

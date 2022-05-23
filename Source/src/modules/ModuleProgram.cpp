@@ -111,31 +111,31 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateProgram(const char* vtx_shader_p
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()
 {
-    main_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex.glsl", ASSETS_FOLDER "/shaders/fragment.glsl");
+    main_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment.glsl");
     return main_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
 {
-    skybox_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_skybox.glsl", ASSETS_FOLDER "/shaders/fragment_skybox.glsl");
+    skybox_program = CreateProgram(SHADERS_FOLDER "vertex_skybox.glsl", SHADERS_FOLDER "fragment_skybox.glsl");
     return skybox_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 {
-    stencil_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_stencil.glsl", ASSETS_FOLDER "/shaders/fragment_stencil.glsl");
+    stencil_program = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
     return stencil_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceImageProgram()
 {
-    ui_image_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_ui.glsl", ASSETS_FOLDER "/shaders/fragment_ui.glsl");
+    ui_image_program = CreateProgram(SHADERS_FOLDER "vertex_ui.glsl", SHADERS_FOLDER "fragment_ui.glsl");
     return ui_image_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 {
-    ui_text_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_font.glsl", ASSETS_FOLDER "/Shaders/fragment_font.glsl");
+    ui_text_program = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
     return ui_text_program;
 }
 

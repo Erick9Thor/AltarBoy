@@ -3,13 +3,11 @@
 #include "modules/ModuleResources.h"
 #include "importers/MaterialImporter.h"
 
-Hachiko::ResourceMaterial::ResourceMaterial(UID uid) :
-    Resource(uid, Type::MATERIAL) {}
+Hachiko::ResourceMaterial::ResourceMaterial(UID uid) : Resource(uid, Type::MATERIAL) {}
 
-Hachiko::ResourceMaterial::~ResourceMaterial()
-{}
+Hachiko::ResourceMaterial::~ResourceMaterial() {}
 
-void Hachiko::ResourceMaterial::DrawGui() 
+void Hachiko::ResourceMaterial::DrawGui()
 {
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
     ImGui::Text("Material: %s", name.c_str());
@@ -22,7 +20,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (diffuse != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(diffuse->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(diffuse->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", diffuse->width, diffuse->height);
@@ -47,7 +45,7 @@ void Hachiko::ResourceMaterial::DrawGui()
         {
             if (metalness != nullptr)
             {
-                ImGui::Image(reinterpret_cast<void*>(metalness->GetId()), ImVec2(80, 80));
+                ImGui::Image(reinterpret_cast<void*>(metalness->GetImageId()), ImVec2(80, 80));
                 ImGui::SameLine();
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", metalness->width, metalness->height);
@@ -70,13 +68,13 @@ void Hachiko::ResourceMaterial::DrawGui()
             ImGui::TreePop();
         }
     }
-    else 
+    else
     {
         if (ImGui::TreeNodeEx((void*)&specular, texture_flags, "Specular"))
         {
             if (specular != nullptr)
             {
-                ImGui::Image(reinterpret_cast<void*>(specular->GetId()), ImVec2(80, 80));
+                ImGui::Image(reinterpret_cast<void*>(specular->GetImageId()), ImVec2(80, 80));
                 ImGui::SameLine();
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", specular->width, specular->height);
@@ -105,7 +103,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (normal != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(normal->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(normal->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", normal->width, normal->height);
@@ -127,7 +125,7 @@ void Hachiko::ResourceMaterial::DrawGui()
     {
         if (emissive != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(emissive->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(emissive->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", emissive->width, emissive->height);
@@ -153,28 +151,63 @@ void Hachiko::ResourceMaterial::DrawGui()
     }
 }
 
+void Hachiko::ResourceMaterial::SetTexture(ResourceTexture* res, ResourceTexture::Type type)
+{
+    switch (type)
+    {
+    case ResourceTexture::Type::DIFFUSE:
+        App->resources->ReleaseResource(diffuse);
+        diffuse = res;
+        break;
+    case ResourceTexture::Type::SPECULAR:
+        App->resources->ReleaseResource(specular);
+        specular = res;
+        break;
+    case ResourceTexture::Type::NORMALS:
+        App->resources->ReleaseResource(normal);
+        normal = res;
+        break;
+    case ResourceTexture::Type::METALNESS:
+        App->resources->ReleaseResource(metalness);
+        metalness = res;
+        break;
+    }
+}
 
+std::string Hachiko::ResourceMaterial::TypeToString(ResourceTexture::Type type)
+{
+    switch (type)
+    {
+    case ResourceTexture::Type::DIFFUSE:
+        return "Diffuse";
+    case ResourceTexture::Type::SPECULAR:
+        return "Specular";
+    case ResourceTexture::Type::NORMALS:
+        return "Normals";
+    case ResourceTexture::Type::METALNESS:
+        return "Metalness";
+    case ResourceTexture::Type::EMISSIVE:
+        return "Emissive";
+    }
+}
 
 void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 {
-    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + this->name;
+    const std::string title = StringUtils::Concat("Select texture ", TypeToString(type)) + "##" + name;
     ResourceTexture* res = nullptr;
 
     if (ImGui::Button(StringUtils::Concat(TypeToString(type).c_str(), " Texture").c_str()))
     {
-        ImGuiFileDialog::Instance()->OpenDialog(
-            title.c_str(),
-            "Select Texture",
-            ".png,.tif,.jpg,.tga",
-            "./assets/textures/",
-            1,
-            nullptr,
-              ImGuiFileDialogFlags_DontShowHiddenFiles 
-            | ImGuiFileDialogFlags_DisableCreateDirectoryButton 
-            | ImGuiFileDialogFlags_HideColumnType
-            | ImGuiFileDialogFlags_HideColumnDate);
+        ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                "Select Texture",
+                                                ".png,.tif,.jpg,.tga",
+                                                "./assets/textures/",
+                                                1,
+                                                nullptr,
+                                                ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
+                                                    | ImGuiFileDialogFlags_HideColumnDate);
     }
-    
+
     if (ImGuiFileDialog::Instance()->Display(title.c_str()))
     {
         if (ImGuiFileDialog::Instance()->IsOk())
@@ -183,8 +216,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
             texture_path.append(META_EXTENSION);
             YAML::Node texture_node = YAML::LoadFile(texture_path);
 
-            res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, 
-                texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
+            res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
         }
 
         ImGuiFileDialog::Instance()->Close();
@@ -198,7 +230,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 
 void Hachiko::ResourceMaterial::RemoveTexture(ResourceTexture::Type type)
 {
-    if (ImGui::Button(StringUtils::Concat("Remove " , TypeToString(type).c_str()).c_str()))
+    if (ImGui::Button(StringUtils::Concat("Remove ", TypeToString(type).c_str()).c_str()))
     {
         switch (type)
         {

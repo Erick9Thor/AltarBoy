@@ -6,6 +6,8 @@
 
 namespace Hachiko
 {
+    class ResourceTexture;
+    
     struct Texture // TODO: removed
     {
         bool loaded = false;
@@ -15,12 +17,26 @@ namespace Hachiko
         unsigned height = 0;
     };
 
-    struct TextureCube // TODO: removed
+    struct TextureCube
     {
+        enum class Side
+        {
+            RIGHT,
+            LEFT,
+            // Order between top and bottom is swaped from opengl
+            // Because we flip the y to correct not properly flipped resources
+            BOTTOM,
+            TOP,            
+            CENTER,
+            BACK,
+            COUNT
+        };
+
+        static std::string SideString(Side side);
         bool loaded = false;
         unsigned id{};
-        unsigned widths[6]{};
-        unsigned heights[6]{};
+        UID uids[static_cast<unsigned>(Side::COUNT)] = {0};
+        ResourceTexture* resources[static_cast<unsigned>(Side::COUNT)] = {nullptr};
     };
     
     class ResourceTexture;
@@ -40,7 +56,7 @@ namespace Hachiko
         static Texture Load(const char* path, bool flip = true);
         [[deprecated]]
         static void Unload(Texture& texture);
-        static TextureCube LoadCubeMap(const char* paths[6]);
+        static TextureCube LoadCubeMap(TextureCube& cube);
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);
 

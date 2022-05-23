@@ -60,10 +60,6 @@
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 #define MATERIAL_IS_TRANSPARENT "is_transparent"
 
-// ComponentMeshRenderer
-#define RENDERER_MESH_ID "mesh_id"
-#define RENDERER_MATERIAL_ID "material_id"
-
 //////////////////////////
 //						//
 // Importer extensions  //
@@ -76,6 +72,13 @@
 #define MATERIAL_EXTENSION ".mat"
 #define META_EXTENSION ".meta"
 #define PREFAB_EXTENSION ".prefab"
+#define JPG_TEXTURE_EXTENSION ".jpg"
+#define PNG_TEXTURE_EXTENSION ".png"
+#define TIF_TEXTURE_EXTENSION ".tif"
+#define DEFAULT_SHADER_EXTENSION ".glsl"
+#define MODEL_EXTENSION ".fbx"
+#define SKYBOX_EXTENSION ".hdr"
+#define FONT_EXTENSION ".ttf"
  
 //////////////////////////
 //						//
@@ -140,7 +143,9 @@
 #define SCENE_NAME "scene_name"
 #define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
-#define SCENE_TEMP_NAME "temp_scene"
+#define NAVMESH_ID "navmesh_id"
+#define SKYBOX_NODE "skybox"
+#define CUBE_ID "_cube_id"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"
@@ -197,11 +202,13 @@
 #define PINNED_CAMERA "pinned_camera"
 
 // Component Image
-#define IMAGE_PATH "image_path"
-#define HOVER_IMAGE_PATH "hover_image_path"
+#define IMAGE_IMAGE_ID "image_id"
+#define IMAGE_HOVER_IMAGE_ID "hover_image_id"
+#define USE_IMAGE "use_image"
+#define USE_HOVER_IMAGE "use_hover_image"
 
 // Component Text
-#define FONT_PATH "font_path"
+#define FONT_ID "font_id"
 #define FONT_COLOR "color"
 #define FONT_SIZE "size"
 #define FONT_LABEL_TEXT "label_text"
@@ -223,8 +230,11 @@
 #define AVOID_OBSTACLES "avoid_obstacles"
 
 // Component Billboard
-
 #define BILLBOARD_TEXTURE_ID "texture_id"
+
+// ComponentMeshRenderer
+#define RENDERER_MESH_ID "mesh_id"
+#define RENDERER_MATERIAL_ID "material_id"
 
 // Script
 #define SCRIPT_NAME "class_name"
