@@ -35,7 +35,7 @@ namespace Hachiko
         static std::string SideString(Side side);
         bool loaded = false;
         unsigned id{};
-        UID uids[static_cast<unsigned>(Side::COUNT)] = {10505613530091827897, 13700979212544735236, 5133574444860088995, 4391007458909829677, 10188972483801135247, 17476158828083105361};
+        UID uids[static_cast<unsigned>(Side::COUNT)] = {0};
         ResourceTexture* resources[static_cast<unsigned>(Side::COUNT)] = {nullptr};
     };
     
