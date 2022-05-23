@@ -2,10 +2,7 @@
 #include "Quadtree.h"
 #include <debugdraw.h>
 
-Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth) :
-    depth(depth),
-    box(box),
-    parent(parent)
+Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth) : depth(depth), box(box), parent(parent)
 {
     children[static_cast<int>(Quadrants::NW)] = children[static_cast<int>(Quadrants::NE)] = children[static_cast<int>(Quadrants::SE)] = children[static_cast<int>(Quadrants::SW)] = nullptr;
 }
@@ -20,7 +17,6 @@ Hachiko::QuadtreeNode::~QuadtreeNode()
 
 void Hachiko::QuadtreeNode::Insert(ComponentMeshRenderer* mesh)
 {
-    
     meshes.push_back(mesh);
 
     if (depth >= QUADTREE_MAX_DEPTH)
@@ -112,7 +108,6 @@ void Hachiko::QuadtreeNode::RearangeChildren()
     {
         ComponentMeshRenderer* mesh = *it;
         bool intersects[static_cast<int>(Quadrants::COUNT)];
-        int intersections = 0;
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
             intersects[i] = children[i]->box.Intersects(mesh->GetAABB());
@@ -124,13 +119,14 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             ++it;
             continue;
         }
-        if (intersections > 1)
-        {
-            ++it;
-            continue;
-        }
-
         it = meshes.erase(it);
+        for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
+        {
+            if (intersects[i])
+            {
+                children[i]->Insert(mesh);
+            }
+        }
     }
 }
 

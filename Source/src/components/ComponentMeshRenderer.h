@@ -89,6 +89,16 @@ namespace Hachiko
             material = res;
         }
 
+        [[nodiscard]] const ResourceMesh* GetResourceMesh() const
+        {
+            return mesh;
+        }
+
+        [[nodiscard]] const ResourceMaterial* GetResourceMaterial() const
+        {
+            return material;
+        }
+
         void LoadMesh(UID mesh_id);
         void LoadMaterial(UID material_id);
         void DrawGui() override;
