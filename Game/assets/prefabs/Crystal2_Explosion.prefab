@@ -1,0 +1,147 @@
+prefab_name: Crystal2_Explosion
+name: Crystal2_Explosion
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [1.11035252, 0, -2.33799982]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 14
+    enabled: true
+    animations:
+      - 10140546150993567985
+  - type: 15
+    enabled: true
+    class_name: CrystalExplotion
+    "'_animator@ComponentAnimation*'": 6889070396378724002
+    "'_crashing_index@unsigned'": 0
+child:
+  - name: Geo
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0.707106829, 0, 0, 0.707106709]
+        scale: [1, 0.999999881, 0.999999881]
+    child:
+      - name: Top
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.0390297659, 1.24786723, -0.122365341]
+            rotation: [-0.699713588, 0.000990346773, -0.00413561799, 0.714410782]
+            scale: [2.5400002, 2.53999972, 2.53999996]
+          - type: 2
+            enabled: true
+            mesh_id: 8491662251488687946
+            navigable: false
+            visible: true
+            material_id: 12020905371248233719
+      - name: TopRight
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.0765447319, 0.925721884, -0.0172951315]
+            rotation: [-0.703085482, -0.00609574048, 0.00520839915, 0.711060226]
+            scale: [2.53999853, 2.54000068, 2.54000163]
+          - type: 2
+            enabled: true
+            mesh_id: 10892393975826750078
+            navigable: false
+            visible: true
+            material_id: 12020905371248233719
+      - name: Middle
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.00915046968, 0.824442148, 0.00801388454]
+            rotation: [-0.698970914, -0.00733375037, -0.00171151629, 0.715110421]
+            scale: [2.53999996, 2.53999996, 2.5400002]
+          - type: 2
+            enabled: true
+            mesh_id: 3913156033904217141
+            navigable: false
+            visible: true
+            material_id: 12020905371248233719
+      - name: TopLeft
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.00468555419, 0.851930737, -0.163572505]
+            rotation: [-0.703144133, -0.00227717403, 0.0023599288, 0.711039782]
+            scale: [2.53999996, 2.53999996, 2.53999996]
+          - type: 2
+            enabled: true
+            mesh_id: 17187476894969531268
+            navigable: false
+            visible: true
+            material_id: 12020905371248233719
+      - name: Down
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.0345472023, 0.302218705, -0.093022503]
+            rotation: [-0.701309443, -0.00464925077, 0.000145189391, 0.712841809]
+            scale: [2.53999996, 2.53999996, 2.53999996]
+          - type: 2
+            enabled: true
+            mesh_id: 4869994198959428903
+            navigable: false
+            visible: true
+            material_id: 12020905371248233719
+  - name: MainBone
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.0345472023, 0.0264687333, -0.115474738]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Joint_Down
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-4.440892e-18, 0.275749952, 0.0224522315]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: JoinMiddle
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-0.0253967326, 0.797973394, 0.123488627]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: JointTopLeft
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-0.0298616476, 0.825462043, -0.0480977632]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: JointTopRight
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.0419975258, 0.897041023, 0.0973160565]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: JointTop
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.00448256498, 1.2190311, -0.0065773176]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]

@@ -41,8 +41,10 @@ void Hachiko::Scripting::CrystalExplotion::ReceiveDamage(int damage)
 
 void Hachiko::Scripting::CrystalExplotion::DestroyCristall()
 {
-	_animator->StartAnimating(_crashing_index, true, 200);
+	_animator->StartAnimating(_crashing_index, false, 200);
 	_stats._is_alive = false;
 
-	// TODO: Destroy element
+	// Wait until animation finish
+
+	// delete game_object;
 }

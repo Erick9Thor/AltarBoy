@@ -38,6 +38,15 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
+	if(serialized_fields.find("_stats") != serialized_fields.end())
+	{
+		const SerializedField& _stats_sf = serialized_fields["_stats"];
+		if (_stats_sf.type_name == "Stats")
+		{
+			_stats = std::any_cast<Stats>(_stats_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_animator") != serialized_fields.end())
 	{
 		const SerializedField& _animator_sf = serialized_fields["_animator"];
@@ -64,28 +73,19 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 			_crashing_index = std::any_cast<unsigned>(_crashing_index_sf.copy);
 		}
 	}
-
-	if(serialized_fields.find("_stats") != serialized_fields.end())
-	{
-		const SerializedField& _stats_sf = serialized_fields["_stats"];
-		if (_stats_sf.type_name == "Stats")
-		{
-			_stats = std::any_cast<Stats>(_stats_sf.copy);
-		}
-	}
 }
 
 void Hachiko::Scripting::CrystalExplotion::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
+	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
+
 	serialized_fields["_animator"] = SerializedField(std::string("_animator"), std::make_any<ComponentAnimation*>(_animator), std::string("ComponentAnimation*"));
 
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<CristalState>(_state), std::string("CristalState"));
 
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
-
-	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

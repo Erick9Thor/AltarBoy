@@ -39,6 +39,7 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 
 void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
 {
+
 	if (_animator != nullptr && _animator->GetGameObject() != nullptr)
 	{
 		node["'_animator@ComponentAnimation*'"] = _animator->GetGameObject()->GetID();
@@ -53,6 +54,7 @@ void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::CrystalExplotion::OnLoad()
 {
+
 	if (load_node["'_animator@ComponentAnimation*'"].IsDefined())
 	{
 		GameObject* _animator_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_animator@ComponentAnimation*'"].as<unsigned long long>());
