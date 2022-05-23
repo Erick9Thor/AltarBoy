@@ -180,8 +180,8 @@ void Hachiko::ModuleDebugMode::DrawGUI()
 
     if (ImGui::Begin("InGame Window", &is_gui_active, window_flags))
     {
-        ImGui::End();
-        return;
+       // ImGui::End();
+       // return;
     }
     App->renderer->FpsGraph();
     ImGui::Separator();

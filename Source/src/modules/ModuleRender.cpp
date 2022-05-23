@@ -220,7 +220,12 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     RenderTarget* outline_target = nullptr;
     for (RenderTarget& target : render_list.GetNodes())
     {
-        target.game_object->Draw(camera, program);
+        
+        if (target.game_object->IsActive())
+        {
+            target.game_object->Draw(camera, program);
+        }
+
         if (selected_go && target.game_object == selected_go)
         {
             outline_target = &target;
