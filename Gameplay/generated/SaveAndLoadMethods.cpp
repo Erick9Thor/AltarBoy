@@ -2,7 +2,6 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
-#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -26,30 +25,6 @@ void Hachiko::Scripting::BackToMainMenu::OnSave(YAML::Node& node) const
 }
 
 void Hachiko::Scripting::BackToMainMenu::OnLoad()
-{
-	if (load_node["'_button_back@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _button_back_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_button_back@ComponentButton*'"].as<unsigned long long>());
-		if (_button_back_owner__temp != nullptr)
-		{
-			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-}
-
-void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
-{
-	if (_button_back != nullptr && _button_back->GetGameObject() != nullptr)
-	{
-		node["'_button_back@ComponentButton*'"] = _button_back->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_button_back@ComponentButton*'"] = 0;
-	}
-}
-
-void Hachiko::Scripting::DebugManager::OnLoad()
 {
 	if (load_node["'_button_back@ComponentButton*'"].IsDefined())
 	{

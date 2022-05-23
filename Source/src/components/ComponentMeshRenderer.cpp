@@ -26,6 +26,8 @@ Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
 {
+    App->resources->ReleaseResource(mesh);
+    App->resources->ReleaseResource(material);
     delete[] node_cache;
 }
 
@@ -89,11 +91,13 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
 
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
+    App->resources->ReleaseResource(mesh);
     AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
 {
+    App->resources->ReleaseResource(material);
     material = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id));
 }
 
@@ -234,8 +238,8 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Material",
-                                                ".mat",
-                                                "./assets/materials/",
+                                                MATERIAL_EXTENSION,
+                                                ASSETS_FOLDER_MATERIAL,
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
@@ -253,7 +257,7 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
-                // Unload material
+                App->resources->ReleaseResource(material);
                 material = res;
             }
         }

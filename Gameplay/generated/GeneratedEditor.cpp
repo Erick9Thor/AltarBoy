@@ -1,6 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
-#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -11,11 +10,6 @@
 
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
-{
-	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
-}
-
-void Hachiko::Scripting::DebugManager::OnEditor()
 {
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
 }

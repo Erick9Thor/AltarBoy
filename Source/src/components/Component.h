@@ -45,6 +45,8 @@ namespace Hachiko
             TEXT = 16,
             AGENT = 17,
             OBSTACLE = 18,
+            AUDIO_LISTENER = 19,
+            AUDIO_SOURCE = 20,
             UNKNOWN
         };
 
