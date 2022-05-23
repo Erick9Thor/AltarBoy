@@ -51,37 +51,31 @@ enum class UpdateStatus
 // File System config -----------
 #define VERSION "0.1"
 #define ASSETS_FOLDER "assets/"
-#define ASSETS_FOLDER_SCENES "assets/scenes/"
-#define ASSETS_FOLDER_TEXTURES "assets/textures/"
-#define ASSETS_FOLDER_FONTS "assets/fonts/"
+#define LIBRARY_FOLDER "library/"
+#define SHADERS_FOLDER "shaders/"
 
 #define SETTINGS_FOLDER "settings"
 #define SETTINGS_FILE_PATH "settings/he.cfg"
 
-#define LIBRARY_FOLDER "library/"
-#define LIBRARY_TEXTURES_FOLDER "library/textures/"
-#define LIBRARY_MESH_FOLDER "library/meshes/"
-#define LIBRARY_SCENE_FOLDER "library/scenes/"
-#define LIBRARY_MATERIAL_FOLDER "library/materials/"
-#define LIBRARY_MODEL_FOLDER "library/models/"
-#define LIBRARY_SHADERS_FOLDER "library/shaders/"
-#define LIBRARY_FONTS_FOLDER "library/fonts/"
+#define ASSETS_FOLDER_SCENE ASSETS_FOLDER "scenes/"
+#define ASSETS_FOLDER_MODEL ASSETS_FOLDER "models/"
+#define ASSETS_FOLDER_TEXTURE ASSETS_FOLDER "textures/"
+#define ASSETS_FOLDER_VIDEO ASSETS_FOLDER "video/"
+#define ASSETS_FOLDER_MATERIAL ASSETS_FOLDER "materials/"
+#define ASSETS_FOLDER_SKYBOX ASSETS_FOLDER "skybox/"
+#define ASSETS_FOLDER_FONT ASSETS_FOLDER "fonts/"
+#define ASSETS_FOLDER_PREFAB ASSETS_FOLDER "prefabs/"
 
-#define JPG_TEXTURE_EXTENSION ".jpg"
-#define PNG_TEXTURE_EXTENSION ".png"
-
-#define MATERIAL_EXTENSION ".mat"
-#define SCENE_EXTENSION ".scene"
-#define PREFAB_EXTENSION ".prefab"
-#define META_EXTENSION ".meta"
-
-#define FRAGMENT_SHADER_EXTENSION ".frag"
-#define VERTEX_SHADER_EXTENSION ".vert"
-#define DEFAULT_SHADER_EXTENSION ".glsl"
-
-#define MODEL_EXTENSION ".fbx"
-
-#define SKYBOX_EXTENSION ".hdr"
+#define LIBRARY_FOLDER_SCENE LIBRARY_FOLDER "scenes/"
+#define LIBRARY_FOLDER_MESH LIBRARY_FOLDER "meshes/"
+#define LIBRARY_FOLDER_TEXTURE LIBRARY_FOLDER "textures/"
+#define LIBRARY_FOLDER_VIDEO LIBRARY_FOLDER "video/"
+#define LIBRARY_FOLDER_MATERIAL LIBRARY_FOLDER "materials/"
+#define LIBRARY_FOLDER_ANIMATION LIBRARY_FOLDER "animations/"
+#define LIBRARY_FOLDER_SKYBOX LIBRARY_FOLDER "skybox/"
+#define LIBRARY_FOLDER_FONT LIBRARY_FOLDER "fonts/"
+#define LIBRARY_FOLDER_NAVMESH LIBRARY_FOLDER "navmesh/"
+#define LIBRARY_FOLDER_PREFAB LIBRARY_FOLDER "prefabs/"
 
 #define AUXILIAR_NODE "_$AssimpFbx$_"
 

@@ -369,13 +369,7 @@
     <ClCompile Include="src\Modules\ModuleResources.cpp">
       <Filter>Modules\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\serialization\SceneSerializer.cpp">
-      <Filter>Core\Serialization</Filter>
-    </ClCompile>
     <ClCompile Include="src\Resources\ResourceTexture.cpp">
-      <Filter>Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\resources\ResourceModel.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\importers\ImporterManager.cpp">
@@ -560,6 +554,18 @@
     </ClCompile>
     <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp">
       <Filter>Core\Preferences\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\PrefabImporter.cpp" />
+    <ClCompile Include="src\resources\ResourcePrefab.cpp" />
+    <ClCompile Include="src\importers\SceneImporter.cpp" />
+    <ClCompile Include="src\importers\VideoImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceScene.cpp" />
+    <ClCompile Include="src\importers\NavmeshImporter.cpp" />
+    <ClCompile Include="src\components\ComponentAudioListener.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentAudioSource.cpp">
+      <Filter>Core\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1165,16 +1171,7 @@
     <ClInclude Include="src\Importers\Importer.h">
       <Filter>Importers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\serialization\SceneSerializer.h">
-      <Filter>Core\Serialization</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core\serialization\ISerializable.h">
-      <Filter>Core\Serialization</Filter>
-    </ClInclude>
     <ClInclude Include="src\Resources\ResourceTexture.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resources\ResourceModel.h">
       <Filter>Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\importers\ImporterManager.h">
@@ -2248,6 +2245,23 @@
     </ClInclude>
     <ClInclude Include="src\core\preferences\src\AudioPreferences.h">
       <Filter>Core\Preferences\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h" />
+    <ClInclude Include="src\resources\ResourcePrefab.h" />
+    <ClInclude Include="src\importers\SceneImporter.h" />
+    <ClInclude Include="src\importers\VideoImporter.h" />
+    <ClInclude Include="src\resources\ResourceScene.h" />
+    <ClInclude Include="src\importers\NavmeshImporter.h" />
+    <ClInclude Include="src\events\EditorHistoryEntryRestore.h">
+      <Filter>Core\Events\Payload</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h" />
+    <ClInclude Include="src\resources\ResourcePrefab.h" />
+    <ClInclude Include="src\components\ComponentAudioListener.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentAudioSource.h">
+      <Filter>Core\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

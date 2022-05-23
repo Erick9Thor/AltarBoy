@@ -24,7 +24,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportResource(UID uid, const char* path, bool flip)
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid, const char* path, bool flip)
 {
     std::filesystem::path texture_path = path;
 
@@ -98,35 +98,32 @@ void Hachiko::ModuleTexture::Unload(Texture& texture)
     }
 }
 
-Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(const char* paths[6])
+Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(TextureCube& cube)
 {
     constexpr bool flip = true;
-    TextureCube cube;
     cube.loaded = true;
 
     glGenTextures(1, &cube.id);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
 
     // Expected file order x, -x, y, -y, z, -z
-    for (int i = 0; i < 6; ++i)
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
     {
-        const unsigned int img_id = LoadImg(paths[i], flip);
-        iluFlipImage();
-        if (img_id == 0)
+        cube.resources[i] = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, cube.uids[i]));
+        
+        ResourceTexture* cube_face = cube.resources[i];
+        if (!cube_face)
         {
             cube.loaded = false;
             continue; // Try loading the other parts despite failing
         }
+
+        //ilBindImage(cube.resources[i]->GetImageId());
+        // iluFlipImage();
         // Take advantage of opengl enum with index
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                     0,
-                     ilGetInteger(IL_IMAGE_BPP),
-                     cube.widths[i] = ilGetInteger(IL_IMAGE_WIDTH),
-                     cube.heighths[i] = ilGetInteger(IL_IMAGE_HEIGHT),
-                     0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
-                     GL_UNSIGNED_BYTE,
-                     ilGetData());
+                     0, cube_face->bpp, cube_face->width, cube_face->height,
+                     0, cube_face->format, GL_UNSIGNED_BYTE, cube_face->data);
     }
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -188,4 +185,35 @@ unsigned int Hachiko::ModuleTexture::LoadImg(const char* path, bool flip)
 void Hachiko::ModuleTexture::DeleteImg(unsigned& img_id)
 {
     ilDeleteImages(1, &img_id);
+}
+
+std::string Hachiko::TextureCube::SideString(Side side)
+{
+    enum class Side
+    {
+        RIGHT,
+        LEFT,
+        TOP,
+        BOTTOM,
+        CENTER,
+        BACK,
+        COUNT
+    };
+
+    switch (side)
+    {
+    case TextureCube::Side::RIGHT :
+        return std::string("right") + CUBE_ID;
+    case TextureCube::Side::LEFT:
+        return std::string("left") + CUBE_ID;
+    case TextureCube::Side::TOP:
+        return std::string("top") + CUBE_ID;
+    case TextureCube::Side::BOTTOM:
+        return std::string("bottom") + CUBE_ID;
+    case TextureCube::Side::CENTER:
+        return std::string("center") + CUBE_ID;
+    case TextureCube::Side::BACK:
+        return std::string("back") + CUBE_ID;
+    }
+    return std::string("unknown") + CUBE_ID;
 }

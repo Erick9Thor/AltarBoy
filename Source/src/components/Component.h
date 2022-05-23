@@ -1,21 +1,27 @@
 #pragma once
 
-#include "core/serialization/ISerializable.h"
-#include "utils/UUID.h"
-
 #if defined(HACHIKO_API)
 // Do Nothing
 #elif defined(_MSC_VER)
 #define HACHIKO_API __declspec(dllexport)
 #endif
 
+#include "utils/UUID.h"
+#include "yaml-cpp/yaml.h"
+
 namespace Hachiko
 {
+#define CREATE_HISTORY_ENTRY_AFTER_EDIT()                               \
+    if (ImGui::IsItemDeactivatedAfterEdit())                            \
+    {                                                                   \
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);  \
+    }
+
     class GameObject;
     class ComponentCamera;
     class Program;
 
-    class HACHIKO_API Component : public ISerializable
+    class HACHIKO_API Component
     {
     public:
         enum class Type
@@ -39,19 +45,32 @@ namespace Hachiko
             TEXT = 16,
             AGENT = 17,
             OBSTACLE = 18,
+            AUDIO_LISTENER = 19,
+            AUDIO_SOURCE = 20,
             UNKNOWN
         };
 
-        Component(const Type type, GameObject* container, UID id = 0);
+        Component(Type type, GameObject* container, UID id = 0);
 
         virtual ~Component() = default;
 
         // --- COMPONENT EVENTS --- //
 
-        virtual void Start() {}
-        virtual void Stop() {}
-        virtual void Update() {}
-        virtual void OnTransformUpdated() {}
+        virtual void Start()
+        {
+        }
+
+        virtual void Stop()
+        {
+        }
+
+        virtual void Update()
+        {
+        }
+
+        virtual void OnTransformUpdated()
+        {
+        }
 
         [[nodiscard]] Type GetType() const
         {
@@ -98,21 +117,31 @@ namespace Hachiko
             game_object = container;
         }
 
-        virtual void DrawGui() {}
+        virtual void DrawGui()
+        {
+        }
 
-        virtual void Draw(ComponentCamera* camera, Program* program) {}
+        virtual void Draw(ComponentCamera* camera, Program* program)
+        {
+        }
 
-        virtual void DebugDraw() {}
+        virtual void DebugDraw()
+        {
+        }
 
-        virtual void Save(YAML::Node& node) const {}
+        virtual void Save(YAML::Node& node) const
+        {
+        }
 
-        virtual void Load(const YAML::Node& node) {}
+        virtual void Load(const YAML::Node& node)
+        {
+        }
 
-        virtual bool CanBeRemoved() const;
+        [[nodiscard]] virtual bool CanBeRemoved() const;
         virtual bool HasDependentComponents(GameObject* game_object) const;
 
     protected:
-        void OverrideUID(UID new_uid) 
+        void OverrideUID(UID new_uid)
         {
             uid = new_uid;
         }

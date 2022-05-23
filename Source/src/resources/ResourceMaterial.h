@@ -33,11 +33,16 @@ namespace Hachiko
             return metalness != nullptr;
         }
 
+        [[nodiscard]] bool HasEmissive() const
+        {
+            return emissive != nullptr;
+        }
+
         [[nodiscard]] unsigned GetDiffuseId() const
         {
             if (diffuse != nullptr)
             {
-                return diffuse->GetId();
+                return diffuse->GetImageId();
             }
             return 0;
         }
@@ -46,7 +51,7 @@ namespace Hachiko
         {
             if (specular != nullptr)
             {
-                return specular->GetId();
+                return specular->GetImageId();
             }
             return 0;
         }
@@ -55,7 +60,7 @@ namespace Hachiko
         {
             if (normal != nullptr)
             {
-                return normal->GetId();
+                return normal->GetImageId();
             }
             return 0;
         }
@@ -64,7 +69,16 @@ namespace Hachiko
         {
             if (metalness != nullptr)
             {
-                return metalness->GetId();
+                return metalness->GetImageId();
+            }
+            return 0;
+        }
+
+        [[nodiscard]] unsigned GetEmissiveId() const
+        {
+            if (emissive != nullptr)
+            {
+                return emissive->GetImageId();
             }
             return 0;
         }
@@ -74,51 +88,23 @@ namespace Hachiko
             return name;
         }
 
-        void SetName(const std::string& new_name) 
+        void SetName(const std::string& new_name)
         {
             name = new_name;
         }
 
-        void SetTexture(ResourceTexture* res, ResourceTexture::Type type)
-        {
-            switch (type)
-            {
-            case ResourceTexture::Type::DIFFUSE:
-                diffuse = res;
-                break;            
-            case ResourceTexture::Type::SPECULAR:
-                specular = res;
-                break;            
-            case ResourceTexture::Type::NORMALS:
-                normal = res;
-                break;
-            case ResourceTexture::Type::METALNESS:
-                metalness = res;
-                break;
-            }
-        }
+        void SetTexture(ResourceTexture* res, ResourceTexture::Type type);
 
-        std::string TypeToString(ResourceTexture::Type type)
-        {
-            switch (type)
-            {
-            case ResourceTexture::Type::DIFFUSE:
-                return "Diffuse";
-            case ResourceTexture::Type::SPECULAR:
-                return "Specular";
-            case ResourceTexture::Type::NORMALS:
-                return "Normals";
-            case ResourceTexture::Type::METALNESS:
-                return "Metalness";
-            }
-        }
+        std::string TypeToString(ResourceTexture::Type type);
 
         ResourceTexture* diffuse = nullptr;
         ResourceTexture* specular = nullptr;
         ResourceTexture* normal = nullptr;
         ResourceTexture* metalness = nullptr;
+        ResourceTexture* emissive = nullptr;
         float4 diffuse_color = float4::one;
-        float4 specular_color = float4::one / 10.0f;
+        float4 specular_color = float4::zero;
+        float4 emissive_color = float4::zero;
         float smoothness = 0.5f;
         float metalness_value = 0.5f;
         unsigned is_metallic = 0;

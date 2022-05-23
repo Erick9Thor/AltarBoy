@@ -5,36 +5,30 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentImage.h"
-#include "components/ComponentAnimation.h"
 
-#include "modules/ModuleTexture.h"
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleCamera.h"
-#include "modules/ModuleDebugDraw.h"
-#include "modules/ModuleResources.h"
+#include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
 
-#include "resources/ResourceModel.h"
-#include "resources/ResourceMaterial.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
+
 #include <debugdraw.h>
 #include <algorithm>
 
-Hachiko::Scene::Scene()
-    : root(new GameObject(nullptr, float4x4::identity, "Root"))
-    , culling_camera(App->camera->GetRenderingCamera())
-    , skybox(new Skybox())
-    , quadtree(new Quadtree())
-    , loaded(false)
-    , name(UNNAMED_SCENE)
+Hachiko::Scene::Scene() :
+    name(UNNAMED_SCENE),
+    root(new GameObject(nullptr, float4x4::identity, "Root")),
+    culling_camera(App->camera->GetRenderingCamera()),
+    skybox(new Skybox()),
+    quadtree(new Quadtree())
 {
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
-    App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -76,13 +70,6 @@ Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
     return root->GetComponentInDescendants<ComponentCamera>();
 }
 
-void Hachiko::Scene::AddGameObject(GameObject* new_object, GameObject* parent) const
-{
-    GameObject* new_parent = parent ? parent : root;
-    new_parent->children.push_back(new_object);
-    quadtree->Insert(new_object);
-}
-
 Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, const char* name)
 {
     GameObject* final_parent = parent != nullptr ? parent : root;
@@ -92,53 +79,6 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
 
     // This will insert itself into quadtree on first bounding box update:
     return new_game_object;
-}
-
-void Hachiko::Scene::HandleInputModel(ResourceModel* model)
-{
-    GameObject* game_object = CreateNewGameObject(nullptr, model->model_name.c_str());
-
-    if (model->have_animation > 0)
-    {
-        ComponentAnimation* component_animation = static_cast<ComponentAnimation*>(game_object->CreateComponent(Component::Type::ANIMATION));
-        for (unsigned int i = 0; i < model->have_animation; ++i)
-        {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, model->animations[i].animation_id));
-            component_animation->animations.push_back(r_animation);
-        }
-    }
-
-    std::function<void(GameObject*, const std::vector<ResourceNode*>&)> create_children_function = [&](GameObject* parent, const std::vector<ResourceNode*>& children) {
-        for (auto child : children)
-        {
-            GameObject* last_parent = parent;
-
-            last_parent = CreateNewGameObject(parent, child->node_name.c_str());
-            last_parent->GetTransform()->SetLocalTransform(child->node_transform);
-            
-            if (!child->meshes_index.empty())
-            {
-                for (unsigned i = 0; i < child->meshes_index.size(); ++i)
-                {
-                    MeshInfo mesh_info = model->meshes[child->meshes_index[i]];
-                    MaterialInfo mat_info = model->materials[mesh_info.material_index];
-                    ComponentMeshRenderer* component = static_cast<ComponentMeshRenderer*>(last_parent->CreateComponent(Component::Type::MESH_RENDERER));
-                    //component->SetID(mesh_info.mesh_id); // TODO: ask if this is correct (i dont think so)
-                    //component->SetModelName(model->model_name);
-                    
-                    //component->SetMeshIndex(child->meshes_index[i]); // the component mesh support one mesh so we take the first of the node
-                    component->AddResourceMesh(static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, mesh_info.mesh_id)));
-                    component->AddResourceMaterial(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, mat_info.material_id)));
-                }
-            }
-            
-            last_parent->GetComponent<ComponentTransform>()->SetLocalTransform(child->node_transform);
-
-            create_children_function(last_parent, child->children);
-        }
-    };
-
-    create_children_function(game_object, model->child_nodes);
 }
 
 void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
@@ -210,9 +150,25 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
     return selected;
 }
 
-void Hachiko::Scene::Save(YAML::Node& node) const
+void Hachiko::Scene::Save(YAML::Node& node)
 {
     node[SCENE_NAME] = GetName();
+    // Navmesh
+    if (!navmesh_id)
+    {
+        SetNavmeshID(UUID::GenerateUID());
+    }
+    node[NAVMESH_ID] = navmesh_id;
+
+    // Skybox
+    const TextureCube& cube = skybox->GetCube();
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        node[SKYBOX_NODE][side_name] = cube.uids[i];
+    }
+
+
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -222,16 +178,30 @@ void Hachiko::Scene::Save(YAML::Node& node) const
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
+    SetName(node[SCENE_NAME].as<std::string>().c_str());
+    navmesh_id = node[NAVMESH_ID].as<UID>();
+    root->SetID(node[ROOT_ID].as<UID>());
+
+    RELEASE(skybox);
+
+    TextureCube cube;
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        // Store UID 0 if no resource is present
+        cube.uids[i] = node[SKYBOX_NODE][side_name].as<UID>();
+    }
+    // Pass skybox with used uids to be loaded
+    skybox = new Skybox(cube);
+
+
     if (!node[CHILD_NODE].IsDefined())
     {
         // Loaded as an empty scene:
         loaded = true;
-
         return;
     }
-
-    SetName(node[SCENE_NAME].as<std::string>().c_str());
-    root->SetID(node[ROOT_ID].as<UID>());
+    
     const YAML::Node children_node = node[CHILD_NODE];
 
     for (unsigned i = 0; i < children_node.size(); ++i)
@@ -242,8 +212,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->scene_owner = this;
         child->Load(children_node[i]);
     }
-
-    App->navigation->BuildNavmesh(this);
 
     loaded = true;
 }
@@ -326,4 +294,25 @@ void Hachiko::Scene::Update() const
 {
     OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
+}
+
+Hachiko::Scene::Memento* Hachiko::Scene::CreateSnapshot()
+{
+    YAML::Node scene_data;
+    Save(scene_data);
+    std::stringstream stream;
+    stream << scene_data;
+    return new Memento(stream.str());
+}
+
+void Hachiko::Scene::Restore(const Memento* memento) const
+{
+    //we are swapping the whole scene with a new one (ModuleSceneManager handles that using event data)
+    const YAML::Node scene_data = YAML::Load(memento->GetContent());
+    const auto scene = new Scene();
+    scene->Load(scene_data);
+    Event e(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY);
+    e.SetEventData<EditorHistoryEntryRestore>(scene);
+    App->event->Publish(e);
+    App->editor->SetSelectedGO(nullptr);
 }

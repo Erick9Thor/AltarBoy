@@ -1,18 +1,14 @@
-General:
-  id: 130310266246910630
-  type: 3
-  hash: 7006234088666238769
+asset_hash: 7006234088666238769
 model_name: capsule
-material:
-  - id: 130310266247010630
-    name: DefaultMaterial
-mesh:
-  - id: 130310266246911630
-    material_index: 0
-name: RootNode
-transform: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-child:
-  - name: Capsule001
-    transform: [1, 0, 0, 0, 0, 5.96046448e-08, 0.99999994, 0, 0, -0.99999994, 5.96046448e-08, 0, 0, 0, 0, 1]
-    mesh_index:
-      - 0
+meshes:
+  - 1309944288732959230
+materials:
+  - 6750369022920963075
+prefab_id: 12073972053588366504
+resources:
+  - resource_id: 1309944288732959230
+    resource_type: 3
+  - resource_id: 6750369022920963075
+    resource_type: 1
+  - resource_id: 12073972053588366504
+    resource_type: 13

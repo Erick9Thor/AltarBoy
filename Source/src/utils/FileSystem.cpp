@@ -200,6 +200,14 @@ std::string Hachiko::FileSystem::GetFileExtension(const char* file_path)
     return extension;
 }
 
+std::string Hachiko::FileSystem::GetFileName(const char* file_path)
+{
+    std::string path = file_path;
+    path = path.substr(path.find_last_of("/\\") + 1);
+    path = path.substr(0, path.find_last_of("."));
+    return path;
+}
+
 Hachiko::PathNode Hachiko::FileSystem::GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext)
 {
     PathNode root;

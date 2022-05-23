@@ -15,19 +15,14 @@ namespace Hachiko
     public:
         ComponentButton(GameObject* container);
         ~ComponentButton() override = default;
-        
-        void Activate() override {}
 
-        static Type GetType();
+        void Activate() override
+        {
+        }
 
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
     };
-    
-    inline Component::Type Hachiko::ComponentButton::GetType()
-    {
-        return Type::BUTTON;
-    }
 } // namespace Hachiko

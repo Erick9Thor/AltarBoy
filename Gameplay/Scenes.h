@@ -2,8 +2,8 @@
 
 namespace Hachiko::Scenes
 {
-	constexpr const char* GAME = "assets/scenes/game.scene";
-	constexpr const char* WIN = "assets/scenes/win.scene";
-	constexpr const char* LOSE = "assets/scenes/lose.scene";
-	constexpr const char* MAIN_MENU = "assets/scenes/menu.scene";
+	static UID GAME = 0;
+	static UID WIN = 1;
+	static UID LOSE = 2;
+	static UID MAIN_MENU = 3;
 }

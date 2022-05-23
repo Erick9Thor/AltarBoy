@@ -21,7 +21,10 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container)
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
     delete controller;
-    animations.clear();
+    for (auto& animation : animations)
+    {
+        App->resources->ReleaseResource(animation);
+    }
 }
 
 void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms) 
@@ -120,8 +123,8 @@ void Hachiko::ComponentAnimation::DrawGui()
         {
             ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                     "Select Animation",
-                                                    ".*",
-                                                    "./library/animations/",
+                                                    ".fbx",
+                                                    "./assets/models/",
                                                     1,
                                                     nullptr,
                                                     ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
@@ -132,15 +135,24 @@ void Hachiko::ComponentAnimation::DrawGui()
         {
             if (ImGuiFileDialog::Instance()->IsOk())
             {
-                std::string filename = ImGuiFileDialog::Instance()->GetCurrentFileName();
-                const std::string uid = filename.substr(0, filename.find(".*"));
+                
+                std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
+                YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
 
-                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, Hachiko::UUID::StringToUID(uid)));
-                if (res != nullptr) // TODO: ADD CHECK FOR ADDED
+                for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
                 {
-                    HE_LOG(res->GetName().c_str());
-                    animations.push_back(res);
+                    Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+                    if (type == Resource::Type::ANIMATION)
+                    {
+                        UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+                        ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
+                        if (res != nullptr)
+                        {
+                            animations.push_back(res);
+                        }
+                    }
                 }
+
             }
 
             ImGuiFileDialog::Instance()->Close();

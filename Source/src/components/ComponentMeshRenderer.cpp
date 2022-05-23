@@ -13,6 +13,8 @@
 #include "ComponentCamera.h"
 #include "ComponentTransform.h"
 
+#include "modules/ModuleEvent.h"
+
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH_RENDERER, container)
 {
@@ -24,6 +26,8 @@ Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
 {
+    App->resources->ReleaseResource(mesh);
+    App->resources->ReleaseResource(material);
     delete[] node_cache;
 }
 
@@ -87,11 +91,13 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
 
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
+    App->resources->ReleaseResource(mesh);
     AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
 {
+    App->resources->ReleaseResource(material);
     material = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id));
 }
 
@@ -110,8 +116,14 @@ void Hachiko::ComponentMeshRenderer::DrawGui()
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)],
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)],
                             mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES)]);
-                ImGui::Checkbox("Visible", &visible);
-                ImGui::Checkbox("Navigable", &navigable);
+                if(ImGui::Checkbox("Visible", &visible))
+                {
+                    App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+                }
+                if(ImGui::Checkbox("Navigable", &navigable))
+                {
+                    App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+                }
             }
             ImGui::TreePop();
         }
@@ -138,8 +150,6 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     if (mesh != nullptr)
     {
         node[RENDERER_MESH_ID] = mesh->GetID();
-        node[MODEL_NAME] = model_name;
-        node[NODE_MESH_INDEX] = mesh_index;
         node[MESH_NAVIGABLE] = navigable;
         node[MESH_VISIBLE] = visible;
     }
@@ -147,7 +157,6 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     {
         node[RENDERER_MESH_ID] = 0;
         node[MODEL_NAME] = 0;
-        node[NODE_MESH_INDEX] = 0;
         node[MESH_VISIBLE] = true;
     }
 
@@ -163,14 +172,10 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
 
 void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 {
-    SetID(node[COMPONENT_ID].as<UID>());
-
     UID mesh_id = node[RENDERER_MESH_ID].as<UID>();
     UID material_id = node[RENDERER_MATERIAL_ID].as<UID>();
     if (mesh_id)
     {
-        model_name = node[MODEL_NAME].as<std::string>();
-        mesh_index = node[NODE_MESH_INDEX].as<int>();
         navigable = node[MESH_NAVIGABLE].IsDefined() ? node[MESH_NAVIGABLE].as<bool>() : false;
         visible = node[MESH_VISIBLE].IsDefined() ? node[MESH_VISIBLE].as<bool>() : true;
 
@@ -233,8 +238,8 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Material",
-                                                ".mat",
-                                                "./assets/materials/",
+                                                MATERIAL_EXTENSION,
+                                                ASSETS_FOLDER_MATERIAL,
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
@@ -249,10 +254,10 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             material_path.append(META_EXTENSION);
             YAML::Node material_node = YAML::LoadFile(material_path);
 
-            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[GENERAL_NODE][GENERAL_ID].as<UID>()));
+            ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
-                // Unload material
+                App->resources->ReleaseResource(material);
                 material = res;
             }
         }

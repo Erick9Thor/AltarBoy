@@ -110,31 +110,31 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateProgram(const char* vtx_shader_p
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()
 {
-    main_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex.glsl", ASSETS_FOLDER "/shaders/fragment.glsl");
+    main_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment.glsl");
     return main_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
 {
-    skybox_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_skybox.glsl", ASSETS_FOLDER "/shaders/fragment_skybox.glsl");
+    skybox_program = CreateProgram(SHADERS_FOLDER "vertex_skybox.glsl", SHADERS_FOLDER "fragment_skybox.glsl");
     return skybox_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 {
-    stencil_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_stencil.glsl", ASSETS_FOLDER "/shaders/fragment_stencil.glsl");
+    stencil_program = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
     return stencil_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceImageProgram()
 {
-    ui_image_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_ui.glsl", ASSETS_FOLDER "/shaders/fragment_ui.glsl");
+    ui_image_program = CreateProgram(SHADERS_FOLDER "vertex_ui.glsl", SHADERS_FOLDER "fragment_ui.glsl");
     return ui_image_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 {
-    ui_text_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_font.glsl", ASSETS_FOLDER "/Shaders/fragment_font.glsl");
+    ui_text_program = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
     return ui_text_program;
 }
 
@@ -202,7 +202,11 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
 
 void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
 {
-    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE), static_cast<int>(TextureSlots::SPECULAR), static_cast<int>(TextureSlots::NORMAL)};
+    static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE),
+                                                                       static_cast<int>(TextureSlots::SPECULAR),
+                                                                       static_cast<int>(TextureSlots::NORMAL),
+                                                                       static_cast<int>(TextureSlots::METALNESS),
+                                                                       static_cast<int>(TextureSlots::EMISSIVE)};
     main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
 
     const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
@@ -221,6 +225,8 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* compone
     material_data.specular_flag = material->HasSpecular();
     material_data.normal_flag = material->HasNormal();
     material_data.metalness_flag = material->HasMetalness();
+    material_data.emissive_flag = material->HasEmissive();
+    material_data.emissive_color = material->emissive_color;
     material_data.is_metallic = material->is_metallic;
     material_data.smoothness_alpha = material->smoothness_alpha;
     material_data.is_transparent = material->is_transparent;
@@ -240,6 +246,10 @@ void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* compone
     if (material_data.metalness_flag)
     {
         ModuleTexture::Bind(material->GetMetalnessId(), static_cast<int>(TextureSlots::METALNESS));
+    }
+    if (material_data.emissive_flag)
+    {
+        ModuleTexture::Bind(material->GetEmissiveId(), static_cast<int>(TextureSlots::EMISSIVE));
     }
 
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);

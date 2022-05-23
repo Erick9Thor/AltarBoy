@@ -1,21 +1,24 @@
 #include "core/hepch.h"
 #include "ComponentText.h"
 #include "ComponentTransform2D.h"
-#include "ComponentButton.h"
 #include "ComponentCamera.h"
 #include "resources/ResourceFont.h"
 
-#include "modules/ModuleProgram.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleResources.h"
 
 #include "core/rendering/Program.h"
+#include "modules/ModuleResources.h"
 
+#include "modules/ModuleEvent.h"
 
 Hachiko::ComponentText::ComponentText(GameObject* container) 
-	: Component(Type::TEXT, container) {
-}
+	: Component(Type::TEXT, container) {}
 
+Hachiko::ComponentText::~ComponentText()
+{
+    App->resources->ReleaseResource(font);
+}
 
 void Hachiko::ComponentText::DrawGui()
 {
@@ -32,11 +35,11 @@ void Hachiko::ComponentText::DrawGui()
         {
             ImGui::TextColored(warn_color, "No Generated Label!");
         }
-        
 
         if (ImGui::InputText("Text", &label_text, ImGuiInputTextFlags_EnterReturnsTrue))
         {
             SetText(label_text.c_str());
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
         if (ImGui::DragFloat("Font Size", &font_size, 2.0f, 0.0f, FLT_MAX))
@@ -44,33 +47,36 @@ void Hachiko::ComponentText::DrawGui()
             
             SetFontSize(static_cast<int>(font_size));
         }
+        CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
         if (ImGuiUtils::CompactColorPicker("Font Color", font_color.ptr()))
         {
             SetFontColor(font_color);
         }
+        CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
         const std::string title = "Select Font";
         if (ImGui::Button("Change Font"))
         {
             ImGuiFileDialog::Instance()->OpenDialog(title,
                                                     "Select Font",
-                                                    ".ttf,",
-                                                    "./assets/fonts/",
+                                                    FONT_EXTENSION,
+                                                    ASSETS_FOLDER_FONT,
                                                     1,
                                                     nullptr,
                                                     ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
                                                         | ImGuiFileDialogFlags_HideColumnDate);
         }
 
-        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+        if (ImGuiFileDialog::Instance()->Display(title))
         {
             if (ImGuiFileDialog::Instance()->IsOk())
             {
                 std::string font_path = ImGuiFileDialog::Instance()->GetFilePathName();
                 font_path.append(META_EXTENSION);
                 YAML::Node font_node = YAML::LoadFile(font_path);              
-                LoadFont(font_node[GENERAL_NODE][GENERAL_ID].as<UID>());
+                LoadFont(font_node[RESOURCES][0][RESOURCE_ID].as<UID>());
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
 
             ImGuiFileDialog::Instance()->Close();
@@ -99,6 +105,7 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
 
 void Hachiko::ComponentText::Save(YAML::Node& node) const
 {    
+    node[FONT_ID] = font ? font->GetID() : 0;
     node[FONT_COLOR] = font_color;
     node[FONT_SIZE] = font_size;
     node[FONT_LABEL_TEXT] = label_text;
@@ -106,11 +113,10 @@ void Hachiko::ComponentText::Save(YAML::Node& node) const
 
 void Hachiko::ComponentText::Load(const YAML::Node& node)
 {
-    SetID(node[COMPONENT_ID].as<UID>());   
     font_color = node[FONT_COLOR].as<float4>();
     font_size = node[FONT_SIZE].as<float>();
     label_text = node[FONT_LABEL_TEXT].as<std::string>();
-    LoadFont(node[COMPONENT_ID].as<UID>());
+    LoadFont(node[FONT_ID].as<UID>());
 }
 
 void Hachiko::ComponentText::SetText(const char* new_text)
@@ -141,15 +147,17 @@ void Hachiko::ComponentText::LoadFont(UID id)
 {
     try
     {
+        App->resources->ReleaseResource(font);
         font = static_cast<ResourceFont*>(App->resources->GetResource(Resource::Type::FONT, id));
-        BuildLabel(game_object->GetComponent<ComponentTransform2D>());
-        // TODO: Fix how this works, right now it uses component id to find font
-        SetID(id);
+        if (font)
+        {
+            BuildLabel(game_object->GetComponent<ComponentTransform2D>());
+        }
     }
     catch (std::exception& e)
     {
         // Catch exception and return unloaded font if fails
-        HE_LOG("Failed to load font %d", id);
+        HE_LOG("Failed to load font %s", std::to_string(id).c_str());
     }    
 }
 
