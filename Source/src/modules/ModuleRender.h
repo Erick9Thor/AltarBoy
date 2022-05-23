@@ -105,6 +105,7 @@ namespace Hachiko
         unsigned g_buffer_specular_smoothness = 0;
         unsigned g_buffer_normal = 0;
         unsigned g_buffer_position = 0;
+        unsigned g_buffer_emissive = 0;
         unsigned g_buffer_depth = 0;
         // Deferred rendering quad:
         unsigned deferred_quad_vao = 0;

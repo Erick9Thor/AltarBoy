@@ -9,6 +9,7 @@ layout (binding = 0) uniform sampler2D g_specular_smoothness;
 layout (binding = 1) uniform sampler2D g_diffuse;
 layout (binding = 2) uniform sampler2D g_normal;
 layout (binding = 3) uniform sampler2D g_position;
+layout (binding = 4) uniform sampler2D g_emissive;
 
 layout(std140, row_major, binding = 0) uniform Camera
 {
@@ -187,7 +188,8 @@ void main()
     float fragment_smoothness = (texture(g_specular_smoothness, texture_coords)).a;
     vec3  fragment_normal = (texture(g_normal, texture_coords)).rgb;
     vec3  fragment_position = (texture(g_position, texture_coords)).rgb;
-    vec3 view_direction = normalize(camera.pos - fragment_position);
+    vec3  fragment_emissive = (texture(g_emissive, texture_coords)).rgb;
+    vec3  view_direction = normalize(camera.pos - fragment_position);
 
     if (mode == 0)
     {
@@ -206,6 +208,8 @@ void main()
         }
 
         hdr_color += fragment_diffuse * lights.ambient.color.rgb * lights.ambient.intensity;
+
+        hdr_color += fragment_emissive;
 
         // Reinhard tone mapping
         vec3 ldr_color = hdr_color / (hdr_color + vec3(1.0));
@@ -232,10 +236,12 @@ void main()
     {
         fragment_color = vec4(fragment_normal, 1.0f);
     }
-    else 
+    else if (mode == 5)
     {
         fragment_color = vec4(fragment_position, 1.0f);
     }
-
-    // TODO: Add emissive.
+    else
+    {
+        fragment_color = vec4(fragment_emissive, 1.0f);
+    }
 }

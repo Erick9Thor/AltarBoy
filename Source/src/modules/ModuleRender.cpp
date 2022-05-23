@@ -95,7 +95,7 @@ void Hachiko::ModuleRender::GenerateGBuffer()
     // Generate diffuse color buffer as texture:
     glGenTextures(1, &g_buffer_diffuse);
     glBindTexture(GL_TEXTURE_2D, g_buffer_diffuse);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, default_width, default_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, default_width, default_height, 0, GL_RGB, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, g_buffer_diffuse, 0);    
@@ -126,6 +126,14 @@ void Hachiko::ModuleRender::GenerateGBuffer()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, g_buffer_position, 0);
+    
+    // Generate emissive color buffer as texture:
+    glGenTextures(1, &g_buffer_emissive);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_emissive);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, default_width, default_height, 0, GL_RGB, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, g_buffer_emissive, 0);  
 
     // Generate depth color buffer as texture:
     glGenTextures(1, &g_buffer_depth);
@@ -136,9 +144,13 @@ void Hachiko::ModuleRender::GenerateGBuffer()
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, g_buffer_depth, 0);
     
     // Pass the color attachments we're gonna use for g_buffer frame buffer to opengl:
-    constexpr size_t attachments_length = 4;
-    unsigned int attachments[attachments_length] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, 
-                                                    GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3};
+    constexpr size_t attachments_length = 5;
+
+    unsigned int attachments[attachments_length] = {
+        GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, 
+        GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4
+    };
+
     glDrawBuffers(attachments_length, attachments);
 
     GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -171,6 +183,10 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
     // Position color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, heigth, width, 0, GL_RGB, GL_FLOAT, NULL);
+
+    // Emissive color stored in g buffer:
+    glBindTexture(GL_TEXTURE_2D, g_buffer_emissive);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, heigth, width, 0, GL_RGB, GL_FLOAT, NULL);
 
     // Depth color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, g_buffer_depth);
@@ -292,24 +308,24 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-    //if (draw_skybox)
-    //{
-    //    scene->GetSkybox()->Draw(camera);
-    //}
-    //else
-    //{
-    //    const auto& clear_color = App->editor->scene_background;
-    //    glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-    //}
+    // if (draw_skybox)
+    // {
+    //     scene->GetSkybox()->Draw(camera);
+    // }
+    // else
+    // {
+    //     const auto& clear_color = App->editor->scene_background;
+    //     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+    // }
 
     // Clear default frame buffer:
-    //glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //glStencilMask(0XFF);
+    // glStencilMask(0XFF);
 
-    //glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // glEnable(GL_BLEND);
+    // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
     // Disable blending for deferred rendering as the meshes with transparent 
@@ -362,6 +378,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     // Bind position texture:
     glActiveTexture(GL_TEXTURE3);
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
+    // Binf emissive texture:
+    glActiveTexture(GL_TEXTURE4);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_emissive);
     
     program->BindUniformInts("mode", 1, &deferred_mode);
     
@@ -376,21 +395,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glReadBuffer(GL_DEPTH_ATTACHMENT);
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
 
-    /*if (outline_selection && outline_target)
-    {
-        glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
-        glStencilMask(0X00);
-        glDisable(GL_DEPTH_TEST);
+    // if (outline_selection && outline_target)
+    // {
+    //     glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
+    //     glStencilMask(0X00);
+    //     glDisable(GL_DEPTH_TEST);
 
-        Program* outline_program = App->program->GetStencilProgram();
-        outline_program->Activate();
-        outline_target->game_object->DrawStencil(camera, outline_program);
-        Program::Deactivate();
+    //     Program* outline_program = App->program->GetStencilProgram();
+    //     outline_program->Activate();
+    //     outline_target->game_object->DrawStencil(camera, outline_program);
+    //     Program::Deactivate();
 
-        glStencilMask(0XFF);
-        glStencilFunc(GL_ALWAYS, 0, 0xFF);
-        glEnable(GL_DEPTH_TEST);
-    }*/
+    //     glStencilMask(0XFF);
+    //     glStencilFunc(GL_ALWAYS, 0, 0xFF);
+    //     glEnable(GL_DEPTH_TEST);
+    // }
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
@@ -466,6 +485,11 @@ void Hachiko::ModuleRender::DeferredOptions()
     if (ImGui::RadioButton("Position", deferred_mode == 5))
     {
         deferred_mode = 5;
+    }
+
+    if (ImGui::RadioButton("Emissive", deferred_mode == 6))
+    {
+        deferred_mode = 6;
     }
 
     // TODO: Add emissive.
@@ -610,6 +634,7 @@ bool Hachiko::ModuleRender::CleanUp()
     glDeleteTextures(1, &g_buffer_specular_smoothness);
     glDeleteTextures(1, &g_buffer_position);
     glDeleteTextures(1, &g_buffer_normal);
+    glDeleteTextures(1, &g_buffer_emissive);
 
     FreeDeferredQuad();
 

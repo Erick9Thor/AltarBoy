@@ -11,6 +11,7 @@ layout (location = 0) out vec4 g_diffuse;
 layout (location = 1) out vec4 g_specular_smoothness;
 layout (location = 2) out vec4 g_normal;
 layout (location = 3) out vec4 g_position;
+layout (location = 4) out vec4 g_emissive;
 
 layout(std140, binding = 1) uniform Material
 {
@@ -117,6 +118,22 @@ void CalculateSpecularDiffuseSmoothness(
                      ((1 - material_smoothness_alpha)* diffuse_temp.a ));                    // false
     } 
 }
+
+// TODO: Add this to a common file.
+// TODO: Ask what's the purpose of alpha channel and if it's needed to store it.
+vec3 CalculateEmissive(vec3 texture_emissive_color, vec4 material_emissive_color, uint material_emissive_flag)
+{
+    vec3 emissive_color = material_emissive_color.rgb;
+
+    if (material_emissive_flag != 0)
+    {
+        emissive_color *= texture_emissive_color;
+    }
+
+    emissive_color *= material_emissive_color.a;
+
+    return emissive_color;
+}
  
 void main()
 {
@@ -161,4 +178,11 @@ void main()
 
     // Store the fragment position in rgb channels of g buffer texture for position:
     g_position.xyz = fragment.pos.xyz;
+
+    // Store the fragment emissive color in rgb channels of g buffer texture for emissive:
+    g_emissive.xyz = CalculateEmissive(
+        texture(textures[EMISSIVE_SAMPLER], fragment.tex_coord).rgb,
+        material.emissive_color,
+        material.emissive_flag
+    );
 }
