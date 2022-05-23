@@ -9,17 +9,323 @@ skybox:
   back_cube_id: 17476158828083105361
 root_id: 12140782261084320883
 child:
-  - id: 10975885172196684923
-    name: Main Camera
+  - id: 2872023854181859913
+    name: PlayerC
     enabled: true
     component:
-      - id: 1743340939787544045
+      - id: 1025704317075721422
+        type: 1
+        enabled: true
+        position: [0, 0.613225877, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 644119917079242216
+        type: 15
+        enabled: true
+        class_name: PlayerController
+        "'_movement_speed@float'": 0
+        "'_dash_indicator@GameObject*'": 10959303401567680609
+        "'_goal@GameObject*'": 4490362637945540161
+        "'_dash_duration@float'": 0
+        "'_dash_distance@float'": 0
+        "'_dash_progress@float'": 0
+        "'_dash_cooldown@float'": 0
+        "'_dash_timer@float'": 0
+        "'_dash_count@int'": 0
+        "'_max_dash_count@int'": 0
+        "'_is_dashing@bool'": false
+        "'_has_cooldown@bool'": false
+        "'_is_falling@bool'": false
+        "'_dash_start@math::float3'": [0, 0, 0]
+        "'_dash_direction@math::float3'": [0, 0, 0]
+        "'_raycast_min_range@float'": 0.00100000005
+        "'_raycast_max_range@float'": 15
+        "'_attack_radius@float'": 0
+        "'_attack_cooldown@float'": 0
+        "'_should_rotate@bool'": false
+        "'_rotation_progress@float'": 0
+        "'_rotation_duration@float'": 0
+        "'_rotation_start@math::Quat'": [0, 0, 0, 1]
+        "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+    child:
+      - id: 8485197372022335238
+        name: Torso_01
+        enabled: true
+        component:
+          - id: 12577235410530299648
+            type: 1
+            enabled: true
+            position: [0, 0.647756636, -0.0772219971]
+            rotation: [3.09086232e-08, 0.707106829, 0.707106829, -3.09086232e-08]
+            scale: [0.016898457, 0.0168984346, 0.0168984346]
+          - id: 5906580799296556394
+            type: 2
+            enabled: true
+            mesh_id: 15417489233916492426
+            navigable: false
+            visible: true
+            material_id: 3732015406589361445
+      - id: 567757740028815462
+        name: Arm_01
+        enabled: true
+        component:
+          - id: 17053225221220083561
+            type: 1
+            enabled: true
+            position: [-0.102162249, 0.440588713, -0.117372878]
+            rotation: [-0.572700977, 0.0554051884, -0.366084248, 0.731386483]
+            scale: [0.0304086301, 0.0304086208, 0.0304086208]
+          - id: 13857874213913815835
+            type: 2
+            enabled: true
+            mesh_id: 6825625381101298616
+            navigable: false
+            visible: true
+            material_id: 3732015406589361445
+          - id: 8827068121915176937
+            type: 2
+            enabled: true
+            mesh_id: 7931117650464535034
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+          - id: 1610895572384180988
+            type: 2
+            enabled: true
+            mesh_id: 12966638051790020970
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+      - id: 12454699851221254138
+        name: Leg_01
+        enabled: true
+        component:
+          - id: 8927610013841896812
+            type: 1
+            enabled: true
+            position: [-0.148603737, -0.29355067, -0.0482582934]
+            rotation: [-0.70710665, 0, 0, 0.707106948]
+            scale: [0.0253999997, 0.0253999941, 0.0253999941]
+          - id: 1525960616872789381
+            type: 2
+            enabled: true
+            mesh_id: 2620627679532038903
+            navigable: false
+            visible: true
+            material_id: 3732015406589361445
+      - id: 8057205420005511666
+        name: TorsoArmour_01
+        enabled: true
+        component:
+          - id: 10665610562864032294
+            type: 1
+            enabled: true
+            position: [-0.00357382488, 0.465125591, -0.0798330978]
+            rotation: [0.642787874, 0, 0, 0.766044259]
+            scale: [0.0253999997, 0.0254000239, 0.0254000239]
+          - id: 6652551172428281312
+            type: 2
+            enabled: true
+            mesh_id: 14215175710258194067
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+          - id: 11792439230897840547
+            type: 2
+            enabled: true
+            mesh_id: 492702412559852976
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+      - id: 6793626748552613609
+        name: HipArmour_01
+        enabled: true
+        component:
+          - id: 2598928396657523124
+            type: 1
+            enabled: true
+            position: [-2.28536878e-09, 0.21267128, -0.0762471482]
+            rotation: [-0.70710665, 0, 0, 0.707106948]
+            scale: [0.0253999997, 0.0253999941, 0.0253999941]
+          - id: 5741264696578649381
+            type: 2
+            enabled: true
+            mesh_id: 1715900030195424151
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+      - id: 18090268012289585980
+        name: MechanicLeg_01
+        enabled: true
+        component:
+          - id: 4569903106881754616
+            type: 1
+            enabled: true
+            position: [-0.119662777, -0.0179719888, -0.0130566554]
+            rotation: [0.041600924, -0.0131165022, -0.130402103, 0.990501225]
+            scale: [0.0254000034, 0.0253999997, 0.0253999997]
+          - id: 7633410508143863151
+            type: 2
+            enabled: true
+            mesh_id: 2154420379989870412
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+          - id: 10288899324324952126
+            type: 2
+            enabled: true
+            mesh_id: 11990669548665173842
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+      - id: 10922032940784974075
+        name: MaskPiece_01
+        enabled: true
+        component:
+          - id: 6175417820041224454
+            type: 1
+            enabled: true
+            position: [-0.0770082325, 0.667488158, -0.00711565465]
+            rotation: [-0.70710665, 0, 0, 0.707106948]
+            scale: [0.0253999997, 0.0253999941, 0.0253999941]
+          - id: 10967341347576032694
+            type: 2
+            enabled: true
+            mesh_id: 9690104152344260425
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+          - id: 2450662780397067562
+            type: 2
+            enabled: true
+            mesh_id: 1248698053874246545
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+      - id: 11854301156016720110
+        name: MechanicArm_01
+        enabled: true
+        component:
+          - id: 11738036706683363106
+            type: 1
+            enabled: true
+            position: [-0.335916042, -0.0544057339, 1.07213855e-05]
+            rotation: [0.25358817, 0.596063077, 0.604468226, -0.46370253]
+            scale: [0.0253999941, 0.0253999922, 0.0254000053]
+          - id: 2358276465001085244
+            type: 2
+            enabled: true
+            mesh_id: 9802222454163498197
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+          - id: 2658999228052786643
+            type: 2
+            enabled: true
+            mesh_id: 8005919720121740191
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+      - id: 13634434486902725267
+        name: Reproportion_01
+        enabled: true
+        component:
+          - id: 8240227906510477780
+            type: 1
+            enabled: true
+            position: [0.393518627, 0.00644586375, -0.0880567729]
+            rotation: [-0.0913622752, 0.722277522, 0.0895021707, 0.679674506]
+            scale: [0.0254000127, 0.0253999978, 0.0254000127]
+          - id: 1381230249056221114
+            type: 2
+            enabled: true
+            mesh_id: 3190431119747523934
+            navigable: false
+            visible: true
+            material_id: 8628746369642354336
+          - id: 8372778336332034098
+            type: 2
+            enabled: true
+            mesh_id: 17272673726904041534
+            navigable: false
+            visible: true
+            material_id: 1036670598364638300
+          - id: 11892698920706021227
+            type: 2
+            enabled: true
+            mesh_id: 14750993830365075161
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+          - id: 16928684968420891358
+            type: 2
+            enabled: true
+            mesh_id: 16019881623299926241
+            navigable: false
+            visible: true
+            material_id: 3732015406589361445
+      - id: 1892471904187674381
+        name: Jetpack_01
+        enabled: true
+        component:
+          - id: 18174146351409334249
+            type: 1
+            enabled: true
+            position: [0, 0.414363265, -0.192427292]
+            rotation: [-0.57357651, 0, 0, 0.819151998]
+            scale: [0.0389276855, 0.0389276743, 0.0389276743]
+          - id: 793232877729880893
+            type: 2
+            enabled: true
+            mesh_id: 17414516408912328845
+            navigable: false
+            visible: true
+            material_id: 3732015406589361445
+          - id: 6764782371174635875
+            type: 2
+            enabled: true
+            mesh_id: 8447702738076971672
+            navigable: false
+            visible: true
+            material_id: 1739185857870868275
+          - id: 5464909953124308105
+            type: 2
+            enabled: true
+            mesh_id: 14816985851976778809
+            navigable: false
+            visible: true
+            material_id: 2403324920938806055
+      - id: 10959303401567680609
+        name: DashIndicator
+        enabled: true
+        component:
+          - id: 795036053384642853
+            type: 1
+            enabled: true
+            position: [0, -0.203772038, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - id: 4490362637945540161
+        name: Goal
+        enabled: true
+        component:
+          - id: 17623066769824776696
+            type: 1
+            enabled: true
+            position: [-23.9108429, 1.12222564, -30.2674046]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+  - id: 14737883786191737945
+    name: MainCamera
+    enabled: true
+    component:
+      - id: 8773540846526246605
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
-        scale: [1, 1, 1]
-      - id: 14990744334046851246
+        rotation: [4.03840517e-08, 0.923879504, -0.382683456, 1.6727622e-08]
+        scale: [1.00000012, 1, 1]
+      - id: 5974161483135473959
         type: 4
         enabled: true
         frustum:
@@ -27,7 +333,158 @@ child:
           far_distance: 1000
           fov: 65
           position: [0, 0, 0]
-          front: [0, 0, 1]
-          up: [0, 1, 0]
-          type: 0
+          front: [-3.55271368e-15, -0.707106829, -0.707106709]
+          up: [8.74227624e-08, 0.707106709, -0.707106829]
+          type: 3
           pinned_camera: [0, 0, 0]
+      - id: 7142798221017834895
+        type: 15
+        enabled: true
+        class_name: PlayerCamera
+        "'_relative_position_to_player@math::float3'": [0, 0, 0]
+        "'_player@GameObject*'": 0
+        "'_follow_delay@float'": 0
+  - id: 15456960405303195264
+    name: plane
+    enabled: true
+    component:
+      - id: 18247981217657905434
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [50, 1, 50]
+    child:
+      - id: 17377634438968543877
+        name: Plane001
+        enabled: true
+        component:
+          - id: 18094582774345686006
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999285, 0.999999285]
+          - id: 10994749954463604364
+            type: 2
+            enabled: true
+            mesh_id: 4601319148081155683
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+  - id: 12879412908031305474
+    name: Enemies
+    enabled: true
+    component:
+      - id: 531496092066644912
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+  - id: 11923272689244651400
+    name: Debug
+    enabled: true
+    component:
+      - id: 3120004241229737792
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 1649054559869719545
+        type: 15
+        enabled: true
+        class_name: DebugManager
+        "'_button_back@ComponentButton*'": 0
+    child:
+      - id: 216963862465676777
+        name: Canvas
+        enabled: true
+        component:
+          - id: 1722971268025175005
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - id: 7680921748218669618
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1007, 570]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - id: 5063820963557956852
+            type: 8
+            enabled: true
+          - id: 16221606169021504904
+            type: 9
+            enabled: true
+          - id: 16094624797694857299
+            type: 12
+            enabled: true
+        child:
+          - id: 14977375268038615423
+            name: Background
+            enabled: true
+            component:
+              - id: 11126416795166393399
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 10680797923934252004
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [220, 300]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.150000006, 0.699999988]
+              - id: 1838336717936455055
+                type: 9
+                enabled: true
+              - id: 16723952144158951466
+                type: 11
+                enabled: true
+                image_id: 12023432331947101770
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 4035928358135351135
+            name: GameObject
+            enabled: true
+            component:
+              - id: 15211560369801576723
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 9012214572309622403
+                type: 10
+                enabled: true
+                position: [0, 0, 0]
+                size: [20, 20]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.5, 0.5]
+              - id: 13924695754791418217
+                type: 9
+                enabled: true
+              - id: 9005081956507072111
+                type: 12
+                enabled: true
+              - id: 9668862030086242921
+                type: 11
+                enabled: true
+                image_id: 0
+                hover_image_id: 0
+                use_image: false
+                use_hover_image: false

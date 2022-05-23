@@ -140,6 +140,10 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
 {
     constexpr bool is_hover_image = true;
+    if (node[USE_IMAGE].IsDefined())
+    {
+        use_image = node[USE_IMAGE].as<bool>();    
+    }
     LoadImageResource(node[IMAGE_IMAGE_ID].as<UID>(), !is_hover_image);
     LoadImageResource(node[IMAGE_HOVER_IMAGE_ID].as<UID>(), is_hover_image);
 }
