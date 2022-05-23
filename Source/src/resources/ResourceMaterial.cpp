@@ -223,7 +223,7 @@ void Hachiko::ResourceMaterial::AddTexture(ResourceTexture::Type type)
 
             YAML::Node texture_node = YAML::LoadFile(texture_path);
             ResourceTexture* res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
-        
+
             if (res != nullptr)
             {
                 SetTexture(res, type);

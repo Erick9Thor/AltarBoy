@@ -10,6 +10,7 @@
 
 Hachiko::TextureBatch::~TextureBatch() 
 {
+
     for (auto& resource : resources)
     {
         delete resource.second;
@@ -18,7 +19,7 @@ Hachiko::TextureBatch::~TextureBatch()
 
     for (TextureArray* textureArray : texture_arrays)
     {
-        glDeleteTextures(textureArray->depth, &textureArray->id);
+        glDeleteTextures(1, &textureArray->id);
         delete textureArray;
     }
     texture_arrays.clear();
@@ -279,11 +280,8 @@ void Hachiko::TextureBatch::BindTextures()
     const std::vector<int> texture_slots = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
     App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
-    //glEnable(GL_TEXTURE_2D_ARRAY);
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
-        //glUniform1i(1 + i, 1 + i);
-        //glEnable(GL_TEXTURE_2D_ARRAY);
         glActiveTexture(GL_TEXTURE1 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
     }
