@@ -114,10 +114,7 @@ void Hachiko::ComponentMeshRenderer::OnTransformUpdated()
 
 void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
 {
-    if (mesh)
-    {
-        App->resources->ReleaseResource(mesh->GetID());
-    }
+    App->resources->ReleaseResource(mesh);
     mesh = res;
 
     if (!mesh)
