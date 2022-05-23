@@ -166,7 +166,9 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		// Make the player look the mouse:
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::RANGED_ATTACKING;
-		RangedAttack(transform, current_position);
+		float3 t_pos = current_position;
+		t_pos.y += 0.5;
+		RangedAttack(transform, t_pos);
 
 		attack_current_cd = _stats._attack_cd;
 	}
@@ -222,17 +224,17 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
-	const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
+	const float3 forward = transform->GetFront().Normalized();
 	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
 		forward * _raycast_max_range + current_position);
 
 	if (hit_game_object)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 		if (!enemy)	return;
 		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 	}
 }
 
