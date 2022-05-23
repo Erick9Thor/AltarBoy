@@ -127,6 +127,15 @@ void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std
 		}
 	}
 
+	if(serialized_fields.find("_spawn_is_initial") != serialized_fields.end())
+	{
+		const SerializedField& _spawn_is_initial_sf = serialized_fields["_spawn_is_initial"];
+		if (_spawn_is_initial_sf.type_name == "bool")
+		{
+			_spawn_is_initial = std::any_cast<bool>(_spawn_is_initial_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_player") != serialized_fields.end())
 	{
 		const SerializedField& _player_sf = serialized_fields["_player"];
@@ -148,6 +157,8 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_attack_range"] = SerializedField(std::string("_attack_range"), std::make_any<int>(_attack_range), std::string("int"));
 
 	serialized_fields["_spawn_pos"] = SerializedField(std::string("_spawn_pos"), std::make_any<float3>(_spawn_pos), std::string("float3"));
+
+	serialized_fields["_spawn_is_initial"] = SerializedField(std::string("_spawn_is_initial"), std::make_any<bool>(_spawn_is_initial), std::string("bool"));
 
 	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 }
@@ -662,6 +673,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_ui_damage") != serialized_fields.end())
+	{
+		const SerializedField& _ui_damage_sf = serialized_fields["_ui_damage"];
+		if (_ui_damage_sf.type_name == "GameObject*")
+		{
+			_ui_damage = std::any_cast<GameObject*>(_ui_damage_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_state") != serialized_fields.end())
 	{
 		const SerializedField& _state_sf = serialized_fields["_state"];
@@ -727,6 +747,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_rotation_target"] = SerializedField(std::string("_rotation_target"), std::make_any<math::Quat>(_rotation_target), std::string("math::Quat"));
 
 	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<GameObject*>(_camera), std::string("GameObject*"));
+
+	serialized_fields["_ui_damage"] = SerializedField(std::string("_ui_damage"), std::make_any<GameObject*>(_ui_damage), std::string("GameObject*"));
 
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<PlayerState>(_state), std::string("PlayerState"));
 }
