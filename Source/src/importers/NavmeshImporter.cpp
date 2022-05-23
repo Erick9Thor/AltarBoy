@@ -159,7 +159,7 @@ Hachiko::Resource* Hachiko::NavmeshImporter::Load(UID id)
 
 void Hachiko::NavmeshImporter::CreateNavmeshFromScene(Scene* scene, UID id)
 {
-    ResourceNavMesh* navmesh = App->navigation->BuildNavmesh(scene);
+    ResourceNavMesh* navmesh = App->navigation->BuildNavmeshResource(scene);
     Save(id, navmesh);
     delete navmesh;
 }

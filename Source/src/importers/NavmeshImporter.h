@@ -15,6 +15,7 @@ namespace Hachiko
     public:
 
         friend class SceneImporter;
+        friend class ModuleNavigation;
 
         struct TileCacheSetHeader
         {
