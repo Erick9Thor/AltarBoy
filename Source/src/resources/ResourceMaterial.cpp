@@ -16,7 +16,7 @@ void Hachiko::ResourceMaterial::DrawGui()
 
     ImGuiUtils::Combo("Material Type", material_types, is_metallic);
 
-    ImGuiUtils::Combo("", transparency, is_transparent);
+    ImGuiUtils::Combo("Transparency", transparency, is_transparent);
 
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
