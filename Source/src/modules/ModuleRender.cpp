@@ -45,9 +45,39 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_FRONT_AND_BACK);  
 
+    //////////////////////////////////////////// <<<<< FOR ALVARO
+    glDisable(GL_CULL_FACE); // Disable cull backward faces
+
+    float positions[] = {
+        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
+    };
+
+    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
+
+    glGenVertexArrays(1, &billboard_vao);
+    glBindVertexArray(billboard_vao);
+
+    glGenBuffers(1, &billboard_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, billboard_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
+
+    glGenBuffers(1, &billboard_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, billboard_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+    glBindVertexArray(0);
+    //////////////////////////////////////////// <<<<< FOR ALVARO
 
     return true;
 }
@@ -231,6 +261,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         }
     }
     Program::Deactivate();
+
+    //////////////////////////////////////////// <<<<< FOR ALVARO
+    Program* billboard_program = App->program->GetBillboardProgram();
+    billboard_program->Activate();
+
+    float4x4 identity = float4x4::identity;
+    billboard_program->BindUniformFloat4x4("model", identity.ptr()); //newModelMatrix.ptr());
+    billboard_program->BindUniformFloat4x4("view", identity.ptr());// & camera->GetViewMatrix()[0][0]); //view->ptr());camera->GetViewMatrix(), camera->GetProjectionMatrix()
+    billboard_program->BindUniformFloat4x4("proj", identity.ptr()); //&camera->GetProjectionMatrix()[0][0]); //proj->ptr());
+
+    glBindVertexArray(billboard_vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(0);
+    Program::Deactivate();
+    //////////////////////////////////////////// <<<<< FOR ALVARO
 
     if (outline_selection && outline_target)
     {

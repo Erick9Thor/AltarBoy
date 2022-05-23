@@ -107,5 +107,9 @@ namespace Hachiko
         std::vector<float> ms_log;
         float current_fps = 0.0f;
         float current_ms = 0.0f;
+
+        unsigned billboard_vao;
+        unsigned billboard_vbo;
+        unsigned billboard_ebo;
     };
 }
