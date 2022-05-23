@@ -6,5 +6,6 @@ out vec4 outColor;
 
 void main()
 {	
-    outColor = texture2D(diffuseMap,  uv0);
+    //outColor = texture2D(diffuseMap,  uv0);
+    outColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

@@ -29,31 +29,23 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    //Program* billboard_program = App->program->GetBillboardProgram();
+    Program* billboard_program = App->program->GetBillboardProgram();
 
-    //if (billboard_program == nullptr)
-    //{
-    //    return;
-    //}
+    if (billboard_program == nullptr)
+    {
+        return;
+    }
 
-    //billboard_program->Activate();
+    billboard_program->Activate();
 
     glActiveTexture(GL_TEXTURE0);
     int glTexture = 0;
-    if (texture != nullptr)
-    {
-        glTexture = texture->GetId();
-        Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
-    }
+    //if (texture != nullptr)
+    //{
+    //    glTexture = texture->GetImageId();
+    //    Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    //}
     int hasDiffuseMap = texture ? 1 : 0;
-
-    glDepthFunc(GL_ALWAYS);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    glBegin(GL_LINES);
-    glVertex2f(0.5, 0.5);
-    glVertex2f(-0.5, -0.5);
-    glEnd();
 
     //glDepthMask(GL_FALSE);
     //glEnable(GL_BLEND);
@@ -66,10 +58,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     //{
     //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //}
-    //glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    /*
+    glBindVertexArray(vao);
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
 
     float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
@@ -132,9 +121,10 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
     }
 
-    program->BindUniformFloat4x4("model" , newModelMatrix.ptr());
-    program->BindUniformFloat4x4("view", view->ptr());
-    program->BindUniformFloat4x4("proj", proj->ptr());
+    float4x4 identity = float4x4::identity;
+    billboard_program->BindUniformFloat4x4("model", identity.ptr()); //newModelMatrix.ptr());
+    billboard_program->BindUniformFloat4x4("view", identity.ptr()); //view->ptr());
+    billboard_program->BindUniformFloat4x4("proj", identity.ptr()); //proj->ptr());
 
     float4 color = float4::one;
     if (colorOverLifetime)
@@ -142,30 +132,32 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         gradient->getColorAt(colorFrame, color.ptr());
     }
 
-    program->BindUniformInts("diffuseMap", 1, &glTexture);
-    program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
-    program->BindUniformFloat4("inputColor", color.ptr());
-    program->BindUniformFloat3("intensity", textureIntensity.ptr());
-    program->BindUniformFloat("currentFrame", &currentFrame);
-    program->BindUniformInts("Xtiles", 1, &Xtiles);
-    program->BindUniformInts("Ytiles", 1, &Ytiles);
+    //program->BindUniformInts("diffuseMap", 1, &glTexture);
+    //program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
+    //program->BindUniformFloat4("inputColor", color.ptr());
+    //program->BindUniformFloat3("intensity", textureIntensity.ptr());
+    //program->BindUniformFloat("currentFrame", &currentFrame);
+    //program->BindUniformInts("Xtiles", 1, &Xtiles);
+    //program->BindUniformInts("Ytiles", 1, &Ytiles);
 
-    int flip_x = flipTexture[0] ? 1 : 0;
-    int flip_y = flipTexture[1] ? 1 : 0;
-    program->BindUniformInts("flipX", 1, &flip_x);
-    program->BindUniformInts("flipY", 1, &flip_y);
-    */
+    //int flip_x = flipTexture[0] ? 1 : 0;
+    //int flip_y = flipTexture[1] ? 1 : 0;
+    //program->BindUniformInts("flipX", 1, &flip_x);
+    //program->BindUniformInts("flipY", 1, &flip_y);
+
+    glUniform1i(glGetUniformLocation(billboard_program->GetId(), "diffuseMap"), 0);
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, glTexture);
-
-    glDrawBuffer(GL_DYNAMIC_DRAW);
-    //glDrawArrays(GL_TRIANGLES, 0, 4);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    
+    // Clear
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glDepthFunc(GL_LESS);
+    Program::Deactivate();
     //glDisable(GL_BLEND);
     //glDepthMask(GL_TRUE);
-    //billboard_program->Deactivate();
 }
 
 void Hachiko::ComponentBillboard::DrawGui()
@@ -196,7 +188,7 @@ void Hachiko::ComponentBillboard::DrawGui()
     {
         if (texture != nullptr)
         {
-            ImGui::Image(reinterpret_cast<void*>(texture->GetId()), ImVec2(80, 80));
+            ImGui::Image(reinterpret_cast<void*>(texture->GetImageId()), ImVec2(80, 80));
             ImGui::SameLine();
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", texture->width, texture->height);
@@ -241,7 +233,7 @@ void Hachiko::ComponentBillboard::AddTexture()
     const std::string title = "Select billboard texture ";
     ResourceTexture* res = nullptr;
 
-    if (ImGui::Button(StringUtils::Concat("##", " Texture").c_str()))
+    if (ImGui::Button("Add Texture"))
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Texture",

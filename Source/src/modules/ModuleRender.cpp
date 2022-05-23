@@ -45,6 +45,10 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_FRONT_AND_BACK);  
+
+
     return true;
 }
 
