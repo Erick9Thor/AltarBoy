@@ -67,7 +67,7 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
     glGenRenderbuffers(1, &depth_stencil_buffer);
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 800, 600);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, 800, 600);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -197,7 +197,7 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
 
     // TODO: Do we need this for G buffer as well? If so, do it.
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, heigth, width);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
@@ -222,7 +222,8 @@ void Hachiko::ModuleRender::CreateContext()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // we want a double buffer
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // we want to have a depth buffer with 24 bits
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
+    //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // we want to have a depth buffer with 24 bits
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
 
@@ -304,7 +305,8 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
-void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling)
+void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, 
+    ComponentCamera* culling)
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
@@ -327,12 +329,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     // glEnable(GL_BLEND);
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-
-    // Disable blending for deferred rendering as the meshes with transparent 
-    // materials are gonna be rendered with forward rendering after the 
-    // deferred lighting pass:
-    glDisable(GL_BLEND);
-
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     Program* program = App->program->GetDeferredGeometryProgram();
     
@@ -342,6 +338,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     glBindFramebuffer(GL_FRAMEBUFFER, g_buffer);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Disable blending for deferred rendering as the meshes with transparent 
+    // materials are gonna be rendered with forward rendering after the 
+    // deferred lighting pass:
+    glDisable(GL_BLEND);
 
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
@@ -355,9 +356,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     }
 
     Program::Deactivate();
-
-    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
-   
+    
+    // Draw debug draw stuff to the g-buffer:
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), 
+        camera->GetProjectionMatrix(), fb_height, fb_width);
+    
     // Light Pass:
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -378,7 +381,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     // Bind position texture:
     glActiveTexture(GL_TEXTURE3);
     glBindTexture(GL_TEXTURE_2D, g_buffer_position);
-    // Binf emissive texture:
+    // Bind emissive texture:
     glActiveTexture(GL_TEXTURE4);
     glBindTexture(GL_TEXTURE_2D, g_buffer_emissive);
     
@@ -390,10 +393,11 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
 
     // Blit g_buffer depth buffer to frame_buffer to be used for forward 
     // rendering pass:
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
-    glReadBuffer(GL_DEPTH_ATTACHMENT);
-    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_DEPTH_BUFFER_BIT, GL_LINEAR);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, 
+        GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
     // if (outline_selection && outline_target)
     // {
