@@ -44,6 +44,11 @@ Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
 {
     const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
+    if (!FileSystem::Exists(material_library_path.c_str()))
+    {
+        return nullptr;
+    }
+
     YAML::Node node = YAML::LoadFile(material_library_path);
     ResourceMaterial* material = new ResourceMaterial(id);
 
