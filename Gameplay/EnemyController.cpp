@@ -12,7 +12,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _aggro_range(4)
 	, _attack_range(1.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
-	, _stats(2, 2, 5, 10)
+	, _combat_stats()
 {
 }
 
@@ -20,19 +20,25 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	_attack_range = 1.5f;
+
+	_combat_stats._attack_power = 1;
+	_combat_stats._attack_cd = 1;
+	_combat_stats._move_speed = 4;
+	_combat_stats._max_hp = 4;
+	_combat_stats._current_hp = _combat_stats._max_hp;
 }
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
-	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
+	if(!_player)	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
 	_player_controller = _player->GetComponent<PlayerController>();
 	transform = game_object->GetComponent<ComponentTransform>();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
-	if (!_stats.IsAlive())
+	if (!_combat_stats.IsAlive())
 	{
 		return;
 	}
@@ -41,7 +47,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	_current_pos = transform->GetGlobalPosition();
 
 	float dist_to_player = _current_pos.Distance(_player_pos);
-	if (dist_to_player <= _aggro_range)
+	if (dist_to_player <= _aggro_range && _player_controller->IsAlive())
 	{
 		if (dist_to_player <= _attack_range)
 		{
@@ -55,24 +61,23 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	else
 	{
 		GoBack();
-	}
-
-	if (_stats._current_hp <= 0)
-	{
-		DestroyEntity();
-		_stats._is_alive = false;
-	}
-	
+	}	
 }
 
 Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 {
-	return _stats;
+	return _combat_stats;
 }
 
-void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage)
+void Hachiko::Scripting::EnemyController::RegisterPlayerHit(int player_atk)
 {
-	_stats.ReceiveDamage(damage);
+	if (!_combat_stats.IsAlive())	return;
+
+	_combat_stats.ReceiveDamage(player_atk);
+	if (!_combat_stats.IsAlive())
+	{
+		DestroyEntity();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::Attack()
@@ -85,8 +90,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
-	_player_controller->_stats.ReceiveDamage(_stats._attack_power);
-	_attack_cooldown = _stats._attack_cd;
+	_player_controller->RegisterEnemyHit(_combat_stats._attack_power);
+	_attack_cooldown = _combat_stats._attack_cd;
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
@@ -105,7 +110,7 @@ void Hachiko::Scripting::EnemyController::GoBack()
 void Hachiko::Scripting::EnemyController::Move()
 {
 	math::float3 dir = (_target_pos - game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()).Normalized();
-	math::float3 step = dir * _stats._move_speed;
+	math::float3 step = dir * _combat_stats._move_speed;
 	_current_pos += step;
 
 	transform->SetGlobalPosition(_current_pos);

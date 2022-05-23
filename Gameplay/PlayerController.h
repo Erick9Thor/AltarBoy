@@ -48,12 +48,15 @@ private:
 	void HandleInput(math::float3& current_position);
 
 public:
-	SERIALIZE_FIELD(Stats, _stats);
 	void CheckGoal(const float3& current_position);
-
+	void RegisterEnemyHit(int enemy_atk);
+	void UpdateHealthBar();
+	
+	bool IsAlive() { return _combat_stats._current_hp > 0; }
 private:
-	SERIALIZE_FIELD(float, _movement_speed);
+	SERIALIZE_FIELD(Stats, _combat_stats);
 
+	// Player specific
 	SERIALIZE_FIELD(GameObject*, _dash_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
@@ -80,9 +83,14 @@ private:
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
 
+	SERIALIZE_FIELD(GameObject*, _hp_cell_1);
+	SERIALIZE_FIELD(GameObject*, _hp_cell_2);
+	SERIALIZE_FIELD(GameObject*, _hp_cell_3);
+	std::vector<GameObject*> hp_cells;
+
 	float attack_current_cd = 0.0f;
 
-	bool _is_god_mode = false;
+	bool _god_mode = false;
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 };

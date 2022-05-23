@@ -23,7 +23,7 @@ namespace Hachiko
             void OnUpdate() override;
 
             Stats& GetStats();
-            void ReceiveDamage(int damage);
+            void RegisterPlayerHit(int player_atk);
 
         private:
             void Attack();
@@ -36,12 +36,13 @@ namespace Hachiko
             void DestroyEntity();
 
         private:
-            SERIALIZE_FIELD(Stats, _stats);
+            SERIALIZE_FIELD(Stats, _combat_stats);
+
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
 
-            GameObject* _player;
+            SERIALIZE_FIELD(GameObject*, _player);;
             PlayerController* _player_controller;
             ComponentTransform* transform;
             math::float3 _player_pos;

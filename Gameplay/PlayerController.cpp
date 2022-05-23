@@ -6,12 +6,12 @@
 
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
+#include <components/ComponentImage.h>
 #include <modules/ModuleSceneManager.h>
 #include <core/GameObject.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
-	, _movement_speed(0.0f)
 	, _dash_indicator(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
@@ -33,7 +33,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_start(math::Quat::identity)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
-	, _stats(5, 2, 10, 10)
+	, _combat_stats()
 	, _state(PlayerState::IDLE)
 {
 }
@@ -46,22 +46,33 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_attack_radius = 4.0f;
 	_attack_cooldown = 0.2f;
 	_dash_count = 2;
-	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
 	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
 	_dash_timer = 0.0f;
 	_max_dash_count = _dash_count;
-	_is_god_mode = false;
+	_god_mode = false;
+
+	_combat_stats._attack_power = 2;
+	_combat_stats._attack_cd = 1;
+	_combat_stats._move_speed = 7.0f;
+	_combat_stats._max_hp = 3;
+	_combat_stats._current_hp = _combat_stats._max_hp;
+
+	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3)
+	{
+		HE_LOG("Error loading HP Cells UI");
+		return;
+	}
+
+	hp_cells.push_back(_hp_cell_1);
+	hp_cells.push_back(_hp_cell_2);
+	hp_cells.push_back(_hp_cell_3);
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
-	if (_stats._current_hp <= 0)
-	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
-	}
 
 	// Set state to idle, it will be overriden if there is a movement:
 	_state = PlayerState::IDLE;
@@ -167,7 +178,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		_state = PlayerState::RANGED_ATTACKING;
 		RangedAttack(transform, current_position);
 
-		attack_current_cd = _stats._attack_cd;
+		attack_current_cd = _combat_stats._attack_cd;
 	}
 	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
 	{
@@ -175,7 +186,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 
-		attack_current_cd = _stats._attack_cd;
+		attack_current_cd = _combat_stats._attack_cd;
 	}
 }
 
@@ -208,7 +219,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	//loop in enemies hit
 	for (Hachiko::GameObject* enemy : enemies_hit)
 	{
-		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power);
+		enemy->GetComponent<EnemyController>()->RegisterPlayerHit(_combat_stats._attack_power);
 	}
 }
 
@@ -223,7 +234,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-		enemy->ReceiveDamage(_stats._attack_power);
+		enemy->RegisterPlayerHit(_combat_stats._attack_power);
 	}
 }
 
@@ -348,7 +359,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		return;
 	}
 
-	if (!_is_god_mode && _is_falling)
+	if (!_god_mode && _is_falling)
 	{
 		current_position.y -= 0.25f;
 
@@ -370,7 +381,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 	// Dashing locks player from submitting new commands on input:
 	if (_is_dashing)
 	{
-		if (_is_god_mode)
+		if (_god_mode)
 		{
 			return;
 		}
@@ -398,7 +409,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		return;
 	}
 
-	const float velocity = _movement_speed * Time::DeltaTime();
+	const float velocity = _combat_stats._move_speed * Time::DeltaTime();
 	const math::float3 delta_x = math::float3::unitX * velocity;
 	const math::float3 delta_y = math::float3::unitY * velocity;
 	const math::float3 delta_z = math::float3::unitZ * velocity;
@@ -425,11 +436,11 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		_state = PlayerState::WALKING;
 	}
 
-	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
+	if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
 		current_position += delta_y;
 	}
-	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
+	else if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
 	{
 		current_position -= delta_y;
 	}
@@ -456,16 +467,41 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
 	{
-		_is_god_mode = !_is_god_mode;
-		_stats._god_mode = _is_god_mode;
+		//_god_mode = !_god_mode;
+
+		// TEST do not let this pass
+		RegisterEnemyHit(1);
 	}
 	//float current_y = current_position.y;
 
 	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
 	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
-	if (!_is_god_mode && _state == PlayerState::WALKING)
+	if (!_god_mode && _state == PlayerState::WALKING)
 	{
 		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+	}
+}
+
+void Hachiko::Scripting::PlayerController::RegisterEnemyHit(int enemy_attack_power)
+{
+	if (_god_mode)	return;
+
+	_combat_stats.ReceiveDamage(enemy_attack_power);
+
+	// Player is dead
+	if (_combat_stats._current_hp <= 0)
+	{
+		SceneManagement::SwitchScene(Scenes::LOSE);
+	}
+}
+
+void Hachiko::Scripting::PlayerController::UpdateHealthBar()
+{
+	// Disable cells 
+	for (int i = 0; i < _combat_stats._max_hp; ++i)
+	{
+		if(i >= _combat_stats._current_hp)
+			hp_cells[i]->GetComponent<ComponentImage>()->Disable();
 	}
 }
 

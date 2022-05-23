@@ -22,9 +22,6 @@ namespace Hachiko
 
             int _max_hp;
             int _current_hp;
-
-            bool _is_alive;
-            bool _god_mode;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

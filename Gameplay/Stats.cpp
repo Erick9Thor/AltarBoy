@@ -2,13 +2,12 @@
 #include <Stats.h>
 
 Hachiko::Scripting::Stats::Stats()
-	:_attack_power(5)
+	: _attack_power(1)
 	, _attack_cd(2)
-	, _move_speed(4.0f)
-	, _max_hp(10)
+	, _move_speed(7.0f)
+
+	, _max_hp(3)
 	, _current_hp(_max_hp)
-	, _is_alive(true)
-	, _god_mode(false)
 {
 }
 
@@ -19,26 +18,15 @@ Hachiko::Scripting::Stats::Stats(int _ap, int _atkcooldown, int _ms, int _maxhp)
 	_move_speed = _ms;
 	_max_hp = _maxhp;
 	_current_hp = _maxhp;
-	_is_alive = true;
-	_god_mode = false;
 }
 
 bool Hachiko::Scripting::Stats::IsAlive()
 {
-	return _is_alive;
+	return _current_hp > 0;
 }
 
 void Hachiko::Scripting::Stats::ReceiveDamage(int damage)
 {
-	if (_god_mode)	return;
-
 	_current_hp -= damage;
 	math::Clamp(_current_hp, 0, _max_hp);
-
-	if (_current_hp <= 0)
-	{
-		//_is_alive = false;
-		//Play dead animation
-		//etc...
-	}
 }
