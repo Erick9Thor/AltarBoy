@@ -391,6 +391,13 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
+
+    // If forward pass is disabled on the settings, return:
+    if (!render_forward_pass)
+    {
+        return;
+    }
+
     // Blit g_buffer depth buffer to frame_buffer to be used for forward 
     // rendering pass:
     glBindFramebuffer(GL_READ_FRAMEBUFFER, g_buffer);
@@ -523,6 +530,8 @@ void Hachiko::ModuleRender::DeferredOptions()
     {
         deferred_mode = 6;
     }
+
+    ImGui::Checkbox("Forward Rendering Pass", &render_forward_pass);
 
     // TODO: Add emissive.
 

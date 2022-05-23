@@ -119,6 +119,7 @@ namespace Hachiko
 
         // Deferred rendering draw mode:
         int deferred_mode = 0;
+        bool render_forward_pass = true;
 
         GpuData gpu{};
         GlVersion gl{};
