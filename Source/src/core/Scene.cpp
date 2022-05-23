@@ -51,8 +51,6 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     {
         App->editor->SetSelectedGO(nullptr);
     }
-
-    quadtree->Remove(game_object);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
@@ -259,7 +257,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
-            scene_bounds.Enclose(go->GetAABB());
+            scene_bounds.Enclose(mesh_renderer->GetAABB());
         }
 
         for (auto& child : go->children)
