@@ -85,7 +85,7 @@ private:
 	bool _is_god_mode = false;
 
 	GameObject* enemies;
-	GameObject* crystals;
+	GameObject* dynamic_envi;
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);

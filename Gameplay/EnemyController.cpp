@@ -24,7 +24,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
-	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
+	_player = SceneManagement::FindInCurrentScene(16779115546230417295);
 	_player_controller = _player->GetComponent<PlayerController>();
 	transform = game_object->GetComponent<ComponentTransform>();
 }

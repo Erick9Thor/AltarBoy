@@ -3,6 +3,7 @@
 #include "Scenes.h"
 #include "Stats.h"
 #include "EnemyController.h"
+#include "CrystalExplotion.h"
 
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
@@ -54,7 +55,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
 
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	crystals = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
+	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -185,12 +186,12 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
-	if (enemies == nullptr && crystals == nullptr) {
+	if (enemies == nullptr && dynamic_envi == nullptr) {
 		return;
 	}
 
 	std::vector<GameObject*> enemy_children = enemies->children;
-	std::vector<GameObject*> environment = crystals->children;
+	std::vector<GameObject*> environment = dynamic_envi->children;
 
 	// MELEE
 
@@ -198,7 +199,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 
 	GameObject* inter = game_object->scene_owner->GetRoot();
 
-	std::vector<GameObject*> enemies_hit = {};
+	std::vector<GameObject*> elements_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
 
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
@@ -214,15 +215,26 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 			float dot_product = transform->GetRight().Dot(rel_translate);
 			if (dot_product > 0)
 			{
-				enemies_hit.push_back(enemy_children[i]);
+				elements_hit.push_back(enemy_children[i]);
 			}
 		}
 	}
 
 	//loop in enemies hit
-	for (Hachiko::GameObject* enemy : enemies_hit)
+	for (Hachiko::GameObject* element : elements_hit)
 	{
-		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power);
+
+		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
+		CrystalExplotion* crystal_controller = element->GetComponent<CrystalExplotion>();
+
+		if (enemy_controller != nullptr)
+		{
+			enemy_controller->ReceiveDamage(_stats._attack_power);
+		}
+		else if (crystal_controller != nullptr)
+		{
+			crystal_controller->ReceiveDamage(_stats._attack_power);
+		}
 	}
 }
 
