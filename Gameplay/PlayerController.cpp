@@ -191,7 +191,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemies.size(); ++i)
 	{
-		if (_attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+		if (enemies[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 		{
 			// VS2: EXCEPTION ON QUAD.CPP
 			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
@@ -214,7 +214,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	}
 	if (enemies_hit.size() > 0)
 	{
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.1f);
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 	}
 	
 }
@@ -229,6 +229,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	if (hit_game_object)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 		if (!enemy)	return;
 		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
@@ -370,7 +371,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 		if (current_position.y < -20.0f) 
 		{
-			SceneManagement::SwitchScene(Scenes::LOSE);
+			//SceneManagement::SwitchScene(Scenes::LOSE);
 		}
 		return;
 	}
@@ -483,6 +484,6 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(Scenes::WIN);
+		//SceneManagement::SwitchScene(Scenes::WIN);
 	}
 }

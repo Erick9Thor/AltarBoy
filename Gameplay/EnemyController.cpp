@@ -11,6 +11,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _aggro_range(4)
 	, _attack_range(1.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
+	, _spawn_is_initial(false)
 	, _stats(2, 2, 5, 10)
 	, _player(nullptr)
 {
@@ -20,13 +21,21 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	_attack_range = 1.5f;
+	_stun_time = 0.0f;
+	_is_stunned = false;
 }
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
 	_player_controller = _player->GetComponent<PlayerController>();
+	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
+	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 	transform = game_object->GetTransform();
+	if (_spawn_is_initial)
+	{
+		_spawn_pos = transform->GetGlobalPosition();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
@@ -34,6 +43,21 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	if (!_stats.IsAlive())
 	{
 		return;
+	}
+	if (_is_stunned)
+	{
+		if (_stun_time > 0.0f)
+		{
+			_stun_time -= Time::DeltaTime();
+			RecieveKnockback();
+			return;
+		}
+		_is_stunned = false;
+
+		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+		// We set the variables back to normal
+		agc->SetMaxAcceleration(_acceleration);
+		agc->SetMaxSpeed(_speed);
 	}
 
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
@@ -72,7 +96,10 @@ Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage, float3 direction)
 {
 	_stats.ReceiveDamage(damage);
-	transform->SetGlobalPosition(transform->GetGlobalPosition() - direction * 5);
+	_is_stunned = true;
+	_stun_time = 1.0f; // Once we have weapons stun duration might be moved to each weapon stat
+	float knockback_intensity = 0.2f; // same with knock-back intensity
+	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback_intensity);
 }
 
 void Hachiko::Scripting::EnemyController::Attack()
@@ -99,7 +126,25 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 void Hachiko::Scripting::EnemyController::GoBack()
 {
 	_target_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
+	transform->LookAtTarget(_target_pos);
 	MoveInNavmesh();
+}
+
+void Hachiko::Scripting::EnemyController::Stop()
+{
+	float3 temp_pos = transform->GetGlobalPosition();
+	_target_pos = Navigation::GetCorrectedPosition(temp_pos, math::float3(1.0f, 1.0f, 1.0f));
+	MoveInNavmesh();
+}
+
+void Hachiko::Scripting::EnemyController::RecieveKnockback()
+{
+	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(5.0f, 1.0f, 5.0f));
+	// We exagerate the movement
+	agc->SetMaxAcceleration(500.0f);
+	agc->SetMaxSpeed(500.0f);
+	agc->SetTargetPosition(_target_pos);
 }
 
 void Hachiko::Scripting::EnemyController::Move()

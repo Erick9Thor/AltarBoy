@@ -83,6 +83,8 @@ private:
 
 	SERIALIZE_FIELD(GameObject*, _camera);
 
+	SERIALIZE_FIELD(GameObject*, _ui_damage);
+
 	float attack_current_cd = 0.0f;
 
 	bool _is_god_mode = false;

@@ -29,6 +29,8 @@ namespace Hachiko
             void Attack();
             void ChasePlayer();
             void GoBack();
+            void RecieveKnockback();
+            void Stop();
 
             void Move();
             void MoveInNavmesh();
@@ -40,6 +42,7 @@ namespace Hachiko
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
+            SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
 
             PlayerController* _player_controller;
@@ -48,6 +51,12 @@ namespace Hachiko
             math::float3 _target_pos;
             math::float3 _current_pos;
             float _attack_cooldown;
+
+            bool _is_stunned = false;
+            float _stun_time = 0.0f;
+            float _acceleration = 0.0f;
+            float _speed = 0.0f;
+            float3 _knockback_pos = float3::zero;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
