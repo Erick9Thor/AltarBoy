@@ -227,18 +227,19 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
     UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*) &camera_data);
 }
 
-void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
+void Hachiko::ModuleProgram::UpdateMaterial(
+    const ComponentMeshRenderer* component_mesh_renderer, 
+    const Program* program) const
 {
-    // TODO: For now, I've swapped main_program with deferred_geometry_program, handle this more beautifully,
-    // maybe pass the correct program and this function uses the passed one.
-
     static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE),
                                                                        static_cast<int>(TextureSlots::SPECULAR),
                                                                        static_cast<int>(TextureSlots::NORMAL),
                                                                        static_cast<int>(TextureSlots::METALNESS),
                                                                        static_cast<int>(TextureSlots::EMISSIVE)};
     // main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
-    deferred_geometry_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
+    // deferred_geometry_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
+    program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), 
+        &texture_slots[0]);
 
     const ResourceMaterial* material = component_mesh_renderer->GetMaterial();
 

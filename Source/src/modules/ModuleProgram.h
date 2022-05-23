@@ -86,7 +86,7 @@ namespace Hachiko
 
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const CameraData& camera) const;
-        void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
+        void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
         void OptionsMenu();

@@ -310,6 +310,7 @@ void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) con
 void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+
     // Call draw on all components
     for (Component* component : components)
     {

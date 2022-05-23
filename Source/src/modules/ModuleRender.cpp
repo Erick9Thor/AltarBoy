@@ -330,6 +330,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+    GameObject* selected_go = App->editor->GetSelectedGameObject();
+    RenderTarget* outline_target = nullptr;
+    
     Program* program = App->program->GetDeferredGeometryProgram();
     
     program->Activate();
@@ -344,15 +347,19 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     // deferred lighting pass:
     glDisable(GL_BLEND);
 
-    GameObject* selected_go = App->editor->GetSelectedGameObject();
-    RenderTarget* outline_target = nullptr;
     for (RenderTarget& target : render_list.GetNodes())
     {
+        if (target.game_object->GetName() == "experiment") 
+        {
+            continue;
+        }
+
         target.game_object->Draw(camera, program);
-        if (selected_go && target.game_object == selected_go)
+
+        /*if (selected_go && target.game_object == selected_go)
         {
             outline_target = &target;
-        }
+        }*/
     }
 
     Program::Deactivate();
@@ -398,6 +405,28 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, 
         GL_DEPTH_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
+    // Forward rendering pass for transparent game objects:
+    program = App->program->GetMainProgram();
+
+    program->Activate();
+
+    for (RenderTarget& target : render_list.GetNodes())
+    {
+        if (target.game_object->GetName() != "experiment")
+        {
+            continue;
+        }
+
+        target.game_object->Draw(camera, program);
+
+        /*if (selected_go && target.game_object == selected_go)
+        {
+            outline_target = &target;
+        }*/
+    }
+
+    Program::Deactivate();
 
     // if (outline_selection && outline_target)
     // {

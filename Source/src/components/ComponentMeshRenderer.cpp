@@ -69,7 +69,7 @@ void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* prog
     }
     program->BindUniformBool("has_bones", mesh->num_bones > 0);
 
-    App->program->UpdateMaterial(this);
+    App->program->UpdateMaterial(this, program);
     glBindVertexArray(mesh->vao);
     glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
