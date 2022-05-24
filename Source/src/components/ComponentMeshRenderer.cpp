@@ -244,10 +244,16 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 
 Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 
 {
+    if (!posible_root)
+    {
+        return nullptr;
+    }
+
     if (posible_root->GetComponent<Hachiko::ComponentAnimation>())
     {
         return posible_root;
     }
+
     GetRoot(posible_root->parent);
 }
 
