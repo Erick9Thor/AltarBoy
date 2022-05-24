@@ -151,7 +151,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
 
             size = r->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::BONES_WEIGHTS)];
             size_bytes = sizeof(float4) * size;
-            memcpy(batch->src_bone_weights[bones_weights_offset].ptr(), r->src_bone_weights.get(), size_bytes);
+            memcpy(batch->src_bone_weights[bones_weights_offset].ptr(), r->src_bone_weights[0].ptr(), size_bytes);
             bones_weights_offset += size;
         }
     }
