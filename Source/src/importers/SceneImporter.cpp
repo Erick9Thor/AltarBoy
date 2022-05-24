@@ -26,7 +26,8 @@ void Hachiko::SceneImporter::Import(const char* path, YAML::Node& meta)
     Scene* temp_scene = new Scene();
     // Cant load a scene that is not imported yet
     const ResourceScene* scene = static_cast<const ResourceScene*>(Load(scene_uid));
-    temp_scene->Load(scene->scene_data);
+    constexpr bool meshes_only = true;
+    temp_scene->Load(scene->scene_data, meshes_only);
     navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_id);
     delete temp_scene;
     delete scene;

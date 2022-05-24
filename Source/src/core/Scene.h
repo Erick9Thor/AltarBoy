@@ -114,7 +114,7 @@ namespace Hachiko
         }
 
         void Save(YAML::Node& node);
-        void Load(const YAML::Node& node);
+        void Load(const YAML::Node& node, bool meshes_only = false);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
 

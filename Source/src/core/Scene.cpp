@@ -191,7 +191,7 @@ void Hachiko::Scene::Save(YAML::Node& node)
     }
 }
 
-void Hachiko::Scene::Load(const YAML::Node& node)
+void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
 {
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     navmesh_id = node[NAVMESH_ID].as<UID>();
@@ -199,16 +199,18 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 
     RELEASE(skybox);
 
-    TextureCube cube;
-    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    if (!meshes_only)
     {
-        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
-        // Store UID 0 if no resource is present
-        cube.uids[i] = node[SKYBOX_NODE][side_name].as<UID>();
+        TextureCube cube;
+        for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+        {
+            std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+            // Store UID 0 if no resource is present
+            cube.uids[i] = node[SKYBOX_NODE][side_name].as<UID>();
+        }
+        // Pass skybox with used uids to be loaded
+        skybox = new Skybox(cube);
     }
-    // Pass skybox with used uids to be loaded
-    skybox = new Skybox(cube);
-
 
     if (!node[CHILD_NODE].IsDefined())
     {
@@ -225,7 +227,9 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         UID child_uid = children_node[i][GAME_OBJECT_ID].as<UID>();
         const auto child = new GameObject(root, child_name.c_str(), child_uid);
         child->scene_owner = this;
-        child->Load(children_node[i]);
+        // Scene will never be loaded as a prefab, it needs to maintain the existing uids
+        constexpr bool as_prefab = false;
+        child->Load(children_node[i], as_prefab, meshes_only);
     }
 
     loaded = true;
