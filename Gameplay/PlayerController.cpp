@@ -228,7 +228,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
 		forward * _raycast_max_range + current_position);
 
-	if (hit_game_object)
+	if (hit_game_object && hit_game_object->active)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
