@@ -47,7 +47,6 @@ bool Hachiko::ModuleRender::Init()
 
 
     //////////////////////////////////////////// <<<<< FOR ALVARO
-    glDisable(GL_CULL_FACE); // Disable cull backward faces
 
     float positions[] = {
         0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
@@ -263,18 +262,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     Program::Deactivate();
 
     //////////////////////////////////////////// <<<<< FOR ALVARO
-    Program* billboard_program = App->program->GetBillboardProgram();
-    billboard_program->Activate();
 
-    float4x4 identity = float4x4::identity;
-    billboard_program->BindUniformFloat4x4("model", identity.ptr()); //newModelMatrix.ptr());
-    billboard_program->BindUniformFloat4x4("view", identity.ptr());// & camera->GetViewMatrix()[0][0]); //view->ptr());camera->GetViewMatrix(), camera->GetProjectionMatrix()
-    billboard_program->BindUniformFloat4x4("proj", identity.ptr()); //&camera->GetProjectionMatrix()[0][0]); //proj->ptr());
-
-    glBindVertexArray(billboard_vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    glBindVertexArray(0);
-    Program::Deactivate();
     //////////////////////////////////////////// <<<<< FOR ALVARO
 
     if (outline_selection && outline_target)

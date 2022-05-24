@@ -6,7 +6,7 @@
 
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleResources.h"
-#include "modules/ModuleUserInterface.h"
+#include "modules/ModuleRender.h"
 
 #include "modules/ModuleCamera.h" // TODO: This is only for debug
 
@@ -19,7 +19,6 @@ Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container, UID id)
 	: Component(Component::Type::BILLBOARD, container, id) 
 {
     gradient = new ImGradient();
-    CreateSquare();
 }
 
 Hachiko::ComponentBillboard::~ComponentBillboard() 
@@ -30,35 +29,28 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
     Program* billboard_program = App->program->GetBillboardProgram();
-
-    if (billboard_program == nullptr)
-    {
-        return;
-    }
-
     billboard_program->Activate();
 
     glActiveTexture(GL_TEXTURE0);
     int glTexture = 0;
-    //if (texture != nullptr)
-    //{
-    //    glTexture = texture->GetImageId();
-    //    Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
-    //}
+    if (texture != nullptr)
+    {
+        glTexture = texture->GetImageId();
+        Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    }
     int hasDiffuseMap = texture ? 1 : 0;
 
-    //glDepthMask(GL_FALSE);
-    //glEnable(GL_BLEND);
-    //glBlendEquation(GL_FUNC_ADD);
-    //if (renderMode == BillboardRenderMode::B_ADDITIVE)
-    //{
-    //    glBlendFunc(GL_ONE, GL_ONE);
-    //}
-    //else
-    //{
-    //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //}
-    glBindVertexArray(vao);
+    glEnable(GL_BLEND);
+    glBlendEquation(GL_FUNC_ADD);
+    if (renderMode == BillboardRenderMode::B_ADDITIVE)
+    {
+        glBlendFunc(GL_ONE, GL_ONE);
+    }
+    else
+    {
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
 
     float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
@@ -121,10 +113,9 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
     }
 
-    float4x4 identity = float4x4::identity;
-    billboard_program->BindUniformFloat4x4("model", identity.ptr()); //newModelMatrix.ptr());
-    billboard_program->BindUniformFloat4x4("view", identity.ptr()); //view->ptr());
-    billboard_program->BindUniformFloat4x4("proj", identity.ptr()); //proj->ptr());
+    billboard_program->BindUniformFloat4x4("model", newModelMatrix.ptr());
+    billboard_program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
+    billboard_program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
     float4 color = float4::one;
     if (colorOverLifetime)
@@ -132,8 +123,21 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         gradient->getColorAt(colorFrame, color.ptr());
     }
 
+    program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
+    
+    glBindVertexArray(App->renderer->billboard_vao);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    
+    // Clear
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDepthFunc(GL_LESS);
+    glDisable(GL_BLEND);
+    Program::Deactivate();
+    return;
+
     //program->BindUniformInts("diffuseMap", 1, &glTexture);
-    //program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
+
     //program->BindUniformFloat4("inputColor", color.ptr());
     //program->BindUniformFloat3("intensity", textureIntensity.ptr());
     //program->BindUniformFloat("currentFrame", &currentFrame);
@@ -144,19 +148,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     //int flip_y = flipTexture[1] ? 1 : 0;
     //program->BindUniformInts("flipX", 1, &flip_x);
     //program->BindUniformInts("flipY", 1, &flip_y);
-
-    glUniform1i(glGetUniformLocation(billboard_program->GetId(), "diffuseMap"), 0);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, glTexture);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-    
-    // Clear
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glDepthFunc(GL_LESS);
-    Program::Deactivate();
-    //glDisable(GL_BLEND);
     //glDepthMask(GL_TRUE);
 }
 
@@ -167,22 +158,6 @@ void Hachiko::ComponentBillboard::DrawGui()
     ImGui::Text("Billboard");
 
     static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-
-    	// Color Over Lifetime
-    if (ImGui::CollapsingHeader("Color over lifetime"))
-    {
-        ImGui::Checkbox("##color_over_lifetime", &colorOverLifetime);
-        if (colorOverLifetime)
-        {
-            ImGui::SameLine();
-            ImGui::PushItemWidth(200);
-            ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
-            //ImGui::PushItemWidth(ITEM_SIZE);
-            ImGui::NewLine();
-            //ImGui::DragFloat("Cycles##color_cycles", &colorCycles, App->editor->dragSpeed2f, 1, inf);
-            ImGui::Checkbox("Loop##color_loop", &colorLoop);
-        }
-    }
 
     if (ImGui::TreeNodeEx((void*)&texture, texture_flags, "Texture"))
     {
@@ -204,6 +179,23 @@ void Hachiko::ComponentBillboard::DrawGui()
         }
         ImGui::TreePop();
     }
+
+    // Color Over Lifetime
+    if (ImGui::CollapsingHeader("Color over lifetime"))
+    {
+        ImGui::Checkbox("##color_over_lifetime", &colorOverLifetime);
+        if (colorOverLifetime)
+        {
+            ImGui::SameLine();
+            ImGui::PushItemWidth(200);
+            ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
+            //ImGui::PushItemWidth(ITEM_SIZE);
+            ImGui::NewLine();
+            //ImGui::DragFloat("Cycles##color_cycles", &colorCycles, App->editor->dragSpeed2f, 1, inf);
+            ImGui::Checkbox("Loop##color_loop", &colorLoop);
+        }
+    }
+
 }
 
 void Hachiko::ComponentBillboard::Update() 
@@ -267,39 +259,4 @@ void Hachiko::ComponentBillboard::AddTexture()
 void Hachiko::ComponentBillboard::RemoveTexture()
 {
     texture = nullptr;
-}
-
-void Hachiko::ComponentBillboard::CreateSquare()
-{
-    float positions[] = {
-        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
-        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
-    };
-
-    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
-
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glGenBuffers(1, &ebo);
-
-    glBindVertexArray(vao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // Positions
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // Texture coords
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    //HE_LOG("QUAD VAO %d %d %d", vao, vbo, ebo);
-    glBindVertexArray(0);
 }

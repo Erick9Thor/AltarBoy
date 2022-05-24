@@ -81,7 +81,7 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
                 polycount_rendered += game_object->GetComponent<ComponentMeshRenderer>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
             }
         }
-
+        // TODO: place the following correctly (or change function's name?)
         else if (components[i]->GetType() == Component::Type::BILLBOARD)
         {
             HE_LOG("Adding billboard to renderer");

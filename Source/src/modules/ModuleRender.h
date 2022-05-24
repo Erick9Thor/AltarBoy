@@ -72,6 +72,8 @@ namespace Hachiko
             return &render_list;
         }
 
+        unsigned billboard_vao;
+    
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int heigth, int width) const;
@@ -108,7 +110,7 @@ namespace Hachiko
         float current_fps = 0.0f;
         float current_ms = 0.0f;
 
-        unsigned billboard_vao;
+
         unsigned billboard_vbo;
         unsigned billboard_ebo;
     };

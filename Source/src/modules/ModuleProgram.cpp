@@ -141,7 +141,7 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateBillboardProgram()
 {
-    billboard_program = CreateProgram(ASSETS_FOLDER "/shaders/vertex_billboard.glsl", ASSETS_FOLDER "/shaders/fragment_billboard.glsl");
+    billboard_program = CreateProgram(SHADERS_FOLDER "vertex_billboard.glsl", SHADERS_FOLDER "fragment_billboard.glsl");
     return billboard_program;
 }
 

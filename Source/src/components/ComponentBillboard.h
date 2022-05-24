@@ -53,7 +53,7 @@ namespace Hachiko
         bool playOnAwake = false;
 
         // Render
-        BillboardType billboardType = BillboardType::NORMAL;
+        BillboardType billboardType = BillboardType::HORIZONTAL;
         BillboardRenderMode renderMode = BillboardRenderMode::B_ADDITIVE;
         UID textureID = 0; // ID of the image
         float3 textureIntensity = {1.0f, 1.0f, 1.0f};
@@ -75,13 +75,6 @@ namespace Hachiko
         ImGradient* gradient = nullptr;
         ImGradientMark* draggingGradient = nullptr;
         ImGradientMark* selectedGradient = nullptr;
-
-        // DEBUG
-        unsigned int vao;
-        unsigned int vbo;
-        unsigned int ebo;
-        void CreateSquare();
-
 
         void AddTexture();
         void RemoveTexture();
