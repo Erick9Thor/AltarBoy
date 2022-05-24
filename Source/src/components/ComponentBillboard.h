@@ -55,8 +55,8 @@ namespace Hachiko
         bool playOnAwake = false;
 
         // Render
-        BillboardType billboardType = BillboardType::HORIZONTAL;
-        BillboardRenderMode renderMode = BillboardRenderMode::B_ADDITIVE;
+        BillboardType type = BillboardType::HORIZONTAL;
+        BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
         UID textureID = 0; // ID of the image
         float3 textureIntensity = {1.0f, 1.0f, 1.0f};
         ResourceTexture* texture = nullptr;
@@ -84,5 +84,6 @@ namespace Hachiko
         void AddTexture();
         void RemoveTexture();
         void UpdateAnimationIndex();
+        void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
     };
 }

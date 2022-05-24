@@ -42,7 +42,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
-    if (renderMode == BillboardRenderMode::B_ADDITIVE)
+    if (render_mode == BillboardRenderMode::B_ADDITIVE)
     {
         glBlendFunc(GL_ONE, GL_ONE);
     }
@@ -51,69 +51,12 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
-    ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
 
-    float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
-    float3 position = transform->GetGlobalPosition();
-    float4x4 modelMatrix = transform->GetGlobalMatrix();
-    float3 scale = transform->GetGlobalScale();
+    float4x4 model_matrix;
+    GetOrientationMatrix(camera, model_matrix);
+    
 
-    Frustum* frustum = camera->GetFrustum();
-    float4x4* proj = &camera->GetProjectionMatrix();
-    float4x4* view = &camera->GetViewMatrix();
-
-    float4x4 newModelMatrix;
-
-    if (billboardType == BillboardType::NORMAL)
-    {
-        newModelMatrix = modelMatrix.LookAt(rotatePart.Col(2), -frustum->Front(), rotatePart.Col(1), float3::unitY);
-        newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart() * rotatePart, scale);
-    }
-    else if (billboardType == BillboardType::STRETCH)
-    {
-        float3 cameraPos = camera->GetFrustum()->Pos();
-        float3 cameraDir = (cameraPos - position).Normalized();
-        float3 upDir = Cross(direction, cameraDir);
-        float3 newCameraDir = Cross(direction, upDir);
-
-        float3x3 newRotation;
-        newRotation.SetCol(0, upDir);
-        newRotation.SetCol(1, direction);
-        newRotation.SetCol(2, newCameraDir);
-
-        newModelMatrix = float4x4::FromTRS(position, newRotation * modelStretch, scale);
-    }
-    else if (billboardType == BillboardType::HORIZONTAL)
-    {
-        if (isHorizontalOrientation)
-        {
-            float3 direction = transform->GetGlobalRotation().WorldZ();
-            float3 projection = position + direction - direction.y * float3::unitY;
-            direction = (projection - position).Normalized();
-            float3 right = Cross(float3::unitY, direction);
-
-            float3x3 newRotation;
-            newRotation.SetCol(1, right);
-            newRotation.SetCol(2, float3::unitY);
-            newRotation.SetCol(0, direction);
-
-            newModelMatrix = float4x4::FromTRS(position, newRotation, scale);
-        }
-        else
-        {
-            newModelMatrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
-            newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
-        }
-    }
-    else if (billboardType == BillboardType::VERTICAL)
-    {
-        float3 cameraPos = camera->GetFrustum()->Pos();
-        float3 cameraDir = (float3(cameraPos.x, position.y, cameraPos.z) - position).Normalized();
-        newModelMatrix = float4x4::LookAt(float3::unitZ, cameraDir, float3::unitY, float3::unitY);
-        newModelMatrix = float4x4::FromTRS(position, newModelMatrix.RotatePart(), scale);
-    }
-
-    billboard_program->BindUniformFloat4x4("model", newModelMatrix.ptr());
+    billboard_program->BindUniformFloat4x4("model", model_matrix.ptr());
     billboard_program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
     billboard_program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
@@ -174,7 +117,7 @@ void Hachiko::ComponentBillboard::DrawGui()
         ImGui::Checkbox("Play On Awake", &playOnAwake);
 
         const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
-        const char* billboardTypeComboCurrent = billboardTypeCombo[(int)billboardType];
+        const char* billboardTypeComboCurrent = billboardTypeCombo[(int)type];
         ImGui::Text("Type:");
         if (ImGui::BeginCombo("##Type", billboardTypeComboCurrent))
         {
@@ -183,7 +126,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                 bool isSelected = (billboardTypeComboCurrent == billboardTypeCombo[n]);
                 if (ImGui::Selectable(billboardTypeCombo[n], isSelected))
                 {
-                    billboardType = (BillboardType)n;
+                    type = (BillboardType)n;
                 }
                 if (isSelected)
                 {
@@ -193,7 +136,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             ImGui::EndCombo();
         }
 
-        if (billboardType == BillboardType::HORIZONTAL)
+        if (type == BillboardType::HORIZONTAL)
         {
             ImGui::Indent();
             ImGui::Checkbox("Orientate to direction", &isHorizontalOrientation);
@@ -202,7 +145,7 @@ void Hachiko::ComponentBillboard::DrawGui()
         ImGui::NewLine();
 
         const char* renderModeCombo[] = {"Additive", "Transparent"};
-        const char* renderModeComboCurrent = renderModeCombo[(int)renderMode];
+        const char* renderModeComboCurrent = renderModeCombo[(int)render_mode];
         if (ImGui::BeginCombo("Render Mode##", renderModeComboCurrent))
         {
             for (int n = 0; n < IM_ARRAYSIZE(renderModeCombo); ++n)
@@ -210,7 +153,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                 bool isSelected = (renderModeComboCurrent == renderModeCombo[n]);
                 if (ImGui::Selectable(renderModeCombo[n], isSelected))
                 {
-                    renderMode = (BillboardRenderMode)n;
+                    render_mode = (BillboardRenderMode)n;
                 }
                 if (isSelected)
                 {
@@ -307,7 +250,7 @@ void Hachiko::ComponentBillboard::Stop()
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {
-    node[BILLBOARD_TYPE] = static_cast<int>(billboardType);
+    node[BILLBOARD_TYPE] = static_cast<int>(type);
     if (texture != nullptr)
     {
         node[BILLBOARD_TEXTURE_ID] = texture->GetID();
@@ -324,7 +267,7 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
         texture = static_cast<ResourceTexture*>(
             App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
     }
-    billboardType = node[BILLBOARD_TYPE].IsDefined() 
+    type = node[BILLBOARD_TYPE].IsDefined() 
         ? static_cast<BillboardType>(node[BILLBOARD_TYPE].as<int>()) 
         : BillboardType::HORIZONTAL;
 
@@ -396,4 +339,67 @@ void Hachiko::ComponentBillboard::UpdateAnimationIndex()
         return;
     }
     animation_index = {0.0f, 0.0f};
+}
+
+void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix)
+{
+    ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
+
+    Frustum* frustum = camera->GetFrustum();
+    float4x4* proj = &camera->GetProjectionMatrix();
+    float4x4* view = &camera->GetViewMatrix();
+
+    float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
+    float3 position = transform->GetGlobalPosition();
+    float4x4 modelMatrix = transform->GetGlobalMatrix();
+    float3 scale = transform->GetGlobalScale();
+
+    if (type == BillboardType::NORMAL)
+    {
+        model_matrix = modelMatrix.LookAt(rotatePart.Col(2), -frustum->Front(), rotatePart.Col(1), float3::unitY);
+        model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotatePart, scale);
+    }
+    else if (type == BillboardType::STRETCH)
+    {
+        float3 cameraPos = camera->GetFrustum()->Pos();
+        float3 cameraDir = (cameraPos - position).Normalized();
+        float3 upDir = Cross(direction, cameraDir);
+        float3 newCameraDir = Cross(direction, upDir);
+
+        float3x3 newRotation;
+        newRotation.SetCol(0, upDir);
+        newRotation.SetCol(1, direction);
+        newRotation.SetCol(2, newCameraDir);
+
+        model_matrix = float4x4::FromTRS(position, newRotation * modelStretch, scale);
+    }
+    else if (type == BillboardType::HORIZONTAL)
+    {
+        if (isHorizontalOrientation)
+        {
+            float3 direction = transform->GetGlobalRotation().WorldZ();
+            float3 projection = position + direction - direction.y * float3::unitY;
+            direction = (projection - position).Normalized();
+            float3 right = Cross(float3::unitY, direction);
+
+            float3x3 newRotation;
+            newRotation.SetCol(1, right);
+            newRotation.SetCol(2, float3::unitY);
+            newRotation.SetCol(0, direction);
+
+            model_matrix = float4x4::FromTRS(position, newRotation, scale);
+        }
+        else
+        {
+            model_matrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
+            model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart(), scale);
+        }
+    }
+    else if (type == BillboardType::VERTICAL)
+    {
+        float3 cameraPos = camera->GetFrustum()->Pos();
+        float3 cameraDir = (float3(cameraPos.x, position.y, cameraPos.z) - position).Normalized();
+        model_matrix = float4x4::LookAt(float3::unitZ, cameraDir, float3::unitY, float3::unitY);
+        model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart(), scale);
+    }
 }
