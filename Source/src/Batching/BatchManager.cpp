@@ -121,8 +121,6 @@ void Hachiko::BatchManager::CleanUp()
         delete geometry_batch;
     }
     geometry_batches.clear();
-
-    //glDeleteBuffers(1, &material_ssbo);
 }
 
 void Hachiko::BatchManager::DebugMenu() 

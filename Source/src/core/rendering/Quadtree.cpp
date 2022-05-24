@@ -119,7 +119,6 @@ void Hachiko::QuadtreeNode::RearangeChildren()
         }
 
         // If it intersects all there is no point in moving downwards
-        //if (intersects[static_cast<int>(Quadrants::NW)] && intersects[static_cast<int>(Quadrants::NE)] && intersects[static_cast<int>(Quadrants::SE)] && intersects[static_cast<int>(Quadrants::SW)])
         if (intersection_count > 1)
         {
             ++it;
