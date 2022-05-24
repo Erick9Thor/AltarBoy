@@ -1,3 +1,4 @@
+
 #include "core/hepch.h"
 
 #include "core/ErrorHandler.h"
@@ -13,6 +14,7 @@
 #include "ModuleNavigation.h"
 
 #include "components/ComponentCamera.h"
+#include "components/ComponentTransform.h"
 #include "resources/ResourceNavMesh.h"
 
 #ifdef PLAY_BUILD
@@ -340,10 +342,14 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     // TODO: Add proper way of distinction between transparent and opaque game
     // objects by separating them into different render_lists maybe.
+    std::vector<RenderTarget*> transparent_targets;
+
     for (RenderTarget& target : render_list.GetNodes())
     {
         if (target.game_object->GetName() == "experiment") 
         {
+            transparent_targets.push_back(&target);
+
             continue;
         }
 
@@ -410,6 +416,13 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    float3 camera_position = camera->GetGameObject()->GetTransform()->GetGlobalPosition();
+
+    // Sort the transparent render targets by their distance to the camera:
+    std::sort(transparent_targets.begin(), transparent_targets.end(), [&camera_position](RenderTarget* lhs, RenderTarget* rhs) {
+        return camera_position.Distance(lhs->game_object->GetTransform()->GetGlobalPosition()) < camera_position.Distance(rhs->game_object->GetTransform()->GetGlobalPosition());
+    });
+
     // Forward rendering pass for transparent game objects:
     program = App->program->GetMainProgram();
 
@@ -417,22 +430,14 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
 
     // TODO: Add proper forward pass with opaque objects only.  
-    for (RenderTarget& target : render_list.GetNodes())
+    for (RenderTarget* target : transparent_targets)
     {
-        if (target.game_object->GetName() != "experiment")
-        {
-            continue;
-        }
-
-        target.game_object->Draw(camera, program);
-
-        /*if (selected_go && target.game_object == selected_go)
-        {
-            outline_target = &target;
-        }*/
+        target->game_object->Draw(camera, program);
     }
 
     Program::Deactivate();
+
+    transparent_targets.clear();
 
      /*if (outline_selection && outline_target)
      {
