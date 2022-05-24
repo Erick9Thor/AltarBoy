@@ -415,7 +415,7 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     }
 }
 
-void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
+void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool meshes_only)
 {   
     const YAML::Node components_node = node[COMPONENT_NODE];
     for (unsigned i = 0; i < components_node.size(); ++i)
@@ -435,7 +435,16 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
 
         Component* component = nullptr;
 
-        if (type == Component::Type::SCRIPT)
+        if (meshes_only)
+        {
+            if (type == Component::Type::MESH_RENDERER)
+            {
+                component = CreateComponent(type);
+            }
+            continue;
+        }
+
+        else if(type == Component::Type::SCRIPT)
         {
             std::string script_name =
                 components_node[i][SCRIPT_NAME].as<std::string>();
