@@ -153,49 +153,95 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
 void Hachiko::ComponentBillboard::DrawGui()
 {
-    ImGui::NewLine();
-    ImGui::Separator;
-    ImGui::Text("Billboard");
-
-    static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-
-    if (ImGui::TreeNodeEx((void*)&texture, texture_flags, "Texture"))
+    if (ImGui::CollapsingHeader("Billboard", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        if (texture != nullptr)
+        const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
+        const char* billboardTypeComboCurrent = billboardTypeCombo[(int)billboardType];
+        ImGui::TextColored(textColor, "Type:");
+        if (ImGui::BeginCombo("##Type", billboardTypeComboCurrent))
         {
-            ImGui::Image(reinterpret_cast<void*>(texture->GetImageId()), ImVec2(80, 80));
-            ImGui::SameLine();
-            ImGui::BeginGroup();
-            ImGui::Text("%dx%d", texture->width, texture->height);
-            ImGui::Text("Path: %s", texture->path.c_str());
-
-            // TODO: textue configuration (maybe delegate to the ResourceTexture)
-
-            ImGui::EndGroup();
+            for (int n = 0; n < IM_ARRAYSIZE(billboardTypeCombo); ++n)
+            {
+                bool isSelected = (billboardTypeComboCurrent == billboardTypeCombo[n]);
+                if (ImGui::Selectable(billboardTypeCombo[n], isSelected))
+                {
+                    billboardType = (BillboardType)n;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
         }
-        else
+
+        if (billboardType == BillboardType::HORIZONTAL)
         {
-            AddTexture();
+            ImGui::Indent();
+            ImGui::Checkbox("Orientate to direction", &isHorizontalOrientation);
+            ImGui::Unindent();
         }
-        ImGui::TreePop();
+        ImGui::NewLine();
+
+        const char* renderModeCombo[] = {"Additive", "Transparent"};
+        const char* renderModeComboCurrent = renderModeCombo[(int)renderMode];
+        if (ImGui::BeginCombo("Render Mode##", renderModeComboCurrent))
+        {
+            for (int n = 0; n < IM_ARRAYSIZE(renderModeCombo); ++n)
+            {
+                bool isSelected = (renderModeComboCurrent == renderModeCombo[n]);
+                if (ImGui::Selectable(renderModeCombo[n], isSelected))
+                {
+                    renderMode = (BillboardRenderMode)n;
+                }
+                if (isSelected)
+                {
+                    ImGui::SetItemDefaultFocus();
+                }
+            }
+            ImGui::EndCombo();
+        }
+        ImGui::NewLine();
+
+        static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+
+        if (ImGui::TreeNodeEx((void*)&texture, texture_flags, "Texture"))
+        {
+            if (texture != nullptr)
+            {
+                ImGui::Image(reinterpret_cast<void*>(texture->GetImageId()), ImVec2(80, 80));
+                ImGui::SameLine();
+                ImGui::BeginGroup();
+                ImGui::Text("%dx%d", texture->width, texture->height);
+                ImGui::Text("Path: %s", texture->path.c_str());
+
+                // TODO: textue configuration (maybe delegate to the ResourceTexture)
+
+                ImGui::EndGroup();
+            }
+            else
+            {
+                AddTexture();
+            }
+            ImGui::TreePop();
+        }
+
+        // Color Over Lifetime
+        if (ImGui::CollapsingHeader("Color over lifetime"))
+        {
+            ImGui::Checkbox("##color_over_lifetime", &colorOverLifetime);
+            if (colorOverLifetime)
+            {
+                ImGui::SameLine();
+                ImGui::PushItemWidth(200);
+                ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
+                //ImGui::PushItemWidth(ITEM_SIZE);
+                ImGui::NewLine();
+                //ImGui::DragFloat("Cycles##color_cycles", &colorCycles, App->editor->dragSpeed2f, 1, inf);
+                ImGui::Checkbox("Loop##color_loop", &colorLoop);
+            }
+        }
     }
-
-    // Color Over Lifetime
-    if (ImGui::CollapsingHeader("Color over lifetime"))
-    {
-        ImGui::Checkbox("##color_over_lifetime", &colorOverLifetime);
-        if (colorOverLifetime)
-        {
-            ImGui::SameLine();
-            ImGui::PushItemWidth(200);
-            ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
-            //ImGui::PushItemWidth(ITEM_SIZE);
-            ImGui::NewLine();
-            //ImGui::DragFloat("Cycles##color_cycles", &colorCycles, App->editor->dragSpeed2f, 1, inf);
-            ImGui::Checkbox("Loop##color_loop", &colorLoop);
-        }
-    }
-
 }
 
 void Hachiko::ComponentBillboard::Update() 

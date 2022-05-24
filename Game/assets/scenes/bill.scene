@@ -1,0 +1,47 @@
+scene_name: bill
+navmesh_id: 15729583066227742361
+skybox:
+  right_cube_id: 0
+  left_cube_id: 0
+  bottom_cube_id: 0
+  top_cube_id: 0
+  center_cube_id: 0
+  back_cube_id: 0
+root_id: 2112468677600086813
+child:
+  - id: 10938978541725939418
+    name: Main Camera
+    enabled: true
+    component:
+      - id: 7322800874301376986
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 1640729036956120262
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          type: 0
+          pinned_camera: [0, 0, 0]
+  - id: 13048800713742145231
+    name: GameObject
+    enabled: true
+    component:
+      - id: 12883591676797453512
+        type: 1
+        enabled: true
+        position: [-24.684185, 30.3117981, -12.2000437]
+        rotation: [0, 0, 0, 1]
+        scale: [10, 10, 2.5]
+      - id: 6750474000712139999
+        type: 21
+        enabled: true
+        texture_id: 12023432331947101770
