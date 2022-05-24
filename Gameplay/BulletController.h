@@ -1,7 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "Stats.h"
+
 
 namespace Hachiko
 {
@@ -13,7 +13,7 @@ namespace Hachiko
             SERIALIZATION_METHODS(false)
 
         public:
-            BulletController();
+            BulletController(GameObject* game_object);
             ~BulletController() override = default;
 
             void OnAwake() override;
@@ -31,4 +31,4 @@ namespace Hachiko
             int _damage;
         };
     } // namespace Scripting
-} // namespace Hachiko*/
+} // namespace Hachiko

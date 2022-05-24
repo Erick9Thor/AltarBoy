@@ -1,14 +1,15 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BulletController.h"
+
 #include "Scenes.h"
 #include "EnemyController.h"
 #include "PlayerController.h"
 
-#include <modules/ModuleSceneManager.h>
 #include <components/ComponentTransform.h>
-#include <core/GameObject.h>
 
-Hachiko::Scripting::BulletController::BulletController()
+#include <modules/ModuleSceneManager.h>
+
+Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 	: Script(game_object, "BulletController")
 	, _move_speed()
 	, _direction(1.0f, 1.0f, 1.0f)
@@ -25,7 +26,7 @@ void Hachiko::Scripting::BulletController::OnAwake()
 	// Set the time for this object to disappear
 	_destroy_time = Time::DeltaTime() + _lifetime;
 	// Get Damage from parent stats
-	_damage = game_object->GetComponent<PlayerController>()->_stats._attack_power;
+	_damage = game_object->parent->GetComponent<PlayerController>()->_stats._attack_power;
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()
@@ -57,8 +58,8 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 {
 	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
 	ComponentTransform* transform = game_object->GetTransform();
-
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
+
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 		if (enemies[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
