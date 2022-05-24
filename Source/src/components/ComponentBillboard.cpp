@@ -155,9 +155,25 @@ void Hachiko::ComponentBillboard::DrawGui()
 {
     if (ImGui::CollapsingHeader("Billboard", ImGuiTreeNodeFlags_DefaultOpen))
     {
+        ImGui::Separator();
+        ImGui::Indent();
+        ImGui::PushItemWidth(150);
+
+        if (ImGui::Button("Play"))
+        {
+            Play();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Stop"))
+        {
+            Stop();
+        }
+        ImGui::DragFloat("Duration", &billboardLifetime, 1.0f, 0, inf);
+        ImGui::Checkbox("Play On Awake", &playOnAwake);
+
         const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
         const char* billboardTypeComboCurrent = billboardTypeCombo[(int)billboardType];
-        ImGui::TextColored(textColor, "Type:");
+        ImGui::Text("Type:");
         if (ImGui::BeginCombo("##Type", billboardTypeComboCurrent))
         {
             for (int n = 0; n < IM_ARRAYSIZE(billboardTypeCombo); ++n)
@@ -226,6 +242,15 @@ void Hachiko::ComponentBillboard::DrawGui()
             ImGui::TreePop();
         }
 
+      	// Texture Sheet Animation
+        if (ImGui::CollapsingHeader("Texture Sheet Animation"))
+        {
+            ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &Xtiles);
+            ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &Ytiles);
+            ImGui::DragFloat("Cycles##animation_cycles", &animationCycles, 1.0f, 1.0f, inf);
+            ImGui::Checkbox("Loop##animation_loop", &animationLoop);
+        }
+
         // Color Over Lifetime
         if (ImGui::CollapsingHeader("Color over lifetime"))
         {
@@ -235,9 +260,9 @@ void Hachiko::ComponentBillboard::DrawGui()
                 ImGui::SameLine();
                 ImGui::PushItemWidth(200);
                 ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
-                //ImGui::PushItemWidth(ITEM_SIZE);
+                ImGui::PushItemWidth(150);
                 ImGui::NewLine();
-                //ImGui::DragFloat("Cycles##color_cycles", &colorCycles, App->editor->dragSpeed2f, 1, inf);
+                ImGui::DragFloat("Cycles##color_cycles", &colorCycles, 1.0f, 1.0f, inf);
                 ImGui::Checkbox("Loop##color_loop", &colorLoop);
             }
         }
@@ -245,8 +270,11 @@ void Hachiko::ComponentBillboard::DrawGui()
 }
 
 void Hachiko::ComponentBillboard::Update() 
-{
-}
+{}
+
+void Hachiko::ComponentBillboard::Play() {}
+
+void Hachiko::ComponentBillboard::Stop() {}
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {

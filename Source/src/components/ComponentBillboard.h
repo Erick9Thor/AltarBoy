@@ -29,6 +29,8 @@ namespace Hachiko
         ~ComponentBillboard() override;
         
         void Update() override;
+        void Play();
+        void Stop() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
@@ -37,7 +39,6 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
 
     private:
-        const ImVec4 textColor = ImVec4(0.5f, 0.5f, 0.5f, 1.0f);
         float4x4 modelStretch = float4x4::identity;
         float3 initPos = float3::zero;
         float3 previousPos = float3::zero;
