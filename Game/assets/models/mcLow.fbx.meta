@@ -1,0 +1,56 @@
+asset_hash: 9417100210530165242
+model_name: mcLow
+meshes:
+  - 8423440843867290643
+  - 1119675387283013084
+  - 11322888504701892458
+  - 13501166671557405458
+  - 9276696853152820699
+  - 4098046208273859946
+  - 12011194831651727356
+  - 10820329579185120070
+materials:
+  - 15290504283960228232
+  - 16986423740163290191
+  - 5808338921622117034
+  - 15290504283960228232
+  - 15290504283960228232
+  - 7726662488496225977
+  - 5808338921622117034
+  - 15290504283960228232
+prefab_id: 2674124803771256852
+resources:
+  - resource_id: 8423440843867290643
+    resource_type: 3
+  - resource_id: 1119675387283013084
+    resource_type: 3
+  - resource_id: 11322888504701892458
+    resource_type: 3
+  - resource_id: 13501166671557405458
+    resource_type: 3
+  - resource_id: 9276696853152820699
+    resource_type: 3
+  - resource_id: 4098046208273859946
+    resource_type: 3
+  - resource_id: 12011194831651727356
+    resource_type: 3
+  - resource_id: 10820329579185120070
+    resource_type: 3
+  - resource_id: 15290504283960228232
+    resource_type: 1
+  - resource_id: 16986423740163290191
+    resource_type: 1
+  - resource_id: 5808338921622117034
+    resource_type: 1
+  - resource_id: 15290504283960228232
+    resource_type: 1
+  - resource_id: 15290504283960228232
+    resource_type: 1
+  - resource_id: 7726662488496225977
+    resource_type: 1
+  - resource_id: 5808338921622117034
+    resource_type: 1
+  - resource_id: 15290504283960228232
+    resource_type: 1
+  - resource_id: 2674124803771256852
+    resource_type: 13

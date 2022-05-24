@@ -20,9 +20,13 @@ public:
 	void OnStart() override;
 	void OnUpdate() override;
 
+	void Shake(float time, float intesity);
+
+
 private:
 	float2 MoveCameraWithMouse();
 	void ScrollWheelZoom(float3* cam_pos);
+	float3 Shake();
 
 private:
 	SERIALIZE_FIELD(math::float3, _relative_position_to_player);
@@ -31,6 +35,11 @@ private:
 
 	math::float3 _look_ahead;
 	PlayerController* _player_ctrl;
+
+	float shake_elapsed;
+	float shake_time;
+	float shake_intensity;
+	float shake_magnitude;
 };
 } // namespace Scripting
 } // namespace Hachiko

@@ -4,6 +4,7 @@
 #include "PlayerController.h"
 #include <components/ComponentTransform.h>
 #include <core/Scene.h>
+#include <thread>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
@@ -19,10 +20,12 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// This is until we have saving for scripts. Because of this, this
 	// script needs to be a direct child of scene root, and there must
 	// be a GameObject of name "PlayerC" which is our player.
-	_player = game_object->parent->GetFirstChildWithName("PlayerC");
+	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
 	_player_ctrl = _player->GetComponent<PlayerController>();
 	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
+	// Seed the rand()
+	srand(static_cast <unsigned> (time(0)));
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
@@ -63,7 +66,11 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 	current_position = math::float3::Lerp(current_position, final_position,
 		delayed_time);
 
-	transform->SetGlobalPosition(current_position);
+	float3 shake_offset = float3::zero;
+
+	shake_offset = Shake();
+
+	transform->SetGlobalPosition(current_position + shake_offset);
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
@@ -110,5 +117,34 @@ void Hachiko::Scripting::PlayerCamera::ScrollWheelZoom(float3* cam_pos)
 	{
 		cam_pos->y = cam_pos->y + 0.5f;
 		cam_pos->z = cam_pos->z + 0.3f;
+	}
+}
+
+void Hachiko::Scripting::PlayerCamera::Shake(float time, float intensity)
+{
+	shake_time = time;
+	shake_elapsed = 0.0f;
+	shake_intensity = intensity;
+	shake_magnitude = 1.0f;
+}
+
+float3 Hachiko::Scripting::PlayerCamera::Shake()
+{
+	if (shake_elapsed < shake_time)
+	{
+		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float x = (r - 0.5f) * shake_magnitude * shake_intensity;
+		r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		float z = (r - 0.5f) * shake_magnitude * shake_intensity;
+
+		shake_elapsed += Time::DeltaTime();
+		shake_magnitude = (1 - (shake_elapsed / shake_time)) * (1 - (shake_elapsed / shake_time));
+		return float3(x, 0, z);
+	} 
+	else
+	{
+		shake_time = 0.0f;
+		shake_elapsed = 0.0f;
+		return float3::zero;
 	}
 }

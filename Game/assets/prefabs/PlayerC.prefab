@@ -1,0 +1,101 @@
+prefab_name: PlayerC
+name: PlayerC
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 1.65130103, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 15
+    enabled: true
+    class_name: PlayerController
+    "'_movement_speed@float'": 0
+    "'_dash_indicator@GameObject*'": 11958795440563041269
+    "'_goal@GameObject*'": 11250741770684060965
+    "'_dash_duration@float'": 0
+    "'_dash_distance@float'": 0
+    "'_dash_progress@float'": 0
+    "'_dash_cooldown@float'": 0
+    "'_dash_timer@float'": 0
+    "'_dash_count@int'": 0
+    "'_max_dash_count@int'": 0
+    "'_is_dashing@bool'": false
+    "'_has_cooldown@bool'": false
+    "'_is_falling@bool'": false
+    "'_dash_start@math::float3'": [0, 0, 0]
+    "'_dash_direction@math::float3'": [0, 0, 0]
+    "'_raycast_min_range@float'": 0.00100000005
+    "'_raycast_max_range@float'": 15
+    "'_attack_radius@float'": 0
+    "'_attack_cooldown@float'": 0
+    "'_should_rotate@bool'": false
+    "'_rotation_progress@float'": 0
+    "'_rotation_duration@float'": 0
+    "'_rotation_start@math::Quat'": [0, 0, 0, 1]
+    "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+child:
+  - name: Legs_low
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0.70710665, 0, 0, 0.707106888]
+        scale: [2.00019312, 2.00019264, 2.00019264]
+      - type: 2
+        enabled: true
+        mesh_id: 8423440843867290643
+        navigable: false
+        visible: true
+        material_id: 15290504283960228232
+      - type: 2
+        enabled: true
+        mesh_id: 1119675387283013084
+        navigable: false
+        visible: true
+        material_id: 16986423740163290191
+      - type: 2
+        enabled: true
+        mesh_id: 11322888504701892458
+        navigable: false
+        visible: true
+        material_id: 5808338921622117034
+      - type: 2
+        enabled: true
+        mesh_id: 13501166671557405458
+        navigable: false
+        visible: true
+        material_id: 15290504283960228232
+      - type: 2
+        enabled: true
+        mesh_id: 9276696853152820699
+        navigable: false
+        visible: true
+        material_id: 15290504283960228232
+      - type: 2
+        enabled: true
+        mesh_id: 4098046208273859946
+        navigable: false
+        visible: true
+        material_id: 7726662488496225977
+      - type: 2
+        enabled: true
+        mesh_id: 12011194831651727356
+        navigable: false
+        visible: true
+        material_id: 5808338921622117034
+      - type: 2
+        enabled: true
+        mesh_id: 10820329579185120070
+        navigable: false
+        visible: true
+        material_id: 15290504283960228232
+  - name: DashIndicator
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, -1.65130103, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
