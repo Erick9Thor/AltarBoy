@@ -8,9 +8,8 @@
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleTexture.h"
 
-Hachiko::TextureBatch::~TextureBatch() 
+Hachiko::TextureBatch::~TextureBatch()
 {
-
     for (auto& resource : resources)
     {
         delete resource.second;
@@ -29,6 +28,11 @@ Hachiko::TextureBatch::~TextureBatch()
 
 void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_material)
 {
+    if (!resource_material)
+    {
+        return;
+    }
+
     if (resource_material->HasDiffuse())
     {
         AddTexture(resource_material->diffuse);
@@ -47,7 +51,7 @@ void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_materia
     }
 }
 
-void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture) 
+void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
 {
     auto it = resources.find(texture);
 
@@ -220,6 +224,11 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
     {
         const ResourceMaterial* material = components[i]->GetResourceMaterial();
 
+        if (!material)
+        {
+            continue;
+        }
+
         materials[i].diffuse_color = material->diffuse_color;
         materials[i].specular_color = material->specular_color;
         materials[i].emissive_color = material->emissive_color;
@@ -277,7 +286,7 @@ void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned compo
 
 void Hachiko::TextureBatch::BindTextures()
 {
-    const std::vector<int> texture_slots = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+    const std::vector<int> texture_slots = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
     App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
     for (unsigned i = 0; i < texture_arrays.size(); ++i)

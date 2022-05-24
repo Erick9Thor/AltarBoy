@@ -25,24 +25,24 @@ namespace Hachiko
 
         struct Material
         {
-            float4 diffuse_color;
-            float4 specular_color;
-            float4 emissive_color;
-            unsigned diffuse_flag;
-            unsigned specular_flag;
-            unsigned normal_flag;
-            unsigned metallic_flag;
-            unsigned emissive_flag;
+            float4 diffuse_color = float4::zero;
+            float4 specular_color = float4::zero;
+            float4 emissive_color = float4::zero;
+            unsigned diffuse_flag = false;
+            unsigned specular_flag = false;
+            unsigned normal_flag = false;
+            unsigned metallic_flag = false;
+            unsigned emissive_flag = false;
             TexAddress diffuse_map;
             TexAddress specular_map;
             TexAddress normal_map;
             TexAddress metallic_map;
             TexAddress emissive_map;
-            float smoothness;
-            float metalness_value;
-            unsigned is_metallic;
-            unsigned smoothness_alpha;
-            unsigned is_transparent;
+            float smoothness = 0.f;
+            float metalness_value = 0.f;
+            unsigned is_metallic = false;
+            unsigned smoothness_alpha = 0;
+            unsigned is_transparent = 0;
             //unsigned padding[3];
         };
 
@@ -64,9 +64,9 @@ namespace Hachiko
 
         void BindTextures();
         void BindBuffers(bool use_first_segment, int component_count);
-        
+
         bool EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture);
-        
+
         std::map<const ResourceTexture*, TexAddress*> resources; // contains all the Texture resources and their address
         std::vector<TextureArray*> texture_arrays; // contains all the texture arrays
 
