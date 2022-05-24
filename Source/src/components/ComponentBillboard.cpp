@@ -117,6 +117,10 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     billboard_program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
     billboard_program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
+    billboard_program->BindUniformFloat("x_factor", &x_factor);
+    billboard_program->BindUniformFloat("y_factor", &y_factor);
+    billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
+
     float4 color = float4::one;
     if (colorOverLifetime)
     {
@@ -135,8 +139,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     glDisable(GL_BLEND);
     Program::Deactivate();
     return;
-
-    //program->BindUniformInts("diffuseMap", 1, &glTexture);
 
     //program->BindUniformFloat4("inputColor", color.ptr());
     //program->BindUniformFloat3("intensity", textureIntensity.ptr());
@@ -245,8 +247,22 @@ void Hachiko::ComponentBillboard::DrawGui()
       	// Texture Sheet Animation
         if (ImGui::CollapsingHeader("Texture Sheet Animation"))
         {
-            ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &Xtiles);
-            ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &Ytiles);
+            if (ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &Xtiles))
+            {
+                if (Xtiles)
+                {
+                    x_factor = 1 / (float)Xtiles;
+                    HE_LOG("x_factor: %f", x_factor);
+                }
+            }
+            if (ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &Ytiles))
+            {
+                if (Ytiles)
+                {
+                    y_factor = 1 / (float)Ytiles;
+                    HE_LOG("y_factor: %f", y_factor);
+                }
+            }
             ImGui::DragFloat("Cycles##animation_cycles", &animationCycles, 1.0f, 1.0f, inf);
             ImGui::Checkbox("Loop##animation_loop", &animationLoop);
         }
@@ -278,10 +294,13 @@ void Hachiko::ComponentBillboard::Stop() {}
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {
+    node[BILLBOARD_TYPE] = static_cast<int>(billboardType);
     if (texture != nullptr)
     {
         node[BILLBOARD_TEXTURE_ID] = texture->GetID();
     }
+    node[X_TILES] = Xtiles;
+    node[Y_TILES] = Ytiles;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -291,6 +310,23 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     {
         texture = static_cast<ResourceTexture*>(
             App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+    }
+    billboardType = node[BILLBOARD_TYPE].IsDefined() 
+        ? static_cast<BillboardType>(node[BILLBOARD_TYPE].as<int>()) 
+        : BillboardType::HORIZONTAL;
+
+    Xtiles = 1;
+    if (node[X_TILES].IsDefined() && !node[X_TILES].IsNull())
+    {
+        Xtiles = node[X_TILES].as<int>();
+        x_factor = 1 / (float)Xtiles;
+    }
+
+    Ytiles = 1;
+    if (node[Y_TILES].IsDefined() && !node[Y_TILES].IsNull())
+    {
+        Ytiles = node[Y_TILES].as<int>();
+        y_factor = 1 / (float)Ytiles;
     }
 }
 
@@ -302,13 +338,11 @@ void Hachiko::ComponentBillboard::AddTexture()
     if (ImGui::Button("Add Texture"))
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
-                                                "Select Texture",
-                                                ".png,.tif,.jpg,.tga",
-                                                "./assets/textures/",
-                                                1,
-                                                nullptr,
-                                                ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
-                                                    | ImGuiFileDialogFlags_HideColumnDate);
+            "Select Texture", ".png,.tif,.jpg,.tga", "./assets/textures/", 1, nullptr,
+            ImGuiFileDialogFlags_DontShowHiddenFiles 
+            | ImGuiFileDialogFlags_DisableCreateDirectoryButton 
+            | ImGuiFileDialogFlags_HideColumnType
+            | ImGuiFileDialogFlags_HideColumnDate);
     }
 
     if (ImGuiFileDialog::Instance()->Display(title.c_str()))

@@ -67,9 +67,12 @@ namespace Hachiko
         // Texture Sheet Animation
         int Xtiles = 1;
         int Ytiles = 1;
+        float x_factor = 1.0f;
+        float y_factor = 1.0f;
         float animationCycles = 1.0f;
         bool animationLoop = true;
-
+        float2 animation_index = {1.0f, 1.0f};
+        
         // Color over Lifetime
         bool colorOverLifetime = false;
         float colorCycles = 1.0f;

@@ -231,6 +231,9 @@
 
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"
+#define BILLBOARD_TYPE "billboard_type"
+#define X_TILES "x_tiles"
+#define Y_TILES "y_tiles"
 
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"

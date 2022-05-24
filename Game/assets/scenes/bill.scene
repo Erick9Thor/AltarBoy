@@ -31,17 +31,20 @@ child:
           up: [0, 1, 0]
           type: 0
           pinned_camera: [0, 0, 0]
-  - id: 2917331946386089603
+  - id: 15365361998403244311
     name: GameObject
     enabled: true
     component:
-      - id: 11020600808320403649
+      - id: 16753552073556325775
         type: 1
         enabled: true
-        position: [0, 8.28241444, 7.33515072]
+        position: [1.38490796, 3.07540226, 14.3847876]
         rotation: [0, 0, 0, 1]
-        scale: [1, 1, 1]
-      - id: 14668670799777792220
+        scale: [10, 10, 1]
+      - id: 16292953984949160155
         type: 21
         enabled: true
+        billboard_type: 3
         texture_id: 9793570645799761911
+        x_tiles: 6
+        y_tiles: 6

@@ -84,7 +84,6 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game
         // TODO: place the following correctly (or change function's name?)
         else if (components[i]->GetType() == Component::Type::BILLBOARD)
         {
-            HE_LOG("Adding billboard to renderer");
             has_mesh_renderer = true;
         }
     }
