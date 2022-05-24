@@ -4,7 +4,7 @@ specular: 0
 normals: 0
 metalness: 0
 emissive: 0
-diffuse_color: [0.800000012, 0.800000012, 0.800000012, 0.34117648]
+diffuse_color: [0.800000012, 0.800000012, 0.800000012, 0.568627477]
 specular_color: [0, 0, 0, 0]
 emissive_color: [0, 0, 0, 0]
 smoothness: 0.5
