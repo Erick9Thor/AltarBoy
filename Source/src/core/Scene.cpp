@@ -29,7 +29,6 @@ Hachiko::Scene::Scene() :
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
-    //App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -52,8 +51,6 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     {
         App->editor->SetSelectedGO(nullptr);
     }
-
-    quadtree->Remove(game_object);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
@@ -214,7 +211,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->Load(children_node[i]);
     }
 
-    App->navigation->SetNavmesh(navmesh_id);
     loaded = true;
 }
 
@@ -261,7 +257,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
-            scene_bounds.Enclose(go->GetAABB());
+            scene_bounds.Enclose(mesh_renderer->GetAABB());
         }
 
         for (auto& child : go->children)
