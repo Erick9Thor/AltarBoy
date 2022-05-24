@@ -216,8 +216,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
 
 void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)
 {
-    // Ensure that all scene is fresh (bounding boxes were not updated if using right after loading scene)
-    root->Update();
     // TODO: Have an array of meshes on scene to not make this recursive ?
     scene_vertices.clear();
     scene_triangles.clear();
