@@ -31,17 +31,17 @@ child:
           up: [0, 1, 0]
           type: 0
           pinned_camera: [0, 0, 0]
-  - id: 13048800713742145231
+  - id: 2917331946386089603
     name: GameObject
     enabled: true
     component:
-      - id: 12883591676797453512
+      - id: 11020600808320403649
         type: 1
         enabled: true
-        position: [-24.684185, 30.3117981, -12.2000437]
+        position: [0, 8.28241444, 7.33515072]
         rotation: [0, 0, 0, 1]
-        scale: [10, 10, 2.5]
-      - id: 6750474000712139999
+        scale: [1, 1, 1]
+      - id: 14668670799777792220
         type: 21
         enabled: true
-        texture_id: 12023432331947101770
+        texture_id: 9793570645799761911
