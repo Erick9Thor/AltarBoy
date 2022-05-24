@@ -17,12 +17,15 @@
 #include <debugdraw.h>
 #include <algorithm>
 
+#include "batching/BatchManager.h"
+
 Hachiko::Scene::Scene() :
     name(UNNAMED_SCENE),
     root(new GameObject(nullptr, float4x4::identity, "Root")),
     culling_camera(App->camera->GetRenderingCamera()),
     skybox(new Skybox()),
-    quadtree(new Quadtree())
+    quadtree(new Quadtree()),
+    batch_manager(new BatchManager())
 {
     // Root's scene_owner should always be this scene:
     root->scene_owner = this;
@@ -42,10 +45,11 @@ void Hachiko::Scene::CleanScene()
     delete root;
     delete skybox;
     delete quadtree;
+    delete batch_manager;
     loaded = false;
 }
 
-void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
+void Hachiko::Scene::DestroyGameObject(GameObject* game_object)
 {
     if (App->editor->GetSelectedGameObject() == game_object)
     {
@@ -75,6 +79,8 @@ Hachiko::GameObject* Hachiko::Scene::CreateNewGameObject(GameObject* parent, con
 
     new_game_object->SetName(name);
 
+    OnMeshesChanged();
+
     // This will insert itself into quadtree on first bounding box update:
     return new_game_object;
 }
@@ -92,6 +98,17 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     if (component_mesh_renderer != nullptr)
     {
         component_mesh_renderer->AddResourceMaterial(material);
+    }
+}
+
+void Hachiko::Scene::RebuildBatching() 
+{
+    if (rebuild_batch)
+    {
+        batch_manager->CleanUp();
+        batch_manager->CollectMeshes(root);
+        batch_manager->BuildBatches();
+        rebuild_batch = false;
     }
 }
 
@@ -288,7 +305,7 @@ void Hachiko::Scene::Start() const
     root->Start();
 }
 
-void Hachiko::Scene::Update() const
+void Hachiko::Scene::Update()
 {
     OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
