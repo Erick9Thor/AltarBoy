@@ -170,7 +170,7 @@ void Hachiko::ComponentBillboard::DrawGui()
         {
             Stop();
         }
-        ImGui::DragFloat("Duration", &billboardLifetime, 1.0f, 0, inf);
+        ImGui::DragFloat("Duration", &billboard_lifetime, 1.0f, 0, inf);
         ImGui::Checkbox("Play On Awake", &playOnAwake);
 
         const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
@@ -247,24 +247,24 @@ void Hachiko::ComponentBillboard::DrawGui()
       	// Texture Sheet Animation
         if (ImGui::CollapsingHeader("Texture Sheet Animation"))
         {
-            if (ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &Xtiles))
+            if (ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &x_tiles))
             {
-                if (Xtiles)
+                if (x_tiles)
                 {
-                    x_factor = 1 / (float)Xtiles;
+                    x_factor = 1 / (float)x_tiles;
                     HE_LOG("x_factor: %f", x_factor);
                 }
             }
-            if (ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &Ytiles))
+            if (ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &y_tiles))
             {
-                if (Ytiles)
+                if (y_tiles)
                 {
-                    y_factor = 1 / (float)Ytiles;
+                    y_factor = 1 / (float)y_tiles;
                     HE_LOG("y_factor: %f", y_factor);
                 }
             }
-            ImGui::DragFloat("Cycles##animation_cycles", &animationCycles, 1.0f, 1.0f, inf);
-            ImGui::Checkbox("Loop##animation_loop", &animationLoop);
+            ImGui::DragFloat("Cycles##animation_cycles", &animation_cycles, 1.0f, 1.0f, inf);
+            ImGui::Checkbox("Loop##animation_loop", &animation_loop);
         }
 
         // Color Over Lifetime
@@ -286,11 +286,24 @@ void Hachiko::ComponentBillboard::DrawGui()
 }
 
 void Hachiko::ComponentBillboard::Update() 
-{}
+{
+    if (!is_playing)
+    {
+        return;
+    }
+    
+    UpdateAnimationIndex();
+}
 
-void Hachiko::ComponentBillboard::Play() {}
+void Hachiko::ComponentBillboard::Play() 
+{
+    is_playing = true;
+}
 
-void Hachiko::ComponentBillboard::Stop() {}
+void Hachiko::ComponentBillboard::Stop()
+{
+    is_playing = false;
+}
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {
@@ -299,8 +312,8 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     {
         node[BILLBOARD_TEXTURE_ID] = texture->GetID();
     }
-    node[X_TILES] = Xtiles;
-    node[Y_TILES] = Ytiles;
+    node[X_TILES] = x_tiles;
+    node[Y_TILES] = y_tiles;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -315,18 +328,18 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
         ? static_cast<BillboardType>(node[BILLBOARD_TYPE].as<int>()) 
         : BillboardType::HORIZONTAL;
 
-    Xtiles = 1;
+    x_tiles = 1;
     if (node[X_TILES].IsDefined() && !node[X_TILES].IsNull())
     {
-        Xtiles = node[X_TILES].as<int>();
-        x_factor = 1 / (float)Xtiles;
+        x_tiles = node[X_TILES].as<int>();
+        x_factor = 1 / (float)x_tiles;
     }
 
-    Ytiles = 1;
+    y_tiles = 1;
     if (node[Y_TILES].IsDefined() && !node[Y_TILES].IsNull())
     {
-        Ytiles = node[Y_TILES].as<int>();
-        y_factor = 1 / (float)Ytiles;
+        y_tiles = node[Y_TILES].as<int>();
+        y_factor = 1 / (float)y_tiles;
     }
 }
 
@@ -367,4 +380,20 @@ void Hachiko::ComponentBillboard::AddTexture()
 void Hachiko::ComponentBillboard::RemoveTexture()
 {
     texture = nullptr;
+}
+
+void Hachiko::ComponentBillboard::UpdateAnimationIndex() 
+{
+    if (animation_index.x < x_tiles - 1)
+    {
+        animation_index.x += 1.0f;
+        return;
+    }
+    else if (animation_index.y < y_tiles - 1)
+    {
+        animation_index.x = 0.0f;
+        animation_index.y += 1.0f;
+        return;
+    }
+    animation_index = {0.0f, 0.0f};
 }

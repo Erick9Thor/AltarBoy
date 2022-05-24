@@ -13,7 +13,7 @@ out vec4 outColor;
 
 void main()
 {	
-    float u = uv0.x * x_factor;
-    float v = uv0.y * y_factor;
+    float u = (uv0.x + animation_index.x) * x_factor;
+    float v = (uv0.y + animation_index.y) * y_factor;
     outColor = texture2D(diffuseMap,  vec2(u, v));
 }

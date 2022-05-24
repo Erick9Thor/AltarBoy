@@ -45,13 +45,13 @@ namespace Hachiko
         float3 direction = float3::zero;
 
         bool isStarted = false;
-        bool isPlaying = false;
+        bool is_playing = false;
         float time = 0.0f;
         float currentFrame = 0.0f;
         float colorFrame = 0.0f;
 
         // General
-        float billboardLifetime = 5.0f;
+        float billboard_lifetime = 5.0f;
         bool playOnAwake = false;
 
         // Render
@@ -65,13 +65,13 @@ namespace Hachiko
         bool flipTexture[2] = {false, false};
 
         // Texture Sheet Animation
-        int Xtiles = 1;
-        int Ytiles = 1;
+        int x_tiles = 1;
+        int y_tiles = 1;
         float x_factor = 1.0f;
         float y_factor = 1.0f;
-        float animationCycles = 1.0f;
-        bool animationLoop = true;
-        float2 animation_index = {1.0f, 1.0f};
+        float animation_cycles = 1.0f;
+        bool animation_loop = true;
+        float2 animation_index = {0.0f, 0.0f};
         
         // Color over Lifetime
         bool colorOverLifetime = false;
@@ -83,5 +83,6 @@ namespace Hachiko
 
         void AddTexture();
         void RemoveTexture();
+        void UpdateAnimationIndex();
     };
 }
