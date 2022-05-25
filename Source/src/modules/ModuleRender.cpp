@@ -312,16 +312,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-    // if (draw_skybox)
-    // {
-    //     scene->GetSkybox()->Draw(camera);
-    // }
-    // else
-    // {
-    //     const auto& clear_color = App->editor->scene_background;
-    //     glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-    // }
-
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;
@@ -355,10 +345,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
     
-    // Draw debug draw stuff to the g-buffer:
-    ModuleDebugDraw::Draw(camera->GetViewMatrix(), 
-        camera->GetProjectionMatrix(), fb_height, fb_width);
-    
     // Light Pass:
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -384,16 +370,10 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     glBindTexture(GL_TEXTURE_2D, g_buffer_emissive);
     
     program->BindUniformInts("mode", 1, &deferred_mode);
-    
+
     RenderDeferredQuad();
 
     Program::Deactivate();
-
-    // If forward pass is disabled on the settings, return:
-    if (!render_forward_pass)
-    {
-        return;
-    }
 
     // Blit g_buffer depth buffer to frame_buffer to be used for forward 
     // rendering pass:
@@ -406,6 +386,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    if (draw_skybox)
+    {
+        scene->GetSkybox()->Draw(camera);
+    }
+
+    // Draw debug draw stuff to the g-buffer:
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), 
+        camera->GetProjectionMatrix(), fb_height, fb_width);
+
+    // If forward pass is disabled on the settings, return:
+    if (!render_forward_pass)
+    {
+        return;
+    }
+
     // Forward rendering pass for transparent game objects:
     program = App->program->GetMainProgram();
 
@@ -413,8 +408,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     // Get the targets that has transparent materials. These targets will be 
     // rendered with regular forward rendering pass:
-    std::vector<RenderTarget>& transparent_targets = 
-        render_list.GetTransparentTargets();
+    std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
 
     for (RenderTarget target : transparent_targets)
     {
@@ -423,21 +417,21 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
-     /*if (outline_selection && outline_target)
-     {
-         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
-         glStencilMask(0X00);
-         glDisable(GL_DEPTH_TEST);
+    /*if (outline_selection && outline_target)
+    {
+        glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
+        glStencilMask(0X00);
+        glDisable(GL_DEPTH_TEST);
 
-         Program* outline_program = App->program->GetStencilProgram();
-         outline_program->Activate();
-         outline_target->game_object->DrawStencil(camera, outline_program);
-         Program::Deactivate();
+        Program* outline_program = App->program->GetStencilProgram();
+        outline_program->Activate();
+        outline_target->game_object->DrawStencil(camera, outline_program);
+        Program::Deactivate();
 
-         glStencilMask(0XFF);
-         glStencilFunc(GL_ALWAYS, 0, 0xFF);
-         glEnable(GL_DEPTH_TEST);
-     }*/
+        glStencilMask(0XFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
+    }*/
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
