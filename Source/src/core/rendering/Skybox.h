@@ -22,7 +22,11 @@ namespace Hachiko
             return cube;
         }
 
+        void DrawImGui();
+
     private:
+        void SelectSkyboxTexture(TextureCube::Side cube_side);
+
         void CreateBuffers();
         TextureCube cube;
         unsigned vao{};

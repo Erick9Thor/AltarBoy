@@ -60,6 +60,87 @@ void Hachiko::Skybox::ReleaseCubemap()
     cube.loaded = false;
 }
 
+void Hachiko::Skybox::DrawImGui() 
+{
+    ImGui::PushID(this);
+
+    ImGui::Text("Skybox");
+
+    ImGui::TextDisabled("Keep in mind that all images \nneed to have the same format!");
+
+    if (ImGui::CollapsingHeader("Params"))
+    {
+        SelectSkyboxTexture(TextureCube::Side::RIGHT);
+        SelectSkyboxTexture(TextureCube::Side::LEFT);
+        SelectSkyboxTexture(TextureCube::Side::BOTTOM);
+        SelectSkyboxTexture(TextureCube::Side::TOP);
+        SelectSkyboxTexture(TextureCube::Side::CENTER);
+        SelectSkyboxTexture(TextureCube::Side::BACK);
+    }
+
+    ImGui::PopID();
+}
+
+const std::string TextureCubeSideToString(Hachiko::TextureCube::Side cube_side)
+{
+    switch (cube_side)
+    {
+    case Hachiko::TextureCube::Side::RIGHT:
+        return "Right";
+    case Hachiko::TextureCube::Side::LEFT:
+        return "Left";
+    case Hachiko::TextureCube::Side::BOTTOM:
+        return "Bottom";
+    case Hachiko::TextureCube::Side::TOP:
+        return "Top";
+    case Hachiko::TextureCube::Side::CENTER:
+        return "Center";
+    case Hachiko::TextureCube::Side::BACK:
+        return "Back";
+    }
+}
+
+void Hachiko::Skybox::SelectSkyboxTexture(TextureCube::Side cube_side)
+{
+    const std::string title = Hachiko::StringUtils::Concat("Select texture ", TextureCubeSideToString(cube_side));
+    const char* filters = "Image files{.png,.tif,.jpg,.tga}";
+
+    if (ImGui::Button(Hachiko::StringUtils::Concat(TextureCubeSideToString(cube_side).c_str(), " Texture").c_str()))
+    {
+        ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                "Select Texture",
+                                                filters,
+                                                "./assets/textures/",
+                                                1,
+                                                nullptr,
+                                                ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
+                                                    | ImGuiFileDialogFlags_HideColumnDate);
+    }
+
+    if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string texture_path = ImGuiFileDialog::Instance()->GetFilePathName();
+            texture_path.append(META_EXTENSION);
+
+            YAML::Node texture_node = YAML::LoadFile(texture_path);
+            Hachiko::UID res = texture_node[RESOURCES][0][RESOURCE_ID].as<Hachiko::UID>();
+
+            if (res)
+            {
+                ChangeCubeMapSide(res, cube_side);
+            }
+            else
+            {
+                HE_ERROR("Failed when loading the texture.");
+            }
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+}
+
 void Hachiko::Skybox::CreateBuffers()
 {
     constexpr float vertices[]
