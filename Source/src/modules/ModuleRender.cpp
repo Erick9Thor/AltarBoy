@@ -340,20 +340,12 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     // deferred lighting pass:
     glDisable(GL_BLEND);
 
-    // TODO: Add proper way of distinction between transparent and opaque game
-    // objects by separating them into different render_lists maybe.
-    std::vector<RenderTarget*> transparent_targets;
+    // Get opaque targets, these will be rendered in deferred rendering passes:
+    std::vector<RenderTarget>& opaque_targets = render_list.GetOpaqueTargets();
 
-    for (RenderTarget& target : render_list.GetNodes())
+    for (RenderTarget& target : opaque_targets)
     {
-        if (target.game_object->GetName() == "experiment") 
-        {
-            transparent_targets.push_back(&target);
-
-            continue;
-        }
-
-        target.game_object->Draw(camera, program);
+        target.mesh_renderer->Draw(camera, program);
 
         /*if (selected_go && target.game_object == selected_go)
         {
@@ -397,7 +389,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
-
     // If forward pass is disabled on the settings, return:
     if (!render_forward_pass)
     {
@@ -412,32 +403,25 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
         GL_DEPTH_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    float3 camera_position = camera->GetGameObject()->GetTransform()->GetGlobalPosition();
-
-    // Sort the transparent render targets by their distance to the camera:
-    std::sort(transparent_targets.begin(), transparent_targets.end(), [&camera_position](RenderTarget* lhs, RenderTarget* rhs) {
-        return camera_position.Distance(lhs->game_object->GetTransform()->GetGlobalPosition()) < camera_position.Distance(rhs->game_object->GetTransform()->GetGlobalPosition());
-    });
 
     // Forward rendering pass for transparent game objects:
     program = App->program->GetMainProgram();
 
     program->Activate();
 
+    // Get the targets that has transparent materials. These targets will be 
+    // rendered with regular forward rendering pass:
+    std::vector<RenderTarget>& transparent_targets = 
+        render_list.GetTransparentTargets();
 
-    // TODO: Add proper forward pass with opaque objects only.  
-    for (RenderTarget* target : transparent_targets)
+    for (RenderTarget target : transparent_targets)
     {
-        target->game_object->Draw(camera, program);
+        target.mesh_renderer->Draw(camera, program);
     }
 
     Program::Deactivate();
-
-    transparent_targets.clear();
 
      /*if (outline_selection && outline_target)
      {

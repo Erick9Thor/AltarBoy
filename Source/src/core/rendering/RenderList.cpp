@@ -12,7 +12,8 @@ void Hachiko::RenderList::PreUpdate()
 
 void Hachiko::RenderList::Update(ComponentCamera* camera, GameObject* game_object)
 {
-    nodes.clear();
+    opaque_targets.clear();
+    transparent_targets.clear();
     const Frustum* frustum = camera->GetFrustum();
     const float3 camera_pos = frustum->WorldMatrix().TranslatePart();
     CollectObjects(camera, camera_pos, game_object);
@@ -20,7 +21,8 @@ void Hachiko::RenderList::Update(ComponentCamera* camera, GameObject* game_objec
 
 void Hachiko::RenderList::Update(ComponentCamera* camera, QuadtreeNode* quadtree)
 {
-    nodes.clear();
+    opaque_targets.clear();
+    transparent_targets.clear();
     const Frustum* frustum = camera->GetFrustum();
     const float3 camera_pos = frustum->WorldMatrix().TranslatePart();
     CollectObjects(camera, camera_pos, quadtree);
@@ -66,37 +68,45 @@ void Hachiko::RenderList::CollectObjects(ComponentCamera* camera, const float3& 
     }
 }
 
-void Hachiko::RenderList::CollectMesh(const float3& camera_pos, GameObject* game_object)
+void Hachiko::RenderList::CollectMesh(const float3& camera_pos, 
+    GameObject* game_object)
 {
-    bool has_mesh_renderer = false;
-    const std::vector<Component*> components = game_object->GetComponents();
-    for (int i = 0; i < components.size(); ++i)
+    std::vector<ComponentMeshRenderer*> component_mesh_renderers = 
+        game_object->GetComponents<ComponentMeshRenderer>();
+ 
+    for (int i = 0; i < component_mesh_renderers.size(); ++i)
     {
-        if (components[i]->GetType() == Component::Type::MESH_RENDERER)
-        {
-            ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
-            if (mesh_renderer->IsVisible())
-            {
-                has_mesh_renderer = true;
-                polycount_rendered += game_object->GetComponent<ComponentMeshRenderer>()->GetBufferSize(ResourceMesh::Buffers::INDICES) / 3;
-            }
-        }
-    }
+        ComponentMeshRenderer* mesh_renderer = 
+            component_mesh_renderers[i];
 
-    if (has_mesh_renderer)
-    {
+        if (!mesh_renderer->IsVisible())
+        {
+            continue;
+        }
+
+        polycount_rendered += 
+            mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES)/3;
+
         RenderTarget target;
         target.name = game_object->GetName().c_str();
-        target.game_object = game_object;
-        target.distance = (game_object->GetOBB().CenterPoint() - camera_pos).LengthSq();
+        target.mesh_renderer = mesh_renderer;
+        target.distance = 
+            (game_object->GetOBB().CenterPoint() - camera_pos).LengthSq();
 
-        // Get first element which distance is not less than current target one
-        const auto it = std::lower_bound(nodes.begin(),
-                                         nodes.end(),
-                                         target,
-                                         [](const RenderTarget& it_target, const RenderTarget& new_target) {
-                                             return it_target.distance < new_target.distance;
-                                         });
-        nodes.insert(it, target);
+        // Decide in which list this target should be placed in based on its
+        // material's transparency:
+        auto targets = mesh_renderer->GetMaterial()->is_transparent 
+            ? &transparent_targets : &opaque_targets;
+
+        // Get sorted by distance to camera in ascending order:
+        const auto it
+            = std::lower_bound((*targets).begin(), (*targets).end(),
+            target,
+            [](const RenderTarget& it_target, const RenderTarget& new_target) 
+            {
+                return it_target.distance < new_target.distance;
+            });
+
+        (*targets).insert(it, target);
     }
 }
