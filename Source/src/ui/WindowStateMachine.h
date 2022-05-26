@@ -18,18 +18,34 @@ namespace Hachiko
 
         void SetStateMachine(ResourceStateMachine& resourceStateMachine);
 
-        void showAddNodePopup();
-        void showEditNodePopup();
+        void DrawNodes();
+        void DrawTransitions();
 
+        void ShowAddNodePopup();
+        void ShowContextMenus();
+        void ShowNodeMenu();
+        void ShowLinkMenu();
+
+
+
+
+
+
+        void showEditNodePopup();
         void addLink();
         void showDeleteLinkPopup();
 
-        void showHelp();
+
+
+
+
+
+        void ShowHelp(); 
 
     private:
 
         //char* trigger = nullptr;
-        bool add_node = false;
+        bool addNode = false;
         bool add_clip = false;
 
         int node_id = 0;
@@ -40,8 +56,12 @@ namespace Hachiko
         //bool editIT = false;
         bool deleteLink = false;
 
-        ResourceStateMachine* sm = nullptr;
-        ImNodesContext* context0 = nullptr;
+        int context_node = 0;
+        int context_link = 0;
+        ImVec2 new_node_pos;
+        ax::NodeEditor::PinId new_node_pin = 0;
+
+        ResourceStateMachine* stateMachine = nullptr;
         ax::NodeEditor::EditorContext* context = nullptr;
     };
 } // namespace Hachiko

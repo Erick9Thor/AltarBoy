@@ -9,28 +9,34 @@ using namespace ax;
 
 Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor - Press Left Alt + H for help", false)
 {
+    
+
 }
 
 Hachiko::WindowStateMachine::WindowStateMachine(std::string name) : Window(std::string(name + std::string(" State Machine editor - Press Left Alt + H for help")).c_str(), false)
 {
+    context = NodeEditor::CreateEditor();
 }
 
 Hachiko::WindowStateMachine::~WindowStateMachine()
 {
-    delete sm;
-    delete context;
+    stateMachine = nullptr;
+    NodeEditor::DestroyEditor(context);
+    //delete context;
+    //delete context0;
     //delete trigger;
 }
 
 void Hachiko::WindowStateMachine::Update()
 {
+    
     ImGui::SetNextWindowSize(ImVec2(400.0f, 200.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin((std::string(ICON_FA_BEZIER_CURVE " ") + name).c_str(), &active))
+    if (!ImGui::Begin((std::string(ICON_FA_BEZIER_CURVE " ") + "StateMachine").c_str(), &active))
     {
         ImGui::End();
         return;
     }
-
+    
     /*
     ImNodes::BeginNodeEditor();
 
@@ -92,50 +98,99 @@ void Hachiko::WindowStateMachine::Update()
     showDeleteLinkPopup();
     */
 
-    context = NodeEditor::CreateEditor();
+
     NodeEditor::SetCurrentEditor(context);
-    NodeEditor::Begin("State Machine Editor", ImVec2(0.0, 0.0f));
+    NodeEditor::Begin("State Machine Editor", ImVec2(0.0, 0.0f)); // TODO: Revise why this causes memory leaks
+    
+    DrawNodes();
+    DrawTransitions();
 
-    NodeEditor::BeginNode(1);
-    ImGui::TextColored(ImVec4(255, 255, 0, 255), "Default state");
-    ImVec2 size = NodeEditor::GetNodeSize(1);
-
-
-    // In Pin
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 8.0f);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 8.0f);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinRadius, 10.0f);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
-    NodeEditor::BeginPin(2, NodeEditor::PinKind::Input);
-    ImGui::Text("In");
-    NodeEditor::EndPin();
-    NodeEditor::PopStyleVar(4);
-
-    // Out Pin
-    ImGui::SameLine(size.x - 40);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 0.0f);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 0.0f);
-    NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
-    NodeEditor::BeginPin(3, NodeEditor::PinKind::Output);
-    ImGui::Text("Out");
-    NodeEditor::EndPin();
-
-    NodeEditor::EndNode();
-
-    NodeEditor::PopStyleVar(2);
-
-    showHelp();
+    ShowAddNodePopup();
+    ShowContextMenus();
+    ShowNodeMenu();
+    ShowHelp();
 
     NodeEditor::End();
     NodeEditor::SetCurrentEditor(nullptr);
-    NodeEditor::DestroyEditor(context);
 
     ImGui::End();
 }
 
-
-void Hachiko::WindowStateMachine::showAddNodePopup() 
+void Hachiko::WindowStateMachine::DrawNodes()
 {
+    for (int i = 0; i < stateMachine->nodes.size(); ++i)
+    {
+        NodeEditor::PushStyleColor(NodeEditor::StyleColor_PinRect, ImColor(60, 180, 255, 150));
+        NodeEditor::PushStyleColor(NodeEditor::StyleColor_PinRectBorder, ImColor(60, 180, 255, 150));
+
+        int id = i * 3;
+        NodeEditor::BeginNode(id + 1);
+        
+        ImVec2 size = NodeEditor::GetNodeSize(id + 1);
+        //HE_LOG("size: %f, %f", size.x, size.y);
+        ImVec2 pos = NodeEditor::GetNodePosition(id + 1);
+        //HE_LOG("pos: %f, %f", pos.x, pos.y);
+
+        ImGui::Indent(1.0);
+        if (stateMachine->nodes[i].name.size() <= 7)
+        {
+            ImGui::Text("");
+            float offset = (8 - stateMachine->nodes[i].name.size()) * 0.05;
+            ImGui::SameLine(size.x * offset);
+        }
+        ImGui::TextColored(ImVec4(255, 255, 0, 255), stateMachine->nodes[i].name.c_str());
+
+
+        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 0.5f * ImGui::GetStyle().Alpha);
+        ImGui::PopStyleVar();
+        
+        // In Pin
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 8.0f);
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 8.0f);
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinRadius, 10.0f);
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
+        NodeEditor::BeginPin(id + 2, NodeEditor::PinKind::Input);
+        ImGui::Text("In");
+        NodeEditor::EndPin();
+        NodeEditor::PopStyleVar(4);
+
+        // Out Pin
+        if (size.x > 80)
+        {
+            ImGui::SameLine(size.x - 40);
+        }
+        else
+        {
+            ImGui::SameLine(40);
+        }
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 0.0f);
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowWidth, 0.0f);
+        NodeEditor::PushStyleVar(NodeEditor::StyleVar_TargetDirection, ImVec2(0.0f, 0.0f));
+        NodeEditor::BeginPin(id + 3, NodeEditor::PinKind::Output);
+        ImGui::Text("Out");
+        NodeEditor::EndPin();
+
+        NodeEditor::EndNode();
+    }
+}
+
+void Hachiko::WindowStateMachine::DrawTransitions()
+{
+    //NodeEditor::PushStyleVar(NodeEditor::StyleVar_LinkStrength, 4.0f);
+    for (const Hachiko::ResourceStateMachine::Transition& transition : stateMachine->transitions)
+    {
+        int sourceID = stateMachine->FindNode(transition.source);
+        int targetID = stateMachine->FindNode(transition.target);
+        int linkID = sourceID * 100 + targetID;
+        NodeEditor::Link(linkID, sourceID * 3 + 3, targetID * 3 + 2);
+    }
+    //NodeEditor::PopStyleVar(1);
+}
+
+
+void Hachiko::WindowStateMachine::ShowAddNodePopup()
+{
+    /*
     const bool openPopup = ImNodes::IsEditorHovered() && ImGui::IsMouseClicked(1, false);
 
     if (!ImGui::IsAnyItemHovered() && openPopup)
@@ -166,8 +221,65 @@ void Hachiko::WindowStateMachine::showAddNodePopup()
     }
 
     ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
-}
+    */
+    /*
+    if (ImGui::IsMouseDoubleClicked(0))
+    {
+        *id = NodeEditor::GetDoubleClickedNode();
+    }
 
+
+    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1,false) && ImGui::GetHoveredID() > 0)
+    {
+        addNode = true;       
+        if (NodeEditor::ShowNodeContextMenu(id))
+        {
+            int j = 0;
+        }
+        HE_LOG("%f, %f", NodeEditor::GetNodePosition(*id).x, NodeEditor::GetNodePosition(*id).y);
+    }
+    
+    if (addNode)
+    {
+        if (NodeEditor::ShowNodeContextMenu(id))
+        {
+            ImGui::Text("<sgsdg");
+            if (ImGui::Button(" Add node "))
+            {
+                
+            }
+        }
+        HE_LOG("%f, %f", NodeEditor::GetNodePosition(*id).x, NodeEditor::GetNodePosition(*id).y);
+    }
+    
+    //ImGuiPopupFlags flags = ImGuiMouseButton_Right | ImGuiPopupFlags_NoOpenOverItems;
+    //ImGui::OpenPopup("AddNode", flags);
+
+    if (ImGui::BeginPopup("AddNode"))
+    {
+        HE_LOG("%f, %f", ImGui::GetMousePosOnOpeningCurrentPopup().x, ImGui::GetMousePosOnOpeningCurrentPopup().y);
+        if (ImGui::Button(" Add node "))
+        {
+            addNode = true;
+        }
+
+        //if (addNode)
+        ImGui::EndPopup();
+    }
+
+    if (addNode)
+    {
+        static char nodeName[128] = "";
+        const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+        if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
+        {
+            addNode = false;
+            stateMachine->AddNode(nodeName, "");
+            ImGui::CloseCurrentPopup();
+        }
+    }*/
+}
+/*
 void Hachiko::WindowStateMachine::showEditNodePopup() 
 {
     if (ImNodes::IsNodeHovered(&node_id) && ImGui::IsMouseClicked(1, false))
@@ -193,8 +305,8 @@ void Hachiko::WindowStateMachine::showEditNodePopup()
                 }
                 ImGui::CloseCurrentPopup();
             }*/
-        else if (ImGui::Button(" Delete clip "))
-        {
+        //else if (ImGui::Button(" Delete clip "))
+        //{
             /*
             for (int i = 0; i < sm->nodes.size(); ++i)
             {
@@ -204,10 +316,10 @@ void Hachiko::WindowStateMachine::showEditNodePopup()
                 }
             }
             */
-            ImGui::CloseCurrentPopup();
-        }
-        else if (ImGui::Button(" Delete node "))
-        {
+            //ImGui::CloseCurrentPopup();
+        //}
+        //else if (ImGui::Button(" Delete node "))
+        //{
             /*
             for (int i = 0; i < sm->nodes.size(); ++i)
             {
@@ -217,6 +329,7 @@ void Hachiko::WindowStateMachine::showEditNodePopup()
                 }
             }
             */
+/*/
             sm->RemoveNode(sm->nodes[node_id / 3].name);
             ImGui::CloseCurrentPopup();
         }
@@ -306,7 +419,7 @@ void Hachiko::WindowStateMachine::showDeleteLinkPopup()
             ImGui::CloseCurrentPopup();
         }
         */
-
+/*
         if (ImGui::Button(" Delete link "))
         {
             sm->RemoveTransitionWithTarget(sm->nodes[link_id / 100].name, sm->nodes[link_id % 100].name);
@@ -385,11 +498,138 @@ void Hachiko::WindowStateMachine::showDeleteLinkPopup()
             }
         }
         */
+/*
+        ImGui::EndPopup();
+    }
+}
+*/
+
+void Hachiko::WindowStateMachine::ShowContextMenus() 
+{
+    auto openPopupPosition = ImGui::GetMousePos();
+    NodeEditor::Suspend();
+
+    NodeEditor::NodeId contextNodeId = 0;
+    NodeEditor::PinId contextPinId = 0;
+    NodeEditor::LinkId contextLinkId = 0;
+    //NodeEditor::GetSelectedNodes(&contextNodeId, 1);
+    //contextNodeId = NodeEditor::GetDoubleClickedNode();
+    //context_node = int(contextNodeId.Get() - 1) / 3;
+    //HE_LOG("%i", context_node);
+    if (NodeEditor::ShowNodeContextMenu(&contextNodeId))
+    {
+        context_node = int(contextNodeId.Get() - 1) / 3;
+        ImGui::OpenPopup("Node Context Menu");
+    }
+    else if (NodeEditor::ShowPinContextMenu(&contextPinId))
+    {
+        ImGui::OpenPopup("Pin Context Menu");
+    }
+    else if (NodeEditor::ShowLinkContextMenu(&contextLinkId))
+    {
+        //context_link = int(contextLinkId.Get()) - animation->GetNumNodes() * 3 - 1;
+        ImGui::OpenPopup("Link Context Menu");
+    }
+    else if (NodeEditor::ShowBackgroundContextMenu())
+    {
+        new_node_pos = ImGui::GetMousePos();
+        new_node_pin = 0;
+        ImGui::OpenPopup("Create New Node");
+    }
+
+    NodeEditor::Resume();
+}
+
+void Hachiko::WindowStateMachine::ShowNodeMenu() 
+{
+    if (ImGui::BeginPopup("Node Context Menu"))
+    {
+        ImGui::TextUnformatted("Node Context Menu");
+        ImGui::Separator();
+
+        char tmp[128];
+
+        //snprintf(tmp, 127, animation->GetNodeName(context_node).C_str());
+        snprintf(tmp, 127, stateMachine->nodes[context_node].name.c_str());
+        if (ImGui::InputText("Name", tmp, 128))
+        {
+            //animation->SetNodeName(context_node, HashString(tmp));
+            //animation->Save();
+            stateMachine->AddNode(tmp, "");
+        }
+        /*
+        int clip_index = animation->FindClip(animation->GetNodeClip(context_node));
+        if (ImGui::Combo("Clip", &clip_index, &StateViewport::GetClip, animation, animation->GetNumClips()))
+        {
+            animation->SetNodeClip(context_node, animation->GetClipName(clip_index));
+            animation->Save();
+        }
+
+        bool def = animation->GetDefaultNode() == context_node;
+        if (ImGui::Checkbox("Default", &def))
+        {
+            if (def)
+            {
+                animation->SetDefaultNode(context_node);
+            }
+            else
+            {
+                animation->SetDefaultNode(0);
+            }
+        }
+        */
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Delete"))
+        {
+            NodeEditor::DeleteNode(NodeEditor::NodeId((context_node + 1) * 3));
+            //animation->RemoveNode(context_node);
+            //animation->Save();
+            stateMachine->RemoveNode(stateMachine->nodes[context_node].name.c_str());
+        }
+
         ImGui::EndPopup();
     }
 }
 
-void Hachiko::WindowStateMachine::showHelp() 
+void Hachiko::WindowStateMachine::ShowLinkMenu() 
+{
+    if (ImGui::BeginPopup("Link Context Menu"))
+    {
+        ImGui::TextUnformatted("Transition Context Menu");
+        ImGui::Separator();
+        /*
+        char tmp[128];
+
+        HashString trigger = animation->GetTransitionTrigger(context_link);
+        snprintf(tmp, 127, trigger ? trigger.C_str() : "");
+        if (ImGui::InputText("Trigger", tmp, 128))
+        {
+            animation->SetTransitionTrigger(context_link, HashString(tmp));
+            animation->Save();
+        }
+
+        uint blend = animation->GetTransitionBlend(context_link);
+        if (ImGui::DragInt("Blend", (int*)&blend, 1.0f, 0, 1000))
+        {
+            animation->SetTransitionBlend(context_link, blend);
+            animation->Save();
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem("Delete"))
+        {
+            ed::DeleteLink(ed::LinkId((context_link + 1) + 2));
+            animation->RemoveTransition(context_link);
+            animation->Save();
+        }
+        */
+        ImGui::EndPopup();
+    }
+}
+
+void Hachiko::WindowStateMachine::ShowHelp() 
 {
     if (ImGui::IsKeyDown(SDL_SCANCODE_LALT) && ImGui::IsKeyPressed(SDL_SCANCODE_H, false))
     {
@@ -421,7 +661,7 @@ void Hachiko::WindowStateMachine::showHelp()
 
 void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine& resourceStateMachine) 
 {
-    sm = &resourceStateMachine;
+    stateMachine = &resourceStateMachine;
 }
 
 

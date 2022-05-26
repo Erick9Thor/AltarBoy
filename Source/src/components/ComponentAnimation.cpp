@@ -23,7 +23,7 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
-    //delete windowStateMachine;
+    delete windowStateMachine;
     delete state_machine;
     delete controller;
     animations.clear();
@@ -262,7 +262,7 @@ void Hachiko::ComponentAnimation::DrawGui()
             windowStateMachine->Update(); // TODO: Revise
 
             char name[128];
-            strcpy_s(name, state_machine->state_m_name.c_str());
+            //strcpy_s(name, state_machine->state_m_name.c_str());
 
             if (ImGui::InputText("Resource name", name, 128))
             {
