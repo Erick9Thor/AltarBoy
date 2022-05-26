@@ -24,6 +24,15 @@ namespace Hachiko
 
 		private:
 			SERIALIZE_FIELD(ComponentButton*, _button_back);
+			SERIALIZE_FIELD(ComponentButton*, _teleport_next_pos);
+			SERIALIZE_FIELD(ComponentButton*, _add_health);
+			SERIALIZE_FIELD(ComponentButton*, _remove_health);
+			SERIALIZE_FIELD(ComponentButton*, _toggle_invulnerable);
+			// placeholder for _navigate_in_godmode
+			SERIALIZE_FIELD(ComponentButton*, _spawn_enemy);
+			SERIALIZE_FIELD(ComponentButton*, _toggle_performance_output);
+			SERIALIZE_FIELD(ComponentButton*, _toggle_wireframe);
+			SERIALIZE_FIELD(ComponentButton*, _toggle_show_colliders);
 			bool is_active;
 			bool _is_god_mode = false;
 		};

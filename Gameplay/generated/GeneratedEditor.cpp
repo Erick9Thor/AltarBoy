@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -12,6 +13,19 @@
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
 {
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
+}
+
+void Hachiko::Scripting::DebugManager::OnEditor()
+{
+	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
+	Editor::Show<ComponentButton>("_teleport_next_pos", "ComponentButton*", _teleport_next_pos);
+	Editor::Show<ComponentButton>("_add_health", "ComponentButton*", _add_health);
+	Editor::Show<ComponentButton>("_remove_health", "ComponentButton*", _remove_health);
+	Editor::Show<ComponentButton>("_toggle_invulnerable", "ComponentButton*", _toggle_invulnerable);
+	Editor::Show<ComponentButton>("_spawn_enemy", "ComponentButton*", _spawn_enemy);
+	Editor::Show<ComponentButton>("_toggle_performance_output", "ComponentButton*", _toggle_performance_output);
+	Editor::Show<ComponentButton>("_toggle_wireframe", "ComponentButton*", _toggle_wireframe);
+	Editor::Show<ComponentButton>("_toggle_show_colliders", "ComponentButton*", _toggle_show_colliders);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

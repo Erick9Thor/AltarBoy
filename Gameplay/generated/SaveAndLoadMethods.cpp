@@ -2,6 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -32,6 +33,174 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 		if (_button_back_owner__temp != nullptr)
 		{
 			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+}
+
+void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
+{
+	if (_button_back != nullptr && _button_back->GetGameObject() != nullptr)
+	{
+		node["'_button_back@ComponentButton*'"] = _button_back->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_button_back@ComponentButton*'"] = 0;
+	}
+
+	if (_teleport_next_pos != nullptr && _teleport_next_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_next_pos@ComponentButton*'"] = _teleport_next_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_next_pos@ComponentButton*'"] = 0;
+	}
+
+	if (_add_health != nullptr && _add_health->GetGameObject() != nullptr)
+	{
+		node["'_add_health@ComponentButton*'"] = _add_health->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_add_health@ComponentButton*'"] = 0;
+	}
+
+	if (_remove_health != nullptr && _remove_health->GetGameObject() != nullptr)
+	{
+		node["'_remove_health@ComponentButton*'"] = _remove_health->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_remove_health@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_invulnerable != nullptr && _toggle_invulnerable->GetGameObject() != nullptr)
+	{
+		node["'_toggle_invulnerable@ComponentButton*'"] = _toggle_invulnerable->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_invulnerable@ComponentButton*'"] = 0;
+	}
+
+	if (_spawn_enemy != nullptr && _spawn_enemy->GetGameObject() != nullptr)
+	{
+		node["'_spawn_enemy@ComponentButton*'"] = _spawn_enemy->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_spawn_enemy@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_performance_output != nullptr && _toggle_performance_output->GetGameObject() != nullptr)
+	{
+		node["'_toggle_performance_output@ComponentButton*'"] = _toggle_performance_output->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_performance_output@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_wireframe != nullptr && _toggle_wireframe->GetGameObject() != nullptr)
+	{
+		node["'_toggle_wireframe@ComponentButton*'"] = _toggle_wireframe->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_wireframe@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_show_colliders != nullptr && _toggle_show_colliders->GetGameObject() != nullptr)
+	{
+		node["'_toggle_show_colliders@ComponentButton*'"] = _toggle_show_colliders->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_show_colliders@ComponentButton*'"] = 0;
+	}
+}
+
+void Hachiko::Scripting::DebugManager::OnLoad()
+{
+	if (load_node["'_button_back@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _button_back_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_button_back@ComponentButton*'"].as<unsigned long long>());
+		if (_button_back_owner__temp != nullptr)
+		{
+			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_teleport_next_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_next_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_next_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_next_pos_owner__temp != nullptr)
+		{
+			_teleport_next_pos = _teleport_next_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_add_health@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _add_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_add_health@ComponentButton*'"].as<unsigned long long>());
+		if (_add_health_owner__temp != nullptr)
+		{
+			_add_health = _add_health_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_remove_health@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _remove_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_remove_health@ComponentButton*'"].as<unsigned long long>());
+		if (_remove_health_owner__temp != nullptr)
+		{
+			_remove_health = _remove_health_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_invulnerable@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_invulnerable_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_invulnerable@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_invulnerable_owner__temp != nullptr)
+		{
+			_toggle_invulnerable = _toggle_invulnerable_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_spawn_enemy@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _spawn_enemy_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_spawn_enemy@ComponentButton*'"].as<unsigned long long>());
+		if (_spawn_enemy_owner__temp != nullptr)
+		{
+			_spawn_enemy = _spawn_enemy_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_performance_output@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_performance_output_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_performance_output@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_performance_output_owner__temp != nullptr)
+		{
+			_toggle_performance_output = _toggle_performance_output_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_wireframe@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_wireframe_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_wireframe@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_wireframe_owner__temp != nullptr)
+		{
+			_toggle_wireframe = _toggle_wireframe_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_show_colliders@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_show_colliders_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_show_colliders@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_show_colliders_owner__temp != nullptr)
+		{
+			_toggle_show_colliders = _toggle_show_colliders_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 }
