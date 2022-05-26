@@ -174,8 +174,10 @@ void Hachiko::ComponentBillboard::DrawGui()
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", texture->width, texture->height);
                 ImGui::Text("Path: %s", texture->path.c_str());
-
-                // TODO: textue configuration (maybe delegate to the ResourceTexture)
+                if (ImGui::Button("Remove Texture##remove_texture"))
+                {
+                    RemoveTexture();
+                }
 
                 ImGui::EndGroup();
             }
@@ -246,12 +248,7 @@ void Hachiko::ComponentBillboard::Update()
     {
         UpdateColorOverLifetime();
     }
-    else
-    {
-        color_frame = 1.0f;
-    }
-
-    if (time < billboard_lifetime || animation_loop)
+    else if (time < billboard_lifetime || animation_loop)
     {
         UpdateAnimationIndex();
     }
@@ -259,6 +256,7 @@ void Hachiko::ComponentBillboard::Update()
 
 inline void Hachiko::ComponentBillboard::Play() 
 {
+    Reset();
     is_playing = true;
 }
 
@@ -271,6 +269,7 @@ inline void Hachiko::ComponentBillboard::Reset()
 {
     is_playing = false;
     time = 0.0f;
+    color_frame = 1.0f;
 }
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
@@ -340,6 +339,7 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 void Hachiko::ComponentBillboard::AddTexture()
 {
     const std::string title = "Select billboard texture ";
+    std::string texture_path;
     ResourceTexture* res = nullptr;
 
     if (ImGui::Button("Add Texture"))
@@ -354,14 +354,22 @@ void Hachiko::ComponentBillboard::AddTexture()
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
-            std::string texture_path = ImGuiFileDialog::Instance()->GetFilePathName();
-            texture_path.append(META_EXTENSION);
-            YAML::Node texture_node = YAML::LoadFile(texture_path);
-            res = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
+            texture_path = ImGuiFileDialog::Instance()->GetFilePathName();
         }
 
         ImGuiFileDialog::Instance()->Close();
     }
+
+    texture_path.append(META_EXTENSION);
+    if (!std::filesystem::exists(texture_path.c_str()))
+    {
+        return;
+    }
+
+    YAML::Node texture_node = YAML::LoadFile(texture_path);
+    res = static_cast<ResourceTexture*>(App->resources->GetResource
+    (Resource::Type::TEXTURE, texture_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
+
     if (res != nullptr)
     {
         texture = res;
@@ -372,6 +380,7 @@ void Hachiko::ComponentBillboard::AddTexture()
 void Hachiko::ComponentBillboard::RemoveTexture()
 {
     texture = nullptr;
+    textureID = 0;
 }
 
 inline void Hachiko::ComponentBillboard::UpdateAnimationIndex() 
