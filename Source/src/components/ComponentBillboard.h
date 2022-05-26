@@ -28,6 +28,7 @@ namespace Hachiko
         ComponentBillboard(GameObject* container, UID id = 0);
         ~ComponentBillboard() override;
         
+        void Start() override;
         void Update() override;
         void Play();
         void Stop() override;
@@ -69,13 +70,12 @@ namespace Hachiko
         int has_diffuse_map = 0;
         float x_factor = 1.0f;
         float y_factor = 1.0f;
-        float animation_cycles = 1.0f;
         float2 animation_index = {0.0f, 0.0f};
         
         // Color gradient
         bool has_color_gradient = false;
         bool color_loop = true;
-        float color_cycles = 1.0f;
+        int color_cycles = 1.0f;
         float color_frame = 0.0f;
         ImGradient* gradient = nullptr;
         ImGradientMark* draggingGradient = nullptr;

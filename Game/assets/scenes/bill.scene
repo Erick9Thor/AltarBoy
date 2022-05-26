@@ -31,21 +31,26 @@ child:
           up: [0, 1, 0]
           type: 0
           pinned_camera: [0, 0, 0]
-  - id: 2786219729286763365
-    name: Billy
+  - id: 15365361998403244311
+    name: GameObject
     enabled: true
     component:
-      - id: 17738107168343765330
+      - id: 16753552073556325775
         type: 1
         enabled: true
-        position: [0, 31.519722, 49.6186829]
+        position: [1.38490796, 3.07540226, -6.63989449]
         rotation: [0, 0, 0, 1]
-        scale: [47.0999985, 34.5999985, 1]
-      - id: 17787028528505626783
+        scale: [10, 10, 1]
+      - id: 16292953984949160155
         type: 21
         enabled: true
         billboard_type: 3
+        play_on_awake: false
         texture_id: 9793570645799761911
         x_tiles: 6
         y_tiles: 6
         billboard_lifetime: 2
+        animation_loop: false
+        has_color_gradient: false
+        color_cycles: 2
+        color_loop: true

@@ -205,7 +205,8 @@ void Hachiko::ComponentBillboard::DrawGui()
                     HE_LOG("y_factor: %f", y_factor);
                 }
             }
-            ImGui::DragFloat("Cycles##animation_cycles", &animation_cycles, 1.0f, 1.0f, inf);
+
+            //ImGui::DragInt("Cycles##animation_cycles", &animation_cycles, 1, 1, inf);
             ImGui::Checkbox("Loop##animation_loop", &animation_loop);
         }
 
@@ -220,24 +221,40 @@ void Hachiko::ComponentBillboard::DrawGui()
                 ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
                 ImGui::PushItemWidth(150);
                 ImGui::NewLine();
-                ImGui::DragFloat("Cycles over lifetime##color_cycles", &color_cycles, 1.0f, 1.0f, inf);
+                ImGui::DragInt("Cycles over lifetime##color_cycles", &color_cycles, 1, 1, inf);
                 ImGui::Checkbox("Loop##color_loop", &color_loop);
             }
         }
     }
 }
 
-void Hachiko::ComponentBillboard::Update() 
+void Hachiko::ComponentBillboard::Start()
+{
+    is_playing = play_on_awake;
+}
+
+void Hachiko::ComponentBillboard::Update()
 {
     time += EngineTimer::delta_time;
-    if (!is_playing || (!color_loop && time > billboard_lifetime))
+    if (!is_playing)
     {
         Reset();
         return;
     }
+    
+    if (has_color_gradient && (time < billboard_lifetime || color_loop))
+    {
+        UpdateColorOverLifetime();
+    }
+    else
+    {
+        color_frame = 1.0f;
+    }
 
-    UpdateColorOverLifetime();
-    UpdateAnimationIndex();
+    if (time < billboard_lifetime || animation_loop)
+    {
+        UpdateAnimationIndex();
+    }
 }
 
 inline void Hachiko::ComponentBillboard::Play() 
@@ -259,6 +276,7 @@ inline void Hachiko::ComponentBillboard::Reset()
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {
     node[BILLBOARD_TYPE] = static_cast<int>(type);
+    node[BILLBOARD_PLAY_ON_AWAKE] = play_on_awake;
     if (texture != nullptr)
     {
         node[BILLBOARD_TEXTURE_ID] = texture->GetID();
@@ -266,19 +284,28 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[X_TILES] = x_tiles;
     node[Y_TILES] = y_tiles;
     node[BILLBOARD_LIFETIME] = billboard_lifetime;
+    node[ANIMATION_LOOP] = animation_loop;
+    node[HAS_COLOR_GRADIENT] = has_color_gradient;
+    node[COLOR_CYCLES] = color_cycles;
+    node[COLOR_LOOP] = color_loop;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
 {
-    UID texture_id = node[BILLBOARD_TEXTURE_ID].IsDefined() ? node[BILLBOARD_TEXTURE_ID].as<UID>() : 0;
+    UID texture_id = node[BILLBOARD_TEXTURE_ID].IsDefined() ? 
+        node[BILLBOARD_TEXTURE_ID].as<UID>() : 0;
     if (texture_id)
     {
         texture = static_cast<ResourceTexture*>(
             App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
     }
+
     type = node[BILLBOARD_TYPE].IsDefined() 
         ? static_cast<BillboardType>(node[BILLBOARD_TYPE].as<int>()) 
         : BillboardType::HORIZONTAL;
+    
+    play_on_awake = node[BILLBOARD_PLAY_ON_AWAKE].IsDefined() ? 
+        node[BILLBOARD_PLAY_ON_AWAKE].as<bool>() : false;
 
     x_tiles = 1;
     if (node[X_TILES].IsDefined() && !node[X_TILES].IsNull())
@@ -296,6 +323,18 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
     billboard_lifetime = node[BILLBOARD_LIFETIME].IsDefined() ?
         node[BILLBOARD_LIFETIME].as<float>() : 0.0f;
+
+    animation_loop = node[ANIMATION_LOOP].IsDefined() ?
+        node[ANIMATION_LOOP].as<bool>() : false;
+
+    has_color_gradient = node[HAS_COLOR_GRADIENT].IsDefined() ?
+        node[HAS_COLOR_GRADIENT].as<bool>() : false;
+
+    color_cycles = node[COLOR_CYCLES].IsDefined() ? 
+        node[COLOR_CYCLES].as<int>() : 0;
+    
+    color_loop = node[COLOR_LOOP].IsDefined() ?
+        node[COLOR_LOOP].as<bool>() : false;
 }
 
 void Hachiko::ComponentBillboard::AddTexture()
@@ -307,10 +346,8 @@ void Hachiko::ComponentBillboard::AddTexture()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
             "Select Texture", ".png,.tif,.jpg,.tga", "./assets/textures/", 1, nullptr,
-            ImGuiFileDialogFlags_DontShowHiddenFiles 
-            | ImGuiFileDialogFlags_DisableCreateDirectoryButton 
-            | ImGuiFileDialogFlags_HideColumnType
-            | ImGuiFileDialogFlags_HideColumnDate);
+            ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton 
+            | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
     }
 
     if (ImGuiFileDialog::Instance()->Display(title.c_str()))
@@ -357,22 +394,12 @@ inline void Hachiko::ComponentBillboard::UpdateAnimationIndex()
         animation_index.y += 1.0f;
         return;
     }
+
     animation_index = {0.0f, 0.0f};
 }
 
 inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
 {
-    if (!has_color_gradient)
-    {
-        return;
-    }
-    
-    if (!color_loop && time > billboard_lifetime)
-    {
-        color_frame = 1.0;
-        return;
-    }
-
     float timeMod = fmod(time, billboard_lifetime / color_cycles);
     color_frame = timeMod / billboard_lifetime * color_cycles;
 
