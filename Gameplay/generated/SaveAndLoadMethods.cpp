@@ -601,6 +601,15 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 
 void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 {
+	if (_audio_source != nullptr && _audio_source->GetGameObject() != nullptr)
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = _audio_source->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = 0;
+	}
+
 	node["'_step_frequency@float'"] = _step_frequency;
 
 	node["'_melee_frequency@float'"] = _melee_frequency;
@@ -612,6 +621,15 @@ void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 {
+	if (load_node["'_audio_source@ComponentAudioSource*'"].IsDefined())
+	{
+		GameObject* _audio_source_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_audio_source@ComponentAudioSource*'"].as<unsigned long long>());
+		if (_audio_source_owner__temp != nullptr)
+		{
+			_audio_source = _audio_source_owner__temp->GetComponent<ComponentAudioSource>();
+		}
+	}
+
 	if (load_node["'_step_frequency@float'"].IsDefined())
 	{
 		_step_frequency = load_node["'_step_frequency@float'"].as<float>();

@@ -34,11 +34,11 @@ namespace Hachiko
             return camera_buffer[0];
         }
 
-        void AddCameraComponent(ComponentCamera* camera);
-        void RemoveCameraComponent(ComponentCamera* camera);
+        void AddCamera(ComponentCamera* camera);
+        void RemoveCamera(ComponentCamera* camera);
+        void ToggleCamera();
         void SetRenderingCamera(ComponentCamera* camera);
-        void RestoreOriginCamera();
-        void ReturnPlayerCamera();
+        void RestoreEditorCamera();
 
         // Camera actions
         void Zoom(float zoom) const;
@@ -46,15 +46,14 @@ namespace Hachiko
         void FocusOnModel(const float3& target, float distance) const;
         void Rotate(float motion_x, float motion_y) const;
         void PerpendicularMovement(float motion_x, float motion_y) const;
-        void RunDynamicScript(const float delta);
 
     private:
         
-        GameObject* editor_camera_game_object = nullptr;
+        ComponentCamera* editor_camera = nullptr;
         ComponentCamera* rendering_camera = nullptr;
         CameraPreferences* camera_prefs = nullptr;
 
         std::vector<ComponentCamera*> camera_buffer;
-        unsigned int last_it = 0;
+        unsigned int camera_idx = 0;
     };
 }

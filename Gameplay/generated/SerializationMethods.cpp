@@ -757,6 +757,15 @@ void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
+	if(serialized_fields.find("_audio_source") != serialized_fields.end())
+	{
+		const SerializedField& _audio_source_sf = serialized_fields["_audio_source"];
+		if (_audio_source_sf.type_name == "ComponentAudioSource*")
+		{
+			_audio_source = std::any_cast<ComponentAudioSource*>(_audio_source_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_step_frequency") != serialized_fields.end())
 	{
 		const SerializedField& _step_frequency_sf = serialized_fields["_step_frequency"];
@@ -806,6 +815,8 @@ void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<
 void Hachiko::Scripting::PlayerSoundManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_audio_source"] = SerializedField(std::string("_audio_source"), std::make_any<ComponentAudioSource*>(_audio_source), std::string("ComponentAudioSource*"));
 
 	serialized_fields["_step_frequency"] = SerializedField(std::string("_step_frequency"), std::make_any<float>(_step_frequency), std::string("float"));
 

@@ -95,6 +95,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 
 void Hachiko::Scripting::PlayerSoundManager::OnEditor()
 {
+	Editor::Show<ComponentAudioSource>("_audio_source", "ComponentAudioSource*", _audio_source);
 	Editor::Show("_step_frequency", _step_frequency);
 	Editor::Show("_melee_frequency", _melee_frequency);
 	Editor::Show("_ranged_frequency", _ranged_frequency);
