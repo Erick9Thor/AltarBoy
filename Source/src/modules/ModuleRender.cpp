@@ -353,12 +353,12 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     program = App->program->GetDeferredLightingProgram();
     program->Activate();
 
-    // Bind specular & smoothness texture:
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, g_buffer_specular_smoothness);
     // Bind diffuse texture:
-    glActiveTexture(GL_TEXTURE1);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, g_buffer_diffuse);
+    // Bind specular & smoothness texture:
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, g_buffer_specular_smoothness);
     // Bind normal texture:
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, g_buffer_normal);
