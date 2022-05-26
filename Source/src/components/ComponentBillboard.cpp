@@ -65,7 +65,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
 
     float4 color = float4::one;
-    if (color_over_lifetime)
+    if (has_color_gradient)
     {
         gradient->getColorAt(color_frame, color.ptr());
         billboard_program->BindUniformFloat4("input_color", color.ptr());
@@ -113,7 +113,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             Stop();
         }
         ImGui::DragFloat("Duration", &billboard_lifetime, 1.0f, 0, inf);
-        ImGui::Checkbox("Play On Awake", &playOnAwake);
+        ImGui::Checkbox("Play On Awake", &play_on_awake);
 
         const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
         const char* billboardTypeComboCurrent = billboardTypeCombo[(int)type];
@@ -138,7 +138,7 @@ void Hachiko::ComponentBillboard::DrawGui()
         if (type == BillboardType::HORIZONTAL)
         {
             ImGui::Indent();
-            ImGui::Checkbox("Orientate to direction", &isHorizontalOrientation);
+            ImGui::Checkbox("Orientate to direction", &is_horizontal);
             ImGui::Unindent();
         }
         ImGui::NewLine();
@@ -212,15 +212,15 @@ void Hachiko::ComponentBillboard::DrawGui()
         // Color Over Lifetime
         if (ImGui::CollapsingHeader("Color over lifetime"))
         {
-            ImGui::Checkbox("##color_over_lifetime", &color_over_lifetime);
-            if (color_over_lifetime)
+            ImGui::Checkbox("##color_over_lifetime", &has_color_gradient);
+            if (has_color_gradient)
             {
                 ImGui::SameLine();
                 ImGui::PushItemWidth(200);
                 ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
                 ImGui::PushItemWidth(150);
                 ImGui::NewLine();
-                ImGui::DragFloat("Cycles##color_cycles", &color_cycles, 1.0f, 1.0f, inf);
+                ImGui::DragFloat("Cycles over lifetime##color_cycles", &color_cycles, 1.0f, 1.0f, inf);
                 ImGui::Checkbox("Loop##color_loop", &color_loop);
             }
         }
@@ -230,7 +230,7 @@ void Hachiko::ComponentBillboard::DrawGui()
 void Hachiko::ComponentBillboard::Update() 
 {
     time += EngineTimer::delta_time;
-    if (!is_playing || time > billboard_lifetime)
+    if (!is_playing || (!color_loop && time > billboard_lifetime))
     {
         Reset();
         return;
@@ -337,8 +337,15 @@ void Hachiko::ComponentBillboard::RemoveTexture()
     texture = nullptr;
 }
 
-void Hachiko::ComponentBillboard::UpdateAnimationIndex() 
+inline void Hachiko::ComponentBillboard::UpdateAnimationIndex() 
 {
+    // For now if color gradient has been set,
+    // no animation texture is taken into account
+    if (has_color_gradient || !has_diffuse_map)
+    {
+        return;
+    }
+
     if (animation_index.x < x_tiles - 1)
     {
         animation_index.x += 1.0f;
@@ -353,18 +360,26 @@ void Hachiko::ComponentBillboard::UpdateAnimationIndex()
     animation_index = {0.0f, 0.0f};
 }
 
-void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
+inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
 {
-    if (!color_over_lifetime)
+    if (!has_color_gradient)
     {
+        return;
+    }
+    
+    if (!color_loop && time > billboard_lifetime)
+    {
+        color_frame = 1.0;
         return;
     }
 
     float timeMod = fmod(time, billboard_lifetime / color_cycles);
     color_frame = timeMod / billboard_lifetime * color_cycles;
-    if (!color_loop && time > billboard_lifetime)
+
+    if (color_loop && time > billboard_lifetime)
     {
-        color_frame = 1.0;
+        time = 0.0f;
+        color_frame = 0.0f;
     }
 }
 
@@ -398,11 +413,11 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
         newRotation.SetCol(1, direction);
         newRotation.SetCol(2, newCameraDir);
 
-        model_matrix = float4x4::FromTRS(position, newRotation * modelStretch, scale);
+        model_matrix = float4x4::FromTRS(position, newRotation * model_stretch, scale);
     }
     else if (type == BillboardType::HORIZONTAL)
     {
-        if (isHorizontalOrientation)
+        if (is_horizontal)
         {
             float3 direction = transform->GetGlobalRotation().WorldZ();
             float3 projection = position + direction - direction.y * float3::unitY;

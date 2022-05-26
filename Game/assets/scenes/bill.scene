@@ -32,15 +32,15 @@ child:
           type: 0
           pinned_camera: [0, 0, 0]
   - id: 2786219729286763365
-    name: GameObject
+    name: Billy
     enabled: true
     component:
       - id: 17738107168343765330
         type: 1
         enabled: true
-        position: [0, 0, 0]
+        position: [0, 31.519722, 49.6186829]
         rotation: [0, 0, 0, 1]
-        scale: [10, 10, 1]
+        scale: [47.0999985, 34.5999985, 1]
       - id: 17787028528505626783
         type: 21
         enabled: true
@@ -48,4 +48,4 @@ child:
         texture_id: 9793570645799761911
         x_tiles: 6
         y_tiles: 6
-        billboard_lifetime: 7
+        billboard_lifetime: 2

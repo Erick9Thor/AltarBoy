@@ -39,31 +39,30 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
 
     private:
-        float4x4 modelStretch = float4x4::identity;
+        // General
+        bool started = false;
+        bool is_playing = false;
+        bool play_on_awake = false;
+        float time = 0.0f;
+        float current_frame = 0.0f;
+        float billboard_lifetime = 5.0f;
+        BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
+        
+        // Orientation
+        bool is_horizontal = false;
+        bool flip_texture[2] = {false, false};
+        float4x4 model_stretch = float4x4::identity;
         float3 initPos = float3::zero;
         float3 previousPos = float3::zero;
         float3 direction = float3::zero;
-
-        bool isStarted = false;
-        bool is_playing = false;
-        float time = 0.0f;
-        float currentFrame = 0.0f;
-
-        // General
-        float billboard_lifetime = 5.0f;
-        bool playOnAwake = false;
-
-        // Render
         BillboardType type = BillboardType::HORIZONTAL;
-        BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
-        UID textureID = 0; // ID of the image
-        float3 textureIntensity = {1.0f, 1.0f, 1.0f};
+
+        // Texture
+        UID textureID = 0;
         ResourceTexture* texture = nullptr;
-
-        bool isHorizontalOrientation = false;
-        bool flipTexture[2] = {false, false};
-
-        // Texture Sheet Animation
+        float3 textureIntensity = {1.0f, 1.0f, 1.0f};
+        
+        // Animation
         bool animation_loop = true;
         int x_tiles = 1;
         int y_tiles = 1;
@@ -73,9 +72,9 @@ namespace Hachiko
         float animation_cycles = 1.0f;
         float2 animation_index = {0.0f, 0.0f};
         
-        // Color over Lifetime
+        // Color gradient
+        bool has_color_gradient = false;
         bool color_loop = true;
-        bool color_over_lifetime = false;
         float color_cycles = 1.0f;
         float color_frame = 0.0f;
         ImGradient* gradient = nullptr;
