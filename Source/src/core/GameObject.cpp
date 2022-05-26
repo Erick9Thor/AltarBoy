@@ -12,6 +12,7 @@
 #include "components/ComponentAudioListener.h"
 #include "components/ComponentAudioSource.h"
 
+#include "importers/PrefabImporter.h"
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -25,6 +26,7 @@
 #include "Application.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleScriptingSystem.h" // For instantiating Scripts.
+#include "modules/ModuleResources.h"
 
 
 #include <debugdraw.h>
@@ -95,6 +97,11 @@ Hachiko::GameObject* Hachiko::GameObject::CreateChild()
 Hachiko::GameObject* Hachiko::GameObject::Instantiate()
 {
     return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Instantiate(UID prefab_uid, GameObject* parent)
+{
+    return App->resources->InstantiatePrefab(prefab_uid, parent);
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)

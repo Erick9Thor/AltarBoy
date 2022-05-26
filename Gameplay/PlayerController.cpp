@@ -224,6 +224,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
+	/*
 	const float3 forward = transform->GetFront().Normalized();
 	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
 		forward * _raycast_max_range + current_position);
@@ -235,7 +236,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
-	}
+	}*/
+	GameObject::Instantiate(14757395258967641292, game_object);
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
