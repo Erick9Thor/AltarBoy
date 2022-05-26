@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\rendering\GBuffer.cpp" />
     <ClCompile Include="src\components\ComponentAudioListener.cpp" />
     <ClCompile Include="src\components\ComponentAudioSource.cpp" />
     <ClCompile Include="src\importers\PrefabImporter.cpp" />
@@ -657,6 +658,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\rendering\GBuffer.h" />
     <ClInclude Include="src\components\ComponentAudioListener.h" />
     <ClInclude Include="src\components\ComponentAudioSource.h" />
     <ClInclude Include="src\importers\PrefabImporter.h" />

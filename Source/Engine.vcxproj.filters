@@ -566,6 +566,9 @@
     <ClCompile Include="src\components\ComponentAudioSource.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\GBuffer.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2258,6 +2261,9 @@
     </ClInclude>
     <ClInclude Include="src\components\ComponentAudioSource.h">
       <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\rendering\GBuffer.h">
+      <Filter>Core\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

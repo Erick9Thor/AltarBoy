@@ -3,6 +3,7 @@
 #include "Globals.h"
 
 #include "core/rendering/RenderList.h"
+#include "core/rendering/GBuffer.h"
 
 #include <vector>
 
@@ -75,7 +76,6 @@ namespace Hachiko
 
     private:
         void GenerateFrameBuffer();
-        void GenerateGBuffer();
         void ResizeFrameBuffer(int heigth, int width) const;
         void ManageResolution(ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
@@ -98,16 +98,11 @@ namespace Hachiko
         unsigned fb_texture = 0;
         unsigned fb_height = 0;
         unsigned fb_width = 0;
+        int deferred_mode = 0;
+        bool render_forward_pass = true;
 
-        // Deferred rendering buffers:
-        unsigned g_buffer = 0;
-        unsigned g_buffer_diffuse = 0;
-        unsigned g_buffer_specular_smoothness = 0;
-        unsigned g_buffer_normal = 0;
-        unsigned g_buffer_position = 0;
-        unsigned g_buffer_emissive = 0;
-        unsigned g_buffer_depth = 0;
-        // Deferred rendering quad:
+        // Deferred rendering:
+        GBuffer g_buffer_deneme;
         unsigned deferred_quad_vao = 0;
         unsigned deferred_quad_vbo = 0;
         unsigned deferred_quad_ebo = 0;
@@ -116,10 +111,6 @@ namespace Hachiko
         bool draw_skybox = true;
         bool draw_navmesh = false;
         bool outline_selection = true;
-
-        // Deferred rendering draw mode:
-        int deferred_mode = 0;
-        bool render_forward_pass = true;
 
         GpuData gpu{};
         GlVersion gl{};
