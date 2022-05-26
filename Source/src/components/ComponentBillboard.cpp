@@ -38,7 +38,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         glTexture = texture->GetImageId();
         Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
     }
-    int hasDiffuseMap = texture ? 1 : 0;
+    has_diffuse_map = texture ? 1 : 0;
 
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
@@ -65,12 +65,15 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
 
     float4 color = float4::one;
-    if (colorOverLifetime)
+    if (color_over_lifetime)
     {
-        gradient->getColorAt(colorFrame, color.ptr());
+        gradient->getColorAt(color_frame, color.ptr());
+        billboard_program->BindUniformFloat4("input_color", color.ptr());
+        has_diffuse_map = 0;
     }
 
-    program->BindUniformInts("hasDiffuseMap", 1, &hasDiffuseMap);
+    billboard_program->BindUniformInts("has_diffuse_map", 1, &has_diffuse_map);
+    
     
     glBindVertexArray(App->renderer->billboard_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -78,21 +81,17 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     // Clear
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glDepthFunc(GL_LESS);
     glDisable(GL_BLEND);
     Program::Deactivate();
     return;
 
-    //program->BindUniformFloat4("inputColor", color.ptr());
-    //program->BindUniformFloat3("intensity", textureIntensity.ptr());
-    //program->BindUniformFloat("currentFrame", &currentFrame);
-    //program->BindUniformInts("Xtiles", 1, &Xtiles);
-    //program->BindUniformInts("Ytiles", 1, &Ytiles);
+    //billboard_program->BindUniformFloat3("intensity", textureIntensity.ptr());
+    //billboard_program->BindUniformFloat("currentFrame", &currentFrame);
 
     //int flip_x = flipTexture[0] ? 1 : 0;
     //int flip_y = flipTexture[1] ? 1 : 0;
-    //program->BindUniformInts("flipX", 1, &flip_x);
-    //program->BindUniformInts("flipY", 1, &flip_y);
+    //billboard_program->BindUniformInts("flipX", 1, &flip_x);
+    //billboard_program->BindUniformInts("flipY", 1, &flip_y);
     //glDepthMask(GL_TRUE);
 }
 
@@ -213,16 +212,16 @@ void Hachiko::ComponentBillboard::DrawGui()
         // Color Over Lifetime
         if (ImGui::CollapsingHeader("Color over lifetime"))
         {
-            ImGui::Checkbox("##color_over_lifetime", &colorOverLifetime);
-            if (colorOverLifetime)
+            ImGui::Checkbox("##color_over_lifetime", &color_over_lifetime);
+            if (color_over_lifetime)
             {
                 ImGui::SameLine();
                 ImGui::PushItemWidth(200);
                 ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
                 ImGui::PushItemWidth(150);
                 ImGui::NewLine();
-                ImGui::DragFloat("Cycles##color_cycles", &colorCycles, 1.0f, 1.0f, inf);
-                ImGui::Checkbox("Loop##color_loop", &colorLoop);
+                ImGui::DragFloat("Cycles##color_cycles", &color_cycles, 1.0f, 1.0f, inf);
+                ImGui::Checkbox("Loop##color_loop", &color_loop);
             }
         }
     }
@@ -230,22 +229,31 @@ void Hachiko::ComponentBillboard::DrawGui()
 
 void Hachiko::ComponentBillboard::Update() 
 {
-    if (!is_playing)
+    time += EngineTimer::delta_time;
+    if (!is_playing || time > billboard_lifetime)
     {
+        Reset();
         return;
     }
-    
+
+    UpdateColorOverLifetime();
     UpdateAnimationIndex();
 }
 
-void Hachiko::ComponentBillboard::Play() 
+inline void Hachiko::ComponentBillboard::Play() 
 {
     is_playing = true;
 }
 
-void Hachiko::ComponentBillboard::Stop()
+inline void Hachiko::ComponentBillboard::Stop()
 {
     is_playing = false;
+}
+
+inline void Hachiko::ComponentBillboard::Reset()
+{
+    is_playing = false;
+    time = 0.0f;
 }
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
@@ -257,6 +265,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     }
     node[X_TILES] = x_tiles;
     node[Y_TILES] = y_tiles;
+    node[BILLBOARD_LIFETIME] = billboard_lifetime;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -284,9 +293,12 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
         y_tiles = node[Y_TILES].as<int>();
         y_factor = 1 / (float)y_tiles;
     }
+
+    billboard_lifetime = node[BILLBOARD_LIFETIME].IsDefined() ?
+        node[BILLBOARD_LIFETIME].as<float>() : 0.0f;
 }
 
-void Hachiko::ComponentBillboard::AddTexture() 
+void Hachiko::ComponentBillboard::AddTexture()
 {
     const std::string title = "Select billboard texture ";
     ResourceTexture* res = nullptr;
@@ -339,6 +351,21 @@ void Hachiko::ComponentBillboard::UpdateAnimationIndex()
         return;
     }
     animation_index = {0.0f, 0.0f};
+}
+
+void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
+{
+    if (!color_over_lifetime)
+    {
+        return;
+    }
+
+    float timeMod = fmod(time, billboard_lifetime / color_cycles);
+    color_frame = timeMod / billboard_lifetime * color_cycles;
+    if (!color_loop && time > billboard_lifetime)
+    {
+        color_frame = 1.0;
+    }
 }
 
 void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix)

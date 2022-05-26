@@ -232,6 +232,7 @@
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"
 #define BILLBOARD_TYPE "billboard_type"
+#define BILLBOARD_LIFETIME "billboard_lifetime"
 #define X_TILES "x_tiles"
 #define Y_TILES "y_tiles"
 

@@ -48,7 +48,6 @@ namespace Hachiko
         bool is_playing = false;
         float time = 0.0f;
         float currentFrame = 0.0f;
-        float colorFrame = 0.0f;
 
         // General
         float billboard_lifetime = 5.0f;
@@ -65,25 +64,30 @@ namespace Hachiko
         bool flipTexture[2] = {false, false};
 
         // Texture Sheet Animation
+        bool animation_loop = true;
         int x_tiles = 1;
         int y_tiles = 1;
+        int has_diffuse_map = 0;
         float x_factor = 1.0f;
         float y_factor = 1.0f;
         float animation_cycles = 1.0f;
-        bool animation_loop = true;
         float2 animation_index = {0.0f, 0.0f};
         
         // Color over Lifetime
-        bool colorOverLifetime = false;
-        float colorCycles = 1.0f;
-        bool colorLoop = true;
+        bool color_loop = true;
+        bool color_over_lifetime = false;
+        float color_cycles = 1.0f;
+        float color_frame = 0.0f;
         ImGradient* gradient = nullptr;
         ImGradientMark* draggingGradient = nullptr;
         ImGradientMark* selectedGradient = nullptr;
 
+    private:
+        void Reset();
         void AddTexture();
         void RemoveTexture();
         void UpdateAnimationIndex();
+        void UpdateColorOverLifetime();
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
     };
 }
