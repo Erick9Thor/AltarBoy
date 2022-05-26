@@ -184,8 +184,6 @@ void Hachiko::ComponentCamera::DrawGui()
             {
                 App->camera->SetRenderingCamera(this);
             }
-            else
-                App->camera->RestoreEditorCamera();
         #endif
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))

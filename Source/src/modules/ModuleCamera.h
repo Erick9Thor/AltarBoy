@@ -31,7 +31,7 @@ namespace Hachiko
 
         [[nodiscard]] ComponentCamera* GetEditorCamera()
         {
-            return camera_buffer[0];
+            return editor_camera;
         }
 
         void AddCamera(ComponentCamera* camera);

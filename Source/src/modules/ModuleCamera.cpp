@@ -24,7 +24,7 @@ bool Hachiko::ModuleCamera::Init()
 
     GameObject* editor_camera_go = new GameObject("Editor Camera");
     editor_camera = static_cast<ComponentCamera*>(editor_camera_go->CreateComponent(Component::Type::CAMERA));
-    rendering_camera = editor_camera;
+    SetRenderingCamera(editor_camera);
 
     editor_camera_go->GetTransform()->SetGlobalPosition(camera_prefs->GetPosition());
     editor_camera_go->GetTransform()->LookAtTarget(float3::zero);
@@ -137,17 +137,17 @@ void Hachiko::ModuleCamera::ToggleCamera()
     {
         camera_idx = 0;
     }
-    rendering_camera = camera_buffer[camera_idx];
+    SetRenderingCamera(camera_buffer[camera_idx]);
 }
 
 void Hachiko::ModuleCamera::SetRenderingCamera(ComponentCamera* camera)
 {
-    rendering_camera = static_cast<ComponentCamera*>(camera);
+    rendering_camera = camera;
 }
 
 void Hachiko::ModuleCamera::RestoreEditorCamera()
 {
-    rendering_camera = editor_camera;
+    SetRenderingCamera(editor_camera);
 }
 
 void Hachiko::ModuleCamera::Zoom(float zoom) const
