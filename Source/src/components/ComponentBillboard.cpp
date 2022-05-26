@@ -141,7 +141,6 @@ void Hachiko::ComponentBillboard::DrawGui()
             ImGui::Checkbox("Orientate to direction", &is_horizontal);
             ImGui::Unindent();
         }
-        ImGui::NewLine();
 
         const char* renderModeCombo[] = {"Additive", "Transparent"};
         const char* renderModeComboCurrent = renderModeCombo[(int)render_mode];
@@ -163,34 +162,34 @@ void Hachiko::ComponentBillboard::DrawGui()
         }
         ImGui::NewLine();
 
-        static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
-
-        if (ImGui::TreeNodeEx((void*)&texture, texture_flags, "Texture"))
-        {
-            if (texture != nullptr)
-            {
-                ImGui::Image(reinterpret_cast<void*>(texture->GetImageId()), ImVec2(80, 80));
-                ImGui::SameLine();
-                ImGui::BeginGroup();
-                ImGui::Text("%dx%d", texture->width, texture->height);
-                ImGui::Text("Path: %s", texture->path.c_str());
-                if (ImGui::Button("Remove Texture##remove_texture"))
-                {
-                    RemoveTexture();
-                }
-
-                ImGui::EndGroup();
-            }
-            else
-            {
-                AddTexture();
-            }
-            ImGui::TreePop();
-        }
-
-      	// Texture Sheet Animation
+        // Texture Sheet Animation
         if (ImGui::CollapsingHeader("Texture Sheet Animation"))
         {
+            ImGui::Checkbox("Loop##animation_loop", &animation_loop);
+            static const ImGuiTreeNodeFlags texture_flags = ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_DefaultOpen;
+
+            if (ImGui::TreeNodeEx((void*)&texture, texture_flags, "Texture"))
+            {
+                if (texture != nullptr)
+                {
+                    ImGui::Image(reinterpret_cast<void*>(texture->GetImageId()), ImVec2(80, 80));
+                    ImGui::SameLine();
+                    ImGui::BeginGroup();
+                    ImGui::Text("%dx%d", texture->width, texture->height);
+                    ImGui::Text("Path: %s", texture->path.c_str());
+                    if (ImGui::Button("Remove Texture##remove_texture"))
+                    {
+                        RemoveTexture();
+                    }
+
+                    ImGui::EndGroup();
+                }
+                else
+                {
+                    AddTexture();
+                }
+                ImGui::TreePop();
+            }
             if (ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &x_tiles))
             {
                 if (x_tiles)
@@ -209,7 +208,9 @@ void Hachiko::ComponentBillboard::DrawGui()
             }
 
             //ImGui::DragInt("Cycles##animation_cycles", &animation_cycles, 1, 1, inf);
-            ImGui::Checkbox("Loop##animation_loop", &animation_loop);
+            ImGui::Checkbox("FlipX##animation_loop", &flip_x);
+            ImGui::SameLine();
+            ImGui::Checkbox("FlipY##animation_loop", &flip_y);
         }
 
         // Color Over Lifetime

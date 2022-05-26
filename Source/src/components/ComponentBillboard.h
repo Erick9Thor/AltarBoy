@@ -65,6 +65,8 @@ namespace Hachiko
         
         // Animation
         bool animation_loop = true;
+        bool flip_x = false;
+        bool flip_y = false;
         int x_tiles = 1;
         int y_tiles = 1;
         int has_diffuse_map = 0;
