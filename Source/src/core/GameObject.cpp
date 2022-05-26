@@ -387,11 +387,16 @@ void Hachiko::GameObject::ForceRemoveComponent(Component* component)
     components.erase(std::remove(components.begin(), components.end(), component));
 }
 
-void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
+void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab, std::vector<const GameObject*>* object_collector) const
 {
     if (!as_prefab)
     {
         node[GAME_OBJECT_ID] = uid;
+    }
+
+    if (object_collector)
+    {
+        object_collector->push_back(this);
     }
     
     node[GAME_OBJECT_NAME] = name.c_str();

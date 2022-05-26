@@ -92,7 +92,7 @@ namespace Hachiko
             uid = new_id;
         }
 
-        void Save(YAML::Node& node, bool as_prefab = false) const;
+        void Save(YAML::Node& node, bool as_prefab = false, std::vector<const GameObject*>* object_collector = nullptr) const;
         void Load(const YAML::Node& node, bool as_prefab = false, bool meshes_only = false);
 
 

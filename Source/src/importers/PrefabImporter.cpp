@@ -54,7 +54,10 @@ Hachiko::UID Hachiko::PrefabImporter::CreatePrefabAsset(const char* name, GameOb
 
     // Save without storing ids
     constexpr bool as_prefab = true;
-    root->Save(prefab->prefab_data, as_prefab);
+    std::vector<const GameObject*> object_collector = std::vector<const GameObject*>();
+    root->Save(prefab->prefab_data, as_prefab, &object_collector);
+
+    // Wire script references by inexes
 
     const std::string prefab_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::PREFAB), prefab->name, PREFAB_EXTENSION);
     FileSystem::Save(prefab_asset_path.c_str(), prefab->prefab_data);
