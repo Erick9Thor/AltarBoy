@@ -227,7 +227,7 @@ void Hachiko::ComponentCamera::DrawGui()
         }
         CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
-        if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 180.f))
+        if (ImGui::SliderFloat("H. Fov", &horizontal_fov, 30.f, 178.f))
         {
             SetHorizontalFov(horizontal_fov);
         }
