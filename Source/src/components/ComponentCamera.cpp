@@ -179,11 +179,18 @@ void Hachiko::ComponentCamera::DrawGui()
 
         ImGui::SameLine();
         #ifndef PLAY_BUILD
-            ImGui::Checkbox("Preview Camera", &preview_cam);
-            if (preview_cam)
+            if(ImGui::Checkbox("Preview Camera", &preview_cam))
             {
-                App->camera->SetRenderingCamera(this);
+                if (preview_cam)
+                {
+                    App->camera->SetRenderingCamera(this);
+                }
+                else
+                {
+                    App->camera->RestoreEditorCamera();
+                }
             }
+            
         #endif
         float planes[2] = {frustum.NearPlaneDistance(), frustum.FarPlaneDistance()};
         if (ImGui::InputFloat2("N & F", &planes[0]))
