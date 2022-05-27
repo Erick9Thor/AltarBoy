@@ -16,7 +16,11 @@ void Hachiko::Scripting::FancyLights::OnAwake()
 {
 	_point_light = game_object->GetComponent<ComponentPointLight>();
 
-	math::LCG lcg; 
+	math::LCG lcg(game_object->GetID());
+
+	_distance = 2.0f;
+	_speed = 5.0f;
+	_radius = 2.0f;
 
 	_point_light->color = float4::RandomGeneral(lcg, 0.0f, 1.0f);
 }
@@ -26,17 +30,14 @@ void Hachiko::Scripting::FancyLights::OnUpdate()
 	float velocity = Time::DeltaTime() * _speed;
 	_angle += velocity;
 
-	math::float3 center = game_object->GetTransform()->GetGlobalPosition();
-
-	float x = std::sin(_angle) * _distance + center.x;
-	float y = std::sin(_angle) * _distance + center.y;
+	math::float3 center = game_object->parent->GetTransform()->GetGlobalPosition();
 
 	if (_rotate_on_y)
 	{
-		game_object->GetTransform()->SetGlobalPosition(math::float3(x, y, center.z + _distance));
+		game_object->GetTransform()->SetGlobalPosition(math::float3(std::sin(_angle) * _distance + center.x, std::cos(_angle) * _distance + center.y, center.z));
 	}
 	else
 	{
-		game_object->GetTransform()->SetGlobalPosition(math::float3(x, center.y + _distance, y));
+		game_object->GetTransform()->SetGlobalPosition(math::float3(std::sin(_angle) * _distance + center.x, center.y, std::cos(_angle) * _distance + center.z));
 	}
 }
