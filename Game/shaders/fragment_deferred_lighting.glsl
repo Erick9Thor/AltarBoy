@@ -198,7 +198,10 @@ void main()
         
         for(uint i=0; i<lights.n_points; ++i)
         {
-            hdr_color +=  PositionalPBR(fragment_position, fragment_normal, view_direction, lights.points[i], fragment_diffuse, fragment_specular, fragment_smoothness);
+            if (distance(lights.points[i].position.xyz, fragment_position) <= lights.points[i].radius)
+            {
+                hdr_color +=  PositionalPBR(fragment_position, fragment_normal, view_direction, lights.points[i], fragment_diffuse, fragment_specular, fragment_smoothness);
+            }
         }
 
         for(uint i=0; i<lights.n_spots; ++i)
