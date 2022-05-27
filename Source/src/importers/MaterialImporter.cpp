@@ -23,8 +23,8 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::MATERIAL, resource_index, meta);
 
-    YAML::Node material_node = YAML::LoadFile(path);   
-    FileSystem::Copy(path, GetResourcePath(Resource::Type::MATERIAL, uid).c_str());
+    YAML::Node material_node = YAML::LoadFile(path);    
+    FileSystem::Save(GetResourcePath(Resource::Type::MATERIAL, uid).c_str(), material_node);
 }
 
 void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
@@ -43,6 +43,11 @@ void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
 {
     const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
+
+    if (!FileSystem::Exists(material_library_path.c_str()))
+    {
+        return nullptr;
+    }
 
     YAML::Node node = YAML::LoadFile(material_library_path);
     ResourceMaterial* material = new ResourceMaterial(id);
@@ -108,6 +113,7 @@ Hachiko::UID Hachiko::MaterialImporter::CreateEmptyMaterial(const std::string& n
 
 Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std::string& model_path, aiMaterial* ai_material)
 {  
+    
     // This uid wont be used
     ResourceMaterial* material = new ResourceMaterial(0);
     std::string name = ai_material->GetName().C_Str();
@@ -116,6 +122,16 @@ Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std:
         name.erase(remove(name.begin(), name.end(), ':'), name.end());
     }
     material->SetName(name);
+
+    const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
+
+    if (FileSystem::Exists(material_path.c_str()))
+    {
+        // Do not overwrite material if its already defined
+        UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
+        delete material;
+        return material_uid;
+    }
     
     aiColor4D color;
     if (ai_material->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
@@ -139,11 +155,8 @@ Hachiko::UID Hachiko::MaterialImporter::CreateMaterialAssetFromAssimp(const std:
     material->emissive = texture_importer.CreateTextureAssetFromAssimp(model_path, ai_material, aiTextureType_EMISSIVE);
     GenerateMaterialAssetFile(material);
     
-    const std::string material_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), material->GetName(), MATERIAL_EXTENSION);
     UID material_uid = App->resources->ImportAssetFromAnyPath(material_path)[0];
-
     delete material;
-
     return material_uid;
 }
 

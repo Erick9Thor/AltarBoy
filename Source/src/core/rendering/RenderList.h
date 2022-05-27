@@ -14,7 +14,6 @@ namespace Hachiko
     struct RenderTarget
     {
         const char* name = nullptr;
-        //GameObject* game_object = nullptr;
         ComponentMeshRenderer* mesh_renderer = nullptr;
         float distance = 0.0f;
     };
@@ -23,7 +22,6 @@ namespace Hachiko
     {
     public:
         void PreUpdate();
-        void Update(ComponentCamera* camera, GameObject* game_object);
         void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
 
         std::vector<RenderTarget>& GetOpaqueTargets()
@@ -47,9 +45,8 @@ namespace Hachiko
         }
 
     private:
-        void CollectObjects(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
-        void CollectObjects(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
-        void CollectMesh(const float3& camera_pos, GameObject* game_object);
+        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
+        void CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh);
 
         std::vector<RenderTarget> opaque_targets;
         std::vector<RenderTarget> transparent_targets;

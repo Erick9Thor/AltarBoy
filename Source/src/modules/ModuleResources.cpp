@@ -23,26 +23,30 @@ bool ModuleResources::Init()
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree
-    for (int i = 1; i < static_cast<int>(Resource::Type::COUNT); ++i)
+
+    for (auto& lib_path : preferences->GetLibraryPathsMap())
     {
-        FileSystem::CreateDir(preferences->GetLibraryPath(static_cast<Resource::Type>(i)));
+        FileSystem::CreateDir(lib_path.second.c_str());
     }
 
-    for (int i = 1; i < static_cast<int>(Resource::AssetType::COUNT); ++i)
+#ifndef PLAY_BUILD
+    for (auto& asset_path : preferences->GetAssetsPathsMap())
     {
-        FileSystem::CreateDir(preferences->GetAssetsPath(static_cast<Resource::AssetType>(i)));
+        FileSystem::CreateDir(asset_path.second.c_str());
     }
 
     AssetsLibraryCheck();
 
-    std::function handleAddedFile = [&](Event& evt)
-    {
+    std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
         std::filesystem::path file = e.GetPath();
         HE_LOG("Handling dropped file: %s", file.string().c_str());
         ImportAssetFromAnyPath(file);
     };
+
     App->event->Subscribe(Event::Type::FILE_ADDED, handleAddedFile);
+#endif
+
     return true;
 }
 
@@ -50,7 +54,8 @@ bool ModuleResources::CleanUp()
 {
     for (auto& it : loaded_resources)
     {
-        RELEASE(it.second);
+        HE_LOG("Removing unreleased resources (fbi coming)");
+        delete it.second.resource;
     }
 
     return true;
@@ -118,16 +123,40 @@ Resource* Hachiko::ModuleResources::GetResource(Resource::Type type, UID id)
     auto it = loaded_resources.find(id);
     if (it != loaded_resources.end())
     {
-        return it->second;
+        it->second.n_users += 1;
+        return it->second.resource;
     }
     // If not loaded try to load and return
     auto res = importer_manager.LoadResource(type, id);
     if (res != nullptr)
     {
-        return loaded_resources.emplace(id, res).first->second;
+        ResourceInstance& resource_instance = loaded_resources.emplace(id, ResourceInstance {res, 1}).first->second;
+        return resource_instance.resource;
     }
-
     return nullptr;
+}
+
+void Hachiko::ModuleResources::ReleaseResource(Resource* resource)
+{
+    if (resource)
+    {
+        ReleaseResource(resource->GetID());
+    }
+}
+
+void Hachiko::ModuleResources::ReleaseResource(UID id)
+{
+    auto it = loaded_resources.find(id);
+    if (it != loaded_resources.end())
+    {
+        ResourceInstance& res_instance = it->second;
+        res_instance.n_users -= 1;
+        if (res_instance.n_users == 0)
+        {
+            delete res_instance.resource;
+            loaded_resources.erase(id);
+        }
+    }
 }
 
 std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, const std::string& name) const
@@ -179,10 +208,14 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
             {
                 Scene* scene = App->scene_manager->GetActiveScene();
                 // Material asset only contains a single material resource
-                auto material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
+                ResourceMaterial* material_res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta_node[RESOURCES][0].as<UID>()));
                 scene->HandleInputMaterial(material_res);
                 break;
-            }            
+            }
+        case Resource::AssetType::SCENE:
+            // Scene asset has to keep its scene id at the first position, navmesh is found inside scene serialization
+            // It is also in resources array so it is reimported but no need to pass it here
+            App->scene_manager->LoadScene(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
         }
     }
 }
@@ -193,7 +226,7 @@ void Hachiko::ModuleResources::AssetsLibraryCheck()
 
     // Ignores files that dont need any short of importing themselves
     // Metas are searched for based on what's on assets
-    std::vector<std::string> ignore_extensions {"meta", "scene"};
+    std::vector<std::string> ignore_extensions {"meta"};
     PathNode assets_folder = FileSystem::GetAllFiles(ASSETS_FOLDER, nullptr, &ignore_extensions);
     GenerateLibrary(assets_folder);
 
@@ -217,13 +250,13 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
 std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path)
 {
     Resource::AssetType type = GetAssetTypeFromPath(asset_path);
-
+    
     if (type == Resource::AssetType::UNKNOWN)
     {
         // Discard unrecognised types
         return std::vector<UID>();
     }
-
+    
     // Infer meta path from the asset name
     std::string meta_path = StringUtils::Concat(asset_path, META_EXTENSION);
 

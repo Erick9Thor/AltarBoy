@@ -340,8 +340,6 @@ void Hachiko::GameObject::OnTransformUpdated()
     {
         child->OnTransformUpdated();
     }
-
-    UpdateBoundingBoxes();
 }
 
 void Hachiko::GameObject::DebugDrawAll()
@@ -357,28 +355,11 @@ void Hachiko::GameObject::DebugDrawAll()
 
 void Hachiko::GameObject::DebugDraw() const
 {
-    //if (in_quadtree)
-    //{
-    DrawBoundingBox();
-    //}
-    DrawBones();
+    //DrawBones();
     for (Component* component : components)
     {
         component->DebugDraw();
     }
-}
-
-void Hachiko::GameObject::DrawBoundingBox() const
-{
-    ddVec3 p[8];
-    // This order was pure trial and error, i dont know how to really do it
-    // Using center and points does not show the rotation
-    static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
-    for (int i = 0; i < 8; ++i)
-    {
-        p[i] = obb.CornerPoint(order[i]);
-    }
-    dd::box(p, dd::colors::White);
 }
 
 void Hachiko::GameObject::DrawBones() const
@@ -387,87 +368,6 @@ void Hachiko::GameObject::DrawBones() const
     {
         dd::line(this->GetTransform()->GetGlobalPosition(), parent->GetTransform()->GetGlobalPosition(), dd::colors::Blue);
         dd::axisTriad(this->GetTransform()->GetGlobalMatrix(), 0.005f, 0.1f);
-    }
-}
-
-void Hachiko::GameObject::UpdateBoundingBoxes()
-{
-    /* Improvement in quadtree: only add the ones with a mesh 
-    in_quadtree = false;
-    
-    constexpr float default_bounding_size = 1.0f;
-    // If there is no mesh generate a default size
-    aabb.SetNegativeInfinity();
-    aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
-    obb = aabb;
-
-    bool mesh_renderer_found = false;
-    for (int i = 0; i < components.size(); ++i)
-    {
-        if (components[i]->GetType() == Component::Type::MESH)
-        {
-            ComponentMeshRenderer* component_mesh_renderer = static_cast<ComponentMeshRenderer*>(components[i]);
-            if (mesh_renderer_found)
-            {
-                math::OBB aux_obb = component_mesh_renderer->GetAABB();
-                aux_obb.Transform(transform->GetGlobalMatrix());
-                aabb.Enclose(aux_obb);
-
-                if (obb.Volume() < aux_obb.Volume())
-                {
-                    // TODO: keep the biggest obb
-                    obb = aux_obb;
-                }
-            }
-            else
-            {
-                mesh_renderer_found = true;
-
-                obb = component_mesh_renderer->GetAABB();
-                obb.Transform(transform->GetGlobalMatrix());
-                // Enclose is accumulative, reset the box
-                aabb.SetNegativeInfinity();
-                aabb.Enclose(obb);
-            }
-        }
-    }
-    // Without the check main camera crashes bcs there is no quadtree
-    if (scene_owner)
-    {
-        // TODO: only insert if there a mesh
-        const Quadtree* quadtree = scene_owner->GetQuadtree();
-        quadtree->Remove(this);
-        if (mesh_renderer_found)
-        {
-            in_quadtree = true;
-            quadtree->Insert(this);
-        }
-    } */
-
-    ComponentMeshRenderer* component_mesh_renderer = GetComponent<ComponentMeshRenderer>();
-    if (component_mesh_renderer != nullptr)
-    {
-        obb = component_mesh_renderer->GetAABB();
-        obb.Transform(transform->GetGlobalMatrix());
-        // Enclose is accumulative, reset the box
-        aabb.SetNegativeInfinity();
-        aabb.Enclose(obb);
-    }
-    else
-    {
-        constexpr float default_bounding_size = 1.0f;
-        // If there is no mesh generate a default size
-        aabb.SetNegativeInfinity();
-        aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), float3(default_bounding_size));
-        obb = aabb;
-    }
-
-    // Without the check main camera crashes bcs there is no quadtree
-    if (scene_owner)
-    {
-        const Quadtree* quadtree = scene_owner->GetQuadtree();
-        quadtree->Remove(this);
-        quadtree->Insert(this);
     }
 }
 

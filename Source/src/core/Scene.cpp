@@ -29,7 +29,6 @@ Hachiko::Scene::Scene() :
 
     // TODO: Send hardcoded values to preferences
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
-    App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()
@@ -52,8 +51,6 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object) const
     {
         App->editor->SetSelectedGO(nullptr);
     }
-
-    quadtree->Remove(game_object);
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
@@ -151,9 +148,25 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
     return selected;
 }
 
-void Hachiko::Scene::Save(YAML::Node& node) const
+void Hachiko::Scene::Save(YAML::Node& node)
 {
     node[SCENE_NAME] = GetName();
+    // Navmesh
+    if (!navmesh_id)
+    {
+        SetNavmeshID(UUID::GenerateUID());
+    }
+    node[NAVMESH_ID] = navmesh_id;
+
+    // Skybox
+    const TextureCube& cube = skybox->GetCube();
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        node[SKYBOX_NODE][side_name] = cube.uids[i];
+    }
+
+
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -163,16 +176,30 @@ void Hachiko::Scene::Save(YAML::Node& node) const
 
 void Hachiko::Scene::Load(const YAML::Node& node)
 {
+    SetName(node[SCENE_NAME].as<std::string>().c_str());
+    navmesh_id = node[NAVMESH_ID].as<UID>();
+    root->SetID(node[ROOT_ID].as<UID>());
+
+    RELEASE(skybox);
+
+    TextureCube cube;
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
+        // Store UID 0 if no resource is present
+        cube.uids[i] = node[SKYBOX_NODE][side_name].as<UID>();
+    }
+    // Pass skybox with used uids to be loaded
+    skybox = new Skybox(cube);
+
+
     if (!node[CHILD_NODE].IsDefined())
     {
         // Loaded as an empty scene:
         loaded = true;
-
         return;
     }
-
-    SetName(node[SCENE_NAME].as<std::string>().c_str());
-    root->SetID(node[ROOT_ID].as<UID>());
+    
     const YAML::Node children_node = node[CHILD_NODE];
 
     for (unsigned i = 0; i < children_node.size(); ++i)
@@ -183,8 +210,6 @@ void Hachiko::Scene::Load(const YAML::Node& node)
         child->scene_owner = this;
         child->Load(children_node[i]);
     }
-
-    App->navigation->BuildNavmesh(this);
 
     loaded = true;
 }
@@ -232,7 +257,7 @@ void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vec
                 scene_normals.insert(scene_normals.end(), &global_normal.x, &global_normal.w);
             }
 
-            scene_bounds.Enclose(go->GetAABB());
+            scene_bounds.Enclose(mesh_renderer->GetAABB());
         }
 
         for (auto& child : go->children)
@@ -269,7 +294,7 @@ void Hachiko::Scene::Update() const
     root->Update();
 }
 
-Hachiko::Scene::Memento* Hachiko::Scene::CreateSnapshot() const
+Hachiko::Scene::Memento* Hachiko::Scene::CreateSnapshot()
 {
     YAML::Node scene_data;
     Save(scene_data);

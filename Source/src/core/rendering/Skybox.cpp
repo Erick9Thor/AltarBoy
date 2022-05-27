@@ -3,38 +3,27 @@
 
 #include "modules/ModuleProgram.h"
 #include "components/ComponentCamera.h"
+#include "modules/ModuleResources.h"
+#include "resources/ResourceTexture.h"
 
 Hachiko::Skybox::Skybox()
 {
-    const char* paths[6] = {"Assets/Skybox/skybox_right.png",
-                            "Assets/Skybox/skybox_left.png",
-                            "Assets/Skybox/skybox_top.png",
-                            "Assets/Skybox/skybox_bottom.png",
-                            "Assets/Skybox/skybox_center.png",
-                            "Assets/Skybox/skybox_back.png"};
-    texture = ModuleTexture::LoadCubeMap(paths);
+    cube = ModuleTexture::LoadCubeMap(cube);
+    CreateBuffers();
+    
+}
 
-    constexpr float vertices[] = {
-        // positions          
-        -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f};
-
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+Hachiko::Skybox::Skybox(TextureCube new_cube) : cube(new_cube)
+{
+    cube = ModuleTexture::LoadCubeMap(cube);
+    CreateBuffers();
+    
 }
 
 Hachiko::Skybox::~Skybox()
 {
     glDeleteBuffers(1, &vbo);
-    glDeleteTextures(1, &texture.id);
-    texture.loaded = false;
+    ReleaseCubemap();    
 }
 
 void Hachiko::Skybox::Draw(ComponentCamera* camera) const
@@ -50,10 +39,94 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     // Draw skybox
     glBindVertexArray(vao);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texture.id);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     Program::Deactivate();
     
     glDepthFunc(GL_LESS);
+}
+
+void Hachiko::Skybox::ReleaseCubemap()
+{
+    glDeleteTextures(1, &cube.id);
+    for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
+    {
+        App->resources->ReleaseResource(cube.resources[i]);
+    }
+    cube.loaded = false;
+}
+
+void Hachiko::Skybox::CreateBuffers()
+{
+    constexpr float vertices[]
+        = {
+    // positions          
+
+    // Back
+    -1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+
+    // Left
+    -1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f, -1.0f,
+    -1.0f,  1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+
+    // Right
+    1.0f, -1.0f, -1.0f,
+    1.0f, -1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f,  1.0f,
+    1.0f,  1.0f, -1.0f,
+    1.0f, -1.0f, -1.0f,
+
+    // Front
+    1.0f,  1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+     1.0f,  1.0f,  1.0f,
+     
+
+    // Top
+    -1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f, -1.0f,
+     1.0f,  1.0f,  1.0f,
+    -1.0f,  1.0f,  1.0f,
+
+    // Bottom
+     1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f, -1.0f,
+     1.0f, -1.0f,  1.0f,
+     1.0f, -1.0f,  1.0f,
+    -1.0f, -1.0f, -1.0f,
+    -1.0f, -1.0f,  1.0f
+};
+
+
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glBindVertexArray(vao);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), static_cast<void*>(nullptr));
+}
+
+void Hachiko::Skybox::ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_side)
+{
+    unsigned side_number = static_cast<unsigned>(cube_side);
+    ReleaseCubemap();
+    cube.uids[side_number] = texture_uid;
+    cube = ModuleTexture::LoadCubeMap(cube);
 }

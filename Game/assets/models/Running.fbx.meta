@@ -3,14 +3,14 @@ model_name: Running
 meshes:
   - 12267903123424216882
 materials:
-  - 15737844490852114836
+  - 12924252210591909690
 animations:
   - 2184831573162580743
 prefab_id: 1821899360000955217
 resources:
   - resource_id: 12267903123424216882
     resource_type: 3
-  - resource_id: 15737844490852114836
+  - resource_id: 12924252210591909690
     resource_type: 1
   - resource_id: 2184831573162580743
     resource_type: 7

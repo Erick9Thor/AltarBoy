@@ -5,6 +5,7 @@
 #include "modules/ModuleInput.h"
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleEvent.h"
+#include "importers/PrefabImporter.h"
 
 Hachiko::WindowHierarchy::WindowHierarchy() :
     Window("Hierarchy", true) {}
@@ -146,6 +147,12 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
             dragged_object = nullptr;
             ImGui::CloseCurrentPopup();
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+        }
+        if (ImGui::MenuItem("Create Prefab (Use GO Name)"))
+        {
+            ImGui::CloseCurrentPopup();
+            PrefabImporter prefab_importer;
+            prefab_importer.CreatePrefabAsset(game_object->GetName().c_str(), game_object);
         }
         ImGui::EndPopup();
     }
