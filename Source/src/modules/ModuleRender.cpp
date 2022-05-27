@@ -295,7 +295,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
-    if (outline_selection && selected_go)
+    /*if (outline_selection && selected_go)
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
         glStencilMask(0X00);
@@ -309,7 +309,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
         glStencilMask(0XFF);
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
-    }
+    }*/
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
