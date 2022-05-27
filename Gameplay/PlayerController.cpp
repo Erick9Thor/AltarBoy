@@ -25,7 +25,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_start(math::float3::zero)
 	, _dash_direction(math::float3::zero)
 	, _attack_radius(0.0f)
-	, _attack_cooldown(0.0f)
+	, _attack_cooldown(0.33f)
 	, _should_rotate(false)
 	, _rotation_progress(0.0f)
 	, _rotation_duration(0.0f)
@@ -45,7 +45,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_dash_duration = 0.15f;
 	_dash_cooldown = 2.00f;
 	_attack_radius = 4.0f;
-	_attack_cooldown = 0.2f;
+	_attack_cooldown = 0.33f;
 	_dash_count = 2;
 	_movement_speed = 7.0f;
 	_rotation_duration = 0.075f;
@@ -59,6 +59,8 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
+	math::float3 moving_input_dir = float3::zero;
+
 	if (_stats._current_hp <= 0)
 	{
 		//SceneManagement::SwitchScene(Scenes::LOSE);
@@ -71,13 +73,13 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	Attack(transform, current_position);
 
 	// Handle all the input:
-	HandleInput(current_position);
+	HandleInput(current_position, moving_input_dir);
 
 	// Dash:
 	Dash(current_position);
 
 	// Rotate player to the necessary direction:
-	Rotate(transform, current_position);
+	Rotate(transform, moving_input_dir);
 
 	// Move the dash indicator:
 	//MoveDashIndicator(current_position);
@@ -152,9 +154,6 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
-	// For now this only makes player look at to the direction to the mouse
-	// on left mouse button is clicked, can be used as a base to build the 
-	// actual combat upon.
 	if (_is_dashing || (attack_current_cd > 0.0f) )
 	{
 		attack_current_cd -= Time::DeltaTime();
@@ -170,7 +169,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		t_pos.y += 0.5;
 		RangedAttack(transform, t_pos);
 
-		attack_current_cd = _stats._attack_cd;
+		attack_current_cd = _attack_cooldown;
 	}
 	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
 	{
@@ -178,7 +177,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 
-		attack_current_cd = _stats._attack_cd;
+		attack_current_cd = _attack_cooldown;
 	}
 }
 
@@ -299,23 +298,15 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 }
 
 void Hachiko::Scripting::PlayerController::Rotate(
-	ComponentTransform* transform, const math::float3& current_position)
+	ComponentTransform* transform, const math::float3& moving_dir_input)
 {
-	// If the player position is changed, check if rotation is needed:
-	if (!current_position.Equals(transform->GetGlobalPosition()))
+	// If input tells to turn to player
+	if (!moving_dir_input.Equals(float3::zero) && _state == PlayerState::WALKING)
 	{
-		// Get the position player should be looking at:
-		math::float3 look_at_position = current_position;
-		look_at_position.y = transform->GetGlobalPosition().y;
-
-		// Calculate the direction player should be looking at:
-		math::float3 look_at_direction = 
-			(transform->GetGlobalPosition() - look_at_position);
-		look_at_direction.Normalize();
 
 		// Get the rotation player is going to have:
 		const math::Quat target_rotation = 
-			transform->SimulateLookAt(look_at_direction);
+			transform->SimulateLookAt(moving_dir_input);
 
 		// If rotation is gonna be changed fire up the rotating process:
 		if (!target_rotation.Equals(transform->GetGlobalRotation()))
@@ -351,7 +342,7 @@ void Hachiko::Scripting::PlayerController::Rotate(
 	}
 }
 
-void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_position)
+void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_position, math::float3& moving_input_dir)
 {
 	// Ignore the inputs if engine camera input is taken:
 	if (Input::IsMouseButtonPressed(Input::MouseButton::RIGHT))
@@ -413,26 +404,30 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 	const math::float3 delta_x = math::float3::unitX * velocity;
 	const math::float3 delta_y = math::float3::unitY * velocity;
 	const math::float3 delta_z = math::float3::unitZ * velocity;
-
+	
 	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
 	{
 		current_position -= delta_z;
+		moving_input_dir += math::float3::unitZ;
 		_state = PlayerState::WALKING;
 	}
 	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
 	{
 		current_position += delta_z;
+		moving_input_dir -= math::float3::unitZ;
 		_state = PlayerState::WALKING;
 	}
 
 	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
 	{
 		current_position += delta_x;
+		moving_input_dir -= math::float3::unitX;
 		_state = PlayerState::WALKING;
 	}
 	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
 	{
 		current_position -= delta_x;
+		moving_input_dir += math::float3::unitX;
 		_state = PlayerState::WALKING;
 	}
 
@@ -457,11 +452,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		_dash_progress = 0.0f;
 		_dash_start = current_position;
 		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
-		const math::float3 dash_end = GetRaycastPosition(_dash_start);
 		
 		//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
 
-		_dash_direction = dash_end - _dash_start;
+		_dash_direction = game_object->GetTransform()->GetFront();
 		_dash_direction.Normalize();
 	}
 

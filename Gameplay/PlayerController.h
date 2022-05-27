@@ -43,10 +43,11 @@ private:
 
 	void Dash(math::float3& current_position);
 
-	void Rotate(ComponentTransform* transform, 
-		const math::float3& current_position);
+	void Rotate(ComponentTransform* transform,
+		const math::float3& moving_input_dir);
 	
-	void HandleInput(math::float3& current_position);
+	void HandleInput(math::float3& current_position,
+		math::float3& moving_input_dir);
 
 public:
 	SERIALIZE_FIELD(Stats, _stats);

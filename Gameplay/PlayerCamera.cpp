@@ -74,7 +74,7 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
-	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
+	// transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
