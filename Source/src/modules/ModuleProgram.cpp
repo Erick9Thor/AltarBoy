@@ -144,13 +144,13 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryPassProgram()
 {
-    deferred_geometry_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_geometry.glsl");
+    deferred_geometry_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
     return deferred_geometry_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
 {
-    deferred_lighting_program = CreateProgram(ASSETS_FOLDER "/Shaders/vertex_deferred_lighting.glsl", ASSETS_FOLDER "/Shaders/fragment_deferred_lighting.glsl");
+    deferred_lighting_program = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_deferred_lighting.glsl");
     return deferred_lighting_program;
 }
 
