@@ -102,7 +102,7 @@ namespace Hachiko
         bool render_forward_pass = true;
 
         // Deferred rendering:
-        GBuffer g_buffer_deneme;
+        GBuffer g_buffer;
         unsigned deferred_quad_vao = 0;
         unsigned deferred_quad_vbo = 0;
         unsigned deferred_quad_ebo = 0;

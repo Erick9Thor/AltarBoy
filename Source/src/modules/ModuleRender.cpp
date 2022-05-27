@@ -78,7 +78,7 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
     }
 
     // Generate G-Buffer and associated textures:
-    g_buffer_deneme.Generate();
+    g_buffer.Generate();
 
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -91,7 +91,7 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, heigth, width, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
     
     // Handle resizing the textures of g-buffer:
-    g_buffer_deneme.Resize(heigth, width);
+    g_buffer.Resize(heigth, width);
     
     // Unbind:
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -212,14 +212,13 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     GameObject* selected_go = App->editor->GetSelectedGameObject();
-    RenderTarget* outline_target = nullptr;
     
     Program* program = App->program->GetDeferredGeometryProgram();
     
     program->Activate();
 
     // Geometry pass:
-    g_buffer_deneme.BindForDrawing();
+    g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -234,11 +233,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     for (RenderTarget& target : opaque_targets)
     {
         target.mesh_renderer->Draw(camera, program);
-
-        /*if (selected_go && target.game_object == selected_go)
-        {
-            outline_target = &target;
-        }*/
     }
 
     Program::Deactivate();
@@ -252,7 +246,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     program->Activate();
 
     // Bind all g-buffer textures:
-    g_buffer_deneme.BindTextures();
+    g_buffer.BindTextures();
     
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
@@ -264,7 +258,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     // Blit g_buffer depth buffer to frame_buffer to be used for forward 
     // rendering pass:
-    g_buffer_deneme.BlitDepth(frame_buffer, fb_width, fb_height);
+    g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
 
     // Enable blending for the next passes:
     glEnable(GL_BLEND);
@@ -301,7 +295,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     Program::Deactivate();
 
-    /*if (outline_selection && outline_target)
+    if (outline_selection && selected_go)
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
         glStencilMask(0X00);
@@ -309,13 +303,13 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
         Program* outline_program = App->program->GetStencilProgram();
         outline_program->Activate();
-        outline_target->game_object->DrawStencil(camera, outline_program);
+        selected_go->DrawStencil(camera, outline_program);
         Program::Deactivate();
 
         glStencilMask(0XFF);
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
-    }*/
+    }
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)

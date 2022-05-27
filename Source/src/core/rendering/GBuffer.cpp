@@ -14,14 +14,7 @@ Hachiko::GBuffer::GBuffer()
 
 Hachiko::GBuffer::~GBuffer() 
 {
-    glDeleteTextures(1, &_diffuse_texture);
-    glDeleteTextures(1, &_specular_smoothness_texture);
-    glDeleteTextures(1, &_normal_texture);
-    glDeleteTextures(1, &_position_texture);
-    glDeleteTextures(1, &_emissive_texture);
-    glDeleteTextures(1, &_depth_texture);
-
-	glDeleteBuffers(1, &_g_buffer);
+    Free();
 }
 
 void Hachiko::GBuffer::Generate() 
@@ -102,6 +95,18 @@ void Hachiko::GBuffer::Generate()
         HE_ERROR("An error occured while creating G Buffer, status: 0x%x\n", status);
         return;
     }
+}
+
+void Hachiko::GBuffer::Free() 
+{
+    glDeleteTextures(1, &_diffuse_texture);
+    glDeleteTextures(1, &_specular_smoothness_texture);
+    glDeleteTextures(1, &_normal_texture);
+    glDeleteTextures(1, &_position_texture);
+    glDeleteTextures(1, &_emissive_texture);
+    glDeleteTextures(1, &_depth_texture);
+
+    glDeleteBuffers(1, &_g_buffer);
 }
 
 void Hachiko::GBuffer::Resize(int width, int height) const 

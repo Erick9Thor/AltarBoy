@@ -9,6 +9,7 @@ public:
     ~GBuffer();
 
     void Generate();
+    void Free();
     void Resize(int width, int height) const;
     void BlitDepth(unsigned int target_buffer_id, int widht, int height) const;
     void BindTextures() const;
