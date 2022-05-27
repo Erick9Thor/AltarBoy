@@ -10,7 +10,7 @@ component:
   - type: 14
     enabled: true
     animations:
-      - 4720233982978660920
+      - 7290321072388025035
 child:
   - name: Zombunny
     enabled: true
@@ -22,16 +22,16 @@ child:
         scale: [1, 1, 1]
       - type: 2
         enabled: true
-        mesh_id: 4657792022921634311
+        mesh_id: 9832801381674867867
         navigable: false
         visible: true
-        material_id: 6437139493858524530
+        material_id: 3254954440065982604
       - type: 2
         enabled: true
-        mesh_id: 282215514867166725
+        mesh_id: 3966560579723772918
         navigable: false
         visible: true
-        material_id: 13051681587602430099
+        material_id: 4800725388279944687
   - name: Ctrl_Grp
     enabled: true
     component:

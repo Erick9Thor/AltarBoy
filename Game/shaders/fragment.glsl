@@ -7,7 +7,7 @@
 #define EMISSIVE_SAMPLER 4
 #define N_2D_SAMPLERS 5
 
-#define MAX_POINT_LIGHTS 4
+#define MAX_POINT_LIGHTS 1200
 #define MAX_SPOT_LIGHTS 4
 
 #define PI 3.141597

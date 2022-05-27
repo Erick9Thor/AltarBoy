@@ -22,6 +22,8 @@ void Hachiko::Scripting::FancyLights::OnAwake()
 	_speed = 5.0f;
 	_radius = 2.0f;
 
+	_rotate_on_y = game_object->GetName() == "Light 1";
+
 	_point_light->color = float4::RandomGeneral(lcg, 0.0f, 1.0f);
 }
 

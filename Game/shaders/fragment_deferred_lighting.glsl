@@ -18,7 +18,7 @@ layout(std140, row_major, binding = 0) uniform Camera
     vec3 pos;
 } camera;
 
-#define MAX_POINT_LIGHTS 4
+#define MAX_POINT_LIGHTS 1200
 #define MAX_SPOT_LIGHTS 4
 
 #define PI 3.141597
