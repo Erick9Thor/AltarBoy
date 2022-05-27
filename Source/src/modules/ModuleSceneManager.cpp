@@ -18,6 +18,8 @@
 
 bool Hachiko::ModuleSceneManager::Init()
 { 
+    HE_LOG("INITIALIZING MODULE: SCENE MANAGER");
+
     preferences = App->preferences->GetResourcesPreference();
 
     // If uid is not found it will load an empty scene

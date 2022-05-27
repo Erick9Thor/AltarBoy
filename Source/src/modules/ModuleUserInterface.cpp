@@ -23,6 +23,8 @@ Hachiko::ModuleUserInterface::~ModuleUserInterface() = default;
 
 bool Hachiko::ModuleUserInterface::Init()
 {
+    HE_LOG("INITIALIZING MODULE: USER INTERFACE");
+
     CreateSquare();
     std::function handle_mouse_action = [&](Event& evt) { HandleMouseAction(evt); };
     App->event->Subscribe(Event::Type::MOUSE_ACTION, handle_mouse_action);

@@ -10,6 +10,8 @@ Hachiko::ModuleWindow::~ModuleWindow() = default;
 
 bool Hachiko::ModuleWindow::Init()
 {
+    HE_LOG("INITIALIZING MODULE: WINDOW");
+
     GetMonitorResolution(max_width, max_height);
     width = static_cast<int>(max_width * WINDOWED_RATIO);
     height = static_cast<int>(max_height * WINDOWED_RATIO);

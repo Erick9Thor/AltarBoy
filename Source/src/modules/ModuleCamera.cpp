@@ -19,6 +19,7 @@ Hachiko::ModuleCamera::~ModuleCamera() = default;
 
 bool Hachiko::ModuleCamera::Init()
 {
+    HE_LOG("INITIALIZING MODULE: CAMERA");
     HE_LOG("Creating Editor Camera");
 
     editor_camera_game_object = new GameObject("Editor Camera");

@@ -10,6 +10,8 @@ Hachiko::ModuleTexture::~ModuleTexture() = default;
 
 bool Hachiko::ModuleTexture::Init()
 {
+    HE_LOG("INITIALIZING MODULE: TEXTURE");
+
     // Initialize image library
     ilInit();
 

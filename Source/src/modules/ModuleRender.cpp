@@ -27,7 +27,7 @@ Hachiko::ModuleRender::~ModuleRender() = default;
 
 bool Hachiko::ModuleRender::Init()
 {
-    HE_LOG("Init Module render");
+    HE_LOG("INITIALIZING MODULE: RENDER");
 
     CreateContext();
 

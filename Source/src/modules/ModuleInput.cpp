@@ -22,6 +22,8 @@ Hachiko::ModuleInput::~ModuleInput()
 // Called before render is available
 bool Hachiko::ModuleInput::Init()
 {
+    HE_LOG("INITIALIZING MODULE: INPUT");
+
     HE_LOG("Init SDL input event system");
     bool ret = true;
     SDL_Init(0);

@@ -15,6 +15,8 @@ Hachiko::ModuleProgram::~ModuleProgram() = default;
 
 bool Hachiko::ModuleProgram::Init()
 {
+    HE_LOG("INITIALIZING MODULE: PROGRAM");
+
     CreateMainProgram();
     CreateSkyboxProgram();
     CreateStencilProgram();
