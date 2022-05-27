@@ -36,11 +36,14 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
-    if (App->input->IsKeyDown(SDL_SCANCODE_C) && App->input->IsModifierPressed(KMOD_SHIFT))
+    if (!GameTimer::running)
     {
-        ToggleCamera();
+        if (App->input->IsKeyDown(SDL_SCANCODE_C) && App->input->IsModifierPressed(KMOD_SHIFT))
+        {
+            ToggleCamera();
+        }
+        Controller(delta);
     }
-    Controller(delta);
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
