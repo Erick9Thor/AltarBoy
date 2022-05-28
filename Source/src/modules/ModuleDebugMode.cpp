@@ -18,15 +18,6 @@ bool Hachiko::ModuleDebugMode::Init()
 	glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &hw_info.vram_capacity);
 	glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &hw_info.vram_free);
 	SDL_GetVersion(&hw_info.sdl_version);
-
-	// Deprecated after VS1
-	player = FindPlayer();
-
-	// God mode
-    playerLocations.push_back(float3(0.0f, 0.0f, 0.0f));
-    playerLocations.push_back(float3(10.0f, 0.0f, 0.0f));
-    playerLocations.push_back(float3(10.0f, 0.0f, 7.0f));
-    playerLocations.push_back(float3(7.0f, 0.0f, 7.0f));
 	
 	SetupWindow();
 
@@ -49,73 +40,6 @@ UpdateStatus Hachiko::ModuleDebugMode::Update(const float delta)
 	if (is_gui_active)
 	{
 		DrawGUI();
-	}
-
-	// God mode
-	
-	// Teleport player with mouse double click
-	if (App->input->IsKeyPressed(SDL_SCANCODE_RALT) && ImGui::IsMouseDoubleClicked(0))
-	{
-        Plane plane(vec(50, 0, 50), vec(50, 0, -50), vec(-50, 0, -50));
-        float d = 0;
-        if (line.Intersects(plane, &d))
-        {
-            player = FindPlayer();
-            if (player)
-            {
-                player->GetTransform()->SetGlobalPosition(line.GetPoint(d));
-            }
-        }
-	}
-
-	// Teleport player to the nearest position in playerLocations
-	if (App->input->IsKeyPressed(SDL_SCANCODE_SPACE))
-	{
-        player = FindPlayer();
-		if (player)
-		{
-            float3 currentPosition = player->GetTransform()->GetGlobalPosition();
-
-            float dist = 1000.0f;
-            int loc = 0;
-            for (int i = 0; i < playerLocations.size(); ++i)
-            {
-                if (dist > math::Distance(currentPosition, playerLocations[i]) && math::Distance(currentPosition, playerLocations[i]) != 0)
-                {
-                    dist = math::Distance(currentPosition, playerLocations[i]);
-                    loc = i;
-                }
-            }
-            player->GetTransform()->SetGlobalPosition(playerLocations[loc]);
-		}
-	}
-	
-	// Teleport player to the next position in playerLocations
-    if (App->input->IsKeyPressed(SDL_SCANCODE_RETURN))
-	{
-        player = FindPlayer();
-		if (player)
-		{
-            float3 currentPosition = player->GetTransform()->GetGlobalPosition();
-
-            int loc = 0;
-            for (int i = 0; i < playerLocations.size(); ++i)
-            {
-                if (math::Distance(currentPosition, playerLocations[i]) == 0)
-                {
-                    loc = i + 1;
-                    break;
-                }
-            }
-
-            if (loc == playerLocations.size())
-            {
-                loc = 0;
-            }
-
-            player->GetTransform()->SetGlobalPosition(playerLocations[loc]);
-
-		}
 	}
 
 	return UpdateStatus::UPDATE_CONTINUE;

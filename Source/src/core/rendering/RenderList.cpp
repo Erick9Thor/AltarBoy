@@ -58,7 +58,7 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, ComponentMeshRen
 
     // Decide in which list this target should be placed in based on its
     // material's transparency:
-    auto targets = mesh_renderer->GetMaterial()->is_transparent 
+    auto targets = mesh_renderer->GetResourceMaterial()->is_transparent 
         ? &transparent_targets 
         : &opaque_targets;
 

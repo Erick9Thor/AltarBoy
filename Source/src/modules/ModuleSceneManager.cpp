@@ -230,6 +230,11 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     }
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
     App->navigation->DrawOptionsGui();
+
+    // Skybox
+    ImGui::Separator();
+    main_scene->GetSkybox()->DrawImGui();
+    //
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)

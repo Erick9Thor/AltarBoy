@@ -150,7 +150,8 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {    
     ComponentCamera* camera = App->camera->GetRenderingCamera();
-    const Scene* active_scene = App->scene_manager->GetActiveScene();   
+    Scene* active_scene = App->scene_manager->GetActiveScene();   
+    active_scene->RebuildBatching();
 
 #ifdef PLAY_BUILD
     int width, height;
@@ -210,14 +211,15 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
+    BatchManager* batch_manager = scene->GetBatchManager();
+
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     
-    Program* program = App->program->GetDeferredGeometryProgram();
-    
-    program->Activate();
+    Program* program = nullptr;
 
-    // Geometry pass:
+    // ----------------------------- GEOMETRY PASS ----------------------------
+    
     g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -229,15 +231,25 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     // Get opaque targets, these will be rendered in deferred rendering passes:
     std::vector<RenderTarget>& opaque_targets = render_list.GetOpaqueTargets();
-
-    for (RenderTarget& target : opaque_targets)
+    
+    // Clear Batches:
+    batch_manager->ClearBatchesDrawList();
+    
+    // Send mesh renderers with opaque materials to batch manager draw list:
+    for (const RenderTarget& target : opaque_targets)
     {
-        target.mesh_renderer->Draw(camera, program);
+        batch_manager->AddDrawComponent(target.mesh_renderer);
+        // target.mesh_renderer->Draw(camera, program);
     }
 
+    // Draw collected meshes with geometry pass rogram:
+    program = App->program->GetDeferredGeometryProgram();
+    program->Activate();
+    batch_manager->DrawBatches(program);
     Program::Deactivate();
+
+    // ------------------------------ LIGHT PASS ------------------------------
     
-    // Light Pass:
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -252,6 +264,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     // and shader sets the fragment color according to this mode:
     program->BindUniformInts("mode", 1, &deferred_mode);
 
+    // Render the final texture from deferred rendering on a quad that is,
+    // 1x1 on NDC:
     RenderDeferredQuad();
 
     Program::Deactivate();
@@ -264,6 +278,8 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // ------------------------- SKYBOX & DEBUG DRAW --------------------------
+
     if (draw_skybox)
     {
         scene->GetSkybox()->Draw(camera);
@@ -273,26 +289,30 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), 
         camera->GetProjectionMatrix(), fb_height, fb_width);
 
+    // ----------------------------- FORWARD PASS -----------------------------
+
     // If forward pass is disabled on the settings, return:
     if (!render_forward_pass)
     {
         return;
     }
-
-    // Forward rendering pass for transparent game objects:
-    program = App->program->GetMainProgram();
-
-    program->Activate();
+    
+    // Clear Batches:
+    batch_manager->ClearBatchesDrawList();
 
     // Get the targets that has transparent materials. These targets will be 
     // rendered with regular forward rendering pass:
     std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
 
-    for (RenderTarget target : transparent_targets)
+    for (const RenderTarget& target : transparent_targets)
     {
-        target.mesh_renderer->Draw(camera, program);
+        batch_manager->AddDrawComponent(target.mesh_renderer);
     }
-
+    
+    // Forward rendering pass for transparent game objects:
+    program = App->program->GetMainProgram();
+    program->Activate();
+    batch_manager->DrawBatches(program);
     Program::Deactivate();
 
     /*if (outline_selection && selected_go)
