@@ -15,6 +15,7 @@
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
+#include "resources/ResourceSkybox.h"
 
 using namespace Hachiko;
 
@@ -112,6 +113,11 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
     const auto it = std::find_if(supported_extensions.begin(), supported_extensions.end(), isValidExtension);
     if (it != supported_extensions.end())
     {
+        // TODO: Remove exception when skybox is hdr since it will not creaate confusion
+        if (path.string().find("skybox") != std::string::npos)
+        {
+            return Resource::AssetType::SKYBOX;
+        }
         return it->first;
     }
     return Resource::AssetType::UNKNOWN;
@@ -177,6 +183,7 @@ std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, cons
 void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 {
     Resource::AssetType asset_type = GetAssetTypeFromPath(path);
+
     
 
     if (asset_type != Resource::AssetType::UNKNOWN)
