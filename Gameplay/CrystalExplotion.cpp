@@ -34,7 +34,7 @@ void Hachiko::Scripting::CrystalExplotion::OnUpdate()
 }
 
 
-void Hachiko::Scripting::CrystalExplotion::ReceiveDamage(int damage)
+void Hachiko::Scripting::CrystalExplotion::ReceiveDamage(int damage, float3 direction)
 {
 	_stats.ReceiveDamage(damage);
 }

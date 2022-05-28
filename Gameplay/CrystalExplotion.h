@@ -27,7 +27,7 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 
-			void ReceiveDamage(int damage);
+			void ReceiveDamage(int damage, float3 direction);
 
 		private:
 			void DestroyCristall();
