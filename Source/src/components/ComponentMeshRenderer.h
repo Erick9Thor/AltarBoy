@@ -23,6 +23,10 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
         void DrawStencil(ComponentCamera* camera, Program* program) const;
 
+        void DebugDraw() override;
+
+        void OnTransformUpdated() override;
+
         [[nodiscard]] bool IsLoaded() const
         {
             return mesh != nullptr;
@@ -38,9 +42,19 @@ namespace Hachiko
             return navigable;
         }
 
-        [[nodiscard]] AABB GetAABB() const
+        [[nodiscard]] AABB GetMeshAABB() const
         {
             return mesh->bounding_box;
+        }
+
+        [[nodiscard]] const OBB& GetOBB() const
+        {
+            return obb;
+        }
+
+        const AABB& GetAABB()
+        {
+            return aabb;
         }
 
         [[nodiscard]] unsigned GetBufferSize(ResourceMesh::Buffers buffer) const
@@ -68,29 +82,21 @@ namespace Hachiko
             return mesh->normals;
         }
 
-        void AddResourceMesh(ResourceMesh* res)
-        {
-            mesh = res;
-
-            if (mesh->num_bones > 0)
-            {
-                node_cache = new const GameObject*[mesh->num_bones];
-
-                for (unsigned int i = 0; i < mesh->num_bones; ++i)
-                {
-                    node_cache[i] = nullptr;
-                }
-            }
-        }
-
-        [[nodiscard]] const ResourceMaterial* GetMaterial() const
-        {
-            return material;
-        }
+        void SetResourceMesh(ResourceMesh* res);
 
         void AddResourceMaterial(ResourceMaterial* res)
         {
             material = res;
+        }
+
+        [[nodiscard]] const ResourceMesh* GetResourceMesh() const
+        {
+            return mesh;
+        }
+
+        [[nodiscard]] const ResourceMaterial* GetResourceMaterial() const
+        {
+            return material;
         }
 
         void LoadMesh(UID mesh_id);
@@ -105,15 +111,39 @@ namespace Hachiko
 
         void ChangeMaterial();
 
+        std::vector<float4x4> palette{}; // TODO: MOVE TO PRIVATE AGAIN
+
+        // Scripting
+        [[nodiscard]] bool OverrideMaterialActive() const
+        {
+            return override_material;
+        }
+        void OverrideEmissive(float4 color, float time);
+
+        [[nodiscard]] float4 GetOverrideEmissiveColor() const
+        {
+            return override_emissive;
+        }
+
     private:
+        void UpdateBoundingBoxes();
         bool visible = true;       
-        bool navigable = false;        
+        bool navigable = false;
+
+        AABB aabb;
+        OBB obb;
       
         // SKINING
         const GameObject** node_cache = nullptr;
-        std::vector<float4x4> palette{};
+        //std::vector<float4x4> palette{};
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
+
+        // Scripting
+        bool override_material = false;
+        float override_timer = 0;
+        float4 override_emissive;
+
     };
-}
+} // namespace Hachiko

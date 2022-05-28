@@ -1,22 +1,25 @@
 #include "core/hepch.h"
 #include "ComponentAudioSource.h"
 #include "components/ComponentTransform.h"
-
-/**     CONSTRUCTORS    **/
+#include "modules/ModuleAudio.h"
 
 Hachiko::ComponentAudioSource::ComponentAudioSource(GameObject* container)
     : Component(Type::AUDIO_SOURCE, container)
+    , source_transform(new AkTransform())
 {
-    GAME_OBJECT_SOURCE = GetID();
-    AK::SoundEngine::RegisterGameObj(GAME_OBJECT_SOURCE, game_object->GetName().c_str());
+    source_id = GetID();
+    
+    AK::SoundEngine::RegisterGameObj(source_id, game_object->GetName().c_str());
+    
     OnTransformUpdated();
-    //PostEvent(L"Play_BackgroundMusic"); // Unncoment this to test, should be erased at the final version
 }
 
 Hachiko::ComponentAudioSource::~ComponentAudioSource()
 {
-    AK::SoundEngine::StopAll(GAME_OBJECT_SOURCE);
-    AK::SoundEngine::UnregisterGameObj(GAME_OBJECT_SOURCE);
+    AK::SoundEngine::StopAll(source_id);
+    AK::SoundEngine::UnregisterGameObj(source_id);
+    
+    delete source_transform;
 }
 
 void Hachiko::ComponentAudioSource::OnTransformUpdated()
@@ -27,21 +30,17 @@ void Hachiko::ComponentAudioSource::OnTransformUpdated()
     const float3& front = transform->GetFront();
     const float3& up = transform->GetUp();
 
-    source_transform.Set(pos.x, pos.y, pos.z,
-                         front.x, front.y, front.z,
-                         up.x, up.y, up.z
-    );
+    source_transform->Set(pos.x, pos.y, pos.z,
+                          front.x, front.y, front.z,
+                          up.x, up.y, up.z);
 
-    AK::SoundEngine::SetPosition(GAME_OBJECT_SOURCE, source_transform);
-
+    AK::SoundEngine::SetPosition(source_id, *source_transform);
 }
 
 void Hachiko::ComponentAudioSource::PostEvent(const wchar_t* name_event) const
 {
-    AK::SoundEngine::PostEvent(name_event, GAME_OBJECT_SOURCE);
+    AK::SoundEngine::PostEvent(name_event, source_id);
 }
-
-/**     GUI     **/
 
 void Hachiko::ComponentAudioSource::DrawGui()
 {
@@ -51,5 +50,6 @@ void Hachiko::ComponentAudioSource::DrawGui()
     {
         ImGui::Text("Now you can call events to be played ^-^");
     }
+
     ImGui::PopID();
 }

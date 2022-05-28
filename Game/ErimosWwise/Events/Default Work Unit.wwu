@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" SchemaVersion="103">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_BackgroundMusic" ID="{88A4A1D0-45F5-4DD6-AA56-80482AADDF56}">
+					<ChildrenList>
+						<Action Name="" ID="{A5608073-4DA8-4495-8477-EC0EF88548D6}" ShortID="687497127">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="BackgroundMusic" ID="{CB42BC61-300C-4E57-BC4D-161B23968908}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Dash" ID="{A12C6C82-D071-492B-81CF-704393DEA18F}">
+					<ChildrenList>
+						<Action Name="" ID="{30263D9A-7040-4EB9-8984-52B3E9306CFD}" ShortID="810159737">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Dash" ID="{B75B22B5-FAC6-47B7-8987-A1453FAB6935}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_MeleeAttack" ID="{40AC6350-5EEA-49F4-A273-59760B0CCEE2}">
+					<ChildrenList>
+						<Action Name="" ID="{C564AAD7-CB5C-42B1-913F-5CF554419D23}" ShortID="303566824">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MeleeAttack" ID="{3D78327C-F61C-4EDF-90CD-41BC8B4183A3}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_RangedAttack" ID="{1AB4989D-79DB-4814-8BB0-2FA70A13AC2C}">
+					<ChildrenList>
+						<Action Name="" ID="{DCBDCED5-A018-4A13-A545-C38A9951CEE9}" ShortID="383038571">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="RangedAttack" ID="{8943FF7B-D917-452B-9718-55ECD946B1B6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Footstep" ID="{12BD81DB-B728-4B71-81F1-938BB62E6042}">
+					<ChildrenList>
+						<Action Name="" ID="{A92A11F4-ED55-46AB-A98B-88FE1D081EBD}" ShortID="601902871">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Footsteps" ID="{A14E74A9-F76D-46FB-92B7-0FD1A7464A60}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

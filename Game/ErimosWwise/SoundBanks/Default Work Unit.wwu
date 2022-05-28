@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{774839F6-7393-4AAB-A30B-0D20A5DB65E1}" SchemaVersion="103">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{774839F6-7393-4AAB-A30B-0D20A5DB65E1}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="BackgroundMusic" ID="{3EA8A1A2-7429-4B2C-847E-AEA973584D2B}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_BackgroundMusic" ID="{88A4A1D0-45F5-4DD6-AA56-80482AADDF56}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+				<SoundBank Name="Footsteps" ID="{36C9EC42-8758-49F9-BFF4-59F1B8080238}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_Footstep" ID="{12BD81DB-B728-4B71-81F1-938BB62E6042}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+				<SoundBank Name="Attacks" ID="{DB2C905B-568D-4B66-AC0A-61B413B8C327}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_RangedAttack" ID="{1AB4989D-79DB-4814-8BB0-2FA70A13AC2C}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Dash" ID="{A12C6C82-D071-492B-81CF-704393DEA18F}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_MeleeAttack" ID="{40AC6350-5EEA-49F4-A273-59760B0CCEE2}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

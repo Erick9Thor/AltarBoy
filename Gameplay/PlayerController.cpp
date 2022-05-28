@@ -4,6 +4,7 @@
 #include "Stats.h"
 #include "EnemyController.h"
 #include "CrystalExplotion.h"
+#include "PlayerCamera.h"
 
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
@@ -36,6 +37,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _raycast_max_range(15.f)
 	, _stats(5, 2, 10, 10)
 	, _state(PlayerState::IDLE)
+	, _camera(nullptr)
 {
 }
 
@@ -64,7 +66,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	math::float3 current_position = transform->GetGlobalPosition();
 	if (_stats._current_hp <= 0)
 	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
+		//SceneManagement::SwitchScene(Scenes::LOSE);
 	}
 
 	// Set state to idle, it will be overriden if there is a movement:
@@ -91,7 +93,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
-	CheckGoal(current_position);
+	//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -169,7 +171,9 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		// Make the player look the mouse:
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::RANGED_ATTACKING;
-		RangedAttack(transform, current_position);
+		float3 t_pos = current_position;
+		t_pos.y += 0.5;
+		RangedAttack(transform, t_pos);
 
 		attack_current_cd = _stats._attack_cd;
 	}
@@ -205,7 +209,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{
-		if (_attack_radius >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		if (enemy_children[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			// VS2: EXCEPTION ON QUAD.CPP
 			math::float4x4 relative_matrix = enemy_children[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
@@ -225,31 +229,42 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	{
 
 		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
-		CrystalExplotion* crystal_controller = element->GetComponent<CrystalExplotion>();
+		CrystalExplotion* crystal_explotion = element->GetComponent<CrystalExplotion>();
+
+		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->_stats.ReceiveDamage(_stats._attack_power);
+			enemy_controller->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		}
-		else if (crystal_controller != nullptr)
+		else if (crystal_explotion != nullptr)
 		{
-			crystal_controller->_stats.ReceiveDamage(_stats._attack_power);
+			crystal_explotion->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		}
+		
 	}
+
+	if (elements_hit.size() > 0)
+	{
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
+	}
+	
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
-	const float3 forward = transform->GetGlobalMatrix().WorldZ().Normalized();
+	const float3 forward = transform->GetFront().Normalized();
 	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
 		forward * _raycast_max_range + current_position);
 
-	if (hit_game_object)
+	if (hit_game_object && hit_game_object->active)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-		enemy->ReceiveDamage(_stats._attack_power);
+		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 	}
 }
 
@@ -388,7 +403,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 		if (current_position.y < -20.0f)
 		{
-			SceneManagement::SwitchScene(Scenes::LOSE);
+			//SceneManagement::SwitchScene(Scenes::LOSE);
 		}
 		return;
 	}
@@ -501,6 +516,6 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(Scenes::WIN);
+		//SceneManagement::SwitchScene(Scenes::WIN);
 	}
 }
