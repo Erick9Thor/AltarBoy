@@ -67,7 +67,8 @@ public:
     void addMark(float position, ImColor const color);
     void removeMark(ImGradientMark* mark);
     void refreshCache();
-    std::list<ImGradientMark*> & getMarks(){ return m_marks; }
+    void clearMarks();
+    const std::list<ImGradientMark*> & getMarks() const { return m_marks; }
 private:
     void computeColorAt(float position, float* color) const;
     std::list<ImGradientMark*> m_marks;

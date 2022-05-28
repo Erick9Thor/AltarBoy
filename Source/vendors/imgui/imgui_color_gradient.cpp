@@ -20,10 +20,7 @@ ImGradient::ImGradient()
 
 ImGradient::~ImGradient()
 {
-	for (ImGradientMark* mark : m_marks)
-	{
-		delete mark;
-	}
+    clearMarks();
 }
 
 void ImGradient::addMark(float position, ImColor const color)
@@ -124,7 +121,15 @@ void ImGradient::refreshCache()
     }
 }
 
+void ImGradient::clearMarks()
+{
+    for (ImGradientMark* mark : m_marks)
+    {
+        delete mark;
+    }
 
+    m_marks.clear();
+}
 
 namespace ImGui
 {

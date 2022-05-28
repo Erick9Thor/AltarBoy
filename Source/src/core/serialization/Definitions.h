@@ -242,6 +242,7 @@
 #define HAS_COLOR_GRADIENT "has_color_gradient"
 #define COLOR_CYCLES "color_cycles"
 #define COLOR_LOOP "color_loop"
+#define COLOR_GRADIENT "color_gradient"
 #define ANIMATION_LOOP "animation_loop"
 
 // ComponentMeshRenderer

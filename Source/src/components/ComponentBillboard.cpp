@@ -217,16 +217,15 @@ void Hachiko::ComponentBillboard::DrawGui()
         // Color Over Lifetime
         if (ImGui::CollapsingHeader("Color over lifetime"))
         {
-            ImGui::Checkbox("##color_over_lifetime", &has_color_gradient);
+            ImGui::Checkbox("Activate Gradient##color_over_lifetime", &has_color_gradient);
             if (has_color_gradient)
             {
-                ImGui::SameLine();
+                ImGui::Checkbox("Loop##color_loop", &color_loop);
                 ImGui::PushItemWidth(200);
                 ImGui::GradientEditor(gradient, draggingGradient, selectedGradient);
                 ImGui::PushItemWidth(150);
                 ImGui::NewLine();
                 ImGui::DragInt("Cycles over lifetime##color_cycles", &color_cycles, 1, 1, inf);
-                ImGui::Checkbox("Loop##color_loop", &color_loop);
             }
         }
     }
@@ -304,6 +303,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[HAS_COLOR_GRADIENT] = has_color_gradient;
     node[COLOR_CYCLES] = color_cycles;
     node[COLOR_LOOP] = color_loop;
+    node[COLOR_GRADIENT] = *gradient;
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -358,6 +358,17 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     
     color_loop = node[COLOR_LOOP].IsDefined() ?
         node[COLOR_LOOP].as<bool>() : false;
+
+    if (node[COLOR_GRADIENT].IsDefined())
+    {
+        gradient->clearMarks();
+        for (int i = 0; i < node[COLOR_GRADIENT].size(); ++i)
+        {
+            auto mark = node[COLOR_GRADIENT][i].as<ImGradientMark>();
+            gradient->addMark(mark.position,
+                ImColor(mark.color[0], mark.color[1], mark.color[2], mark.color[3]));
+        }
+    }
 }
 
 void Hachiko::ComponentBillboard::AddTexture()
