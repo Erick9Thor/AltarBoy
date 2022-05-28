@@ -33,12 +33,13 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     glActiveTexture(GL_TEXTURE0);
     int glTexture = 0;
+    has_texture = 0;
     if (texture != nullptr)
     {
         glTexture = texture->GetImageId();
         Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+        has_texture = 1;
     }
-    has_diffuse_map = texture ? 1 : 0;
 
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
@@ -62,6 +63,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     billboard_program->BindUniformFloat("x_factor", &x_factor);
     billboard_program->BindUniformFloat("y_factor", &y_factor);
+    billboard_program->BindUniformFloat("current_frame", &current_frame);
     billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
 
     float4 color = float4::one;
@@ -69,11 +71,14 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     {
         gradient->getColorAt(color_frame, color.ptr());
         billboard_program->BindUniformFloat4("input_color", color.ptr());
-        has_diffuse_map = 0;
     }
 
-    billboard_program->BindUniformInts("has_diffuse_map", 1, &has_diffuse_map);
-    
+    billboard_program->BindUniformInts("has_texture", 1, &has_texture);
+
+    int flip_x = has_flip_x ? 1 : 0;
+    int flip_y = has_flip_y ? 1 : 0;
+    billboard_program->BindUniformInts("flip_x", 1, &flip_x);
+    billboard_program->BindUniformInts("flip_y", 1, &flip_y);
     
     glBindVertexArray(App->renderer->billboard_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -88,10 +93,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     //billboard_program->BindUniformFloat3("intensity", textureIntensity.ptr());
     //billboard_program->BindUniformFloat("currentFrame", &currentFrame);
 
-    //int flip_x = flipTexture[0] ? 1 : 0;
-    //int flip_y = flipTexture[1] ? 1 : 0;
-    //billboard_program->BindUniformInts("flipX", 1, &flip_x);
-    //billboard_program->BindUniformInts("flipY", 1, &flip_y);
     //glDepthMask(GL_TRUE);
 }
 
@@ -208,9 +209,9 @@ void Hachiko::ComponentBillboard::DrawGui()
             }
 
             //ImGui::DragInt("Cycles##animation_cycles", &animation_cycles, 1, 1, inf);
-            ImGui::Checkbox("FlipX##animation_loop", &flip_x);
+            ImGui::Checkbox("FlipX##animation_loop", &has_flip_x);
             ImGui::SameLine();
-            ImGui::Checkbox("FlipY##animation_loop", &flip_y);
+            ImGui::Checkbox("FlipY##animation_loop", &has_flip_y);
         }
 
         // Color Over Lifetime
@@ -244,14 +245,21 @@ void Hachiko::ComponentBillboard::Update()
         Reset();
         return;
     }
-    
-    if (has_color_gradient && (time < billboard_lifetime || color_loop))
+
+    if (time > billboard_lifetime)
+    {
+        play_animation = false;
+        play_color_gradient = false;
+    }
+
+    if (animation_loop || play_animation)
+    {
+        UpdateAnimationData();
+    }
+
+    if (color_loop || play_color_gradient)
     {
         UpdateColorOverLifetime();
-    }
-    else if (time < billboard_lifetime || animation_loop)
-    {
-        UpdateAnimationIndex();
     }
 }
 
@@ -259,11 +267,15 @@ inline void Hachiko::ComponentBillboard::Play()
 {
     Reset();
     is_playing = true;
+    play_animation = true;
+    play_color_gradient = true;
 }
 
 inline void Hachiko::ComponentBillboard::Stop()
 {
     is_playing = false;
+    play_animation = false;
+    play_color_gradient = false;
 }
 
 inline void Hachiko::ComponentBillboard::Reset()
@@ -271,6 +283,8 @@ inline void Hachiko::ComponentBillboard::Reset()
     is_playing = false;
     time = 0.0f;
     color_frame = 1.0f;
+    play_animation = false;
+    play_color_gradient = false;
 }
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
@@ -283,6 +297,8 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     }
     node[X_TILES] = x_tiles;
     node[Y_TILES] = y_tiles;
+    node[FLIP_X] = has_flip_x;
+    node[FLIP_Y] = has_flip_y;
     node[BILLBOARD_LIFETIME] = billboard_lifetime;
     node[ANIMATION_LOOP] = animation_loop;
     node[HAS_COLOR_GRADIENT] = has_color_gradient;
@@ -298,6 +314,7 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     {
         texture = static_cast<ResourceTexture*>(
             App->resources->GetResource(Resource::Type::TEXTURE, texture_id));
+        has_texture = 1;
     }
 
     type = node[BILLBOARD_TYPE].IsDefined() 
@@ -326,6 +343,12 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
     animation_loop = node[ANIMATION_LOOP].IsDefined() ?
         node[ANIMATION_LOOP].as<bool>() : false;
+
+    has_flip_x = node[FLIP_X].IsDefined() ?
+        node[FLIP_X].as<bool>() : false;
+
+    has_flip_y = node[FLIP_Y].IsDefined() ?
+        node[FLIP_Y].as<bool>() : false;
 
     has_color_gradient = node[HAS_COLOR_GRADIENT].IsDefined() ?
         node[HAS_COLOR_GRADIENT].as<bool>() : false;
@@ -375,6 +398,7 @@ void Hachiko::ComponentBillboard::AddTexture()
     {
         texture = res;
         textureID = texture->GetID();
+        has_texture = 1;
     }
 }
 
@@ -384,11 +408,9 @@ void Hachiko::ComponentBillboard::RemoveTexture()
     textureID = 0;
 }
 
-inline void Hachiko::ComponentBillboard::UpdateAnimationIndex() 
+inline void Hachiko::ComponentBillboard::UpdateAnimationData() 
 {
-    // For now if color gradient has been set,
-    // no animation texture is taken into account
-    if (has_color_gradient || !has_diffuse_map)
+    if (!has_texture)
     {
         return;
     }

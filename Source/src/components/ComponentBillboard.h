@@ -45,7 +45,6 @@ namespace Hachiko
         bool is_playing = false;
         bool play_on_awake = false;
         float time = 0.0f;
-        float current_frame = 0.0f;
         float billboard_lifetime = 5.0f;
         BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
         
@@ -65,15 +64,19 @@ namespace Hachiko
         
         // Animation
         bool animation_loop = true;
-        bool flip_x = false;
-        bool flip_y = false;
+        bool has_flip_x = false;
+        bool has_flip_y = false;
         int x_tiles = 1;
         int y_tiles = 1;
-        int has_diffuse_map = 0;
+        int has_texture = 0;
         float x_factor = 1.0f;
         float y_factor = 1.0f;
+        float current_frame = 0.0f;
         float2 animation_index = {0.0f, 0.0f};
         
+        bool play_animation = false;
+        bool play_color_gradient = false;
+
         // Color gradient
         bool has_color_gradient = false;
         bool color_loop = true;
@@ -87,7 +90,7 @@ namespace Hachiko
         void Reset();
         void AddTexture();
         void RemoveTexture();
-        void UpdateAnimationIndex();
+        void UpdateAnimationData();
         void UpdateColorOverLifetime();
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
     };

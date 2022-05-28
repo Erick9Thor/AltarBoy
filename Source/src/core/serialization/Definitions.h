@@ -237,6 +237,8 @@
 #define ANIMATION_CYCLES "animation_cycles"
 #define X_TILES "x_tiles"
 #define Y_TILES "y_tiles"
+#define FLIP_X "flip_x"
+#define FLIP_Y "flip_y"
 #define HAS_COLOR_GRADIENT "has_color_gradient"
 #define COLOR_CYCLES "color_cycles"
 #define COLOR_LOOP "color_loop"

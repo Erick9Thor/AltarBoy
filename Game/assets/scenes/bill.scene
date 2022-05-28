@@ -31,17 +31,17 @@ child:
           up: [0, 1, 0]
           type: 0
           pinned_camera: [0, 0, 0]
-  - id: 15365361998403244311
-    name: GameObject
+  - id: 2786219729286763365
+    name: Billy
     enabled: true
     component:
-      - id: 16753552073556325775
+      - id: 17738107168343765330
         type: 1
         enabled: true
-        position: [1.38490796, 3.07540226, -6.63989449]
-        rotation: [0, 0, 0, 1]
-        scale: [10, 10, 1]
-      - id: 16292953984949160155
+        position: [7.08838844, 112.048225, 49.087368]
+        rotation: [-0.0507879034, -0.0484708473, -0.631268561, 0.772380173]
+        scale: [47.1012077, 34.600235, 1.00001144]
+      - id: 17787028528505626783
         type: 21
         enabled: true
         billboard_type: 3
@@ -49,8 +49,10 @@ child:
         texture_id: 9793570645799761911
         x_tiles: 6
         y_tiles: 6
-        billboard_lifetime: 2
+        flip_x: true
+        flip_y: true
+        billboard_lifetime: 15
         animation_loop: false
-        has_color_gradient: false
+        has_color_gradient: true
         color_cycles: 2
         color_loop: true
