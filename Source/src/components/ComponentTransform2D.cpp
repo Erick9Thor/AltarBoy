@@ -261,6 +261,12 @@ void Hachiko::ComponentTransform2D::Invalidate()
 {
     dirty = true;
 
+    ComponentText* text = game_object->GetComponent<ComponentText>();
+    if (text)
+    {
+        text->Invalidate();
+    }
+
     for (GameObject* child : game_object->children)
     {
         ComponentTransform2D* transform = child->GetComponent<ComponentTransform2D>();
