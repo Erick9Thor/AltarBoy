@@ -22,6 +22,8 @@ namespace Hachiko
             return cube;
         }
 
+        void GenerateIrradianceCubemap();
+
         void DrawImGui();
 
     private:
@@ -31,6 +33,8 @@ namespace Hachiko
         TextureCube cube;
         unsigned vao{};
         unsigned vbo{};
+
+        unsigned irradiance_cubemap_id{};
 
     public:
         Skybox(const Skybox& other) = default;

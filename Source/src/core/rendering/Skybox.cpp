@@ -6,6 +6,8 @@
 #include "modules/ModuleResources.h"
 #include "resources/ResourceTexture.h"
 
+#include "MathGeoLib.h"
+
 Hachiko::Skybox::Skybox()
 {
     cube = ModuleTexture::LoadCubeMap(cube);
@@ -143,60 +145,58 @@ void Hachiko::Skybox::SelectSkyboxTexture(TextureCube::Side cube_side)
 
 void Hachiko::Skybox::CreateBuffers()
 {
-    constexpr float vertices[]
-        = {
-    // positions          
+    constexpr float vertices[] = {
+        // positions          
 
-    // Back
-    -1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,
+        // Back
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
 
-    // Left
-    -1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
+        // Left
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f, -1.0f,
+        -1.0f,  1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
 
-    // Right
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
+        // Right
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f,  1.0f,
+        1.0f,  1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
 
-    // Front
-    1.0f,  1.0f,  1.0f,
-     1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
+        // Front
+        1.0f,  1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
+         1.0f,  1.0f,  1.0f,
      
 
-    // Top
-    -1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
+        // Top
+        -1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f, -1.0f,
+         1.0f,  1.0f,  1.0f,
+        -1.0f,  1.0f,  1.0f,
 
-    // Bottom
-     1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f,  1.0f,
-     1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f
-};
-
+        // Bottom
+         1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+         1.0f, -1.0f,  1.0f,
+         1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f,  1.0f
+    };
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
@@ -213,4 +213,59 @@ void Hachiko::Skybox::ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_
     ReleaseCubemap();
     cube.uids[side_number] = texture_uid;
     cube = ModuleTexture::LoadCubeMap(cube);
+}
+
+void Hachiko::Skybox::GenerateIrradianceCubemap() 
+{
+    // Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);
+    OPTICK_CATEGORY("GenerateIrradianceCubemap", Optick::Category::Rendering);
+
+    // Initialize variables
+    const float3 front[6] = {float3::unitX, -float3::unitX, float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ};
+    const float3 up[6] = {-float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ, -float3::unitY, -float3::unitY};
+    Frustum frustum;
+    frustum.SetViewPlaneDistances(0.1f, 100.0f);
+    frustum.SetPerspective(math::pi / 2.0f, math::pi / 2.0f);
+
+    // Generate irradiance cubemap
+    glGenTextures(1, &irradiance_cubemap_id);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+
+    // Prepare to 
+    glDepthFunc(GL_ALWAYS);
+    Program* program = App->program->GetSkyboxIrradianceProgram();
+    program->Activate();
+
+    // Draw skybox
+    glBindVertexArray(vao);
+    GLint skybox_binding = glGetUniformLocation(program->GetId(), "skybox");
+    glUniform1i(skybox_binding, 0);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
+
+    for (unsigned i = 0; i < 6; ++i)
+    {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+        frustum.SetFrame(float3::zero, front[i], up[i]);
+        App->program->UpdateCamera(frustum);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+    }
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, 0);
+    glBindVertexArray(0);
+    Program::Deactivate();
+    glDepthFunc(GL_LESS);
+
+    //cube.id = irradiance_cubemap_id;
 }

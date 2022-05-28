@@ -70,6 +70,11 @@ namespace Hachiko
             return skybox_program;
         }
 
+        [[nodiscard]] Program* GetSkyboxIrradianceProgram() const
+        {
+            return skybox_irradiance_program;
+        }
+
         [[nodiscard]] Program* GetStencilProgram() const
         {
             return stencil_program;
@@ -86,6 +91,7 @@ namespace Hachiko
         }
 
         void UpdateCamera(const ComponentCamera* camera) const;
+        void UpdateCamera(const Frustum& frustum) const;
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
@@ -102,12 +108,14 @@ namespace Hachiko
 
         Program* CreateMainProgram();
         Program* CreateSkyboxProgram();
+        Program* CreateSkyboxIrradianceProgram();
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
 
         Program* main_program = nullptr;
         Program* skybox_program = nullptr;
+        Program* skybox_irradiance_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;

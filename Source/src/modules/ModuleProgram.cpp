@@ -19,10 +19,11 @@ bool Hachiko::ModuleProgram::Init()
 {
     CreateMainProgram();
     CreateSkyboxProgram();
+    CreateSkyboxIrradianceProgram();
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program)
+    if (!main_program || !skybox_program || !skybox_irradiance_program || !stencil_program || !ui_image_program || !ui_text_program)
     {
         return false;
     }
@@ -122,6 +123,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
     return skybox_program;
 }
 
+Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxIrradianceProgram()
+{
+    skybox_irradiance_program = CreateProgram(SHADERS_FOLDER "vertex_skybox_irradiance.glsl", SHADERS_FOLDER "fragment_skybox_irradiance.glsl");
+    return skybox_irradiance_program;
+}
+
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 {
     stencil_program = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
@@ -189,6 +196,8 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete main_program;
     skybox_program->CleanUp();
     delete skybox_program;
+    skybox_irradiance_program->CleanUp();
+    delete skybox_irradiance_program;
     stencil_program->CleanUp();
     delete stencil_program;
     ui_image_program->CleanUp();
@@ -203,6 +212,17 @@ void Hachiko::ModuleProgram::UpdateCamera(const ComponentCamera* camera) const
     CameraData camera_data;
     camera_data.view = camera->GetViewMatrix();
     camera_data.proj = camera->GetProjectionMatrix();
+    // TODO: Understand why camera_data.view.TranslatePart() does not give the position
+    camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
+
+    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), &camera_data);
+}
+
+void Hachiko::ModuleProgram::UpdateCamera(const Frustum& frustum) const
+{
+    CameraData camera_data;
+    camera_data.view = float4x4(frustum.ViewMatrix());
+    camera_data.proj = float4x4(frustum.ProjectionMatrix());
     // TODO: Understand why camera_data.view.TranslatePart() does not give the position
     camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
