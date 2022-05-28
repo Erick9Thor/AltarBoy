@@ -184,8 +184,6 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 {
     Resource::AssetType asset_type = GetAssetTypeFromPath(path);
 
-    
-
     if (asset_type != Resource::AssetType::UNKNOWN)
     {
         // Infer meta path from the asset name, it should always already exist since everything gets imported on start

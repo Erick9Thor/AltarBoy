@@ -9,7 +9,10 @@ Hachiko::ResourceSkybox::ResourceSkybox(UID id) : Resource(id, Resource::Type::S
 Hachiko::ResourceSkybox::~ResourceSkybox()
 {
     if (id != 0)
+    {
         glDeleteTextures(1, &id);
+
+    }
     delete[] data;
 }
 

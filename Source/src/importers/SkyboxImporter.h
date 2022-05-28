@@ -16,7 +16,5 @@ namespace Hachiko
         Resource* Load(UID id) override;
 
         void Save(UID id, const Resource* resource) override;
-
-    private:
     };
 } // namespace Hachiko
