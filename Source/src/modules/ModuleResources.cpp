@@ -114,7 +114,7 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
     if (it != supported_extensions.end())
     {
         // TODO: Remove exception when skybox is hdr since it will not creaate confusion
-        if (path.string().find("skybox") != std::string::npos)
+        if (path.string().find("skybox/") != std::string::npos)
         {
             return Resource::AssetType::SKYBOX;
         }
