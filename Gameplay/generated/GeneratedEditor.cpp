@@ -18,7 +18,8 @@ void Hachiko::Scripting::BackToMainMenu::OnEditor()
 void Hachiko::Scripting::CrystalExplotion::OnEditor()
 {
 	Editor::Show("_player", _player);
-	Editor::Show<ComponentAnimation>("_animator", "ComponentAnimation*", _animator);
+	Editor::Show("_explotion_crystal", _explotion_crystal);
+	Editor::Show("_static_crystal", _static_crystal);
 	Editor::Show("_crashing_index", _crashing_index);
 	Editor::Show("_explotion_radius", _explotion_radius);
 	Editor::Show("_explosive_crystal", _explosive_crystal);

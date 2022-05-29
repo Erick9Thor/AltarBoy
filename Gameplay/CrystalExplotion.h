@@ -10,12 +10,6 @@ namespace Hachiko
 
 	namespace Scripting
 	{
-		enum class CristalState
-		{
-			IDLE,
-			CRASHING
-		};
-
 		class CrystalExplotion : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -43,16 +37,16 @@ namespace Hachiko
 		private:
 			ComponentTransform* transform;
 			SERIALIZE_FIELD(GameObject*, _player);
-			SERIALIZE_FIELD(ComponentAnimation*, _animator);
-			SERIALIZE_FIELD(CristalState, _state);
+
+			SERIALIZE_FIELD(GameObject*, _explotion_crystal);
+			SERIALIZE_FIELD(GameObject*, _static_crystal);
+
 			SERIALIZE_FIELD(unsigned, _crashing_index);
 			SERIALIZE_FIELD(float, _explotion_radius);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 
-			float3 _knockback_pos = float3::zero;
 
 			math::float3 _player_pos;
-			math::float3 _crystal_pos;
 
 			GameObject* enemies;
 		};

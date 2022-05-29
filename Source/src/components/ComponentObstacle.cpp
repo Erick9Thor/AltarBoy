@@ -187,4 +187,6 @@ void Hachiko::ComponentObstacle::Load(const YAML::Node& node)
 {
     SetType(static_cast<ObstacleType>(node[OBSTACLE_TYPE].as<unsigned int>()));
     SetSize(node[OBSTACLE_SIZE].as<float3>());
+
+    AddObstacle();
 }

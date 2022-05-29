@@ -49,13 +49,22 @@ void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
 		node["'_player@GameObject*'"] = 0;
 	}
 
-	if (_animator != nullptr && _animator->GetGameObject() != nullptr)
+	if (_explotion_crystal != nullptr)
 	{
-		node["'_animator@ComponentAnimation*'"] = _animator->GetGameObject()->GetID();
+		node["'_explotion_crystal@GameObject*'"] = _explotion_crystal->GetID();
 	}
 	else
 	{
-		node["'_animator@ComponentAnimation*'"] = 0;
+		node["'_explotion_crystal@GameObject*'"] = 0;
+	}
+
+	if (_static_crystal != nullptr)
+	{
+		node["'_static_crystal@GameObject*'"] = _static_crystal->GetID();
+	}
+	else
+	{
+		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
 	node["'_crashing_index@unsigned'"] = _crashing_index;
@@ -73,13 +82,14 @@ void Hachiko::Scripting::CrystalExplotion::OnLoad()
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_animator@ComponentAnimation*'"].IsDefined())
+	if (load_node["'_explotion_crystal@GameObject*'"].IsDefined())
 	{
-		GameObject* _animator_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_animator@ComponentAnimation*'"].as<unsigned long long>());
-		if (_animator_owner__temp != nullptr)
-		{
-			_animator = _animator_owner__temp->GetComponent<ComponentAnimation>();
-		}
+		_explotion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explotion_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_static_crystal@GameObject*'"].IsDefined())
+	{
+		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())

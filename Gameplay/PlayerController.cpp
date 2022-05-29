@@ -246,7 +246,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 
 	if (elements_hit.size() > 0)
 	{
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
+		// _camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
 	
 }

@@ -56,21 +56,21 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_animator") != serialized_fields.end())
+	if(serialized_fields.find("_explotion_crystal") != serialized_fields.end())
 	{
-		const SerializedField& _animator_sf = serialized_fields["_animator"];
-		if (_animator_sf.type_name == "ComponentAnimation*")
+		const SerializedField& _explotion_crystal_sf = serialized_fields["_explotion_crystal"];
+		if (_explotion_crystal_sf.type_name == "GameObject*")
 		{
-			_animator = std::any_cast<ComponentAnimation*>(_animator_sf.copy);
+			_explotion_crystal = std::any_cast<GameObject*>(_explotion_crystal_sf.copy);
 		}
 	}
 
-	if(serialized_fields.find("_state") != serialized_fields.end())
+	if(serialized_fields.find("_static_crystal") != serialized_fields.end())
 	{
-		const SerializedField& _state_sf = serialized_fields["_state"];
-		if (_state_sf.type_name == "CristalState")
+		const SerializedField& _static_crystal_sf = serialized_fields["_static_crystal"];
+		if (_static_crystal_sf.type_name == "GameObject*")
 		{
-			_state = std::any_cast<CristalState>(_state_sf.copy);
+			_static_crystal = std::any_cast<GameObject*>(_static_crystal_sf.copy);
 		}
 	}
 
@@ -110,9 +110,9 @@ void Hachiko::Scripting::CrystalExplotion::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 
-	serialized_fields["_animator"] = SerializedField(std::string("_animator"), std::make_any<ComponentAnimation*>(_animator), std::string("ComponentAnimation*"));
+	serialized_fields["_explotion_crystal"] = SerializedField(std::string("_explotion_crystal"), std::make_any<GameObject*>(_explotion_crystal), std::string("GameObject*"));
 
-	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<CristalState>(_state), std::string("CristalState"));
+	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
 
