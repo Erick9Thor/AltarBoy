@@ -2,6 +2,7 @@
 #include "ModuleTexture.h"
 
 #include "resources/ResourceTexture.h"
+#include "resources/ResourceSkybox.h"
 #include "modules/ModuleResources.h"
 
 #include "GLFont.h"
@@ -70,45 +71,36 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid,
     return texture;
 }
 
-Hachiko::Texture Hachiko::ModuleTexture::Load(const char* path, bool flip)
+
+Hachiko::ResourceSkybox* Hachiko::ModuleTexture::ImportSkyboxResource(UID uid, const char* path, bool flip)
 {
-    Texture texture;
-    texture.path = path;
+    std::filesystem::path texture_path = path;
+
     unsigned int img_id = LoadImg(path, flip);
 
-    if (img_id != 0)
+    if (img_id == 0)
     {
-        glGenTextures(1, &texture.id);
-        glBindTexture(GL_TEXTURE_2D, texture.id);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     ilGetInteger(IL_IMAGE_BPP),
-                     texture.width = ilGetInteger(IL_IMAGE_WIDTH),
-                     texture.height = ilGetInteger(IL_IMAGE_HEIGHT),
-                     0,
-                     ilGetInteger(IL_IMAGE_FORMAT),
-                     GL_UNSIGNED_BYTE,
-                     ilGetData());
-        glGenerateMipmap(GL_TEXTURE_2D);
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-        DeleteImg(img_id);
-        texture.loaded = true; // False by default
+        return nullptr;
     }
-    return texture;
-}
 
-void Hachiko::ModuleTexture::Unload(Texture& texture)
-{
-    if (texture.loaded)
-    {
-        glDeleteTextures(1, &texture.id);
-        texture.loaded = false;
-    }
+    ResourceSkybox* skybox = new ResourceSkybox(uid);
+    skybox->min_filter = GL_LINEAR_MIPMAP_LINEAR;
+    skybox->mag_filter = GL_LINEAR;
+    skybox->wrap = GL_CLAMP;
+
+    skybox->bpp = ilGetInteger(IL_IMAGE_BPP);
+    skybox->width = ilGetInteger(IL_IMAGE_WIDTH);
+    skybox->height = ilGetInteger(IL_IMAGE_HEIGHT);
+    skybox->format = ilGetInteger(IL_IMAGE_FORMAT);
+
+    unsigned char* data = ilGetData();
+    skybox->data_size = ilGetInteger(IL_IMAGE_SIZE_OF_DATA);
+    skybox->data = new unsigned char[skybox->data_size];
+    memcpy(skybox->data, data, skybox->data_size);
+
+    DeleteImg(img_id);
+
+    return skybox;
 }
 
 Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(TextureCube& cube)
@@ -119,20 +111,17 @@ Hachiko::TextureCube Hachiko::ModuleTexture::LoadCubeMap(TextureCube& cube)
     glGenTextures(1, &cube.id);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
 
-    // Expected file order x, -x, y, -y, z, -z
     for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
     {
-        cube.resources[i] = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, cube.uids[i]));
+        cube.resources[i] = static_cast<ResourceSkybox*>(App->resources->GetResource(Resource::Type::SKYBOX, cube.uids[i]));
         
-        ResourceTexture* cube_face = cube.resources[i];
+        ResourceSkybox* cube_face = cube.resources[i];
         if (!cube_face)
         {
             cube.loaded = false;
             continue; // Try loading the other parts despite failing
         }
 
-        //ilBindImage(cube.resources[i]->GetImageId());
-        // iluFlipImage();
         // Take advantage of opengl enum with index
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                      0, cube_face->format, cube_face->width, cube_face->height,//0, cube_face->bpp, cube_face->width, cube_face->height,

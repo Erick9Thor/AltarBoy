@@ -9,6 +9,7 @@ namespace Hachiko
     {
         friend class MaterialImporter;
         friend class ModuleResources;
+        friend class SkyboxImporter;
 
     public:
         TextureImporter() = default;
