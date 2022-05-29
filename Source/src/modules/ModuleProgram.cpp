@@ -222,7 +222,7 @@ void Hachiko::ModuleProgram::UpdateCamera(const Frustum& frustum) const
 {
     CameraData camera_data;
     camera_data.view = float4x4(frustum.ViewMatrix());
-    camera_data.proj = float4x4(frustum.ProjectionMatrix());
+    camera_data.proj = frustum.ProjectionMatrix();
     // TODO: Understand why camera_data.view.TranslatePart() does not give the position
     camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 

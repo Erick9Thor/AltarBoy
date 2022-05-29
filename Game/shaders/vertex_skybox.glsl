@@ -5,6 +5,7 @@ layout(std140, row_major, binding = 0) uniform Camera
 {
     mat4 view;
     mat4 proj;
+    vec3 pos;
 };
 
 out vec3 tex_coords;

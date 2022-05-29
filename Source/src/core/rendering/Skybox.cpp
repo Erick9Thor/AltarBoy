@@ -224,31 +224,42 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
     const float3 front[6] = {float3::unitX, -float3::unitX, float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ};
     const float3 up[6] = {-float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ, -float3::unitY, -float3::unitY};
     Frustum frustum;
-    frustum.SetViewPlaneDistances(0.1f, 100.0f);
+    frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     frustum.SetPerspective(math::pi / 2.0f, math::pi / 2.0f);
-
-    // Generate irradiance cubemap
-    glGenTextures(1, &irradiance_cubemap_id);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+    frustum.SetViewPlaneDistances(0.1f, 100.0f);
 
     // Prepare to 
     glDepthFunc(GL_ALWAYS);
     Program* program = App->program->GetSkyboxIrradianceProgram();
     program->Activate();
+    
+    glViewport(0, 0, cube.resources[0]->height, cube.resources[0]->width);
 
-    // Draw skybox
-    glBindVertexArray(vao);
-    GLint skybox_binding = glGetUniformLocation(program->GetId(), "skybox");
-    glUniform1i(skybox_binding, 0);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
-
+    // Generate irradiance cubemap
+    glGenTextures(1, &irradiance_cubemap_id);
     for (unsigned i = 0; i < 6; ++i)
     {
+        glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                     0,
+                     cube.resources[i]->format,
+                     cube.resources[i]->width,
+                     cube.resources[i]->height, //0, cube_face->bpp, cube_face->width, cube_face->height,
+                     0,
+                     cube.resources[i]->format,
+                     GL_UNSIGNED_BYTE,
+                     0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
         frustum.SetFrame(float3::zero, front[i], up[i]);
         App->program->UpdateCamera(frustum);
+
+        // Draw skybox
+        glBindVertexArray(vao);
+        GLint skybox_binding = glGetUniformLocation(program->GetId(), "skybox");
+        glUniform1i(skybox_binding, 0);
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
 
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
@@ -262,7 +273,8 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, 0);
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindVertexArray(0);
     Program::Deactivate();
     glDepthFunc(GL_LESS);

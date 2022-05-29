@@ -92,6 +92,7 @@ void Hachiko::ModuleRender::ManageResolution(ComponentCamera* camera)
 {
     unsigned res_x, res_y;
     camera->GetResolution(res_x, res_y);
+
     if (res_x != fb_height || res_y != fb_width)
     {
         ResizeFrameBuffer(res_x, res_y);
@@ -137,7 +138,8 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
     // TEST
     //if (App->input->IsKeyDown(SDL_Scancode::SDL_SCANCODE_SPACE))
     //{
-        App->scene_manager->GetActiveScene()->GetSkybox()->GenerateIrradianceCubemap();  
+    App->scene_manager->GetActiveScene()->GetSkybox()->GenerateIrradianceCubemap();
+    glViewport(0, 0, fb_height, fb_width);
     //}
     //
 
