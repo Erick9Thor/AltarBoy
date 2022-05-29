@@ -81,6 +81,11 @@ Hachiko::Resource* Hachiko::MeshImporter::Load(UID id)
     assert(id && "Unable to load mesh. Given an empty id");
 
     const std::string file_path = GetResourcePath(Resource::Type::MESH, id);
+
+    if (!FileSystem::Exists(file_path.c_str()))
+    {
+        return nullptr;
+    }
     
     char* file_buffer = FileSystem::Load(file_path.c_str());
     char* cursor = file_buffer;
