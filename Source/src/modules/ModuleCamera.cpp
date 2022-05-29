@@ -36,14 +36,17 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
-    if (!GameTimer::running)
+#ifndef PLAY_BUILD
+    if (App->input->IsKeyDown(SDL_SCANCODE_F3))
     {
-        if (App->input->IsKeyDown(SDL_SCANCODE_C) && App->input->IsModifierPressed(KMOD_SHIFT))
-        {
-            ToggleCamera();
-        }
+        ToggleCamera();
+    }
+
+    if (editor_camera == rendering_camera || !GameTimer::running)
+    {
         Controller(delta);
     }
+#endif // !PLAY_BUILD
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
