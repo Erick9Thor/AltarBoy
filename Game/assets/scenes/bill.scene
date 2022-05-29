@@ -38,7 +38,7 @@ child:
       - id: 8792541425243767421
         type: 1
         enabled: true
-        position: [81.1569824, 83.9374313, 0]
+        position: [81.1569824, 167.94162, 0]
         rotation: [0, 0, 0, 1]
         scale: [100, 100, 1]
       - id: 1263894750688381676
@@ -53,7 +53,111 @@ child:
         flip_y: true
         billboard_lifetime: 8
         animation_loop: true
-        has_color_gradient: true
+        has_color_gradient: false
         color_cycles: 1
         color_loop: true
         color_gradient: [[0.137254909, 0, 0.600000024, 0, 0.00606061518], [0.589595377, 0, 0, 0, 0.475757539], [0.138995722, 0, 0.601156056, 0, 0.9939394]]
+  - id: 13527752928823844544
+    name: Explosion
+    enabled: true
+    component:
+      - id: 3750226927107758899
+        type: 1
+        enabled: true
+        position: [0, 245.196609, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [100, 100, 1]
+      - id: 4427886678305835338
+        type: 21
+        enabled: true
+        billboard_type: 3
+        play_on_awake: false
+        texture_id: 14263201886060927537
+        x_tiles: 4
+        y_tiles: 4
+        flip_x: false
+        flip_y: false
+        billboard_lifetime: 20
+        animation_loop: true
+        has_color_gradient: false
+        color_cycles: 20000
+        color_loop: true
+        color_gradient: [[1, 1, 1, 0, 0], [0.924855471, 1, 0, 0, 0], [1, 0, 0.971098423, 0, 0.287878722], [1, 0, 0, 0, 0.472727239], [0.0527396798, 0.076657027, 0.94726032, 0, 0.703030229], [0, 0.0809249878, 1, 0, 0.806060731], [0, 0.982659101, 1, 0, 1]]
+  - id: 10367883481975345665
+    name: Fly
+    enabled: true
+    component:
+      - id: 9453099356553456386
+        type: 1
+        enabled: true
+        position: [-30.7772484, 78.3006287, 176.360641]
+        rotation: [0, 0, 0, 1]
+        scale: [100, 100, 1]
+      - id: 1639703447143379880
+        type: 21
+        enabled: true
+        billboard_type: 3
+        play_on_awake: false
+        texture_id: 11469577691443534073
+        x_tiles: 4
+        y_tiles: 1
+        flip_x: false
+        flip_y: false
+        billboard_lifetime: 5
+        animation_loop: false
+        has_color_gradient: true
+        color_cycles: 1
+        color_loop: true
+        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+  - id: 11222537721992160404
+    name: Electricity
+    enabled: true
+    component:
+      - id: 14422231806799640167
+        type: 1
+        enabled: true
+        position: [90.9717255, 146.617798, -369.140015]
+        rotation: [0, 0, 0, 1]
+        scale: [100, 100, 1]
+      - id: 12464096884922366777
+        type: 21
+        enabled: true
+        billboard_type: 3
+        play_on_awake: false
+        texture_id: 18137487070187465412
+        x_tiles: 7
+        y_tiles: 2
+        flip_x: false
+        flip_y: false
+        billboard_lifetime: 5
+        animation_loop: true
+        has_color_gradient: false
+        color_cycles: 1
+        color_loop: true
+        color_gradient: [[0, 0.115607023, 1, 0, 0], [0, 1, 0.947976828, 0, 0.506060779], [0, 0.184971094, 1, 0, 1]]
+  - id: 15448456412226129832
+    name: fire 2
+    enabled: true
+    component:
+      - id: 1643805000644764465
+        type: 1
+        enabled: true
+        position: [0, 0, -219.090988]
+        rotation: [0, 0, 0, 1]
+        scale: [100, 100, 1]
+      - id: 15536588350998683671
+        type: 21
+        enabled: true
+        billboard_type: 3
+        play_on_awake: false
+        texture_id: 6093877322932882287
+        x_tiles: 10
+        y_tiles: 10
+        flip_x: true
+        flip_y: true
+        billboard_lifetime: 7
+        animation_loop: true
+        has_color_gradient: false
+        color_cycles: 1
+        color_loop: true
+        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]

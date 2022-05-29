@@ -570,7 +570,12 @@
     <ClCompile Include="src\components\ComponentBillboard.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
-    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp" />
+    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2270,7 +2275,12 @@
     <ClInclude Include="src\components\ComponentBillboard.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="vendors\imgui\imgui_color_gradient.h" />
+    <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -2419,6 +2429,9 @@
     </Filter>
     <Filter Include="Navigation">
       <UniqueIdentifier>{2ebe7408-ab70-48e9-833b-0e4f88246553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{48cdd47c-ca2b-4a24-a993-297a7700dfeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
