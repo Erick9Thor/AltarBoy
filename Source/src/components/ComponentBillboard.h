@@ -15,7 +15,6 @@ namespace Hachiko
         VERTICAL
     };
 
-    // TODO: Send this to ComponentMeshRenderer or ResourceMesh
     enum class BillboardRenderMode
     {
         B_ADDITIVE,
@@ -41,7 +40,6 @@ namespace Hachiko
 
     private:
         // General
-        bool started = false;
         bool is_playing = false;
         bool play_on_awake = false;
         float time = 0.0f;
@@ -50,7 +48,6 @@ namespace Hachiko
         
         // Orientation
         bool is_horizontal = false;
-        bool flip_texture[2] = {false, false};
         float4x4 model_stretch = float4x4::identity;
         float3 initPos = float3::zero;
         float3 previousPos = float3::zero;
@@ -58,12 +55,14 @@ namespace Hachiko
         BillboardType type = BillboardType::HORIZONTAL;
 
         // Texture
+        bool flip_texture[2] = {false, false};
         UID textureID = 0;
         ResourceTexture* texture = nullptr;
-        float3 textureIntensity = {1.0f, 1.0f, 1.0f};
+        float3 textureIntensity = {1.0f, 1.0f, 1.0f}; // TODO: Not used yet
         
         // Animation
         bool animation_loop = true;
+        bool play_animation = false;
         bool has_flip_x = false;
         bool has_flip_y = false;
         int x_tiles = 1;
@@ -73,12 +72,10 @@ namespace Hachiko
         float y_factor = 1.0f;
         float current_frame = 0.0f;
         float2 animation_index = {0.0f, 0.0f};
-        
-        bool play_animation = false;
-        bool play_color_gradient = false;
 
         // Color gradient
         bool has_color_gradient = false;
+        bool play_color_gradient = false;
         bool color_loop = true;
         int color_cycles = 1.0f;
         float color_frame = 0.0f;
