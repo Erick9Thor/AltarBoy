@@ -80,6 +80,9 @@ namespace Hachiko
         void ResizeFrameBuffer(int heigth, int width) const;
         void ManageResolution(ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
+        void DrawDeferred(BatchManager* batch_manager);
+        void DrawForward(BatchManager* batch_manager);
+        void SetRenderMode(bool is_deferred);
 
         void CreateContext();
         static void SetGLOptions();
@@ -99,14 +102,16 @@ namespace Hachiko
         unsigned fb_texture = 0;
         unsigned fb_height = 0;
         unsigned fb_width = 0;
-        int deferred_mode = 0;
-        bool render_forward_pass = true;
+
+        bool draw_deferred = true;
 
         // Deferred rendering:
         GBuffer g_buffer;
         unsigned deferred_quad_vao = 0;
         unsigned deferred_quad_vbo = 0;
         unsigned deferred_quad_ebo = 0;
+        int deferred_mode = 0;
+        bool render_forward_pass = true;
 
         // float4 clear_color;
         bool draw_skybox = true;

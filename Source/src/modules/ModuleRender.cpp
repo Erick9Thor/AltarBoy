@@ -77,9 +77,12 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
         HE_LOG("Error creating frame buffer");
     }
 
-    // Generate G-Buffer and associated textures:
-    g_buffer.Generate();
-
+    if (draw_deferred)
+    {
+        // Generate G-Buffer and associated textures:
+        g_buffer.Generate();
+    }
+   
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -212,71 +215,16 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
     BatchManager* batch_manager = scene->GetBatchManager();
-
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
-    GameObject* selected_go = App->editor->GetSelectedGameObject();
-    
-    Program* program = nullptr;
 
-    // ----------------------------- GEOMETRY PASS ----------------------------
-    
-    g_buffer.BindForDrawing();
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Disable blending for deferred rendering as the meshes with transparent 
-    // materials are gonna be rendered with forward rendering after the 
-    // deferred lighting pass:
-    glDisable(GL_BLEND);
-
-    // Get opaque targets, these will be rendered in deferred rendering passes:
-    std::vector<RenderTarget>& opaque_targets = render_list.GetOpaqueTargets();
-    
-    // Clear Batches:
-    batch_manager->ClearBatchesDrawList();
-    
-    // Send mesh renderers with opaque materials to batch manager draw list:
-    for (const RenderTarget& target : opaque_targets)
+    if (draw_deferred)
     {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-        // target.mesh_renderer->Draw(camera, program);
+        DrawDeferred(batch_manager);
     }
-
-    // Draw collected meshes with geometry pass rogram:
-    program = App->program->GetDeferredGeometryProgram();
-    program->Activate();
-    batch_manager->DrawBatches(program);
-    Program::Deactivate();
-
-    // ------------------------------ LIGHT PASS ------------------------------
-    
-    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Use Deferred rendering lighting pass program:
-    program = App->program->GetDeferredLightingProgram();
-    program->Activate();
-
-    // Bind all g-buffer textures:
-    g_buffer.BindTextures();
-    
-    // Bind deferred rendering mode. This can be configured from the editor,
-    // and shader sets the fragment color according to this mode:
-    program->BindUniformInts("mode", 1, &deferred_mode);
-
-    // Render the final texture from deferred rendering on a quad that is,
-    // 1x1 on NDC:
-    RenderDeferredQuad();
-
-    Program::Deactivate();
-
-    // Blit g_buffer depth buffer to frame_buffer to be used for forward 
-    // rendering pass:
-    g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
-
-    // Enable blending for the next passes:
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    else
+    {
+        DrawForward(batch_manager);
+    }
 
     // ------------------------- SKYBOX & DEBUG DRAW --------------------------
 
@@ -286,35 +234,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     }
 
     // Draw debug draw stuff:
-    ModuleDebugDraw::Draw(camera->GetViewMatrix(), 
-        camera->GetProjectionMatrix(), fb_height, fb_width);
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
 
-    // ----------------------------- FORWARD PASS -----------------------------
-
-    // If forward pass is disabled on the settings, return:
-    if (!render_forward_pass)
-    {
-        return;
-    }
-    
-    // Clear Batches:
-    batch_manager->ClearBatchesDrawList();
-
-    // Get the targets that has transparent materials. These targets will be 
-    // rendered with regular forward rendering pass:
-    std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
-
-    for (const RenderTarget& target : transparent_targets)
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-    
-    // Forward rendering pass for transparent game objects:
-    program = App->program->GetMainProgram();
-    program->Activate();
-    batch_manager->DrawBatches(program);
-    Program::Deactivate();
-
+    //GameObject* selected_go = App->editor->GetSelectedGameObject();
     /*if (outline_selection && selected_go)
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
@@ -330,6 +252,135 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }*/
+}
+
+void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager) 
+{
+    Program* program = nullptr;
+
+    // ----------------------------- GEOMETRY PASS ----------------------------
+
+    g_buffer.BindForDrawing();
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Disable blending for deferred rendering as the meshes with transparent
+    // materials are gonna be rendered with forward rendering after the
+    // deferred lighting pass:
+    glDisable(GL_BLEND);
+
+    // Clear Batches:
+    batch_manager->ClearBatchesDrawList();
+
+    // Send mesh renderers with opaque materials to batch manager draw list:
+    for (const RenderTarget& target : render_list.GetOpaqueTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);
+        // target.mesh_renderer->Draw(camera, program);
+    }
+
+    // Draw collected meshes with geometry pass rogram:
+    program = App->program->GetDeferredGeometryProgram();
+    program->Activate();
+    batch_manager->DrawBatches(program);
+    Program::Deactivate();
+
+    // ------------------------------ LIGHT PASS ------------------------------
+
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Use Deferred rendering lighting pass program:
+    program = App->program->GetDeferredLightingProgram();
+    program->Activate();
+
+    // Bind all g-buffer textures:
+    g_buffer.BindTextures();
+
+    // Bind deferred rendering mode. This can be configured from the editor,
+    // and shader sets the fragment color according to this mode:
+    program->BindUniformInts("mode", 1, &deferred_mode);
+
+    // Render the final texture from deferred rendering on a quad that is,
+    // 1x1 on NDC:
+    RenderDeferredQuad();
+
+    Program::Deactivate();
+
+    // Blit g_buffer depth buffer to frame_buffer to be used for forward
+    // rendering pass:
+    g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
+
+    // Enable blending for the next passes:
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    // ----------------------------- FORWARD PASS -----------------------------
+
+    // If forward pass is disabled on the settings, return:
+    if (!render_forward_pass)
+    {
+        return;
+    }
+
+    // Clear Batches:
+    batch_manager->ClearBatchesDrawList();
+
+    // Get the targets that has transparent materials. These targets will be
+    // rendered with regular forward rendering pass:
+    for (const RenderTarget& target : render_list.GetTransparentTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);
+    }
+
+    // Forward rendering pass for transparent game objects:
+    program = App->program->GetMainProgram();
+    program->Activate();
+    batch_manager->DrawBatches(program);
+    Program::Deactivate();
+}
+
+void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager) 
+{
+    Program* program = App->program->GetMainProgram();
+    program->Activate();
+
+    batch_manager->ClearBatchesDrawList();
+
+    // Add opaque targets:
+    for (RenderTarget& target : render_list.GetOpaqueTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);    
+    }
+
+    // Add transparent targets:
+    for (RenderTarget& target : render_list.GetTransparentTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);  
+    }
+
+    batch_manager->DrawBatches(program);
+
+    Program::Deactivate();
+}
+
+void Hachiko::ModuleRender::SetRenderMode(bool is_deferred) 
+{
+    if (is_deferred == draw_deferred)
+    {
+        return;
+    }
+
+    draw_deferred = is_deferred;
+
+    if (!draw_deferred)
+    {
+        g_buffer.Free();
+    }
+    else
+    {
+        g_buffer.Generate();
+    }
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
@@ -359,8 +410,28 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
     ImGui::Checkbox("Skybox", &draw_skybox);
     ImGui::Checkbox("Navmesh", &draw_navmesh);
-    
-    DeferredOptions();
+
+    ImGui::NewLine();
+    ImGui::Text("Rendering Mode");
+    ImGui::Separator();
+    ImGui::Text("Select whether the engine should use Deferred or Forward rendering.");
+    ImGui::PushID("RendererMode");
+
+    if (ImGui::RadioButton("Deferred", draw_deferred == true))
+    {
+        SetRenderMode(true);
+    }
+
+    if (ImGui::RadioButton("Forward", draw_deferred == false))
+    {
+        SetRenderMode(false);
+    }
+    ImGui::PopID();
+
+    if (draw_deferred)
+    {
+        DeferredOptions();
+    }
 
     if (!draw_skybox)
     {

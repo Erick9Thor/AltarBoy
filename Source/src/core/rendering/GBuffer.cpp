@@ -9,6 +9,7 @@ Hachiko::GBuffer::GBuffer()
 	, _position_texture(0)
 	, _emissive_texture(0)
 	, _depth_texture(0)
+    , _is_generated(false) 
 {
 }
 
@@ -19,6 +20,11 @@ Hachiko::GBuffer::~GBuffer()
 
 void Hachiko::GBuffer::Generate() 
 {
+    if (_is_generated)
+    {
+        return;
+    }
+
     // Default texture sizes, these will be resized whenever Resize is called:
     constexpr const unsigned int default_width = 800;
     constexpr const unsigned int default_height = 600;
@@ -95,10 +101,19 @@ void Hachiko::GBuffer::Generate()
         HE_ERROR("An error occured while creating G Buffer, status: 0x%x\n", status);
         return;
     }
+
+    _is_generated = true;
 }
 
 void Hachiko::GBuffer::Free() 
 {
+    if (!_is_generated)
+    {
+        return;
+    }
+
+    _is_generated = false;
+
     glDeleteTextures(1, &_diffuse_texture);
     glDeleteTextures(1, &_specular_smoothness_texture);
     glDeleteTextures(1, &_normal_texture);
