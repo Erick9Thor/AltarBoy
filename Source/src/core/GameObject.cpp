@@ -457,9 +457,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
             {
                 component = CreateComponent(type);
             }
-            continue;
         }
-
         else if(type == Component::Type::SCRIPT)
         {
             std::string script_name =
