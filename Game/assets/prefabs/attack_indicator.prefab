@@ -1,4 +1,4 @@
-prefab_name: attack_zone
+prefab_name: attack_indicator
 name: RootNode
 enabled: true
 component:
@@ -8,17 +8,17 @@ component:
     rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
 child:
-  - name: Cylinder
+  - name: AttackIndicator
     enabled: true
     component:
       - type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [-0.707106829, 0, 0, 0.707106709]
-        scale: [100, 99.9999847, 2.56959748]
+        scale: [250, 249.999969, 2.56959748]
       - type: 2
         enabled: true
-        mesh_id: 6492766721524954712
+        mesh_id: 12101815747617848330
         navigable: false
         visible: true
         material_id: 6750369022920963075
