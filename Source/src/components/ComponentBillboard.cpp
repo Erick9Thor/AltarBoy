@@ -70,9 +70,9 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     if (has_color_gradient)
     {
         gradient->getColorAt(color_frame, color.ptr());
-        billboard_program->BindUniformFloat4("input_color", color.ptr());
     }
 
+    billboard_program->BindUniformFloat4("input_color", color.ptr());
     billboard_program->BindUniformInts("has_texture", 1, &has_texture);
 
     int flip_x = has_flip_x ? 1 : 0;
