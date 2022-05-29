@@ -1,0 +1,27 @@
+asset_hash: 3244421341483603138
+model_name: crystalSpikeAnimacion_meshExplision
+meshes:
+  - 2367252208710808329
+  - 11783699103939193595
+  - 10088262584487287873
+  - 10784035645120420919
+materials:
+  - 5759363592208955763
+animations:
+  - 9087701207749168962
+prefab_id: 15275257010767196991
+resources:
+  - resource_id: 2367252208710808329
+    resource_type: 3
+  - resource_id: 11783699103939193595
+    resource_type: 3
+  - resource_id: 10088262584487287873
+    resource_type: 3
+  - resource_id: 10784035645120420919
+    resource_type: 3
+  - resource_id: 5759363592208955763
+    resource_type: 1
+  - resource_id: 9087701207749168962
+    resource_type: 7
+  - resource_id: 15275257010767196991
+    resource_type: 13

@@ -112,6 +112,17 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 	node["'_attack_range@int'"] = _attack_range;
 
 	node["'_spawn_pos@float3'"] = _spawn_pos;
+
+	node["'_spawn_is_initial@bool'"] = _spawn_is_initial;
+
+	if (_player != nullptr)
+	{
+		node["'_player@GameObject*'"] = _player->GetID();
+	}
+	else
+	{
+		node["'_player@GameObject*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::EnemyController::OnLoad()
@@ -130,6 +141,16 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_spawn_pos@float3'"].IsDefined())
 	{
 		_spawn_pos = load_node["'_spawn_pos@float3'"].as<float3>();
+	}
+
+	if (load_node["'_spawn_is_initial@bool'"].IsDefined())
+	{
+		_spawn_is_initial = load_node["'_spawn_is_initial@bool'"].as<bool>();
+	}
+
+	if (load_node["'_player@GameObject*'"].IsDefined())
+	{
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 }
 
@@ -458,6 +479,24 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 	node["'_rotation_start@math::Quat'"] = _rotation_start;
 
 	node["'_rotation_target@math::Quat'"] = _rotation_target;
+
+	if (_camera != nullptr)
+	{
+		node["'_camera@GameObject*'"] = _camera->GetID();
+	}
+	else
+	{
+		node["'_camera@GameObject*'"] = 0;
+	}
+
+	if (_ui_damage != nullptr)
+	{
+		node["'_ui_damage@GameObject*'"] = _ui_damage->GetID();
+	}
+	else
+	{
+		node["'_ui_damage@GameObject*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnLoad()
@@ -582,10 +621,29 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	{
 		_rotation_target = load_node["'_rotation_target@math::Quat'"].as<math::Quat>();
 	}
+
+	if (load_node["'_camera@GameObject*'"].IsDefined())
+	{
+		_camera = SceneManagement::FindInCurrentScene(load_node["'_camera@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_ui_damage@GameObject*'"].IsDefined())
+	{
+		_ui_damage = SceneManagement::FindInCurrentScene(load_node["'_ui_damage@GameObject*'"].as<unsigned long long>());
+	}
 }
 
 void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 {
+	if (_audio_source != nullptr && _audio_source->GetGameObject() != nullptr)
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = _audio_source->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = 0;
+	}
+
 	node["'_step_frequency@float'"] = _step_frequency;
 
 	node["'_melee_frequency@float'"] = _melee_frequency;
@@ -597,6 +655,15 @@ void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 {
+	if (load_node["'_audio_source@ComponentAudioSource*'"].IsDefined())
+	{
+		GameObject* _audio_source_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_audio_source@ComponentAudioSource*'"].as<unsigned long long>());
+		if (_audio_source_owner__temp != nullptr)
+		{
+			_audio_source = _audio_source_owner__temp->GetComponent<ComponentAudioSource>();
+		}
+	}
+
 	if (load_node["'_step_frequency@float'"].IsDefined())
 	{
 		_step_frequency = load_node["'_step_frequency@float'"].as<float>();

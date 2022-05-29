@@ -181,6 +181,24 @@ void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std
 			_spawn_pos = std::any_cast<float3>(_spawn_pos_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_spawn_is_initial") != serialized_fields.end())
+	{
+		const SerializedField& _spawn_is_initial_sf = serialized_fields["_spawn_is_initial"];
+		if (_spawn_is_initial_sf.type_name == "bool")
+		{
+			_spawn_is_initial = std::any_cast<bool>(_spawn_is_initial_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_player") != serialized_fields.end())
+	{
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
+		{
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -194,6 +212,10 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_attack_range"] = SerializedField(std::string("_attack_range"), std::make_any<int>(_attack_range), std::string("int"));
 
 	serialized_fields["_spawn_pos"] = SerializedField(std::string("_spawn_pos"), std::make_any<float3>(_spawn_pos), std::string("float3"));
+
+	serialized_fields["_spawn_is_initial"] = SerializedField(std::string("_spawn_is_initial"), std::make_any<bool>(_spawn_is_initial), std::string("bool"));
+
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::MainMenuManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -697,6 +719,24 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_camera") != serialized_fields.end())
+	{
+		const SerializedField& _camera_sf = serialized_fields["_camera"];
+		if (_camera_sf.type_name == "GameObject*")
+		{
+			_camera = std::any_cast<GameObject*>(_camera_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_ui_damage") != serialized_fields.end())
+	{
+		const SerializedField& _ui_damage_sf = serialized_fields["_ui_damage"];
+		if (_ui_damage_sf.type_name == "GameObject*")
+		{
+			_ui_damage = std::any_cast<GameObject*>(_ui_damage_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_state") != serialized_fields.end())
 	{
 		const SerializedField& _state_sf = serialized_fields["_state"];
@@ -761,12 +801,25 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_rotation_target"] = SerializedField(std::string("_rotation_target"), std::make_any<math::Quat>(_rotation_target), std::string("math::Quat"));
 
+	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<GameObject*>(_camera), std::string("GameObject*"));
+
+	serialized_fields["_ui_damage"] = SerializedField(std::string("_ui_damage"), std::make_any<GameObject*>(_ui_damage), std::string("GameObject*"));
+
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<PlayerState>(_state), std::string("PlayerState"));
 }
 
 void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_audio_source") != serialized_fields.end())
+	{
+		const SerializedField& _audio_source_sf = serialized_fields["_audio_source"];
+		if (_audio_source_sf.type_name == "ComponentAudioSource*")
+		{
+			_audio_source = std::any_cast<ComponentAudioSource*>(_audio_source_sf.copy);
+		}
+	}
 
 	if(serialized_fields.find("_step_frequency") != serialized_fields.end())
 	{
@@ -817,6 +870,8 @@ void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<
 void Hachiko::Scripting::PlayerSoundManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_audio_source"] = SerializedField(std::string("_audio_source"), std::make_any<ComponentAudioSource*>(_audio_source), std::string("ComponentAudioSource*"));
 
 	serialized_fields["_step_frequency"] = SerializedField(std::string("_step_frequency"), std::make_any<float>(_step_frequency), std::string("float"));
 
