@@ -56,8 +56,8 @@ child:
             type: 1
             enabled: true
             position: [0, 0.647756636, -0.0772219971]
-            rotation: [3.09086232e-08, 0.707106829, 0.707106829, -3.09086232e-08]
-            scale: [0.016898457, 0.0168984346, 0.0168984346]
+            rotation: [3.09086658e-08, 0.707106769, 0.707106829, -3.09086658e-08]
+            scale: [0.0168984607, 0.0168984365, 0.0168984365]
           - id: 5906580799296556394
             type: 2
             enabled: true
@@ -210,8 +210,8 @@ child:
             type: 1
             enabled: true
             position: [-0.335916042, -0.0544057339, 1.07213855e-05]
-            rotation: [0.25358817, 0.596063077, 0.604468226, -0.46370253]
-            scale: [0.0253999941, 0.0253999922, 0.0254000053]
+            rotation: [0.25358817, 0.596063077, 0.604468226, -0.463702559]
+            scale: [0.0253999941, 0.0253999922, 0.0254000071]
           - id: 2358276465001085244
             type: 2
             enabled: true
@@ -364,7 +364,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999285, 0.999999285]
+            scale: [1, 0.999998093, 0.999998093]
           - id: 10994749954463604364
             type: 2
             enabled: true
@@ -379,7 +379,7 @@ child:
       - id: 531496092066644912
         type: 1
         enabled: true
-        position: [0, 0, 0]
+        position: [-18.8999996, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
   - id: 11923272689244651400
@@ -396,7 +396,20 @@ child:
         type: 15
         enabled: true
         class_name: DebugManager
-        "'_button_back@ComponentButton*'": 0
+        "'_button_back@ComponentButton*'": 4035928358135351135
+        "'_teleport_next_pos@ComponentButton*'": 4758174701344673734
+        "'_teleport_prev_pos@ComponentButton*'": 6879151169810490569
+        "'_teleport_add_pos@ComponentButton*'": 15421671731144793396
+        "'_add_health@ComponentButton*'": 5585212255617653889
+        "'_remove_health@ComponentButton*'": 682043336193841749
+        "'_god_mode@ComponentButton*'": 9277602522916142109
+        "'_flying_mode@ComponentButton*'": 834749404254648010
+        "'_spawn_enemy@ComponentButton*'": 7795421766566425864
+        "'_unlock_skills@ComponentButton*'": 12928722092846695834
+        "'_toggle_performance_output@ComponentButton*'": 8989663807599389336
+        "'_toggle_wireframe@ComponentButton*'": 16434820207947218854
+        "'_toggle_show_colliders@ComponentButton*'": 14161391415480330610
+        "'_exit_debug@ComponentButton*'": 12579080111622312455
     child:
       - id: 216963862465676777
         name: Canvas
@@ -405,14 +418,14 @@ child:
           - id: 1722971268025175005
             type: 1
             enabled: true
-            position: [0, 0, 0]
+            position: [-10.444788, 6.00192308, -2.60315681]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
           - id: 7680921748218669618
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1007, 570]
+            size: [1323, 767]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -440,41 +453,41 @@ child:
               - id: 10680797923934252004
                 type: 10
                 enabled: true
-                position: [0, 0, 0]
-                size: [220, 300]
-                scale: [1, 1]
+                position: [100, -45, 0]
+                size: [100, 125]
+                scale: [4, 3.5]
                 rotation: [0, 0, 0, 1]
                 pivot: [0.5, 0.5]
-                anchor: [0.150000006, 0.699999988]
+                anchor: [0.100000001, 0.75]
               - id: 1838336717936455055
                 type: 9
                 enabled: true
               - id: 16723952144158951466
                 type: 11
                 enabled: true
-                image_id: 12023432331947101770
+                image_id: 17297576464064791115
                 hover_image_id: 0
                 use_image: true
                 use_hover_image: false
           - id: 4035928358135351135
-            name: GameObject
+            name: ButtonMainMenu
             enabled: true
             component:
               - id: 15211560369801576723
                 type: 1
                 enabled: true
-                position: [0, 0, 0]
+                position: [-5.5, 0, 0]
                 rotation: [0, 0, 0, 1]
                 scale: [1, 1, 1]
               - id: 9012214572309622403
                 type: 10
                 enabled: true
-                position: [0, 0, 0]
-                size: [20, 20]
+                position: [119.800003, -350, 0]
+                size: [100, 30]
                 scale: [1, 1]
                 rotation: [0, 0, 0, 1]
                 pivot: [0.5, 0.5]
-                anchor: [0.5, 0.5]
+                anchor: [0.0799999982, 0.899999976]
               - id: 13924695754791418217
                 type: 9
                 enabled: true
@@ -484,7 +497,452 @@ child:
               - id: 9668862030086242921
                 type: 11
                 enabled: true
-                image_id: 0
+                image_id: 16300116158672968389
+                hover_image_id: 16300116158672968389
+                use_image: true
+                use_hover_image: false
+          - id: 177512589727133247
+            name: DebugTittle
+            enabled: true
+            component:
+              - id: 8965115699735252842
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 11617625766869803363
+                type: 10
+                enabled: true
+                position: [162.100006, 16.5, 0]
+                size: [100, 20]
+                scale: [2, 1.20000005]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 933670604929897305
+                type: 9
+                enabled: true
+              - id: 2432843452781223841
+                type: 11
+                enabled: true
+                image_id: 17269196482696948772
                 hover_image_id: 0
-                use_image: false
+                use_image: true
+                use_hover_image: false
+          - id: 6879151169810490569
+            name: TpPrev
+            enabled: true
+            component:
+              - id: 782178886147024243
+                type: 1
+                enabled: true
+                position: [0.0450000018, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 12104625083552458256
+                type: 10
+                enabled: true
+                position: [50, -40, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 6458585934700112365
+                type: 9
+                enabled: true
+              - id: 7057548730573605013
+                type: 12
+                enabled: true
+              - id: 18009751482085854035
+                type: 11
+                enabled: true
+                image_id: 6505765713823485735
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 15421671731144793396
+            name: TpAdd
+            enabled: true
+            component:
+              - id: 10848248959747315818
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 8311820128761596800
+                type: 10
+                enabled: true
+                position: [160, -40, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 6738700150474478941
+                type: 9
+                enabled: true
+              - id: 4166690890029326156
+                type: 12
+                enabled: true
+              - id: 12729640694522123541
+                type: 11
+                enabled: true
+                image_id: 10162367980187730170
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 4758174701344673734
+            name: TpNext
+            enabled: true
+            component:
+              - id: 4670965000846142397
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 17760103281567539687
+                type: 10
+                enabled: true
+                position: [270, -40, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 12971961184984580496
+                type: 9
+                enabled: true
+              - id: 3206368014759596921
+                type: 12
+                enabled: true
+              - id: 361134256904013725
+                type: 11
+                enabled: true
+                image_id: 4868060867267512982
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 5585212255617653889
+            name: AddHealth
+            enabled: true
+            component:
+              - id: 7782683265272577145
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 17764059484919349190
+                type: 10
+                enabled: true
+                position: [50, -100, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 133575756037341833
+                type: 9
+                enabled: true
+              - id: 6906889851953421113
+                type: 12
+                enabled: true
+              - id: 4112703738347048242
+                type: 11
+                enabled: true
+                image_id: 16384094713735340464
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 12579080111622312455
+            name: Exit
+            enabled: true
+            component:
+              - id: 8105975124251595267
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 2152554599831294936
+                type: 10
+                enabled: true
+                position: [339.700012, 38.7000008, 0]
+                size: [16, 16]
+                scale: [1.25, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 1838398884248532002
+                type: 9
+                enabled: true
+              - id: 13234719121598390809
+                type: 12
+                enabled: true
+              - id: 11600159416523955593
+                type: 11
+                enabled: true
+                image_id: 11323078684510755325
+                hover_image_id: 11323078684510755325
+                use_image: true
+                use_hover_image: false
+          - id: 682043336193841749
+            name: RemoveHealth
+            enabled: true
+            component:
+              - id: 13497117110554308272
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 6671836183918091790
+                type: 10
+                enabled: true
+                position: [160, -100, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 6616047629698613373
+                type: 9
+                enabled: true
+              - id: 5472904517283404505
+                type: 12
+                enabled: true
+              - id: 10159783745767223469
+                type: 11
+                enabled: true
+                image_id: 1246412719274923877
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 7795421766566425864
+            name: SpawnEnemy
+            enabled: true
+            component:
+              - id: 16162026105520195156
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 4128838873970656355
+                type: 10
+                enabled: true
+                position: [50, -160, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 17803803684557506914
+                type: 9
+                enabled: true
+              - id: 15905252779565294461
+                type: 12
+                enabled: true
+              - id: 16038300085773478725
+                type: 11
+                enabled: true
+                image_id: 1222313871679734493
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 16434820207947218854
+            name: Wireframe
+            enabled: true
+            component:
+              - id: 9400553228692513402
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 7991153813448189902
+                type: 10
+                enabled: true
+                position: [50, -220, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 8777780545544295568
+                type: 9
+                enabled: true
+              - id: 16728343648537313859
+                type: 12
+                enabled: true
+              - id: 10252487770805418147
+                type: 11
+                enabled: true
+                image_id: 1892638459420291508
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 8989663807599389336
+            name: Performance
+            enabled: true
+            component:
+              - id: 7874092135906033340
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 18230402649428668309
+                type: 10
+                enabled: true
+                position: [95, -220, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.100000001, 0.899999976]
+              - id: 1700131344702454594
+                type: 9
+                enabled: true
+              - id: 3363255799857512119
+                type: 12
+                enabled: true
+              - id: 13248663341382459282
+                type: 11
+                enabled: true
+                image_id: 12896769960829842660
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 14161391415480330610
+            name: Colliders
+            enabled: true
+            component:
+              - id: 1676833882519741666
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 11622138923094807070
+                type: 10
+                enabled: true
+                position: [270, -220, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 15923337681251268930
+                type: 9
+                enabled: true
+              - id: 3073913510823269767
+                type: 12
+                enabled: true
+              - id: 13196052971037905971
+                type: 11
+                enabled: true
+                image_id: 16778793316685299529
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 9277602522916142109
+            name: GodMode
+            enabled: true
+            component:
+              - id: 17594073125594983179
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 16776004800214374785
+                type: 10
+                enabled: true
+                position: [50, -280, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 12452870909247369649
+                type: 9
+                enabled: true
+              - id: 13412218401924707443
+                type: 12
+                enabled: true
+              - id: 8989356159248656312
+                type: 11
+                enabled: true
+                image_id: 14413011462074534151
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 834749404254648010
+            name: FlyingMode
+            enabled: true
+            component:
+              - id: 16786426725223599897
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 3029473758026386463
+                type: 10
+                enabled: true
+                position: [160, -280, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 5194195746921224704
+                type: 9
+                enabled: true
+              - id: 10938764560108010384
+                type: 12
+                enabled: true
+              - id: 8532498061418753116
+                type: 11
+                enabled: true
+                image_id: 608351346838247461
+                hover_image_id: 0
+                use_image: true
+                use_hover_image: false
+          - id: 12928722092846695834
+            name: UnlockSkills
+            enabled: true
+            component:
+              - id: 5799402021554080561
+                type: 1
+                enabled: true
+                position: [10.444788, -6.00192308, 2.60315681]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - id: 17077987575301345764
+                type: 10
+                enabled: true
+                position: [160, -160, 0]
+                size: [100, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0.0500000007, 0.899999976]
+              - id: 289783229658715054
+                type: 9
+                enabled: true
+              - id: 9309065036053453369
+                type: 12
+                enabled: true
+              - id: 15799178998079655744
+                type: 11
+                enabled: true
+                image_id: 2990539911072806814
+                hover_image_id: 0
+                use_image: true
                 use_hover_image: false

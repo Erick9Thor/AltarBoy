@@ -19,13 +19,18 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 {
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
 	Editor::Show<ComponentButton>("_teleport_next_pos", "ComponentButton*", _teleport_next_pos);
+	Editor::Show<ComponentButton>("_teleport_prev_pos", "ComponentButton*", _teleport_prev_pos);
+	Editor::Show<ComponentButton>("_teleport_add_pos", "ComponentButton*", _teleport_add_pos);
 	Editor::Show<ComponentButton>("_add_health", "ComponentButton*", _add_health);
 	Editor::Show<ComponentButton>("_remove_health", "ComponentButton*", _remove_health);
-	Editor::Show<ComponentButton>("_toggle_invulnerable", "ComponentButton*", _toggle_invulnerable);
+	Editor::Show<ComponentButton>("_god_mode", "ComponentButton*", _god_mode);
+	Editor::Show<ComponentButton>("_flying_mode", "ComponentButton*", _flying_mode);
 	Editor::Show<ComponentButton>("_spawn_enemy", "ComponentButton*", _spawn_enemy);
+	Editor::Show<ComponentButton>("_unlock_skills", "ComponentButton*", _unlock_skills);
 	Editor::Show<ComponentButton>("_toggle_performance_output", "ComponentButton*", _toggle_performance_output);
 	Editor::Show<ComponentButton>("_toggle_wireframe", "ComponentButton*", _toggle_wireframe);
 	Editor::Show<ComponentButton>("_toggle_show_colliders", "ComponentButton*", _toggle_show_colliders);
+	Editor::Show<ComponentButton>("_exit_debug", "ComponentButton*", _exit_debug);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

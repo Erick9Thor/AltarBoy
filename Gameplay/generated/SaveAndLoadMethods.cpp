@@ -57,6 +57,24 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_teleport_next_pos@ComponentButton*'"] = 0;
 	}
 
+	if (_teleport_prev_pos != nullptr && _teleport_prev_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_prev_pos@ComponentButton*'"] = _teleport_prev_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_prev_pos@ComponentButton*'"] = 0;
+	}
+
+	if (_teleport_add_pos != nullptr && _teleport_add_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_add_pos@ComponentButton*'"] = _teleport_add_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_add_pos@ComponentButton*'"] = 0;
+	}
+
 	if (_add_health != nullptr && _add_health->GetGameObject() != nullptr)
 	{
 		node["'_add_health@ComponentButton*'"] = _add_health->GetGameObject()->GetID();
@@ -75,13 +93,22 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_remove_health@ComponentButton*'"] = 0;
 	}
 
-	if (_toggle_invulnerable != nullptr && _toggle_invulnerable->GetGameObject() != nullptr)
+	if (_god_mode != nullptr && _god_mode->GetGameObject() != nullptr)
 	{
-		node["'_toggle_invulnerable@ComponentButton*'"] = _toggle_invulnerable->GetGameObject()->GetID();
+		node["'_god_mode@ComponentButton*'"] = _god_mode->GetGameObject()->GetID();
 	}
 	else
 	{
-		node["'_toggle_invulnerable@ComponentButton*'"] = 0;
+		node["'_god_mode@ComponentButton*'"] = 0;
+	}
+
+	if (_flying_mode != nullptr && _flying_mode->GetGameObject() != nullptr)
+	{
+		node["'_flying_mode@ComponentButton*'"] = _flying_mode->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_flying_mode@ComponentButton*'"] = 0;
 	}
 
 	if (_spawn_enemy != nullptr && _spawn_enemy->GetGameObject() != nullptr)
@@ -91,6 +118,15 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_spawn_enemy@ComponentButton*'"] = 0;
+	}
+
+	if (_unlock_skills != nullptr && _unlock_skills->GetGameObject() != nullptr)
+	{
+		node["'_unlock_skills@ComponentButton*'"] = _unlock_skills->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_unlock_skills@ComponentButton*'"] = 0;
 	}
 
 	if (_toggle_performance_output != nullptr && _toggle_performance_output->GetGameObject() != nullptr)
@@ -119,6 +155,15 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	{
 		node["'_toggle_show_colliders@ComponentButton*'"] = 0;
 	}
+
+	if (_exit_debug != nullptr && _exit_debug->GetGameObject() != nullptr)
+	{
+		node["'_exit_debug@ComponentButton*'"] = _exit_debug->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_exit_debug@ComponentButton*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::DebugManager::OnLoad()
@@ -141,6 +186,24 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
+	if (load_node["'_teleport_prev_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_prev_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_prev_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_prev_pos_owner__temp != nullptr)
+		{
+			_teleport_prev_pos = _teleport_prev_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_teleport_add_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_add_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_add_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_add_pos_owner__temp != nullptr)
+		{
+			_teleport_add_pos = _teleport_add_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
 	if (load_node["'_add_health@ComponentButton*'"].IsDefined())
 	{
 		GameObject* _add_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_add_health@ComponentButton*'"].as<unsigned long long>());
@@ -159,12 +222,21 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
-	if (load_node["'_toggle_invulnerable@ComponentButton*'"].IsDefined())
+	if (load_node["'_god_mode@ComponentButton*'"].IsDefined())
 	{
-		GameObject* _toggle_invulnerable_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_invulnerable@ComponentButton*'"].as<unsigned long long>());
-		if (_toggle_invulnerable_owner__temp != nullptr)
+		GameObject* _god_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_god_mode@ComponentButton*'"].as<unsigned long long>());
+		if (_god_mode_owner__temp != nullptr)
 		{
-			_toggle_invulnerable = _toggle_invulnerable_owner__temp->GetComponent<ComponentButton>();
+			_god_mode = _god_mode_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_flying_mode@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _flying_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_flying_mode@ComponentButton*'"].as<unsigned long long>());
+		if (_flying_mode_owner__temp != nullptr)
+		{
+			_flying_mode = _flying_mode_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 
@@ -174,6 +246,15 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		if (_spawn_enemy_owner__temp != nullptr)
 		{
 			_spawn_enemy = _spawn_enemy_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_unlock_skills@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _unlock_skills_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_unlock_skills@ComponentButton*'"].as<unsigned long long>());
+		if (_unlock_skills_owner__temp != nullptr)
+		{
+			_unlock_skills = _unlock_skills_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 
@@ -201,6 +282,15 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		if (_toggle_show_colliders_owner__temp != nullptr)
 		{
 			_toggle_show_colliders = _toggle_show_colliders_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_exit_debug@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _exit_debug_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_exit_debug@ComponentButton*'"].as<unsigned long long>());
+		if (_exit_debug_owner__temp != nullptr)
+		{
+			_exit_debug = _exit_debug_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 }
