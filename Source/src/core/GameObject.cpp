@@ -506,7 +506,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
         
         const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(children_nodes[i], as_prefab);
+        child->Load(children_nodes[i], as_prefab, meshes_only);
     }
 }
 
