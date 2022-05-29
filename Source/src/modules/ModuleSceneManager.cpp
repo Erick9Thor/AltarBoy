@@ -32,10 +32,10 @@ bool Hachiko::ModuleSceneManager::Init()
 
 #ifdef PLAY_BUILD
     main_scene->Start();
-#else
+#endif
+    
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
-#endif
     return true;
 }
 
