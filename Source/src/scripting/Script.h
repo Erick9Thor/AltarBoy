@@ -23,8 +23,10 @@ public:
     void Start() override;
     void Awake();
 
-    void Save(YAML::Node& node) const override;
+    void Save(YAML::Node& node) const override;    
     void Load(const YAML::Node& node) override;
+    void SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const;
+    void LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection);
     void DrawGui() override;
 
     virtual void OnAwake() {};
