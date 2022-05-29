@@ -43,13 +43,12 @@ void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& c
 
 void Hachiko::RenderList::CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh)
 {
-    GameObject* game_object = mesh->GetGameObject();
-
-    if (!mesh->IsVisible() || !game_object->IsActive())
+    if (!mesh->GetGameObject()->IsActive() || !mesh->IsVisible())
     {
         return;
     }
-
+    
+    GameObject* game_object = mesh->GetGameObject();
     RenderTarget target;
     target.name = game_object->GetName().c_str();
     target.game_object = game_object;
