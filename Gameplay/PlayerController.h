@@ -86,8 +86,8 @@ private:
 
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
-	float attack_current_cd = 0.0f;
-
+	float _attack_current_cd = 0.0f;
+	float _attack_current_duration = 0.0f;
 	bool _is_god_mode = false;
 public:
 	SERIALIZE_FIELD(PlayerState, _state);

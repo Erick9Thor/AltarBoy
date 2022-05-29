@@ -9,6 +9,8 @@
 #include <modules/ModuleSceneManager.h>
 #include <core/GameObject.h>
 
+#define RAD_TO_DEG 180.0f / math::pi
+
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _movement_speed(0.0f)
@@ -154,9 +156,9 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
-	if (_is_dashing || (attack_current_cd > 0.0f) )
+	if (_is_dashing || (_attack_current_cd > 0.0f) )
 	{
-		attack_current_cd -= Time::DeltaTime();
+		_attack_current_cd -= Time::DeltaTime();
 		return;
 	}
 
@@ -169,7 +171,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		t_pos.y += 0.5;
 		RangedAttack(transform, t_pos);
 
-		attack_current_cd = _attack_cooldown;
+		_attack_current_cd = _attack_cooldown;
 	}
 	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
 	{
@@ -177,7 +179,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 
-		attack_current_cd = _attack_cooldown;
+		_attack_current_cd = _attack_cooldown;
 	}
 }
 
@@ -188,19 +190,17 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
 	std::vector<GameObject*> enemies_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
-
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemies.size(); ++i)
 	{
 		if (enemies[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 		{
-			// VS2: EXCEPTION ON QUAD.CPP
-			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
-			math::float3 rel_translate, rel_scale;
-			math::Quat rel_rotation;
-			relative_matrix.Decompose(rel_translate, rel_rotation, rel_scale);
-			float dot_product = transform->GetRight().Dot(rel_translate);
-			if (dot_product > 0)
+			float3 normalized_center = transform->GetFront().Normalized();
+			float3 normalized_enemy = (enemies[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
+			float dot_product = normalized_center.Dot(normalized_enemy);
+			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
+			float attack_angle = 50.0f; // This can vary in the future deppending of weapon
+			if (angle_of_enemy < attack_angle)
 			{
 				enemies_hit.push_back(enemies[i]);
 			}
