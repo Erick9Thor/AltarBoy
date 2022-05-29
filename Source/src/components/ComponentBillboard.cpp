@@ -114,6 +114,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             Stop();
         }
         ImGui::DragFloat("Duration", &billboard_lifetime, 1.0f, 0, inf);
+        ImGui::DragInt("Skip Frames", &skip_frames, 1.0f, 0, inf);
         ImGui::Checkbox("Play On Awake", &play_on_awake);
 
         const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
@@ -239,6 +240,11 @@ void Hachiko::ComponentBillboard::Start()
 void Hachiko::ComponentBillboard::Update()
 {
     time += EngineTimer::delta_time;
+    if (frame_counter++ < skip_frames)
+    {
+        return;
+    }
+
     if (!is_playing)
     {
         Reset();
@@ -260,6 +266,8 @@ void Hachiko::ComponentBillboard::Update()
     {
         UpdateColorOverLifetime();
     }
+
+    frame_counter = 0;
 }
 
 inline void Hachiko::ComponentBillboard::Play() 

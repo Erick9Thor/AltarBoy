@@ -42,6 +42,8 @@ namespace Hachiko
         // General
         bool is_playing = false;
         bool play_on_awake = false;
+        int frame_counter = 0;
+        int skip_frames = 0;
         float time = 0.0f;
         float billboard_lifetime = 5.0f;
         BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
