@@ -12,6 +12,8 @@
 
 #include "modules/ModuleSceneManager.h"
 
+#include "resources/ResourceAnimation.h"
+
 Hachiko::Scripting::CrystalExplotion::CrystalExplotion(GameObject* game_object)
 	: Script(game_object, "CrystalExplotion")
 	, _stats(10, 0, 0, 5)
@@ -37,6 +39,11 @@ void Hachiko::Scripting::CrystalExplotion::OnStart()
 
 void Hachiko::Scripting::CrystalExplotion::OnUpdate()
 {
+	if (!_stats.IsAlive() && _explotion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	{
+		delete game_object;
+	}
+
 	if (!_stats.IsAlive())
 	{
 		return;
@@ -122,10 +129,4 @@ void Hachiko::Scripting::CrystalExplotion::DestroyCristall()
 
 	_explotion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
 	_stats._is_alive = false;
-
-	// Wait until animation finish
-
-	
-
-	// delete game_object;
 }

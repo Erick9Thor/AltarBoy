@@ -29,7 +29,6 @@ child:
           position: [9.06638718, 10.7504959, -15.6233807]
           front: [0, -0.38043341, 0.924808443]
           up: [0, 0.924808443, 0.38043341]
-          type: 0
           pinned_camera: [0, 0, 0]
   - id: 16779115546230417295
     name: PlayerC
@@ -38,7 +37,7 @@ child:
       - id: 17526309186297533573
         type: 1
         enabled: true
-        position: [0, 0.143063307, 5.05761242]
+        position: [12.3063078, 0.143063307, -0.823777914]
         rotation: [0, 0, 0, 1]
         scale: [1, 0.999967158, 0.999967158]
       - id: 18393256411282904038
@@ -74,6 +73,8 @@ child:
         "'_rotation_duration@float'": 0
         "'_rotation_start@math::Quat'": [0, 0, 0, 1]
         "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+        "'_camera@GameObject*'": 10975885172196684923
+        "'_ui_damage@GameObject*'": 0
     child:
       - id: 5570142103381945612
         name: Legs_low_$AssimpFbx$_PreRotation
@@ -84,7 +85,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999998331, 0.999998331]
+            scale: [1, 0.999996126, 0.999996126]
         child:
           - id: 14639014578657222701
             name: Legs_low_$AssimpFbx$_Scaling
@@ -117,7 +118,7 @@ child:
                         enabled: true
                         position: [0, 0, 0]
                         rotation: [0.707106829, 0, 0, 0.707106709]
-                        scale: [1, 0.999999464, 0.999999464]
+                        scale: [1, 0.999997258, 0.999997258]
                       - id: 14951045732703937569
                         type: 2
                         enabled: true
@@ -155,7 +156,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0.136278048, 0, 0, 0.990670741]
+                    rotation: [-0.136278063, 0, 0, 0.990670621]
                     scale: [1, 0.999999881, 0.999999881]
                 child:
                   - id: 3182146765308974443
@@ -375,7 +376,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [0.019902477, 0.00394614507, 0.194447815, 0.980702996]
-                                                                            scale: [1, 0.999999821, 0.999998271]
+                                                                            scale: [1, 0.999999821, 0.999996066]
                                                                         child:
                                                                           - id: 18368552994260758640
                                                                             name: mixamorig:LeftForeArm_$AssimpFbx$_Rotation
@@ -418,8 +419,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0611662194, -0.0593188591, 0.0664329156, 0.994146228]
-                                                                                            scale: [0.999999166, 0.999998569, 0.999999702]
+                                                                                            rotation: [0.0611662492, -0.0593189374, 0.0664329752, 0.994146228]
+                                                                                            scale: [0.999998093, 0.999998152, 0.999999344]
                                                                                         child:
                                                                                           - id: 3722663166582033741
                                                                                             name: mixamorig:LeftHand_$AssimpFbx$_Rotation
@@ -506,7 +507,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.105893873, 0, 0, 0.994377434]
+                                                                                                                            rotation: [0.10589388, 0, 0, 0.994377553]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 7775201306379246021
@@ -1020,8 +1021,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0534113199, 0.0426998325, -0.0672409832, 0.995390713]
-                                                                                            scale: [0.999999762, 0.999999404, 0.999999523]
+                                                                                            rotation: [0.0534113199, 0.042699974, -0.0672409907, 0.995390713]
+                                                                                            scale: [0.999999344, 0.999999404, 0.999999523]
                                                                                         child:
                                                                                           - id: 5907347442156838143
                                                                                             name: mixamorig:RightHand_$AssimpFbx$_Rotation
@@ -1206,7 +1207,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0.186462596, 0.0127588315, 0.0670632869, 0.980087459]
+                                                                                                            rotation: [0.186462596, 0.012758824, 0.0670632869, 0.980087459]
                                                                                                             scale: [0.999999881, 1, 0.999999523]
                                                                                                         child:
                                                                                                           - id: 1568066850160631642
@@ -1294,8 +1295,8 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [-0.0635813996, 0, 0, 0.997976661]
-                                                                                                                                            scale: [1, 0.999999523, 0.999999523]
+                                                                                                                                            rotation: [-0.0635813475, 0, 0, 0.997976661]
+                                                                                                                                            scale: [1, 0.999997735, 0.999997735]
                                                                                                                                         child:
                                                                                                                                           - id: 8660135504756081681
                                                                                                                                             name: mixamorig:RightHandIndex3_$AssimpFbx$_Rotation
@@ -1392,8 +1393,8 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.0837863982, 0, 0, 0.996483743]
-                                                                                                                            scale: [1, 0.999999523, 0.999999523]
+                                                                                                                            rotation: [0.0837866962, 0, 0, 0.996483743]
+                                                                                                                            scale: [1, 0.999998987, 0.999998987]
                                                                                                                         child:
                                                                                                                           - id: 14745531753035668499
                                                                                                                             name: mixamorig:RightHandMiddle2_$AssimpFbx$_Rotation
@@ -1436,8 +1437,8 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [-0.232566416, 0, 0, 0.972580552]
-                                                                                                                                            scale: [1, 0.99999994, 0.99999994]
+                                                                                                                                            rotation: [-0.232566595, 0, 0, 0.972580492]
+                                                                                                                                            scale: [1, 0.999999702, 0.999999702]
                                                                                                                                         child:
                                                                                                                                           - id: 4685582670354308312
                                                                                                                                             name: mixamorig:RightHandMiddle3_$AssimpFbx$_Rotation
@@ -1490,8 +1491,8 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0.0010482393, 0.00960201863, 0.994047463, -0.108519189]
-                    scale: [1.00000155, 1.00000083, 0.999998271]
+                    rotation: [0.00104823604, 0.00960205309, 0.994047523, -0.108519197]
+                    scale: [1.00001132, 1.00000763, 0.999997616]
                 child:
                   - id: 3284221120906593489
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -1808,8 +1809,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [0.346824527, -0.00623859558, 0.00230693864, 0.937906444]
-                                                                    scale: [0.999998271, 1, 0.999999881]
+                                                                    rotation: [0.346824527, -0.00623860816, 0.00230693398, 0.937906444]
+                                                                    scale: [0.999996066, 1, 0.999999881]
                                                                 child:
                                                                   - id: 10485744809602076668
                                                                     name: mixamorig:RightToeBase_$AssimpFbx$_Rotation
@@ -1852,7 +1853,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.707106829, 0, 0, 0.707106709]
-            scale: [1, 0.99999851, 0.99999851]
+            scale: [1, 0.999996305, 0.999996305]
   - id: 15996356040955874012
     name: Goal
     enabled: true
@@ -1883,7 +1884,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999998689, 0.999998689]
+            scale: [1, 0.999996483, 0.999996483]
           - id: 10053401567417248022
             type: 2
             enabled: true
@@ -1909,7 +1910,7 @@ child:
           - id: 14407603094634816398
             type: 1
             enabled: true
-            position: [-0.705326557, 0.199995577, 0]
+            position: [9.49054337, 0.199995577, -8.00707245]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
           - id: 7222316700154383361
@@ -1921,22 +1922,17 @@ child:
             type: 15
             enabled: true
             class_name: EnemyController
-            "'_aggro_range@int'": 4
+            "'_aggro_range@int'": 1
             "'_attack_range@int'": 1
             "'_spawn_pos@float3'": [0, 0, 0]
+            "'_spawn_is_initial@bool'": false
+            "'_player@GameObject*'": 16779115546230417295
           - id: 605615074604004829
             type: 17
             enabled: true
-            max_speed: 5
-            max_acceleration: 2
+            max_speed: 1
+            max_acceleration: 5
             avoid_obstacles: false
-          - id: 7420435526278831537
-            type: 15
-            enabled: true
-            class_name: EnemyController
-            "'_aggro_range@int'": 4
-            "'_attack_range@int'": 1
-            "'_spawn_pos@float3'": [0, 0, 0]
         child:
           - id: 11153236411221663032
             name: Zombunny
@@ -1982,7 +1978,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999999046, 0.999999046, 1]
+                    scale: [0.999996841, 0.999996841, 1]
                 child:
                   - id: 11137831940763597580
                     name: Root
@@ -2047,8 +2043,8 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0.000258133921, -5.96009959e-05, 0.194010273]
-                                            rotation: [0.0907031894, -0.114794642, 0.00386529765, 0.989232123]
-                                            scale: [0.99999994, 0.999999166, 0.999999702]
+                                            rotation: [0.0907034352, -0.114794888, 0.00386531418, 0.989232063]
+                                            scale: [0.999999642, 0.999998212, 0.999999285]
                                         child:
                                           - id: 90588525348590492
                                             name: Head
@@ -2155,8 +2151,8 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504425764, -0.0685685948, -0.0222918633, 0.996120989]
-                                                            scale: [1, 0.999998808, 1]
+                                                            rotation: [-0.0504426509, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            scale: [1, 0.999996603, 1]
                                                         child:
                                                           - id: 5369134726477352179
                                                             name: RightEar
@@ -2199,7 +2195,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999998868, 1, 0.999998868]
+                                                    scale: [0.999996662, 1, 0.999996662]
                                                 child:
                                                   - id: 10791238353389206406
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -2242,7 +2238,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.01414965, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497534, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 9277542848856052168
@@ -2275,7 +2271,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999998868, 1, 0.999998868]
+                                                    scale: [0.999996662, 1, 0.999996662]
                                                 child:
                                                   - id: 16892626323015542549
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -2318,7 +2314,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.01414965, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497534, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 912109624236622812
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -2340,7 +2336,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999998868, 1, 0.999998868]
+                                                    scale: [0.999996662, 1, 0.999996662]
                                                 child:
                                                   - id: 5169306847558413996
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -2350,8 +2346,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826604, -0.0103377886, 0.949738681, 0.00539536402]
-                                                        scale: [1.00000203, 1.00000179, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539532444]
+                                                        scale: [1.00001025, 1.00000989, 0.999999762]
                                                     child:
                                                       - id: 14085786191318698642
                                                         name: LeftUpperArmIK
@@ -2383,8 +2379,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105729485, 0.984830737, 0.0648348108]
-                                                                    scale: [1.0000006, 1.00000226, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728973, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000668, 0.99999994]
                                           - id: 8019458285626313733
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -2404,8 +2400,8 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000191, 1.00000381, 1.00000191]
+                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086232e-08]
+                                                    scale: [1.00000632, 1.00001264, 1.00000632]
                                                 child:
                                                   - id: 7549309450730725839
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -2416,7 +2412,7 @@ child:
                                                         enabled: true
                                                         position: [0, 0, 0]
                                                         rotation: [0.556762099, 0.0841188207, -0.0572061278, 0.824419498]
-                                                        scale: [0.999998808, 1, 1]
+                                                        scale: [0.99999851, 1, 1]
                                                     child:
                                                       - id: 9651016941345420314
                                                         name: RightUpperArm
@@ -2480,8 +2476,8 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000191, 1.00000381, 1.00000191]
+                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086232e-08]
+                                                    scale: [1.00000632, 1.00001264, 1.00000632]
                                                 child:
                                                   - id: 1275028063715662361
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -2492,7 +2488,7 @@ child:
                                                         enabled: true
                                                         position: [0, 0, 0]
                                                         rotation: [0.556762099, 0.0841188207, -0.0572061278, 0.824419498]
-                                                        scale: [0.999998808, 1, 1]
+                                                        scale: [0.99999851, 1, 1]
                                                     child:
                                                       - id: 13873516257580985400
                                                         name: RightUpperArmFK
@@ -2545,8 +2541,8 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000191, 1.00000381, 1.00000191]
+                                                    rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086232e-08]
+                                                    scale: [1.00000632, 1.00001264, 1.00000632]
                                                 child:
                                                   - id: 4663693298634290889
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -2556,7 +2552,7 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.190726742, 0.0220515672, 0.981219053, -0.0186062846]
+                                                        rotation: [0.190726742, 0.0220515449, 0.981219053, -0.0186062846]
                                                         scale: [1.00000012, 1.00000072, 0.999999583]
                                                     child:
                                                       - id: 17624649617242026503
@@ -2589,7 +2585,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [-1.42108544e-16, -6.21724896e-17, -0.238029003]
-                                                                    rotation: [-0.157287657, -0.015486192, 0.982679904, 0.0967521667]
+                                                                    rotation: [-0.157287657, -0.0154861892, 0.982679904, 0.0967521667]
                                                                     scale: [1.00000226, 1.00000155, 0.999999881]
                                       - id: 4942958110570136865
                                         name: LeftLeg_$AssimpFbx$_Translation
@@ -2772,191 +2768,207 @@ child:
       - id: 7058138953999568666
         type: 1
         enabled: true
-        position: [12.4181519, 0, 9.01721382]
+        position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
     child:
-      - id: 6889070396378724002
-        name: Crystal2_Explosion
+      - id: 4290227361266003320
+        name: CrystalExplotion
         enabled: true
         component:
-          - id: 12765581033996955141
+          - id: 6267193907193238444
             type: 1
             enabled: true
-            position: [1.11035252, 0, -2.33799982]
+            position: [0, 0, 8.38094616]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - id: 12324790671358407829
-            type: 14
-            enabled: true
-            animations:
-              - 10140546150993567985
-          - id: 13665313839819875665
+          - id: 10528107868499004656
             type: 15
             enabled: true
             class_name: CrystalExplotion
-            "'_animator@ComponentAnimation*'": 6889070396378724002
+            "'_player@GameObject*'": 16779115546230417295
+            "'_explotion_crystal@GameObject*'": 17517750598722161376
+            "'_static_crystal@GameObject*'": 9205600957050695539
             "'_crashing_index@unsigned'": 0
-          - id: 9016393620439802894
+            "'_explotion_radius@float'": 5
+            "'_explosive_crystal@bool'": true
+          - id: 13561205730021076194
             type: 18
             enabled: true
             obstacle_type: 1
             obstacle_size: [1, 1, 1]
         child:
-          - id: 18200059345399053920
-            name: Geo
+          - id: 9205600957050695539
+            name: crystalSpike_mesh
             enabled: true
             component:
-              - id: 12380489773433609139
+              - id: 8531175892282862949
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
-                rotation: [0.707106829, 0, 0, 0.707106709]
-                scale: [1, 0.999999821, 0.999999821]
-            child:
-              - id: 654635963239343543
-                name: Top
-                enabled: true
-                component:
-                  - id: 6351589731483551571
-                    type: 1
-                    enabled: true
-                    position: [0.0390297659, 1.24786723, -0.122365341]
-                    rotation: [-0.699713588, 0.000990346773, -0.00413561799, 0.714410782]
-                    scale: [2.5400002, 2.53999972, 2.53999996]
-                  - id: 618087545036302105
-                    type: 2
-                    enabled: true
-                    mesh_id: 8491662251488687946
-                    navigable: false
-                    visible: true
-                    material_id: 12020905371248233719
-              - id: 5246419654169491498
-                name: TopRight
-                enabled: true
-                component:
-                  - id: 17611960360590139866
-                    type: 1
-                    enabled: true
-                    position: [0.0765447319, 0.925721884, -0.0172951315]
-                    rotation: [-0.703085482, -0.00609574048, 0.00520840008, 0.711060226]
-                    scale: [2.53999853, 2.54000092, 2.54000211]
-                  - id: 4282299633757238631
-                    type: 2
-                    enabled: true
-                    mesh_id: 10892393975826750078
-                    navigable: false
-                    visible: true
-                    material_id: 12020905371248233719
-              - id: 1099926055765935863
-                name: Middle
-                enabled: true
-                component:
-                  - id: 7989447832268316825
-                    type: 1
-                    enabled: true
-                    position: [0.00915046968, 0.824442148, 0.00801388454]
-                    rotation: [-0.698970914, -0.00733375037, -0.00171151629, 0.715110421]
-                    scale: [2.53999996, 2.53999996, 2.5400002]
-                  - id: 5193719576630292559
-                    type: 2
-                    enabled: true
-                    mesh_id: 3913156033904217141
-                    navigable: false
-                    visible: true
-                    material_id: 12020905371248233719
-              - id: 4326030823234532852
-                name: TopLeft
-                enabled: true
-                component:
-                  - id: 14259636455938583071
-                    type: 1
-                    enabled: true
-                    position: [0.00468555419, 0.851930737, -0.163572505]
-                    rotation: [-0.703144133, -0.00227717403, 0.0023599288, 0.711039782]
-                    scale: [2.53999996, 2.53999996, 2.53999996]
-                  - id: 4459818282816327402
-                    type: 2
-                    enabled: true
-                    mesh_id: 17187476894969531268
-                    navigable: false
-                    visible: true
-                    material_id: 12020905371248233719
-              - id: 9350488262332992112
-                name: Down
-                enabled: true
-                component:
-                  - id: 6685332238919386319
-                    type: 1
-                    enabled: true
-                    position: [0.0345472023, 0.302218705, -0.093022503]
-                    rotation: [-0.701309443, -0.00464925077, 0.000145189391, 0.712841809]
-                    scale: [2.53999996, 2.53999996, 2.53999996]
-                  - id: 15771408182033413539
-                    type: 2
-                    enabled: true
-                    mesh_id: 4869994198959428903
-                    navigable: false
-                    visible: true
-                    material_id: 12020905371248233719
-          - id: 718158323707150998
-            name: MainBone
-            enabled: true
-            component:
-              - id: 10032458991618215688
-                type: 1
-                enabled: true
-                position: [0.0345472023, 0.0264687333, -0.115474738]
                 rotation: [0, 0, 0, 1]
                 scale: [1, 1, 1]
             child:
-              - id: 11411801882761556181
-                name: Joint_Down
+              - id: 4979055420025431247
+                name: crystalSpike_mesh
                 enabled: true
                 component:
-                  - id: 6947630372585900175
+                  - id: 4674001642389312380
                     type: 1
                     enabled: true
-                    position: [-4.440892e-18, 0.275749952, 0.0224522315]
-                    rotation: [0, 0, 0, 1]
-                    scale: [1, 1, 1]
-              - id: 4494133162187435685
-                name: JoinMiddle
+                    position: [1.2035023, 0.56883049, -1.08868277]
+                    rotation: [-0.640856445, 0.298836708, 0.298836529, 0.640855968]
+                    scale: [1.00000012, 1.0000006, 1.00000083]
+                  - id: 9945751266392835726
+                    type: 2
+                    enabled: true
+                    mesh_id: 10390795839823321347
+                    navigable: false
+                    visible: true
+                    material_id: 2620811685305829119
+          - id: 17517750598722161376
+            name: crystalSpikeAnimacion_meshExplision
+            enabled: true
+            component:
+              - id: 4159290752682317096
+                type: 1
+                enabled: true
+                position: [0.0394845456, 0, -0.20355995]
+                rotation: [0, 0, 0, 1]
+                scale: [0.406699985, 0.406699985, 0.406699985]
+              - id: 8589090755411424437
+                type: 14
+                enabled: true
+                animations:
+                  - 9087701207749168962
+            child:
+              - id: 10743458600195966802
+                name: Mesh
                 enabled: true
                 component:
-                  - id: 2961057974902099634
+                  - id: 6968129749117277105
                     type: 1
                     enabled: true
-                    position: [-0.0253967326, 0.797973394, 0.123488627]
-                    rotation: [0, 0, 0, 1]
-                    scale: [1, 1, 1]
-              - id: 798202843003095489
-                name: JointTopLeft
+                    position: [0, 0, 0]
+                    rotation: [0.707106829, 0, 0, 0.707106709]
+                    scale: [1, 0.999999285, 0.999999285]
+                child:
+                  - id: 17992559108953379619
+                    name: crystalSpikeTop_mesh
+                    enabled: true
+                    component:
+                      - id: 18208977719185883012
+                        type: 1
+                        enabled: true
+                        position: [-0.0761962608, 0.494708151, 0.10228952]
+                        rotation: [-0.707106829, 0, 0, 0.707106769]
+                        scale: [2.53999996, 2.53999901, 2.53999901]
+                      - id: 8931830717867428750
+                        type: 2
+                        enabled: true
+                        mesh_id: 2367252208710808329
+                        navigable: false
+                        visible: true
+                        material_id: 5759363592208955763
+                  - id: 1862122086410179541
+                    name: crystalSpikeBottom_mesh
+                    enabled: true
+                    component:
+                      - id: 13060383736542741523
+                        type: 1
+                        enabled: true
+                        position: [0.0911449194, 0.299597561, 0.0456319116]
+                        rotation: [-0.707106829, 0, 0, 0.707106769]
+                        scale: [2.53999996, 2.53999901, 2.53999901]
+                      - id: 7088413284792582122
+                        type: 2
+                        enabled: true
+                        mesh_id: 11783699103939193595
+                        navigable: false
+                        visible: true
+                        material_id: 5759363592208955763
+                  - id: 17217098662618297593
+                    name: crystalSpikeMiddle_mesh
+                    enabled: true
+                    component:
+                      - id: 7661443737270586214
+                        type: 1
+                        enabled: true
+                        position: [0.186976179, 0.484414041, 0.0622473769]
+                        rotation: [-0.707106829, 0, 0, 0.707106769]
+                        scale: [2.53999996, 2.53999901, 2.53999901]
+                      - id: 15042077316274948331
+                        type: 2
+                        enabled: true
+                        mesh_id: 10088262584487287873
+                        navigable: false
+                        visible: true
+                        material_id: 5759363592208955763
+                  - id: 14944463002803967605
+                    name: crystalSpikeBottom2_mesh
+                    enabled: true
+                    component:
+                      - id: 6810302088589233632
+                        type: 1
+                        enabled: true
+                        position: [0.14534016, 0.256375641, 0.271769315]
+                        rotation: [-0.707106829, 0, 0, 0.707106769]
+                        scale: [2.53999996, 2.53999901, 2.53999901]
+                      - id: 2173790372401563616
+                        type: 2
+                        enabled: true
+                        mesh_id: 10784035645120420919
+                        navigable: false
+                        visible: true
+                        material_id: 5759363592208955763
+              - id: 16487431169117057393
+                name: Father
                 enabled: true
                 component:
-                  - id: 13464721904000447897
+                  - id: 9054380544905956527
                     type: 1
                     enabled: true
-                    position: [-0.0298616476, 0.825462043, -0.0480977632]
+                    position: [0.00118318188, -0.00236636377, 0]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
-              - id: 11855551037250095361
-                name: JointTopRight
-                enabled: true
-                component:
-                  - id: 122576468373996568
-                    type: 1
+                child:
+                  - id: 17410728835460817712
+                    name: Bottom2
                     enabled: true
-                    position: [0.0419975258, 0.897041023, 0.0973160565]
-                    rotation: [0, 0, 0, 1]
-                    scale: [1, 1, 1]
-              - id: 7186870174780915177
-                name: JointTop
-                enabled: true
-                component:
-                  - id: 15600016653763365739
-                    type: 1
+                    component:
+                      - id: 13179595250504900554
+                        type: 1
+                        enabled: true
+                        position: [0.144156978, 0.258742034, 0.271769315]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                  - id: 3902267765151565865
+                    name: Bottom
                     enabled: true
-                    position: [0.00448256498, 1.2190311, -0.0065773176]
-                    rotation: [0, 0, 0, 1]
-                    scale: [1, 1, 1]
+                    component:
+                      - id: 11763814397425867157
+                        type: 1
+                        enabled: true
+                        position: [0.0899617374, 0.301963925, 0.0456319116]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                  - id: 13026407696487196075
+                    name: Top
+                    enabled: true
+                    component:
+                      - id: 15698912658123522318
+                        type: 1
+                        enabled: true
+                        position: [-0.0773794428, 0.497074544, 0.10228952]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                  - id: 13699146215714321787
+                    name: Middle
+                    enabled: true
+                    component:
+                      - id: 11408481670291337545
+                        type: 1
+                        enabled: true
+                        position: [0.185792997, 0.486780435, 0.0622473769]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
