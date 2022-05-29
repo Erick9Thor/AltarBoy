@@ -7,7 +7,7 @@
 namespace Hachiko
 { 
 class GameObject;
-
+class ComponentMeshRenderer;
 namespace Scripting
 {
 class PlayerCamera;
@@ -27,8 +27,6 @@ public:
 private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
-	
-	void MoveDashIndicator(const math::float3& current_position) const;
 	
 	void SpawnGameObject() const;
 	
@@ -56,7 +54,7 @@ public:
 private:
 	SERIALIZE_FIELD(float, _movement_speed);
 
-	SERIALIZE_FIELD(GameObject*, _dash_indicator);
+	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);

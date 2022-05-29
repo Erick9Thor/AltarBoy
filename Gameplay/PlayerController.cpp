@@ -14,7 +14,8 @@
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _movement_speed(0.0f)
-	, _dash_indicator(nullptr)
+	, _attack_indicator(nullptr)
+	, _goal(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
@@ -28,12 +29,18 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _stats(5, 2, 10, 10)
 	, _state(PlayerState::IDLE)
 	, _camera(nullptr)
+	, _ui_damage(nullptr)
 {
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_dash_count = _max_dash_count;
+
+	if (_attack_indicator)
+	{
+		_attack_indicator->SetActive(false);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -91,24 +98,6 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 	return plane.ClosestPoint(ray);
 }
 
-void Hachiko::Scripting::PlayerController::MoveDashIndicator(
-	const math::float3& current_position) const
-{
-	const math::float3 mouse_world_position =
-		GetRaycastPosition(current_position);
-
-	math::float3 direction = mouse_world_position - current_position;
-	direction.Normalize();
-
-	//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
-
-	//_dash_indicator->GetTransform()->SetGlobalPosition(current_position
-	//	+ float3(mouse_direction.x, 0.0f, mouse_direction.y));
-
-	//_dash_indicator->GetTransform()->SetGlobalRotationEuler(
-	//	float3(90.0f, 0.0f, 0.0f));
-}
-
 void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 {
 	static int times_hit_g = 0;
@@ -134,10 +123,19 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 {
 	if (_attack_current_duration > 0.0f)
 	{
+		if (_attack_indicator)
+		{
+			_attack_indicator->SetActive(true);
+		}
+
 		_attack_current_duration -= Time::DeltaTime();
 	}
 	else
 	{
+		if (_attack_indicator)
+		{
+			_attack_indicator->SetActive(false);
+		}
 		// Set state to idle, it will be overriden if there is a movement:
 		_state = PlayerState::IDLE;
 
