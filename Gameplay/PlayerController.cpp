@@ -47,9 +47,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		//SceneManagement::SwitchScene(Scenes::LOSE);
 	}
 
-	// Set state to idle, it will be overriden if there is a movement:
-	_state = PlayerState::IDLE;
-
 	// Attack:
 	Attack(transform, current_position);
 
@@ -133,8 +130,19 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 }
 
 void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
-	const math::float3& current_position)
+	math::float3& current_position)
 {
+	if (_attack_current_duration > 0.0f)
+	{
+		_attack_current_duration -= Time::DeltaTime();
+	}
+	else
+	{
+		// Set state to idle, it will be overriden if there is a movement:
+		_state = PlayerState::IDLE;
+
+	}
+
 	if (_is_dashing || (_attack_current_cd > 0.0f) )
 	{
 		_attack_current_cd -= Time::DeltaTime();
@@ -154,10 +162,11 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 	}
 	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
 	{
+		_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
-
+		current_position += transform->GetFront() * 0.3f;
 		_attack_current_cd = _attack_cooldown;
 	}
 }
@@ -279,6 +288,13 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 void Hachiko::Scripting::PlayerController::Rotate(
 	ComponentTransform* transform, const math::float3& moving_dir_input)
 {
+	// For now dont update if player is Attacking, later with custom animations this may change
+	if (_state == PlayerState::MELEE_ATTACKING ||
+		_state == PlayerState::RANGED_ATTACKING)
+	{
+		return;
+	}
+
 	// If input tells to turn to player
 	if (!moving_dir_input.Equals(float3::zero) && _state == PlayerState::WALKING)
 	{
@@ -324,6 +340,7 @@ void Hachiko::Scripting::PlayerController::Rotate(
 void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_position, math::float3& moving_input_dir)
 {
 	// Ignore the inputs if engine camera input is taken:
+	// Do we need this?
 	if (Input::IsMouseButtonPressed(Input::MouseButton::RIGHT))
 	{
 		return;

@@ -33,7 +33,7 @@ private:
 	void SpawnGameObject() const;
 	
 	void Attack(ComponentTransform* transform, 
-		const math::float3& current_position);
+		math::float3& current_position);
 
 	void MeleeAttack(ComponentTransform* transform,
 		const math::float3& current_position);
