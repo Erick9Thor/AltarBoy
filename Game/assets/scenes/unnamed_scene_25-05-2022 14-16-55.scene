@@ -17,8 +17,8 @@ child:
         type: 1
         enabled: true
         position: [-113.67424, 0, -14.8525391]
-        rotation: [-3.87724022e-08, 0.887010872, -0.46174857, -2.01832133e-08]
-        scale: [1.00004709, 1.00001073, 1.00003409]
+        rotation: [-3.87724093e-08, 0.887010872, -0.4617486, -2.01831973e-08]
+        scale: [1.000049, 1.00001073, 1.00003541]
       - id: 1219616210356617501
         type: 4
         enabled: true
@@ -27,8 +27,8 @@ child:
           far_distance: 1000
           fov: 65
           position: [-113.67424, 0, -14.8525391]
-          front: [7.42542475e-13, -0.819179952, -0.57359612]
-          up: [-8.74231674e-08, 0.573582649, -0.819160759]
+          front: [7.81624656e-13, -0.819181085, -0.573596895]
+          up: [-8.74231603e-08, 0.57358259, -0.819160819]
           pinned_camera: [0, 0, 0]
       - id: 8071707948999942953
         type: 15
@@ -62,7 +62,7 @@ child:
         type: 1
         enabled: true
         position: [-115.236176, 3.30575967, -23.512579]
-        rotation: [0, 0.0784594119, 0, 0.996917307]
+        rotation: [0, 0.0784594044, 0, 0.996917307]
         scale: [0.999999523, 1, 0.999999523]
       - id: 13550872943031959967
         type: 14
@@ -73,30 +73,19 @@ child:
         type: 15
         enabled: true
         class_name: PlayerController
-        "'_movement_speed@float'": 0
+        "'_movement_speed@float'": 7
         "'_dash_indicator@GameObject*'": 6515959323984804834
         "'_goal@GameObject*'": 18237002791232467726
-        "'_dash_duration@float'": 0
-        "'_dash_distance@float'": 0
-        "'_dash_progress@float'": 0
-        "'_dash_cooldown@float'": 0
-        "'_dash_timer@float'": 0
-        "'_dash_count@int'": 0
-        "'_max_dash_count@int'": 0
-        "'_is_dashing@bool'": false
-        "'_has_cooldown@bool'": false
-        "'_is_falling@bool'": false
-        "'_dash_start@math::float3'": [0, 0, 0]
-        "'_dash_direction@math::float3'": [0, 0, 0]
+        "'_dash_duration@float'": 0.150000006
+        "'_dash_distance@float'": 6
+        "'_dash_cooldown@float'": 2
+        "'_max_dash_count@int'": 2
         "'_raycast_min_range@float'": 0.00100000005
         "'_raycast_max_range@float'": 15
-        "'_attack_radius@float'": 0
-        "'_attack_cooldown@float'": 0
-        "'_should_rotate@bool'": false
-        "'_rotation_progress@float'": 0
-        "'_rotation_duration@float'": 0
-        "'_rotation_start@math::Quat'": [0, 0, 0, 1]
-        "'_rotation_target@math::Quat'": [0, 0, 0, 1]
+        "'_attack_radius@float'": 3
+        "'_attack_cooldown@float'": 0.330000013
+        "'_attack_duration@float'": 0.330000013
+        "'_rotation_duration@float'": 0.075000003
         "'_camera@GameObject*'": 2223877946256215970
         "'_ui_damage@GameObject*'": 0
     child:
@@ -144,7 +133,7 @@ child:
                 enabled: true
                 position: [0, 0, 0]
                 rotation: [0, 0, 0.707106829, 0.707106709]
-                scale: [0.999996245, 0.999996245, 1]
+                scale: [0.999995828, 0.999995828, 1]
             child:
               - id: 4852818229783939951
                 name: Root
@@ -361,7 +350,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0, 0.70710665, 0, 0.707106888]
-                                                scale: [0.999996066, 1, 0.999996066]
+                                                scale: [0.999995649, 1, 0.999995649]
                                             child:
                                               - id: 11903578868183437627
                                                 name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -404,7 +393,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                rotation: [0, -0.0141497813, 0, 0.999899983]
+                                                                rotation: [0, -0.0141498009, 0, 0.999899983]
                                                                 scale: [1, 1, 1]
                                                             child:
                                                               - id: 1898457466991041944
@@ -437,7 +426,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0, 0.70710665, 0, 0.707106888]
-                                                scale: [0.999996066, 1, 0.999996066]
+                                                scale: [0.999995649, 1, 0.999995649]
                                             child:
                                               - id: 13414404633089525352
                                                 name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -480,7 +469,7 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                rotation: [0, -0.0141497813, 0, 0.999899983]
+                                                                rotation: [0, -0.0141498009, 0, 0.999899983]
                                                                 scale: [1, 1, 1]
                                       - id: 263945548165522243
                                         name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -502,7 +491,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0, 0.70710665, 0, 0.707106888]
-                                                scale: [0.999996066, 1, 0.999996066]
+                                                scale: [0.999995649, 1, 0.999995649]
                                             child:
                                               - id: 6659594713832526742
                                                 name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -512,8 +501,8 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531233]
-                                                    scale: [1.00001264, 1.00001228, 0.999999762]
+                                                    rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539530348]
+                                                    scale: [1.00001431, 1.00001395, 0.999999762]
                                                 child:
                                                   - id: 5643350238940373661
                                                     name: LeftUpperArmIK
@@ -545,8 +534,8 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                rotation: [0.160602391, 0.0105728842, 0.984830737, 0.0648347512]
-                                                                scale: [1.0000006, 1.00000787, 0.99999994]
+                                                                rotation: [0.160602391, 0.0105728768, 0.984830737, 0.0648347512]
+                                                                scale: [1.0000006, 1.0000087, 0.99999994]
                                       - id: 525017418210486166
                                         name: RightUpperArm_$AssimpFbx$_Translation
                                         enabled: true
@@ -567,7 +556,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                scale: [1.00000751, 1.00001502, 1.00000751]
+                                                scale: [1.00000834, 1.00001669, 1.00000834]
                                             child:
                                               - id: 11972699355724584356
                                                 name: RightUpperArm_$AssimpFbx$_Rotation
@@ -643,7 +632,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                scale: [1.00000751, 1.00001502, 1.00000751]
+                                                scale: [1.00000834, 1.00001669, 1.00000834]
                                             child:
                                               - id: 10247898089237237800
                                                 name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -708,7 +697,7 @@ child:
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                scale: [1.00000751, 1.00001502, 1.00000751]
+                                                scale: [1.00000834, 1.00001669, 1.00000834]
                                             child:
                                               - id: 5105248949399853384
                                                 name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -945,15 +934,15 @@ child:
             type: 1
             enabled: true
             position: [-2.28881836e-05, 0.498346329, 0]
-            rotation: [-0.707106829, 4.88902892e-08, -2.19162821e-08, 0.707106709]
-            scale: [100.000046, 99.9998016, 2.56959128]
+            rotation: [-0.707106829, 8.72585773e-08, -8.19694961e-08, 0.707106709]
+            scale: [255.000122, 254.999329, 6.55245352]
           - id: 14014856922884467210
             type: 2
             enabled: true
             mesh_id: 6492766721524954712
             navigable: false
             visible: true
-            material_id: 6750369022920963075
+            material_id: 617936367517861074
   - id: 18237002791232467726
     name: Goal
     enabled: true
@@ -1050,7 +1039,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996662, 0.999996662, 1]
+                    scale: [0.999996245, 0.999996245, 1]
                 child:
                   - id: 3737592754687177703
                     name: Root
@@ -1224,7 +1213,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
-                                                            scale: [1, 0.999996424, 1]
+                                                            scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 12458278403434625025
                                                             name: RightEar
@@ -1267,7 +1256,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996483, 1, 0.999996483]
+                                                    scale: [0.999996066, 1, 0.999996066]
                                                 child:
                                                   - id: 12280492308885884055
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -1310,7 +1299,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497618, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497813, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 4110231760889161344
@@ -1343,7 +1332,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996483, 1, 0.999996483]
+                                                    scale: [0.999996066, 1, 0.999996066]
                                                 child:
                                                   - id: 219017733265735510
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -1386,7 +1375,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497618, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497813, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 5058743053904358085
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -1408,7 +1397,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996483, 1, 0.999996483]
+                                                    scale: [0.999996066, 1, 0.999996066]
                                                 child:
                                                   - id: 10624314895114408633
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -1418,8 +1407,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539532118]
-                                                        scale: [1.00001097, 1.00001061, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531233]
+                                                        scale: [1.00001264, 1.00001228, 0.999999762]
                                                     child:
                                                       - id: 17056856134701614802
                                                         name: LeftUpperArmIK
@@ -1451,8 +1440,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728926, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000703, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728842, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000787, 0.99999994]
                                           - id: 4122439626626220227
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -1473,7 +1462,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000668, 1.00001335, 1.00000668]
+                                                    scale: [1.00000751, 1.00001502, 1.00000751]
                                                 child:
                                                   - id: 16134026060640790586
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -1549,7 +1538,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000668, 1.00001335, 1.00000668]
+                                                    scale: [1.00000751, 1.00001502, 1.00000751]
                                                 child:
                                                   - id: 11540474658302176852
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -1614,7 +1603,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000668, 1.00001335, 1.00000668]
+                                                    scale: [1.00000751, 1.00001502, 1.00000751]
                                                 child:
                                                   - id: 9001623254397339671
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -1908,7 +1897,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 6359705901614822978
                     name: Root
@@ -2081,7 +2070,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 2913638713581954214
@@ -2125,7 +2114,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 3870054803840211019
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -2168,7 +2157,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 3234232451829199632
@@ -2201,7 +2190,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 5326565293653761577
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -2244,7 +2233,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 3869995368486947251
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -2266,7 +2255,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 7662814549853996661
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -2276,8 +2265,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 2954754017512233248
                                                         name: LeftUpperArmIK
@@ -2309,8 +2298,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 10771828898874085064
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -2331,7 +2320,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 12694154781220602047
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -2407,7 +2396,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 6968217095106632192
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -2472,7 +2461,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 16424259968277177706
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -2766,7 +2755,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 15630258277146521225
                     name: Root
@@ -2939,7 +2928,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 3435823695416665967
@@ -2983,7 +2972,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 14546424230407565738
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -3026,7 +3015,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 16129828515217771925
@@ -3059,7 +3048,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 17670905321680340893
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -3102,7 +3091,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 3841003983124591235
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -3124,7 +3113,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 16718546086662374949
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -3134,8 +3123,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 13647174588030755307
                                                         name: LeftUpperArmIK
@@ -3167,8 +3156,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 11521694818039963210
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -3189,7 +3178,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 15726216008496837485
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -3265,7 +3254,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 17248457134025400121
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -3330,7 +3319,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 13074848393683973559
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -3624,7 +3613,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 7438907898517362730
                     name: Root
@@ -3797,7 +3786,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 4572728230472482651
@@ -3841,7 +3830,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 12636575431964156831
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -3884,7 +3873,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 7516623995105729847
@@ -3917,7 +3906,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 17506227272405425582
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -3960,7 +3949,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 1564046916300430797
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -3982,7 +3971,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 1079870688977831106
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -3992,8 +3981,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 5492748593311730518
                                                         name: LeftUpperArmIK
@@ -4025,8 +4014,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 8010494447929062925
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -4047,7 +4036,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 7102675338878420884
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -4123,7 +4112,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 5552310009880347788
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -4188,7 +4177,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 4088925746706964921
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -4482,7 +4471,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996543, 0.999996543, 1]
+                    scale: [0.999996126, 0.999996126, 1]
                 child:
                   - id: 14992103664094593059
                     name: Root
@@ -4699,7 +4688,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 7653438944925116640
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -4742,7 +4731,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 13567929047751996757
@@ -4775,7 +4764,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 16588974442903349478
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -4818,7 +4807,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 13326358090383293910
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -4840,7 +4829,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 9666137794945556062
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -4850,8 +4839,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531838]
-                                                        scale: [1.00001144, 1.00001109, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531]
+                                                        scale: [1.00001311, 1.00001276, 0.999999762]
                                                     child:
                                                       - id: 6713080926790734869
                                                         name: LeftUpperArmIK
@@ -4883,8 +4872,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728908, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000727, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728814, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000811, 0.99999994]
                                           - id: 3099129919415551611
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -4905,7 +4894,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 3307897851171781797
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -4981,7 +4970,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 7449148723696599910
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -5046,7 +5035,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 2558479806395880508
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -5340,7 +5329,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996543, 0.999996543, 1]
+                    scale: [0.999996126, 0.999996126, 1]
                 child:
                   - id: 12030759844421610244
                     name: Root
@@ -5557,7 +5546,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 7230556447844125896
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -5600,7 +5589,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 11410301224788255921
@@ -5633,7 +5622,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 13724230032208538691
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -5676,7 +5665,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 7016874869682718569
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -5698,7 +5687,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 10003074711492999024
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -5708,8 +5697,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531838]
-                                                        scale: [1.00001144, 1.00001109, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531]
+                                                        scale: [1.00001311, 1.00001276, 0.999999762]
                                                     child:
                                                       - id: 15536755917082322604
                                                         name: LeftUpperArmIK
@@ -5741,8 +5730,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728908, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000727, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728814, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000811, 0.99999994]
                                           - id: 12357103189257114044
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -5763,7 +5752,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 4245834847669869573
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -5839,7 +5828,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 2898390887414494771
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -5904,7 +5893,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 7203454832333044942
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -6198,7 +6187,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996543, 0.999996543, 1]
+                    scale: [0.999996126, 0.999996126, 1]
                 child:
                   - id: 86713189682731399
                     name: Root
@@ -6415,7 +6404,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 7224717462654823272
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -6458,7 +6447,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 6208606162160311711
@@ -6491,7 +6480,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 9017862180498459188
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -6534,7 +6523,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497673, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497869, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 3843101305680349041
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -6556,7 +6545,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996364, 1, 0.999996364]
+                                                    scale: [0.999995947, 1, 0.999995947]
                                                 child:
                                                   - id: 10650805158746459776
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -6566,8 +6555,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531838]
-                                                        scale: [1.00001144, 1.00001109, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531]
+                                                        scale: [1.00001311, 1.00001276, 0.999999762]
                                                     child:
                                                       - id: 4240241355205049446
                                                         name: LeftUpperArmIK
@@ -6599,8 +6588,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728908, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000727, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728814, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000811, 0.99999994]
                                           - id: 16600546766787035476
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -6621,7 +6610,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 15805149672589858543
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -6697,7 +6686,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 357769798102823019
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -6762,7 +6751,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000691, 1.00001383, 1.00000691]
+                                                    scale: [1.00000775, 1.0000155, 1.00000775]
                                                 child:
                                                   - id: 4330464634356535893
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -7056,7 +7045,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 3545200547225082420
                     name: Root
@@ -7229,7 +7218,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 9341078859308721975
@@ -7273,7 +7262,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 17672781129659253267
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -7316,7 +7305,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 3809459502902644897
@@ -7349,7 +7338,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 1639665353535403128
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -7392,7 +7381,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 10784109189701716214
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -7414,7 +7403,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 13916822400325074552
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -7424,8 +7413,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 2693251085972149874
                                                         name: LeftUpperArmIK
@@ -7457,8 +7446,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 5913645413339546936
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -7479,7 +7468,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 1146052696773321982
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -7555,7 +7544,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 9986614960701503491
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -7620,7 +7609,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 17980103142309007977
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -7914,7 +7903,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 18433635989529970703
                     name: Root
@@ -8087,7 +8076,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 17856157886871624542
@@ -8131,7 +8120,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 8074959184735906798
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -8174,7 +8163,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 3915905337044767292
@@ -8207,7 +8196,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 13481539663570587407
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -8250,7 +8239,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 12880118466450652480
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -8272,7 +8261,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 1556779968875559857
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -8282,8 +8271,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 2212777883402151565
                                                         name: LeftUpperArmIK
@@ -8315,8 +8304,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 15841821810394001259
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -8337,7 +8326,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 8574785417548908269
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -8413,7 +8402,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 12359192781566677451
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -8478,7 +8467,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 15928027610441782150
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -8772,7 +8761,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 11595068739855134882
                     name: Root
@@ -8945,7 +8934,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 14091017149474374972
@@ -8989,7 +8978,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 17610806006812539862
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -9032,7 +9021,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 13941043931052740960
@@ -9065,7 +9054,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 4510389867781241592
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -9108,7 +9097,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 7437934436188625331
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -9130,7 +9119,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 9106057541644180584
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -9140,8 +9129,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 7591331634771288669
                                                         name: LeftUpperArmIK
@@ -9173,8 +9162,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 9409630794019654257
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -9195,7 +9184,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 18415309849886293836
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -9271,7 +9260,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 8871670422834419056
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -9336,7 +9325,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 3914421595884093696
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -9630,7 +9619,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0, 0.707106829, 0.707106709]
-                    scale: [0.999996603, 0.999996603, 1]
+                    scale: [0.999996185, 0.999996185, 1]
                 child:
                   - id: 13804546516369758651
                     name: Root
@@ -9803,7 +9792,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918987, 0.996120989]
+                                                            rotation: [-0.0504426584, -0.0685685948, -0.0222918969, 0.996120989]
                                                             scale: [1, 0.999996364, 1]
                                                         child:
                                                           - id: 590460056212404592
@@ -9847,7 +9836,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 1271523552015272161
                                                     name: LeftUpperArm_$AssimpFbx$_Rotation
@@ -9890,7 +9879,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                                                 child:
                                                                   - id: 1126971361311862692
@@ -9923,7 +9912,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 8498883294738109706
                                                     name: LeftUpperArmFK_$AssimpFbx$_Rotation
@@ -9966,7 +9955,7 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0, -0.0141497646, 0, 0.999899983]
+                                                                    rotation: [0, -0.0141497841, 0, 0.999899983]
                                                                     scale: [1, 1, 1]
                                           - id: 13360521411347105093
                                             name: LeftUpperArmIK_$AssimpFbx$_Translation
@@ -9988,7 +9977,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0, 0.70710665, 0, 0.707106888]
-                                                    scale: [0.999996424, 1, 0.999996424]
+                                                    scale: [0.999996006, 1, 0.999996006]
                                                 child:
                                                   - id: 7379793278951983796
                                                     name: LeftUpperArmIK_$AssimpFbx$_Rotation
@@ -9998,8 +9987,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
-                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.00539531978]
-                                                        scale: [1.00001121, 1.00001085, 0.999999762]
+                                                        rotation: [0.312826544, -0.0103377812, 0.949738741, 0.0053953114]
+                                                        scale: [1.00001287, 1.00001252, 0.999999762]
                                                     child:
                                                       - id: 4504701173781463505
                                                         name: LeftUpperArmIK
@@ -10031,8 +10020,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [3.89922935e-16, -1.26217742e-31, 0.238028452]
-                                                                    rotation: [0.160602391, 0.0105728917, 0.984830737, 0.0648347512]
-                                                                    scale: [1.0000006, 1.00000715, 0.99999994]
+                                                                    rotation: [0.160602391, 0.0105728833, 0.984830737, 0.0648347512]
+                                                                    scale: [1.0000006, 1.00000799, 0.99999994]
                                           - id: 3475612174081562432
                                             name: RightUpperArm_$AssimpFbx$_Translation
                                             enabled: true
@@ -10053,7 +10042,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 11987901011989563978
                                                     name: RightUpperArm_$AssimpFbx$_Rotation
@@ -10129,7 +10118,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 13058385793599886773
                                                     name: RightUpperArmFK_$AssimpFbx$_Rotation
@@ -10194,7 +10183,7 @@ child:
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [0.707106829, -3.09086232e-08, 0.707106829, 3.09086197e-08]
-                                                    scale: [1.00000679, 1.00001359, 1.00000679]
+                                                    scale: [1.00000763, 1.00001526, 1.00000763]
                                                 child:
                                                   - id: 14603122162232782222
                                                     name: RightUpperArmIK_$AssimpFbx$_Rotation
@@ -10449,8 +10438,8 @@ child:
             type: 1
             enabled: true
             position: [-29.6334076, -12.666688, 2.09419012]
-            rotation: [0.499999523, 0.499999523, 0.500001371, -0.499999642]
-            scale: [1.0000025, 1.00000215, 1.00000215]
+            rotation: [0.499999404, 0.499999404, 0.500001788, -0.499999523]
+            scale: [1.00000322, 1.00000286, 1.00000286]
         child:
           - id: 11025739220549076809
             name: Box130
@@ -10529,7 +10518,7 @@ child:
                 enabled: true
                 position: [-38.5504761, -15.0006714, 5.80129623]
                 rotation: [0, 0, -0.707106829, 0.707106709]
-                scale: [0.99999845, 0.99999845, 1]
+                scale: [0.999998033, 0.999998033, 1]
               - id: 1874341956751733570
                 type: 2
                 enabled: true
@@ -10546,7 +10535,7 @@ child:
                 enabled: true
                 position: [-10.9111938, -15.0006714, 5.80129623]
                 rotation: [0, 0, -0.707106829, 0.707106709]
-                scale: [0.99999845, 0.99999845, 1]
+                scale: [0.999998033, 0.999998033, 1]
               - id: 18205722425371493248
                 type: 2
                 enabled: true
@@ -10698,8 +10687,8 @@ child:
                 type: 1
                 enabled: true
                 position: [78.8007126, 3.69447136, -16.2247562]
-                rotation: [-0.0140738608, -0.014409896, -0.698581934, 0.715246558]
-                scale: [1.00000143, 1.00000286, 0.999991]
+                rotation: [-0.0140738711, -0.0144098978, -0.698581934, 0.715246558]
+                scale: [1.00000143, 1.00000286, 0.999990582]
               - id: 248170687358388293
                 type: 2
                 enabled: true
@@ -10716,7 +10705,7 @@ child:
                 enabled: true
                 position: [28.1558228, 94.4394531, 2.66251373]
                 rotation: [0, 0, -0.707106829, 0.707106709]
-                scale: [0.99999845, 0.99999845, 1]
+                scale: [0.999998033, 0.999998033, 1]
               - id: 9653698713212704137
                 type: 2
                 enabled: true
@@ -10783,8 +10772,8 @@ child:
                 type: 1
                 enabled: true
                 position: [74.1847534, -9.39981079, -16.2259445]
-                rotation: [0.707106829, 0.707106829, -1.22999865e-07, 3.20958122e-07]
-                scale: [1.00013077, 1.00012445, 1.00015736]
+                rotation: [0.707106829, 0.707106829, -1.22999694e-07, 3.20958122e-07]
+                scale: [1.00013161, 1.00012529, 1.00015903]
               - id: 13270093607880572186
                 type: 2
                 enabled: true
@@ -10988,7 +10977,7 @@ child:
                 enabled: true
                 position: [28.1558228, 89.5400391, 2.66251373]
                 rotation: [0, 0, -0.707106829, 0.707106709]
-                scale: [0.99999845, 0.99999845, 1]
+                scale: [0.999998033, 0.999998033, 1]
               - id: 15305873267613718304
                 type: 2
                 enabled: true
@@ -11123,8 +11112,8 @@ child:
                 type: 1
                 enabled: true
                 position: [59.1574402, -31.4925213, -12.7917891]
-                rotation: [0.707106948, -0.70710659, -2.18557155e-08, -3.99615594e-08]
-                scale: [0.999998569, 0.999998569, 1]
+                rotation: [0.707106948, -0.70710659, -2.18557208e-08, -3.99615594e-08]
+                scale: [0.999998152, 0.999998152, 1]
               - id: 2097062956125757824
                 type: 2
                 enabled: true
@@ -11208,8 +11197,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-33.3192139, -58.6437378, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 14788173697305572829
                 type: 2
                 enabled: true
@@ -11310,8 +11299,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-39.2347717, -64.9420776, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 4584087870030480996
                 type: 2
                 enabled: true
@@ -11412,8 +11401,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-45.7230835, -71.3587646, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 3685729723784554410
                 type: 2
                 enabled: true
@@ -11752,8 +11741,8 @@ child:
                 type: 1
                 enabled: true
                 position: [83.7359619, -56.5591736, -11.1899748]
-                rotation: [0.99619472, -0.0871557891, -4.33860795e-11, -4.38744507e-08]
-                scale: [0.99999994, 1.00000191, 1.00000346]
+                rotation: [0.99619472, -0.087155804, -4.33869711e-11, -4.38744472e-08]
+                scale: [0.999999523, 1.00000203, 1.00000346]
               - id: 10822205069029813177
                 type: 2
                 enabled: true
@@ -11786,8 +11775,8 @@ child:
                 type: 1
                 enabled: true
                 position: [90.9883041, -36.9283142, -11.1899748]
-                rotation: [0.99619472, 0.0871557891, 4.33869711e-11, -4.38744507e-08]
-                scale: [0.99999994, 1.00000191, 1.00000346]
+                rotation: [0.99619472, 0.087155804, 4.33878627e-11, -4.38744472e-08]
+                scale: [0.999999523, 1.00000203, 1.00000346]
               - id: 7792800958690839051
                 type: 2
                 enabled: true
@@ -12160,8 +12149,8 @@ child:
                 type: 1
                 enabled: true
                 position: [62.8060303, -60.5516663, -11.1899748]
-                rotation: [0.99619472, 0.0871557891, 4.33860795e-11, -4.38744507e-08]
-                scale: [0.99999994, 1.00000191, 1.00000346]
+                rotation: [0.99619472, 0.087155804, 4.33869711e-11, -4.38744472e-08]
+                scale: [0.999999523, 1.00000203, 1.00000346]
               - id: 1356160065536635981
                 type: 2
                 enabled: true
@@ -12245,8 +12234,8 @@ child:
                 type: 1
                 enabled: true
                 position: [93.8369141, 69.0345459, -3.20011902]
-                rotation: [0.998265386, 0.058875531, -1.14634036e-08, -1.94368752e-07]
-                scale: [0.999999464, 1.00000787, 1.00001085]
+                rotation: [0.998265445, 0.0588755831, -1.14633902e-08, -1.94368596e-07]
+                scale: [0.999999285, 1.00000989, 1.00001371]
               - id: 11528897851439353951
                 type: 2
                 enabled: true
@@ -12262,8 +12251,8 @@ child:
                 type: 1
                 enabled: true
                 position: [94.9905319, 61.9366455, -3.20011902]
-                rotation: [0.99904424, 0.0437130295, -8.51119175e-09, -1.9452014e-07]
-                scale: [0.999999881, 1.00000882, 1.0000118]
+                rotation: [0.99904424, 0.0437130295, -8.51117576e-09, -1.9451987e-07]
+                scale: [0.999999881, 1.00001132, 1.00001514]
               - id: 15048175829518340787
                 type: 2
                 enabled: true
@@ -12296,8 +12285,8 @@ child:
                 type: 1
                 enabled: true
                 position: [99.9965134, 65.9467773, -3.20011902]
-                rotation: [0.977077603, 0.212883979, -4.14497343e-08, -1.90243384e-07]
-                scale: [1, 1.0000087, 1.0000118]
+                rotation: [0.977077603, 0.212883979, -4.1449649e-08, -1.90243171e-07]
+                scale: [1, 1.00001121, 1.00001514]
               - id: 9134004216500779162
                 type: 2
                 enabled: true
@@ -12381,8 +12370,8 @@ child:
                 type: 1
                 enabled: true
                 position: [62.3432007, 78.5861816, -3.20011902]
-                rotation: [0.0378770456, 0.99928242, -1.9456769e-07, -7.37493222e-09]
-                scale: [1.00000143, 0.999998391, 1]
+                rotation: [0.0378770456, 0.99928242, -1.94567761e-07, -7.37493311e-09]
+                scale: [1.00000226, 0.999997973, 1]
               - id: 17898122340590720108
                 type: 2
                 enabled: true
@@ -12466,8 +12455,8 @@ child:
                 type: 1
                 enabled: true
                 position: [81.4291992, 84.5788574, -3.20011902]
-                rotation: [-0.37187919, 0.928281248, -1.80743527e-07, 7.24072891e-08]
-                scale: [1.00000763, 1, 1.00001037]
+                rotation: [-0.37187919, 0.928281248, -1.80743669e-07, 7.24071896e-08]
+                scale: [1.00001013, 1, 1.00001371]
               - id: 12962874948852449068
                 type: 2
                 enabled: true
@@ -13198,7 +13187,7 @@ child:
                 enabled: true
                 position: [-51.1169128, -29.9623394, 8.92208099]
                 rotation: [0, 0, -0.737277448, 0.675590158]
-                scale: [1.00000286, 1.00000286, 1]
+                scale: [1.0000037, 1.0000037, 1]
               - id: 14797277366471620161
                 type: 2
                 enabled: true
@@ -13214,8 +13203,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-31.2544556, -23.0955811, 10.6085405]
-                rotation: [0, 0, 0.906307876, -0.42261833]
-                scale: [1.00000238, 1.00000238, 1]
+                rotation: [0, 0, 0.906307817, -0.42261827]
+                scale: [1.0000031, 1.0000031, 1]
               - id: 3858367594403088745
                 type: 2
                 enabled: true
@@ -13248,7 +13237,7 @@ child:
                 type: 1
                 enabled: true
                 position: [76.5614014, 97.5119629, 10.723197]
-                rotation: [0, 0, -0.119638756, 0.992817461]
+                rotation: [0, 0, -0.119638763, 0.992817461]
                 scale: [0.213788003, 0.303727984, 1.74003196]
               - id: 15337794275675944555
                 type: 2
@@ -13486,8 +13475,8 @@ child:
                 type: 1
                 enabled: true
                 position: [87.7579346, 87.1203613, -3.20011902]
-                rotation: [-0.37187919, 0.928281248, -1.80743527e-07, 7.24072891e-08]
-                scale: [1.00000763, 1, 1.00001037]
+                rotation: [-0.37187919, 0.928281248, -1.80743669e-07, 7.24071896e-08]
+                scale: [1.00001013, 1, 1.00001371]
               - id: 2133015397626028995
                 type: 2
                 enabled: true
@@ -13554,8 +13543,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-2.04611206, 37.3615723, -3.20011902]
-                rotation: [-0.638373494, 0.769726753, -1.49871212e-07, 1.24295411e-07]
-                scale: [1, 1, 1.0000031]
+                rotation: [-0.638373554, 0.769726753, -1.49871227e-07, 1.24295283e-07]
+                scale: [0.99999994, 0.99999994, 1.00000381]
               - id: 4569323050978329256
                 type: 2
                 enabled: true
@@ -13571,8 +13560,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-14.803833, 20.0322266, -3.20011902]
-                rotation: [0.970350921, -0.24170059, 4.70606025e-08, -1.8893364e-07]
-                scale: [0.99999994, 1.00000286, 1.00000501]
+                rotation: [0.970350921, -0.24170059, 4.70605173e-08, -1.88933441e-07]
+                scale: [0.99999994, 1.0000037, 1.00000668]
               - id: 6668358888846441120
                 type: 2
                 enabled: true
@@ -13588,8 +13577,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-18.6383362, 15.6540527, -3.20011902]
-                rotation: [0.846133769, -0.532970667, 1.03772628e-07, -1.64747945e-07]
-                scale: [0.99999994, 1.00000286, 1.00000572]
+                rotation: [0.846133769, -0.532970667, 1.03772464e-07, -1.64747746e-07]
+                scale: [0.99999994, 1.0000037, 1.00000739]
               - id: 15355139972095013271
                 type: 2
                 enabled: true
@@ -13605,8 +13594,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-24.1506958, 13.9482422, -3.20011902]
-                rotation: [-0.654281139, 0.756251454, -1.47247491e-07, 1.27392482e-07]
-                scale: [1.00000298, 1, 1.0000062]
+                rotation: [-0.654281139, 0.756251454, -1.47247491e-07, 1.27392269e-07]
+                scale: [1.00000298, 1, 1.00000787]
               - id: 6497514953970839456
                 type: 2
                 enabled: true
@@ -13622,8 +13611,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-29.5652466, 16.0821533, -3.20011902]
-                rotation: [-0.385031819, 0.922903419, -1.7969586e-07, 7.49682414e-08]
-                scale: [1.0000025, 1, 1.00000525]
+                rotation: [-0.385031819, 0.922903419, -1.7969586e-07, 7.49681703e-08]
+                scale: [1.0000031, 1, 1.00000668]
               - id: 17236292484419608423
                 type: 2
                 enabled: true
@@ -13656,8 +13645,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-32.7124634, 27.6223145, -3.20011902]
-                rotation: [0.210480258, 0.977598131, -1.90345261e-07, -4.09819521e-08]
-                scale: [1.00000179, 1, 1.00000119]
+                rotation: [0.210480258, 0.977598131, -1.90345148e-07, -4.09819059e-08]
+                scale: [1.00000262, 1, 1.00000286]
               - id: 14931283904527216581
                 type: 2
                 enabled: true
@@ -13673,8 +13662,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-23.7497559, 32.34375, -3.20011902]
-                rotation: [0.762531638, 0.64695102, -1.25965343e-07, -1.48470065e-07]
-                scale: [1, 1.00000286, 1.00000572]
+                rotation: [0.762531638, 0.64695102, -1.25965158e-07, -1.48469951e-07]
+                scale: [1, 1.0000037, 1.00000739]
               - id: 12469371241176587225
                 type: 2
                 enabled: true
@@ -13860,8 +13849,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-35.7652588, 15.4793701, -3.20011902]
-                rotation: [-0.456412077, 0.889768541, -1.73244331e-07, 8.88661376e-08]
-                scale: [1.00000024, 0.99999994, 1.0000062]
+                rotation: [-0.456412077, 0.889768541, -1.73244302e-07, 8.88659883e-08]
+                scale: [1.00000024, 0.99999994, 1.00000787]
               - id: 10167962170513790146
                 type: 2
                 enabled: true
@@ -13894,8 +13883,8 @@ child:
                 type: 1
                 enabled: true
                 position: [51.0959167, 78.486084, -3.20011902]
-                rotation: [0.0140912235, 0.999900818, -1.94687885e-07, -2.74364087e-09]
-                scale: [1.00000894, 1, 1.0000118]
+                rotation: [0.0140912235, 0.999900818, -1.94687885e-07, -2.7436351e-09]
+                scale: [1.00001144, 1, 1.00001514]
               - id: 10015428129927061372
                 type: 2
                 enabled: true
@@ -13945,8 +13934,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-84.0847778, -19.8146667, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 17774781769766497990
                 type: 2
                 enabled: true
@@ -14336,8 +14325,8 @@ child:
                 type: 1
                 enabled: true
                 position: [92.7364273, 8.59570312, -3.20011902]
-                rotation: [0.186583072, 0.98243922, -1.91287953e-07, -3.63289345e-08]
-                scale: [1.00000298, 0.99999994, 1.00000596]
+                rotation: [0.186583072, 0.98243922, -1.91287953e-07, -3.63288848e-08]
+                scale: [1.00000381, 0.99999994, 1.00000763]
               - id: 11200301852373678405
                 type: 2
                 enabled: true
@@ -14404,8 +14393,8 @@ child:
                 type: 1
                 enabled: true
                 position: [70.3743896, 8.65356445, -3.20011902]
-                rotation: [0.134764627, 0.990877748, -1.92931324e-07, -2.62395723e-08]
-                scale: [1.00000906, 0.999999881, 1.00001216]
+                rotation: [0.134764627, 0.990877748, -1.9293141e-07, -2.62395385e-08]
+                scale: [1.00001156, 0.999999881, 1.0000155]
               - id: 4854518600556786269
                 type: 2
                 enabled: true
@@ -14438,8 +14427,8 @@ child:
                 type: 1
                 enabled: true
                 position: [69.5027466, 0.429443359, -3.20011902]
-                rotation: [0.999951065, -0.00989533775, 1.92668614e-09, -1.94697648e-07]
-                scale: [0.999998391, 1.00000298, 1]
+                rotation: [0.999951065, -0.0098953424, 1.92668548e-09, -1.94697648e-07]
+                scale: [0.999997973, 1.00000381, 1]
               - id: 2145104311201077849
                 type: 2
                 enabled: true
@@ -14455,8 +14444,8 @@ child:
                 type: 1
                 enabled: true
                 position: [65.7194824, 7.40820312, -3.20011902]
-                rotation: [0.0239308849, 0.999713719, -1.94651804e-07, -4.65947858e-09]
-                scale: [1.00000882, 1, 1.0000118]
+                rotation: [0.0239308961, 0.999713719, -1.94651903e-07, -4.65947014e-09]
+                scale: [1.00001132, 1, 1.00001514]
               - id: 8596132719612216177
                 type: 2
                 enabled: true
@@ -14574,8 +14563,8 @@ child:
                 type: 1
                 enabled: true
                 position: [81.8384476, -16.6571655, -17.47752]
-                rotation: [0, 0, 0.987806559, -0.155686453]
-                scale: [1.00000203, 1.00000203, 1]
+                rotation: [0, 0, 0.987806559, -0.155686423]
+                scale: [1.00000322, 1.00000322, 1]
               - id: 15451281828713004332
                 type: 2
                 enabled: true
@@ -14591,8 +14580,8 @@ child:
                 type: 1
                 enabled: true
                 position: [79.2471085, -18.7738953, -17.0150909]
-                rotation: [0, 0, 0.987806559, -0.155686453]
-                scale: [1.00000203, 1.00000203, 1]
+                rotation: [0, 0, 0.987806559, -0.155686423]
+                scale: [1.00000322, 1.00000322, 1]
               - id: 9096436508232515400
                 type: 2
                 enabled: true
@@ -14812,8 +14801,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-37.4733276, 10.7506104, -3.20011902]
-                rotation: [-0.456412077, 0.889768541, -1.73244331e-07, 8.88661376e-08]
-                scale: [1.00000024, 0.99999994, 1.0000062]
+                rotation: [-0.456412077, 0.889768541, -1.73244302e-07, 8.88659883e-08]
+                scale: [1.00000024, 0.99999994, 1.00000787]
               - id: 8978715973135112954
                 type: 2
                 enabled: true
@@ -14966,7 +14955,7 @@ child:
                 enabled: true
                 position: [-4.56472778, 64.9073486, 16.8697891]
                 rotation: [0, 0.70710665, 0, 0.707106888]
-                scale: [0.99999845, 1, 0.99999845]
+                scale: [0.999998033, 1, 0.999998033]
               - id: 3018358740887013337
                 type: 2
                 enabled: true
@@ -15441,8 +15430,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-6.19604492, -69.039978, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 11176244599641689915
                 type: 2
                 enabled: true
@@ -15509,8 +15498,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-7.42492676, -74.6323853, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 13731676966227294291
                 type: 2
                 enabled: true
@@ -15526,7 +15515,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-20.7078247, -62.1246681, -3.20011902]
-                rotation: [0.999641716, -0.0267665926, 5.21164845e-09, -1.94637792e-07]
+                rotation: [0.999641716, -0.0267665926, 5.21164845e-09, -1.94637892e-07]
                 scale: [1, 1, 1]
               - id: 3920267051033244509
                 type: 2
@@ -15560,7 +15549,7 @@ child:
                 type: 1
                 enabled: true
                 position: [-17.4614563, -66.8414001, -3.20011902]
-                rotation: [0.999641716, -0.0267665926, 5.21164845e-09, -1.94637792e-07]
+                rotation: [0.999641716, -0.0267665926, 5.21164845e-09, -1.94637892e-07]
                 scale: [1, 1, 1]
               - id: 8483061119458504908
                 type: 2
@@ -15594,8 +15583,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-16.4827881, -56.1245117, -3.20011902]
-                rotation: [0.906307995, -0.422617882, 8.22863058e-08, -1.76464184e-07]
-                scale: [1, 1.00000286, 1.00000584]
+                rotation: [0.906307995, -0.422617882, 8.22861708e-08, -1.76463985e-07]
+                scale: [1, 1.0000037, 1.00000751]
               - id: 12778067991851455543
                 type: 2
                 enabled: true
@@ -15611,8 +15600,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-32.4112549, -45.250824, -10.7251577]
-                rotation: [0, 0, -0.0436195061, 0.999048233]
-                scale: [0.999999464, 0.999999464, 1]
+                rotation: [0, 0, -0.0436195582, 0.999048293]
+                scale: [0.999999166, 0.999999166, 1]
               - id: 13541757606792939681
                 type: 2
                 enabled: true
@@ -15628,8 +15617,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-31.815033, -29.997282, -10.7251577]
-                rotation: [0, 0, 0.043619521, 0.999048233]
-                scale: [0.999999344, 0.999999344, 1]
+                rotation: [0, 0, 0.0436195731, 0.999048293]
+                scale: [0.999999166, 0.999999166, 1]
               - id: 3789259024963732914
                 type: 2
                 enabled: true
@@ -15713,8 +15702,8 @@ child:
                 type: 1
                 enabled: true
                 position: [60.0838013, -33.361908, -18.0405121]
-                rotation: [0, 0, 0.994205296, -0.107498236]
-                scale: [1.00000656, 1.00000656, 1]
+                rotation: [0, 0, 0.994205356, -0.107498229]
+                scale: [1.00000799, 1.00000799, 1]
               - id: 12430824255941541181
                 type: 2
                 enabled: true
@@ -15866,8 +15855,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-2.20568848, -85.6377869, 16.8697891]
-                rotation: [0.705048561, -0.0539148264, -0.705048263, -0.053914912]
-                scale: [1.00000286, 1.00000584, 1.00000298]
+                rotation: [0.705048561, -0.0539148115, -0.705048263, -0.0539149269]
+                scale: [1.0000037, 1.00000751, 1.00000381]
               - id: 17179688851699484994
                 type: 2
                 enabled: true
@@ -15900,8 +15889,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-36.1378784, -99.0923767, 8.5508461]
-                rotation: [0, 0, 0.999821603, -0.0188889168]
-                scale: [1.0000031, 1.0000031, 1]
+                rotation: [0, 0, 0.999821603, -0.0188889001]
+                scale: [1.00000393, 1.00000393, 1]
               - id: 16330339841307486725
                 type: 2
                 enabled: true
@@ -15917,8 +15906,8 @@ child:
                 type: 1
                 enabled: true
                 position: [-38.2890015, -96.447998, 10.37988]
-                rotation: [0, 0, 0.973183334, 0.230030835]
-                scale: [0.999999881, 0.999999881, 1]
+                rotation: [0, 0, 0.973183334, 0.23003085]
+                scale: [0.999999702, 0.999999702, 1]
               - id: 3387123378290224240
                 type: 2
                 enabled: true
@@ -16223,8 +16212,8 @@ child:
                 type: 1
                 enabled: true
                 position: [35.4246826, 52.5959473, -0.848495483]
-                rotation: [0, 0, 0.999617994, -0.0276401527]
-                scale: [1.00000322, 1.00000322, 1]
+                rotation: [0, 0, 0.999617994, -0.0276401304]
+                scale: [1.00000405, 1.00000405, 1]
               - id: 11465063684609019260
                 type: 2
                 enabled: true

@@ -17,22 +17,12 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_indicator(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
-	, _dash_progress(0.0f)
 	, _dash_cooldown(0.0f)
-	, _dash_timer(0.0f)
-	, _dash_count(0)
 	, _max_dash_count(0)
-	, _is_dashing(false)
-	, _has_cooldown(false)
-	, _dash_start(math::float3::zero)
-	, _dash_direction(math::float3::zero)
 	, _attack_radius(0.0f)
 	, _attack_cooldown(0.33f)
-	, _should_rotate(false)
-	, _rotation_progress(0.0f)
+	, _attack_duration(0.0f)
 	, _rotation_duration(0.0f)
-	, _rotation_target(math::Quat::identity)
-	, _rotation_start(math::Quat::identity)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
 	, _stats(5, 2, 10, 10)
@@ -43,18 +33,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_distance = 6.0f;
-	_dash_duration = 0.15f;
-	_dash_cooldown = 2.00f;
-	_attack_radius = 4.0f;
-	_attack_cooldown = 0.33f;
-	_dash_count = 2;
-	_movement_speed = 7.0f;
-	_rotation_duration = 0.075f;
-	_dash_indicator = game_object->GetFirstChildWithName("DashIndicator");
-	_dash_timer = 0.0f;
-	_max_dash_count = _dash_count;
-	_is_god_mode = false;
+	_dash_count = _max_dash_count;
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -199,7 +178,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 			float3 normalized_enemy = (enemies[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
 			float dot_product = normalized_center.Dot(normalized_enemy);
 			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
-			float attack_angle = 50.0f; // This can vary in the future deppending of weapon
+			float attack_angle = 60.0f; // This can vary in the future deppending of weapon
 			if (angle_of_enemy < attack_angle)
 			{
 				enemies_hit.push_back(enemies[i]);
@@ -275,7 +254,7 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 		}
 	}
 
-	_has_cooldown = (_dash_count <= 0);
+	_dash_has_cooldown = (_dash_count <= 0);
 
 	if (!_is_dashing)
 	{
@@ -442,8 +421,8 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE))
 	{
-		_has_cooldown = (_dash_count <= 0);
-		if (_has_cooldown)
+		_dash_has_cooldown = (_dash_count <= 0);
+		if (_dash_has_cooldown)
 		{
 			return;
 		}
