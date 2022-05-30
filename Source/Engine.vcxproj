@@ -165,6 +165,7 @@
     <ClCompile Include="src\components\ComponentAudioSource.cpp" />
     <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\importers\SceneImporter.cpp" />
+    <ClCompile Include="src\importers\SkyboxImporter.cpp" />
     <ClCompile Include="src\importers\VideoImporter.cpp" />
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
     <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="src\core\logging\ImGuiLogger.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
     <ClCompile Include="src\resources\ResourceScene.cpp" />
+    <ClCompile Include="src\resources\ResourceSkybox.cpp" />
     <ClCompile Include="src\scripting\serialization\SerializedField.cpp" />
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
@@ -671,6 +673,7 @@
     <ClInclude Include="src\components\ComponentAudioSource.h" />
     <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\importers\SceneImporter.h" />
+    <ClInclude Include="src\importers\SkyboxImporter.h" />
     <ClInclude Include="src\importers\VideoImporter.h" />
     <ClInclude Include="src\resources\ResourcePrefab.h" />
     <ClInclude Include="src\core\preferences\src\AudioPreferences.h" />
@@ -690,6 +693,7 @@
     <ClInclude Include="src\Gameplay.h" />
     <ClInclude Include="src\core\HachikoApiDefine.h" />
     <ClInclude Include="src\resources\ResourceScene.h" />
+    <ClInclude Include="src\resources\ResourceSkybox.h" />
     <ClInclude Include="src\scripting\serialization\IRuntimeSerializable.h" />
     <ClInclude Include="src\scripting\serialization\SerializedField.h" />
     <ClInclude Include="src\scripting\Script.h" />

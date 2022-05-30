@@ -11,6 +11,7 @@
 #include "PrefabImporter.h"
 #include "SceneImporter.h"
 #include "NavmeshImporter.h"
+#include "SkyboxImporter.h"
 
 namespace Hachiko
 {
@@ -42,6 +43,7 @@ namespace Hachiko
         FontImporter font;
         PrefabImporter prefab;
         SceneImporter scene;
+        SkyboxImporter skybox;
 
         // It doesnt have its own resource type (we use prefabs)
         ModelImporter model;

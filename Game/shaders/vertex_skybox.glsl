@@ -13,5 +13,4 @@ void main ()
 {
     gl_Position = (proj * vec4(mat3(view) * position, 1.0)).xyww;
     tex_coords = position;
-    tex_coords.y = -tex_coords.y;
 }
