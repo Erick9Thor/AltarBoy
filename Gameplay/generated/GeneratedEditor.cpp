@@ -1,6 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
-#include "CrystalExplotion.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -15,13 +15,13 @@ void Hachiko::Scripting::BackToMainMenu::OnEditor()
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
 }
 
-void Hachiko::Scripting::CrystalExplotion::OnEditor()
+void Hachiko::Scripting::CrystalExplosion::OnEditor()
 {
 	Editor::Show("_player", _player);
-	Editor::Show("_explotion_crystal", _explotion_crystal);
+	Editor::Show("_explosion_crystal", _explosion_crystal);
 	Editor::Show("_static_crystal", _static_crystal);
 	Editor::Show("_crashing_index", _crashing_index);
-	Editor::Show("_explotion_radius", _explotion_radius);
+	Editor::Show("_explosion_radius", _explosion_radius);
 	Editor::Show("_explosive_crystal", _explosive_crystal);
 }
 

@@ -2,7 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
-#include "CrystalExplotion.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -37,7 +37,7 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 {
 
 	if (_player != nullptr)
@@ -49,13 +49,13 @@ void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
 		node["'_player@GameObject*'"] = 0;
 	}
 
-	if (_explotion_crystal != nullptr)
+	if (_explosion_crystal != nullptr)
 	{
-		node["'_explotion_crystal@GameObject*'"] = _explotion_crystal->GetID();
+		node["'_explosion_crystal@GameObject*'"] = _explosion_crystal->GetID();
 	}
 	else
 	{
-		node["'_explotion_crystal@GameObject*'"] = 0;
+		node["'_explosion_crystal@GameObject*'"] = 0;
 	}
 
 	if (_static_crystal != nullptr)
@@ -69,12 +69,12 @@ void Hachiko::Scripting::CrystalExplotion::OnSave(YAML::Node& node) const
 
 	node["'_crashing_index@unsigned'"] = _crashing_index;
 
-	node["'_explotion_radius@float'"] = _explotion_radius;
+	node["'_explosion_radius@float'"] = _explosion_radius;
 
 	node["'_explosive_crystal@bool'"] = _explosive_crystal;
 }
 
-void Hachiko::Scripting::CrystalExplotion::OnLoad()
+void Hachiko::Scripting::CrystalExplosion::OnLoad()
 {
 
 	if (load_node["'_player@GameObject*'"].IsDefined())
@@ -82,9 +82,9 @@ void Hachiko::Scripting::CrystalExplotion::OnLoad()
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_explotion_crystal@GameObject*'"].IsDefined())
+	if (load_node["'_explosion_crystal@GameObject*'"].IsDefined())
 	{
-		_explotion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explotion_crystal@GameObject*'"].as<unsigned long long>());
+		_explosion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explosion_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_static_crystal@GameObject*'"].IsDefined())
@@ -97,9 +97,9 @@ void Hachiko::Scripting::CrystalExplotion::OnLoad()
 		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
 	}
 
-	if (load_node["'_explotion_radius@float'"].IsDefined())
+	if (load_node["'_explosion_radius@float'"].IsDefined())
 	{
-		_explotion_radius = load_node["'_explotion_radius@float'"].as<float>();
+		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
 	}
 
 	if (load_node["'_explosive_crystal@bool'"].IsDefined())

@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
-#include "CrystalExplotion.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -34,7 +34,7 @@ void Hachiko::Scripting::BackToMainMenu::SerializeTo(std::unordered_map<std::str
 	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
 }
 
-void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
@@ -56,12 +56,12 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_explotion_crystal") != serialized_fields.end())
+	if(serialized_fields.find("_explosion_crystal") != serialized_fields.end())
 	{
-		const SerializedField& _explotion_crystal_sf = serialized_fields["_explotion_crystal"];
-		if (_explotion_crystal_sf.type_name == "GameObject*")
+		const SerializedField& _explosion_crystal_sf = serialized_fields["_explosion_crystal"];
+		if (_explosion_crystal_sf.type_name == "GameObject*")
 		{
-			_explotion_crystal = std::any_cast<GameObject*>(_explotion_crystal_sf.copy);
+			_explosion_crystal = std::any_cast<GameObject*>(_explosion_crystal_sf.copy);
 		}
 	}
 
@@ -83,12 +83,12 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_explotion_radius") != serialized_fields.end())
+	if(serialized_fields.find("_explosion_radius") != serialized_fields.end())
 	{
-		const SerializedField& _explotion_radius_sf = serialized_fields["_explotion_radius"];
-		if (_explotion_radius_sf.type_name == "float")
+		const SerializedField& _explosion_radius_sf = serialized_fields["_explosion_radius"];
+		if (_explosion_radius_sf.type_name == "float")
 		{
-			_explotion_radius = std::any_cast<float>(_explotion_radius_sf.copy);
+			_explosion_radius = std::any_cast<float>(_explosion_radius_sf.copy);
 		}
 	}
 
@@ -102,7 +102,7 @@ void Hachiko::Scripting::CrystalExplotion::DeserializeFrom(std::unordered_map<st
 	}
 }
 
-void Hachiko::Scripting::CrystalExplotion::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
@@ -110,13 +110,13 @@ void Hachiko::Scripting::CrystalExplotion::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 
-	serialized_fields["_explotion_crystal"] = SerializedField(std::string("_explotion_crystal"), std::make_any<GameObject*>(_explotion_crystal), std::string("GameObject*"));
+	serialized_fields["_explosion_crystal"] = SerializedField(std::string("_explosion_crystal"), std::make_any<GameObject*>(_explosion_crystal), std::string("GameObject*"));
 
 	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
 
-	serialized_fields["_explotion_radius"] = SerializedField(std::string("_explotion_radius"), std::make_any<float>(_explotion_radius), std::string("float"));
+	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
 
 	serialized_fields["_explosive_crystal"] = SerializedField(std::string("_explosive_crystal"), std::make_any<bool>(_explosive_crystal), std::string("bool"));
 }

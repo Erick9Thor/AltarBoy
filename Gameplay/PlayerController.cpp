@@ -3,7 +3,7 @@
 #include "Scenes.h"
 #include "Stats.h"
 #include "EnemyController.h"
-#include "CrystalExplotion.h"
+#include "CrystalExplosion.h"
 #include "PlayerCamera.h"
 
 #include <components/ComponentTransform.h>
@@ -229,7 +229,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	{
 
 		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
-		CrystalExplotion* crystal_explotion = element->GetComponent<CrystalExplotion>();
+		CrystalExplosion* crystal_explotion = element->GetComponent<CrystalExplosion>();
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 
@@ -246,7 +246,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 
 	if (elements_hit.size() > 0)
 	{
-		// _camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
 	
 }
