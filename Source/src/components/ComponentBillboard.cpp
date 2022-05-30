@@ -7,11 +7,8 @@
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleResources.h"
 #include "modules/ModuleRender.h"
-
 #include "modules/ModuleCamera.h" // TODO: This is only for debug
-
 #include "resources/ResourceTexture.h"
-
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
@@ -41,6 +38,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
         has_texture = 1;
     }
 
+    glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendEquation(GL_FUNC_ADD);
     if (render_mode == BillboardRenderMode::B_ADDITIVE)
@@ -77,20 +75,16 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     billboard_program->BindUniformInts("flip_x", 1, &flip_x);
     billboard_program->BindUniformInts("flip_y", 1, &flip_y);
     
-    glBindVertexArray(App->renderer->billboard_vao);
+    glBindVertexArray(App->renderer->GetParticleVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     
     // Clear
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_BLEND);
+    glDepthMask(GL_TRUE);
     Program::Deactivate();
     return;
-
-    //billboard_program->BindUniformFloat3("intensity", textureIntensity.ptr());
-    //billboard_program->BindUniformFloat("currentFrame", &currentFrame);
-
-    //glDepthMask(GL_TRUE);
 }
 
 void Hachiko::ComponentBillboard::DrawGui()
@@ -159,6 +153,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             }
             ImGui::EndCombo();
         }
+
         ImGui::NewLine();
 
         // Texture Sheet Animation

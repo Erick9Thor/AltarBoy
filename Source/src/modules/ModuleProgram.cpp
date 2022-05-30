@@ -21,7 +21,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
     CreateBillboardProgram();
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || !billboard_program)
+    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
     {
         return false;
     }
@@ -141,8 +141,8 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateBillboardProgram()
 {
-    billboard_program = CreateProgram(SHADERS_FOLDER "vertex_billboard.glsl", SHADERS_FOLDER "fragment_billboard.glsl");
-    return billboard_program;
+    particle_program = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
+    return particle_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -188,8 +188,8 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete ui_image_program;
     ui_text_program->CleanUp();
     delete ui_text_program;
-    billboard_program->CleanUp();
-    delete billboard_program;
+    particle_program->CleanUp();
+    delete particle_program;
     return true;
 }
 

@@ -76,7 +76,7 @@ namespace Hachiko
 
         [[nodiscard]] Program* GetBillboardProgram() const
         {
-            return billboard_program;
+            return particle_program;
         }
 
         void UpdateCamera(const ComponentCamera* camera) const;
@@ -104,7 +104,7 @@ namespace Hachiko
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
-        Program* billboard_program = nullptr;
+        Program* particle_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);

@@ -45,38 +45,7 @@ bool Hachiko::ModuleRender::Init()
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
 
-
-    //////////////////////////////////////////// <<<<< FOR ALVARO
-
-    float positions[] = {
-        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
-        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
-    };
-
-    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
-
-    glGenVertexArrays(1, &billboard_vao);
-    glBindVertexArray(billboard_vao);
-
-    glGenBuffers(1, &billboard_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, billboard_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
-
-    glGenBuffers(1, &billboard_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, billboard_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-
-    glBindVertexArray(0);
-    //////////////////////////////////////////// <<<<< FOR ALVARO
+    GenerateParticlesBuffers();
 
     return true;
 }
@@ -261,10 +230,6 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     }
     Program::Deactivate();
 
-    //////////////////////////////////////////// <<<<< FOR ALVARO
-
-    //////////////////////////////////////////// <<<<< FOR ALVARO
-
     if (outline_selection && outline_target)
     {
         glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
@@ -389,6 +354,37 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     int vram_budget;
     glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram_budget);
     gpu.vram_budget_mb = static_cast<float>(vram_budget) / 1024.0f;
+}
+
+void Hachiko::ModuleRender::GenerateParticlesBuffers()
+{
+    float positions[] = {
+        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
+    };
+
+    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
+
+    glGenVertexArrays(1, &particle_vao);
+    glBindVertexArray(particle_vao);
+
+    glGenBuffers(1, &particle_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, particle_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
+
+    glGenBuffers(1, &particle_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, particle_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
 }
 
 bool Hachiko::ModuleRender::CleanUp()

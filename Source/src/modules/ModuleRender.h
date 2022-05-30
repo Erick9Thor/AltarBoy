@@ -72,7 +72,10 @@ namespace Hachiko
             return &render_list;
         }
 
-        unsigned billboard_vao;
+        [[nodiscard]] const unsigned& GetParticleVao() const
+        {
+            return particle_vao;
+        }
     
     private:
         void GenerateFrameBuffer();
@@ -110,8 +113,10 @@ namespace Hachiko
         float current_fps = 0.0f;
         float current_ms = 0.0f;
 
-
-        unsigned billboard_vbo;
-        unsigned billboard_ebo;
+        // Particle System
+        void GenerateParticlesBuffers();
+        unsigned particle_vbo;
+        unsigned particle_ebo;
+        unsigned particle_vao;
     };
 }
