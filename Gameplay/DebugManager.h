@@ -31,13 +31,16 @@ namespace Hachiko
 			SERIALIZE_FIELD(ComponentButton*, _remove_health);
 			SERIALIZE_FIELD(ComponentButton*, _god_mode);
 			SERIALIZE_FIELD(ComponentButton*, _flying_mode);
-			// placeholder for _navigate_in_godmode
 			SERIALIZE_FIELD(ComponentButton*, _spawn_enemy);
 			SERIALIZE_FIELD(ComponentButton*, _unlock_skills);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_performance_output);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_wireframe);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_show_colliders);
 			SERIALIZE_FIELD(ComponentButton*, _exit_debug);
+
+			SERIALIZE_FIELD(GameObject*, _tp_pos1);
+			SERIALIZE_FIELD(GameObject*, _tp_pos2);
+			SERIALIZE_FIELD(GameObject*, _tp_pos3);
 
 			bool is_active;
 			bool _is_god_mode = false;

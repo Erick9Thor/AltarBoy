@@ -73,8 +73,8 @@ child:
             type: 1
             enabled: true
             position: [-0.102162249, 0.440588713, -0.117372878]
-            rotation: [-0.572700977, 0.0554051884, -0.366084248, 0.731386483]
-            scale: [0.0304086301, 0.0304086208, 0.0304086208]
+            rotation: [-0.572700977, 0.0554051884, -0.366084218, 0.731386483]
+            scale: [0.030408632, 0.0304086208, 0.0304086208]
           - id: 13857874213913815835
             type: 2
             enabled: true
@@ -364,7 +364,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999998093, 0.999998093]
+            scale: [1, 0.999997795, 0.999997795]
           - id: 10994749954463604364
             type: 2
             enabled: true
@@ -410,6 +410,9 @@ child:
         "'_toggle_wireframe@ComponentButton*'": 16434820207947218854
         "'_toggle_show_colliders@ComponentButton*'": 14161391415480330610
         "'_exit_debug@ComponentButton*'": 12579080111622312455
+        "'_tp_pos1@GameObject*'": 14596696239910212765
+        "'_tp_pos2@GameObject*'": 8144182366683976063
+        "'_tp_pos3@GameObject*'": 4158396533495110404
     child:
       - id: 216963862465676777
         name: Canvas
@@ -946,3 +949,33 @@ child:
                 hover_image_id: 0
                 use_image: true
                 use_hover_image: false
+      - id: 14596696239910212765
+        name: TpPos1
+        enabled: true
+        component:
+          - id: 9643184035843740040
+            type: 1
+            enabled: true
+            position: [8.82816029, 0.645099401, -15.4966831]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - id: 8144182366683976063
+        name: TpPos2
+        enabled: true
+        component:
+          - id: 14332413866947700200
+            type: 1
+            enabled: true
+            position: [-15.0745564, 1.06873536, 15.912878]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - id: 4158396533495110404
+        name: TpPos3
+        enabled: true
+        component:
+          - id: 8697586497964348355
+            type: 1
+            enabled: true
+            position: [16.6334171, 0.739875913, 18.6321526]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]

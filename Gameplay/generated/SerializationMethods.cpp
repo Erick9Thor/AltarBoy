@@ -163,6 +163,33 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 			_exit_debug = std::any_cast<ComponentButton*>(_exit_debug_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_tp_pos1") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos1_sf = serialized_fields["_tp_pos1"];
+		if (_tp_pos1_sf.type_name == "GameObject*")
+		{
+			_tp_pos1 = std::any_cast<GameObject*>(_tp_pos1_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tp_pos2") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos2_sf = serialized_fields["_tp_pos2"];
+		if (_tp_pos2_sf.type_name == "GameObject*")
+		{
+			_tp_pos2 = std::any_cast<GameObject*>(_tp_pos2_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tp_pos3") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos3_sf = serialized_fields["_tp_pos3"];
+		if (_tp_pos3_sf.type_name == "GameObject*")
+		{
+			_tp_pos3 = std::any_cast<GameObject*>(_tp_pos3_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -196,6 +223,12 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 	serialized_fields["_toggle_show_colliders"] = SerializedField(std::string("_toggle_show_colliders"), std::make_any<ComponentButton*>(_toggle_show_colliders), std::string("ComponentButton*"));
 
 	serialized_fields["_exit_debug"] = SerializedField(std::string("_exit_debug"), std::make_any<ComponentButton*>(_exit_debug), std::string("ComponentButton*"));
+
+	serialized_fields["_tp_pos1"] = SerializedField(std::string("_tp_pos1"), std::make_any<GameObject*>(_tp_pos1), std::string("GameObject*"));
+
+	serialized_fields["_tp_pos2"] = SerializedField(std::string("_tp_pos2"), std::make_any<GameObject*>(_tp_pos2), std::string("GameObject*"));
+
+	serialized_fields["_tp_pos3"] = SerializedField(std::string("_tp_pos3"), std::make_any<GameObject*>(_tp_pos3), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
