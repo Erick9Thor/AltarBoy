@@ -22,7 +22,7 @@ const std::map<Resource::Type, std::string> ResourcesPreferences::lib_paths = {
     {Resource::Type::VIDEO, LIBRARY_FOLDER_VIDEO},
     {Resource::Type::MATERIAL, LIBRARY_FOLDER_MATERIAL},
     {Resource::Type::ANIMATION, LIBRARY_FOLDER_ANIMATION},
-    // {Resource::Type::SKYBOX, LIBRARY_FOLDER_SKYBOX},
+    {Resource::Type::SKYBOX, LIBRARY_FOLDER_SKYBOX},
     {Resource::Type::FONT, LIBRARY_FOLDER_FONT},
     {Resource::Type::NAVMESH, LIBRARY_FOLDER_NAVMESH},
     {Resource::Type::PREFAB, LIBRARY_FOLDER_PREFAB},
