@@ -97,6 +97,11 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		{
 			float3 current_position = teleport_positions[teleport_iterator];
 			_player->GetTransform()->SetGlobalPosition(current_position);
+			++teleport_iterator;
+			if (teleport_iterator >= teleport_positions.size())
+			{
+				teleport_iterator = 0;
+			}
 		}
 
 	}
@@ -110,6 +115,11 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		{
 			float3 current_position = teleport_positions[teleport_iterator];
 			_player->GetTransform()->SetGlobalPosition(current_position);
+			--teleport_iterator;
+			if (teleport_iterator < 0)
+			{
+				teleport_iterator = teleport_positions.size() - 1;
+			}
 		}
 
 	}
