@@ -153,8 +153,7 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {    
     ComponentCamera* camera = App->camera->GetRenderingCamera();
-    Scene* active_scene = App->scene_manager->GetActiveScene();   
-    active_scene->RebuildBatching();
+    Scene* active_scene = App->scene_manager->GetActiveScene();
 
 #ifdef PLAY_BUILD
     int width, height;
@@ -180,6 +179,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
         return UpdateStatus::UPDATE_CONTINUE;
     }    
 
+    active_scene->RebuildBatching();
     App->program->UpdateCamera(camera);
 
 #ifdef PLAY_BUILD
@@ -216,13 +216,14 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     BatchManager* batch_manager = scene->GetBatchManager();
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
-
+    
     if (draw_deferred)
     {
         DrawDeferred(batch_manager);
     }
     else
     {
+        // NOTE: Forward rendering still has that weird stuttering bug, fix this.
         DrawForward(batch_manager);
     }
 
@@ -269,8 +270,8 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     // deferred lighting pass:
     glDisable(GL_BLEND);
 
-    // Clear Batches:
-    batch_manager->ClearBatchesDrawList();
+    // Clear Opaque Batches List:
+    batch_manager->ClearOpaqueBatchesDrawList();
 
     // Send mesh renderers with opaque materials to batch manager draw list:
     for (const RenderTarget& target : render_list.GetOpaqueTargets())
@@ -282,7 +283,7 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     // Draw collected meshes with geometry pass rogram:
     program = App->program->GetDeferredGeometryProgram();
     program->Activate();
-    batch_manager->DrawBatches(program);
+    batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();
 
     // ------------------------------ LIGHT PASS ------------------------------
@@ -315,7 +316,7 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // ----------------------------- FORWARD PASS -----------------------------
+    //// ----------------------------- FORWARD PASS -----------------------------
 
     // If forward pass is disabled on the settings, return:
     if (!render_forward_pass)
@@ -323,12 +324,20 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
         return;
     }
 
-    // Clear Batches:
-    batch_manager->ClearBatchesDrawList();
+    // Get transparent meshes:
+    const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
 
+    if (transparent_targets.size() <= 0)
+    {
+        return;
+    }
+
+    // Clear Transparent Batches:
+    batch_manager->ClearTransparentBatchesDrawList();
+    
     // Get the targets that has transparent materials. These targets will be
     // rendered with regular forward rendering pass:
-    for (const RenderTarget& target : render_list.GetTransparentTargets())
+    for (const RenderTarget& target : transparent_targets)
     {
         batch_manager->AddDrawComponent(target.mesh_renderer);
     }
@@ -336,7 +345,7 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     // Forward rendering pass for transparent game objects:
     program = App->program->GetMainProgram();
     program->Activate();
-    batch_manager->DrawBatches(program);
+    batch_manager->DrawTransparentBatches(program);
     Program::Deactivate();
 }
 
@@ -345,21 +354,22 @@ void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager)
     Program* program = App->program->GetMainProgram();
     program->Activate();
 
-    batch_manager->ClearBatchesDrawList();
+    batch_manager->ClearOpaqueBatchesDrawList();
+    batch_manager->ClearTransparentBatchesDrawList();
 
     // Add opaque targets:
     for (RenderTarget& target : render_list.GetOpaqueTargets())
     {
         batch_manager->AddDrawComponent(target.mesh_renderer);    
     }
-
     // Add transparent targets:
     for (RenderTarget& target : render_list.GetTransparentTargets())
     {
         batch_manager->AddDrawComponent(target.mesh_renderer);  
     }
 
-    batch_manager->DrawBatches(program);
+    batch_manager->DrawOpaqueBatches(program);
+    batch_manager->DrawTransparentBatches(program);
 
     Program::Deactivate();
 }
@@ -414,7 +424,7 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::NewLine();
     ImGui::Text("Rendering Mode");
     ImGui::Separator();
-    ImGui::Text("Select whether the engine should use Deferred or Forward rendering.");
+    ImGui::TextWrapped("Select whether the engine should use Deferred or Forward rendering.");
     ImGui::PushID("RendererMode");
 
     if (ImGui::RadioButton("Deferred", draw_deferred == true))

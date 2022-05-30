@@ -322,6 +322,9 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             {
                 App->resources->ReleaseResource(material);
                 material = res;
+
+                // TODO: Do this only when the material is actually changed.
+                App->scene_manager->GetActiveScene()->OnMeshesChanged();
             }
         }
 
@@ -352,5 +355,4 @@ void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
         quadtree->Remove(this);
         quadtree->Insert(this);
     }
-
 }

@@ -103,7 +103,10 @@ void Hachiko::ComponentCamera::OnTransformUpdated()
 {
     ComponentTransform* transform = game_object->GetTransform();
 
-    frustum.SetFrame(transform->GetGlobalPosition(), transform->GetFront(), transform->GetUp());
+    frustum.SetPos(transform->GetGlobalPosition());
+    frustum.SetFront(transform->GetFront());
+    frustum.SetUp(transform->GetUp());
+
     frustum.GetPlanes(planes);
 }
 
