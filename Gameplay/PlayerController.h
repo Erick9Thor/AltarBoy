@@ -24,9 +24,10 @@ public:
 
 	PlayerState GetState() const;
 
-private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
+
+private:
 	
 	void MoveDashIndicator(const math::float3& current_position) const;
 	

@@ -99,7 +99,7 @@ Hachiko::GameObject* Hachiko::GameObject::Instantiate()
     return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
 }
 
-Hachiko::GameObject* Hachiko::GameObject::Instantiate(UID prefab_uid, GameObject* parent)
+Hachiko::GameObject* Hachiko::GameObject::Instantiate(unsigned long long prefab_uid, GameObject* parent)
 {
     return App->resources->InstantiatePrefab(prefab_uid, parent);
 }

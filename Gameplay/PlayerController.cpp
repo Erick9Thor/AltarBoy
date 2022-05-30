@@ -1,13 +1,11 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
 #include "Scenes.h"
-#include "Stats.h"
 #include "EnemyController.h"
 #include "PlayerCamera.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
-#include <core/GameObject.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -237,7 +235,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 	}*/
-	GameObject::Instantiate(14757395258967641292, game_object);
+	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object);
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)

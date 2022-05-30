@@ -11,9 +11,9 @@
 
 Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 	: Script(game_object, "BulletController")
-	, _move_speed()
+	, _move_speed(0.5f)
 	, _direction(1.0f, 1.0f, 1.0f)
-	, _lifetime(5.0f)
+	, _lifetime(2.0f)
 	, _collider_radius(2.0f)
 	, _damage(1)
 {
@@ -22,23 +22,24 @@ Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 void Hachiko::Scripting::BulletController::OnAwake()
 {
 	// Get bullet direction from parent
-	_direction = game_object->parent->GetComponent<ComponentTransform>()->GetFront();
-	// Set the time for this object to disappear
-	_destroy_time = Time::DeltaTime() + _lifetime;
+	CalculateDirection();
 	// Get Damage from parent stats
 	_damage = game_object->parent->GetComponent<PlayerController>()->_stats._attack_power;
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()
 {
+	if (!game_object->IsActive())	return;
+
 	math::float3 current_position = game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
 	const math::float3 delta_pos = _direction * _move_speed;
 
 	// Check if its time to destroy
-	if (Time::DeltaTime() >= _destroy_time)
+	if (_lifetime <= 0)
 	{
 		//	Disable
-		//	game_object->Destroy(); (?)
+		game_object->SetActive(false);
+		RELEASE(game_object);
 	}
 	else
 	{
@@ -49,9 +50,18 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		if (CheckCollisions())
 		{
 			//	If it hits enemy bullets is destroyed
-			//	game_object->Destroy(); (?)
+			game_object->SetActive(false);
 		}
+
+		_lifetime -= Time::DeltaTime();
 	}
+}
+void Hachiko::Scripting::BulletController::CalculateDirection()
+{
+	float3 spawn_pos = game_object->parent->GetComponent<ComponentTransform>()->GetGlobalPosition();
+	float3 target_pos = game_object->parent->GetComponent<PlayerController>()->GetRaycastPosition(spawn_pos);
+	_direction = (target_pos - spawn_pos);
+	_direction.Normalize();
 }
 
 bool Hachiko::Scripting::BulletController::CheckCollisions()
@@ -72,8 +82,8 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 			if (dot_product > 0)
 			{
 				//	Merge Lifebar branch first
-				//enemies[i]->GetComponent<EnemyController>().RegisterPlayerHit(_damage, dir);
-				//_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f); ??
+				// enemies[i]->GetComponent<EnemyController>().RegisterPlayerHit(_damage, dir);
+				// _camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f); ??
 				return true;
 			}
 		}

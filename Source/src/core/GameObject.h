@@ -55,7 +55,7 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
-        static GameObject* Instantiate(UID prefab_uid, GameObject* parent);
+        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>

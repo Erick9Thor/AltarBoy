@@ -20,6 +20,7 @@ namespace Hachiko
             void OnUpdate() override;
 
         private:
+            void CalculateDirection();
             bool CheckCollisions();
         private:
             SERIALIZE_FIELD(float, _move_speed);
@@ -27,7 +28,6 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _collider_radius);
 
             math::float3 _direction;
-            float _destroy_time;
             int _damage;
         };
     } // namespace Scripting
