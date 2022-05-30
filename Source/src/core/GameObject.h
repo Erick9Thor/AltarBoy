@@ -55,6 +55,7 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
+        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>
@@ -80,9 +81,7 @@ namespace Hachiko
 
         void DebugDrawAll();
         void DebugDraw() const;
-        void DrawBoundingBox() const;
         void DrawBones() const;
-        void UpdateBoundingBoxes();
 
         [[nodiscard]] UID GetID() const
         {
@@ -97,15 +96,6 @@ namespace Hachiko
         void Save(YAML::Node& node, bool as_prefab = false) const;
         void Load(const YAML::Node& node, bool as_prefab = false);
 
-        [[nodiscard]] const OBB& GetOBB() const
-        {
-            return obb;
-        }
-
-        const AABB& GetAABB()
-        {
-            return aabb;
-        }
 
         [[nodiscard]] const std::vector<Component*>& GetComponents() const
         {
@@ -224,9 +214,6 @@ namespace Hachiko
         bool started = false;
         std::vector<Component*> components{};
         ComponentTransform* transform = nullptr;
-        //bool in_quadtree = false;
-        AABB aabb;
-        OBB obb;
         UID uid = 0;
     };
 } // namespace Hachiko

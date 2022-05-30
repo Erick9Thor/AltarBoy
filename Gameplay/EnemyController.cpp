@@ -157,8 +157,8 @@ void Hachiko::Scripting::EnemyController::RecieveKnockback()
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(5.0f, 1.0f, 5.0f));
 	// We exagerate the movement
-	agc->SetMaxAcceleration(500.0f);
-	agc->SetMaxSpeed(500.0f);
+	agc->SetMaxAcceleration(50.0f);
+	agc->SetMaxSpeed(30.0f);
 	agc->SetTargetPosition(_target_pos);
 }
 

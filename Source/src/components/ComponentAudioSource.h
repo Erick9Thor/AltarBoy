@@ -1,11 +1,13 @@
 #pragma once
 
 #include "components/Component.h"
-#include "modules/ModuleAudio.h"
+
+class AkTransform;
 
 namespace Hachiko
 {
     class GameObject;
+    
     class ComponentAudioSource : public Component
     {
     public:
@@ -14,12 +16,12 @@ namespace Hachiko
 
         void OnTransformUpdated() override;
 
-        void PostEvent(const wchar_t* name_event) const;
+        HACHIKO_API void PostEvent(const wchar_t* name_event) const;
 
         void DrawGui() override;
 
     private:
-        AkTransform source_transform;
-        AkGameObjectID GAME_OBJECT_SOURCE;
+        AkTransform* source_transform;
+        uint64_t source_id; // This is AkGameObjectID, actually same with uint64_t
     };
 } // namespace Hachiko

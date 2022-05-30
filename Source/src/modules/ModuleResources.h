@@ -33,6 +33,8 @@ namespace Hachiko
         std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void LoadAsset(const std::string& path);
 
+        GameObject* InstantiatePrefab(UID prefab_uid, GameObject* parent);
+
     private:
         struct ResourceInstance
         {

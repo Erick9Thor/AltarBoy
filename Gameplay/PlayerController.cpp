@@ -1,14 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "PlayerController.h"
 #include "Scenes.h"
-#include "Stats.h"
 #include "EnemyController.h"
 #include "PlayerCamera.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <components/ComponentImage.h>
 #include <modules/ModuleSceneManager.h>
-#include <core/GameObject.h>
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -232,7 +230,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	}
 	if (enemies_hit.size() > 0)
 	{
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
+		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
 	
 }
@@ -240,18 +238,20 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
+	/*
 	const float3 forward = transform->GetFront().Normalized();
 	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
 		forward * _raycast_max_range + current_position);
 
-	if (hit_game_object)
+	if (hit_game_object && hit_game_object->active)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
 		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
 		enemy->RegisterPlayerHit(_combat_stats._attack_power, relative_dir.Normalized());
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
-	}
+	}*/
+	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object);
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
