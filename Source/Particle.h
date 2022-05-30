@@ -1,42 +1,59 @@
+#pragma once
+
+class ImGradient;
+struct ImGradientMark;
 
 namespace Hachiko
 {
+    enum class ParticleOrientationType
+    {
+        NORMAL,
+        STRETCH,
+        HORIZONTAL,
+        VERTICAL
+    };
+
     enum class ParticleRenderMode
     {
-        ADDITIVE_PARTICLE,
-        TRANSPARENT_PARTICLE
+        PARTICLE_ADDITIVE,
+        PARTICLE_TRANSPARENT
     };
 
     class Particle
     {
     public:
-        Particle() = default;
-        virtual ~Particle() = default;
+        Particle();
+        virtual ~Particle();
 
-        void Activate();
-        void Deactivate();
+        void Start();
+        void Update();
+        void Play();
+        void Stop();
 
-        // Rendering
+        void Save(YAML::Node& node) const;
+        void Load(const YAML::Node& node);
+
+        void DrawGui();
         void Draw(ComponentCamera* camera, Program* program);
 
-        // Settings
-
-
+        // Getters and Setters instead of DrawGui
     private:
         // General
         bool is_playing = false;
         bool play_on_awake = false;
+        int frame_counter = 0;
+        int skip_frames = 0;
         float time = 0.0f;
-        float lifetime = 5.0f;
-        ParticleRenderMode render_mode = ParticleRenderMode::ADDITIVE_PARTICLE;
+        float billboard_lifetime = 5.0f;
+        ParticleRenderMode render_mode = ParticleRenderMode::PARTICLE_ADDITIVE;
 
-        //// Orientation
-        //bool is_horizontal = false;
-        //float4x4 model_stretch = float4x4::identity;
-        //float3 initPos = float3::zero;
-        //float3 previousPos = float3::zero;
-        //float3 direction = float3::zero;
-        //BillboardType type = BillboardType::HORIZONTAL;
+        // Orientation
+        bool is_horizontal = false;
+        float4x4 model_stretch = float4x4::identity;
+        float3 initPos = float3::zero;
+        float3 previousPos = float3::zero;
+        float3 direction = float3::zero;
+        ParticleOrientationType type = ParticleOrientationType::HORIZONTAL;
 
         // Texture
         bool flip_texture[2] = {false, false};
@@ -67,7 +84,12 @@ namespace Hachiko
         ImGradientMark* draggingGradient = nullptr;
         ImGradientMark* selectedGradient = nullptr;
 
+    private:
+        void Reset();
+        void AddTexture();
+        void RemoveTexture();
+        void UpdateAnimationData();
         void UpdateColorOverLifetime();
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
     };
-}
+} // namespace Hachiko

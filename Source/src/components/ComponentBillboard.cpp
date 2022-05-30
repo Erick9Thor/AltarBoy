@@ -28,7 +28,7 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    Program* billboard_program = App->program->GetBillboardProgram();
+    Program* billboard_program = App->program->GetBillboardProgram(); //TODO: This must be taken from the parameter
     billboard_program->Activate();
 
     glActiveTexture(GL_TEXTURE0);
@@ -55,8 +55,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     float4x4 model_matrix;
     GetOrientationMatrix(camera, model_matrix);
-    
-
     billboard_program->BindUniformFloat4x4("model", model_matrix.ptr());
     billboard_program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
     billboard_program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
@@ -65,7 +63,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     billboard_program->BindUniformFloat("y_factor", &y_factor);
     billboard_program->BindUniformFloat("current_frame", &current_frame);
     billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
-
     float4 color = float4::one;
     if (has_color_gradient)
     {
@@ -307,6 +304,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[FLIP_X] = has_flip_x;
     node[FLIP_Y] = has_flip_y;
     node[BILLBOARD_LIFETIME] = billboard_lifetime;
+    node[SKIP_FRAMES] = skip_frames;
     node[ANIMATION_LOOP] = animation_loop;
     node[HAS_COLOR_GRADIENT] = has_color_gradient;
     node[COLOR_CYCLES] = color_cycles;
@@ -348,6 +346,9 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
     billboard_lifetime = node[BILLBOARD_LIFETIME].IsDefined() ?
         node[BILLBOARD_LIFETIME].as<float>() : 0.0f;
+
+    skip_frames = node[SKIP_FRAMES].IsDefined() ?
+        node[SKIP_FRAMES].as<int>() : 0;
 
     animation_loop = node[ANIMATION_LOOP].IsDefined() ?
         node[ANIMATION_LOOP].as<bool>() : false;

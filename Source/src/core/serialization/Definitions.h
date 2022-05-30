@@ -244,6 +244,7 @@
 #define COLOR_LOOP "color_loop"
 #define COLOR_GRADIENT "color_gradient"
 #define ANIMATION_LOOP "animation_loop"
+#define SKIP_FRAMES "skip_frames"
 
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"
