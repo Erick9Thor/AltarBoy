@@ -23,6 +23,9 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	, _toggle_show_colliders(nullptr)
 	, _player(nullptr)
 	, _exit_debug(nullptr)
+	, _tp_pos1(nullptr)
+	, _tp_pos2(nullptr)
+	, _tp_pos3(nullptr)
 {
 }
 
@@ -30,6 +33,20 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 {
 	is_active = false;
 	_is_god_mode = false;
+
+	if (_tp_pos1) 
+	{
+		teleport_positions.push_back(_tp_pos1->GetTransform()->GetGlobalPosition());
+	}
+	if (_tp_pos2)
+	{
+		teleport_positions.push_back(_tp_pos2->GetTransform()->GetGlobalPosition());
+	}
+	if (_tp_pos3)
+	{
+		teleport_positions.push_back(_tp_pos3->GetTransform()->GetGlobalPosition());
+	}
+
 }
 
 void Hachiko::Scripting::DebugManager::OnStart()
@@ -45,6 +62,7 @@ void Hachiko::Scripting::DebugManager::OnStart()
 
 void Hachiko::Scripting::DebugManager::OnUpdate()
 {
+	
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F3))
 	{
 		_player_controller->_isInDebug = !_player_controller->_isInDebug;
@@ -55,8 +73,14 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 			child->SetActive(is_active);
 		}
 	}
+	if(!is_active)
+	{
+		return;
+	}
+
 
 	// register button interactions
+
 	if (_button_back->IsSelected())
 	{
 		HE_LOG("_button_back pressed");
@@ -65,16 +89,34 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	
 	if (_teleport_next_pos->IsSelected())
 	{
-		HE_LOG("_teleport_next_pos pressed");
+		if (teleport_positions.size() == 0)
+		{
+			HE_LOG("ERROR: teleport_positions vector is empty");
+		}
+		else
+		{
+			float3 current_position = teleport_positions[teleport_iterator];
+			_player->GetTransform()->SetGlobalPosition(current_position);
+		}
+
 	}
 	if (_teleport_prev_pos->IsSelected())
 	{
-		HE_LOG("_teleport_prev_pos pressed");
+		if (teleport_positions.size() == 0)
+		{
+			HE_LOG("ERROR: teleport_positions vector is empty");
+		}
+		else
+		{
+			float3 current_position = teleport_positions[teleport_iterator];
+			_player->GetTransform()->SetGlobalPosition(current_position);
+		}
+
 	}
 	if (_teleport_add_pos->IsSelected())
 	{
 		HE_LOG("_teleport_add_pos pressed");
-		teleport_positions.push_back(game_object->GetTransform()->GetGlobalPosition());
+		teleport_positions.push_back(_player->GetTransform()->GetGlobalPosition());
 	}
 	if (_add_health->IsSelected())
 	{

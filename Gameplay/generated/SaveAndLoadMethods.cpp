@@ -164,6 +164,33 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	{
 		node["'_exit_debug@ComponentButton*'"] = 0;
 	}
+
+	if (_tp_pos1 != nullptr)
+	{
+		node["'_tp_pos1@GameObject*'"] = _tp_pos1->GetID();
+	}
+	else
+	{
+		node["'_tp_pos1@GameObject*'"] = 0;
+	}
+
+	if (_tp_pos2 != nullptr)
+	{
+		node["'_tp_pos2@GameObject*'"] = _tp_pos2->GetID();
+	}
+	else
+	{
+		node["'_tp_pos2@GameObject*'"] = 0;
+	}
+
+	if (_tp_pos3 != nullptr)
+	{
+		node["'_tp_pos3@GameObject*'"] = _tp_pos3->GetID();
+	}
+	else
+	{
+		node["'_tp_pos3@GameObject*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::DebugManager::OnLoad()
@@ -292,6 +319,21 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		{
 			_exit_debug = _exit_debug_owner__temp->GetComponent<ComponentButton>();
 		}
+	}
+
+	if (load_node["'_tp_pos1@GameObject*'"].IsDefined())
+	{
+		_tp_pos1 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos1@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tp_pos2@GameObject*'"].IsDefined())
+	{
+		_tp_pos2 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos2@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tp_pos3@GameObject*'"].IsDefined())
+	{
+		_tp_pos3 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos3@GameObject*'"].as<unsigned long long>());
 	}
 }
 
