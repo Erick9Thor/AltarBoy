@@ -34,7 +34,7 @@ namespace Hachiko
         unsigned vao{};
         unsigned vbo{};
 
-        unsigned irradiance_cubemap_id{};
+        unsigned irradiance_cubemap_id = 0;
 
     public:
         Skybox(const Skybox& other) = default;

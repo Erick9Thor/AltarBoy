@@ -24,7 +24,9 @@ Hachiko::Skybox::Skybox(TextureCube new_cube) : cube(new_cube)
 Hachiko::Skybox::~Skybox()
 {
     glDeleteBuffers(1, &vbo);
-    ReleaseCubemap();    
+    ReleaseCubemap();
+
+    glDeleteTextures(1, &irradiance_cubemap_id);
 }
 
 void Hachiko::Skybox::Draw(ComponentCamera* camera) const
@@ -228,18 +230,29 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
     frustum.SetPerspective(math::pi / 2.0f, math::pi / 2.0f);
     frustum.SetViewPlaneDistances(0.1f, 100.0f);
 
-    // Prepare to 
+    // Activate shader and deactivate the depth mask
     glDepthFunc(GL_ALWAYS);
+    glDepthMask(false);
     Program* program = App->program->GetSkyboxIrradianceProgram();
     program->Activate();
     
     glViewport(0, 0, cube.resources[0]->height, cube.resources[0]->width);
 
+    unsigned frame_buffer;
+    glGenFramebuffers(1, &frame_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+
     // Generate irradiance cubemap
     glGenTextures(1, &irradiance_cubemap_id);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     for (unsigned i = 0; i < 6; ++i)
     {
-        glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+        //glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                      0,
                      cube.resources[i]->format,
@@ -249,7 +262,15 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
                      cube.resources[i]->format,
                      GL_UNSIGNED_BYTE,
                      0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+    }
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        HE_LOG("Error creating frame buffer");
+    }
+
+    for (unsigned i = 0; i < 6; ++i)
+    {
         frustum.SetFrame(float3::zero, front[i], up[i]);
         App->program->UpdateCamera(frustum);
 
@@ -264,20 +285,18 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
-    glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, 0);
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    // Delete and unbind the frame buffer, and unbind the skybox vao
+    glDeleteFramebuffers(1, &frame_buffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindVertexArray(0);
+
+    // Deactivate shader and set depth mask to default
     Program::Deactivate();
     glDepthFunc(GL_LESS);
+    glDepthMask(true);
 
-    //cube.id = irradiance_cubemap_id;
+    //glDeleteTextures(1, &irradiance_cubemap_id);
+    cube.id = irradiance_cubemap_id;
 }

@@ -136,11 +136,11 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
     render_list.PreUpdate();
 
     // TEST
-    //if (App->input->IsKeyDown(SDL_Scancode::SDL_SCANCODE_SPACE))
-    //{
+    if (App->input->IsKeyDown(SDL_Scancode::SDL_SCANCODE_SPACE))
+    {
     App->scene_manager->GetActiveScene()->GetSkybox()->GenerateIrradianceCubemap();
     glViewport(0, 0, fb_height, fb_width);
-    //}
+    }
     //
 
     return UpdateStatus::UPDATE_CONTINUE;
