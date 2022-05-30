@@ -107,7 +107,8 @@ void Hachiko::WindowStateMachine::Update()
     ShowAddNodePopup();
     //ShowContextMenus();
 
-    //NodeEditor::Suspend();
+    NodeEditor::Suspend();
+    
     if (NodeEditor::ShowBackgroundContextMenu())
     {
         addNode = true;
@@ -138,7 +139,7 @@ void Hachiko::WindowStateMachine::Update()
             ImGui::EndPopup();
         }
     }
-    //NodeEditor::Resume();
+    NodeEditor::Resume();
 
 
     ShowNodeMenu();
