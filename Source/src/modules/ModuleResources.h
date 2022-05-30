@@ -40,6 +40,7 @@ namespace Hachiko
             unsigned n_users = 0;
         };
         std::map<UID, ResourceInstance> loaded_resources;
+        std::set<UID> managed_uids;
 
         std::vector<std::pair<Hachiko::Resource::AssetType, std::string>> supported_extensions = 
         {
@@ -66,6 +67,12 @@ namespace Hachiko
         std::vector<UID> ImportAssetResources(const std::filesystem::path& asset, YAML::Node& meta);
         // Checks if all the asset resource files exist in library
         bool ValidateAssetResources(const YAML::Node& meta) const;
+
+        // Removes UIDS not seen while importing from all library folders
+        void ClearUnusedResources(const std::set<UID>& seen_uids);
+        // Process Cleaning on a specific path node
+        void ClearLibrary(const PathNode& folder, const std::set<UID>& seen_uids);
+
 
     public:
         // Create a clean initial meta node

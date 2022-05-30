@@ -36,6 +36,7 @@ bool ModuleResources::Init()
     }
 
     AssetsLibraryCheck();
+    ClearUnusedResources(managed_uids);
 
     std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
@@ -248,7 +249,7 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
             GenerateLibrary(path_node);
             continue;
         }
-        ImportAsset(path_node.path);
+        managed_uids.emplace(ImportAsset(path_node.path));
     }
 }
 
@@ -326,6 +327,36 @@ bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) co
         if (!FileSystem::Exists(library_path.c_str())) return false;
     }
     return true;
+}
+
+void Hachiko::ModuleResources::ClearUnusedResources(const std::set<UID>& seen_uids)
+{
+    const auto& asset_paths = preferences->GetLibraryPathsMap();
+    for (auto it = asset_paths.begin(); it != asset_paths.end(); ++it)
+    {
+        const PathNode folder = FileSystem::GetAllFiles(it->second.c_str());
+        GenerateLibrary(folder);
+    }
+    HE_LOG("Assets/Library check finished.");
+}
+
+void Hachiko::ModuleResources::ClearLibrary(const PathNode& folder, const std::set<UID>& seen_uids)
+{
+    // Iterate all files found in assets except metas and scene
+    for (const PathNode& path_node : folder.children)
+    {
+        if (!path_node.isFile)
+        {
+            ClearLibrary(path_node, seen_uids);
+            continue;
+        }
+        
+        UID file_name = static_cast<UID>(std::stoull(FileSystem::GetFileName(path_node.path.c_str())));
+        if (seen_uids.find(file_name) == seen_uids.end())
+        {
+            FileSystem::Delete(path_node.path.c_str());
+        }
+    }
 }
 
 
