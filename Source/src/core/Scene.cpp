@@ -34,7 +34,7 @@ Hachiko::Scene::Scene() :
     quadtree->SetBox(AABB(float3(-500, -100, -500), float3(500, 250, 500)));
    
     ImNodes::CreateContext();
-    App->navigation->BuildNavmesh(this);
+    //App->navigation->BuildNavmesh(this);
 }
 
 Hachiko::Scene::~Scene()

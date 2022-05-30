@@ -46,7 +46,7 @@
 #include <imgui_impl_sdl.h>
 #include <ImGuiFileDialog.h>
 
-#include <imgui-node-editor-0.9/NodeEditor/Include/imgui_node_editor.h>
+#include <imgui_node_editor.h>
 #include <imnodes.h>
 
 #include <il.h>

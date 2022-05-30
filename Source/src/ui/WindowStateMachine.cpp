@@ -106,7 +106,42 @@ void Hachiko::WindowStateMachine::Update()
     DrawTransitions();
 
     ShowAddNodePopup();
-    ShowContextMenus();
+    //ShowContextMenus();
+
+    //NodeEditor::Suspend();
+    if (NodeEditor::ShowBackgroundContextMenu())
+    {
+        addNode = true;
+    }
+    if (addNode)
+    {
+        ImGuiContext* ctx = ImGui::GetCurrentContext();
+        const ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGuiWindow* win = ImGui::GetCurrentWindow();
+        ImGui::SetWindowPos(ImVec2(win->Pos.x + 100, win->Pos.y + 100), 0);
+        ImGui::SetCurrentViewport(ImGui::GetCurrentWindow(), ImGui::GetCurrentWindow()->Viewport);
+        NodeEditor::NodeId contextNodeId = 0;
+        context_node = int(contextNodeId.Get() - 1) / 3;
+        ImGui::OpenPopup("Context Menu");
+
+         if (ImGui::BeginPopup("Context Menu"))
+        {
+            ImGui::TextUnformatted("Context Menu");
+            ImGui::Separator();
+
+            if (ImGui::Button(" Add node "))
+            {
+                addNode = false;
+            }
+
+            ImGui::Separator();
+
+            ImGui::EndPopup();
+        }
+    }
+    //NodeEditor::Resume();
+
+
     ShowNodeMenu();
     ShowHelp();
 
