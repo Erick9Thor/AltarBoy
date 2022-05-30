@@ -18,7 +18,7 @@ Hachiko::QuadtreeNode::~QuadtreeNode()
 void Hachiko::QuadtreeNode::Insert(ComponentMeshRenderer* mesh)
 {
     meshes.push_back(mesh);
-
+   
     if (depth >= QUADTREE_MAX_DEPTH)
     {
         return;
@@ -64,7 +64,6 @@ void Hachiko::QuadtreeNode::Remove(ComponentMeshRenderer* mesh)
 
 void Hachiko::QuadtreeNode::CreateChildren()
 {
-    HE_LOG("Create Children");
     // Subdivide current box
     const auto size = float3(box.Size());
     const float3 center = box.CenterPoint();
@@ -103,7 +102,7 @@ void Hachiko::QuadtreeNode::CreateChildren()
 
 void Hachiko::QuadtreeNode::RearangeChildren()
 {
-    //HE_LOG("Rearange Children %s", this);
+    // HE_LOG("Rearange Children %s", this);
     for (auto it = meshes.begin(); it != meshes.end();)
     {
         ComponentMeshRenderer* mesh = *it;
@@ -130,6 +129,30 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             if (intersects[i])
             {
                 children[i]->Insert(mesh);
+            }
+        }
+    }
+}
+
+void Hachiko::QuadtreeNode::GetIntersections(
+    std::vector<ComponentMeshRenderer*>& intersected, const Frustum& frustum) const
+{
+    if (frustum.Intersects(box))
+    {
+        for (ComponentMeshRenderer* mesh : meshes)
+        {
+            if (frustum.Intersects(mesh->GetOBB()))
+            {
+                intersected.push_back(mesh);
+            }
+        }
+
+        // If it has one child all exist
+        if (children[0] != nullptr)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                children[i]->GetIntersections(intersected, frustum);
             }
         }
     }
