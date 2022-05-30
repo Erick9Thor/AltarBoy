@@ -1,7 +1,6 @@
 #include "core/hepch.h"
 #include "WindowStateMachine.h"
 
-#include "imnodes.h"
 #include "imgui_node_editor.h"
 #include "modules/ModuleEditor.h"
 
@@ -702,5 +701,5 @@ void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine& resource
 
 void Hachiko::WindowStateMachine::CleanUp()
 {
-    ImNodes::DestroyContext();
+
 }

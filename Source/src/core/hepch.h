@@ -47,7 +47,6 @@
 #include <ImGuiFileDialog.h>
 
 #include <imgui_node_editor.h>
-#include <imnodes.h>
 
 #include <il.h>
 #include <ilu.h>
