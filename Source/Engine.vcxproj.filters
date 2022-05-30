@@ -573,9 +573,6 @@
     <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Particles</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2277,9 +2274,6 @@
     </ClInclude>
     <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
       <Filter>Vendors\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Particles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -157,7 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="src\importers\NavmeshImporter.cpp" />
     <ClCompile Include="src\components\ComponentAudioListener.cpp" />
     <ClCompile Include="src\components\ComponentAudioSource.cpp" />
@@ -663,7 +662,6 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Particle.h" />
     <ClInclude Include="src\importers\NavmeshImporter.h" />
     <ClInclude Include="src\components\ComponentAudioListener.h" />
     <ClInclude Include="src\components\ComponentAudioSource.h" />
