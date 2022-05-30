@@ -14,8 +14,9 @@ namespace Hachiko
     struct RenderTarget
     {
         const char* name = nullptr;
+        unsigned long long mesh_id = 0;
         ComponentMeshRenderer* mesh_renderer = nullptr;
-        float distance = 0.0f;
+        double distance = 0.0;
     };
 
     class RenderList
