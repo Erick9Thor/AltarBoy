@@ -12,6 +12,7 @@ namespace Hachiko
     class ComponentDirLight;
     class ComponentPointLight;
     class ComponentSpotLight;
+    class ComponentBillboard;
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
@@ -121,9 +122,8 @@ namespace Hachiko
         std::vector<ComponentDirLight*> dir_lights{};
         std::vector<ComponentPointLight*> point_lights{};
         std::vector<ComponentSpotLight*> spot_lights{};
-
-        
-
+        std::vector<ComponentBillboard*> billboards{};
+    
     private:
         std::string name;
         GameObject* root = nullptr;
