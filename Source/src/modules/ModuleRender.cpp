@@ -52,8 +52,16 @@ bool Hachiko::ModuleRender::Init()
     return true;
 }
 
+float2 Hachiko::ModuleRender::GetFrameBufferSize() const
+{
+    return float2(fb_width, fb_height);
+}
+
 void Hachiko::ModuleRender::GenerateFrameBuffer()
 {
+    fb_width = 800;
+    fb_height = 600;
+
     glGenFramebuffers(1, &frame_buffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
@@ -62,14 +70,14 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 800, 600, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, fb_width, fb_height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     //Depth and stencil buffer
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
     glGenRenderbuffers(1, &depth_stencil_buffer);
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, 800, 600);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, fb_width, fb_height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -362,6 +370,7 @@ void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager)
     {
         batch_manager->AddDrawComponent(target.mesh_renderer);    
     }
+
     // Add transparent targets:
     for (RenderTarget& target : render_list.GetTransparentTargets())
     {

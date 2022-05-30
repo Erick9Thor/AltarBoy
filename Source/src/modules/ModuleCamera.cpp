@@ -4,6 +4,7 @@
 #include "ModuleCamera.h"
 #include "ModuleInput.h"
 #include "ModuleEditor.h"
+#include "ModuleSceneManager.h"
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentCamera.h"
@@ -59,12 +60,11 @@ bool Hachiko::ModuleCamera::CleanUp()
     return true;
 }
 
-void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int screen_height) const
+void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int screen_height)
 {
-    rendering_camera->SetResolution(screen_width, screen_height);
-    if (rendering_camera != nullptr)
+    for (ComponentCamera* camera : camera_buffer)
     {
-        rendering_camera->SetResolution(screen_width, screen_height);
+        camera->SetResolution(screen_width, screen_height);
     }
 }
 

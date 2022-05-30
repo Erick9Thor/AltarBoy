@@ -75,6 +75,8 @@ namespace Hachiko
             return &render_list;
         }
 
+        [[nodiscard]] float2 GetFrameBufferSize() const;
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int heigth, int width) const;
