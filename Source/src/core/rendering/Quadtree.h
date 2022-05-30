@@ -1,13 +1,14 @@
 #pragma once
 
 #include "core/GameObject.h"
+#include "components/ComponentMeshRenderer.h"
 
 #include <MathGeoLib.h>
 #include <list>
 
 #define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 50.f
-#define QUADTREE_MAX_DEPTH 3
+#define QUADTREE_MAX_DEPTH 10
 
 namespace Hachiko
 {
@@ -26,8 +27,8 @@ namespace Hachiko
         QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth);
         ~QuadtreeNode();
 
-        void Insert(GameObject* game_object);
-        void Remove(GameObject* game_object);
+        void Insert(ComponentMeshRenderer* mesh);
+        void Remove(ComponentMeshRenderer* mesh);
         void CreateChildren();
         void RearangeChildren();
 
@@ -41,9 +42,9 @@ namespace Hachiko
             return box;
         }
 
-        [[nodiscard]] const std::list<GameObject*>& GetObjects() const
+        [[nodiscard]] const std::list<ComponentMeshRenderer*>& GetMeshes() const
         {
-            return objects;
+            return meshes;
         }
 
         template<typename T>
@@ -56,8 +57,8 @@ namespace Hachiko
     private:
         int depth = 0;
         AABB box;
-        QuadtreeNode* parent =  nullptr;
-        std::list<GameObject*> objects{};
+        QuadtreeNode* parent = nullptr;
+        std::list<ComponentMeshRenderer*> meshes {};
     };
 
     class Quadtree
@@ -69,8 +70,8 @@ namespace Hachiko
         void Clear();
         void SetBox(const AABB& box);
 
-        void Insert(GameObject* game_object) const;
-        void Remove(GameObject* game_object) const;
+        void Insert(ComponentMeshRenderer* mesh) const;
+        void Remove(ComponentMeshRenderer* mesh) const;
 
         [[nodiscard]] QuadtreeNode* GetRoot() const
         {
@@ -89,11 +90,11 @@ namespace Hachiko
         if (primitive.Intersects(box))
         {
             float near_hit, far_hit;
-            for (GameObject* object : objects)
+            for (ComponentMeshRenderer* mesh : meshes)
             {
-                if (primitive.Intersects(object->GetOBB(), near_hit, far_hit))
+                if (primitive.Intersects(mesh->GetOBB(), near_hit, far_hit))
                 {
-                    intersected.push_back(object);
+                    intersected.push_back(mesh->GetGameObject());
                 }
             }
 

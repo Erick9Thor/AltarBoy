@@ -79,7 +79,7 @@ const float2& Hachiko::Input::GetMousePixelPosition()
 
 HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
 {
-    HE_LOG("Position got as: %f, %f", App->input->GetMouseNormalizedPosition().x, App->input->GetMouseNormalizedPosition().y);
+    //HE_LOG("Position got as: %f, %f", App->input->GetMouseNormalizedPosition().x, App->input->GetMouseNormalizedPosition().y);
     
     return App->input->GetMouseNormalizedPosition();
 }
@@ -275,15 +275,6 @@ math::float3 Hachiko::Navigation::GetCorrectedPosition(math::float3& position, c
 void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::float3& extents)
 {
     return App->navigation->CorrectPosition(position, extents);
-}
-
-/*---------------------------------------------------------------------------*/
-
-/*AUDIO----------------------------------------------------------------------*/
-
-HACHIKO_API void Hachiko::Audio::Play(const wchar_t* name)
-{
-    return App->audio->Play(name);
 }
 
 /*---------------------------------------------------------------------------*/

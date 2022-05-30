@@ -573,6 +573,11 @@
     <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\batching\GeometryBatch.cpp" />
+    <ClCompile Include="src\batching\BatchManager.cpp" />
+    <ClCompile Include="src\batching\TextureBatch.cpp" />
+    <ClCompile Include="src\importers\SkyboxImporter.cpp" />
+    <ClCompile Include="src\resources\ResourceSkybox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2275,6 +2280,12 @@
     <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\batching\DrawCommand.h" />
+    <ClInclude Include="src\batching\GeometryBatch.h" />
+    <ClInclude Include="src\batching\BatchManager.h" />
+    <ClInclude Include="src\batching\TextureBatch.h" />
+    <ClInclude Include="src\importers\SkyboxImporter.h" />
+    <ClInclude Include="src\resources\ResourceSkybox.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
