@@ -3,6 +3,7 @@
 #include "resources/Resource.h"
 #include "importers/ImporterManager.h"
 #include "core/preferences/src/ResourcesPreferences.h"
+#include "utils/UUID.h"
 
 namespace Hachiko
 {
