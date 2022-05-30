@@ -266,9 +266,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendors\imnodes-0.5\imnodes.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="vendors\PhysicsFS\physfs.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -1063,8 +1060,6 @@
     <ClInclude Include="vendors\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendors\imGuizmo\ImSequencer.h" />
     <ClInclude Include="vendors\imGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="vendors\imnodes-0.5\imnodes.h" />
-    <ClInclude Include="vendors\imnodes-0.5\imnodes_internal.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs_casefolding.h" />
     <ClInclude Include="vendors\PhysicsFS\physfs_internal.h" />
