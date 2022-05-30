@@ -1,10 +1,10 @@
-name: crystalSpike_material1
+name: lambert4
 diffuse: 0
 specular: 0
 normals: 0
 metalness: 0
 emissive: 0
-diffuse_color: [0.800000012, 0.800000012, 0.800000012, 1]
+diffuse_color: [0.974025965, 0.974025965, 0.974025965, 1]
 specular_color: [0, 0, 0, 0]
 emissive_color: [0, 0, 0, 1]
 smoothness: 0.5
