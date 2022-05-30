@@ -23,6 +23,7 @@ public:
 	void OnUpdate() override;
 
 	PlayerState GetState() const;
+	const Stats& GetStats() { return _combat_stats; }
 
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;

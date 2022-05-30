@@ -47,7 +47,6 @@ namespace Hachiko
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
 
-            SERIALIZE_FIELD(GameObject*, _player);;
             PlayerController* _player_controller;
             ComponentTransform* transform;
             math::float3 _player_pos;
