@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "DebugManager.h"
+#include "PlayerController.h"
 
 #include <components/ComponentTransform.h>
 #include <core/GameObject.h>
@@ -34,6 +35,7 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 void Hachiko::Scripting::DebugManager::OnStart()
 {
 	_player = game_object->parent->GetFirstChildWithName("PlayerC");
+	_player_controller = _player->GetComponent<PlayerController>();
 
 	for (GameObject* child : game_object->children)
 	{
@@ -45,6 +47,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 {
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F3))
 	{
+		_player_controller->_isInDebug = !_player_controller->_isInDebug;
 		HE_LOG("HOLAA");
 		is_active = !is_active;
 		for (GameObject* child : game_object->children)
@@ -75,11 +78,13 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	}
 	if (_add_health->IsSelected())
 	{
-		HE_LOG("_add_health pressed");
+		_player_controller->_stats._current_hp += 1;
+		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
 	if (_remove_health->IsSelected())
 	{
-		HE_LOG("_remove_health pressed");
+		_player_controller->_stats._current_hp -= 1;
+		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
 	if (_god_mode->IsSelected())
 	{

@@ -50,6 +50,7 @@ private:
 public:
 	SERIALIZE_FIELD(Stats, _stats);
 	void CheckGoal(const float3& current_position);
+	bool _isInDebug = false;
 
 private:
 	SERIALIZE_FIELD(float, _movement_speed);

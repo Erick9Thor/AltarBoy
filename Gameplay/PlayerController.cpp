@@ -169,7 +169,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 
 		attack_current_cd = _stats._attack_cd;
 	}
-	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
+	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT) && !_isInDebug)
 	{
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::MELEE_ATTACKING;

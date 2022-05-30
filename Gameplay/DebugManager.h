@@ -10,6 +10,7 @@ namespace Hachiko
 
 	namespace Scripting
 	{
+		class PlayerController;
 		class DebugManager : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -44,6 +45,7 @@ namespace Hachiko
 			std::vector<math::float3> teleport_positions;
 			int teleport_iterator = 0;
 			GameObject* _player = nullptr;
+			PlayerController* _player_controller;
 
 		};
 	} // namespace Scripting
