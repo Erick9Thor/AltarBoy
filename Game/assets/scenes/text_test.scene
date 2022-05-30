@@ -3,8 +3,8 @@ navmesh_id: 6508920449510527110
 skybox:
   right_cube_id: 0
   left_cube_id: 0
-  bottom_cube_id: 0
   top_cube_id: 0
+  bottom_cube_id: 0
   center_cube_id: 0
   back_cube_id: 0
 root_id: 13556145879424740869
@@ -44,7 +44,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1141, 630]
+        size: [1133, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -67,7 +67,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [20, 20]
+            size: [20, 200]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -78,7 +78,7 @@ child:
           - id: 4442635127978081950
             type: 16
             enabled: true
-            font_id: 0
-            color: [1, 1, 1, 1]
-            size: 28
+            font_id: 1554818920850946454
+            color: [0.894308925, 0, 0, 1]
+            size: 40
             label_text: Sample Text
