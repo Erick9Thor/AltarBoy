@@ -14,6 +14,14 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	, _teleport_add_pos(nullptr)
 	, _add_health(nullptr)
 	, _remove_health(nullptr)
+	, _increase_max_hp(nullptr)
+	, _decrease_max_hp(nullptr)
+	, _increase_move_speed(nullptr)
+	, _decrease_move_speed(nullptr)
+	, _increase_attack_cd(nullptr)
+	, _decrease_attack_cd(nullptr)
+	, _increase_attack_power(nullptr)
+	, _decrease_attack_power(nullptr)
 	, _god_mode(nullptr)
 	, _flying_mode(nullptr)
 	, _spawn_enemy(nullptr)
@@ -128,6 +136,8 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		HE_LOG("_teleport_add_pos pressed");
 		teleport_positions.push_back(_player->GetTransform()->GetGlobalPosition());
 	}
+	
+	// Edit Character Stats
 	if (_add_health->IsSelected())
 	{
 		_player_controller->_stats._current_hp += 1;
@@ -138,6 +148,48 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._current_hp -= 1;
 		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
+	if (_increase_max_hp->IsSelected())
+	{
+		_player_controller->_stats._max_hp += 1;
+		HE_LOG("Max health now %d", _player_controller->_stats._max_hp);
+	}
+	if (_decrease_max_hp->IsSelected())
+	{
+		_player_controller->_stats._max_hp -= 1;
+		HE_LOG("Max health now %d", _player_controller->_stats._max_hp);
+	}
+	if (_increase_move_speed->IsSelected())
+	{
+		_player_controller->_stats._move_speed += 0.1f;
+		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
+	}
+	if (_decrease_move_speed->IsSelected())
+	{
+		_player_controller->_stats._move_speed -= 0.1f;
+		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
+	}
+	if (_increase_attack_cd->IsSelected())
+	{
+		_player_controller->_stats._attack_cd += 0.1f;
+		HE_LOG("Attack speed now %f", _player_controller->_stats._attack_cd);
+	}
+	if (_decrease_attack_cd->IsSelected())
+	{
+		_player_controller->_stats._attack_cd -= 0.1f;
+		HE_LOG("Attack speed now %f", _player_controller->_stats._attack_cd);
+	}
+	if (_increase_attack_power->IsSelected())
+	{
+		_player_controller->_stats._attack_power += 1;
+		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
+	}
+	if (_decrease_attack_power->IsSelected())
+	{
+		_player_controller->_stats._attack_power -= 1;
+		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
+	}
+	
+	// Player States
 	if (_god_mode->IsSelected())
 	{
 		HE_LOG("_god_mode pressed");
@@ -146,13 +198,14 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	{
 		HE_LOG("_flying_mode pressed");
 	}
-	if (_spawn_enemy->IsSelected())
-	{
-		HE_LOG("_spawn_enemy pressed");
-	}
 	if (_unlock_skills->IsSelected())
 	{
 		HE_LOG("_toggle_invulnerable pressed");
+	}
+	
+	if (_spawn_enemy->IsSelected())
+	{
+		HE_LOG("_spawn_enemy pressed");
 	}
 	if (_toggle_performance_output->IsSelected())
 	{
@@ -171,6 +224,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		is_active = !is_active;
 		for (GameObject* child : game_object->children)
 		{
+			_player_controller->_isInDebug = !_player_controller->_isInDebug;
 			child->SetActive(is_active);
 		}
 	}

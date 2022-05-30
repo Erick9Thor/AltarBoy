@@ -23,6 +23,12 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 	Editor::Show<ComponentButton>("_teleport_add_pos", "ComponentButton*", _teleport_add_pos);
 	Editor::Show<ComponentButton>("_add_health", "ComponentButton*", _add_health);
 	Editor::Show<ComponentButton>("_remove_health", "ComponentButton*", _remove_health);
+	Editor::Show<ComponentButton>("_increase_max_hp", "ComponentButton*", _increase_max_hp);
+	Editor::Show<ComponentButton>("_decrease_max_hp", "ComponentButton*", _decrease_max_hp);
+	Editor::Show<ComponentButton>("_increase_move_speed", "ComponentButton*", _increase_move_speed);
+	Editor::Show<ComponentButton>("_decrease_move_speed", "ComponentButton*", _decrease_move_speed);
+	Editor::Show<ComponentButton>("_increase_attack_cd", "ComponentButton*", _increase_attack_cd);
+	Editor::Show<ComponentButton>("_decrease_attack_cd", "ComponentButton*", _decrease_attack_cd);
 	Editor::Show<ComponentButton>("_god_mode", "ComponentButton*", _god_mode);
 	Editor::Show<ComponentButton>("_flying_mode", "ComponentButton*", _flying_mode);
 	Editor::Show<ComponentButton>("_spawn_enemy", "ComponentButton*", _spawn_enemy);

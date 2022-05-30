@@ -30,6 +30,14 @@ namespace Hachiko
 			SERIALIZE_FIELD(ComponentButton*, _teleport_add_pos);
 			SERIALIZE_FIELD(ComponentButton*, _add_health);
 			SERIALIZE_FIELD(ComponentButton*, _remove_health);
+			SERIALIZE_FIELD(ComponentButton*, _increase_max_hp);
+			SERIALIZE_FIELD(ComponentButton*, _decrease_max_hp);
+			SERIALIZE_FIELD(ComponentButton*, _increase_move_speed);
+			SERIALIZE_FIELD(ComponentButton*, _decrease_move_speed);
+			SERIALIZE_FIELD(ComponentButton*, _increase_attack_cd);
+			SERIALIZE_FIELD(ComponentButton*, _decrease_attack_cd);
+			SERIALIZE_FIELD(ComponentButton*, _increase_attack_power);
+			SERIALIZE_FIELD(ComponentButton*, _decrease_attack_power);
 			SERIALIZE_FIELD(ComponentButton*, _god_mode);
 			SERIALIZE_FIELD(ComponentButton*, _flying_mode);
 			SERIALIZE_FIELD(ComponentButton*, _spawn_enemy);

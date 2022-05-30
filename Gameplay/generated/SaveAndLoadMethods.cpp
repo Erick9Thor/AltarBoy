@@ -93,6 +93,60 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_remove_health@ComponentButton*'"] = 0;
 	}
 
+	if (_increase_max_hp != nullptr && _increase_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = _increase_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_max_hp != nullptr && _decrease_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = _decrease_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_move_speed != nullptr && _increase_move_speed->GetGameObject() != nullptr)
+	{
+		node["'_increase_move_speed@ComponentButton*'"] = _increase_move_speed->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_move_speed@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_move_speed != nullptr && _decrease_move_speed->GetGameObject() != nullptr)
+	{
+		node["'_decrease_move_speed@ComponentButton*'"] = _decrease_move_speed->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_move_speed@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_attack_cd != nullptr && _increase_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = _increase_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_attack_cd != nullptr && _decrease_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = _decrease_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = 0;
+	}
+
 	if (_god_mode != nullptr && _god_mode->GetGameObject() != nullptr)
 	{
 		node["'_god_mode@ComponentButton*'"] = _god_mode->GetGameObject()->GetID();
@@ -246,6 +300,60 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		if (_remove_health_owner__temp != nullptr)
 		{
 			_remove_health = _remove_health_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_max_hp_owner__temp != nullptr)
+		{
+			_increase_max_hp = _increase_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_max_hp_owner__temp != nullptr)
+		{
+			_decrease_max_hp = _decrease_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_move_speed@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_move_speed@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_move_speed_owner__temp != nullptr)
+		{
+			_increase_move_speed = _increase_move_speed_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_move_speed@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_move_speed@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_move_speed_owner__temp != nullptr)
+		{
+			_decrease_move_speed = _decrease_move_speed_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_attack_cd_owner__temp != nullptr)
+		{
+			_increase_attack_cd = _increase_attack_cd_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_attack_cd_owner__temp != nullptr)
+		{
+			_decrease_attack_cd = _decrease_attack_cd_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 

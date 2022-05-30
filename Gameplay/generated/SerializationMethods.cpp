@@ -92,6 +92,60 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 		}
 	}
 
+	if(serialized_fields.find("_increase_max_hp") != serialized_fields.end())
+	{
+		const SerializedField& _increase_max_hp_sf = serialized_fields["_increase_max_hp"];
+		if (_increase_max_hp_sf.type_name == "ComponentButton*")
+		{
+			_increase_max_hp = std::any_cast<ComponentButton*>(_increase_max_hp_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_max_hp") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_max_hp_sf = serialized_fields["_decrease_max_hp"];
+		if (_decrease_max_hp_sf.type_name == "ComponentButton*")
+		{
+			_decrease_max_hp = std::any_cast<ComponentButton*>(_decrease_max_hp_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_move_speed") != serialized_fields.end())
+	{
+		const SerializedField& _increase_move_speed_sf = serialized_fields["_increase_move_speed"];
+		if (_increase_move_speed_sf.type_name == "ComponentButton*")
+		{
+			_increase_move_speed = std::any_cast<ComponentButton*>(_increase_move_speed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_move_speed") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_move_speed_sf = serialized_fields["_decrease_move_speed"];
+		if (_decrease_move_speed_sf.type_name == "ComponentButton*")
+		{
+			_decrease_move_speed = std::any_cast<ComponentButton*>(_decrease_move_speed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_attack_cd") != serialized_fields.end())
+	{
+		const SerializedField& _increase_attack_cd_sf = serialized_fields["_increase_attack_cd"];
+		if (_increase_attack_cd_sf.type_name == "ComponentButton*")
+		{
+			_increase_attack_cd = std::any_cast<ComponentButton*>(_increase_attack_cd_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_attack_cd") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_attack_cd_sf = serialized_fields["_decrease_attack_cd"];
+		if (_decrease_attack_cd_sf.type_name == "ComponentButton*")
+		{
+			_decrease_attack_cd = std::any_cast<ComponentButton*>(_decrease_attack_cd_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_god_mode") != serialized_fields.end())
 	{
 		const SerializedField& _god_mode_sf = serialized_fields["_god_mode"];
@@ -207,6 +261,18 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 	serialized_fields["_add_health"] = SerializedField(std::string("_add_health"), std::make_any<ComponentButton*>(_add_health), std::string("ComponentButton*"));
 
 	serialized_fields["_remove_health"] = SerializedField(std::string("_remove_health"), std::make_any<ComponentButton*>(_remove_health), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_max_hp"] = SerializedField(std::string("_increase_max_hp"), std::make_any<ComponentButton*>(_increase_max_hp), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_max_hp"] = SerializedField(std::string("_decrease_max_hp"), std::make_any<ComponentButton*>(_decrease_max_hp), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_move_speed"] = SerializedField(std::string("_increase_move_speed"), std::make_any<ComponentButton*>(_increase_move_speed), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_move_speed"] = SerializedField(std::string("_decrease_move_speed"), std::make_any<ComponentButton*>(_decrease_move_speed), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_attack_cd"] = SerializedField(std::string("_increase_attack_cd"), std::make_any<ComponentButton*>(_increase_attack_cd), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_attack_cd"] = SerializedField(std::string("_decrease_attack_cd"), std::make_any<ComponentButton*>(_decrease_attack_cd), std::string("ComponentButton*"));
 
 	serialized_fields["_god_mode"] = SerializedField(std::string("_god_mode"), std::make_any<ComponentButton*>(_god_mode), std::string("ComponentButton*"));
 
