@@ -5,6 +5,7 @@
 #include "modules/ModuleInput.h"
 #include "modules/ModuleEditor.h"
 #include "modules/ModuleEvent.h"
+#include "importers/PrefabImporter.h"
 
 Hachiko::WindowHierarchy::WindowHierarchy() :
     Window("Hierarchy", true) {}
@@ -67,6 +68,7 @@ bool Hachiko::WindowHierarchy::RecursiveDraw(GameObject* game_object)
 
 bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop)
 {
+    ImGui::PushID(game_object);
     ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;
 
     if (game_object->children.empty())
@@ -147,6 +149,12 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
             ImGui::CloseCurrentPopup();
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
+        if (ImGui::MenuItem("Create Prefab (Use GO Name)"))
+        {
+            ImGui::CloseCurrentPopup();
+            PrefabImporter prefab_importer;
+            prefab_importer.CreatePrefabAsset(game_object->GetName().c_str(), game_object);
+        }
         ImGui::EndPopup();
     }
 
@@ -156,6 +164,8 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
     }
 
     ImGui::PopStyleColor();
+
+    ImGui::PopID();
 
     return stop;
 }

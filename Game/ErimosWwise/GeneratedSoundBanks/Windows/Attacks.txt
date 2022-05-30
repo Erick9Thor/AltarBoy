@@ -1,0 +1,14 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2211787386	Play_Dash			\Default Work Unit\Play_Dash	
+	2988676654	Play_MeleeAttack			\Default Work Unit\Play_MeleeAttack	
+	3766948527	Play_RangedAttack			\Default Work Unit\Play_RangedAttack	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	132983356	Meele_05	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_05_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_05		110392
+	171904615	Dash	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Dash_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Dash		211744
+	277816369	RangedAttack	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\weapons-plasma-shot_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\RangedAttack		28380
+	701692506	Meele_04	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_04		110392
+	723959887	Meele_02	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_02_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_02		110396
+	911303618	Meele_01	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_01		132444
+	929993214	Meele_03	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_03_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_03		110392
+

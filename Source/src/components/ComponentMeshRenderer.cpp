@@ -14,26 +14,44 @@
 #include "ComponentTransform.h"
 
 #include "modules/ModuleEvent.h"
+#include "modules/ModuleResources.h"
+
+#include <debugdraw.h>
 
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH_RENDERER, container)
 {
-    if (res != nullptr)
-    {
-        AddResourceMesh(res);
-    }
+    SetResourceMesh(res);
 }
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
 {
+    App->resources->ReleaseResource(mesh);
+    App->resources->ReleaseResource(material);
+    if (game_object->scene_owner)
+    {
+        game_object->scene_owner->GetQuadtree()->Remove(this);
+    }
     delete[] node_cache;
 }
 
-void Hachiko::ComponentMeshRenderer::Update() {
+void Hachiko::ComponentMeshRenderer::Update()
+{
     if (mesh == nullptr)
     {
         return;
 
+    }
+
+    // Material override
+    if (override_material)
+    {
+        override_timer -= GameTimer::delta_time;
+        if (override_timer <= 0)
+        {
+            override_material = false;
+            override_timer = 0;
+        }
     }
 
     if (palette.empty())
@@ -87,13 +105,54 @@ void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Progra
     glDrawElements(GL_TRIANGLES, mesh->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)], GL_UNSIGNED_INT, nullptr);
 }
 
+void Hachiko::ComponentMeshRenderer::DebugDraw()
+{
+    ddVec3 p[8];
+    // This order was pure trial and error, i dont know how to really do it
+    // Using center and points does not show the rotation
+    static const int order[8] = {0, 1, 5, 4, 2, 3, 7, 6};
+    for (int i = 0; i < 8; ++i)
+    {
+        p[i] = obb.CornerPoint(order[i]);
+    }
+    dd::box(p, dd::colors::White);
+}
+
+void Hachiko::ComponentMeshRenderer::OnTransformUpdated()
+{
+    UpdateBoundingBoxes();
+}
+
+void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
+{
+    App->resources->ReleaseResource(mesh);
+    mesh = res;
+
+    if (!mesh)
+    {
+        return;
+    }
+
+    if (mesh->num_bones > 0)
+    {
+        node_cache = new const GameObject*[mesh->num_bones];
+
+        for (unsigned int i = 0; i < mesh->num_bones; ++i)
+        {
+            node_cache[i] = nullptr;
+        }
+    }
+}
+
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
-    AddResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
+    App->resources->ReleaseResource(mesh);
+    SetResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
 {
+    App->resources->ReleaseResource(material);
     material = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id));
 }
 
@@ -152,7 +211,7 @@ void Hachiko::ComponentMeshRenderer::Save(YAML::Node& node) const
     else
     {
         node[RENDERER_MESH_ID] = 0;
-        node[MODEL_NAME] = 0;
+        node[MESH_NAVIGABLE] = false;
         node[MESH_VISIBLE] = true;
     }
 
@@ -185,22 +244,30 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
 
 Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 
 {
+    if (!posible_root)
+    {
+        return nullptr;
+    }
+
     if (posible_root->GetComponent<Hachiko::ComponentAnimation>())
     {
         return posible_root;
     }
+
     GetRoot(posible_root->parent);
 }
 
 void Hachiko::ComponentMeshRenderer::UpdateSkinPalette(std::vector<float4x4>& palette) const
 {
-    
     if (mesh && mesh->num_bones > 0)
     {
         const GameObject* root = GetRoot(game_object);
 
         if (!root)
+        {
+            HE_LOG("Root not found");
             return;
+        }     
 
         float4x4 root_transform = root->GetTransform()->GetGlobalMatrix().Inverted();
 
@@ -234,8 +301,8 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Material",
-                                                ".mat",
-                                                "./assets/materials/",
+                                                MATERIAL_EXTENSION,
+                                                ASSETS_FOLDER_MATERIAL,
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
@@ -253,11 +320,37 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
             ResourceMaterial* res = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_node[RESOURCES][0][RESOURCE_ID].as<UID>()));
             if (res != nullptr)
             {
-                // Unload material
+                App->resources->ReleaseResource(material);
                 material = res;
             }
         }
 
         ImGuiFileDialog::Instance()->Close();
     }
+}
+
+void Hachiko::ComponentMeshRenderer::OverrideEmissive(float4 color, float time) 
+{
+    override_material = true;
+    override_timer = time;
+    override_emissive = color;
+}
+
+void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
+{
+    obb = GetMeshAABB();
+    obb.Transform(game_object->GetTransform()->GetGlobalMatrix());
+    // Enclose is accumulative, reset the box
+    aabb.SetNegativeInfinity();
+    aabb.Enclose(obb);
+
+    // Without the check main camera crashes bcs there is no quadtree
+    Scene* scene = game_object->scene_owner;
+    if (scene)
+    {
+        const Quadtree* quadtree = scene->GetQuadtree();
+        quadtree->Remove(this);
+        quadtree->Insert(this);
+    }
+
 }

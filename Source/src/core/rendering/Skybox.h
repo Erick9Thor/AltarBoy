@@ -10,11 +10,25 @@ namespace Hachiko
     {
     public:
         Skybox();
+        Skybox(TextureCube new_cube);
         ~Skybox();
         void Draw(ComponentCamera* camera) const;
 
+        void ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_side);
+        void ReleaseCubemap();
+
+        const TextureCube& GetCube() const
+        {
+            return cube;
+        }
+
+        void DrawImGui();
+
     private:
-        TextureCube texture;
+        void SelectSkyboxTexture(TextureCube::Side cube_side);
+
+        void CreateBuffers();
+        TextureCube cube;
         unsigned vao{};
         unsigned vbo{};
 

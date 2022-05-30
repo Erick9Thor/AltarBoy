@@ -406,9 +406,9 @@ HACHIKO_API const float2& GetMouseNormalizedPosition();
 
 namespace Hachiko::SceneManagement
 {
-HACHIKO_API void SwitchScene(const char* name);
+HACHIKO_API void SwitchScene(unsigned long long scene_uid);
 HACHIKO_API GameObject* Raycast(const float3& origin, 
-    const float3& destination);
+const float3& destination);
 HACHIKO_API GameObject* FindInCurrentScene(unsigned long long id);
 HACHIKO_API void Destroy(GameObject* game_object);
 } // namespace Hachiko::SceneManagement
@@ -472,8 +472,3 @@ namespace Hachiko::Navigation
     HACHIKO_API math::float3 GetCorrectedPosition(math::float3& position, const math::float3& extents);
     HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
 } // namespace Hachiko::Navigation
-
-namespace Hachiko::Audio
-{
-    HACHIKO_API void Play(const wchar_t* name);
-} // namespace Hachiko::Audio

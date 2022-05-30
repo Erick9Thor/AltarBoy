@@ -61,7 +61,7 @@ bool Hachiko::ImGuiUtils::CompactColorPicker(const char* name, float* color)
 
 bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* component, const char* header_name)
 {
-    const bool open = ImGui::CollapsingHeader(header_name, ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen);
+    bool open = ImGui::CollapsingHeader(header_name, ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen);
 
     ImGui::SameLine();
     if (ImGui::GetWindowWidth() > 170)
@@ -79,8 +79,7 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* c
 
     if (ImGui::BeginPopup(header_name))
     {
-
-        game_object->AttemptRemoveComponent(component);
+        open = !game_object->AttemptRemoveComponent(component);
         
         ImGui::EndPopup();
     }

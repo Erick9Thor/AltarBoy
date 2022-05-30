@@ -192,7 +192,7 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(go->CreateComponent(Component::Type::MESH_RENDERER));
         ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, meta[MESHES][mesh_idx].as<UID>()));
         ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta[MATERIALS][material_idx].as<UID>()));
-        mesh_renderer->AddResourceMesh(mesh_resource);     
+        mesh_renderer->SetResourceMesh(mesh_resource);     
         mesh_renderer->AddResourceMaterial(material_resource);
     }
 

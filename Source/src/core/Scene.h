@@ -15,6 +15,8 @@ namespace Hachiko
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
+    class ResourceNavMesh;
+    class BatchManager;
 
     class Scene
     {
@@ -28,14 +30,16 @@ namespace Hachiko
 
         // --- Life cycle Scene --- //
         void Start() const;
-        void Update() const;
+        void Update();
 
         // --- GameObject Management --- //
         [[nodiscard]] ComponentCamera* GetMainCamera() const;
-        void DestroyGameObject(GameObject* game_object) const;
+        void DestroyGameObject(GameObject* game_object);
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
         void HandleInputMaterial(ResourceMaterial* material);
+
+        void RebuildBatching();
 
         [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
 
@@ -60,6 +64,17 @@ namespace Hachiko
             return quadtree;
         }
 
+        // --- Batching --- //
+        void OnMeshesChanged()
+        {
+            rebuild_batch = true;
+        }
+
+        [[nodiscard]] BatchManager* GetBatchManager() const
+        {
+            return batch_manager;
+        }
+
         // --- Debug --- //
         GameObject* CreateDebugCamera();
 
@@ -79,6 +94,16 @@ namespace Hachiko
             return name.c_str();
         }
 
+        [[nodiscard]] UID GetNavmeshID() const
+        {
+            return navmesh_id;
+        }
+
+        void SetNavmeshID(UID new_navmesh_id)
+        {
+            navmesh_id = new_navmesh_id;
+        }
+        
         [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
 
         [[nodiscard]] GameObject* Find(UID id) const;
@@ -88,8 +113,8 @@ namespace Hachiko
             name = new_name;
         }
 
-        void Save(YAML::Node& node) const;
-        void Load(const YAML::Node& node);
+        void Save(YAML::Node& node);
+        void Load(const YAML::Node& node, bool meshes_only = false);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
 
@@ -105,8 +130,13 @@ namespace Hachiko
         ComponentCamera* culling_camera = nullptr;
         bool loaded = false;
 
+        UID navmesh_id = 0;
+
         Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
+
+        bool rebuild_batch = true;
+        BatchManager* batch_manager = nullptr;
 
     public:
         class Memento
@@ -129,7 +159,7 @@ namespace Hachiko
             std::string content;
         };
 
-        [[nodiscard]] Memento* CreateSnapshot() const;
+        [[nodiscard]] Memento* CreateSnapshot();
         void Restore(const Memento*) const;
     };
-}
+} // namespace Hachiko

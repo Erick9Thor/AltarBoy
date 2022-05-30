@@ -6,6 +6,8 @@
 #include "modules/ModuleProgram.h"
 #include "Application.h"
 #include "modules/ModuleUserInterface.h"
+#include "modules/ModuleResources.h"
+#include "resources/ResourceTexture.h"
 
 #include "core/rendering/Program.h"
 #include "modules/ModuleEvent.h"
@@ -18,46 +20,83 @@ Hachiko::ComponentImage::ComponentImage(GameObject* container)
 
 void Hachiko::ComponentImage::DrawGui()
 {
+    constexpr bool is_hover_image = true;
+
     ImGui::PushID(this);
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
     {   
 
+        ImGui::Text("Normal Image");
         ImGui::Checkbox("Use Image", &use_image);
-        
-        if (ImGui::InputText("Image File", image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+
+        const std::string title = "Select Image";
+        if (ImGui::Button(title.c_str()))
         {
-            ModuleTexture::Unload(image);
-            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + image_filename_buffer;
-            image = ModuleTexture::Load(destination.c_str());
-            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+            ImGuiFileDialog::Instance()->OpenDialog(title,
+                                                    title,
+                                                    ".png",
+                                                    ASSETS_FOLDER_TEXTURE,
+                                                    1,
+                                                    nullptr,
+                                                    ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
+                                                        | ImGuiFileDialogFlags_HideColumnDate);
         }
 
-        if (!use_image || !image.loaded)
+        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
         {
-            ImGuiUtils::CompactColorPicker("Color", color.ptr());
-            CREATE_HISTORY_ENTRY_AFTER_EDIT() 
-        }       
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                std::string font_path = ImGuiFileDialog::Instance()->GetFilePathName();
+                font_path.append(META_EXTENSION);
+                YAML::Node font_node = YAML::LoadFile(font_path);
+                LoadImageResource(font_node[RESOURCES][0][RESOURCE_ID].as<UID>(), !is_hover_image);
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+            }
 
-        if(ImGui::Checkbox("Use Hover Image", &use_hover_image))
-        {
-            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+            ImGuiFileDialog::Instance()->Close();
         }
 
-        if (ImGui::InputText("Hover Image File", hover_image_filename_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+        if (!use_image || !image)
         {
-            ModuleTexture::Unload(hover_image);
-            std::string destination = std::string(ASSETS_FOLDER_TEXTURES) + "/" + hover_image_filename_buffer;
-            hover_image = ModuleTexture::Load(destination.c_str());
-            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+            ImGuiUtils::CompactColorPicker("Image Color", color.ptr());
         }
 
-        if (!use_hover_image || !hover_image.loaded)
+        ImGui::Text("Hover Image");
+
+        const std::string hover_title = "Select Hover Image";
+        if (ImGui::Button(hover_title.c_str()))
+        {
+            ImGuiFileDialog::Instance()->OpenDialog(hover_title,
+                                                    hover_title,
+                                                    ".png",
+                                                    ASSETS_FOLDER_TEXTURE,
+                                                    1,
+                                                    nullptr,
+                                                    ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
+                                                        | ImGuiFileDialogFlags_HideColumnDate);
+        }
+
+        if (ImGuiFileDialog::Instance()->Display(hover_title.c_str()))
+        {
+            if (ImGuiFileDialog::Instance()->IsOk())
+            {
+                std::string font_path = ImGuiFileDialog::Instance()->GetFilePathName();
+                font_path.append(META_EXTENSION);
+                YAML::Node font_node = YAML::LoadFile(font_path);
+                LoadImageResource(font_node[RESOURCES][0][RESOURCE_ID].as<UID>(), is_hover_image);
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+            }
+
+            ImGuiFileDialog::Instance()->Close();
+        }
+
+        if (!use_hover_image || !hover_image)
         {
             ImGuiUtils::CompactColorPicker("Hover Color", hover_color.ptr());
         }
 
-        ImGui::Text("Image Loaded %d", image.loaded);
-        ImGui::Text("Hover Image Loaded %d", hover_image.loaded);
+        ImGui::Text("Image Loaded %d", image != nullptr);
+        ImGui::Text("Hover Image Loaded %d", hover_image != nullptr);
 	}
     ImGui::PopID();
 }
@@ -70,7 +109,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     program->Activate();
     App->ui->BindSquare();
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
-    const Texture* img_to_draw = &image;
+    const ResourceTexture* img_to_draw = image;
     const float4* render_color = &color;
     bool render_img = use_image;    
     
@@ -79,49 +118,46 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 
     if (button && button->IsHovered())
     {
-        img_to_draw = &hover_image;
+        img_to_draw = hover_image;
         render_color = &hover_color;
         render_img = use_hover_image;
     }
 
-    program->BindUniformBool("diffuse_flag", img_to_draw->loaded && render_img);
+    program->BindUniformBool("diffuse_flag", img_to_draw && render_img);
     program->BindUniformFloat4("img_color", render_color->ptr());
-    ModuleTexture::Bind(img_to_draw->id, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+    ModuleTexture::Bind(img_to_draw? img_to_draw->GetImageId(): 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
 {
-    node[IMAGE_PATH] = image.path.c_str();
-    node[HOVER_IMAGE_PATH] = hover_image.path.c_str();
+    node[IMAGE_IMAGE_ID] = image ? image->GetID() : 0;
+    node[IMAGE_HOVER_IMAGE_ID] = hover_image ? hover_image->GetID() : 0;
+    node[USE_IMAGE] = use_image;
+    node[USE_HOVER_IMAGE] = use_hover_image;
+    node[IMAGE_COLOR] = color;
+    node[IMAGE_HOVER_COLOR] = hover_color;
 }
 
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
 {
-    const std::string image_path = node[IMAGE_PATH].as<std::string>();
-    const std::string hover_image_path = node[HOVER_IMAGE_PATH].as<std::string>();
-
-    if (!image_path.empty())
-    {
-        image = ModuleTexture::Load(image_path.c_str());
-        if (image.loaded)
-        {
-            use_image = true;
-        }
-    }
-
-    if (!hover_image_path.empty())
-    {
-        hover_image = ModuleTexture::Load(hover_image_path.c_str());
-        use_hover_image = true;
-    }
+    constexpr bool is_hover_image = true;
+    LoadImageResource(node[IMAGE_IMAGE_ID].as<UID>(), !is_hover_image);
+    LoadImageResource(node[IMAGE_HOVER_IMAGE_ID].as<UID>(), is_hover_image);
+    use_image = node[USE_IMAGE].as<bool>();
+    use_hover_image = node[USE_HOVER_IMAGE].as<bool>();
+    color = node[IMAGE_COLOR].as<float4>();
+    hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
 }
 
-void Hachiko::ComponentImage::Import(const char* path)
+void Hachiko::ComponentImage::LoadImageResource(UID image_uid, bool is_hover)
 {
-    image = ModuleTexture::Load(path);
-    if (image.loaded)
+    if (!is_hover)
     {
-        use_image = true;
+        App->resources->ReleaseResource(image);
+        image = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, image_uid));
+        return;
     }
+    App->resources->ReleaseResource(hover_image);
+    hover_image = static_cast<ResourceTexture*>(App->resources->GetResource(Resource::Type::TEXTURE, image_uid));
 }

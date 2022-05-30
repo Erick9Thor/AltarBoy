@@ -33,7 +33,7 @@ void Hachiko::WindowResource::Update()
         ImGui::InputText("Name", &auxiliary_name[0], 64);
         if (ImGui::Button("Create material"))
         {
-            App->resources->CreateAsset(Resource::Type::MATERIAL, auxiliary_name);
+            App->resources->CreateAsset(Resource::Type::MATERIAL, auxiliary_name + MATERIAL_EXTENSION);
             ImGui::CloseCurrentPopup();
         }
         ImGui::EndPopup();
@@ -64,7 +64,7 @@ void Hachiko::WindowResource::Update()
         }
         else
         {
-            if (FileSystem::GetFileExtension(filename.c_str()) != ".meta")
+            if (FileSystem::GetFileExtension(filename.c_str()) != META_EXTENSION)
             {
                 auto selection = ImGui::Selectable(filename.c_str(), ImGuiSelectableFlags_AllowDoubleClick);
                 if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())

@@ -11,6 +11,7 @@ Hachiko::Scripting::PlayerSoundManager::PlayerSoundManager(Hachiko::GameObject* 
 	, _melee_frequency(0.0f)
 	, _ranged_frequency(0.0f)
 	, _previous_state(PlayerState::INVALID)
+	, _audio_source(nullptr)
 {
 }
 
@@ -44,7 +45,7 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 
 		if (_timer == 0.0f)
 		{
-			Audio::Play(Sounds::FOOTSTEP);
+			_audio_source->PostEvent(Sounds::FOOTSTEP);
 		}
 
 		break;
@@ -54,7 +55,7 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 
 		if (_timer == 0.0f)
 		{
-			Audio::Play(Sounds::MELEE_ATTACK);
+			_audio_source->PostEvent(Sounds::MELEE_ATTACK);
 		}
 
 		break;
@@ -63,14 +64,14 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 
 		if (_timer == 0.0f)
 		{
-			Audio::Play(Sounds::RANGED_ATTACK);
+			_audio_source->PostEvent(Sounds::RANGED_ATTACK);
 		}
 
 		break;
 	case PlayerState::DASHING:
 		if (state_changed)
 		{
-			Audio::Play(Sounds::DASH);
+			_audio_source->PostEvent(Sounds::DASH);
 		}
 		_timer = 0.0f;
 		break;

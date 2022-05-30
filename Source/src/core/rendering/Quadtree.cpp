@@ -2,10 +2,7 @@
 #include "Quadtree.h"
 #include <debugdraw.h>
 
-Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth) :
-    depth(depth),
-    box(box),
-    parent(parent)
+Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth) : depth(depth), box(box), parent(parent)
 {
     children[static_cast<int>(Quadrants::NW)] = children[static_cast<int>(Quadrants::NE)] = children[static_cast<int>(Quadrants::SE)] = children[static_cast<int>(Quadrants::SW)] = nullptr;
 }
@@ -18,9 +15,9 @@ Hachiko::QuadtreeNode::~QuadtreeNode()
     RELEASE(children[(int)Quadrants::SW]);
 }
 
-void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
+void Hachiko::QuadtreeNode::Insert(ComponentMeshRenderer* mesh)
 {
-    objects.push_back(game_object);
+    meshes.push_back(mesh);
 
     if (depth >= QUADTREE_MAX_DEPTH)
     {
@@ -28,7 +25,7 @@ void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
     }
 
     // No split due to not enough objects
-    if (IsLeaf() && objects.size() < QUADTREE_MAX_ITEMS)
+    if (IsLeaf() && meshes.size() < QUADTREE_MAX_ITEMS)
     {
         return;
     }
@@ -47,20 +44,20 @@ void Hachiko::QuadtreeNode::Insert(GameObject* game_object)
     RearangeChildren();
 }
 
-void Hachiko::QuadtreeNode::Remove(GameObject* game_object)
+void Hachiko::QuadtreeNode::Remove(ComponentMeshRenderer* mesh)
 {
     // TODO: Reduce size when no longer necessary?
-    const auto find_iter = std::find(objects.begin(), objects.end(), game_object);
-    if (find_iter != objects.end())
+    const auto find_iter = std::find(meshes.begin(), meshes.end(), mesh);
+    if (find_iter != meshes.end())
     {
-        objects.erase(find_iter);
+        meshes.erase(find_iter);
     }
 
     if (!IsLeaf())
     {
         for (const auto& child : children)
         {
-            child->Remove(game_object);
+            child->Remove(mesh);
         }
     }
 }
@@ -107,27 +104,32 @@ void Hachiko::QuadtreeNode::CreateChildren()
 void Hachiko::QuadtreeNode::RearangeChildren()
 {
     //HE_LOG("Rearange Children %s", this);
-    for (auto it = objects.begin(); it != objects.end();)
+    for (auto it = meshes.begin(); it != meshes.end();)
     {
-        GameObject* game_object = *it;
+        ComponentMeshRenderer* mesh = *it;
+        int intersection_count = 0;
         bool intersects[static_cast<int>(Quadrants::COUNT)];
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
-            intersects[i] = children[i]->box.Intersects(game_object->GetAABB());
+            intersects[i] = children[i]->box.Intersects(mesh->GetAABB());
+            if (intersects[i])
+            {
+                intersection_count += 1;
+            }
         }
 
         // If it intersects all there is no point in moving downwards
-        if (intersects[static_cast<int>(Quadrants::NW)] && intersects[static_cast<int>(Quadrants::NE)] && intersects[static_cast<int>(Quadrants::SE)] && intersects[static_cast<int>(Quadrants::SW)])
+        if (intersection_count > 1)
         {
             ++it;
             continue;
         }
-        it = objects.erase(it);
+        it = meshes.erase(it);
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
             if (intersects[i])
             {
-                children[i]->Insert(game_object);
+                children[i]->Insert(mesh);
             }
         }
     }
@@ -173,19 +175,19 @@ void Hachiko::Quadtree::SetBox(const AABB& box)
     root = new QuadtreeNode(box, nullptr, 0);
 }
 
-void Hachiko::Quadtree::Insert(GameObject* game_object) const
+void Hachiko::Quadtree::Insert(ComponentMeshRenderer* mesh) const
 {
     if (root)
     {
-        root->Insert(game_object);
+        root->Insert(mesh);
     }
 }
 
-void Hachiko::Quadtree::Remove(GameObject* game_object) const
+void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh) const
 {
     if (root)
     {
-        root->Remove(game_object);
+        root->Remove(mesh);
     }
 }
 

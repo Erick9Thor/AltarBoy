@@ -6,7 +6,7 @@ namespace Hachiko
     class ErrorHandler
     {
     public:
-#ifndef PLAY_BUILD
+#ifdef _DEBUG
         static void HandleOpenGlError(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam)
         {
             auto tmp_source = "", tmp_type = "", tmp_severity = "";
