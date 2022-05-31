@@ -110,7 +110,7 @@ namespace Hachiko
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
-        Program* CreateBillboardProgram();
+        Program* CreateParticleProgram();
 
         Program* main_program = nullptr;
         Program* skybox_program = nullptr;

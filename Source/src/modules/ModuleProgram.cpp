@@ -22,7 +22,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    CreateBillboardProgram();
+    CreateParticleProgram();
     if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
     {
         return false;
@@ -141,7 +141,7 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
     return ui_text_program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateBillboardProgram()
+Hachiko::Program* Hachiko::ModuleProgram::CreateParticleProgram()
 {
     particle_program = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
     return particle_program;
