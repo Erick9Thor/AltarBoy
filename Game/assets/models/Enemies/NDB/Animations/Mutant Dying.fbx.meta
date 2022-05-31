@@ -1,0 +1,18 @@
+asset_hash: 16660560770270220882
+model_name: Mutant Dying
+meshes:
+  - 10758750511289331120
+materials:
+  - 6750369022920963075
+animations:
+  - 3589836453226493017
+prefab_id: 9375044690453030469
+resources:
+  - resource_id: 10758750511289331120
+    resource_type: 3
+  - resource_id: 6750369022920963075
+    resource_type: 1
+  - resource_id: 3589836453226493017
+    resource_type: 7
+  - resource_id: 9375044690453030469
+    resource_type: 13

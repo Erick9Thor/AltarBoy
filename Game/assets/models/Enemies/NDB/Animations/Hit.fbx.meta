@@ -1,0 +1,18 @@
+asset_hash: 1332974145382613868
+model_name: Hit
+meshes:
+  - 10955667391598848979
+materials:
+  - 6750369022920963075
+animations:
+  - 1754357970815292822
+prefab_id: 13793626529022590837
+resources:
+  - resource_id: 10955667391598848979
+    resource_type: 3
+  - resource_id: 6750369022920963075
+    resource_type: 1
+  - resource_id: 1754357970815292822
+    resource_type: 7
+  - resource_id: 13793626529022590837
+    resource_type: 13
