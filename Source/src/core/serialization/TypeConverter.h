@@ -318,14 +318,8 @@ namespace YAML
 
         static bool decode(const Node& node, ImGradient& rhs)
         {
-            /*for (int i = 0; i < node.size(); ++i)
-            {
-                auto mark = node[i].as<ImGradientMark>();
-                rhs.addMark(mark.position,
-                    ImColor(mark.color[0], mark.color[1], mark.color[2], mark.color[3]));
-            }*/
-
-            return true;
+            // Not able to decode. Use ImGradientMark's decode instead and ImGradient::addMark
+            return false;
         }
     };
 
