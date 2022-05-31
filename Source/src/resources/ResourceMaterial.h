@@ -5,12 +5,6 @@
 
 namespace Hachiko
 {
-    enum class RenderMode
-    {
-        MATERIAL_OPAQUE,
-        MATERIAL_TRANSPARENT
-    };
-
     class ResourceMaterial : public Resource
     {
     public:
@@ -122,7 +116,6 @@ namespace Hachiko
         void RemoveTexture(ResourceTexture::Type type);
         void UpdateMaterial();
         std::string name;
-        RenderMode render_mode = RenderMode::MATERIAL_OPAQUE;
 
         std::vector<std::string> transparency = {"Opaque", "Transparent"};
         std::vector<std::string> material_types = {"Specular", "Metallic"};
