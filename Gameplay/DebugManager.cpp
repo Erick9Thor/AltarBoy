@@ -8,6 +8,7 @@
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
+	, _player(nullptr)
 	, _button_back(nullptr)
 	, _teleport_next_pos(nullptr)
 	, _teleport_prev_pos(nullptr)
@@ -29,7 +30,6 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	, _toggle_performance_output(nullptr)
 	, _toggle_wireframe(nullptr)
 	, _toggle_show_colliders(nullptr)
-	, _player(nullptr)
 	, _exit_debug(nullptr)
 	, _tp_pos1(nullptr)
 	, _tp_pos2(nullptr)
@@ -59,7 +59,7 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 
 void Hachiko::Scripting::DebugManager::OnStart()
 {
-	_player = game_object->parent->GetFirstChildWithName("PlayerC");
+	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
 	_player_controller = _player->GetComponent<PlayerController>();
 
 	for (GameObject* child : game_object->children)
@@ -103,13 +103,16 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		}
 		else
 		{
-			float3 current_position = teleport_positions[teleport_iterator];
-			_player->GetTransform()->SetGlobalPosition(current_position);
 			++teleport_iterator;
 			if (teleport_iterator >= teleport_positions.size())
 			{
 				teleport_iterator = 0;
 			}
+			float3 current_position = teleport_positions[teleport_iterator];
+			_player->GetTransform()->SetGlobalPosition(current_position);
+
+
+			HE_LOG("Iterator: %d", teleport_iterator);
 		}
 
 	}
@@ -122,13 +125,15 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		}
 		else
 		{
-			float3 current_position = teleport_positions[teleport_iterator];
-			_player->GetTransform()->SetGlobalPosition(current_position);
 			--teleport_iterator;
 			if (teleport_iterator < 0)
 			{
 				teleport_iterator = teleport_positions.size() - 1;
 			}
+			float3 current_position = teleport_positions[teleport_iterator];
+			_player->GetTransform()->SetGlobalPosition(current_position);
+
+			HE_LOG("Iterator: %d",teleport_iterator);
 		}
 
 	}
@@ -139,6 +144,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	}
 	
 	// Edit Character Stats
+	/*
 	if (_add_health->IsSelected())
 	{
 		_player_controller->_stats._current_hp += 1;
@@ -149,7 +155,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._current_hp -= 1;
 		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
-	/*
+
 	if (_increase_max_hp->IsSelected())
 	{
 		_player_controller->_stats._max_hp += 1;
@@ -190,7 +196,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
 	}
-	*/
+	
 	// Player States
 	if (_god_mode->IsSelected())
 	{
@@ -221,6 +227,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	{
 		HE_LOG("_toggle_show_colliders pressed");
 	}
+	*/
 	if (_exit_debug->IsSelected())
 	{
 		is_active = !is_active;

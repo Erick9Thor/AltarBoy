@@ -24,6 +24,7 @@ namespace Hachiko
 			void OnUpdate() override;
 
 		private:
+			SERIALIZE_FIELD(GameObject*, _player);
 			SERIALIZE_FIELD(ComponentButton*, _button_back);
 			SERIALIZE_FIELD(ComponentButton*, _teleport_next_pos);
 			SERIALIZE_FIELD(ComponentButton*, _teleport_prev_pos);
@@ -54,8 +55,7 @@ namespace Hachiko
 			bool is_active;
 			bool _is_god_mode = false;
 			std::vector<math::float3> teleport_positions;
-			int teleport_iterator = 0;
-			GameObject* _player = nullptr;
+			int teleport_iterator = -1;
 			PlayerController* _player_controller;
 
 		};
