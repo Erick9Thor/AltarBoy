@@ -262,15 +262,17 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
                      cube.resources[i]->format,
                      GL_UNSIGNED_BYTE,
                      0);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
-    }
-    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    {
-        HE_LOG("Error creating frame buffer");
     }
 
     for (unsigned i = 0; i < 6; ++i)
     {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            HE_LOG("Error creating frame buffer");
+        }
+
         frustum.SetFrame(float3::zero, front[i], up[i]);
         App->program->UpdateCamera(frustum);
 

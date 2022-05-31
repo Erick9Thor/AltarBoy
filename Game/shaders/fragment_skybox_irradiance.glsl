@@ -1,6 +1,6 @@
 # version 460
 
-#define NUM_SAMPLES 10
+#define NUM_SAMPLES 100
 #define PI 3.14159
 
 in vec3 tex_coords;
