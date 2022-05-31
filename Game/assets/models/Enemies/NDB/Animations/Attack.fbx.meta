@@ -6,7 +6,7 @@ materials:
   - 6750369022920963075
 animations:
   - 1533795829663336851
-prefab_id: 13199790773928826948
+prefab_id: 15846034710762777278
 resources:
   - resource_id: 14441581912804852720
     resource_type: 3
@@ -14,5 +14,5 @@ resources:
     resource_type: 1
   - resource_id: 1533795829663336851
     resource_type: 7
-  - resource_id: 13199790773928826948
+  - resource_id: 15846034710762777278
     resource_type: 13

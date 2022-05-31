@@ -75,7 +75,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
-	//CheckGoal(current_position);
+	CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -165,6 +165,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 		current_position += transform->GetFront() * 0.3f;
+		current_position = Navigation::GetCorrectedPosition(current_position, float3(2.0f, 1.0f, 2.0f));
 		_attack_current_cd = _attack_cooldown;
 	}
 }
@@ -276,11 +277,18 @@ void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
 
 	_is_dashing = (_dash_progress < 1.0f);
 
-	const math::float3 _dash_end = 
-		_dash_start + _dash_direction * _dash_distance;
-
 	current_position = math::float3::Lerp(_dash_start, _dash_end, 
 		_dash_progress);
+
+	//if (!_is_dashing)
+	//{
+	//	float3 temp_position;
+	//	temp_position = Navigation::GetCorrectedPosition(current_position, float3(0.5f, 0.1f, 0.5f));
+	//	if (temp_position.x < FLT_MAX)
+	//	{
+	//		current_position = temp_position;
+	//	}
+	//}
 }
 
 void Hachiko::Scripting::PlayerController::Rotate(
@@ -348,7 +356,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 	{
 		current_position.y -= 0.25f;
 
-		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(3.0f, 3.0f, 3.0f));
 		_state = PlayerState::FALLING;
 		if (Distance(corrected_position, current_position) < 1.0f)
 		{
@@ -448,9 +456,27 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
 		
 		//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
-
-		_dash_direction = game_object->GetTransform()->GetFront();
+		if (moving_input_dir.Equals(float3::zero))
+		{
+			_dash_direction = game_object->GetTransform()->GetFront();
+		}
+		else
+		{
+			_dash_direction = moving_input_dir * -1;
+		}
 		_dash_direction.Normalize();
+
+		float3 temp_end;
+		float3 end_calculated = _dash_start + _dash_direction * _dash_distance;
+		temp_end = Navigation::GetCorrectedPosition(end_calculated, float3(1.0f, 0.1f, 1.0f));
+		if (temp_end.x < FLT_MAX)
+		{
+			_dash_end = temp_end;
+		}
+		else
+		{
+			_dash_end = end_calculated;
+		}
 	}
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
@@ -474,6 +500,6 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		//SceneManagement::SwitchScene(Scenes::WIN);
+		SceneManagement::SwitchScene(12124061992092393469);
 	}
 }

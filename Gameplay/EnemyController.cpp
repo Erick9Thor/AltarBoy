@@ -19,7 +19,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
+	//game_object->GetComponent<ComponentAgent>()->AddToCrowd();    Changed when the Player is Loaded
 	_attack_range = 1.5f;
 	_stun_time = 0.0f;
 	_is_stunned = false;
@@ -28,7 +28,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
-	_player_controller = _player->GetComponent<PlayerController>();
+	if (_player != nullptr)
+	{
+		_player_controller = _player->GetComponent<PlayerController>();
+		game_object->GetComponent<ComponentAgent>()->AddToCrowd();
+	}
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 	transform = game_object->GetTransform();
@@ -40,10 +44,21 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
+	if (_player_controller == nullptr)
+	{
+		if (_player == nullptr)
+		{
+			return;
+		}
+		_player_controller = _player->GetComponent<PlayerController>();
+		game_object->GetComponent<ComponentAgent>()->AddToCrowd();
+	}
+
 	if (!_stats.IsAlive())
 	{
 		return;
 	}
+
 	if (_is_stunned)
 	{
 		if (_stun_time > 0.0f)
