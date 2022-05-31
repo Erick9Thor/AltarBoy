@@ -10,6 +10,7 @@ class GameObject;
 
 namespace Scripting
 {
+class PlayerCamera;
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
@@ -80,6 +81,10 @@ private:
 	SERIALIZE_FIELD(float, _rotation_duration);
 	SERIALIZE_FIELD(math::Quat, _rotation_start);
 	SERIALIZE_FIELD(math::Quat, _rotation_target);
+
+	SERIALIZE_FIELD(GameObject*, _camera);
+
+	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
 	float attack_current_cd = 0.0f;
 

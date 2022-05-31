@@ -6,27 +6,27 @@
 using namespace Hachiko;
 
 const std::map<Resource::AssetType, std::string> ResourcesPreferences::assets_paths = {
-    {Resource::AssetType::SCENE, ASSETS_FOLDER_SCENE},
     {Resource::AssetType::MODEL, ASSETS_FOLDER_MODEL},
     {Resource::AssetType::TEXTURE, ASSETS_FOLDER_TEXTURE},
     {Resource::AssetType::VIDEO, ASSETS_FOLDER_VIDEO},
     {Resource::AssetType::MATERIAL, ASSETS_FOLDER_MATERIAL},
-    // {Resource::AssetType::SKYBOX, ASSETS_FOLDER_SKYBOX},
+    {Resource::AssetType::SKYBOX, ASSETS_FOLDER_SKYBOX},
     {Resource::AssetType::FONT, ASSETS_FOLDER_FONT},
     {Resource::AssetType::PREFAB, ASSETS_FOLDER_PREFAB},
+    {Resource::AssetType::SCENE, ASSETS_FOLDER_SCENE},
 };
 
-const std::map<Resource::Type, std::string> ResourcesPreferences::lib_paths = {
-    {Resource::Type::SCENE, LIBRARY_FOLDER_SCENE},
+const std::map<Resource::Type, std::string> ResourcesPreferences::lib_paths = {    
     {Resource::Type::MESH, LIBRARY_FOLDER_MESH},
     {Resource::Type::TEXTURE, LIBRARY_FOLDER_TEXTURE},
     {Resource::Type::VIDEO, LIBRARY_FOLDER_VIDEO},
     {Resource::Type::MATERIAL, LIBRARY_FOLDER_MATERIAL},
     {Resource::Type::ANIMATION, LIBRARY_FOLDER_ANIMATION},
-    // {Resource::Type::SKYBOX, LIBRARY_FOLDER_SKYBOX},
+    {Resource::Type::SKYBOX, LIBRARY_FOLDER_SKYBOX},
     {Resource::Type::FONT, LIBRARY_FOLDER_FONT},
     {Resource::Type::NAVMESH, LIBRARY_FOLDER_NAVMESH},
     {Resource::Type::PREFAB, LIBRARY_FOLDER_PREFAB},
+    {Resource::Type::SCENE, LIBRARY_FOLDER_SCENE},
 };
 
 ResourcesPreferences::ResourcesPreferences()

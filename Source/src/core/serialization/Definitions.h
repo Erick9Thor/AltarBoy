@@ -151,7 +151,6 @@
 #define GAME_OBJECT_NAME "name"
 #define GAME_OBJECT_ENABLED "enabled"
 #define GAME_OBJECT_ID "id"
-#define GAME_OBJECT_PARENT_ID "parent_id"
 
 // Component
 #define COMPONENT_NODE "component"
@@ -204,6 +203,8 @@
 // Component Image
 #define IMAGE_IMAGE_ID "image_id"
 #define IMAGE_HOVER_IMAGE_ID "hover_image_id"
+#define IMAGE_COLOR "image_color"
+#define IMAGE_HOVER_COLOR "hover_image_color"
 #define USE_IMAGE "use_image"
 #define USE_HOVER_IMAGE "use_hover_image"
 

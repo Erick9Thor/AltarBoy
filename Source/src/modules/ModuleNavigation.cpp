@@ -42,7 +42,6 @@ bool Hachiko::ModuleNavigation::CleanUp()
 Hachiko::ResourceNavMesh* Hachiko::ModuleNavigation::BuildNavmeshResource(Scene* scene)
 {
     HE_LOG("Building Navmesh");
-
     ResourceNavMesh::NavmeshParams initial_params;
     if (scene_navmesh)
     {
@@ -144,7 +143,7 @@ void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* new_reosurce)
 void Hachiko::ModuleNavigation::RebuildCurrentNavmesh(Scene* scene)
 {
     // Builds navmesh without getting it from library
-    ResourceNavMesh* resource_navmesh = App->navigation->BuildNavmeshResource(scene);
+    ResourceNavMesh* resource_navmesh = BuildNavmeshResource(scene);
     App->navigation->SetNavmesh(resource_navmesh);
 }
 

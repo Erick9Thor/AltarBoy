@@ -22,14 +22,6 @@ namespace Hachiko
     class HACHIKO_API ComponentCamera : public Component
     {
     public:
-        enum class CameraType
-        {
-            STATIC,
-            DYNAMIC,
-            GOD,
-            PLAYER
-        };
-
         ComponentCamera(GameObject* conatiner);
         ~ComponentCamera() override;
 
@@ -43,10 +35,7 @@ namespace Hachiko
             return &frustum;
         }
 
-        void SetCameraType(CameraType cam_type);
         void SetCameraInitialPos();
-        CameraType GetCameraType() const;
-        std::string GetCameraTypeString(CameraType cam_type);
 
         void SetNearPlane(float distance);
         void SetFarPlane(float distance);
@@ -78,7 +67,6 @@ namespace Hachiko
     private:
         float horizontal_fov;
         Frustum frustum;
-        CameraType camera_type;
         unsigned resolution_x = DEFAULT_CAMERA_WIDTH;
         unsigned resolution_y = DEFAULT_CAMERA_HEIGHT;
     };
