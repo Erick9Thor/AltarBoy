@@ -74,7 +74,6 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F3))
 	{
 		_player_controller->_isInDebug = !_player_controller->_isInDebug;
-		HE_LOG("HOLAA");
 		is_active = !is_active;
 		for (GameObject* child : game_object->children)
 		{
@@ -97,6 +96,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	
 	if (_teleport_next_pos->IsSelected())
 	{
+		HE_LOG("_teleport_next_pos pressed");
 		if (teleport_positions.size() == 0)
 		{
 			HE_LOG("ERROR: teleport_positions vector is empty");
@@ -115,6 +115,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	}
 	if (_teleport_prev_pos->IsSelected())
 	{
+		HE_LOG("_teleport_prev_pos pressed");
 		if (teleport_positions.size() == 0)
 		{
 			HE_LOG("ERROR: teleport_positions vector is empty");
@@ -148,6 +149,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._current_hp -= 1;
 		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
+	/*
 	if (_increase_max_hp->IsSelected())
 	{
 		_player_controller->_stats._max_hp += 1;
@@ -188,7 +190,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
 	}
-	
+	*/
 	// Player States
 	if (_god_mode->IsSelected())
 	{
