@@ -290,6 +290,9 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
         main_scene->SetCullingCamera(main_scene->GetMainCamera());
     }
 #endif // PLAY_MODE
+
+    // REBUILD NAVMESH
+    App->navigation->RebuildCurrentNavmesh(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)
