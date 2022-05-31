@@ -90,6 +90,7 @@ private:
 	SERIALIZE_FIELD(GameObject*, _hp_cell_1);
 	SERIALIZE_FIELD(GameObject*, _hp_cell_2);
 	SERIALIZE_FIELD(GameObject*, _hp_cell_3);
+	SERIALIZE_FIELD(GameObject*, _hp_cell_4);
 	std::vector<GameObject*> hp_cells;
 
 	SERIALIZE_FIELD(GameObject*, _camera);

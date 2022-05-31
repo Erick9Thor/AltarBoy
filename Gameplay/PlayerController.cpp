@@ -57,7 +57,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_combat_stats._max_hp = 3;
 	_combat_stats._current_hp = _combat_stats._max_hp;
 
-	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3)
+	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
 	{
 		HE_LOG("Error loading HP Cells UI");
 		return;
@@ -66,6 +66,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_1);
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
+	hp_cells.push_back(_hp_cell_4);
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -503,6 +504,7 @@ void Hachiko::Scripting::PlayerController::RegisterEnemyHit(int enemy_attack_pow
 	if (_god_mode)	return;
 
 	_combat_stats.ReceiveDamage(enemy_attack_power);
+	UpdateHealthBar();
 
 	// Player is dead
 	if (_combat_stats._current_hp <= 0)
