@@ -3,9 +3,9 @@
 
 Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE)
 {
-    //AddNode("Puta", "");
-    //AddNode("Vida", "");
-    //AddTransition("Puta", "Vida", "", 0);
+    AddNode("Puta", "ñ");
+    AddNode("Vida", "");
+    AddTransition("Puta", "Vida", "", 0);
 }
 
 Hachiko::ResourceStateMachine::~ResourceStateMachine() {}

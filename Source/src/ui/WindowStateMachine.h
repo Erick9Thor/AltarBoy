@@ -20,25 +20,14 @@ namespace Hachiko
 
         void DrawNodes();
         void DrawTransitions();
+        void CreateTransitions();
 
-        void ShowAddNodePopup();
         void ShowContextMenus();
+        void ShowAddNodeMenu();
         void ShowNodeMenu();
         void ShowLinkMenu();
 
-
-
-
-
-
-        void showEditNodePopup();
-        void addLink();
-        void showDeleteLinkPopup();
-
-
-
-
-
+        void OpenPopups();
 
         void ShowHelp(); 
 
@@ -46,20 +35,10 @@ namespace Hachiko
 
         //char* trigger = nullptr;
         bool addNode = false;
-        bool add_clip = false;
 
-        int node_id = 0;
-        bool started = false;
-        int link_id = 0;
-
-        //bool editTrigger = false;
-        //bool editIT = false;
-        bool deleteLink = false;
-
-        int context_node = 0;
-        int context_link = 0;
         ImVec2 new_node_pos;
-        ax::NodeEditor::PinId new_node_pin = 0;
+        int nodeId = 0;
+        int linkId = 0;
 
         ResourceStateMachine* stateMachine = nullptr;
         ax::NodeEditor::EditorContext* context = nullptr;

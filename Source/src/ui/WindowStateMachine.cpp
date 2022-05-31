@@ -103,46 +103,16 @@ void Hachiko::WindowStateMachine::Update()
     
     DrawNodes();
     DrawTransitions();
-
-    ShowAddNodePopup();
-    //ShowContextMenus();
+    CreateTransitions();
 
     NodeEditor::Suspend();
-    
-    if (NodeEditor::ShowBackgroundContextMenu())
-    {
-        addNode = true;
-    }
-    if (addNode)
-    {
-        ImGuiContext* ctx = ImGui::GetCurrentContext();
-        const ImGuiViewport* viewport = ImGui::GetMainViewport();
-        ImGuiWindow* win = ImGui::GetCurrentWindow();
-        ImGui::SetWindowPos(ImVec2(win->Pos.x + 100, win->Pos.y + 100), 0);
-        ImGui::SetCurrentViewport(ImGui::GetCurrentWindow(), ImGui::GetCurrentWindow()->Viewport);
-        NodeEditor::NodeId contextNodeId = 0;
-        context_node = int(contextNodeId.Get() - 1) / 3;
-        ImGui::OpenPopup("Context Menu");
-
-         if (ImGui::BeginPopup("Context Menu"))
-        {
-            ImGui::TextUnformatted("Context Menu");
-            ImGui::Separator();
-
-            if (ImGui::Button(" Add node "))
-            {
-                addNode = false;
-            }
-
-            ImGui::Separator();
-
-            ImGui::EndPopup();
-        }
-    }
-    NodeEditor::Resume();
-
-
+    ShowContextMenus();
+    ShowAddNodeMenu();
     ShowNodeMenu();
+    ShowLinkMenu();
+    OpenPopups();
+    NodeEditor::Resume();
+   
     ShowHelp();
 
     NodeEditor::End();
@@ -162,9 +132,6 @@ void Hachiko::WindowStateMachine::DrawNodes()
         NodeEditor::BeginNode(id + 1);
         
         ImVec2 size = NodeEditor::GetNodeSize(id + 1);
-        //HE_LOG("size: %f, %f", size.x, size.y);
-        ImVec2 pos = NodeEditor::GetNodePosition(id + 1);
-        //HE_LOG("pos: %f, %f", pos.x, pos.y);
 
         ImGui::Indent(1.0);
         if (stateMachine->nodes[i].name.size() <= 7)
@@ -175,9 +142,20 @@ void Hachiko::WindowStateMachine::DrawNodes()
         }
         ImGui::TextColored(ImVec4(255, 255, 0, 255), stateMachine->nodes[i].name.c_str());
 
-
-        ImGui::PushStyleVar(ImGuiStyleVar_Alpha, 0.5f * ImGui::GetStyle().Alpha);
-        ImGui::PopStyleVar();
+        ImGui::Text(stateMachine->nodes[i].clip.c_str());
+        
+        if (!stateMachine->clips.empty())
+        {
+            ImGui::SameLine();
+            if (stateMachine->clips[stateMachine->FindClip(stateMachine->nodes[i].clip.c_str())].loop)
+            {
+                ImGui::Text(" | looping");
+            }
+            else
+            {
+                ImGui::Text(" | not looping");
+            }
+        }
         
         // In Pin
         NodeEditor::PushStyleVar(NodeEditor::StyleVar_PinArrowSize, 8.0f);
@@ -211,7 +189,6 @@ void Hachiko::WindowStateMachine::DrawNodes()
 
 void Hachiko::WindowStateMachine::DrawTransitions()
 {
-    //NodeEditor::PushStyleVar(NodeEditor::StyleVar_LinkStrength, 4.0f);
     for (const Hachiko::ResourceStateMachine::Transition& transition : stateMachine->transitions)
     {
         int sourceID = stateMachine->FindNode(transition.source);
@@ -219,192 +196,127 @@ void Hachiko::WindowStateMachine::DrawTransitions()
         int linkID = sourceID * 100 + targetID;
         NodeEditor::Link(linkID, sourceID * 3 + 3, targetID * 3 + 2);
     }
-    //NodeEditor::PopStyleVar(1);
 }
 
-
-void Hachiko::WindowStateMachine::ShowAddNodePopup()
+void Hachiko::WindowStateMachine::CreateTransitions() 
 {
-    /*
-    const bool openPopup = ImNodes::IsEditorHovered() && ImGui::IsMouseClicked(1, false);
-
-    if (!ImGui::IsAnyItemHovered() && openPopup)
+    if (NodeEditor::BeginCreate(ImColor(255, 255, 255), 2.0f))
     {
-        ImGui::OpenPopup("AddNode");
-    }
+        auto showLabel = [](const char* label, ImColor color) {
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() - ImGui::GetTextLineHeight());
+            auto size = ImGui::CalcTextSize(label);
 
-    if (ImGui::BeginPopup("AddNode"))
-    {
-        if (ImGui::Button(" Add node "))
-        {
-            add_node = true;
-        }
+            auto padding = ImGui::GetStyle().FramePadding;
+            auto spacing = ImGui::GetStyle().ItemSpacing;
 
-        if (add_node)
+            ImGui::SetCursorPos(ImGui::GetCursorPos() + ImVec2(spacing.x, -spacing.y));
+
+            auto rectMin = ImGui::GetCursorScreenPos() - padding;
+            auto rectMax = ImGui::GetCursorScreenPos() + size + padding;
+
+            auto drawList = ImGui::GetWindowDrawList();
+            drawList->AddRectFilled(rectMin, rectMax, color, size.y * 0.15f);
+            ImGui::TextUnformatted(label);
+        };
+
+        NodeEditor::PinId startPinId = 0, endPinId = 0;
+        if (NodeEditor::QueryNewLink(&startPinId, &endPinId))
         {
-            static char nodeName[128] = "";
-            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
+            if (startPinId && endPinId)
             {
-                add_node = false;
-                sm->AddNode(nodeName, "");
-                ImGui::CloseCurrentPopup();
+                bool startIsInput = int(startPinId.Get() - 1) % 3 == 1;
+                bool endIsInput = int(endPinId.Get() - 1) % 3 == 1;
+                int startNode = int(startPinId.Get() - 1) / 3;
+                int endNode = int(endPinId.Get() - 1) / 3;
+
+                if (endPinId == startPinId)
+                {
+                    NodeEditor::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+                }
+                else if (startIsInput == endIsInput)
+                {
+                    showLabel("x Incompatible Pins. Must be In->Out", ImColor(45, 32, 32, 180));
+                    NodeEditor::RejectNewItem(ImColor(255, 0, 0), 2.0f);
+                }
+                else if (startNode == endNode)
+                {
+                    showLabel("x Cannot connect to self", ImColor(45, 32, 32, 180));
+                    NodeEditor::RejectNewItem(ImColor(255, 0, 0), 1.0f);
+                }
+                else
+                {
+                    showLabel("+ Create Link", ImColor(32, 45, 32, 180));
+                    if (NodeEditor::AcceptNewItem(ImColor(128, 255, 128), 4.0f))
+                    {
+                        if (startIsInput)
+                        {
+                            stateMachine->AddTransition(stateMachine->nodes[endNode].name.c_str(), stateMachine->nodes[startNode].name.c_str(), "", 0);
+                        }
+                        else
+                        {
+                            stateMachine->AddTransition(stateMachine->nodes[startNode].name.c_str(), stateMachine->nodes[endNode].name.c_str(), "", 0);
+                        }
+
+                        //stateMachine->Save();
+                    }
+                }
             }
         }
-
-        ImGui::EndPopup();
     }
+    NodeEditor::EndCreate();
+}
 
-    ImNodes::MiniMap(0.2f, ImNodesMiniMapLocation_BottomRight);
-    */
-    /*
-    if (ImGui::IsMouseDoubleClicked(0))
+void Hachiko::WindowStateMachine::ShowContextMenus()
+{
+    auto openPopupPosition = ImGui::GetMousePos();
+
+    NodeEditor::NodeId contextNodeId = 0;
+    NodeEditor::PinId contextPinId = 0;
+    NodeEditor::LinkId contextLinkId = 0;
+
+    if (NodeEditor::ShowBackgroundContextMenu())
     {
-        *id = NodeEditor::GetDoubleClickedNode();
+        new_node_pos = ImGui::GetMousePos();
+        ImGui::OpenPopup("Add Node Menu");
     }
-
-
-    if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(1,false) && ImGui::GetHoveredID() > 0)
+    else if (NodeEditor::ShowNodeContextMenu(&contextNodeId))
     {
-        addNode = true;       
-        if (NodeEditor::ShowNodeContextMenu(id))
-        {
-            int j = 0;
-        }
-        HE_LOG("%f, %f", NodeEditor::GetNodePosition(*id).x, NodeEditor::GetNodePosition(*id).y);
+        nodeId = int(contextNodeId.Get() - 1) / 3;
+        ImGui::OpenPopup("Node Menu");
     }
-    
-    if (addNode)
+    else if (NodeEditor::ShowLinkContextMenu(&contextLinkId))
     {
-        if (NodeEditor::ShowNodeContextMenu(id))
-        {
-            ImGui::Text("<sgsdg");
-            if (ImGui::Button(" Add node "))
-            {
-                
-            }
-        }
-        HE_LOG("%f, %f", NodeEditor::GetNodePosition(*id).x, NodeEditor::GetNodePosition(*id).y);
+        linkId = int(contextLinkId.Get());
+        ImGui::OpenPopup("Link Menu");
     }
-    
-    //ImGuiPopupFlags flags = ImGuiMouseButton_Right | ImGuiPopupFlags_NoOpenOverItems;
-    //ImGui::OpenPopup("AddNode", flags);
+}
 
-    if (ImGui::BeginPopup("AddNode"))
+void Hachiko::WindowStateMachine::ShowAddNodeMenu()
+{
+    if (ImGui::BeginPopup("Add Node Menu"))
     {
-        HE_LOG("%f, %f", ImGui::GetMousePosOnOpeningCurrentPopup().x, ImGui::GetMousePosOnOpeningCurrentPopup().y);
         if (ImGui::Button(" Add node "))
         {
             addNode = true;
         }
 
-        //if (addNode)
+        if (addNode)
+        {
+            static char nodeName[128] = "";
+            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+            if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
+            {
+                addNode = false;
+                NodeEditor::SetNodePosition(stateMachine->nodes.size() * 3 + 1, NodeEditor::ScreenToCanvas(new_node_pos));
+                stateMachine->AddNode(nodeName, "");
+                ImGui::CloseCurrentPopup();
+            }
+        }
+
         ImGui::EndPopup();
     }
-
-    if (addNode)
-    {
-        static char nodeName[128] = "";
-        const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-        if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
-        {
-            addNode = false;
-            stateMachine->AddNode(nodeName, "");
-            ImGui::CloseCurrentPopup();
-        }
-    }*/
 }
 /*
-void Hachiko::WindowStateMachine::showEditNodePopup() 
-{
-    if (ImNodes::IsNodeHovered(&node_id) && ImGui::IsMouseClicked(1, false))
-    {
-        ImGui::OpenPopup("EditNode");
-    }
-
-    if (ImGui::BeginPopup("EditNode"))
-    {
-        if (ImGui::Button(" Add/change clip "))
-        {
-            add_clip = true;
-        }
-        /*
-            else if (ImGui::Button(" edit looping "))
-            {
-                for (int i = 0; i < nodes.size(); ++i)
-                {
-                    if (nodes[i].nodeIndex == nodeId)
-                    {
-                        sm.EditClipLoop(nodes[i].name, !sm.clips[sm.FindClip(sm.states[i].clip)].loop);
-                    }
-                }
-                ImGui::CloseCurrentPopup();
-            }*/
-        //else if (ImGui::Button(" Delete clip "))
-        //{
-            /*
-            for (int i = 0; i < sm->nodes.size(); ++i)
-            {
-                if (sm->nodes[i].nodeIndex == node_id)
-                {
-                    // sm.EditStateClip(sm.nodes[i].name, "");
-                }
-            }
-            */
-            //ImGui::CloseCurrentPopup();
-        //}
-        //else if (ImGui::Button(" Delete node "))
-        //{
-            /*
-            for (int i = 0; i < sm->nodes.size(); ++i)
-            {
-                if (sm->nodes[i].nodeIndex == node_id)
-                {
-                    // sm.RemoveState(nodes[i].name);
-                }
-            }
-            */
-/*/
-            sm->RemoveNode(sm->nodes[node_id / 3].name);
-            ImGui::CloseCurrentPopup();
-        }
-
-        if (add_clip)
-        {
-            static char clipName[128] = "";
-            const ImGuiInputTextFlags clipName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(" Clip name ", clipName, IM_ARRAYSIZE(clipName), clipName_input_flags))
-            {
-                add_clip = false;
-                for (int i = 0; i < sm->nodes.size(); ++i)
-                {
-                    if (sm->nodes[i].nodeIndex == node_id)
-                    {
-                        // sm.EditStateClip(sm.nodes[i].name, clipName);
-                        ImGui::CloseCurrentPopup();
-                    }
-                }
-            }
-        }
-
-        ImGui::EndPopup();
-    }
-}
-
-void Hachiko::WindowStateMachine::addLink() 
-{
-    int start, end;
-    if (ImNodes::IsLinkStarted(&start))
-    {
-        started = true;
-    }
-
-    if (started && ImNodes::IsLinkCreated(&start, &end, false))
-    {
-        sm->AddTransition(sm->nodes[(start - 2) / 3].name, sm->nodes[(end - 1) / 3].name, "", 0);
-    }
-}
-
 void Hachiko::WindowStateMachine::showDeleteLinkPopup() 
 {
     if (ImNodes::IsLinkHovered(&link_id) && ImGui::IsMouseClicked(1, false))
@@ -539,99 +451,47 @@ void Hachiko::WindowStateMachine::showDeleteLinkPopup()
 }
 */
 
-void Hachiko::WindowStateMachine::ShowContextMenus() 
-{
-    auto openPopupPosition = ImGui::GetMousePos();
-    NodeEditor::Suspend();
-
-    NodeEditor::NodeId contextNodeId = 0;
-    NodeEditor::PinId contextPinId = 0;
-    NodeEditor::LinkId contextLinkId = 0;
-    //NodeEditor::GetSelectedNodes(&contextNodeId, 1);
-    //contextNodeId = NodeEditor::GetDoubleClickedNode();
-    //context_node = int(contextNodeId.Get() - 1) / 3;
-    //HE_LOG("%i", context_node);
-    if (NodeEditor::ShowNodeContextMenu(&contextNodeId))
-    {
-        context_node = int(contextNodeId.Get() - 1) / 3;
-        ImGui::OpenPopup("Node Context Menu");
-    }
-    else if (NodeEditor::ShowPinContextMenu(&contextPinId))
-    {
-        ImGui::OpenPopup("Pin Context Menu");
-    }
-    else if (NodeEditor::ShowLinkContextMenu(&contextLinkId))
-    {
-        //context_link = int(contextLinkId.Get()) - animation->GetNumNodes() * 3 - 1;
-        ImGui::OpenPopup("Link Context Menu");
-    }
-    else if (NodeEditor::ShowBackgroundContextMenu())
-    {
-        new_node_pos = ImGui::GetMousePos();
-        new_node_pin = 0;
-        ImGui::OpenPopup("Create New Node");
-    }
-
-    NodeEditor::Resume();
-}
-
 void Hachiko::WindowStateMachine::ShowNodeMenu() 
 {
-    if (ImGui::BeginPopup("Node Context Menu"))
+    if (ImGui::BeginPopup("Node Menu"))
     {
-        ImGui::TextUnformatted("Node Context Menu");
+        ImGui::TextUnformatted("Node Menu");
         ImGui::Separator();
-
-        char tmp[128];
-
-        //snprintf(tmp, 127, animation->GetNodeName(context_node).C_str());
-        snprintf(tmp, 127, stateMachine->nodes[context_node].name.c_str());
-        if (ImGui::InputText("Name", tmp, 128))
+        
+        if (ImGui::BeginMenu("Edit clip"))
         {
-            //animation->SetNodeName(context_node, HashString(tmp));
-            //animation->Save();
-            stateMachine->AddNode(tmp, "");
-        }
-        /*
-        int clip_index = animation->FindClip(animation->GetNodeClip(context_node));
-        if (ImGui::Combo("Clip", &clip_index, &StateViewport::GetClip, animation, animation->GetNumClips()))
-        {
-            animation->SetNodeClip(context_node, animation->GetClipName(clip_index));
-            animation->Save();
-        }
-
-        bool def = animation->GetDefaultNode() == context_node;
-        if (ImGui::Checkbox("Default", &def))
-        {
-            if (def)
+            if (ImGui::MenuItem("Change clip"))
             {
-                animation->SetDefaultNode(context_node);
+                stateMachine->EditNodeClip(stateMachine->nodes[nodeId].name.c_str(), "newClip");
+                ImGui::CloseCurrentPopup();
             }
-            else
+
+            if (ImGui::MenuItem("Change looping"))
             {
-                animation->SetDefaultNode(0);
+                stateMachine->EditClipLoop(stateMachine->nodes[nodeId].name.c_str(), !stateMachine->clips[stateMachine->FindClip(stateMachine->nodes[nodeId].clip.c_str())].loop);
+                ImGui::CloseCurrentPopup();
             }
+            
+            ImGui::EndMenu();
         }
-        */
-        ImGui::Separator();
 
-        if (ImGui::MenuItem("Delete"))
+        if (ImGui::MenuItem("Delete node"))
         {
-            NodeEditor::DeleteNode(NodeEditor::NodeId((context_node + 1) * 3));
-            //animation->RemoveNode(context_node);
-            //animation->Save();
-            stateMachine->RemoveNode(stateMachine->nodes[context_node].name.c_str());
+            NodeEditor::DeleteNode(NodeEditor::NodeId((nodeId + 1) * 3));
+            stateMachine->RemoveNode(stateMachine->nodes[nodeId].name.c_str());
+            ImGui::CloseCurrentPopup();
         }
-
+        
+        //stateMachine->Save();
         ImGui::EndPopup();
     }
 }
 
 void Hachiko::WindowStateMachine::ShowLinkMenu() 
 {
-    if (ImGui::BeginPopup("Link Context Menu"))
+    if (ImGui::BeginPopup("Link Menu"))
     {
-        ImGui::TextUnformatted("Transition Context Menu");
+        ImGui::TextUnformatted("Transition Menu");
         ImGui::Separator();
         /*
         char tmp[128];
@@ -653,14 +513,64 @@ void Hachiko::WindowStateMachine::ShowLinkMenu()
 
         ImGui::Separator();
 
+        */
+        if (ImGui::BeginMenu("Edit transition"))
+        {
+            if (ImGui::MenuItem("Edit trigger"))
+            {
+                char tmp[128];
+
+                ImGui::InputText("Trigger", tmp, 128);
+                if (tmp != "")
+                {
+                    stateMachine->AddTransition("Puta", "Vida", tmp, 0);
+                    //stateMachine->Save();
+                }
+                /*
+                int blend = animation->GetTransitionBlend(context_link);
+                if (ImGui::DragInt("Blend", (int*)&blend, 1.0f, 0, 1000))
+                {
+                    animation->SetTransitionBlend(context_link, blend);
+                    animation->Save();
+                }
+                */
+            }
+
+            if (ImGui::MenuItem("Edit interpolation time"))
+            {
+
+            }
+
+            ImGui::EndMenu();
+        }
+
         if (ImGui::MenuItem("Delete"))
         {
-            ed::DeleteLink(ed::LinkId((context_link + 1) + 2));
-            animation->RemoveTransition(context_link);
-            animation->Save();
+            NodeEditor::DeleteLink(NodeEditor::LinkId((linkId + 1) + 2));
+            stateMachine->RemoveTransitionWithTarget(stateMachine->nodes[linkId / 100].name, stateMachine->nodes[linkId % 100].name);
+            //stateMachine->Save();
+            ImGui::CloseCurrentPopup();
         }
-        */
+
         ImGui::EndPopup();
+    }
+}
+
+void Hachiko::WindowStateMachine::OpenPopups() 
+{
+    if (ImGui::BeginPopup("trigger popup"))
+    {
+        if (ImGui::Button("B"))
+        {
+
+        }
+        static char newTrigger[128] = "";
+        const ImGuiInputTextFlags editTrigger_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+        if (ImGui::InputText(" Edit trigger", newTrigger, IM_ARRAYSIZE(newTrigger), editTrigger_input_flags))
+        {
+            int i = 0;
+            ImGui::CloseCurrentPopup();
+        }
     }
 }
 
