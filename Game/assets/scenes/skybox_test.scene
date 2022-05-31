@@ -45,7 +45,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [903, 478]
+        size: [818, 478]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -230,7 +230,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999762, 0.999999762]
+            scale: [1, 0.999999642, 0.999999642]
           - id: 11077989664688734692
             type: 2
             enabled: true
@@ -288,6 +288,7 @@ child:
         "'_hp_cell_1@GameObject*'": 14776642273298919197
         "'_hp_cell_2@GameObject*'": 376889989449090615
         "'_hp_cell_3@GameObject*'": 12696528678143837912
+        "'_hp_cell_4@GameObject*'": 13782812275322700246
         "'_camera@GameObject*'": 0
         "'_ui_damage@GameObject*'": 0
     child:
@@ -300,7 +301,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999976397, 0.999976397]
+            scale: [1, 0.999976277, 0.999976277]
           - id: 7196494532368118417
             type: 2
             enabled: true

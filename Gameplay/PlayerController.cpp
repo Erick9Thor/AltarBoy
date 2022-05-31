@@ -54,7 +54,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_combat_stats._attack_power = 2;
 	_combat_stats._attack_cd = 1;
 	_combat_stats._move_speed = 7.0f;
-	_combat_stats._max_hp = 3;
+	_combat_stats._max_hp = 4;
 	_combat_stats._current_hp = _combat_stats._max_hp;
 
 	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
@@ -516,7 +516,7 @@ void Hachiko::Scripting::PlayerController::RegisterEnemyHit(int enemy_attack_pow
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 {
 	// Disable cells 
-	for (int i = 0; i < _combat_stats._max_hp; ++i)
+	for (int i = 0; i < hp_cells.size(); ++i)
 	{
 		if(i >= _combat_stats._current_hp)
 			hp_cells[i]->GetComponent<ComponentImage>()->Disable();
