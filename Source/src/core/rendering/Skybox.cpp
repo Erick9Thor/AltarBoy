@@ -266,7 +266,9 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
 
     for (unsigned i = 0; i < 6; ++i)
     {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+        unsigned attachment = GL_COLOR_ATTACHMENT0;
+        glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradiance_cubemap_id, 0);
+        glDrawBuffers(1, &attachment);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
