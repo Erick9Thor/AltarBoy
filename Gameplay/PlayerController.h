@@ -88,6 +88,10 @@ private:
 	float attack_current_cd = 0.0f;
 
 	bool _is_god_mode = false;
+
+	GameObject* enemies;
+	GameObject* dynamic_envi;
+
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 };
