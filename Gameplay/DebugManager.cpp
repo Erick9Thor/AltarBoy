@@ -3,6 +3,7 @@
 #include "PlayerController.h"
 
 #include <components/ComponentTransform.h>
+
 #include <core/GameObject.h>
 #include "Scenes.h"
 
@@ -219,15 +220,18 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	{
 		HE_LOG("_toggle_performance_output pressed");
 	}
+	*/
 	if (_toggle_wireframe->IsSelected())
 	{
 		HE_LOG("_toggle_wireframe pressed");
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // WIRE
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // SOLID
 	}
 	if (_toggle_show_colliders->IsSelected())
 	{
 		HE_LOG("_toggle_show_colliders pressed");
 	}
-	*/
+
 	if (_exit_debug->IsSelected())
 	{
 		is_active = !is_active;
