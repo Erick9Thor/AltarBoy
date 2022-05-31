@@ -19,7 +19,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	//game_object->GetComponent<ComponentAgent>()->AddToCrowd();    Changed when the Player is Loaded
+	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	_attack_range = 1.5f;
 	_stun_time = 0.0f;
 	_is_stunned = false;
@@ -31,7 +31,6 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	if (_player != nullptr)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
-		game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	}
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
@@ -51,7 +50,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			return;
 		}
 		_player_controller = _player->GetComponent<PlayerController>();
-		game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	}
 
 	if (!_stats.IsAlive())
