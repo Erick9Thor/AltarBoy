@@ -40,6 +40,7 @@ namespace Hachiko
 
     private:
         // General
+        bool in_scene = false;
         bool is_playing = false;
         bool play_on_awake = false;
         int frame_counter = 0;
@@ -91,6 +92,8 @@ namespace Hachiko
         void RemoveTexture();
         void UpdateAnimationData();
         void UpdateColorOverLifetime();
+        void PublishIntoScene();
+        void DetachFromScene();
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
     };
 }

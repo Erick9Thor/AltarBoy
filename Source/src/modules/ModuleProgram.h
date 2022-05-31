@@ -85,7 +85,7 @@ namespace Hachiko
             return ui_text_program;
         }
 
-        [[nodiscard]] Program* GetBillboardProgram() const
+        [[nodiscard]] Program* GetParticleProgram() const
         {
             return particle_program;
         }

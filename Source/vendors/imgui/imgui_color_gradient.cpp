@@ -39,6 +39,7 @@ void ImGradient::addMark(float position, ImColor const color)
 
 void ImGradient::removeMark(ImGradientMark* mark)
 {
+    delete mark;
     m_marks.remove(mark);
     refreshCache();
 }

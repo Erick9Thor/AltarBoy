@@ -7,7 +7,8 @@
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleResources.h"
 #include "modules/ModuleRender.h"
-#include "modules/ModuleCamera.h" // TODO: This is only for debug
+#include "modules/ModuleCamera.h"
+#include "modules/ModuleSceneManager.h"
 #include "resources/ResourceTexture.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
@@ -16,18 +17,17 @@ Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container, UID id)
 	: Component(Component::Type::BILLBOARD, container, id) 
 {
     gradient = new ImGradient();
+    PublishIntoScene();
 }
 
 Hachiko::ComponentBillboard::~ComponentBillboard() 
 {
+    DetachFromScene();
     delete gradient;
 }
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    Program* billboard_program = App->program->GetBillboardProgram(); //TODO: This must be taken from the parameter
-    billboard_program->Activate();
-
     glActiveTexture(GL_TEXTURE0);
     int glTexture = 0;
     has_texture = 0;
@@ -53,27 +53,27 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
     float4x4 model_matrix;
     GetOrientationMatrix(camera, model_matrix);
-    billboard_program->BindUniformFloat4x4("model", model_matrix.ptr());
-    billboard_program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-    billboard_program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
+    program->BindUniformFloat4x4("model", model_matrix.ptr());
+    program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
+    program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 
-    billboard_program->BindUniformFloat("x_factor", &x_factor);
-    billboard_program->BindUniformFloat("y_factor", &y_factor);
-    billboard_program->BindUniformFloat("current_frame", &current_frame);
-    billboard_program->BindUniformFloat2("animation_index", animation_index.ptr());
+    program->BindUniformFloat("x_factor", &x_factor);
+    program->BindUniformFloat("y_factor", &y_factor);
+    program->BindUniformFloat("current_frame", &current_frame);
+    program->BindUniformFloat2("animation_index", animation_index.ptr());
     float4 color = float4::one;
     if (has_color_gradient)
     {
         gradient->getColorAt(color_frame, color.ptr());
     }
 
-    billboard_program->BindUniformFloat4("input_color", color.ptr());
-    billboard_program->BindUniformInts("has_texture", 1, &has_texture);
+    program->BindUniformFloat4("input_color", color.ptr());
+    program->BindUniformInts("has_texture", 1, &has_texture);
 
     int flip_x = has_flip_x ? 1 : 0;
     int flip_y = has_flip_y ? 1 : 0;
-    billboard_program->BindUniformInts("flip_x", 1, &flip_x);
-    billboard_program->BindUniformInts("flip_y", 1, &flip_y);
+    program->BindUniformInts("flip_x", 1, &flip_x);
+    program->BindUniformInts("flip_y", 1, &flip_y);
     
     glBindVertexArray(App->renderer->GetParticleVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -83,7 +83,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
-    Program::Deactivate();
     return;
 }
 
@@ -231,6 +230,11 @@ void Hachiko::ComponentBillboard::Start()
 
 void Hachiko::ComponentBillboard::Update()
 {
+    if (!in_scene)
+    {
+        PublishIntoScene();
+    }
+
     time += EngineTimer::delta_time;
     if (frame_counter++ < skip_frames)
     {
@@ -454,6 +458,28 @@ inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
     {
         time = 0.0f;
         color_frame = 0.0f;
+    }
+}
+
+void Hachiko::ComponentBillboard::PublishIntoScene()
+{
+    auto scene = game_object->scene_owner;
+
+    if (scene)
+    {
+        scene->AddParticleComponent(this);
+        in_scene = true;
+    }
+}
+
+void Hachiko::ComponentBillboard::DetachFromScene()
+{
+    auto scene = game_object->scene_owner;
+
+    if (scene)
+    {
+        scene->RemoveParticleComponent(GetID());
+        in_scene = false;
     }
 }
 

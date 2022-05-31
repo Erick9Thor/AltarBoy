@@ -254,6 +254,18 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
         glStencilFunc(GL_ALWAYS, 0, 0xFF);
         glEnable(GL_DEPTH_TEST);
     }
+
+    const auto& scene_particles = scene->GetSceneParticles();
+    if (!scene_particles.empty())
+    {
+        Program* particle_program = App->program->GetParticleProgram();
+        particle_program->Activate();
+        for (auto particle : scene_particles)
+        {
+            particle->Draw(camera, particle_program);
+        }
+        Program::Deactivate();
+    }
 }
 
 UpdateStatus Hachiko::ModuleRender::PostUpdate(const float delta)
