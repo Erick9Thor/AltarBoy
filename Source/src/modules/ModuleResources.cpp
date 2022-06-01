@@ -40,7 +40,7 @@ bool ModuleResources::Init()
     }
 
     AssetsLibraryCheck();
-    ClearUnusedResources(managed_uids);
+    //ClearUnusedResources(managed_uids);
 
     std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
