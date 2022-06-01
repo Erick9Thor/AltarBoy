@@ -30,73 +30,11 @@ void Hachiko::WindowStateMachine::Update()
 {
     
     ImGui::SetNextWindowSize(ImVec2(400.0f, 200.0f), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin((std::string(ICON_FA_BEZIER_CURVE " ") + "StateMachine").c_str(), &active))
+    if (!ImGui::Begin((std::string(ICON_FA_BEZIER_CURVE " ") + stateMachine->state_m_name.c_str() + " - Left Alt + H for help").c_str(), &active))
     {
         ImGui::End();
         return;
     }
-    
-    /*
-    ImNodes::BeginNodeEditor();
-
-    unsigned int id = 0;
-
-    for (int i = 0; i < sm->nodes.size(); ++i)
-    {
-
-        ImNodes::BeginNode(i*3);
-
-        ImNodes::BeginNodeTitleBar();
-        ImGui::TextUnformatted(sm->nodes[i].name.c_str());
-        ImNodes::EndNodeTitleBar();
-
-        ImNodes::BeginInputAttribute(i * 3 + 1);
-        ImGui::Text(sm->nodes[i].clip.c_str());
-        ImGui::SameLine();
-        ImGui::Text("|");
-        ImGui::SameLine();
-
-        //TODO: if (sm.clips[sm.FindClip(sm.states[i].clip)].loop)
-        if (false)
-        {
-            ImGui::Text("looping");
-        }
-        else
-        {
-            ImGui::Text("not looping");
-        }
-
-        ImNodes::EndInputAttribute();
-
-        ImNodes::BeginOutputAttribute(i * 3 + 2);
-        ImGui::Text("");
-        ImNodes::EndOutputAttribute();
-
-        ImNodes::EndNode();
-    }
-
-    //id = 0;
-    for (const Hachiko::ResourceStateMachine::Transition& transition : sm->transitions)
-    {
-        int sourceID = sm->FindNode(transition.source);
-        int targetID = sm->FindNode(transition.target);
-        id = sourceID * 100 + targetID;
-        ImNodes::Link(id, sourceID * 3 + 2, targetID * 3 + 1);
-        //ImNodes::Link(id, sm.FindNode(transition.source) * 3 + 2, sm.FindNode(transition.target) * 3 + 1);
-        //++id;
-    }
-
-    showAddNodePopup();
-
-    ImNodes::EndNodeEditor();
-    
-
-    showEditNodePopup();
-
-    addLink();
-    showDeleteLinkPopup();
-    */
-
 
     NodeEditor::SetCurrentEditor(context);
     NodeEditor::Begin("State Machine Editor", ImVec2(0.0, 0.0f)); // TODO: Revise why this causes memory leaks
@@ -110,10 +48,16 @@ void Hachiko::WindowStateMachine::Update()
     ShowAddNodeMenu();
     ShowNodeMenu();
     ShowLinkMenu();
-    OpenPopups();
     NodeEditor::Resume();
    
     ShowHelp();
+
+    if (ImGui::IsKeyDown(SDL_SCANCODE_ESCAPE))
+    {
+        addNode = false;
+        editTrigger = false;
+        editIT = false;
+    }
 
     NodeEditor::End();
     NodeEditor::SetCurrentEditor(nullptr);
@@ -295,15 +239,23 @@ void Hachiko::WindowStateMachine::ShowAddNodeMenu()
 {
     if (ImGui::BeginPopup("Add Node Menu"))
     {
-        if (ImGui::Button(" Add node "))
+        if (ImGui::MenuItem(" Add node "))
         {
             addNode = true;
         }
 
-        if (addNode)
+        ImGui::EndPopup();
+    }
+
+    if (addNode)
+    {
+        ImGui::OpenPopup("addNode");
+        if (ImGui::BeginPopup("addNode"))
         {
             static char nodeName[128] = "";
+            snprintf(nodeName, 128, "");
             const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+
             if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
             {
                 addNode = false;
@@ -311,145 +263,11 @@ void Hachiko::WindowStateMachine::ShowAddNodeMenu()
                 stateMachine->AddNode(nodeName, "");
                 ImGui::CloseCurrentPopup();
             }
-        }
 
-        ImGui::EndPopup();
+            ImGui::EndPopup();
+        }
     }
 }
-/*
-void Hachiko::WindowStateMachine::showDeleteLinkPopup() 
-{
-    if (ImNodes::IsLinkHovered(&link_id) && ImGui::IsMouseClicked(1, false))
-    {
-        ImGui::OpenPopup("EditLink");
-    }
-
-    if (ImGui::BeginPopup("EditLink"))
-    {
-        /*
-        if (ImGui::Button(" Edit trigger "))
-        {
-            editTrigger = true;
-            editIT = false;
-        }
-        else if (ImGui::Button(" Edit interpolation time "))
-        {
-            editIT = true;
-            editTrigger = false;
-        }
-        else if (ImGui::Button(" Delete link "))
-        {
-            std::string startName, endName;
-            for (int i = 0; i < nodes.size(); ++i)
-            {
-                if (startName == "")
-                {
-                    for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
-                    {
-                        if (links[linkId].from == nodes[i].outputIndex[j])
-                        {
-                            startName = nodes[i].name;
-                            break;
-                        }
-                    }
-                }
-                if (links[linkId].to == nodes[i].inputIndex)
-                {
-                    endName = nodes[i].name;
-                    if (startName != "")
-                    {
-                        break;
-                    }
-                }
-            }
-            sm.RemoveTransitionWithTarget(startName, endName);
-            ImGui::CloseCurrentPopup();
-        }
-        */
-/*
-        if (ImGui::Button(" Delete link "))
-        {
-            sm->RemoveTransitionWithTarget(sm->nodes[link_id / 100].name, sm->nodes[link_id % 100].name);
-            ImGui::CloseCurrentPopup();
-        }
-
-
-        /*
-        if (editTrigger)
-        {
-            static char newTrigger[128] = "";
-            const ImGuiInputTextFlags editTrigger_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(" Edit trigger", newTrigger, IM_ARRAYSIZE(newTrigger), editTrigger_input_flags))
-            {
-                editTrigger = false;
-                std::string startName, endName;
-                for (int i = 0; i < nodes.size(); ++i)
-                {
-                    if (startName == "")
-                    {
-                        for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
-                        {
-                            if (links[linkId].from == nodes[i].outputIndex[j])
-                            {
-                                startName = nodes[i].name;
-                                break;
-                            }
-                        }
-                    }
-                    if (links[linkId].to == nodes[i].inputIndex)
-                    {
-                        endName = nodes[i].name;
-                        if (startName != "")
-                        {
-                            break;
-                        }
-                    }
-                }
-                sm.EditTransitionTrigger(startName, endName, newTrigger);
-                ImGui::CloseCurrentPopup();
-            }
-        }
-
-        if (editIT)
-        {
-            static char newIT[128] = "";
-            const ImGuiInputTextFlags editIT_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-            if (ImGui::InputText(" Edit interpolation time", newIT, IM_ARRAYSIZE(newIT), editIT_input_flags))
-            {
-                editIT = false;
-                std::string startName, endName;
-                for (int i = 0; i < nodes.size(); ++i)
-                {
-                    if (startName == "")
-                    {
-                        for (int j = 0; j < nodes[i].outputIndex.size(); ++j)
-                        {
-                            if (links[linkId].from == nodes[i].outputIndex[j])
-                            {
-                                startName = nodes[i].name;
-                                break;
-                            }
-                        }
-                    }
-                    if (links[linkId].to == nodes[i].inputIndex)
-                    {
-                        endName = nodes[i].name;
-                        if (startName != "")
-                        {
-                            break;
-                        }
-                    }
-                }
-                sm.EditTransitionInterpolationTime(startName, endName, std::stoi(newIT));
-                ImGui::CloseCurrentPopup();
-            }
-        }
-        */
-/*
-        ImGui::EndPopup();
-    }
-}
-*/
 
 void Hachiko::WindowStateMachine::ShowNodeMenu() 
 {
@@ -493,52 +311,17 @@ void Hachiko::WindowStateMachine::ShowLinkMenu()
     {
         ImGui::TextUnformatted("Transition Menu");
         ImGui::Separator();
-        /*
-        char tmp[128];
 
-        HashString trigger = animation->GetTransitionTrigger(context_link);
-        snprintf(tmp, 127, trigger ? trigger.C_str() : "");
-        if (ImGui::InputText("Trigger", tmp, 128))
-        {
-            animation->SetTransitionTrigger(context_link, HashString(tmp));
-            animation->Save();
-        }
-
-        uint blend = animation->GetTransitionBlend(context_link);
-        if (ImGui::DragInt("Blend", (int*)&blend, 1.0f, 0, 1000))
-        {
-            animation->SetTransitionBlend(context_link, blend);
-            animation->Save();
-        }
-
-        ImGui::Separator();
-
-        */
         if (ImGui::BeginMenu("Edit transition"))
         {
             if (ImGui::MenuItem("Edit trigger"))
             {
-                char tmp[128];
-
-                ImGui::InputText("Trigger", tmp, 128);
-                if (tmp != "")
-                {
-                    stateMachine->AddTransition("Puta", "Vida", tmp, 0);
-                    //stateMachine->Save();
-                }
-                /*
-                int blend = animation->GetTransitionBlend(context_link);
-                if (ImGui::DragInt("Blend", (int*)&blend, 1.0f, 0, 1000))
-                {
-                    animation->SetTransitionBlend(context_link, blend);
-                    animation->Save();
-                }
-                */
+                editTrigger = true;
             }
 
             if (ImGui::MenuItem("Edit interpolation time"))
             {
-
+                editIT = true;
             }
 
             ImGui::EndMenu();
@@ -554,24 +337,58 @@ void Hachiko::WindowStateMachine::ShowLinkMenu()
 
         ImGui::EndPopup();
     }
-}
 
-void Hachiko::WindowStateMachine::OpenPopups() 
-{
-    if (ImGui::BeginPopup("trigger popup"))
+    if (editTrigger)
     {
-        if (ImGui::Button("B"))
+        ImGui::OpenPopup("editTrigger");
+        if (ImGui::BeginPopup("editTrigger"))
         {
+            std::string sourceName = stateMachine->nodes[linkId / 100].name;
+            std::string targetName = stateMachine->nodes[linkId % 100].name;
+            const char* trigger = stateMachine->transitions[stateMachine->FindTransitionWithTarget(sourceName, targetName)].trigger.c_str();
 
+            static char newTrigger[128] = "";
+            snprintf(newTrigger, 128, trigger ? trigger : "");
+            const ImGuiInputTextFlags editTrigger_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+
+            if (ImGui::InputText(" Edit trigger", newTrigger, IM_ARRAYSIZE(newTrigger), editTrigger_input_flags))
+            {
+                editTrigger = false;
+                stateMachine->EditTransitionTrigger(sourceName, targetName, newTrigger);
+                //stateMachine->Save();
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
         }
-        static char newTrigger[128] = "";
-        const ImGuiInputTextFlags editTrigger_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-        if (ImGui::InputText(" Edit trigger", newTrigger, IM_ARRAYSIZE(newTrigger), editTrigger_input_flags))
+
+    }
+
+    if (editIT)
+    {
+        ImGui::OpenPopup("editIT");
+        if (ImGui::BeginPopup("editIT"))
         {
-            int i = 0;
-            ImGui::CloseCurrentPopup();
+            std::string sourceName = stateMachine->nodes[linkId / 100].name;
+            std::string targetName = stateMachine->nodes[linkId % 100].name;
+            unsigned int it = stateMachine->transitions[stateMachine->FindTransitionWithTarget(sourceName, targetName)].interpolationTime;
+
+            static char newIT[128] = "";
+            snprintf(newIT, 128, std::to_string(it).c_str());
+            const ImGuiInputTextFlags editIT_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
+
+            if (ImGui::InputText(" Edit interpolation time", newIT, IM_ARRAYSIZE(newIT), editIT_input_flags))
+            {
+                editIT = false;
+                stateMachine->EditTransitionInterpolationTime(stateMachine->nodes[linkId / 100].name, stateMachine->nodes[linkId % 100].name, std::stoi(newIT));
+                //stateMachine->Save();
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
         }
     }
+
 }
 
 void Hachiko::WindowStateMachine::ShowHelp() 
@@ -584,21 +401,28 @@ void Hachiko::WindowStateMachine::ShowHelp()
     if (ImGui::BeginPopup("Help"))
     {
         ImGui::Text("Controls:");
-        ImGui::BulletText("Use the mouse wheel to move around the editor");
-        ImGui::Text("   or mouse left-clicking at the mini-map.");
+        ImGui::BulletText("Mouse left-click while moving the mouse to move around the editor.");
         ImGui::Separator();
-        ImGui::BulletText("Mouse right-clicking to add a node.");
+        ImGui::BulletText("Mouse left-clicking in the background to add a node.");
         ImGui::Separator();
-        ImGui::BulletText("Mouse right-clicking hovering a node to edit it.");
+        ImGui::BulletText("Mouse left-clicking hovering a node to open Node Menu.");
         ImGui::Separator();
-        ImGui::BulletText("Mouse left-clicking hovering a pin to start a link");
+        ImGui::BulletText("Mouse right-clicking hovering a pin to start a link");
         ImGui::Text("   and release it in another pin to create it.");
         ImGui::Separator();
-        //ImGui::BulletText("Mouse right-clicking hovering a link to edit it.");
-        //ImGui::Separator();
-        ImGui::Text("Node legend:");
-        ImGui::Text("                  Node name");
-        ImGui::Text("                Clip  | is it looping?");
+        ImGui::BulletText("Mouse left-clicking hovering a link to open Transition Menu.");
+        ImGui::Separator();
+        ImGui::BulletText("ESC to close a menu.");
+        ImGui::Separator();
+        ImGui::Text("Node legend:           ______________________");
+        //ImGui::Text("                      |       Node name      |");
+        ImGui::Text("                      |      ");
+        ImGui::SameLine();
+        ImGui::TextColored(ImVec4(255, 255, 0, 255),"Node name");
+        ImGui::SameLine();
+        ImGui::Text("     |");
+        ImGui::Text("                      | Clip name | looping? |");
+        ImGui::Text("                      | In               Out |");
 
         ImGui::EndPopup();
     }

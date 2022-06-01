@@ -27,18 +27,17 @@ namespace Hachiko
         void ShowNodeMenu();
         void ShowLinkMenu();
 
-        void OpenPopups();
-
         void ShowHelp(); 
 
     private:
 
-        //char* trigger = nullptr;
-        bool addNode = false;
-
         ImVec2 new_node_pos;
         int nodeId = 0;
         int linkId = 0;
+
+        bool addNode = false;
+        bool editTrigger = false;
+        bool editIT = false;
 
         ResourceStateMachine* stateMachine = nullptr;
         ax::NodeEditor::EditorContext* context = nullptr;
