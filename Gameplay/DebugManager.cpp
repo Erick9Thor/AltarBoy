@@ -6,6 +6,7 @@
 
 #include <core/GameObject.h>
 #include "Scenes.h"
+#include <glew-2.1.0/include/GL/glew.h>
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
@@ -220,17 +221,26 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	{
 		HE_LOG("_toggle_performance_output pressed");
 	}
-	*/
-	if (_toggle_wireframe->IsSelected())
-	{
-		HE_LOG("_toggle_wireframe pressed");
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // WIRE
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // SOLID
-	}
 	if (_toggle_show_colliders->IsSelected())
 	{
 		HE_LOG("_toggle_show_colliders pressed");
 	}
+	*/
+	if (_toggle_wireframe->IsSelected())
+	{
+		HE_LOG("_toggle_wireframe pressed");
+		if (is_wireframe)
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // SOLID
+			is_wireframe = !is_wireframe;
+		}
+		else
+		{
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // WIRE
+			is_wireframe = !is_wireframe;
+		}
+	}
+
 
 	if (_exit_debug->IsSelected())
 	{

@@ -57,6 +57,7 @@ namespace Hachiko
 			std::vector<math::float3> teleport_positions;
 			int teleport_iterator = -1;
 			PlayerController* _player_controller;
+			bool is_wireframe = false;
 
 		};
 	} // namespace Scripting
