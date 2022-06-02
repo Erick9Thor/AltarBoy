@@ -43,7 +43,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_attack_indicator->SetActive(false);
 	}
-
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 }

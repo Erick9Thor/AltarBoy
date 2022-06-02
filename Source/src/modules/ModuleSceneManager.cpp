@@ -32,11 +32,10 @@ bool Hachiko::ModuleSceneManager::Init()
 #ifdef PLAY_BUILD
     main_scene->Start();
 #else
-
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
-#endif
     return true;
+#endif
 }
 
 void Hachiko::ModuleSceneManager::AttemptScenePause()
@@ -243,8 +242,12 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     Scene* new_scene = new Scene();
     if (scene_resource)
     {
+        
         new_scene->Load(scene_resource->scene_data);
-        App->navigation->RebuildCurrentNavmesh(new_scene);
+        if (!keep_navmesh)
+        {
+            App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
+        }
     }
     else
     {
