@@ -14,6 +14,8 @@
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentButton.h"
 
+#include "ModuleWindow.h"
+
 #include "ui/WindowScene.h"
 
 Hachiko::ModuleUserInterface::ModuleUserInterface() = default;
