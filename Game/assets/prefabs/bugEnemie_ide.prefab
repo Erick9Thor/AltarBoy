@@ -115,7 +115,7 @@ child:
                                                 mesh_id: 5050855239234413206
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: head_c_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -165,7 +165,7 @@ child:
                                                 mesh_id: 8921461089416046575
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: topLeg_l_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -215,7 +215,7 @@ child:
                                                 mesh_id: 7608296668836320973
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: mask_c_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -265,7 +265,7 @@ child:
                                                 mesh_id: 3714555874479123147
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: body_c_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -315,7 +315,7 @@ child:
                                                 mesh_id: 11236497005757872192
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: botLeg_l_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -365,7 +365,7 @@ child:
                                                 mesh_id: 12082825512920871090
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: parasite_c_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -415,7 +415,7 @@ child:
                                                 mesh_id: 9342054772023874247
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: eye_l_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -465,7 +465,7 @@ child:
                                                 mesh_id: 16951405984464232716
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: eye_r_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -515,7 +515,7 @@ child:
                                                 mesh_id: 13513477974846026319
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: topLeg_r_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -565,7 +565,7 @@ child:
                                                 mesh_id: 2876584118452442333
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: botLeg_r_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -615,7 +615,7 @@ child:
                                                 mesh_id: 11058259035994095955
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: wing_l_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -665,7 +665,7 @@ child:
                                                 mesh_id: 10265345391650082278
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: wing_r_geo_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -715,7 +715,7 @@ child:
                                                 mesh_id: 962373369136638487
                                                 navigable: false
                                                 visible: true
-                                                material_id: 16615586293878050055
+                                                material_id: 16059587643228096659
                           - name: arm_r_grp_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -810,7 +810,7 @@ child:
                                                                     mesh_id: 4598278543339683081
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: arm_r_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -860,7 +860,7 @@ child:
                                                                     mesh_id: 12491206118445759341
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: foreArm_r_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -910,7 +910,7 @@ child:
                                                                     mesh_id: 4861880545571209431
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: claw_r_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -960,7 +960,7 @@ child:
                                                                     mesh_id: 4962268931357034298
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                           - name: arm_l_grp_$AssimpFbx$_RotationPivot
                             enabled: true
                             component:
@@ -1055,7 +1055,7 @@ child:
                                                                     mesh_id: 210986983650439643
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: foreArm_l_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -1105,7 +1105,7 @@ child:
                                                                     mesh_id: 8029599147187268745
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: arm_l_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -1155,7 +1155,7 @@ child:
                                                                     mesh_id: 4185061647763376754
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
                                               - name: claw_l_geo_$AssimpFbx$_RotationPivot
                                                 enabled: true
                                                 component:
@@ -1205,7 +1205,7 @@ child:
                                                                     mesh_id: 15416918062675220735
                                                                     navigable: false
                                                                     visible: true
-                                                                    material_id: 16615586293878050055
+                                                                    material_id: 16059587643228096659
   - name: Root
     enabled: true
     component:

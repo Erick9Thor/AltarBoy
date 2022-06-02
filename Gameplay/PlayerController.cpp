@@ -182,9 +182,9 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 		return;
 	}
 
-	std::vector<GameObject*> enemy_children = enemies->children;
-	std::vector<GameObject*> environment = dynamic_envi->children;
-
+	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
+	std::vector<GameObject*> environment = dynamic_envi ? dynamic_envi->children : std::vector<GameObject*>();
+	
 	// MELEE
 
 	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
