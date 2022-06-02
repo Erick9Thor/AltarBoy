@@ -243,6 +243,11 @@ void Hachiko::GameObject::SetActive(bool set_active)
         Start();
     }
     active = set_active;
+
+    for (GameObject* child : children)
+    {
+        child->SetActive(set_active);
+    }
 }
 
 void Hachiko::GameObject::Start()

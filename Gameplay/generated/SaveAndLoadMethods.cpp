@@ -2,7 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
-#include "DebugManager.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -37,8 +37,9 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 {
+
 	if (_player != nullptr)
 	{
 		node["'_player@GameObject*'"] = _player->GetID();
@@ -48,450 +49,62 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_player@GameObject*'"] = 0;
 	}
 
-	if (_button_back != nullptr && _button_back->GetGameObject() != nullptr)
+	if (_explosion_crystal != nullptr)
 	{
-		node["'_button_back@ComponentButton*'"] = _button_back->GetGameObject()->GetID();
+		node["'_explosion_crystal@GameObject*'"] = _explosion_crystal->GetID();
 	}
 	else
 	{
-		node["'_button_back@ComponentButton*'"] = 0;
+		node["'_explosion_crystal@GameObject*'"] = 0;
 	}
 
-	if (_teleport_next_pos != nullptr && _teleport_next_pos->GetGameObject() != nullptr)
+	if (_static_crystal != nullptr)
 	{
-		node["'_teleport_next_pos@ComponentButton*'"] = _teleport_next_pos->GetGameObject()->GetID();
+		node["'_static_crystal@GameObject*'"] = _static_crystal->GetID();
 	}
 	else
 	{
-		node["'_teleport_next_pos@ComponentButton*'"] = 0;
+		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
-	if (_teleport_prev_pos != nullptr && _teleport_prev_pos->GetGameObject() != nullptr)
-	{
-		node["'_teleport_prev_pos@ComponentButton*'"] = _teleport_prev_pos->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_teleport_prev_pos@ComponentButton*'"] = 0;
-	}
+	node["'_crashing_index@unsigned'"] = _crashing_index;
 
-	if (_teleport_add_pos != nullptr && _teleport_add_pos->GetGameObject() != nullptr)
-	{
-		node["'_teleport_add_pos@ComponentButton*'"] = _teleport_add_pos->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_teleport_add_pos@ComponentButton*'"] = 0;
-	}
+	node["'_explosion_radius@float'"] = _explosion_radius;
 
-	if (_add_health != nullptr && _add_health->GetGameObject() != nullptr)
-	{
-		node["'_add_health@ComponentButton*'"] = _add_health->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_add_health@ComponentButton*'"] = 0;
-	}
-
-	if (_remove_health != nullptr && _remove_health->GetGameObject() != nullptr)
-	{
-		node["'_remove_health@ComponentButton*'"] = _remove_health->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_remove_health@ComponentButton*'"] = 0;
-	}
-
-	if (_increase_max_hp != nullptr && _increase_max_hp->GetGameObject() != nullptr)
-	{
-		node["'_increase_max_hp@ComponentButton*'"] = _increase_max_hp->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_increase_max_hp@ComponentButton*'"] = 0;
-	}
-
-	if (_decrease_max_hp != nullptr && _decrease_max_hp->GetGameObject() != nullptr)
-	{
-		node["'_decrease_max_hp@ComponentButton*'"] = _decrease_max_hp->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_decrease_max_hp@ComponentButton*'"] = 0;
-	}
-
-	if (_increase_move_speed != nullptr && _increase_move_speed->GetGameObject() != nullptr)
-	{
-		node["'_increase_move_speed@ComponentButton*'"] = _increase_move_speed->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_increase_move_speed@ComponentButton*'"] = 0;
-	}
-
-	if (_decrease_move_speed != nullptr && _decrease_move_speed->GetGameObject() != nullptr)
-	{
-		node["'_decrease_move_speed@ComponentButton*'"] = _decrease_move_speed->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_decrease_move_speed@ComponentButton*'"] = 0;
-	}
-
-	if (_increase_attack_cd != nullptr && _increase_attack_cd->GetGameObject() != nullptr)
-	{
-		node["'_increase_attack_cd@ComponentButton*'"] = _increase_attack_cd->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_increase_attack_cd@ComponentButton*'"] = 0;
-	}
-
-	if (_decrease_attack_cd != nullptr && _decrease_attack_cd->GetGameObject() != nullptr)
-	{
-		node["'_decrease_attack_cd@ComponentButton*'"] = _decrease_attack_cd->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_decrease_attack_cd@ComponentButton*'"] = 0;
-	}
-
-	if (_increase_attack_power != nullptr && _increase_attack_power->GetGameObject() != nullptr)
-	{
-		node["'_increase_attack_power@ComponentButton*'"] = _increase_attack_power->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_increase_attack_power@ComponentButton*'"] = 0;
-	}
-
-	if (_decrease_attack_power != nullptr && _decrease_attack_power->GetGameObject() != nullptr)
-	{
-		node["'_decrease_attack_power@ComponentButton*'"] = _decrease_attack_power->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_decrease_attack_power@ComponentButton*'"] = 0;
-	}
-
-	if (_god_mode != nullptr && _god_mode->GetGameObject() != nullptr)
-	{
-		node["'_god_mode@ComponentButton*'"] = _god_mode->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_god_mode@ComponentButton*'"] = 0;
-	}
-
-	if (_flying_mode != nullptr && _flying_mode->GetGameObject() != nullptr)
-	{
-		node["'_flying_mode@ComponentButton*'"] = _flying_mode->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_flying_mode@ComponentButton*'"] = 0;
-	}
-
-	if (_spawn_enemy != nullptr && _spawn_enemy->GetGameObject() != nullptr)
-	{
-		node["'_spawn_enemy@ComponentButton*'"] = _spawn_enemy->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_spawn_enemy@ComponentButton*'"] = 0;
-	}
-
-	if (_unlock_skills != nullptr && _unlock_skills->GetGameObject() != nullptr)
-	{
-		node["'_unlock_skills@ComponentButton*'"] = _unlock_skills->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_unlock_skills@ComponentButton*'"] = 0;
-	}
-
-	if (_toggle_performance_output != nullptr && _toggle_performance_output->GetGameObject() != nullptr)
-	{
-		node["'_toggle_performance_output@ComponentButton*'"] = _toggle_performance_output->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_toggle_performance_output@ComponentButton*'"] = 0;
-	}
-
-	if (_toggle_wireframe != nullptr && _toggle_wireframe->GetGameObject() != nullptr)
-	{
-		node["'_toggle_wireframe@ComponentButton*'"] = _toggle_wireframe->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_toggle_wireframe@ComponentButton*'"] = 0;
-	}
-
-	if (_toggle_show_colliders != nullptr && _toggle_show_colliders->GetGameObject() != nullptr)
-	{
-		node["'_toggle_show_colliders@ComponentButton*'"] = _toggle_show_colliders->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_toggle_show_colliders@ComponentButton*'"] = 0;
-	}
-
-	if (_exit_debug != nullptr && _exit_debug->GetGameObject() != nullptr)
-	{
-		node["'_exit_debug@ComponentButton*'"] = _exit_debug->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_exit_debug@ComponentButton*'"] = 0;
-	}
-
-	if (_tp_pos1 != nullptr)
-	{
-		node["'_tp_pos1@GameObject*'"] = _tp_pos1->GetID();
-	}
-	else
-	{
-		node["'_tp_pos1@GameObject*'"] = 0;
-	}
-
-	if (_tp_pos2 != nullptr)
-	{
-		node["'_tp_pos2@GameObject*'"] = _tp_pos2->GetID();
-	}
-	else
-	{
-		node["'_tp_pos2@GameObject*'"] = 0;
-	}
-
-	if (_tp_pos3 != nullptr)
-	{
-		node["'_tp_pos3@GameObject*'"] = _tp_pos3->GetID();
-	}
-	else
-	{
-		node["'_tp_pos3@GameObject*'"] = 0;
-	}
+	node["'_explosive_crystal@bool'"] = _explosive_crystal;
 }
 
-void Hachiko::Scripting::DebugManager::OnLoad()
+void Hachiko::Scripting::CrystalExplosion::OnLoad()
 {
+
 	if (load_node["'_player@GameObject*'"].IsDefined())
 	{
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_button_back@ComponentButton*'"].IsDefined())
+	if (load_node["'_explosion_crystal@GameObject*'"].IsDefined())
 	{
-		GameObject* _button_back_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_button_back@ComponentButton*'"].as<unsigned long long>());
-		if (_button_back_owner__temp != nullptr)
-		{
-			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
-		}
+		_explosion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explosion_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_teleport_next_pos@ComponentButton*'"].IsDefined())
+	if (load_node["'_static_crystal@GameObject*'"].IsDefined())
 	{
-		GameObject* _teleport_next_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_next_pos@ComponentButton*'"].as<unsigned long long>());
-		if (_teleport_next_pos_owner__temp != nullptr)
-		{
-			_teleport_next_pos = _teleport_next_pos_owner__temp->GetComponent<ComponentButton>();
-		}
+		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_teleport_prev_pos@ComponentButton*'"].IsDefined())
+	if (load_node["'_crashing_index@unsigned'"].IsDefined())
 	{
-		GameObject* _teleport_prev_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_prev_pos@ComponentButton*'"].as<unsigned long long>());
-		if (_teleport_prev_pos_owner__temp != nullptr)
-		{
-			_teleport_prev_pos = _teleport_prev_pos_owner__temp->GetComponent<ComponentButton>();
-		}
+		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
 	}
 
-	if (load_node["'_teleport_add_pos@ComponentButton*'"].IsDefined())
+	if (load_node["'_explosion_radius@float'"].IsDefined())
 	{
-		GameObject* _teleport_add_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_add_pos@ComponentButton*'"].as<unsigned long long>());
-		if (_teleport_add_pos_owner__temp != nullptr)
-		{
-			_teleport_add_pos = _teleport_add_pos_owner__temp->GetComponent<ComponentButton>();
-		}
+		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
 	}
 
-	if (load_node["'_add_health@ComponentButton*'"].IsDefined())
+	if (load_node["'_explosive_crystal@bool'"].IsDefined())
 	{
-		GameObject* _add_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_add_health@ComponentButton*'"].as<unsigned long long>());
-		if (_add_health_owner__temp != nullptr)
-		{
-			_add_health = _add_health_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_remove_health@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _remove_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_remove_health@ComponentButton*'"].as<unsigned long long>());
-		if (_remove_health_owner__temp != nullptr)
-		{
-			_remove_health = _remove_health_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_increase_max_hp@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _increase_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_max_hp@ComponentButton*'"].as<unsigned long long>());
-		if (_increase_max_hp_owner__temp != nullptr)
-		{
-			_increase_max_hp = _increase_max_hp_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_decrease_max_hp@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _decrease_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_max_hp@ComponentButton*'"].as<unsigned long long>());
-		if (_decrease_max_hp_owner__temp != nullptr)
-		{
-			_decrease_max_hp = _decrease_max_hp_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_increase_move_speed@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _increase_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_move_speed@ComponentButton*'"].as<unsigned long long>());
-		if (_increase_move_speed_owner__temp != nullptr)
-		{
-			_increase_move_speed = _increase_move_speed_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_decrease_move_speed@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _decrease_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_move_speed@ComponentButton*'"].as<unsigned long long>());
-		if (_decrease_move_speed_owner__temp != nullptr)
-		{
-			_decrease_move_speed = _decrease_move_speed_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_increase_attack_cd@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _increase_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_cd@ComponentButton*'"].as<unsigned long long>());
-		if (_increase_attack_cd_owner__temp != nullptr)
-		{
-			_increase_attack_cd = _increase_attack_cd_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_decrease_attack_cd@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _decrease_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_cd@ComponentButton*'"].as<unsigned long long>());
-		if (_decrease_attack_cd_owner__temp != nullptr)
-		{
-			_decrease_attack_cd = _decrease_attack_cd_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_increase_attack_power@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _increase_attack_power_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_power@ComponentButton*'"].as<unsigned long long>());
-		if (_increase_attack_power_owner__temp != nullptr)
-		{
-			_increase_attack_power = _increase_attack_power_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_decrease_attack_power@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _decrease_attack_power_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_power@ComponentButton*'"].as<unsigned long long>());
-		if (_decrease_attack_power_owner__temp != nullptr)
-		{
-			_decrease_attack_power = _decrease_attack_power_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_god_mode@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _god_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_god_mode@ComponentButton*'"].as<unsigned long long>());
-		if (_god_mode_owner__temp != nullptr)
-		{
-			_god_mode = _god_mode_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_flying_mode@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _flying_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_flying_mode@ComponentButton*'"].as<unsigned long long>());
-		if (_flying_mode_owner__temp != nullptr)
-		{
-			_flying_mode = _flying_mode_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_spawn_enemy@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _spawn_enemy_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_spawn_enemy@ComponentButton*'"].as<unsigned long long>());
-		if (_spawn_enemy_owner__temp != nullptr)
-		{
-			_spawn_enemy = _spawn_enemy_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_unlock_skills@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _unlock_skills_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_unlock_skills@ComponentButton*'"].as<unsigned long long>());
-		if (_unlock_skills_owner__temp != nullptr)
-		{
-			_unlock_skills = _unlock_skills_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_toggle_performance_output@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _toggle_performance_output_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_performance_output@ComponentButton*'"].as<unsigned long long>());
-		if (_toggle_performance_output_owner__temp != nullptr)
-		{
-			_toggle_performance_output = _toggle_performance_output_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_toggle_wireframe@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _toggle_wireframe_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_wireframe@ComponentButton*'"].as<unsigned long long>());
-		if (_toggle_wireframe_owner__temp != nullptr)
-		{
-			_toggle_wireframe = _toggle_wireframe_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_toggle_show_colliders@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _toggle_show_colliders_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_show_colliders@ComponentButton*'"].as<unsigned long long>());
-		if (_toggle_show_colliders_owner__temp != nullptr)
-		{
-			_toggle_show_colliders = _toggle_show_colliders_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_exit_debug@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _exit_debug_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_exit_debug@ComponentButton*'"].as<unsigned long long>());
-		if (_exit_debug_owner__temp != nullptr)
-		{
-			_exit_debug = _exit_debug_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
-	if (load_node["'_tp_pos1@GameObject*'"].IsDefined())
-	{
-		_tp_pos1 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos1@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_tp_pos2@GameObject*'"].IsDefined())
-	{
-		_tp_pos2 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos2@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_tp_pos3@GameObject*'"].IsDefined())
-	{
-		_tp_pos3 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos3@GameObject*'"].as<unsigned long long>());
+		_explosive_crystal = load_node["'_explosive_crystal@bool'"].as<bool>();
 	}
 }
 
