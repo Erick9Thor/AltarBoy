@@ -57,6 +57,15 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		return;
 	}
 
+	_player_pos = _player->GetTransform()->GetGlobalPosition();
+	_current_pos = transform->GetGlobalPosition();
+	float dist_to_player = _current_pos.Distance(_player_pos);
+
+	if (dist_to_player > 50)
+	{
+		return;
+	}
+
 	if (_is_stunned)
 	{
 		if (_stun_time > 0.0f)
@@ -73,10 +82,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		agc->SetMaxSpeed(_speed);
 	}
 
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
-	_current_pos = transform->GetGlobalPosition();
-
-	float dist_to_player = _current_pos.Distance(_player_pos);
 	if (dist_to_player <= _aggro_range)
 	{
 		if (dist_to_player <= _attack_range)
