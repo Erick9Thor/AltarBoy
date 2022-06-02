@@ -74,7 +74,7 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
-	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
+	// transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
@@ -99,8 +99,10 @@ float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 	{
 		mouse_pos.y += (mouse_pos.y > 0) ? -0.25f : +0.25f;
 	}
-	// First number to set it to 0-1 scale, second one sets the movement distance
-	added_movement = mouse_pos * 4.0f * 3.0f;
+	const float intensity = 3.0f;
+	// We multiply by 4 to set it to 0-1 scale
+	added_movement = (mouse_pos * 4.0f) * intensity;
+	added_movement = added_movement.Clamp(float2(-intensity, -intensity), float2(intensity, intensity));
 	return added_movement;
 }
 
