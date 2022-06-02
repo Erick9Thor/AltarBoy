@@ -8,8 +8,7 @@
 #include "resources/ResourceNavMesh.h"
 #include "DetourTileCache/DetourTileCache.h"
 
-Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container)
-{}
+Hachiko::ComponentObstacle::ComponentObstacle(GameObject* container) : Component(Type::OBSTACLE, container) {}
 
 Hachiko::ComponentObstacle::~ComponentObstacle()
 {
@@ -35,8 +34,8 @@ void Hachiko::ComponentObstacle::Update()
         {
             RefreshObstacle();
             dirty = false;
-            count_since_update = 0; 
-        }        
+            count_since_update = 0;
+        }
     }
 }
 
@@ -68,7 +67,7 @@ void Hachiko::ComponentObstacle::DrawGui()
         }
         if (obstacle && ImGui::Button("Remove from navmesh"))
         {
-            RemoveObstacle(); 
+            RemoveObstacle();
         }
 
         if (obstacle_type == ObstacleType::DT_OBSTACLE_CYLINDER)
@@ -88,17 +87,17 @@ void Hachiko::ComponentObstacle::DrawGui()
 
         bool changed_type = false;
         ImGui::Text("Type");
-        changed_type |= ImGui::RadioButton("Cylinder", (int*) &obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_CYLINDER));
+        changed_type |= ImGui::RadioButton("Cylinder", (int*)&obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_CYLINDER));
         ImGui::SameLine();
         changed_type |= ImGui::RadioButton("Box", (int*)&obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_BOX));
         ImGui::SameLine();
         changed_type |= ImGui::RadioButton("Oriented Box", (int*)&obstacle_type, static_cast<int>(ObstacleType::DT_OBSTACLE_ORIENTED_BOX));
-        
+
         if (changed_type)
         {
             SetType(obstacle_type); // Changes the obstacle type
         }
-        
+
         ImGui::Text("Exists: %d", obstacle != nullptr);
     }
     ImGui::PopID();
@@ -135,7 +134,7 @@ void Hachiko::ComponentObstacle::AddObstacle()
             aabb.SetFromCenterAndSize(transform->GetGlobalPosition(), size);
             tile_cache->addBoxObstacle(aabb.minPoint.ptr(), aabb.maxPoint.ptr(), obstacle);
             break;
-        }        
+        }
     case ObstacleType::DT_OBSTACLE_ORIENTED_BOX:
         // Method expects half the desired size of the box to be passed
         // Expects y rotation in radians and says box cant be rotated in y
