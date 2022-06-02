@@ -23,7 +23,6 @@ namespace Hachiko
     {
     public:
         void PreUpdate();
-        void Update(ComponentCamera* camera, GameObject* game_object);
         void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
 
         std::vector<RenderTarget>& GetNodes()
@@ -47,9 +46,7 @@ namespace Hachiko
         }
 
     private:
-        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, GameObject* game_object);
         void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
-        void CollectMesh(const float3& camera_pos, GameObject* game_object);
         void CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh);
 
         std::vector<RenderTarget> nodes;

@@ -88,6 +88,10 @@ private:
 	bool _should_rotate = false;
 	bool _is_falling = false;
 	bool _is_god_mode = false;
+
+	GameObject* enemies;
+	GameObject* dynamic_envi;
+
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 };
