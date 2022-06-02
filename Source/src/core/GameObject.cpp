@@ -11,6 +11,7 @@
 #include "components/ComponentObstacle.h"
 #include "components/ComponentAudioListener.h"
 #include "components/ComponentAudioSource.h"
+#include "scripting/Script.h"
 
 #include "importers/PrefabImporter.h"
 
@@ -28,7 +29,6 @@
 #include "modules/ModuleScriptingSystem.h" // For instantiating Scripts.
 #include "modules/ModuleResources.h"
 
-
 #include <debugdraw.h>
 
 Hachiko::GameObject::GameObject(const char* name, UID uid) :
@@ -38,17 +38,13 @@ Hachiko::GameObject::GameObject(const char* name, UID uid) :
     AddComponent(new ComponentTransform(this, float3::zero, Quat::identity, float3::one));
 }
 
-Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid) :
-    name(name),
-    uid(uid)
+Hachiko::GameObject::GameObject(GameObject* parent, const float4x4& transform, const char* name, UID uid) : name(name), uid(uid)
 {
     AddComponent(new ComponentTransform(this, transform));
     SetNewParent(parent);
 }
 
-Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) :
-    name(name),
-    uid(uid)
+Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, const float3& translation, const Quat& rotation, const float3& scale) : name(name), uid(uid)
 {
     AddComponent(new ComponentTransform(this, translation, rotation, scale));
     SetNewParent(parent);
@@ -131,18 +127,18 @@ void Hachiko::GameObject::AddComponent(Component* component)
     switch (component->GetType())
     {
     case (Component::Type::TRANSFORM):
-    {
-        components.push_back(component);
-        transform = static_cast<ComponentTransform*>(component);
-        component->SetGameObject(this);
-        break;
-    }
+        {
+            components.push_back(component);
+            transform = static_cast<ComponentTransform*>(component);
+            component->SetGameObject(this);
+            break;
+        }
     default:
-    {
-        components.push_back(component);
-        component->SetGameObject(this);
-        break;
-    }
+        {
+            components.push_back(component);
+            component->SetGameObject(this);
+            break;
+        }
     }
 }
 
@@ -250,6 +246,11 @@ void Hachiko::GameObject::SetActive(bool set_active)
         Start();
     }
     active = set_active;
+
+    for (GameObject* child : children)
+    {
+        child->SetActive(set_active);
+    }
 }
 
 void Hachiko::GameObject::Start()
@@ -405,10 +406,10 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     {
         node[GAME_OBJECT_ID] = uid;
     }
-    
+        
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
-   
+
     for (unsigned i = 0; i < components.size(); ++i)
     {
         if (!as_prefab)
@@ -427,12 +428,26 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     }
 }
 
-void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
+void Hachiko::GameObject::CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector)
+{
+    object_collector.push_back(this);
+
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        component_collector.push_back(components[i]);
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->CollectObjectsAndComponents(object_collector, component_collector);
+    }
+}
+
+void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool meshes_only)
 {   
     const YAML::Node components_node = node[COMPONENT_NODE];
     for (unsigned i = 0; i < components_node.size(); ++i)
     {
-
         UID component_id;
         if (!as_prefab)
         {
@@ -444,12 +459,18 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
         }
         
         bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
-        const auto type = static_cast<Component::Type>(
-            components_node[i][COMPONENT_TYPE].as<int>());
+        const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
 
         Component* component = nullptr;
 
-        if (type == Component::Type::SCRIPT)
+        if (meshes_only)
+        {
+            if (type == Component::Type::MESH_RENDERER)
+            {
+                component = CreateComponent(type);
+            }
+        }
+        else if(type == Component::Type::SCRIPT)
         {
             std::string script_name =
                 components_node[i][SCRIPT_NAME].as<std::string>();
@@ -495,7 +516,45 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab)
         
         const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(children_nodes[i], as_prefab);
+        child->Load(children_nodes[i], as_prefab, meshes_only);
+    }
+}
+
+
+void Hachiko::GameObject::SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const
+{
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        Component::Type type = components[i]->GetType();
+        if (type == Component::Type::SCRIPT)
+        {
+            // Override script data
+            Scripting::Script* script_component = static_cast<Scripting::Script*>(components[i]);
+            script_component->SavePrefabReferences(node[COMPONENT_NODE][i], object_collection, component_collection);
+        }
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->SavePrefabReferences(node[CHILD_NODE][i], object_collection, component_collection);
+    }
+}
+
+void Hachiko::GameObject::LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection)
+{
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        if (components[i]->GetType() == Component::Type::SCRIPT)
+        {
+            // Override script data, script already has its yaml data assigned on load
+            Scripting::Script* script_component = static_cast<Scripting::Script*>(components[i]);
+            script_component->LoadPrefabReferences(object_collection, component_collection);
+        }
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->LoadPrefabReferences(object_collection, component_collection);
     }
 }
 
@@ -519,8 +578,20 @@ Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
     return nullptr;
 }
 
-std::vector<Hachiko::Component*> 
-Hachiko::GameObject::GetComponents(Component::Type type) const
+Hachiko::Component* Hachiko::GameObject::GetComponent(Component::Type type) const
+{
+    for (Component* component : components)
+    {
+        if (component->GetType() == type)
+        {
+            return component;
+        }
+    }
+
+    return nullptr;
+}
+
+std::vector<Hachiko::Component*> Hachiko::GameObject::GetComponents(Component::Type type) const
 {
     std::vector<Component*> components_of_type;
 
@@ -537,37 +608,30 @@ Hachiko::GameObject::GetComponents(Component::Type type) const
     return components_of_type;
 }
 
-std::vector<Hachiko::Component*>
-Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
+std::vector<Hachiko::Component*> Hachiko::GameObject::GetComponentsInDescendants(Component::Type type) const
 {
     std::vector<Component*> components_in_descendants;
 
     for (GameObject* child : children)
     {
-        std::vector<Component*> components_in_child =
-            child->GetComponents(type);
+        std::vector<Component*> components_in_child = child->GetComponents(type);
 
         for (Component* component_in_child : components_in_child)
         {
             components_in_descendants.push_back(component_in_child);
         }
 
-        std::vector<Component*> components_in_childs_descendants =
-            child->GetComponentsInDescendants(type);
-
-        for (Component* component_in_childs_descendants :
-             components_in_childs_descendants)
+        std::vector<Component*> components_in_childs_descendants = child->GetComponentsInDescendants(type);
+        for (Component* component_in_childs_descendants : components_in_childs_descendants)
         {
-            components_in_descendants.push_back(
-                component_in_childs_descendants);
+            components_in_descendants.push_back(component_in_childs_descendants);
         }
     }
 
     return components_in_descendants;
 }
 
-Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(
-    const std::string& child_name) const
+Hachiko::GameObject* Hachiko::GameObject::GetFirstChildWithName(const std::string& child_name) const
 {
     for (GameObject* child : children)
     {

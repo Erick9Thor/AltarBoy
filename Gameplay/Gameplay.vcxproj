@@ -315,6 +315,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="BulletController.h" />
+    <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="generated\Factory.h" />
@@ -718,6 +719,7 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="BulletController.cpp" />
+    <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="generated\Factory.cpp" />

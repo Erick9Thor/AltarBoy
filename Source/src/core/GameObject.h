@@ -94,7 +94,11 @@ namespace Hachiko
         }
 
         void Save(YAML::Node& node, bool as_prefab = false) const;
-        void Load(const YAML::Node& node, bool as_prefab = false);
+        void CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector);
+        void Load(const YAML::Node& node, bool as_prefab = false, bool meshes_only = false);
+
+        void SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const;
+        void LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection);
 
 
         [[nodiscard]] const std::vector<Component*>& GetComponents() const
@@ -197,6 +201,7 @@ namespace Hachiko
             return nullptr;
         }
 
+        [[nodiscard]] Component* GetComponent(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponents(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
 

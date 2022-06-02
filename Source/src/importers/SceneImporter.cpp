@@ -11,21 +11,25 @@ void Hachiko::SceneImporter::Import(const char* path, YAML::Node& meta)
     // Only 1 scene per scene asset will exist
     static const int scene_resource_index = 0;
     static const int navmesh_resource_index = 1;
-    UID scene_uid = ManageResourceUID(Resource::Type::SCENE, scene_resource_index, meta);    
-    FileSystem::Copy(path, GetResourcePath(Resource::Type::SCENE, scene_uid).c_str());
+    UID scene_uid = ManageResourceUID(Resource::Type::SCENE, scene_resource_index, meta);
+    std::string resource_path = GetResourcePath(Resource::Type::SCENE, scene_uid).c_str();
 
     YAML::Node node = YAML::LoadFile(path);
-    UID navmesh_id = node[NAVMESH_ID].as<UID>();
+    if (!node[NAVMESH_ID].IsDefined())
+    {
+        node[NAVMESH_ID] = UUID::GenerateUID();
+    }
+    UID navmesh_id = node[NAVMESH_ID].as<UID>(); 
     SetResource(navmesh_id, Resource::Type::NAVMESH, navmesh_resource_index, meta);
     NavmeshImporter navmesh_importer;
 
     Scene* temp_scene = new Scene();
-    // Cant load a scene that is not imported yet
-    const ResourceScene* scene = static_cast<const ResourceScene*>(Load(scene_uid));
-    temp_scene->Load(scene->scene_data);
+    constexpr bool meshes_only = true;
+    temp_scene->Load(node, meshes_only);
     navmesh_importer.CreateNavmeshFromScene(temp_scene, navmesh_id);
+
+    FileSystem::Save(resource_path.c_str(), node);
     delete temp_scene;
-    delete scene;
 }
 
 void Hachiko::SceneImporter::Save(UID id, const Resource* resource)

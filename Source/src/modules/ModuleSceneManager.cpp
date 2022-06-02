@@ -214,7 +214,9 @@ void Hachiko::ModuleSceneManager::ReloadScene()
 {
     // Use the scene resource refreshed when play is pressed to restore og state
     // Basically scene serialized in memory
-    LoadScene(scene_resource);
+    // Keeps the currently defined navmesh since the one saved in library is from the last time we saved
+    constexpr bool keep_navmesh = true;
+    LoadScene(scene_resource, keep_navmesh);
 }
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
@@ -228,9 +230,13 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     }
     ImGui::Checkbox("Autosave Scene", &scene_autosave);
     App->navigation->DrawOptionsGui();
+
+    // Skybox
+    ImGui::Separator();
+    main_scene->GetSkybox()->DrawImGui();
 }
 
-void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
+void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
 {
     SetSceneResource(new_resource);
 
@@ -238,14 +244,20 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource)
     if (scene_resource)
     {
         new_scene->Load(scene_resource->scene_data);
-        App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
+        if (!keep_navmesh)
+        {
+            App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
+        }
     }
     else
     {
         // This removes current navmesh
         GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
         camera_go->CreateComponent(Component::Type::CAMERA);
-        App->navigation->SetNavmesh(nullptr);
+        if (!keep_navmesh)
+        {
+            App->navigation->SetNavmesh(nullptr);
+        }
     }
 
     ChangeMainScene(new_scene);
@@ -278,6 +290,9 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
         main_scene->SetCullingCamera(main_scene->GetMainCamera());
     }
 #endif // PLAY_MODE
+
+    // REBUILD NAVMESH
+    App->navigation->RebuildCurrentNavmesh(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)

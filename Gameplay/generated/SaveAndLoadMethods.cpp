@@ -2,6 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -33,6 +34,77 @@ void Hachiko::Scripting::BackToMainMenu::OnLoad()
 		{
 			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
 		}
+	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
+{
+
+	if (_player != nullptr)
+	{
+		node["'_player@GameObject*'"] = _player->GetID();
+	}
+	else
+	{
+		node["'_player@GameObject*'"] = 0;
+	}
+
+	if (_explosion_crystal != nullptr)
+	{
+		node["'_explosion_crystal@GameObject*'"] = _explosion_crystal->GetID();
+	}
+	else
+	{
+		node["'_explosion_crystal@GameObject*'"] = 0;
+	}
+
+	if (_static_crystal != nullptr)
+	{
+		node["'_static_crystal@GameObject*'"] = _static_crystal->GetID();
+	}
+	else
+	{
+		node["'_static_crystal@GameObject*'"] = 0;
+	}
+
+	node["'_crashing_index@unsigned'"] = _crashing_index;
+
+	node["'_explosion_radius@float'"] = _explosion_radius;
+
+	node["'_explosive_crystal@bool'"] = _explosive_crystal;
+}
+
+void Hachiko::Scripting::CrystalExplosion::OnLoad()
+{
+
+	if (load_node["'_player@GameObject*'"].IsDefined())
+	{
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_explosion_crystal@GameObject*'"].IsDefined())
+	{
+		_explosion_crystal = SceneManagement::FindInCurrentScene(load_node["'_explosion_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_static_crystal@GameObject*'"].IsDefined())
+	{
+		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_crashing_index@unsigned'"].IsDefined())
+	{
+		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
+	}
+
+	if (load_node["'_explosion_radius@float'"].IsDefined())
+	{
+		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
+	}
+
+	if (load_node["'_explosive_crystal@bool'"].IsDefined())
+	{
+		_explosive_crystal = load_node["'_explosive_crystal@bool'"].as<bool>();
 	}
 }
 
@@ -601,6 +673,15 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 
 void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 {
+	if (_audio_source != nullptr && _audio_source->GetGameObject() != nullptr)
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = _audio_source->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_audio_source@ComponentAudioSource*'"] = 0;
+	}
+
 	node["'_step_frequency@float'"] = _step_frequency;
 
 	node["'_melee_frequency@float'"] = _melee_frequency;
@@ -612,6 +693,15 @@ void Hachiko::Scripting::PlayerSoundManager::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 {
+	if (load_node["'_audio_source@ComponentAudioSource*'"].IsDefined())
+	{
+		GameObject* _audio_source_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_audio_source@ComponentAudioSource*'"].as<unsigned long long>());
+		if (_audio_source_owner__temp != nullptr)
+		{
+			_audio_source = _audio_source_owner__temp->GetComponent<ComponentAudioSource>();
+		}
+	}
+
 	if (load_node["'_step_frequency@float'"].IsDefined())
 	{
 		_step_frequency = load_node["'_step_frequency@float'"].as<float>();

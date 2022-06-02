@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -31,6 +32,93 @@ void Hachiko::Scripting::BackToMainMenu::SerializeTo(std::unordered_map<std::str
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
+}
+
+void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_stats") != serialized_fields.end())
+	{
+		const SerializedField& _stats_sf = serialized_fields["_stats"];
+		if (_stats_sf.type_name == "Stats")
+		{
+			_stats = std::any_cast<Stats>(_stats_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_player") != serialized_fields.end())
+	{
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
+		{
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_explosion_crystal") != serialized_fields.end())
+	{
+		const SerializedField& _explosion_crystal_sf = serialized_fields["_explosion_crystal"];
+		if (_explosion_crystal_sf.type_name == "GameObject*")
+		{
+			_explosion_crystal = std::any_cast<GameObject*>(_explosion_crystal_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_static_crystal") != serialized_fields.end())
+	{
+		const SerializedField& _static_crystal_sf = serialized_fields["_static_crystal"];
+		if (_static_crystal_sf.type_name == "GameObject*")
+		{
+			_static_crystal = std::any_cast<GameObject*>(_static_crystal_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_crashing_index") != serialized_fields.end())
+	{
+		const SerializedField& _crashing_index_sf = serialized_fields["_crashing_index"];
+		if (_crashing_index_sf.type_name == "unsigned")
+		{
+			_crashing_index = std::any_cast<unsigned>(_crashing_index_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_explosion_radius") != serialized_fields.end())
+	{
+		const SerializedField& _explosion_radius_sf = serialized_fields["_explosion_radius"];
+		if (_explosion_radius_sf.type_name == "float")
+		{
+			_explosion_radius = std::any_cast<float>(_explosion_radius_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_explosive_crystal") != serialized_fields.end())
+	{
+		const SerializedField& _explosive_crystal_sf = serialized_fields["_explosive_crystal"];
+		if (_explosive_crystal_sf.type_name == "bool")
+		{
+			_explosive_crystal = std::any_cast<bool>(_explosive_crystal_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_stats"] = SerializedField(std::string("_stats"), std::make_any<Stats>(_stats), std::string("Stats"));
+
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
+
+	serialized_fields["_explosion_crystal"] = SerializedField(std::string("_explosion_crystal"), std::make_any<GameObject*>(_explosion_crystal), std::string("GameObject*"));
+
+	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
+
+	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
+
+	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
+
+	serialized_fields["_explosive_crystal"] = SerializedField(std::string("_explosive_crystal"), std::make_any<bool>(_explosive_crystal), std::string("bool"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -757,6 +845,15 @@ void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
+	if(serialized_fields.find("_audio_source") != serialized_fields.end())
+	{
+		const SerializedField& _audio_source_sf = serialized_fields["_audio_source"];
+		if (_audio_source_sf.type_name == "ComponentAudioSource*")
+		{
+			_audio_source = std::any_cast<ComponentAudioSource*>(_audio_source_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_step_frequency") != serialized_fields.end())
 	{
 		const SerializedField& _step_frequency_sf = serialized_fields["_step_frequency"];
@@ -806,6 +903,8 @@ void Hachiko::Scripting::PlayerSoundManager::DeserializeFrom(std::unordered_map<
 void Hachiko::Scripting::PlayerSoundManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_audio_source"] = SerializedField(std::string("_audio_source"), std::make_any<ComponentAudioSource*>(_audio_source), std::string("ComponentAudioSource*"));
 
 	serialized_fields["_step_frequency"] = SerializedField(std::string("_step_frequency"), std::make_any<float>(_step_frequency), std::string("float"));
 

@@ -40,7 +40,6 @@ namespace Hachiko
 
         private:
             SERIALIZE_FIELD(Stats, _combat_stats);
-
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);
