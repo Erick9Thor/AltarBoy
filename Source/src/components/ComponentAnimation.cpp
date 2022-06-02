@@ -284,7 +284,9 @@ void Hachiko::ComponentAnimation::DrawGui()
             unsigned int i = 0;
             while (i < state_machine->clips.size())
             {
-                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i)));
+                // ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i)));
+
+                ResourceAnimation* res = nullptr;
 
                 strcpy_s(name, state_machine->clips[i].name.c_str());
 
@@ -335,26 +337,29 @@ void Hachiko::ComponentAnimation::DrawGui()
                     }
                 }
 
-                /*if (new_res > 0)
-                {
-                    state_machine->SetClipRes(i, new_res);
-                    state_machine->Save();
 
-                    App->resources->Get(new_res)->LoadToMemory();
+                if (res > 0)
+                {
+                    // state_machine->SetClipRes(i, new_res);
+                    // state_machine->Save();
+
+                    // App->resources->Get(new_res)->LoadToMemory();
                 }
 
-                bool loop = state_machine->GetClipLoop(i);
+                // bool loop = state_machine->GetClipLoop(i);
+                bool loop = false;
+
                 if (ImGui::Checkbox("Loop", &loop))
                 {
-                    state_machine->SetClipLoop(i, loop);
-                    state_machine->Save();
+                    // state_machine->SetClipLoop(i, loop);
+                    // state_machine->Save();
                 }
 
                 ImGui::SameLine();
                 if (ImGui::Button("Remove"))
                 {
-                    state_machine->RemoveClip(i);
-                    state_machine->Save();
+                    // state_machine->RemoveClip(i);
+                    // state_machine->Save();
                 }
                 else
                 {
@@ -363,7 +368,8 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                 ImGui::Separator();
                 ImGui::PopID();
-            }
+            
+            /*
 
             if (App->GetState() != Application::stop)
             {
