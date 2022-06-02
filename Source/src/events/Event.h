@@ -11,6 +11,7 @@
 #include "GameStateEventPayload.h"
 #include "SceneLoadEventPayload.h"
 #include "EditorHistoryEntryRestore.h"
+//#include "NavmeshLoadEventPayload.h"
 
 namespace Hachiko
 {
@@ -37,6 +38,7 @@ namespace Hachiko
             SCENE_LOADED,
             CREATE_EDITOR_HISTORY_ENTRY,
             RESTORE_EDITOR_HISTORY_ENTRY,
+            NAVMESH_LOADED,
             COUNT
         };
 
