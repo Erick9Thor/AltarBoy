@@ -14,6 +14,9 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _spawn_is_initial(false)
 	, _stats(2, 2, 5, 10)
 	, _player(nullptr)
+	, _state(BugState::INVALID)
+	, _attack_animation_duration(0.0f)
+	, _attack_animation_timer(0.0f)
 {
 }
 
@@ -54,7 +57,24 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (!_stats.IsAlive())
 	{
+		_state = BugState::DEAD;
 		return;
+	}
+
+	// TODO: Delete these after seminar and write a better version.
+	if (_state == BugState::ATTACKING)
+	{
+		_attack_animation_timer += Time::DeltaTime();
+		
+		if (_attack_animation_timer >= _attack_animation_duration)
+		{
+			_attack_animation_timer = 0.0f;
+			_state = BugState::IDLE;
+		}
+	}
+	else
+	{
+		_state = BugState::IDLE;
 	}
 
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
@@ -106,6 +126,11 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	
 }
 
+BugState Hachiko::Scripting::EnemyController::GetState() const
+{
+	return _state;
+}
+
 Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 {
 	return _stats;
@@ -130,6 +155,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
+	_state = BugState::ATTACKING;
 	_player_controller->_stats.ReceiveDamage(_stats._attack_power);
 	_attack_cooldown = _stats._attack_cd;
 }
