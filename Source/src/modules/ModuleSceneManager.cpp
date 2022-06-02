@@ -33,7 +33,7 @@ bool Hachiko::ModuleSceneManager::Init()
 #ifdef PLAY_BUILD
     main_scene->Start();
 #endif
-
+    
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
     return true;
@@ -290,9 +290,6 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
         main_scene->SetCullingCamera(main_scene->GetMainCamera());
     }
 #endif // PLAY_MODE
-
-    // REBUILD NAVMESH
-    App->navigation->RebuildCurrentNavmesh(main_scene);
 }
 
 void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)

@@ -112,8 +112,8 @@ void Hachiko::Scripting::EnemyController::RegisterPlayerHit(int player_atk, floa
 void Hachiko::Scripting::EnemyController::KnockEnemyBack(float3 direction)
 {
 	_is_stunned = true;
-	_stun_time = 1.0f; // Once we have weapons stun duration might be moved to each weapon stat
-	float knockback_intensity = 0.2f; // same with knock-back intensity
+	_stun_time = 1.2f; // Once we have weapons stun duration might be moved to each weapon stat
+	float knockback_intensity = 0.5f; // same with knock-back intensity
 	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback_intensity);
 }
 

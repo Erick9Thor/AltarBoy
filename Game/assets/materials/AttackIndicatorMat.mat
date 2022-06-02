@@ -1,12 +1,12 @@
-name: DefaultMaterial
+name: AttackIndicatorMat
 diffuse: 0
 specular: 0
 normals: 0
 metalness: 0
 emissive: 0
-diffuse_color: [1, 1, 1, 1]
-specular_color: [0, 0, 0, 0]
-emissive_color: [0, 0, 0, 0]
+diffuse_color: [1, 0, 0, 1]
+specular_color: [0, 0, 0, 1]
+emissive_color: [0, 0, 0, 1]
 smoothness: 0.5
 metalness_value: 0.5
 is_metallic: 0
