@@ -394,8 +394,10 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 			_is_falling = false;
 		}
 
-		if (current_position.y < -20.0f)
+		if (_dash_start.y - current_position.y > falling_distance)
 		{
+			current_position = Navigation::GetCorrectedPosition(_dash_start, float3(3.0f, 3.0f, 3.0f));;
+			_is_falling = false;
 			//SceneManagement::SwitchScene(Scenes::LOSE);
 		}
 		return;

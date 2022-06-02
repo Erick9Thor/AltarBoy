@@ -6,7 +6,7 @@
 #include "ModuleEditor.h"
 #include "ModuleInput.h"
 #include "ModuleEvent.h"
-
+#include "ModuleWindow.h"
 #include "core/Scene.h"
 #include "core/GameObject.h"
 #include "components/ComponentCanvasRenderer.h"
