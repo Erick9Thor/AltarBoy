@@ -80,7 +80,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
-	CheckGoal(current_position);
+	//CheckGoal(current_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
