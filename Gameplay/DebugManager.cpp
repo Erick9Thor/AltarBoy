@@ -7,6 +7,7 @@
 #include <core/GameObject.h>
 #include "Scenes.h"
 #include <glew-2.1.0/include/GL/glew.h>
+#include "Algorithm/Random/LCG.h"
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
@@ -212,11 +213,19 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 	{
 		HE_LOG("_toggle_invulnerable pressed");
 	}
+	*/
 	
 	if (_spawn_enemy->IsSelected())
 	{
 		HE_LOG("_spawn_enemy pressed");
+		GameObject* enemy = GameObject::Instantiate();
+		enemy->SetName("Enemy");
+		enemy->SetNewParent(game_object->parent->FindDescendantWithName("Enemies")); // TODO: find better way to do this		
+		enemy->GetTransform()->SetGlobalPosition(_player->GetTransform()->GetGlobalPosition());
+		// TODO: rework to use Zombunny prefab when instantiate accepts UID
 	}
+
+	/*
 	if (_toggle_performance_output->IsSelected())
 	{
 		HE_LOG("_toggle_performance_output pressed");
