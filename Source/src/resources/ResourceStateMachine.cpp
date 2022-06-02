@@ -1,6 +1,11 @@
 #include "core/hepch.h"
 #include "ResourceStateMachine.h"
 
+void Hachiko::ResourceStateMachine::RemoveTransition(unsigned int index) 
+{
+    transitions.erase(transitions.begin() + index);
+}
+
 Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE)
 {
     AddNode("Puta", "ny");

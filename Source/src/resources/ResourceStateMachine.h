@@ -26,9 +26,24 @@ namespace Hachiko
         {
             clips[index].name = name;
         }
+
+        const std::string& GetClipName(unsigned int index) const
+        {
+            return clips[index].name;
+        }
+
         UID GetClipRes(unsigned int index) const
         {
             return clips[index].animation;
+
+        }
+        unsigned int GetNumClips() const
+        {
+            return unsigned int(clips.size());
+        }
+        const std::string& GetNodeClip(unsigned int index) const
+        {
+            return nodes[index].clip;
         }
 
         struct Node
@@ -48,6 +63,34 @@ namespace Hachiko
         std::vector<int> FindNodeTransitions(const std::string& name) const;
         void RemoveNode(const std::string& name);
         void EditNodeClip(const std::string& name, const std::string& newClip);
+        void SetNodeName(unsigned int index, const std::string& name)
+        {
+            nodes[index].name = name;
+        }
+        void SetNodeClip(unsigned int index, const std::string& clip)
+        {
+            nodes[index].clip = clip;
+        }
+
+        unsigned int GetDefaultNode() const
+        {
+            return default_node;
+        }
+
+        unsigned int GetNumNodes() const
+        {
+            return unsigned int(nodes.size());
+        }
+
+        void SetDefaultNode(unsigned int d)
+        {
+            default_node = d;
+        }
+
+        const std::string& GetNodeName(unsigned int index) const
+        {
+            return nodes[index].name;
+        }
 
         struct Transition
         {
@@ -70,7 +113,35 @@ namespace Hachiko
         void EditTransitionTarget(const std::string& source, const std::string& newTarget, const std::string& trigger);
         void EditTransitionTrigger(const std::string& source, const std::string& target, const std::string& newTrigger);
         void EditTransitionInterpolationTime(const std::string& source, const std::string& target, unsigned int newInterpolationTime);
-
+        unsigned int GetNumTransitions() const
+        {
+            return unsigned int(transitions.size());
+        }
+        const std::string& GetTransitionSource(unsigned int index) const
+        {
+            return transitions[index].source;
+        }
+        const std::string& GetTransitionTarget(unsigned int index) const
+        {
+            return transitions[index].target;
+        }
+        const std::string& GetTransitionTrigger(unsigned int index) const
+        {
+            return transitions[index].trigger;
+        }
+        unsigned int GetTransitionBlend(unsigned int index) const
+        {
+            return transitions[index].interpolationTime;
+        }
+        void SetTransitionTrigger(unsigned int index, const std::string& trigger)
+        {
+            transitions[index].trigger = trigger;
+        }
+        void SetTransitionBlend(unsigned int index, unsigned int blend)
+        {
+            transitions[index].interpolationTime = blend;
+        }
+        void RemoveTransition(unsigned int index);
 
     public:
         ResourceStateMachine(UID uid);
@@ -81,5 +152,7 @@ namespace Hachiko
         std::vector<Clip> clips;
         std::vector<Node> nodes;
         std::vector<Transition> transitions;
+
+        unsigned int default_node = 0;
     };
 } // namespace Hachiko
