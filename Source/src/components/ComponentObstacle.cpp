@@ -17,11 +17,15 @@ Hachiko::ComponentObstacle::~ComponentObstacle()
 
 void Hachiko::ComponentObstacle::Start()
 {
+    count_since_update = 100;
+    Invalidate();
     AddObstacle();
 }
 
 void Hachiko::ComponentObstacle::Stop()
 {
+    count_since_update = 100;
+    Invalidate();
     RemoveObstacle();
 }
 

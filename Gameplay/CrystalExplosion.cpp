@@ -131,7 +131,11 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCristall()
 
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
-
+	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
+	if (obstacle)
+	{
+		obstacle->Stop();
+	}
 	_explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
 	_stats._is_alive = false;
 }
