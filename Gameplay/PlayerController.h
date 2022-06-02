@@ -1,8 +1,8 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "Stats.h"
 #include "PlayerState.h"
+#include "Stats.h"
 
 namespace Hachiko
 { 
@@ -23,7 +23,7 @@ public:
 	void OnUpdate() override;
 
 	PlayerState GetState() const;
-	const Stats& GetStats() { return _combat_stats; }
+	Stats* GetStats() { return _combat_stats; }
 
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
@@ -51,13 +51,12 @@ private:
 
 public:
 	void CheckGoal(const float3& current_position);
-	void RegisterEnemyHit(int enemy_atk);
+	void RegisterHit(int enemy_atk);
 	void UpdateHealthBar();
 	
-	bool IsAlive() { return _combat_stats._current_hp > 0; }
+	bool IsAlive() { return _combat_stats->_current_hp > 0; }
 private:
-	SERIALIZE_FIELD(Stats, _combat_stats);
-
+	Stats* _combat_stats;
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
@@ -65,14 +64,11 @@ private:
 	SERIALIZE_FIELD(float, _dash_cooldown);
 	SERIALIZE_FIELD(int, _max_dash_count);
 
-	SERIALIZE_FIELD(float, _raycast_min_range);
-	SERIALIZE_FIELD(float, _raycast_max_range);
 	SERIALIZE_FIELD(float, _attack_radius);
 	SERIALIZE_FIELD(float, _attack_cooldown);
 	SERIALIZE_FIELD(float, _attack_duration);
 
 	SERIALIZE_FIELD(float, _rotation_duration);
-
 
 	SERIALIZE_FIELD(GameObject*, _hp_cell_1);
 	SERIALIZE_FIELD(GameObject*, _hp_cell_2);
@@ -97,7 +93,7 @@ private:
 	bool _dash_has_cooldown = false;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-	bool _is_god_mode = false;
+	bool _god_mode = false;
 
 	GameObject* enemies;
 	GameObject* dynamic_envi;

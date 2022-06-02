@@ -22,7 +22,7 @@ namespace Hachiko
             void OnStart() override;
             void OnUpdate() override;
 
-            Stats& GetStats();
+            Stats* GetStats();
             void RegisterPlayerHit(int player_atk, math::float3 direction);
             void KnockEnemyBack(math::float3 direction);
 
@@ -39,7 +39,7 @@ namespace Hachiko
             void DestroyEntity();
 
         private:
-            SERIALIZE_FIELD(Stats, _combat_stats);
+            Stats* _combat_stats;
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);

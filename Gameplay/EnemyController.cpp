@@ -21,13 +21,12 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	_attack_range = 1.5f;
-
-	_combat_stats._attack_power = 1;
-	_combat_stats._attack_cd = 1;
-	_combat_stats._move_speed = 4;
-	_combat_stats._max_hp = 4;
-	_combat_stats._current_hp = _combat_stats._max_hp;
-
+	_combat_stats = game_object->GetComponent<Stats>();
+	_combat_stats->_attack_power = 1;
+	_combat_stats->_attack_cd = 1;
+	_combat_stats->_move_speed = 4;
+	_combat_stats->_max_hp = 4;
+	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
 
@@ -50,7 +49,7 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
-	if (!_combat_stats.IsAlive())
+	if (!_combat_stats->IsAlive())
 	{
 		return;
 	}
@@ -91,19 +90,19 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}	
 }
 
-Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
+Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 {
 	return _combat_stats;
 }
 
 void Hachiko::Scripting::EnemyController::RegisterPlayerHit(int player_atk, float3 direction)
 {
-	if (!_combat_stats.IsAlive())	return;
+	if (!_combat_stats->IsAlive())	return;
 
-	_combat_stats.ReceiveDamage(player_atk);
+	_combat_stats->ReceiveDamage(player_atk);
 	KnockEnemyBack(direction);
 
-	if (!_combat_stats.IsAlive())
+	if (!_combat_stats->IsAlive())
 	{
 		DestroyEntity();
 	}
@@ -127,8 +126,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
-	_player_controller->RegisterEnemyHit(_combat_stats._attack_power);
-	_attack_cooldown = _combat_stats._attack_cd;
+	_player_controller->RegisterHit(_combat_stats->_attack_power);
+	_attack_cooldown = _combat_stats->_attack_cd;
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
@@ -165,7 +164,7 @@ void Hachiko::Scripting::EnemyController::RecieveKnockback()
 void Hachiko::Scripting::EnemyController::Move()
 {
 	math::float3 dir = (_target_pos - game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()).Normalized();
-	math::float3 step = dir * _combat_stats._move_speed;
+	math::float3 step = dir * _combat_stats->_move_speed;
 	_current_pos += step;
 
 	transform->SetGlobalPosition(_current_pos);

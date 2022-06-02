@@ -24,7 +24,7 @@ void Hachiko::Scripting::BulletController::OnAwake()
 	// Get bullet direction from parent
 	CalculateDirection();
 	// Get Damage from parent stats
-	_damage = game_object->parent->GetComponent<PlayerController>()->GetStats()._attack_power;
+	_damage = game_object->parent->GetComponent<Stats>()->_attack_power;
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()

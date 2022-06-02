@@ -4,24 +4,26 @@
 
 namespace Hachiko
 {
+    class GameObject;
     namespace Scripting
     {
-        class Stats
+        class Stats : public Script
         {
+            SERIALIZATION_METHODS(false)
+
         public:
-            Stats();
-            Stats(int _ap, int _as, int _ms, int _maxhp);
-            ~Stats() = default;
+            Stats(GameObject* game_object);
+            ~Stats() override = default;
 
             void ReceiveDamage(int _damage);
             bool IsAlive();
         public:
-            int _attack_power;
-            int _attack_cd;
-            float _move_speed;
-
-            int _max_hp;
-            int _current_hp;
+            SERIALIZE_FIELD(int, _attack_power);
+            SERIALIZE_FIELD(int, _attack_cd);
+            SERIALIZE_FIELD(float, _attack_range);
+            SERIALIZE_FIELD(float, _move_speed);
+            SERIALIZE_FIELD(int, _max_hp);
+            SERIALIZE_FIELD(int, _current_hp);
         };
     } // namespace Scripting
 } // namespace Hachiko*/

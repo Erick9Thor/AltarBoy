@@ -16,7 +16,7 @@
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
-	, _stats(10, 0, 0, 5)
+	, _stats(game_object)
 	, _player(nullptr)
 	, _explosion_radius(10.0f)
 	, _explosive_crystal(false)
@@ -105,7 +105,7 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 
 		if (player_controller != nullptr)
 		{
-			player_controller->RegisterEnemyHit(_stats._attack_power);
+			player_controller->RegisterHit(_stats._attack_power);
 		}
 	}
 
