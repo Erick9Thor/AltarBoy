@@ -9,6 +9,7 @@
 #include "core/GameObject.h"
 
 #include "components/ComponentTransform.h"
+#include "components/ComponentObstacle.h"
 
 #include "modules/ModuleSceneManager.h"
 
@@ -36,6 +37,11 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 void Hachiko::Scripting::CrystalExplosion::OnStart()
 {
 	transform = game_object->GetTransform();
+	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
+	if (obstacle)
+	{
+		obstacle->Start();
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
