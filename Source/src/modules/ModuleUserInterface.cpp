@@ -6,6 +6,7 @@
 #include "ModuleEditor.h"
 #include "ModuleInput.h"
 #include "ModuleEvent.h"
+#include "ModuleWindow.h"
 
 #include "core/Scene.h"
 #include "core/GameObject.h"
@@ -13,6 +14,7 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentButton.h"
+
 
 #include "ui/WindowScene.h"
 
