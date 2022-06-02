@@ -303,7 +303,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 // CLIP selector
 
                 const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
-                if (ImGui::Button("Select animation"))
+                if (ImGui::Button(ICON_FA_PLAY))
                 {
                     ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                             "Select Animation",
@@ -314,6 +314,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                                                             ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
                 }
 
+                ResourceAnimation* new_res = nullptr;
                 if (ImGuiFileDialog::Instance()->Display(title.c_str()))
                 {
                     if (ImGuiFileDialog::Instance()->IsOk())
@@ -327,18 +328,14 @@ void Hachiko::ComponentAnimation::DrawGui()
                             if (type == Resource::Type::ANIMATION)
                             {
                                 UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
-                                if (res != nullptr)
-                                {
-                                    state_machine->AddClip("None", res->GetID(), true);
-                                }
+                                ResourceAnimation* new_res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
                             }
                         }
                     }
                 }
 
 
-                if (res > 0)
+                if (new_res > 0)
                 {
                     // state_machine->SetClipRes(i, new_res);
                     // state_machine->Save();
@@ -368,10 +365,8 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                 ImGui::Separator();
                 ImGui::PopID();
-            
-            /*
-
-            if (App->GetState() != Application::stop)
+            }
+            /*if (App->GetState() != Application::stop)
             {
                 if (ImGui::CollapsingHeader("Animation triggers", ImGuiTreeNodeFlags_DefaultOpen))
                 {
@@ -393,8 +388,8 @@ void Hachiko::ComponentAnimation::DrawGui()
                     {
                         component->ResetState();
                     }
-                }*/
-            }
+                }
+            }*/
         }
     }
 
