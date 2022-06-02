@@ -498,7 +498,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 		float3 temp_end;
 		float3 end_calculated = _dash_start + _dash_direction * _dash_distance;
-		temp_end = Navigation::GetCorrectedPosition(end_calculated, float3(1.0f, 0.1f, 1.0f));
+		temp_end = Navigation::GetCorrectedPosition(end_calculated, float3(0.5f, 0.1f, 0.5f));
 		if (temp_end.x < FLT_MAX)
 		{
 			_dash_end = temp_end;

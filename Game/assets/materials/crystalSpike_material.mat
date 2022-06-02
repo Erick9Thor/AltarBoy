@@ -3,7 +3,7 @@ diffuse: 879487886243846185
 specular: 2842664124103588567
 normals: 3997003743442544213
 metalness: 0
-emissive: 827734173276011101
+emissive: 0
 diffuse_color: [1, 1, 1, 1]
 specular_color: [1, 1, 1, 1]
 emissive_color: [0, 0, 0, 1]
