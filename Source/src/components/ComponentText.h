@@ -15,6 +15,7 @@ namespace Hachiko
 
     class HACHIKO_API ComponentText : public Component
     {
+        friend class ComponentTransform2D;
     public:
         ComponentText(GameObject* container);
         ~ComponentText() override;
@@ -29,12 +30,11 @@ namespace Hachiko
         void SetFontSize(int new_size);
         void SetFontColor(const float4& new_color);
 
+    private:
         void Invalidate()
         {
             dirty = true;
         }
-
-    private:
         void LoadFont(UID id);
         void RefreshLabel(ComponentTransform2D* transform);
         void BuildLabel(ComponentTransform2D* transform);

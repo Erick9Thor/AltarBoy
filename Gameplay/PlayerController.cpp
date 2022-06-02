@@ -3,7 +3,9 @@
 #include "Scenes.h"
 #include "Stats.h"
 #include "EnemyController.h"
+#include "CrystalExplosion.h"
 #include "PlayerCamera.h"
+
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
 #include <modules/ModuleSceneManager.h>
@@ -41,6 +43,9 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_attack_indicator->SetActive(false);
 	}
+
+	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -101,7 +106,7 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 {
 	static int times_hit_g = 0;
-	
+
 	if (!Input::IsKeyDown(Input::KeyCode::KEY_G))
 	{
 		return;
@@ -173,34 +178,59 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* transform,
 	const math::float3& current_position)
 {
+	if (enemies == nullptr && dynamic_envi == nullptr) {
+		return;
+	}
+
+	std::vector<GameObject*> enemy_children = enemies->children;
+	std::vector<GameObject*> environment = dynamic_envi->children;
+
 	// MELEE
-	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
-	std::vector<GameObject*> enemies_hit = {};
+
+	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
+
+	GameObject* inter = game_object->scene_owner->GetRoot();
+
+	std::vector<GameObject*> elements_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
-	for (int i = 0; i < enemies.size(); ++i)
+	for (int i = 0; i < enemy_children.size(); ++i)
 	{
-		if (enemies[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+		if (enemy_children[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			float3 normalized_center = transform->GetFront().Normalized();
-			float3 normalized_enemy = (enemies[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
+			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
 			float dot_product = normalized_center.Dot(normalized_enemy);
 			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
 			float attack_angle = 60.0f; // This can vary in the future deppending of weapon
 			if (angle_of_enemy < attack_angle)
 			{
-				enemies_hit.push_back(enemies[i]);
+				elements_hit.push_back(enemy_children[i]);
 			}
 		}
 	}
 
 	//loop in enemies hit
-	for (Hachiko::GameObject* enemy : enemies_hit)
+	for (Hachiko::GameObject* element : elements_hit)
 	{
-		float3 relative_dir = enemy->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-		enemy->GetComponent<EnemyController>()->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
+
+		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
+		CrystalExplosion* crystal_explotion = element->GetComponent<CrystalExplosion>();
+
+		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+
+		if (enemy_controller != nullptr)
+		{
+			enemy_controller->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
+		}
+		else if (crystal_explotion != nullptr)
+		{
+			crystal_explotion->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
+		}
+		
 	}
-	if (enemies_hit.size() > 0)
+
+	if (elements_hit.size() > 0)
 	{
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
@@ -319,14 +349,14 @@ void Hachiko::Scripting::PlayerController::Rotate(
 			_should_rotate = true;
 		}
 	}
-	
+
 	// Smoothly rotate to the new direction of the player in _rotation_duration
 	// amount of seconds:
 	if (_should_rotate)
 	{
 		_rotation_progress += Time::DeltaTime() / _rotation_duration;
-		_rotation_progress = _rotation_progress > 1.0f 
-			? 1.0f 
+		_rotation_progress = _rotation_progress > 1.0f
+			? 1.0f
 			: _rotation_progress;
 
 		transform->SetGlobalRotation(Quat::Lerp(_rotation_start, _rotation_target, _rotation_progress));
@@ -364,7 +394,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 			_is_falling = false;
 		}
 
-		if (current_position.y < -20.0f) 
+		if (current_position.y < -20.0f)
 		{
 			//SceneManagement::SwitchScene(Scenes::LOSE);
 		}
@@ -386,7 +416,7 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		{
 			_is_falling = true;
 		}
-		else 
+		else
 		{
 			current_position = corrected_position;
 		}

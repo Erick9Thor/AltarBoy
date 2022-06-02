@@ -96,8 +96,6 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
         return;
     }
     
-    // Make sure transform is refreshed
-    transform->GetGlobalTransform();
     RefreshLabel(transform);
     // Program is activated inside hachikorender
     label->HachikoRender(program);   
@@ -193,5 +191,5 @@ void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
     label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
     label->setPixelSize(font_size);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
-    RefreshLabel(transform);
+    Invalidate();
 }

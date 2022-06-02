@@ -27,6 +27,11 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
+        ResourceAnimation* GetCurrentAnimation()
+        {
+            return current_animation;
+        }
+
         std::vector<ResourceAnimation*> animations;
 
     private:
