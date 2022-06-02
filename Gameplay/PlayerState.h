@@ -10,3 +10,11 @@ enum class PlayerState
 	DASHING,
 	FALLING
 };
+
+enum class BugState
+{
+	INVALID,
+	DEAD,
+	IDLE,
+	ATTACKING
+};
