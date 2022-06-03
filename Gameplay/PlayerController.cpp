@@ -59,7 +59,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	}
 
 	// Handle player the input
-	HandleInput();
+	HandleInputAndStatus();
 
 	// Run movement simulation
 	MovementController();
@@ -137,44 +137,104 @@ bool Hachiko::Scripting::PlayerController::IsWalking() const
 	return _state == PlayerState::WALKING;
 }
 
-void Hachiko::Scripting::PlayerController::AttackController()
+
+void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 {
-	if (!IsAttacking())
+	// Movement Direction
+	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
 	{
-		return;
+		_movement_direction -= math::float3::unitZ;
 	}
-	
-	if (_attack_current_duration > 0.0f)
+	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
 	{
-		if (_attack_indicator)
-		{
-			_attack_indicator->SetActive(true);
-		}
-
-		_attack_current_duration -= Time::DeltaTime();
-	}
-	else
-	{
-		if (_attack_indicator)
-		{
-			_attack_indicator->SetActive(false);
-		}
-		// Set state to idle, it will be overriden if there is a movement:
-		_state = PlayerState::IDLE;
+		_movement_direction += math::float3::unitZ;
 	}
 
-	if (_attack_current_cd > 0.0f)
+	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
 	{
-		_attack_current_cd -= Time::DeltaTime();
+		_movement_direction += math::float3::unitX;
+	}
+	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
+	{
+		_movement_direction -= math::float3::unitX;
+	}
+
+	if (!IsAttacking() && !IsDashing())
+	{
+		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
+		{
+			RangedAttack();
+		}
+		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
+		{
+			MeleeAttack();
+		}
+		// Keep dash here since it uses the input movement direction
+		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
+		{
+			Dash();
+		}
+		else if (!_movement_direction.Equals(float3::zero))
+		{
+			_state = PlayerState::WALKING;
+		}
+		else
+		{
+			_state = PlayerState::IDLE;
+		}
+	}
+
+	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
+	{
+		_movement_direction += math::float3::unitY;
+	}
+	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
+	{
+		_movement_direction += math::float3::unitY;
+	}
+
+	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
+	{
+		_is_god_mode = !_is_god_mode;
+		_stats._god_mode = _is_god_mode;
 	}
 }
 
+
+void Hachiko::Scripting::PlayerController::Dash()
+{
+	_state = PlayerState::DASHING;
+	_dash_charges -= 1;
+	_dash_progress = 0.f;
+	_dash_start = _player_position;
+
+	// If we are not inputing any direction default to player orientation
+	if (_movement_direction.Equals(float3::zero))
+	{
+		_dash_direction = _player_transform->GetFront();
+	}
+	else
+	{
+		_dash_direction = _movement_direction;
+	}
+	_dash_direction.Normalize();
+
+	float3 corrected_dash_final_position;
+	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
+	corrected_dash_final_position = Navigation::GetCorrectedPosition(corrected_dash_final_position, float3(0.5f, 0.1f, 0.5f));
+	if (corrected_dash_final_position.x < FLT_MAX)
+	{
+		_dash_end = corrected_dash_final_position;
+	}
+	else
+	{
+		_dash_end = dash_final_position;
+	}
+}
+
+
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
-	if (IsAttacking())
-	{
-		return;
-	}
 	_state = PlayerState::MELEE_ATTACKING;
 	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
@@ -184,7 +244,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 
 	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
 	std::vector<GameObject*> environment = dynamic_envi ? dynamic_envi->children : std::vector<GameObject*>();
-	
+
 	// MELEE
 
 	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
@@ -227,7 +287,6 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 		{
 			crystal_explotion->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		}
-		
 	}
 
 	if (elements_hit.size() > 0)
@@ -239,25 +298,20 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_player_position += _player_transform->GetFront() * 0.3f;
 	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
 	_attack_current_cd = _attack_cooldown;
-	
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	if (IsAttacking())
-	{
-		return;
-	}	
 	_state = PlayerState::RANGED_ATTACKING;
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 	float3 attack_origin_position = _player_position;
 	attack_origin_position.y += 0.5f;
 	float3 attack_end_posiiton = attack_origin_position;
-	
+
 	attack_origin_position += (forward * _raycast_min_range);
-	attack_end_posiiton += (forward * _raycast_max_range);	
-	
+	attack_end_posiiton += (forward * _raycast_max_range);
+
 	GameObject* hit_game_object = SceneManagement::Raycast(attack_origin_position, attack_end_posiiton);
 
 	if (hit_game_object && hit_game_object->active)
@@ -271,36 +325,66 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	_attack_current_cd = _attack_cooldown;
 }
 
-void Hachiko::Scripting::PlayerController::Dash()
+void Hachiko::Scripting::PlayerController::MovementController()
 {
-	_state = PlayerState::DASHING;
-	_dash_charges -= 1;
-	_dash_progress = 0.f;
-	_dash_start = _player_position;
+	DashController();
+	WalkingOrientationController();
 
-	// If we are not inputing any direction default to player orientation
-	if (_movement_direction.Equals(float3::zero))
+	if (IsWalking())
 	{
-		_dash_direction = _player_transform->GetFront();
+		_player_position += (_movement_direction * _movement_speed * Time::DeltaTime());
 	}
-	else
-	{
-		_dash_direction = _movement_direction;
-	}
-	_dash_direction.Normalize();
 
-	float3 corrected_dash_final_position;
-	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
-	corrected_dash_final_position = Navigation::GetCorrectedPosition(corrected_dash_final_position, float3(0.5f, 0.1f, 0.5f));
-	if (corrected_dash_final_position.x < FLT_MAX)
+	if (_is_god_mode)
 	{
-		_dash_end = corrected_dash_final_position;
+		return;
 	}
-	else
+
+	if (_is_falling)
 	{
-		_dash_end = dash_final_position;
+		_player_position.y -= 0.25f;
+
+		if (_dash_start.y - _player_position.y > falling_distance)
+		{
+			_player_position = _dash_start;
+		}
+	}
+
+	float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+	if (Distance(corrected_position, _player_position) < 1.0f)
+	{
+		_player_position = corrected_position;
+		_is_falling = false;
+	}
+	else if (!IsDashing())
+	{
+		_is_falling = true;
 	}
 }
+
+void Hachiko::Scripting::PlayerController::DashController()
+{
+	DashChargesManager();
+
+	if (!IsDashing())
+	{
+		return;
+	}
+
+	_dash_progress += Time::DeltaTime() / _dash_duration;
+	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
+
+	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
+	// of an acceleration.
+	_player_position = math::float3::Lerp(_dash_start, _dash_end,
+		_dash_progress);
+
+	if (_dash_progress >= 1.0f)
+	{
+		_state = PlayerState::IDLE;
+	}
+}
+
 
 void Hachiko::Scripting::PlayerController::DashChargesManager()
 {
@@ -319,29 +403,6 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 		{
 			_dash_charges += 1;
 		}
-	}
-}
-
-void Hachiko::Scripting::PlayerController::DashController()
-{
-	DashChargesManager();
-
-	if (!IsDashing())
-	{
-		return;
-	}
-
-	_dash_progress += Time::DeltaTime() / _dash_duration;
-	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
-
-	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
-	// of an acceleration.
-	_player_position = math::float3::Lerp(_dash_start, _dash_end, 
-		_dash_progress);
-	
-	if (_dash_progress >= 1.0f)
-	{
-		_state = PlayerState::IDLE;
 	}
 }
 
@@ -388,102 +449,35 @@ void Hachiko::Scripting::PlayerController::WalkingOrientationController()
 	}
 }
 
-void Hachiko::Scripting::PlayerController::HandleInput()
+void Hachiko::Scripting::PlayerController::AttackController()
 {
-	// Movement Direction
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
-	{
-		_movement_direction -= math::float3::unitZ;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
-	{
-		_movement_direction += math::float3::unitZ;
-	}
-
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
-	{
-		_movement_direction += math::float3::unitX;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
-	{
-		_movement_direction -= math::float3::unitX;
-	}
-	
-	if (!IsAttacking() && !IsDashing())
-	{
-		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
-		{
-			RangedAttack();
-		}
-		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
-		{
-			MeleeAttack();
-		}
-		// Keep dash here since it uses the input movement direction
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
-		{
-			Dash();
-		}
-		else if (!_movement_direction.Equals(float3::zero))
-		{
-			_state = PlayerState::WALKING;
-		}
-		else
-		{
-			_state = PlayerState::IDLE;
-		}
-	}
-
-	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
-	{
-		_movement_direction += math::float3::unitY;
-	}
-	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
-	{
-		_movement_direction += math::float3::unitY;
-	}
-
-	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
-	{
-		_is_god_mode = !_is_god_mode;
-		_stats._god_mode = _is_god_mode;
-	}
-}
-
-void Hachiko::Scripting::PlayerController::MovementController()
-{
-	DashController();
-	WalkingOrientationController();
-
-	if (IsWalking())
-	{
-		_player_position += (_movement_direction * _movement_speed * Time::DeltaTime());
-	}
-
-	if (_is_god_mode)
+	if (!IsAttacking())
 	{
 		return;
 	}
 
-	if (_is_falling)
+	if (_attack_current_duration > 0.0f)
 	{
-		_player_position.y -= 0.25f;
-
-		if (_dash_start.y - _player_position.y > falling_distance)
+		if (_attack_indicator)
 		{
-			_player_position = _dash_start;
+			_attack_indicator->SetActive(true);
 		}
+
+		_attack_current_duration -= Time::DeltaTime();
+	}
+	else
+	{
+		if (_attack_indicator)
+		{
+			_attack_indicator->SetActive(false);
+		}
+		// Set state to idle, it will be overriden if there is a movement:
+		_state = PlayerState::IDLE;
 	}
 
-	float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
-	if (Distance(corrected_position, _player_position) < 1.0f)
+	if (_attack_current_cd > 0.0f)
 	{
-		_player_position = corrected_position;
-		_is_falling = false;
-	}
-	else if (!IsDashing())
-	{
-		_is_falling = true;
+		_attack_current_cd -= Time::DeltaTime();
 	}
 }
 

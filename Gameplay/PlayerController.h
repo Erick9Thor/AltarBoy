@@ -30,26 +30,25 @@ private:
 	
 	void SpawnGameObject() const;
 	
-
+	// Status check
 	bool IsAttacking() const;
 	bool IsDashing() const;
 	bool IsWalking() const;
 
-	void AttackController();
+	// Input and status management
+	void HandleInputAndStatus();
 
+	// Actions called by handle input
+	void Dash();
 	void MeleeAttack();
-
 	void RangedAttack();
 
-	void Dash();
-	void DashChargesManager();
-	void DashController();
-
-	void WalkingOrientationController();
-	
-	void HandleInput();
-
+	// Player simulation
 	void MovementController();
+	void DashController();
+	void DashChargesManager();
+	void WalkingOrientationController();
+	void AttackController();
 
 public:
 	SERIALIZE_FIELD(Stats, _stats);
