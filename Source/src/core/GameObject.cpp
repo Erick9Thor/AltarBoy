@@ -239,6 +239,11 @@ void Hachiko::GameObject::SetActive(bool set_active)
         Start();
     }
     active = set_active;
+
+    for (GameObject* child : children)
+    {
+        child->SetActive(set_active);
+    }
 }
 
 void Hachiko::GameObject::Start()
@@ -453,7 +458,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
 
         if (meshes_only)
         {
-            if (type == Component::Type::MESH_RENDERER)
+            if (type == Component::Type::MESH_RENDERER || type == Component::Type::TRANSFORM)
             {
                 component = CreateComponent(type);
             }
