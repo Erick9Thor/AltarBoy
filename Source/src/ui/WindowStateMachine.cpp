@@ -41,16 +41,15 @@ void Hachiko::WindowStateMachine::Update()
 
     ed::Suspend();
     ShowContextMenus();
-    ShowAddNodeMenu();
     ShowNodeMenu();
     ShowLinkMenu();
+    ShowAddNodeMenu();
     ed::Resume();
    
     ShowHelp();
 
     if (ImGui::IsKeyDown(SDL_SCANCODE_ESCAPE))
     {
-        addNode = false;
         editTrigger = false;
         editIT = false;
     }
@@ -227,33 +226,31 @@ void Hachiko::WindowStateMachine::ShowAddNodeMenu()
 {
     if (ImGui::BeginPopup("Add Node Menu"))
     {
-        if (ImGui::MenuItem(" Add node "))
+        ImGui::TextUnformatted("Create Node Menu");
+        ImGui::Separator();
+
+        if (ImGui::BeginMenu("New animation"))
         {
-            addNode = true;
-        }
-
-        ImGui::EndPopup();
-    }
-
-    if (addNode)
-    {
-        ImGui::OpenPopup("addNode");
-        if (ImGui::BeginPopup("addNode"))
-        {
-            static char nodeName[128] = "";
-            snprintf(nodeName, 128, "");
-            const ImGuiInputTextFlags nodeName_input_flags = ImGuiInputTextFlags_EnterReturnsTrue;
-
-            if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
+            for (unsigned int i = 0, count = animation->GetNumClips(); i < count; ++i)
             {
-                addNode = false;
-                ed::SetNodePosition(animation->GetNumNodes() * 3 + 1, ed::ScreenToCanvas(new_node_pos));
-                animation->AddNode(nodeName, "");
-                ImGui::CloseCurrentPopup();
+                if (ImGui::MenuItem(animation->GetClipName(i).c_str()))
+                {
+                    unsigned int node_idx = animation->GetNumNodes();
+                    ed::SetNodePosition(node_idx * 3 + 1, ed::ScreenToCanvas(new_node_pos));
+                    AddAnimationNode(i);
+
+                    if (new_node_pin != ed::PinId::Invalid)
+                    {
+                        unsigned int out_node = unsigned int(new_node_pin.Get() - 1) / 3;
+                        animation->AddTransition(animation->GetNodeName(out_node), animation->GetNodeName(node_idx), "", DEFAULT_BLEND);
+                        // animation->Save();
+                    }
+                }
             }
 
-            ImGui::EndPopup();
+            ImGui::EndMenu();
         }
+        ImGui::EndPopup();
     }
 }
 
@@ -414,6 +411,26 @@ void Hachiko::WindowStateMachine::ShowHelp()
 
         ImGui::EndPopup();
     }
+}
+
+void Hachiko::WindowStateMachine::AddAnimationNode(unsigned int index) 
+{
+    std::string name = animation->GetClipName(index);
+    std::string clip = animation->GetClipName(index);
+
+    unsigned int node_idx = animation->FindNode(name);
+
+    unsigned int counter = 0;
+    while (node_idx < animation->GetNumNodes())
+    {
+        char tmp[128];
+        snprintf(tmp, 127, "%s_%d", name.c_str(), ++counter);
+        name = std::string(tmp);
+        node_idx = animation->FindNode(name);
+    }
+
+    animation->AddNode(name, clip);
+    // animation->Save();
 }
 
 void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine* resourceStateMachine) 

@@ -30,15 +30,19 @@ namespace Hachiko
 
         void ShowHelp(); 
 
+        void AddAnimationNode(unsigned int index);
+
+
     private:
 
-        ImVec2 new_node_pos;
         int nodeId = 0;
         int linkId = 0;
 
-        bool addNode = false;
         bool editTrigger = false;
         bool editIT = false;
+
+        ImVec2 new_node_pos;
+        ed::PinId new_node_pin = 0;
 
         ResourceStateMachine* animation = nullptr;
         ed::EditorContext* context = nullptr;
