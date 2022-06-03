@@ -591,6 +591,7 @@
     <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Vendors\NodeEditor</Filter>
     </ClCompile>
+    <ClCompile Include="src\importers\StateMachineImporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2315,6 +2316,7 @@
     <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Vendors\NodeEditor</Filter>
     </ClInclude>
+    <ClInclude Include="src\importers\StateMachineImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
