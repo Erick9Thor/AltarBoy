@@ -21,7 +21,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
-	, _max_dash_count(0)
+	, _max_dash_charges(0)
 	, _attack_radius(0.0f)
 	, _attack_cooldown(0.33f)
 	, _attack_duration(0.0f)
@@ -37,7 +37,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_dash_count = _max_dash_count;
+	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
 	{
@@ -49,37 +49,37 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	ComponentTransform* transform = game_object->GetTransform();
-	math::float3 current_position = transform->GetGlobalPosition();
-	math::float3 moving_input_dir = float3::zero;
+	_player_transform = game_object->GetTransform();
+	_player_position = _player_transform->GetGlobalPosition();
+	_movement_direction = float3::zero;
 
 	if (_stats._current_hp <= 0)
 	{
 		//SceneManagement::SwitchScene(Scenes::LOSE);
 	}
 
-	// Attack:
-	Attack(transform, current_position);
+	// Handle player the input
+	HandleInput();
 
-	// Handle all the input:
-	HandleInput(current_position, moving_input_dir);
+	// Run movement simulation
+	MovementController();
 
-	// Dash:
-	Dash(current_position);
+	// Run attack simulation
+	AttackController();
 
 	// Rotate player to the necessary direction:
-	Rotate(transform, moving_input_dir);
+	WalkingOrientationController();
 
 	// Move the dash indicator:
 	//MoveDashIndicator(current_position);
-
-	// Apply the position:
-	transform->SetGlobalPosition(current_position);
 
 	// Instantiate GameObject in current scene test:
 	//SpawnGameObject();
 
 	//CheckGoal(current_position);
+
+	// Apply the position after everything is simulated
+	_player_transform->SetGlobalPosition(_player_position);
 }
 
 PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -122,9 +122,28 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 	created_game_object->SetName(name);
 }
 
-void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
-	math::float3& current_position)
+bool Hachiko::Scripting::PlayerController::IsAttacking() const
 {
+	return _state == PlayerState::MELEE_ATTACKING || _state == PlayerState::RANGED_ATTACKING;
+}
+
+bool Hachiko::Scripting::PlayerController::IsDashing() const
+{
+	return _state == PlayerState::DASHING;
+}
+
+bool Hachiko::Scripting::PlayerController::IsWalking() const
+{
+	return _state == PlayerState::WALKING;
+}
+
+void Hachiko::Scripting::PlayerController::AttackController()
+{
+	if (!IsAttacking())
+	{
+		return;
+	}
+	
 	if (_attack_current_duration > 0.0f)
 	{
 		if (_attack_indicator)
@@ -142,41 +161,23 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		}
 		// Set state to idle, it will be overriden if there is a movement:
 		_state = PlayerState::IDLE;
-
 	}
 
-	if (_is_dashing || (_attack_current_cd > 0.0f) )
+	if (_attack_current_cd > 0.0f)
 	{
 		_attack_current_cd -= Time::DeltaTime();
-		return;
-	}
-
-	if (Input::IsMouseButtonPressed(Input::MouseButton::RIGHT))
-	{
-		// Make the player look the mouse:
-		transform->LookAtTarget(GetRaycastPosition(current_position));
-		_state = PlayerState::RANGED_ATTACKING;
-		float3 t_pos = current_position;
-		t_pos.y += 0.5;
-		RangedAttack(transform, t_pos);
-
-		_attack_current_cd = _attack_cooldown;
-	}
-	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
-	{
-		_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
-		transform->LookAtTarget(GetRaycastPosition(current_position));
-		_state = PlayerState::MELEE_ATTACKING;
-		MeleeAttack(transform, current_position);
-		current_position += transform->GetFront() * 0.3f;
-		current_position = Navigation::GetCorrectedPosition(current_position, float3(2.0f, 1.0f, 2.0f));
-		_attack_current_cd = _attack_cooldown;
 	}
 }
 
-void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* transform,
-	const math::float3& current_position)
+void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
+	if (IsAttacking())
+	{
+		return;
+	}
+	_state = PlayerState::MELEE_ATTACKING;
+	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
+	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	if (enemies == nullptr && dynamic_envi == nullptr) {
 		return;
 	}
@@ -192,13 +193,13 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 
 	std::vector<GameObject*> elements_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
-	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
+	math::float4x4 inv_matrix = _player_transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{
-		if (enemy_children[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		if (enemy_children[i]->active && _attack_radius >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
 		{
-			float3 normalized_center = transform->GetFront().Normalized();
-			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
+			float3 normalized_center = _player_transform->GetFront().Normalized();
+			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition()).Normalized();
 			float dot_product = normalized_center.Dot(normalized_enemy);
 			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
 			float attack_angle = 60.0f; // This can vary in the future deppending of weapon
@@ -216,7 +217,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
 		CrystalExplosion* crystal_explotion = element->GetComponent<CrystalExplosion>();
 
-		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition();
 
 		if (enemy_controller != nullptr)
 		{
@@ -233,118 +234,133 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	{
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
+
+	// Move player a bit forward on melee attack
+	_player_position += _player_transform->GetFront() * 0.3f;
+	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
+	_attack_current_cd = _attack_cooldown;
 	
 }
 
-void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* transform,
-	const math::float3& current_position)
+void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	const float3 forward = transform->GetFront().Normalized();
-	GameObject* hit_game_object = SceneManagement::Raycast(current_position + forward * _raycast_min_range,
-		forward * _raycast_max_range + current_position);
+	if (IsAttacking())
+	{
+		return;
+	}	
+	_state = PlayerState::RANGED_ATTACKING;
+	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
+	const float3 forward = _player_transform->GetFront().Normalized();
+	float3 attack_origin_position = _player_position;
+	attack_origin_position.y += 0.5f;
+	float3 attack_end_posiiton = attack_origin_position;
+	
+	attack_origin_position += (forward * _raycast_min_range);
+	attack_end_posiiton += (forward * _raycast_max_range);	
+	
+	GameObject* hit_game_object = SceneManagement::Raycast(attack_origin_position, attack_end_posiiton);
 
 	if (hit_game_object && hit_game_object->active)
 	{
 		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
 		if (!enemy)	return;
-		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - _player_position;
 		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
 	}
+	_attack_current_cd = _attack_cooldown;
 }
 
-void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
+void Hachiko::Scripting::PlayerController::Dash()
 {
-	// This is a rather primitive dash that should be used as a base to build 
-	// a more polished one. Some related issues needed to be fixed are:
-	// 1. It should have a cooldown.
-	// 2. As we use the camera that has PlayerCamera script is attached to now,
-	//    while the camera is lerping with a delay, the corresponding world 
-	//    position of mouse position changes as the camera approaches its final
-	//    position, that causes dash to seem kind of unstable.
-	// 3. Instead of approaching to _dash_end linearly, dash must have some sort
-	//    of an acceleration.
-	// TODO: Address the issues above. 
-	if (_dash_timer > 0.0f)
-	{
-		_dash_timer += Time::DeltaTime();
-	}
+	_state = PlayerState::DASHING;
+	_dash_charges -= 1;
+	_dash_progress = 0.f;
+	_dash_start = _player_position;
 
-	if (_dash_timer >= _dash_cooldown)
+	// If we are not inputing any direction default to player orientation
+	if (_movement_direction.Equals(float3::zero))
 	{
-		if (_dash_count < _max_dash_count)
-		{
-			_dash_timer = 0.0001f;
-			_dash_count += 1;
-		}
-		else if (_dash_count == _max_dash_count)
-		{
-			_dash_timer = 0.0f;
-		}
-
+		_dash_direction = _player_transform->GetFront();
 	}
 	else
 	{
-		if (_dash_count == _max_dash_count)
-		{
-			_dash_timer = 0.0f;
-		}
+		_dash_direction = _movement_direction;
 	}
+	_dash_direction.Normalize();
 
-	_dash_has_cooldown = (_dash_count <= 0);
-
-	if (!_is_dashing)
+	float3 corrected_dash_final_position;
+	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
+	corrected_dash_final_position = Navigation::GetCorrectedPosition(corrected_dash_final_position, float3(0.5f, 0.1f, 0.5f));
+	if (corrected_dash_final_position.x < FLT_MAX)
 	{
+		_dash_end = corrected_dash_final_position;
+	}
+	else
+	{
+		_dash_end = dash_final_position;
+	}
+}
+
+void Hachiko::Scripting::PlayerController::DashChargesManager()
+{
+	if (_dash_charges == _max_dash_charges)
+	{
+		_dash_charging_time = 0.f;
 		return;
 	}
 
-	// Set state to dashing:
-	_state = PlayerState::DASHING;
+	_dash_charging_time += Time::DeltaTime();
+
+	if (_dash_charging_time >= _dash_cooldown)
+	{
+		_dash_charging_time = 0.f;
+		if (_dash_charges < _max_dash_charges)
+		{
+			_dash_charges += 1;
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::DashController()
+{
+	DashChargesManager();
+
+	if (!IsDashing())
+	{
+		return;
+	}
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
 
-	_is_dashing = (_dash_progress < 1.0f);
-
-	current_position = math::float3::Lerp(_dash_start, _dash_end, 
+	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
+	// of an acceleration.
+	_player_position = math::float3::Lerp(_dash_start, _dash_end, 
 		_dash_progress);
-
-	//if (!_is_dashing)
-	//{
-	//	float3 temp_position;
-	//	temp_position = Navigation::GetCorrectedPosition(current_position, float3(0.5f, 0.1f, 0.5f));
-	//	if (temp_position.x < FLT_MAX)
-	//	{
-	//		current_position = temp_position;
-	//	}
-	//}
+	
+	if (_dash_progress >= 1.0f)
+	{
+		_state = PlayerState::IDLE;
+	}
 }
 
-void Hachiko::Scripting::PlayerController::Rotate(
-	ComponentTransform* transform, const math::float3& moving_dir_input)
+void Hachiko::Scripting::PlayerController::WalkingOrientationController()
 {
-	// For now dont update if player is Attacking, later with custom animations this may change
-	if (_state == PlayerState::MELEE_ATTACKING ||
-		_state == PlayerState::RANGED_ATTACKING)
-	{
-		return;
-	}
-
 	// If input tells to turn to player
-	if (!moving_dir_input.Equals(float3::zero) && _state == PlayerState::WALKING)
+	if (_state == PlayerState::WALKING)
 	{
-
 		// Get the rotation player is going to have:
 		const math::Quat target_rotation = 
-			transform->SimulateLookAt(moving_dir_input);
+			_player_transform->SimulateLookAt(_movement_direction);
 
 		// If rotation is gonna be changed fire up the rotating process:
-		if (!target_rotation.Equals(transform->GetGlobalRotation()))
+		if (!target_rotation.Equals(_player_transform->GetGlobalRotation()))
 		{
 			// Reset all the variables related to rotation lerp:
 			_rotation_progress = 0.0f;
 			_rotation_target = target_rotation;
-			_rotation_start = transform->GetGlobalRotation();
+			_rotation_start = _player_transform->GetGlobalRotation();
 			_should_rotate = true;
 		}
 	}
@@ -358,7 +374,7 @@ void Hachiko::Scripting::PlayerController::Rotate(
 			? 1.0f
 			: _rotation_progress;
 
-		transform->SetGlobalRotation(Quat::Lerp(_rotation_start, _rotation_target, _rotation_progress));
+		_player_transform->SetGlobalRotation(Quat::Lerp(_rotation_start, _rotation_target, _rotation_progress));
 
 		_should_rotate = _rotation_progress < 1.0f;
 
@@ -372,142 +388,59 @@ void Hachiko::Scripting::PlayerController::Rotate(
 	}
 }
 
-void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_position, math::float3& moving_input_dir)
+void Hachiko::Scripting::PlayerController::HandleInput()
 {
-	// Ignore the inputs if engine camera input is taken:
-	// Do we need this?
-	if (Input::IsMouseButtonPressed(Input::MouseButton::RIGHT))
-	{
-		return;
-	}
-
-	if (!_is_god_mode && _is_falling)
-	{
-		current_position.y -= 0.25f;
-
-		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(3.0f, 3.0f, 3.0f));
-		_state = PlayerState::FALLING;
-		if (Distance(corrected_position, current_position) < 1.0f)
-		{
-			current_position = corrected_position;
-			_is_falling = false;
-		}
-
-		if (_dash_start.y - current_position.y > falling_distance)
-		{
-			current_position = Navigation::GetCorrectedPosition(_dash_start, float3(3.0f, 3.0f, 3.0f));;
-			_is_falling = false;
-			//SceneManagement::SwitchScene(Scenes::LOSE);
-		}
-		return;
-	}
-
-	// Dashing locks player from submitting new commands on input:
-	if (_is_dashing)
-	{
-		if (_is_god_mode)
-		{
-			return;
-		}
-
-		// check if in navmesh
-		float3 corrected_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
-
-		if (Distance(corrected_position, current_position) >= 1.0f)
-		{
-			_is_falling = true;
-		}
-		else
-		{
-			current_position = corrected_position;
-		}
-
-		return;
-	}
-
-	// Lock the player movement while attacking, this is gonna be 
-	// probably changed after root motion anims are implemented:
-	if (_state == PlayerState::MELEE_ATTACKING ||
-		_state == PlayerState::RANGED_ATTACKING)
-	{
-		return;
-	}
-
-	const float velocity = _movement_speed * Time::DeltaTime();
-	const math::float3 delta_x = math::float3::unitX * velocity;
-	const math::float3 delta_y = math::float3::unitY * velocity;
-	const math::float3 delta_z = math::float3::unitZ * velocity;
-	
+	// Movement Direction
 	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
 	{
-		current_position -= delta_z;
-		moving_input_dir += math::float3::unitZ;
-		_state = PlayerState::WALKING;
+		_movement_direction -= math::float3::unitZ;
 	}
 	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
 	{
-		current_position += delta_z;
-		moving_input_dir -= math::float3::unitZ;
-		_state = PlayerState::WALKING;
+		_movement_direction += math::float3::unitZ;
 	}
 
 	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
 	{
-		current_position += delta_x;
-		moving_input_dir -= math::float3::unitX;
-		_state = PlayerState::WALKING;
+		_movement_direction += math::float3::unitX;
 	}
 	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
 	{
-		current_position -= delta_x;
-		moving_input_dir += math::float3::unitX;
-		_state = PlayerState::WALKING;
+		_movement_direction -= math::float3::unitX;
+	}
+	
+	if (!IsAttacking() && !IsDashing())
+	{
+		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
+		{
+			RangedAttack();
+		}
+		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
+		{
+			MeleeAttack();
+		}
+		// Keep dash here since it uses the input movement direction
+		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
+		{
+			Dash();
+		}
+		else if (!_movement_direction.Equals(float3::zero))
+		{
+			_state = PlayerState::WALKING;
+		}
+		else
+		{
+			_state = PlayerState::IDLE;
+		}
 	}
 
 	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
-		current_position += delta_y;
+		_movement_direction += math::float3::unitY;
 	}
 	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
 	{
-		current_position -= delta_y;
-	}
-
-	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE))
-	{
-		_dash_has_cooldown = (_dash_count <= 0);
-		if (_dash_has_cooldown)
-		{
-			return;
-		}
-		_dash_count -= 1;
-		_is_dashing = true;
-		_dash_progress = 0.0f;
-		_dash_start = current_position;
-		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
-		
-		//const math::float2 mouse_direction = GetMouseDirectionRelativeToCenter();
-		if (moving_input_dir.Equals(float3::zero))
-		{
-			_dash_direction = game_object->GetTransform()->GetFront();
-		}
-		else
-		{
-			_dash_direction = moving_input_dir * -1;
-		}
-		_dash_direction.Normalize();
-
-		float3 temp_end;
-		float3 end_calculated = _dash_start + _dash_direction * _dash_distance;
-		temp_end = Navigation::GetCorrectedPosition(end_calculated, float3(0.5f, 0.1f, 0.5f));
-		if (temp_end.x < FLT_MAX)
-		{
-			_dash_end = temp_end;
-		}
-		else
-		{
-			_dash_end = end_calculated;
-		}
+		_movement_direction += math::float3::unitY;
 	}
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
@@ -515,13 +448,42 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 		_is_god_mode = !_is_god_mode;
 		_stats._god_mode = _is_god_mode;
 	}
-	//float current_y = current_position.y;
+}
 
-	//Navigation::CorrectPosition(current_position, game_object->GetTransform()->GetGlobalScale());
-	//current_position.y = current_position.y < current_y ? current_y : current_position.y;
-	if (!_is_god_mode && _state == PlayerState::WALKING)
+void Hachiko::Scripting::PlayerController::MovementController()
+{
+	DashController();
+	WalkingOrientationController();
+
+	if (IsWalking())
 	{
-		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+		_player_position += (_movement_direction * _movement_speed * Time::DeltaTime());
+	}
+
+	if (_is_god_mode)
+	{
+		return;
+	}
+
+	if (_is_falling)
+	{
+		_player_position.y -= 0.25f;
+
+		if (_dash_start.y - _player_position.y > falling_distance)
+		{
+			_player_position = _dash_start;
+		}
+	}
+
+	float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+	if (Distance(corrected_position, _player_position) < 1.0f)
+	{
+		_player_position = corrected_position;
+		_is_falling = false;
+	}
+	else if (!IsDashing())
+	{
+		_is_falling = true;
 	}
 }
 

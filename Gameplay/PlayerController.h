@@ -30,22 +30,26 @@ private:
 	
 	void SpawnGameObject() const;
 	
-	void Attack(ComponentTransform* transform, 
-		math::float3& current_position);
 
-	void MeleeAttack(ComponentTransform* transform,
-		const math::float3& current_position);
+	bool IsAttacking() const;
+	bool IsDashing() const;
+	bool IsWalking() const;
 
-	void RangedAttack(ComponentTransform* transform,
-		const math::float3& current_position);
+	void AttackController();
 
-	void Dash(math::float3& current_position);
+	void MeleeAttack();
 
-	void Rotate(ComponentTransform* transform,
-		const math::float3& moving_input_dir);
+	void RangedAttack();
+
+	void Dash();
+	void DashChargesManager();
+	void DashController();
+
+	void WalkingOrientationController();
 	
-	void HandleInput(math::float3& current_position,
-		math::float3& moving_input_dir);
+	void HandleInput();
+
+	void MovementController();
 
 public:
 	SERIALIZE_FIELD(Stats, _stats);
@@ -59,7 +63,7 @@ private:
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
-	SERIALIZE_FIELD(int, _max_dash_count);
+	SERIALIZE_FIELD(int, _max_dash_charges);
 
 	SERIALIZE_FIELD(float, _raycast_min_range);
 	SERIALIZE_FIELD(float, _raycast_max_range);
@@ -73,20 +77,21 @@ private:
 
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
+	ComponentTransform* _player_transform = nullptr;
+	float3 _player_position = float3::zero;
+	float3 _movement_direction = float3::zero;
 	float3 _dash_start = float3::zero;
 	float3 _dash_direction = float3::zero;
 	float3 _dash_end = float3::zero;
 	float falling_distance = 10.0f;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
-	float _dash_count = 0.0f;
+	float _dash_charges = 0.0f;
 	float _dash_progress = 0.0f;
-	float _dash_timer = 0.0f;
+	float _dash_charging_time = 0.0f;
 	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
 	float _rotation_progress = 0.0f;
-	bool _is_dashing = false;
-	bool _dash_has_cooldown = false;
 	bool _should_rotate = false;
 	bool _is_falling = false;
 	bool _is_god_mode = false;
