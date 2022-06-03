@@ -255,17 +255,11 @@ void Hachiko::ComponentAnimation::DrawGui()
 
         if (state_machine != nullptr)
         {
-
-            if (state_machine->clips.size() > 0)
-            {
-                ; // TODO: Revise
-            }
-            
             windowStateMachine->SetStateMachine(static_cast<ResourceStateMachine*> (state_machine)); // Add a breakpoint in this line to make it work properly // TODO: Revise
             windowStateMachine->Update(); // TODO: Revise
 
             char name[128];
-            //strcpy_s(name, state_machine->state_m_name.c_str());
+            strcpy_s(name, state_machine->state_m_name.c_str());
 
             if (ImGui::InputText("Resource name", name, 128))
             {
@@ -288,7 +282,7 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                 ResourceAnimation* res = nullptr;
 
-                strcpy_s(name, state_machine->clips[i].name.c_str());
+                strcpy_s(name, state_machine->GetClipName(i).c_str());
 
                 ImGui::PushID(i);
                 if (ImGui::InputText("Clip name", name, 128))
@@ -337,25 +331,23 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                 if (new_res > 0)
                 {
-                    // state_machine->SetClipRes(i, new_res);
+                    state_machine->SetClipRes(i, new_res->GetID());
                     // state_machine->Save();
 
                     // App->resources->Get(new_res)->LoadToMemory();
                 }
 
-                // bool loop = state_machine->GetClipLoop(i);
-                bool loop = false;
-
+                bool loop = state_machine->GetClipLoop(i);
                 if (ImGui::Checkbox("Loop", &loop))
                 {
-                    // state_machine->SetClipLoop(i, loop);
+                    state_machine->SetClipLoop(i, loop);
                     // state_machine->Save();
                 }
 
                 ImGui::SameLine();
                 if (ImGui::Button("Remove"))
                 {
-                    // state_machine->RemoveClip(i);
+                    state_machine->RemoveClip(i);
                     // state_machine->Save();
                 }
                 else
@@ -366,30 +358,30 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ImGui::Separator();
                 ImGui::PopID();
             }
-            /*if (App->GetState() != Application::stop)
+            
+            if (ImGui::CollapsingHeader("Animation triggers", ImGuiTreeNodeFlags_DefaultOpen))
             {
-                if (ImGui::CollapsingHeader("Animation triggers", ImGuiTreeNodeFlags_DefaultOpen))
-                {
-                    HashString active_node = component->GetActiveNode();
+                // std::string active_node = component->GetActiveNode();
+                std::string active_node("");
 
-                    for (uint i = 0; i < state_machine->GetNumTransitions(); ++i)
+                for (unsigned int i = 0; i < state_machine->GetNumTransitions(); ++i)
+                {
+                    if (state_machine->GetTransitionSource(i) == active_node)
                     {
-                        if (state_machine->GetTransitionSource(i) == active_node)
+                        std::string trigger = state_machine->GetTransitionTrigger(i);
+                        if (!trigger.empty() && ImGui::Button(trigger.c_str()))
                         {
-                            HashString trigger = state_machine->GetTransitionTrigger(i);
-                            if (trigger && ImGui::Button(trigger.C_str()))
-                            {
-                                component->SendTrigger(trigger);
-                            }
+                            // component->SendTrigger(trigger);
                         }
                     }
-
-                    if (ImGui::Button("Reset state"))
-                    {
-                        component->ResetState();
-                    }
                 }
-            }*/
+
+                if (ImGui::Button("Reset state"))
+                {
+                    // component->ResetState();
+                }
+            }
+            
         }
     }
 

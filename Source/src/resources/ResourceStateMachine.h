@@ -20,6 +20,7 @@ namespace Hachiko
         void AddClip(const std::string& name, UID animation, bool loop);
         int FindClip(const std::string& name) const;
         void RemoveClip(const std::string& name);
+        void RemoveClip(unsigned int index);
         void EditClipAnimation(const std::string& name, UID newAnimation);
         void EditClipLoop(const std::string& name, bool newLoop);
         void SetClipName(unsigned int index, const std::string& name)
@@ -37,6 +38,20 @@ namespace Hachiko
             return clips[index].animation;
 
         }
+        void SetClipRes(unsigned int index, UID uid)
+        {
+            clips[index].animation = uid;
+        }
+        bool GetClipLoop(unsigned int index) const
+        {
+            return clips[index].loop;
+        }
+        void SetClipLoop(unsigned int index, bool loop)
+        {
+            clips[index].loop = loop;
+        }
+
+
         unsigned int GetNumClips() const
         {
             return unsigned int(clips.size());
@@ -91,19 +106,20 @@ namespace Hachiko
         {
             return nodes[index].name;
         }
+        void RemoveNodeTransitions(std::string& name);
 
         struct Transition
         {
             std::string source;
             std::string target;
             std::string trigger;
-            unsigned int interpolationTime = 0;
+            unsigned int blend = 0;
 
             Transition() {};
-            Transition(const std::string& source, const std::string& target,const std::string& trigger, unsigned int interpolationTime) : source(source), target(target), trigger(trigger), interpolationTime(interpolationTime) {};
+            Transition(const std::string& source, const std::string& target,const std::string& trigger, unsigned int blend) : source(source), target(target), trigger(trigger), blend(blend) {};
         };
 
-        void AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime);
+        void AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int blend);
         int FindTransitionWithTrigger(const std::string& source, const std::string& trigger) const;
         int FindTransitionWithTarget(const std::string& source, const std::string& target) const;
         std::vector<struct Transition> FindTransitionsFromNode(const std::string& name) const;
@@ -131,7 +147,7 @@ namespace Hachiko
         }
         unsigned int GetTransitionBlend(unsigned int index) const
         {
-            return transitions[index].interpolationTime;
+            return transitions[index].blend;
         }
         void SetTransitionTrigger(unsigned int index, const std::string& trigger)
         {
@@ -139,9 +155,10 @@ namespace Hachiko
         }
         void SetTransitionBlend(unsigned int index, unsigned int blend)
         {
-            transitions[index].interpolationTime = blend;
+            transitions[index].blend = blend;
         }
         void RemoveTransition(unsigned int index);
+
 
     public:
         ResourceStateMachine(UID uid);

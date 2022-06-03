@@ -16,7 +16,6 @@ namespace Hachiko
         ~WindowStateMachine() override;
 
         void Update() override;
-        void CleanUp() override;
 
         void SetStateMachine(ResourceStateMachine* resourceStateMachine);
 

@@ -76,16 +76,6 @@ void Hachiko::WindowStateMachine::DrawNodes()
 
         ImVec2 size = ed::GetNodeSize(i * 3 + 1);
 
-        /* todo:
-		ImDrawList* drawList = ed::GetNodeBackgroundDrawList(i * 3 + 1);
-
-		drawList->AddLine(
-			ImGui::GetCursorScreenPos(),
-			ImGui::GetCursorScreenPos()+ImVec2(size.x-16.0f, 0.0),
-			IM_COL32(255, 255, 0, 255), 1.0f);
-
-            */
-
         ImGui::PopStyleVar();
 
         ImGui::Dummy(ImVec2(96.0, 8.0));
@@ -96,13 +86,6 @@ void Hachiko::WindowStateMachine::DrawNodes()
         }
 
         ImGui::Dummy(ImVec2(96.0, 8.0));
-
-        /* todo
-		drawList->AddLine(
-			ImGui::GetCursorScreenPos(),
-			ImGui::GetCursorScreenPos()+ImVec2(size.x-16.0f, 0.0),
-			IM_COL32(255, 255, 255, 255), 1.0f);
-            */
 
         ImGui::Dummy(ImVec2(64.0, 8.0));
 
@@ -136,7 +119,6 @@ void Hachiko::WindowStateMachine::DrawNodes()
 void Hachiko::WindowStateMachine::DrawTransitions()
 {
     ed::PushStyleVar(ed::StyleVar_LinkStrength, 4.0f);
-    unsigned int num_nodes = animation->GetNumNodes();
     for (const Hachiko::ResourceStateMachine::Transition& transition : animation->transitions)
     {
         int sourceID = animation->FindNode(transition.source);
@@ -265,7 +247,7 @@ void Hachiko::WindowStateMachine::ShowAddNodeMenu()
             if (ImGui::InputText(" Node name ", nodeName, IM_ARRAYSIZE(nodeName), nodeName_input_flags))
             {
                 addNode = false;
-                ed::SetNodePosition(animation->nodes.size() * 3 + 1, ed::ScreenToCanvas(new_node_pos));
+                ed::SetNodePosition(animation->GetNumNodes() * 3 + 1, ed::ScreenToCanvas(new_node_pos));
                 animation->AddNode(nodeName, "");
                 ImGui::CloseCurrentPopup();
             }
@@ -286,13 +268,13 @@ void Hachiko::WindowStateMachine::ShowNodeMenu()
         {
             if (ImGui::MenuItem("Change clip"))
             {
-                animation->EditNodeClip(animation->nodes[nodeId].name.c_str(), "newClip");
+                animation->EditNodeClip(animation->GetNodeName(nodeId).c_str(), "newClip");
                 ImGui::CloseCurrentPopup();
             }
 
             if (ImGui::MenuItem("Change looping"))
             {
-                animation->EditClipLoop(animation->nodes[nodeId].name.c_str(), !animation->clips[animation->FindClip(animation->nodes[nodeId].clip.c_str())].loop);
+                animation->EditClipLoop(animation->GetNodeName(nodeId).c_str(), !animation->clips[animation->FindClip(animation->nodes[nodeId].clip.c_str())].loop);
                 ImGui::CloseCurrentPopup();
             }
             
@@ -302,7 +284,7 @@ void Hachiko::WindowStateMachine::ShowNodeMenu()
         if (ImGui::MenuItem("Delete node"))
         {
             ed::DeleteNode(ed::NodeId((nodeId + 1) * 3));
-            animation->RemoveNode(animation->nodes[nodeId].name.c_str());
+            animation->RemoveNode(animation->GetNodeName(nodeId).c_str());
             ImGui::CloseCurrentPopup();
         }
         
@@ -377,7 +359,7 @@ void Hachiko::WindowStateMachine::ShowLinkMenu()
         {
             std::string sourceName = animation->nodes[linkId / 100].name;
             std::string targetName = animation->nodes[linkId % 100].name;
-            unsigned int it = animation->transitions[animation->FindTransitionWithTarget(sourceName, targetName)].interpolationTime;
+            unsigned int it = animation->transitions[animation->FindTransitionWithTarget(sourceName, targetName)].blend;
 
             static char newIT[128] = "";
             snprintf(newIT, 128, std::to_string(it).c_str());
@@ -437,10 +419,4 @@ void Hachiko::WindowStateMachine::ShowHelp()
 void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine* resourceStateMachine) 
 {
     animation = resourceStateMachine;
-}
-
-
-void Hachiko::WindowStateMachine::CleanUp()
-{
-
 }

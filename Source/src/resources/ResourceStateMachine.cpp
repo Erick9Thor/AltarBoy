@@ -7,11 +7,7 @@ void Hachiko::ResourceStateMachine::RemoveTransition(unsigned int index)
 }
 
 Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE)
-{
-    AddNode("Puta", "ny");
-    AddNode("Vida", "");
-    AddTransition("Puta", "Vida", "3 tristes triggers", 3);
-}
+{}
 
 Hachiko::ResourceStateMachine::~ResourceStateMachine() {}
 
@@ -40,6 +36,43 @@ void Hachiko::ResourceStateMachine::RemoveClip(const std::string& name)
     {
         // RemoveState?
         clips.erase(clips.begin() + index);
+    }
+}
+
+void Hachiko::ResourceStateMachine::RemoveClip(unsigned int index)
+{
+    std::vector<Node>::iterator it = nodes.begin();
+
+    while (it != nodes.end())
+    {
+        if (it->clip == clips[index].name)
+        {
+            RemoveNodeTransitions(it->name);
+            it = nodes.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
+    clips.erase(clips.begin() + index);
+}
+
+void Hachiko::ResourceStateMachine::RemoveNodeTransitions(std::string& name)
+{
+    std::vector<Transition>::iterator it = transitions.begin();
+
+    while (it != transitions.end())
+    {
+        if (it->source == name || it->target == name)
+        {
+            it = transitions.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
 }
 
@@ -106,9 +139,9 @@ void Hachiko::ResourceStateMachine::EditNodeClip(const std::string& name, const 
     nodes[index].clip = newClip;
 }
 
-void Hachiko::ResourceStateMachine::AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int interpolationTime)
+void Hachiko::ResourceStateMachine::AddTransition(const std::string& source, const std::string& target, const std::string& trigger, unsigned int blend)
 {
-    transitions.push_back(Transition(source, target, trigger, interpolationTime));
+    transitions.push_back(Transition(source, target, trigger, blend));
 }
 
 int Hachiko::ResourceStateMachine::FindTransitionWithTrigger(const std::string& source, const std::string& trigger) const
@@ -211,5 +244,5 @@ void Hachiko::ResourceStateMachine::EditTransitionTrigger(const std::string& sou
 void Hachiko::ResourceStateMachine::EditTransitionInterpolationTime(const std::string& source, const std::string& target, unsigned int newInterpolationTime)
 {
     int index = FindTransitionWithTarget(source, target);
-    transitions[index].interpolationTime = newInterpolationTime;
+    transitions[index].blend = newInterpolationTime;
 }
