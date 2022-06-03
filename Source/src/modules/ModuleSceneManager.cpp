@@ -34,8 +34,8 @@ bool Hachiko::ModuleSceneManager::Init()
 #else
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
-    return true;
 #endif
+    return true;
 }
 
 void Hachiko::ModuleSceneManager::AttemptScenePause()
