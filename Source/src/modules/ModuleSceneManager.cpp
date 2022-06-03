@@ -242,22 +242,21 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     Scene* new_scene = new Scene();
     if (scene_resource)
     {
-        
-        new_scene->Load(scene_resource->scene_data);
         if (!keep_navmesh)
         {
             App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
         }
+        new_scene->Load(scene_resource->scene_data);
     }
     else
     {
-        // This removes current navmesh
-        GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
-        camera_go->CreateComponent(Component::Type::CAMERA);
         if (!keep_navmesh)
         {
             App->navigation->SetNavmesh(nullptr);
         }
+        // This removes current navmesh
+        GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
+        camera_go->CreateComponent(Component::Type::CAMERA);
     }
 
     ChangeMainScene(new_scene);

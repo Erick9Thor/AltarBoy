@@ -12,20 +12,7 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
-}
-
-Hachiko::ComponentAgent::~ComponentAgent()
-{
-    if (agent_id != -1)
-    {
-        RemoveFromCrowd();
-    }    
-}
-
-void Hachiko::ComponentAgent::Start()
-{
-    std::function handleGameStateChanges = [&](Event& evt)
-    {
+    std::function handleGameStateChanges = [&](Event& evt) {
         const auto& e = evt.GetEventData<GameStateEventPayload>();
         if (e.GetState() == GameStateEventPayload::State::STARTED)
         {
@@ -37,6 +24,14 @@ void Hachiko::ComponentAgent::Start()
         }
     };
     App->event->Subscribe(Event::Type::GAME_STATE, handleGameStateChanges);
+}
+
+Hachiko::ComponentAgent::~ComponentAgent()
+{
+    if (agent_id != -1)
+    {
+        RemoveFromCrowd();
+    }    
 }
 
 void Hachiko::ComponentAgent::Update()
@@ -204,10 +199,19 @@ void Hachiko::ComponentAgent::RemoveFromCrowd()
     }
 
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
-    if (!navMesh)    return;
+    if (!navMesh)
+    {
+        agent_id = -1;
+        return;
+    }
+        
 
-    navMesh->GetCrowd()->removeAgent(agent_id);
-    agent_id = -1;
+    dtCrowd* crowd = navMesh->GetCrowd();
+    if (crowd)
+    {
+        crowd->removeAgent(agent_id);
+        agent_id = -1;
+    }
 }
 
 void Hachiko::ComponentAgent::MoveToNearestNavmeshPoint()

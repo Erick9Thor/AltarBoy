@@ -37,11 +37,6 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 void Hachiko::Scripting::CrystalExplosion::OnStart()
 {
 	transform = game_object->GetTransform();
-	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
-	if (obstacle)
-	{
-		obstacle->Start();
-	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
@@ -134,8 +129,12 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCristall()
 	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
 	if (obstacle)
 	{
-		obstacle->Stop();
+		obstacle->RemoveObstacle();
 	}
-	_explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
+	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
+	if (exploding_animation)
+	{
+		exploding_animation->StartAnimating(_crashing_index, false, 200);
+	}
 	_stats._is_alive = false;
 }

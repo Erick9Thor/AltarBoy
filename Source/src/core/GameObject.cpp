@@ -250,7 +250,6 @@ void Hachiko::GameObject::Start()
 {
     if (!started)
     {
-        transform->Start();
         for (Component* component : components)
         {
             component->Start();
