@@ -20,6 +20,7 @@
 #define MESHES "meshes"
 #define MATERIALS "materials"
 #define ANIMATIONS "animations"
+#define ANIMATION_NAMES "animation_names"
 #define MODEL_NAME "model_name"
 #define PREFAB_ID "prefab_id"
 

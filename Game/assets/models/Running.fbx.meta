@@ -7,6 +7,8 @@ materials:
 animations:
   - 2184831573162580743
 prefab_id: 1821899360000955217
+animation_names:
+  - mixamo.com
 resources:
   - resource_id: 12267903123424216882
     resource_type: 3

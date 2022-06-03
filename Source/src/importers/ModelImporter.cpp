@@ -101,7 +101,11 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
                 animaiton_id = UUID::GenerateUID();
                 meta[ANIMATIONS][animation_index] = animaiton_id;
             }
+
+            
             aiAnimation* animation = scene->mAnimations[animation_index];
+
+            meta[ANIMATION_NAMES][animation_index] = animation->mName.C_Str();
             // Create animation from assimp, since its not a separate asset manage its id
             animation_importer.CreateAnimationFromAssimp(animation, animaiton_id);
             resource_ids.push_back(animaiton_id);

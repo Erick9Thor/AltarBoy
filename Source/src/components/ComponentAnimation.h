@@ -27,7 +27,7 @@ namespace Hachiko
 
         void DrawGui() override;
 
-        UID LoadAnimation();
+        void AnimationSelector(unsigned clip_idx);
         void LoadStateMachine();
 
         void Save(YAML::Node& node) const override;
@@ -41,5 +41,9 @@ namespace Hachiko
         ResourceStateMachine* state_machine = nullptr;
 
         WindowStateMachine* windowStateMachine = nullptr;
+
+        unsigned editing_clip_idx = 0;
+        YAML::Node selected_model_meta;
+        std::vector<std::string> selected_asset_clip_names;
     };
 } // namespace Hachiko

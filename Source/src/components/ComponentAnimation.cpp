@@ -146,50 +146,41 @@ void Hachiko::ComponentAnimation::DrawGui()
 
             ImGui::Separator();
 
-            unsigned int i = 0;
-            while (i < state_machine->GetNumClips())
+            unsigned int clip_idx = 0;
+            while (clip_idx < state_machine->GetNumClips())
             {
-                ResourceAnimation* res = state_machine->GetClipRes(i) > 0 ? static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i))) : nullptr;
+                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(clip_idx)));
 
-                strcpy_s(name, state_machine->GetClipName(i).c_str());
+                strcpy_s(name, state_machine->GetClipName(clip_idx).c_str());
 
-                ImGui::PushID(i);
+                ImGui::PushID(clip_idx);
                 if (ImGui::InputText("Clip name", name, 128))
                 {
-                    state_machine->SetClipName(i, name);
+                    state_machine->SetClipName(clip_idx, name);
                     // state_machine->Save();
                 }
 
                 ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
                 ImGui::SameLine();
                 
-                UID new_res = LoadAnimation();
-
-
-                if (new_res > 0)
-                {
-                    state_machine->SetClipRes(i, new_res);
-                    // state_machine->Save();
-
-                    // App->resources->Get(new_res)->LoadToMemory();
-                }
-
-                bool loop = state_machine->GetClipLoop(i);
+                AnimationSelector(clip_idx);
+                
+                bool loop = state_machine->GetClipLoop(clip_idx);
                 if (ImGui::Checkbox("Loop", &loop))
                 {
-                    state_machine->SetClipLoop(i, loop);
+                    state_machine->SetClipLoop(clip_idx, loop);
                     // state_machine->Save();
                 }
 
                 ImGui::SameLine();
                 if (ImGui::Button("Remove"))
                 {
-                    state_machine->RemoveClip(i);
+                    state_machine->RemoveClip(clip_idx);
                     // state_machine->Save();
                 }
                 else
                 {
-                    ++i;
+                    ++clip_idx;
                 }
 
                 ImGui::Separator();
@@ -246,61 +237,76 @@ void Hachiko::ComponentAnimation::LoadStateMachine()
             std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
             YAML::Node meta = YAML::LoadFile("./assets/state_machine/" + meta_path);
 
-            for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
-            {
-                Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
-                if (type == Resource::Type::STATE_MACHINE)
-                {
-                    UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                    state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, res_uid));
-                }
-            }
+            // State machine asset will only have a state machine resource
+            UID res_uid = meta[RESOURCES][0][RESOURCE_ID].as<UID>();
+            state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, res_uid));
         }
 
         ImGuiFileDialog::Instance()->Close();
     }
 }
 
-Hachiko::UID Hachiko::ComponentAnimation::LoadAnimation()
+void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 {
-    // CLIP selector
-
-    UID new_res = 0;
-
-    const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
+    UID selected_animation_id = 0;
+    
+    const std::string title = StringUtils::Concat("Select Model#", std::to_string(uid));
     if (ImGui::Button(ICON_FA_PLAY))
     {
+        editing_clip_idx = clip_idx;
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
-                                                "Select Animation",
-                                                ".fbx",
-                                                "./assets/animations/",
+                                                "Select Clips Source",
+                                                MODEL_EXTENSION,
+                                                ASSETS_FOLDER_MODEL,
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
+    }
+
+    if (clip_idx != editing_clip_idx)
+    {
+        return;
     }
 
     if (ImGuiFileDialog::Instance()->Display(title.c_str()))
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
-            std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
-            YAML::Node meta = YAML::LoadFile("./assets/animations/" + meta_path);
+            std::string meta_path = ImGuiFileDialog::Instance()->GetFilePathName();
+            meta_path.append(META_EXTENSION);
+            selected_model_meta = YAML::LoadFile(meta_path);
 
-            for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+            selected_asset_clip_names.clear();
+
+            for (unsigned i = 0; i < selected_model_meta[ANIMATIONS].size(); ++i)
             {
-                Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
-                if (type == Resource::Type::ANIMATION)
-                {
-                    UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                    return res_uid;
-                }
+                selected_asset_clip_names.push_back(selected_model_meta[ANIMATION_NAMES][i].as<std::string>());
             }
         }
-
         ImGuiFileDialog::Instance()->Close();
     }
 
-    return new_res;
+    constexpr const char* popup_name = "Clip Selector";
+    if (selected_asset_clip_names.size() > 0)
+    {
+        ImGui::OpenPopup(popup_name);
+    }
+
+    if (ImGui::BeginPopup(popup_name))
+    {
+        for (unsigned i = 0; i < selected_asset_clip_names.size(); ++i)
+        {
+            if (ImGui::MenuItem(selected_asset_clip_names[i].c_str()))
+            {
+                UID selected_animation_id = selected_model_meta[ANIMATIONS][i].as<UID>();
+
+                state_machine->SetClipRes(clip_idx, selected_animation_id);               
+                //state_machine->Save();
+                selected_asset_clip_names.clear();
+            }
+        }
+        ImGui::EndPopup();
+    }
 }
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const

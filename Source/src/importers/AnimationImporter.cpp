@@ -68,10 +68,19 @@ void Hachiko::AnimationImporter::Save(UID id, const Resource* resource)
 
 Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
 {
-    assert(id && "Unable to load module. Given an empty id");
-    char* file_buffer = FileSystem::Load(GetResourcePath(Resource::Type::ANIMATION, id).c_str());
+    std::string file_path = GetResourcePath(Resource::Type::ANIMATION, id);
+
+    if (!FileSystem::Exists(file_path.c_str()))
+    {
+        return nullptr;
+    }
+
+    char* file_buffer = FileSystem::Load(file_path.c_str());
+
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
+
+    
 
     const auto animation = new ResourceAnimation(id);
 
