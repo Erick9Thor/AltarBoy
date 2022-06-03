@@ -261,7 +261,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ; // TODO: Revise
             }
             
-            windowStateMachine->SetStateMachine(*state_machine); // Add a breakpoint in this line to make it work properly // TODO: Revise
+            windowStateMachine->SetStateMachine(static_cast<ResourceStateMachine*> (state_machine)); // Add a breakpoint in this line to make it work properly // TODO: Revise
             windowStateMachine->Update(); // TODO: Revise
 
             char name[128];

@@ -18,7 +18,7 @@ namespace Hachiko
         void Update() override;
         void CleanUp() override;
 
-        void SetStateMachine(ResourceStateMachine& resourceStateMachine);
+        void SetStateMachine(ResourceStateMachine* resourceStateMachine);
 
         void DrawNodes();
         void DrawTransitions();

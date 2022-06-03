@@ -4,11 +4,11 @@
 #include "imgui_node_editor.h"
 #include "modules/ModuleEditor.h"
 
-Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor - Press Left Alt + H for help", false)
-{
-    
+#define DEFAULT_BLEND 300
 
-}
+
+Hachiko::WindowStateMachine::WindowStateMachine() : Window("State Machine editor - Press Left Alt + H for help", false)
+{}
 
 Hachiko::WindowStateMachine::WindowStateMachine(std::string name) : Window(std::string(name + std::string(" State Machine editor - Press Left Alt + H for help")).c_str(), false)
 {
@@ -200,14 +200,14 @@ void Hachiko::WindowStateMachine::CreateTransitions()
                     {
                         if (startIsInput)
                         {
-                            animation->AddTransition(animation->nodes[endNode].name.c_str(), animation->nodes[startNode].name.c_str(), "", 0);
+                            animation->AddTransition(animation->GetNodeName(endNode).c_str(), animation->GetNodeName(startNode).c_str(), "", DEFAULT_BLEND);
                         }
                         else
                         {
-                            animation->AddTransition(animation->nodes[startNode].name.c_str(), animation->nodes[endNode].name.c_str(), "", 0);
+                            animation->AddTransition(animation->GetNodeName(startNode).c_str(), animation->GetNodeName(endNode).c_str(), "", DEFAULT_BLEND);
                         }
 
-                        //stateMachine->Save();
+                        //TODO: stateMachine->Save();
                     }
                 }
             }
@@ -434,9 +434,9 @@ void Hachiko::WindowStateMachine::ShowHelp()
     }
 }
 
-void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine& resourceStateMachine) 
+void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine* resourceStateMachine) 
 {
-    animation = &resourceStateMachine;
+    animation = resourceStateMachine;
 }
 
 
