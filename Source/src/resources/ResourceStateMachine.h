@@ -4,24 +4,25 @@
 
 namespace Hachiko
 {
+    class ResourceAnimation;
+    
     class ResourceStateMachine : public Resource
     {
     public:
         struct Clip
         {
             std::string name;
-            UID animation = 0;
+            ResourceAnimation* animation = nullptr;
             bool loop = false;
 
             Clip() {};
-            Clip(const std::string& name, UID animation, bool loop) : name(name), animation(animation), loop(loop) {};
+            Clip(const std::string& name, UID animation, bool loop);
         };
 
         void AddClip(const std::string& name, UID animation, bool loop);
         int FindClip(const std::string& name) const;
         void RemoveClip(const std::string& name);
         void RemoveClip(unsigned int index);
-        void EditClipAnimation(const std::string& name, UID newAnimation);
         void EditClipLoop(const std::string& name, bool newLoop);
         void SetClipName(unsigned int index, const std::string& name)
         {
@@ -33,15 +34,11 @@ namespace Hachiko
             return clips[index].name;
         }
 
-        UID GetClipRes(unsigned int index) const
+        ResourceAnimation* GetClipRes(unsigned int index) const
         {
             return clips[index].animation;
-
         }
-        void SetClipRes(unsigned int index, UID uid)
-        {
-            clips[index].animation = uid;
-        }
+        void SetClipRes(unsigned int index, UID uid);
         bool GetClipLoop(unsigned int index) const
         {
             return clips[index].loop;

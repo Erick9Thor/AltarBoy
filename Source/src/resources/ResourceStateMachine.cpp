@@ -1,5 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceStateMachine.h"
+#include "modules/ModuleResources.h"
+#include "ResourceAnimation.h"
 
 void Hachiko::ResourceStateMachine::RemoveTransition(unsigned int index) 
 {
@@ -76,16 +78,16 @@ void Hachiko::ResourceStateMachine::RemoveNodeTransitions(std::string& name)
     }
 }
 
-void Hachiko::ResourceStateMachine::EditClipAnimation(const std::string& name, UID newAnimation) 
-{
-    int index = FindClip(name);
-    clips[index].animation = newAnimation;
-}
-
 void Hachiko::ResourceStateMachine::EditClipLoop(const std::string& name, bool newLoop) 
 {
     int index = FindClip(name);
     clips[index].loop = newLoop;
+}
+
+void Hachiko::ResourceStateMachine::SetClipRes(unsigned int index, UID uid)
+{
+    App->resources->ReleaseResource(clips[index].animation);
+    clips[index].animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, uid));
 }
 
 void Hachiko::ResourceStateMachine::AddNode(const std::string& name, const std::string& clip)
@@ -246,3 +248,8 @@ void Hachiko::ResourceStateMachine::EditTransitionInterpolationTime(const std::s
     int index = FindTransitionWithTarget(source, target);
     transitions[index].blend = newInterpolationTime;
 }
+
+Hachiko::ResourceStateMachine::Clip::Clip(const std::string& name, UID animation_id, bool loop) : name(name), loop(loop)
+{
+    animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, animation_id));
+};

@@ -117,6 +117,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 // TODO ADD A resource creation for state machine.
                 // ResourceStateMachine* res = static_cast<ResourceStateMachine*>(App->resources->CreateAsset(Resource::Type::STATE_MACHINE, auxiliary_name));
 
+                App->resources->ReleaseResource(state_machine);
                 state_machine = new ResourceStateMachine(UUID::GenerateUID());
                 state_machine->state_m_name = auxiliary_name;
                 ImGui::CloseCurrentPopup();
@@ -149,7 +150,7 @@ void Hachiko::ComponentAnimation::DrawGui()
             unsigned int clip_idx = 0;
             while (clip_idx < state_machine->GetNumClips())
             {
-                ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(clip_idx)));
+                ResourceAnimation* res = state_machine->GetClipRes(clip_idx);
 
                 strcpy_s(name, state_machine->GetClipName(clip_idx).c_str());
 
@@ -239,6 +240,7 @@ void Hachiko::ComponentAnimation::LoadStateMachine()
 
             // State machine asset will only have a state machine resource
             UID res_uid = meta[RESOURCES][0][RESOURCE_ID].as<UID>();
+            App->resources->ReleaseResource(state_machine);
             state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, res_uid));
         }
 
