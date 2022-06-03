@@ -80,6 +80,7 @@
 #define MODEL_EXTENSION ".fbx"
 #define SKYBOX_EXTENSION ".hdr"
 #define FONT_EXTENSION ".ttf"
+#define STATE_MACHINE_EXTENSION ".stm"
  
 //////////////////////////
 //						//
