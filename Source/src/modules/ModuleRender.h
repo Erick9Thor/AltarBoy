@@ -73,6 +73,12 @@ namespace Hachiko
             return &render_list;
         }
 
+        void GetFrameBufferSize(unsigned& width, unsigned& height) const 
+        {
+            width = fb_width;
+            height = fb_height;
+        }
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int heigth, int width) const;

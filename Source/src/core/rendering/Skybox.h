@@ -26,6 +26,8 @@ namespace Hachiko
 
         void DrawImGui();
 
+        void BindImageBasedLightingUniforms(Program* program) const;
+
     private:
         void SelectSkyboxTexture(TextureCube::Side cube_side);
 
@@ -34,6 +36,7 @@ namespace Hachiko
         unsigned vao{};
         unsigned vbo{};
 
+        bool activate_IBL = true;
         unsigned irradiance_cubemap_id = 0;
 
     public:

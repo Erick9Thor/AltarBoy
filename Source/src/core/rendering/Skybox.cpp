@@ -4,6 +4,7 @@
 #include "modules/ModuleProgram.h"
 #include "components/ComponentCamera.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleRender.h"
 #include "resources/ResourceTexture.h"
 
 #include "MathGeoLib.h"
@@ -12,7 +13,6 @@ Hachiko::Skybox::Skybox()
 {
     cube = ModuleTexture::LoadCubeMap(cube);
     CreateBuffers();
-    
 }
 
 Hachiko::Skybox::Skybox(TextureCube new_cube) : cube(new_cube)
@@ -40,12 +40,7 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     // Draw skybox
     glBindVertexArray(vao);
 
-    //const int texture_slots = 0;
-    //App->program->GetMainProgram()->BindUniformInts("skybox", 1, &texture_slots);
-
-    GLint skybox_binding = glGetUniformLocation(program->GetId(), "skybox");
-    glUniform1i(skybox_binding, 0);
-
+    program->BindUniformInt("skybox", 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, cube.id);
     glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -82,7 +77,29 @@ void Hachiko::Skybox::DrawImGui()
         SelectSkyboxTexture(TextureCube::Side::BACK);
     }
 
+    ImGui::Checkbox("Activate IBL", &activate_IBL);
+    if (ImGui::Button("Build irradiance cubemap"))
+    {
+        GenerateIrradianceCubemap();
+    }
+
     ImGui::PopID();
+}
+
+void Hachiko::Skybox::BindImageBasedLightingUniforms(Program* program) const 
+{
+    if (irradiance_cubemap_id != 0 && activate_IBL)
+    {
+        program->BindUniformBool("has_diffuseIBL", true);
+
+        program->BindUniformInt("diffuseIBL", 0);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, irradiance_cubemap_id);
+    }
+    else
+    {
+        program->BindUniformBool("has_diffuseIBL", false);
+    }
 }
 
 const std::string TextureCubeSideToString(Hachiko::TextureCube::Side cube_side)
@@ -221,6 +238,16 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
 {
     // Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);
     OPTICK_CATEGORY("GenerateIrradianceCubemap", Optick::Category::Rendering);
+    
+    if (!cube.loaded)
+    {
+        HE_ERROR("There is not a skybox loaded");
+        return;
+    }
+
+    // Delete last irradiance cubemap
+    glDeleteTextures(1, &irradiance_cubemap_id);
+    irradiance_cubemap_id = 0;
 
     // Initialize variables
     const float3 front[6] = {float3::unitX, -float3::unitX, float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ};
@@ -301,6 +328,7 @@ void Hachiko::Skybox::GenerateIrradianceCubemap()
     glDepthFunc(GL_LESS);
     glDepthMask(true);
 
-    //glDeleteTextures(1, &irradiance_cubemap_id);
-    cube.id = irradiance_cubemap_id;
+    unsigned fb_width, fb_height;
+    App->renderer->GetFrameBufferSize(fb_width, fb_height);
+    glViewport(0, 0, fb_height, fb_width);
 }

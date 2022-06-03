@@ -127,21 +127,9 @@ void Hachiko::ModuleRender::SetGLOptions()
     glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE); // Only replace stencil value if stencil and depth tests pass
 }
 
-// TEST
-#include "modules/ModuleInput.h"
-//
-
 UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 {
     render_list.PreUpdate();
-
-    // TEST
-    if (App->input->IsKeyDown(SDL_Scancode::SDL_SCANCODE_SPACE))
-    {
-    App->scene_manager->GetActiveScene()->GetSkybox()->GenerateIrradianceCubemap();
-    glViewport(0, 0, fb_height, fb_width);
-    }
-    //
 
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -229,6 +217,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera, Componen
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     Program* program = App->program->GetMainProgram();
     program->Activate();
+
+    // Bind ImageBasedLighting uniforms
+    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     GameObject* selected_go = App->editor->GetSelectedGameObject();
     RenderTarget* outline_target = nullptr;

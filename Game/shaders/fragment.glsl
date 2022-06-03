@@ -12,6 +12,9 @@
 
 #define PI 3.141597
 
+uniform bool has_diffuseIBL;
+uniform samplerCube diffuseIBL;
+
 struct AmbientLight
 {
     vec4 color;
@@ -250,6 +253,16 @@ mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
 	return mat3(tangent, bitangent, normal);
 }
 
+vec3 GetAmbientLight(in vec3 normal, in vec3 diffuse_color, in vec3 specular_color)
+{
+    if (has_diffuseIBL)
+    {
+        vec3 irradiance = texture(diffuseIBL, normal).rgb;
+        return irradiance * (diffuse_color * (1 - specular_color));
+    }
+    return diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
+}
+
 
 void main()
 {
@@ -298,15 +311,14 @@ void main()
     
     for(uint i=0; i<lights.n_points; ++i)
     {
-        hdr_color +=  PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
+        hdr_color += PositionalPBR(fragment.pos, norm, view_dir, lights.points[i], Cd, f0, smoothness);
     }
 
     for(uint i=0; i<lights.n_spots; ++i)
     {
-        hdr_color +=  SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
-        
+        hdr_color += SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
     }   
-    hdr_color += Cd * lights.ambient.color.rgb * lights.ambient.intensity;
+    hdr_color += GetAmbientLight(norm, Cd, f0);
 
     // Emissive map
     vec3 emissive = material.emissive_color.rgb;
