@@ -2,6 +2,8 @@
 #include "Window.h"
 #include "resources/ResourceStateMachine.h"
 
+namespace ed = ax::NodeEditor;
+
 namespace Hachiko
 {
     class WindowStateMachine final : public Window
@@ -39,7 +41,7 @@ namespace Hachiko
         bool editTrigger = false;
         bool editIT = false;
 
-        ResourceStateMachine* stateMachine = nullptr;
-        ax::NodeEditor::EditorContext* context = nullptr;
+        ResourceStateMachine* animation = nullptr;
+        ed::EditorContext* context = nullptr;
     };
 } // namespace Hachiko
