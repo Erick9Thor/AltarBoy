@@ -91,48 +91,12 @@ void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
 
+
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
         /* LOAD STATE MACHINE */
 
-        const std::string title = StringUtils::Concat("State Machine Selector#", std::to_string(uid));
-        if (ImGui::Button("Select State machine"))
-        {
-            ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
-                                                    "Select State Machine",
-                                                    ".yml",
-                                                    "./library/state_machine/",
-                                                    1,
-                                                    nullptr,
-                                                    ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
-        }
-        
-        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
-        {
-            if (ImGuiFileDialog::Instance()->IsOk())
-            {
-                /* std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
-                YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
-
-                for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
-                {
-                    Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
-                    if (type == Resource::Type::ANIMATION)
-                    {
-                        UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                        ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
-                        if (res != nullptr)
-                        {
-                            animations.push_back(res);
-                        }
-                    }
-                }*/
-
-                state_machine = new ResourceStateMachine(UUID::GenerateUID());
-            }
-
-            ImGuiFileDialog::Instance()->Close();
-        }
+        LoadStateMachine();
 
         /* CREATE NEW STATE MACHINE */
 
@@ -199,7 +163,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
                 ImGui::SameLine();
                 
-                UID new_res = OpenModal();
+                UID new_res = LoadAnimation();
 
 
                 if (new_res > 0)
@@ -261,7 +225,43 @@ void Hachiko::ComponentAnimation::DrawGui()
     ImGui::PopID();
 }
 
-Hachiko::UID Hachiko::ComponentAnimation::OpenModal()
+void Hachiko::ComponentAnimation::LoadStateMachine()
+{
+    const std::string title = StringUtils::Concat("State Machine Selector#", std::to_string(uid));
+    if (ImGui::Button("Select State machine"))
+    {
+        ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                "Select State Machine",
+                                                ".yml",
+                                                "./assets/state_machine/",
+                                                1,
+                                                nullptr,
+                                                ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
+    }
+
+    if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
+            YAML::Node meta = YAML::LoadFile("./assets/state_machine/" + meta_path);
+
+            for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+            {
+                Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+                if (type == Resource::Type::STATE_MACHINE)
+                {
+                    UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+                    state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, res_uid));
+                }
+            }
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+}
+
+Hachiko::UID Hachiko::ComponentAnimation::LoadAnimation()
 {
     // CLIP selector
 
@@ -273,7 +273,7 @@ Hachiko::UID Hachiko::ComponentAnimation::OpenModal()
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Animation",
                                                 ".fbx",
-                                                "./assets/models/",
+                                                "./assets/animations/",
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
@@ -284,7 +284,7 @@ Hachiko::UID Hachiko::ComponentAnimation::OpenModal()
         if (ImGuiFileDialog::Instance()->IsOk())
         {
             std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
-            YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
+            YAML::Node meta = YAML::LoadFile("./assets/animations/" + meta_path);
 
             for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
             {

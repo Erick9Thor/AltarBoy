@@ -27,7 +27,8 @@ namespace Hachiko
 
         void DrawGui() override;
 
-        UID OpenModal();
+        UID LoadAnimation();
+        void LoadStateMachine();
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
