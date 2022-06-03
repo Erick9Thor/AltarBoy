@@ -91,99 +91,6 @@ void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
 
-    /* if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
-    {
-        constexpr int NO_DELETION = -1;
-        int removed_index = NO_DELETION;
-        for (unsigned i = 0; i < animations.size(); ++i)
-        {
-            char animation_name[50];
-            strcpy_s(animation_name, 50, animations[i]->GetName().c_str());
-            
-            if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, " ", animation_name, std::to_string(i)).c_str()))
-            {
-                current_animation = animations[i];
-                this->StartAnimating(true, 200);
-            }
-
-            ImGui::SameLine();
-
-
-            if (ImGui::Button(ICON_FA_STOP))
-            {
-                StopAnimating();
-            }
-
-            ImGuiUtils::DisplayTooltip("Pause");
-
-            ImGui::SameLine();
-
-            ImGui::PushID(StringUtils::Concat(std::to_string(i), "##animation").c_str());
-            if (ImGui::Button(ICON_FA_TRASH))
-            {
-                removed_index = i;   
-            }
-
-            ImGuiUtils::DisplayTooltip("Delete");
-
-            ImGui::PopID();
-        }
-
-        if (removed_index != NO_DELETION)
-        {
-            animations.erase(animations.begin() + removed_index);
-        }
-        
-        // Animator selector
-        const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
-
-        if (ImGui::Button("Select animation"))
-        {
-            ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
-                                                    "Select Animation",
-                                                    ".fbx",
-                                                    "./assets/models/",
-                                                    1,
-                                                    nullptr,
-                                                    ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType
-                                                        | ImGuiFileDialogFlags_HideColumnDate);
-        }
-
-        if (ImGuiFileDialog::Instance()->Display(title.c_str()))
-        {
-            if (ImGuiFileDialog::Instance()->IsOk())
-            {
-                
-                std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
-                YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
-
-                for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
-                {
-                    Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
-                    if (type == Resource::Type::ANIMATION)
-                    {
-                        UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                        ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
-                        if (res != nullptr)
-                        {
-                            animations.push_back(res);
-                        }
-                    }
-                }
-
-            }
-
-            ImGuiFileDialog::Instance()->Close();
-        }
-
-        // State machine displayer
-
-        if (animations.size() > 0)
-        {
-            stateMachineWindow = new WindowStateMachine(game_object->name);
-        }
-    }*/
-
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
         /* LOAD STATE MACHINE */
@@ -276,11 +183,9 @@ void Hachiko::ComponentAnimation::DrawGui()
             ImGui::Separator();
 
             unsigned int i = 0;
-            while (i < state_machine->clips.size())
+            while (i < state_machine->GetNumClips())
             {
-                // ResourceAnimation* res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i)));
-
-                ResourceAnimation* res = nullptr;
+                ResourceAnimation* res = state_machine->GetClipRes(i) > 0 ? static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, state_machine->GetClipRes(i))) : nullptr;
 
                 strcpy_s(name, state_machine->GetClipName(i).c_str());
 
@@ -294,44 +199,12 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
                 ImGui::SameLine();
                 
-                // CLIP selector
-
-                const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
-                if (ImGui::Button(ICON_FA_PLAY))
-                {
-                    ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
-                                                            "Select Animation",
-                                                            ".fbx",
-                                                            "./assets/models/",
-                                                            1,
-                                                            nullptr,
-                                                            ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
-                }
-
-                ResourceAnimation* new_res = nullptr;
-                if (ImGuiFileDialog::Instance()->Display(title.c_str()))
-                {
-                    if (ImGuiFileDialog::Instance()->IsOk())
-                    {
-                        std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
-                        YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
-
-                        for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
-                        {
-                            Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
-                            if (type == Resource::Type::ANIMATION)
-                            {
-                                UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-                                ResourceAnimation* new_res = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, res_uid));
-                            }
-                        }
-                    }
-                }
+                UID new_res = OpenModal();
 
 
                 if (new_res > 0)
                 {
-                    state_machine->SetClipRes(i, new_res->GetID());
+                    state_machine->SetClipRes(i, new_res);
                     // state_machine->Save();
 
                     // App->resources->Get(new_res)->LoadToMemory();
@@ -386,6 +259,48 @@ void Hachiko::ComponentAnimation::DrawGui()
     }
 
     ImGui::PopID();
+}
+
+Hachiko::UID Hachiko::ComponentAnimation::OpenModal()
+{
+    // CLIP selector
+
+    UID new_res = 0;
+
+    const std::string title = StringUtils::Concat("Select Animation#", std::to_string(uid));
+    if (ImGui::Button(ICON_FA_PLAY))
+    {
+        ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+                                                "Select Animation",
+                                                ".fbx",
+                                                "./assets/models/",
+                                                1,
+                                                nullptr,
+                                                ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
+    }
+
+    if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+    {
+        if (ImGuiFileDialog::Instance()->IsOk())
+        {
+            std::string meta_path = StringUtils::Concat(ImGuiFileDialog::Instance()->GetCurrentFileName(), META_EXTENSION);
+            YAML::Node meta = YAML::LoadFile("./assets/models/" + meta_path);
+
+            for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
+            {
+                Resource::Type type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+                if (type == Resource::Type::ANIMATION)
+                {
+                    UID res_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
+                    return res_uid;
+                }
+            }
+        }
+
+        ImGuiFileDialog::Instance()->Close();
+    }
+
+    return new_res;
 }
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
