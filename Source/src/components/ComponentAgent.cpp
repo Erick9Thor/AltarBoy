@@ -12,18 +12,6 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
-    std::function handleGameStateChanges = [&](Event& evt) {
-        const auto& e = evt.GetEventData<GameStateEventPayload>();
-        if (e.GetState() == GameStateEventPayload::State::STARTED)
-        {
-            AddToCrowd();
-        }
-        else if (e.GetState() == GameStateEventPayload::State::STOPPED)
-        {
-            RemoveFromCrowd();
-        }
-    };
-    App->event->Subscribe(Event::Type::GAME_STATE, handleGameStateChanges);
 }
 
 Hachiko::ComponentAgent::~ComponentAgent()
@@ -48,6 +36,16 @@ void Hachiko::ComponentAgent::Update()
     const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
     ComponentTransform* transform = game_object->GetTransform();
     transform->SetGlobalPosition(float3(dt_agent->npos));
+}
+
+void Hachiko::ComponentAgent::Start()
+{
+    AddToCrowd();
+}
+
+void Hachiko::ComponentAgent::Stop()
+{
+    RemoveFromCrowd();
 }
 
 void DebugAgentInfo(const dtCrowdAgent* ag)

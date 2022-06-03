@@ -266,6 +266,26 @@ void Hachiko::GameObject::Start()
     }
 }
 
+void Hachiko::GameObject::Stop()
+{
+    if (started)
+    {
+        for (Component* component : components)
+        {
+            component->Stop();
+        }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Stop();
+            }
+        }
+        started = false;
+    }
+}
+
 void Hachiko::GameObject::Update()
 {
     if (transform->HasChanged())

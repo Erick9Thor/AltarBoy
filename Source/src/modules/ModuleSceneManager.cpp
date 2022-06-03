@@ -72,6 +72,7 @@ void Hachiko::ModuleSceneManager::AttemptScenePlay()
         Event game_state(Event::Type::GAME_STATE);
         game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STARTED);
         App->event->Publish(game_state);
+        main_scene->Start();
 
         GameTimer::Start();
     }
@@ -95,6 +96,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 
         main_scene->SetCullingCamera(App->camera->GetEditorCamera());
         App->camera->SetRenderingCamera(App->camera->GetEditorCamera());
+        main_scene->Stop();
 
         GameTimer::Stop();
 
