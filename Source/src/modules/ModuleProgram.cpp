@@ -1,6 +1,7 @@
 #include "core/hepch.h"
 #include "ModuleProgram.h"
 
+#include "utils/FileSystem.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
@@ -18,6 +19,8 @@ Hachiko::ModuleProgram::~ModuleProgram() = default;
 bool Hachiko::ModuleProgram::Init()
 {
     HE_LOG("INITIALIZING MODULE: PROGRAM");
+
+    CreateGLSLIncludes();
 
     CreateMainProgram();
     CreateSkyboxProgram();
@@ -114,6 +117,37 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateProgram(const char* vtx_shader_p
     glDeleteShader(fragment_shader_id);
 
     return program;
+}
+
+void Hachiko::ModuleProgram::CreateGLSLIncludes() const 
+{
+    PathNode path_node = App->file_system.GetAllFiles(SHADERS_FOLDER, nullptr, nullptr);
+    std::vector<PathNode*> files_in_shaders_folder;
+    path_node.GetFilesRecursively(files_in_shaders_folder);
+
+    const std::string shaders_folder_name = SHADERS_FOLDER;
+
+    for (auto child : files_in_shaders_folder)
+    {
+        std::string local_path = child->path;
+
+        assert(("File is not in shaders folder: ", 
+            local_path.substr(0, shaders_folder_name.size()) == shaders_folder_name));
+        
+        // Get the file path local to shaders/ folder:
+        local_path = local_path.substr(shaders_folder_name.size());
+        // Get the absolute file path:
+        std::string path = StringUtils::Concat(App->file_system.GetWorkingDirectory(), "/" , child->path);
+
+        // Get the file content:
+        std::ifstream file_stream(path);
+        std::stringstream file_buffer;
+        file_buffer << file_stream.rdbuf();
+        file_stream.close();
+
+        // Add the file to GLSL virtual filesystem:
+        glNamedStringARB(GL_SHADER_INCLUDE_ARB, -1, &(local_path.c_str()[0]), -1, file_buffer.str().c_str());
+    }
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()

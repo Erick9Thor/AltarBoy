@@ -109,6 +109,7 @@ namespace Hachiko
         unsigned int CompileShader(unsigned type, const char* source) const;
         void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader) const;
         Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
+        void CreateGLSLIncludes() const;
 
         Program* CreateMainProgram();
         Program* CreateSkyboxProgram();
