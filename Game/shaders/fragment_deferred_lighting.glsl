@@ -5,6 +5,7 @@
 #include "/common/lights.glsl"
 #include "/common/lighting_functions.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
+#include "/common/uniforms/lights_uniform.glsl"
 
 out vec4 fragment_color;
 in vec2 texture_coords;
@@ -16,16 +17,6 @@ layout (binding = 1) uniform sampler2D g_specular_smoothness;
 layout (binding = 2) uniform sampler2D g_normal;
 layout (binding = 3) uniform sampler2D g_position;
 layout (binding = 4) uniform sampler2D g_emissive;
-
-layout(std140, binding = 2) uniform Lights
-{
-    AmbientLight ambient;
-    DirLight directional;
-    PointLight points[MAX_POINT_LIGHTS];
-    SpotLight spots[MAX_SPOT_LIGHTS];
-    uint n_points;
-    uint n_spots;
-} lights;
 
 void main()
 {

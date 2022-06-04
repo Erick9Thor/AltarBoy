@@ -9,16 +9,7 @@
 #include "/common/lighting_functions.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
 #include "/common/uniforms/material_and_texture_uniforms.glsl"
-
-layout(std140, binding = 2) uniform Lights
-{
-    AmbientLight ambient;
-    DirLight directional;
-    PointLight points[MAX_POINT_LIGHTS];
-    SpotLight spots[MAX_SPOT_LIGHTS];
-    uint n_points;
-    uint n_spots;
-} lights;
+#include "/common/uniforms/lights_uniform.glsl"
 
 // Inputs
 in VertexData fragment;
