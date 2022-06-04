@@ -41,12 +41,12 @@ namespace Hachiko
 
     private:
         AnimationController* controller = nullptr;
-        ResourceStateMachine* state_machine = nullptr;
-
-        WindowStateMachine* windowStateMachine = nullptr;
-
         unsigned int active_node = 0;
 
+        // SM CONTROL
+        WindowStateMachine* windowStateMachine = nullptr;
+        ResourceStateMachine* state_machine = nullptr;
+        std::string auxiliary_name;
         unsigned editing_clip_idx = 0;
         YAML::Node selected_model_meta;
         std::vector<std::string> selected_asset_clip_names;

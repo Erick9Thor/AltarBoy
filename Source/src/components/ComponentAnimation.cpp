@@ -16,6 +16,7 @@
 
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
+    auxiliary_name = game_object->name;
     controller = new AnimationController();
     windowStateMachine = new WindowStateMachine(game_object->name); // TODO: Revise
 }
@@ -69,7 +70,7 @@ std::string Hachiko::ComponentAnimation::GetActiveNode() const
 
 void Hachiko::ComponentAnimation::Update()
 {
-    controller->Update(EngineTimer::delta_time * 1000); // TODO: change for GameTimer::delta_time
+    controller->Update(EngineTimer::delta_time * 1000);
 
     if (game_object != nullptr)
     {
@@ -131,8 +132,6 @@ void Hachiko::ComponentAnimation::DrawGui()
         /* CREATE NEW STATE MACHINE */
 
         ImGui::SameLine();
-        std::string auxiliary_name;
-
         if (ImGui::Button("New State machine"))
         {
             ImGui::OpenPopup("NewStateMachine");
@@ -140,7 +139,6 @@ void Hachiko::ComponentAnimation::DrawGui()
 
         if (ImGui::BeginPopup("NewStateMachine"))
         {
-            auxiliary_name = game_object->name;
             ImGui::InputText("Name", &auxiliary_name, ImGuiInputTextFlags_EnterReturnsTrue);
             if (ImGui::Button("Create State Machine"))
             {
@@ -175,7 +173,10 @@ void Hachiko::ComponentAnimation::DrawGui()
                 // state_machine->Save();
             }
 
-            ImGui::Separator();
+            if (state_machine->clips.size() > 0)
+            {
+                ImGui::Separator();
+            }
 
             unsigned int clip_idx = 0;
             while (clip_idx < state_machine->GetNumClips())
@@ -262,7 +263,6 @@ void Hachiko::ComponentAnimation::DrawGui()
                     }
                 }
             }
-
         }
     }
 

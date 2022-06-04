@@ -11,7 +11,17 @@ void Hachiko::ResourceStateMachine::RemoveTransition(unsigned int index)
 Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE)
 {}
 
-Hachiko::ResourceStateMachine::~ResourceStateMachine() {}
+Hachiko::ResourceStateMachine::~ResourceStateMachine() 
+{
+    for (std::vector<Clip>::iterator it = clips.begin(), end = clips.end(); it != end; ++it)
+    {
+        App->resources->ReleaseResource(it->animation);
+    }
+
+    clips.clear();
+    nodes.clear();
+    transitions.clear();
+}
 
 void Hachiko::ResourceStateMachine::AddClip(const std::string& name, UID animation, bool loop)
 {

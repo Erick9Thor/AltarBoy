@@ -19,7 +19,6 @@ Hachiko::WindowStateMachine::~WindowStateMachine()
 {
     animation = nullptr;
     ed::DestroyEditor(context);
-
 }
 
 void Hachiko::WindowStateMachine::Update()
