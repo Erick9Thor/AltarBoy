@@ -8,6 +8,7 @@
 #include "/common/lights.glsl"
 #include "/common/lighting_functions.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
+#include "/common/uniforms/material_and_texture_uniforms.glsl"
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -18,13 +19,6 @@ layout(std140, binding = 2) uniform Lights
     uint n_points;
     uint n_spots;
 } lights;
-
-// Texture Batching
-uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
-
-readonly layout(std430, binding = 1) buffer Materials {
-    Material materials[];
-} materialsBuffer;
 
 // Inputs
 in VertexData fragment;

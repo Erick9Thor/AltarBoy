@@ -5,6 +5,7 @@
 #include "/common/vertex_data.glsl"
 #include "/common/material.glsl"
 #include "/common/material_property_functions.glsl"
+#include "/common/uniforms/material_and_texture_uniforms.glsl"
 
 // G Buffer textures:
 layout (location = 0) out vec4 g_diffuse;
@@ -12,13 +13,6 @@ layout (location = 1) out vec4 g_specular_smoothness;
 layout (location = 2) out vec4 g_normal;
 layout (location = 3) out vec4 g_position;
 layout (location = 4) out vec4 g_emissive;
-
-readonly layout(std430, binding = 1) buffer Materials {
-    Material materials[];
-} materialsBuffer;
-
-// Texture Batching
-uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
 
 // Inputs
 in VertexData fragment;
