@@ -222,43 +222,18 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     
     if (draw_deferred)
     {
-        DrawDeferred(batch_manager);
+        DrawDeferred(scene, camera, batch_manager);
     }
     else
     {
-        // NOTE: Forward rendering still has that weird stuttering bug, fix this.
+        DrawPreForwardPass(scene, camera);
+        // TODO: Forward rendering still has that weird stuttering bug, fix this.
         DrawForward(batch_manager);
     }
-
-    // ------------------------- SKYBOX & DEBUG DRAW --------------------------
-
-    if (draw_skybox)
-    {
-        scene->GetSkybox()->Draw(camera);
-    }
-
-    // Draw debug draw stuff:
-    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
-
-    //GameObject* selected_go = App->editor->GetSelectedGameObject();
-    /*if (outline_selection && selected_go)
-    {
-        glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
-        glStencilMask(0X00);
-        glDisable(GL_DEPTH_TEST);
-
-        Program* outline_program = App->program->GetStencilProgram();
-        outline_program->Activate();
-        selected_go->DrawStencil(camera, outline_program);
-        Program::Deactivate();
-
-        glStencilMask(0XFF);
-        glStencilFunc(GL_ALWAYS, 0, 0xFF);
-        glEnable(GL_DEPTH_TEST);
-    }*/
 }
 
-void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager) 
+void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera, 
+    BatchManager* batch_manager)
 {
     Program* program = nullptr;
 
@@ -329,6 +304,10 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // ------------------------------ PRE FORWARD -----------------------------
+    
+    DrawPreForwardPass(scene, camera);
+
     // ----------------------------- FORWARD PASS -----------------------------
 
     // If forward pass is disabled on the settings, return:
@@ -386,6 +365,37 @@ void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager)
     batch_manager->DrawTransparentBatches(program);
 
     Program::Deactivate();
+}
+
+void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const
+{
+    // This method is to draw things that needs to be drawn before forward pass 
+    // of deferred rendering or before forward rendering.
+
+    if (draw_skybox)
+    {
+        scene->GetSkybox()->Draw(camera);
+    }
+
+    // Draw debug draw stuff:
+    ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
+
+    //GameObject* selected_go = App->editor->GetSelectedGameObject();
+    /*if (outline_selection && selected_go)
+    {
+        glStencilFunc(GL_NOTEQUAL, 1, 0XFF);
+        glStencilMask(0X00);
+        glDisable(GL_DEPTH_TEST);
+
+        Program* outline_program = App->program->GetStencilProgram();
+        outline_program->Activate();
+        selected_go->DrawStencil(camera, outline_program);
+        Program::Deactivate();
+
+        glStencilMask(0XFF);
+        glStencilFunc(GL_ALWAYS, 0, 0xFF);
+        glEnable(GL_DEPTH_TEST);
+    }*/
 }
 
 void Hachiko::ModuleRender::SetRenderMode(bool is_deferred) 

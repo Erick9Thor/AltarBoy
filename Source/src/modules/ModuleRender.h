@@ -82,8 +82,9 @@ namespace Hachiko
         void ResizeFrameBuffer(int heigth, int width) const;
         void ManageResolution(ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
-        void DrawDeferred(BatchManager* batch_manager);
+        void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void DrawForward(BatchManager* batch_manager);
+        void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();
