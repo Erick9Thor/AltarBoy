@@ -3,6 +3,7 @@
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
 #include "CrystalExplosion.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -105,6 +106,464 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_explosive_crystal@bool'"].IsDefined())
 	{
 		_explosive_crystal = load_node["'_explosive_crystal@bool'"].as<bool>();
+	}
+}
+
+void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
+{
+	if (_player != nullptr)
+	{
+		node["'_player@GameObject*'"] = _player->GetID();
+	}
+	else
+	{
+		node["'_player@GameObject*'"] = 0;
+	}
+
+	if (_button_back != nullptr && _button_back->GetGameObject() != nullptr)
+	{
+		node["'_button_back@ComponentButton*'"] = _button_back->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_button_back@ComponentButton*'"] = 0;
+	}
+
+	if (_teleport_next_pos != nullptr && _teleport_next_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_next_pos@ComponentButton*'"] = _teleport_next_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_next_pos@ComponentButton*'"] = 0;
+	}
+
+	if (_teleport_prev_pos != nullptr && _teleport_prev_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_prev_pos@ComponentButton*'"] = _teleport_prev_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_prev_pos@ComponentButton*'"] = 0;
+	}
+
+	if (_teleport_add_pos != nullptr && _teleport_add_pos->GetGameObject() != nullptr)
+	{
+		node["'_teleport_add_pos@ComponentButton*'"] = _teleport_add_pos->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_teleport_add_pos@ComponentButton*'"] = 0;
+	}
+
+	if (_add_health != nullptr && _add_health->GetGameObject() != nullptr)
+	{
+		node["'_add_health@ComponentButton*'"] = _add_health->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_add_health@ComponentButton*'"] = 0;
+	}
+
+	if (_remove_health != nullptr && _remove_health->GetGameObject() != nullptr)
+	{
+		node["'_remove_health@ComponentButton*'"] = _remove_health->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_remove_health@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_max_hp != nullptr && _increase_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = _increase_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_max_hp@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_max_hp != nullptr && _decrease_max_hp->GetGameObject() != nullptr)
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = _decrease_max_hp->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_max_hp@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_move_speed != nullptr && _increase_move_speed->GetGameObject() != nullptr)
+	{
+		node["'_increase_move_speed@ComponentButton*'"] = _increase_move_speed->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_move_speed@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_move_speed != nullptr && _decrease_move_speed->GetGameObject() != nullptr)
+	{
+		node["'_decrease_move_speed@ComponentButton*'"] = _decrease_move_speed->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_move_speed@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_attack_cd != nullptr && _increase_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = _increase_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_attack_cd@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_attack_cd != nullptr && _decrease_attack_cd->GetGameObject() != nullptr)
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = _decrease_attack_cd->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_attack_cd@ComponentButton*'"] = 0;
+	}
+
+	if (_increase_attack_power != nullptr && _increase_attack_power->GetGameObject() != nullptr)
+	{
+		node["'_increase_attack_power@ComponentButton*'"] = _increase_attack_power->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_increase_attack_power@ComponentButton*'"] = 0;
+	}
+
+	if (_decrease_attack_power != nullptr && _decrease_attack_power->GetGameObject() != nullptr)
+	{
+		node["'_decrease_attack_power@ComponentButton*'"] = _decrease_attack_power->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_decrease_attack_power@ComponentButton*'"] = 0;
+	}
+
+	if (_god_mode != nullptr && _god_mode->GetGameObject() != nullptr)
+	{
+		node["'_god_mode@ComponentButton*'"] = _god_mode->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_god_mode@ComponentButton*'"] = 0;
+	}
+
+	if (_flying_mode != nullptr && _flying_mode->GetGameObject() != nullptr)
+	{
+		node["'_flying_mode@ComponentButton*'"] = _flying_mode->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_flying_mode@ComponentButton*'"] = 0;
+	}
+
+	if (_spawn_enemy != nullptr && _spawn_enemy->GetGameObject() != nullptr)
+	{
+		node["'_spawn_enemy@ComponentButton*'"] = _spawn_enemy->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_spawn_enemy@ComponentButton*'"] = 0;
+	}
+
+	if (_unlock_skills != nullptr && _unlock_skills->GetGameObject() != nullptr)
+	{
+		node["'_unlock_skills@ComponentButton*'"] = _unlock_skills->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_unlock_skills@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_performance_output != nullptr && _toggle_performance_output->GetGameObject() != nullptr)
+	{
+		node["'_toggle_performance_output@ComponentButton*'"] = _toggle_performance_output->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_performance_output@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_wireframe != nullptr && _toggle_wireframe->GetGameObject() != nullptr)
+	{
+		node["'_toggle_wireframe@ComponentButton*'"] = _toggle_wireframe->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_wireframe@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_show_colliders != nullptr && _toggle_show_colliders->GetGameObject() != nullptr)
+	{
+		node["'_toggle_show_colliders@ComponentButton*'"] = _toggle_show_colliders->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_show_colliders@ComponentButton*'"] = 0;
+	}
+
+	if (_exit_debug != nullptr && _exit_debug->GetGameObject() != nullptr)
+	{
+		node["'_exit_debug@ComponentButton*'"] = _exit_debug->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_exit_debug@ComponentButton*'"] = 0;
+	}
+
+	if (_tp_pos1 != nullptr)
+	{
+		node["'_tp_pos1@GameObject*'"] = _tp_pos1->GetID();
+	}
+	else
+	{
+		node["'_tp_pos1@GameObject*'"] = 0;
+	}
+
+	if (_tp_pos2 != nullptr)
+	{
+		node["'_tp_pos2@GameObject*'"] = _tp_pos2->GetID();
+	}
+	else
+	{
+		node["'_tp_pos2@GameObject*'"] = 0;
+	}
+
+	if (_tp_pos3 != nullptr)
+	{
+		node["'_tp_pos3@GameObject*'"] = _tp_pos3->GetID();
+	}
+	else
+	{
+		node["'_tp_pos3@GameObject*'"] = 0;
+	}
+}
+
+void Hachiko::Scripting::DebugManager::OnLoad()
+{
+	if (load_node["'_player@GameObject*'"].IsDefined())
+	{
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_button_back@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _button_back_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_button_back@ComponentButton*'"].as<unsigned long long>());
+		if (_button_back_owner__temp != nullptr)
+		{
+			_button_back = _button_back_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_teleport_next_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_next_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_next_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_next_pos_owner__temp != nullptr)
+		{
+			_teleport_next_pos = _teleport_next_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_teleport_prev_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_prev_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_prev_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_prev_pos_owner__temp != nullptr)
+		{
+			_teleport_prev_pos = _teleport_prev_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_teleport_add_pos@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _teleport_add_pos_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_teleport_add_pos@ComponentButton*'"].as<unsigned long long>());
+		if (_teleport_add_pos_owner__temp != nullptr)
+		{
+			_teleport_add_pos = _teleport_add_pos_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_add_health@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _add_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_add_health@ComponentButton*'"].as<unsigned long long>());
+		if (_add_health_owner__temp != nullptr)
+		{
+			_add_health = _add_health_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_remove_health@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _remove_health_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_remove_health@ComponentButton*'"].as<unsigned long long>());
+		if (_remove_health_owner__temp != nullptr)
+		{
+			_remove_health = _remove_health_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_max_hp_owner__temp != nullptr)
+		{
+			_increase_max_hp = _increase_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_max_hp@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_max_hp_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_max_hp@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_max_hp_owner__temp != nullptr)
+		{
+			_decrease_max_hp = _decrease_max_hp_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_move_speed@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_move_speed@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_move_speed_owner__temp != nullptr)
+		{
+			_increase_move_speed = _increase_move_speed_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_move_speed@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_move_speed_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_move_speed@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_move_speed_owner__temp != nullptr)
+		{
+			_decrease_move_speed = _decrease_move_speed_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_attack_cd_owner__temp != nullptr)
+		{
+			_increase_attack_cd = _increase_attack_cd_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_attack_cd@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_attack_cd_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_cd@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_attack_cd_owner__temp != nullptr)
+		{
+			_decrease_attack_cd = _decrease_attack_cd_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_increase_attack_power@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _increase_attack_power_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_increase_attack_power@ComponentButton*'"].as<unsigned long long>());
+		if (_increase_attack_power_owner__temp != nullptr)
+		{
+			_increase_attack_power = _increase_attack_power_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_decrease_attack_power@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _decrease_attack_power_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_decrease_attack_power@ComponentButton*'"].as<unsigned long long>());
+		if (_decrease_attack_power_owner__temp != nullptr)
+		{
+			_decrease_attack_power = _decrease_attack_power_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_god_mode@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _god_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_god_mode@ComponentButton*'"].as<unsigned long long>());
+		if (_god_mode_owner__temp != nullptr)
+		{
+			_god_mode = _god_mode_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_flying_mode@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _flying_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_flying_mode@ComponentButton*'"].as<unsigned long long>());
+		if (_flying_mode_owner__temp != nullptr)
+		{
+			_flying_mode = _flying_mode_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_spawn_enemy@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _spawn_enemy_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_spawn_enemy@ComponentButton*'"].as<unsigned long long>());
+		if (_spawn_enemy_owner__temp != nullptr)
+		{
+			_spawn_enemy = _spawn_enemy_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_unlock_skills@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _unlock_skills_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_unlock_skills@ComponentButton*'"].as<unsigned long long>());
+		if (_unlock_skills_owner__temp != nullptr)
+		{
+			_unlock_skills = _unlock_skills_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_performance_output@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_performance_output_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_performance_output@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_performance_output_owner__temp != nullptr)
+		{
+			_toggle_performance_output = _toggle_performance_output_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_wireframe@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_wireframe_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_wireframe@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_wireframe_owner__temp != nullptr)
+		{
+			_toggle_wireframe = _toggle_wireframe_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_show_colliders@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_show_colliders_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_show_colliders@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_show_colliders_owner__temp != nullptr)
+		{
+			_toggle_show_colliders = _toggle_show_colliders_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_exit_debug@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _exit_debug_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_exit_debug@ComponentButton*'"].as<unsigned long long>());
+		if (_exit_debug_owner__temp != nullptr)
+		{
+			_exit_debug = _exit_debug_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_tp_pos1@GameObject*'"].IsDefined())
+	{
+		_tp_pos1 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos1@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tp_pos2@GameObject*'"].IsDefined())
+	{
+		_tp_pos2 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos2@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_tp_pos3@GameObject*'"].IsDefined())
+	{
+		_tp_pos3 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos3@GameObject*'"].as<unsigned long long>());
 	}
 }
 
@@ -458,13 +917,13 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_movement_speed@float'"] = _movement_speed;
 
-	if (_dash_indicator != nullptr)
+	if (_attack_indicator != nullptr)
 	{
-		node["'_dash_indicator@GameObject*'"] = _dash_indicator->GetID();
+		node["'_attack_indicator@GameObject*'"] = _attack_indicator->GetID();
 	}
 	else
 	{
-		node["'_dash_indicator@GameObject*'"] = 0;
+		node["'_attack_indicator@GameObject*'"] = 0;
 	}
 
 	if (_goal != nullptr)
@@ -480,25 +939,9 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_distance@float'"] = _dash_distance;
 
-	node["'_dash_progress@float'"] = _dash_progress;
-
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
-	node["'_dash_timer@float'"] = _dash_timer;
-
-	node["'_dash_count@int'"] = _dash_count;
-
 	node["'_max_dash_count@int'"] = _max_dash_count;
-
-	node["'_is_dashing@bool'"] = _is_dashing;
-
-	node["'_has_cooldown@bool'"] = _has_cooldown;
-
-	node["'_is_falling@bool'"] = _is_falling;
-
-	node["'_dash_start@math::float3'"] = _dash_start;
-
-	node["'_dash_direction@math::float3'"] = _dash_direction;
 
 	node["'_raycast_min_range@float'"] = _raycast_min_range;
 
@@ -508,15 +951,9 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_attack_cooldown@float'"] = _attack_cooldown;
 
-	node["'_should_rotate@bool'"] = _should_rotate;
-
-	node["'_rotation_progress@float'"] = _rotation_progress;
+	node["'_attack_duration@float'"] = _attack_duration;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
-
-	node["'_rotation_start@math::Quat'"] = _rotation_start;
-
-	node["'_rotation_target@math::Quat'"] = _rotation_target;
 
 	if (_camera != nullptr)
 	{
@@ -545,9 +982,9 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_movement_speed = load_node["'_movement_speed@float'"].as<float>();
 	}
 
-	if (load_node["'_dash_indicator@GameObject*'"].IsDefined())
+	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
-		_dash_indicator = SceneManagement::FindInCurrentScene(load_node["'_dash_indicator@GameObject*'"].as<unsigned long long>());
+		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_goal@GameObject*'"].IsDefined())
@@ -565,54 +1002,14 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_distance = load_node["'_dash_distance@float'"].as<float>();
 	}
 
-	if (load_node["'_dash_progress@float'"].IsDefined())
-	{
-		_dash_progress = load_node["'_dash_progress@float'"].as<float>();
-	}
-
 	if (load_node["'_dash_cooldown@float'"].IsDefined())
 	{
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_dash_timer@float'"].IsDefined())
-	{
-		_dash_timer = load_node["'_dash_timer@float'"].as<float>();
-	}
-
-	if (load_node["'_dash_count@int'"].IsDefined())
-	{
-		_dash_count = load_node["'_dash_count@int'"].as<int>();
-	}
-
 	if (load_node["'_max_dash_count@int'"].IsDefined())
 	{
 		_max_dash_count = load_node["'_max_dash_count@int'"].as<int>();
-	}
-
-	if (load_node["'_is_dashing@bool'"].IsDefined())
-	{
-		_is_dashing = load_node["'_is_dashing@bool'"].as<bool>();
-	}
-
-	if (load_node["'_has_cooldown@bool'"].IsDefined())
-	{
-		_has_cooldown = load_node["'_has_cooldown@bool'"].as<bool>();
-	}
-
-	if (load_node["'_is_falling@bool'"].IsDefined())
-	{
-		_is_falling = load_node["'_is_falling@bool'"].as<bool>();
-	}
-
-	if (load_node["'_dash_start@math::float3'"].IsDefined())
-	{
-		_dash_start = load_node["'_dash_start@math::float3'"].as<math::float3>();
-	}
-
-	if (load_node["'_dash_direction@math::float3'"].IsDefined())
-	{
-		_dash_direction = load_node["'_dash_direction@math::float3'"].as<math::float3>();
 	}
 
 	if (load_node["'_raycast_min_range@float'"].IsDefined())
@@ -635,29 +1032,14 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_attack_cooldown = load_node["'_attack_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_should_rotate@bool'"].IsDefined())
+	if (load_node["'_attack_duration@float'"].IsDefined())
 	{
-		_should_rotate = load_node["'_should_rotate@bool'"].as<bool>();
-	}
-
-	if (load_node["'_rotation_progress@float'"].IsDefined())
-	{
-		_rotation_progress = load_node["'_rotation_progress@float'"].as<float>();
+		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
 	{
 		_rotation_duration = load_node["'_rotation_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_rotation_start@math::Quat'"].IsDefined())
-	{
-		_rotation_start = load_node["'_rotation_start@math::Quat'"].as<math::Quat>();
-	}
-
-	if (load_node["'_rotation_target@math::Quat'"].IsDefined())
-	{
-		_rotation_target = load_node["'_rotation_target@math::Quat'"].as<math::Quat>();
 	}
 
 	if (load_node["'_camera@GameObject*'"].IsDefined())

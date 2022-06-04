@@ -1927,7 +1927,7 @@ child:
         "'_decrease_attack_power@ComponentButton*'": 0
         "'_god_mode@ComponentButton*'": 0
         "'_flying_mode@ComponentButton*'": 0
-        "'_spawn_enemy@ComponentButton*'": 14926013181255891169
+        "'_spawn_enemy@ComponentButton*'": 6133761453928303144
         "'_unlock_skills@ComponentButton*'": 0
         "'_toggle_performance_output@ComponentButton*'": 0
         "'_toggle_wireframe@ComponentButton*'": 9594652102806341443
@@ -1951,7 +1951,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1166, 623]
+            size: [1323, 767]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2226,17 +2226,17 @@ child:
               - id: 5151184871265972030
                 type: 12
                 enabled: true
-          - id: 14926013181255891169
+          - id: 6133761453928303144
             name: SpawnEnemy
             enabled: true
             component:
-              - id: 9108997555621338838
+              - id: 13298870460761980755
                 type: 1
                 enabled: true
                 position: [0, 0, 0]
                 rotation: [0, 0, 0, 1]
                 scale: [1, 1, 1]
-              - id: 2379322924674353223
+              - id: 10934972873552334952
                 type: 10
                 enabled: true
                 position: [100, -150, 0]
@@ -2245,10 +2245,10 @@ child:
                 rotation: [0, 0, 0, 1]
                 pivot: [0.5, 0.5]
                 anchor: [0, 1]
-              - id: 5622957620778814074
+              - id: 2383747127341127498
                 type: 9
                 enabled: true
-              - id: 4543026670700522923
+              - id: 5114495026237001191
                 type: 11
                 enabled: true
                 image_id: 1222313871679734493
@@ -2257,7 +2257,7 @@ child:
                 use_hover_image: false
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
-              - id: 4281072548753156242
+              - id: 914417455542657335
                 type: 12
                 enabled: true
       - id: 18085145873429673956

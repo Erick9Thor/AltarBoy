@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
 #include "CrystalExplosion.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "MainMenuManager.h"
@@ -23,6 +24,36 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("_crashing_index", _crashing_index);
 	Editor::Show("_explosion_radius", _explosion_radius);
 	Editor::Show("_explosive_crystal", _explosive_crystal);
+}
+
+void Hachiko::Scripting::DebugManager::OnEditor()
+{
+	Editor::Show("_player", _player);
+	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
+	Editor::Show<ComponentButton>("_teleport_next_pos", "ComponentButton*", _teleport_next_pos);
+	Editor::Show<ComponentButton>("_teleport_prev_pos", "ComponentButton*", _teleport_prev_pos);
+	Editor::Show<ComponentButton>("_teleport_add_pos", "ComponentButton*", _teleport_add_pos);
+	Editor::Show<ComponentButton>("_add_health", "ComponentButton*", _add_health);
+	Editor::Show<ComponentButton>("_remove_health", "ComponentButton*", _remove_health);
+	Editor::Show<ComponentButton>("_increase_max_hp", "ComponentButton*", _increase_max_hp);
+	Editor::Show<ComponentButton>("_decrease_max_hp", "ComponentButton*", _decrease_max_hp);
+	Editor::Show<ComponentButton>("_increase_move_speed", "ComponentButton*", _increase_move_speed);
+	Editor::Show<ComponentButton>("_decrease_move_speed", "ComponentButton*", _decrease_move_speed);
+	Editor::Show<ComponentButton>("_increase_attack_cd", "ComponentButton*", _increase_attack_cd);
+	Editor::Show<ComponentButton>("_decrease_attack_cd", "ComponentButton*", _decrease_attack_cd);
+	Editor::Show<ComponentButton>("_increase_attack_power", "ComponentButton*", _increase_attack_power);
+	Editor::Show<ComponentButton>("_decrease_attack_power", "ComponentButton*", _decrease_attack_power);
+	Editor::Show<ComponentButton>("_god_mode", "ComponentButton*", _god_mode);
+	Editor::Show<ComponentButton>("_flying_mode", "ComponentButton*", _flying_mode);
+	Editor::Show<ComponentButton>("_spawn_enemy", "ComponentButton*", _spawn_enemy);
+	Editor::Show<ComponentButton>("_unlock_skills", "ComponentButton*", _unlock_skills);
+	Editor::Show<ComponentButton>("_toggle_performance_output", "ComponentButton*", _toggle_performance_output);
+	Editor::Show<ComponentButton>("_toggle_wireframe", "ComponentButton*", _toggle_wireframe);
+	Editor::Show<ComponentButton>("_toggle_show_colliders", "ComponentButton*", _toggle_show_colliders);
+	Editor::Show<ComponentButton>("_exit_debug", "ComponentButton*", _exit_debug);
+	Editor::Show("_tp_pos1", _tp_pos1);
+	Editor::Show("_tp_pos2", _tp_pos2);
+	Editor::Show("_tp_pos3", _tp_pos3);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()
@@ -77,29 +108,18 @@ void Hachiko::Scripting::PlayerCamera::OnEditor()
 void Hachiko::Scripting::PlayerController::OnEditor()
 {
 	Editor::Show("_movement_speed", _movement_speed);
-	Editor::Show("_dash_indicator", _dash_indicator);
+	Editor::Show("_attack_indicator", _attack_indicator);
 	Editor::Show("_goal", _goal);
 	Editor::Show("_dash_duration", _dash_duration);
 	Editor::Show("_dash_distance", _dash_distance);
-	Editor::Show("_dash_progress", _dash_progress);
 	Editor::Show("_dash_cooldown", _dash_cooldown);
-	Editor::Show("_dash_timer", _dash_timer);
-	Editor::Show("_dash_count", _dash_count);
 	Editor::Show("_max_dash_count", _max_dash_count);
-	Editor::Show("_is_dashing", _is_dashing);
-	Editor::Show("_has_cooldown", _has_cooldown);
-	Editor::Show("_is_falling", _is_falling);
-	Editor::Show("_dash_start", _dash_start);
-	Editor::Show("_dash_direction", _dash_direction);
 	Editor::Show("_raycast_min_range", _raycast_min_range);
 	Editor::Show("_raycast_max_range", _raycast_max_range);
 	Editor::Show("_attack_radius", _attack_radius);
 	Editor::Show("_attack_cooldown", _attack_cooldown);
-	Editor::Show("_should_rotate", _should_rotate);
-	Editor::Show("_rotation_progress", _rotation_progress);
+	Editor::Show("_attack_duration", _attack_duration);
 	Editor::Show("_rotation_duration", _rotation_duration);
-	Editor::Show("_rotation_start", _rotation_start);
-	Editor::Show("_rotation_target", _rotation_target);
 	Editor::Show("_camera", _camera);
 	Editor::Show("_ui_damage", _ui_damage);
 }
