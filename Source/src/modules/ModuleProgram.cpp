@@ -30,8 +30,8 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredGeometryPassProgram();
     CreateDeferredLightingPassProgram();
 
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || !ui_text_program || 
-        !deferred_geometry_program || !deferred_lighting_program)
+    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || 
+        !ui_text_program || !deferred_geometry_program || !deferred_lighting_program)
     {
         return false;
     }

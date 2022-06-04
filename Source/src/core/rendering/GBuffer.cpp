@@ -79,7 +79,7 @@ void Hachiko::GBuffer::Generate()
     // Generate depth color buffer as texture:
     glGenTextures(1, &_depth_texture);
     glBindTexture(GL_TEXTURE_2D, _depth_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, default_width, default_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, default_width, default_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depth_texture, 0);
@@ -148,7 +148,7 @@ void Hachiko::GBuffer::Resize(int width, int height) const
 
     // Depth color stored in g buffer:
     glBindTexture(GL_TEXTURE_2D, _depth_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 }
 
 void Hachiko::GBuffer::BlitDepth(unsigned int target_buffer_id, int width, int height) const 

@@ -12,14 +12,11 @@
 #include "ModuleEditor.h"
 #include "ModuleUserInterface.h"
 #include "ModuleNavigation.h"
+#include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform.h"
 #include "resources/ResourceNavMesh.h"
-
-#ifdef PLAY_BUILD
-#include "ModuleInput.h"
-#endif
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -77,7 +74,7 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fb_texture, 0);
     glGenRenderbuffers(1, &depth_stencil_buffer);
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, fb_width, fb_height);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, fb_width, fb_height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth_stencil_buffer);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -109,7 +106,7 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
 
     // TODO: Do we need this for G buffer as well? If so, do it.
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH32F_STENCIL8, heigth, width);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
@@ -130,16 +127,11 @@ void Hachiko::ModuleRender::CreateContext()
 {
     HE_LOG("Creating Renderer context");
 
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1); // we want a double buffer
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 32);
-    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8); // we want to have a stencil buffer with 8 bits
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG); // enable context debug
-
     context = SDL_GL_CreateContext(App->window->GetWindow());
     GLenum err = glewInit();
+
+    int value = 0;
+    SDL_GL_GetAttribute(SDL_GL_DEPTH_SIZE, &value);
 }
 
 void Hachiko::ModuleRender::SetGLOptions()
@@ -164,24 +156,20 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     Scene* active_scene = App->scene_manager->GetActiveScene();
 
 #ifdef PLAY_BUILD
-    int width, height;
+    int width = 0; 
+    int height = 0;
     App->window->GetWindowSize(width, height);
-    App->camera->OnResize(width, height);
+    
     glViewport(0, 0, width, height);
+    
+    App->camera->OnResize(width, height);
+#endif
 
+    ManageResolution(camera);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    glStencilFunc(GL_ALWAYS, 1, 0XFF);
-    glStencilMask(0x00); // Prevent background from filling stencil
-#else
-    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-    ManageResolution(camera);
-    
-    //glStencilFunc(GL_ALWAYS, 1, 0XFF);
-    //glStencilMask(0x00); // Prevent background from filling stencil
-#endif
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);  
-
+      
     if (active_scene == nullptr)
     {
         return UpdateStatus::UPDATE_CONTINUE;
@@ -211,9 +199,16 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 
     App->ui->DrawUI(active_scene);
 
+    // If in play build, blit frame_buffer to the default frame buffer and render to the whole 
+    // screen, if not, bind default frame buffer:
 #ifndef PLAY_BUILD
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+#else
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 #endif
+
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -266,6 +261,16 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager) 
 {
     Program* program = nullptr;
+
+    if (App->input->GetKey(SDL_SCANCODE_F5) == KeyState::KEY_DOWN)
+    {
+        deferred_mode = (deferred_mode + 1) % 7;
+    }
+
+    if (App->input->GetKey(SDL_SCANCODE_F4) == KeyState::KEY_DOWN)
+    {
+        render_forward_pass = !render_forward_pass;
+    }
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
@@ -324,7 +329,7 @@ void Hachiko::ModuleRender::DrawDeferred(BatchManager* batch_manager)
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    //// ----------------------------- FORWARD PASS -----------------------------
+    // ----------------------------- FORWARD PASS -----------------------------
 
     // If forward pass is disabled on the settings, return:
     if (!render_forward_pass)

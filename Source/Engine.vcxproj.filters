@@ -570,6 +570,9 @@
     <ClCompile Include="src\core\rendering\GBuffer.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\batching\GeometryBatch.cpp" />
+    <ClCompile Include="src\batching\BatchManager.cpp" />
+    <ClCompile Include="src\batching\TextureBatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2269,6 +2272,10 @@
     <ClInclude Include="src\core\rendering\GBuffer.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\batching\DrawCommand.h" />
+    <ClInclude Include="src\batching\GeometryBatch.h" />
+    <ClInclude Include="src\batching\BatchManager.h" />
+    <ClInclude Include="src\batching\TextureBatch.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
