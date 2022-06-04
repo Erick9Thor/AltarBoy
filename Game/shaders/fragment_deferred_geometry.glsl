@@ -23,7 +23,7 @@ uniform sampler2DArray allMyTextures[gl_MaxTextureImageUnits-8];
 // Inputs
 in VertexData fragment;
 in flat uint instance;
- 
+
 void main()
 {
     Material material = materialsBuffer.materials[instance];
