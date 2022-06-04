@@ -310,6 +310,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // ----------------------------- FORWARD PASS -----------------------------
 
+    // Clear Transparent Batches:
+    batch_manager->ClearTransparentBatchesDrawList();
+
     // If forward pass is disabled on the settings, return:
     if (!render_forward_pass)
     {
@@ -323,9 +326,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     {
         return;
     }
-
-    // Clear Transparent Batches:
-    batch_manager->ClearTransparentBatchesDrawList();
     
     // Get the targets that has transparent materials. These targets will be
     // rendered with regular forward rendering pass:
