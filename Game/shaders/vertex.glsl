@@ -1,5 +1,10 @@
 # version 460
 
+#extension GL_ARB_shading_language_include : require
+
+#include "/common/vertex_data.glsl"
+#include "/common/bones.glsl"
+
 layout(location=0) in vec3 in_position;
 layout(location=1) in vec3 in_normal;
 layout(location=2) in vec2 in_tex_coord;
@@ -7,8 +12,6 @@ layout(location=3) in vec3 in_tangent;
 layout(location=4) in ivec4 in_bone_indices;
 layout(location=5) in vec4 in_bone_weights;
 layout(location=6) in uint instance_idx;
-
-#define MAX_BONES 64
 
 uniform bool has_bones;
 
@@ -29,25 +32,12 @@ readonly layout(std430, row_major, binding = 4) buffer Palettes
  mat4 palettes[];
 };
 
-struct PalettePerInstance {
-    uint  numBones;
-    uint  paletteOffset;
-    uint  padding0, padding1;
-};
-
 readonly layout(std430, row_major, binding = 5) buffer PalettesPerInstances
 {
  PalettePerInstance paletteInstanceInfo[];
 };
 
-// Outputs
-struct VertexData
-{
-    vec3 normal;
-    vec3 tangent;
-    vec3 pos;
-    vec2 tex_coord;
-};
+// Outputs:
 out VertexData fragment;
 out flat uint instance;
 
@@ -67,7 +57,6 @@ void main()
 
         position = (skin_transform*vec4(in_position, 1.0));
         normal = (skin_transform*vec4(in_normal, 0.0));
-        //tangent = (skin_transform*vec4(in_tangent, 0.0));
     }
 
     gl_Position = camera.proj * camera.view *  models[instance] * position;
