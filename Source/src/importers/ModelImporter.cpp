@@ -123,11 +123,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     if (meta[ANIMATIONS].IsDefined())
     {
         ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->children[0]->CreateComponent(Component::Type::ANIMATION));
-        for (int i = 0; i < meta[ANIMATIONS].size(); i++)
-        {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, meta[ANIMATIONS][i].as<UID>()));
-            animation->animations.push_back(r_animation);
-        }
+
     }
 
     // Create prefab

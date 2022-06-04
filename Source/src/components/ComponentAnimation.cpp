@@ -17,7 +17,6 @@
 Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Component(Type::ANIMATION, container)
 {
     controller = new AnimationController();
-
     windowStateMachine = new WindowStateMachine(game_object->name); // TODO: Revise
 }
 
@@ -26,47 +25,55 @@ Hachiko::ComponentAnimation::~ComponentAnimation()
     delete windowStateMachine;
     delete state_machine;
     delete controller;
-    for (auto& animation : animations)
-    {
-        App->resources->ReleaseResource(animation);
-    }
 }
 
-void Hachiko::ComponentAnimation::StartAnimating(unsigned int animation_index, bool on_loop, unsigned int fade_in_time_ms)
+void Hachiko::ComponentAnimation::StartAnimating()
 {
-    if (animation_index >= animations.size())
-    {
-        return;
-    }
-
-    current_animation = animations[animation_index];
-
-    StartAnimating(on_loop, fade_in_time_ms);
-}
-
-void Hachiko::ComponentAnimation::StartAnimating(bool on_loop, unsigned int fade_in_time_ms)
-{
-    if (!animations.empty())
-    {
-        controller->Play(current_animation, on_loop, fade_in_time_ms);
-    }
+    PlayNode(state_machine->GetDefaultNode(), 0);
 }
 
 void Hachiko::ComponentAnimation::StopAnimating()
 {
     controller->Stop();
+    unsigned active_node = 0;
+}
+
+void Hachiko::ComponentAnimation::ResetState()
+{
+    controller->Stop();
+    PlayNode(state_machine->GetDefaultNode(), 0);
+}
+
+void Hachiko::ComponentAnimation::SendTrigger(const std::string& trigger) 
+{
+    std::string active = GetActiveNode();
+
+    for (unsigned int i = 0; i < state_machine->GetNumTransitions(); ++i)
+    {
+        if (state_machine->GetTransitionSource(i) == active && state_machine->GetTransitionTrigger(i) == trigger)
+        {
+            PlayNode(state_machine->GetTransitionTarget(i), state_machine->GetTransitionBlend(i));
+        }
+    }
+}
+
+std::string Hachiko::ComponentAnimation::GetActiveNode() const
+{
+    if (state_machine != nullptr && active_node < state_machine->GetNumNodes())
+    {
+        return state_machine->GetNodeName(active_node);
+    }
+
+    return std::string();
 }
 
 void Hachiko::ComponentAnimation::Update()
 {
-    if (current_animation)
-    {
-        controller->Update(EngineTimer::delta_time * 1000); // TODO: change for GameTimer::delta_time
+    controller->Update(EngineTimer::delta_time * 1000); // TODO: change for GameTimer::delta_time
 
-        if (game_object != nullptr)
-        {
-            UpdatedGameObject(game_object);
-        }
+    if (game_object != nullptr)
+    {
+        UpdatedGameObject(game_object);
     }
 }
 
@@ -87,10 +94,33 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
     }
 }
 
+void Hachiko::ComponentAnimation::PlayNode(const std::string& node, unsigned int blend) 
+{
+    PlayNode(state_machine->FindNode(node), blend);
+}
+
+void Hachiko::ComponentAnimation::PlayNode(unsigned int node_idx, unsigned int blend) 
+{
+    if (node_idx < state_machine->GetNumNodes())
+    {
+        active_node = node_idx;
+        unsigned int clip_idx = state_machine->FindClip(state_machine->GetNodeClip(node_idx));
+
+        if (clip_idx < state_machine->GetNumClips())
+        {
+            ResourceAnimation* anim_res = state_machine->GetClipRes(clip_idx);
+
+            if (anim_res != 0)
+            {
+                controller->Play(anim_res, state_machine->GetClipLoop(clip_idx), blend);
+            }
+        }
+    }
+}
+
 void Hachiko::ComponentAnimation::DrawGui()
 {
     ImGui::PushID(this);
-
 
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
@@ -127,8 +157,8 @@ void Hachiko::ComponentAnimation::DrawGui()
 
         if (state_machine != nullptr)
         {
-            windowStateMachine->SetStateMachine(static_cast<ResourceStateMachine*> (state_machine)); // Add a breakpoint in this line to make it work properly // TODO: Revise
-            windowStateMachine->Update(); // TODO: Revise
+            windowStateMachine->SetStateMachine(static_cast<ResourceStateMachine*> (state_machine));
+            windowStateMachine->Update();
 
             char name[128];
             strcpy_s(name, state_machine->state_m_name.c_str());
@@ -187,30 +217,52 @@ void Hachiko::ComponentAnimation::DrawGui()
                 ImGui::Separator();
                 ImGui::PopID();
             }
-            
-            if (ImGui::CollapsingHeader("Animation triggers", ImGuiTreeNodeFlags_DefaultOpen))
+         
+            if (state_machine->GetNumClips() > 0)
             {
-                // std::string active_node = component->GetActiveNode();
-                std::string active_node("");
-
-                for (unsigned int i = 0; i < state_machine->GetNumTransitions(); ++i)
+                if (ImGui::CollapsingHeader("Animation controller", ImGuiTreeNodeFlags_DefaultOpen))
                 {
-                    if (state_machine->GetTransitionSource(i) == active_node)
+                    if (ImGui::Button(StringUtils::Concat(ICON_FA_PLAY, "Play Anim").c_str()))
                     {
-                        std::string trigger = state_machine->GetTransitionTrigger(i);
-                        if (!trigger.empty() && ImGui::Button(trigger.c_str()))
+                        StartAnimating();
+                    }
+
+                    ImGui::SameLine();
+
+                    if (ImGui::Button(StringUtils::Concat(ICON_FA_STOP, "Stop Anim").c_str()))
+                    {
+                        StopAnimating();
+                    }
+
+                    ImGui::SameLine();
+
+                    if (ImGui::Button(StringUtils::Concat(ICON_FA_RETWEET, "Reset state").c_str()))
+                    {
+                        ResetState();
+                    }
+
+                    if (state_machine->GetNumTransitions() > 0)
+                    {
+                        ImGui::Separator();
+
+                        std::string active_node = GetActiveNode();
+                
+                        for (unsigned int i = 0; i < state_machine->GetNumTransitions(); ++i)
                         {
-                            // component->SendTrigger(trigger);
+                            if (state_machine->GetTransitionSource(i) == active_node)
+                            {
+                                std::string trigger = state_machine->GetTransitionTrigger(i);
+                                if (!trigger.empty() && ImGui::Button(trigger.c_str()))
+                                {
+                                    SendTrigger(trigger);
+                                }
+                            }
                         }
+
                     }
                 }
-
-                if (ImGui::Button("Reset state"))
-                {
-                    // component->ResetState();
-                }
             }
-            
+
         }
     }
 
@@ -253,7 +305,7 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
     UID selected_animation_id = 0;
     
     const std::string title = StringUtils::Concat("Select Model#", std::to_string(uid));
-    if (ImGui::Button(ICON_FA_PLAY))
+    if (ImGui::Button(ICON_FA_UPLOAD))
     {
         editing_clip_idx = clip_idx;
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
@@ -313,20 +365,10 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
-    for (unsigned i = 0; i < animations.size(); ++i)
-    {
-        node[ANIMATIONS][i] = animations[i]->GetID();
-    }
+
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
-    if (node[ANIMATIONS].IsDefined())
-    {
-        for (unsigned i = 0; i < node[ANIMATIONS].size(); ++i)
-        {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, node[ANIMATIONS][i].as<UID>()));
-            animations.push_back(r_animation);
-        }
-    }
+
 }

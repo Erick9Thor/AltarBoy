@@ -39,10 +39,10 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	if (!_stats.IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	/*if (!_stats.IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
 	{
 		delete game_object;
-	}
+	}*/
 
 	if (!_stats.IsAlive())
 	{
@@ -127,6 +127,6 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCristall()
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
 
-	_explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
+	// _explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
 	_stats._is_alive = false;
 }

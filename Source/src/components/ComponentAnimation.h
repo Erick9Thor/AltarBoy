@@ -17,35 +17,35 @@ namespace Hachiko
         ComponentAnimation(GameObject* container);
         ~ComponentAnimation() override;
 
-        HACHIKO_API void StartAnimating(unsigned int animation_index, bool on_loop = true, unsigned int fade_in_time_ms = 0);
-        HACHIKO_API void StartAnimating(bool on_loop = true, unsigned int fade_in_time_ms = 0);
+        HACHIKO_API void StartAnimating();
         HACHIKO_API void StopAnimating();
-        
+
+        void ResetState();
+        void SendTrigger(const std::string& trigger);
+
         void Update() override;
 
-        void UpdatedGameObject(GameObject* go);
-
         void DrawGui() override;
-
-        void AnimationSelector(unsigned clip_idx);
-        void LoadStateMachine();
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        ResourceAnimation* GetCurrentAnimation()
-        {
-            return current_animation;
-        }
+    private:
+        void LoadStateMachine();
+        void AnimationSelector(unsigned clip_idx);
 
-        std::vector<ResourceAnimation*> animations;
+        void UpdatedGameObject(GameObject* go);
+        void PlayNode(const std::string& node, unsigned int blend);
+        void PlayNode(unsigned int node_idx, unsigned int blend);
+        std::string GetActiveNode() const;
 
     private:
         AnimationController* controller = nullptr;
-        ResourceAnimation* current_animation = nullptr;
         ResourceStateMachine* state_machine = nullptr;
 
         WindowStateMachine* windowStateMachine = nullptr;
+
+        unsigned int active_node = 0;
 
         unsigned editing_clip_idx = 0;
         YAML::Node selected_model_meta;
