@@ -4,6 +4,7 @@
 
 #include "/common/vertex_data.glsl"
 #include "/common/bones.glsl"
+#include "/common/uniforms/camera_uniform.glsl"
 
 layout(location=0) in vec3 in_position;
 layout(location=1) in vec3 in_normal;
@@ -14,13 +15,6 @@ layout(location=5) in vec4 in_bone_weights;
 layout(location=6) in uint instance_idx;
 
 uniform bool has_bones;
-
-layout(std140, row_major, binding = 0) uniform Camera
-{
-    mat4 view;
-    mat4 proj;
-    vec3 pos;
-} camera;
 
 readonly layout(std430, row_major, binding = 3) buffer Transforms
 {

@@ -7,13 +7,7 @@
 #include "/common/material_property_functions.glsl"
 #include "/common/lights.glsl"
 #include "/common/lighting_functions.glsl"
-
-layout(std140, row_major, binding = 0) uniform Camera
-{
-    mat4 view;
-    mat4 proj;
-    vec3 pos;
-} camera;
+#include "/common/uniforms/camera_uniform.glsl"
 
 layout(std140, binding = 2) uniform Lights
 {

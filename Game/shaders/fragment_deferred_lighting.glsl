@@ -4,6 +4,7 @@
 
 #include "/common/lights.glsl"
 #include "/common/lighting_functions.glsl"
+#include "/common/uniforms/camera_uniform.glsl"
 
 out vec4 fragment_color;
 in vec2 texture_coords;
@@ -15,13 +16,6 @@ layout (binding = 1) uniform sampler2D g_specular_smoothness;
 layout (binding = 2) uniform sampler2D g_normal;
 layout (binding = 3) uniform sampler2D g_position;
 layout (binding = 4) uniform sampler2D g_emissive;
-
-layout(std140, row_major, binding = 0) uniform Camera
-{
-    mat4 view;
-    mat4 proj;
-    vec3 pos;
-} camera;
 
 layout(std140, binding = 2) uniform Lights
 {
@@ -59,7 +53,6 @@ void main()
         for(uint i=0; i<lights.n_spots; ++i)
         {
             hdr_color +=  SpotPBR(fragment_position, fragment_normal, view_direction, lights.spots[i], fragment_diffuse, fragment_specular, fragment_smoothness);
-            
         }
 
         hdr_color += fragment_diffuse * lights.ambient.color.rgb * lights.ambient.intensity;
