@@ -1,5 +1,5 @@
-#ifndef _LIGHTS_UNIFORM
-#define _LIGHTS_UNIFORM
+#ifndef _LIGHTS_UNIFORM_INCLUDE_
+#define _LIGHTS_UNIFORM_INCLUDE_
 
 layout(std140, binding = 2) uniform Lights
 {

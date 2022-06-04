@@ -1,4 +1,7 @@
-#include "/common/tex_address.glsl"
+#ifndef _MATERIAL_INCLUDE_
+#define _MATERIAL_INCLUDE_
+
+#include "/common/structs/tex_address.glsl"
 
 struct Material {
     vec4 diffuse_color;
@@ -21,3 +24,5 @@ struct Material {
     uint is_transparent;
     //uint padding0;
 };
+
+#endif

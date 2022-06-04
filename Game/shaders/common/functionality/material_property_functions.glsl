@@ -1,3 +1,6 @@
+#ifndef _MATERIAL_PROPERTY_FUNCTIONS_INCLUDE_
+#define _MATERIAL_PROPERTY_FUNCTIONS_INCLUDE_
+
 mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
 {
 	vec3 ortho_tangent = normalize(tangent - dot(tangent, normal) * normal); // Gram-Schmidt
@@ -86,3 +89,5 @@ vec3 CalculateEmissive(vec3 texture_emissive_color, vec4 material_emissive_color
 
     return emissive_color;
 }
+
+#endif

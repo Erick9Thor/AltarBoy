@@ -2,14 +2,14 @@
 
 #extension GL_ARB_shading_language_include : require
 
-#include "/common/vertex_data.glsl"
-#include "/common/material.glsl"
-#include "/common/material_property_functions.glsl"
-#include "/common/lights.glsl"
-#include "/common/lighting_functions.glsl"
+#include "/common/structs/vertex_data.glsl"
+#include "/common/structs/material.glsl"
+#include "/common/structs/lights.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
 #include "/common/uniforms/material_and_texture_uniforms.glsl"
 #include "/common/uniforms/lights_uniform.glsl"
+#include "/common/functionality/material_property_functions.glsl"
+#include "/common/functionality/lighting_functions.glsl"
 
 // Inputs
 in VertexData fragment;

@@ -2,10 +2,10 @@
 
 #extension GL_ARB_shading_language_include : require
 
-#include "/common/lights.glsl"
-#include "/common/lighting_functions.glsl"
+#include "/common/structs/lights.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
 #include "/common/uniforms/lights_uniform.glsl"
+#include "/common/functionality/lighting_functions.glsl"
 
 out vec4 fragment_color;
 in vec2 texture_coords;

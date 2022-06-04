@@ -2,8 +2,8 @@
 
 #extension GL_ARB_shading_language_include : require
 
-#include "/common/vertex_data.glsl"
-#include "/common/bones.glsl"
+#include "/common/structs/vertex_data.glsl"
+#include "/common/structs/bones.glsl"
 #include "/common/uniforms/camera_uniform.glsl"
 
 layout(location=0) in vec3 in_position;

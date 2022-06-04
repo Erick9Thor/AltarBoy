@@ -1,3 +1,6 @@
+#ifndef _LIGHTING_FUNCTIONS_INCLUDE_
+#define _LIGHTING_FUNCTIONS_INCLUDE_
+
 vec3 SchlickFresnel(const vec3 f0, float half_vector)
 {
     return f0 + (vec3(1.0) - f0) * pow(1.0 - half_vector, 5.0);
@@ -109,3 +112,5 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
     float cone = Cone(L, cone_direction, light.inner, light.outer);
     return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation * cone, smoothness) * light.intensity;
 }
+
+#endif
