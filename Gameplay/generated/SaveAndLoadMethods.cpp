@@ -11,6 +11,7 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
 
 
 
@@ -710,5 +711,50 @@ void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 	if (load_node["'_timer@float'"].IsDefined())
 	{
 		_timer = load_node["'_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
+{
+	node["'_touching@bool'"] = _touching;
+
+	if (_target != nullptr)
+	{
+		node["'_target@GameObject*'"] = _target->GetID();
+	}
+	else
+	{
+		node["'_target@GameObject*'"] = 0;
+	}
+
+	if (_fade_image != nullptr && _fade_image->GetGameObject() != nullptr)
+	{
+		node["'_fade_image@ComponentImage*'"] = _fade_image->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_fade_image@ComponentImage*'"] = 0;
+	}
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnLoad()
+{
+	if (load_node["'_touching@bool'"].IsDefined())
+	{
+		_touching = load_node["'_touching@bool'"].as<bool>();
+	}
+
+	if (load_node["'_target@GameObject*'"].IsDefined())
+	{
+		_target = SceneManagement::FindInCurrentScene(load_node["'_target@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_fade_image@ComponentImage*'"].IsDefined())
+	{
+		GameObject* _fade_image_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_fade_image@ComponentImage*'"].as<unsigned long long>());
+		if (_fade_image_owner__temp != nullptr)
+		{
+			_fade_image = _fade_image_owner__temp->GetComponent<ComponentImage>();
+		}
 	}
 }

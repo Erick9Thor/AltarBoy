@@ -12,6 +12,7 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
 
 
 void Hachiko::Scripting::BackToMainMenu::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -904,4 +905,47 @@ void Hachiko::Scripting::PlayerSoundManager::SerializeTo(std::unordered_map<std:
 	serialized_fields["_timer"] = SerializedField(std::string("_timer"), std::make_any<float>(_timer), std::string("float"));
 
 	serialized_fields["_previous_state"] = SerializedField(std::string("_previous_state"), std::make_any<PlayerState>(_previous_state), std::string("PlayerState"));
+}
+
+void Hachiko::Scripting::RoomTeleporter::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_touching") != serialized_fields.end())
+	{
+		const SerializedField& _touching_sf = serialized_fields["_touching"];
+		if (_touching_sf.type_name == "bool")
+		{
+			_touching = std::any_cast<bool>(_touching_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_target") != serialized_fields.end())
+	{
+		const SerializedField& _target_sf = serialized_fields["_target"];
+		if (_target_sf.type_name == "GameObject*")
+		{
+			_target = std::any_cast<GameObject*>(_target_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_fade_image") != serialized_fields.end())
+	{
+		const SerializedField& _fade_image_sf = serialized_fields["_fade_image"];
+		if (_fade_image_sf.type_name == "ComponentImage*")
+		{
+			_fade_image = std::any_cast<ComponentImage*>(_fade_image_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::RoomTeleporter::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_touching"] = SerializedField(std::string("_touching"), std::make_any<bool>(_touching), std::string("bool"));
+
+	serialized_fields["_target"] = SerializedField(std::string("_target"), std::make_any<GameObject*>(_target), std::string("GameObject*"));
+
+	serialized_fields["_fade_image"] = SerializedField(std::string("_fade_image"), std::make_any<ComponentImage*>(_fade_image), std::string("ComponentImage*"));
 }

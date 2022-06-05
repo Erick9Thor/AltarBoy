@@ -3,16 +3,15 @@
 #include "components/Component.h"
 #include "Globals.h"
 
-#include "modules/ModuleTexture.h"
-
 namespace Hachiko
 {
     class GameObject;
 
     class ComponentTransform2D;
     class Program;
+    class ResourceTexture;
 
-    class HACHIKO_API ComponentImage : public Component
+    class ComponentImage : public Component
     {
     public:
         ComponentImage(GameObject* container);
@@ -23,6 +22,26 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
+
+        [[nodiscard]] const float4& GetColor() const 
+        {
+            return color;
+        }
+        
+        [[nodiscard]] const float4& GetHoverColor() const 
+        {
+            return hover_color;
+        }
+
+        void SetColor(float4 new_color) 
+        {
+            color = new_color;
+        }
+
+        void SetHoverColor(float4 new_hover_color) 
+        {
+            hover_color = new_hover_color;
+        }
 
     private:
         void LoadImageResource(UID image_uid, bool is_hover = false);
