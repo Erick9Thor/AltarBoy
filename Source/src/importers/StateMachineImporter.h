@@ -20,6 +20,6 @@ namespace Hachiko
         void Save(UID id, const Resource* resource) override;
         Resource* Load(UID id) override;
 
-    private:
+        void GenerateAssetStateMachine(const ResourceStateMachine* state_machine);
     };
 } // namespace Hachiko

@@ -429,7 +429,7 @@ void Hachiko::WindowStateMachine::AddAnimationNode(unsigned int index)
     }
 
     animation->AddNode(name, clip);
-    // animation->Save();
+    animation->Save();
 }
 
 void Hachiko::WindowStateMachine::SetStateMachine(ResourceStateMachine* resourceStateMachine) 

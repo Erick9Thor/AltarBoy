@@ -18,7 +18,7 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 {
     auxiliary_name = game_object->name;
     controller = new AnimationController();
-    windowStateMachine = new WindowStateMachine(game_object->name); // TODO: Revise
+    windowStateMachine = new WindowStateMachine(game_object->name);
 }
 
 Hachiko::ComponentAnimation::~ComponentAnimation()
@@ -170,9 +170,8 @@ void Hachiko::ComponentAnimation::DrawGui()
                 state_machine->Save();
             }
 
-            if (state_machine->clips.size() > 0)
+            if (state_machine->GetNumClips() > 0)
             {
-
                 ImGui::Separator();
             }
 
@@ -274,7 +273,7 @@ void Hachiko::ComponentAnimation::LoadStateMachine()
     {
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select State Machine",
-                                                ".yml",
+                                                ".stm",
                                                 "./assets/state_machine/",
                                                 1,
                                                 nullptr,
@@ -363,10 +362,16 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
-    // node[M_STATE_MACHINE] = state_machine->GetID();
+    if (state_machine != nullptr)
+    {
+        node[M_STATE_MACHINE] = state_machine->GetID();
+    }
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
-    // state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
+    if (node[M_STATE_MACHINE].IsDefined())
+    {
+        state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
+    }
 }

@@ -61,8 +61,8 @@ namespace Hachiko
             std::string name;
             std::string clip;
 
-            int nodeIndex;
-            int inputIndex;
+            int node_index;
+            int input_index;
 
             Node() {};
             Node(const std::string& name, const std::string& clip) : name(name), clip(clip) {};

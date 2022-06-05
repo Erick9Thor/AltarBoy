@@ -62,6 +62,27 @@
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 #define MATERIAL_IS_TRANSPARENT "is_transparent"
 
+// State machine
+#define SM_NAME "name"
+#define SM_DEFAULT_NODE "default_node"
+
+#define SM_CLIPS "clips"
+#define SM_CLIP_NAME "clip_name"
+#define SM_CLIP_ID "clips_id"
+#define SM_CLIP_LOOP "clips_loop"
+
+#define SM_NODES "nodes"
+#define SM_NODE_NAME "node_name"
+#define SM_NODE_CLIP_NAME "node_clip_name"
+
+#define SM_TRANSITIONS "transitions"
+#define SM_TRANSITION_SOURCE "transition_source"
+#define SM_TRANSITION_TARGET "transition_target"
+#define SM_TRANSITION_TRIGGER "transition_trigger"
+#define SM_TRANSITION_BLEND "transition_blend"
+
+
+
 //////////////////////////
 //						//
 // Importer extensions  //
