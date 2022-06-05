@@ -35,7 +35,7 @@ nodes:
 transitions:
   - transition_source: idle
     transition_target: mele
-    transition_trigger: isAtack
+    transition_trigger: isMeleeAtack
     transition_blend: 300
   - transition_source: idle
     transition_target: walking
@@ -43,11 +43,11 @@ transitions:
     transition_blend: 300
   - transition_source: idle
     transition_target: gunplay
-    transition_trigger: isShoting
+    transition_trigger: isRangedAttack
     transition_blend: 300
   - transition_source: idle
     transition_target: falling
-    transition_trigger: isFaling
+    transition_trigger: isFalling
     transition_blend: 300
   - transition_source: idle
     transition_target: running
@@ -55,21 +55,21 @@ transitions:
     transition_blend: 300
   - transition_source: running
     transition_target: idle
-    transition_trigger: isNRuning
+    transition_trigger: isIdle
     transition_blend: 300
   - transition_source: walking
     transition_target: idle
-    transition_trigger: isNWalking
+    transition_trigger: isIdle
     transition_blend: 300
   - transition_source: mele
     transition_target: idle
-    transition_trigger: isNMele
+    transition_trigger: isIdle
     transition_blend: 300
   - transition_source: gunplay
     transition_target: idle
-    transition_trigger: isNShoting
+    transition_trigger: isIdle
     transition_blend: 300
   - transition_source: falling
     transition_target: idle
-    transition_trigger: isNfalling
+    transition_trigger: isIdle
     transition_blend: 300
