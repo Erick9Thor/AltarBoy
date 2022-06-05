@@ -5,6 +5,7 @@
 #include "resources/ResourceSkybox.h"
 #include "modules/ModuleResources.h"
 
+#include "ft2build.h"
 #include "GLFont.h"
 #include "FTLabel.h"
 

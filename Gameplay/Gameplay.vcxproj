@@ -124,7 +124,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>Hachiko.lib;glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib; $(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;$(SolutionDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib;$(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;;$(SolutionDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
@@ -157,7 +157,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalDependencies>Hachiko.lib;glew32.lib;opengl32.lib;DevIL.lib;ILU.lib;ILUT.lib;SDL2.lib;SDL2main.lib;assimp-vc143-mt.lib;OptickCore.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib; $(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;$(SolutionDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib;$(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;;$(SolutionDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
@@ -325,6 +325,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="PlayerSoundManager.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="RoomTeleporter.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
@@ -731,6 +732,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="PlayerSoundManager.cpp" />
+    <ClCompile Include="RoomTeleporter.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

@@ -12,7 +12,7 @@ namespace Hachiko
     class ComponentTransform2D;
     class Program;
 
-    class ComponentImage : public Component
+    class HACHIKO_API ComponentImage : public Component
     {
     public:
         ComponentImage(GameObject* container);
