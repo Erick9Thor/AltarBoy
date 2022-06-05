@@ -9,8 +9,6 @@ component:
     scale: [1, 1, 1]
   - type: 14
     enabled: true
-    animations:
-      - 13765448837329734440
 child:
   - name: Plane051_$AssimpFbx$_Translation
     enabled: true

@@ -1,0 +1,6 @@
+name: aaa
+default_node: 0
+clips:
+  - clip_name: noname
+    clips_id: 0
+    clips_loop: true

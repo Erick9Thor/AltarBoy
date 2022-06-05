@@ -27,6 +27,8 @@ materials:
 animations:
   - 9054706964290541382
 prefab_id: 15825041331629225874
+animation_names:
+  - Attack
 resources:
   - resource_id: 15210605525662147809
     resource_type: 3
