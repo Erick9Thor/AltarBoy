@@ -38,9 +38,13 @@ void main()
         material.specular_color,
         material.metalness_value,
         material.smoothness,
-        texture(allMyTextures[material.metallic_map.texIndex], vec3(fragment.tex_coord, material.metallic_map.layerIndex)),
-        texture(allMyTextures[material.specular_map.texIndex], vec3(fragment.tex_coord, material.specular_map.layerIndex)),
-        texture(allMyTextures[material.diffuse_map.texIndex], vec3(fragment.tex_coord, material.diffuse_map.layerIndex)),
+        allMyTextures[material.metallic_map.texIndex],
+        allMyTextures[material.specular_map.texIndex],
+        allMyTextures[material.diffuse_map.texIndex],
+        fragment.tex_coord,
+        material.metallic_map.layerIndex,
+        material.specular_map.layerIndex,
+        material.diffuse_map.layerIndex,
         smoothness, 
         diffuse, 
         specular);
@@ -57,7 +61,9 @@ void main()
     // Store the fragment normal in rgb channels of g buffer texture for normal:
     g_normal.xyz = CalculateNormal(
         material.normal_flag, 
-        texture(allMyTextures[material.normal_map.texIndex], vec3(fragment.tex_coord, material.normal_map.layerIndex)).rgb, 
+        allMyTextures[material.normal_map.texIndex],
+        fragment.tex_coord,
+        material.normal_map.layerIndex,
         fragment.normal, 
         fragment.tangent); 
 
@@ -66,7 +72,9 @@ void main()
 
     // Store the fragment emissive color in rgb channels of g buffer texture for emissive:
     g_emissive.xyz = CalculateEmissive(
-        texture(allMyTextures[material.emissive_map.texIndex], vec3(fragment.tex_coord, material.emissive_map.layerIndex)).rgb,
+        allMyTextures[material.emissive_map.texIndex],
+        fragment.tex_coord,
+        material.emissive_map.layerIndex,
         material.emissive_color,
         material.emissive_flag
     );

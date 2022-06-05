@@ -22,10 +22,12 @@ void main()
 {
     Material material = materialsBuffer.materials[instance];
     
+    // Temporary values that will be calculated:
     float smoothness;
     vec3 diffuse;
     vec3 specular;
 
+    // Calculate specular color, diffuse color and smoothness based on material properties and textures:
     CalculateSpecularDiffuseSmoothness(
         material.diffuse_flag,
         material.metallic_flag,
@@ -36,17 +38,23 @@ void main()
         material.specular_color,
         material.metalness_value,
         material.smoothness,
-        texture(allMyTextures[material.metallic_map.texIndex], vec3(fragment.tex_coord, material.metallic_map.layerIndex)),
-        texture(allMyTextures[material.specular_map.texIndex], vec3(fragment.tex_coord, material.specular_map.layerIndex)),
-        texture(allMyTextures[material.diffuse_map.texIndex], vec3(fragment.tex_coord, material.diffuse_map.layerIndex)),
+        allMyTextures[material.metallic_map.texIndex],
+        allMyTextures[material.specular_map.texIndex],
+        allMyTextures[material.diffuse_map.texIndex],
+        fragment.tex_coord,
+        material.metallic_map.layerIndex,
+        material.specular_map.layerIndex,
+        material.diffuse_map.layerIndex,
         smoothness, 
         diffuse, 
         specular);
 
 
     vec3 normal = CalculateNormal(
-        material.normal_flag, 
-        texture(allMyTextures[material.normal_map.texIndex], vec3(fragment.tex_coord, material.normal_map.layerIndex)).rgb, 
+        material.normal_flag,
+        allMyTextures[material.normal_map.texIndex],
+        fragment.tex_coord,
+        material.normal_map.layerIndex,
         fragment.normal, 
         fragment.tangent); 
     
@@ -69,7 +77,9 @@ void main()
 
     // Calculate emissive color:
     vec3 emissive = CalculateEmissive(
-        texture(allMyTextures[material.emissive_map.texIndex], vec3(fragment.tex_coord, material.emissive_map.layerIndex)).rgb,
+        allMyTextures[material.emissive_map.texIndex],
+        fragment.tex_coord,
+        material.emissive_map.layerIndex,
         material.emissive_color,
         material.emissive_flag
     );
