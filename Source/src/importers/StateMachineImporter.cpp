@@ -15,8 +15,8 @@ void Hachiko::StateMachineImporter::Import(const char* path, YAML::Node& meta)
 
 void Hachiko::StateMachineImporter::Save(UID id, const Resource* resource)
 {
+    // To save state machine we just update the asset and call the whole asset import pipeline
     const ResourceStateMachine* state_machine = static_cast<const ResourceStateMachine*>(resource);
-    const std::string sm_library_path = GetResourcePath(Resource::Type::STATE_MACHINE, id);
       
     GenerateAssetStateMachine(state_machine);
 
@@ -24,8 +24,6 @@ void Hachiko::StateMachineImporter::Save(UID id, const Resource* resource)
         state_machine->state_m_name, STATE_MACHINE_EXTENSION);
 
     App->resources->ImportAssetFromAnyPath(asset_path);
-
-    FileSystem::Copy(asset_path.c_str(), sm_library_path.c_str());
 }
 
 Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
