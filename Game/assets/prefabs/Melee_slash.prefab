@@ -1,4 +1,4 @@
-prefab_name: Running
+prefab_name: Melee_slash
 name: RootNode
 enabled: true
 component:
@@ -47,7 +47,7 @@ child:
                     scale: [1, 1, 1]
                   - type: 2
                     enabled: true
-                    mesh_id: 2512171253866590231
+                    mesh_id: 10738203373906927419
                     navigable: false
                     visible: true
                     material_id: 12924252210591909690
@@ -1277,7 +1277,7 @@ child:
                                                                 rotation: [0.352499843, 0.00516502326, -0.00194558466, 0.935795605]
                                                                 scale: [1, 1, 1]
                                                             child:
-                                                              - name: mixamorig:LeftToeBase_$AssimpFbx$_Rotation
+                                                              - name: mixamorig:LeftToeBase
                                                                 enabled: true
                                                                 component:
                                                                   - type: 1
@@ -1286,23 +1286,14 @@ child:
                                                                     rotation: [0, 0, 0, 1]
                                                                     scale: [1, 1, 1]
                                                                 child:
-                                                                  - name: mixamorig:LeftToeBase
+                                                                  - name: mixamorig:LeftToe_End
                                                                     enabled: true
                                                                     component:
                                                                       - type: 1
                                                                         enabled: true
-                                                                        position: [0, 0, 0]
+                                                                        position: [0, 0.107648462, 0]
                                                                         rotation: [0, 0, 0, 1]
                                                                         scale: [1, 1, 1]
-                                                                    child:
-                                                                      - name: mixamorig:LeftToe_End
-                                                                        enabled: true
-                                                                        component:
-                                                                          - type: 1
-                                                                            enabled: true
-                                                                            position: [0, 0.107648462, 0]
-                                                                            rotation: [0, 0, 0, 1]
-                                                                            scale: [1, 1, 1]
       - name: mixamorig:RightUpLeg_$AssimpFbx$_Translation
         enabled: true
         component:

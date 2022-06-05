@@ -1,0 +1,75 @@
+name: PlayerSM
+default_node: 0
+clips:
+  - clip_name: idle
+    clips_id: 4608338360404570035
+    clips_loop: true
+  - clip_name: falling
+    clips_id: 10266083241331568067
+    clips_loop: true
+  - clip_name: gunplay
+    clips_id: 7029406674230567596
+    clips_loop: true
+  - clip_name: mele
+    clips_id: 14398689952102781257
+    clips_loop: true
+  - clip_name: running
+    clips_id: 16477442206840998159
+    clips_loop: true
+  - clip_name: walking
+    clips_id: 17772918528688286605
+    clips_loop: true
+nodes:
+  - node_name: idle
+    node_clip_name: idle
+  - node_name: falling
+    node_clip_name: falling
+  - node_name: gunplay
+    node_clip_name: gunplay
+  - node_name: mele
+    node_clip_name: mele
+  - node_name: running
+    node_clip_name: running
+  - node_name: walking
+    node_clip_name: walking
+transitions:
+  - transition_source: idle
+    transition_target: mele
+    transition_trigger: isAtack
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: walking
+    transition_trigger: isWalking
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: gunplay
+    transition_trigger: isShoting
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: falling
+    transition_trigger: isFaling
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: running
+    transition_trigger: isRuning
+    transition_blend: 300
+  - transition_source: running
+    transition_target: idle
+    transition_trigger: isNRuning
+    transition_blend: 300
+  - transition_source: walking
+    transition_target: idle
+    transition_trigger: isNWalking
+    transition_blend: 300
+  - transition_source: mele
+    transition_target: idle
+    transition_trigger: isNMele
+    transition_blend: 300
+  - transition_source: gunplay
+    transition_target: idle
+    transition_trigger: isNShoting
+    transition_blend: 300
+  - transition_source: falling
+    transition_target: idle
+    transition_trigger: isNfalling
+    transition_blend: 300

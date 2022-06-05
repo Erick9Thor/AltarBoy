@@ -1,4 +1,4 @@
-prefab_name: Running
+prefab_name: Gunplay
 name: RootNode
 enabled: true
 component:
@@ -47,7 +47,7 @@ child:
                     scale: [1, 1, 1]
                   - type: 2
                     enabled: true
-                    mesh_id: 2512171253866590231
+                    mesh_id: 13453985054399606184
                     navigable: false
                     visible: true
                     material_id: 12924252210591909690
