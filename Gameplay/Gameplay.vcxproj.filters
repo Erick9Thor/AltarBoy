@@ -511,6 +511,7 @@
     <ClInclude Include="PlayerSoundManager.h" />
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="Stats.h" />
+    <ClInclude Include="FancyLights.h" />
     <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="BugAnimationManager.h" />
   </ItemGroup>
@@ -773,6 +774,7 @@
     <ClCompile Include="PlayerSoundManager.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="Stats.cpp" />
+    <ClCompile Include="FancyLights.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="BugAnimationManager.cpp" />
   </ItemGroup>

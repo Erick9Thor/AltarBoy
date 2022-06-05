@@ -10,6 +10,8 @@
 
 Hachiko::ModuleEditor::ModuleEditor()
 {
+    HE_LOG("INITIALIZING MODULE: EDITOR");
+
     HE_LOG("Creating windows");
 
 #ifndef PLAY_BUILD
