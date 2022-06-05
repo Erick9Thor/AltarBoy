@@ -238,6 +238,7 @@ void Hachiko::WindowStateMachine::ShowAddNodeMenu()
                     ed::SetNodePosition(node_idx * 3 + 1, ed::ScreenToCanvas(new_node_pos));
                     AddAnimationNode(i);
 
+                    unsigned int out_node = 0;
                     if (new_node_pin != ed::PinId::Invalid)
                     {
                         unsigned int out_node = unsigned int(new_node_pin.Get() - 1) / 3;

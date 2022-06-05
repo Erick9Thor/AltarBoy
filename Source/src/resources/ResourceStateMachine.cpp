@@ -38,12 +38,13 @@ void Hachiko::ResourceStateMachine::AddClip(const std::string& name, UID animati
 int Hachiko::ResourceStateMachine::FindClip(const std::string& name) const
 {
     int index = 0;
-    for (index; index < clips.size(); ++index)
+    while (index < clips.size())
     {
         if (clips[index].name == name)
         {
             break;
         }
+        ++index;
     }
     return index;
 }
@@ -115,12 +116,13 @@ void Hachiko::ResourceStateMachine::AddNode(const std::string& name, const std::
 int Hachiko::ResourceStateMachine::FindNode(const std::string& name) const 
 {
     int index = 0;
-    for (index; index < nodes.size(); ++index)
+    while (index < nodes.size())
     {
         if (nodes[index].name == name)
         {
             break;
         }
+        ++index;
     }
     return index;
 }
@@ -166,12 +168,13 @@ void Hachiko::ResourceStateMachine::AddTransition(const std::string& source, con
 int Hachiko::ResourceStateMachine::FindTransitionWithTrigger(const std::string& source, const std::string& trigger) const
 {
     int index = 0;
-    for (index; index < transitions.size(); ++index)
+    while (index < transitions.size())
     {
         if (transitions[index].source == source && transitions[index].trigger == trigger)
         {
             break;
-        }
+        };
+        ++index;
     }
     return index;
 }
@@ -179,12 +182,13 @@ int Hachiko::ResourceStateMachine::FindTransitionWithTrigger(const std::string& 
 int Hachiko::ResourceStateMachine::FindTransitionWithTarget(const std::string& source, const std::string& target) const
 {
     int index = 0;
-    for (index; index < transitions.size(); ++index)
+    while (index < transitions.size())
     {
         if (transitions[index].source == source && transitions[index].target == target)
         {
             break;
         }
+        ++index;
     }
     return index;
 }
@@ -224,12 +228,13 @@ void Hachiko::ResourceStateMachine::RemoveTransitionWithTarget(const std::string
 void Hachiko::ResourceStateMachine::EditTransitionSource(const std::string& newSource, const std::string& target, const std::string& trigger)
 {
     int index = 0;
-    for (index; index < transitions.size(); ++index)
+    while (index < transitions.size())
     {
         if (transitions[index].target == target && transitions[index].trigger == trigger)
         {
             break;
         }
+        ++index;
     }
     transitions[index].source = newSource;
 }
@@ -237,12 +242,13 @@ void Hachiko::ResourceStateMachine::EditTransitionSource(const std::string& newS
 void Hachiko::ResourceStateMachine::EditTransitionTarget(const std::string& source, const std::string& newTarget, const std::string& trigger)
 {
     int index = 0;
-    for (index; index < transitions.size(); ++index)
+    while (index < transitions.size())
     {
         if (transitions[index].source == source && transitions[index].trigger == trigger)
         {
             break;
         }
+        ++index;
     }
     transitions[index].target = newTarget;
 }
@@ -250,12 +256,13 @@ void Hachiko::ResourceStateMachine::EditTransitionTarget(const std::string& sour
 void Hachiko::ResourceStateMachine::EditTransitionTrigger(const std::string& source, const std::string& target, const std::string& newTrigger)
 {
     int index = 0;
-    for (index; index < transitions.size(); ++index)
+    while (index < transitions.size())
     {
         if (transitions[index].source == source && transitions[index].target == target)
         {
             break;
         }
+        ++index;
     }
     transitions[index].trigger = newTrigger;
 }
