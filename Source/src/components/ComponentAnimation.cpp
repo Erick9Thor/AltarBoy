@@ -24,7 +24,7 @@ Hachiko::ComponentAnimation::ComponentAnimation(GameObject* container) : Compone
 Hachiko::ComponentAnimation::~ComponentAnimation()
 {
     delete windowStateMachine;
-    delete state_machine;
+    App->resources->ReleaseResource(state_machine);
     delete controller;
 }
 

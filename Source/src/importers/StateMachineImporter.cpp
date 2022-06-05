@@ -24,8 +24,6 @@ void Hachiko::StateMachineImporter::Save(UID id, const Resource* resource)
         state_machine->state_m_name, STATE_MACHINE_EXTENSION);
 
     App->resources->ImportAssetFromAnyPath(asset_path);
-
-    FileSystem::Copy(asset_path.c_str(), sm_library_path.c_str());
 }
 
 Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
