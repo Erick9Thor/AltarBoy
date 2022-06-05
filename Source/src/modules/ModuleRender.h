@@ -54,6 +54,7 @@ namespace Hachiko
         void PerformanceMenu();
         void FpsGraph() const;
         void AddFrame(float delta);
+        void SetOpenGLAttributes() const;
 
         [[nodiscard]] void* GetGLContext() const
         {

@@ -579,6 +579,36 @@ void Hachiko::ModuleRender::AddFrame(const float delta)
     }
 }
 
+void Hachiko::ModuleRender::SetOpenGLAttributes() const 
+{
+    // Enable hardware acceleration:
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+    // Set desired major version of OpenGL:
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    // Set desired minor version of OpenGL:
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
+    // Set OpenGL to compatibility mode (we can use core mode as well): 
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+    // Enable double buffer usage:
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    // Set buffer size to 32 bits, Red 8, Green 8, Blue 8, Alpha 8:
+    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
+    // Set depth component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24); // TODO: Ask Carlos why this can't be 32.
+    // Set red color component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    // Set green color component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    // Set blue color component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    // Set alpha color component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+    // Set stencil component size (bits):
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    // Enable OpenGL context debug:
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+}
+
 void Hachiko::ModuleRender::RetrieveLibVersions()
 {
     HE_LOG("GPU Vendor: %s", glGetString(GL_VENDOR));
