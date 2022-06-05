@@ -3,6 +3,7 @@
 #include "StateMachineImporter.h"
 #include "resources/ResourceStateMachine.h"
 #include "resources/ResourceAnimation.h"
+#include "modules/ModuleResources.h"
 
 void Hachiko::StateMachineImporter::Import(const char* path, YAML::Node& meta)
 {
@@ -10,7 +11,7 @@ void Hachiko::StateMachineImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::STATE_MACHINE, resource_index, meta);
 
-    FileSystem::Copy(path, GetResourcePath(Resource::Type::MATERIAL, uid).c_str());
+    FileSystem::Copy(path, GetResourcePath(Resource::Type::STATE_MACHINE, uid).c_str());
 }
 
 void Hachiko::StateMachineImporter::Save(UID id, const Resource* resource)
@@ -20,9 +21,11 @@ void Hachiko::StateMachineImporter::Save(UID id, const Resource* resource)
       
     GenerateAssetStateMachine(state_machine);
 
+
     const std::string asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::STATE_MACHINE), 
         state_machine->state_m_name, STATE_MACHINE_EXTENSION);
-    FileSystem::Copy(asset_path.c_str(), sm_library_path.c_str());
+
+    App->resources->ImportAssetFromAnyPath(asset_path);
 }
 
 Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
@@ -38,15 +41,12 @@ Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
     ResourceStateMachine* state_machine = new ResourceStateMachine(id);
 
     // Name
-
     state_machine->state_m_name = node[SM_NAME].as<std::string>();
 
     // Default Node
-
     state_machine->SetDefaultNode(node[SM_DEFAULT_NODE].as<unsigned int>());
 
     // Clips
-
     if (node[SM_CLIPS].size() > 0)
     {
         for (unsigned int clip_index = 0; clip_index < node[SM_CLIPS].size(); ++clip_index)
@@ -60,7 +60,6 @@ Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
     }
 
     // Nodes
-
     if (node[SM_NODES].size() > 0)
     {
         for (unsigned int node_index = 0; node_index < node[SM_NODES].size(); ++node_index)
@@ -73,7 +72,6 @@ Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
     }
 
     // Transitions
-
     if (node[SM_TRANSITIONS].size() > 0)
     {
         for (unsigned int transition_index = 0; transition_index < node[SM_TRANSITIONS].size(); ++transition_index)
@@ -95,15 +93,12 @@ void Hachiko::StateMachineImporter::GenerateAssetStateMachine(const ResourceStat
     YAML::Node state_machine_node;
 
     // Save name
-
     state_machine_node[SM_NAME] = state_machine->GetName();
 
     // Save default node
-
     state_machine_node[SM_DEFAULT_NODE] = state_machine->GetDefaultNode();
 
     // Save clips
-
     if (state_machine->GetNumClips() > 0)
     {
         for (unsigned int clip_index = 0; clip_index < state_machine->GetNumClips(); ++clip_index)

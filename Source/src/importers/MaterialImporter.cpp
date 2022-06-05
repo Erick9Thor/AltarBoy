@@ -37,7 +37,7 @@ void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
     GenerateMaterialAssetFile(material);
     const std::string material_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
         material->GetName(), MATERIAL_EXTENSION);
-    FileSystem::Copy(material_asset_path.c_str(), material_library_path.c_str());
+    App->resources->ImportAssetFromAnyPath(material_asset_path);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)
