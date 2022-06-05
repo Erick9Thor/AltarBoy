@@ -411,12 +411,12 @@ void Hachiko::GameObject::DrawBones() const
     }
 }
 
-bool Hachiko::GameObject::AttemptRemoveComponent(Component* component)
+bool Hachiko::GameObject::AttemptRemoveComponent(const Component* component)
 {
     //TODO: Should I delete the component?
     if (component->CanBeRemoved())
     {
-        auto it = std::find(components.begin(), components.end(), component);
+        const auto it = std::find(components.begin(), components.end(), component);
         if (it != components.end())
         {
             delete *it;
