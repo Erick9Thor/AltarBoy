@@ -208,6 +208,13 @@ void Hachiko::WindowScene::DrawScene()
             // Transpose back again to store in our format
             model.Transpose();
             selected_object->GetTransform()->SetGlobalTransform(model);
+            changedGameObject = true;
+        }
+
+        if (!using_guizmo && changedGameObject)
+        {
+            changedGameObject = false;
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
     }
 }
