@@ -3,8 +3,8 @@
 #include "Stats.h"
 
 #include "CrystalExplosion.h"
-#include "player/PlayerController.h"
-#include "enemies/EnemyController.h"
+#include "PlayerController.h"
+#include "EnemyController.h"
 
 #include "core/GameObject.h"
 
