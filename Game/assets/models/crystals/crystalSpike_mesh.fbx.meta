@@ -4,11 +4,11 @@ meshes:
   - 12493242938431995642
 materials:
   - 15711698613413314858
-prefab_id: 16156969811732247075
+prefab_id: 10042195172663342112
 resources:
   - resource_id: 12493242938431995642
     resource_type: 3
   - resource_id: 15711698613413314858
     resource_type: 1
-  - resource_id: 16156969811732247075
+  - resource_id: 10042195172663342112
     resource_type: 13

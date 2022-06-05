@@ -47,14 +47,14 @@ inline Quat Hachiko::ComponentTransform::SimulateLookAt(const float3& direction)
 
     float3 up_temp = direction.Cross(right_temp).Normalized();
 
-    Quat orientation = Quat::LookAt(-float3::unitZ, direction, float3::unitY, float3::unitY);
+    Quat orientation = Quat::LookAt(float3::unitZ, direction, float3::unitY, float3::unitY);
 
     return orientation;
 }
 
 void Hachiko::ComponentTransform::LookAtTarget(const float3& target)
 {
-    const float3 direction = (GetGlobalPosition() - target).Normalized();
+    const float3 direction = (target - GetGlobalPosition()).Normalized();
 
     SetGlobalRotation(SimulateLookAt(direction));
 }

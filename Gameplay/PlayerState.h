@@ -8,7 +8,8 @@ enum class PlayerState
 	MELEE_ATTACKING,
 	RANGED_ATTACKING,
 	DASHING,
-	FALLING
+	FALLING,
+	STUNNED,
 };
 
 enum class BugState

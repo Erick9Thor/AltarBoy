@@ -665,3 +665,17 @@ Hachiko::GameObject* Hachiko::GameObject::FindDescendantWithName(const std::stri
 
     return nullptr;
 }
+
+void Hachiko::GameObject::ChangeColor(float4 color, float time)
+{
+    std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+    for (int i = 0; i < v_mesh_renderer.size(); ++i)
+    {
+        v_mesh_renderer[i]->OverrideEmissive(color, time);
+    }
+
+    for (GameObject* child : children)
+    {
+        child->ChangeColor(color, time);
+    }
+}
