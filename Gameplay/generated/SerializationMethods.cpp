@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "BugAnimationManager.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
@@ -32,6 +33,71 @@ void Hachiko::Scripting::BackToMainMenu::SerializeTo(std::unordered_map<std::str
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
+}
+
+void Hachiko::Scripting::BugAnimationManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_animator") != serialized_fields.end())
+	{
+		const SerializedField& _animator_sf = serialized_fields["_animator"];
+		if (_animator_sf.type_name == "ComponentAnimation*")
+		{
+			_animator = std::any_cast<ComponentAnimation*>(_animator_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_previous_state") != serialized_fields.end())
+	{
+		const SerializedField& _previous_state_sf = serialized_fields["_previous_state"];
+		if (_previous_state_sf.type_name == "BugState")
+		{
+			_previous_state = std::any_cast<BugState>(_previous_state_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_state_string") != serialized_fields.end())
+	{
+		const SerializedField& _state_string_sf = serialized_fields["_state_string"];
+		if (_state_string_sf.type_name == "std::string")
+		{
+			_state_string = std::any_cast<std::string>(_state_string_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_idle_index") != serialized_fields.end())
+	{
+		const SerializedField& _idle_index_sf = serialized_fields["_idle_index"];
+		if (_idle_index_sf.type_name == "unsigned")
+		{
+			_idle_index = std::any_cast<unsigned>(_idle_index_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attacking_index") != serialized_fields.end())
+	{
+		const SerializedField& _attacking_index_sf = serialized_fields["_attacking_index"];
+		if (_attacking_index_sf.type_name == "unsigned")
+		{
+			_attacking_index = std::any_cast<unsigned>(_attacking_index_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::BugAnimationManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_animator"] = SerializedField(std::string("_animator"), std::make_any<ComponentAnimation*>(_animator), std::string("ComponentAnimation*"));
+
+	serialized_fields["_previous_state"] = SerializedField(std::string("_previous_state"), std::make_any<BugState>(_previous_state), std::string("BugState"));
+
+	serialized_fields["_state_string"] = SerializedField(std::string("_state_string"), std::make_any<std::string>(_state_string), std::string("std::string"));
+
+	serialized_fields["_idle_index"] = SerializedField(std::string("_idle_index"), std::make_any<unsigned>(_idle_index), std::string("unsigned"));
+
+	serialized_fields["_attacking_index"] = SerializedField(std::string("_attacking_index"), std::make_any<unsigned>(_attacking_index), std::string("unsigned"));
 }
 
 void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -83,6 +149,15 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_detecting_radius") != serialized_fields.end())
+	{
+		const SerializedField& _detecting_radius_sf = serialized_fields["_detecting_radius"];
+		if (_detecting_radius_sf.type_name == "float")
+		{
+			_detecting_radius = std::any_cast<float>(_detecting_radius_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_explosion_radius") != serialized_fields.end())
 	{
 		const SerializedField& _explosion_radius_sf = serialized_fields["_explosion_radius"];
@@ -115,6 +190,8 @@ void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
+
+	serialized_fields["_detecting_radius"] = SerializedField(std::string("_detecting_radius"), std::make_any<float>(_detecting_radius), std::string("float"));
 
 	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
 
@@ -232,6 +309,33 @@ void Hachiko::Scripting::EnemyController::DeserializeFrom(std::unordered_map<std
 			_player = std::any_cast<GameObject*>(_player_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_state") != serialized_fields.end())
+	{
+		const SerializedField& _state_sf = serialized_fields["_state"];
+		if (_state_sf.type_name == "BugState")
+		{
+			_state = std::any_cast<BugState>(_state_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attack_animation_duration") != serialized_fields.end())
+	{
+		const SerializedField& _attack_animation_duration_sf = serialized_fields["_attack_animation_duration"];
+		if (_attack_animation_duration_sf.type_name == "float")
+		{
+			_attack_animation_duration = std::any_cast<float>(_attack_animation_duration_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_attack_animation_timer") != serialized_fields.end())
+	{
+		const SerializedField& _attack_animation_timer_sf = serialized_fields["_attack_animation_timer"];
+		if (_attack_animation_timer_sf.type_name == "float")
+		{
+			_attack_animation_timer = std::any_cast<float>(_attack_animation_timer_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -249,6 +353,12 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_spawn_is_initial"] = SerializedField(std::string("_spawn_is_initial"), std::make_any<bool>(_spawn_is_initial), std::string("bool"));
 
 	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
+
+	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<BugState>(_state), std::string("BugState"));
+
+	serialized_fields["_attack_animation_duration"] = SerializedField(std::string("_attack_animation_duration"), std::make_any<float>(_attack_animation_duration), std::string("float"));
+
+	serialized_fields["_attack_animation_timer"] = SerializedField(std::string("_attack_animation_timer"), std::make_any<float>(_attack_animation_timer), std::string("float"));
 }
 
 void Hachiko::Scripting::MainMenuManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -545,12 +655,12 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_dash_indicator") != serialized_fields.end())
+	if(serialized_fields.find("_attack_indicator") != serialized_fields.end())
 	{
-		const SerializedField& _dash_indicator_sf = serialized_fields["_dash_indicator"];
-		if (_dash_indicator_sf.type_name == "GameObject*")
+		const SerializedField& _attack_indicator_sf = serialized_fields["_attack_indicator"];
+		if (_attack_indicator_sf.type_name == "GameObject*")
 		{
-			_dash_indicator = std::any_cast<GameObject*>(_dash_indicator_sf.copy);
+			_attack_indicator = std::any_cast<GameObject*>(_attack_indicator_sf.copy);
 		}
 	}
 
@@ -581,15 +691,6 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_dash_progress") != serialized_fields.end())
-	{
-		const SerializedField& _dash_progress_sf = serialized_fields["_dash_progress"];
-		if (_dash_progress_sf.type_name == "float")
-		{
-			_dash_progress = std::any_cast<float>(_dash_progress_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_dash_cooldown") != serialized_fields.end())
 	{
 		const SerializedField& _dash_cooldown_sf = serialized_fields["_dash_cooldown"];
@@ -599,75 +700,12 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_dash_timer") != serialized_fields.end())
-	{
-		const SerializedField& _dash_timer_sf = serialized_fields["_dash_timer"];
-		if (_dash_timer_sf.type_name == "float")
-		{
-			_dash_timer = std::any_cast<float>(_dash_timer_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_dash_count") != serialized_fields.end())
-	{
-		const SerializedField& _dash_count_sf = serialized_fields["_dash_count"];
-		if (_dash_count_sf.type_name == "int")
-		{
-			_dash_count = std::any_cast<int>(_dash_count_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_max_dash_count") != serialized_fields.end())
 	{
 		const SerializedField& _max_dash_count_sf = serialized_fields["_max_dash_count"];
 		if (_max_dash_count_sf.type_name == "int")
 		{
 			_max_dash_count = std::any_cast<int>(_max_dash_count_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_is_dashing") != serialized_fields.end())
-	{
-		const SerializedField& _is_dashing_sf = serialized_fields["_is_dashing"];
-		if (_is_dashing_sf.type_name == "bool")
-		{
-			_is_dashing = std::any_cast<bool>(_is_dashing_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_has_cooldown") != serialized_fields.end())
-	{
-		const SerializedField& _has_cooldown_sf = serialized_fields["_has_cooldown"];
-		if (_has_cooldown_sf.type_name == "bool")
-		{
-			_has_cooldown = std::any_cast<bool>(_has_cooldown_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_is_falling") != serialized_fields.end())
-	{
-		const SerializedField& _is_falling_sf = serialized_fields["_is_falling"];
-		if (_is_falling_sf.type_name == "bool")
-		{
-			_is_falling = std::any_cast<bool>(_is_falling_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_dash_start") != serialized_fields.end())
-	{
-		const SerializedField& _dash_start_sf = serialized_fields["_dash_start"];
-		if (_dash_start_sf.type_name == "math::float3")
-		{
-			_dash_start = std::any_cast<math::float3>(_dash_start_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_dash_direction") != serialized_fields.end())
-	{
-		const SerializedField& _dash_direction_sf = serialized_fields["_dash_direction"];
-		if (_dash_direction_sf.type_name == "math::float3")
-		{
-			_dash_direction = std::any_cast<math::float3>(_dash_direction_sf.copy);
 		}
 	}
 
@@ -707,21 +745,12 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_should_rotate") != serialized_fields.end())
+	if(serialized_fields.find("_attack_duration") != serialized_fields.end())
 	{
-		const SerializedField& _should_rotate_sf = serialized_fields["_should_rotate"];
-		if (_should_rotate_sf.type_name == "bool")
+		const SerializedField& _attack_duration_sf = serialized_fields["_attack_duration"];
+		if (_attack_duration_sf.type_name == "float")
 		{
-			_should_rotate = std::any_cast<bool>(_should_rotate_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_rotation_progress") != serialized_fields.end())
-	{
-		const SerializedField& _rotation_progress_sf = serialized_fields["_rotation_progress"];
-		if (_rotation_progress_sf.type_name == "float")
-		{
-			_rotation_progress = std::any_cast<float>(_rotation_progress_sf.copy);
+			_attack_duration = std::any_cast<float>(_attack_duration_sf.copy);
 		}
 	}
 
@@ -731,24 +760,6 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		if (_rotation_duration_sf.type_name == "float")
 		{
 			_rotation_duration = std::any_cast<float>(_rotation_duration_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_rotation_start") != serialized_fields.end())
-	{
-		const SerializedField& _rotation_start_sf = serialized_fields["_rotation_start"];
-		if (_rotation_start_sf.type_name == "math::Quat")
-		{
-			_rotation_start = std::any_cast<math::Quat>(_rotation_start_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_rotation_target") != serialized_fields.end())
-	{
-		const SerializedField& _rotation_target_sf = serialized_fields["_rotation_target"];
-		if (_rotation_target_sf.type_name == "math::Quat")
-		{
-			_rotation_target = std::any_cast<math::Quat>(_rotation_target_sf.copy);
 		}
 	}
 
@@ -788,7 +799,7 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_movement_speed"] = SerializedField(std::string("_movement_speed"), std::make_any<float>(_movement_speed), std::string("float"));
 
-	serialized_fields["_dash_indicator"] = SerializedField(std::string("_dash_indicator"), std::make_any<GameObject*>(_dash_indicator), std::string("GameObject*"));
+	serialized_fields["_attack_indicator"] = SerializedField(std::string("_attack_indicator"), std::make_any<GameObject*>(_attack_indicator), std::string("GameObject*"));
 
 	serialized_fields["_goal"] = SerializedField(std::string("_goal"), std::make_any<GameObject*>(_goal), std::string("GameObject*"));
 
@@ -796,25 +807,9 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_dash_distance"] = SerializedField(std::string("_dash_distance"), std::make_any<float>(_dash_distance), std::string("float"));
 
-	serialized_fields["_dash_progress"] = SerializedField(std::string("_dash_progress"), std::make_any<float>(_dash_progress), std::string("float"));
-
 	serialized_fields["_dash_cooldown"] = SerializedField(std::string("_dash_cooldown"), std::make_any<float>(_dash_cooldown), std::string("float"));
 
-	serialized_fields["_dash_timer"] = SerializedField(std::string("_dash_timer"), std::make_any<float>(_dash_timer), std::string("float"));
-
-	serialized_fields["_dash_count"] = SerializedField(std::string("_dash_count"), std::make_any<int>(_dash_count), std::string("int"));
-
 	serialized_fields["_max_dash_count"] = SerializedField(std::string("_max_dash_count"), std::make_any<int>(_max_dash_count), std::string("int"));
-
-	serialized_fields["_is_dashing"] = SerializedField(std::string("_is_dashing"), std::make_any<bool>(_is_dashing), std::string("bool"));
-
-	serialized_fields["_has_cooldown"] = SerializedField(std::string("_has_cooldown"), std::make_any<bool>(_has_cooldown), std::string("bool"));
-
-	serialized_fields["_is_falling"] = SerializedField(std::string("_is_falling"), std::make_any<bool>(_is_falling), std::string("bool"));
-
-	serialized_fields["_dash_start"] = SerializedField(std::string("_dash_start"), std::make_any<math::float3>(_dash_start), std::string("math::float3"));
-
-	serialized_fields["_dash_direction"] = SerializedField(std::string("_dash_direction"), std::make_any<math::float3>(_dash_direction), std::string("math::float3"));
 
 	serialized_fields["_raycast_min_range"] = SerializedField(std::string("_raycast_min_range"), std::make_any<float>(_raycast_min_range), std::string("float"));
 
@@ -824,15 +819,9 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_attack_cooldown"] = SerializedField(std::string("_attack_cooldown"), std::make_any<float>(_attack_cooldown), std::string("float"));
 
-	serialized_fields["_should_rotate"] = SerializedField(std::string("_should_rotate"), std::make_any<bool>(_should_rotate), std::string("bool"));
-
-	serialized_fields["_rotation_progress"] = SerializedField(std::string("_rotation_progress"), std::make_any<float>(_rotation_progress), std::string("float"));
+	serialized_fields["_attack_duration"] = SerializedField(std::string("_attack_duration"), std::make_any<float>(_attack_duration), std::string("float"));
 
 	serialized_fields["_rotation_duration"] = SerializedField(std::string("_rotation_duration"), std::make_any<float>(_rotation_duration), std::string("float"));
-
-	serialized_fields["_rotation_start"] = SerializedField(std::string("_rotation_start"), std::make_any<math::Quat>(_rotation_start), std::string("math::Quat"));
-
-	serialized_fields["_rotation_target"] = SerializedField(std::string("_rotation_target"), std::make_any<math::Quat>(_rotation_target), std::string("math::Quat"));
 
 	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<GameObject*>(_camera), std::string("GameObject*"));
 

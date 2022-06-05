@@ -75,6 +75,8 @@ private:
 
 	float3 _dash_start = float3::zero;
 	float3 _dash_direction = float3::zero;
+	float3 _dash_end = float3::zero;
+	float falling_distance = 10.0f;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	float _dash_count = 0.0f;

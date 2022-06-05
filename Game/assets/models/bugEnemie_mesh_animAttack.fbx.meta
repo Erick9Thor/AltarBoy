@@ -1,0 +1,78 @@
+asset_hash: 5930545645633060629
+model_name: bugEnemie_mesh_animAttack
+meshes:
+  - 15210605525662147809
+  - 42393286226051468
+  - 5964931704620164776
+  - 11453833257392676201
+  - 3275443395346555374
+  - 8761976222552801585
+  - 11791530491616698172
+  - 7407606933675017230
+  - 3942627938000389773
+  - 3335480114070465942
+  - 4979023842786990397
+  - 15698398994373220506
+  - 549563601866518234
+  - 490909027575289294
+  - 16780002157634923876
+  - 10268474166569623315
+  - 9598244777598508006
+  - 1045988484003893975
+  - 8482612497262153417
+  - 14456470526575154782
+  - 309244153538478532
+materials:
+  - 16615586293878050055
+animations:
+  - 9054706964290541382
+prefab_id: 15825041331629225874
+resources:
+  - resource_id: 15210605525662147809
+    resource_type: 3
+  - resource_id: 42393286226051468
+    resource_type: 3
+  - resource_id: 5964931704620164776
+    resource_type: 3
+  - resource_id: 11453833257392676201
+    resource_type: 3
+  - resource_id: 3275443395346555374
+    resource_type: 3
+  - resource_id: 8761976222552801585
+    resource_type: 3
+  - resource_id: 11791530491616698172
+    resource_type: 3
+  - resource_id: 7407606933675017230
+    resource_type: 3
+  - resource_id: 3942627938000389773
+    resource_type: 3
+  - resource_id: 3335480114070465942
+    resource_type: 3
+  - resource_id: 4979023842786990397
+    resource_type: 3
+  - resource_id: 15698398994373220506
+    resource_type: 3
+  - resource_id: 549563601866518234
+    resource_type: 3
+  - resource_id: 490909027575289294
+    resource_type: 3
+  - resource_id: 16780002157634923876
+    resource_type: 3
+  - resource_id: 10268474166569623315
+    resource_type: 3
+  - resource_id: 9598244777598508006
+    resource_type: 3
+  - resource_id: 1045988484003893975
+    resource_type: 3
+  - resource_id: 8482612497262153417
+    resource_type: 3
+  - resource_id: 14456470526575154782
+    resource_type: 3
+  - resource_id: 309244153538478532
+    resource_type: 3
+  - resource_id: 16615586293878050055
+    resource_type: 1
+  - resource_id: 9054706964290541382
+    resource_type: 7
+  - resource_id: 15825041331629225874
+    resource_type: 13
