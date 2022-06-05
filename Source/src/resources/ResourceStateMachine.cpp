@@ -2,10 +2,17 @@
 #include "ResourceStateMachine.h"
 #include "modules/ModuleResources.h"
 #include "ResourceAnimation.h"
+#include "ResourceStateMachine.h"
 
 void Hachiko::ResourceStateMachine::RemoveTransition(unsigned int index) 
 {
     transitions.erase(transitions.begin() + index);
+}
+
+void Hachiko::ResourceStateMachine::Save() 
+{
+    StateMachineImporter state_machine_importer;
+    state_machine_importer.Save(GetID(), this);
 }
 
 Hachiko::ResourceStateMachine::ResourceStateMachine(UID uid) : Resource(uid, Resource::Type::STATE_MACHINE)

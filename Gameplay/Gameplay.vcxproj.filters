@@ -72,11 +72,11 @@
     <ClInclude Include="generated\Factory.h">
       <Filter>Generated</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="DynamicCamera.h" />
-    <ClInclude Include="MainMenuManager.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="BackToMainMenu.h" />
+    <ClInclude Include="src\player\PlayerController.h" />
+    <ClInclude Include="src\DynamicCamera.h" />
+    <ClInclude Include="src\scene\MainMenuManager.h" />
+    <ClInclude Include="src\player\PlayerCamera.h" />
+    <ClInclude Include="src\scene\BackToMainMenu.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="..\Source\vendors\imgui\imgui_stdlib.h">
       <Filter>Vendors\ImGui</Filter>
@@ -505,13 +505,13 @@
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
     <ClInclude Include="Scenes.h" />
-    <ClInclude Include="PlayerAnimationManager.h" />
-    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="src\player\PlayerAnimationManager.h" />
+    <ClInclude Include="src\player\PlayerState.h" />
     <ClInclude Include="Sounds.h" />
-    <ClInclude Include="PlayerSoundManager.h" />
-    <ClInclude Include="EnemyController.h" />
+    <ClInclude Include="src\player\PlayerSoundManager.h" />
+    <ClInclude Include="src\enemies\EnemyController.h" />
     <ClInclude Include="Stats.h" />
-    <ClInclude Include="CrystalExplosion.h" />
+    <ClInclude Include="src\CrystalExplosion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -523,11 +523,11 @@
     <ClCompile Include="generated\SerializationMethods.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
-    <ClCompile Include="MainMenuManager.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="BackToMainMenu.cpp" />
+    <ClCompile Include="src\player\PlayerController.cpp" />
+    <ClCompile Include="src\DynamicCamera.cpp" />
+    <ClCompile Include="src\scene\MainMenuManager.cpp" />
+    <ClCompile Include="src\player\PlayerCamera.cpp" />
+    <ClCompile Include="src\scene\BackToMainMenu.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
@@ -768,11 +768,11 @@
     <ClCompile Include="generated\SaveAndLoadMethods.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAnimationManager.cpp" />
-    <ClCompile Include="PlayerSoundManager.cpp" />
-    <ClCompile Include="EnemyController.cpp" />
+    <ClCompile Include="src\player\PlayerAnimationManager.cpp" />
+    <ClCompile Include="src\player\PlayerSoundManager.cpp" />
+    <ClCompile Include="src\enemies\EnemyController.cpp" />
     <ClCompile Include="Stats.cpp" />
-    <ClCompile Include="CrystalExplosion.cpp" />
+    <ClCompile Include="src\CrystalExplosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

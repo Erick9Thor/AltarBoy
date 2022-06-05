@@ -47,8 +47,6 @@ namespace Hachiko
         {
             clips[index].loop = loop;
         }
-
-
         unsigned int GetNumClips() const
         {
             return unsigned int(clips.size());
@@ -157,16 +155,23 @@ namespace Hachiko
         void RemoveTransition(unsigned int index);
 
 
-    public:
-        ResourceStateMachine(UID uid);
-        ~ResourceStateMachine() override;
+        // RESOURCE INFO
+        [[nodiscard]] std::string GetName() const
+        {
+            return state_m_name;
+        }
 
-        std::string state_m_name;
+        void Save();
 
         std::vector<Clip> clips;
         std::vector<Node> nodes;
         std::vector<Transition> transitions;
 
+    public:
+        ResourceStateMachine(UID uid);
+        ~ResourceStateMachine() override;
+
+        std::string state_m_name;
         unsigned int default_node = 0;
     };
 } // namespace Hachiko

@@ -161,13 +161,13 @@ void Hachiko::ComponentAnimation::DrawGui()
             if (ImGui::InputText("Resource name", name, 128))
             {
                 state_machine->state_m_name = name;
-                // state_machine->Save();
+                state_machine->Save();
             }
 
             if (ImGui::Button("Add clip"))
             {
                 state_machine->AddClip("noname", 0, true);
-                // state_machine->Save();
+                state_machine->Save();
             }
 
             if (state_machine->clips.size() > 0)
@@ -187,7 +187,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 if (ImGui::InputText("Clip name", name, 128))
                 {
                     state_machine->SetClipName(clip_idx, name);
-                    // state_machine->Save();
+                    state_machine->Save();
                 }
 
                 ImGui::LabelText("Resource", res ? res->GetName().c_str() : "Unknown");
@@ -199,14 +199,14 @@ void Hachiko::ComponentAnimation::DrawGui()
                 if (ImGui::Checkbox("Loop", &loop))
                 {
                     state_machine->SetClipLoop(clip_idx, loop);
-                    // state_machine->Save();
+                    state_machine->Save();
                 }
 
                 ImGui::SameLine();
                 if (ImGui::Button("Remove"))
                 {
                     state_machine->RemoveClip(clip_idx);
-                    // state_machine->Save();
+                    state_machine->Save();
                 }
                 else
                 {
@@ -353,7 +353,7 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
                 UID selected_animation_id = selected_model_meta[ANIMATIONS][i].as<UID>();
 
                 state_machine->SetClipRes(clip_idx, selected_animation_id);               
-                //state_machine->Save();
+                state_machine->Save();
                 selected_asset_clip_names.clear();
             }
         }
@@ -363,10 +363,10 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
-    node[M_STATE_MACHINE] = state_machine->GetID();
+    // node[M_STATE_MACHINE] = state_machine->GetID();
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
-    state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
+    // state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
 }

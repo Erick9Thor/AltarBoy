@@ -19,9 +19,8 @@ namespace Hachiko
 
         HACHIKO_API void StartAnimating();
         HACHIKO_API void StopAnimating();
-
-        void ResetState();
-        void SendTrigger(const std::string& trigger);
+        HACHIKO_API void SendTrigger(const std::string& trigger);
+        HACHIKO_API void ResetState();
 
         void Update() override;
 

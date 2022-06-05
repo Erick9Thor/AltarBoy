@@ -83,7 +83,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>scriptingUtil/gameplaypch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src;$(SolutionDir)src;$(SolutionDir)vendors\SDL\include;$(SolutionDir)vendors\glew-2.1.0\include\GL;$(SolutionDir)vendors\imgui;$(SolutionDir)vendors\MathGeoLib;$(SolutionDir)vendors\DevIL\include\IL;$(SolutionDir)vendors\DebugDraw;$(SolutionDir)vendors\assimp\include;$(SolutionDir)vendors\ImGuiFileDialog-0.6.3;$(SolutionDir)vendors\ImGuizmo;$(SolutionDir)vendors\rapidjson\include;$(SolutionDir)vendors\optick\include;$(SolutionDir)vendors\PhysicsFS;$(SolutionDir)vendors\yaml-cpp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -313,17 +313,17 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
-    <ClInclude Include="BackToMainMenu.h" />
-    <ClInclude Include="CrystalExplosion.h" />
-    <ClInclude Include="DynamicCamera.h" />
-    <ClInclude Include="EnemyController.h" />
+    <ClInclude Include="src\scene\BackToMainMenu.h" />
+    <ClInclude Include="src\CrystalExplosion.h" />
+    <ClInclude Include="src\DynamicCamera.h" />
+    <ClInclude Include="src\enemies\EnemyController.h" />
     <ClInclude Include="generated\Factory.h" />
-    <ClInclude Include="MainMenuManager.h" />
-    <ClInclude Include="PlayerAnimationManager.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="PlayerSoundManager.h" />
-    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="src\scene\MainMenuManager.h" />
+    <ClInclude Include="src\player\PlayerAnimationManager.h" />
+    <ClInclude Include="src\player\PlayerCamera.h" />
+    <ClInclude Include="src\player\PlayerController.h" />
+    <ClInclude Include="src\player\PlayerSoundManager.h" />
+    <ClInclude Include="src\player\PlayerState.h" />
     <ClInclude Include="Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
@@ -716,19 +716,19 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="BackToMainMenu.cpp" />
-    <ClCompile Include="CrystalExplosion.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
-    <ClCompile Include="EnemyController.cpp" />
+    <ClCompile Include="src\scene\BackToMainMenu.cpp" />
+    <ClCompile Include="src\CrystalExplosion.cpp" />
+    <ClCompile Include="src\DynamicCamera.cpp" />
+    <ClCompile Include="src\enemies\EnemyController.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SaveAndLoadMethods.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
-    <ClCompile Include="MainMenuManager.cpp" />
-    <ClCompile Include="PlayerAnimationManager.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="PlayerSoundManager.cpp" />
+    <ClCompile Include="src\scene\MainMenuManager.cpp" />
+    <ClCompile Include="src\player\PlayerAnimationManager.cpp" />
+    <ClCompile Include="src\player\PlayerCamera.cpp" />
+    <ClCompile Include="src\player\PlayerController.cpp" />
+    <ClCompile Include="src\player\PlayerSoundManager.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

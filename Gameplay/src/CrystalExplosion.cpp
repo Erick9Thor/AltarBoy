@@ -3,8 +3,8 @@
 #include "Stats.h"
 
 #include "CrystalExplosion.h"
-#include "PlayerController.h"
-#include "EnemyController.h"
+#include "player/PlayerController.h"
+#include "enemies/EnemyController.h"
 
 #include "core/GameObject.h"
 
@@ -127,6 +127,6 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCristall()
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
 
-	// _explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
+	_explosion_crystal->GetComponent<ComponentAnimation>()->SendTrigger("isCrashing");
 	_stats._is_alive = false;
 }

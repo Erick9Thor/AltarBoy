@@ -1,7 +1,7 @@
 
 #include "scriptingUtil/gameplaypch.h"
 #include "EnemyController.h"
-#include "PlayerController.h"
+#include "player/PlayerController.h"
 #include "Stats.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>

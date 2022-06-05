@@ -80,19 +80,12 @@ Hachiko::Resource* Hachiko::AnimationImporter::Load(UID id)
     char* cursor = file_buffer;
     unsigned size_bytes = 0;
 
-    
-
     const auto animation = new ResourceAnimation(id);
 
     unsigned header[3];
     size_bytes = sizeof(header);
     memcpy(header, cursor, size_bytes);
     cursor += size_bytes;
-
-    //header[0] duration
-    //header[1] nameLength
-    //header[2] numChanels
-
 
     animation->SetDuration(header[0]);
 

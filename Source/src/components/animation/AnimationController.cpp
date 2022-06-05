@@ -17,8 +17,6 @@ void Hachiko::AnimationController::Play(ResourceAnimation* current_animation, bo
 {
     Instance* new_instance = new Instance();
 
-    current_animation->SetCurrentState(ResourceAnimation::State::PLAYING);
-
     new_instance->current_animation = current_animation;
     new_instance->loop = loop;
     new_instance->fade_duration = fade_time;
@@ -39,7 +37,6 @@ void Hachiko::AnimationController::Stop()
 {
     if (current != nullptr)
     {
-        current->current_animation->SetCurrentState(ResourceAnimation::State::PAUSED);
         ReleaseInstance(current);
         current = nullptr;
     }
@@ -67,11 +64,6 @@ void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned e
         }
 
         instance->time = instance->time > current->current_animation->GetDuration() ? current->current_animation->GetDuration() : instance->time;
-
-        if (to_end == 0)
-        {
-            current->current_animation->SetCurrentState(ResourceAnimation::State::STOPPED);
-        }
 
         //assert(instance->time <= current->current_animation->GetDuration());
     }
