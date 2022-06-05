@@ -30,6 +30,7 @@ void Hachiko::BatchManager::CollectMeshes(const GameObject* game_object)
 void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
 {
     const std::vector<Component*> components = game_object->GetComponents();
+    
     for (unsigned i = 0; i < components.size(); ++i)
     {
         if (components[i]->GetType() == Component::Type::MESH_RENDERER)
@@ -38,8 +39,14 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
             const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
             bool batch_found = false;
 
+            // Switch between correct batches vector based on transparency property of the material:
+            std::vector<GeometryBatch*>* geometry_batches = 
+                mesh_renderer->GetResourceMaterial()->is_transparent 
+                    ? &geometry_batches_transparent 
+                    : &geometry_batches_opaque;      
+
             // Find matching batch to include the mesh
-            for (GeometryBatch* geometry_batch : geometry_batches)
+            for (GeometryBatch* geometry_batch : (*geometry_batches))
             {
                 if (geometry_batch->batch->layout.Equal(resource->layout))
                 {
@@ -54,7 +61,7 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
                 // Create new batch if there are no matching ones
                 GeometryBatch* new_batch = new GeometryBatch(resource->layout);
                 new_batch->AddMesh(mesh_renderer);
-                geometry_batches.push_back(new_batch);
+                geometry_batches->push_back(new_batch);
             }
         }
     }
@@ -63,6 +70,11 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
 void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh_renderer)
 {
     const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
+
+    std::vector<GeometryBatch*>& geometry_batches = 
+                mesh_renderer->GetResourceMaterial()->is_transparent 
+                    ? geometry_batches_transparent 
+                    : geometry_batches_opaque;
 
     for (GeometryBatch* geometry_batch : geometry_batches)
     {
@@ -77,38 +89,48 @@ void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh_r
 
 void Hachiko::BatchManager::BuildBatches()
 {
-    for (GeometryBatch* geometry_batch : geometry_batches)
+    for (GeometryBatch* geometry_batch : geometry_batches_opaque)
+    {
+        geometry_batch->BuildBatch();
+    }
+
+    for (GeometryBatch* geometry_batch : geometry_batches_transparent)
     {
         geometry_batch->BuildBatch();
     }
 }
 
-void Hachiko::BatchManager::DrawBatches()
+void Hachiko::BatchManager::DrawOpaqueBatches(const Program* program)
 {
-    static float4x4 identity = float4x4::identity;
-    for (GeometryBatch* geometry_batch : geometry_batches)
+    for (GeometryBatch* geometry_batch : geometry_batches_opaque)
     {
-        // Binds meshes and transforms
-        geometry_batch->UpdateWithTextureBatch(use_first_segment);
-        geometry_batch->BindBuffers(use_first_segment);
-        //App->program->GetMainProgram()->BindUniformFloat4x4("model", identity.ptr());
-        // Bind texture batch
-        // bind materials array
-        auto& commands = geometry_batch->GetCommands();
-
-        App->program->GetMainProgram()->BindUniformBool("has_bones", geometry_batch->batch->layout.bones);
-        int persistent_offset = (use_first_segment) ? 0 : geometry_batch->component_count;
-        App->program->GetMainProgram()->BindUniformInts("persistent_offset", 1, &persistent_offset);
-
-        glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
+        DrawSingleBatch(geometry_batch, program, use_first_segment_opaque);
     }
 
-    use_first_segment = !use_first_segment;
+    use_first_segment_opaque = !use_first_segment_opaque;
 }
 
-void Hachiko::BatchManager::ClearBatchesDrawList()
+void Hachiko::BatchManager::DrawTransparentBatches(const Program* program) 
 {
-    for (GeometryBatch* geometry_batch : geometry_batches)
+    for (GeometryBatch* geometry_batch : geometry_batches_transparent)
+    {
+        DrawSingleBatch(geometry_batch, program, use_first_segment_transparent);
+    }
+
+    use_first_segment_transparent = !use_first_segment_transparent;
+}
+
+void Hachiko::BatchManager::ClearOpaqueBatchesDrawList()
+{
+    for (GeometryBatch* geometry_batch : geometry_batches_opaque)
+    {
+        geometry_batch->ClearDrawList();
+    }
+}
+
+void Hachiko::BatchManager::ClearTransparentBatchesDrawList() 
+{
+    for (GeometryBatch* geometry_batch : geometry_batches_transparent)
     {
         geometry_batch->ClearDrawList();
     }
@@ -116,16 +138,38 @@ void Hachiko::BatchManager::ClearBatchesDrawList()
 
 void Hachiko::BatchManager::CleanUp()
 {
-    for (GeometryBatch* geometry_batch : geometry_batches)
+    for (GeometryBatch* geometry_batch : geometry_batches_opaque)
     {
         delete geometry_batch;
     }
-    geometry_batches.clear();
+
+    for (GeometryBatch* geometry_batch : geometry_batches_transparent)
+    {
+        delete geometry_batch;
+    }
+
+    geometry_batches_opaque.clear();
+
+    geometry_batches_transparent.clear();
 }
 
 void Hachiko::BatchManager::DebugMenu() 
 {
-    for (GeometryBatch* geometry_batch : geometry_batches)
+    ImGui::Text("Opaque Batches");
+    ImGui::Separator();
+    ShowDebugMenuForBatches(geometry_batches_opaque);
+
+    ImGui::NewLine();
+
+    ImGui::Text("Transparent Batches"); 
+    ImGui::Separator();
+    ShowDebugMenuForBatches(geometry_batches_transparent);
+}
+
+void Hachiko::BatchManager::ShowDebugMenuForBatches(
+    const std::vector<GeometryBatch*>& batches) const 
+{
+    for (GeometryBatch* geometry_batch : batches)
     {
         ImGui::Text(geometry_batch->batch->layout.bones ? "Bones = true; " : "Bones = false; ");
         ImGui::SameLine();
@@ -136,4 +180,21 @@ void Hachiko::BatchManager::DebugMenu()
         geometry_batch->ImGuiWindow();
         ImGui::Separator();
     }
+}
+
+void Hachiko::BatchManager::DrawSingleBatch(GeometryBatch* geometry_batch, const Program* program, bool use_first_segment) const 
+{
+    // Binds meshes and transforms
+    geometry_batch->UpdateWithTextureBatch(program, use_first_segment);
+    geometry_batch->BindBuffers(use_first_segment);
+
+    // Bind texture batch
+    // bind materials array
+    auto& commands = geometry_batch->GetCommands();
+
+    program->BindUniformBool("has_bones", geometry_batch->batch->layout.bones);
+    int persistent_offset = (use_first_segment) ? 0 : geometry_batch->component_count;
+    program->BindUniformInts("persistent_offset", 1, &persistent_offset);
+
+    glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, commands.size(), 0);
 }

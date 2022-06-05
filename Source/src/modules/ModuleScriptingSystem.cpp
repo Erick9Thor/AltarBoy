@@ -25,6 +25,8 @@ Hachiko::ModuleScriptingSystem::ModuleScriptingSystem()
 
 bool Hachiko::ModuleScriptingSystem::Init()
 {
+    HE_LOG("INITIALIZING MODULE: SCRIPTING SYSTEM");
+
     _dll_change_check_frequency_in_secs = 2.0f;
     _dll_change_check_timer = 0.0f;
     _in_play_mode = false;

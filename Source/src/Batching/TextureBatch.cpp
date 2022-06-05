@@ -7,6 +7,7 @@
 
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleTexture.h"
+#include "core/rendering/Program.h"
 
 Hachiko::TextureBatch::~TextureBatch()
 {
@@ -171,12 +172,12 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
     loaded = true;
 }
 
-void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
+void Hachiko::TextureBatch::Draw(const Program* program, const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
 {
     GenerateMaterials(components);
     UpdateBuffers(use_first_segment, component_count);
 
-    BindTextures();
+    BindTextures(program);
     BindBuffers(use_first_segment, component_count);
 }
 
@@ -285,10 +286,10 @@ void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned compo
     }
 }
 
-void Hachiko::TextureBatch::BindTextures()
+void Hachiko::TextureBatch::BindTextures(const Program* program)
 {
     const std::vector<int> texture_slots = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-    App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
+    program->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {

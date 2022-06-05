@@ -265,11 +265,12 @@ void Hachiko::ComponentTransform::UpdateTransform()
         }
 
         // Update global matrix related variables
-        right = matrix.WorldX();
-        up = matrix.WorldY();
-        front = matrix.WorldZ();
+        right = matrix.WorldX().Normalized();
+        up = matrix.WorldY().Normalized();
+        front = matrix.WorldZ().Normalized();
 
         matrix.Decompose(position, rotation, scale);
+        rotation.Normalize();
         rotation_euler = RadToDeg(rotation.ToEulerXYZ());
 
         changed = true;
