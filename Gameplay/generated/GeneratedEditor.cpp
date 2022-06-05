@@ -120,4 +120,5 @@ void Hachiko::Scripting::RoomTeleporter::OnEditor()
 	Editor::Show("_touching", _touching);
 	Editor::Show("_target", _target);
 	Editor::Show<ComponentImage>("_fade_image", "ComponentImage*", _fade_image);
+	Editor::Show("_fade_duration", _fade_duration);
 }

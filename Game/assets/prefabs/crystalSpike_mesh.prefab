@@ -1,0 +1,24 @@
+prefab_name: crystalSpike_mesh
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: crystalSpike_mesh
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [1.2035023, 0.56883049, -1.08868277]
+        rotation: [-0.640856266, 0.298836261, 0.298836261, 0.640856564]
+        scale: [0.99999994, 1, 0.999999881]
+      - type: 2
+        enabled: true
+        mesh_id: 12493242938431995642
+        navigable: false
+        visible: true
+        material_id: 15711698613413314858

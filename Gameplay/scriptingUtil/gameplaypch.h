@@ -15,6 +15,7 @@
 #include <components/ComponentAudioSource.h>
 #include <components/ComponentImage.h>
 #include <components/ComponentTransform.h>
+#include <components/ComponentTransform2D.h>
 #include <core/GameObject.h>
 #include <Gameplay.h>
 #include <Globals.h>

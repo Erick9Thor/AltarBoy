@@ -735,6 +735,8 @@ void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
 	{
 		node["'_fade_image@ComponentImage*'"] = 0;
 	}
+
+	node["'_fade_duration@float'"] = _fade_duration;
 }
 
 void Hachiko::Scripting::RoomTeleporter::OnLoad()
@@ -756,5 +758,10 @@ void Hachiko::Scripting::RoomTeleporter::OnLoad()
 		{
 			_fade_image = _fade_image_owner__temp->GetComponent<ComponentImage>();
 		}
+	}
+
+	if (load_node["'_fade_duration@float'"].IsDefined())
+	{
+		_fade_duration = load_node["'_fade_duration@float'"].as<float>();
 	}
 }

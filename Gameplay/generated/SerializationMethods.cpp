@@ -937,6 +937,15 @@ void Hachiko::Scripting::RoomTeleporter::DeserializeFrom(std::unordered_map<std:
 			_fade_image = std::any_cast<ComponentImage*>(_fade_image_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_fade_duration") != serialized_fields.end())
+	{
+		const SerializedField& _fade_duration_sf = serialized_fields["_fade_duration"];
+		if (_fade_duration_sf.type_name == "float")
+		{
+			_fade_duration = std::any_cast<float>(_fade_duration_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::RoomTeleporter::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -948,4 +957,6 @@ void Hachiko::Scripting::RoomTeleporter::SerializeTo(std::unordered_map<std::str
 	serialized_fields["_target"] = SerializedField(std::string("_target"), std::make_any<GameObject*>(_target), std::string("GameObject*"));
 
 	serialized_fields["_fade_image"] = SerializedField(std::string("_fade_image"), std::make_any<ComponentImage*>(_fade_image), std::string("ComponentImage*"));
+
+	serialized_fields["_fade_duration"] = SerializedField(std::string("_fade_duration"), std::make_any<float>(_fade_duration), std::string("float"));
 }
