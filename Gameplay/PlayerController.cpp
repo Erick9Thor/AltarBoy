@@ -206,11 +206,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
-		_movement_direction += math::float3::unitY;
+		_player_position += math::float3::unitY * 0.5f;
 	}
 	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
 	{
-		_movement_direction += math::float3::unitY;
+		_player_position -= math::float3::unitY * 0.5f;
 	}
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
@@ -556,7 +556,7 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 directi
 	_knock_start = _player_transform->GetGlobalPosition();
 	_knock_end = _player_transform->GetGlobalPosition() + direction;
 	_stun_time = _stun_duration;
-	_player_transform->LookAtDirection(direction);
+	_player_transform->LookAtDirection(-direction);
 }
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)

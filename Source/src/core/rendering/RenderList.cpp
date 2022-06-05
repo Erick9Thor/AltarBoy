@@ -56,7 +56,7 @@ void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& c
 
 void Hachiko::RenderList::CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh_renderer)
 {
-    if (!mesh_renderer || !mesh_renderer->IsVisible())
+    if (!mesh_renderer || !mesh_renderer->GetGameObject()->IsActive() || !mesh_renderer->IsVisible())
     {
         return;
     }
