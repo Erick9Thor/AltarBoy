@@ -267,6 +267,7 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
         if (components[i]->OverrideMaterialActive())
         {
+            materials[i].emissive_flag = 0;
             materials[i].emissive_color = components[i]->GetOverrideEmissiveColor();
         }
     }

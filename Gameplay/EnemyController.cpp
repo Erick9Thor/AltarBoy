@@ -12,7 +12,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _attack_range(1.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _spawn_is_initial(false)
-	, _stats(2, 2, 5, 10)
+	, _stats(2, 2, 5, 10.0f)
 	, _player(nullptr)
 	, _state(BugState::INVALID)
 	, _attack_animation_duration(0.0f)
@@ -95,7 +95,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			return;
 		}
 		_is_stunned = false;
-
 		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 		// We set the variables back to normal
 		agc->SetMaxAcceleration(_acceleration);
@@ -139,8 +138,9 @@ Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage, float3 direction)
 {
 	_stats.ReceiveDamage(damage);
+	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
 	_is_stunned = true;
-	_stun_time = 1.2f; // Once we have weapons stun duration might be moved to each weapon stat
+	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
 	float knockback_intensity = 0.5f; // same with knock-back intensity
 	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback_intensity);
 }
@@ -156,7 +156,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
-	_player_controller->_stats.ReceiveDamage(_stats._attack_power);
+	_player_controller->ReceiveDamage(_stats._attack_power);
 	_attack_cooldown = _stats._attack_cd;
 }
 
@@ -209,4 +209,5 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
+	delete game_object;
 }

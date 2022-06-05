@@ -94,7 +94,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("_dash_duration", _dash_duration);
 	Editor::Show("_dash_distance", _dash_distance);
 	Editor::Show("_dash_cooldown", _dash_cooldown);
-	Editor::Show("_max_dash_count", _max_dash_count);
+	Editor::Show("_max_dash_charges", _max_dash_charges);
 	Editor::Show("_raycast_min_range", _raycast_min_range);
 	Editor::Show("_raycast_max_range", _raycast_max_range);
 	Editor::Show("_attack_radius", _attack_radius);
