@@ -24,7 +24,7 @@ void main()
 
     // Temporary values that will be calculated:
     float smoothness;
-    vec3 diffuse;
+    vec4 diffuse;
     vec3 specular;
     
     // Calculate specular color, diffuse color and smoothness based on material properties and textures:
@@ -50,7 +50,7 @@ void main()
         specular);
 
     // Store diffuse color in rgb channels of g buffer texture for diffuse: 
-    g_diffuse.rgb = diffuse;
+    g_diffuse.rgb = diffuse.rgb;
     g_diffuse.a = 1.0f;
 
     // Store specular color in rgb channels of g buffer texture for specular and smoothness:

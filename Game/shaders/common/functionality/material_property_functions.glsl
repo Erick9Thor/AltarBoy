@@ -44,11 +44,11 @@ void CalculateSpecularDiffuseSmoothness(
     int specular_layer_index,
     int diffuse_layer_index,
     inout float smoothness, 
-    inout vec3 diffuse, 
+    inout vec4 diffuse, 
     inout vec3 specular)
 {
-    vec4 diffuse_temp = material_diffuse_flag * pow(texture(diffuse_texture, vec3(texture_coords, diffuse_layer_index)), vec4(2.2)) + // true
-                        (1 - material_diffuse_flag) * material_diffuse_color;                                                         // false
+    vec4 diffuse_temp = material_diffuse_flag * pow(texture(diffuse_texture, vec3(texture_coords, diffuse_layer_index)), vec4(2.2, 2.2, 2.2, 1.0)) + // true
+                        (1 - material_diffuse_flag) * material_diffuse_color;                                                                        // false
 
     if (material_is_metallic > 0)
     {
@@ -60,7 +60,7 @@ void CalculateSpecularDiffuseSmoothness(
                                (1 - material_metallic_flag) * material_metalness_value; // false
         
         // Cd:
-        diffuse = diffuse_temp.rgb * (1 - metalness_mask);
+        diffuse.rgb = diffuse_temp.rgb * (1 - metalness_mask);
         // f0:
         specular = vec3(0.04) * (1 - metalness_mask) + diffuse_temp.rgb * metalness_mask;
 
@@ -70,7 +70,7 @@ void CalculateSpecularDiffuseSmoothness(
     else 
     {
         // Cd:
-        diffuse = diffuse_temp.rgb;
+        diffuse.rgb = diffuse_temp.rgb;
 
         // If the flag is true (1) it will paint texture specular color, otherwise material specular color:
         vec4 color_specular = (material_specular_flag * texture(specular_texture, vec3(texture_coords, specular_layer_index))) + // true
@@ -82,6 +82,10 @@ void CalculateSpecularDiffuseSmoothness(
         smoothness = material_smoothness * ((material_smoothness_alpha * color_specular.a) + // true
                      ((1 - material_smoothness_alpha)* diffuse_temp.a ));                    // false
     } 
+
+    // This is later then used in gamma correction & alpha stage of forward rendering,
+    // and disregarded by deferred rendering:
+    diffuse.a = diffuse_temp.a;
 }
 
 vec3 CalculateEmissive(sampler2DArray emissive_texture, vec2 texture_coords, int layer_index, vec4 material_emissive_color, uint material_emissive_flag)
