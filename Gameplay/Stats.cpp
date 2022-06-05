@@ -12,7 +12,7 @@ Hachiko::Scripting::Stats::Stats()
 {
 }
 
-Hachiko::Scripting::Stats::Stats(int _ap, int _atkcooldown, int _ms, int _maxhp)
+Hachiko::Scripting::Stats::Stats(int _ap, int _atkcooldown, int _ms, float _maxhp)
 {
 	_attack_power = _ap;
 	_attack_cd = _atkcooldown;
@@ -33,7 +33,7 @@ void Hachiko::Scripting::Stats::ReceiveDamage(int damage)
 	if (_god_mode)	return;
 
 	_current_hp -= damage;
-	math::Clamp(_current_hp, 0, _max_hp);
+	math::Clamp(_current_hp, 0.0f, _max_hp);
 
 	if (_current_hp <= 0)
 	{

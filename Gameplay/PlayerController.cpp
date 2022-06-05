@@ -28,7 +28,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_duration(0.0f)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
-	, _stats(5, 2, 10, 10)
+	, _stats(5, 2, 10, 10.0f)
 	, _state(PlayerState::IDLE)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
@@ -42,6 +42,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	if (_attack_indicator)
 	{
 		_attack_indicator->SetActive(false);
+	}
+	if (_ui_damage)
+	{
+		_ui_damage->SetActive(false);
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
@@ -137,6 +141,22 @@ bool Hachiko::Scripting::PlayerController::IsWalking() const
 	return _state == PlayerState::WALKING;
 }
 
+bool Hachiko::Scripting::PlayerController::IsStunned() const
+{
+	return _state == PlayerState::STUNNED;
+}
+
+bool Hachiko::Scripting::PlayerController::IsFalling() const
+{
+	return _state == PlayerState::FALLING;
+}
+
+
+bool Hachiko::Scripting::PlayerController::IsActionLocked() const
+{
+	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
+}
+
 
 void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 {
@@ -159,7 +179,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		_movement_direction -= math::float3::unitX;
 	}
 
-	if (!IsAttacking() && !IsDashing())
+	if (!IsActionLocked())
 	{
 		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
@@ -340,13 +360,29 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		return;
 	}
 
-	if (_is_falling)
+	if (IsFalling())
 	{
 		_player_position.y -= 0.25f;
 
-		if (_dash_start.y - _player_position.y > falling_distance)
+		if (_dash_start.y - _player_position.y > _falling_distance)
 		{
 			_player_position = _dash_start;
+		}
+	}
+	else if (IsStunned())
+	{
+		if(_stun_time > 0.0f)
+		{
+			_stun_time -= Time::DeltaTime();
+			float stun_completion = (_stun_duration - _stun_time) * (1.0 / _stun_duration);
+			_player_position = math::float3::Lerp(_knock_start, _knock_end,
+				stun_completion);
+			
+		}
+		else
+		{
+			_player_position = Navigation::GetCorrectedPosition(_knock_end, float3(2.0f, 2.0f, 2.0f));
+			_state = PlayerState::IDLE;
 		}
 	}
 
@@ -354,11 +390,16 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	if (Distance(corrected_position, _player_position) < 1.0f)
 	{
 		_player_position = corrected_position;
-		_is_falling = false;
+		if (IsFalling())
+		{
+			// Stopped falling
+			_state = PlayerState::IDLE;
+		}
 	}
 	else if (!IsDashing())
 	{
-		_is_falling = true;
+		// Started falling
+		_state = PlayerState::FALLING;
 	}
 }
 
@@ -479,6 +520,43 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	{
 		_attack_current_cd -= Time::DeltaTime();
 	}
+}
+
+void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, bool is_heavy, float3 direction)
+{
+	_stats.ReceiveDamage(damage_received);
+	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3);
+	// Activate vignette
+	if (_ui_damage && _stats._current_hp / _stats._max_hp < 0.25f)
+	{
+		_ui_damage->SetActive(true);
+	}
+	
+	if(is_heavy)
+	{
+		RecieveKnockback(direction);
+		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
+	}
+	else
+	{
+		if (_stats._current_hp / _stats._max_hp < 0.25f)
+		{
+			_camera->GetComponent<PlayerCamera>()->Shake(0.8f, 0.2f);
+		}
+		else
+		{
+			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 direction)
+{
+	_state = PlayerState::STUNNED;
+	_knock_start = _player_transform->GetGlobalPosition();
+	_knock_end = _player_transform->GetGlobalPosition() + direction;
+	_stun_time = _stun_duration;
+	_player_transform->LookAtDirection(direction);
 }
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)

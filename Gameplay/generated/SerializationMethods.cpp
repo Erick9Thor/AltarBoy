@@ -700,12 +700,12 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_max_dash_count") != serialized_fields.end())
+	if(serialized_fields.find("_max_dash_charges") != serialized_fields.end())
 	{
-		const SerializedField& _max_dash_count_sf = serialized_fields["_max_dash_count"];
-		if (_max_dash_count_sf.type_name == "int")
+		const SerializedField& _max_dash_charges_sf = serialized_fields["_max_dash_charges"];
+		if (_max_dash_charges_sf.type_name == "int")
 		{
-			_max_dash_count = std::any_cast<int>(_max_dash_count_sf.copy);
+			_max_dash_charges = std::any_cast<int>(_max_dash_charges_sf.copy);
 		}
 	}
 
@@ -809,7 +809,7 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_dash_cooldown"] = SerializedField(std::string("_dash_cooldown"), std::make_any<float>(_dash_cooldown), std::string("float"));
 
-	serialized_fields["_max_dash_count"] = SerializedField(std::string("_max_dash_count"), std::make_any<int>(_max_dash_count), std::string("int"));
+	serialized_fields["_max_dash_charges"] = SerializedField(std::string("_max_dash_charges"), std::make_any<int>(_max_dash_charges), std::string("int"));
 
 	serialized_fields["_raycast_min_range"] = SerializedField(std::string("_raycast_min_range"), std::make_any<float>(_raycast_min_range), std::string("float"));
 

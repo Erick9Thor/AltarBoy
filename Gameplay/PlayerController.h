@@ -34,6 +34,9 @@ private:
 	bool IsAttacking() const;
 	bool IsDashing() const;
 	bool IsWalking() const;
+	bool IsStunned() const;
+	bool IsFalling() const;
+	bool IsActionLocked() const;
 
 	// Input and status management
 	void HandleInputAndStatus();
@@ -50,8 +53,11 @@ private:
 	void WalkingOrientationController();
 	void AttackController();
 
+	void RecieveKnockback(math::float3 direction);
+
 public:
 	SERIALIZE_FIELD(Stats, _stats);
+	void ReceiveDamage(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void CheckGoal(const float3& current_position);
 
 private:
@@ -80,9 +86,10 @@ private:
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _dash_start = float3::zero;
-	float3 _dash_direction = float3::zero;
 	float3 _dash_end = float3::zero;
-	float falling_distance = 10.0f;
+	float3 _dash_direction = float3::zero;
+	float3 _knock_start = float3::zero;
+	float3 _knock_end = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	float _dash_charges = 0.0f;
@@ -91,8 +98,10 @@ private:
 	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
 	float _rotation_progress = 0.0f;
+	float _stun_time = 0.0f;
+	float _stun_duration = 0.5f;
+	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
-	bool _is_falling = false;
 	bool _is_god_mode = false;
 
 	GameObject* enemies;

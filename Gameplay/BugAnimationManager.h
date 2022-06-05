@@ -1,5 +1,5 @@
 #pragma once
-#include <scripting\Script.h>
+#include <scripting/Script.h>
 #include "PlayerState.h"
 
 namespace Hachiko
