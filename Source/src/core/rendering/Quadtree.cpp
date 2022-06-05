@@ -64,7 +64,6 @@ void Hachiko::QuadtreeNode::Remove(ComponentMeshRenderer* mesh)
 
 void Hachiko::QuadtreeNode::CreateChildren()
 {
-    HE_LOG("Create Children");
     // Subdivide current box
     const auto size = float3(box.Size());
     const float3 center = box.CenterPoint();
