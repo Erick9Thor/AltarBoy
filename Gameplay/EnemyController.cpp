@@ -113,7 +113,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
-	_player_controller->ReceiveDamage(_stats._attack_power, false);
+	_player_controller->ReceiveDamage(_stats._attack_power);
 	_attack_cooldown = _stats._attack_cd;
 }
 

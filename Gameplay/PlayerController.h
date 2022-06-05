@@ -47,9 +47,11 @@ private:
 	void HandleInput(math::float3& current_position,
 		math::float3& moving_input_dir);
 
+	void RecieveKnockback(math::float3 direction);
+
 public:
 	SERIALIZE_FIELD(Stats, _stats);
-	void ReceiveDamage(float damage_received, bool is_heavy);
+	void ReceiveDamage(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void CheckGoal(const float3& current_position);
 
 private:
@@ -76,6 +78,8 @@ private:
 
 	float3 _dash_start = float3::zero;
 	float3 _dash_direction = float3::zero;
+	float3 _knock_start = float3::zero;
+	float3 _knock_end = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	float _dash_count = 0.0f;
@@ -84,11 +88,14 @@ private:
 	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
 	float _rotation_progress = 0.0f;
+	float _stun_time = 0.0f;
+	float _stun_duration = 0.5f;
 	bool _is_dashing = false;
 	bool _dash_has_cooldown = false;
 	bool _should_rotate = false;
 	bool _is_falling = false;
 	bool _is_god_mode = false;
+	bool _is_stunned = false;
 
 	GameObject* enemies;
 	GameObject* dynamic_envi;

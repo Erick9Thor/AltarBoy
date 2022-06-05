@@ -62,6 +62,22 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		//SceneManagement::SwitchScene(Scenes::LOSE);
 	}
 
+	if (_is_stunned)
+	{
+		if (_stun_time > 0.0f)
+		{
+			_stun_time -= Time::DeltaTime();
+			float stun_completion = (_stun_duration - _stun_time) * (1.0 / _stun_duration);
+			current_position = math::float3::Lerp(_knock_start, _knock_end,
+				stun_completion);
+			current_position = Navigation::GetCorrectedPosition(current_position, float3(2.0f, 2.0f, 2.0f));
+			transform->SetGlobalPosition(current_position);
+			return;
+		}
+		current_position = Navigation::GetCorrectedPosition(_knock_end, float3(2.0f, 2.0f, 2.0f));
+		_is_stunned = false;
+	}
+
 	// Attack:
 	Attack(transform, current_position);
 
@@ -500,18 +516,19 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 	}
 }
 
-void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, bool is_heavy)
+void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, bool is_heavy, float3 direction)
 {
 	_stats.ReceiveDamage(damage_received);
 	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3);
 	// Activate vignette
-	if (_stats._current_hp / _stats._max_hp < 0.25f)
+	if (_ui_damage && _stats._current_hp / _stats._max_hp < 0.25f)
 	{
 		_ui_damage->SetActive(true);
 	}
-	// Shake camera depending of the current hp and the attack type
+	
 	if(is_heavy)
 	{
+		RecieveKnockback(direction);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
 	}
 	else
@@ -525,6 +542,16 @@ void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, 
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
+}
+
+void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 direction)
+{
+	ComponentTransform* transform = game_object->GetTransform();
+	_knock_start = transform->GetGlobalPosition();
+	_knock_end = transform->GetGlobalPosition() + direction;
+	_stun_time = _stun_duration;
+	_is_stunned = true;
+	transform->LookAtDirection(direction);
 }
 
 void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_position)

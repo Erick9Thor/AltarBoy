@@ -98,6 +98,7 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 		PlayerController* player_controller = element->GetComponent<PlayerController>();
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		relative_dir.y = 0.0f;
 
 		if (enemy_controller != nullptr)
 		{
@@ -106,7 +107,7 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 
 		if (player_controller != nullptr)
 		{
-			player_controller->_stats.ReceiveDamage(_stats._attack_power);
+			player_controller->ReceiveDamage(_stats._attack_power, true, relative_dir.Normalized());
 		}
 	}
 
