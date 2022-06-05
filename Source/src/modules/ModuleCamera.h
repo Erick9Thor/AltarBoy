@@ -47,6 +47,8 @@ namespace Hachiko
         void Rotate(float motion_x, float motion_y) const;
         void PerpendicularMovement(float motion_x, float motion_y) const;
 
+        void CheckImGuizmoViewManipulateUsed();
+
     private:
         
         ComponentCamera* editor_camera = nullptr;

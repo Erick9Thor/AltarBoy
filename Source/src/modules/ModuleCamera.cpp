@@ -36,6 +36,8 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
+    CheckImGuizmoViewManipulateUsed();
+
 #ifndef PLAY_BUILD
     if (App->input->IsKeyDown(SDL_SCANCODE_F3))
     {
@@ -272,4 +274,18 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
     transform->SetGlobalPosition(transform->GetGlobalPosition() + deltaMovement);
     rendering_camera->GetGameObject()->Update();
     rendering_camera->reference_point += deltaMovement;
+}
+
+void Hachiko::ModuleCamera::CheckImGuizmoViewManipulateUsed() 
+{
+    float3 frustumFront = (float3)rendering_camera->GetFrustum()->Front();
+    float3 transformFront = rendering_camera->GetGameObject()->GetTransform()->GetFront();
+    if (frustumFront.x != transformFront.x || frustumFront.y != transformFront.y || frustumFront.z != transformFront.z)
+    {
+        ComponentTransform* transform = rendering_camera->GetGameObject()->GetTransform();
+        transform->SetGlobalRotationAxis(math::Cross(rendering_camera->GetFrustum()->Up(), rendering_camera->GetFrustum()->Front()),
+                                         rendering_camera->GetFrustum()->Up(),
+                                         rendering_camera->GetFrustum()->Front());
+        rendering_camera->GetGameObject()->Update();
+    }
 }
