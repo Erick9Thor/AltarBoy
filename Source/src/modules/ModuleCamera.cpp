@@ -77,11 +77,12 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
     static const float perpendicular_movement_speed = 2.0f;
 
 #ifndef PLAY_BUILD
-    if (!App->editor->GetSceneWindow()->IsHovering())
+    if (!App->editor->GetSceneWindow()->IsHovering()&& !editor_camera->isMoving)
     {
         return;
     }
 #endif
+
     // Keyboard movement ---------------
     if (App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT))
     {
@@ -89,6 +90,8 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
         Rotate(-moved.x * delta * rot_speed, moved.y * delta * rot_speed);
         MovementController(delta);
+
+        editor_camera->isMoving = true;
     }
 
     // Mouse ----------------------------
@@ -118,6 +121,13 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
         const float2 moved = App->input->GetMousePixelsMotion();
 
         PerpendicularMovement(moved.x * delta * perpendicular_movement_speed, moved.y * delta * perpendicular_movement_speed);
+
+        editor_camera->isMoving = true;
+    }
+
+    if (!App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT) && !App->input->IsMouseButtonPressed(SDL_BUTTON_MIDDLE))
+    {
+        editor_camera->isMoving = false;
     }
 }
 

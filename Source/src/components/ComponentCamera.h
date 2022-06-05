@@ -64,6 +64,8 @@ namespace Hachiko
         bool preview_cam = false;
         float3 camera_pinned_pos = float3::zero;
 
+        bool isMoving = false;
+
     private:
         float horizontal_fov;
         Frustum frustum;
