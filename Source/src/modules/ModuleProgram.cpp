@@ -19,11 +19,13 @@ bool Hachiko::ModuleProgram::Init()
 {
     CreateMainProgram();
     CreateSkyboxProgram();
-    CreateSkyboxIrradianceProgram();
+    CreateDiffuseIBLProgram();
+    CreatePrefilteredIBLProgram();
+    CreateEnvironmentBRDFProgram();
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    if (!main_program || !skybox_program || !skybox_irradiance_program || !stencil_program || !ui_image_program || !ui_text_program)
+    if (!main_program || !skybox_program || !diffuseIBL_program || !stencil_program || !ui_image_program || !ui_text_program)
     {
         return false;
     }
@@ -123,10 +125,22 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
     return skybox_program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxIrradianceProgram()
+Hachiko::Program* Hachiko::ModuleProgram::CreateDiffuseIBLProgram()
 {
-    skybox_irradiance_program = CreateProgram(SHADERS_FOLDER "vertex_skybox_irradiance.glsl", SHADERS_FOLDER "fragment_skybox_irradiance.glsl");
-    return skybox_irradiance_program;
+    diffuseIBL_program = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
+    return diffuseIBL_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreatePrefilteredIBLProgram()
+{
+    prefilteredIBL_program = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
+    return prefilteredIBL_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateEnvironmentBRDFProgram()
+{
+    environmentBRDF_program = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
+    return environmentBRDF_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
@@ -196,8 +210,12 @@ bool Hachiko::ModuleProgram::CleanUp()
     delete main_program;
     skybox_program->CleanUp();
     delete skybox_program;
-    skybox_irradiance_program->CleanUp();
-    delete skybox_irradiance_program;
+    diffuseIBL_program->CleanUp();
+    delete diffuseIBL_program;
+    prefilteredIBL_program->CleanUp();
+    delete prefilteredIBL_program;
+    environmentBRDF_program->CleanUp();
+    delete environmentBRDF_program;
     stencil_program->CleanUp();
     delete stencil_program;
     ui_image_program->CleanUp();

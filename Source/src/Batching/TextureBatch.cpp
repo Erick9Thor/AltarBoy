@@ -286,12 +286,12 @@ void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned compo
 
 void Hachiko::TextureBatch::BindTextures()
 {
-    const std::vector<int> texture_slots = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    const std::vector<int> texture_slots = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
     App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
-        glActiveTexture(GL_TEXTURE1 + i);
+        glActiveTexture(GL_TEXTURE4 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
     }
 }

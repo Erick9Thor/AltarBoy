@@ -22,7 +22,9 @@ namespace Hachiko
             return cube;
         }
 
-        void GenerateIrradianceCubemap();
+        void GenerateDiffuseIBL();
+        void GeneratePrefilteredIBL();
+        void GenerateEnvironmentBRDF();
 
         void DrawImGui();
 
@@ -36,8 +38,11 @@ namespace Hachiko
         unsigned vao{};
         unsigned vbo{};
 
-        bool activate_IBL = true;
-        unsigned irradiance_cubemap_id = 0;
+        bool activate_IBL = false;
+        unsigned diffuseIBL_id = 0;
+        unsigned prefilteredIBL_id = 0;
+        unsigned environmentBRDF_id = 0;
+        unsigned prefilteredIBL_numLevels = 0;
 
     public:
         Skybox(const Skybox& other) = default;

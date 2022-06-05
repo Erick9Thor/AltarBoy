@@ -131,6 +131,11 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 {
     render_list.PreUpdate();
 
+    //Skybox* skybox = App->scene_manager->GetActiveScene()->GetSkybox();
+    //skybox->GenerateDiffuseIBL();
+    //skybox->GeneratePrefilteredIBL();
+    //skybox->GenerateEnvironmentBRDF();
+
     return UpdateStatus::UPDATE_CONTINUE;
 }
 

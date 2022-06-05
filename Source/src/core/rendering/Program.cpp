@@ -77,6 +77,11 @@ void Hachiko::Program::BindUniformInts(const char* name, unsigned size, const in
     glUniform1iv(GetUniformLocation(name), size, data);
 }
 
+void Hachiko::Program::BindUniformUInt(const char* name, unsigned value) const
+{
+    glUniform1ui(GetUniformLocation(name), value);
+}
+
 int Hachiko::Program::GetUniformLocation(const char* key) const
 {
     int value = uniforms_cache->Get(key);

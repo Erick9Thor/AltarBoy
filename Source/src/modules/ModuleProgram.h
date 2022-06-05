@@ -70,9 +70,19 @@ namespace Hachiko
             return skybox_program;
         }
 
-        [[nodiscard]] Program* GetSkyboxIrradianceProgram() const
+        [[nodiscard]] Program* GetDiffuseIBLProgram() const
         {
-            return skybox_irradiance_program;
+            return diffuseIBL_program;
+        }
+        
+        [[nodiscard]] Program* GetPrefilteredIBLProgram() const
+        {
+            return prefilteredIBL_program;
+        }
+        
+        [[nodiscard]] Program* GetEnvironmentBRDFProgram() const
+        {
+            return environmentBRDF_program;
         }
 
         [[nodiscard]] Program* GetStencilProgram() const
@@ -108,14 +118,18 @@ namespace Hachiko
 
         Program* CreateMainProgram();
         Program* CreateSkyboxProgram();
-        Program* CreateSkyboxIrradianceProgram();
+        Program* CreateDiffuseIBLProgram();
+        Program* CreatePrefilteredIBLProgram();
+        Program* CreateEnvironmentBRDFProgram();
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
 
         Program* main_program = nullptr;
         Program* skybox_program = nullptr;
-        Program* skybox_irradiance_program = nullptr;
+        Program* diffuseIBL_program = nullptr;
+        Program* prefilteredIBL_program = nullptr;
+        Program* environmentBRDF_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;

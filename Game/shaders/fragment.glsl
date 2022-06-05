@@ -12,8 +12,11 @@
 
 #define PI 3.141597
 
-uniform bool has_diffuseIBL;
+uniform uint activate_IBL;
 uniform samplerCube diffuseIBL;
+uniform samplerCube prefilteredIBL;
+uniform sampler2D environmentBRDF;
+uniform uint prefilteredIBL_numLevels;
 
 struct AmbientLight
 {
@@ -253,12 +256,17 @@ mat3 CreateTangentSpace(const vec3 normal, const vec3 tangent)
 	return mat3(tangent, bitangent, normal);
 }
 
-vec3 GetAmbientLight(in vec3 normal, in vec3 diffuse_color, in vec3 specular_color)
+vec3 GetAmbientLight(in vec3 normal, in vec3 R, float NdotV, float roughness, in vec3 diffuse_color, in vec3 specular_color)
 {
-    if (has_diffuseIBL)
+    if (activate_IBL > 0)
     {
         vec3 irradiance = texture(diffuseIBL, normal).rgb;
-        return irradiance * (diffuse_color * (1 - specular_color));
+        vec3 radiance = textureLod( prefilteredIBL, R, roughness * prefilteredIBL_numLevels).rgb;
+        vec2 fab = texture( environmentBRDF, vec2(NdotV, roughness)).rg;
+
+        vec3 diffuse = (diffuse_color * (1 - specular_color));
+
+        return diffuse * irradiance + radiance * (specular_color * fab.x + fab.y);
     }
     return diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
 }
@@ -318,7 +326,7 @@ void main()
     {
         hdr_color += SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
     }   
-    hdr_color += GetAmbientLight(norm, Cd, f0);
+    hdr_color += GetAmbientLight(norm, reflect(-view_dir, norm), dot(norm, view_dir), smoothness * smoothness, Cd, f0);
 
     // Emissive map
     vec3 emissive = material.emissive_color.rgb;
