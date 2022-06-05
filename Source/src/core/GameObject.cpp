@@ -11,6 +11,7 @@
 #include "components/ComponentObstacle.h"
 #include "components/ComponentAudioListener.h"
 #include "components/ComponentAudioSource.h"
+#include "scripting/Script.h"
 
 
 // UI
@@ -238,6 +239,11 @@ void Hachiko::GameObject::SetActive(bool set_active)
         Start();
     }
     active = set_active;
+
+    for (GameObject* child : children)
+    {
+        child->SetActive(set_active);
+    }
 }
 
 void Hachiko::GameObject::Start()
@@ -394,7 +400,7 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     {
         node[GAME_OBJECT_ID] = uid;
     }
-    
+        
     node[GAME_OBJECT_NAME] = name.c_str();
     node[GAME_OBJECT_ENABLED] = active;
 
@@ -413,6 +419,21 @@ void Hachiko::GameObject::Save(YAML::Node& node, bool as_prefab) const
     for (unsigned i = 0; i < children.size(); ++i)
     {
         children[i]->Save(node[CHILD_NODE][i], as_prefab);
+    }
+}
+
+void Hachiko::GameObject::CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector)
+{
+    object_collector.push_back(this);
+
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        component_collector.push_back(components[i]);
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->CollectObjectsAndComponents(object_collector, component_collector);
     }
 }
 
@@ -438,13 +459,11 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
 
         if (meshes_only)
         {
-            if (type == Component::Type::MESH_RENDERER)
+            if (type == Component::Type::MESH_RENDERER || type == Component::Type::TRANSFORM)
             {
                 component = CreateComponent(type);
             }
-            continue;
         }
-
         else if(type == Component::Type::SCRIPT)
         {
             std::string script_name =
@@ -491,7 +510,45 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
         
         const auto child = new GameObject(this, child_name.c_str(), child_uid);
         child->scene_owner = scene_owner;
-        child->Load(children_nodes[i], as_prefab);
+        child->Load(children_nodes[i], as_prefab, meshes_only);
+    }
+}
+
+
+void Hachiko::GameObject::SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const
+{
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        Component::Type type = components[i]->GetType();
+        if (type == Component::Type::SCRIPT)
+        {
+            // Override script data
+            Scripting::Script* script_component = static_cast<Scripting::Script*>(components[i]);
+            script_component->SavePrefabReferences(node[COMPONENT_NODE][i], object_collection, component_collection);
+        }
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->SavePrefabReferences(node[CHILD_NODE][i], object_collection, component_collection);
+    }
+}
+
+void Hachiko::GameObject::LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection)
+{
+    for (unsigned i = 0; i < components.size(); ++i)
+    {
+        if (components[i]->GetType() == Component::Type::SCRIPT)
+        {
+            // Override script data, script already has its yaml data assigned on load
+            Scripting::Script* script_component = static_cast<Scripting::Script*>(components[i]);
+            script_component->LoadPrefabReferences(object_collection, component_collection);
+        }
+    }
+
+    for (unsigned i = 0; i < children.size(); ++i)
+    {
+        children[i]->LoadPrefabReferences(object_collection, component_collection);
     }
 }
 

@@ -5,6 +5,7 @@
 #include "components/ComponentCamera.h"
 #include "modules/ModuleResources.h"
 #include "resources/ResourceTexture.h"
+#include "resources/ResourceSkybox.h"
 
 Hachiko::Skybox::Skybox()
 {
@@ -38,8 +39,6 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     // Draw skybox
     glBindVertexArray(vao);
 
-    //const int texture_slots = 0;
-    //App->program->GetMainProgram()->BindUniformInts("skybox", 1, &texture_slots);
 
     GLint skybox_binding = glGetUniformLocation(program->GetId(), "skybox");
     glUniform1i(skybox_binding, 0);
@@ -71,7 +70,7 @@ void Hachiko::Skybox::DrawImGui()
 
     ImGui::TextDisabled("Keep in mind that all images \nneed to have the same format!");
 
-    if (ImGui::CollapsingHeader("Params"))
+    if (ImGui::CollapsingHeader("Resources"))
     {
         SelectSkyboxTexture(TextureCube::Side::RIGHT);
         SelectSkyboxTexture(TextureCube::Side::LEFT);

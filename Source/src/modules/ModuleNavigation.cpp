@@ -145,7 +145,7 @@ void Hachiko::ModuleNavigation::SetNavmesh(ResourceNavMesh* new_reosurce)
 void Hachiko::ModuleNavigation::RebuildCurrentNavmesh(Scene* scene)
 {
     // Builds navmesh without getting it from library
-    ResourceNavMesh* resource_navmesh = App->navigation->BuildNavmeshResource(scene);
+    ResourceNavMesh* resource_navmesh = BuildNavmeshResource(scene);
     App->navigation->SetNavmesh(resource_navmesh);
 }
 

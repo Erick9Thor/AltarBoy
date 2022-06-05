@@ -15,6 +15,7 @@
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceTexture.h"
+#include "resources/ResourceSkybox.h"
 
 using namespace Hachiko;
 
@@ -38,6 +39,7 @@ bool ModuleResources::Init()
     }
 
     AssetsLibraryCheck();
+    ClearUnusedResources(managed_uids);
 
     std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
@@ -114,6 +116,11 @@ Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem:
     const auto it = std::find_if(supported_extensions.begin(), supported_extensions.end(), isValidExtension);
     if (it != supported_extensions.end())
     {
+        // TODO: Remove exception when skybox is hdr since it will not creaate confusion
+        if (path.string().find("skybox/") != std::string::npos)
+        {
+            return Resource::AssetType::SKYBOX;
+        }
         return it->first;
     }
     return Resource::AssetType::UNKNOWN;
@@ -179,7 +186,6 @@ std::vector<UID> Hachiko::ModuleResources::CreateAsset(Resource::Type type, cons
 void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 {
     Resource::AssetType asset_type = GetAssetTypeFromPath(path);
-    
 
     if (asset_type != Resource::AssetType::UNKNOWN)
     {
@@ -250,7 +256,12 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
             GenerateLibrary(path_node);
             continue;
         }
-        ImportAsset(path_node.path);
+        std::vector<UID> new_uids = ImportAsset(path_node.path);
+        for (auto& uid : new_uids)
+        {
+            managed_uids.emplace(uid);
+        }
+        
     }
 }
 
@@ -328,6 +339,30 @@ bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) co
         if (!FileSystem::Exists(library_path.c_str())) return false;
     }
     return true;
+}
+
+void Hachiko::ModuleResources::ClearUnusedResources(const std::set<UID>& seen_uids)
+{
+    const auto& library_paths = preferences->GetLibraryPathsMap();
+    for (auto it = library_paths.begin(); it != library_paths.end(); ++it)
+    {
+        const PathNode folder = FileSystem::GetAllFiles(it->second.c_str());
+        ClearLibrary(folder, seen_uids);
+    }
+    HE_LOG("Library cleanup finished.");
+}
+
+void Hachiko::ModuleResources::ClearLibrary(const PathNode& folder, const std::set<UID>& seen_uids)
+{
+    // Iterate all files found in assets except metas and scene
+    for (const PathNode& path_node : folder.children)
+    {
+        UID file_name = static_cast<UID>(std::stoull(FileSystem::GetFileName(path_node.path.c_str())));
+        if (seen_uids.find(file_name) == seen_uids.end())
+        {
+            FileSystem::Delete(path_node.path.c_str());
+        }
+    }
 }
 
 

@@ -36,7 +36,7 @@ namespace Hachiko
         static uint64_t HashFromPath(const char* file_path);
 
         // --- Path utils --- //
-        static PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext, std::vector<std::string>* ignore_ext);
+        static PathNode GetAllFiles(const char* directory, std::vector<std::string>* filter_ext = nullptr, std::vector<std::string>* ignore_ext = nullptr);
         static void DiscoverFiles(const char* directory, std::vector<std::string>& file_list, std::vector<std::string>& dir_list);
 
         const std::string& GetWorkingDirectory() const
