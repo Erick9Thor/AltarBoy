@@ -60,9 +60,9 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        [[nodiscard]] Program* GetMainProgram() const
+        [[nodiscard]] Program* GetForwardProgram() const
         {
-            return main_program;
+            return forward_program;
         }
         
         [[nodiscard]] Program* GetDeferredGeometryProgram() const
@@ -111,7 +111,7 @@ namespace Hachiko
         Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
         void CreateGLSLIncludes() const;
 
-        Program* CreateMainProgram();
+        Program* CreateForwardProgram();
         Program* CreateSkyboxProgram();
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
@@ -119,7 +119,7 @@ namespace Hachiko
         Program* CreateDeferredGeometryPassProgram();
         Program* CreateDeferredLightingPassProgram();
 
-        Program* main_program = nullptr;
+        Program* forward_program = nullptr;
         Program* deferred_geometry_program = nullptr;
         Program* deferred_lighting_program = nullptr;
         Program* skybox_program = nullptr;

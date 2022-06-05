@@ -334,7 +334,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     }
 
     // Forward rendering pass for transparent game objects:
-    program = App->program->GetMainProgram();
+    program = App->program->GetForwardProgram();
     program->Activate();
     batch_manager->DrawTransparentBatches(program);
     Program::Deactivate();
@@ -342,7 +342,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
 void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager) 
 {
-    Program* program = App->program->GetMainProgram();
+    Program* program = App->program->GetForwardProgram();
     program->Activate();
 
     batch_manager->ClearOpaqueBatchesDrawList();

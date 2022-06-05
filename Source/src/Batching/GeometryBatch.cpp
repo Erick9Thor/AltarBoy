@@ -157,7 +157,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
-void Hachiko::GeometryBatch::UpdateWithTextureBatch(bool use_first_segment)
+void Hachiko::GeometryBatch::UpdateWithTextureBatch(const Program* program, bool use_first_segment)
 {
     BatchData();
     GenerateCommands();
@@ -184,7 +184,7 @@ void Hachiko::GeometryBatch::UpdateWithTextureBatch(bool use_first_segment)
         }
     }
 
-    texture_batch->Draw(components, use_first_segment, component_count);
+    texture_batch->Draw(program, components, use_first_segment, component_count);
 }
 
 void Hachiko::GeometryBatch::BatchData()

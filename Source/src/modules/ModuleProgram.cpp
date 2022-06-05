@@ -22,7 +22,7 @@ bool Hachiko::ModuleProgram::Init()
 
     CreateGLSLIncludes();
 
-    CreateMainProgram();
+    CreateForwardProgram();
     CreateSkyboxProgram();
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
@@ -30,7 +30,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredGeometryPassProgram();
     CreateDeferredLightingPassProgram();
 
-    if (!main_program || !skybox_program || !stencil_program || !ui_image_program || 
+    if (!forward_program || !skybox_program || !stencil_program || !ui_image_program || 
         !ui_text_program || !deferred_geometry_program || !deferred_lighting_program)
     {
         return false;
@@ -150,10 +150,10 @@ void Hachiko::ModuleProgram::CreateGLSLIncludes() const
     }
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()
+Hachiko::Program* Hachiko::ModuleProgram::CreateForwardProgram()
 {
-    main_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment.glsl");
-    return main_program;
+    forward_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
+    return forward_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
@@ -237,8 +237,8 @@ void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, int b
 
 bool Hachiko::ModuleProgram::CleanUp()
 {
-    main_program->CleanUp();
-    delete main_program;
+    forward_program->CleanUp();
+    delete forward_program;
     
     skybox_program->CleanUp();
     delete skybox_program;

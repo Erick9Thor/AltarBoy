@@ -185,7 +185,7 @@ void Hachiko::BatchManager::ShowDebugMenuForBatches(
 void Hachiko::BatchManager::DrawSingleBatch(GeometryBatch* geometry_batch, const Program* program, bool use_first_segment) const 
 {
     // Binds meshes and transforms
-    geometry_batch->UpdateWithTextureBatch(use_first_segment);
+    geometry_batch->UpdateWithTextureBatch(program, use_first_segment);
     geometry_batch->BindBuffers(use_first_segment);
 
     // Bind texture batch
