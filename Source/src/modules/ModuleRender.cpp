@@ -104,7 +104,6 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(int heigth, int width) const
     // Unbind:
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    // TODO: Do we need this for G buffer as well? If so, do it.
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, heigth, width);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);

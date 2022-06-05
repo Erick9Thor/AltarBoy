@@ -102,7 +102,6 @@ void Hachiko::QuadtreeNode::CreateChildren()
 
 void Hachiko::QuadtreeNode::RearangeChildren()
 {
-    // HE_LOG("Rearange Children %s", this);
     for (auto it = meshes.begin(); it != meshes.end();)
     {
         ComponentMeshRenderer* mesh = *it;

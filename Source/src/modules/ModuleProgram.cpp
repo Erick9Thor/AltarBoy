@@ -286,8 +286,6 @@ void Hachiko::ModuleProgram::UpdateMaterial(
                                                                        static_cast<int>(TextureSlots::NORMAL),
                                                                        static_cast<int>(TextureSlots::METALNESS),
                                                                        static_cast<int>(TextureSlots::EMISSIVE)};
-    // main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
-    // deferred_geometry_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
     program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), 
         &texture_slots[0]);
 
