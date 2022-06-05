@@ -314,6 +314,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="BackToMainMenu.h" />
+    <ClInclude Include="BugAnimationManager.h" />
     <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="EnemyController.h" />
@@ -717,6 +718,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="BackToMainMenu.cpp" />
+    <ClCompile Include="BugAnimationManager.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="EnemyController.cpp" />
