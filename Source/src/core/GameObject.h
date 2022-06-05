@@ -44,7 +44,7 @@ namespace Hachiko
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
-        bool AttemptRemoveComponent(Component* component);
+        bool AttemptRemoveComponent(const Component* component);
         /// <summary>
         /// Do not use this unless it's mandatory. Use AttemptRemoveComponent
         /// instead.
