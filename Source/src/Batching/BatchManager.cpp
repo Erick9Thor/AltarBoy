@@ -61,7 +61,7 @@ void Hachiko::BatchManager::CollectMesh(const GameObject* game_object)
                 // Create new batch if there are no matching ones
                 GeometryBatch* new_batch = new GeometryBatch(resource->layout);
                 new_batch->AddMesh(mesh_renderer);
-                (*geometry_batches).push_back(new_batch);
+                geometry_batches->push_back(new_batch);
             }
         }
     }
@@ -71,12 +71,12 @@ void Hachiko::BatchManager::AddDrawComponent(const ComponentMeshRenderer* mesh_r
 {
     const ResourceMesh* resource = mesh_renderer->GetResourceMesh();
 
-    std::vector<GeometryBatch*>* geometry_batches = 
+    std::vector<GeometryBatch*>& geometry_batches = 
                 mesh_renderer->GetResourceMaterial()->is_transparent 
-                    ? &geometry_batches_transparent 
-                    : &geometry_batches_opaque;
+                    ? geometry_batches_transparent 
+                    : geometry_batches_opaque;
 
-    for (GeometryBatch* geometry_batch : (*geometry_batches))
+    for (GeometryBatch* geometry_batch : geometry_batches)
     {
         if (geometry_batch->batch->layout.Equal(resource->layout))
         {
