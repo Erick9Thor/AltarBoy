@@ -123,7 +123,6 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     if (meta[ANIMATIONS].IsDefined())
     {
         ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->children[0]->CreateComponent(Component::Type::ANIMATION));
-
     }
 
     // Create prefab

@@ -562,12 +562,8 @@
     <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp">
       <Filter>Core\Preferences\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
-    <ClCompile Include="src\importers\SceneImporter.cpp" />
-    <ClCompile Include="src\importers\VideoImporter.cpp" />
     <ClCompile Include="src\resources\ResourceScene.cpp" />
-    <ClCompile Include="src\importers\NavmeshImporter.cpp" />
     <ClCompile Include="src\components\ComponentAudioListener.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
@@ -577,7 +573,6 @@
     <ClCompile Include="src\batching\GeometryBatch.cpp" />
     <ClCompile Include="src\batching\BatchManager.cpp" />
     <ClCompile Include="src\batching\TextureBatch.cpp" />
-    <ClCompile Include="src\importers\SkyboxImporter.cpp" />
     <ClCompile Include="src\resources\ResourceSkybox.cpp" />
     <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.cpp">
       <Filter>Vendors\NodeEditor</Filter>
@@ -591,7 +586,24 @@
     <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp">
       <Filter>Vendors\NodeEditor</Filter>
     </ClCompile>
-    <ClCompile Include="src\importers\StateMachineImporter.cpp" />
+    <ClCompile Include="src\importers\StateMachineImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\SkyboxImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\SceneImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\NavmeshImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\VideoImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\PrefabImporter.cpp">
+      <Filter>Importers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2274,12 +2286,8 @@
     <ClInclude Include="src\core\preferences\src\AudioPreferences.h">
       <Filter>Core\Preferences\Source</Filter>
     </ClInclude>
-    <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\resources\ResourcePrefab.h" />
-    <ClInclude Include="src\importers\SceneImporter.h" />
-    <ClInclude Include="src\importers\VideoImporter.h" />
     <ClInclude Include="src\resources\ResourceScene.h" />
-    <ClInclude Include="src\importers\NavmeshImporter.h" />
     <ClInclude Include="src\events\EditorHistoryEntryRestore.h">
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
@@ -2295,7 +2303,6 @@
     <ClInclude Include="src\batching\GeometryBatch.h" />
     <ClInclude Include="src\batching\BatchManager.h" />
     <ClInclude Include="src\batching\TextureBatch.h" />
-    <ClInclude Include="src\importers\SkyboxImporter.h" />
     <ClInclude Include="src\resources\ResourceSkybox.h" />
     <ClInclude Include="src\core\HachikoApiDefine.h" />
     <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.h">
@@ -2316,7 +2323,24 @@
     <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h">
       <Filter>Vendors\NodeEditor</Filter>
     </ClInclude>
-    <ClInclude Include="src\importers\StateMachineImporter.h" />
+    <ClInclude Include="src\importers\StateMachineImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\SkyboxImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\SceneImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\NavmeshImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\VideoImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h">
+      <Filter>Importers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

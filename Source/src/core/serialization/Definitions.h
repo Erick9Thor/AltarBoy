@@ -23,6 +23,7 @@
 #define ANIMATION_NAMES "animation_names"
 #define MODEL_NAME "model_name"
 #define PREFAB_ID "prefab_id"
+#define M_STATE_MACHINE "state_machine"
 
 // Prefab
 #define PREFAB_NAME "prefab_name"

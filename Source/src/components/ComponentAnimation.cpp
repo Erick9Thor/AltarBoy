@@ -142,9 +142,6 @@ void Hachiko::ComponentAnimation::DrawGui()
             ImGui::InputText("Name", &auxiliary_name, ImGuiInputTextFlags_EnterReturnsTrue);
             if (ImGui::Button("Create State Machine"))
             {
-                // TODO ADD A resource creation for state machine.
-                // ResourceStateMachine* res = static_cast<ResourceStateMachine*>(App->resources->CreateAsset(Resource::Type::STATE_MACHINE, auxiliary_name));
-
                 App->resources->ReleaseResource(state_machine);
                 state_machine = new ResourceStateMachine(UUID::GenerateUID());
                 state_machine->state_m_name = auxiliary_name;
@@ -175,6 +172,7 @@ void Hachiko::ComponentAnimation::DrawGui()
 
             if (state_machine->clips.size() > 0)
             {
+
                 ImGui::Separator();
             }
 
@@ -365,10 +363,10 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
-
+    node[M_STATE_MACHINE] = state_machine->GetID();
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
-
+    state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
 }
