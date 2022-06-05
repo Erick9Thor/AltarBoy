@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
+#include "BugAnimationManager.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
@@ -15,12 +16,21 @@ void Hachiko::Scripting::BackToMainMenu::OnEditor()
 	Editor::Show<ComponentButton>("_button_back", "ComponentButton*", _button_back);
 }
 
+void Hachiko::Scripting::BugAnimationManager::OnEditor()
+{
+	Editor::Show<ComponentAnimation>("_animator", "ComponentAnimation*", _animator);
+	Editor::Show("_state_string", _state_string);
+	Editor::Show("_idle_index", _idle_index);
+	Editor::Show("_attacking_index", _attacking_index);
+}
+
 void Hachiko::Scripting::CrystalExplosion::OnEditor()
 {
 	Editor::Show("_player", _player);
 	Editor::Show("_explosion_crystal", _explosion_crystal);
 	Editor::Show("_static_crystal", _static_crystal);
 	Editor::Show("_crashing_index", _crashing_index);
+	Editor::Show("_detecting_radius", _detecting_radius);
 	Editor::Show("_explosion_radius", _explosion_radius);
 	Editor::Show("_explosive_crystal", _explosive_crystal);
 }
@@ -40,6 +50,8 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("_spawn_pos", _spawn_pos);
 	Editor::Show("_spawn_is_initial", _spawn_is_initial);
 	Editor::Show("_player", _player);
+	Editor::Show("_attack_animation_duration", _attack_animation_duration);
+	Editor::Show("_attack_animation_timer", _attack_animation_timer);
 }
 
 void Hachiko::Scripting::MainMenuManager::OnEditor()
@@ -77,29 +89,18 @@ void Hachiko::Scripting::PlayerCamera::OnEditor()
 void Hachiko::Scripting::PlayerController::OnEditor()
 {
 	Editor::Show("_movement_speed", _movement_speed);
-	Editor::Show("_dash_indicator", _dash_indicator);
+	Editor::Show("_attack_indicator", _attack_indicator);
 	Editor::Show("_goal", _goal);
 	Editor::Show("_dash_duration", _dash_duration);
 	Editor::Show("_dash_distance", _dash_distance);
-	Editor::Show("_dash_progress", _dash_progress);
 	Editor::Show("_dash_cooldown", _dash_cooldown);
-	Editor::Show("_dash_timer", _dash_timer);
-	Editor::Show("_dash_count", _dash_count);
 	Editor::Show("_max_dash_count", _max_dash_count);
-	Editor::Show("_is_dashing", _is_dashing);
-	Editor::Show("_has_cooldown", _has_cooldown);
-	Editor::Show("_is_falling", _is_falling);
-	Editor::Show("_dash_start", _dash_start);
-	Editor::Show("_dash_direction", _dash_direction);
 	Editor::Show("_raycast_min_range", _raycast_min_range);
 	Editor::Show("_raycast_max_range", _raycast_max_range);
 	Editor::Show("_attack_radius", _attack_radius);
 	Editor::Show("_attack_cooldown", _attack_cooldown);
-	Editor::Show("_should_rotate", _should_rotate);
-	Editor::Show("_rotation_progress", _rotation_progress);
+	Editor::Show("_attack_duration", _attack_duration);
 	Editor::Show("_rotation_duration", _rotation_duration);
-	Editor::Show("_rotation_start", _rotation_start);
-	Editor::Show("_rotation_target", _rotation_target);
 	Editor::Show("_camera", _camera);
 	Editor::Show("_ui_damage", _ui_damage);
 }

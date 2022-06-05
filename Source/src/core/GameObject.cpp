@@ -250,7 +250,6 @@ void Hachiko::GameObject::Start()
 {
     if (!started)
     {
-        transform->Start();
         for (Component* component : components)
         {
             component->Start();
@@ -264,6 +263,26 @@ void Hachiko::GameObject::Start()
             }
         }
         started = true;
+    }
+}
+
+void Hachiko::GameObject::Stop()
+{
+    if (started)
+    {
+        for (Component* component : components)
+        {
+            component->Stop();
+        }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Stop();
+            }
+        }
+        started = false;
     }
 }
 

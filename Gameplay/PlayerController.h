@@ -77,6 +77,7 @@ private:
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
 	float3 _dash_start = float3::zero;
+	float3 _dash_end = float3::zero;
 	float3 _dash_direction = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
@@ -85,6 +86,7 @@ private:
 	float _dash_count = 0.0f;
 	float _dash_progress = 0.0f;
 	float _dash_timer = 0.0f;
+	float falling_distance = 10.0f;
 	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
 	float _rotation_progress = 0.0f;

@@ -14,6 +14,9 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _spawn_is_initial(false)
 	, _stats(2, 2, 5, 10.0f)
 	, _player(nullptr)
+	, _state(BugState::INVALID)
+	, _attack_animation_duration(0.0f)
+	, _attack_animation_timer(0.0f)
 {
 }
 
@@ -28,7 +31,10 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	// TODO: Find by name in scene.
-	_player_controller = _player->GetComponent<PlayerController>();
+	if (_player != nullptr)
+	{
+		_player_controller = _player->GetComponent<PlayerController>();
+	}
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 	transform = game_object->GetTransform();
@@ -40,7 +46,42 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
+	if (_player_controller == nullptr)
+	{
+		if (_player == nullptr)
+		{
+			return;
+		}
+		_player_controller = _player->GetComponent<PlayerController>();
+	}
+
 	if (!_stats.IsAlive())
+	{
+		_state = BugState::DEAD;
+		return;
+	}
+
+	// TODO: Delete these after seminar and write a better version.
+	if (_state == BugState::ATTACKING)
+	{
+		_attack_animation_timer += Time::DeltaTime();
+		
+		if (_attack_animation_timer >= _attack_animation_duration)
+		{
+			_attack_animation_timer = 0.0f;
+			_state = BugState::IDLE;
+		}
+	}
+	else
+	{
+		_state = BugState::IDLE;
+	}
+
+	_player_pos = _player->GetTransform()->GetGlobalPosition();
+	_current_pos = transform->GetGlobalPosition();
+	float dist_to_player = _current_pos.Distance(_player_pos);
+
+	if (dist_to_player > 50)
 	{
 		return;
 	}
@@ -60,10 +101,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		agc->SetMaxSpeed(_speed);
 	}
 
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
-	_current_pos = transform->GetGlobalPosition();
-
-	float dist_to_player = _current_pos.Distance(_player_pos);
 	if (dist_to_player <= _aggro_range)
 	{
 		if (dist_to_player <= _attack_range)
@@ -86,6 +123,11 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		_stats._is_alive = false;
 	}
 	
+}
+
+BugState Hachiko::Scripting::EnemyController::GetState() const
+{
+	return _state;
 }
 
 Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
@@ -113,6 +155,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
+	_state = BugState::ATTACKING;
 	_player_controller->ReceiveDamage(_stats._attack_power);
 	_attack_cooldown = _stats._attack_cd;
 }

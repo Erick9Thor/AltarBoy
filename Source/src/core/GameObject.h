@@ -62,6 +62,7 @@ namespace Hachiko
         GameObject* CreateChild();
 
         void Start();
+        void Stop();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
