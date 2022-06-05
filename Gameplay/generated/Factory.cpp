@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "generated/Factory.h"
 #include "BackToMainMenu.h"
+#include "BugAnimationManager.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
@@ -16,6 +17,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "BackToMainMenu")
 	{
 		return new Hachiko::Scripting::BackToMainMenu(script_owner);
+	}
+
+	if (script_name == "BugAnimationManager")
+	{
+		return new Hachiko::Scripting::BugAnimationManager(script_owner);
 	}
 
 	if (script_name == "CrystalExplosion")

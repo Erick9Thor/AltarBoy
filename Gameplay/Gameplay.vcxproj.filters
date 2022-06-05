@@ -513,6 +513,7 @@
     <ClInclude Include="Stats.h" />
     <ClInclude Include="FancyLights.h" />
     <ClInclude Include="CrystalExplosion.h" />
+    <ClInclude Include="BugAnimationManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -775,6 +776,7 @@
     <ClCompile Include="Stats.cpp" />
     <ClCompile Include="FancyLights.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
+    <ClCompile Include="BugAnimationManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
