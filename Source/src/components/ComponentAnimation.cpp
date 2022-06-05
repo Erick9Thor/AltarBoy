@@ -241,7 +241,6 @@ void Hachiko::ComponentAnimation::DrawGui()
 
                     if (state_machine->GetNumTransitions() > 0)
                     {
-                        ImGui::Separator();
 
                         std::string active_node = GetActiveNode();
                 
@@ -249,9 +248,11 @@ void Hachiko::ComponentAnimation::DrawGui()
                         {
                             if (state_machine->GetTransitionSource(i) == active_node)
                             {
+
                                 std::string trigger = state_machine->GetTransitionTrigger(i);
                                 if (!trigger.empty() && ImGui::Button(trigger.c_str()))
                                 {
+                                    ImGui::Separator();
                                     SendTrigger(trigger);
                                 }
                             }

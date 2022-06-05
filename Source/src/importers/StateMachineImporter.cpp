@@ -76,10 +76,10 @@ Hachiko::Resource* Hachiko::StateMachineImporter::Load(UID id)
     {
         for (unsigned int transition_index = 0; transition_index < node[SM_TRANSITIONS].size(); ++transition_index)
         {
-            state_machine->AddTransition(node[SM_NODES][transition_index][SM_TRANSITION_SOURCE].as<std::string>(),
-                                         node[SM_NODES][transition_index][SM_TRANSITION_TARGET].as<std::string>(),
-                                         node[SM_NODES][transition_index][SM_TRANSITION_TRIGGER].as<std::string>(),
-                                         node[SM_NODES][transition_index][SM_TRANSITION_BLEND].as<unsigned int>());
+            state_machine->AddTransition(node[SM_TRANSITIONS][transition_index][SM_TRANSITION_SOURCE].as<std::string>(),
+                                         node[SM_TRANSITIONS][transition_index][SM_TRANSITION_TARGET].as<std::string>(),
+                                         node[SM_TRANSITIONS][transition_index][SM_TRANSITION_TRIGGER].as<std::string>(),
+                                         node[SM_TRANSITIONS][transition_index][SM_TRANSITION_BLEND].as<unsigned int>());
         }            
     }
 
