@@ -49,6 +49,7 @@ private:
 
 public:
 	SERIALIZE_FIELD(Stats, _stats);
+	void ReceiveDamage(float damage_received, bool is_heavy);
 	void CheckGoal(const float3& current_position);
 
 private:

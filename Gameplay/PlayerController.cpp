@@ -28,7 +28,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _rotation_duration(0.0f)
 	, _raycast_min_range(0.001)
 	, _raycast_max_range(15.f)
-	, _stats(5, 2, 10, 10)
+	, _stats(5, 2, 10, 10.0f)
 	, _state(PlayerState::IDLE)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
@@ -42,6 +42,10 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	if (_attack_indicator)
 	{
 		_attack_indicator->SetActive(false);
+	}
+	if (_ui_damage)
+	{
+		_ui_damage->SetActive(false);
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
@@ -493,6 +497,33 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 	if (!_is_god_mode && _state == PlayerState::WALKING)
 	{
 		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
+	}
+}
+
+void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, bool is_heavy)
+{
+	_stats.ReceiveDamage(damage_received);
+	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3);
+	// Activate vignette
+	if (_stats._current_hp / _stats._max_hp < 0.25f)
+	{
+		_ui_damage->SetActive(true);
+	}
+	// Shake camera depending of the current hp and the attack type
+	if(is_heavy)
+	{
+		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
+	}
+	else
+	{
+		if (_stats._current_hp / _stats._max_hp < 0.25f)
+		{
+			_camera->GetComponent<PlayerCamera>()->Shake(0.8f, 0.2f);
+		}
+		else
+		{
+			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
+		}
 	}
 }
 

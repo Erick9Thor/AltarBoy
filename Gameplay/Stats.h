@@ -10,7 +10,7 @@ namespace Hachiko
         {
         public:
             Stats();
-            Stats(int _ap, int _as, int _ms, int _maxhp);
+            Stats(int _ap, int _as, int _ms, float _maxhp);
             ~Stats() = default;
 
             void ReceiveDamage(int _damage);
@@ -20,8 +20,8 @@ namespace Hachiko
             int _attack_cd;
             float _move_speed;
 
-            int _max_hp;
-            int _current_hp;
+            float _max_hp;
+            float _current_hp;
 
             bool _is_alive;
             bool _god_mode;
