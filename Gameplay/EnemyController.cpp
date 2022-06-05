@@ -96,6 +96,7 @@ Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage, float3 direction)
 {
 	_stats.ReceiveDamage(damage);
+	game_object->ChangeColor(float4(255, 255, 255, 255), 0.2f);
 	_is_stunned = true;
 	_stun_time = 1.0f; // Once we have weapons stun duration might be moved to each weapon stat
 	float knockback_intensity = 0.2f; // same with knock-back intensity
