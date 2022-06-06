@@ -5,6 +5,7 @@
 #include "Scenes.h"
 
 #include <Algorithm/Random/LCG.h>
+//#include <components/ComponentTransform.h>
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
