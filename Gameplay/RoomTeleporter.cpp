@@ -5,10 +5,12 @@
 // constructor properly. Note the name field that is same with the class name.
 Hachiko::Scripting::RoomTeleporter::RoomTeleporter(GameObject* game_object)
 	: Script(game_object, "RoomTeleporter")
-	, _touching(false)
-	, _target(nullptr)
+	, _player(nullptr)
+	, _room_portal()
+	, _outdoor_portal(nullptr)
 	, _fade_image(nullptr)
 	, _fade_duration(0.25f)
+	, _trigger_distance(1.f)
 {
 }
 
@@ -43,60 +45,100 @@ void Hachiko::Scripting::RoomTeleporter::OnStart()
 
 void Hachiko::Scripting::RoomTeleporter::OnUpdate()
 {
+	if (!_player || !_outdoor_portal || !_room_portal || !_fade_image)
+	{
+		// If some reference is working the system cant work
+		return;
+	}
 	
-	//if (_target->GetTransform()->GetGlobalPosition().Distance(game_object->GetTransform()->GetGlobalPosition()) <= 2.0f)
 	if(Input::IsKeyDown(Input::KeyCode::KEY_T))
 	{
-		SetActive(!_indoors);
+		SetActive(!_inside_room);
+	}
+	
+	if (!_already_triggered)
+	{
+		if (_player->GetTransform()->GetGlobalPosition().Distance(_outdoor_portal->GetTransform()->GetGlobalPosition()) <= _trigger_distance)
+		{
+			EnterRoom();
+		}
+		else if (_player->GetTransform()->GetGlobalPosition().Distance(_room_portal->GetTransform()->GetGlobalPosition()) <= _trigger_distance)
+		{
+			ExitRoom();
+		}
 	}
 
-	if (_step != Step::WAITING)
+	if (_step == Step::WAITING)
 	{
-		Interpolate();
+		float out_dist = _player->GetTransform()->GetGlobalPosition().Distance(_outdoor_portal->GetTransform()->GetGlobalPosition());
+		float in_dist = _player->GetTransform()->GetGlobalPosition().Distance(_room_portal->GetTransform()->GetGlobalPosition());
+
+		if (out_dist > _trigger_distance && in_dist > _trigger_distance)
+		{
+			_already_triggered = false;
+		}
+	} 
+	else
+	{
+		SimulateTransition();
+
 	}
 }
 
 void Hachiko::Scripting::RoomTeleporter::SetActive(bool v)
 {
 	_step = Step::FADE_IN;
-	_fade_progress = 0.f;
-	_indoors = v;
+	_already_triggered = true;
+	_step_progress = 0.f;
 }
 
 void Hachiko::Scripting::RoomTeleporter::EnterRoom()
 {
+	_inside_room = true;
 	SetActive(true);
 }
 
 void Hachiko::Scripting::RoomTeleporter::ExitRoom()
 {
-	SetActive(false);
+	_inside_room = false;
+	SetActive(true);
 }
 
-void Hachiko::Scripting::RoomTeleporter::Interpolate()
+void Hachiko::Scripting::RoomTeleporter::SimulateTransition()
 {
 
 	// In step logic
 	if (_step == Step::FADE_IN)
 	{
-		_fade_progress += Time::DeltaTime() / _fade_duration;
-		_fade_image->SetColor(float4::Lerp(_clear_color, _opaque_color, _fade_progress));
+		_step_progress += Time::DeltaTime() / _fade_duration;
+		_fade_image->SetColor(float4::Lerp(_clear_color, _opaque_color, _step_progress));
+	}
+	else if (_step == Step::BLACKOUT)
+	{
+		// Do literally nothing
+		_step_progress += Time::DeltaTime() / _blackout_duration;
 	}
 	else if (_step == Step::FADE_OUT)
 	{
-		_fade_progress += Time::DeltaTime() / _fade_duration;
-		_fade_image->SetColor(float4::Lerp(_opaque_color, _clear_color, _fade_progress));
+		_step_progress += Time::DeltaTime() / _fade_duration;
+		_fade_image->SetColor(float4::Lerp(_opaque_color, _clear_color, _step_progress));
 	}
 
 	// Step transition logic
-	if (_fade_progress >= 1.f)
+	if (_step_progress >= 1.f)
 	{
+		_step_progress = 0.f;
+		
 		if (_step == Step::FADE_IN)
 		{
 			// Teleport player
+			TeleportPlayer(_inside_room);
 			// Toggle skybox based on indoors
-			SceneManagement::SetSkyboxActive(!_indoors);
-			_fade_progress = 0.f;
+			SceneManagement::SetSkyboxActive(!_inside_room);
+			_step = Step::BLACKOUT;
+		}
+		else if (_step == Step::BLACKOUT)
+		{
 			_step = Step::FADE_OUT;
 		}
 		else if (_step == Step::FADE_OUT)
@@ -104,6 +146,17 @@ void Hachiko::Scripting::RoomTeleporter::Interpolate()
 			_step = Step::WAITING;
 		}
 	}
-
 	
+}
+
+void Hachiko::Scripting::RoomTeleporter::TeleportPlayer(bool indoors)
+{
+	if (indoors)
+	{
+		_player->GetTransform()->SetGlobalPosition(_room_portal->GetTransform()->GetGlobalPosition());
+		HE_LOG("Teleport indoors");
+		return;
+	}
+	HE_LOG("Teleport outdoors");
+	_player->GetTransform()->SetGlobalPosition(_outdoor_portal->GetTransform()->GetGlobalPosition());
 }
