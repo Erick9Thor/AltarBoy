@@ -737,16 +737,34 @@ void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 
 void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
 {
-	node["'_touching@bool'"] = _touching;
-
-	if (_target != nullptr)
+	if (_player != nullptr)
 	{
-		node["'_target@GameObject*'"] = _target->GetID();
+		node["'_player@GameObject*'"] = _player->GetID();
 	}
 	else
 	{
-		node["'_target@GameObject*'"] = 0;
+		node["'_player@GameObject*'"] = 0;
 	}
+
+	if (_room_portal != nullptr)
+	{
+		node["'_room_portal@GameObject*'"] = _room_portal->GetID();
+	}
+	else
+	{
+		node["'_room_portal@GameObject*'"] = 0;
+	}
+
+	if (_outdoor_portal != nullptr)
+	{
+		node["'_outdoor_portal@GameObject*'"] = _outdoor_portal->GetID();
+	}
+	else
+	{
+		node["'_outdoor_portal@GameObject*'"] = 0;
+	}
+
+	node["'_trigger_distance@float'"] = _trigger_distance;
 
 	if (_fade_image != nullptr && _fade_image->GetGameObject() != nullptr)
 	{
@@ -758,18 +776,30 @@ void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
 	}
 
 	node["'_fade_duration@float'"] = _fade_duration;
+
+	node["'_blackout_duration@float'"] = _blackout_duration;
 }
 
 void Hachiko::Scripting::RoomTeleporter::OnLoad()
 {
-	if (load_node["'_touching@bool'"].IsDefined())
+	if (load_node["'_player@GameObject*'"].IsDefined())
 	{
-		_touching = load_node["'_touching@bool'"].as<bool>();
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_target@GameObject*'"].IsDefined())
+	if (load_node["'_room_portal@GameObject*'"].IsDefined())
 	{
-		_target = SceneManagement::FindInCurrentScene(load_node["'_target@GameObject*'"].as<unsigned long long>());
+		_room_portal = SceneManagement::FindInCurrentScene(load_node["'_room_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_outdoor_portal@GameObject*'"].IsDefined())
+	{
+		_outdoor_portal = SceneManagement::FindInCurrentScene(load_node["'_outdoor_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_trigger_distance@float'"].IsDefined())
+	{
+		_trigger_distance = load_node["'_trigger_distance@float'"].as<float>();
 	}
 
 	if (load_node["'_fade_image@ComponentImage*'"].IsDefined())
@@ -784,5 +814,10 @@ void Hachiko::Scripting::RoomTeleporter::OnLoad()
 	if (load_node["'_fade_duration@float'"].IsDefined())
 	{
 		_fade_duration = load_node["'_fade_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_blackout_duration@float'"].IsDefined())
+	{
+		_blackout_duration = load_node["'_blackout_duration@float'"].as<float>();
 	}
 }

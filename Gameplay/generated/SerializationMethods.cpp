@@ -944,21 +944,39 @@ void Hachiko::Scripting::RoomTeleporter::DeserializeFrom(std::unordered_map<std:
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 
-	if(serialized_fields.find("_touching") != serialized_fields.end())
+	if(serialized_fields.find("_player") != serialized_fields.end())
 	{
-		const SerializedField& _touching_sf = serialized_fields["_touching"];
-		if (_touching_sf.type_name == "bool")
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
 		{
-			_touching = std::any_cast<bool>(_touching_sf.copy);
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
 		}
 	}
 
-	if(serialized_fields.find("_target") != serialized_fields.end())
+	if(serialized_fields.find("_room_portal") != serialized_fields.end())
 	{
-		const SerializedField& _target_sf = serialized_fields["_target"];
-		if (_target_sf.type_name == "GameObject*")
+		const SerializedField& _room_portal_sf = serialized_fields["_room_portal"];
+		if (_room_portal_sf.type_name == "GameObject*")
 		{
-			_target = std::any_cast<GameObject*>(_target_sf.copy);
+			_room_portal = std::any_cast<GameObject*>(_room_portal_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_outdoor_portal") != serialized_fields.end())
+	{
+		const SerializedField& _outdoor_portal_sf = serialized_fields["_outdoor_portal"];
+		if (_outdoor_portal_sf.type_name == "GameObject*")
+		{
+			_outdoor_portal = std::any_cast<GameObject*>(_outdoor_portal_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_trigger_distance") != serialized_fields.end())
+	{
+		const SerializedField& _trigger_distance_sf = serialized_fields["_trigger_distance"];
+		if (_trigger_distance_sf.type_name == "float")
+		{
+			_trigger_distance = std::any_cast<float>(_trigger_distance_sf.copy);
 		}
 	}
 
@@ -979,17 +997,32 @@ void Hachiko::Scripting::RoomTeleporter::DeserializeFrom(std::unordered_map<std:
 			_fade_duration = std::any_cast<float>(_fade_duration_sf.copy);
 		}
 	}
+
+	if(serialized_fields.find("_blackout_duration") != serialized_fields.end())
+	{
+		const SerializedField& _blackout_duration_sf = serialized_fields["_blackout_duration"];
+		if (_blackout_duration_sf.type_name == "float")
+		{
+			_blackout_duration = std::any_cast<float>(_blackout_duration_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::RoomTeleporter::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
-	serialized_fields["_touching"] = SerializedField(std::string("_touching"), std::make_any<bool>(_touching), std::string("bool"));
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
 
-	serialized_fields["_target"] = SerializedField(std::string("_target"), std::make_any<GameObject*>(_target), std::string("GameObject*"));
+	serialized_fields["_room_portal"] = SerializedField(std::string("_room_portal"), std::make_any<GameObject*>(_room_portal), std::string("GameObject*"));
+
+	serialized_fields["_outdoor_portal"] = SerializedField(std::string("_outdoor_portal"), std::make_any<GameObject*>(_outdoor_portal), std::string("GameObject*"));
+
+	serialized_fields["_trigger_distance"] = SerializedField(std::string("_trigger_distance"), std::make_any<float>(_trigger_distance), std::string("float"));
 
 	serialized_fields["_fade_image"] = SerializedField(std::string("_fade_image"), std::make_any<ComponentImage*>(_fade_image), std::string("ComponentImage*"));
 
 	serialized_fields["_fade_duration"] = SerializedField(std::string("_fade_duration"), std::make_any<float>(_fade_duration), std::string("float"));
+
+	serialized_fields["_blackout_duration"] = SerializedField(std::string("_blackout_duration"), std::make_any<float>(_blackout_duration), std::string("float"));
 }
