@@ -4,7 +4,7 @@
 #include "components/ComponentMeshRenderer.h"
 
 #include <MathGeoLib.h>
-#include <list>
+#include <unordered_set>
 
 #define QUADTREE_MAX_ITEMS 16
 #define QUADTREE_MIN_SIZE 50.f
@@ -26,8 +26,8 @@ namespace Hachiko
         QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth);
         ~QuadtreeNode();
 
-        void Insert(const std::set<ComponentMeshRenderer*>& to_insert);
-        void Remove(const std::set<ComponentMeshRenderer*>& to_remove);
+        void Insert(const std::unordered_set<ComponentMeshRenderer*>& to_insert);
+        void Remove(const std::unordered_set<ComponentMeshRenderer*>& to_remove);
         void CreateChildren();
         void RearangeChildren();
 
@@ -41,7 +41,7 @@ namespace Hachiko
             return box;
         }
 
-        [[nodiscard]] const std::list<ComponentMeshRenderer*>& GetMeshes() const
+        [[nodiscard]] const std::vector<ComponentMeshRenderer*>& GetMeshes() const
         {
             return meshes;
         }
@@ -56,12 +56,10 @@ namespace Hachiko
         void DebugDraw();
 
     private:
-        void Invalidate();
-        bool dirty = true;
         int depth = 0;
         AABB box;
         QuadtreeNode* parent = nullptr;
-        std::list<ComponentMeshRenderer*> meshes {};
+        std::vector<ComponentMeshRenderer*> meshes {};
     };
 
     class Quadtree
@@ -85,8 +83,8 @@ namespace Hachiko
         void DebugDraw() const;
 
     private:
-        std::set<ComponentMeshRenderer*> to_remove = {};
-        std::set<ComponentMeshRenderer*> to_insert = {};
+        std::unordered_set<ComponentMeshRenderer*> to_remove = {};
+        std::unordered_set<ComponentMeshRenderer*> to_insert = {};
         QuadtreeNode* root = nullptr;
     };
 
