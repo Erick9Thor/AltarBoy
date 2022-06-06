@@ -3,17 +3,16 @@
 #include "Component.h"
 #include "Globals.h"
 
-#include "resources/ResourceFont.h"
-#include "FTLabel.h"
+class FTLabel;
 
 namespace Hachiko
 {
     class GameObject;
-
     class ComponentTransform2D;
     class Program;
+    class ResourceFont;
 
-    class HACHIKO_API ComponentText : public Component
+    class ComponentText : public Component
     {
         friend class ComponentTransform2D;
     public:
@@ -26,9 +25,9 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        void SetText(const char* new_text);
-        void SetFontSize(int new_size);
-        void SetFontColor(const float4& new_color);
+        HACHIKO_API void SetText(const char* new_text);
+        HACHIKO_API void SetFontSize(int new_size);
+        HACHIKO_API void SetFontColor(const float4& new_color);
 
     private:
         void Invalidate()
@@ -45,7 +44,6 @@ namespace Hachiko
         std::unique_ptr<FTLabel> label = nullptr;
 
         std::string label_text = "Sample Text";
-
 
         float4 font_color = float4::one;
         float font_size = 28.f;

@@ -418,6 +418,7 @@ namespace Hachiko::Debug
 HACHIKO_API const Hachiko::ComponentCamera* GetRenderingCamera();
 HACHIKO_API float GetFps();
 HACHIKO_API unsigned int GetMs();
+HACHIKO_API void SetPolygonMode(bool is_fill);
 } // namespace Hachiko::Debug
 
 

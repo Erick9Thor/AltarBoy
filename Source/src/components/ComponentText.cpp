@@ -12,6 +12,9 @@
 
 #include "modules/ModuleEvent.h"
 
+#include "resources/ResourceFont.h"
+#include "FTLabel.h"
+
 Hachiko::ComponentText::ComponentText(GameObject* container) 
 	: Component(Type::TEXT, container) {}
 

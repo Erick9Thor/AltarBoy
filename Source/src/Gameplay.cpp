@@ -127,7 +127,12 @@ float Hachiko::Debug::GetFps()
 
 unsigned int Hachiko::Debug::GetMs()
 {
-    return App->renderer->GetCurrentFps();
+    return App->renderer->GetCurrentMs();
+}
+
+void Hachiko::Debug::SetPolygonMode(bool is_fill) 
+{
+    glPolygonMode(GL_FRONT_AND_BACK, is_fill ? GL_FILL : GL_LINE);
 }
 
 /*---------------------------------------------------------------------------*/
