@@ -36,7 +36,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 	{
 		//	Disable
 		game_object->SetActive(false);
-		RELEASE(game_object);
+		SceneManagement::Destroy(game_object);
 	}
 	else
 	{
@@ -84,7 +84,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 	{
 		if (crystal_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(crystal_children[i]->GetTransform()->GetGlobalPosition()))
 		{
-			crystal_children[i]->GetComponent<CrystalExplosion>()->ReceiveDamage(_damage);
+			crystal_children[i]->GetComponent<CrystalExplosion>()->RegisterHit(_damage);
 			return true;
 		}
 	}

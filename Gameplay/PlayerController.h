@@ -23,15 +23,13 @@ public:
 	void OnUpdate() override;
 
 	PlayerState GetState() const;
-	Stats* GetStats() { return _combat_stats; }
 
+private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
 
-private:
-	
 	void SpawnGameObject() const;
-	
+
 	// Status check
 	bool IsAttacking() const;
 	bool IsDashing() const;
@@ -40,7 +38,12 @@ private:
 	bool IsFalling() const;
 	bool IsActionLocked() const;
 
+	// Input and status management
+	void HandleInputAndStatus();
+
 	// Actions called by handle input
+	void Dash();
+	void MeleeAttack();
 	void RangedAttack();
 
 	// Player simulation

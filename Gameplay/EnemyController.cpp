@@ -140,8 +140,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 
 	_state = BugState::ATTACKING;
 	_player_controller->RegisterHit(_combat_stats->_attack_power);
-	_attack_cooldown = _combat_stats->_attack_cd;
-	
+	_attack_cooldown = _combat_stats->_attack_cd;	
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()

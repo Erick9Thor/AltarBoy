@@ -42,9 +42,12 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	if (!_stats->IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	ResourceAnimation* nabo = _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation();
+	if (!nabo)	return;
+
+	if (!_stats->IsAlive())
 	{
-		RELEASE(game_object);
+		SceneManagement::Destroy(game_object);
 		return;
 	}
 
@@ -68,7 +71,7 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 {
 	if (_detecting_radius >= transform->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
 	{
-		ReceiveDamage(_stats->_max_hp);
+		RegisterHit(_stats->_max_hp);
 	}
 }
 
@@ -114,7 +117,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 	}
 }
 
-void Hachiko::Scripting::CrystalExplosion::ReceiveDamage(int damage)
+void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 {
 	if (!_stats)	return;
 
