@@ -19,18 +19,10 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
-	, _max_dash_count(0)
 	, _attack_duration(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
-	, _attack_radius(0.0f)
-	, _attack_cooldown(0.33f)
-	, _attack_duration(0.0f)
-	, _rotation_duration(0.0f)
-	, _raycast_min_range(0.001)
-	, _raycast_max_range(15.f)
-	, _stats(5, 2, 10, 10.0f)
 	, _state(PlayerState::IDLE)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
@@ -77,16 +69,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	// Attack:
-	Attack(transform, current_position);
-	if (_stats._current_hp <= 0)
-	{
-		//SceneManagement::SwitchScene(Scenes::LOSE);
-	}
-
-	// Handle player the input
-	HandleInputAndStatus();
-
 	// Run movement simulation
 	MovementController();
 
@@ -95,16 +77,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
-
-	// Apply the position:
-	transform->SetGlobalPosition(current_position);
-	// Move the dash indicator:
-	//MoveDashIndicator(current_position);
-
-	// Instantiate GameObject in current scene test:
-	//SpawnGameObject();
-
-	//CheckGoal(current_position);
 
 	// Apply the position after everything is simulated
 	_player_transform->SetGlobalPosition(_player_position);
@@ -181,223 +153,22 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
 }
 
-
-void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
-{
-	// Movement Direction
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
-	{
-		_movement_direction -= math::float3::unitZ;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
-	{
-		_movement_direction += math::float3::unitZ;
-	}
-
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
-	{
-		_movement_direction += math::float3::unitX;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
-	{
-		_movement_direction -= math::float3::unitX;
-	}
-
-	if (!IsActionLocked())
-	{
-		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
-		{
-			RangedAttack();
-		}
-		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
-		{
-			MeleeAttack();
-		}
-		// Keep dash here since it uses the input movement direction
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
-		{
-			Dash();
-		}
-		else if (!_movement_direction.Equals(float3::zero))
-		{
-			_state = PlayerState::WALKING;
-		}
-		else
-		{
-			_state = PlayerState::IDLE;
-		}
-	}
-
-	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
-	{
-		_player_position += math::float3::unitY * 0.5f;
-	}
-	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
-	{
-		_player_position -= math::float3::unitY * 0.5f;
-	}
-
-	if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
-	{
-		// Make the player look the mouse:
-		transform->LookAtTarget(GetRaycastPosition(current_position));
-		_state = PlayerState::RANGED_ATTACKING;
-		float3 t_pos = current_position;
-		t_pos.y += 0.5;
-		RangedAttack(transform, t_pos);
-
-		_attack_current_cd = _combat_stats->_attack_cd;
-	}
-	else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
-	{
-		_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
-		transform->LookAtTarget(GetRaycastPosition(current_position));
-		_state = PlayerState::MELEE_ATTACKING;
-		MeleeAttack(transform, current_position);
-		current_position += transform->GetFront() * 0.3f;
-		_attack_current_cd = _combat_stats->_attack_cd;
-	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
-	{
-		_is_god_mode = !_is_god_mode;
-		_stats._god_mode = _is_god_mode;
-	}
-}
-
-
-void Hachiko::Scripting::PlayerController::Dash()
-{
-	if (enemies == nullptr && dynamic_envi == nullptr) 
-	{
-	_state = PlayerState::DASHING;
-	_dash_charges -= 1;
-	_dash_progress = 0.f;
-	_dash_start = _player_position;
-
-	// If we are not inputing any direction default to player orientation
-	if (_movement_direction.Equals(float3::zero))
-	{
-		_dash_direction = _player_transform->GetFront();
-	}
-	else
-	{
-		_dash_direction = _movement_direction;
-	}
-	_dash_direction.Normalize();
-
-	float3 corrected_dash_final_position;
-	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
-	corrected_dash_final_position = Navigation::GetCorrectedPosition(corrected_dash_final_position, float3(0.5f, 0.1f, 0.5f));
-	if (corrected_dash_final_position.x < FLT_MAX)
-	{
-		_dash_end = corrected_dash_final_position;
-	}
-	else
-	{
-		_dash_end = dash_final_position;
-	}
-}
-
-
-void Hachiko::Scripting::PlayerController::MeleeAttack()
-{
-	_state = PlayerState::MELEE_ATTACKING;
-	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
-	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
-	if (enemies == nullptr && dynamic_envi == nullptr) {
-		return;
-	}
-
-	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
-	std::vector<GameObject*> environment = dynamic_envi ? dynamic_envi->children : std::vector<GameObject*>();
-
-	// MELEE
-
-	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
-
-	GameObject* inter = game_object->scene_owner->GetRoot();
-
-	std::vector<GameObject*> elements_hit = {};
-	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
-	for (int i = 0; i < enemy_children.size(); ++i)
-	{
-		if (enemy_children[i]->active && _combat_stats->_attack_range >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
-	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
-	math::float4x4 inv_matrix = _player_transform->GetGlobalMatrix().Transposed();
-	for (int i = 0; i < enemy_children.size(); ++i)
-	{
-		if (enemy_children[i]->active && _attack_radius >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
-		{
-			float3 normalized_center = _player_transform->GetFront().Normalized();
-			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition()).Normalized();
-			float dot_product = normalized_center.Dot(normalized_enemy);
-			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
-			float attack_angle = 60.0f; // This can vary in the future deppending of weapon
-			if (angle_of_enemy < attack_angle)
-			{
-				elements_hit.push_back(enemy_children[i]);
-			}
-		}
-	}
-
-	//loop in enemies hit
-	for (Hachiko::GameObject* element : elements_hit)
-	{
-		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
-		CrystalExplosion* crystal_explotion = element->GetComponent<CrystalExplosion>();
-
-		float3 relative_dir = (element->GetTransform()->GetGlobalPosition() 
-			- transform->GetGlobalPosition()).Normalized();
-		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition();
-
-		if (enemy_controller != nullptr)
-		{
-			enemy_controller->RegisterPlayerHit(_combat_stats->_attack_power, relative_dir);
-		}
-		else if (crystal_explotion != nullptr)
-		{
-			crystal_explotion->ReceiveDamage(_combat_stats->_attack_power, relative_dir);
-		}
-	}
-
-	if (elements_hit.size() > 0)
-	{
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
-	}
-
-	// Move player a bit forward on melee attack
-	_player_position += _player_transform->GetFront() * 0.3f;
-	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
-	_attack_current_cd = _attack_cooldown;
-}
-
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	// Spawn bullet
-	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object->scene_owner->GetRoot());
-	bullet->GetTransform()->SetGlobalPosition(current_position);
-	bullet->GetComponent<BulletController>()->SetForward((GetRaycastPosition(current_position) - current_position).Normalized());
-	bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
 	_state = PlayerState::RANGED_ATTACKING;
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 	float3 attack_origin_position = _player_position;
 	attack_origin_position.y += 0.5f;
-	float3 attack_end_posiiton = attack_origin_position;
 
-	attack_origin_position += (forward * _raycast_min_range);
-	attack_end_posiiton += (forward * _raycast_max_range);
+	// Spawn bullet (Passing the prefab can be improved)
+	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object->scene_owner->GetRoot());
 
-	GameObject* hit_game_object = SceneManagement::Raycast(attack_origin_position, attack_end_posiiton);
+	bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
+	bullet->GetComponent<BulletController>()->SetForward(forward);
+	bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
 
-	if (hit_game_object && hit_game_object->active)
-	{
-		EnemyController* enemy = hit_game_object->parent->GetComponent<EnemyController>();
-		if (!enemy)	return;
-		float3 relative_dir = hit_game_object->GetTransform()->GetGlobalPosition() - _player_position;
-		enemy->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f);
-	}
-	_attack_current_cd = _attack_cooldown;
+	_attack_current_cd = _combat_stats->_attack_cd;
 }
 
 void Hachiko::Scripting::PlayerController::MovementController()
@@ -407,10 +178,10 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsWalking())
 	{
-		_player_position += (_movement_direction * _movement_speed * Time::DeltaTime());
+		_player_position += (_movement_direction * _combat_stats->_move_speed * Time::DeltaTime());
 	}
 
-	if (_is_god_mode)
+	if (_god_mode)
 	{
 		return;
 	}
@@ -552,7 +323,6 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		return;
 	}
 
-	if (!_god_mode && _is_falling)
 	if (_attack_current_duration > 0.0f)
 	{
 		if (_attack_indicator)
@@ -582,12 +352,16 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	}
 }
 
-void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, bool is_heavy, float3 direction)
+void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	_stats.ReceiveDamage(damage_received);
+	if (_god_mode)	return;
+
+	_combat_stats->ReceiveDamage(damage_received);
+	UpdateHealthBar();
 	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3);
+
 	// Activate vignette
-	if (_ui_damage && _stats._current_hp / _stats._max_hp < 0.25f)
+	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
 	{
 		_ui_damage->SetActive(true);
 	}
@@ -599,7 +373,7 @@ void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, 
 	}
 	else
 	{
-		if (_stats._current_hp / _stats._max_hp < 0.25f)
+		if (_combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
 		{
 			_camera->GetComponent<PlayerCamera>()->Shake(0.8f, 0.2f);
 		}
@@ -608,86 +382,14 @@ void Hachiko::Scripting::PlayerController::ReceiveDamage(float damage_received, 
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
+
+	// Player is dead
+	if (!_combat_stats->IsAlive())
+	{
+		SceneManagement::SwitchScene(Scenes::LOSE);
+	}
 }
 
-		return;
-	}
-
-	// Lock the player movement while attacking, this is gonna be 
-	// probably changed after root motion anims are implemented:
-	if (_state == PlayerState::MELEE_ATTACKING ||
-		_state == PlayerState::RANGED_ATTACKING)
-	{
-		return;
-	}
-
-	const float velocity = _combat_stats->_move_speed * Time::DeltaTime();
-	const math::float3 delta_x = math::float3::unitX * velocity;
-	const math::float3 delta_y = math::float3::unitY * velocity;
-	const math::float3 delta_z = math::float3::unitZ * velocity;
-	
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_W))
-	{
-		current_position -= delta_z;
-		moving_input_dir += math::float3::unitZ;
-		_state = PlayerState::WALKING;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_S))
-	{
-		current_position += delta_z;
-		moving_input_dir -= math::float3::unitZ;
-		_state = PlayerState::WALKING;
-	}
-
-	if (Input::IsKeyPressed(Input::KeyCode::KEY_D))
-	{
-		current_position += delta_x;
-		moving_input_dir -= math::float3::unitX;
-		_state = PlayerState::WALKING;
-	}
-	else if (Input::IsKeyPressed(Input::KeyCode::KEY_A))
-	{
-		current_position -= delta_x;
-		moving_input_dir += math::float3::unitX;
-		_state = PlayerState::WALKING;
-	}
-
-	if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
-	{
-		current_position += delta_y;
-	}
-	else if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
-	{
-		current_position -= delta_y;
-	}
-
-	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE))
-	{
-		_dash_has_cooldown = (_dash_count <= 0);
-		if (_dash_has_cooldown)
-		{
-			return;
-		}
-		_dash_count -= 1;
-		_is_dashing = true;
-		_dash_progress = 0.0f;
-		_dash_start = current_position;
-		_dash_timer = _dash_timer == 0.0f ? 0.0001f : _dash_timer;
-
-		_dash_direction = game_object->GetTransform()->GetFront();
-		_dash_direction.Normalize();
-	}
-
-	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
-	{
-		//_god_mode = !_god_mode;
-		RegisterHit(1);
-	}
-	
-	if (!_god_mode && _state == PlayerState::WALKING)
-	{
-		current_position = Navigation::GetCorrectedPosition(current_position, float3(10.0f, 10.0f, 10.0f));
-	}
 void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 direction)
 {
 	_state = PlayerState::STUNNED;
@@ -697,26 +399,14 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 directi
 	_player_transform->LookAtDirection(-direction);
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(int enemy_attack_power)
+void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 {
-	if (_god_mode)
+	if (hp_cells.size() < 1)
 	{
+		HE_LOG("Error. PlayerController is missing Health UI parts");
 		return;
 	}
 
-	_combat_stats->ReceiveDamage(enemy_attack_power);
-	UpdateHealthBar();
-	_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
-
-	// Player is dead
-	if (_combat_stats->_current_hp <= 0)
-	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
-	}
-}
-
-void Hachiko::Scripting::PlayerController::UpdateHealthBar()
-{
 	// Disable cells 
 	for (int i = 0; i < hp_cells.size(); ++i)
 	{

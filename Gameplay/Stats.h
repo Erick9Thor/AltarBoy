@@ -23,7 +23,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_range);
             SERIALIZE_FIELD(float, _move_speed);
             SERIALIZE_FIELD(int, _max_hp);
-            SERIALIZE_FIELD(int, _current_hp);
+            int _current_hp;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

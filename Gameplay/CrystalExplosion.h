@@ -27,7 +27,7 @@ namespace Hachiko
 			void CheckRadiusExplosion();
 			void ExplodeCrystal();
 
-			void ReceiveDamage(int damage, float3 direction);
+			void ReceiveDamage(int damage);
 
 		private:
 			void DestroyCrystal();

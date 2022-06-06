@@ -69,7 +69,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 		if (enemies_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-			enemies_children[i]->GetComponent<EnemyController>()->RegisterPlayerHit(_damage, dir);
+			enemies_children[i]->GetComponent<EnemyController>()->RegisterHit(_damage, dir);
 			return true;
 		}
 	}
@@ -84,8 +84,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 	{
 		if (crystal_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(crystal_children[i]->GetTransform()->GetGlobalPosition()))
 		{
-			float3 dir = crystal_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-			crystal_children[i]->GetComponent<CrystalExplosion>()->ReceiveDamage(_damage, dir);
+			crystal_children[i]->GetComponent<CrystalExplosion>()->ReceiveDamage(_damage);
 			return true;
 		}
 	}

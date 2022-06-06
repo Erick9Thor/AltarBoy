@@ -40,12 +40,7 @@ private:
 	bool IsFalling() const;
 	bool IsActionLocked() const;
 
-	// Input and status management
-	void HandleInputAndStatus();
-
 	// Actions called by handle input
-	void Dash();
-	void MeleeAttack();
 	void RangedAttack();
 
 	// Player simulation
@@ -58,9 +53,8 @@ private:
 	void RecieveKnockback(math::float3 direction);
 
 public:
-	void ReceiveDamage(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void CheckGoal(const float3& current_position);
-	void RegisterHit(int enemy_atk);
+	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void UpdateHealthBar();
 	
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }

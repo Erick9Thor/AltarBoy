@@ -25,9 +25,8 @@ namespace Hachiko
             
             BugState GetState() const;
 
-            Stats* GetStats();
-            void RegisterPlayerHit(int player_atk, math::float3 direction);
-            void KnockEnemyBack(math::float3 direction);
+            const Stats* GetStats();
+            void RegisterHit(int player_atk, math::float3 direction);
 
         private:
             void Attack();

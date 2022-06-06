@@ -15,7 +15,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
-	, _stats()
 	, _player(nullptr)
 	, _state(BugState::INVALID)
 	, _attack_animation_duration(0.0f)
@@ -55,7 +54,7 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
-	if (!_stats.IsAlive())
+	if (!_combat_stats->IsAlive())
 	{
 		_state = BugState::DEAD;
 		return;
@@ -100,44 +99,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		agc->SetMaxAcceleration(_acceleration);
 		agc->SetMaxSpeed(_speed);
 	}
-
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
-	_current_pos = transform->GetGlobalPosition();
-
-	float dist_to_player = _current_pos.Distance(_player_pos);
-	if (dist_to_player <= _aggro_range && _player_controller->IsAlive())
-	{
-		if (dist_to_player <= _attack_range)
-		{
-			Attack();
-		}
-		else
-		{
-			ChasePlayer();
-		}
-	}
-	else
-	{
-		GoBack();
-	}	
-}
-
-Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
-{
-	return _combat_stats;
-}
-
-void Hachiko::Scripting::EnemyController::RegisterPlayerHit(int player_atk, float3 direction)
-{
-	if (!_combat_stats->IsAlive())	return;
-
-	_combat_stats->ReceiveDamage(player_atk);
-	KnockEnemyBack(direction);
-
-	if (!_combat_stats->IsAlive())
-	{
-		DestroyEntity();
-	}
 }
 
 BugState Hachiko::Scripting::EnemyController::GetState() const
@@ -145,21 +106,28 @@ BugState Hachiko::Scripting::EnemyController::GetState() const
 	return _state;
 }
 
-Hachiko::Scripting::Stats& Hachiko::Scripting::EnemyController::GetStats()
+const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 {
-	return _stats;
+	return _combat_stats;
 }
 
-void Hachiko::Scripting::EnemyController::ReceiveDamage(int damage, float3 direction)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction)
 {
-	_stats.ReceiveDamage(damage);
+	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
+	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
 	float knockback_intensity = 0.5f; // same with knock-back intensity
 	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback_intensity);
+
+	if (!_combat_stats->IsAlive())
+	{
+		DestroyEntity();
+	}
 }
 
+// Needs to be improved. Player should be able to dodge when enemy starts attacking.
 void Hachiko::Scripting::EnemyController::Attack()
 {
 	_attack_cooldown -= Time::DeltaTime();
@@ -170,11 +138,10 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
+	_state = BugState::ATTACKING;
 	_player_controller->RegisterHit(_combat_stats->_attack_power);
 	_attack_cooldown = _combat_stats->_attack_cd;
-	_state = BugState::ATTACKING;
-	_player_controller->ReceiveDamage(_stats._attack_power);
-	_attack_cooldown = _stats._attack_cd;
+	
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
@@ -226,5 +193,5 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
-	delete game_object;
+	RELEASE(game_object);
 }
