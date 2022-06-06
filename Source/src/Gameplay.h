@@ -416,6 +416,8 @@ HACHIKO_API void Destroy(GameObject* game_object);
 namespace Hachiko::Debug
 {
 HACHIKO_API const Hachiko::ComponentCamera* GetRenderingCamera();
+HACHIKO_API float GetFps();
+HACHIKO_API unsigned int GetMs();
 } // namespace Hachiko::Debug
 
 

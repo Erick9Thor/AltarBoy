@@ -3,6 +3,7 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
+#include "modules/ModuleRender.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -117,6 +118,16 @@ HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
 const Hachiko::ComponentCamera* Hachiko::Debug::GetRenderingCamera() 
 {
     return App->camera->GetRenderingCamera();
+}
+
+float Hachiko::Debug::GetFps()
+{
+    return App->renderer->GetCurrentFps();
+}
+
+unsigned int Hachiko::Debug::GetMs()
+{
+    return App->renderer->GetCurrentFps();
 }
 
 /*---------------------------------------------------------------------------*/

@@ -1,12 +1,8 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "DebugManager.h"
 #include "PlayerController.h"
-
-#include <components/ComponentTransform.h>
-
 #include <core/GameObject.h>
 #include "Scenes.h"
-#include <glew-2.1.0/include/GL/glew.h>
 #include "Algorithm/Random/LCG.h"
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
@@ -96,8 +92,8 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 
 	if (is_performance)
 	{
-		std::string fps = std::to_string(App->renderer->GetCurrentFps());
-		std::string ms = std::to_string(App->renderer->GetCurrentMs());
+		std::string fps = std::to_string(Debug::GetFps());
+		std::string ms = std::to_string(Debug::GetMs());
 
 		_text_fps->SetText(fps.c_str());
 		_text_ms->SetText(ms.c_str());
