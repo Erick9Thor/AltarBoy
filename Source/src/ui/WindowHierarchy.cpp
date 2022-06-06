@@ -200,6 +200,8 @@ bool Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
                 }
                 parent_check = parent_check->parent;
             }
+
+            assert(dragged_object->parent != nullptr);
             if (dragged_object->parent == game_object)
             {
                 // Unparent object
@@ -210,8 +212,10 @@ bool Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
             {
                 payload_n->SetNewParent(game_object);
             }
+
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
+
         ImGui::EndDragDropTarget();
     }
 
