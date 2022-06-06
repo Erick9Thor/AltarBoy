@@ -16,7 +16,7 @@
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
-	, _stats(game_object)
+	, _stats()
 	, _player(nullptr)
 	, _explosion_radius(10.0f)
 	, _explosive_crystal(false)
@@ -30,6 +30,7 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 		_explosion_crystal->SetActive(false);
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	_stats = game_object->GetComponent<Stats>();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -39,12 +40,12 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	if (!_stats.IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	if (!_stats->IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
 	{
 		delete game_object;
 	}
 
-	if (!_stats.IsAlive())
+	if (!_stats->IsAlive())
 	{
 		return;
 	}
@@ -54,7 +55,7 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 		CheckRadiusExplosion();
 	}
 
-	if (_stats._current_hp <= 0)
+	if (_stats->_current_hp <= 0)
 	{
 		DestroyCrystal();
 	}
@@ -100,24 +101,24 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->RegisterPlayerHit(_stats._attack_power, relative_dir.Normalized());
+			enemy_controller->RegisterPlayerHit(_stats->_attack_power, relative_dir.Normalized());
 		}
 
 		if (player_controller != nullptr)
 		{
-			player_controller->RegisterHit(_stats._attack_power);
+			player_controller->RegisterHit(_stats->_attack_power);
 		}
 	}
 
 	if (elements_hit.size() > 0)
 	{
-		_stats.ReceiveDamage(5);
+		_stats->ReceiveDamage(5);
 	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::ReceiveDamage(int damage, float3 direction)
 {
-	_stats.ReceiveDamage(damage);
+	_stats->ReceiveDamage(damage);
 }
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()

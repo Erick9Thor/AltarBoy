@@ -32,7 +32,7 @@ namespace Hachiko
 			void DestroyCrystal();
 
 		public:
-			SERIALIZE_FIELD(Stats, _stats);
+			Stats* _stats;
 
 		private:
 			ComponentTransform* transform;
