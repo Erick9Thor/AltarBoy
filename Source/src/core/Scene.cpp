@@ -320,6 +320,7 @@ void Hachiko::Scene::Update()
 {
     OPTICK_CATEGORY("UpdateScene", Optick::Category::Scene);
     root->Update();
+    quadtree->Refresh();
 }
 
 Hachiko::Scene::Memento* Hachiko::Scene::CreateSnapshot()

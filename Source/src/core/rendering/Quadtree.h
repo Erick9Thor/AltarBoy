@@ -6,9 +6,8 @@
 #include <MathGeoLib.h>
 #include <list>
 
-#define QUADTREE_MAX_ITEMS 8
+#define QUADTREE_MAX_ITEMS 16
 #define QUADTREE_MIN_SIZE 50.f
-#define QUADTREE_MAX_DEPTH 10
 
 namespace Hachiko
 {
@@ -27,8 +26,8 @@ namespace Hachiko
         QuadtreeNode(const AABB& box, QuadtreeNode* parent, int depth);
         ~QuadtreeNode();
 
-        void Insert(ComponentMeshRenderer* mesh);
-        void Remove(ComponentMeshRenderer* mesh);
+        void Insert(const std::set<ComponentMeshRenderer*>& to_insert);
+        void Remove(const std::set<ComponentMeshRenderer*>& to_remove);
         void CreateChildren();
         void RearangeChildren();
 
@@ -57,6 +56,8 @@ namespace Hachiko
         void DebugDraw();
 
     private:
+        void Invalidate();
+        bool dirty = true;
         int depth = 0;
         AABB box;
         QuadtreeNode* parent = nullptr;
@@ -72,8 +73,9 @@ namespace Hachiko
         void Clear();
         void SetBox(const AABB& box);
 
-        void Insert(ComponentMeshRenderer* mesh) const;
-        void Remove(ComponentMeshRenderer* mesh) const;
+        void Insert(ComponentMeshRenderer* mesh);
+        void Remove(ComponentMeshRenderer* mesh);
+        void Refresh();
 
         [[nodiscard]] QuadtreeNode* GetRoot() const
         {
@@ -83,6 +85,8 @@ namespace Hachiko
         void DebugDraw() const;
 
     private:
+        std::set<ComponentMeshRenderer*> to_remove = {};
+        std::set<ComponentMeshRenderer*> to_insert = {};
         QuadtreeNode* root = nullptr;
     };
 
