@@ -326,7 +326,7 @@ void main()
     {
         hdr_color += SpotPBR(fragment.pos, norm, view_dir, lights.spots[i], Cd, f0, smoothness);
     }   
-    hdr_color += GetAmbientLight(norm, reflect(-view_dir, norm), dot(norm, view_dir), smoothness * smoothness, Cd, f0);
+    hdr_color += GetAmbientLight(norm, reflect(-view_dir, norm), dot(norm, view_dir), 1.0 - smoothness, Cd, f0);
 
     // Emissive map
     vec3 emissive = material.emissive_color.rgb;
