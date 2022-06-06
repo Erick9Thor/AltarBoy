@@ -1,4 +1,3 @@
-
 #include "core/hepch.h"
 
 #include "core/ErrorHandler.h"
@@ -381,6 +380,19 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     // Draw debug draw stuff:
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
 
+    
+    const auto& scene_particles = scene->GetSceneParticles();
+    if (!scene_particles.empty())
+    {
+        Program* particle_program = App->program->GetParticleProgram();
+        particle_program->Activate();
+        for (auto particle : scene_particles)
+        {
+            particle->Draw(camera, particle_program);
+        }
+        Program::Deactivate();
+    }
+
     //GameObject* selected_go = App->editor->GetSelectedGameObject();
     /*if (outline_selection && selected_go)
     {
@@ -415,18 +427,6 @@ void Hachiko::ModuleRender::SetRenderMode(bool is_deferred)
     else
     {
         g_buffer.Generate();
-    }
-
-    const auto& scene_particles = scene->GetSceneParticles();
-    if (!scene_particles.empty())
-    {
-        Program* particle_program = App->program->GetParticleProgram();
-        particle_program->Activate();
-        for (auto particle : scene_particles)
-        {
-            particle->Draw(camera, particle_program);
-        }
-        Program::Deactivate();
     }
 }
 
