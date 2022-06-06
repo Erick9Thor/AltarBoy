@@ -6,7 +6,7 @@
 #include <MathGeoLib.h>
 #include <unordered_set>
 
-#define QUADTREE_MAX_ITEMS 16
+#define QUADTREE_MAX_ITEMS 8
 #define QUADTREE_MIN_SIZE 50.f
 
 namespace Hachiko

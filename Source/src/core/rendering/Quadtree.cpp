@@ -119,7 +119,7 @@ void Hachiko::QuadtreeNode::RearangeChildren()
         }
 
         // If it intersects all there is no point in moving downwards
-        if (intersection_count == 4)
+        if (intersection_count > 1)
         {
             ++it;
             continue;
