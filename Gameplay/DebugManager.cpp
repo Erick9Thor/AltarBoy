@@ -1,13 +1,10 @@
 #include "scriptingUtil/gameplaypch.h"
+
 #include "DebugManager.h"
 #include "PlayerController.h"
-
-#include <components/ComponentTransform.h>
-
-#include <core/GameObject.h>
 #include "Scenes.h"
-#include <glew-2.1.0/include/GL/glew.h>
-#include "Algorithm/Random/LCG.h"
+
+#include <Algorithm/Random/LCG.h>
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
@@ -96,15 +93,12 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 
 	if (is_performance)
 	{
-		std::string fps = std::to_string(App->renderer->GetCurrentFps());
-		std::string ms = std::to_string(App->renderer->GetCurrentMs());
+		std::string fps = std::to_string(Debug::GetFps());
+		std::string ms = std::to_string(Debug::GetMs());
 
 		_text_fps->SetText(fps.c_str());
 		_text_ms->SetText(ms.c_str());
-
 	}
-
-	
 }
 
 void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
@@ -243,20 +237,27 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		// TODO: rework to use Zombunny prefab when instantiate accepts UID
 	}
 
-	
-	if (_toggle_performance_output->IsSelected())
+	// NOTE: This nullptr check is just for experiment purposes on the new exposed component text. 
+	// Marius will probably gonna set this button from editor and save it so it will be never 
+	// nullptr in the future.
+	// TODO: Delete this when the previous note is addressed.
+	if (_toggle_performance_output != nullptr)
 	{
-		HE_LOG("_toggle_performance_output pressed");
-		is_performance = !is_performance;
-		if (is_performance)
+		if (_toggle_performance_output->IsSelected())
 		{
-			_performance_menu->SetActive(true);
-		}
-		else
-		{
-			_performance_menu->SetActive(true);
+			HE_LOG("_toggle_performance_output pressed");
+			is_performance = !is_performance;
+			if (is_performance)
+			{
+				_performance_menu->SetActive(true);
+			}
+			else
+			{
+				_performance_menu->SetActive(true);
+			}
 		}
 	}
+
 
 	/*
 	if (_toggle_show_colliders->IsSelected())
@@ -268,16 +269,11 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	if (_toggle_wireframe->IsSelected())
 	{
 		HE_LOG("_toggle_wireframe pressed");
-		if (is_wireframe)
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // SOLID
-			is_wireframe = !is_wireframe;
-		}
-		else
-		{
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // WIRE
-			is_wireframe = !is_wireframe;
-		}
+
+		is_wireframe = !is_wireframe;
+
+		// Set polygon mode to GL_FILL if is_wireframe is false, GL_LINE if true:
+		Debug::SetPolygonMode(!is_wireframe);
 	}
 
 	if (_exit_debug->IsSelected())

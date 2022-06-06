@@ -1,8 +1,6 @@
 #pragma once
 #include <scripting/Script.h>
 #include "Stats.h"
-#include "Application.h"
-#include "Modules/ModuleRender.h"
 #include "PlayerState.h"
 
 namespace Hachiko
