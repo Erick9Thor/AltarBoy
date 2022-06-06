@@ -194,6 +194,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         {
             game_object->CreateComponent(Component::Type::BILLBOARD);
             ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
         ImGui::EndPopup();

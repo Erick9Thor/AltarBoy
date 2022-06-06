@@ -88,7 +88,8 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
 
 void Hachiko::ComponentBillboard::DrawGui()
 {
-    if (ImGui::CollapsingHeader("Billboard", ImGuiTreeNodeFlags_DefaultOpen))
+    ImGui::PushID(this);
+    if (ImGuiUtils::CollapsingHeader(game_object, this, "Billboard"))
     {
         ImGui::Separator();
         ImGui::Indent();
@@ -221,6 +222,7 @@ void Hachiko::ComponentBillboard::DrawGui()
             }
         }
     }
+    ImGui::PopID();
 }
 
 void Hachiko::ComponentBillboard::Start()
