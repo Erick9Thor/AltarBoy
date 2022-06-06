@@ -1,12 +1,12 @@
 scene_name: Fade_test
 navmesh_id: 6812846620149289574
 skybox:
-  right_cube_id: 0
-  left_cube_id: 0
-  top_cube_id: 0
-  bottom_cube_id: 0
-  center_cube_id: 0
-  back_cube_id: 0
+  right_cube_id: 1702588198696288572
+  left_cube_id: 1739534624842796925
+  top_cube_id: 6957442237302133202
+  bottom_cube_id: 17416802361919324532
+  center_cube_id: 11268774594414416246
+  back_cube_id: 10885047276093589253
 root_id: 1355365245468165729
 child:
   - id: 420969117229830922

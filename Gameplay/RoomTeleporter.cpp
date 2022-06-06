@@ -47,10 +47,10 @@ void Hachiko::Scripting::RoomTeleporter::OnUpdate()
 	//if (_target->GetTransform()->GetGlobalPosition().Distance(game_object->GetTransform()->GetGlobalPosition()) <= 2.0f)
 	if(Input::IsKeyDown(Input::KeyCode::KEY_T))
 	{
-		SetActive(!_transition_active);
+		SetActive(!_indoors);
 	}
 
-	if (_changing)
+	if (_step != Step::WAITING)
 	{
 		Interpolate();
 	}
@@ -58,28 +58,52 @@ void Hachiko::Scripting::RoomTeleporter::OnUpdate()
 
 void Hachiko::Scripting::RoomTeleporter::SetActive(bool v)
 {
-	_transition_active = v;
+	_step = Step::FADE_IN;
 	_fade_progress = 0.f;
-	_changing = true;
+	_indoors = v;
+}
+
+void Hachiko::Scripting::RoomTeleporter::EnterRoom()
+{
+	SetActive(true);
+}
+
+void Hachiko::Scripting::RoomTeleporter::ExitRoom()
+{
+	SetActive(false);
 }
 
 void Hachiko::Scripting::RoomTeleporter::Interpolate()
 {
-	_fade_progress += Time::DeltaTime() / _fade_duration;
-	//_fade_progress = _fade_progress > 1.0f ? 1.0f : _fade_progress;
 
-	if (_transition_active)
+	// In step logic
+	if (_step == Step::FADE_IN)
 	{
+		_fade_progress += Time::DeltaTime() / _fade_duration;
 		_fade_image->SetColor(float4::Lerp(_clear_color, _opaque_color, _fade_progress));
 	}
-	else
+	else if (_step == Step::FADE_OUT)
 	{
+		_fade_progress += Time::DeltaTime() / _fade_duration;
 		_fade_image->SetColor(float4::Lerp(_opaque_color, _clear_color, _fade_progress));
 	}
-		
 
+	// Step transition logic
 	if (_fade_progress >= 1.f)
 	{
-		_changing = false;
+		if (_step == Step::FADE_IN)
+		{
+			// Teleport player
+			// Toggle skybox based on indoors
+			SceneManagement::SetSkyboxActive(!_indoors);
+			_fade_progress = 0.f;
+			_step = Step::FADE_OUT;
+		}
+		else if (_step == Step::FADE_OUT)
+		{
+			_step = Step::WAITING;
+		}
 	}
+
+	
 }

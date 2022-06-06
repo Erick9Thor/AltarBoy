@@ -13,6 +13,13 @@ namespace Hachiko
         {
             SERIALIZATION_METHODS(false)
 
+            enum Step
+            {
+                WAITING = 0,
+                FADE_IN = 1,
+                FADE_OUT = 3,
+            };
+
         public:
             RoomTeleporter(GameObject* game_object);
             ~RoomTeleporter() override = default;
@@ -23,6 +30,9 @@ namespace Hachiko
 
             void SetActive(bool v);
 
+            void EnterRoom();
+            void ExitRoom();
+
         private:
             void Interpolate();
 
@@ -30,8 +40,8 @@ namespace Hachiko
             const float4 _clear_color = float4::zero;
             const float4 _opaque_color = float4(0.f, 0.f, 0.f, 1.f);
             float _fade_progress = 0.f;
-            bool _transition_active = false;
-            bool _changing = false;
+            Step _step = Step::WAITING;
+            bool _indoors = false;
             SERIALIZE_FIELD(bool, _touching);
             SERIALIZE_FIELD(GameObject*, _target);
             SERIALIZE_FIELD(ComponentImage*, _fade_image);
