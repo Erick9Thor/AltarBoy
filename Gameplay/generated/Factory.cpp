@@ -5,6 +5,7 @@
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
+#include "FancyLights.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
@@ -38,6 +39,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "EnemyController")
 	{
 		return new Hachiko::Scripting::EnemyController(script_owner);
+	}
+
+	if (script_name == "FancyLights")
+	{
+		return new Hachiko::Scripting::FancyLights(script_owner);
 	}
 
 	if (script_name == "MainMenuManager")

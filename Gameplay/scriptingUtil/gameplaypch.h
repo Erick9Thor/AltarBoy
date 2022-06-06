@@ -16,6 +16,7 @@
 #include <components/ComponentImage.h>
 #include <components/ComponentTransform.h>
 #include <components/ComponentTransform2D.h>
+#include <components/ComponentPointLight.h>
 #include <core/GameObject.h>
 #include <Gameplay.h>
 #include <Globals.h>

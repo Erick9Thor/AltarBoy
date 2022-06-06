@@ -132,7 +132,10 @@ void Hachiko::WindowScene::ToolbarMenu() const
 void Hachiko::WindowScene::DrawScene()
 {
     ImVec2 size = ImGui::GetContentRegionAvail();
-    if (size.x != texture_size.x || size.y != texture_size.y)
+    bool size_changed = size.x != texture_size.x || size.y != texture_size.y;
+    bool size_valid = (size.x > 0 && size.y > 0);
+    
+    if (size_changed && size_valid)
     {
         texture_size = {
             size.x,

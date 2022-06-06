@@ -6,6 +6,7 @@
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
+#include "FancyLights.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
@@ -257,6 +258,26 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_attack_animation_timer@float'"].IsDefined())
 	{
 		_attack_animation_timer = load_node["'_attack_animation_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::FancyLights::OnSave(YAML::Node& node) const
+{
+	node["'_rotate_on_y@bool'"] = _rotate_on_y;
+
+	node["'_angle@float'"] = _angle;
+}
+
+void Hachiko::Scripting::FancyLights::OnLoad()
+{
+	if (load_node["'_rotate_on_y@bool'"].IsDefined())
+	{
+		_rotate_on_y = load_node["'_rotate_on_y@bool'"].as<bool>();
+	}
+
+	if (load_node["'_angle@float'"].IsDefined())
+	{
+		_angle = load_node["'_angle@float'"].as<float>();
 	}
 }
 
@@ -550,7 +571,7 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
-	node["'_max_dash_count@int'"] = _max_dash_count;
+	node["'_max_dash_charges@int'"] = _max_dash_charges;
 
 	node["'_raycast_min_range@float'"] = _raycast_min_range;
 
@@ -616,9 +637,9 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_max_dash_count@int'"].IsDefined())
+	if (load_node["'_max_dash_charges@int'"].IsDefined())
 	{
-		_max_dash_count = load_node["'_max_dash_count@int'"].as<int>();
+		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
 	}
 
 	if (load_node["'_raycast_min_range@float'"].IsDefined())

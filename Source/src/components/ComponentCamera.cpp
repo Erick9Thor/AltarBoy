@@ -2,6 +2,7 @@
 
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
+#include "modules/ModuleRender.h"
 #include "modules/ModuleEvent.h"
 
 #include "ComponentCamera.h"
@@ -15,8 +16,9 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 {
     frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     frustum.SetViewPlaneDistances(0.1f, 1000.0f);
-    HE_LOG("TEST LOG: INIT COMPONENT CAMERA");
-    frustum.SetHorizontalFovAndAspectRatio(DegToRad(horizontal_fov), static_cast<float>(DEFAULT_CAMERA_WIDTH) / static_cast<float>(DEFAULT_CAMERA_HEIGHT));
+    
+    float2 frame_buffer_size = App->renderer->GetFrameBufferSize();    
+    SetResolution(frame_buffer_size.x, frame_buffer_size.y);
 
     frustum.SetPos(float3(0.0f, 0.0f, 0.0f));
     frustum.SetFront(float3x3::identity.WorldZ());
@@ -29,7 +31,6 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
 
 Hachiko::ComponentCamera::~ComponentCamera()
 {
-    
     if (game_object->scene_owner)
     {
         App->camera->RemoveCamera(this);
@@ -103,7 +104,10 @@ void Hachiko::ComponentCamera::OnTransformUpdated()
 {
     ComponentTransform* transform = game_object->GetTransform();
 
-    frustum.SetFrame(transform->GetGlobalPosition(), transform->GetFront(), transform->GetUp());
+    frustum.SetPos(transform->GetGlobalPosition());
+    frustum.SetFront(transform->GetFront());
+    frustum.SetUp(transform->GetUp());
+
     frustum.GetPlanes(planes);
 }
 
