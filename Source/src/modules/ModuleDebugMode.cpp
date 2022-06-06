@@ -8,7 +8,8 @@
 
 bool Hachiko::ModuleDebugMode::Init()
 {
-	
+    HE_LOG("INITIALIZING MODULE: DEBUG MODE");
+
 	hw_info.system = (unsigned char*)SDL_GetPlatform();
 	hw_info.cpu = SDL_GetCPUCount();
 	hw_info.ram = (float)SDL_GetSystemRAM() / 1024.0f;

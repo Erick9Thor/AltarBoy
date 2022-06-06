@@ -50,6 +50,8 @@ namespace Hachiko
         template<typename T>
         void GetIntersections(std::vector<GameObject*>& objects, const T& primitive) const;
 
+        void GetIntersections(std::vector<ComponentMeshRenderer*>& objects, const Frustum& frustum) const;
+
         QuadtreeNode* children[static_cast<int>(Quadrants::COUNT)] {};
 
         void DebugDraw();

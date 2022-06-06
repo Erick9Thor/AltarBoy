@@ -15,7 +15,15 @@ void Hachiko::ResourceMaterial::DrawGui()
 
     ImGuiUtils::Combo("Material Type", material_types, is_metallic);
 
+    bool was_transparent = is_transparent;
     ImGuiUtils::Combo("Transparency", transparency, is_transparent);
+
+    if (was_transparent != is_transparent)
+    {
+        // If the transparency property of a material is changed, notify
+        // scene to arrange batching again:
+        App->scene_manager->GetActiveScene()->OnMeshesChanged();
+    }
 
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {

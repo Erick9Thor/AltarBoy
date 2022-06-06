@@ -318,6 +318,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="EnemyController.h" />
+    <ClInclude Include="FancyLights.h" />
     <ClInclude Include="generated\Factory.h" />
     <ClInclude Include="MainMenuManager.h" />
     <ClInclude Include="PlayerAnimationManager.h" />
@@ -722,6 +723,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="EnemyController.cpp" />
+    <ClCompile Include="FancyLights.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SaveAndLoadMethods.cpp" />

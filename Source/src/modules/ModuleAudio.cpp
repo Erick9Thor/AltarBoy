@@ -28,6 +28,7 @@ Hachiko::ModuleAudio::~ModuleAudio() = default;
 
 bool Hachiko::ModuleAudio::Init()
 {
+    HE_LOG("INITIALIZING MODULE: AUDIO");
     HE_LOG("Initializing Wwise");
     AkMemSettings memSettings;
 

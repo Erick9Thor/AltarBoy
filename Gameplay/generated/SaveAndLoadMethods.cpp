@@ -6,6 +6,7 @@
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
+#include "FancyLights.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
@@ -256,6 +257,26 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_attack_animation_timer@float'"].IsDefined())
 	{
 		_attack_animation_timer = load_node["'_attack_animation_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::FancyLights::OnSave(YAML::Node& node) const
+{
+	node["'_rotate_on_y@bool'"] = _rotate_on_y;
+
+	node["'_angle@float'"] = _angle;
+}
+
+void Hachiko::Scripting::FancyLights::OnLoad()
+{
+	if (load_node["'_rotate_on_y@bool'"].IsDefined())
+	{
+		_rotate_on_y = load_node["'_rotate_on_y@bool'"].as<bool>();
+	}
+
+	if (load_node["'_angle@float'"].IsDefined())
+	{
+		_angle = load_node["'_angle@float'"].as<float>();
 	}
 }
 

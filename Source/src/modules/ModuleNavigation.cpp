@@ -15,6 +15,8 @@
 
 bool Hachiko::ModuleNavigation::Init()
 {
+    HE_LOG("INITIALIZING MODULE: NAVIGATION");
+
     return true;
 }
 

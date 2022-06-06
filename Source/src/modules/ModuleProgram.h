@@ -4,7 +4,7 @@
 #include <vector>
 #include "Batching/TextureBatch.h"
 
-#define MAX_POINT_LIGHTS 4
+#define MAX_POINT_LIGHTS 1200
 #define MAX_SPOT_LIGHTS 4
 
 namespace Hachiko
@@ -60,9 +60,19 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        [[nodiscard]] Program* GetMainProgram() const
+        [[nodiscard]] Program* GetForwardProgram() const
         {
-            return main_program;
+            return forward_program;
+        }
+        
+        [[nodiscard]] Program* GetDeferredGeometryProgram() const
+        {
+            return deferred_geometry_program;
+        }
+
+        [[nodiscard]] Program* GetDeferredLightingProgram() const
+        {
+            return deferred_lighting_program;
         }
 
         [[nodiscard]] Program* GetSkyboxProgram() const
@@ -87,7 +97,7 @@ namespace Hachiko
 
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const CameraData& camera) const;
-        void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const;
+        void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
         void OptionsMenu();
@@ -99,14 +109,19 @@ namespace Hachiko
         unsigned int CompileShader(unsigned type, const char* source) const;
         void CompileShaders(const char* vtx_shader_path, const char* frg_shader_path, unsigned& vtx_shader, unsigned& frg_shader) const;
         Program* CreateProgram(const char* vtx_shader_path, const char* frg_shader_path);
+        void CreateGLSLIncludes() const;
 
-        Program* CreateMainProgram();
+        Program* CreateForwardProgram();
         Program* CreateSkyboxProgram();
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
+        Program* CreateDeferredGeometryPassProgram();
+        Program* CreateDeferredLightingPassProgram();
 
-        Program* main_program = nullptr;
+        Program* forward_program = nullptr;
+        Program* deferred_geometry_program = nullptr;
+        Program* deferred_lighting_program = nullptr;
         Program* skybox_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;

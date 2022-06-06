@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\rendering\GBuffer.cpp" />
     <ClCompile Include="src\batching\GeometryBatch.cpp" />
     <ClCompile Include="src\batching\BatchManager.cpp" />
     <ClCompile Include="src\batching\TextureBatch.cpp" />
@@ -672,6 +673,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\rendering\GBuffer.h" />
     <ClInclude Include="src\batching\DrawCommand.h" />
     <ClInclude Include="src\batching\GeometryBatch.h" />
     <ClInclude Include="src\batching\BatchManager.h" />

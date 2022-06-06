@@ -1,4 +1,5 @@
-# version 460
+#version 460
+
 out vec4 color;
 
 in vec3 tex_coords;

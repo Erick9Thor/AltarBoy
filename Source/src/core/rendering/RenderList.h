@@ -14,9 +14,9 @@ namespace Hachiko
     struct RenderTarget
     {
         const char* name = nullptr;
-        GameObject* game_object = nullptr;
-        ComponentMeshRenderer* mesh = nullptr;
-        float distance = 0.0f;
+        unsigned long long mesh_id = 0;
+        ComponentMeshRenderer* mesh_renderer = nullptr;
+        double distance = 0.0;
     };
 
     class RenderList
@@ -25,14 +25,14 @@ namespace Hachiko
         void PreUpdate();
         void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
 
-        std::vector<RenderTarget>& GetNodes()
+        std::vector<RenderTarget>& GetOpaqueTargets()
         {
-            return nodes;
+            return opaque_targets;
         }
 
-        [[nodiscard]] const std::vector<RenderTarget>& GetNodes() const
+        std::vector<RenderTarget>& GetTransparentTargets()
         {
-            return nodes;
+            return transparent_targets;
         }
 
         [[nodiscard]] unsigned GetPolycountRendered() const
@@ -49,7 +49,9 @@ namespace Hachiko
         void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
         void CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh);
 
-        std::vector<RenderTarget> nodes;
+        std::vector<RenderTarget> opaque_targets;
+        std::vector<RenderTarget> transparent_targets;
+
         unsigned polycount_rendered = 0, polycount_total = 0;
     };
 }
