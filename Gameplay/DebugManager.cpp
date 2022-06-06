@@ -254,7 +254,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 			}
 			else
 			{
-				_performance_menu->SetActive(true);
+				_performance_menu->SetActive(false);
 			}
 		}
 	}
