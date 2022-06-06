@@ -41,13 +41,10 @@ void Hachiko::WindowResource::Update()
 
     std::filesystem::path assets_path("./assets");
 
-    if (current_directory != assets_path)
+    if (current_directory != assets_path && ImGui::Button(ICON_FA_FOLDER_MINUS))
     {
-        if (ImGui::Button(ICON_FA_FOLDER_MINUS))
-        {
-            current_directory = current_directory.parent_path();
-        }
-    }
+        current_directory = current_directory.parent_path();
+    }    
 
     for (auto& directory_entry : std::filesystem::directory_iterator(current_directory))
     {

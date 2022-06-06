@@ -279,7 +279,7 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
 
 void Hachiko::ModuleCamera::CheckImGuizmoViewManipulateUsed() 
 {
-    float3 frustumFront = (float3)rendering_camera->GetFrustum()->Front();
+    float3 frustumFront = rendering_camera->GetFrustum()->Front();
     float3 transformFront = rendering_camera->GetGameObject()->GetTransform()->GetFront();
     if (frustumFront.x != transformFront.x || frustumFront.y != transformFront.y || frustumFront.z != transformFront.z)
     {
