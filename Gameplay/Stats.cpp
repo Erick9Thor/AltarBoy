@@ -20,5 +20,5 @@ bool Hachiko::Scripting::Stats::IsAlive()
 void Hachiko::Scripting::Stats::ReceiveDamage(int damage)
 {
 	_current_hp -= damage;
-	math::Clamp(_current_hp, 0, _max_hp);
+	_current_hp = math::Clamp(_current_hp, 0, _max_hp);
 }
