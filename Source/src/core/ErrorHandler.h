@@ -75,6 +75,7 @@ namespace Hachiko
                 tmp_severity = "medium";
                 break;
             case GL_DEBUG_SEVERITY_LOW:
+                tmp_severity = "low";
                 return;
             case GL_DEBUG_SEVERITY_NOTIFICATION:
                 tmp_severity = "notification";
@@ -83,15 +84,10 @@ namespace Hachiko
                 return;
             }
 
-            const std::string& msg = StringUtils::Format("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>", tmp_source, tmp_type, tmp_severity, id, message);
-
-            if (severity == GL_DEBUG_SEVERITY_HIGH)
+            if (severity != GL_DEBUG_SEVERITY_NOTIFICATION)
             {
+                const std::string& msg = StringUtils::Format("<Source:%s> <Type:%s> <Severity:%s> <ID:%d> <Message:%s>", tmp_source, tmp_type, tmp_severity, id, message);
                 HE_ERROR(msg.c_str());
-            }
-            else
-            {
-                HE_LOG(msg.c_str());
             }
         }
 #endif // PLAY_BUILD

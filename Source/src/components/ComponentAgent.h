@@ -10,8 +10,9 @@ namespace Hachiko
 		ComponentAgent(GameObject* container);
 		~ComponentAgent() override;
 
-		void Start() override;
 		void Update() override;
+        void Start() override;
+        void Stop() override;
 		
 		void SetTargetPosition(const float3& target_pos);
 		void SetMaxSpeed(float new_max_speed);

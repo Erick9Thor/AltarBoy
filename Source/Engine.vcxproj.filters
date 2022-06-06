@@ -573,6 +573,9 @@
     <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
       <Filter>Vendors\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\GBuffer.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\batching\GeometryBatch.cpp" />
     <ClCompile Include="src\batching\BatchManager.cpp" />
     <ClCompile Include="src\batching\TextureBatch.cpp" />
@@ -2279,6 +2282,9 @@
     </ClInclude>
     <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
       <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\rendering\GBuffer.h">
+      <Filter>Core\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\batching\DrawCommand.h" />
     <ClInclude Include="src\batching\GeometryBatch.h" />

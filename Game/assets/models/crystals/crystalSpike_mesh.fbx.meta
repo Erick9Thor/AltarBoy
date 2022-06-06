@@ -1,0 +1,14 @@
+asset_hash: 18367340106120697485
+model_name: crystalSpike_mesh
+meshes:
+  - 12493242938431995642
+materials:
+  - 15711698613413314858
+prefab_id: 10042195172663342112
+resources:
+  - resource_id: 12493242938431995642
+    resource_type: 3
+  - resource_id: 15711698613413314858
+    resource_type: 1
+  - resource_id: 10042195172663342112
+    resource_type: 13

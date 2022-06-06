@@ -101,15 +101,18 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     }
 }
 
-void Hachiko::Scene::RebuildBatching() 
+void Hachiko::Scene::RebuildBatching()
 {
-    if (rebuild_batch)
+    if (!rebuild_batch)
     {
-        batch_manager->CleanUp();
-        batch_manager->CollectMeshes(root);
-        batch_manager->BuildBatches();
-        rebuild_batch = false;
+        return;
     }
+
+    batch_manager->CleanUp();
+    batch_manager->CollectMeshes(root);
+    batch_manager->BuildBatches();
+
+    rebuild_batch = false;
 }
 
 Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
@@ -306,6 +309,11 @@ Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()
 void Hachiko::Scene::Start() const
 {
     root->Start();
+}
+
+void Hachiko::Scene::Stop() const
+{
+    root->Stop();
 }
 
 void Hachiko::Scene::Update()

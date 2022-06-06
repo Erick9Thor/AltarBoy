@@ -1,0 +1,166 @@
+prefab_name: BreakableCrystal
+name: BreakableCrystal
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [-69.7828979, 3.00204587, -71.4248276]
+    rotation: [0, 0, 0, 1]
+    scale: [1.39999998, 1.39999998, 1.39999998]
+  - type: 18
+    enabled: true
+    obstacle_type: 0
+    obstacle_size: [0.800000012, 1, 1]
+  - type: 15
+    enabled: true
+    class_name: CrystalExplosion
+    "'_player@GameObject*'": 0
+    "'_explosion_crystal@GameObject*'": 4
+    "'_static_crystal@GameObject*'": 2
+    "'_crashing_index@unsigned'": 0
+    "'_detecting_radius@float'": 2
+    "'_explosion_radius@float'": 10
+    "'_explosive_crystal@bool'": false
+child:
+  - name: crystalSpike_mesh
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: crystalSpike_mesh
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [1.2035023, 0.56883049, -1.08868277]
+            rotation: [-0.640856445, 0.298836708, 0.298836529, 0.640855968]
+            scale: [1.00000012, 1.0000006, 1.00000083]
+          - type: 2
+            enabled: true
+            mesh_id: 12493242938431995642
+            navigable: false
+            visible: true
+            material_id: 15711698613413314858
+  - name: crystalSpikeAnimacion_meshExplision
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.0394845456, 0, -0.20355995]
+        rotation: [0, 0, 0, 1]
+        scale: [0.406699985, 0.406699985, 0.406699985]
+      - type: 14
+        enabled: true
+        animations:
+          - 9087701207749168962
+    child:
+      - name: Mesh
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0.707106829, 0, 0, 0.707106709]
+            scale: [1, 0.999998629, 0.999998629]
+        child:
+          - name: crystalSpikeTop_mesh
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [-0.0761962608, 0.494708151, 0.10228952]
+                rotation: [-0.707106829, 0, 0, 0.707106769]
+                scale: [2.53999996, 2.53999901, 2.53999901]
+              - type: 2
+                enabled: true
+                mesh_id: 2367252208710808329
+                navigable: false
+                visible: true
+                material_id: 5759363592208955763
+          - name: crystalSpikeBottom_mesh
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.0911449194, 0.299597561, 0.0456319116]
+                rotation: [-0.707106829, 0, 0, 0.707106769]
+                scale: [2.53999996, 2.53999901, 2.53999901]
+              - type: 2
+                enabled: true
+                mesh_id: 11783699103939193595
+                navigable: false
+                visible: true
+                material_id: 5759363592208955763
+          - name: crystalSpikeMiddle_mesh
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.186976179, 0.484414041, 0.0622473769]
+                rotation: [-0.707106829, 0, 0, 0.707106769]
+                scale: [2.53999996, 2.53999901, 2.53999901]
+              - type: 2
+                enabled: true
+                mesh_id: 10088262584487287873
+                navigable: false
+                visible: true
+                material_id: 5759363592208955763
+          - name: crystalSpikeBottom2_mesh
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.14534016, 0.256375641, 0.271769315]
+                rotation: [-0.707106829, 0, 0, 0.707106769]
+                scale: [2.53999996, 2.53999901, 2.53999901]
+              - type: 2
+                enabled: true
+                mesh_id: 10784035645120420919
+                navigable: false
+                visible: true
+                material_id: 5759363592208955763
+      - name: Father
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0.00118318188, -0.00236636377, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - name: Bottom2
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.144156978, 0.258742034, 0.271769315]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+          - name: Bottom
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.0899617374, 0.301963925, 0.0456319116]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+          - name: Top
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [-0.0773794428, 0.497074544, 0.10228952]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+          - name: Middle
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0.185792997, 0.486780435, 0.0622473769]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
