@@ -406,7 +406,7 @@ void Hachiko::ComponentBillboard::AddTexture()
     }
 
     texture_path.append(META_EXTENSION);
-    if (!std::filesystem::exists(texture_path.c_str()))
+    if (!FileSystem::Exists(texture_path.c_str()))
     {
         return;
     }
