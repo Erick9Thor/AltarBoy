@@ -51,9 +51,12 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 	Editor::Show<ComponentButton>("_toggle_wireframe", "ComponentButton*", _toggle_wireframe);
 	Editor::Show<ComponentButton>("_toggle_show_colliders", "ComponentButton*", _toggle_show_colliders);
 	Editor::Show<ComponentButton>("_exit_debug", "ComponentButton*", _exit_debug);
+	Editor::Show<ComponentText>("_text_fps", "ComponentText*", _text_fps);
+	Editor::Show<ComponentText>("_text_ms", "ComponentText*", _text_ms);
 	Editor::Show("_tp_pos1", _tp_pos1);
 	Editor::Show("_tp_pos2", _tp_pos2);
 	Editor::Show("_tp_pos3", _tp_pos3);
+	Editor::Show("_performance_menu", _performance_menu);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

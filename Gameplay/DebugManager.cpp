@@ -31,6 +31,9 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	, _spawn_enemy(nullptr)
 	, _unlock_skills(nullptr)
 	, _toggle_performance_output(nullptr)
+	, _performance_menu(nullptr)
+	, _text_fps(nullptr)
+	, _text_ms(nullptr)
 	, _toggle_wireframe(nullptr)
 	, _toggle_show_colliders(nullptr)
 	, _exit_debug(nullptr)
@@ -62,7 +65,6 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 
 void Hachiko::Scripting::DebugManager::OnStart()
 {
-	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
 	_player_controller = _player->GetComponent<PlayerController>();
 
 	for (GameObject* child : game_object->children)
@@ -90,13 +92,29 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 
 
 	// register button interactions
+	HandleButtonInteraction();
 
+	if (is_performance)
+	{
+		std::string fps = std::to_string(App->renderer->GetCurrentFps());
+		std::string ms = std::to_string(App->renderer->GetCurrentMs());
+
+		_text_fps->SetText(fps.c_str());
+		_text_ms->SetText(ms.c_str());
+
+	}
+
+	
+}
+
+void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
+{
 	if (_button_back->IsSelected())
 	{
 		HE_LOG("_button_back pressed");
 		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
-	
+
 	if (_teleport_next_pos->IsSelected())
 	{
 		HE_LOG("_teleport_next_pos pressed");
@@ -136,7 +154,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 			float3 current_position = teleport_positions[teleport_iterator];
 			_player->GetTransform()->SetGlobalPosition(current_position);
 
-			HE_LOG("Iterator: %d",teleport_iterator);
+			HE_LOG("Iterator: %d", teleport_iterator);
 		}
 
 	}
@@ -145,7 +163,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		HE_LOG("_teleport_add_pos pressed");
 		teleport_positions.push_back(_player->GetTransform()->GetGlobalPosition());
 	}
-	
+
 	// Edit Character Stats
 	/*
 	if (_add_health->IsSelected())
@@ -199,7 +217,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		_player_controller->_stats._attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
 	}
-	
+
 	// Player States
 	if (_god_mode->IsSelected())
 	{
@@ -214,7 +232,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		HE_LOG("_toggle_invulnerable pressed");
 	}
 	*/
-	
+
 	if (_spawn_enemy->IsSelected())
 	{
 		HE_LOG("_spawn_enemy pressed");
@@ -225,16 +243,28 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		// TODO: rework to use Zombunny prefab when instantiate accepts UID
 	}
 
-	/*
+	
 	if (_toggle_performance_output->IsSelected())
 	{
 		HE_LOG("_toggle_performance_output pressed");
+		is_performance = !is_performance;
+		if (is_performance)
+		{
+			_performance_menu->SetActive(true);
+		}
+		else
+		{
+			_performance_menu->SetActive(true);
+		}
 	}
+
+	/*
 	if (_toggle_show_colliders->IsSelected())
 	{
 		HE_LOG("_toggle_show_colliders pressed");
 	}
 	*/
+
 	if (_toggle_wireframe->IsSelected())
 	{
 		HE_LOG("_toggle_wireframe pressed");
@@ -250,7 +280,6 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		}
 	}
 
-
 	if (_exit_debug->IsSelected())
 	{
 		is_active = !is_active;
@@ -260,5 +289,4 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 			child->SetActive(is_active);
 		}
 	}
-	
 }

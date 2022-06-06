@@ -318,6 +318,24 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_exit_debug@ComponentButton*'"] = 0;
 	}
 
+	if (_text_fps != nullptr && _text_fps->GetGameObject() != nullptr)
+	{
+		node["'_text_fps@ComponentText*'"] = _text_fps->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_text_fps@ComponentText*'"] = 0;
+	}
+
+	if (_text_ms != nullptr && _text_ms->GetGameObject() != nullptr)
+	{
+		node["'_text_ms@ComponentText*'"] = _text_ms->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_text_ms@ComponentText*'"] = 0;
+	}
+
 	if (_tp_pos1 != nullptr)
 	{
 		node["'_tp_pos1@GameObject*'"] = _tp_pos1->GetID();
@@ -343,6 +361,15 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_tp_pos3@GameObject*'"] = 0;
+	}
+
+	if (_performance_menu != nullptr)
+	{
+		node["'_performance_menu@GameObject*'"] = _performance_menu->GetID();
+	}
+	else
+	{
+		node["'_performance_menu@GameObject*'"] = 0;
 	}
 }
 
@@ -551,6 +578,24 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
+	if (load_node["'_text_fps@ComponentText*'"].IsDefined())
+	{
+		GameObject* _text_fps_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_text_fps@ComponentText*'"].as<unsigned long long>());
+		if (_text_fps_owner__temp != nullptr)
+		{
+			_text_fps = _text_fps_owner__temp->GetComponent<ComponentText>();
+		}
+	}
+
+	if (load_node["'_text_ms@ComponentText*'"].IsDefined())
+	{
+		GameObject* _text_ms_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_text_ms@ComponentText*'"].as<unsigned long long>());
+		if (_text_ms_owner__temp != nullptr)
+		{
+			_text_ms = _text_ms_owner__temp->GetComponent<ComponentText>();
+		}
+	}
+
 	if (load_node["'_tp_pos1@GameObject*'"].IsDefined())
 	{
 		_tp_pos1 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos1@GameObject*'"].as<unsigned long long>());
@@ -564,6 +609,11 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 	if (load_node["'_tp_pos3@GameObject*'"].IsDefined())
 	{
 		_tp_pos3 = SceneManagement::FindInCurrentScene(load_node["'_tp_pos3@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_performance_menu@GameObject*'"].IsDefined())
+	{
+		_performance_menu = SceneManagement::FindInCurrentScene(load_node["'_performance_menu@GameObject*'"].as<unsigned long long>());
 	}
 }
 

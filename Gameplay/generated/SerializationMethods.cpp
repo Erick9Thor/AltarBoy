@@ -333,6 +333,24 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 		}
 	}
 
+	if(serialized_fields.find("_text_fps") != serialized_fields.end())
+	{
+		const SerializedField& _text_fps_sf = serialized_fields["_text_fps"];
+		if (_text_fps_sf.type_name == "ComponentText*")
+		{
+			_text_fps = std::any_cast<ComponentText*>(_text_fps_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_text_ms") != serialized_fields.end())
+	{
+		const SerializedField& _text_ms_sf = serialized_fields["_text_ms"];
+		if (_text_ms_sf.type_name == "ComponentText*")
+		{
+			_text_ms = std::any_cast<ComponentText*>(_text_ms_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_tp_pos1") != serialized_fields.end())
 	{
 		const SerializedField& _tp_pos1_sf = serialized_fields["_tp_pos1"];
@@ -357,6 +375,15 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 		if (_tp_pos3_sf.type_name == "GameObject*")
 		{
 			_tp_pos3 = std::any_cast<GameObject*>(_tp_pos3_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_performance_menu") != serialized_fields.end())
+	{
+		const SerializedField& _performance_menu_sf = serialized_fields["_performance_menu"];
+		if (_performance_menu_sf.type_name == "GameObject*")
+		{
+			_performance_menu = std::any_cast<GameObject*>(_performance_menu_sf.copy);
 		}
 	}
 }
@@ -411,11 +438,17 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 
 	serialized_fields["_exit_debug"] = SerializedField(std::string("_exit_debug"), std::make_any<ComponentButton*>(_exit_debug), std::string("ComponentButton*"));
 
+	serialized_fields["_text_fps"] = SerializedField(std::string("_text_fps"), std::make_any<ComponentText*>(_text_fps), std::string("ComponentText*"));
+
+	serialized_fields["_text_ms"] = SerializedField(std::string("_text_ms"), std::make_any<ComponentText*>(_text_ms), std::string("ComponentText*"));
+
 	serialized_fields["_tp_pos1"] = SerializedField(std::string("_tp_pos1"), std::make_any<GameObject*>(_tp_pos1), std::string("GameObject*"));
 
 	serialized_fields["_tp_pos2"] = SerializedField(std::string("_tp_pos2"), std::make_any<GameObject*>(_tp_pos2), std::string("GameObject*"));
 
 	serialized_fields["_tp_pos3"] = SerializedField(std::string("_tp_pos3"), std::make_any<GameObject*>(_tp_pos3), std::string("GameObject*"));
+
+	serialized_fields["_performance_menu"] = SerializedField(std::string("_performance_menu"), std::make_any<GameObject*>(_performance_menu), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

@@ -1,11 +1,14 @@
 #pragma once
 #include <scripting/Script.h>
 #include "Stats.h"
+#include "Application.h"
+#include "Modules/ModuleRender.h"
 #include "PlayerState.h"
 
 namespace Hachiko
 {
 	class ComponentButton;
+	class ComponentText;
 	class GameObject;
 
 	namespace Scripting
@@ -22,9 +25,15 @@ namespace Hachiko
 			void OnAwake() override;
 			void OnStart() override;
 			void OnUpdate() override;
+		private:
+			void HandleButtonInteraction();
+
+		public:
 
 		private:
 			SERIALIZE_FIELD(GameObject*, _player);
+
+			// BUTTONS
 			SERIALIZE_FIELD(ComponentButton*, _button_back);
 			SERIALIZE_FIELD(ComponentButton*, _teleport_next_pos);
 			SERIALIZE_FIELD(ComponentButton*, _teleport_prev_pos);
@@ -48,9 +57,16 @@ namespace Hachiko
 			SERIALIZE_FIELD(ComponentButton*, _toggle_show_colliders);
 			SERIALIZE_FIELD(ComponentButton*, _exit_debug);
 
+			// TEXT
+			SERIALIZE_FIELD(ComponentText*, _text_fps);
+			SERIALIZE_FIELD(ComponentText*, _text_ms);
+
+			// DEFAULT POSITIONS
 			SERIALIZE_FIELD(GameObject*, _tp_pos1);
 			SERIALIZE_FIELD(GameObject*, _tp_pos2);
 			SERIALIZE_FIELD(GameObject*, _tp_pos3);
+
+			SERIALIZE_FIELD(GameObject*, _performance_menu);
 
 			bool is_active;
 			bool _is_god_mode = false;
@@ -58,7 +74,7 @@ namespace Hachiko
 			int teleport_iterator = -1;
 			PlayerController* _player_controller;
 			bool is_wireframe = false;
-
+			bool is_performance = false;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

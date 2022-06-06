@@ -53,6 +53,16 @@ namespace Hachiko
         void FpsGraph() const;
         void AddFrame(float delta);
 
+        [[nodiscard]] float GetCurrentFps() const
+        {
+            return current_fps;
+        }
+
+        [[nodiscard]] unsigned int GetCurrentMs() const
+        {
+            return current_ms;
+        }
+
         [[nodiscard]] void* GetGLContext() const
         {
             return context;
