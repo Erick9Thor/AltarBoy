@@ -95,11 +95,11 @@ on_editor_method_format = (
 )
 # Formatted string that generates Editor::Show for Default types:
 editor_show_default_format = (
-    '{new_line}{tab}Editor::Show(\"{field_name}\", {field_name});'
+    '{new_line}{tab}Editor::Show(\"{field_name_formatted}\", {field_name});'
 )
 # Formatted string that generates Editor::Show for Components (and scripts):
 editor_show_components_format = (
-    '{new_line}{tab}Editor::Show<{non_ptr_field_type}>(\"{field_name}\", \"{field_type}\", {field_name});'
+    '{new_line}{tab}Editor::Show<{non_ptr_field_type}>(\"{field_name_formatted}\", \"{field_type}\", {field_name});'
 )
 
 # Formatted string that generates Script::OnSave:
@@ -202,6 +202,65 @@ def delete_comments_from_file(text):
         re.DOTALL | re.MULTILINE
     )
     return re.sub(pattern, replacer, text)
+
+def get_formatted_editor_label(current_name):
+    formatted_label = current_name
+
+    # Clear the underscores before the name:
+    for i in range(len(formatted_label)):
+        if formatted_label[i] != '_':
+            formatted_label = formatted_label[i:]
+            break
+    
+    # Replace underscores with spaces:
+    prev_formatted_label = formatted_label
+    formatted_label = re.sub('_', ' ', formatted_label)
+
+    is_snake_case = prev_formatted_label != formatted_label
+
+    # Delete multiple spaces:
+    formatted_label = re.sub(' +', ' ', formatted_label)
+
+    uppercase_formatted_label = formatted_label.upper()
+    lowercase_formatted_label = formatted_label.lower()
+    
+    # Make the first letter uppercase:
+    formatted_label = formatted_label[:0] + uppercase_formatted_label[0] + formatted_label[1:]
+
+    # Make letters after underscore uppercase:
+    if is_snake_case:
+        for i in range(len(formatted_label)):
+            if i == 0:
+                continue
+            if formatted_label[i-1] == ' ':
+                formatted_label = formatted_label[:i] + uppercase_formatted_label[i] + formatted_label[i+1:]
+            else:
+                formatted_label = formatted_label[:i] + lowercase_formatted_label[i] + formatted_label[i+1:]
+            # No needs to update uppercase_formatted_label as we only replace.
+        
+        # Separate numbers:
+        new_formatted_label = '' 
+        for i in range(len(formatted_label)):
+            if i > 0 and formatted_label[i-1] != ' ' and formatted_label[i-1].isdigit() == False and formatted_label[i].isdigit() == True:
+                new_formatted_label += ' '
+            
+            new_formatted_label += formatted_label[i]
+        
+        formatted_label = new_formatted_label
+
+    # Insert spaces before uppercase letters (camelCase or PascalCase):
+    else:
+        new_formatted_label = ''
+        
+        for i in range(len(formatted_label)):
+            if i > 0 and formatted_label[i] == uppercase_formatted_label[i] and (formatted_label[i].isdigit() == False or formatted_label[i-1].isdigit() == False):
+                new_formatted_label += ' '
+            new_formatted_label += formatted_label[i]
+
+        formatted_label = new_formatted_label
+
+    return formatted_label
+
 
 print("Running Pre-Build Event \"Create ScriptFactory & Serialization\"")
 print("Using header files:")
@@ -316,6 +375,7 @@ for script_class in script_classes:
         if current_type in editor_allowed_default_types:
             on_editor_method_body += editor_show_default_format.format(
                 field_name = current_name,
+                field_name_formatted = get_formatted_editor_label(current_name),
                 new_line = '\n',
                 tab = '\t'
             )
@@ -364,6 +424,7 @@ for script_class in script_classes:
             without_pointer = current_type[:-1]
             on_editor_method_body += editor_show_components_format.format(
                 field_name = current_name,
+                field_name_formatted = get_formatted_editor_label(current_name),
                 field_type = current_type,
                 non_ptr_field_type = without_pointer,
                 new_line = '\n',
@@ -398,6 +459,7 @@ for script_class in script_classes:
                 # If the type without pointer is a script:
                 if without_pointer in script_classes:
                     on_editor_method_body += editor_show_components_format.format(
+                        field_name_formatted = get_formatted_editor_label(current_name),
                         field_name = current_name,
                         field_type = current_type,
                         non_ptr_field_type = without_pointer,

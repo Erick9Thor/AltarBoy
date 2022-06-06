@@ -1,0 +1,14 @@
+asset_hash: 11772457735737638292
+model_name: attack_zone
+meshes:
+  - 6492766721524954712
+materials:
+  - 6750369022920963075
+prefab_id: 4064208256472002686
+resources:
+  - resource_id: 6492766721524954712
+    resource_type: 3
+  - resource_id: 6750369022920963075
+    resource_type: 1
+  - resource_id: 4064208256472002686
+    resource_type: 13

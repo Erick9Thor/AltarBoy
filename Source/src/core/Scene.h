@@ -30,6 +30,7 @@ namespace Hachiko
 
         // --- Life cycle Scene --- //
         void Start() const;
+        void Stop() const;
         void Update();
 
         // --- GameObject Management --- //

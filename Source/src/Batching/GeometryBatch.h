@@ -34,7 +34,7 @@ namespace Hachiko
         void BatchMeshes();
         void BatchData();
 
-        void UpdateWithTextureBatch(bool use_first_segment);
+        void UpdateWithTextureBatch(const Program* program, bool use_first_segment);
 
         void ClearDrawList();
 

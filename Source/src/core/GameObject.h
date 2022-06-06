@@ -63,6 +63,7 @@ namespace Hachiko
         GameObject* CreateChild();
 
         void Start();
+        void Stop();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
@@ -207,6 +208,8 @@ namespace Hachiko
 
         GameObject* GetFirstChildWithName(const std::string& child_name) const;
         Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
+
+        void ChangeColor(float4 color, float time);
 
     public:
         std::string name;

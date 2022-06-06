@@ -257,7 +257,6 @@ void Hachiko::GameObject::Start()
 {
     if (!started)
     {
-        transform->Start();
         for (Component* component : components)
         {
             component->Start();
@@ -271,6 +270,26 @@ void Hachiko::GameObject::Start()
             }
         }
         started = true;
+    }
+}
+
+void Hachiko::GameObject::Stop()
+{
+    if (started)
+    {
+        for (Component* component : components)
+        {
+            component->Stop();
+        }
+
+        for (GameObject* child : children)
+        {
+            if (child->IsActive())
+            {
+                child->Stop();
+            }
+        }
+        started = false;
     }
 }
 
@@ -318,6 +337,7 @@ void Hachiko::GameObject::DrawAll(ComponentCamera* camera, Program* program) con
 void Hachiko::GameObject::Draw(ComponentCamera* camera, Program* program) const
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+
     // Call draw on all components
     for (Component* component : components)
     {
@@ -465,7 +485,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
 
         if (meshes_only)
         {
-            if (type == Component::Type::MESH_RENDERER)
+            if (type == Component::Type::MESH_RENDERER || type == Component::Type::TRANSFORM)
             {
                 component = CreateComponent(type);
             }
@@ -664,4 +684,18 @@ Hachiko::GameObject* Hachiko::GameObject::FindDescendantWithName(const std::stri
     }
 
     return nullptr;
+}
+
+void Hachiko::GameObject::ChangeColor(float4 color, float time)
+{
+    std::vector<ComponentMeshRenderer*> v_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+    for (int i = 0; i < v_mesh_renderer.size(); ++i)
+    {
+        v_mesh_renderer[i]->OverrideEmissive(color, time);
+    }
+
+    for (GameObject* child : children)
+    {
+        child->ChangeColor(color, time);
+    }
 }

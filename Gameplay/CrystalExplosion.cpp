@@ -9,6 +9,7 @@
 #include "core/GameObject.h"
 
 #include "components/ComponentTransform.h"
+#include "components/ComponentObstacle.h"
 
 #include "modules/ModuleSceneManager.h"
 
@@ -16,9 +17,10 @@
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
-	, _stats()
+	, _stats(10, 0, 0, 5)
 	, _player(nullptr)
 	, _explosion_radius(10.0f)
+	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
 {
 }
@@ -30,7 +32,6 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 		_explosion_crystal->SetActive(false);
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	_stats = game_object->GetComponent<Stats>();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -40,12 +41,12 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	if (!_stats->IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	if (!_stats.IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
 	{
 		delete game_object;
 	}
 
-	if (!_stats->IsAlive())
+	if (!_stats.IsAlive())
 	{
 		return;
 	}
@@ -55,13 +56,22 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 		CheckRadiusExplosion();
 	}
 
-	if (_stats->_current_hp <= 0)
+	if (_stats._current_hp <= 0)
 	{
-		DestroyCrystal();
+		DestroyCristall();
+		_stats._is_alive = false;
 	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
+{
+	if (_detecting_radius >= transform->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
+	{
+		ReceiveDamage(999, float3(0.0f, 0.0f, 0.0f));
+	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 {
 	std::vector<GameObject*> check_hit = {};
 
@@ -73,22 +83,13 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 	check_hit.push_back(_player);
 
 	std::vector<GameObject*> elements_hit = {};
-	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 
 	for (int i = 0; i < check_hit.size(); ++i)
 	{
-		if (check_hit[i]->active && _explosion_radius >= transform->GetGlobalPosition().Distance(check_hit[i]->GetTransform()->GetGlobalPosition()))
+		if (check_hit[i]->active &&
+			_explosion_radius >= transform->GetGlobalPosition().Distance(check_hit[i]->GetTransform()->GetGlobalPosition()))
 		{
-			// VS2: EXCEPTION ON QUAD.CPP
-			math::float4x4 relative_matrix = check_hit[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
-			math::float3 rel_translate, rel_scale;
-			math::Quat rel_rotation;
-			relative_matrix.Decompose(rel_translate, rel_rotation, rel_scale);
-			float dot_product = transform->GetRight().Dot(rel_translate);
-			if (dot_product > 0)
-			{
-				elements_hit.push_back(check_hit[i]);
-			}
+			elements_hit.push_back(check_hit[i]);
 		}
 	}
 
@@ -98,33 +99,43 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 		PlayerController* player_controller = element->GetComponent<PlayerController>();
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		relative_dir.y = 0.0f;
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->RegisterPlayerHit(_stats->_attack_power, relative_dir.Normalized());
+			enemy_controller->ReceiveDamage(_stats._attack_power, relative_dir.Normalized());
 		}
 
 		if (player_controller != nullptr)
 		{
-			player_controller->RegisterHit(_stats->_attack_power);
+			player_controller->ReceiveDamage(_stats._attack_power, true, relative_dir.Normalized());
 		}
-	}
-
-	if (elements_hit.size() > 0)
-	{
-		_stats->ReceiveDamage(5);
 	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::ReceiveDamage(int damage, float3 direction)
 {
-	_stats->ReceiveDamage(damage);
+	_stats.ReceiveDamage(damage);
+	if (_explosive_crystal)
+	{
+		ExplodeCrystal();
+	}
 }
 
-void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
+void Hachiko::Scripting::CrystalExplosion::DestroyCristall()
 {
+
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
-
-	_explosion_crystal->GetComponent<ComponentAnimation>()->StartAnimating(_crashing_index, false, 200);
+	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
+	if (obstacle)
+	{
+		obstacle->RemoveObstacle();
+	}
+	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
+	if (exploding_animation)
+	{
+		exploding_animation->StartAnimating(_crashing_index, false, 200);
+	}
+	_stats._is_alive = false;
 }

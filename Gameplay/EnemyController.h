@@ -2,6 +2,7 @@
 
 #include <scripting/Script.h>
 #include "Stats.h"
+#include "PlayerState.h"
 
 namespace Hachiko
 {
@@ -21,6 +22,8 @@ namespace Hachiko
             void OnAwake() override;
             void OnStart() override;
             void OnUpdate() override;
+            
+            BugState GetState() const;
 
             Stats* GetStats();
             void RegisterPlayerHit(int player_atk, math::float3 direction);
@@ -45,6 +48,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
+            SERIALIZE_FIELD(BugState, _state);
 
             PlayerController* _player_controller;
             ComponentTransform* transform;
@@ -53,11 +57,15 @@ namespace Hachiko
             math::float3 _current_pos;
             float _attack_cooldown;
 
+            SERIALIZE_FIELD(float, _attack_animation_duration);
+            SERIALIZE_FIELD(float, _attack_animation_timer);
+
             bool _is_stunned = false;
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;
             float _speed = 0.0f;
             float3 _knockback_pos = float3::zero;
+
         };
     } // namespace Scripting
 } // namespace Hachiko*/
