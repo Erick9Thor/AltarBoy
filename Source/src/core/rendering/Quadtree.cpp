@@ -25,12 +25,14 @@ void Hachiko::QuadtreeNode::Insert(const std::unordered_set<ComponentMeshRendere
 
 void Hachiko::QuadtreeNode::Remove(const std::unordered_set<ComponentMeshRenderer*>& to_remove)
 {
-    for (auto it = meshes.begin(); it != meshes.end();)
+    for (auto it = meshes.rbegin(); it != meshes.rend();)
     {
         ComponentMeshRenderer* mesh = *it;
         if (to_remove.find(mesh) != to_remove.end())
         {
-            it = meshes.erase(it);
+            
+            std::advance(it, 1);
+            meshes.erase(it.base());
             continue;
         }
         ++it;
@@ -104,7 +106,8 @@ void Hachiko::QuadtreeNode::RearangeChildren()
         CreateChildren();
     }
     
-    for (auto it = meshes.begin(); it != meshes.end();)
+    
+    for (auto it = meshes.rbegin(); it != meshes.rend();)
     {
         ComponentMeshRenderer* mesh = *it;
         int intersection_count = 0;
@@ -124,7 +127,10 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             ++it;
             continue;
         }
-        it = meshes.erase(it);
+
+        std::advance(it, 1);
+        meshes.erase(it.base());
+
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
             if (intersects[i])
