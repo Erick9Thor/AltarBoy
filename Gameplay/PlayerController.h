@@ -64,8 +64,6 @@ private:
 	SERIALIZE_FIELD(float, _dash_cooldown);
 	SERIALIZE_FIELD(int, _max_dash_count);
 
-	SERIALIZE_FIELD(float, _attack_radius);
-	SERIALIZE_FIELD(float, _attack_cooldown);
 	SERIALIZE_FIELD(float, _attack_duration);
 
 	SERIALIZE_FIELD(float, _rotation_duration);

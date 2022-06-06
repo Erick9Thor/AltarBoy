@@ -3,8 +3,10 @@
 #include "EnemyController.h"
 #include "PlayerController.h"
 #include "Stats.h"
+#include "Scenes.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
+#include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
@@ -34,9 +36,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	// TODO: Find by name in scene.
-	if (!_player)	_player = SceneManagement::FindInCurrentScene(12338322613321170553);
-
 	_player_controller = _player->GetComponent<PlayerController>();
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();

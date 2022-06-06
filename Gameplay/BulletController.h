@@ -19,8 +19,10 @@ namespace Hachiko
             void OnAwake() override;
             void OnUpdate() override;
 
+            void SetDamage(int new_damage);
+            void SetForward(float3 new_forward);
+
         private:
-            void CalculateDirection();
             bool CheckCollisions();
         private:
             SERIALIZE_FIELD(float, _move_speed);

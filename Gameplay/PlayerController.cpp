@@ -4,6 +4,7 @@
 #include "EnemyController.h"
 #include "CrystalExplosion.h"
 #include "PlayerCamera.h"
+#include "BulletController.h"
 
 #include <components/ComponentTransform.h>
 #include <components/ComponentCamera.h>
@@ -19,8 +20,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
 	, _max_dash_count(0)
-	, _attack_radius(3.5f)
-	, _attack_cooldown(0.33f)
 	, _attack_duration(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
@@ -153,7 +152,7 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		return;
 	}
 
-	if (Input::IsMouseButtonPressed(Input::MouseButton::RIGHT))
+	if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 	{
 		// Make the player look the mouse:
 		transform->LookAtTarget(GetRaycastPosition(current_position));
@@ -162,16 +161,16 @@ void Hachiko::Scripting::PlayerController::Attack(ComponentTransform* transform,
 		t_pos.y += 0.5;
 		RangedAttack(transform, t_pos);
 
-		_attack_current_cd = _attack_cooldown;
+		_attack_current_cd = _combat_stats->_attack_cd;
 	}
-	else if (Input::IsMouseButtonPressed(Input::MouseButton::LEFT))
+	else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
 	{
 		_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 		transform->LookAtTarget(GetRaycastPosition(current_position));
 		_state = PlayerState::MELEE_ATTACKING;
 		MeleeAttack(transform, current_position);
 		current_position += transform->GetFront() * 0.3f;
-		_attack_current_cd = _attack_cooldown;
+		_attack_current_cd = _combat_stats->_attack_cd;
 	}
 }
 
@@ -196,7 +195,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack(ComponentTransform* trans
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{
-		if (enemy_children[i]->active && _attack_radius >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		if (enemy_children[i]->active && _combat_stats->_attack_range >= transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			float3 normalized_center = transform->GetFront().Normalized();
 			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition()).Normalized();
@@ -240,8 +239,10 @@ void Hachiko::Scripting::PlayerController::RangedAttack(ComponentTransform* tran
 	const math::float3& current_position)
 {
 	// Spawn bullet
-	// Player as parent is bugged.
-	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object);
+	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object->scene_owner->GetRoot());
+	bullet->GetTransform()->SetGlobalPosition(current_position);
+	bullet->GetComponent<BulletController>()->SetForward((GetRaycastPosition(current_position) - current_position).Normalized());
+	bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
 }
 
 void Hachiko::Scripting::PlayerController::Dash(math::float3& current_position)
@@ -474,7 +475,8 @@ void Hachiko::Scripting::PlayerController::HandleInput(math::float3& current_pos
 
 	if (Input::IsKeyDown(Input::KeyCode::KEY_G))
 	{
-		_god_mode = !_god_mode;
+		//_god_mode = !_god_mode;
+		RegisterHit(1);
 	}
 	
 	if (!_god_mode && _state == PlayerState::WALKING)
@@ -492,6 +494,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int enemy_attack_power)
 
 	_combat_stats->ReceiveDamage(enemy_attack_power);
 	UpdateHealthBar();
+	_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 
 	// Player is dead
 	if (_combat_stats->_current_hp <= 0)

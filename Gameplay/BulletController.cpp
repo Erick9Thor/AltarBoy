@@ -4,6 +4,7 @@
 #include "Scenes.h"
 #include "EnemyController.h"
 #include "PlayerController.h"
+#include "CrystalExplosion.h"
 
 #include <components/ComponentTransform.h>
 
@@ -21,10 +22,6 @@ Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 
 void Hachiko::Scripting::BulletController::OnAwake()
 {
-	// Get bullet direction from parent
-	CalculateDirection();
-	// Get Damage from parent stats
-	_damage = game_object->parent->GetComponent<Stats>()->_attack_power;
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()
@@ -50,44 +47,58 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		if (CheckCollisions())
 		{
 			//	If it hits enemy bullets is destroyed
-			game_object->SetActive(false);
+			RELEASE(game_object);
 		}
 
 		_lifetime -= Time::DeltaTime();
 	}
 }
-void Hachiko::Scripting::BulletController::CalculateDirection()
-{
-	float3 spawn_pos = game_object->parent->GetComponent<ComponentTransform>()->GetGlobalPosition();
-	float3 target_pos = game_object->parent->GetComponent<PlayerController>()->GetRaycastPosition(spawn_pos);
-	_direction = (target_pos - spawn_pos);
-	_direction.Normalize();
-}
 
 bool Hachiko::Scripting::BulletController::CheckCollisions()
 {
-	std::vector<GameObject*> enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies")->children;
+	// Enemy collisions
+	GameObject* enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	if (!enemies)	return false;
+
+	std::vector<GameObject*> enemies_children = enemies->children;
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
 
-	for (int i = 0; i < enemies.size(); ++i)
+	for (int i = 0; i < enemies_children.size(); ++i)
 	{
-		if (enemies[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
+		if (enemies_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
 		{
-			math::float4x4 relative_matrix = enemies[i]->GetTransform()->GetGlobalMatrix() * inv_matrix;
-			math::float3 rel_translate, rel_scale;
-			math::Quat rel_rotation;
-			relative_matrix.Decompose(rel_translate, rel_rotation, rel_scale);
-			float dot_product = transform->GetRight().Dot(rel_translate);
-			if (dot_product > 0)
-			{
-				//	Merge Lifebar branch first
-				// enemies[i]->GetComponent<EnemyController>().RegisterPlayerHit(_damage, dir);
-				// _camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.3f); ??
-				return true;
-			}
+			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+			enemies_children[i]->GetComponent<EnemyController>()->RegisterPlayerHit(_damage, dir);
+			return true;
+		}
+	}
+
+	// Crystal collisions
+	GameObject* crystals = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
+	if (!crystals)	return false;
+
+	std::vector<GameObject*> crystal_children = crystals->children;
+
+	for (int i = 0; i < crystal_children.size(); ++i)
+	{
+		if (crystal_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(crystal_children[i]->GetTransform()->GetGlobalPosition()))
+		{
+			float3 dir = crystal_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+			crystal_children[i]->GetComponent<CrystalExplosion>()->ReceiveDamage(_damage, dir);
+			return true;
 		}
 	}
 
 	return false;
+}
+
+void Hachiko::Scripting::BulletController::SetDamage(int new_damage)
+{
+	_damage = new_damage;
+}
+
+void Hachiko::Scripting::BulletController::SetForward(float3 new_forward)
+{
+	_direction = new_forward;
 }
