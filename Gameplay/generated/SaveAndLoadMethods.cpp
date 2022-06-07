@@ -309,15 +309,6 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 		node["'_god_mode@ComponentButton*'"] = 0;
 	}
 
-	if (_flying_mode != nullptr && _flying_mode->GetGameObject() != nullptr)
-	{
-		node["'_flying_mode@ComponentButton*'"] = _flying_mode->GetGameObject()->GetID();
-	}
-	else
-	{
-		node["'_flying_mode@ComponentButton*'"] = 0;
-	}
-
 	if (_spawn_enemy != nullptr && _spawn_enemy->GetGameObject() != nullptr)
 	{
 		node["'_spawn_enemy@ComponentButton*'"] = _spawn_enemy->GetGameObject()->GetID();
@@ -343,6 +334,15 @@ void Hachiko::Scripting::DebugManager::OnSave(YAML::Node& node) const
 	else
 	{
 		node["'_toggle_performance_output@ComponentButton*'"] = 0;
+	}
+
+	if (_toggle_vsync != nullptr && _toggle_vsync->GetGameObject() != nullptr)
+	{
+		node["'_toggle_vsync@ComponentButton*'"] = _toggle_vsync->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_toggle_vsync@ComponentButton*'"] = 0;
 	}
 
 	if (_toggle_wireframe != nullptr && _toggle_wireframe->GetGameObject() != nullptr)
@@ -569,15 +569,6 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		}
 	}
 
-	if (load_node["'_flying_mode@ComponentButton*'"].IsDefined())
-	{
-		GameObject* _flying_mode_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_flying_mode@ComponentButton*'"].as<unsigned long long>());
-		if (_flying_mode_owner__temp != nullptr)
-		{
-			_flying_mode = _flying_mode_owner__temp->GetComponent<ComponentButton>();
-		}
-	}
-
 	if (load_node["'_spawn_enemy@ComponentButton*'"].IsDefined())
 	{
 		GameObject* _spawn_enemy_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_spawn_enemy@ComponentButton*'"].as<unsigned long long>());
@@ -602,6 +593,15 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 		if (_toggle_performance_output_owner__temp != nullptr)
 		{
 			_toggle_performance_output = _toggle_performance_output_owner__temp->GetComponent<ComponentButton>();
+		}
+	}
+
+	if (load_node["'_toggle_vsync@ComponentButton*'"].IsDefined())
+	{
+		GameObject* _toggle_vsync_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_toggle_vsync@ComponentButton*'"].as<unsigned long long>());
+		if (_toggle_vsync_owner__temp != nullptr)
+		{
+			_toggle_vsync = _toggle_vsync_owner__temp->GetComponent<ComponentButton>();
 		}
 	}
 

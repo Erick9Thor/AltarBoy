@@ -55,10 +55,10 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 	Editor::Show<ComponentButton>("Increase Attack Power", "ComponentButton*", _increase_attack_power);
 	Editor::Show<ComponentButton>("Decrease Attack Power", "ComponentButton*", _decrease_attack_power);
 	Editor::Show<ComponentButton>("God Mode", "ComponentButton*", _god_mode);
-	Editor::Show<ComponentButton>("Flying Mode", "ComponentButton*", _flying_mode);
 	Editor::Show<ComponentButton>("Spawn Enemy", "ComponentButton*", _spawn_enemy);
 	Editor::Show<ComponentButton>("Unlock Skills", "ComponentButton*", _unlock_skills);
 	Editor::Show<ComponentButton>("Toggle Performance Output", "ComponentButton*", _toggle_performance_output);
+	Editor::Show<ComponentButton>("Toggle Vsync", "ComponentButton*", _toggle_vsync);
 	Editor::Show<ComponentButton>("Toggle Wireframe", "ComponentButton*", _toggle_wireframe);
 	Editor::Show<ComponentButton>("Toggle Show Colliders", "ComponentButton*", _toggle_show_colliders);
 	Editor::Show<ComponentButton>("Exit Debug", "ComponentButton*", _exit_debug);

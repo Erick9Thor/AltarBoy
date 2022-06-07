@@ -135,6 +135,17 @@ void Hachiko::Debug::SetPolygonMode(bool is_fill)
     glPolygonMode(GL_FRONT_AND_BACK, is_fill ? GL_FILL : GL_LINE);
 }
 
+void Hachiko::Debug::SetVsync(bool is_vsync)
+{
+    SDL_GL_SetSwapInterval(is_vsync);
+}
+
+bool Hachiko::Debug::GetVsync()
+{
+    return SDL_HINT_RENDER_VSYNC;
+}
+
+
 /*---------------------------------------------------------------------------*/
 
 /*EDITOR---------------------------------------------------------------------*/

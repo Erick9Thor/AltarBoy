@@ -25,11 +25,11 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	, _increase_attack_power(nullptr)
 	, _decrease_attack_power(nullptr)
 	, _god_mode(nullptr)
-	, _flying_mode(nullptr)
 	, _spawn_enemy(nullptr)
 	, _unlock_skills(nullptr)
 	, _toggle_performance_output(nullptr)
 	, _performance_menu(nullptr)
+	, _toggle_vsync(nullptr)
 	, _text_fps(nullptr)
 	, _text_ms(nullptr)
 	, _toggle_wireframe(nullptr)
@@ -47,6 +47,7 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 	is_god_mode = false;
 	is_wireframe = false;
 	is_performance = false;
+	
 
 	if (_tp_pos1) 
 	{
@@ -66,7 +67,7 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 void Hachiko::Scripting::DebugManager::OnStart()
 {
 	_player_controller = _player->GetComponent<PlayerController>();
-
+	is_vsync = Debug::GetVsync();
 
 	for (GameObject* child : game_object->children)
 	{
@@ -93,6 +94,8 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		return;
 	}
 
+
+	_performance_menu->SetActive(is_performance);
 
 	// register button interactions
 	HandleButtonInteraction();
@@ -188,16 +191,19 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._max_hp -= 1;
 		HE_LOG("Max health now %d", _player_controller->_stats._max_hp);
 	}
+	*/
+	
 	if (_increase_move_speed->IsSelected())
 	{
-		_player_controller->_stats._move_speed += 0.1f;
+		_player_controller->_stats._move_speed += 1.0f;
 		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
 	}
 	if (_decrease_move_speed->IsSelected())
 	{
-		_player_controller->_stats._move_speed -= 0.1f;
+		_player_controller->_stats._move_speed -= 1.0f;
 		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
 	}
+	/*
 	if (_increase_attack_cd->IsSelected())
 	{
 		_player_controller->_stats._attack_cd += 0.1f;
@@ -218,16 +224,16 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
 	}
-
+	*/
 	// Player States
 	if (_god_mode->IsSelected())
 	{
 		HE_LOG("_god_mode pressed");
+		is_god_mode = !is_god_mode;
+		_player_controller->_stats._god_mode = is_god_mode;
 	}
-	if (_flying_mode->IsSelected())
-	{
-		HE_LOG("_flying_mode pressed");
-	}
+	/*
+
 	if (_unlock_skills->IsSelected())
 	{
 		HE_LOG("_toggle_invulnerable pressed");
@@ -252,10 +258,14 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	{
 		if (_toggle_performance_output->IsSelected())
 		{
-			HE_LOG("_toggle_performance_output pressed");
 			is_performance = !is_performance;
 		}
 
+		if (_toggle_vsync->IsSelected())
+		{
+			is_vsync = !is_vsync;
+			Debug::SetVsync(is_vsync);
+		}
 
 		/*
 		if (_toggle_show_colliders->IsSelected())

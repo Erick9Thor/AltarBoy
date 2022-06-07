@@ -38,6 +38,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_dash_charges = _max_dash_charges;
+	_stats._move_speed = _movement_speed;
 
 	if (_attack_indicator)
 	{
@@ -56,10 +57,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
+	_movement_speed = _stats._move_speed;
 
 	if (_stats._current_hp <= 0)
 	{
 		//SceneManagement::SwitchScene(Scenes::LOSE);
+		HE_LOG("YOU DIED");
 	}
 
 	// Handle player the input
@@ -204,11 +207,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		}
 	}
 
-	if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
+	if (_stats._god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
 		_player_position += math::float3::unitY * 0.5f;
 	}
-	else if (_is_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
+	else if (_stats._god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_E))
 	{
 		_player_position -= math::float3::unitY * 0.5f;
 	}
@@ -355,7 +358,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		_player_position += (_movement_direction * _movement_speed * Time::DeltaTime());
 	}
 
-	if (_is_god_mode)
+	if (_stats._god_mode)
 	{
 		return;
 	}

@@ -47,10 +47,10 @@ namespace Hachiko
 			SERIALIZE_FIELD(ComponentButton*, _increase_attack_power);
 			SERIALIZE_FIELD(ComponentButton*, _decrease_attack_power);
 			SERIALIZE_FIELD(ComponentButton*, _god_mode);
-			SERIALIZE_FIELD(ComponentButton*, _flying_mode);
 			SERIALIZE_FIELD(ComponentButton*, _spawn_enemy);
 			SERIALIZE_FIELD(ComponentButton*, _unlock_skills);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_performance_output);
+			SERIALIZE_FIELD(ComponentButton*, _toggle_vsync);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_wireframe);
 			SERIALIZE_FIELD(ComponentButton*, _toggle_show_colliders);
 			SERIALIZE_FIELD(ComponentButton*, _exit_debug);
@@ -73,6 +73,7 @@ namespace Hachiko
 			PlayerController* _player_controller;
 			bool is_wireframe = false;
 			bool is_performance = false;
+			bool is_vsync = false;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

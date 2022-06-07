@@ -348,15 +348,6 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 		}
 	}
 
-	if(serialized_fields.find("_flying_mode") != serialized_fields.end())
-	{
-		const SerializedField& _flying_mode_sf = serialized_fields["_flying_mode"];
-		if (_flying_mode_sf.type_name == "ComponentButton*")
-		{
-			_flying_mode = std::any_cast<ComponentButton*>(_flying_mode_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_spawn_enemy") != serialized_fields.end())
 	{
 		const SerializedField& _spawn_enemy_sf = serialized_fields["_spawn_enemy"];
@@ -381,6 +372,15 @@ void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::s
 		if (_toggle_performance_output_sf.type_name == "ComponentButton*")
 		{
 			_toggle_performance_output = std::any_cast<ComponentButton*>(_toggle_performance_output_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_toggle_vsync") != serialized_fields.end())
+	{
+		const SerializedField& _toggle_vsync_sf = serialized_fields["_toggle_vsync"];
+		if (_toggle_vsync_sf.type_name == "ComponentButton*")
+		{
+			_toggle_vsync = std::any_cast<ComponentButton*>(_toggle_vsync_sf.copy);
 		}
 	}
 
@@ -502,13 +502,13 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 
 	serialized_fields["_god_mode"] = SerializedField(std::string("_god_mode"), std::make_any<ComponentButton*>(_god_mode), std::string("ComponentButton*"));
 
-	serialized_fields["_flying_mode"] = SerializedField(std::string("_flying_mode"), std::make_any<ComponentButton*>(_flying_mode), std::string("ComponentButton*"));
-
 	serialized_fields["_spawn_enemy"] = SerializedField(std::string("_spawn_enemy"), std::make_any<ComponentButton*>(_spawn_enemy), std::string("ComponentButton*"));
 
 	serialized_fields["_unlock_skills"] = SerializedField(std::string("_unlock_skills"), std::make_any<ComponentButton*>(_unlock_skills), std::string("ComponentButton*"));
 
 	serialized_fields["_toggle_performance_output"] = SerializedField(std::string("_toggle_performance_output"), std::make_any<ComponentButton*>(_toggle_performance_output), std::string("ComponentButton*"));
+
+	serialized_fields["_toggle_vsync"] = SerializedField(std::string("_toggle_vsync"), std::make_any<ComponentButton*>(_toggle_vsync), std::string("ComponentButton*"));
 
 	serialized_fields["_toggle_wireframe"] = SerializedField(std::string("_toggle_wireframe"), std::make_any<ComponentButton*>(_toggle_wireframe), std::string("ComponentButton*"));
 
