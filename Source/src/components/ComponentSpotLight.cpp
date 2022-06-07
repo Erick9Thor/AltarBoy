@@ -72,7 +72,6 @@ void Hachiko::ComponentSpotLight::Load(const YAML::Node& node)
 void Hachiko::ComponentSpotLight::DrawGui()
 {
     ImGui::PushID(this);
-    DebugDraw();
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Spot Light"))
     {
         ImGui::PushItemWidth(100.0f);
