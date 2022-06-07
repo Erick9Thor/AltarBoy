@@ -184,13 +184,13 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		_god_mode = !_god_mode;
 
+		_state = PlayerState::IDLE;
 		if (!_god_mode)
 		{
 			float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
 			if (corrected_position.x < FLT_MAX)
 			{
 				_player_position = corrected_position;
-				_state = PlayerState::IDLE;
 			}
 			// Started falling
 			_state = PlayerState::FALLING;
