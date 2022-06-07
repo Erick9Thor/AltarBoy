@@ -1,0 +1,24 @@
+prefab_name: ugly cliff
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: cliffBackground_01
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-10.6870537, 0.0392818451, 39.6959343]
+        rotation: [0.860233128, -0.00945459958, -0.509563386, -0.01596101]
+        scale: [1, 0.99999994, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 11109535570980559062
+        navigable: false
+        visible: true
+        material_id: 12543806836585443627
