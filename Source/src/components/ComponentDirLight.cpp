@@ -60,7 +60,6 @@ void Hachiko::ComponentDirLight::Load(const YAML::Node& node)
 void Hachiko::ComponentDirLight::DrawGui()
 {
     ImGui::PushID(this);
-    DebugDraw();
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Dir Light"))
     {
         if (ImGui::Checkbox("D.Active", &active))
