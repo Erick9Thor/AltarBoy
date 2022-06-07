@@ -56,7 +56,27 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	if (!_combat_stats->IsAlive())
 	{
 		_state = BugState::DEAD;
+		DestroyEntity();
 		return;
+	}
+
+	_player_pos = _player->GetTransform()->GetGlobalPosition();
+	_current_pos = transform->GetGlobalPosition();
+	float dist_to_player = _current_pos.Distance(_player_pos);
+
+	if (_is_stunned)
+	{
+		if (_stun_time > 0.0f)
+		{
+			_stun_time -= Time::DeltaTime();
+			RecieveKnockback();
+			return;
+		}
+		_is_stunned = false;
+		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+		// We set the variables back to normal
+		agc->SetMaxAcceleration(_acceleration);
+		agc->SetMaxSpeed(_speed);
 	}
 
 	// TODO: Delete these after seminar and write a better version.
@@ -75,28 +95,22 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		_state = BugState::IDLE;
 	}
 
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
-	_current_pos = transform->GetGlobalPosition();
-	float dist_to_player = _current_pos.Distance(_player_pos);
 
-	if (dist_to_player > 50)
+
+	if (dist_to_player > _aggro_range)
 	{
-		return;
+		GoBack();
 	}
-
-	if (_is_stunned)
+	else
 	{
-		if (_stun_time > 0.0f)
+		if (dist_to_player <= _attack_range)
 		{
-			_stun_time -= Time::DeltaTime();
-			RecieveKnockback();
-			return;
+			Attack();
 		}
-		_is_stunned = false;
-		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-		// We set the variables back to normal
-		agc->SetMaxAcceleration(_acceleration);
-		agc->SetMaxSpeed(_speed);
+		else
+		{
+			ChasePlayer();
+		}
 	}
 }
 
