@@ -3,6 +3,7 @@
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
+#include "modules/ModuleRender.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -91,6 +92,11 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
 void Hachiko::SceneManagement::SwitchScene(UID scene_uid)
 {
     App->scene_manager->ChangeSceneById(scene_uid);
+}
+
+void Hachiko::SceneManagement::SetSkyboxActive(bool v)
+{
+    App->renderer->SetDrawSkybox(v);
 }
 
 Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin, 

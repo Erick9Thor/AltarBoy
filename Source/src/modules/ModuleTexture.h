@@ -4,7 +4,6 @@
 #include <il.h>
 #include <string>
 
-#include "ft2build.h"
 #include "freetype.h"
 #include "GLfont.h"
 

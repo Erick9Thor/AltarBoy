@@ -11,6 +11,7 @@
 #include "importers/TextureImporter.h"
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
+#include "importers/PrefabImporter.h"
 
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
@@ -226,6 +227,12 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
             App->scene_manager->LoadScene(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
         }
     }
+}
+
+GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent)
+{
+    PrefabImporter importer;
+    return importer.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
 void Hachiko::ModuleResources::AssetsLibraryCheck()

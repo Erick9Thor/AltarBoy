@@ -130,6 +130,11 @@ bool Hachiko::ModuleSceneManager::CleanUp()
         SaveScene();
     }
 
+    if (IsScenePlaying())
+    {
+        main_scene->Stop();
+    }
+
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
     // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
