@@ -395,7 +395,8 @@ void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
 {
     if (node[M_STATE_MACHINE].IsDefined())
     {
+        UID state_machine_uid = node[M_STATE_MACHINE].as<UID>();
         App->resources->ReleaseResource(state_machine);
-        state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, node[M_STATE_MACHINE].as<UID>()));
+        state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, state_machine_uid));
     }
 }

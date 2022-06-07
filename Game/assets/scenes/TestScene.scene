@@ -2750,7 +2750,7 @@ child:
       - id: 15106956091823123751
         type: 14
         enabled: true
-        state_machine: 0
+        state_machine: 10998250991341204431
       - id: 14578851630127373568
         type: 20
         enabled: true
@@ -2801,10 +2801,6 @@ child:
         "'_attack_range@float'": 3.5
         "'_move_speed@float'": 7
         "'_max_hp@int'": 3
-      - id: 5285330048282688455
-        type: 14
-        enabled: true
-        state_machine: 10998250991341204431
     child:
       - id: 15218158254226999161
         name: Legs_low_$AssimpFbx$_PreRotation
