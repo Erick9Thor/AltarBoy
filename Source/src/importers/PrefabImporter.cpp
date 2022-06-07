@@ -68,6 +68,25 @@ Hachiko::Resource* Hachiko::PrefabImporter::Load(UID id)
     return nullptr;
 }
 
+Hachiko::GameObject* Hachiko::PrefabImporter::CreateObjectFromPrefab(UID prefab_uid, GameObject* parent)
+{
+    const std::string prefab_resource_path = GetResourcePath(Resource::Type::PREFAB, prefab_uid);
+    YAML::Node node = YAML::LoadFile(prefab_resource_path);
+    ResourcePrefab* prefab = new ResourcePrefab(prefab_uid);
+    prefab->prefab_data = node;
+    prefab->name = node[PREFAB_NAME].as<std::string>();
+
+    Scene* scene = App->scene_manager->GetActiveScene();
+    GameObject* prefab_root = scene->CreateNewGameObject(parent, prefab->name.c_str());
+
+    // Load generating new ids
+    constexpr bool as_prefab = true;
+    prefab_root->Load(prefab->prefab_data, as_prefab);
+    delete prefab;
+    // We dont use the prefab resource outside of load
+    return prefab_root;
+}
+
 Hachiko::UID Hachiko::PrefabImporter::CreatePrefabAsset(const char* name, GameObject* root)
 {
     // This id wont be used
