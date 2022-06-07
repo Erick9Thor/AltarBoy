@@ -21,7 +21,7 @@ namespace Hachiko
 
         void OnResize(unsigned int screen_width, unsigned int screen_height);
 
-        void Controller(float delta) const;
+        void Controller(float delta);
         void MovementController(float delta) const;
 
         [[nodiscard]] ComponentCamera* GetRenderingCamera() 
@@ -57,5 +57,7 @@ namespace Hachiko
 
         std::vector<ComponentCamera*> camera_buffer;
         unsigned int camera_idx = 0;
+
+        bool moving_camera = false;
     };
 }

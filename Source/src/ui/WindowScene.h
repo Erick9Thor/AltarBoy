@@ -57,6 +57,6 @@ namespace Hachiko
         float2 texture_position = float2(0.0f);
         float2 texture_size = {0.0f, 0.0f};
 
-        bool changedGameObject = false;
+        bool changed_game_object = false;
     };
 }

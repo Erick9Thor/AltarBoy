@@ -73,14 +73,14 @@ void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int scr
     }
 }
 
-void Hachiko::ModuleCamera::Controller(const float delta) const
+void Hachiko::ModuleCamera::Controller(const float delta)
 {
     static const float zoom_speed = 3.0f;
     static const float rot_speed = 2.0f;
     static const float perpendicular_movement_speed = 2.0f;
 
 #ifndef PLAY_BUILD
-    if (!App->editor->GetSceneWindow()->IsHovering()&& !editor_camera->isMoving)
+    if (!App->editor->GetSceneWindow()->IsHovering() && !moving_camera)
     {
         return;
     }
@@ -94,7 +94,7 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
         Rotate(-moved.x * delta * rot_speed, moved.y * delta * rot_speed);
         MovementController(delta);
 
-        editor_camera->isMoving = true;
+        moving_camera = true;
     }
 
     // Mouse ----------------------------
@@ -125,12 +125,12 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
         PerpendicularMovement(moved.x * delta * perpendicular_movement_speed, moved.y * delta * perpendicular_movement_speed);
 
-        editor_camera->isMoving = true;
+        moving_camera = true;
     }
 
     if (!App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT) && !App->input->IsMouseButtonPressed(SDL_BUTTON_MIDDLE))
     {
-        editor_camera->isMoving = false;
+        moving_camera = false;
     }
 }
 
@@ -279,9 +279,9 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
 
 void Hachiko::ModuleCamera::CheckImGuizmoViewManipulateUsed() 
 {
-    float3 frustumFront = rendering_camera->GetFrustum()->Front();
-    float3 transformFront = rendering_camera->GetGameObject()->GetTransform()->GetFront();
-    if (frustumFront.x != transformFront.x || frustumFront.y != transformFront.y || frustumFront.z != transformFront.z)
+    float3 frustum_front = rendering_camera->GetFrustum()->Front();
+    float3 transform_front = rendering_camera->GetGameObject()->GetTransform()->GetFront();
+    if (frustum_front.x != transform_front.x || frustum_front.y != transform_front.y || frustum_front.z != transform_front.z)
     {
         ComponentTransform* transform = rendering_camera->GetGameObject()->GetTransform();
         transform->SetGlobalRotationAxis(math::Cross(rendering_camera->GetFrustum()->Up(), rendering_camera->GetFrustum()->Front()),
