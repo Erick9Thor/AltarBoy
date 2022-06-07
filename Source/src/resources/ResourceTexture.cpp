@@ -65,6 +65,11 @@ void Hachiko::ResourceTexture::DrawGui()
     ImGui::SameLine();
     ImGui::Text(std::to_string(bpp).c_str());
 
+
+    // Wrap Mode Configuration:
+
+    ImGui::TextWrapped("Wrapping");
+
     unsigned int previous_wrap = wrap;
 
     if (ImGui::RadioButton("Repeat", wrap == GL_REPEAT))
@@ -82,11 +87,6 @@ void Hachiko::ResourceTexture::DrawGui()
 
     if (wrap != previous_wrap)
     {
-        glBindTexture(GL_TEXTURE_2D, id);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, wrap);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, wrap);
-        glBindTexture(GL_TEXTURE_2D, 0);
-
         App->scene_manager->GetActiveScene()->OnMeshesChanged();
     }
 }

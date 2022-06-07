@@ -1,0 +1,14 @@
+name: NewMaterial.mat
+diffuse: 13550761809306702793
+specular: 0
+normals: 1474704778743094048
+metalness: 0
+emissive: 0
+diffuse_color: [1, 1, 1, 1]
+specular_color: [0, 0, 0, 0]
+emissive_color: [0, 0, 0, 0]
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 0
+is_transparent: 0
