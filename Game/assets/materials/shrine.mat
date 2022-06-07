@@ -1,0 +1,14 @@
+name: shrine
+diffuse: 10189043182499777534
+specular: 17872984649298177507
+normals: 7275694209711399713
+metalness: 0
+emissive: 10813778861627612124
+diffuse_color: [0.5, 0.5, 0.5, 1]
+specular_color: [1, 1, 1, 1]
+emissive_color: [0, 0, 0, 1]
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 1
+is_transparent: 0
