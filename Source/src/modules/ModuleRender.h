@@ -76,6 +76,10 @@ namespace Hachiko
             return &render_list;
         }
 
+        void SetDrawSkybox(bool v)
+        {
+            draw_skybox = v;
+        }
         [[nodiscard]] float2 GetFrameBufferSize() const;
 
     private:

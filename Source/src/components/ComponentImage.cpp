@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleTexture.h"
 #include "resources/ResourceTexture.h"
 
 #include "core/rendering/Program.h"

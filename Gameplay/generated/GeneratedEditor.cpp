@@ -10,6 +10,7 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
 
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
@@ -119,4 +120,15 @@ void Hachiko::Scripting::PlayerSoundManager::OnEditor()
 	Editor::Show("Melee Frequency", _melee_frequency);
 	Editor::Show("Ranged Frequency", _ranged_frequency);
 	Editor::Show("Timer", _timer);
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnEditor()
+{
+	Editor::Show("Player", _player);
+	Editor::Show("Room Portal", _room_portal);
+	Editor::Show("Outdoor Portal", _outdoor_portal);
+	Editor::Show("Trigger Distance", _trigger_distance);
+	Editor::Show<ComponentImage>("Fade Image", "ComponentImage*", _fade_image);
+	Editor::Show("Fade Duration", _fade_duration);
+	Editor::Show("Blackout Duration", _blackout_duration);
 }

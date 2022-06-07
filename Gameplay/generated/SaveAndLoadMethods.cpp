@@ -12,6 +12,7 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
 
 
 
@@ -731,5 +732,92 @@ void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 	if (load_node["'_timer@float'"].IsDefined())
 	{
 		_timer = load_node["'_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
+{
+	if (_player != nullptr)
+	{
+		node["'_player@GameObject*'"] = _player->GetID();
+	}
+	else
+	{
+		node["'_player@GameObject*'"] = 0;
+	}
+
+	if (_room_portal != nullptr)
+	{
+		node["'_room_portal@GameObject*'"] = _room_portal->GetID();
+	}
+	else
+	{
+		node["'_room_portal@GameObject*'"] = 0;
+	}
+
+	if (_outdoor_portal != nullptr)
+	{
+		node["'_outdoor_portal@GameObject*'"] = _outdoor_portal->GetID();
+	}
+	else
+	{
+		node["'_outdoor_portal@GameObject*'"] = 0;
+	}
+
+	node["'_trigger_distance@float'"] = _trigger_distance;
+
+	if (_fade_image != nullptr && _fade_image->GetGameObject() != nullptr)
+	{
+		node["'_fade_image@ComponentImage*'"] = _fade_image->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_fade_image@ComponentImage*'"] = 0;
+	}
+
+	node["'_fade_duration@float'"] = _fade_duration;
+
+	node["'_blackout_duration@float'"] = _blackout_duration;
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnLoad()
+{
+	if (load_node["'_player@GameObject*'"].IsDefined())
+	{
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_room_portal@GameObject*'"].IsDefined())
+	{
+		_room_portal = SceneManagement::FindInCurrentScene(load_node["'_room_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_outdoor_portal@GameObject*'"].IsDefined())
+	{
+		_outdoor_portal = SceneManagement::FindInCurrentScene(load_node["'_outdoor_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_trigger_distance@float'"].IsDefined())
+	{
+		_trigger_distance = load_node["'_trigger_distance@float'"].as<float>();
+	}
+
+	if (load_node["'_fade_image@ComponentImage*'"].IsDefined())
+	{
+		GameObject* _fade_image_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_fade_image@ComponentImage*'"].as<unsigned long long>());
+		if (_fade_image_owner__temp != nullptr)
+		{
+			_fade_image = _fade_image_owner__temp->GetComponent<ComponentImage>();
+		}
+	}
+
+	if (load_node["'_fade_duration@float'"].IsDefined())
+	{
+		_fade_duration = load_node["'_fade_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_blackout_duration@float'"].IsDefined())
+	{
+		_blackout_duration = load_node["'_blackout_duration@float'"].as<float>();
 	}
 }
