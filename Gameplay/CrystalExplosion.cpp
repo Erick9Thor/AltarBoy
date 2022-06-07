@@ -10,6 +10,7 @@
 
 #include "components/ComponentTransform.h"
 #include "components/ComponentObstacle.h"
+#include "components/ComponentAnimation.h"
 
 #include "modules/ModuleSceneManager.h"
 
@@ -42,7 +43,9 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	if (!_stats->IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	// TODO: Fix
+	// if (!_stats->IsAlive() && _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+	if (!_stats->IsAlive())
 	{
 		SceneManagement::Destroy(game_object);
 		return;
