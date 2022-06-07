@@ -217,6 +217,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
     BatchManager* batch_manager = scene->GetBatchManager();
+    
+    scene->GetQuadtree()->Refresh();
+
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     
     if (draw_deferred)
