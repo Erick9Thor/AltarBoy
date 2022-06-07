@@ -198,7 +198,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         }
         break;
     case (Component::Type::TEXT):
-        if (!GetComponent<ComponentProgressBar>())
+        if (!GetComponent<ComponentText>())
         {
             new_component = new ComponentText(this);
         }
@@ -229,6 +229,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     {
         HE_LOG("Falied to create component");
     }
+
     return new_component;
 }
 
