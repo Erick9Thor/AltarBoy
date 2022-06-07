@@ -1,11 +1,8 @@
-# version 460
+#version 460
 
-layout(std140, row_major, binding = 0) uniform Camera
-{
-    mat4 view;
-    mat4 proj;
-    vec3 pos;
-} camera;
+#extension GL_ARB_shading_language_include : require
+
+#include "/common/uniforms/camera_uniform.glsl"
 
 // Outputs
 out vec4 color;

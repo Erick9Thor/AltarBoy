@@ -21,6 +21,8 @@ using namespace Hachiko;
 
 bool ModuleResources::Init()
 {
+    HE_LOG("INITIALIZING MODULE: RESOURCES");
+
     preferences = App->preferences->GetResourcesPreference();
 
     // create assets & library directory tree

@@ -25,6 +25,7 @@ namespace Hachiko
 			void OnUpdate() override;
 
 			void CheckRadiusExplosion();
+			void ExplodeCrystal();
 
 			void ReceiveDamage(int damage, float3 direction);
 
@@ -42,6 +43,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
 
 			SERIALIZE_FIELD(unsigned, _crashing_index);
+			SERIALIZE_FIELD(float, _detecting_radius);
 			SERIALIZE_FIELD(float, _explosion_radius);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 

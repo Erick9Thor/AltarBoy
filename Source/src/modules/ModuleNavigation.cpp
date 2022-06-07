@@ -15,6 +15,8 @@
 
 bool Hachiko::ModuleNavigation::Init()
 {
+    HE_LOG("INITIALIZING MODULE: NAVIGATION");
+
     return true;
 }
 
@@ -210,7 +212,7 @@ float3 Hachiko::ModuleNavigation::GetCorrectedPosition(math::float3& position, c
 {
     dtQueryFilter filter;
     dtPolyRef reference;
-    float nearestPt[3];
+    float nearestPt[3] = {FLT_MAX, FLT_MAX, FLT_MAX};
 
     scene_navmesh->navigation_query->findNearestPoly(position.ptr(), extents.ptr(), &filter, &reference, nearestPt);
 
