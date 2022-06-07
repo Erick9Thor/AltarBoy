@@ -24,7 +24,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	game_object->GetComponent<ComponentAgent>()->AddToCrowd();
 	_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
