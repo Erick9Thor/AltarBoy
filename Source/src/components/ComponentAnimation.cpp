@@ -30,6 +30,11 @@ Hachiko::ComponentAnimation::~ComponentAnimation()
 
 void Hachiko::ComponentAnimation::StartAnimating()
 {
+    if (!state_machine)
+    {
+        return;
+    }
+    
     PlayNode(state_machine->GetDefaultNode(), 0);
 }
 
@@ -41,12 +46,22 @@ void Hachiko::ComponentAnimation::StopAnimating()
 
 void Hachiko::ComponentAnimation::ResetState()
 {
+    if (!state_machine)
+    {
+        return;
+    }
+    
     controller->Stop();
     PlayNode(state_machine->GetDefaultNode(), 0);
 }
 
 void Hachiko::ComponentAnimation::SendTrigger(const std::string& trigger) 
 {
+    if (!state_machine)
+    {
+        return;
+    }
+    
     std::string active = GetActiveNode();
 
     for (unsigned int i = 0; i < state_machine->GetNumTransitions(); ++i)
@@ -97,6 +112,11 @@ void Hachiko::ComponentAnimation::UpdatedGameObject(GameObject* go)
 
 void Hachiko::ComponentAnimation::PlayNode(const std::string& node, unsigned int blend) 
 {
+    if (!state_machine)
+    {
+        return;
+    }
+    
     PlayNode(state_machine->FindNode(node), blend);
 }
 
@@ -363,10 +383,12 @@ void Hachiko::ComponentAnimation::AnimationSelector(unsigned clip_idx)
 
 void Hachiko::ComponentAnimation::Save(YAML::Node& node) const
 {
-    if (state_machine != nullptr)
+    if (state_machine == nullptr)
     {
-        node[M_STATE_MACHINE] = state_machine->GetID();
+        node[M_STATE_MACHINE] = 0;
+        return;
     }
+    node[M_STATE_MACHINE] = state_machine->GetID();
 }
 
 void Hachiko::ComponentAnimation::Load(const YAML::Node& node)
