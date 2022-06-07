@@ -145,29 +145,36 @@ void Hachiko::Scripting::EnemyController::Attack()
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
 {
-	_target_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
-	transform->LookAtTarget(_target_pos);
-	MoveInNavmesh();
+	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
+	if (corrected_pos.x < FLT_MAX)
+	{
+		_target_pos = corrected_pos;
+		transform->LookAtTarget(_target_pos);
+		MoveInNavmesh();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::GoBack()
 {
-	_target_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
-	transform->LookAtTarget(_target_pos);
-	MoveInNavmesh();
+	float3 corrected_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
+	if (corrected_pos.x < FLT_MAX)
+	{
+		_target_pos = corrected_pos;
+		transform->LookAtTarget(_target_pos);
+		MoveInNavmesh();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::Stop()
 {
-	float3 temp_pos = transform->GetGlobalPosition();
-	_target_pos = Navigation::GetCorrectedPosition(temp_pos, math::float3(1.0f, 1.0f, 1.0f));
+	_target_pos = transform->GetGlobalPosition();
 	MoveInNavmesh();
 }
 
 void Hachiko::Scripting::EnemyController::RecieveKnockback()
 {
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(5.0f, 1.0f, 5.0f));
+	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(10.0f, 1.0f, 10.0f));
 	// We exagerate the movement
 	agc->SetMaxAcceleration(50.0f);
 	agc->SetMaxSpeed(30.0f);

@@ -91,7 +91,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 
     App->program->UpdateCamera(camera_data);
     RecursiveDrawUI(scene->GetRoot(), img_program, txt_program);
-    UnbindSuare();
+    UnbindSquare();
     glDepthFunc(GL_LESS);
 }
 
@@ -198,12 +198,12 @@ void Hachiko::ModuleUserInterface::CreateSquare()
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleUserInterface::BindSquare()
+void Hachiko::ModuleUserInterface::BindSquare() const
 {
     glBindVertexArray(vao);
 }
 
-void Hachiko::ModuleUserInterface::UnbindSuare()
+void Hachiko::ModuleUserInterface::UnbindSquare() const
 {
     glBindVertexArray(0);
 }

@@ -351,7 +351,7 @@ void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
     Scene* scene = game_object->scene_owner;
     if (scene)
     {
-        const Quadtree* quadtree = scene->GetQuadtree();
+        Quadtree* quadtree = scene->GetQuadtree();
         quadtree->Remove(this);
         quadtree->Insert(this);
     }

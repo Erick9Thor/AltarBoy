@@ -11,6 +11,7 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
 
 
 Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)
@@ -68,6 +69,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "PlayerSoundManager")
 	{
 		return new Hachiko::Scripting::PlayerSoundManager(script_owner);
+	}
+
+	if (script_name == "RoomTeleporter")
+	{
+		return new Hachiko::Scripting::RoomTeleporter(script_owner);
 	}
 
 	return nullptr;
