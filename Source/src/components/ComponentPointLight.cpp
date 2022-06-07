@@ -61,7 +61,6 @@ void Hachiko::ComponentPointLight::Load(const YAML::Node& node)
 void Hachiko::ComponentPointLight::DrawGui()
 {
     ImGui::PushID(this);
-    DebugDraw();
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Point Light"))
     {
         if (ImGui::Checkbox("P.Active", &active))
