@@ -21,12 +21,12 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
     {
         Save(uid, texture);
     }
+
     delete texture;
 }
 
 Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
 {
-
     const std::string file_path = GetResourcePath(Resource::Type::TEXTURE, id);
 
     if (!FileSystem::Exists(file_path.c_str()))

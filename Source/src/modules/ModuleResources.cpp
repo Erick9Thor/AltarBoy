@@ -228,6 +228,11 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
     }
 }
 
+void Hachiko::ModuleResources::SaveResource(const Resource* resource) 
+{
+    importer_manager.SaveResource(resource->GetID(), resource);
+}
+
 void Hachiko::ModuleResources::AssetsLibraryCheck()
 {
     HE_LOG("Assets/Library check...");

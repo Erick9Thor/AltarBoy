@@ -22,7 +22,6 @@ namespace Hachiko
         // TODO: Remove this should not exist
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
 
-
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
@@ -33,6 +32,8 @@ namespace Hachiko
         std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
         std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void LoadAsset(const std::string& path);
+
+        void SaveResource(const Resource* resource);
 
     private:
         struct ResourceInstance
