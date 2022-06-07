@@ -76,6 +76,11 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, const Compon
     {
         open = !game_object->AttemptRemoveComponent(component);
 
+        if (!open)
+        {
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+        }
+
         ImGui::EndPopup();
     }
     ImGui::PopID();
