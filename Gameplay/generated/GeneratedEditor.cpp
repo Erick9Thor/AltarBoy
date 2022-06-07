@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "BackToMainMenu.h"
 #include "BugAnimationManager.h"
+#include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
@@ -10,6 +11,8 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
+#include "Stats.h"
 
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
@@ -23,6 +26,13 @@ void Hachiko::Scripting::BugAnimationManager::OnEditor()
 	Editor::Show("State String", _state_string);
 	Editor::Show("Idle Index", _idle_index);
 	Editor::Show("Attacking Index", _attacking_index);
+}
+
+void Hachiko::Scripting::BulletController::OnEditor()
+{
+	Editor::Show("Move Speed", _move_speed);
+	Editor::Show("Lifetime", _lifetime);
+	Editor::Show("Collider Radius", _collider_radius);
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnEditor()
@@ -95,19 +105,18 @@ void Hachiko::Scripting::PlayerCamera::OnEditor()
 
 void Hachiko::Scripting::PlayerController::OnEditor()
 {
-	Editor::Show("Movement Speed", _movement_speed);
 	Editor::Show("Attack Indicator", _attack_indicator);
 	Editor::Show("Goal", _goal);
 	Editor::Show("Dash Duration", _dash_duration);
 	Editor::Show("Dash Distance", _dash_distance);
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
-	Editor::Show("Raycast Min Range", _raycast_min_range);
-	Editor::Show("Raycast Max Range", _raycast_max_range);
-	Editor::Show("Attack Radius", _attack_radius);
-	Editor::Show("Attack Cooldown", _attack_cooldown);
 	Editor::Show("Attack Duration", _attack_duration);
 	Editor::Show("Rotation Duration", _rotation_duration);
+	Editor::Show("Hp Cell 1", _hp_cell_1);
+	Editor::Show("Hp Cell 2", _hp_cell_2);
+	Editor::Show("Hp Cell 3", _hp_cell_3);
+	Editor::Show("Hp Cell 4", _hp_cell_4);
 	Editor::Show("Camera", _camera);
 	Editor::Show("Ui Damage", _ui_damage);
 }
@@ -121,3 +130,22 @@ void Hachiko::Scripting::PlayerSoundManager::OnEditor()
 	Editor::Show("Timer", _timer);
 }
 
+void Hachiko::Scripting::RoomTeleporter::OnEditor()
+{
+	Editor::Show("Player", _player);
+	Editor::Show("Room Portal", _room_portal);
+	Editor::Show("Outdoor Portal", _outdoor_portal);
+	Editor::Show("Trigger Distance", _trigger_distance);
+	Editor::Show<ComponentImage>("Fade Image", "ComponentImage*", _fade_image);
+	Editor::Show("Fade Duration", _fade_duration);
+	Editor::Show("Blackout Duration", _blackout_duration);
+}
+
+void Hachiko::Scripting::Stats::OnEditor()
+{
+	Editor::Show("Attack Power", _attack_power);
+	Editor::Show("Attack Cd", _attack_cd);
+	Editor::Show("Attack Range", _attack_range);
+	Editor::Show("Move Speed", _move_speed);
+	Editor::Show("Max Hp", _max_hp);
+}

@@ -55,6 +55,7 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
+        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>
@@ -201,6 +202,7 @@ namespace Hachiko
             return nullptr;
         }
 
+        [[nodiscard]] Component* GetComponent(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponents(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
 

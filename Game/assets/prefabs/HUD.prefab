@@ -1,0 +1,159 @@
+prefab_name: HUD
+name: HUD
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 10
+    enabled: true
+    position: [0, 0, 0]
+    size: [1133, 630]
+    scale: [1, 1]
+    rotation: [0, 0, 0, 1]
+    pivot: [0.5, 0.5]
+    anchor: [0.5, 0.5]
+  - type: 8
+    enabled: true
+child:
+  - name: HealthBar
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Overlay
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-320, 210, 0]
+            size: [20, 20]
+            scale: [20, 6]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 10482571268862899118
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Cell_1
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-367.5, 210, 0]
+            size: [20, 20]
+            scale: [3.5, 1.20000005]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 2627443166751613316
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Cell_2
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-300, 210, 0]
+            size: [20, 20]
+            scale: [3.5, 1.20000005]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 2627443166751613316
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Cell_3
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-233, 210, 0]
+            size: [20, 20]
+            scale: [3.5, 1.20000005]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 2627443166751613316
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Cell_4
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-166, 210, 0]
+            size: [20, 20]
+            scale: [3.5, 1.20000005]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 2627443166751613316
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]

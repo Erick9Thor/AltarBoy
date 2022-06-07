@@ -9,6 +9,8 @@ component:
     scale: [1, 1, 1]
   - type: 14
     enabled: true
+    animations:
+      - 9087701207749168962
 child:
   - name: Mesh
     enabled: true

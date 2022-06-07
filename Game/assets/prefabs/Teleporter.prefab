@@ -1,0 +1,102 @@
+prefab_name: Teleporter
+name: Teleporter
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 10
+    enabled: true
+    position: [0, 0, 0]
+    size: [1091, 630]
+    scale: [1, 1]
+    rotation: [0, 0, 0, 1]
+    pivot: [0.5, 0.5]
+    anchor: [0.5, 0.5]
+  - type: 8
+    enabled: true
+  - type: 15
+    enabled: true
+    class_name: RoomTeleporter
+    "'_player@GameObject*'": 0
+    "'_room_portal@GameObject*'": 5
+    "'_outdoor_portal@GameObject*'": 3
+    "'_trigger_distance@float'": 1
+    "'_fade_image@ComponentImage*'": 0
+    "'_fade_duration@float'": 0.25
+    "'_blackout_duration@float'": 0.25
+child:
+  - name: Fade Image
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [20, 20]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 0
+        hover_image_id: 0
+        use_image: false
+        use_hover_image: false
+        image_color: [0, 0, 0, 0]
+        hover_image_color: [1, 1, 1, 1]
+  - name: Outdoor Portal
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 15.5427542]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Cylinder001
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - type: 2
+            enabled: true
+            mesh_id: 10210867973034302559
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+  - name: Indoor Portal
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 45.1684265, 129.10733]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Cylinder001
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - type: 2
+            enabled: true
+            mesh_id: 10210867973034302559
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075

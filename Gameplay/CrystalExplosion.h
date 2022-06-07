@@ -27,13 +27,13 @@ namespace Hachiko
 			void CheckRadiusExplosion();
 			void ExplodeCrystal();
 
-			void ReceiveDamage(int damage, float3 direction);
+			void RegisterHit(int damage);
 
 		private:
-			void DestroyCristall();
+			void DestroyCrystal();
 
 		public:
-			SERIALIZE_FIELD(Stats, _stats);
+			Stats* _stats;
 
 		private:
 			ComponentTransform* transform;
