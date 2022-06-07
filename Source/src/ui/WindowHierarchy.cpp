@@ -32,9 +32,10 @@ void Hachiko::WindowHierarchy::CleanUp()
 
 void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
 {
-    for (const auto go : game_object->children)
+    for (int i = 0; i < game_object->children.size(); ++i)
     {
-       RecursiveDraw(go);
+        auto go = game_object->children[i];
+        RecursiveDraw(go);
     }
 
     if (!App->input->IsMouseButtonPressed(SDL_BUTTON_LEFT))
@@ -199,9 +200,22 @@ bool Hachiko::WindowHierarchy::DragAndDrop(GameObject* game_object)
                 }
                 parent_check = parent_check->parent;
             }
-            payload_n->SetNewParent(game_object);
+
+            assert(dragged_object->parent != nullptr);
+            if (dragged_object->parent == game_object)
+            {
+                // Unparent object
+                payload_n->SetNewParent(game_object->parent); 
+                game_object->RemoveChild(payload_n);
+            }
+            else
+            {
+                payload_n->SetNewParent(game_object);
+            }
+
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
+
         ImGui::EndDragDropTarget();
     }
 

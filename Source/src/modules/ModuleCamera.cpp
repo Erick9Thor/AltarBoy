@@ -38,6 +38,8 @@ bool Hachiko::ModuleCamera::Init()
 
 UpdateStatus Hachiko::ModuleCamera::Update(const float delta)
 {
+    CheckImGuizmoViewManipulateUsed();
+
 #ifndef PLAY_BUILD
     if (App->input->IsKeyDown(SDL_SCANCODE_F3))
     {
@@ -71,18 +73,19 @@ void Hachiko::ModuleCamera::OnResize(unsigned int screen_width, unsigned int scr
     }
 }
 
-void Hachiko::ModuleCamera::Controller(const float delta) const
+void Hachiko::ModuleCamera::Controller(const float delta)
 {
     static const float zoom_speed = 3.0f;
     static const float rot_speed = 2.0f;
     static const float perpendicular_movement_speed = 2.0f;
 
 #ifndef PLAY_BUILD
-    if (!App->editor->GetSceneWindow()->IsHovering())
+    if (!App->editor->GetSceneWindow()->IsHovering() && !moving_camera)
     {
         return;
     }
 #endif
+
     // Keyboard movement ---------------
     if (App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT))
     {
@@ -90,6 +93,8 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
 
         Rotate(-moved.x * delta * rot_speed, moved.y * delta * rot_speed);
         MovementController(delta);
+
+        moving_camera = true;
     }
 
     // Mouse ----------------------------
@@ -119,6 +124,13 @@ void Hachiko::ModuleCamera::Controller(const float delta) const
         const float2 moved = App->input->GetMousePixelsMotion();
 
         PerpendicularMovement(moved.x * delta * perpendicular_movement_speed, moved.y * delta * perpendicular_movement_speed);
+
+        moving_camera = true;
+    }
+
+    if (!App->input->IsMouseButtonPressed(SDL_BUTTON_RIGHT) && !App->input->IsMouseButtonPressed(SDL_BUTTON_MIDDLE))
+    {
+        moving_camera = false;
     }
 }
 
@@ -263,4 +275,18 @@ void Hachiko::ModuleCamera::PerpendicularMovement(float motion_x, float motion_y
     transform->SetGlobalPosition(transform->GetGlobalPosition() + deltaMovement);
     rendering_camera->GetGameObject()->Update();
     rendering_camera->reference_point += deltaMovement;
+}
+
+void Hachiko::ModuleCamera::CheckImGuizmoViewManipulateUsed() 
+{
+    float3 frustum_front = rendering_camera->GetFrustum()->Front();
+    float3 transform_front = rendering_camera->GetGameObject()->GetTransform()->GetFront();
+    if (frustum_front.x != transform_front.x || frustum_front.y != transform_front.y || frustum_front.z != transform_front.z)
+    {
+        ComponentTransform* transform = rendering_camera->GetGameObject()->GetTransform();
+        transform->SetGlobalRotationAxis(math::Cross(rendering_camera->GetFrustum()->Up(), rendering_camera->GetFrustum()->Front()),
+                                         rendering_camera->GetFrustum()->Up(),
+                                         rendering_camera->GetFrustum()->Front());
+        rendering_camera->GetGameObject()->Update();
+    }
 }
