@@ -13,11 +13,9 @@
 #include "core/rendering/Program.h"
 #include "modules/ModuleEvent.h"
 
-
 Hachiko::ComponentImage::ComponentImage(GameObject* container) 
 	: Component(Type::IMAGE, container) {
 }
-
 
 void Hachiko::ComponentImage::DrawGui()
 {
@@ -106,14 +104,14 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-	// Bind matrix
+	// Activate program & bind square:
     program->Activate();
     App->ui->BindSquare();
+
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     const ResourceTexture* img_to_draw = image;
     const float4* render_color = &color;
     bool render_img = use_image;    
-    
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
@@ -128,6 +126,10 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     program->BindUniformFloat4("img_color", render_color->ptr());
     ModuleTexture::Bind(img_to_draw? img_to_draw->GetImageId(): 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // Unbind square & deactivate program:
+    App->ui->UnbindSquare();
+    Program::Deactivate();
 }
 
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
