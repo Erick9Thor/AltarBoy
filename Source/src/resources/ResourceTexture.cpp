@@ -1,5 +1,7 @@
 #include "core/hepch.h"
 #include "ResourceTexture.h"
+#include "modules/ModuleSceneManager.h"
+#include "core/Scene.h"
 
 Hachiko::ResourceTexture::ResourceTexture()
 	: Resource(Resource::Type::TEXTURE)
@@ -62,4 +64,29 @@ void Hachiko::ResourceTexture::DrawGui()
     ImGui::Text("BPP: ");
     ImGui::SameLine();
     ImGui::Text(std::to_string(bpp).c_str());
+
+    unsigned int previous_wrap = wrap;
+
+    if (ImGui::RadioButton("Repeat", wrap == GL_REPEAT))
+    {
+        wrap = GL_REPEAT;
+    }
+    if (ImGui::RadioButton("Clamp", wrap == GL_CLAMP))
+    {
+        wrap = GL_CLAMP;
+    }
+    if (ImGui::RadioButton("Mirrored Repeat", wrap == GL_MIRRORED_REPEAT))
+    {
+        wrap = GL_MIRRORED_REPEAT;
+    }
+
+    if (wrap != previous_wrap)
+    {
+        glBindTexture(GL_TEXTURE_2D, id);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, wrap);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, wrap);
+        glBindTexture(GL_TEXTURE_2D, 0);
+
+        App->scene_manager->GetActiveScene()->OnMeshesChanged();
+    }
 }
