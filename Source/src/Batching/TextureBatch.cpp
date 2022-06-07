@@ -81,6 +81,7 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
             textureArray->width = texture->width;
             textureArray->height = texture->height;
             textureArray->format = texture->format;
+            //textureArray->wrap_mode = texture->wrap;
 
             texture_arrays.push_back(textureArray);
         }
@@ -136,6 +137,10 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
             {
                 resource.second->texIndex = i;
                 resource.second->layerIndex = depth;
+                
+                glBindTexture(GL_TEXTURE_2D, resource.first->id);
+                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, resource.first->wrap);
+                glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, resource.first->wrap);
 
                 glTexSubImage3D(GL_TEXTURE_2D_ARRAY, // target
                                 0, // level
@@ -154,16 +159,17 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
             }
         }
 
+        glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
+
         // Array texture parameters
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BASE_LEVEL, 0);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAX_LEVEL, 2);
         glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
 
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        // TODO: Get these per texture as well:
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+       
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
 
@@ -314,5 +320,9 @@ void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_co
 
 bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texture_layout, const ResourceTexture& texture)
 {
-    return (texture_layout.width == texture.width && texture_layout.height == texture.height && texture_layout.format == texture.format);
+    return (texture_layout.width == texture.width && 
+            texture_layout.height == texture.height && 
+            texture_layout.format == texture.format 
+        //&& texture_layout.wrap_mode == texture.wrap
+        );
 }
