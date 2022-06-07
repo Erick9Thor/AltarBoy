@@ -50,12 +50,7 @@ void Hachiko::Scripting::RoomTeleporter::OnUpdate()
 		// If some reference is working the system cant work
 		return;
 	}
-	
-	if(Input::IsKeyDown(Input::KeyCode::KEY_T))
-	{
-		SetActive(!_inside_room);
-	}
-	
+		
 	if (!_already_triggered)
 	{
 		if (_player->GetTransform()->GetGlobalPosition().Distance(_outdoor_portal->GetTransform()->GetGlobalPosition()) <= _trigger_distance)
@@ -154,9 +149,7 @@ void Hachiko::Scripting::RoomTeleporter::TeleportPlayer(bool indoors)
 	if (indoors)
 	{
 		_player->GetTransform()->SetGlobalPosition(_room_portal->GetTransform()->GetGlobalPosition());
-		HE_LOG("Teleport indoors");
 		return;
 	}
-	HE_LOG("Teleport outdoors");
 	_player->GetTransform()->SetGlobalPosition(_outdoor_portal->GetTransform()->GetGlobalPosition());
 }
