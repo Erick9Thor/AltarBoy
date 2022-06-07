@@ -127,7 +127,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // Unbind square & deactivate program:
-    App->ui->UnbindSuare();
+    App->ui->UnbindSquare();
     Program::Deactivate();
 }
 
