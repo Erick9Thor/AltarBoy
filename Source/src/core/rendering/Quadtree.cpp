@@ -15,49 +15,33 @@ Hachiko::QuadtreeNode::~QuadtreeNode()
     RELEASE(children[(int)Quadrants::SW]);
 }
 
-void Hachiko::QuadtreeNode::Insert(ComponentMeshRenderer* mesh)
+void Hachiko::QuadtreeNode::Insert(const std::unordered_set<ComponentMeshRenderer*>& to_insert)
 {
-    meshes.push_back(mesh);
-   
-    if (depth >= QUADTREE_MAX_DEPTH)
+    for (ComponentMeshRenderer* mesh : to_insert)
     {
-        return;
+        meshes.push_back(mesh);
     }
-
-    // No split due to not enough objects
-    if (IsLeaf() && meshes.size() < QUADTREE_MAX_ITEMS)
-    {
-        return;
-    }
-
-    // No split due to minimum size
-    if (box.HalfSize().LengthSq() <= (QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE))
-    {
-        return;
-    }
-    // Rearrange children
-    if (IsLeaf())
-    {
-        CreateChildren();
-    }
-
-    RearangeChildren();
 }
 
-void Hachiko::QuadtreeNode::Remove(ComponentMeshRenderer* mesh)
+void Hachiko::QuadtreeNode::Remove(const std::unordered_set<ComponentMeshRenderer*>& to_remove)
 {
-    // TODO: Reduce size when no longer necessary?
-    const auto find_iter = std::find(meshes.begin(), meshes.end(), mesh);
-    if (find_iter != meshes.end())
+    auto it = meshes.rbegin();
+    while (it != meshes.rend())
     {
-        meshes.erase(find_iter);
+        ComponentMeshRenderer* mesh = *it;
+        if (to_remove.find(mesh) == to_remove.end())
+        {
+            ++it;
+            continue;
+        }
+        it = decltype(it)(meshes.erase((it + 1).base()));
     }
-
+    
     if (!IsLeaf())
     {
         for (const auto& child : children)
         {
-            child->Remove(mesh);
+            child->Remove(to_remove);
         }
     }
 }
@@ -102,7 +86,26 @@ void Hachiko::QuadtreeNode::CreateChildren()
 
 void Hachiko::QuadtreeNode::RearangeChildren()
 {
-    for (auto it = meshes.begin(); it != meshes.end();)
+    
+    // No split due to not enough objects
+    if (IsLeaf() && meshes.size() < QUADTREE_MAX_ITEMS)
+    {
+        return;
+    }
+
+    // No split due to minimum size
+    if (box.HalfSize().LengthSq() <= (QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE))
+    {
+        return;
+    }
+    // Rearrange children
+    if (IsLeaf())
+    {
+        CreateChildren();
+    }
+    
+    auto it = meshes.rbegin();
+    while (it != meshes.rend())
     {
         ComponentMeshRenderer* mesh = *it;
         int intersection_count = 0;
@@ -122,14 +125,20 @@ void Hachiko::QuadtreeNode::RearangeChildren()
             ++it;
             continue;
         }
-        it = meshes.erase(it);
+        it = decltype(it)(meshes.erase((it + 1).base()));
+
         for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
         {
             if (intersects[i])
             {
-                children[i]->Insert(mesh);
+                children[i]->meshes.push_back(mesh);
             }
         }
+    }
+
+    for (QuadtreeNode* child : children)
+    {
+        child->RearangeChildren();
     }
 }
 
@@ -197,19 +206,44 @@ void Hachiko::Quadtree::SetBox(const AABB& box)
     root = new QuadtreeNode(box, nullptr, 0);
 }
 
-void Hachiko::Quadtree::Insert(ComponentMeshRenderer* mesh) const
+void Hachiko::Quadtree::Insert(ComponentMeshRenderer* mesh)
 {
     if (root)
     {
-        root->Insert(mesh);
+        to_insert.insert(mesh);
     }
 }
 
-void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh) const
+void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 {
     if (root)
     {
-        root->Remove(mesh);
+        to_remove.insert(mesh);
+    }
+}
+
+void Hachiko::Quadtree::Refresh()
+{
+    bool dirty = false;
+    if (root)
+    {
+        if (!to_remove.empty())
+        {
+            root->Remove(to_remove);
+            to_remove.clear();
+            dirty = true;
+        }
+        if (!to_insert.empty())
+        {
+            root->Insert(to_insert);
+            to_insert.clear();
+            dirty = true;
+        }
+
+        if (dirty)
+        {
+            root->RearangeChildren();
+        }
     }
 }
 
