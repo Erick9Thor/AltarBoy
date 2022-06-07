@@ -67,7 +67,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _performance_menu);
 
 			bool is_active;
-			bool _is_god_mode = false;
+			bool is_god_mode = false;
 			std::vector<math::float3> teleport_positions;
 			int teleport_iterator = -1;
 			PlayerController* _player_controller;

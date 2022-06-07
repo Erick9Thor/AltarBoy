@@ -44,7 +44,9 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 void Hachiko::Scripting::DebugManager::OnAwake()
 {
 	is_active = false;
-	_is_god_mode = false;
+	is_god_mode = false;
+	is_wireframe = false;
+	is_performance = false;
 
 	if (_tp_pos1) 
 	{
@@ -65,16 +67,18 @@ void Hachiko::Scripting::DebugManager::OnStart()
 {
 	_player_controller = _player->GetComponent<PlayerController>();
 
+
 	for (GameObject* child : game_object->children)
 	{
 		child->SetActive(is_active);
 	}
+
 }
 
 void Hachiko::Scripting::DebugManager::OnUpdate()
 {
 	
-	if (Input::IsKeyDown(Input::KeyCode::KEY_F3))
+	if (Input::IsKeyDown(Input::KeyCode::KEY_F2))
 	{
 		_player_controller->_isInDebug = !_player_controller->_isInDebug;
 		is_active = !is_active;
@@ -83,6 +87,7 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 			child->SetActive(is_active);
 		}
 	}
+
 	if(!is_active)
 	{
 		return;
@@ -94,12 +99,13 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 
 	if (is_performance)
 	{
-		std::string fps = std::to_string(Debug::GetFps());
+		std::string fps =  std::to_string(int(Debug::GetFps()));
 		std::string ms = std::to_string(Debug::GetMs());
 
 		_text_fps->SetText(fps.c_str());
 		_text_ms->SetText(ms.c_str());
 	}
+
 }
 
 void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
@@ -248,42 +254,34 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		{
 			HE_LOG("_toggle_performance_output pressed");
 			is_performance = !is_performance;
-			if (is_performance)
-			{
-				_performance_menu->SetActive(true);
-			}
-			else
-			{
-				_performance_menu->SetActive(false);
-			}
 		}
-	}
 
 
-	/*
-	if (_toggle_show_colliders->IsSelected())
-	{
-		HE_LOG("_toggle_show_colliders pressed");
-	}
-	*/
-
-	if (_toggle_wireframe->IsSelected())
-	{
-		HE_LOG("_toggle_wireframe pressed");
-
-		is_wireframe = !is_wireframe;
-
-		// Set polygon mode to GL_FILL if is_wireframe is false, GL_LINE if true:
-		Debug::SetPolygonMode(!is_wireframe);
-	}
-
-	if (_exit_debug->IsSelected())
-	{
-		is_active = !is_active;
-		for (GameObject* child : game_object->children)
+		/*
+		if (_toggle_show_colliders->IsSelected())
 		{
-			_player_controller->_isInDebug = !_player_controller->_isInDebug;
-			child->SetActive(is_active);
+			HE_LOG("_toggle_show_colliders pressed");
+		}
+		*/
+
+		if (_toggle_wireframe->IsSelected())
+		{
+			HE_LOG("_toggle_wireframe pressed");
+
+			is_wireframe = !is_wireframe;
+
+			// Set polygon mode to GL_FILL if is_wireframe is false, GL_LINE if true:
+			Debug::SetPolygonMode(!is_wireframe);
+		}
+
+		if (_exit_debug->IsSelected())
+		{
+			is_active = !is_active;
+			for (GameObject* child : game_object->children)
+			{
+				_player_controller->_isInDebug = !_player_controller->_isInDebug;
+				child->SetActive(is_active);
+			}
 		}
 	}
 }
