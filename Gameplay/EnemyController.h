@@ -25,8 +25,8 @@ namespace Hachiko
             
             BugState GetState() const;
 
-            Stats& GetStats();
-            void ReceiveDamage(int damage, math::float3 direction);
+            const Stats* GetStats();
+            void RegisterHit(int player_atk, math::float3 direction);
 
         private:
             void Attack();
@@ -40,10 +40,8 @@ namespace Hachiko
 
             void DestroyEntity();
 
-        public: 
-            SERIALIZE_FIELD(Stats, _stats);
-
         private:
+            Stats* _combat_stats;
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float3, _spawn_pos);

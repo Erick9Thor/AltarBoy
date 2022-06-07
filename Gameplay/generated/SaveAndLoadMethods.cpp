@@ -3,14 +3,18 @@
 #include <core/serialization/TypeConverter.h>
 #include "BackToMainMenu.h"
 #include "BugAnimationManager.h"
+#include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
+#include "FancyLights.h"
 #include "MainMenuManager.h"
 #include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
+#include "Stats.h"
 
 
 
@@ -83,9 +87,35 @@ void Hachiko::Scripting::BugAnimationManager::OnLoad()
 	}
 }
 
+void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
+{
+	node["'_move_speed@float'"] = _move_speed;
+
+	node["'_lifetime@float'"] = _lifetime;
+
+	node["'_collider_radius@float'"] = _collider_radius;
+}
+
+void Hachiko::Scripting::BulletController::OnLoad()
+{
+	if (load_node["'_move_speed@float'"].IsDefined())
+	{
+		_move_speed = load_node["'_move_speed@float'"].as<float>();
+	}
+
+	if (load_node["'_lifetime@float'"].IsDefined())
+	{
+		_lifetime = load_node["'_lifetime@float'"].as<float>();
+	}
+
+	if (load_node["'_collider_radius@float'"].IsDefined())
+	{
+		_collider_radius = load_node["'_collider_radius@float'"].as<float>();
+	}
+}
+
 void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 {
-
 	if (_player != nullptr)
 	{
 		node["'_player@GameObject*'"] = _player->GetID();
@@ -124,7 +154,6 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::CrystalExplosion::OnLoad()
 {
-
 	if (load_node["'_player@GameObject*'"].IsDefined())
 	{
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
@@ -197,7 +226,6 @@ void Hachiko::Scripting::DynamicCamera::OnLoad()
 
 void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 {
-
 	node["'_aggro_range@int'"] = _aggro_range;
 
 	node["'_attack_range@int'"] = _attack_range;
@@ -222,7 +250,6 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::EnemyController::OnLoad()
 {
-
 	if (load_node["'_aggro_range@int'"].IsDefined())
 	{
 		_aggro_range = load_node["'_aggro_range@int'"].as<int>();
@@ -256,6 +283,26 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_attack_animation_timer@float'"].IsDefined())
 	{
 		_attack_animation_timer = load_node["'_attack_animation_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::FancyLights::OnSave(YAML::Node& node) const
+{
+	node["'_rotate_on_y@bool'"] = _rotate_on_y;
+
+	node["'_angle@float'"] = _angle;
+}
+
+void Hachiko::Scripting::FancyLights::OnLoad()
+{
+	if (load_node["'_rotate_on_y@bool'"].IsDefined())
+	{
+		_rotate_on_y = load_node["'_rotate_on_y@bool'"].as<bool>();
+	}
+
+	if (load_node["'_angle@float'"].IsDefined())
+	{
+		_angle = load_node["'_angle@float'"].as<float>();
 	}
 }
 
@@ -522,9 +569,6 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 
 void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 {
-
-	node["'_movement_speed@float'"] = _movement_speed;
-
 	if (_attack_indicator != nullptr)
 	{
 		node["'_attack_indicator@GameObject*'"] = _attack_indicator->GetID();
@@ -551,17 +595,45 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_max_dash_charges@int'"] = _max_dash_charges;
 
-	node["'_raycast_min_range@float'"] = _raycast_min_range;
-
-	node["'_raycast_max_range@float'"] = _raycast_max_range;
-
-	node["'_attack_radius@float'"] = _attack_radius;
-
-	node["'_attack_cooldown@float'"] = _attack_cooldown;
-
 	node["'_attack_duration@float'"] = _attack_duration;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
+
+	if (_hp_cell_1 != nullptr)
+	{
+		node["'_hp_cell_1@GameObject*'"] = _hp_cell_1->GetID();
+	}
+	else
+	{
+		node["'_hp_cell_1@GameObject*'"] = 0;
+	}
+
+	if (_hp_cell_2 != nullptr)
+	{
+		node["'_hp_cell_2@GameObject*'"] = _hp_cell_2->GetID();
+	}
+	else
+	{
+		node["'_hp_cell_2@GameObject*'"] = 0;
+	}
+
+	if (_hp_cell_3 != nullptr)
+	{
+		node["'_hp_cell_3@GameObject*'"] = _hp_cell_3->GetID();
+	}
+	else
+	{
+		node["'_hp_cell_3@GameObject*'"] = 0;
+	}
+
+	if (_hp_cell_4 != nullptr)
+	{
+		node["'_hp_cell_4@GameObject*'"] = _hp_cell_4->GetID();
+	}
+	else
+	{
+		node["'_hp_cell_4@GameObject*'"] = 0;
+	}
 
 	if (_camera != nullptr)
 	{
@@ -584,12 +656,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerController::OnLoad()
 {
-
-	if (load_node["'_movement_speed@float'"].IsDefined())
-	{
-		_movement_speed = load_node["'_movement_speed@float'"].as<float>();
-	}
-
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
@@ -620,26 +686,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
 	}
 
-	if (load_node["'_raycast_min_range@float'"].IsDefined())
-	{
-		_raycast_min_range = load_node["'_raycast_min_range@float'"].as<float>();
-	}
-
-	if (load_node["'_raycast_max_range@float'"].IsDefined())
-	{
-		_raycast_max_range = load_node["'_raycast_max_range@float'"].as<float>();
-	}
-
-	if (load_node["'_attack_radius@float'"].IsDefined())
-	{
-		_attack_radius = load_node["'_attack_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_attack_cooldown@float'"].IsDefined())
-	{
-		_attack_cooldown = load_node["'_attack_cooldown@float'"].as<float>();
-	}
-
 	if (load_node["'_attack_duration@float'"].IsDefined())
 	{
 		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
@@ -648,6 +694,26 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_rotation_duration@float'"].IsDefined())
 	{
 		_rotation_duration = load_node["'_rotation_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_hp_cell_1@GameObject*'"].IsDefined())
+	{
+		_hp_cell_1 = SceneManagement::FindInCurrentScene(load_node["'_hp_cell_1@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_hp_cell_2@GameObject*'"].IsDefined())
+	{
+		_hp_cell_2 = SceneManagement::FindInCurrentScene(load_node["'_hp_cell_2@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_hp_cell_3@GameObject*'"].IsDefined())
+	{
+		_hp_cell_3 = SceneManagement::FindInCurrentScene(load_node["'_hp_cell_3@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_hp_cell_4@GameObject*'"].IsDefined())
+	{
+		_hp_cell_4 = SceneManagement::FindInCurrentScene(load_node["'_hp_cell_4@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_camera@GameObject*'"].IsDefined())
@@ -710,5 +776,133 @@ void Hachiko::Scripting::PlayerSoundManager::OnLoad()
 	if (load_node["'_timer@float'"].IsDefined())
 	{
 		_timer = load_node["'_timer@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnSave(YAML::Node& node) const
+{
+	if (_player != nullptr)
+	{
+		node["'_player@GameObject*'"] = _player->GetID();
+	}
+	else
+	{
+		node["'_player@GameObject*'"] = 0;
+	}
+
+	if (_room_portal != nullptr)
+	{
+		node["'_room_portal@GameObject*'"] = _room_portal->GetID();
+	}
+	else
+	{
+		node["'_room_portal@GameObject*'"] = 0;
+	}
+
+	if (_outdoor_portal != nullptr)
+	{
+		node["'_outdoor_portal@GameObject*'"] = _outdoor_portal->GetID();
+	}
+	else
+	{
+		node["'_outdoor_portal@GameObject*'"] = 0;
+	}
+
+	node["'_trigger_distance@float'"] = _trigger_distance;
+
+	if (_fade_image != nullptr && _fade_image->GetGameObject() != nullptr)
+	{
+		node["'_fade_image@ComponentImage*'"] = _fade_image->GetGameObject()->GetID();
+	}
+	else
+	{
+		node["'_fade_image@ComponentImage*'"] = 0;
+	}
+
+	node["'_fade_duration@float'"] = _fade_duration;
+
+	node["'_blackout_duration@float'"] = _blackout_duration;
+}
+
+void Hachiko::Scripting::RoomTeleporter::OnLoad()
+{
+	if (load_node["'_player@GameObject*'"].IsDefined())
+	{
+		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_room_portal@GameObject*'"].IsDefined())
+	{
+		_room_portal = SceneManagement::FindInCurrentScene(load_node["'_room_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_outdoor_portal@GameObject*'"].IsDefined())
+	{
+		_outdoor_portal = SceneManagement::FindInCurrentScene(load_node["'_outdoor_portal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_trigger_distance@float'"].IsDefined())
+	{
+		_trigger_distance = load_node["'_trigger_distance@float'"].as<float>();
+	}
+
+	if (load_node["'_fade_image@ComponentImage*'"].IsDefined())
+	{
+		GameObject* _fade_image_owner__temp = SceneManagement::FindInCurrentScene(load_node["'_fade_image@ComponentImage*'"].as<unsigned long long>());
+		if (_fade_image_owner__temp != nullptr)
+		{
+			_fade_image = _fade_image_owner__temp->GetComponent<ComponentImage>();
+		}
+	}
+
+	if (load_node["'_fade_duration@float'"].IsDefined())
+	{
+		_fade_duration = load_node["'_fade_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_blackout_duration@float'"].IsDefined())
+	{
+		_blackout_duration = load_node["'_blackout_duration@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
+{
+	node["'_attack_power@int'"] = _attack_power;
+
+	node["'_attack_cd@int'"] = _attack_cd;
+
+	node["'_attack_range@float'"] = _attack_range;
+
+	node["'_move_speed@float'"] = _move_speed;
+
+	node["'_max_hp@int'"] = _max_hp;
+}
+
+void Hachiko::Scripting::Stats::OnLoad()
+{
+	if (load_node["'_attack_power@int'"].IsDefined())
+	{
+		_attack_power = load_node["'_attack_power@int'"].as<int>();
+	}
+
+	if (load_node["'_attack_cd@int'"].IsDefined())
+	{
+		_attack_cd = load_node["'_attack_cd@int'"].as<int>();
+	}
+
+	if (load_node["'_attack_range@float'"].IsDefined())
+	{
+		_attack_range = load_node["'_attack_range@float'"].as<float>();
+	}
+
+	if (load_node["'_move_speed@float'"].IsDefined())
+	{
+		_move_speed = load_node["'_move_speed@float'"].as<float>();
+	}
+
+	if (load_node["'_max_hp@int'"].IsDefined())
+	{
+		_max_hp = load_node["'_max_hp@int'"].as<int>();
 	}
 }
