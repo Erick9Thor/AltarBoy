@@ -1,0 +1,24 @@
+prefab_name: 2022_06_07_Level1_Test1(navmesh only)
+name: RootNode
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: Plane253
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-53.0703201, 3.5823822, 86.5522308]
+        rotation: [-0.707106709, 0, 0, 0.707106829]
+        scale: [1, 0.99999994, 0.99999994]
+      - type: 2
+        enabled: true
+        mesh_id: 13589059780213916267
+        navigable: false
+        visible: true
+        material_id: 6750369022920963075
