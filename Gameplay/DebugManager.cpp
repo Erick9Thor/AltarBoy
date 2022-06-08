@@ -171,13 +171,20 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	
 	if (_add_health->IsSelected())
 	{
-		_player_controller->_combat_stats->_current_hp += 1.0f;
-		HE_LOG("Health now %f", _player_controller->_combat_stats->_current_hp);
+		if (_player_controller->_combat_stats->_current_hp < _player_controller->_combat_stats->_max_hp)
+		{
+			_player_controller->_combat_stats->_current_hp += 1;
+			HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
+		}
+		else
+		{
+			HE_LOG("Max health reached %u", _player_controller->_combat_stats->_current_hp);
+		}
 	}
 	if (_remove_health->IsSelected())
 	{
 		_player_controller->_combat_stats->_current_hp -= 1;
-		HE_LOG("Health now %f", _player_controller->_combat_stats->_current_hp);
+		HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
 	}
 	/*
 	if (_increase_max_hp->IsSelected())

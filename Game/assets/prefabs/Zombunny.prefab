@@ -9,8 +9,7 @@ component:
     scale: [1, 1, 1]
   - type: 14
     enabled: true
-    animations:
-      - 7290321072388025035
+    state_machine: 0
 child:
   - name: Zombunny
     enabled: true
