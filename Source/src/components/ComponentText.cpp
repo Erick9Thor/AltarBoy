@@ -45,9 +45,9 @@ void Hachiko::ComponentText::DrawGui()
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::DragFloat("Font Size", &font_size, 2.0f, 0.0f, FLT_MAX))
+        if (ImGui::DragInt("Font Size", &font_size, 2, 0, 1010))
         {
-            SetFontSize(static_cast<int>(font_size));
+            SetFontSize(font_size);
         }
         CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
@@ -114,7 +114,7 @@ void Hachiko::ComponentText::Save(YAML::Node& node) const
 void Hachiko::ComponentText::Load(const YAML::Node& node)
 {
     font_color = node[FONT_COLOR].as<float4>();
-    font_size = node[FONT_SIZE].as<float>();
+    font_size = node[FONT_SIZE].as<int>();
     label_text = node[FONT_LABEL_TEXT].as<std::string>();
     LoadFont(node[FONT_ID].as<UID>());
     SetText(label_text.c_str());
@@ -135,7 +135,7 @@ void Hachiko::ComponentText::SetFontSize(int new_size)
 {
     if (label)
     {
-        label->setPixelSize(static_cast<int>(new_size));
+        label->setPixelSize(new_size);
         font_size = new_size;
     }
 }

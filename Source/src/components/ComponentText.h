@@ -46,7 +46,7 @@ namespace Hachiko
         std::string label_text = "Sample Text";
 
         float4 font_color = float4::one;
-        float font_size = 28.f;
+        int font_size = 28;
 
         char font_filename_buffer[MAX_PATH] = "Image Filename\0";
     };

@@ -1,0 +1,36 @@
+name: wormDistance
+default_node: 0
+clips:
+  - clip_name: Idle
+    clips_id: 3218712889809898691
+    clips_loop: true
+  - clip_name: Attack
+    clips_id: 106767654921252826
+    clips_loop: true
+  - clip_name: Moving
+    clips_id: 6432986437067202826
+    clips_loop: true
+nodes:
+  - node_name: Idle
+    node_clip_name: Idle
+  - node_name: Attack
+    node_clip_name: Attack
+  - node_name: Moving
+    node_clip_name: Moving
+transitions:
+  - transition_source: Idle
+    transition_target: Attack
+    transition_trigger: isAttack
+    transition_blend: 300
+  - transition_source: Idle
+    transition_target: Moving
+    transition_trigger: isMoving
+    transition_blend: 300
+  - transition_source: Moving
+    transition_target: Idle
+    transition_trigger: isNMoving
+    transition_blend: 300
+  - transition_source: Attack
+    transition_target: Idle
+    transition_trigger: isNAttack
+    transition_blend: 300

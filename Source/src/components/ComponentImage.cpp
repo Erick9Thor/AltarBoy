@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleTexture.h"
 #include "resources/ResourceTexture.h"
 
 #include "core/rendering/Program.h"
@@ -127,7 +128,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     // Unbind square & deactivate program:
-    App->ui->UnbindSuare();
+    App->ui->UnbindSquare();
     Program::Deactivate();
 }
 

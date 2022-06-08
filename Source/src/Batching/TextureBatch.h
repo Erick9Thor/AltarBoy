@@ -22,6 +22,9 @@ namespace Hachiko
             unsigned width = 0;
             unsigned height = 0;
             unsigned format = 0;
+            unsigned wrap_mode = 0;
+            unsigned min_filter = 0;
+            unsigned mag_filter = 0;
         };
 
         struct Material

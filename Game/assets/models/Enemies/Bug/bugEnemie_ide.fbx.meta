@@ -27,6 +27,8 @@ materials:
 animations:
   - 14184767561852842691
 prefab_id: 2729954273441203566
+animation_names:
+  - Idle
 resources:
   - resource_id: 5050855239234413206
     resource_type: 3

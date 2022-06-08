@@ -41,27 +41,27 @@ void Hachiko::Scripting::PlayerAnimationManager::OnUpdate()
 	{
 	case PlayerState::IDLE:
 		_state_string = "Play Idle Animation.";
-		_animator->StartAnimating(_idle_index, true, 200);
+		_animator->SendTrigger("isIdle");
 		break;
 	case PlayerState::WALKING:
 		_state_string = "Play Walking Animation.";
-		_animator->StartAnimating(_walking_index, true, 200);
+		_animator->SendTrigger("isRuning");
 		break;
 	case PlayerState::MELEE_ATTACKING:
 		_state_string = "Play Melee Attacking Animation.";
-		_animator->StartAnimating(_melee_index, true, 200);
+		_animator->SendTrigger("isMeleeAtack");
 		break;
 	case PlayerState::RANGED_ATTACKING:
 		_state_string = "Play Ranged Attacking Animation.";
-		_animator->StartAnimating(_ranged_index, true, 200);
+		_animator->SendTrigger("isRangedAttack");
 		break;
 	case PlayerState::DASHING:
 		_state_string = "Play Dashing Animation.";
-		_animator->StartAnimating(_dashing_index, true, 200);
+		_animator->SendTrigger("isDashing");
 		break;
 	case PlayerState::FALLING:
 		_state_string = "Play Falling Animation.";
-		_animator->StartAnimating(_dashing_index, false, 200);
+		_animator->SendTrigger("isFalling");
 		break;
 	
 	case PlayerState::INVALID:

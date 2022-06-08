@@ -22,7 +22,6 @@ namespace Hachiko
         // TODO: Remove this should not exist
         [[nodiscard]] std::filesystem::path GetLastResourceLoadedPath() const;
 
-
         Hachiko::Resource::AssetType GetAssetTypeFromPath(const std::filesystem::path& file);
 
         Resource* GetResource(Resource::Type type, UID id);
@@ -33,6 +32,8 @@ namespace Hachiko
         std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
         std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void LoadAsset(const std::string& path);
+        void SaveResource(const Resource* resource) const;
+        GameObject* InstantiatePrefab(UID prefab_uid, GameObject* parent);
 
     private:
         struct ResourceInstance
@@ -54,6 +55,7 @@ namespace Hachiko
             {Hachiko::Resource::AssetType::FONT, FONT_EXTENSION},
             {Hachiko::Resource::AssetType::PREFAB, PREFAB_EXTENSION},
             {Hachiko::Resource::AssetType::SKYBOX, SKYBOX_EXTENSION},
+            {Hachiko::Resource::AssetType::STATE_MACHINE, STATE_MACHINE_EXTENSION},
         };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;

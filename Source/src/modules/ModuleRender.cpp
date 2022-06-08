@@ -1,4 +1,3 @@
-
 #include "core/hepch.h"
 
 #include "core/ErrorHandler.h"
@@ -45,6 +44,8 @@ bool Hachiko::ModuleRender::Init()
 
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
+
+    GenerateParticlesBuffers();
 
     return true;
 }
@@ -228,6 +229,9 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
     BatchManager* batch_manager = scene->GetBatchManager();
+    
+    scene->GetQuadtree()->Refresh();
+
     render_list.Update(culling, scene->GetQuadtree()->GetRoot());
     
     if (draw_deferred)
@@ -389,6 +393,19 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
 
     // Draw debug draw stuff:
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
+
+    
+    const auto& scene_particles = scene->GetSceneParticles();
+    if (!scene_particles.empty())
+    {
+        Program* particle_program = App->program->GetParticleProgram();
+        particle_program->Activate();
+        for (auto particle : scene_particles)
+        {
+            particle->Draw(camera, particle_program);
+        }
+        Program::Deactivate();
+    }
 
     //GameObject* selected_go = App->editor->GetSelectedGameObject();
     /*if (outline_selection && selected_go)
@@ -637,6 +654,37 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     int vram_budget;
     glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram_budget);
     gpu.vram_budget_mb = static_cast<float>(vram_budget) / 1024.0f;
+}
+
+
+void Hachiko::ModuleRender::GenerateParticlesBuffers()
+{
+    float positions[] = {
+        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
+        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
+    };
+
+    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
+
+    glGenVertexArrays(1, &particle_vao);
+    glBindVertexArray(particle_vao);
+
+    glGenBuffers(1, &particle_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, particle_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
+
+    glGenBuffers(1, &particle_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, particle_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindVertexArray(0);
 }
 
 void Hachiko::ModuleRender::GenerateDeferredQuad() 

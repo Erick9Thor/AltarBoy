@@ -12,6 +12,7 @@
 #include "SceneImporter.h"
 #include "NavmeshImporter.h"
 #include "SkyboxImporter.h"
+#include "StateMachineImporter.h"
 
 namespace Hachiko
 {
@@ -36,6 +37,7 @@ namespace Hachiko
         Importer* GetAssetImporter(Resource::AssetType type) const;
         Importer* GetResourceImporter(Resource::Type type) const;
 
+        void SaveResource(UID uid, const Resource* resource) const;
 
         // They exist both as assets and as resources
         MaterialImporter material;
@@ -44,6 +46,7 @@ namespace Hachiko
         PrefabImporter prefab;
         SceneImporter scene;
         SkyboxImporter skybox;
+        StateMachineImporter state_machine;
 
         // It doesnt have its own resource type (we use prefabs)
         ModelImporter model;

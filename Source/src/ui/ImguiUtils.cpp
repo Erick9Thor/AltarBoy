@@ -126,7 +126,7 @@ bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_ico
     return active;
 }
 
-static void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
+void Hachiko::ImGuiUtils::DisplayTooltip(const char* desc)
 {
     if (ImGui::IsItemHovered())
     {
@@ -159,7 +159,8 @@ void Hachiko::ImGuiUtils::Combo(const char* label, std::vector<std::string> list
     }
 }
 
+/*
 ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
 {
     return {lhs.x + rhs.x, lhs.y + rhs.y};
-}
+}*/

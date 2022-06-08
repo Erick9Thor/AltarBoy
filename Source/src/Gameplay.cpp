@@ -94,8 +94,18 @@ void Hachiko::SceneManagement::SwitchScene(UID scene_uid)
     App->scene_manager->ChangeSceneById(scene_uid);
 }
 
+void Hachiko::SceneManagement::SetSkyboxActive(bool v)
+{
+    App->renderer->SetDrawSkybox(v);
+}
+
 Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin, 
     const float3& destination)
+{
+    return App->scene_manager->Raycast(origin, destination);
+}
+
+Hachiko::GameObject* Hachiko::SceneManagement::BoundingRaycast(const float3& origin, const float3& destination)
 {
     return App->scene_manager->Raycast(origin, destination);
 }
