@@ -192,6 +192,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
+	animation->SendTrigger("isAttacking");
+
 	if (_is_ranged_attack) 
 	{
 		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();

@@ -1,0 +1,45 @@
+name: WormEnemy
+default_node: 0
+clips:
+  - clip_name: idle
+    clips_id: 9464182224978156370
+    clips_loop: true
+  - clip_name: attack
+    clips_id: 12771979576332723871
+    clips_loop: true
+  - clip_name: move
+    clips_id: 724728904780443812
+    clips_loop: true
+  - clip_name: death
+    clips_id: 4698805499038945353
+    clips_loop: true
+nodes:
+  - node_name: idle
+    node_clip_name: idle
+  - node_name: attack
+    node_clip_name: attack
+  - node_name: move
+    node_clip_name: move
+  - node_name: death
+    node_clip_name: death
+transitions:
+  - transition_source: idle
+    transition_target: attack
+    transition_trigger: isAttacking
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: move
+    transition_trigger: isMoving
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: attack
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: move
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
