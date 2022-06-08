@@ -23,7 +23,6 @@ namespace Hachiko
         float intensity = 1.0f;
 
     private:
-        bool d_active = true;
         bool draw_direction = false;
     };
 }
