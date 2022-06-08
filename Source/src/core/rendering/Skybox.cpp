@@ -108,17 +108,34 @@ void Hachiko::Skybox::BindImageBasedLightingUniforms(Program* program) const
     {
         program->BindUniformUInt("activate_IBL", 1);
 
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
-        program->BindUniformInt("diffuseIBL", 1);
+        if (App->renderer->IsDeferred())
+        {
+            glActiveTexture(GL_TEXTURE5);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
+            program->BindUniformInt("diffuseIBL", 5);
 
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
-        program->BindUniformInt("prefilteredIBL", 2);
+            glActiveTexture(GL_TEXTURE6);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
+            program->BindUniformInt("prefilteredIBL", 6);
 
-        glActiveTexture(GL_TEXTURE3);
-        glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
-        program->BindUniformInt("environmentBRDF", 3);
+            glActiveTexture(GL_TEXTURE7);
+            glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
+            program->BindUniformInt("environmentBRDF", 7);
+        }
+        else
+        {
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
+            program->BindUniformInt("diffuseIBL", 1);
+
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
+            program->BindUniformInt("prefilteredIBL", 2);
+
+            glActiveTexture(GL_TEXTURE3);
+            glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
+            program->BindUniformInt("environmentBRDF", 3);
+        }
 
         program->BindUniformUInt("prefilteredIBL_numLevels", prefilteredIBL_numLevels);
     }
@@ -353,9 +370,8 @@ void Hachiko::Skybox::GenerateDiffuseIBL()
     glDepthFunc(GL_LESS);
     glDepthMask(true);
 
-    unsigned fb_width, fb_height;
-    App->renderer->GetFrameBufferSize(fb_width, fb_height);
-    glViewport(0, 0, fb_height, fb_width);
+    float2 fb_size = App->renderer->GetFrameBufferSize();
+    glViewport(0, 0, fb_size.y, fb_size.x);
 }
 
 void Hachiko::Skybox::GeneratePrefilteredIBL()
@@ -464,9 +480,8 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
     glDepthFunc(GL_LESS);
     glDepthMask(true);
 
-    unsigned fb_width, fb_height;
-    App->renderer->GetFrameBufferSize(fb_width, fb_height);
-    glViewport(0, 0, fb_height, fb_width);
+    float2 fb_size = App->renderer->GetFrameBufferSize();
+    glViewport(0, 0, fb_size.y, fb_size.x);
 }
 
 void Hachiko::Skybox::GenerateEnvironmentBRDF() 
@@ -531,7 +546,6 @@ void Hachiko::Skybox::GenerateEnvironmentBRDF()
     glDepthFunc(GL_LESS);
     glDepthMask(true);
 
-    unsigned fb_width, fb_height;
-    App->renderer->GetFrameBufferSize(fb_width, fb_height);
-    glViewport(0, 0, fb_height, fb_width);
+    float2 fb_size = App->renderer->GetFrameBufferSize();
+    glViewport(0, 0, fb_size.y, fb_size.x);
 }

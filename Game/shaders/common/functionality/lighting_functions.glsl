@@ -113,4 +113,20 @@ vec3 SpotPBR(const vec3 frag_pos, const vec3 normal, const vec3 view_dir, const 
     return PBR(normal, view_dir, L, light.color.rgb, diffuse_color, F0, attenuation * cone, smoothness) * light.intensity;
 }
 
+// TODO: pass uniforms as in parameters
+vec3 GetAmbientLight(in vec3 normal, in vec3 R, float NdotV, float roughness, in vec3 diffuse_color, in vec3 specular_color)
+{
+    if (activate_IBL > 0)
+    {
+        vec3 irradiance = texture(diffuseIBL, normal).rgb;
+        vec3 radiance = textureLod( prefilteredIBL, R, roughness * prefilteredIBL_numLevels).rgb;
+        vec2 fab = texture( environmentBRDF, vec2(NdotV, roughness)).rg;
+
+        vec3 diffuse = (diffuse_color * (1 - specular_color));
+
+        return diffuse * irradiance + radiance * (specular_color * fab.x + fab.y);
+    }
+    return diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
+}
+
 #endif

@@ -237,7 +237,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     {
         DrawPreForwardPass(scene, camera);
         // TODO: Forward rendering still has that weird stuttering bug, fix this.
-        DrawForward(batch_manager);
+        DrawForward(scene, batch_manager);
     }
 }
 
@@ -261,6 +261,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
     // Disable blending for deferred rendering as the meshes with transparent
     // materials are gonna be rendered with forward rendering after the
@@ -353,7 +354,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     Program::Deactivate();
 }
 
-void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager) 
+void Hachiko::ModuleRender::DrawForward(Scene* scene, BatchManager* batch_manager) 
 {
     Program* program = App->program->GetForwardProgram();
     program->Activate();

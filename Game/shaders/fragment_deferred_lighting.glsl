@@ -46,7 +46,7 @@ void main()
             hdr_color +=  SpotPBR(fragment_position, fragment_normal, view_direction, lights.spots[i], fragment_diffuse, fragment_specular, fragment_smoothness);
         }
 
-        hdr_color += fragment_diffuse * lights.ambient.color.rgb * lights.ambient.intensity;
+        hdr_color += GetAmbientLight(fragment_normal, reflect(-view_direction, fragment_normal), dot(fragment_normal, view_direction), pow(1.0 - fragment_smoothness, 2), fragment_diffuse, fragment_specular);
 
         hdr_color += fragment_emissive;
 

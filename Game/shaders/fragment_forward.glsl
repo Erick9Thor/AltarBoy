@@ -73,7 +73,7 @@ void main()
         hdr_color +=  SpotPBR(fragment.pos, normal, view_direction, lights.spots[i], diffuse.rgb, specular, smoothness);
     }   
 
-    hdr_color += diffuse.rgb * lights.ambient.color.rgb * lights.ambient.intensity;
+    hdr_color += GetAmbientLight(normal, reflect(-view_direction, normal), dot(normal, view_direction), pow(1.0 - smoothness, 2), diffuse.rgb, specular);
 
     // Calculate emissive color:
     vec3 emissive = CalculateEmissive(
