@@ -32,6 +32,7 @@ Hachiko::Application::Application()
     modules.push_back(camera = new ModuleCamera());
     modules.push_back(resources = new ModuleResources());
     modules.push_back(audio = new ModuleAudio());
+    modules.push_back(navigation = new ModuleNavigation());
     modules.push_back(scene_manager = new ModuleSceneManager());
     modules.push_back(program = new ModuleProgram());
     modules.push_back(debug_draw = new ModuleDebugDraw());
@@ -39,7 +40,6 @@ Hachiko::Application::Application()
     modules.push_back(event = new ModuleEvent());
     modules.push_back(ui = new ModuleUserInterface()); 
     modules.push_back(debug_mode = new ModuleDebugMode());
-    modules.push_back(navigation = new ModuleNavigation());
     preferences = new PreferenceManager(SETTINGS_FILE_PATH);
 
 }

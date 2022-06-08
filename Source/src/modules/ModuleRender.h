@@ -80,7 +80,12 @@ namespace Hachiko
         {
             return particle_vao;
         }
-
+        
+        void SetDrawSkybox(bool v)
+        {
+            draw_skybox = v;
+        }
+        
         [[nodiscard]] float2 GetFrameBufferSize() const;
 
     private:

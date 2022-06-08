@@ -2,6 +2,7 @@
 #include "generated/Factory.h"
 #include "BackToMainMenu.h"
 #include "BugAnimationManager.h"
+#include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
@@ -11,6 +12,8 @@
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
+#include "RoomTeleporter.h"
+#include "Stats.h"
 
 
 Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)
@@ -23,6 +26,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "BugAnimationManager")
 	{
 		return new Hachiko::Scripting::BugAnimationManager(script_owner);
+	}
+
+	if (script_name == "BulletController")
+	{
+		return new Hachiko::Scripting::BulletController(script_owner);
 	}
 
 	if (script_name == "CrystalExplosion")
@@ -68,6 +76,16 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "PlayerSoundManager")
 	{
 		return new Hachiko::Scripting::PlayerSoundManager(script_owner);
+	}
+
+	if (script_name == "RoomTeleporter")
+	{
+		return new Hachiko::Scripting::RoomTeleporter(script_owner);
+	}
+
+	if (script_name == "Stats")
+	{
+		return new Hachiko::Scripting::Stats(script_owner);
 	}
 
 	return nullptr;

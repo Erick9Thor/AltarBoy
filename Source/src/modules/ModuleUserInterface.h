@@ -22,8 +22,8 @@ namespace Hachiko
         void HandleMouseAction(const float2&);
 
         void CreateSquare();
-        void BindSquare();
-        void UnbindSuare();
+        void BindSquare() const;
+        void UnbindSquare() const;
         void RemoveSquare();
 
     private:

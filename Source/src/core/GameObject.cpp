@@ -14,6 +14,7 @@
 #include "components/ComponentBillboard.h"
 #include "scripting/Script.h"
 
+#include "importers/PrefabImporter.h"
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -27,6 +28,7 @@
 #include "Application.h"
 #include "modules/ModuleSceneManager.h"
 #include "modules/ModuleScriptingSystem.h" // For instantiating Scripts.
+#include "modules/ModuleResources.h"
 
 #include <debugdraw.h>
 
@@ -92,6 +94,11 @@ Hachiko::GameObject* Hachiko::GameObject::CreateChild()
 Hachiko::GameObject* Hachiko::GameObject::Instantiate()
 {
     return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
+}
+
+Hachiko::GameObject* Hachiko::GameObject::Instantiate(unsigned long long prefab_uid, GameObject* parent)
+{
+    return App->resources->InstantiatePrefab(prefab_uid, parent);
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)
@@ -199,7 +206,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
         }
         break;
     case (Component::Type::TEXT):
-        if (!GetComponent<ComponentProgressBar>())
+        if (!GetComponent<ComponentText>())
         {
             new_component = new ComponentText(this);
         }
@@ -234,6 +241,7 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     {
         HE_LOG("Falied to create component");
     }
+
     return new_component;
 }
 
@@ -590,6 +598,19 @@ Hachiko::GameObject* Hachiko::GameObject::Find(UID id) const
         if (descendant != nullptr)
         {
             return descendant;
+        }
+    }
+
+    return nullptr;
+}
+
+Hachiko::Component* Hachiko::GameObject::GetComponent(Component::Type type) const
+{
+    for (Component* component : components)
+    {
+        if (component->GetType() == type)
+        {
+            return component;
         }
     }
 
