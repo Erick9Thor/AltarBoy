@@ -9,7 +9,10 @@
 #include <components/ComponentAnimation.h>
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
+
 #include <modules/ModuleSceneManager.h>
+
+#include <resources/ResourceAnimation.h>
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
@@ -73,16 +76,11 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	if (!_combat_stats->IsAlive())
 	{
-		animation->SendTrigger("isDead");
-
-		if (_current_lifetime >= _parasite_lifespan)
+		if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) 
 		{
 			DestroyEntity();
 		}
-		else
-		{
-			_current_lifetime += Time::DeltaTime();
-		}
+		animation->SendTrigger("isDead");
 
 		return;
 	}
@@ -109,7 +107,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	// TODO: Delete these after seminar and write a better version.
 	if (_state == BugState::ATTACKING)
 	{
-
 		animation->SendTrigger("isAttacking");
 
 		_attack_animation_timer += Time::DeltaTime();
@@ -117,7 +114,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		if (_attack_animation_timer >= _attack_animation_duration)
 		{
 			_attack_animation_timer = 0.0f;
-			_state = BugState::IDLE;
 		}
 	}
 
