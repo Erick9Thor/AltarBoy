@@ -6,6 +6,7 @@
 #include "modules/ModuleResources.h"
 #include "modules/ModuleRender.h"
 #include "resources/ResourceTexture.h"
+#include "resources/ResourceSkybox.h"
 
 #include "MathGeoLib.h"
 
@@ -33,8 +34,10 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
 {
     // Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
+    
+    glDepthFunc(GL_LEQUAL);
+    glClearDepth(1.0);
 
-    glDepthFunc(GL_ALWAYS);
     Program* program = App->program->GetSkyboxProgram();
     program->Activate();
     // Draw skybox
@@ -46,6 +49,7 @@ void Hachiko::Skybox::Draw(ComponentCamera* camera) const
     glDrawArrays(GL_TRIANGLES, 0, 36);
     glBindVertexArray(0);
     Program::Deactivate();
+    
     glDepthFunc(GL_LESS);
 }
 
@@ -67,7 +71,7 @@ void Hachiko::Skybox::DrawImGui()
 
     ImGui::TextDisabled("Keep in mind that all images \nneed to have the same format!");
 
-    if (ImGui::CollapsingHeader("Params"))
+    if (ImGui::CollapsingHeader("Resources"))
     {
         SelectSkyboxTexture(TextureCube::Side::RIGHT);
         SelectSkyboxTexture(TextureCube::Side::LEFT);
@@ -153,7 +157,7 @@ void Hachiko::Skybox::SelectSkyboxTexture(TextureCube::Side cube_side)
         ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
                                                 "Select Texture",
                                                 filters,
-                                                "./assets/textures/",
+                                                "./assets/skybox/",
                                                 1,
                                                 nullptr,
                                                 ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton | ImGuiFileDialogFlags_HideColumnType

@@ -109,6 +109,87 @@ void Hachiko::Scripting::Script::Load(const YAML::Node& node)
     // after VS2.
 }
 
+void Hachiko::Scripting::Script::SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const
+{
+    static const std::string component_node("@Component");
+    static const std::string gameobject_node("@GameObject");
+    // Iterate over the serialized yaml and replace uids for index references 
+    // obtained from collecting gos and components from the scene into a vector.
+    // 0 Means it was not found, on load first collection object will contain nullptr to make this work seamlessly
+    for (YAML::iterator it = node.begin(); it != node.end(); ++it)
+    {
+        if (it->first.as<std::string>().find(gameobject_node) != std::string::npos)
+        {
+            UID gameobject_uid = it->second.as<UID>();
+            auto found = std::find_if(object_collection.begin() + 1, object_collection.end(), 
+                [&](const GameObject* go) { return go->GetID() == gameobject_uid; });
+
+            unsigned gameobject_index = 0;
+
+            if (found != object_collection.end())
+            {
+                gameobject_index = std::distance(object_collection.begin(), found);
+            }
+
+            it->second = gameobject_index;
+        }
+        else if (it->first.as<std::string>().find(component_node) != std::string::npos)
+        {
+            UID component_uid = it->second.as<UID>();
+            auto found = std::find_if(component_collection.begin() + 1, component_collection.end(), 
+                [&](const Component* c) { return c->GetID() == component_uid; });
+
+            unsigned component_index = 0;
+            
+            if (found != component_collection.end())
+            {
+                component_index = std::distance(component_collection.begin(), found);
+            }
+
+            it->second = component_index;
+        }
+    }
+}
+
+void Hachiko::Scripting::Script::LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection)
+{
+    static const std::string component_node("@Component");
+    static const std::string gameobject_node("@GameObject");
+
+    // Iterate over the serialized yaml and replace uids for index references
+    // obtained from collecting gos and components from the scene into a vector.
+    // 0 Means it was not found, on load first collection object will contain nullptr to make this work seamlessly    
+    for (YAML::iterator it = load_node.begin(); it != load_node.end(); ++it)
+    {
+        if (it->first.as<std::string>().find(gameobject_node) != std::string::npos)
+        {
+            unsigned gameobject_index = it->second.as<unsigned>();
+            UID gameobject_uid = 0;
+            
+            // Index 0 contains nullptr
+            if (gameobject_index)
+            {
+                gameobject_uid = object_collection[gameobject_index]->GetID();
+            }
+
+            it->second = gameobject_uid;
+        }
+        else if (it->first.as<std::string>().find(component_node) != std::string::npos)
+        {
+            unsigned component_index = it->second.as<unsigned>();
+            UID component_uid = 0;
+
+            // Index 0 contains nullptr
+            if (component_index)
+            {
+                component_uid = component_collection[component_index]->GetID();
+            }
+
+            it->second = component_uid;
+        }
+    }
+}
+
 void Hachiko::Scripting::Script::DrawGui()
 {
     ImGui::PushID(this);

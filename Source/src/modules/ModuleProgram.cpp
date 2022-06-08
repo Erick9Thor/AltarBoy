@@ -1,6 +1,7 @@
 #include "core/hepch.h"
 #include "ModuleProgram.h"
 
+#include "utils/FileSystem.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentPointLight.h"
@@ -17,7 +18,11 @@ Hachiko::ModuleProgram::~ModuleProgram() = default;
 
 bool Hachiko::ModuleProgram::Init()
 {
-    CreateMainProgram();
+    HE_LOG("INITIALIZING MODULE: PROGRAM");
+
+    CreateGLSLIncludes();
+
+    CreateForwardProgram();
     CreateSkyboxProgram();
     CreateDiffuseIBLProgram();
     CreatePrefilteredIBLProgram();
@@ -25,7 +30,13 @@ bool Hachiko::ModuleProgram::Init()
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
-    if (!main_program || !skybox_program || !diffuseIBL_program || !stencil_program || !ui_image_program || !ui_text_program)
+    CreateDeferredGeometryPassProgram();
+    CreateDeferredLightingPassProgram();
+    CreateParticleProgram();
+
+    if (!forward_program || !deferred_geometry_program || !deferred_lighting_program || !skybox_program || 
+        !diffuseIBL_program || !prefilteredIBL_program || !environmentBRDF_program ||
+        !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
     {
         return false;
     }
@@ -113,10 +124,41 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateProgram(const char* vtx_shader_p
     return program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateMainProgram()
+void Hachiko::ModuleProgram::CreateGLSLIncludes() const 
 {
-    main_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment.glsl");
-    return main_program;
+    PathNode path_node = App->file_system.GetAllFiles(SHADERS_FOLDER, nullptr, nullptr);
+    std::vector<PathNode*> files_in_shaders_folder;
+    path_node.GetFilesRecursively(files_in_shaders_folder);
+
+    const std::string shaders_folder_name = SHADERS_FOLDER;
+
+    for (auto child : files_in_shaders_folder)
+    {
+        std::string local_path = child->path;
+
+        assert(("File is not in shaders folder: ", 
+            local_path.substr(0, shaders_folder_name.size()) == shaders_folder_name));
+        
+        // Get the file path local to shaders/ folder:
+        local_path = local_path.substr(shaders_folder_name.size());
+        // Get the absolute file path:
+        std::string path = StringUtils::Concat(App->file_system.GetWorkingDirectory(), "/" , child->path);
+
+        // Get the file content:
+        std::ifstream file_stream(path);
+        std::stringstream file_buffer;
+        file_buffer << file_stream.rdbuf();
+        file_stream.close();
+
+        // Add the file to GLSL virtual filesystem:
+        glNamedStringARB(GL_SHADER_INCLUDE_ARB, -1, &(local_path.c_str()[0]), -1, file_buffer.str().c_str());
+    }
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateForwardProgram()
+{
+    forward_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
+    return forward_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
@@ -159,6 +201,24 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
 {
     ui_text_program = CreateProgram(SHADERS_FOLDER "vertex_font.glsl", SHADERS_FOLDER "fragment_font.glsl");
     return ui_text_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateParticleProgram()
+{
+    particle_program = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
+    return particle_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryPassProgram()
+{
+    deferred_geometry_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
+    return deferred_geometry_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
+{
+    deferred_lighting_program = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_deferred_lighting.glsl");
+    return deferred_lighting_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -206,22 +266,39 @@ void* Hachiko::ModuleProgram::CreatePersistentBuffers(unsigned& buffer_id, int b
 
 bool Hachiko::ModuleProgram::CleanUp()
 {
-    main_program->CleanUp();
-    delete main_program;
+    forward_program->CleanUp();
+    delete forward_program;
+    
     skybox_program->CleanUp();
     delete skybox_program;
+
     diffuseIBL_program->CleanUp();
     delete diffuseIBL_program;
+
     prefilteredIBL_program->CleanUp();
     delete prefilteredIBL_program;
+    
     environmentBRDF_program->CleanUp();
     delete environmentBRDF_program;
+
     stencil_program->CleanUp();
     delete stencil_program;
+    
     ui_image_program->CleanUp();
     delete ui_image_program;
+    
     ui_text_program->CleanUp();
     delete ui_text_program;
+
+    deferred_geometry_program->CleanUp();
+    delete deferred_geometry_program;
+    
+    deferred_lighting_program->CleanUp();
+    delete deferred_lighting_program;
+    
+    particle_program->CleanUp();
+    delete particle_program;
+
     return true;
 }
 
@@ -252,14 +329,17 @@ void Hachiko::ModuleProgram::UpdateCamera(const CameraData& camera_data) const
     UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), (void*)&camera_data);
 }
 
-void Hachiko::ModuleProgram::UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer) const
+void Hachiko::ModuleProgram::UpdateMaterial(
+    const ComponentMeshRenderer* component_mesh_renderer, 
+    const Program* program) const
 {
     static int texture_slots[static_cast<int>(TextureSlots::COUNT)] = {static_cast<int>(TextureSlots::DIFFUSE),
                                                                        static_cast<int>(TextureSlots::SPECULAR),
                                                                        static_cast<int>(TextureSlots::NORMAL),
                                                                        static_cast<int>(TextureSlots::METALNESS),
                                                                        static_cast<int>(TextureSlots::EMISSIVE)};
-    main_program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), &texture_slots[0]);
+    program->BindUniformInts("textures", static_cast<int>(TextureSlots::COUNT), 
+        &texture_slots[0]);
 
     const ResourceMaterial* material = component_mesh_renderer->GetResourceMaterial();
 

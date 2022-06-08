@@ -15,7 +15,15 @@ void Hachiko::ResourceMaterial::DrawGui()
 
     ImGuiUtils::Combo("Material Type", material_types, is_metallic);
 
+    bool was_transparent = is_transparent;
     ImGuiUtils::Combo("Transparency", transparency, is_transparent);
+
+    if (was_transparent != is_transparent)
+    {
+        // If the transparency property of a material is changed, notify
+        // scene to arrange batching again:
+        App->scene_manager->GetActiveScene()->OnMeshesChanged();
+    }
 
     if (ImGui::TreeNodeEx((void*)&diffuse, texture_flags, "Diffuse"))
     {
@@ -26,6 +34,11 @@ void Hachiko::ResourceMaterial::DrawGui()
             ImGui::BeginGroup();
             ImGui::Text("%dx%d", diffuse->width, diffuse->height);
             ImGui::Text("Path: %s", diffuse->path.c_str());
+
+            if (ImGui::CollapsingHeader("Resource Diffuse Texture")) 
+            {
+                diffuse->DrawGui();
+            }
 
             // TODO: textue configuration (maybe delegate to the ResourceTexture)
 
@@ -51,6 +64,11 @@ void Hachiko::ResourceMaterial::DrawGui()
                 ImGui::BeginGroup();
                 ImGui::Text("%dx%d", metalness->width, metalness->height);
                 ImGui::Text("Path: %s", metalness->path.c_str());
+
+                if (ImGui::CollapsingHeader("Resource Metalness Texture"))
+                {
+                    metalness->DrawGui();
+                }
 
                 RemoveTexture(ResourceTexture::Type::METALNESS);
 
@@ -82,6 +100,10 @@ void Hachiko::ResourceMaterial::DrawGui()
                 ImGui::Text("Path: %s", specular->path.c_str());
 
                 // TODO: textue configuration (maybe delegate to the ResourceTexture)
+                if (ImGui::CollapsingHeader("Resource Specular Texture"))
+                {
+                    specular->DrawGui();
+                }
 
                 RemoveTexture(ResourceTexture::Type::SPECULAR);
 
@@ -111,6 +133,10 @@ void Hachiko::ResourceMaterial::DrawGui()
             ImGui::Text("Path: %s", normal->path.c_str());
 
             // TODO: textue configuration (maybe delegate to the ResourceTexture)
+            if (ImGui::CollapsingHeader("Resource Normal Texture"))
+            {
+                normal->DrawGui();
+            }
 
             RemoveTexture(ResourceTexture::Type::NORMALS);
 
@@ -134,6 +160,10 @@ void Hachiko::ResourceMaterial::DrawGui()
             ImGui::Text("Path: %s", emissive->path.c_str());
 
             // TODO: textue configuration (maybe delegate to the ResourceTexture)
+            if (ImGui::CollapsingHeader("Resource Emissive Texture"))
+            {
+                emissive->DrawGui();
+            }
 
             ImGui::ColorEdit4("Emissive color", &emissive_color[0]);
             RemoveTexture(ResourceTexture::Type::EMISSIVE);

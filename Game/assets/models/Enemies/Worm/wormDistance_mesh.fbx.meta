@@ -1,0 +1,28 @@
+asset_hash: 9588152509516601949
+model_name: wormDistance_mesh
+meshes:
+  - 6237063063821742698
+materials:
+  - 16901641101249946828
+animations:
+  - 3218712889809898691
+  - 106767654921252826
+  - 6432986437067202826
+animation_names:
+  - Idle
+  - Attack
+  - Move
+prefab_id: 17029835336448305424
+resources:
+  - resource_id: 6237063063821742698
+    resource_type: 3
+  - resource_id: 16901641101249946828
+    resource_type: 1
+  - resource_id: 3218712889809898691
+    resource_type: 7
+  - resource_id: 106767654921252826
+    resource_type: 7
+  - resource_id: 6432986437067202826
+    resource_type: 7
+  - resource_id: 17029835336448305424
+    resource_type: 13

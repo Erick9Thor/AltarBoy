@@ -511,6 +511,11 @@
     <ClInclude Include="PlayerSoundManager.h" />
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="Stats.h" />
+    <ClInclude Include="BulletController.h" />
+    <ClInclude Include="FancyLights.h" />
+    <ClInclude Include="CrystalExplosion.h" />
+    <ClInclude Include="BugAnimationManager.h" />
+    <ClInclude Include="RoomTeleporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -771,6 +776,11 @@
     <ClCompile Include="PlayerSoundManager.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="Stats.cpp" />
+    <ClCompile Include="BulletController.cpp" />
+    <ClCompile Include="FancyLights.cpp" />
+    <ClCompile Include="CrystalExplosion.cpp" />
+    <ClCompile Include="BugAnimationManager.cpp" />
+    <ClCompile Include="RoomTeleporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

@@ -7,6 +7,7 @@
 
 #include "Modules/ModuleProgram.h"
 #include "Modules/ModuleTexture.h"
+#include "core/rendering/Program.h"
 
 Hachiko::TextureBatch::~TextureBatch()
 {
@@ -80,6 +81,9 @@ void Hachiko::TextureBatch::AddTexture(const ResourceTexture* texture)
             textureArray->width = texture->width;
             textureArray->height = texture->height;
             textureArray->format = texture->format;
+            textureArray->wrap_mode = texture->wrap;
+            textureArray->min_filter = texture->min_filter;
+            textureArray->mag_filter = texture->mag_filter;
 
             texture_arrays.push_back(textureArray);
         }
@@ -157,12 +161,11 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_BASE_LEVEL, 0);
         glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAX_LEVEL, 2);
         glGenerateMipmap(GL_TEXTURE_2D_ARRAY);
-
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, texture_arrays[i]->wrap_mode);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, texture_arrays[i]->wrap_mode);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, texture_arrays[i]->min_filter);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, texture_arrays[i]->mag_filter);
+       
         glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
     }
 
@@ -171,12 +174,12 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
     loaded = true;
 }
 
-void Hachiko::TextureBatch::Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
+void Hachiko::TextureBatch::Draw(const Program* program, const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count)
 {
     GenerateMaterials(components);
     UpdateBuffers(use_first_segment, component_count);
 
-    BindTextures();
+    BindTextures(program);
     BindBuffers(use_first_segment, component_count);
 }
 
@@ -205,6 +208,18 @@ void Hachiko::TextureBatch::ImGuiWindow()
         ImGui::Text("Format: ");
         ImGui::SameLine();
         ImGui::Text(std::to_string(texture_arrays[i]->format).c_str());
+        
+        ImGui::Text("Wrap Mode: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->wrap_mode).c_str());
+
+        ImGui::Text("Min Filter: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->min_filter).c_str());
+
+        ImGui::Text("Mag Filter: ");
+        ImGui::SameLine();
+        ImGui::Text(std::to_string(texture_arrays[i]->mag_filter).c_str());
 
         for (auto& resource : resources)
         {
@@ -267,6 +282,7 @@ void Hachiko::TextureBatch::GenerateMaterials(const std::vector<const ComponentM
 
         if (components[i]->OverrideMaterialActive())
         {
+            materials[i].emissive_flag = 0;
             materials[i].emissive_color = components[i]->GetOverrideEmissiveColor();
         }
     }
@@ -284,10 +300,10 @@ void Hachiko::TextureBatch::UpdateBuffers(bool use_first_segment, unsigned compo
     }
 }
 
-void Hachiko::TextureBatch::BindTextures()
+void Hachiko::TextureBatch::BindTextures(const Program* program)
 {
     const std::vector<int> texture_slots = { 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
-    App->program->GetMainProgram()->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
+    program->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
@@ -312,5 +328,12 @@ void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_co
 
 bool Hachiko::TextureBatch::EqualLayout(const TextureArray& texture_layout, const ResourceTexture& texture)
 {
-    return (texture_layout.width == texture.width && texture_layout.height == texture.height && texture_layout.format == texture.format);
+    return (
+        texture_layout.width == texture.width && 
+        texture_layout.height == texture.height && 
+        texture_layout.format == texture.format && 
+        texture_layout.wrap_mode == texture.wrap && 
+        texture_layout.min_filter == texture.min_filter &&
+        texture_layout.mag_filter == texture.mag_filter
+    );
 }

@@ -7,13 +7,13 @@
 #include "ModuleInput.h"
 #include "ModuleEvent.h"
 #include "ModuleWindow.h"
-
 #include "core/Scene.h"
 #include "core/GameObject.h"
 #include "components/ComponentCanvasRenderer.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform2D.h"
 #include "components/ComponentButton.h"
+
 
 #include "ui/WindowScene.h"
 
@@ -23,8 +23,17 @@ Hachiko::ModuleUserInterface::~ModuleUserInterface() = default;
 
 bool Hachiko::ModuleUserInterface::Init()
 {
+    HE_LOG("INITIALIZING MODULE: USER INTERFACE");
+
     CreateSquare();
-    std::function handle_mouse_action = [&](Event& evt) { HandleMouseAction(evt); };
+    std::function handle_mouse_action = [&](Event& evt) {
+        const auto& payload = evt.GetEventData<MouseEventPayload>();
+        const auto action = payload.GetAction();
+        if (action == MouseEventPayload::Action::CLICK)
+        {
+            HandleMouseAction(payload.GetCoords());
+        }
+    };
     App->event->Subscribe(Event::Type::MOUSE_ACTION, handle_mouse_action);
     return true;
 }
@@ -82,7 +91,7 @@ void Hachiko::ModuleUserInterface::DrawUI(const Scene* scene)
 
     App->program->UpdateCamera(camera_data);
     RecursiveDrawUI(scene->GetRoot(), img_program, txt_program);
-    UnbindSuare();
+    UnbindSquare();
     glDepthFunc(GL_LESS);
 }
 
@@ -131,12 +140,8 @@ void Hachiko::ModuleUserInterface::RecursiveCheckMousePos(GameObject* game_objec
     }
 }
 
-void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
+void Hachiko::ModuleUserInterface::HandleMouseAction(const float2& coords)
 {
-    const auto& payload = evt.GetEventData<MouseEventPayload>();
-    MouseEventPayload::Action action = payload.GetAction();
-    float2 coords = payload.GetCoords();
-
 #ifdef PLAY_BUILD
     int height, width;
     App->window->GetWindowSize(width, height);
@@ -151,7 +156,7 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(Hachiko::Event& evt)
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, is_click);
 #else
     const WindowScene* w_scene = App->editor->GetSceneWindow();
-    float2 click_pos = w_scene->ImguiToScreenPos(coords);
+    const float2 click_pos = w_scene->ImguiToScreenPos(coords);
 
     constexpr bool is_click = true;
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), click_pos, is_click);
@@ -193,12 +198,12 @@ void Hachiko::ModuleUserInterface::CreateSquare()
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleUserInterface::BindSquare()
+void Hachiko::ModuleUserInterface::BindSquare() const
 {
     glBindVertexArray(vao);
 }
 
-void Hachiko::ModuleUserInterface::UnbindSuare()
+void Hachiko::ModuleUserInterface::UnbindSquare() const
 {
     glBindVertexArray(0);
 }

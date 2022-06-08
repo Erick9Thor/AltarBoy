@@ -55,6 +55,7 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
+        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>
@@ -62,6 +63,7 @@ namespace Hachiko
         GameObject* CreateChild();
 
         void Start();
+        void Stop();
         void Update();
         void DrawAll(ComponentCamera* camera, Program* program) const;
         void Draw(ComponentCamera* camera, Program* program) const;
@@ -93,7 +95,11 @@ namespace Hachiko
         }
 
         void Save(YAML::Node& node, bool as_prefab = false) const;
+        void CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector);
         void Load(const YAML::Node& node, bool as_prefab = false, bool meshes_only = false);
+
+        void SavePrefabReferences(YAML::Node& node, std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection) const;
+        void LoadPrefabReferences(std::vector<const GameObject*>& object_collection, std::vector<const Component*>& component_collection);
 
 
         [[nodiscard]] const std::vector<Component*>& GetComponents() const
@@ -196,11 +202,14 @@ namespace Hachiko
             return nullptr;
         }
 
+        [[nodiscard]] Component* GetComponent(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponents(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
 
         GameObject* GetFirstChildWithName(const std::string& child_name) const;
         Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
+
+        void ChangeColor(float4 color, float time);
 
     public:
         std::string name;

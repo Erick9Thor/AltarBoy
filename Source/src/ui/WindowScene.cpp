@@ -132,7 +132,10 @@ void Hachiko::WindowScene::ToolbarMenu() const
 void Hachiko::WindowScene::DrawScene()
 {
     ImVec2 size = ImGui::GetContentRegionAvail();
-    if (size.x != texture_size.x || size.y != texture_size.y)
+    bool size_changed = size.x != texture_size.x || size.y != texture_size.y;
+    bool size_valid = (size.x > 0 && size.y > 0);
+    
+    if (size_changed && size_valid)
     {
         texture_size = {
             size.x,
@@ -208,6 +211,13 @@ void Hachiko::WindowScene::DrawScene()
             // Transpose back again to store in our format
             model.Transpose();
             selected_object->GetTransform()->SetGlobalTransform(model);
+            changed_game_object = true;
+        }
+
+        if (!using_guizmo && changed_game_object)
+        {
+            changed_game_object = false;
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
     }
 }

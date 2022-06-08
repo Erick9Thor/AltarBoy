@@ -157,7 +157,7 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
-void Hachiko::GeometryBatch::UpdateWithTextureBatch(bool use_first_segment)
+void Hachiko::GeometryBatch::UpdateWithTextureBatch(const Program* program, bool use_first_segment)
 {
     BatchData();
     GenerateCommands();
@@ -184,7 +184,7 @@ void Hachiko::GeometryBatch::UpdateWithTextureBatch(bool use_first_segment)
         }
     }
 
-    texture_batch->Draw(components, use_first_segment, component_count);
+    texture_batch->Draw(program, components, use_first_segment, component_count);
 }
 
 void Hachiko::GeometryBatch::BatchData()
@@ -350,8 +350,8 @@ void Hachiko::GeometryBatch::GenerateBuffers()
     batch->loaded = true;
 }
 
-void Hachiko::GeometryBatch::UpdateBuffers(){
-
+void Hachiko::GeometryBatch::UpdateBuffers()
+{
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::VERTICES)]);
     glBufferData(GL_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::VERTICES)] * sizeof(float), batch->vertices, GL_DYNAMIC_DRAW);
@@ -376,7 +376,7 @@ void Hachiko::GeometryBatch::UpdateBuffers(){
 
     std::vector<unsigned> indices_vbo(components.size());
     std::iota(std::begin(indices_vbo), std::end(indices_vbo), 0);
-    
+
     glBindBuffer(GL_ARRAY_BUFFER, instance_indices_vbo);
     glBufferData(GL_ARRAY_BUFFER, components.size() * sizeof(unsigned), indices_vbo.data(), GL_DYNAMIC_DRAW);
 

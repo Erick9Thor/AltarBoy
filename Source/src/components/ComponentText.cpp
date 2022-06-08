@@ -42,10 +42,9 @@ void Hachiko::ComponentText::DrawGui()
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::DragFloat("Font Size", &font_size, 2.0f, 0.0f, FLT_MAX))
+        if (ImGui::DragInt("Font Size", &font_size, 2, 0, 1010))
         {
-            
-            SetFontSize(static_cast<int>(font_size));
+            SetFontSize(font_size);
         }
         CREATE_HISTORY_ENTRY_AFTER_EDIT()
 
@@ -96,8 +95,6 @@ void Hachiko::ComponentText::Draw(ComponentTransform2D* transform, Program* prog
         return;
     }
     
-    // Make sure transform is refreshed
-    transform->GetGlobalTransform();
     RefreshLabel(transform);
     // Program is activated inside hachikorender
     label->HachikoRender(program);   
@@ -114,9 +111,12 @@ void Hachiko::ComponentText::Save(YAML::Node& node) const
 void Hachiko::ComponentText::Load(const YAML::Node& node)
 {
     font_color = node[FONT_COLOR].as<float4>();
-    font_size = node[FONT_SIZE].as<float>();
+    font_size = node[FONT_SIZE].as<int>();
     label_text = node[FONT_LABEL_TEXT].as<std::string>();
     LoadFont(node[FONT_ID].as<UID>());
+    SetText(label_text.c_str());
+    SetFontSize(font_size);
+    SetFontColor(font_color);
 }
 
 void Hachiko::ComponentText::SetText(const char* new_text)
@@ -124,6 +124,7 @@ void Hachiko::ComponentText::SetText(const char* new_text)
     if (label)
     {
         label->setText(new_text);
+        label_text = new_text;
     }
 }
 
@@ -131,7 +132,8 @@ void Hachiko::ComponentText::SetFontSize(int new_size)
 {
     if (label)
     {
-        label->setPixelSize(static_cast<int>(font_size));
+        label->setPixelSize(new_size);
+        font_size = new_size;
     }
 }
 
@@ -139,7 +141,8 @@ void Hachiko::ComponentText::SetFontColor(const float4& new_color)
 {
     if (label)
     {
-        label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
+        label->setColor(new_color.x, new_color.y, new_color.z, new_color.w);
+        font_color = new_color;
     }
 }
 
@@ -193,5 +196,5 @@ void Hachiko::ComponentText::BuildLabel(ComponentTransform2D* transform)
     label->setColor(font_color.x, font_color.y, font_color.z, font_color.w);
     label->setPixelSize(font_size);
     label->setAlignment(FTLabel::FontFlags::CenterAligned);
-    RefreshLabel(transform);
+    Invalidate();
 }

@@ -14,6 +14,7 @@ namespace Hachiko
 
         //TODO centralize uniform binding in ModuleProgram with a cleaner API
         void BindUniformFloat4x4(const char* name, const float* data, bool transpose = true) const;
+        void BindUniformFloat2(const char* name, const float* data) const;
         void BindUniformFloat3(const char* name, const float* data) const;
         void BindUniformFloat4(const char* name, const float* data) const;
         void BindUniformFloat(const char* name, const float* data) const;

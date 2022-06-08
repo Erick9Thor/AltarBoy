@@ -21,7 +21,10 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// script needs to be a direct child of scene root, and there must
 	// be a GameObject of name "PlayerC" which is our player.
 	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
-	_player_ctrl = _player->GetComponent<PlayerController>();
+	if (_player != nullptr)
+	{
+		_player_ctrl = _player->GetComponent<PlayerController>();
+	}
 	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
 	// Seed the rand()
@@ -34,6 +37,14 @@ void Hachiko::Scripting::PlayerCamera::OnStart()
 
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
 {
+	if (_player_ctrl == nullptr)
+	{
+		if (_player != nullptr)
+		{
+			_player_ctrl = _player->GetComponent<PlayerController>();
+		}
+		return;
+	}
 	// TODO: set some camera offset
 
 	const math::float2 mouse_movement_x_z = MoveCameraWithMouse();
@@ -74,7 +85,7 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 
 	// Uncomment the following line if you want the camera to turn itself towards
 	// curent player position:
-	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
+	// transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
@@ -99,8 +110,10 @@ float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
 	{
 		mouse_pos.y += (mouse_pos.y > 0) ? -0.25f : +0.25f;
 	}
-	// First number to set it to 0-1 scale, second one sets the movement distance
-	added_movement = mouse_pos * 4.0f * 3.0f;
+	const float intensity = 3.0f;
+	// We multiply by 4 to set it to 0-1 scale
+	added_movement = (mouse_pos * 4.0f) * intensity;
+	added_movement = added_movement.Clamp(float2(-intensity, -intensity), float2(intensity, intensity));
 	return added_movement;
 }
 

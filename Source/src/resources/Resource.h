@@ -20,10 +20,12 @@ namespace Hachiko
             ANIMATION = 7,
             SCRIPT = 8,
             VIDEO = 9,
-            // SKYBOX = 10,
+            SKYBOX = 10,
             FONT = 11,
             NAVMESH = 12,
             PREFAB = 13,
+            STATE_MACHINE = 14,
+            COUNT
         };
 
         enum class AssetType
@@ -39,6 +41,7 @@ namespace Hachiko
             SKYBOX = 8,
             FONT = 9,
             PREFAB = 10,
+            STATE_MACHINE = 11,
         };
 
         static std::string ResourceTypeString(const Type& t) {
@@ -50,10 +53,11 @@ namespace Hachiko
                 {Type::ANIMATION, "animations"},
                 {Type::SCRIPT, "scripts"},
                 {Type::VIDEO, "video"},
-                // {Type::SKYBOX, "skybox"},
+                {Type::SKYBOX, "skybox"},
                 {Type::FONT, "fonts"},
                 {Type::NAVMESH, "navmesh"},
                 {Type::PREFAB, "prefab"},
+                {Type::STATE_MACHINE, "state_machine"},
             };
 
             auto it = string_map.find(t);
@@ -71,9 +75,10 @@ namespace Hachiko
                 {AssetType::MATERIAL, "textures"},
                 {AssetType::MODEL, "models"},
                 {AssetType::SCENE, "scene"},
-                // {AssetType::SKYBOX, "skybox"},
+                {AssetType::SKYBOX, "skybox"},
                 {AssetType::FONT, "fonts"},
                 {AssetType::PREFAB, "prefab"},
+                {AssetType::STATE_MACHINE, "state_machine"},
             };
 
             auto it = string_map.find(t);

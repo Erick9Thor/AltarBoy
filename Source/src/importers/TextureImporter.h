@@ -4,11 +4,11 @@
 
 namespace Hachiko
 {
-
     class TextureImporter final : public Importer
     {
         friend class MaterialImporter;
         friend class ModuleResources;
+        friend class SkyboxImporter;
 
     public:
         TextureImporter() = default;

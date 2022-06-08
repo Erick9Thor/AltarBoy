@@ -552,6 +552,7 @@ Hachiko::ModuleDebugDraw::~ModuleDebugDraw() = default;
 
 bool Hachiko::ModuleDebugDraw::Init()
 {
+    HE_LOG("INITIALIZING MODULE: DEBUG DRAW");
     implementation = new DDRenderInterfaceCoreGL;
     initialize(implementation);
     return true;

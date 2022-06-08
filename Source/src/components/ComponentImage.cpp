@@ -7,16 +7,15 @@
 #include "Application.h"
 #include "modules/ModuleUserInterface.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleTexture.h"
 #include "resources/ResourceTexture.h"
 
 #include "core/rendering/Program.h"
 #include "modules/ModuleEvent.h"
 
-
 Hachiko::ComponentImage::ComponentImage(GameObject* container) 
 	: Component(Type::IMAGE, container) {
 }
-
 
 void Hachiko::ComponentImage::DrawGui()
 {
@@ -105,14 +104,14 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-	// Bind matrix
+	// Activate program & bind square:
     program->Activate();
     App->ui->BindSquare();
+
     program->BindUniformFloat4x4("model", transform->GetGlobalScaledTransform().ptr());
     const ResourceTexture* img_to_draw = image;
     const float4* render_color = &color;
     bool render_img = use_image;    
-    
 
     ComponentButton* button = game_object->GetComponent<ComponentButton>();
 
@@ -127,6 +126,10 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     program->BindUniformFloat4("img_color", render_color->ptr());
     ModuleTexture::Bind(img_to_draw? img_to_draw->GetImageId(): 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // Unbind square & deactivate program:
+    App->ui->UnbindSquare();
+    Program::Deactivate();
 }
 
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
@@ -135,6 +138,8 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
     node[IMAGE_HOVER_IMAGE_ID] = hover_image ? hover_image->GetID() : 0;
     node[USE_IMAGE] = use_image;
     node[USE_HOVER_IMAGE] = use_hover_image;
+    node[IMAGE_COLOR] = color;
+    node[IMAGE_HOVER_COLOR] = hover_color;
 }
 
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
@@ -142,6 +147,10 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     constexpr bool is_hover_image = true;
     LoadImageResource(node[IMAGE_IMAGE_ID].as<UID>(), !is_hover_image);
     LoadImageResource(node[IMAGE_HOVER_IMAGE_ID].as<UID>(), is_hover_image);
+    use_image = node[USE_IMAGE].as<bool>();
+    use_hover_image = node[USE_HOVER_IMAGE].as<bool>();
+    color = node[IMAGE_COLOR].as<float4>();
+    hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
 }
 
 void Hachiko::ComponentImage::LoadImageResource(UID image_uid, bool is_hover)

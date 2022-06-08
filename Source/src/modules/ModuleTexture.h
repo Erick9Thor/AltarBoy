@@ -4,23 +4,16 @@
 #include <il.h>
 #include <string>
 
-#include "ft2build.h"
 #include "freetype.h"
 #include "GLfont.h"
 
 namespace Hachiko
 {
+    class ResourceSkybox;
     class ResourceTexture;
     
-    struct Texture // TODO: removed
-    {
-        bool loaded = false;
-        unsigned id = 0;
-        std::string path;
-        unsigned width = 0;
-        unsigned height = 0;
-    };
-
+    // TODO: Change to proper resource skybox
+    // Curent workaround is to use the 6 textures as if they were resource skybox (they are for now)
     struct TextureCube
     {
         enum class Side
@@ -29,8 +22,8 @@ namespace Hachiko
             LEFT,
             // Order between top and bottom is swaped from opengl
             // Because we flip the y to correct not properly flipped resources
+            TOP,
             BOTTOM,
-            TOP,            
             CENTER,
             BACK,
             COUNT
@@ -40,7 +33,7 @@ namespace Hachiko
         bool loaded = false;
         unsigned id{};
         UID uids[static_cast<unsigned>(Side::COUNT)] = {0};
-        ResourceTexture* resources[static_cast<unsigned>(Side::COUNT)] = {nullptr};
+        ResourceSkybox* resources[static_cast<unsigned>(Side::COUNT)] = {nullptr};
     };
 
     struct Font
@@ -50,7 +43,7 @@ namespace Hachiko
         std::shared_ptr<GLFont> gl_font = nullptr;
     };
 
-    class ResourceTexture;
+    
 
     class ModuleTexture final : public Module
     {
@@ -62,11 +55,8 @@ namespace Hachiko
         bool CleanUp() override;
 
         static ResourceTexture* ImportTextureResource(UID uid, const char* path, bool flip = true);
+        static ResourceSkybox* ImportSkyboxResource(UID uid, const char* path, bool flip = true);
 
-        [[deprecated]]
-        static Texture Load(const char* path, bool flip = true);
-        [[deprecated]]
-        static void Unload(Texture& texture);
         static TextureCube LoadCubeMap(TextureCube& cube);
         static void Bind(unsigned id, unsigned slot);
         static void Unbind(unsigned slot);

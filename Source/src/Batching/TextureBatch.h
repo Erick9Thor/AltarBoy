@@ -4,6 +4,7 @@ namespace Hachiko
 {
     class ComponentMeshRenderer;
     class ResourceMaterial;
+    class Program;
 
     class TextureBatch
     {
@@ -21,6 +22,9 @@ namespace Hachiko
             unsigned width = 0;
             unsigned height = 0;
             unsigned format = 0;
+            unsigned wrap_mode = 0;
+            unsigned min_filter = 0;
+            unsigned mag_filter = 0;
         };
 
         struct Material
@@ -54,7 +58,7 @@ namespace Hachiko
 
         void BuildBatch(unsigned component_count);
 
-        void Draw(const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
+        void Draw(const Program* program, const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
 
         void ImGuiWindow();
 
@@ -62,7 +66,7 @@ namespace Hachiko
         void GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components);
         void UpdateBuffers(bool use_first_segment, unsigned component_count);
 
-        void BindTextures();
+        void BindTextures(const Program* program);
         void BindBuffers(bool use_first_segment, int component_count);
 
         bool EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture);

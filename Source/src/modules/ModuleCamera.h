@@ -19,9 +19,9 @@ namespace Hachiko
         UpdateStatus Update(float delta) override;
         bool CleanUp() override;
 
-        void OnResize(unsigned int screen_width, unsigned int screen_height) const;
+        void OnResize(unsigned int screen_width, unsigned int screen_height);
 
-        void Controller(float delta) const;
+        void Controller(float delta);
         void MovementController(float delta) const;
 
         [[nodiscard]] ComponentCamera* GetRenderingCamera() 
@@ -47,6 +47,8 @@ namespace Hachiko
         void Rotate(float motion_x, float motion_y) const;
         void PerpendicularMovement(float motion_x, float motion_y) const;
 
+        void CheckImGuizmoViewManipulateUsed();
+
     private:
         
         ComponentCamera* editor_camera = nullptr;
@@ -55,5 +57,7 @@ namespace Hachiko
 
         std::vector<ComponentCamera*> camera_buffer;
         unsigned int camera_idx = 0;
+
+        bool moving_camera = false;
     };
 }

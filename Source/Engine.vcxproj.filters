@@ -531,6 +531,13 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp">
       <Filter>Vendors\Recast</Filter>
     </ClCompile>
+    <ClCompile Include="src\modules\ModuleSceneManager.cpp" />
+    <ClCompile Include="src\ui\WindowStateMachine.cpp">
+      <Filter>UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resources\ResourceStateMachine.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
     <ClCompile Include="src\components\ComponentAgent.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
@@ -555,17 +562,56 @@
     <ClCompile Include="src\core\preferences\src\AudioPreferences.cpp">
       <Filter>Core\Preferences\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\importers\PrefabImporter.cpp" />
     <ClCompile Include="src\resources\ResourcePrefab.cpp" />
-    <ClCompile Include="src\importers\SceneImporter.cpp" />
-    <ClCompile Include="src\importers\VideoImporter.cpp" />
     <ClCompile Include="src\resources\ResourceScene.cpp" />
-    <ClCompile Include="src\importers\NavmeshImporter.cpp" />
     <ClCompile Include="src\components\ComponentAudioListener.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ComponentAudioSource.cpp">
       <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\ComponentBillboard.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\rendering\GBuffer.cpp">
+      <Filter>Core\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\batching\GeometryBatch.cpp" />
+    <ClCompile Include="src\batching\BatchManager.cpp" />
+    <ClCompile Include="src\batching\TextureBatch.cpp" />
+    <ClCompile Include="src\resources\ResourceSkybox.cpp" />
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.cpp">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.cpp">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor.cpp">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_api.cpp">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\StateMachineImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\SkyboxImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\SceneImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\NavmeshImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\VideoImporter.cpp">
+      <Filter>Importers\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\importers\PrefabImporter.cpp">
+      <Filter>Importers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1412,9 +1458,6 @@
     <ClInclude Include="vendors\glm\gtx\gradient_paint.hpp">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\HachikoApiDefine.h">
-      <Filter>Vendors\Glm</Filter>
-    </ClInclude>
     <ClInclude Include="vendors\glm\gtx\handed_coordinate_space.hpp">
       <Filter>Vendors\Glm</Filter>
     </ClInclude>
@@ -2213,6 +2256,12 @@
     <ClInclude Include="src\modules\ModuleNavigation.h">
       <Filter>Modules\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="src\ui\WindowStateMachine.h">
+      <Filter>UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceStateMachine.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
     <ClInclude Include="vendors\recast\include\Recast\SampleInterfaces.h">
       <Filter>Vendors\Recast</Filter>
     </ClInclude>
@@ -2246,12 +2295,8 @@
     <ClInclude Include="src\core\preferences\src\AudioPreferences.h">
       <Filter>Core\Preferences\Source</Filter>
     </ClInclude>
-    <ClInclude Include="src\importers\PrefabImporter.h" />
     <ClInclude Include="src\resources\ResourcePrefab.h" />
-    <ClInclude Include="src\importers\SceneImporter.h" />
-    <ClInclude Include="src\importers\VideoImporter.h" />
     <ClInclude Include="src\resources\ResourceScene.h" />
-    <ClInclude Include="src\importers\NavmeshImporter.h" />
     <ClInclude Include="src\events\EditorHistoryEntryRestore.h">
       <Filter>Core\Events\Payload</Filter>
     </ClInclude>
@@ -2262,6 +2307,57 @@
     </ClInclude>
     <ClInclude Include="src\components\ComponentAudioSource.h">
       <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\ComponentBillboard.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core\rendering\GBuffer.h">
+      <Filter>Core\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\batching\DrawCommand.h" />
+    <ClInclude Include="src\batching\GeometryBatch.h" />
+    <ClInclude Include="src\batching\BatchManager.h" />
+    <ClInclude Include="src\batching\TextureBatch.h" />
+    <ClInclude Include="src\resources\ResourceSkybox.h" />
+    <ClInclude Include="src\core\HachikoApiDefine.h" />
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\crude_json.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_canvas.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Include\imgui_node_editor.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.h">
+      <Filter>Vendors\NodeEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\StateMachineImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\SkyboxImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\SceneImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\NavmeshImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\VideoImporter.h">
+      <Filter>Importers\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="src\importers\PrefabImporter.h">
+      <Filter>Importers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2411,6 +2507,12 @@
     </Filter>
     <Filter Include="Navigation">
       <UniqueIdentifier>{2ebe7408-ab70-48e9-833b-0e4f88246553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendors\NodeEditor">
+      <UniqueIdentifier>{f4b8878d-771c-4575-879e-dc75cc85244e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{48cdd47c-ca2b-4a24-a993-297a7700dfeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2843,6 +2945,15 @@
     </None>
     <None Include="vendors\glm\gtx\wrap.inl">
       <Filter>Vendors\Glm</Filter>
+    </None>
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.inl">
+      <Filter>Vendors\NodeEditor</Filter>
+    </None>
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.inl">
+      <Filter>Vendors\NodeEditor</Filter>
+    </None>
+    <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl">
+      <Filter>Vendors\NodeEditor</Filter>
     </None>
   </ItemGroup>
 </Project>

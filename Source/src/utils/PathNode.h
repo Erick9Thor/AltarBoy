@@ -19,6 +19,20 @@ namespace Hachiko
         bool isLeaf = true;
         bool isFile = true;
 
+        void GetFilesRecursively(std::vector<PathNode*>& files)
+        {
+            for (PathNode& child : children)
+            {
+                if (child.isFile)
+                {
+                    files.push_back(&child);
+                    continue;
+                }
+
+                child.GetFilesRecursively(files);
+            }
+        }
+
         [[nodiscard]] bool IsLastFolder() const
         {
             for (const auto& i : children)

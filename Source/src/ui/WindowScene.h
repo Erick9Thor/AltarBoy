@@ -56,5 +56,7 @@ namespace Hachiko
         ImVec2 guizmo_rect_origin = {0.0f, 0.0f};
         float2 texture_position = float2(0.0f);
         float2 texture_size = {0.0f, 0.0f};
+
+        bool changed_game_object = false;
     };
 }
