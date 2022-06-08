@@ -52,8 +52,6 @@ namespace Hachiko
         // Orientation
         bool is_horizontal = false;
         float4x4 model_stretch = float4x4::identity;
-        float3 initPos = float3::zero;
-        float3 previousPos = float3::zero;
         float3 direction = float3::zero;
         BillboardType type = BillboardType::HORIZONTAL;
 
@@ -61,7 +59,6 @@ namespace Hachiko
         bool flip_texture[2] = {false, false};
         UID textureID = 0;
         ResourceTexture* texture = nullptr;
-        float3 textureIntensity = {1.0f, 1.0f, 1.0f}; // TODO: Not used yet
         
         // Animation
         bool animation_loop = true;
@@ -83,8 +80,8 @@ namespace Hachiko
         int color_cycles = 1.0f;
         float color_frame = 0.0f;
         ImGradient* gradient = nullptr;
-        ImGradientMark* draggingGradient = nullptr;
-        ImGradientMark* selectedGradient = nullptr;
+        ImGradientMark* dragging_gradient = nullptr;
+        ImGradientMark* selected_gradient = nullptr;
 
     private:
         void Reset();
