@@ -15,6 +15,8 @@ namespace Hachiko
             Stats(GameObject* game_object);
             ~Stats() override = default;
 
+            void OnAwake() override;
+
             void ReceiveDamage(int _damage);
             bool IsAlive();
         public:

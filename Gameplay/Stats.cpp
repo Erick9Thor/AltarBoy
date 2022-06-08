@@ -12,6 +12,11 @@ Hachiko::Scripting::Stats::Stats(GameObject* game_object)
 {
 }
 
+void Hachiko::Scripting::Stats::OnAwake()
+{
+	_current_hp = _max_hp;
+}
+
 bool Hachiko::Scripting::Stats::IsAlive()
 {
 	return _current_hp > 0;
