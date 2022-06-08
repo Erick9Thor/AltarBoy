@@ -12,7 +12,7 @@ component:
     class_name: EnemyBulletController
     "'_move_speed@float'": 0.5
     "'_lifetime@float'": 2
-    "'_collider_radius@float'": 2
+    "'_collider_radius@float'": 1
 child:
   - name: Sphere001
     enabled: true

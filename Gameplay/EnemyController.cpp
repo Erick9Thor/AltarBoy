@@ -170,6 +170,15 @@ void Hachiko::Scripting::EnemyController::Attack()
 	_attack_cooldown -= Time::DeltaTime();
 	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
+	if (_is_ranged_attack)
+	{
+		transform->LookAtTarget(_player_controller->GetGameObject()->GetTransform()->GetGlobalPosition());
+
+		// Make the enemy stop (quick fix)
+		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+		agc->SetTargetPosition(game_object->GetTransform()->GetGlobalPosition());
+	}
+
 	if (_attack_cooldown > 0.0f)
 	{
 		return;
