@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="3444488197">
+		<SoundBank Id="626769978" Language="SFX" Hash="2053433330">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -24,14 +24,32 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="513571230" Name="Play_Combat" ObjectPath="\Events\Default Work Unit\Play_Combat">
+					<IncludedMemoryFiles>
+						<File Id="363091743" Language="SFX">
+							<ShortName>PlaceholderBlackShroudBattleTheme.wav</ShortName>
+							<Path>SFX\PlaceholderBlackShroudBattleTheme_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3849525492" Name="Play_Navigation" ObjectPath="\Events\Default Work Unit\Play_Navigation">
+					<IncludedMemoryFiles>
+						<File Id="743935933" Language="SFX">
+							<ShortName>PlaceholderAmhAraeng.wav</ShortName>
+							<Path>SFX\PlaceholderAmhAraeng_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="913896232" Name="Stop_Combat" ObjectPath="\Events\Default Work Unit\Stop_Combat"/>
+				<Event Id="445689598" Name="Stop_Navigation" ObjectPath="\Events\Default Work Unit\Stop_Navigation"/>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="3690994985">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1147299202">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="1401776252">
+		<SoundBank Id="2385628198" Language="SFX" Hash="1974466695">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -361,7 +379,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3569357570">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2142475735">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -371,6 +389,14 @@
 						<File Id="171904615" Language="SFX">
 							<ShortName>Dash.wav</ShortName>
 							<Path>SFX\Dash_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1824944578" Name="Play_EnemyAttack" ObjectPath="\Events\Default Work Unit\Play_EnemyAttack">
+					<IncludedMemoryFiles>
+						<File Id="116007299" Language="SFX">
+							<ShortName>slime-squish.wav</ShortName>
+							<Path>SFX\slime-squish_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -406,6 +432,58 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+			</IncludedEvents>
+		</SoundBank>
+		<SoundBank Id="3909959462" Language="SFX" Hash="3363133239">
+			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
+			<ShortName>Enviroment</ShortName>
+			<Path>Enviroment.bnk</Path>
+			<IncludedEvents>
+				<Event Id="2035174344" Name="Play_Crystal" ObjectPath="\Events\Default Work Unit\Play_Crystal">
+					<IncludedMemoryFiles>
+						<File Id="101284139" Language="SFX">
+							<ShortName>Crystal\cristal broken 1.wav</ShortName>
+							<Path>SFX\Crystal\cristal broken 1_10C4C929.wem</Path>
+						</File>
+						<File Id="202657829" Language="SFX">
+							<ShortName>Crystal\cristal broken 2.wav</ShortName>
+							<Path>SFX\Crystal\cristal broken 2_10C4C929.wem</Path>
+						</File>
+						<File Id="706795758" Language="SFX">
+							<ShortName>Crystal\cristal broken 3.wav</ShortName>
+							<Path>SFX\Crystal\cristal broken 3_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1157125118" Name="Play_Pebble" ObjectPath="\Events\Default Work Unit\Play_Pebble">
+					<IncludedMemoryFiles>
+						<File Id="11692854" Language="SFX">
+							<ShortName>Ambient\Pebbles 3.wav</ShortName>
+							<Path>SFX\Ambient\Pebbles 3_10C4C929.wem</Path>
+						</File>
+						<File Id="23504808" Language="SFX">
+							<ShortName>Ambient\Pebbles 2.wav</ShortName>
+							<Path>SFX\Ambient\Pebbles 2_10C4C929.wem</Path>
+						</File>
+						<File Id="376669262" Language="SFX">
+							<ShortName>Ambient\Pebbles 1.wav</ShortName>
+							<Path>SFX\Ambient\Pebbles 1_10C4C929.wem</Path>
+						</File>
+						<File Id="857441310" Language="SFX">
+							<ShortName>Ambient\Pebbles 4.wav</ShortName>
+							<Path>SFX\Ambient\Pebbles 4_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1020223172" Name="Play_Wind" ObjectPath="\Events\Default Work Unit\Play_Wind">
+					<IncludedMemoryFiles>
+						<File Id="244703648" Language="SFX">
+							<ShortName>Ambient\Desert.wav</ShortName>
+							<Path>SFX\Ambient\Desert_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="707649828" Name="Stop_Pebble" ObjectPath="\Events\Default Work Unit\Stop_Pebble"/>
 			</IncludedEvents>
 		</SoundBank>
 	</SoundBanks>
