@@ -11,17 +11,18 @@ namespace Hachiko
         ComponentDirLight(GameObject* conatiner);
         ~ComponentDirLight() override;
 
+        void Update() override;
         void DebugDraw() override;
 
         [[nodiscard]] bool IsActive() const
         {
             return active;
         }
-
+        /*
         void SetActive(bool is_active)
         {
             active = is_active;
-        }
+        }*/
 
         [[nodiscard]] float3 GetDirection() const;
 
@@ -34,7 +35,7 @@ namespace Hachiko
         float intensity = 1.0f;
 
     private:
-        bool active = true;
+        bool d_active = true;
         bool draw_direction = false;
     };
 }

@@ -24,6 +24,12 @@ Hachiko::ComponentDirLight::~ComponentDirLight()
     }
 }
 
+void Hachiko::ComponentDirLight::Update() 
+{
+    if (!d_active)
+        active = false;
+}
+
 void Hachiko::ComponentDirLight::DebugDraw()
 {
     if (draw_direction)
@@ -62,8 +68,9 @@ void Hachiko::ComponentDirLight::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Dir Light"))
     {
-        if (ImGui::Checkbox("D.Active", &active))
+        if (ImGui::Checkbox("D.Active", &d_active))
         {
+            active = d_active && game_object->active;
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
         if (ImGui::Checkbox("Draw Direction", &draw_direction))

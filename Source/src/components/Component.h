@@ -98,6 +98,11 @@ namespace Hachiko
             active = false;
         }
 
+        void SetActive(bool set_active)
+        {
+            active = set_active;
+        }
+
         [[nodiscard]] bool IsActive() const
         {
             return active;

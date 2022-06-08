@@ -254,9 +254,20 @@ void Hachiko::GameObject::SetActive(bool set_active)
 
     for (Component* component : components)
     {
+        component->SetActive(set_active);
+        /*
+        if (set_active)
+        {
+            component->Enable();
+        }
+        else
+        {
+            component->Disable();
+        }
+        /*
         if (component->GetType() == Component::Type::DIRLIGHT)
         {
-            static_cast<ComponentDirLight*>(component)->SetActive(set_active);
+            //static_cast<ComponentDirLight*>(component)->SetActive(set_active);
         }
         else if (component->GetType() == Component::Type::POINTLIGHT)
         {
@@ -265,7 +276,7 @@ void Hachiko::GameObject::SetActive(bool set_active)
         else if (component->GetType() == Component::Type::SPOTLIGHT)
         {
             static_cast<ComponentSpotLight*>(component)->SetActive(set_active);
-        }
+        }*/
     }
 }
 
@@ -325,6 +336,8 @@ void Hachiko::GameObject::Update()
 
     for (int i = 0; i < components.size(); ++i)
     {
+        if (!active)//if (components[i]->GetType() == Component::Type::DIRLIGHT && active == false)
+            int j = 0;
         components[i]->Update();
     }
 
