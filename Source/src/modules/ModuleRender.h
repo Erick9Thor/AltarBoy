@@ -56,6 +56,16 @@ namespace Hachiko
         void AddFrame(float delta);
         void SetOpenGLAttributes() const;
 
+        [[nodiscard]] float GetCurrentFps() const
+        {
+            return current_fps;
+        }
+
+        [[nodiscard]] unsigned int GetCurrentMs() const
+        {
+            return current_ms;
+        }
+
         [[nodiscard]] void* GetGLContext() const
         {
             return context;

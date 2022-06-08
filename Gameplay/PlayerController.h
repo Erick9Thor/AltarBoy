@@ -61,8 +61,9 @@ public:
 	void UpdateHealthBar();
 	
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }
+	bool _isInDebug = false;
+
 private:
-	Stats* _combat_stats;
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
@@ -104,13 +105,15 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-	bool _god_mode = false;
+	
 
 	GameObject* enemies;
 	GameObject* dynamic_envi;
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
+	Stats* _combat_stats;
+	bool _god_mode = false;
 };
 } // namespace Scripting
 } // namespace Hachiko
