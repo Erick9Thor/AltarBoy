@@ -9,8 +9,7 @@ component:
     scale: [1, 1, 1]
   - type: 14
     enabled: true
-    animations:
-      - 8653433190320991810
+    state_machine: 0
 child:
   - name: floorTileBroken_004_$AssimpFbx$_Translation
     enabled: true
