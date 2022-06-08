@@ -1,9 +1,11 @@
 Event	ID	Name			Wwise Object Path	Notes
+	1824944578	Play_EnemyAttack			\Default Work Unit\Play_EnemyAttack	
 	2211787386	Play_Dash			\Default Work Unit\Play_Dash	
 	2988676654	Play_MeleeAttack			\Default Work Unit\Play_MeleeAttack	
 	3766948527	Play_RangedAttack			\Default Work Unit\Play_RangedAttack	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	116007299	MonsterAttack	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\slime-squish_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MonsterAttack		79676
 	132983356	Meele_05	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Melee\Meele_05_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\MeleeAttack\Meele_05		110392
 	171904615	Dash	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\Dash_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Dash		211744
 	277816369	RangedAttack	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\weapons-plasma-shot_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\RangedAttack		28380
