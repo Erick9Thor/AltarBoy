@@ -26,7 +26,9 @@ namespace Hachiko
             BugState GetState() const;
 
             const Stats* GetStats();
-            void RegisterHit(int player_atk, math::float3 direction);
+            bool isAlive() { return _combat_stats->IsAlive(); };
+            void RegisterHit(int player_atk, math::float3 direction, float knockback);
+            void GetParasite();
 
         private:
             void Attack();
@@ -37,7 +39,7 @@ namespace Hachiko
 
             void Move();
             void MoveInNavmesh();
-
+            void DropParasite();
             void DestroyEntity();
 
         private:
@@ -47,6 +49,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
+            SERIALIZE_FIELD(GameObject*, _enemy_body);
+            SERIALIZE_FIELD(GameObject*, _parasite);
             SERIALIZE_FIELD(BugState, _state);
 
             PlayerController* _player_controller;
@@ -63,6 +67,8 @@ namespace Hachiko
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;
             float _speed = 0.0f;
+            float _parasite_lifespan = 5.0f;
+            float _current_lifetime = 0.0f;
             float3 _knockback_pos = float3::zero;
 
         };

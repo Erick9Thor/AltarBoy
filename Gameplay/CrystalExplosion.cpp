@@ -104,7 +104,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized());
+			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized(), 0.7f);
 		}
 
 		if (player_controller != nullptr)

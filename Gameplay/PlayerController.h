@@ -4,6 +4,22 @@
 #include "PlayerState.h"
 #include "Stats.h"
 
+enum class WeaponUsed
+{
+	RED = 0,
+	GREEN,
+	BLUE,
+	SIZE
+};
+
+struct Weapon
+{
+	int attack;
+	float cooldown;
+	float range;
+	float knockback;
+};
+
 namespace Hachiko
 { 
 class GameObject;
@@ -53,7 +69,8 @@ private:
 	void WalkingOrientationController();
 	void AttackController();
 
-	void RecieveKnockback(math::float3 direction);
+	void PickupParasite(const math::float3& current_position);
+	void RecieveKnockback(const math::float3 direction);
 
 public:
 	void CheckGoal(const float3& current_position);
@@ -102,9 +119,17 @@ private:
 	float _stun_time = 0.0f;
 	float _stun_duration = 0.5f;
 	float _falling_distance = 10.0f;
+	WeaponUsed weapon = WeaponUsed::RED;
 	bool _should_rotate = false;
 	bool _is_falling = false;
 	bool _god_mode = false;
+
+	std::vector<Weapon> weapons =
+	{
+		Weapon{1, 0.33f, 3.5f, 0.5f},
+		Weapon{2, 1.0f, 3.5f, 0.7f},
+		Weapon{1, 0.6f, 3.5f, 2.0f}
+	};
 
 	GameObject* enemies;
 	GameObject* dynamic_envi;

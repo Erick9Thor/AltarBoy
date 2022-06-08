@@ -16,6 +16,8 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _combat_stats()
 	, _spawn_is_initial(false)
 	, _player(nullptr)
+	, _enemy_body(nullptr)
+	, _parasite(nullptr)
 	, _state(BugState::INVALID)
 	, _attack_animation_duration(0.0f)
 	, _attack_animation_timer(0.0f)
@@ -27,12 +29,20 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = 1;
+	_combat_stats->_attack_cd = 1.0f;
 	_combat_stats->_move_speed = 4;
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
+	if (_enemy_body)
+	{
+		_enemy_body->SetActive(true);
+	}
+	if (_parasite)
+	{
+		_parasite->SetActive(false);
+	}
 
 }
 
@@ -56,7 +66,16 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	if (!_combat_stats->IsAlive())
 	{
 		_state = BugState::DEAD;
-		DestroyEntity();
+
+		if (_current_lifetime >= _parasite_lifespan)
+		{
+			DestroyEntity();
+		}
+		else
+		{
+			_current_lifetime += Time::DeltaTime();
+		}
+
 		return;
 	}
 
@@ -124,25 +143,28 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 	return _combat_stats;
 }
 
-void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
-	float knockback_intensity = 0.5f; // same with knock-back intensity
-	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback_intensity);
+	_knockback_pos = transform->GetGlobalPosition() + (direction * knockback);
 
 	if (!_combat_stats->IsAlive())
 	{
-		DestroyEntity();
+		DropParasite();
 	}
 }
 
 // Needs to be improved. Player should be able to dodge when enemy starts attacking.
 void Hachiko::Scripting::EnemyController::Attack()
 {
+	if (_state == BugState::DEAD)
+	{
+		return;
+	}
 	_attack_cooldown -= Time::DeltaTime();
 	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
@@ -158,6 +180,10 @@ void Hachiko::Scripting::EnemyController::Attack()
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
 {
+	if (_state == BugState::DEAD)
+	{
+		return;
+	}
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
@@ -169,6 +195,11 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 
 void Hachiko::Scripting::EnemyController::GoBack()
 {
+	if (_state == BugState::DEAD)
+	{
+		return;
+	}
+
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
@@ -213,4 +244,22 @@ void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
 	RELEASE(game_object);
+}
+
+void Hachiko::Scripting::EnemyController::DropParasite()
+{
+	Stop();
+	//TODO: Check if in scene there's already a parasite? Maybe?
+	if (_enemy_body) {
+		_enemy_body->SetActive(false);
+	}
+
+	if (_parasite) {
+		_parasite->SetActive(true);
+	}
+}
+
+void Hachiko::Scripting::EnemyController::GetParasite()
+{
+	DestroyEntity();
 }

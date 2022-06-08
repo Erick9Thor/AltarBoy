@@ -196,6 +196,10 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			_state = PlayerState::FALLING;
 		}
 	}
+	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
+	{
+		PickupParasite(_player_position);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::Dash()
@@ -267,6 +271,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 		}
 	}
 
+	bool hit_connected = false;
 	//loop in enemies hit
 	for (Hachiko::GameObject* element : elements_hit)
 	{
@@ -276,17 +281,19 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 
 		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition();
 
-		if (enemy_controller != nullptr)
+		if (enemy_controller != nullptr && enemy_controller->isAlive())
 		{
-			enemy_controller->RegisterHit(_combat_stats->_attack_power, relative_dir.Normalized());
+			enemy_controller->RegisterHit(_combat_stats->_attack_power, relative_dir.Normalized(), weapons[static_cast<int>(weapon)].knockback);
+			hit_connected = true;
 		}
-		else if (crystal_explotion != nullptr)
+		else if (crystal_explotion != nullptr && crystal_explotion->isAlive())
 		{
 			crystal_explotion->RegisterHit(_combat_stats->_attack_power);
+			hit_connected = true;
 		}
 	}
 
-	if (elements_hit.size() > 0)
+	if (hit_connected)
 	{
 		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 	}
@@ -295,6 +302,23 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_player_position += _player_transform->GetFront() * 0.3f;
 	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
 	_attack_current_cd = _combat_stats->_attack_cd;
+
+	// Fast and Scuffed, has to be changed when changing attack indicator
+	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	switch (weapon)
+	{
+	case WeaponUsed::RED:
+		attack_color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+		break;
+	case WeaponUsed::BLUE:
+		attack_color = float4(0.0f, 0.0f, 255.0f, 255.0f);
+		break;
+	case WeaponUsed::GREEN:
+		attack_color = float4(0.0f, 255.0f, 0.0f, 255.0f);
+		break;
+	}
+
+	_attack_indicator->ChangeColor(attack_color, _attack_duration);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -527,6 +551,45 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	}
 }
 
+void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
+{
+	if (enemies == nullptr) {
+		return;
+	}
+
+	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
+
+	for (int i = 0; i < enemy_children.size(); ++i)
+	{
+		if (enemy_children[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		{
+			EnemyController* enemy_controller = enemy_children[i]->GetComponent<EnemyController>();
+
+			if (enemy_controller->isAlive() == false)
+			{
+				enemy_controller->GetParasite();
+				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
+				_combat_stats->Heal(1);
+				UpdateHealthBar();
+
+				// Generate a random number for the weapon
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
+				std::uniform_int_distribution<> dist(0, num_of_weapons);
+				int new_wpn_num = dist(gen);
+				weapon = static_cast<WeaponUsed>(dist(gen));
+				_combat_stats->ChangeWeapon(
+					weapons[new_wpn_num].attack,
+					weapons[new_wpn_num].cooldown,
+					weapons[new_wpn_num].range
+				);
+				return;
+			}
+		}
+	}
+}
+
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
 	if (_god_mode)	return;
@@ -565,7 +628,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 	}
 }
 
-void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 direction)
+void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 direction)
 {
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
@@ -588,6 +651,10 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		if (i >= _combat_stats->_current_hp)
 		{
 			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Disable();
+		}
+		else
+		{
+			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
 		}
 	}
 }

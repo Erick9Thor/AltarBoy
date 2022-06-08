@@ -28,6 +28,7 @@ namespace Hachiko
 			void ExplodeCrystal();
 
 			void RegisterHit(int damage);
+			bool isAlive() { return _stats->IsAlive(); };
 
 		private:
 			void DestroyCrystal();

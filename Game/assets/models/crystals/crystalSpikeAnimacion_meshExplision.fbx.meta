@@ -10,6 +10,8 @@ materials:
 animations:
   - 9087701207749168962
 prefab_id: 7517619833700867939
+animation_names:
+  - Explision
 resources:
   - resource_id: 2367252208710808329
     resource_type: 3
