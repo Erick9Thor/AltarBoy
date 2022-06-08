@@ -84,3 +84,10 @@ Importer* Hachiko::ImporterManager::GetResourceImporter(Resource::Type type) con
     return nullptr;    
 }
 
+void Hachiko::ImporterManager::SaveResource(UID uid, const Resource* resource) const 
+{
+    Importer* importer = GetResourceImporter(resource->GetType());
+
+    importer->Save(uid, resource);
+}
+

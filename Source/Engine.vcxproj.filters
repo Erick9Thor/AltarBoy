@@ -570,6 +570,12 @@
     <ClCompile Include="src\components\ComponentAudioSource.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\ComponentBillboard.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
+      <Filter>Vendors\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\core\rendering\GBuffer.cpp">
       <Filter>Core\Rendering</Filter>
     </ClCompile>
@@ -2302,6 +2308,12 @@
     <ClInclude Include="src\components\ComponentAudioSource.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\ComponentBillboard.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="vendors\imgui\imgui_color_gradient.h">
+      <Filter>Vendors\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\core\rendering\GBuffer.h">
       <Filter>Core\Rendering</Filter>
     </ClInclude>
@@ -2498,6 +2510,9 @@
     </Filter>
     <Filter Include="Vendors\NodeEditor">
       <UniqueIdentifier>{f4b8878d-771c-4575-879e-dc75cc85244e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{48cdd47c-ca2b-4a24-a993-297a7700dfeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
