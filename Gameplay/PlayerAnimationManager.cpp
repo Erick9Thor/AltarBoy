@@ -45,7 +45,7 @@ void Hachiko::Scripting::PlayerAnimationManager::OnUpdate()
 		break;
 	case PlayerState::WALKING:
 		_state_string = "Play Walking Animation.";
-		_animator->SendTrigger("isWalking");
+		_animator->SendTrigger("isRuning");
 		break;
 	case PlayerState::MELEE_ATTACKING:
 		_state_string = "Play Melee Attacking Animation.";
