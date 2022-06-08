@@ -4,6 +4,7 @@
 #include "PlayerController.h"
 #include "Stats.h"
 #include "Scenes.h"
+#include "EnemyBulletController.h"
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
 #include <modules/ModuleSceneManager.h>
@@ -21,6 +22,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _state(BugState::INVALID)
 	, _attack_animation_duration(0.0f)
 	, _attack_animation_timer(0.0f)
+	, _is_ranged_attack(false)
 {
 }
 
@@ -29,7 +31,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = 1.0f;
+	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
 	_combat_stats->_move_speed = 4;
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
@@ -174,8 +176,26 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
-	_player_controller->RegisterHit(_combat_stats->_attack_power);
-	_attack_cooldown = _combat_stats->_attack_cd;	
+	if (_is_ranged_attack) 
+	{
+		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
+		forward = forward.Normalized();
+
+		// Spawn bullet (Passing the prefab can be improved)
+		GameObject* bullet = GameObject::Instantiate(8002494183732356716, game_object->scene_owner->GetRoot());
+
+		bullet->GetTransform()->SetGlobalPosition(game_object->GetTransform()->GetGlobalPosition());
+
+		EnemyBulletController* ebc = bullet->GetComponent<EnemyBulletController>();
+		ebc->SetTarget(_player_controller->GetGameObject());
+		ebc->SetForward(forward);
+		ebc->SetDamage(_combat_stats->_attack_power);
+	}
+	else
+	{
+		_player_controller->RegisterHit(_combat_stats->_attack_power);
+	}
+	_attack_cooldown = _combat_stats->_attack_cd;
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
