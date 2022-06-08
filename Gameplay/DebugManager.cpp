@@ -171,13 +171,13 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	
 	if (_add_health->IsSelected())
 	{
-		_player_controller->_stats._current_hp += 1.0f;
-		HE_LOG("Health now %f", _player_controller->_stats._current_hp);
+		_player_controller->_combat_stats->_current_hp += 1.0f;
+		HE_LOG("Health now %f", _player_controller->_combat_stats->_current_hp);
 	}
 	if (_remove_health->IsSelected())
 	{
-		_player_controller->_stats._current_hp -= 1;
-		HE_LOG("Health now %f", _player_controller->_stats._current_hp);
+		_player_controller->_combat_stats->_current_hp -= 1;
+		HE_LOG("Health now %f", _player_controller->_combat_stats->_current_hp);
 	}
 	/*
 	if (_increase_max_hp->IsSelected())
@@ -194,13 +194,13 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	
 	if (_increase_move_speed->IsSelected())
 	{
-		_player_controller->_stats._move_speed += 1.0f;
-		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
+		_player_controller->_combat_stats->_move_speed += 1.0f;
+		HE_LOG("Move speed now %f", _player_controller->_combat_stats->_move_speed);
 	}
 	if (_decrease_move_speed->IsSelected())
 	{
-		_player_controller->_stats._move_speed -= 1.0f;
-		HE_LOG("Move speed now %f", _player_controller->_stats._move_speed);
+		_player_controller->_combat_stats->_move_speed -= 1.0f;
+		HE_LOG("Move speed now %f", _player_controller->_combat_stats->_move_speed);
 	}
 	/*
 	if (_increase_attack_cd->IsSelected())
@@ -217,20 +217,20 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	*/
 	if (_increase_attack_power->IsSelected())
 	{
-		_player_controller->_stats._attack_power += 1;
-		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
+		_player_controller->_combat_stats->_attack_power += 1;
+		HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
 	}
 	if (_decrease_attack_power->IsSelected())
 	{
-		_player_controller->_stats._attack_power -= 1;
-		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
+		_player_controller->_combat_stats->_attack_power -= 1;
+		HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
 	}
 	
 	// Player States
 	if (_god_mode->IsSelected())
 	{
 		is_god_mode = !is_god_mode;
-		_player_controller->_stats._god_mode = is_god_mode;
+		_player_controller->_god_mode = is_god_mode;
 	}
 	/*
 
@@ -243,11 +243,10 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	if (_spawn_enemy->IsSelected())
 	{
 		HE_LOG("_spawn_enemy pressed");
-		GameObject* enemy = GameObject::Instantiate();
-		enemy->SetName("Enemy");
-		enemy->SetNewParent(game_object->parent->FindDescendantWithName("Enemies")); // TODO: find better way to do this		
-		enemy->GetTransform()->SetGlobalPosition(_player->GetTransform()->GetGlobalPosition());
-		// TODO: rework to use Zombunny prefab when instantiate accepts UID
+		UID* enemy_uid = new UID(11363594999076676195);
+		GameObject* enemy = GameObject::Instantiate(enemy_uid, game_object->parent->FindDescendantWithName("Enemies"));
+		float3 player_pos = _player->GetTransform()->GetGlobalPosition();
+		enemy->GetTransform()->SetGlobalPosition(player_pos + float3(-3, 0, 0));
 	}
 
 	// NOTE: This nullptr check is just for experiment purposes on the new exposed component text. 
