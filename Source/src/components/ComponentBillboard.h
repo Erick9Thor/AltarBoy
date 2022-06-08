@@ -10,7 +10,6 @@ namespace Hachiko
     enum class BillboardType
     {
         NORMAL,
-        STRETCH,
         HORIZONTAL,
         VERTICAL
     };

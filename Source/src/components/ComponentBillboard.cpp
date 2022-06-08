@@ -83,7 +83,6 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
-    return;
 }
 
 void Hachiko::ComponentBillboard::DrawGui()
@@ -108,15 +107,15 @@ void Hachiko::ComponentBillboard::DrawGui()
         ImGui::DragInt("Skip Frames", &skip_frames, 1.0f, 0, inf);
         ImGui::Checkbox("Play On Awake", &play_on_awake);
 
-        const char* billboardTypeCombo[] = {"LookAt", "Stretch", "Horitzontal", "Vertical"};
-        const char* billboardTypeComboCurrent = billboardTypeCombo[(int)type];
+        const char* billboard_type_combo[] = {"LookAt", "Horitzontal", "Vertical"};
+        const char* billboard_type_combo_current = billboard_type_combo[static_cast<int>(type)];
         ImGui::Text("Type:");
-        if (ImGui::BeginCombo("##Type", billboardTypeComboCurrent))
+        if (ImGui::BeginCombo("##Type", billboard_type_combo_current))
         {
-            for (int n = 0; n < IM_ARRAYSIZE(billboardTypeCombo); ++n)
+            for (int n = 0; n < IM_ARRAYSIZE(billboard_type_combo); ++n)
             {
-                bool isSelected = (billboardTypeComboCurrent == billboardTypeCombo[n]);
-                if (ImGui::Selectable(billboardTypeCombo[n], isSelected))
+                bool isSelected = (billboard_type_combo_current == billboard_type_combo[n]);
+                if (ImGui::Selectable(billboard_type_combo[n], isSelected))
                 {
                     type = (BillboardType)n;
                 }
@@ -135,14 +134,14 @@ void Hachiko::ComponentBillboard::DrawGui()
             ImGui::Unindent();
         }
 
-        const char* renderModeCombo[] = {"Additive", "Transparent"};
-        const char* renderModeComboCurrent = renderModeCombo[(int)render_mode];
-        if (ImGui::BeginCombo("Render Mode##", renderModeComboCurrent))
+        const char* render_mode_combo[] = {"Additive", "Transparent"};
+        const char* render_mode_combo_current = render_mode_combo[(int)render_mode];
+        if (ImGui::BeginCombo("Render Mode##", render_mode_combo_current))
         {
-            for (int n = 0; n < IM_ARRAYSIZE(renderModeCombo); ++n)
+            for (int n = 0; n < IM_ARRAYSIZE(render_mode_combo); ++n)
             {
-                bool isSelected = (renderModeComboCurrent == renderModeCombo[n]);
-                if (ImGui::Selectable(renderModeCombo[n], isSelected))
+                bool isSelected = (render_mode_combo_current == render_mode_combo[n]);
+                if (ImGui::Selectable(render_mode_combo[n], isSelected))
                 {
                     render_mode = (BillboardRenderMode)n;
                 }
@@ -184,7 +183,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                 }
                 ImGui::TreePop();
             }
-            if (ImGui::DragScalar("Xtiles", ImGuiDataType_U32, &x_tiles))
+            if (ImGui::DragScalar("X tiles", ImGuiDataType_U32, &x_tiles))
             {
                 if (x_tiles)
                 {
@@ -192,7 +191,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                     HE_LOG("x_factor: %f", x_factor);
                 }
             }
-            if (ImGui::DragScalar("Ytiles", ImGuiDataType_U32, &y_tiles))
+            if (ImGui::DragScalar("Y tiles", ImGuiDataType_U32, &y_tiles))
             {
                 if (y_tiles)
                 {
@@ -488,62 +487,64 @@ void Hachiko::ComponentBillboard::DetachFromScene()
 void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix)
 {
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
-
-    Frustum* frustum = camera->GetFrustum();
-    float4x4* proj = &camera->GetProjectionMatrix();
-    float4x4* view = &camera->GetViewMatrix();
-
-    float3x3 rotatePart = transform->GetGlobalMatrix().RotatePart();
     float3 position = transform->GetGlobalPosition();
-    float4x4 modelMatrix = transform->GetGlobalMatrix();
     float3 scale = transform->GetGlobalScale();
+    float3 camera_position = camera->GetFrustum()->Pos();
 
-    if (type == BillboardType::NORMAL)
+    switch (type)
     {
-        model_matrix = modelMatrix.LookAt(rotatePart.Col(2), -frustum->Front(), rotatePart.Col(1), float3::unitY);
-        model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotatePart, scale);
-    }
-    else if (type == BillboardType::STRETCH)
-    {
-        float3 cameraPos = camera->GetFrustum()->Pos();
-        float3 cameraDir = (cameraPos - position).Normalized();
-        float3 upDir = Cross(direction, cameraDir);
-        float3 newCameraDir = Cross(direction, upDir);
-
-        float3x3 newRotation;
-        newRotation.SetCol(0, upDir);
-        newRotation.SetCol(1, direction);
-        newRotation.SetCol(2, newCameraDir);
-
-        model_matrix = float4x4::FromTRS(position, newRotation * model_stretch, scale);
-    }
-    else if (type == BillboardType::HORIZONTAL)
-    {
-        if (is_horizontal)
+    case BillboardType::NORMAL:
         {
-            float3 direction = transform->GetGlobalRotation().WorldZ();
-            float3 projection = position + direction - direction.y * float3::unitY;
-            direction = (projection - position).Normalized();
-            float3 right = Cross(float3::unitY, direction);
-
-            float3x3 newRotation;
-            newRotation.SetCol(1, right);
-            newRotation.SetCol(2, float3::unitY);
-            newRotation.SetCol(0, direction);
-
-            model_matrix = float4x4::FromTRS(position, newRotation, scale);
+            Frustum* frustum = camera->GetFrustum();
+            float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
+            float4x4 global_model_matrix = transform->GetGlobalMatrix();
+            model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
+            model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotate_part, scale);
+            break;
         }
-        else
+    case BillboardType::HORIZONTAL:
         {
-            model_matrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
+            if (is_horizontal)
+            {
+                float3 direction = transform->GetGlobalRotation().WorldZ();
+                float3 projection = position + direction - direction.y * float3::unitY;
+                direction = (projection - position).Normalized();
+                float3 right = Cross(float3::unitY, direction);
+
+                float3x3 new_rotation;
+                new_rotation.SetCol(1, right);
+                new_rotation.SetCol(2, float3::unitY);
+                new_rotation.SetCol(0, direction);
+
+                model_matrix = float4x4::FromTRS(position, new_rotation, scale);
+            }
+            else
+            {
+                model_matrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
+                model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart(), scale);
+            }
+            break;
+        }
+    case BillboardType::VERTICAL:
+        {
+            float3 camera_direction = (float3(camera_position.x, position.y, camera_position.z) - position).Normalized();
+            model_matrix = float4x4::LookAt(float3::unitZ, camera_direction, float3::unitY, float3::unitY);
             model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart(), scale);
+            break;
         }
     }
-    else if (type == BillboardType::VERTICAL)
-    {
-        float3 cameraPos = camera->GetFrustum()->Pos();
-        float3 cameraDir = (float3(cameraPos.x, position.y, cameraPos.z) - position).Normalized();
-        model_matrix = float4x4::LookAt(float3::unitZ, cameraDir, float3::unitY, float3::unitY);
-        model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart(), scale);
-    }
+    // TODO: To add
+    //case BillboardType::STRETCH:
+    //{
+    //    float3 camera_direction = (camera_position - position).Normalized();
+    //    float3 up_dir = Cross(direction, camera_direction);
+    //    float3 new_camera_dir = Cross(direction, up_dir);
+
+    //    float3x3 new_rotation;
+    //    new_rotation.SetCol(0, up_dir);
+    //    new_rotation.SetCol(1, direction);
+    //    new_rotation.SetCol(2, new_camera_dir);
+
+    //    model_matrix = float4x4::FromTRS(position, new_rotation * model_stretch, scale);
+    //}
 }
