@@ -4,8 +4,11 @@
 #include "PlayerController.h"
 #include "Stats.h"
 #include "Scenes.h"
+
+#include <components/ComponentAnimation.h>
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
+
 #include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
@@ -52,6 +55,9 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
 	}
+
+	animation = game_object->GetComponent<ComponentAnimation>();
+
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 	transform = game_object->GetTransform();
@@ -59,13 +65,14 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		_spawn_pos = transform->GetGlobalPosition();
 	}
+	animation->StartAnimating();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	if (!_combat_stats->IsAlive())
 	{
-		_state = BugState::DEAD;
+		animation->SendTrigger("isDead");
 
 		if (_current_lifetime >= _parasite_lifespan)
 		{
@@ -101,6 +108,9 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	// TODO: Delete these after seminar and write a better version.
 	if (_state == BugState::ATTACKING)
 	{
+
+		animation->SendTrigger("isAttacking");
+
 		_attack_animation_timer += Time::DeltaTime();
 		
 		if (_attack_animation_timer >= _attack_animation_duration)
@@ -111,10 +121,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}
 	else
 	{
-		_state = BugState::IDLE;
+		animation->SendTrigger("idle");
 	}
-
-
 
 	if (dist_to_player > _aggro_range)
 	{
@@ -174,6 +182,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
+	animation->SendTrigger("isAttacking");
 	_player_controller->RegisterHit(_combat_stats->_attack_power);
 	_attack_cooldown = _combat_stats->_attack_cd;	
 }
@@ -225,17 +234,10 @@ void Hachiko::Scripting::EnemyController::RecieveKnockback()
 	agc->SetTargetPosition(_target_pos);
 }
 
-void Hachiko::Scripting::EnemyController::Move()
-{
-	math::float3 dir = (_target_pos - game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()).Normalized();
-	math::float3 step = dir * _combat_stats->_move_speed;
-	_current_pos += step;
-
-	transform->SetGlobalPosition(_current_pos);
-}
-
 void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 {
+	animation->SendTrigger("isMoving");
+
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	agc->SetTargetPosition(_target_pos);
 }

@@ -37,7 +37,6 @@ namespace Hachiko
             void RecieveKnockback();
             void Stop();
 
-            void Move();
             void MoveInNavmesh();
             void DropParasite();
             void DestroyEntity();
@@ -55,6 +54,7 @@ namespace Hachiko
 
             PlayerController* _player_controller;
             ComponentTransform* transform;
+            ComponentAnimation* animation;
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;
