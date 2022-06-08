@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Importer.h"
+
 class aiMaterial;
 
 namespace Hachiko

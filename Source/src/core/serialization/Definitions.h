@@ -12,16 +12,22 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
+#define EXTRA_HASH "extra_hash"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
+#define TEXTURE_MIN_FILTER "min_filter"
+#define TEXTURE_MAG_FILTER "mag_filter"
+#define TEXTURE_WRAP_MODE "wrap_mode"
 
 // Model
 #define MESHES "meshes"
 #define MATERIALS "materials"
 #define ANIMATIONS "animations"
+#define ANIMATION_NAMES "animation_names"
 #define MODEL_NAME "model_name"
 #define PREFAB_ID "prefab_id"
+#define M_STATE_MACHINE "state_machine"
 
 // Prefab
 #define PREFAB_NAME "prefab_name"
@@ -60,6 +66,27 @@
 #define MATERIAL_ALPHA_CHANNEL "smoothness_alpha"
 #define MATERIAL_IS_TRANSPARENT "is_transparent"
 
+// State machine
+#define SM_NAME "name"
+#define SM_DEFAULT_NODE "default_node"
+
+#define SM_CLIPS "clips"
+#define SM_CLIP_NAME "clip_name"
+#define SM_CLIP_ID "clips_id"
+#define SM_CLIP_LOOP "clips_loop"
+
+#define SM_NODES "nodes"
+#define SM_NODE_NAME "node_name"
+#define SM_NODE_CLIP_NAME "node_clip_name"
+
+#define SM_TRANSITIONS "transitions"
+#define SM_TRANSITION_SOURCE "transition_source"
+#define SM_TRANSITION_TARGET "transition_target"
+#define SM_TRANSITION_TRIGGER "transition_trigger"
+#define SM_TRANSITION_BLEND "transition_blend"
+
+
+
 //////////////////////////
 //						//
 // Importer extensions  //
@@ -79,6 +106,7 @@
 #define MODEL_EXTENSION ".fbx"
 #define SKYBOX_EXTENSION ".hdr"
 #define FONT_EXTENSION ".ttf"
+#define STATE_MACHINE_EXTENSION ".stm"
  
 //////////////////////////
 //						//
@@ -229,6 +257,23 @@
 #define MAX_SPEED "max_speed"
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
+
+// Component Billboard
+#define BILLBOARD_TEXTURE_ID "texture_id"
+#define BILLBOARD_TYPE "billboard_type"
+#define BILLBOARD_LIFETIME "billboard_lifetime"
+#define BILLBOARD_PLAY_ON_AWAKE "play_on_awake"
+#define ANIMATION_CYCLES "animation_cycles"
+#define X_TILES "x_tiles"
+#define Y_TILES "y_tiles"
+#define FLIP_X "flip_x"
+#define FLIP_Y "flip_y"
+#define HAS_COLOR_GRADIENT "has_color_gradient"
+#define COLOR_CYCLES "color_cycles"
+#define COLOR_LOOP "color_loop"
+#define COLOR_GRADIENT "color_gradient"
+#define ANIMATION_LOOP "animation_loop"
+#define SKIP_FRAMES "skip_frames"
 
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"

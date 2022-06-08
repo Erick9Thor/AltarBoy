@@ -80,7 +80,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
         return std::vector<UID>();
     }
 
-    size_t relative_pos = path.string().find("assets");
+    size_t relative_pos = path.string().find("assets/");
     bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
@@ -231,8 +231,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 
 GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent)
 {
-    PrefabImporter importer;
-    return importer.CreateObjectFromPrefab(prefab_uid, parent);
+    return importer_manager.prefab.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
 void Hachiko::ModuleResources::AssetsLibraryCheck()
@@ -305,6 +304,18 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     {
         UpdateAssetHash(asset_path.c_str(), meta_node);
         return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+    }
+
+    // If the asset serializes user defined data on meta (textures) we have extra checks for it)
+    if (type == Resource::AssetType::TEXTURE)
+    {
+        TextureImporter tex_importer;
+
+        if (tex_importer.OutdatedExtraHash(meta_node))
+        {
+            UpdateAssetHash(asset_path.c_str(), meta_node);
+            return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+        }
     }
     
     // Reimport if any lib file is missing

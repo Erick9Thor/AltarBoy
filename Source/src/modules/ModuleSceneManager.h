@@ -54,6 +54,7 @@ namespace Hachiko
         void SaveScene(const char* file_path = nullptr);
 
         GameObject* Raycast(const float3& origin, const float3& destination);
+        GameObject* BoundingRaycast(const float3& origin, const float3& destination);
         void ChangeSceneById(UID new_scene_id);
 
         void ReloadScene();

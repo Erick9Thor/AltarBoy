@@ -27,7 +27,7 @@ namespace Hachiko
 
         [[nodiscard]] unsigned GetImageId() const
         {
-            return id;
+            return texture_id;
         }
 
         [[nodiscard]] std::string GetAssetPath() const
@@ -50,7 +50,7 @@ namespace Hachiko
             name = new_name;
         }
 
-        unsigned id = 0;
+        unsigned texture_id = 0;
         unsigned width = 0;
         unsigned height = 0;
         unsigned format = 0;
