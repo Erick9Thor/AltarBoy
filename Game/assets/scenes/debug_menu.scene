@@ -46,29 +46,38 @@ child:
         enabled: true
         position: [0.586424351, 0.432896674, 0]
         rotation: [0.707106829, 0, 0, 0.707106709]
-        scale: [0.99999994, 0.999998093, 0.999998093]
+        scale: [0.99999994, 0.999997914, 0.999997914]
       - id: 15456178153323203404
         type: 14
         enabled: true
+        state_machine: 0
       - id: 13886694430279845866
         type: 15
         enabled: true
         class_name: PlayerController
-        "'_movement_speed@float'": 0
         "'_attack_indicator@GameObject*'": 0
         "'_goal@GameObject*'": 14595488425590114928
         "'_dash_duration@float'": 0
         "'_dash_distance@float'": 0
         "'_dash_cooldown@float'": 0
         "'_max_dash_charges@int'": 0
-        "'_raycast_min_range@float'": 0.00100000005
-        "'_raycast_max_range@float'": 15
-        "'_attack_radius@float'": 0
-        "'_attack_cooldown@float'": 0
         "'_attack_duration@float'": 0
         "'_rotation_duration@float'": 0
+        "'_hp_cell_1@GameObject*'": 0
+        "'_hp_cell_2@GameObject*'": 0
+        "'_hp_cell_3@GameObject*'": 0
+        "'_hp_cell_4@GameObject*'": 0
         "'_camera@GameObject*'": 10975885172196684923
         "'_ui_damage@GameObject*'": 0
+      - id: 6899175676630523097
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 1
+        "'_attack_cd@int'": 2
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 7
+        "'_max_hp@int'": 3
     child:
       - id: 18111616342472175038
         name: Legs_low_$AssimpFbx$_PreRotation
@@ -79,7 +88,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.99999845, 0.99999845]
+            scale: [1, 0.999998271, 0.999998271]
         child:
           - id: 10996208795697171307
             name: Legs_low_$AssimpFbx$_Scaling
@@ -370,7 +379,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [0.019902477, 0.00394614507, 0.194447815, 0.980702996]
-                                                                            scale: [1, 0.999999821, 0.999998391]
+                                                                            scale: [1, 0.999999821, 0.999998212]
                                                                         child:
                                                                           - id: 9210545225773100127
                                                                             name: mixamorig:LeftForeArm_$AssimpFbx$_Rotation
@@ -413,8 +422,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0611662157, -0.0593188517, 0.0664329007, 0.994146228]
-                                                                                            scale: [0.999999285, 0.999998689, 0.999999702]
+                                                                                            rotation: [0.0611662231, -0.0593188666, 0.0664329231, 0.994146228]
+                                                                                            scale: [0.999999106, 0.99999851, 0.999999702]
                                                                                         child:
                                                                                           - id: 14318155248402109306
                                                                                             name: mixamorig:LeftHand_$AssimpFbx$_Rotation
@@ -501,7 +510,7 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.105893888, 0, 0, 0.994377434]
+                                                                                                                            rotation: [0.10589388, 0, 0, 0.994377553]
                                                                                                                             scale: [1, 1, 1]
                                                                                                                         child:
                                                                                                                           - id: 15640277138328093528
@@ -1015,7 +1024,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0534113199, 0.042699825, -0.0672409683, 0.995390713]
+                                                                                            rotation: [0.0534113199, 0.0426998362, -0.0672409907, 0.995390713]
                                                                                             scale: [0.999999762, 0.999999404, 0.999999523]
                                                                                         child:
                                                                                           - id: 12958834517539662739
@@ -1201,7 +1210,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0.186462596, 0.0127588334, 0.0670632869, 0.980087459]
+                                                                                                            rotation: [0.186462596, 0.0127588306, 0.0670632869, 0.980087459]
                                                                                                             scale: [0.999999881, 1, 0.999999523]
                                                                                                         child:
                                                                                                           - id: 7157337497408280433
@@ -1289,7 +1298,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [-0.0635814145, 0, 0, 0.997976661]
+                                                                                                                                            rotation: [-0.0635813922, 0, 0, 0.997976661]
                                                                                                                                             scale: [1, 0.999999523, 0.999999523]
                                                                                                                                         child:
                                                                                                                                           - id: 17082775950830108194
@@ -1387,8 +1396,8 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.0837863833, 0, 0, 0.996483743]
-                                                                                                                            scale: [1, 0.999999523, 0.999999523]
+                                                                                                                            rotation: [0.0837864205, 0, 0, 0.996483743]
+                                                                                                                            scale: [1, 0.999999464, 0.999999464]
                                                                                                                         child:
                                                                                                                           - id: 6186176298028390893
                                                                                                                             name: mixamorig:RightHandMiddle2_$AssimpFbx$_Rotation
@@ -1431,7 +1440,7 @@ child:
                                                                                                                                             type: 1
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
-                                                                                                                                            rotation: [-0.232566386, 0, 0, 0.972580552]
+                                                                                                                                            rotation: [-0.232566431, 0, 0, 0.972580552]
                                                                                                                                             scale: [1, 0.99999994, 0.99999994]
                                                                                                                                         child:
                                                                                                                                           - id: 14822316041367644748
@@ -1485,8 +1494,8 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0.00104823941, 0.00960201584, 0.994047463, -0.108519182]
-                    scale: [1.00000107, 1.0000006, 0.999998391]
+                    rotation: [0.0010482393, 0.00960201956, 0.994047463, -0.108519197]
+                    scale: [1.00000155, 1.00000083, 0.999998212]
                 child:
                   - id: 9818251572522831099
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -1803,8 +1812,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [0.346824527, -0.00623859465, 0.00230693887, 0.937906444]
-                                                                    scale: [0.999998391, 1, 0.999999881]
+                                                                    rotation: [0.346824527, -0.00623859605, 0.0023069384, 0.937906444]
+                                                                    scale: [0.999998212, 1, 0.999999881]
                                                                 child:
                                                                   - id: 3025102644879354260
                                                                     name: mixamorig:RightToeBase_$AssimpFbx$_Rotation
@@ -1878,7 +1887,7 @@ child:
             enabled: true
             position: [-0.100000001, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [60, 59.9999084, 0.99999845]
+            scale: [60, 59.999897, 0.999998271]
           - id: 11428392219129906281
             type: 2
             enabled: true
@@ -2495,9 +2504,9 @@ child:
               - id: 17989173075689714235
                 type: 11
                 enabled: true
-                image_id: 0
+                image_id: 14150452817998078242
                 hover_image_id: 0
-                use_image: false
+                use_image: true
                 use_hover_image: false
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
@@ -2529,9 +2538,9 @@ child:
               - id: 6048616514783175218
                 type: 11
                 enabled: true
-                image_id: 0
+                image_id: 1211413917304924669
                 hover_image_id: 0
-                use_image: false
+                use_image: true
                 use_hover_image: false
                 image_color: [1, 1, 1, 1]
                 hover_image_color: [1, 1, 1, 1]
