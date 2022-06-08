@@ -234,7 +234,7 @@ GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObje
     return importer_manager.prefab.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
-void Hachiko::ModuleResources::SaveResource(const Resource* resource) 
+void Hachiko::ModuleResources::SaveResource(const Resource* resource) const 
 {
     importer_manager.SaveResource(resource->GetID(), resource);
 }
