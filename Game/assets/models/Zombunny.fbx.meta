@@ -9,6 +9,8 @@ materials:
 animations:
   - 7290321072388025035
 prefab_id: 11363594999076676195
+animation_names:
+  - Take 001
 resources:
   - resource_id: 9832801381674867867
     resource_type: 3

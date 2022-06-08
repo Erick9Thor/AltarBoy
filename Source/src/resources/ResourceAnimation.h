@@ -66,7 +66,6 @@ namespace Hachiko
 
         [[nodiscard]] const Channel* GetChannel(const std::string& name) const;
 
-
         State GetCurrentState() const
         {
             return current_state;
@@ -77,12 +76,11 @@ namespace Hachiko
             current_state = new_current_state;
         }
 
+
         std::unordered_map<std::string, Channel> channels;
 
     private:
-        //std::vector<Node> nodes;
         unsigned int duration = 0;
-
         std::string name;
 
         State current_state = State::UNSET;
