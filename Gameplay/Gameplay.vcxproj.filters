@@ -514,7 +514,6 @@
     <ClInclude Include="BulletController.h" />
     <ClInclude Include="FancyLights.h" />
     <ClInclude Include="CrystalExplosion.h" />
-    <ClInclude Include="BugAnimationManager.h" />
     <ClInclude Include="RoomTeleporter.h" />
     <ClInclude Include="EnemyBulletController.h" />
   </ItemGroup>
@@ -780,7 +779,6 @@
     <ClCompile Include="BulletController.cpp" />
     <ClCompile Include="FancyLights.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
-    <ClCompile Include="BugAnimationManager.cpp" />
     <ClCompile Include="RoomTeleporter.cpp" />
     <ClCompile Include="EnemyBulletController.cpp" />
   </ItemGroup>

@@ -37,7 +37,6 @@ namespace Hachiko
             void RecieveKnockback();
             void Stop();
 
-            void Move();
             void MoveInNavmesh();
             void DropParasite();
             void DestroyEntity();
@@ -55,6 +54,7 @@ namespace Hachiko
 
             PlayerController* _player_controller;
             ComponentTransform* transform;
+            ComponentAnimation* animation;
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;
@@ -62,6 +62,8 @@ namespace Hachiko
 
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);
+
+            SERIALIZE_FIELD(bool, _is_ranged_attack);
 
             bool _is_stunned = false;
             float _stun_time = 0.0f;

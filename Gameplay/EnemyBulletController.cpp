@@ -11,7 +11,7 @@ Hachiko::Scripting::EnemyBulletController::EnemyBulletController(Hachiko::GameOb
 	, _move_speed(0.5f)
 	, _direction(1.0f, 1.0f, 1.0f)
 	, _lifetime(2.0f)
-	, _collider_radius(2.0f)
+	, _collider_radius(1.0f)
 	, _damage(1)
 {
 }
