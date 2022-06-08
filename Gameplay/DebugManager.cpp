@@ -171,13 +171,13 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	
 	if (_add_health->IsSelected())
 	{
-		_player_controller->_stats._current_hp += 1;
-		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
+		_player_controller->_stats._current_hp += 1.0f;
+		HE_LOG("Health now %f", _player_controller->_stats._current_hp);
 	}
 	if (_remove_health->IsSelected())
 	{
 		_player_controller->_stats._current_hp -= 1;
-		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
+		HE_LOG("Health now %f", _player_controller->_stats._current_hp);
 	}
 	/*
 	if (_increase_max_hp->IsSelected())
@@ -208,11 +208,13 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._attack_cd += 0.1f;
 		HE_LOG("Attack speed now %f", _player_controller->_stats._attack_cd);
 	}
+	
 	if (_decrease_attack_cd->IsSelected())
 	{
 		_player_controller->_stats._attack_cd -= 0.1f;
 		HE_LOG("Attack speed now %f", _player_controller->_stats._attack_cd);
 	}
+	*/
 	if (_increase_attack_power->IsSelected())
 	{
 		_player_controller->_stats._attack_power += 1;
@@ -223,7 +225,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_stats._attack_power);
 	}
-	*/
+	
 	// Player States
 	if (_god_mode->IsSelected())
 	{
@@ -265,19 +267,14 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 			Debug::SetVsync(is_vsync);
 		}
 
-		/*
 		if (_toggle_show_colliders->IsSelected())
 		{
 			HE_LOG("_toggle_show_colliders pressed");
 		}
-		*/
 
 		if (_toggle_wireframe->IsSelected())
 		{
-			HE_LOG("_toggle_wireframe pressed");
-
 			is_wireframe = !is_wireframe;
-
 			// Set polygon mode to GL_FILL if is_wireframe is false, GL_LINE if true:
 			Debug::SetPolygonMode(!is_wireframe);
 		}
