@@ -7,23 +7,11 @@ namespace Hachiko
     class ComponentDirLight : public Component
     {
     public:
-        // TODO: add more light types
         ComponentDirLight(GameObject* conatiner);
         ~ComponentDirLight() override;
 
-        void Update() override;
         void DebugDraw() override;
-
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-        /*
-        void SetActive(bool is_active)
-        {
-            active = is_active;
-        }*/
-
+        
         [[nodiscard]] float3 GetDirection() const;
 
         void Save(YAML::Node& node) const override;

@@ -349,7 +349,7 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     Lights lights_data;
     // Ambient
     lights_data.ambient = ambient_light;
-    // DirectionalS
+    // Directional Lights
     if (dir_light && dir_light->IsActive())
     {
         lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
@@ -361,7 +361,7 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
         lights_data.directional.intensity = 0.0f;
     }
 
-    // Point
+    // Point Lights
     lights_data.n_points = 0;
     for (const auto point_light : point_lights)
     {
