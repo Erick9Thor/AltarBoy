@@ -29,12 +29,12 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
     glActiveTexture(GL_TEXTURE0);
-    int glTexture = 0;
+    int gl_texture = 0;
     has_texture = 0;
     if (texture != nullptr)
     {
-        glTexture = texture->GetImageId();
-        Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+        has_texture = texture->GetImageId();
+        Hachiko::ModuleTexture::Bind(has_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
         has_texture = 1;
     }
 
@@ -135,7 +135,7 @@ void Hachiko::ComponentBillboard::DrawGui()
         }
 
         const char* render_mode_combo[] = {"Additive", "Transparent"};
-        const char* render_mode_combo_current = render_mode_combo[(int)render_mode];
+        const char* render_mode_combo_current = render_mode_combo[static_cast<int>(render_mode)];
         if (ImGui::BeginCombo("Render Mode##", render_mode_combo_current))
         {
             for (int n = 0; n < IM_ARRAYSIZE(render_mode_combo); ++n)
