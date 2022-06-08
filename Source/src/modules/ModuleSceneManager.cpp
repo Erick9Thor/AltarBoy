@@ -212,6 +212,11 @@ Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, 
     return main_scene->Raycast(origin, destination);
 }
 
+Hachiko::GameObject* Hachiko::ModuleSceneManager::BoundingRaycast(const float3& origin, const float3& destination)
+{
+    return main_scene->Raycast(origin, destination);
+}
+
 void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
 {
     scene_ready_to_load = true;

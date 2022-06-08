@@ -42,7 +42,10 @@ namespace Hachiko
 
         void RebuildBatching();
 
-        [[nodiscard]] GameObject* Raycast(const LineSegment& segment) const;
+
+        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
+        [[nodiscard]] GameObject* BoundingRaycast(const float3& origin, const float3& destination) const;
+        [[nodiscard]] GameObject* Raycast(const LineSegment& segment, bool triangle_level = true) const;
 
         [[nodiscard]] GameObject* GetRoot() const
         {
@@ -105,7 +108,7 @@ namespace Hachiko
             navmesh_id = new_navmesh_id;
         }
         
-        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
+
 
         [[nodiscard]] GameObject* Find(UID id) const;
 

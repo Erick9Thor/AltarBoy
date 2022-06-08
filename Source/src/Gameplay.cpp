@@ -105,6 +105,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::Raycast(const float3& origin,
     return App->scene_manager->Raycast(origin, destination);
 }
 
+Hachiko::GameObject* Hachiko::SceneManagement::BoundingRaycast(const float3& origin, const float3& destination)
+{
+    return App->scene_manager->Raycast(origin, destination);
+}
+
 Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     unsigned long long id)
 {
