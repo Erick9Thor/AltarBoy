@@ -231,8 +231,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
 
 GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent)
 {
-    PrefabImporter importer;
-    return importer.CreateObjectFromPrefab(prefab_uid, parent);
+    return importer_manager.prefab.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
 void Hachiko::ModuleResources::SaveResource(const Resource* resource) 
