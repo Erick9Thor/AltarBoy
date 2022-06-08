@@ -81,10 +81,10 @@
 // This will be inlined as part of ImVec2 and ImVec4 class declarations.
 
 #define IM_VEC2_CLASS_EXTRA                                                 \
-        ImVec2 operator+(const ImVec2& rhs) { return ImVec2(x + rhs.x, y + rhs.y); }  
+        ImVec2 operator+(const ImVec2& rhs) { return ImVec2(x + rhs.x, y + rhs.y); }
 
 /*#define IM_VEC4_CLASS_EXTRA                                                 \
-        ImVec4(const MyVec4& f) { x = f.x; y = f.y; z = f.z; w = f.w; }     \
+        ImVec4(const MyVec4& f) { x = f.x; ope = f.y; z = f.z; w = f.w; }     \
         operator MyVec4() const { return MyVec4(x,y,z,w); }*/
 
 

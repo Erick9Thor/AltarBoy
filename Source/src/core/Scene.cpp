@@ -121,12 +121,19 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3&
     return Raycast(line_seg);
 }
 
+Hachiko::GameObject* Hachiko::Scene::BoundingRaycast(const float3& origin, const float3& destination) const
+{
+    LineSegment line_seg(origin, destination);
+    // Pass false to not use triangles
+    return Raycast(line_seg, false);
+}
+
 Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
 {
     return root->Find(id);
 }
 
-Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool triangle_level) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
@@ -143,26 +150,43 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment) const
             LineSegment local_segment(segment);
             local_segment.Transform(game_object->GetTransform()->GetGlobalMatrix().Inverted());
 
-            const float* vertices = mesh_renderer->GetVertices();
-            const unsigned* indices = mesh_renderer->GetIndices();
-            for (unsigned i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
+            float hit_distance;           
+            if (triangle_level)
             {
-                Triangle triangle;
-                triangle.a = vec(&vertices[indices[i] * 3]);
-                triangle.b = vec(&vertices[indices[i + 1] * 3]);
-                triangle.c = vec(&vertices[indices[i + 2] * 3]);
-
-                float hit_distance;
-                float3 hit_point;
-                if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
+                const float* vertices = mesh_renderer->GetVertices();
+                const unsigned* indices = mesh_renderer->GetIndices();
+                for (unsigned i = 0; i < mesh_renderer->GetBufferSize(ResourceMesh::Buffers::INDICES); i += 3)
                 {
-                    if (hit_distance < closest_hit_distance)
+                    Triangle triangle;
+                    triangle.a = vec(&vertices[indices[i] * 3]);
+                    triangle.b = vec(&vertices[indices[i + 1] * 3]);
+                    triangle.c = vec(&vertices[indices[i + 2] * 3]);
+
+                    
+                    float3 hit_point;
+                    if (local_segment.Intersects(triangle, &hit_distance, &hit_point))
                     {
-                        closest_hit_distance = hit_distance;
-                        selected = game_object;
+                        if (hit_distance < closest_hit_distance)
+                        {
+                            closest_hit_distance = hit_distance;
+                            selected = game_object;
+                        }
                     }
                 }
+                continue;
             }
+
+            // Rough Raycast
+            float hit_far;
+            if (local_segment.Intersects(mesh_renderer->GetOBB(), hit_distance, hit_far))
+            {
+                if (hit_distance < closest_hit_distance)
+                {
+                    closest_hit_distance = hit_distance;
+                    selected = game_object;
+                }
+            }
+            
         }
     }
     return selected;

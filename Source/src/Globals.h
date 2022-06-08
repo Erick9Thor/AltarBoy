@@ -65,6 +65,7 @@ enum class UpdateStatus
 #define ASSETS_FOLDER_SKYBOX ASSETS_FOLDER "skybox/"
 #define ASSETS_FOLDER_FONT ASSETS_FOLDER "fonts/"
 #define ASSETS_FOLDER_PREFAB ASSETS_FOLDER "prefabs/"
+#define ASSETS_FOLDER_STATE_MACHINE ASSETS_FOLDER "state_machine/"
 
 #define LIBRARY_FOLDER_SCENE LIBRARY_FOLDER "scenes/"
 #define LIBRARY_FOLDER_MESH LIBRARY_FOLDER "meshes/"
@@ -76,6 +77,7 @@ enum class UpdateStatus
 #define LIBRARY_FOLDER_FONT LIBRARY_FOLDER "fonts/"
 #define LIBRARY_FOLDER_NAVMESH LIBRARY_FOLDER "navmesh/"
 #define LIBRARY_FOLDER_PREFAB LIBRARY_FOLDER "prefabs/"
+#define LIBRARY_FOLDER_STATE_MACHINE LIBRARY_FOLDER "state_machine/"
 
 #define AUXILIAR_NODE "_$AssimpFbx$_"
 

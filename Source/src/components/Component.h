@@ -47,6 +47,7 @@ namespace Hachiko
             OBSTACLE = 18,
             AUDIO_LISTENER = 19,
             AUDIO_SOURCE = 20,
+            BILLBOARD = 21,
             UNKNOWN
         };
 

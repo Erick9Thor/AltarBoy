@@ -1,0 +1,14 @@
+asset_hash: 15888683599204127708
+model_name: bugMele_mesh
+meshes:
+  - 15262383386180840425
+materials:
+  - 5351843326543487428
+prefab_id: 15230312228727393064
+resources:
+  - resource_id: 15262383386180840425
+    resource_type: 3
+  - resource_id: 5351843326543487428
+    resource_type: 1
+  - resource_id: 15230312228727393064
+    resource_type: 13

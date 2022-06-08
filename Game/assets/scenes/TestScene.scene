@@ -17,8 +17,8 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [-3.87722849e-08, 0.887010932, -0.46174863, -2.01826893e-08]
-        scale: [1.00009215, 1.00001943, 1.00006735]
+        rotation: [-3.87722849e-08, 0.887010932, -0.46174863, -2.01826609e-08]
+        scale: [1.00009453, 1.00002003, 1.00006902]
       - id: 1219616210356617501
         type: 4
         enabled: true
@@ -27,8 +27,8 @@ child:
           far_distance: 1000
           fov: 65
           position: [0, 0, 0]
-          front: [1.56674608e-12, -0.819151878, -0.57357657]
-          up: [-8.7421526e-08, 0.573576391, -0.819152057]
+          front: [1.61648418e-12, -0.819151878, -0.57357657]
+          up: [-8.74214976e-08, 0.573576391, -0.819152057]
           pinned_camera: [0, 0, 0]
       - id: 13408884615593672014
         type: 19
@@ -81,9 +81,7 @@ child:
           - id: 975773209534617855
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
+            state_machine: 0
           - id: 11650224722633631183
             type: 17
             enabled: true
@@ -1705,8 +1703,8 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0, 0, 0.00506422436, 0.999987185]
-                                                            scale: [0.999997854, 0.999997854, 1]
+                                                            rotation: [0, 0, 0.00506423227, 0.999987185]
+                                                            scale: [0.999997377, 0.999997377, 1]
                                                         child:
                                                           - id: 11328668102247937856
                                                             name: Spine3_Jnt
@@ -1738,8 +1736,8 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [-0.0156324822, 0.706933975, 0.0156324934, 0.706933975]
-                                                                        scale: [1, 0.999993563, 0.99999994]
+                                                                        rotation: [-0.0156324822, 0.706933975, 0.0156324953, 0.706933975]
+                                                                        scale: [1, 0.999993086, 0.99999994]
                                                                     child:
                                                                       - id: 12419482238429346567
                                                                         name: Spine4_Jnt
@@ -1782,8 +1780,8 @@ child:
                                                                                         type: 1
                                                                                         enabled: true
                                                                                         position: [0, 0, 0]
-                                                                                        rotation: [0, 0, 0.0228577908, 0.999738812]
-                                                                                        scale: [1, 1, 1]
+                                                                                        rotation: [0, 0, 0.0228578318, 0.999738812]
+                                                                                        scale: [0.999999762, 0.999999762, 1]
                                                                                     child:
                                                                                       - id: 8058495164582295167
                                                                                         name: Head_Jnt
@@ -1816,7 +1814,7 @@ child:
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
                                                                                                     rotation: [-0.404129297, 0.580241263, 0.404129416, 0.580240428]
-                                                                                                    scale: [0.999994397, 1.00000048, 1.00000048]
+                                                                                                    scale: [0.99999392, 1.00000048, 1.00000048]
                                                                                                 child:
                                                                                                   - id: 13614394335958253944
                                                                                                     name: Head2_Jnt_$AssimpFbx$_Rotation
@@ -1826,8 +1824,8 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [-0.0205792636, -0.706809461, 0.0205791127, 0.70680511]
-                                                                                                        scale: [1.00001252, 0.999997854, 1.00001252]
+                                                                                                        rotation: [-0.0205792952, -0.706809938, 0.0205791108, 0.706804633]
+                                                                                                        scale: [1.00001347, 0.999997377, 1.00001347]
                                                                                                     child:
                                                                                                       - id: 13425738137042313906
                                                                                                         name: Head2_Jnt
@@ -1913,8 +1911,8 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0.00213041436, -0.00111508276, -0.0490948483, 0.998791218]
-                                                                                                        scale: [0.999998569, 0.999999166, 1]
+                                                                                                        rotation: [0.00213041436, -0.00111508276, -0.0490948558, 0.998791218]
+                                                                                                        scale: [0.999998569, 0.999999046, 1]
                                                                                                     child:
                                                                                                       - id: 15324213971417672126
                                                                                                         name: Arm2_jnt_L
@@ -1957,8 +1955,8 @@ child:
                                                                                                                         type: 1
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
-                                                                                                                        rotation: [0.000362261344, 0.00022444129, -0.00174403458, 0.999998391]
-                                                                                                                        scale: [0.999997854, 1, 1]
+                                                                                                                        rotation: [0.000362261577, 0.000224441523, -0.00174403645, 0.999998391]
+                                                                                                                        scale: [0.999997377, 1, 1]
                                                                                                                     child:
                                                                                                                       - id: 629676285150750444
                                                                                                                         name: Arm3_jnt_L
@@ -2077,7 +2075,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0.00213851407, -0.00111932273, -0.0492815599, 0.998782039]
+                                                                                                        rotation: [0.00213851221, -0.00111932179, -0.0492815599, 0.998782039]
                                                                                                         scale: [0.99999845, 1, 1]
                                                                                                     child:
                                                                                                       - id: 4205099625933347370
@@ -2216,8 +2214,8 @@ child:
                                                                                     type: 1
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
-                                                                                    rotation: [0.735009968, -0.6780563, 2.96387572e-08, -3.21283551e-08]
-                                                                                    scale: [1.00000024, 1.00000036, 1.00000882]
+                                                                                    rotation: [0.735010028, -0.6780563, 2.96387608e-08, -3.21283551e-08]
+                                                                                    scale: [1.00000024, 1.00000024, 1.0000093]
                                                                                 child:
                                                                                   - id: 15685557545574283671
                                                                                     name: Wing1_Jnt_L_$AssimpFbx$_Rotation
@@ -2260,8 +2258,8 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, -0.0335026793, 0.999438643]
-                                                                                                    scale: [1, 1, 1]
+                                                                                                    rotation: [0, 0, -0.0335027128, 0.999438643]
+                                                                                                    scale: [0.99999994, 0.99999994, 1]
                                                                                                 child:
                                                                                                   - id: 422588858930257870
                                                                                                     name: Wing2_Jnt_L_$AssimpFbx$_Rotation
@@ -2421,8 +2419,8 @@ child:
                                                                                                     type: 1
                                                                                                     enabled: true
                                                                                                     position: [0, 0, 0]
-                                                                                                    rotation: [0, 0, -0.0335026793, 0.999438643]
-                                                                                                    scale: [1, 1, 1]
+                                                                                                    rotation: [0, 0, -0.0335027128, 0.999438643]
+                                                                                                    scale: [0.99999994, 0.99999994, 1]
                                                                                                 child:
                                                                                                   - id: 9300806283563887462
                                                                                                     name: Wing2_Jnt_R_$AssimpFbx$_Rotation
@@ -2498,7 +2496,7 @@ child:
                                                                                                                     enabled: true
                                                                                                                     position: [0, 0, 0]
                                                                                                                     rotation: [0, -0.70710665, 0, 0.707106888]
-                                                                                                                    scale: [0.999993622, 1, 0.999993622]
+                                                                                                                    scale: [0.999993145, 1, 0.999993145]
                                                                                                           - id: 3211298619612645918
                                                                                                             name: Wing_Middle_R
                                                                                                             enabled: true
@@ -2519,6 +2517,485 @@ child:
                                                                                                 position: [0, 0, 0]
                                                                                                 rotation: [0, 0, 0, 1]
                                                                                                 scale: [1, 1, 1]
+      - id: 15873863668320335584
+        name: wormDistance
+        enabled: true
+        component:
+          - id: 9380862565941602697
+            type: 1
+            enabled: true
+            position: [7.39783764, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1.00003743, 1, 1.00003743]
+          - id: 70234854438691045
+            type: 14
+            enabled: true
+            state_machine: 3283866530194967255
+        child:
+          - id: 13732268486289917866
+            name: Main_root
+            enabled: true
+            component:
+              - id: 5616984533351469588
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 16481454013522726536
+                name: Root
+                enabled: true
+                component:
+                  - id: 3037374514378614716
+                    type: 1
+                    enabled: true
+                    position: [0, 0.181032777, 0.0598026738]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 11673934020734581607
+                    name: Body_Jnt_$AssimpFbx$_PreRotation
+                    enabled: true
+                    component:
+                      - id: 17337323759112572104
+                        type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, -0.70710665, 0, 0.707106888]
+                        scale: [0.999999821, 1, 0.999999821]
+                    child:
+                      - id: 2880649976001476645
+                        name: Body_Jnt_$AssimpFbx$_Rotation
+                        enabled: true
+                        component:
+                          - id: 5405684125397443620
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [0, 0, 0.174028412, 0.984740615]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 396580120024186516
+                            name: Body_Jnt
+                            enabled: true
+                            component:
+                              - id: 2895527254914377745
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [0, 0, 0, 1]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 15195428608228764445
+                                name: Neck_Jnt_$AssimpFbx$_Translation
+                                enabled: true
+                                component:
+                                  - id: 3592243858689640350
+                                    type: 1
+                                    enabled: true
+                                    position: [0.276285022, 0, 0]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 4224658910815853631
+                                    name: Neck_Jnt_$AssimpFbx$_PreRotation
+                                    enabled: true
+                                    component:
+                                      - id: 7029253476399181919
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0, 0]
+                                        rotation: [0, 0.70710665, 0, 0.707106888]
+                                        scale: [0.999999821, 1, 0.999999821]
+                                    child:
+                                      - id: 11071957008200173579
+                                        name: Neck_Jnt_$AssimpFbx$_Rotation
+                                        enabled: true
+                                        component:
+                                          - id: 18068239408939944191
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0.257612288, 0, 0, 0.966248453]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 10951171336802726540
+                                            name: Neck_Jnt
+                                            enabled: true
+                                            component:
+                                              - id: 15644425743149864368
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 241085403977358510
+                                                name: Head_Jnt_$AssimpFbx$_Translation
+                                                enabled: true
+                                                component:
+                                                  - id: 10639582343511263685
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-7.88860888e-33, 3.5527136e-17, 0.219875604]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 6242788297275664864
+                                                    name: Head_Jnt_$AssimpFbx$_PreRotation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 14801821018353980455
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0, 0]
+                                                        rotation: [0.445624352, 0.549016356, 0.445624352, 0.549016356]
+                                                        scale: [1, 1, 0.99999994]
+                                                    child:
+                                                      - id: 8183909448876757227
+                                                        name: Head_Jnt_$AssimpFbx$_Rotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 3118512005297700946
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0, 0, 0, 1]
+                                                            scale: [1, 0.99999994, 1]
+                                                        child:
+                                                          - id: 9353899272502811715
+                                                            name: Head_Jnt
+                                                            enabled: true
+                                                            component:
+                                                              - id: 2951394475084612823
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                                            child:
+                                                              - id: 16876273698751246058
+                                                                name: Eye_Jnt_$AssimpFbx$_Translation
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 3902770679226740489
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0.122637726, 4.440892e-18, -2.72310455e-17]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 15797402395399429353
+                                                                    name: Eye_Jnt_$AssimpFbx$_PreRotation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 2620344840439233318
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0, 0]
+                                                                        rotation: [-0.445624322, -0.549016356, -0.445624322, 0.549016356]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 17244950767087624674
+                                                                        name: Eye_Jnt_$AssimpFbx$_Rotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 1443439861528992179
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [0.00115574151, -0.545582414, -0.0659797564, 0.83545506]
+                                                                            scale: [0.99999994, 1, 1]
+                                                                        child:
+                                                                          - id: 5131133816742890668
+                                                                            name: Eye_Jnt
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 10392974298877973895
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                              - id: 9577256496722251630
+                                                                name: Clamp_Start_Jnt_L_$AssimpFbx$_Translation
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 5029175187407194446
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [-0.0914677605, 0.0338537917, 0.0747504011]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 11762913439256849018
+                                                                    name: Clamp_Start_Jnt_L_$AssimpFbx$_PreRotation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 18666470245745945
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0, 0]
+                                                                        rotation: [0.989858687, -0.110914156, -0.0842867121, 0.0278138109]
+                                                                        scale: [1, 1, 0.999999821]
+                                                                    child:
+                                                                      - id: 10196117482583261564
+                                                                        name: Clamp_Start_Jnt_L_$AssimpFbx$_Rotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 5043003105854157655
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [9.20017101e-07, -5.50090647e-07, -0.0648460165, 0.9978953]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 10551818900713460230
+                                                                            name: Clamp_Start_Jnt_L
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 4619609624524165908
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - id: 11500033834757921775
+                                                                                name: Clamp_middle_Jnt_L
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - id: 13235223964881043801
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [-0.155859396, -0.0440905318, -0.0201200917]
+                                                                                    rotation: [-2.47283396e-07, 1.1214005e-07, -0.0648437738, 0.99789542]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - id: 3051081111239833793
+                                                                                    name: Clamp_end_Jnt_L
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - id: 3923805672909090917
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [0.0166936889, -0.0687169209, -0.0423900709]
+                                                                                        rotation: [-2.47283538e-07, 1.10207552e-07, -0.0648437738, 0.99789542]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - id: 356234857140694852
+                                                                                        name: zero_Jnt_L
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - id: 7662077714353572331
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [0.0664831698, -0.0209813546, -0.00781517755]
+                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            scale: [1, 1, 1]
+                                                              - id: 1295805562370319358
+                                                                name: Clamp_Start_Jnt_R_$AssimpFbx$_Translation
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 7678599509091179125
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [-0.0914676711, 0.033853557, -0.0747503862]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 1510905541451950703
+                                                                    name: Clamp_Start_Jnt_R_$AssimpFbx$_PreRotation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 5126049938310484670
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0, 0, 0]
+                                                                        rotation: [0.110914111, 0.989858687, 0.0278138146, 0.0842867121]
+                                                                        scale: [1, 1, 0.999999821]
+                                                                    child:
+                                                                      - id: 12967800994872262311
+                                                                        name: Clamp_Start_Jnt_R_$AssimpFbx$_Rotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 381330025085076032
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [5.02614512e-07, 1.95184413e-07, -0.0648460165, 0.9978953]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 3717774273398407819
+                                                                            name: Clamp_Start_Jnt_R
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 9581921726407404173
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                                            child:
+                                                                              - id: 16463192563121666790
+                                                                                name: Clamp_middle_Jnt_R
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - id: 15561140313912119469
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0.155859396, 0.0440904312, 0.0201200023]
+                                                                                    rotation: [-2.47283339e-07, 1.1350653e-07, -0.0648437738, 0.99789542]
+                                                                                    scale: [1, 1, 1]
+                                                                                child:
+                                                                                  - id: 12548524930090938612
+                                                                                    name: Clamp_end_Jnt_R
+                                                                                    enabled: true
+                                                                                    component:
+                                                                                      - id: 10346803352078149053
+                                                                                        type: 1
+                                                                                        enabled: true
+                                                                                        position: [-0.0166935921, 0.068717353, 0.0423897579]
+                                                                                        rotation: [-2.47283538e-07, 1.1350653e-07, -0.0648437738, 0.99789542]
+                                                                                        scale: [1, 1, 1]
+                                                                                    child:
+                                                                                      - id: 17832638424724403333
+                                                                                        name: zero_Jnt_R
+                                                                                        enabled: true
+                                                                                        component:
+                                                                                          - id: 17240678588896248642
+                                                                                            type: 1
+                                                                                            enabled: true
+                                                                                            position: [-0.0664828718, 0.0209816508, 0.00781573076]
+                                                                                            rotation: [0, 0, 0, 1]
+                                                                                            scale: [1, 1, 1]
+                  - id: 9641693736970230067
+                    name: Tail_first_Jnt_$AssimpFbx$_Translation
+                    enabled: true
+                    component:
+                      - id: 13447952651937631210
+                        type: 1
+                        enabled: true
+                        position: [0, 0, -0.224702761]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 5029519705064131568
+                        name: Tail_first_Jnt_$AssimpFbx$_PreRotation
+                        enabled: true
+                        component:
+                          - id: 16064727663787596454
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [0, 0.70710665, 0, 0.707106888]
+                            scale: [0.999999821, 1, 0.999999821]
+                        child:
+                          - id: 17284214681597871653
+                            name: Tail_first_Jnt_$AssimpFbx$_Rotation
+                            enabled: true
+                            component:
+                              - id: 11946422060046674928
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [0, 0.157969937, 0, 0.987443984]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 12261566506771743361
+                                name: Tail_first_Jnt
+                                enabled: true
+                                component:
+                                  - id: 8947587656524443863
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 11399921253687781207
+                                    name: Tail_middle_Jnt
+                                    enabled: true
+                                    component:
+                                      - id: 2589736446646584179
+                                        type: 1
+                                        enabled: true
+                                        position: [0.239311978, 3.5527136e-17, 0]
+                                        rotation: [0, 0.259802669, 0, 0.965661824]
+                                        scale: [0.999999762, 1, 0.999999762]
+                                    child:
+                                      - id: 14069031941540321317
+                                        name: Tail_end_Jnt_$AssimpFbx$_Translation
+                                        enabled: true
+                                        component:
+                                          - id: 14267568939425112515
+                                            type: 1
+                                            enabled: true
+                                            position: [0.240222886, -1.7763568e-17, 0]
+                                            rotation: [0, 0, 0, 1]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 8201104008839105213
+                                            name: Tail_end_Jnt_$AssimpFbx$_PreRotation
+                                            enabled: true
+                                            component:
+                                              - id: 815050012091439428
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0, -0.70710665, 0, 0.707106888]
+                                                scale: [0.999999821, 1, 0.999999821]
+                                            child:
+                                              - id: 10764953579410269945
+                                                name: Tail_end_Jnt_$AssimpFbx$_Rotation
+                                                enabled: true
+                                                component:
+                                                  - id: 3094283757036900051
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0.0971346498, 0, 0.995271266]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 1781537080808036129
+                                                    name: Tail_end_Jnt
+                                                    enabled: true
+                                                    component:
+                                                      - id: 13113364783220097304
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0, 0, 0]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+          - id: 150063866605018154
+            name: Geo
+            enabled: true
+            component:
+              - id: 11119021333743189432
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 8060308771812557606
+                name: worm_geo2
+                enabled: true
+                component:
+                  - id: 12893943235966624568
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                  - id: 10533547452434410340
+                    type: 2
+                    enabled: true
+                    mesh_id: 6237063063821742698
+                    navigable: false
+                    visible: true
+                    material_id: 16901641101249946828
   - id: 10533314505781200958
     name: Crystals
     enabled: true
@@ -2607,8 +3084,7 @@ child:
               - id: 12415861617714663263
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
+                state_machine: 4494346183400875454
             child:
               - id: 13790508632444277309
                 name: Mesh
@@ -2619,7 +3095,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0.707106829, 0, 0, 0.707106709]
-                    scale: [1, 0.99999404, 0.99999404]
+                    scale: [1, 0.999993563, 0.999993563]
                 child:
                   - id: 9802724628000275634
                     name: crystalSpikeTop_mesh
@@ -2707,9 +3183,9 @@ child:
                       - id: 9514690646369897978
                         type: 1
                         enabled: true
-                        position: [0.144156978, 0.258742034, 0.271769315]
-                        rotation: [0, 0, 0, 1]
-                        scale: [1, 1, 1]
+                        position: [0.472761869, 0.179867968, 0.621286571]
+                        rotation: [0.0972542763, 0.456552684, -0.455303729, 0.758155525]
+                        scale: [1.00000024, 1, 1.00000012]
                   - id: 11160585515080312039
                     name: Bottom
                     enabled: true
@@ -2717,9 +3193,9 @@ child:
                       - id: 7878184607850954991
                         type: 1
                         enabled: true
-                        position: [0.0899617374, 0.301963925, 0.0456319116]
-                        rotation: [0, 0, 0, 1]
-                        scale: [1, 1, 1]
+                        position: [0.626370072, 0.521541834, -0.957159877]
+                        rotation: [-0.534172893, 0.487338901, -0.374156088, 0.580661178]
+                        scale: [1, 1.00000012, 1.00000024]
                   - id: 16904796737324970190
                     name: Top
                     enabled: true
@@ -2727,9 +3203,9 @@ child:
                       - id: 6339109476621287747
                         type: 1
                         enabled: true
-                        position: [-0.0773794428, 0.497074544, 0.10228952]
-                        rotation: [0, 0, 0, 1]
-                        scale: [1, 1, 1]
+                        position: [-0.395053506, 1.4850508, 0.147124633]
+                        rotation: [0.479975045, -0.566293955, -0.138840884, 0.655483246]
+                        scale: [1, 1, 1.00000036]
                   - id: 872265333633079402
                     name: Middle
                     enabled: true
@@ -2737,9 +3213,9 @@ child:
                       - id: 6832292093043092201
                         type: 1
                         enabled: true
-                        position: [0.185792997, 0.486780435, 0.0622473769]
-                        rotation: [0, 0, 0, 1]
-                        scale: [1, 1, 1]
+                        position: [0.865905881, 0.869572341, 0.361112475]
+                        rotation: [-0.254298955, 0.797793329, 0.00895784609, 0.546605706]
+                        scale: [1.00000036, 1, 1.0000006]
   - id: 7577865002841685786
     name: Player
     enabled: true
@@ -2753,9 +3229,7 @@ child:
       - id: 15106956091823123751
         type: 14
         enabled: true
-        animations:
-          - 1246325987446287226
-          - 2184831573162580743
+        state_machine: 10998250991341204431
       - id: 14578851630127373568
         type: 20
         enabled: true
@@ -2816,7 +3290,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999996722, 0.999996722]
+            scale: [1, 0.999996245, 0.999996245]
         child:
           - id: 7764132022733223854
             name: Legs_low_$AssimpFbx$_Scaling
@@ -2849,7 +3323,7 @@ child:
                         enabled: true
                         position: [0, 0, -0.31464088]
                         rotation: [0.707106829, 0, 0, 0.707106709]
-                        scale: [0.5, 0.499998808, 0.499998808]
+                        scale: [0.5, 0.499998569, 0.499998569]
                       - id: 3428151599920119695
                         type: 2
                         enabled: true
@@ -2887,7 +3361,7 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [-0.136278048, 0, 0, 0.990670741]
+                    rotation: [-0.136278048, 0, 0, 0.990670621]
                     scale: [1, 0.999999881, 0.999999881]
                 child:
                   - id: 14159291792561565159
@@ -2964,8 +3438,8 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
-                                                rotation: [-0.0261876658, -0.0106169656, 0.00216075871, 0.999598324]
-                                                scale: [1, 1, 0.999998152]
+                                                rotation: [-0.0261876918, -0.0106169684, 0.00216075871, 0.999598324]
+                                                scale: [1, 1, 0.999997675]
                                             child:
                                               - id: 4829556732801599224
                                                 name: mixamorig:Neck
@@ -2986,8 +3460,8 @@ child:
                                                         type: 1
                                                         enabled: true
                                                         position: [0, 0.0631763935, -0.208886743]
-                                                        rotation: [-0.0673732534, 0.178018823, -0.00593195017, 0.981700063]
-                                                        scale: [0.999999583, 0.999999523, 0.999999881]
+                                                        rotation: [-0.0673732683, 0.178018823, -0.00593195343, 0.981700063]
+                                                        scale: [0.999999583, 0.999999046, 0.999999881]
                                                     child:
                                                       - id: 2795807593649331640
                                                         name: mixamorig:HeadTop_End
@@ -3107,7 +3581,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [0.019902477, 0.00394614507, 0.194447815, 0.980702996]
-                                                                            scale: [1, 0.999999821, 0.999996662]
+                                                                            scale: [1, 0.999999821, 0.999996185]
                                                                         child:
                                                                           - id: 286693084533948441
                                                                             name: mixamorig:LeftForeArm_$AssimpFbx$_Rotation
@@ -3293,7 +3767,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                rotation: [0.0314806364, -0.00527426507, 0.100132152, 0.994462013]
+                                                                                                                                                rotation: [0.0314806364, -0.00527427159, 0.100132152, 0.994462013]
                                                                                                                                                 scale: [0.999999106, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - id: 6688317874553404643
@@ -3391,8 +3865,8 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                rotation: [0.0681894645, -0.0010213668, 0.00135457353, 0.997670949]
-                                                                                                                                scale: [0.999996841, 1, 1]
+                                                                                                                                rotation: [0.0681894645, -0.0010213668, 0.00135457388, 0.997670949]
+                                                                                                                                scale: [0.999996364, 1, 1]
                                                                                                                             child:
                                                                                                                               - id: 11450712976190635208
                                                                                                                                 name: mixamorig:LeftHandIndex2
@@ -3435,7 +3909,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                rotation: [0.00420448557, -1.19757806e-05, 0.000395389303, 0.999991179]
+                                                                                                                                                rotation: [0.00420449302, -1.19758097e-05, 0.000395390001, 0.999991179]
                                                                                                                                                 scale: [1, 1, 1]
                                                                                                                                             child:
                                                                                                                                               - id: 2841942637372761838
@@ -3577,7 +4051,7 @@ child:
                                                                                                                                                 type: 1
                                                                                                                                                 enabled: true
                                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                                rotation: [0.0745363832, 0.000228554592, -0.000471974869, 0.997218192]
+                                                                                                                                                rotation: [0.0745363832, 0.000228554592, -0.000471975101, 0.997218192]
                                                                                                                                                 scale: [1, 1, 0.999999642]
                                                                                                                                             child:
                                                                                                                                               - id: 12282466106365490328
@@ -3631,8 +4105,8 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
-                                                rotation: [-0.00658497307, -0.0340634845, -0.0709145814, 0.996878862]
-                                                scale: [1, 1, 0.999996841]
+                                                rotation: [-0.00658497401, -0.0340634845, -0.0709145814, 0.996878862]
+                                                scale: [1, 1, 0.999996662]
                                             child:
                                               - id: 7591660388528149488
                                                 name: mixamorig:RightShoulder
@@ -3752,7 +4226,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0534113199, 0.0426999591, -0.0672409907, 0.995390713]
+                                                                                            rotation: [0.0534113199, 0.042699974, -0.0672409907, 0.995390713]
                                                                                             scale: [0.999999344, 0.999999404, 0.999999523]
                                                                                         child:
                                                                                           - id: 16982251325589247529
@@ -3949,8 +4423,8 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
-                                                                                                                rotation: [-0.146327868, 0.0138469329, 0.0425894633, 0.988221943]
-                                                                                                                scale: [0.999996841, 1, 1]
+                                                                                                                rotation: [-0.146327868, 0.0138469338, 0.0425894707, 0.988221943]
+                                                                                                                scale: [0.999996364, 1, 1]
                                                                                                             child:
                                                                                                               - id: 8909808448685861875
                                                                                                                 name: mixamorig:RightHandIndex1
@@ -3993,7 +4467,7 @@ child:
                                                                                                                                 type: 1
                                                                                                                                 enabled: true
                                                                                                                                 position: [0, 0, 0]
-                                                                                                                                rotation: [0.00281675998, 0.000562975183, 0.00232935511, 0.999993265]
+                                                                                                                                rotation: [0.00281676743, 0.00056297658, 0.00232936069, 0.999993265]
                                                                                                                                 scale: [1, 1, 1]
                                                                                                                             child:
                                                                                                                               - id: 1351480841705291622
@@ -4027,7 +4501,7 @@ child:
                                                                                                                                             enabled: true
                                                                                                                                             position: [0, 0, 0]
                                                                                                                                             rotation: [-0.0635813475, 0, 0, 0.997976661]
-                                                                                                                                            scale: [1, 0.999998331, 0.999998331]
+                                                                                                                                            scale: [1, 0.999997854, 0.999997854]
                                                                                                                                         child:
                                                                                                                                           - id: 495197906851575578
                                                                                                                                             name: mixamorig:RightHandIndex3_$AssimpFbx$_Rotation
@@ -4124,8 +4598,8 @@ child:
                                                                                                                             type: 1
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
-                                                                                                                            rotation: [0.0837866142, 0, 0, 0.996483743]
-                                                                                                                            scale: [1, 0.999999166, 0.999999166]
+                                                                                                                            rotation: [0.0837866813, 0, 0, 0.996483743]
+                                                                                                                            scale: [1, 0.999998987, 0.999998987]
                                                                                                                         child:
                                                                                                                           - id: 6172683621477613901
                                                                                                                             name: mixamorig:RightHandMiddle2_$AssimpFbx$_Rotation
@@ -4222,8 +4696,8 @@ child:
                     type: 1
                     enabled: true
                     position: [0, 0, 0]
-                    rotation: [0.00104823732, 0.00960204564, 0.994047523, -0.108519219]
-                    scale: [1.00000775, 1.00000525, 0.999997616]
+                    rotation: [0.00104823627, 0.00960205216, 0.994047523, -0.108519197]
+                    scale: [1.00001061, 1.00000715, 0.999997616]
                 child:
                   - id: 7371629505677526311
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -4365,7 +4839,7 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0.0220926702, 0.0108474279, -0.02535972, 0.999375403]
+                                                                        rotation: [0.0220926851, 0.0108474279, -0.02535972, 0.999375403]
                                                                         scale: [1, 1, 0.999998569]
                                                                     child:
                                                                       - id: 11882876627544157593
@@ -4540,8 +5014,8 @@ child:
                                                                     type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
-                                                                    rotation: [0.346824527, -0.0062386049, 0.00230693514, 0.937906444]
-                                                                    scale: [0.999996662, 1, 0.999999881]
+                                                                    rotation: [0.346824527, -0.00623860676, 0.00230693421, 0.937906444]
+                                                                    scale: [0.999996185, 1, 0.999999881]
                                                                 child:
                                                                   - id: 10436137367160897924
                                                                     name: mixamorig:RightToeBase_$AssimpFbx$_Rotation
@@ -4551,8 +5025,8 @@ child:
                                                                         type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
-                                                                        rotation: [0.0153889088, 0.000630977214, -0.00486916211, 0.999869585]
-                                                                        scale: [0.999996841, 1, 0.999996841]
+                                                                        rotation: [0.0153889162, 0.000630977913, -0.00486916536, 0.999869585]
+                                                                        scale: [0.999996364, 1, 0.999996364]
                                                                     child:
                                                                       - id: 16091046922086322096
                                                                         name: mixamorig:RightToeBase
@@ -4584,7 +5058,7 @@ child:
             enabled: true
             position: [0, 1.10207868, 0]
             rotation: [-0.704928994, 0.0554792136, 0.0554794557, 0.704925001]
-            scale: [255.000458, 254.999237, 6.55252838]
+            scale: [255.000458, 254.999237, 6.55253601]
           - id: 14014856922884467210
             type: 2
             enabled: true
@@ -4611,7 +5085,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.707106829, 0, 0.707106709]
-        scale: [0.999999881, 1, 0.999999881]
+        scale: [0.999999404, 1, 0.999999404]
     child:
       - id: 13136078212927589090
         name: Room
@@ -4621,8 +5095,8 @@ child:
             type: 1
             enabled: true
             position: [1.07919786e-05, -2.8608799, 49.7303085]
-            rotation: [-0.707104921, 8.41128816e-13, 4.74915788e-13, 0.707108617]
-            scale: [38.9678917, 29.4149323, 0.999966562]
+            rotation: [-0.707104921, 8.41128816e-13, 4.74915734e-13, 0.707108617]
+            scale: [38.9678917, 29.414917, 0.999966085]
           - id: 5598191833808325502
             type: 2
             enabled: true
@@ -4639,7 +5113,7 @@ child:
             enabled: true
             position: [0, -3.01507711, 0]
             rotation: [-0.707105935, 0, 0, 0.707107604]
-            scale: [47.8903847, 39.0531731, 2.99748731]
+            scale: [47.8903847, 39.0531425, 2.9974854]
           - id: 400843504506925837
             type: 2
             enabled: true
@@ -4661,7 +5135,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1091, 658]
+            size: [958, 731]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -4732,7 +5206,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-0.70710665, 0, 0, 0.707106888]
-                    scale: [1, 0.999999106, 0.999999106]
+                    scale: [1, 0.999998629, 0.999998629]
                   - id: 14688935481581605658
                     type: 2
                     enabled: true
@@ -4759,8 +5233,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.08493869e-05, 0, 0]
-                    rotation: [-0.70710665, 9.41939059e-14, -9.41938449e-14, 0.707106888]
-                    scale: [1, 0.999950707, 0.999950707]
+                    rotation: [-0.70710665, 9.41939533e-14, -9.41938381e-14, 0.707106888]
+                    scale: [1, 0.99995023, 0.99995023]
                   - id: 14866484190479746652
                     type: 2
                     enabled: true
@@ -4782,7 +5256,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1091, 658]
+        size: [958, 731]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]

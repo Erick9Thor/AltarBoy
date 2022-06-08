@@ -15,6 +15,8 @@ ImporterManager::ImporterManager()
     asset_importers.emplace(Resource::AssetType::MODEL, &model);
     asset_importers.emplace(Resource::AssetType::SCENE, &scene);
     asset_importers.emplace(Resource::AssetType::SKYBOX, &skybox);
+    asset_importers.emplace(Resource::AssetType::STATE_MACHINE, &state_machine);
+
 
     // Importers used to save and load the different resource types
     resource_importers.emplace(Resource::Type::TEXTURE, &texture);
@@ -26,6 +28,7 @@ ImporterManager::ImporterManager()
     resource_importers.emplace(Resource::Type::SCENE, &scene);
     resource_importers.emplace(Resource::Type::NAVMESH, &navmesh);
     resource_importers.emplace(Resource::Type::SKYBOX, &skybox);
+    resource_importers.emplace(Resource::Type::STATE_MACHINE, &state_machine);
 }
 
 std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
@@ -79,5 +82,12 @@ Importer* Hachiko::ImporterManager::GetResourceImporter(Resource::Type type) con
         return it->second;
     }
     return nullptr;    
+}
+
+void Hachiko::ImporterManager::SaveResource(UID uid, const Resource* resource) const 
+{
+    Importer* importer = GetResourceImporter(resource->GetType());
+
+    importer->Save(uid, resource);
 }
 
