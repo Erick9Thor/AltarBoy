@@ -63,6 +63,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);
 
+            SERIALIZE_FIELD(bool, _is_ranged_attack);
+
             bool _is_stunned = false;
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;
