@@ -114,12 +114,12 @@ void Hachiko::ComponentBillboard::DrawGui()
         {
             for (int n = 0; n < IM_ARRAYSIZE(billboard_type_combo); ++n)
             {
-                bool isSelected = (billboard_type_combo_current == billboard_type_combo[n]);
-                if (ImGui::Selectable(billboard_type_combo[n], isSelected))
+                bool is_selected = (billboard_type_combo_current == billboard_type_combo[n]);
+                if (ImGui::Selectable(billboard_type_combo[n], is_selected))
                 {
                     type = (BillboardType)n;
                 }
-                if (isSelected)
+                if (is_selected)
                 {
                     ImGui::SetItemDefaultFocus();
                 }
@@ -140,12 +140,12 @@ void Hachiko::ComponentBillboard::DrawGui()
         {
             for (int n = 0; n < IM_ARRAYSIZE(render_mode_combo); ++n)
             {
-                bool isSelected = (render_mode_combo_current == render_mode_combo[n]);
-                if (ImGui::Selectable(render_mode_combo[n], isSelected))
+                bool is_selected = (render_mode_combo_current == render_mode_combo[n]);
+                if (ImGui::Selectable(render_mode_combo[n], is_selected))
                 {
                     render_mode = (BillboardRenderMode)n;
                 }
-                if (isSelected)
+                if (is_selected)
                 {
                     ImGui::SetItemDefaultFocus();
                 }
@@ -200,7 +200,6 @@ void Hachiko::ComponentBillboard::DrawGui()
                 }
             }
 
-            //ImGui::DragInt("Cycles##animation_cycles", &animation_cycles, 1, 1, inf);
             ImGui::Checkbox("FlipX##animation_loop", &has_flip_x);
             ImGui::SameLine();
             ImGui::Checkbox("FlipY##animation_loop", &has_flip_y);
@@ -382,19 +381,19 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
 void Hachiko::ComponentBillboard::AddTexture()
 {
-    const std::string title = "Select billboard texture ";
-    std::string texture_path;
+    constexpr char* title = "Select billboard texture ";
+    std::string texture_path{};
     ResourceTexture* res = nullptr;
 
     if (ImGui::Button("Add Texture"))
     {
-        ImGuiFileDialog::Instance()->OpenDialog(title.c_str(),
+        ImGuiFileDialog::Instance()->OpenDialog(title,
             "Select Texture", ".png,.tif,.jpg,.tga", "./assets/textures/", 1, nullptr,
             ImGuiFileDialogFlags_DontShowHiddenFiles | ImGuiFileDialogFlags_DisableCreateDirectoryButton 
             | ImGuiFileDialogFlags_HideColumnType | ImGuiFileDialogFlags_HideColumnDate);
     }
 
-    if (ImGuiFileDialog::Instance()->Display(title.c_str()))
+    if (ImGuiFileDialog::Instance()->Display(title))
     {
         if (ImGuiFileDialog::Instance()->IsOk())
         {
@@ -405,7 +404,7 @@ void Hachiko::ComponentBillboard::AddTexture()
     }
 
     texture_path.append(META_EXTENSION);
-    if (!FileSystem::Exists(texture_path.c_str()))
+    if (!std::filesystem::exists(texture_path.c_str()))
     {
         return;
     }
@@ -452,8 +451,8 @@ inline void Hachiko::ComponentBillboard::UpdateAnimationData()
 
 inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
 {
-    float timeMod = fmod(time, billboard_lifetime / color_cycles);
-    color_frame = timeMod / billboard_lifetime * color_cycles;
+    float time_mod = fmod(time, billboard_lifetime / color_cycles);
+    color_frame = time_mod / billboard_lifetime * color_cycles;
 
     if (color_loop && time > billboard_lifetime)
     {
