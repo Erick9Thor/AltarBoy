@@ -36,6 +36,7 @@ namespace Hachiko
         Importer* GetAssetImporter(Resource::AssetType type) const;
         Importer* GetResourceImporter(Resource::Type type) const;
 
+        void SaveResource(UID uid, const Resource* resource) const;
 
         // They exist both as assets and as resources
         MaterialImporter material;
