@@ -129,11 +129,11 @@ void Hachiko::ComponentAnimation::PlayNode(unsigned int node_idx, unsigned int b
 
         if (clip_idx < state_machine->GetNumClips())
         {
-            ResourceAnimation* anim_res = state_machine->GetClipRes(clip_idx);
+            current_animation = state_machine->GetClipRes(clip_idx);
 
-            if (anim_res != 0)
+            if (current_animation != 0)
             {
-                controller->Play(anim_res, state_machine->GetClipLoop(clip_idx), blend);
+                controller->Play(current_animation, state_machine->GetClipLoop(clip_idx), blend);
             }
         }
     }

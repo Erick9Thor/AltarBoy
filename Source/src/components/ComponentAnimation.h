@@ -29,6 +29,11 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
+        ResourceAnimation* GetCurrentAnimation()
+        {
+            return current_animation;
+        }
+
     private:
         void LoadStateMachine();
         void AnimationSelector(unsigned clip_idx);
@@ -41,6 +46,7 @@ namespace Hachiko
     private:
         AnimationController* controller = nullptr;
         unsigned int active_node = 0;
+        ResourceAnimation* current_animation = nullptr;
 
         // SM CONTROL
         WindowStateMachine* windowStateMachine = nullptr;
