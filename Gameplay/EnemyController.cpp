@@ -120,10 +120,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			_state = BugState::IDLE;
 		}
 	}
-	else
-	{
-		animation->SendTrigger("idle");
-	}
 
 	if (dist_to_player > _aggro_range)
 	{
