@@ -39,11 +39,11 @@ void Hachiko::Scripting::BugAnimationManager::OnUpdate()
 	{
 	case BugState::IDLE:
 		_state_string = "Play Idle Animation.";
-		_animator->StartAnimating(_idle_index, true, 200);
+		// _animator->SendTrigger("idle");
 		break;
 	case BugState::ATTACKING:
 		_state_string = "Play Melee Attacking Animation.";
-		_animator->StartAnimating(_attacking_index, true, 200);
+		// _animator->SendTrigger("isAttacking");
 		break;
 	case BugState::DEAD:
 		break;

@@ -11,6 +11,7 @@
 #include "components/ComponentObstacle.h"
 #include "components/ComponentAudioListener.h"
 #include "components/ComponentAudioSource.h"
+#include "components/ComponentBillboard.h"
 #include "scripting/Script.h"
 
 #include "importers/PrefabImporter.h"
@@ -225,6 +226,10 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
     case (Component::Type::AUDIO_SOURCE):
         if (!GetComponent<ComponentAudioSource>())
             new_component = new ComponentAudioSource(this);
+        break;
+    case (Component::Type::BILLBOARD):
+        if (!GetComponent<ComponentBillboard>())
+            new_component = new ComponentBillboard(this);
         break;
     }
 

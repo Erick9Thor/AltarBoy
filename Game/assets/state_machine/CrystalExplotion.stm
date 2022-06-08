@@ -1,0 +1,9 @@
+name: CrystalExplotion
+default_node: 0
+clips:
+  - clip_name: Crashing
+    clips_id: 9087701207749168962
+    clips_loop: false
+nodes:
+  - node_name: Crashing
+    node_clip_name: Crashing

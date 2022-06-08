@@ -12,6 +12,7 @@ const std::map<Resource::AssetType, std::string> ResourcesPreferences::assets_pa
     {Resource::AssetType::MATERIAL, ASSETS_FOLDER_MATERIAL},
     {Resource::AssetType::SKYBOX, ASSETS_FOLDER_SKYBOX},
     {Resource::AssetType::FONT, ASSETS_FOLDER_FONT},
+    {Resource::AssetType::STATE_MACHINE, ASSETS_FOLDER_STATE_MACHINE},
     {Resource::AssetType::PREFAB, ASSETS_FOLDER_PREFAB},
     {Resource::AssetType::SCENE, ASSETS_FOLDER_SCENE},
 };
@@ -25,6 +26,7 @@ const std::map<Resource::Type, std::string> ResourcesPreferences::lib_paths = {
     {Resource::Type::SKYBOX, LIBRARY_FOLDER_SKYBOX},
     {Resource::Type::FONT, LIBRARY_FOLDER_FONT},
     {Resource::Type::NAVMESH, LIBRARY_FOLDER_NAVMESH},
+    {Resource::Type::STATE_MACHINE, LIBRARY_FOLDER_STATE_MACHINE},
     {Resource::Type::PREFAB, LIBRARY_FOLDER_PREFAB},
     {Resource::Type::SCENE, LIBRARY_FOLDER_SCENE},
 };

@@ -8,6 +8,7 @@
 #include <Math/float4x4.h>
 #include <assimp/vector3.h>
 #include <assimp/matrix4x4.h>
+#include <imgui_color_gradient.h>
 #include "utils/UUID.h"
 
 namespace YAML
@@ -300,6 +301,60 @@ namespace YAML
         }
     };
 
+    template<>
+    struct convert<ImGradient>
+    {
+        static Node encode(const ImGradient& rhs)
+        {
+            Node node;
+            for (auto mark : rhs.getMarks())
+            {
+                node.push_back(*mark);
+            }
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, ImGradient& rhs)
+        {
+            // Not able to decode. Use ImGradientMark's decode instead and ImGradient::addMark
+            return false;
+        }
+    };
+
+    template<>
+    struct convert<ImGradientMark>
+    {
+        static Node encode(const ImGradientMark& rhs)
+        {
+            Node node;
+
+            node.push_back(rhs.color[0]);
+            node.push_back(rhs.color[1]);
+            node.push_back(rhs.color[2]);
+            node.push_back(rhs.color[3]);
+            node.push_back(rhs.position);
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, ImGradientMark& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 5)
+            {
+                return false;
+            }
+
+            rhs.color[0] = node[0].as<float>();
+            rhs.color[1] = node[1].as<float>();
+            rhs.color[2] = node[2].as<float>();
+            rhs.color[3] = node[3].as<float>();
+            rhs.position = node[4].as<float>();
+            return true;
+        }
+    };
 
     /* template<>
     struct convert<uint64_t>
