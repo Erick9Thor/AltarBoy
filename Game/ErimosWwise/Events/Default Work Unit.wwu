@@ -58,6 +58,56 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Navigation" ID="{C72B32F3-D0E9-476D-A101-B04D035F2671}">
+					<ChildrenList>
+						<Action Name="" ID="{2FC34D87-92DB-4F3A-A46D-BEE8ADF38FF4}" ShortID="370259288">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Combat" ID="{DF59185F-C72C-4550-8276-02199898FFD6}">
+					<ChildrenList>
+						<Action Name="" ID="{F660E5AF-9B22-4FD6-B3A8-851412F73F54}" ShortID="861098003">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Combat" ID="{5DE2B3AE-E618-4BF8-BEB5-34D4EABAE122}">
+					<ChildrenList>
+						<Action Name="" ID="{49A22510-BD11-4F68-8F7C-576CB194EB38}" ShortID="524323038">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Navigation" ID="{D7EBD3F1-A44F-41C6-BB5F-F2012825BD2B}">
+					<ChildrenList>
+						<Action Name="" ID="{5E603B12-46A6-4889-8932-EE230A2EC39E}" ShortID="164375468">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

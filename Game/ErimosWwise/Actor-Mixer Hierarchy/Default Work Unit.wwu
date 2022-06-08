@@ -1648,6 +1648,52 @@
 						</GroupingList>
 					</GroupingInfo>
 				</SwitchContainer>
+				<Sound Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" ShortID="129324281">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="PlaceholderAmhAraeng" ID="{F3AF7B7C-69DB-4FB5-84B2-88931812D97B}">
+							<Language>SFX</Language>
+							<AudioFile>PlaceholderAmhAraeng.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="743935933"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="PlaceholderAmhAraeng" ID="{F3AF7B7C-69DB-4FB5-84B2-88931812D97B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" ShortID="431604490">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="PlaceholderALongFall" ID="{D9C0E27F-0101-40D3-AFE5-56EF0EF07C44}">
+							<Language>SFX</Language>
+							<AudioFile>PlaceholderALongFall.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="514525226"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="PlaceholderALongFall" ID="{D9C0E27F-0101-40D3-AFE5-56EF0EF07C44}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>
