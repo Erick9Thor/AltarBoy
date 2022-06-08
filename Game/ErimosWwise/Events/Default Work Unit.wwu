@@ -61,6 +61,10 @@
 				<Event Name="Play_Navigation" ID="{C72B32F3-D0E9-476D-A101-B04D035F2671}">
 					<ChildrenList>
 						<Action Name="" ID="{2FC34D87-92DB-4F3A-A46D-BEE8ADF38FF4}" ShortID="370259288">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
@@ -72,6 +76,10 @@
 				<Event Name="Play_Combat" ID="{DF59185F-C72C-4550-8276-02199898FFD6}">
 					<ChildrenList>
 						<Action Name="" ID="{F660E5AF-9B22-4FD6-B3A8-851412F73F54}" ShortID="861098003">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="PlaceholderCombat" ID="{495AEE8B-4F4E-4582-A57B-6DCB378F2ED6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
@@ -85,6 +93,14 @@
 						<Action Name="" ID="{49A22510-BD11-4F68-8F7C-576CB194EB38}" ShortID="524323038">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="2">
+									<ModifierList>
+										<ModifierInfo>
+											<Modifier Name="" ID="{9696DA29-775B-4A66-9C32-8DDB96558AF6}"/>
+										</ModifierInfo>
+									</ModifierList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
@@ -99,10 +115,54 @@
 						<Action Name="" ID="{5E603B12-46A6-4889-8932-EE230A2EC39E}" ShortID="164375468">
 							<PropertyList>
 								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="PlaceholderNavigation" ID="{B3BA09D0-6A64-4A3A-B91F-13BE62A37BF7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Crystal" ID="{422E26F2-F986-4E14-B6FC-38411475A3E4}">
+					<ChildrenList>
+						<Action Name="" ID="{FE999945-18A1-4AE3-A364-9B009A638FF0}" ShortID="76633500">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Crystals" ID="{DF9BB866-7CA0-4C5A-B15B-22BA9A7EE109}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Pebble" ID="{7E7451A2-4336-4CCF-BE28-99A6CF205E0D}">
+					<ChildrenList>
+						<Action Name="" ID="{40610BF5-EF4F-4DE6-B5C7-D1CFFBC23EAD}" ShortID="448938372">
+							<PropertyList>
+								<Property Name="FadeInCurve" Type="int16" Value="6"/>
+								<Property Name="FadeTime" Type="Real64" Value="1"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Pebbles" ID="{217D4A68-FD9D-45A7-BC72-81E275EFC3BD}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Pebble" ID="{3C2F1626-380B-4EF3-9CB2-4CA76FA289C8}">
+					<ChildrenList>
+						<Action Name="" ID="{59B2E670-79DF-43C6-A2D9-300B1013DD06}" ShortID="829839435">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+								<Property Name="FadeOutCurve" Type="int16" Value="1"/>
+								<Property Name="FadeTime" Type="Real64" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Pebbles" ID="{217D4A68-FD9D-45A7-BC72-81E275EFC3BD}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
