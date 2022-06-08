@@ -80,7 +80,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
         return std::vector<UID>();
     }
 
-    size_t relative_pos = path.string().find("assets");
+    size_t relative_pos = path.string().find("assets/");
     bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
