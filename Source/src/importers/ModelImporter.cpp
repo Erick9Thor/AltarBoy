@@ -54,7 +54,15 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     meta.remove(RESOURCES);
     auto resource_ids = std::vector<UID>();
     auto resource_types = std::vector<Resource::Type>();
-    
+
+    bool has_bones = false;
+    for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
+    {
+        if (scene->mMeshes[mesh_index]->mNumBones > 0)
+        {
+            has_bones = true;
+        }
+    }
     for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
     {
         Hachiko::UID mesh_id;
@@ -113,7 +121,10 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     // Import scene tree into gameobjects
     GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
-    ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
+    bool a = scene->HasAnimations();
+
+    // If it has bones we dont want to combine intermediate nodes since they are used for animation
+    ImportNode(model_root, scene, scene->mRootNode, meta, !has_bones);
 
     // Import animations
     if (meta[ANIMATIONS].IsDefined())
@@ -140,7 +151,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     // Remove extra resources if the amount of resources has decreased
 }
 
-void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar)
+void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool combine_intermediate_nodes)
 {
     std::string node_name = assimp_node->mName.C_Str();
 
@@ -158,7 +169,7 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     {
         dummy_node = false;
 
-        if (load_auxiliar)
+        if (combine_intermediate_nodes)
         {
             if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
             {
@@ -197,10 +208,11 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     }
 
     go->GetTransform()->SetLocalTransform(transform);
+    go->GetTransform()->GetLocalMatrix();
 
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         auto child_node = assimp_node->mChildren[i];
-        ImportNode(go, scene, child_node, meta, load_auxiliar);
+        ImportNode(go, scene, child_node, meta, combine_intermediate_nodes);
     }    
 }
