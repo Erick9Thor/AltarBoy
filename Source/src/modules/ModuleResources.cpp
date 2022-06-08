@@ -11,6 +11,7 @@
 #include "importers/TextureImporter.h"
 #include "importers/MaterialImporter.h"
 #include "importers/ModelImporter.h"
+#include "importers/PrefabImporter.h"
 
 #include "components/ComponentMeshRenderer.h"
 #include "resources/ResourceMaterial.h"
@@ -79,7 +80,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
         return std::vector<UID>();
     }
 
-    size_t relative_pos = path.string().find("assets");
+    size_t relative_pos = path.string().find("assets/");
     bool file_in_asset = relative_pos != std::string::npos;
     std::filesystem::path destination;
 
@@ -226,6 +227,12 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
             App->scene_manager->LoadScene(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
         }
     }
+}
+
+GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent)
+{
+    PrefabImporter importer;
+    return importer.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
 void Hachiko::ModuleResources::SaveResource(const Resource* resource) 
