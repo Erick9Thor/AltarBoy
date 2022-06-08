@@ -14,10 +14,19 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_BACKGROUNDMUSIC = 548088167U;
+        static const AkUniqueID PLAY_COMBAT = 513571230U;
+        static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
+        static const AkUniqueID PLAY_ENEMYATTACK = 1824944578U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
         static const AkUniqueID PLAY_MELEEATTACK = 2988676654U;
+        static const AkUniqueID PLAY_NAVIGATION = 3849525492U;
+        static const AkUniqueID PLAY_PEBBLE = 1157125118U;
         static const AkUniqueID PLAY_RANGEDATTACK = 3766948527U;
+        static const AkUniqueID PLAY_WIND = 1020223172U;
+        static const AkUniqueID STOP_COMBAT = 913896232U;
+        static const AkUniqueID STOP_NAVIGATION = 445689598U;
+        static const AkUniqueID STOP_PEBBLE = 707649828U;
     } // namespace EVENTS
 
     namespace SWITCHES
@@ -41,6 +50,7 @@ namespace AK
         static const AkUniqueID INIT = 1355168291U;
         static const AkUniqueID ATTACKS = 3768541028U;
         static const AkUniqueID BACKGROUNDMUSIC = 626769978U;
+        static const AkUniqueID ENVIROMENT = 3909959462U;
         static const AkUniqueID FOOTSTEPS = 2385628198U;
     } // namespace BANKS
 

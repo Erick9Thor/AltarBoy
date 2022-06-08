@@ -168,6 +168,28 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Wind" ID="{82BFA4D8-2D61-4677-9935-C9ECF62165FD}">
+					<ChildrenList>
+						<Action Name="" ID="{0E9069F9-43F1-49C3-937D-4FFB6C9D417F}" ShortID="331286833">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Wind" ID="{50287AC6-E65F-477E-99AF-E8235BFA8282}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_EnemyAttack" ID="{416579A2-32FC-48B0-8308-5AEB9768B0CE}">
+					<ChildrenList>
+						<Action Name="" ID="{C04BFC07-75E7-4A41-9066-2CE1CAE193C1}" ShortID="230530224">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="MonsterAttack" ID="{CAA077B9-4FE9-4FC8-A815-785B688A966E}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

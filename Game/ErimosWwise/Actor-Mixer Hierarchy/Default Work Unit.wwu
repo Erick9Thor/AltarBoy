@@ -1653,7 +1653,7 @@
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-20</Value>
+								<Value>-15</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -1684,7 +1684,7 @@
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-20</Value>
+								<Value>-10</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
@@ -1711,6 +1711,9 @@
 					</ActiveSourceList>
 				</Sound>
 				<RandomSequenceContainer Name="Crystals" ID="{DF9BB866-7CA0-4C5A-B15B-22BA9A7EE109}" ShortID="280822724">
+					<PropertyList>
+						<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -1810,11 +1813,6 @@
 									</Modifier>
 								</ModifierInfo>
 							</ModifierList>
-							<RTPCList>
-								<RTPC Name="" ID="{EF8157E8-924A-429B-B86E-003ABF2D899A}" ShortID="851199624">
-									<ReferenceList/>
-								</RTPC>
-							</RTPCList>
 						</Property>
 						<Property Name="PlayMechanismStepOrContinuous" Type="int16" Value="0"/>
 						<Property Name="Volume" Type="Real64">
@@ -1823,7 +1821,7 @@
 									<Modifier Name="" ID="{98EDE2A0-8E7C-40BB-A33B-A981D272FCDA}">
 										<PropertyList>
 											<Property Name="Enabled" Type="bool" Value="True"/>
-											<Property Name="Max" Type="Real64" Value="30"/>
+											<Property Name="Max" Type="Real64" Value="20"/>
 											<Property Name="Min" Type="Real64" Value="-10"/>
 										</PropertyList>
 									</Modifier>
@@ -1834,6 +1832,9 @@
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="Effect0" PluginName="Wwise RoomVerb" CompanyID="0" PluginID="118" PluginType="3">
+							<ObjectRef Name="Have_U_Ever_Been_Outside" ID="{FE29AE8D-FD86-4652-A95D-68D32F5760EC}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
 						</Reference>
 						<Reference Name="OutputBus">
 							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
@@ -1936,6 +1937,14 @@
 					<ObjectLists/>
 				</RandomSequenceContainer>
 				<Sound Name="Wind" ID="{50287AC6-E65F-477E-99AF-E8235BFA8282}" ShortID="605320073">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>10</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -1956,6 +1965,29 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="Desert" ID="{3932906B-91B2-4804-B108-CEBA0F05F660}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="MonsterAttack" ID="{CAA077B9-4FE9-4FC8-A815-785B688A966E}" ShortID="417391420">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="slime-squish" ID="{AE69E905-F297-4FA6-9595-474C18D2126D}">
+							<Language>SFX</Language>
+							<AudioFile>slime-squish.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="116007299"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="slime-squish" ID="{AE69E905-F297-4FA6-9595-474C18D2126D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>
