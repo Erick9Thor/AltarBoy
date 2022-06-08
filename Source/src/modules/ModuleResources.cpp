@@ -234,11 +234,6 @@ GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObje
     return importer_manager.prefab.CreateObjectFromPrefab(prefab_uid, parent);
 }
 
-void Hachiko::ModuleResources::SaveResource(const Resource* resource) const 
-{
-    importer_manager.SaveResource(resource->GetID(), resource);
-}
-
 void Hachiko::ModuleResources::AssetsLibraryCheck()
 {
     HE_LOG("Assets/Library check...");
@@ -309,6 +304,18 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     {
         UpdateAssetHash(asset_path.c_str(), meta_node);
         return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+    }
+
+    // If the asset serializes user defined data on meta (textures) we have extra checks for it)
+    if (type == Resource::AssetType::TEXTURE)
+    {
+        TextureImporter tex_importer;
+
+        if (tex_importer.OutdatedExtraHash(meta_node))
+        {
+            UpdateAssetHash(asset_path.c_str(), meta_node);
+            return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+        }
     }
     
     // Reimport if any lib file is missing

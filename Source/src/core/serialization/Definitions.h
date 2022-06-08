@@ -12,9 +12,13 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
+#define EXTRA_HASH "extra_hash"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
+#define TEXTURE_MIN_FILTER "min_filter"
+#define TEXTURE_MAG_FILTER "mag_filter"
+#define TEXTURE_WRAP_MODE "wrap_mode"
 
 // Model
 #define MESHES "meshes"

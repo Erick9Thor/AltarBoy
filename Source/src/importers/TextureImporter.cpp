@@ -13,14 +13,20 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::TEXTURE, resource_index, meta);
     std::string extension = FileSystem::GetFileExtension(path);
-    // TODO: could we extract ModuleTexture functionality to this importer?
 
-    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, extension != TIF_TEXTURE_EXTENSION);
+    // TODO: could we extract ModuleTexture functionality to this importer?
+    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, meta, extension != TIF_TEXTURE_EXTENSION);
      
+    meta[TEXTURE_MAG_FILTER] = texture->min_filter;
+    meta[TEXTURE_MIN_FILTER] = texture->mag_filter;
+    meta[TEXTURE_WRAP_MODE] = texture->wrap;
+
     if (texture != nullptr)
     {
         Save(uid, texture);
     }
+
+    meta[EXTRA_HASH] = GetExtraHash(meta);
 
     delete texture;
 }
@@ -75,6 +81,35 @@ Hachiko::Resource* Hachiko::TextureImporter::Load(UID id)
     return texture;
 }
 
+uint64_t Hachiko::TextureImporter::GetExtraHash(const YAML::Node& meta)
+{
+    std::vector<unsigned> properties;
+
+    if (meta[TEXTURE_MAG_FILTER].IsDefined())
+    {
+        properties.push_back(meta[TEXTURE_MIN_FILTER].as<unsigned>());
+    }
+
+    if (meta[TEXTURE_WRAP_MODE].IsDefined())
+    {
+        properties.push_back(meta[TEXTURE_WRAP_MODE].as<unsigned>());
+    }
+
+    if (meta[TEXTURE_WRAP_MODE].IsDefined())
+    {
+        properties.push_back(meta[TEXTURE_MIN_FILTER].as<unsigned>());
+    }
+    uint64_t extra_hash = FileSystem::HashFromBuffer((char*)properties.data(), properties.size() * sizeof(unsigned));
+    return extra_hash;
+}
+
+bool Hachiko::TextureImporter::OutdatedExtraHash(const YAML::Node& meta)
+{
+    uint64_t previous_extra_hash = meta[EXTRA_HASH].IsDefined() ? meta[EXTRA_HASH].as<uint64_t>() : 0;
+    uint64_t extra_hash = GetExtraHash(meta);
+    return previous_extra_hash != extra_hash;
+}
+
 void Hachiko::TextureImporter::Save(UID id, const Hachiko::Resource* res)
 {
     const ResourceTexture* texture = static_cast<const ResourceTexture*>(res);
@@ -115,6 +150,21 @@ void Hachiko::TextureImporter::Save(UID id, const Hachiko::Resource* res)
 
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
+}
+
+void Hachiko::TextureImporter::SaveTextureAsset(const ResourceTexture* texture)
+{
+    // TODO: Make more eleganto
+    // Update the texture meta if edited from engine
+    // Separated because normal import already manages meta file and we need to have the data before it is loaded for import
+    // Here we only add to meta the required params and then manage import normally    
+    std::string meta_path = StringUtils::Concat(texture->path, META_EXTENSION);
+    YAML::Node meta_node = YAML::LoadFile(meta_path);
+    meta_node[TEXTURE_MAG_FILTER] = texture->min_filter;
+    meta_node[TEXTURE_MIN_FILTER] = texture->mag_filter;
+    meta_node[TEXTURE_WRAP_MODE] = texture->wrap;
+    FileSystem::Save(meta_path.c_str(), meta_node);
+    App->resources->ImportAssetFromAnyPath(texture->path);
 }
 
 
