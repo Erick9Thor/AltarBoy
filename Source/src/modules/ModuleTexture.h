@@ -54,7 +54,7 @@ namespace Hachiko
         bool Init() override;
         bool CleanUp() override;
 
-        static ResourceTexture* ImportTextureResource(UID uid, const char* path, bool flip = true);
+        static ResourceTexture* ImportTextureResource(UID uid, const char* path, YAML::Node& meta, bool flip = true);
         static ResourceSkybox* ImportSkyboxResource(UID uid, const char* path, bool flip = true);
 
         static TextureCube LoadCubeMap(TextureCube& cube);
