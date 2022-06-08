@@ -164,12 +164,11 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	}
 	if (_teleport_add_pos->IsSelected())
 	{
-		HE_LOG("_teleport_add_pos pressed");
 		teleport_positions.push_back(_player->GetTransform()->GetGlobalPosition());
 	}
 
 	// Edit Character Stats
-	/*
+	
 	if (_add_health->IsSelected())
 	{
 		_player_controller->_stats._current_hp += 1;
@@ -180,7 +179,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._current_hp -= 1;
 		HE_LOG("Health now %d", _player_controller->_stats._current_hp);
 	}
-
+	/*
 	if (_increase_max_hp->IsSelected())
 	{
 		_player_controller->_stats._max_hp += 1;
@@ -228,7 +227,6 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	// Player States
 	if (_god_mode->IsSelected())
 	{
-		HE_LOG("_god_mode pressed");
 		is_god_mode = !is_god_mode;
 		_player_controller->_stats._god_mode = is_god_mode;
 	}
