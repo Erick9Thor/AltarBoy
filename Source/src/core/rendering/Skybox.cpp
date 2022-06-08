@@ -84,9 +84,7 @@ void Hachiko::Skybox::DrawImGui()
     ImGui::Checkbox("Activate IBL", &activate_IBL);
     if (ImGui::Button("Build precomputed IBL"))
     {
-        GenerateDiffuseIBL();
-        GeneratePrefilteredIBL();
-        GenerateEnvironmentBRDF();
+        BuildIBL();
     }
 
     if (ImGui::Button("Diffuse"))
@@ -277,7 +275,14 @@ void Hachiko::Skybox::ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_
     cube = ModuleTexture::LoadCubeMap(cube);
 }
 
-void Hachiko::Skybox::GenerateDiffuseIBL() 
+void Hachiko::Skybox::BuildIBL() 
+{
+    GenerateDiffuseIBL();
+    GeneratePrefilteredIBL();
+    GenerateEnvironmentBRDF();
+}
+
+void Hachiko::Skybox::GenerateDiffuseIBL()
 {
     // Use for optimized version (draw at the end) glDepthFunc(GL_LEQUAL);
     OPTICK_CATEGORY("GenerateDiffuseIBL", Optick::Category::Rendering);

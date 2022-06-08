@@ -22,9 +22,7 @@ namespace Hachiko
             return cube;
         }
 
-        void GenerateDiffuseIBL();
-        void GeneratePrefilteredIBL();
-        void GenerateEnvironmentBRDF();
+        void BuildIBL();
 
         void DrawImGui();
 
@@ -32,6 +30,10 @@ namespace Hachiko
 
     private:
         void SelectSkyboxTexture(TextureCube::Side cube_side);
+        
+        void GenerateDiffuseIBL();
+        void GeneratePrefilteredIBL();
+        void GenerateEnvironmentBRDF();
 
         void CreateBuffers();
         TextureCube cube;
