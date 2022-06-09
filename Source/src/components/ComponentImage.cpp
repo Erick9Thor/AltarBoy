@@ -12,6 +12,8 @@
 
 #include "core/rendering/Program.h"
 #include "modules/ModuleEvent.h"
+#include "modules/ModuleCamera.h"
+#include "ComponentCamera.h"
 
 Hachiko::ComponentImage::ComponentImage(GameObject* container) 
 	: Component(Type::IMAGE, container) {
@@ -22,6 +24,9 @@ void Hachiko::ComponentImage::DrawGui()
     constexpr bool is_hover_image = true;
 
     ImGui::PushID(this);
+
+    ImGui::Checkbox("Fill Window", &fill_window);
+
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
     {   
 
@@ -132,6 +137,14 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
     Program::Deactivate();
 }
 
+void Hachiko::ComponentImage::Update()
+{
+    if (fill_window)
+    {
+        UpdateSize();
+    }
+}
+
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
 {
     node[IMAGE_IMAGE_ID] = image ? image->GetID() : 0;
@@ -140,6 +153,7 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
     node[USE_HOVER_IMAGE] = use_hover_image;
     node[IMAGE_COLOR] = color;
     node[IMAGE_HOVER_COLOR] = hover_color;
+    node["fill_window"] = fill_window;
 }
 
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
@@ -155,6 +169,23 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     use_hover_image = node[USE_HOVER_IMAGE].as<bool>();
     color = node[IMAGE_COLOR].as<float4>();
     hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
+    fill_window = node["fill_window"].IsDefined() ? node["fill_window"].as<bool>() : false;
+}
+
+void Hachiko::ComponentImage::UpdateSize()
+{
+    unsigned width, height;
+    App->camera->GetRenderingCamera()->GetResolution(width, height);
+    if (width != size_x || height != size_y)
+    {
+        ComponentTransform2D* transform = game_object->GetComponent<ComponentTransform2D>();
+        if (transform)
+        {
+            transform->SetSize(float2(width, height));
+            size_x = width;
+            size_y = height;
+        }
+    }
 }
 
 void Hachiko::ComponentImage::LoadImageResource(UID image_uid, bool is_hover)

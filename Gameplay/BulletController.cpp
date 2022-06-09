@@ -22,6 +22,7 @@ Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 
 void Hachiko::Scripting::BulletController::OnAwake()
 {
+	_transform = game_object->GetTransform();
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()
@@ -35,14 +36,14 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 	if (_lifetime <= 0)
 	{
 		//	Disable
-		game_object->SetActive(false);
-		SceneManagement::Destroy(game_object);
+		//game_object->SetActive(false);
+		RELEASE(game_object);
 	}
 	else
 	{
 		// Move bullet forward
 		current_position += delta_pos;
-		game_object->GetComponent<ComponentTransform>()->SetGlobalPosition(current_position);
+		_transform->SetGlobalPosition(current_position);
 		// Check if it collides with an enemy
 		if (CheckCollisions())
 		{
@@ -61,14 +62,13 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 	if (!enemies)	return false;
 
 	std::vector<GameObject*> enemies_children = enemies->children;
-	ComponentTransform* transform = game_object->GetTransform();
-	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
+	math::float4x4 inv_matrix = _transform->GetGlobalMatrix().Transposed();
 
 	for (int i = 0; i < enemies_children.size(); ++i)
 	{
-		if (enemies_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
+		if (enemies_children[i]->active && _collider_radius >= _transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
 		{
-			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - _transform->GetGlobalPosition();
 			enemies_children[i]->GetComponent<EnemyController>()->RegisterHit(_damage, dir, 0.2f);
 			return true;
 		}
@@ -82,7 +82,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 
 	for (int i = 0; i < crystal_children.size(); ++i)
 	{
-		if (crystal_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(crystal_children[i]->GetTransform()->GetGlobalPosition()))
+		if (crystal_children[i]->active && _collider_radius >= _transform->GetGlobalPosition().Distance(crystal_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			crystal_children[i]->GetComponent<CrystalExplosion>()->RegisterHit(_damage);
 			return true;

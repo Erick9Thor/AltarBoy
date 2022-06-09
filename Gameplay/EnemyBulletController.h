@@ -30,6 +30,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _collider_radius);
 
             GameObject* _player;
+            ComponentTransform* _transform;
             math::float3 _direction;
             int _damage;
         };

@@ -22,9 +22,15 @@ namespace Hachiko
 			void OnAwake() override;
 			void OnStart() override;
 			void OnUpdate() override;
-		private:
 
+			void RegisterCombat();
+			void UnregisterCombat();
+
+		private:
 			ComponentAudioSource* _audio_source;
+
+			SERIALIZE_FIELD(int, _enemies_in_combat);
+			SERIALIZE_FIELD(bool, _previous_in_combat);
 
 			bool isPlayingMoving1 = false;
 			bool isPlayingMoving = false;

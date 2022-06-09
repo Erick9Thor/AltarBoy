@@ -18,6 +18,8 @@
 
 void Hachiko::Scripting::AudioManager::OnEditor()
 {
+	Editor::Show("Enemies In Combat", _enemies_in_combat);
+	Editor::Show("Previous In Combat", _previous_in_combat);
 }
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
@@ -100,6 +102,8 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Player", _player);
 	Editor::Show("Enemy Body", _enemy_body);
 	Editor::Show("Parasite", _parasite);
+	Editor::Show("Audio Manager Game Object", _audio_manager_game_object);
+	Editor::Show("Already In Combat", _already_in_combat);
 	Editor::Show("Attack Animation Duration", _attack_animation_duration);
 	Editor::Show("Attack Animation Timer", _attack_animation_timer);
 	Editor::Show("Is Ranged Attack", _is_ranged_attack);

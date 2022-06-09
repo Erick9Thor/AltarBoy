@@ -21,10 +21,22 @@
 
 void Hachiko::Scripting::AudioManager::OnSave(YAML::Node& node) const
 {
+	node["'_enemies_in_combat@int'"] = _enemies_in_combat;
+
+	node["'_previous_in_combat@bool'"] = _previous_in_combat;
 }
 
 void Hachiko::Scripting::AudioManager::OnLoad()
 {
+	if (load_node["'_enemies_in_combat@int'"].IsDefined())
+	{
+		_enemies_in_combat = load_node["'_enemies_in_combat@int'"].as<int>();
+	}
+
+	if (load_node["'_previous_in_combat@bool'"].IsDefined())
+	{
+		_previous_in_combat = load_node["'_previous_in_combat@bool'"].as<bool>();
+	}
 }
 
 void Hachiko::Scripting::BackToMainMenu::OnSave(YAML::Node& node) const
@@ -760,6 +772,17 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 		node["'_parasite@GameObject*'"] = 0;
 	}
 
+	if (_audio_manager_game_object != nullptr)
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = _audio_manager_game_object->GetID();
+	}
+	else
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = 0;
+	}
+
+	node["'_already_in_combat@bool'"] = _already_in_combat;
+
 	node["'_attack_animation_duration@float'"] = _attack_animation_duration;
 
 	node["'_attack_animation_timer@float'"] = _attack_animation_timer;
@@ -802,6 +825,16 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_parasite@GameObject*'"].IsDefined())
 	{
 		_parasite = SceneManagement::FindInCurrentScene(load_node["'_parasite@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_audio_manager_game_object@GameObject*'"].IsDefined())
+	{
+		_audio_manager_game_object = SceneManagement::FindInCurrentScene(load_node["'_audio_manager_game_object@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_already_in_combat@bool'"].IsDefined())
+	{
+		_already_in_combat = load_node["'_already_in_combat@bool'"].as<bool>();
 	}
 
 	if (load_node["'_attack_animation_duration@float'"].IsDefined())

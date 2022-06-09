@@ -1,19 +1,19 @@
 prefab_name: parasiteConsumable
-name: parasiteConsumable
+name: RootNode
 enabled: true
 component:
   - type: 1
     enabled: true
     position: [0, 0, 0]
     rotation: [0, 0, 0, 1]
-    scale: [0.285714298, 0.285714298, 0.285714298]
+    scale: [1, 1, 1]
 child:
   - name: PM3D_Sphere124
     enabled: true
     component:
       - type: 1
         enabled: true
-        position: [0, 2.54999995, -6.85099983]
+        position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
       - type: 2

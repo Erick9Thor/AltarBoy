@@ -17,8 +17,8 @@ child:
         type: 1
         enabled: true
         position: [0, 0, 0]
-        rotation: [3.87724803e-08, 0.887010932, -0.46174863, 2.01836681e-08]
-        scale: [1.00000048, 1.00000012, 1.00000036]
+        rotation: [3.87724732e-08, 0.887010872, -0.46174863, 2.01836574e-08]
+        scale: [1.00000143, 1.00000024, 1.00000095]
       - id: 15064940495945291953
         type: 4
         enabled: true
@@ -27,8 +27,8 @@ child:
           far_distance: 1000
           fov: 65
           position: [0, 0, 0]
-          front: [-1.06581376e-14, -0.819151998, -0.573576629]
-          up: [8.74227766e-08, 0.573576391, -0.819152117]
+          front: [-2.48689924e-14, -0.819151998, -0.57357651]
+          up: [8.74227624e-08, 0.57357645, -0.819152117]
           pinned_camera: [0, 0, 0]
       - id: 18326098555628291338
         type: 19
@@ -40,504 +40,6 @@ child:
         "'_relative_position_to_player@math::float3'": [0, 0, 0]
         "'_player@GameObject*'": 14796348007437283586
         "'_follow_delay@float'": 0
-  - id: 4184510551137532881
-    name: 2022_06_08_Level2_Test2
-    enabled: true
-    component:
-      - id: 8131071073834610033
-        type: 1
-        enabled: true
-        position: [0, 0, 0]
-        rotation: [0, 0, 0, 1]
-        scale: [1, 1, 1]
-    child:
-      - id: 11962048383660097677
-        name: Box063
-        enabled: true
-        component:
-          - id: 17884532258350161546
-            type: 1
-            enabled: true
-            position: [-25.5000038, 0.0499992371, -3]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 6959381951100637664
-            type: 2
-            enabled: true
-            mesh_id: 6040541699989455943
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-      - id: 11613936772234879868
-        name: Box750
-        enabled: true
-        component:
-          - id: 14487786500877561928
-            type: 1
-            enabled: true
-            position: [-73.5, 0.0499992371, -3]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 16346112912512051257
-            type: 2
-            enabled: true
-            mesh_id: 10246420298256222666
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 5813130421529227140
-        name: Box810
-        enabled: true
-        component:
-          - id: 7802794892470387386
-            type: 1
-            enabled: true
-            position: [-55.5000076, 0.0999979973, 5.94999933]
-            rotation: [0.707107484, 0, 0, 0.707106054]
-            scale: [1, 0.999999702, 0.999999702]
-          - id: 13379574798753190495
-            type: 2
-            enabled: true
-            mesh_id: 13875870049751678416
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 9968001247481728265
-            type: 2
-            enabled: true
-            mesh_id: 15264882463826172704
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-      - id: 4202333814610490197
-        name: Box813
-        enabled: true
-        component:
-          - id: 15860250292807566022
-            type: 1
-            enabled: true
-            position: [-49.5000076, 0.0999979973, 5.94999933]
-            rotation: [0.707107484, 0, 0, 0.707106054]
-            scale: [1, 0.999999702, 0.999999702]
-          - id: 17135592679813254557
-            type: 2
-            enabled: true
-            mesh_id: 1867645335007740423
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 5417184064607232166
-        name: Box823
-        enabled: true
-        component:
-          - id: 13910402689865536188
-            type: 1
-            enabled: true
-            position: [-10.4999924, 0.0999979973, 29.9500008]
-            rotation: [0.707107484, 0, 0, 0.707106054]
-            scale: [1, 0.999999702, 0.999999702]
-          - id: 14483856622124073053
-            type: 2
-            enabled: true
-            mesh_id: 5794404003651871092
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 2321029588830950028
-            type: 2
-            enabled: true
-            mesh_id: 15165216809105393258
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-          - id: 14149858060337074674
-            type: 2
-            enabled: true
-            mesh_id: 17595462204105569663
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-          - id: 11083166705779883161
-            type: 2
-            enabled: true
-            mesh_id: 12588520201223102042
-            navigable: false
-            visible: true
-            material_id: 7631669237127346378
-      - id: 13380729354609417212
-        name: Box861
-        enabled: true
-        component:
-          - id: 8136191186815883695
-            type: 1
-            enabled: true
-            position: [2.96519852, 0.0999979079, 16.4999962]
-            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
-            scale: [1.00000024, 1.00000024, 1.00000012]
-          - id: 1207972786986204388
-            type: 2
-            enabled: true
-            mesh_id: 4173690324734877547
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-      - id: 2741429134065270882
-        name: Box862
-        enabled: true
-        component:
-          - id: 17974712875676890688
-            type: 1
-            enabled: true
-            position: [2.96519852, 0.0999979079, 13.4999981]
-            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
-            scale: [1.00000024, 1.00000024, 1.00000012]
-          - id: 7139900213475130307
-            type: 2
-            enabled: true
-            mesh_id: 18278820509728170742
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-      - id: 15133476312746377156
-        name: Box106
-        enabled: true
-        component:
-          - id: 16861014332608031351
-            type: 1
-            enabled: true
-            position: [19.4999981, -4.95000076, 27]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 4665069259878325062
-            type: 2
-            enabled: true
-            mesh_id: 8086489933765818138
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 15139791111701049752
-        name: Box132
-        enabled: true
-        component:
-          - id: 5833848566413831507
-            type: 1
-            enabled: true
-            position: [28.5000076, -14.9500017, 33]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 7918847624162603640
-            type: 2
-            enabled: true
-            mesh_id: 16610324452345922998
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 12912883776507293304
-            type: 2
-            enabled: true
-            mesh_id: 9372417653662674340
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-          - id: 1392746242687918994
-            type: 2
-            enabled: true
-            mesh_id: 627694408125457577
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-      - id: 8906284540304303404
-        name: Cylinder005
-        enabled: true
-        component:
-          - id: 4040054791305837220
-            type: 1
-            enabled: true
-            position: [83.9972458, -14.9000025, 66]
-            rotation: [-0.5, 0.5, 0.5, 0.5]
-            scale: [0.999999881, 0.99999994, 0.99999994]
-          - id: 10457287861050274665
-            type: 2
-            enabled: true
-            mesh_id: 6743085063590044997
-            navigable: false
-            visible: true
-            material_id: 7631669237127346378
-          - id: 17866558552134092664
-            type: 2
-            enabled: true
-            mesh_id: 15384517979062222181
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 13147879490557400992
-            type: 2
-            enabled: true
-            mesh_id: 4738138872911325589
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-          - id: 16418807128345107331
-            type: 2
-            enabled: true
-            mesh_id: 13359937641597133802
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-      - id: 13846291054641761306
-        name: Box987
-        enabled: true
-        component:
-          - id: 6253722938257654371
-            type: 1
-            enabled: true
-            position: [106.500023, -14.9000025, 68.9499969]
-            rotation: [0.707107246, 0, 0, 0.707106292]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 5151481866205482077
-            type: 2
-            enabled: true
-            mesh_id: 1096665434204614302
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 4676895969953596164
-            type: 2
-            enabled: true
-            mesh_id: 5349295487886115708
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-      - id: 1907094581312807187
-        name: Cylinder007
-        enabled: true
-        component:
-          - id: 17312765516891826288
-            type: 1
-            enabled: true
-            position: [171, -14.9000025, 35.9999962]
-            rotation: [-0.5, 0.5, 0.5, 0.5]
-            scale: [0.999999881, 0.99999994, 0.99999994]
-          - id: 694407074578654428
-            type: 2
-            enabled: true
-            mesh_id: 8157081115384317535
-            navigable: false
-            visible: true
-            material_id: 7631669237127346378
-          - id: 17172533317991238384
-            type: 2
-            enabled: true
-            mesh_id: 14010442352576856547
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 10679101667124917165
-        name: Box1140
-        enabled: true
-        component:
-          - id: 8744561466670441015
-            type: 1
-            enabled: true
-            position: [132.014633, -24.9000015, 70.4646301]
-            rotation: [0.500000417, 0.499999702, -0.500000179, 0.499999702]
-            scale: [1.00000024, 1.00000024, 1.00000012]
-          - id: 3027938176458684283
-            type: 2
-            enabled: true
-            mesh_id: 12920718580940958691
-            navigable: false
-            visible: true
-            material_id: 6750369022920963075
-          - id: 16121989646063005031
-            type: 2
-            enabled: true
-            mesh_id: 16624323471867841651
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-          - id: 9953392321635932293
-            type: 2
-            enabled: true
-            mesh_id: 10945689199157686752
-            navigable: false
-            visible: true
-            material_id: 4587535263328285150
-          - id: 5735281785355461321
-            type: 2
-            enabled: true
-            mesh_id: 10934194922944542413
-            navigable: false
-            visible: true
-            material_id: 2649979332993473088
-          - id: 14317932481217509341
-            type: 2
-            enabled: true
-            mesh_id: 3723356668907884060
-            navigable: false
-            visible: true
-            material_id: 4916520811287933055
-          - id: 8598097057230098070
-            type: 2
-            enabled: true
-            mesh_id: 3124620314867985261
-            navigable: false
-            visible: true
-            material_id: 4358669898672813652
-          - id: 7922236101824287633
-            type: 2
-            enabled: true
-            mesh_id: 3603597427779885778
-            navigable: false
-            visible: true
-            material_id: 5964044276421505701
-          - id: 10203809787127998268
-            type: 2
-            enabled: true
-            mesh_id: 7829127816676199760
-            navigable: false
-            visible: true
-            material_id: 2719247482259562865
-          - id: 14433002489555157416
-            type: 2
-            enabled: true
-            mesh_id: 1239898257602549344
-            navigable: false
-            visible: true
-            material_id: 1346915489203828914
-          - id: 3885570670861681837
-            type: 2
-            enabled: true
-            mesh_id: 11206799825649079093
-            navigable: false
-            visible: true
-            material_id: 7631669237127346378
-          - id: 14452980936527118307
-            type: 2
-            enabled: true
-            mesh_id: 13050712370942232334
-            navigable: false
-            visible: true
-            material_id: 13202539630038216380
-      - id: 6860736496272231847
-        name: Box606
-        enabled: true
-        component:
-          - id: 4485194206141742733
-            type: 1
-            enabled: true
-            position: [157.5, -29.9500008, 66]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 18328134396789431236
-            type: 2
-            enabled: true
-            mesh_id: 9961705848653338007
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 1634073417997880859
-        name: Box646
-        enabled: true
-        component:
-          - id: 8181062677457871077
-            type: 1
-            enabled: true
-            position: [166.5, -43.0191345, 69]
-            rotation: [8.94069601e-08, 0, 0, 1]
-            scale: [1, 0.999999881, 0.999999881]
-          - id: 12242687723793863464
-            type: 2
-            enabled: true
-            mesh_id: 13382627360406350027
-            navigable: false
-            visible: true
-            material_id: 917493402162421944
-      - id: 7376345353105203417
-        name: Plane001
-        enabled: true
-        component:
-          - id: 304720390678807643
-            type: 1
-            enabled: true
-            position: [-72.0014343, 0.182819366, -1.56231523]
-            rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 4692465521885614367
-            type: 2
-            enabled: true
-            mesh_id: 11745340481189940368
-            navigable: true
-            visible: true
-            material_id: 6750369022920963075
-      - id: 12355257976138607378
-        name: Plane002
-        enabled: true
-        component:
-          - id: 2784597357703053295
-            type: 1
-            enabled: true
-            position: [-54.0050964, 0.182819366, -1.56231523]
-            rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 13816227444555690695
-            type: 2
-            enabled: true
-            mesh_id: 5511733838755339245
-            navigable: true
-            visible: true
-            material_id: 6750369022920963075
-      - id: 957145301839694828
-        name: Plane003
-        enabled: true
-        component:
-          - id: 5904346975825681490
-            type: 1
-            enabled: true
-            position: [18.0606308, -4.77585983, 34.4561882]
-            rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 14522546046846056454
-            type: 2
-            enabled: true
-            mesh_id: 17752306601822407888
-            navigable: true
-            visible: true
-            material_id: 6750369022920963075
-      - id: 11266166864676518241
-        name: Plane004
-        enabled: true
-        component:
-          - id: 12965947357343436397
-            type: 1
-            enabled: true
-            position: [18.0606308, -14.8252096, 34.456192]
-            rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 9960070429442303451
-            type: 2
-            enabled: true
-            mesh_id: 12353496125733705766
-            navigable: true
-            visible: true
-            material_id: 6750369022920963075
-      - id: 8343455434526765276
-        name: Plane006
-        enabled: true
-        component:
-          - id: 8798970003001356018
-            type: 1
-            enabled: true
-            position: [136.484528, -29.7145863, 64.5090485]
-            rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999999583, 0.999999583]
-          - id: 14318330892353646683
-            type: 2
-            enabled: true
-            mesh_id: 8027336474816273125
-            navigable: true
-            visible: true
-            material_id: 6750369022920963075
   - id: 2963910235842233937
     name: Directional Light
     enabled: true
@@ -673,8 +175,8 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.0684163868, -0.542874873, -0.233516023]
-                                rotation: [-0.0221113581, 0.00901879743, 0.0294361431, 0.999281406]
-                                scale: [0.999998868, 0.999998629, 1]
+                                rotation: [-0.02211136, 0.00901879556, 0.0294361506, 0.999281406]
+                                scale: [0.999998689, 0.99999845, 1]
                             child:
                               - id: 16835082161758754832
                                 name: LeftToe
@@ -716,7 +218,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [-0.0673040897, -0.0276093148, 0.0831542313, 0.993877888]
+                                rotation: [-0.0673040822, -0.0276093092, 0.0831542313, 0.993877888]
                                 scale: [0.999999523, 1, 0.99999994]
                             child:
                               - id: 5440886976697076934
@@ -738,8 +240,8 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [-0.104924999, 0.419130772, -0.0858220905]
-                                        rotation: [0.0632768422, 0.0124707678, -0.0131807877, 0.997831047]
-                                        scale: [0.999998808, 0.999999881, 0.999999881]
+                                        rotation: [0.0632768422, 0.0124707697, -0.0131807886, 0.997831047]
+                                        scale: [0.999998629, 0.999999881, 0.999999881]
                                     child:
                                       - id: 2062278514611775300
                                         name: RightFoot
@@ -749,7 +251,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [-0.0684159994, 0.54287523, 0.233516097]
-                                            rotation: [0.0704451278, 0.200136781, -0.171858981, 0.962001801]
+                                            rotation: [0.0704451203, 0.200136781, -0.171858966, 0.962001681]
                                             scale: [0.999999821, 0.999999523, 1]
                                         child:
                                           - id: 11861268761261141129
@@ -781,8 +283,8 @@ child:
                         type: 1
                         enabled: true
                         position: [-0.00177570921, 0.209533691, -0.0506989211]
-                        rotation: [0.00410262402, -0.0937282294, -0.000385287334, 0.995589316]
-                        scale: [1, 0.999998868, 0.999999225]
+                        rotation: [0.00410262356, -0.0937282294, -0.000385287305, 0.995589316]
+                        scale: [1, 0.999998689, 0.999999225]
                     child:
                       - id: 16786063068737038803
                         name: CenterNeck
@@ -834,8 +336,8 @@ child:
                             type: 1
                             enabled: true
                             position: [0.154053956, 0.255940497, -0.0161152389]
-                            rotation: [-0.0167177897, -0.169312313, 0.0845512897, 0.981786609]
-                            scale: [0.99999994, 0.999998927, 1]
+                            rotation: [-0.0167177897, -0.169312343, 0.0845512897, 0.981786609]
+                            scale: [0.999999762, 0.999998748, 0.99999994]
                         child:
                           - id: 1676480241869734536
                             name: LeftElbow
@@ -856,8 +358,8 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0.202341482, -0.348988682, -0.100166261]
-                                    rotation: [-0.267992526, -0.00222758041, 0.00243866863, 0.963415325]
-                                    scale: [0.999999881, 0.99999994, 0.999999881]
+                                    rotation: [-0.267992526, -0.00222758041, 0.00243866863, 0.963415444]
+                                    scale: [0.999999881, 0.999999881, 0.999999881]
                                 child:
                                   - id: 12787741909742177562
                                     name: LeftFingerStart
@@ -996,7 +498,7 @@ child:
                                     type: 1
                                     enabled: true
                                     position: [0, 0, 0]
-                                    rotation: [0.000875241763, -0.000529819517, 0.0717774481, 0.997420132]
+                                    rotation: [0.000875241763, -0.000529819343, 0.0717774257, 0.997420132]
                                     scale: [0.999999762, 0.999999881, 0.999999821]
                                 child:
                                   - id: 5528325788176578873
@@ -1029,8 +531,8 @@ child:
                                                 type: 1
                                                 enabled: true
                                                 position: [-0.202341989, 0.34898898, 0.100165993]
-                                                rotation: [-0.00272538466, -0.00221523154, -0.0820613503, 0.996621072]
-                                                scale: [1, 0.999998808, 0.999999762]
+                                                rotation: [-0.00272538466, -0.00221523223, -0.0820613503, 0.996621072]
+                                                scale: [1, 0.999998748, 0.999999762]
                                             child:
                                               - id: 13380855547150892846
                                                 name: Parasite
@@ -1063,7 +565,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [0, 0, 0.927974105, 0.372644752]
-                                                            scale: [1.00000167, 1.00000167, 1]
+                                                            scale: [1.00000191, 1.00000191, 1]
                                                         child:
                                                           - id: 5761924154994129742
                                                             name: Jaw_UP_Parasite_$AssimpFbx$_Rotation
@@ -1073,8 +575,8 @@ child:
                                                                 type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
-                                                                rotation: [0.000181054551, -0.000801367161, 0.0025626251, 0.999996364]
-                                                                scale: [0.999999762, 0.99999994, 0.999998868]
+                                                                rotation: [0.000181054638, -0.000801367394, 0.0025626258, 0.999996364]
+                                                                scale: [0.999999762, 0.99999994, 0.999998689]
                                                             child:
                                                               - id: 8552523540400369934
                                                                 name: Jaw_UP_Parasite
@@ -1149,8 +651,8 @@ child:
                                                                                 type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [-0.230007112, 0.973168015, -0.00333832321, 0.0054441141]
-                                                                                scale: [1.00000036, 0.99999994, 1.00000167]
+                                                                                rotation: [-0.230007112, 0.973168015, -0.00333832274, 0.0054441127]
+                                                                                scale: [1.00000036, 0.99999994, 1.00000203]
                                                                             child:
                                                                               - id: 16469821320708836432
                                                                                 name: Eye_parasite
@@ -1335,7 +837,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [-0.0790388286, -0.702675641, -0.0790388286, 0.702675402]
-                                                            scale: [1.00000203, 1, 1]
+                                                            scale: [1.00000238, 1, 1]
                                                         child:
                                                           - id: 10070047789528078643
                                                             name: LeftWingZero
@@ -1411,7 +913,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [-0.0790388286, -0.702675641, -0.0790388286, 0.702675402]
-                                                            scale: [1.00000203, 1, 1]
+                                                            scale: [1.00000238, 1, 1]
                                                         child:
                                                           - id: 3530391000518768550
                                                             name: RightWingZero
@@ -1480,7 +982,7 @@ child:
             enabled: true
             position: [0, 10.0188961, 0]
             rotation: [-0.704928935, 0.055479221, 0.0554794483, 0.704925001]
-            scale: [2318.18555, 2318.17505, 59.5686302]
+            scale: [2318.18555, 2318.17505, 59.5686188]
           - id: 2406239124268761074
             type: 2
             enabled: true
@@ -1488,3 +990,773 @@ child:
             navigable: false
             visible: true
             material_id: 617936367517861074
+  - id: 4989721286620894874
+    name: 2022_06_09_Level2_Test1
+    enabled: true
+    component:
+      - id: 2148126995648413425
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 15096542528328635541
+        name: Box063
+        enabled: true
+        component:
+          - id: 3988689383653749910
+            type: 1
+            enabled: true
+            position: [-25.5000038, 0.0499992371, -3]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 13953313832333207154
+            type: 2
+            enabled: true
+            mesh_id: 5224866463445697467
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 12332309955905339693
+        name: Box750
+        enabled: true
+        component:
+          - id: 17247768489753071385
+            type: 1
+            enabled: true
+            position: [-73.5, 0.0499992371, -3]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 17025263545655415755
+            type: 2
+            enabled: true
+            mesh_id: 6278398128498885254
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 11707041277784493996
+        name: Box810
+        enabled: true
+        component:
+          - id: 2418330253535102264
+            type: 1
+            enabled: true
+            position: [-55.5000076, 0.0999979973, 5.94999933]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 4604850115534350501
+            type: 2
+            enabled: true
+            mesh_id: 13657967124758806551
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 1324694456158577234
+            type: 2
+            enabled: true
+            mesh_id: 6044571734163780732
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 15681643978637169370
+        name: Box813
+        enabled: true
+        component:
+          - id: 9275936573189487752
+            type: 1
+            enabled: true
+            position: [-49.5000076, 0.0999979973, 5.94999933]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 16432914854149067817
+            type: 2
+            enabled: true
+            mesh_id: 10710106316803334738
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 14345544126106254359
+        name: Box823
+        enabled: true
+        component:
+          - id: 13723092710958454408
+            type: 1
+            enabled: true
+            position: [-10.4999924, 0.0999979973, 29.9500008]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 2946842050790823485
+            type: 2
+            enabled: true
+            mesh_id: 13212787222857048692
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 10934069271319183556
+            type: 2
+            enabled: true
+            mesh_id: 14786815518349263881
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+          - id: 9593546694875769344
+            type: 2
+            enabled: true
+            mesh_id: 1733238276260816019
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 1974219236218228575
+            type: 2
+            enabled: true
+            mesh_id: 3512446853649032270
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+      - id: 17804042575309781843
+        name: Box861
+        enabled: true
+        component:
+          - id: 11223091964810613631
+            type: 1
+            enabled: true
+            position: [2.96519852, 0.0999979079, 16.4999962]
+            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 11110029302280760564
+            type: 2
+            enabled: true
+            mesh_id: 2409280405739529046
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 4805915765012485629
+        name: Box862
+        enabled: true
+        component:
+          - id: 11260579321295168416
+            type: 1
+            enabled: true
+            position: [2.96519852, 0.0999979079, 13.4999981]
+            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 4608097335368820877
+            type: 2
+            enabled: true
+            mesh_id: 16368952477565840915
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 8580067400726013162
+        name: Box106
+        enabled: true
+        component:
+          - id: 2557727932636645292
+            type: 1
+            enabled: true
+            position: [19.4999981, -4.95000076, 27]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 8459765907954150889
+            type: 2
+            enabled: true
+            mesh_id: 7996041704060207065
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 10977614229603199797
+        name: Box132
+        enabled: true
+        component:
+          - id: 3042270902539356682
+            type: 1
+            enabled: true
+            position: [28.5000076, -14.9500017, 33]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 9702444364521795239
+            type: 2
+            enabled: true
+            mesh_id: 5422523072781467050
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 1144527530168784055
+            type: 2
+            enabled: true
+            mesh_id: 1733778500015317988
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 8693281057697419573
+            type: 2
+            enabled: true
+            mesh_id: 1471231976668371010
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 16549504380444692459
+        name: Cylinder005
+        enabled: true
+        component:
+          - id: 18401010615042277938
+            type: 1
+            enabled: true
+            position: [83.9972458, -14.9000025, 66]
+            rotation: [-0.5, 0.5, 0.5, 0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6385165262307487029
+            type: 2
+            enabled: true
+            mesh_id: 5711459303371246528
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 11364260109410143483
+            type: 2
+            enabled: true
+            mesh_id: 9686641797217773426
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 2753348073144442628
+            type: 2
+            enabled: true
+            mesh_id: 14987138481190245928
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 6750096227463648253
+            type: 2
+            enabled: true
+            mesh_id: 9301271631760279348
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 8328455977433137555
+        name: Box987
+        enabled: true
+        component:
+          - id: 5241055301009989303
+            type: 1
+            enabled: true
+            position: [106.500023, -14.9000025, 68.9499969]
+            rotation: [0.707107246, 0, 0, 0.707106292]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 15930068995571013775
+            type: 2
+            enabled: true
+            mesh_id: 6620357255281469183
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 2969490410898589972
+            type: 2
+            enabled: true
+            mesh_id: 18413185454417946345
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 3970080176445657889
+        name: Cylinder007
+        enabled: true
+        component:
+          - id: 1313093927059958095
+            type: 1
+            enabled: true
+            position: [171, -14.9000025, 35.9999962]
+            rotation: [-0.5, 0.5, 0.5, 0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 1815149818021597180
+            type: 2
+            enabled: true
+            mesh_id: 4563657389193739769
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 4956689848330744068
+            type: 2
+            enabled: true
+            mesh_id: 15235879157458068826
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 15034450920878613414
+        name: Box1140
+        enabled: true
+        component:
+          - id: 13538064223350868305
+            type: 1
+            enabled: true
+            position: [132.014633, -24.9000015, 70.4646301]
+            rotation: [0.500000417, 0.499999702, -0.500000179, 0.499999702]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 9443385634993863890
+            type: 2
+            enabled: true
+            mesh_id: 11013636099775019564
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 16122168889675008961
+            type: 2
+            enabled: true
+            mesh_id: 8663801493117844996
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 14112038040495480865
+            type: 2
+            enabled: true
+            mesh_id: 10659504531968306819
+            navigable: false
+            visible: true
+            material_id: 4587535263328285150
+          - id: 14890281931601422667
+            type: 2
+            enabled: true
+            mesh_id: 18301411932781917553
+            navigable: false
+            visible: true
+            material_id: 2649979332993473088
+          - id: 17651184816104211416
+            type: 2
+            enabled: true
+            mesh_id: 11313346340906634089
+            navigable: false
+            visible: true
+            material_id: 4916520811287933055
+          - id: 10386827446327412316
+            type: 2
+            enabled: true
+            mesh_id: 4237147953178629705
+            navigable: false
+            visible: true
+            material_id: 4358669898672813652
+          - id: 11798892668263205171
+            type: 2
+            enabled: true
+            mesh_id: 7099369984212558491
+            navigable: false
+            visible: true
+            material_id: 5964044276421505701
+          - id: 8604158991456592539
+            type: 2
+            enabled: true
+            mesh_id: 10561451601881615498
+            navigable: false
+            visible: true
+            material_id: 2719247482259562865
+          - id: 10030485754274160152
+            type: 2
+            enabled: true
+            mesh_id: 5928433525432526775
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+          - id: 17027052757915265682
+            type: 2
+            enabled: true
+            mesh_id: 9943599348204066620
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 5355628171151172725
+            type: 2
+            enabled: true
+            mesh_id: 7880935228350094292
+            navigable: false
+            visible: true
+            material_id: 13202539630038216380
+      - id: 16001635598347762253
+        name: Box606
+        enabled: true
+        component:
+          - id: 4751951224304209527
+            type: 1
+            enabled: true
+            position: [157.5, -29.9500008, 66]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 17425940307317217879
+            type: 2
+            enabled: true
+            mesh_id: 11611672855841423254
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 17827652660900389671
+        name: Box646
+        enabled: true
+        component:
+          - id: 8149080967962580885
+            type: 1
+            enabled: true
+            position: [166.5, -43.0191345, 69]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 5213923116651840792
+            type: 2
+            enabled: true
+            mesh_id: 5052370927967813487
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 17701963069364688339
+        name: Plane001
+        enabled: true
+        component:
+          - id: 15756314190877773908
+            type: 1
+            enabled: true
+            position: [-72.0014343, 0.182819366, -1.56231523]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 1363491637860365566
+            type: 2
+            enabled: true
+            mesh_id: 15380864787801216305
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 2137800577511475543
+        name: Plane002
+        enabled: true
+        component:
+          - id: 7464478099053152180
+            type: 1
+            enabled: true
+            position: [-54.0050964, 0.182819366, -1.56231523]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 8941402596007619644
+            type: 2
+            enabled: true
+            mesh_id: 836094402826767045
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 7584719123499341128
+        name: Plane003
+        enabled: true
+        component:
+          - id: 13896191165831435004
+            type: 1
+            enabled: true
+            position: [18.0606308, -4.77585983, 34.4561882]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 9298652168249188069
+            type: 2
+            enabled: true
+            mesh_id: 13466723864771157426
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 16186013711856839766
+        name: Plane004
+        enabled: true
+        component:
+          - id: 16149735463039828407
+            type: 1
+            enabled: true
+            position: [18.0606308, -14.8252096, 34.456192]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 7184772884906226925
+            type: 2
+            enabled: true
+            mesh_id: 13403486228802575437
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 5246287796157025580
+        name: Plane006
+        enabled: true
+        component:
+          - id: 12416902382247422671
+            type: 1
+            enabled: true
+            position: [136.484528, -29.7145863, 64.5090485]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 3330477915357171633
+            type: 2
+            enabled: true
+            mesh_id: 17533601380399939202
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 4389225685327580014
+        name: Box1146
+        enabled: true
+        component:
+          - id: 6367949710236406553
+            type: 1
+            enabled: true
+            position: [130.499985, -15.0000029, 94.4000015]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 9888899397584491790
+            type: 2
+            enabled: true
+            mesh_id: 9790408832016685991
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 7485693485661857719
+        name: Box1147
+        enabled: true
+        component:
+          - id: 9598654544606733761
+            type: 1
+            enabled: true
+            position: [130.499985, -16.3999939, 95.8000031]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 2340074116988250292
+            type: 2
+            enabled: true
+            mesh_id: 1450029176043569716
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 992332203548255162
+        name: Box1148
+        enabled: true
+        component:
+          - id: 2600802109359634480
+            type: 1
+            enabled: true
+            position: [131.899963, -16.3999939, 94.4000015]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 16690466813681804898
+            type: 2
+            enabled: true
+            mesh_id: 5037031907122479423
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 13586704997079498949
+        name: Box1149
+        enabled: true
+        component:
+          - id: 4410194266134764381
+            type: 1
+            enabled: true
+            position: [128.999985, -16.3999939, 94.4000015]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 3040796469548255885
+            type: 2
+            enabled: true
+            mesh_id: 8157586313240563117
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 16926903607501817778
+        name: Box1150
+        enabled: true
+        component:
+          - id: 3826793192046299756
+            type: 1
+            enabled: true
+            position: [124.499977, -15.0000029, 73.3999939]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 17810851775780961557
+            type: 2
+            enabled: true
+            mesh_id: 3874709962076097246
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 11296775442872203108
+        name: Box1151
+        enabled: true
+        component:
+          - id: 5167656640050443116
+            type: 1
+            enabled: true
+            position: [124.499977, -16.3999939, 74.7999954]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 5535024782474175269
+            type: 2
+            enabled: true
+            mesh_id: 16964813351737958523
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 1442112147800293764
+        name: Box1152
+        enabled: true
+        component:
+          - id: 6896561317228553880
+            type: 1
+            enabled: true
+            position: [125.899956, -16.3999939, 73.3999939]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 1846809683974594838
+            type: 2
+            enabled: true
+            mesh_id: 2584283257532999489
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 13152074071343941098
+        name: Box1153
+        enabled: true
+        component:
+          - id: 5923964503113110281
+            type: 1
+            enabled: true
+            position: [122.999977, -16.3999939, 73.3999939]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 3567182367979938623
+            type: 2
+            enabled: true
+            mesh_id: 6390105669984826910
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6883047835876105932
+        name: Box1154
+        enabled: true
+        component:
+          - id: 9848267973075894125
+            type: 1
+            enabled: true
+            position: [124.500008, -15.0000029, 61.5000076]
+            rotation: [-3.09086161e-08, 0.707106829, 0.707106829, 3.09086268e-08]
+            scale: [1.00000072, 1.00000024, 1.00000024]
+          - id: 16562827328289018697
+            type: 2
+            enabled: true
+            mesh_id: 4362354799795059811
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 18334964929183568158
+        name: Box1155
+        enabled: true
+        component:
+          - id: 3276425784262992006
+            type: 1
+            enabled: true
+            position: [124.500008, -16.3999939, 60.1000061]
+            rotation: [3.07905794e-15, 1, 2.98023224e-08, 4.37113883e-08]
+            scale: [0.999999881, 0.999999881, 0.999999881]
+          - id: 12495769220022261060
+            type: 2
+            enabled: true
+            mesh_id: 17894934538969648377
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 12537889661605861814
+        name: Box1156
+        enabled: true
+        component:
+          - id: 14768461587348697030
+            type: 1
+            enabled: true
+            position: [123.100029, -16.3999939, 61.5000076]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6687569106877802810
+            type: 2
+            enabled: true
+            mesh_id: 7750502627533482785
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 8945965229763018402
+        name: Box1157
+        enabled: true
+        component:
+          - id: 6945313019192527814
+            type: 1
+            enabled: true
+            position: [126.000008, -16.3999939, 61.5000076]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 11650322891564064155
+            type: 2
+            enabled: true
+            mesh_id: 13869649046661736441
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6968672782998121404
+        name: Box1158
+        enabled: true
+        component:
+          - id: 16015597499081543628
+            type: 1
+            enabled: true
+            position: [148.599991, -15.0000029, 40.5]
+            rotation: [0.5, 0.5, 0.5, -0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6056306985891915639
+            type: 2
+            enabled: true
+            mesh_id: 8892402281539372379
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 9747439030285689535
+        name: Box1159
+        enabled: true
+        component:
+          - id: 12411511318814335404
+            type: 1
+            enabled: true
+            position: [147.199982, -16.3999939, 40.5]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6020726335103230152
+            type: 2
+            enabled: true
+            mesh_id: 17893513533100003658
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 15948875740076613661
+        name: Box1160
+        enabled: true
+        component:
+          - id: 5875175693808043806
+            type: 1
+            enabled: true
+            position: [148.599991, -16.3999939, 41.8999786]
+            rotation: [0, 8.74227766e-08, -9.47312013e-16, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 11058944621031130013
+            type: 2
+            enabled: true
+            mesh_id: 8239086625873029119
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6104833220763653839
+        name: Box1161
+        enabled: true
+        component:
+          - id: 11885926049861674510
+            type: 1
+            enabled: true
+            position: [148.599991, -16.3999939, 39]
+            rotation: [0, 8.74227766e-08, -9.47312013e-16, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 1782226553893021502
+            type: 2
+            enabled: true
+            mesh_id: 15501397509916813598
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
