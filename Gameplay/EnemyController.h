@@ -30,6 +30,8 @@ namespace Hachiko
             void RegisterHit(int player_atk, math::float3 direction, float knockback);
             void GetParasite();
 
+            void CheckState();
+
         private:
             void Attack();
             void ChasePlayer();
@@ -45,12 +47,15 @@ namespace Hachiko
             Stats* _combat_stats;
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
+
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
+            
             SERIALIZE_FIELD(BugState, _state);
+            SERIALIZE_FIELD(BugState, _previous_state);
 
             PlayerController* _player_controller;
             ComponentTransform* transform;

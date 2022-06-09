@@ -74,14 +74,15 @@ void Hachiko::Scripting::EnemyController::OnStart()
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
+	CheckState();
+
 	if (!_combat_stats->IsAlive())
 	{
+		_state = BugState::DEAD;
 		if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) 
 		{
 			DestroyEntity();
 		}
-		animation->SendTrigger("isDead");
-
 		return;
 	}
 
@@ -107,14 +108,16 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	// TODO: Delete these after seminar and write a better version.
 	if (_state == BugState::ATTACKING)
 	{
-		animation->SendTrigger("isAttacking");
-
 		_attack_animation_timer += Time::DeltaTime();
 		
 		if (_attack_animation_timer >= _attack_animation_duration)
 		{
 			_attack_animation_timer = 0.0f;
+			_state = BugState::IDLE;
 		}
+	}
+	else {
+		_state = BugState::IDLE;
 	}
 
 	if (dist_to_player > _aggro_range)
@@ -132,6 +135,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			ChasePlayer();
 		}
 	}
+
+
 }
 
 BugState Hachiko::Scripting::EnemyController::GetState() const
@@ -184,8 +189,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
-	animation->SendTrigger("isAttacking");
-
+	
 	if (_is_ranged_attack) 
 	{
 		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
@@ -214,6 +218,9 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 	{
 		return;
 	}
+
+	_state = BugState::MOVING;
+
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
 	{
@@ -229,6 +236,8 @@ void Hachiko::Scripting::EnemyController::GoBack()
 	{
 		return;
 	}
+
+	_state = BugState::MOVING;
 
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
@@ -257,8 +266,6 @@ void Hachiko::Scripting::EnemyController::RecieveKnockback()
 
 void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 {
-	animation->SendTrigger("isMoving");
-
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	agc->SetTargetPosition(_target_pos);
 }
@@ -285,4 +292,37 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 void Hachiko::Scripting::EnemyController::GetParasite()
 {
 	DestroyEntity();
+}
+
+void Hachiko::Scripting::EnemyController::CheckState()
+{
+	BugState current_state = GetState();
+	bool state_changed = current_state != _previous_state;
+
+	if (!state_changed)
+	{
+		return;
+	}
+
+	_previous_state = current_state;
+
+	switch (current_state)
+	{
+	case BugState::IDLE:
+		animation->SendTrigger("idle");
+		break;
+	case BugState::ATTACKING:
+		animation->SendTrigger("isAttacking");
+		break;
+	case BugState::DEAD:
+		animation->SendTrigger("isDead");
+		break;
+	case BugState::MOVING:
+		animation->SendTrigger("isMoving");
+		break;
+
+	case BugState::INVALID:
+	default:
+		break;
+	}
 }

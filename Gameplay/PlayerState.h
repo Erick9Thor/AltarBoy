@@ -17,5 +17,6 @@ enum class BugState
 	INVALID,
 	DEAD,
 	IDLE,
+	MOVING,
 	ATTACKING
 };

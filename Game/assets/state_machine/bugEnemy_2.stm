@@ -12,7 +12,7 @@ clips:
     clips_loop: true
   - clip_name: death
     clips_id: 12998404091254124528
-    clips_loop: true
+    clips_loop: false
 nodes:
   - node_name: idle
     node_clip_name: idle
@@ -42,4 +42,12 @@ transitions:
   - transition_source: attack
     transition_target: idle
     transition_trigger: idle
+    transition_blend: 300
+  - transition_source: move
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: attack
+    transition_target: death
+    transition_trigger: isDead
     transition_blend: 300
