@@ -117,6 +117,7 @@ UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
     {
         scene_ready_to_load = false;
         LoadScene(scene_to_load_id);
+        AttemptScenePlay();
     }
 
     main_scene->Update();
@@ -221,6 +222,7 @@ void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
 {
     scene_ready_to_load = true;
     scene_to_load_id = new_scene_id;
+    AttemptSceneStop();
 }
 
 void Hachiko::ModuleSceneManager::ReloadScene()
