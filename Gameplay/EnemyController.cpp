@@ -213,7 +213,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 		forward = forward.Normalized();
 
 		// Spawn bullet (Passing the prefab can be improved)
-		GameObject* bullet = GameObject::Instantiate(8002494183732356716, game_object->scene_owner->GetRoot());
+		UID* t_uid = new UID(8002494183732356716);
+		GameObject* bullet = GameObject::Instantiate(t_uid, game_object->scene_owner->GetRoot());
 
 		bullet->GetTransform()->SetGlobalPosition(game_object->GetTransform()->GetGlobalPosition());
 

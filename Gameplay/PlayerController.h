@@ -84,7 +84,6 @@ public:
 	bool _isInDebug = false;
 
 private:
-	Stats* _combat_stats;
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
@@ -130,7 +129,6 @@ private:
 	WeaponUsed weapon = WeaponUsed::RED;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-	
 
 	std::vector<Weapon> weapons =
 	{
@@ -145,6 +143,9 @@ private:
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 	SERIALIZE_FIELD(PlayerState, _previous_state);
+
+	Stats* _combat_stats;
+	bool _god_mode = false;
 };
 } // namespace Scripting
 } // namespace Hachiko

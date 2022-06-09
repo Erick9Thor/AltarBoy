@@ -2,3 +2,7 @@ asset_hash: 13000521240743596223
 resources:
   - resource_id: 3941705484674293788
     resource_type: 2
+mag_filter: 9987
+min_filter: 9729
+wrap_mode: 10496
+extra_hash: 4852379206516900628
