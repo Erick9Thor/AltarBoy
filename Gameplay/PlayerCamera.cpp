@@ -31,14 +31,10 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	// Seed the rand()
 	srand(static_cast <unsigned> (time(0)));
 
-	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
 {
-	_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
-	_audio_source->PostEvent(Sounds::PLAY_WIND);
-	_audio_source->PostEvent(Sounds::PLAY_PEBBLE);
 }
 
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
