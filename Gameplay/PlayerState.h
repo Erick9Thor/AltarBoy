@@ -10,6 +10,7 @@ enum class PlayerState
 	DASHING,
 	FALLING,
 	STUNNED,
+	DIE,
 };
 
 enum class BugState
@@ -20,4 +21,5 @@ enum class BugState
 	MOVING,
 	MOVING_BACK,
 	ATTACKING
+	PARASITE
 };

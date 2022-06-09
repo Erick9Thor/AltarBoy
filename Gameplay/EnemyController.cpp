@@ -34,12 +34,12 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	_attack_range = 1.5f;
+	//_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
 	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
 	_combat_stats->_move_speed = 4;
-	_combat_stats->_max_hp = 4;
+	_combat_stats->_max_hp = 2;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
@@ -82,10 +82,23 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (!_combat_stats->IsAlive())
 	{
-		_state = BugState::DEAD;
-		if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) 
+		if (_state == BugState::PARASITE)
 		{
-			DestroyEntity();
+			if (_current_lifetime >= _parasite_lifespan)
+			{
+				DestroyEntity();
+			}
+			else
+			{
+				_current_lifetime += Time::DeltaTime();
+			}
+		}
+		else
+		{
+			if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+			{
+				DropParasite();
+			}
 		}
 		return;
 	}
@@ -162,7 +175,8 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 
 	if (!_combat_stats->IsAlive())
 	{
-		DropParasite();
+		_state = BugState::DEAD;
+		animation->SendTrigger("isDead");
 	}
 }
 
@@ -281,6 +295,7 @@ void Hachiko::Scripting::EnemyController::DestroyEntity()
 void Hachiko::Scripting::EnemyController::DropParasite()
 {
 	Stop();
+	_state = BugState::PARASITE;
 	//TODO: Check if in scene there's already a parasite? Maybe?
 	if (_enemy_body) {
 		_enemy_body->SetActive(false);
