@@ -60,6 +60,9 @@ namespace Hachiko
             PlayerController* _player_controller;
             ComponentTransform* transform;
             ComponentAnimation* animation;
+
+            ComponentAudioSource* _audio_source;
+
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;
