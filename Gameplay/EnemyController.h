@@ -8,8 +8,10 @@ namespace Hachiko
 {
     class GameObject;
     class ComponentTransform;
+
     namespace Scripting
     {
+        class AudioManager;
         class PlayerController;
         class EnemyController : public Script
         {
@@ -53,14 +55,17 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _player);
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
+            SERIALIZE_FIELD(GameObject*, _audio_manager_game_object);
             
             SERIALIZE_FIELD(BugState, _state);
             SERIALIZE_FIELD(BugState, _previous_state);
+            SERIALIZE_FIELD(bool, _already_in_combat);
 
+            AudioManager* _audio_manager;
             PlayerController* _player_controller;
             ComponentTransform* transform;
             ComponentAnimation* animation;
-
+            
             ComponentAudioSource* _audio_source;
 
             math::float3 _player_pos;
