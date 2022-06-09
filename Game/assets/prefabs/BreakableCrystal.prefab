@@ -4,13 +4,15 @@ enabled: true
 component:
   - type: 1
     enabled: true
-    position: [-10, -0.200000003, -10]
+    position: [-71.4528885, 3.42917585, -73.5527954]
     rotation: [0, 0.0688859746, 0, 0.997624576]
     scale: [1.39999998, 1.39999998, 1.39999998]
   - type: 18
     enabled: true
     obstacle_type: 0
     obstacle_size: [0.800000012, 1, 1]
+  - type: 20
+    enabled: true
   - type: 15
     enabled: true
     class_name: CrystalExplosion
@@ -19,18 +21,16 @@ component:
     "'_static_crystal@GameObject*'": 2
     "'_crashing_index@unsigned'": 0
     "'_detecting_radius@float'": 2
-    "'_explosion_radius@float'": 10
+    "'_explosion_radius@float'": 5
     "'_explosive_crystal@bool'": false
   - type: 15
     enabled: true
     class_name: Stats
-    "'_attack_power@int'": 1
+    "'_attack_power@int'": 2
     "'_attack_cd@float'": 2
     "'_attack_range@float'": 3.5
-    "'_move_speed@float'": 7
-    "'_max_hp@int'": 3
-  - type: 20
-    enabled: true
+    "'_move_speed@float'": 0
+    "'_max_hp@int'": 1
 child:
   - name: crystalSpike_mesh
     enabled: true
@@ -74,7 +74,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [0.707106829, 0, 0, 0.707106709]
-            scale: [1, 0.999992371, 0.999992371]
+            scale: [1, 0.999991357, 0.999991357]
         child:
           - name: crystalSpikeTop_mesh
             enabled: true
@@ -89,7 +89,7 @@ child:
                 mesh_id: 2367252208710808329
                 navigable: false
                 visible: true
-                material_id: 5759363592208955763
+                material_id: 15711698613413314858
           - name: crystalSpikeBottom_mesh
             enabled: true
             component:
@@ -103,7 +103,7 @@ child:
                 mesh_id: 11783699103939193595
                 navigable: false
                 visible: true
-                material_id: 5759363592208955763
+                material_id: 15711698613413314858
           - name: crystalSpikeMiddle_mesh
             enabled: true
             component:
@@ -117,7 +117,7 @@ child:
                 mesh_id: 10088262584487287873
                 navigable: false
                 visible: true
-                material_id: 5759363592208955763
+                material_id: 15711698613413314858
           - name: crystalSpikeBottom2_mesh
             enabled: true
             component:
@@ -131,7 +131,7 @@ child:
                 mesh_id: 10784035645120420919
                 navigable: false
                 visible: true
-                material_id: 5759363592208955763
+                material_id: 15711698613413314858
       - name: Father
         enabled: true
         component:
