@@ -198,6 +198,10 @@ void Hachiko::GeometryBatch::BatchData()
         int palette_offset = 0;
         for (const ComponentMeshRenderer* component : components)
         {
+            if (component->palette.size() <= 0)
+            {
+                continue;
+            }
             transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
 
             palette_per_instance.numBones = component->GetResourceMesh()->num_bones;
@@ -206,7 +210,6 @@ void Hachiko::GeometryBatch::BatchData()
 
             palettes.resize(palette_offset + palette_per_instance.numBones);
             memcpy(&palettes[palette_offset], &component->palette[0], sizeof(float4x4) * palette_per_instance.numBones);
-
             palette_offset += palette_per_instance.numBones;
         }
     }

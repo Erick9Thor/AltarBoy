@@ -21,7 +21,7 @@ child:
         mesh_id: 5224866463445697467
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
   - name: Box750
     enabled: true
     component:
@@ -35,7 +35,7 @@ child:
         mesh_id: 6278398128498885254
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Box810
     enabled: true
     component:
@@ -49,13 +49,13 @@ child:
         mesh_id: 13657967124758806551
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 6044571734163780732
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
   - name: Box813
     enabled: true
     component:
@@ -69,7 +69,7 @@ child:
         mesh_id: 10710106316803334738
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Box823
     enabled: true
     component:
@@ -83,13 +83,13 @@ child:
         mesh_id: 13212787222857048692
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 14786815518349263881
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
       - type: 2
         enabled: true
         mesh_id: 1733238276260816019
@@ -101,7 +101,7 @@ child:
         mesh_id: 3512446853649032270
         navigable: false
         visible: true
-        material_id: 7631669237127346378
+        material_id: 15829563757826157868
   - name: Box861
     enabled: true
     component:
@@ -143,7 +143,7 @@ child:
         mesh_id: 7996041704060207065
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Box132
     enabled: true
     component:
@@ -157,7 +157,7 @@ child:
         mesh_id: 5422523072781467050
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 1733778500015317988
@@ -169,7 +169,7 @@ child:
         mesh_id: 1471231976668371010
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
   - name: Cylinder005
     enabled: true
     component:
@@ -183,13 +183,13 @@ child:
         mesh_id: 5711459303371246528
         navigable: false
         visible: true
-        material_id: 7631669237127346378
+        material_id: 15829563757826157868
       - type: 2
         enabled: true
         mesh_id: 9686641797217773426
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 14987138481190245928
@@ -201,7 +201,7 @@ child:
         mesh_id: 9301271631760279348
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
   - name: Box987
     enabled: true
     component:
@@ -215,7 +215,7 @@ child:
         mesh_id: 6620357255281469183
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 18413185454417946345
@@ -235,13 +235,13 @@ child:
         mesh_id: 4563657389193739769
         navigable: false
         visible: true
-        material_id: 7631669237127346378
+        material_id: 15829563757826157868
       - type: 2
         enabled: true
         mesh_id: 15235879157458068826
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Box1140
     enabled: true
     component:
@@ -261,61 +261,61 @@ child:
         mesh_id: 8663801493117844996
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
       - type: 2
         enabled: true
         mesh_id: 10659504531968306819
         navigable: false
         visible: true
-        material_id: 4587535263328285150
+        material_id: 10604152659642743218
       - type: 2
         enabled: true
         mesh_id: 18301411932781917553
         navigable: false
         visible: true
-        material_id: 2649979332993473088
+        material_id: 9453438049549479873
       - type: 2
         enabled: true
         mesh_id: 11313346340906634089
         navigable: false
         visible: true
-        material_id: 4916520811287933055
+        material_id: 5904949637801033932
       - type: 2
         enabled: true
         mesh_id: 4237147953178629705
         navigable: false
         visible: true
-        material_id: 4358669898672813652
+        material_id: 14186905977489695304
       - type: 2
         enabled: true
         mesh_id: 7099369984212558491
         navigable: false
         visible: true
-        material_id: 5964044276421505701
+        material_id: 15115200596546735242
       - type: 2
         enabled: true
         mesh_id: 10561451601881615498
         navigable: false
         visible: true
-        material_id: 2719247482259562865
+        material_id: 9933597738755813600
       - type: 2
         enabled: true
         mesh_id: 5928433525432526775
         navigable: false
         visible: true
-        material_id: 1346915489203828914
+        material_id: 87387557386037487
       - type: 2
         enabled: true
         mesh_id: 9943599348204066620
         navigable: false
         visible: true
-        material_id: 7631669237127346378
+        material_id: 15829563757826157868
       - type: 2
         enabled: true
         mesh_id: 7880935228350094292
         navigable: false
         visible: true
-        material_id: 13202539630038216380
+        material_id: 3262383589076707216
   - name: Box606
     enabled: true
     component:
@@ -329,7 +329,7 @@ child:
         mesh_id: 11611672855841423254
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Box646
     enabled: true
     component:
@@ -343,7 +343,7 @@ child:
         mesh_id: 5052370927967813487
         navigable: false
         visible: true
-        material_id: 917493402162421944
+        material_id: 13624801920171932401
   - name: Plane001
     enabled: true
     component:

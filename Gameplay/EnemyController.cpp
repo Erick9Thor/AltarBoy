@@ -38,6 +38,12 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
+	
+
+}
+
+void Hachiko::Scripting::EnemyController::OnStart()
+{
 	//_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -61,10 +67,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
-}
-
-void Hachiko::Scripting::EnemyController::OnStart()
-{
 	if (_player != nullptr)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();

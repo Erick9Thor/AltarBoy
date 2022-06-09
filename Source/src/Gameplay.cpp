@@ -91,7 +91,7 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
 
 void Hachiko::SceneManagement::SwitchScene(UID scene_uid)
 {
-    App->scene_manager->ChangeSceneById(scene_uid);
+    App->scene_manager->LoadScene(scene_uid);
 }
 
 void Hachiko::SceneManagement::SetSkyboxActive(bool v)
