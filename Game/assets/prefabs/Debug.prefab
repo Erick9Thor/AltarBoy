@@ -39,6 +39,16 @@ component:
     "'_tp_pos2@GameObject*'": 28
     "'_tp_pos3@GameObject*'": 29
     "'_performance_menu@GameObject*'": 13
+  - type: 10
+    enabled: true
+    position: [0, 0, 0]
+    size: [1415, 767]
+    scale: [1, 1]
+    rotation: [0, 0, 0, 1]
+    pivot: [0.5, 0.5]
+    anchor: [0.5, 0.5]
+  - type: 8
+    enabled: true
 child:
   - name: Canvas
     enabled: true
@@ -51,11 +61,11 @@ child:
       - type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1323, 767]
+        size: [1415, 767]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
-        anchor: [0.5, 0.5]
+        anchor: [0.5, 0.300000012]
       - type: 8
         enabled: true
     child:
@@ -336,7 +346,7 @@ child:
           - type: 12
             enabled: true
       - name: PerformanceMenu
-        enabled: false
+        enabled: true
         component:
           - type: 1
             enabled: true
@@ -346,16 +356,16 @@ child:
           - type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1323, 767]
+            size: [1415, 767]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0.5, 0.699999988]
           - type: 8
             enabled: true
         child:
           - name: FpsText
-            enabled: false
+            enabled: true
             component:
               - type: 1
                 enabled: true
@@ -379,7 +389,7 @@ child:
                 size: 16
                 label_text: 999
           - name: MsText
-            enabled: false
+            enabled: true
             component:
               - type: 1
                 enabled: true
@@ -403,7 +413,7 @@ child:
                 size: 16
                 label_text: 999
           - name: FpsLabel
-            enabled: false
+            enabled: true
             component:
               - type: 1
                 enabled: true
@@ -427,7 +437,7 @@ child:
                 size: 16
                 label_text: "FPS: "
           - name: MsLabel
-            enabled: false
+            enabled: true
             component:
               - type: 1
                 enabled: true
@@ -451,7 +461,7 @@ child:
                 size: 16
                 label_text: "Ms: "
           - name: Vsync
-            enabled: false
+            enabled: true
             component:
               - type: 1
                 enabled: true
@@ -707,7 +717,7 @@ child:
     component:
       - type: 1
         enabled: true
-        position: [-25, 0, -25]
+        position: [-87.7180557, 4.08781862, -48.9046745]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
   - name: tpPos2
@@ -715,7 +725,7 @@ child:
     component:
       - type: 1
         enabled: true
-        position: [-20, 0, -25]
+        position: [22.5770893, -9.81798172, -53.8951569]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
   - name: tpPos3
@@ -723,6 +733,6 @@ child:
     component:
       - type: 1
         enabled: true
-        position: [-15, 0, -25]
+        position: [-40.1609612, -22.7224255, -67.9749908]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]

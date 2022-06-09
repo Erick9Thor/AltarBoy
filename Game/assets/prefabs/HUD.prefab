@@ -10,7 +10,7 @@ component:
   - type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [1133, 630]
+    size: [1415, 767]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
@@ -26,6 +26,16 @@ child:
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1415, 767]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 8
+        enabled: true
     child:
       - name: Overlay
         enabled: true
@@ -37,12 +47,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-309.399994, 210, 0]
-            size: [20, 20]
-            scale: [23, 6]
+            position: [300, -100, 0]
+            size: [500, 100]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -63,12 +73,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-296.200012, 209.449997, 0]
-            size: [20, 20]
-            scale: [26, 7]
+            position: [284.600006, -105, 0]
+            size: [450, 115]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -89,12 +99,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-307.75, 209.050003, 0]
-            size: [20, 20]
-            scale: [24, 6]
+            position: [278.5, -105, 0]
+            size: [450, 115]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -115,12 +125,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-304.399994, 208.100006, 0]
-            size: [20, 20]
-            scale: [20, 6]
+            position: [272.700012, -105, 0]
+            size: [450, 115]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -141,12 +151,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-307.299988, 208.149994, 0]
-            size: [20, 20]
-            scale: [20, 5.5]
+            position: [265.049988, -105, 0]
+            size: [450, 115]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -167,12 +177,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-405.350006, 184.899994, 0]
-            size: [20, 20]
-            scale: [3, 1.5]
+            position: [200, -135, 0]
+            size: [60, 30]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -193,12 +203,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-356.25, 184.899994, 0]
-            size: [20, 20]
-            scale: [3, 1.5]
+            position: [250, -135, 0]
+            size: [60, 30]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -219,12 +229,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-306.850006, 184.899994, 0]
-            size: [20, 20]
-            scale: [3, 1.5]
+            position: [300, -135, 0]
+            size: [60, 30]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11
@@ -245,12 +255,12 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-257.350006, 184.899994, 0]
-            size: [20, 20]
-            scale: [3, 1.5]
+            position: [350, -135, 0]
+            size: [60, 30]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 1]
           - type: 9
             enabled: true
           - type: 11

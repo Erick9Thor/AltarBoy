@@ -86,6 +86,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		HE_LOG("YOU DIED");
 	}
 
+	if (_god_mode_trigger)
+	{
+		_god_mode = !_god_mode;
+		ToggleGodMode();
+		_god_mode_trigger = false;
+	}
 	// Handle player the input
 	HandleInputAndStatus();
 
@@ -201,17 +207,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		_god_mode = !_god_mode;
 
-		_state = PlayerState::IDLE;
-		if (!_god_mode)
-		{
-			float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
-			if (corrected_position.x < FLT_MAX)
-			{
-				_player_position = corrected_position;
-			}
-			// Started falling
-			_state = PlayerState::FALLING;
-		}
+		ToggleGodMode();
 	}
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
 	{
@@ -717,6 +713,22 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		{
 			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
 		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::ToggleGodMode()
+{
+	_state = PlayerState::IDLE;
+	if (!_god_mode)
+	{
+		HE_LOG("FALLING");
+		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+		if (corrected_position.x < FLT_MAX)
+		{
+			_player_position = corrected_position;
+		}
+		// Started falling
+		_state = PlayerState::FALLING;
 	}
 }
 

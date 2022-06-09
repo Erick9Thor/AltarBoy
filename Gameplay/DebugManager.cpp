@@ -170,20 +170,15 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	
 	if (_add_health->IsSelected())
 	{
-		if (_player_controller->_combat_stats->_current_hp < _player_controller->_combat_stats->_max_hp)
-		{
-			_player_controller->_combat_stats->_current_hp += 1;
-			HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
-		}
-		else
-		{
-			HE_LOG("Max health reached %u", _player_controller->_combat_stats->_current_hp);
-		}
+		_player_controller->_combat_stats->Heal(1);
+		HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
+		_player_controller->UpdateHealthBar();
 	}
 	if (_remove_health->IsSelected())
 	{
-		_player_controller->_combat_stats->_current_hp -= 1;
+		_player_controller->_combat_stats->ReceiveDamage(1);
 		HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
+		_player_controller->UpdateHealthBar();
 	}
 	/*
 	if (_increase_max_hp->IsSelected())
@@ -235,7 +230,8 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	// Player States
 	if (_god_mode->IsSelected())
 	{
-		_player_controller->_god_mode = !_player_controller->_god_mode;
+		HE_LOG("GOD MODE pressed");
+		_player_controller->_god_mode_trigger = true;
 	}
 	/*
 

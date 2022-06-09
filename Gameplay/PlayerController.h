@@ -79,6 +79,7 @@ public:
 	void CheckGoal(const float3& current_position);
 	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void UpdateHealthBar();
+	void ToggleGodMode();
 	
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }
 	bool _isInDebug = false;
@@ -146,6 +147,7 @@ public:
 
 	Stats* _combat_stats;
 	bool _god_mode = false;
+	bool _god_mode_trigger = false;
 };
 } // namespace Scripting
 } // namespace Hachiko
