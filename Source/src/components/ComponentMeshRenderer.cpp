@@ -31,6 +31,7 @@ Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer()
     if (game_object->scene_owner)
     {
         game_object->scene_owner->GetQuadtree()->Remove(this);
+        game_object->scene_owner->GetQuadtree()->Refresh();
     }
     delete[] node_cache;
 }

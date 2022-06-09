@@ -5,9 +5,14 @@
 #include "Stats.h"
 #include "Scenes.h"
 #include "EnemyBulletController.h"
+
+#include <components/ComponentAnimation.h>
 #include <components/ComponentTransform.h>
 #include <components/ComponentAgent.h>
+
 #include <modules/ModuleSceneManager.h>
+
+#include <resources/ResourceAnimation.h>
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
@@ -54,6 +59,9 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
 	}
+
+	animation = game_object->GetComponent<ComponentAnimation>();
+
 	_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 	_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 	transform = game_object->GetTransform();
@@ -61,22 +69,18 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	{
 		_spawn_pos = transform->GetGlobalPosition();
 	}
+	animation->StartAnimating();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	if (!_combat_stats->IsAlive())
 	{
-		_state = BugState::DEAD;
-
-		if (_current_lifetime >= _parasite_lifespan)
+		if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) 
 		{
 			DestroyEntity();
 		}
-		else
-		{
-			_current_lifetime += Time::DeltaTime();
-		}
+		animation->SendTrigger("isDead");
 
 		return;
 	}
@@ -103,20 +107,15 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	// TODO: Delete these after seminar and write a better version.
 	if (_state == BugState::ATTACKING)
 	{
+		animation->SendTrigger("isAttacking");
+
 		_attack_animation_timer += Time::DeltaTime();
 		
 		if (_attack_animation_timer >= _attack_animation_duration)
 		{
 			_attack_animation_timer = 0.0f;
-			_state = BugState::IDLE;
 		}
 	}
-	else
-	{
-		_state = BugState::IDLE;
-	}
-
-
 
 	if (dist_to_player > _aggro_range)
 	{
@@ -185,6 +184,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 
 	_state = BugState::ATTACKING;
+	animation->SendTrigger("isAttacking");
+
 	if (_is_ranged_attack) 
 	{
 		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
@@ -254,17 +255,10 @@ void Hachiko::Scripting::EnemyController::RecieveKnockback()
 	agc->SetTargetPosition(_target_pos);
 }
 
-void Hachiko::Scripting::EnemyController::Move()
-{
-	math::float3 dir = (_target_pos - game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()).Normalized();
-	math::float3 step = dir * _combat_stats->_move_speed;
-	_current_pos += step;
-
-	transform->SetGlobalPosition(_current_pos);
-}
-
 void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 {
+	animation->SendTrigger("isMoving");
+
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	agc->SetTargetPosition(_target_pos);
 }

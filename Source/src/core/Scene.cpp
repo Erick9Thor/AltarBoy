@@ -55,6 +55,16 @@ void Hachiko::Scene::DestroyGameObject(GameObject* game_object)
     {
         App->editor->SetSelectedGO(nullptr);
     }
+
+    // TODO: REMOVE AFTER VS AND DO PROPERLY
+    for (Component* e : game_object->GetComponents())
+    {
+        if (e->GetType() == Component::Type::MESH_RENDERER)
+        {
+            quadtree->Remove(static_cast<ComponentMeshRenderer*>(e));
+        }
+    }
+    quadtree->Refresh();
 }
 
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
