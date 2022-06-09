@@ -10,6 +10,7 @@
 					    // Gameplay.h
 
 #include <components/Component.h>
+#include <components/ComponentText.h>
 #include <components/ComponentButton.h>
 #include <components/ComponentAnimation.h>
 #include <components/ComponentAudioSource.h>

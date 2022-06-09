@@ -4,6 +4,7 @@
 #include "BugAnimationManager.h"
 #include "BulletController.h"
 #include "CrystalExplosion.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
@@ -36,6 +37,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "CrystalExplosion")
 	{
 		return new Hachiko::Scripting::CrystalExplosion(script_owner);
+	}
+
+	if (script_name == "DebugManager")
+	{
+		return new Hachiko::Scripting::DebugManager(script_owner);
 	}
 
 	if (script_name == "DynamicCamera")

@@ -317,6 +317,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="BulletController.h" />
     <ClInclude Include="CrystalExplosion.h" />
+    <ClInclude Include="DebugManager.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="EnemyBulletController.h" />
     <ClInclude Include="EnemyController.h" />
@@ -725,6 +726,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="BulletController.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
+    <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="EnemyBulletController.cpp" />
     <ClCompile Include="EnemyController.cpp" />

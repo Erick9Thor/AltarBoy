@@ -1,0 +1,86 @@
+asset_hash: 18063431640107433119
+model_name: Blockout_complet_reatatch
+meshes:
+  - 15417489233916492426
+  - 6825625381101298616
+  - 7931117650464535034
+  - 12966638051790020970
+  - 2620627679532038903
+  - 14215175710258194067
+  - 492702412559852976
+  - 1715900030195424151
+  - 2154420379989870412
+  - 11990669548665173842
+  - 9690104152344260425
+  - 1248698053874246545
+  - 9802222454163498197
+  - 8005919720121740191
+  - 3190431119747523934
+  - 17272673726904041534
+  - 14750993830365075161
+  - 16019881623299926241
+  - 17414516408912328845
+  - 8447702738076971672
+  - 14816985851976778809
+materials:
+  - 3732015406589361445
+  - 1739185857870868275
+  - 2403324920938806055
+  - 8628746369642354336
+  - 1036670598364638300
+prefab_id: 16588290340888140131
+resources:
+  - resource_id: 15417489233916492426
+    resource_type: 3
+  - resource_id: 6825625381101298616
+    resource_type: 3
+  - resource_id: 7931117650464535034
+    resource_type: 3
+  - resource_id: 12966638051790020970
+    resource_type: 3
+  - resource_id: 2620627679532038903
+    resource_type: 3
+  - resource_id: 14215175710258194067
+    resource_type: 3
+  - resource_id: 492702412559852976
+    resource_type: 3
+  - resource_id: 1715900030195424151
+    resource_type: 3
+  - resource_id: 2154420379989870412
+    resource_type: 3
+  - resource_id: 11990669548665173842
+    resource_type: 3
+  - resource_id: 9690104152344260425
+    resource_type: 3
+  - resource_id: 1248698053874246545
+    resource_type: 3
+  - resource_id: 9802222454163498197
+    resource_type: 3
+  - resource_id: 8005919720121740191
+    resource_type: 3
+  - resource_id: 3190431119747523934
+    resource_type: 3
+  - resource_id: 17272673726904041534
+    resource_type: 3
+  - resource_id: 14750993830365075161
+    resource_type: 3
+  - resource_id: 16019881623299926241
+    resource_type: 3
+  - resource_id: 17414516408912328845
+    resource_type: 3
+  - resource_id: 8447702738076971672
+    resource_type: 3
+  - resource_id: 14816985851976778809
+    resource_type: 3
+  - resource_id: 3732015406589361445
+    resource_type: 1
+  - resource_id: 1739185857870868275
+    resource_type: 1
+  - resource_id: 2403324920938806055
+    resource_type: 1
+  - resource_id: 8628746369642354336
+    resource_type: 1
+  - resource_id: 1036670598364638300
+    resource_type: 1
+  - resource_id: 16588290340888140131
+    resource_type: 13
