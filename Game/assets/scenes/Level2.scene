@@ -1,0 +1,1762 @@
+scene_name: Level2
+navmesh_id: 17695498765217932775
+skybox:
+  right_cube_id: 0
+  left_cube_id: 0
+  top_cube_id: 0
+  bottom_cube_id: 0
+  center_cube_id: 0
+  back_cube_id: 0
+root_id: 9914954429185849609
+child:
+  - id: 6225472279859844644
+    name: Main Camera
+    enabled: true
+    component:
+      - id: 4676764014237758403
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [3.87724732e-08, 0.887010872, -0.46174863, 2.01836574e-08]
+        scale: [1.00000143, 1.00000024, 1.00000095]
+      - id: 15064940495945291953
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 0.100000001
+          far_distance: 1000
+          fov: 65
+          position: [0, 0, 0]
+          front: [-2.48689924e-14, -0.819151998, -0.57357651]
+          up: [8.74227624e-08, 0.57357645, -0.819152117]
+          pinned_camera: [0, 0, 0]
+      - id: 18326098555628291338
+        type: 19
+        enabled: true
+      - id: 9342561989668298086
+        type: 15
+        enabled: true
+        class_name: PlayerCamera
+        "'_relative_position_to_player@math::float3'": [0, 0, 0]
+        "'_player@GameObject*'": 14796348007437283586
+        "'_follow_delay@float'": 0
+  - id: 2963910235842233937
+    name: Directional Light
+    enabled: true
+    component:
+      - id: 6249694229382492135
+        type: 1
+        enabled: true
+        position: [0, 13.1033144, 0]
+        rotation: [0.596304238, 0.26053524, -0.213179633, 0.728764057]
+        scale: [0.999998331, 1.00000525, 1.00000441]
+      - id: 11107723903760171690
+        type: 5
+        enabled: true
+        light_type: 5
+        color: [1, 1, 1, 1]
+        intensity: 1
+        draw_direction: false
+  - id: 14796348007437283586
+    name: PlayerN
+    enabled: true
+    component:
+      - id: 5083995553173519292
+        type: 1
+        enabled: true
+        position: [-66.9949646, 0, -1.54471421]
+        rotation: [0, 0, 0, 1]
+        scale: [0.110000014, 0.110000014, 0.110000014]
+      - id: 970320849458949967
+        type: 14
+        enabled: true
+        state_machine: 1600725606103423471
+      - id: 16579296374223428337
+        type: 15
+        enabled: true
+        class_name: PlayerController
+        "'_attack_indicator@GameObject*'": 9656192371899244597
+        "'_goal@GameObject*'": 0
+        "'_dash_duration@float'": 0.150000006
+        "'_dash_distance@float'": 6
+        "'_dash_cooldown@float'": 0.5
+        "'_max_dash_charges@int'": 2
+        "'_attack_duration@float'": 0.330000013
+        "'_attack_duration_distance@float'": 0.5
+        "'_rotation_duration@float'": 0.075000003
+        "'_hp_cell_1@GameObject*'": 0
+        "'_hp_cell_2@GameObject*'": 0
+        "'_hp_cell_3@GameObject*'": 0
+        "'_hp_cell_4@GameObject*'": 0
+        "'_camera@GameObject*'": 6225472279859844644
+        "'_ui_damage@GameObject*'": 0
+      - id: 3984039830897608482
+        type: 15
+        enabled: true
+        class_name: PlayerSoundManager
+        "'_audio_source@ComponentAudioSource*'": 14796348007437283586
+        "'_step_frequency@float'": 0.300000012
+        "'_melee_frequency@float'": 0.300000012
+        "'_ranged_frequency@float'": 0.300000012
+        "'_timer@float'": 0
+      - id: 6596081646070062112
+        type: 20
+        enabled: true
+      - id: 4446557205002375665
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 1
+        "'_attack_cd@float'": 2
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 7
+        "'_max_hp@int'": 3
+    child:
+      - id: 2167962463001967791
+        name: Joints
+        enabled: true
+        component:
+          - id: 17736050240566899001
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 14600902458932289044
+            name: Root
+            enabled: true
+            component:
+              - id: 633482152644758392
+                type: 1
+                enabled: true
+                position: [-0.00170805026, 0.219732597, -0.150796205]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 9533514198567492157
+                name: Hip
+                enabled: true
+                component:
+                  - id: 10313611494865617144
+                    type: 1
+                    enabled: true
+                    position: [0.00170804537, 0, -0.000531659578]
+                    rotation: [0.00157548476, -0.191671431, -0.106878646, 0.975621104]
+                    scale: [1, 1, 0.999999583]
+                child:
+                  - id: 15603469153060102241
+                    name: LeftLeg
+                    enabled: true
+                    component:
+                      - id: 10789793091058509976
+                        type: 1
+                        enabled: true
+                        position: [0.126474991, 0.0572384708, -0.0144411428]
+                        rotation: [-0.328636259, 0.0896977037, 0.228275731, 0.912054121]
+                        scale: [0.999999762, 1, 1]
+                    child:
+                      - id: 5570515903651857019
+                        name: LeftKnee
+                        enabled: true
+                        component:
+                          - id: 13168055303449861194
+                            type: 1
+                            enabled: true
+                            position: [0.104924783, -0.419131309, 0.0858221203]
+                            rotation: [0.372477233, 0.0463824868, -0.0977684185, 0.921710789]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 9495196731645175087
+                            name: LeftFoot
+                            enabled: true
+                            component:
+                              - id: 16871116822424465170
+                                type: 1
+                                enabled: true
+                                position: [0.0684163868, -0.542874873, -0.233516023]
+                                rotation: [-0.02211136, 0.00901879556, 0.0294361506, 0.999281406]
+                                scale: [0.999998689, 0.99999845, 1]
+                            child:
+                              - id: 16835082161758754832
+                                name: LeftToe
+                                enabled: true
+                                component:
+                                  - id: 10326588493855816505
+                                    type: 1
+                                    enabled: true
+                                    position: [-3.5527136e-17, -0.0143482992, 0.377296299]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                  - id: 11237488150729822647
+                    name: RightLeg_$AssimpFbx$_Translation
+                    enabled: true
+                    component:
+                      - id: 4338535871856973686
+                        type: 1
+                        enabled: true
+                        position: [-0.126474991, 0.0572379902, -0.0144411251]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                    child:
+                      - id: 12515176587358791399
+                        name: RightLeg_$AssimpFbx$_PreRotation
+                        enabled: true
+                        component:
+                          - id: 11612394799606288037
+                            type: 1
+                            enabled: true
+                            position: [0, 0, 0]
+                            rotation: [1, 0, 0, 4.37113883e-08]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 15576066688099606982
+                            name: RightLeg_$AssimpFbx$_Rotation
+                            enabled: true
+                            component:
+                              - id: 15433228228557573809
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [-0.0673040822, -0.0276093092, 0.0831542313, 0.993877888]
+                                scale: [0.999999523, 1, 0.99999994]
+                            child:
+                              - id: 5440886976697076934
+                                name: RightLeg
+                                enabled: true
+                                component:
+                                  - id: 11920902529507658031
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 17738921805945159184
+                                    name: RightKnee
+                                    enabled: true
+                                    component:
+                                      - id: 12577419039037672836
+                                        type: 1
+                                        enabled: true
+                                        position: [-0.104924999, 0.419130772, -0.0858220905]
+                                        rotation: [0.0632768422, 0.0124707697, -0.0131807886, 0.997831047]
+                                        scale: [0.999998629, 0.999999881, 0.999999881]
+                                    child:
+                                      - id: 2062278514611775300
+                                        name: RightFoot
+                                        enabled: true
+                                        component:
+                                          - id: 6512669150281765778
+                                            type: 1
+                                            enabled: true
+                                            position: [-0.0684159994, 0.54287523, 0.233516097]
+                                            rotation: [0.0704451203, 0.200136781, -0.171858966, 0.962001681]
+                                            scale: [0.999999821, 0.999999523, 1]
+                                        child:
+                                          - id: 11861268761261141129
+                                            name: RightToe
+                                            enabled: true
+                                            component:
+                                              - id: 13170211970159713454
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0.0143480003, -0.377296388]
+                                                rotation: [0, 0, 0, 1]
+                                                scale: [1, 1, 1]
+              - id: 17026766655885834070
+                name: CenterSpine_start
+                enabled: true
+                component:
+                  - id: 129325388717591638
+                    type: 1
+                    enabled: true
+                    position: [-0.00485496037, 0.131358758, 0.0319358595]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 4590749949681510507
+                    name: CenterSpine_Chest
+                    enabled: true
+                    component:
+                      - id: 15350733022375752990
+                        type: 1
+                        enabled: true
+                        position: [-0.00177570921, 0.209533691, -0.0506989211]
+                        rotation: [0.00410262356, -0.0937282294, -0.000385287305, 0.995589316]
+                        scale: [1, 0.999998689, 0.999999225]
+                    child:
+                      - id: 16786063068737038803
+                        name: CenterNeck
+                        enabled: true
+                        component:
+                          - id: 10516102786021732471
+                            type: 1
+                            enabled: true
+                            position: [0.00355141843, 0.24457027, 0.00318158534]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 16669074302969017561
+                            name: CenterHead
+                            enabled: true
+                            component:
+                              - id: 153608937666648057
+                                type: 1
+                                enabled: true
+                                position: [0.00161101914, 0.182912588, 0.0446635559]
+                                rotation: [-0.00697789853, 0.0550961271, 0.000929434667, 0.99845624]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 8122040370897196520
+                                name: CenterHead001
+                                enabled: true
+                                component:
+                                  - id: 13160149296730945345
+                                    type: 1
+                                    enabled: true
+                                    position: [0.00714651076, 0.359701574, -0.0283717047]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                              - id: 12811270327977283658
+                                name: Helmet
+                                enabled: true
+                                component:
+                                  - id: 10336034858799426865
+                                    type: 1
+                                    enabled: true
+                                    position: [0.00317628193, 0.0562660843, 0.149686232]
+                                    rotation: [0.0854556113, -0.703139186, -0.0854943246, 0.700702071]
+                                    scale: [1.00000012, 1, 1.00000012]
+                      - id: 14996808813132143169
+                        name: LeftShoulder
+                        enabled: true
+                        component:
+                          - id: 6884440333455145459
+                            type: 1
+                            enabled: true
+                            position: [0.154053956, 0.255940497, -0.0161152389]
+                            rotation: [-0.0167177897, -0.169312343, 0.0845512897, 0.981786609]
+                            scale: [0.999999762, 0.999998748, 0.99999994]
+                        child:
+                          - id: 1676480241869734536
+                            name: LeftElbow
+                            enabled: true
+                            component:
+                              - id: 11929510405441799898
+                                type: 1
+                                enabled: true
+                                position: [0.0875578672, -0.0258414354, -0.0560055487]
+                                rotation: [-0.20776765, -0.366069943, 0.16336599, 0.892265081]
+                                scale: [1.00000012, 1, 0.999999881]
+                            child:
+                              - id: 10085100196948024752
+                                name: LeftHand
+                                enabled: true
+                                component:
+                                  - id: 3734476908900026779
+                                    type: 1
+                                    enabled: true
+                                    position: [0.202341482, -0.348988682, -0.100166261]
+                                    rotation: [-0.267992526, -0.00222758041, 0.00243866863, 0.963415444]
+                                    scale: [0.999999881, 0.999999881, 0.999999881]
+                                child:
+                                  - id: 12787741909742177562
+                                    name: LeftFingerStart
+                                    enabled: true
+                                    component:
+                                      - id: 3477182245440228735
+                                        type: 1
+                                        enabled: true
+                                        position: [0.152489215, -0.343325764, 0.093799144]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 5080462596601830217
+                                        name: Index_LeftFinger2
+                                        enabled: true
+                                        component:
+                                          - id: 13887679145902702781
+                                            type: 1
+                                            enabled: true
+                                            position: [0.0566918068, -0.0573153608, -0.0412758626]
+                                            rotation: [0.004360619, -3.23560789e-10, -0.43692854, 0.899485648]
+                                            scale: [1, 0.999999821, 0.99999994]
+                                        child:
+                                          - id: 11000168499500345141
+                                            name: Index_LeftFinger3
+                                            enabled: true
+                                            component:
+                                              - id: 4404859801629441795
+                                                type: 1
+                                                enabled: true
+                                                position: [-0.0190601423, -0.0898300931, 0.00759982457]
+                                                rotation: [0.004360619, -3.23560789e-10, -0.43692854, 0.899485648]
+                                                scale: [1, 0.999999821, 0.99999994]
+                                            child:
+                                              - id: 13913378692462629247
+                                                name: Index_LeftFinger_End
+                                                enabled: true
+                                                component:
+                                                  - id: 15320411048177732714
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-0.0194437485, -0.0568945445, 0.00668885373]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                      - id: 15969247678060221265
+                                        name: Middle_LeftFinger1
+                                        enabled: true
+                                        component:
+                                          - id: 9259779466643402612
+                                            type: 1
+                                            enabled: true
+                                            position: [0.036734309, -0.0573153608, 0.067245312]
+                                            rotation: [0.004360619, -3.23560789e-10, -0.43692854, 0.899485648]
+                                            scale: [1, 0.999999821, 0.99999994]
+                                        child:
+                                          - id: 7759099832627902170
+                                            name: Middle_LeftFinger2
+                                            enabled: true
+                                            component:
+                                              - id: 8553917430951105904
+                                                type: 1
+                                                enabled: true
+                                                position: [-0.0190601423, -0.0898300931, -0.00816307683]
+                                                rotation: [0.004360619, -3.23560789e-10, -0.43692854, 0.899485648]
+                                                scale: [1, 0.999999821, 0.99999994]
+                                            child:
+                                              - id: 1826369766499520194
+                                                name: Middle_LeftFingerEnd
+                                                enabled: true
+                                                component:
+                                                  - id: 10991468749980034828
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-0.0194437485, -0.0568945445, -0.00773774087]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                      - id: 14486217270716327441
+                                        name: Thumb_LeftFinger
+                                        enabled: true
+                                        component:
+                                          - id: 16848796655156432142
+                                            type: 1
+                                            enabled: true
+                                            position: [-0.0670459494, 0.0157899894, 0.067245312]
+                                            rotation: [0.438012511, -0.0668834895, 0.116420962, 0.888885736]
+                                            scale: [1, 0.99999994, 1]
+                                        child:
+                                          - id: 2392661307609870435
+                                            name: Thumb_LeftFinger2
+                                            enabled: true
+                                            component:
+                                              - id: 10203103271729623323
+                                                type: 1
+                                                enabled: true
+                                                position: [-0.0369566418, -0.0719941109, 0.0315798447]
+                                                rotation: [0.438012511, -0.0668834895, 0.116420962, 0.888885736]
+                                                scale: [1, 0.99999994, 1]
+                                            child:
+                                              - id: 2299645380072963491
+                                                name: Thumb_LeftFingerEnd
+                                                enabled: true
+                                                component:
+                                                  - id: 2474206539265548191
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-0.0416687392, -0.0689487904, 0.0072097443]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                      - id: 2419238226348994536
+                        name: RightShoulder_$AssimpFbx$_Translation
+                        enabled: true
+                        component:
+                          - id: 13728530480655966859
+                            type: 1
+                            enabled: true
+                            position: [-0.137376279, 0.255940616, -0.0161152501]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 10320703246316156927
+                            name: RightShoulder_$AssimpFbx$_PreRotation
+                            enabled: true
+                            component:
+                              - id: 11985389217613887928
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [1, 0, 0, 4.37113883e-08]
+                                scale: [1, 1, 1]
+                            child:
+                              - id: 7978504828731928817
+                                name: RightShoulder_$AssimpFbx$_Rotation
+                                enabled: true
+                                component:
+                                  - id: 13801765529524891115
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0.000875241763, -0.000529819343, 0.0717774257, 0.997420132]
+                                    scale: [0.999999762, 0.999999881, 0.999999821]
+                                child:
+                                  - id: 5528325788176578873
+                                    name: RightShoulder
+                                    enabled: true
+                                    component:
+                                      - id: 17606578882893395445
+                                        type: 1
+                                        enabled: true
+                                        position: [0, 0, 0]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 12093369923798825614
+                                        name: RightElbow
+                                        enabled: true
+                                        component:
+                                          - id: 13064029561155810863
+                                            type: 1
+                                            enabled: true
+                                            position: [-0.0875580013, 0.0258410964, 0.0560054705]
+                                            rotation: [-0.00135352474, -0.00462781731, 0.335448056, 0.942046404]
+                                            scale: [0.99999994, 1, 0.999999762]
+                                        child:
+                                          - id: 892153101285183196
+                                            name: RightHand
+                                            enabled: true
+                                            component:
+                                              - id: 6059733327593381530
+                                                type: 1
+                                                enabled: true
+                                                position: [-0.202341989, 0.34898898, 0.100165993]
+                                                rotation: [-0.00272538466, -0.00221523223, -0.0820613503, 0.996621072]
+                                                scale: [1, 0.999998748, 0.999999762]
+                                            child:
+                                              - id: 13380855547150892846
+                                                name: Parasite
+                                                enabled: true
+                                                component:
+                                                  - id: 14067522615556361965
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [-0.152489007, 0.222128794, -0.093798995]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 6591971590626018747
+                                                    name: Jaw_UP_Parasite_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 11289261512710286606
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [-0.215727687, -0.13459222, 0.0273324624]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 2379558560041402292
+                                                        name: Jaw_UP_Parasite_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 11804647519537524803
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0, 0, 0.927974105, 0.372644752]
+                                                            scale: [1.00000191, 1.00000191, 1]
+                                                        child:
+                                                          - id: 5761924154994129742
+                                                            name: Jaw_UP_Parasite_$AssimpFbx$_Rotation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 16626331340118084893
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0.000181054638, -0.000801367394, 0.0025626258, 0.999996364]
+                                                                scale: [0.999999762, 0.99999994, 0.999998689]
+                                                            child:
+                                                              - id: 8552523540400369934
+                                                                name: Jaw_UP_Parasite
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 8675476327312029526
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 1692941920810985846
+                                                                    name: RightFinger_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 2897357186278182866
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.639069021, -1.07136519e-16, -0.275379449]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 4486881730120846570
+                                                                        name: RightFinger_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 8731596408334516044
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-0.372644782, 0.927974045, -1.62888139e-08, -4.05630303e-08]
+                                                                            scale: [1.00000048, 1, 1.00000072]
+                                                                        child:
+                                                                          - id: 11949373976862916371
+                                                                            name: RightFinger
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 16663316378494356282
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                                                                  - id: 7584414105648095370
+                                                                    name: Eye_parasite_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 18357400262036084671
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.374726772, 0.117202148, -0.159265622]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 8713492282545867381
+                                                                        name: Eye_parasite_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 16367004534392407439
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-0.372644782, 0.927974045, -1.62888139e-08, -4.05630303e-08]
+                                                                            scale: [1.00000048, 1, 1.00000072]
+                                                                        child:
+                                                                          - id: 2929614799424508148
+                                                                            name: Eye_parasite_$AssimpFbx$_Rotation
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 9505168218612363652
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [-0.230007112, 0.973168015, -0.00333832274, 0.0054441127]
+                                                                                scale: [1.00000036, 0.99999994, 1.00000203]
+                                                                            child:
+                                                                              - id: 16469821320708836432
+                                                                                name: Eye_parasite
+                                                                                enabled: true
+                                                                                component:
+                                                                                  - id: 18188181094697522086
+                                                                                    type: 1
+                                                                                    enabled: true
+                                                                                    position: [0, 0, 0]
+                                                                                    rotation: [0, 0, 0, 1]
+                                                                                    scale: [1, 1, 1]
+                                                  - id: 8144636599903808928
+                                                    name: Jaw_Down_Parasite_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 16419560893901126745
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0.0694948658, 0.0482985862, -0.0583245158]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 8658950833155163061
+                                                        name: Jaw_Down_Parasite_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 6621166093706371330
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [0, 0, 0.875613809, 0.483011842]
+                                                            scale: [1, 1, 1]
+                                                        child:
+                                                          - id: 2070998572924413369
+                                                            name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
+                                                            enabled: true
+                                                            component:
+                                                              - id: 13850378218872218692
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0.0279657375, -0.0115743065, 0.0399623774, 0.9987427]
+                                                                scale: [0.99999994, 1, 1]
+                                                            child:
+                                                              - id: 14538592833571015411
+                                                                name: Jaw_Down_Parasite
+                                                                enabled: true
+                                                                component:
+                                                                  - id: 12450039686167926431
+                                                                    type: 1
+                                                                    enabled: true
+                                                                    position: [0, 0, 0]
+                                                                    rotation: [0, 0, 0, 1]
+                                                                    scale: [1, 1, 1]
+                                                                child:
+                                                                  - id: 4618266115205473069
+                                                                    name: Zero_$AssimpFbx$_Translation
+                                                                    enabled: true
+                                                                    component:
+                                                                      - id: 8650910922749656918
+                                                                        type: 1
+                                                                        enabled: true
+                                                                        position: [0.689837813, -1.87072573e-16, -0.289711356]
+                                                                        rotation: [0, 0, 0, 1]
+                                                                        scale: [1, 1, 1]
+                                                                    child:
+                                                                      - id: 5073936856059185530
+                                                                        name: Zero_$AssimpFbx$_PreRotation
+                                                                        enabled: true
+                                                                        component:
+                                                                          - id: 6098832294309428094
+                                                                            type: 1
+                                                                            enabled: true
+                                                                            position: [0, 0, 0]
+                                                                            rotation: [-0.483011842, 0.875613809, -2.11131166e-08, -3.8274294e-08]
+                                                                            scale: [1, 1, 1]
+                                                                        child:
+                                                                          - id: 9643893973883104725
+                                                                            name: Zero
+                                                                            enabled: true
+                                                                            component:
+                                                                              - id: 2273070931675749023
+                                                                                type: 1
+                                                                                enabled: true
+                                                                                position: [0, 0, 0]
+                                                                                rotation: [0, 0, 0, 1]
+                                                                                scale: [1, 1, 1]
+                      - id: 1572573228410603114
+                        name: Jetpag_$AssimpFbx$_Translation
+                        enabled: true
+                        component:
+                          - id: 4435060868148930045
+                            type: 1
+                            enabled: true
+                            position: [-0.000506805838, 0.0509069525, -0.178892612]
+                            rotation: [0, 0, 0, 1]
+                            scale: [1, 1, 1]
+                        child:
+                          - id: 6538329981166732957
+                            name: Jetpag_$AssimpFbx$_PreRotation
+                            enabled: true
+                            component:
+                              - id: 2246782707399437695
+                                type: 1
+                                enabled: true
+                                position: [0, 0, 0]
+                                rotation: [0.205894664, 0.676466823, 0.205894664, 0.676466882]
+                                scale: [0.99999994, 0.99999994, 1]
+                            child:
+                              - id: 2778060560969499028
+                                name: Jetpag
+                                enabled: true
+                                component:
+                                  - id: 7620860126659989409
+                                    type: 1
+                                    enabled: true
+                                    position: [0, 0, 0]
+                                    rotation: [0, 0, 0, 1]
+                                    scale: [1, 1, 1]
+                                child:
+                                  - id: 17801610513580303890
+                                    name: LeftWing_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - id: 16780635751469528892
+                                        type: 1
+                                        enabled: true
+                                        position: [0.136507675, 1.23066039e-16, 0.138481587]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 7024444236720350170
+                                        name: LeftWing_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - id: 11485719816265717491
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0, 0, -0.182420015, 0.983220696]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 11417698463649761656
+                                            name: LeftWing_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - id: 1945703801751743521
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [-0.0017132893, 0.00121771207, -0.0114363525, 0.999932408]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 9883996718771654828
+                                                name: LeftWing
+                                                enabled: true
+                                                component:
+                                                  - id: 11055982654754142813
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 9397713965863453199
+                                                    name: LeftWingZero_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 13960908613437549785
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [0.465061218, 1.71543005e-16, 0.167557448]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 13420880519747597641
+                                                        name: LeftWingZero_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 462902214689742441
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [-0.0790388286, -0.702675641, -0.0790388286, 0.702675402]
+                                                            scale: [1.00000238, 1, 1]
+                                                        child:
+                                                          - id: 10070047789528078643
+                                                            name: LeftWingZero
+                                                            enabled: true
+                                                            component:
+                                                              - id: 9844726538954995186
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+                                  - id: 13739029869382494704
+                                    name: RightWing_$AssimpFbx$_Translation
+                                    enabled: true
+                                    component:
+                                      - id: 6999701979412338739
+                                        type: 1
+                                        enabled: true
+                                        position: [0.136505425, -2.68907797e-06, -0.1384812]
+                                        rotation: [0, 0, 0, 1]
+                                        scale: [1, 1, 1]
+                                    child:
+                                      - id: 6405505214202723998
+                                        name: RightWing_$AssimpFbx$_PreRotation
+                                        enabled: true
+                                        component:
+                                          - id: 3692293261818454623
+                                            type: 1
+                                            enabled: true
+                                            position: [0, 0, 0]
+                                            rotation: [0, 0, 0.983220696, 0.18242]
+                                            scale: [1, 1, 1]
+                                        child:
+                                          - id: 7147593597198571298
+                                            name: RightWing_$AssimpFbx$_Rotation
+                                            enabled: true
+                                            component:
+                                              - id: 4830031235923123604
+                                                type: 1
+                                                enabled: true
+                                                position: [0, 0, 0]
+                                                rotation: [0.0017132893, -0.00121771207, -0.0114363525, 0.999932408]
+                                                scale: [1, 1, 1]
+                                            child:
+                                              - id: 10567886006403698933
+                                                name: RightWing
+                                                enabled: true
+                                                component:
+                                                  - id: 5492657316925340426
+                                                    type: 1
+                                                    enabled: true
+                                                    position: [0, 0, 0]
+                                                    rotation: [0, 0, 0, 1]
+                                                    scale: [1, 1, 1]
+                                                child:
+                                                  - id: 2509807496663176112
+                                                    name: RightWingZero_$AssimpFbx$_Translation
+                                                    enabled: true
+                                                    component:
+                                                      - id: 17415607018377815796
+                                                        type: 1
+                                                        enabled: true
+                                                        position: [-0.465062201, -4.44309035e-06, -0.167557999]
+                                                        rotation: [0, 0, 0, 1]
+                                                        scale: [1, 1, 1]
+                                                    child:
+                                                      - id: 9013929702157808685
+                                                        name: RightWingZero_$AssimpFbx$_PreRotation
+                                                        enabled: true
+                                                        component:
+                                                          - id: 1713534512829207699
+                                                            type: 1
+                                                            enabled: true
+                                                            position: [0, 0, 0]
+                                                            rotation: [-0.0790388286, -0.702675641, -0.0790388286, 0.702675402]
+                                                            scale: [1.00000238, 1, 1]
+                                                        child:
+                                                          - id: 3530391000518768550
+                                                            name: RightWingZero
+                                                            enabled: true
+                                                            component:
+                                                              - id: 4283760480911501056
+                                                                type: 1
+                                                                enabled: true
+                                                                position: [0, 0, 0]
+                                                                rotation: [0, 0, 0, 1]
+                                                                scale: [1, 1, 1]
+              - id: 9920669410233651657
+                name: Left_ikHandle1
+                enabled: true
+                component:
+                  - id: 6126242683409949053
+                    type: 1
+                    enabled: true
+                    position: [0.301524192, -0.744879365, 0.127026081]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+              - id: 16776785386956240271
+                name: Right_ikHandle2
+                enabled: true
+                component:
+                  - id: 12331188540165404359
+                    type: 1
+                    enabled: true
+                    position: [-0.53978765, -0.744879603, -0.288992226]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+      - id: 16169215667828771442
+        name: GEO
+        enabled: true
+        component:
+          - id: 9204511029386447188
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 660410189566571008
+            name: Character_low
+            enabled: true
+            component:
+              - id: 14048667828070032359
+                type: 1
+                enabled: true
+                position: [0, 8.97245789, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [12.0011587, 12.0011559, 12.0011559]
+              - id: 624941228565050572
+                type: 2
+                enabled: true
+                mesh_id: 11287868610668799960
+                navigable: false
+                visible: true
+                material_id: 8839885697372629645
+      - id: 9656192371899244597
+        name: AttackIndicator
+        enabled: true
+        component:
+          - id: 14574995008304833963
+            type: 1
+            enabled: true
+            position: [0, 10.0188961, 0]
+            rotation: [-0.704928935, 0.055479221, 0.0554794483, 0.704925001]
+            scale: [2318.18555, 2318.17505, 59.5686188]
+          - id: 2406239124268761074
+            type: 2
+            enabled: true
+            mesh_id: 6492766721524954712
+            navigable: false
+            visible: true
+            material_id: 617936367517861074
+  - id: 4989721286620894874
+    name: 2022_06_09_Level2_Test1
+    enabled: true
+    component:
+      - id: 2148126995648413425
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 15096542528328635541
+        name: Box063
+        enabled: true
+        component:
+          - id: 3988689383653749910
+            type: 1
+            enabled: true
+            position: [-25.5000038, 0.0499992371, -3]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 13953313832333207154
+            type: 2
+            enabled: true
+            mesh_id: 5224866463445697467
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 12332309955905339693
+        name: Box750
+        enabled: true
+        component:
+          - id: 17247768489753071385
+            type: 1
+            enabled: true
+            position: [-73.5, 0.0499992371, -3]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 17025263545655415755
+            type: 2
+            enabled: true
+            mesh_id: 6278398128498885254
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 11707041277784493996
+        name: Box810
+        enabled: true
+        component:
+          - id: 2418330253535102264
+            type: 1
+            enabled: true
+            position: [-55.5000076, 0.0999979973, 5.94999933]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 4604850115534350501
+            type: 2
+            enabled: true
+            mesh_id: 13657967124758806551
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 1324694456158577234
+            type: 2
+            enabled: true
+            mesh_id: 6044571734163780732
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 15681643978637169370
+        name: Box813
+        enabled: true
+        component:
+          - id: 9275936573189487752
+            type: 1
+            enabled: true
+            position: [-49.5000076, 0.0999979973, 5.94999933]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 16432914854149067817
+            type: 2
+            enabled: true
+            mesh_id: 10710106316803334738
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 14345544126106254359
+        name: Box823
+        enabled: true
+        component:
+          - id: 13723092710958454408
+            type: 1
+            enabled: true
+            position: [-10.4999924, 0.0999979973, 29.9500008]
+            rotation: [0.707107484, 0, 0, 0.707106054]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 2946842050790823485
+            type: 2
+            enabled: true
+            mesh_id: 13212787222857048692
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 10934069271319183556
+            type: 2
+            enabled: true
+            mesh_id: 14786815518349263881
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+          - id: 9593546694875769344
+            type: 2
+            enabled: true
+            mesh_id: 1733238276260816019
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 1974219236218228575
+            type: 2
+            enabled: true
+            mesh_id: 3512446853649032270
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+      - id: 17804042575309781843
+        name: Box861
+        enabled: true
+        component:
+          - id: 11223091964810613631
+            type: 1
+            enabled: true
+            position: [2.96519852, 0.0999979079, 16.4999962]
+            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 11110029302280760564
+            type: 2
+            enabled: true
+            mesh_id: 2409280405739529046
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 4805915765012485629
+        name: Box862
+        enabled: true
+        component:
+          - id: 11260579321295168416
+            type: 1
+            enabled: true
+            position: [2.96519852, 0.0999979079, 13.4999981]
+            rotation: [0.500000656, 0.499999464, -0.500000417, 0.499999464]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 4608097335368820877
+            type: 2
+            enabled: true
+            mesh_id: 16368952477565840915
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 8580067400726013162
+        name: Box106
+        enabled: true
+        component:
+          - id: 2557727932636645292
+            type: 1
+            enabled: true
+            position: [19.4999981, -4.95000076, 27]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 8459765907954150889
+            type: 2
+            enabled: true
+            mesh_id: 7996041704060207065
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 10977614229603199797
+        name: Box132
+        enabled: true
+        component:
+          - id: 3042270902539356682
+            type: 1
+            enabled: true
+            position: [28.5000076, -14.9500017, 33]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 9702444364521795239
+            type: 2
+            enabled: true
+            mesh_id: 5422523072781467050
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 1144527530168784055
+            type: 2
+            enabled: true
+            mesh_id: 1733778500015317988
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 8693281057697419573
+            type: 2
+            enabled: true
+            mesh_id: 1471231976668371010
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 16549504380444692459
+        name: Cylinder005
+        enabled: true
+        component:
+          - id: 18401010615042277938
+            type: 1
+            enabled: true
+            position: [83.9972458, -14.9000025, 66]
+            rotation: [-0.5, 0.5, 0.5, 0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6385165262307487029
+            type: 2
+            enabled: true
+            mesh_id: 5711459303371246528
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 11364260109410143483
+            type: 2
+            enabled: true
+            mesh_id: 9686641797217773426
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 2753348073144442628
+            type: 2
+            enabled: true
+            mesh_id: 14987138481190245928
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 6750096227463648253
+            type: 2
+            enabled: true
+            mesh_id: 9301271631760279348
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+      - id: 8328455977433137555
+        name: Box987
+        enabled: true
+        component:
+          - id: 5241055301009989303
+            type: 1
+            enabled: true
+            position: [106.500023, -14.9000025, 68.9499969]
+            rotation: [0.707107246, 0, 0, 0.707106292]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 15930068995571013775
+            type: 2
+            enabled: true
+            mesh_id: 6620357255281469183
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 2969490410898589972
+            type: 2
+            enabled: true
+            mesh_id: 18413185454417946345
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 3970080176445657889
+        name: Cylinder007
+        enabled: true
+        component:
+          - id: 1313093927059958095
+            type: 1
+            enabled: true
+            position: [171, -14.9000025, 35.9999962]
+            rotation: [-0.5, 0.5, 0.5, 0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 1815149818021597180
+            type: 2
+            enabled: true
+            mesh_id: 4563657389193739769
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 4956689848330744068
+            type: 2
+            enabled: true
+            mesh_id: 15235879157458068826
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 15034450920878613414
+        name: Box1140
+        enabled: true
+        component:
+          - id: 13538064223350868305
+            type: 1
+            enabled: true
+            position: [132.014633, -24.9000015, 70.4646301]
+            rotation: [0.500000417, 0.499999702, -0.500000179, 0.499999702]
+            scale: [1.00000024, 1.00000024, 1.00000012]
+          - id: 9443385634993863890
+            type: 2
+            enabled: true
+            mesh_id: 11013636099775019564
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+          - id: 16122168889675008961
+            type: 2
+            enabled: true
+            mesh_id: 8663801493117844996
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+          - id: 14112038040495480865
+            type: 2
+            enabled: true
+            mesh_id: 10659504531968306819
+            navigable: false
+            visible: true
+            material_id: 4587535263328285150
+          - id: 14890281931601422667
+            type: 2
+            enabled: true
+            mesh_id: 18301411932781917553
+            navigable: false
+            visible: true
+            material_id: 2649979332993473088
+          - id: 17651184816104211416
+            type: 2
+            enabled: true
+            mesh_id: 11313346340906634089
+            navigable: false
+            visible: true
+            material_id: 4916520811287933055
+          - id: 10386827446327412316
+            type: 2
+            enabled: true
+            mesh_id: 4237147953178629705
+            navigable: false
+            visible: true
+            material_id: 4358669898672813652
+          - id: 11798892668263205171
+            type: 2
+            enabled: true
+            mesh_id: 7099369984212558491
+            navigable: false
+            visible: true
+            material_id: 5964044276421505701
+          - id: 8604158991456592539
+            type: 2
+            enabled: true
+            mesh_id: 10561451601881615498
+            navigable: false
+            visible: true
+            material_id: 2719247482259562865
+          - id: 10030485754274160152
+            type: 2
+            enabled: true
+            mesh_id: 5928433525432526775
+            navigable: false
+            visible: true
+            material_id: 1346915489203828914
+          - id: 17027052757915265682
+            type: 2
+            enabled: true
+            mesh_id: 9943599348204066620
+            navigable: false
+            visible: true
+            material_id: 7631669237127346378
+          - id: 5355628171151172725
+            type: 2
+            enabled: true
+            mesh_id: 7880935228350094292
+            navigable: false
+            visible: true
+            material_id: 13202539630038216380
+      - id: 16001635598347762253
+        name: Box606
+        enabled: true
+        component:
+          - id: 4751951224304209527
+            type: 1
+            enabled: true
+            position: [157.5, -29.9500008, 66]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 17425940307317217879
+            type: 2
+            enabled: true
+            mesh_id: 11611672855841423254
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 17827652660900389671
+        name: Box646
+        enabled: true
+        component:
+          - id: 8149080967962580885
+            type: 1
+            enabled: true
+            position: [166.5, -43.0191345, 69]
+            rotation: [8.94069601e-08, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 5213923116651840792
+            type: 2
+            enabled: true
+            mesh_id: 5052370927967813487
+            navigable: false
+            visible: true
+            material_id: 917493402162421944
+      - id: 17701963069364688339
+        name: Plane001
+        enabled: true
+        component:
+          - id: 15756314190877773908
+            type: 1
+            enabled: true
+            position: [-72.0014343, 0.182819366, -1.56231523]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 1363491637860365566
+            type: 2
+            enabled: true
+            mesh_id: 15380864787801216305
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 2137800577511475543
+        name: Plane002
+        enabled: true
+        component:
+          - id: 7464478099053152180
+            type: 1
+            enabled: true
+            position: [-54.0050964, 0.182819366, -1.56231523]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 8941402596007619644
+            type: 2
+            enabled: true
+            mesh_id: 836094402826767045
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 7584719123499341128
+        name: Plane003
+        enabled: true
+        component:
+          - id: 13896191165831435004
+            type: 1
+            enabled: true
+            position: [18.0606308, -4.77585983, 34.4561882]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 9298652168249188069
+            type: 2
+            enabled: true
+            mesh_id: 13466723864771157426
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 16186013711856839766
+        name: Plane004
+        enabled: true
+        component:
+          - id: 16149735463039828407
+            type: 1
+            enabled: true
+            position: [18.0606308, -14.8252096, 34.456192]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 7184772884906226925
+            type: 2
+            enabled: true
+            mesh_id: 13403486228802575437
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 5246287796157025580
+        name: Plane006
+        enabled: true
+        component:
+          - id: 12416902382247422671
+            type: 1
+            enabled: true
+            position: [136.484528, -29.7145863, 64.5090485]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 3330477915357171633
+            type: 2
+            enabled: true
+            mesh_id: 17533601380399939202
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 4389225685327580014
+        name: Box1146
+        enabled: true
+        component:
+          - id: 6367949710236406553
+            type: 1
+            enabled: true
+            position: [130.499985, -15.0000029, 94.4000015]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 9888899397584491790
+            type: 2
+            enabled: true
+            mesh_id: 9790408832016685991
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 7485693485661857719
+        name: Box1147
+        enabled: true
+        component:
+          - id: 9598654544606733761
+            type: 1
+            enabled: true
+            position: [130.499985, -16.3999939, 95.8000031]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 2340074116988250292
+            type: 2
+            enabled: true
+            mesh_id: 1450029176043569716
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 992332203548255162
+        name: Box1148
+        enabled: true
+        component:
+          - id: 2600802109359634480
+            type: 1
+            enabled: true
+            position: [131.899963, -16.3999939, 94.4000015]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 16690466813681804898
+            type: 2
+            enabled: true
+            mesh_id: 5037031907122479423
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 13586704997079498949
+        name: Box1149
+        enabled: true
+        component:
+          - id: 4410194266134764381
+            type: 1
+            enabled: true
+            position: [128.999985, -16.3999939, 94.4000015]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 3040796469548255885
+            type: 2
+            enabled: true
+            mesh_id: 8157586313240563117
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 16926903607501817778
+        name: Box1150
+        enabled: true
+        component:
+          - id: 3826793192046299756
+            type: 1
+            enabled: true
+            position: [124.499977, -15.0000029, 73.3999939]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999999762, 0.999999762]
+          - id: 17810851775780961557
+            type: 2
+            enabled: true
+            mesh_id: 3874709962076097246
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 11296775442872203108
+        name: Box1151
+        enabled: true
+        component:
+          - id: 5167656640050443116
+            type: 1
+            enabled: true
+            position: [124.499977, -16.3999939, 74.7999954]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 5535024782474175269
+            type: 2
+            enabled: true
+            mesh_id: 16964813351737958523
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 1442112147800293764
+        name: Box1152
+        enabled: true
+        component:
+          - id: 6896561317228553880
+            type: 1
+            enabled: true
+            position: [125.899956, -16.3999939, 73.3999939]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 1846809683974594838
+            type: 2
+            enabled: true
+            mesh_id: 2584283257532999489
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 13152074071343941098
+        name: Box1153
+        enabled: true
+        component:
+          - id: 5923964503113110281
+            type: 1
+            enabled: true
+            position: [122.999977, -16.3999939, 73.3999939]
+            rotation: [2.10734274e-08, 0.707106829, 2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 3567182367979938623
+            type: 2
+            enabled: true
+            mesh_id: 6390105669984826910
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6883047835876105932
+        name: Box1154
+        enabled: true
+        component:
+          - id: 9848267973075894125
+            type: 1
+            enabled: true
+            position: [124.500008, -15.0000029, 61.5000076]
+            rotation: [-3.09086161e-08, 0.707106829, 0.707106829, 3.09086268e-08]
+            scale: [1.00000072, 1.00000024, 1.00000024]
+          - id: 16562827328289018697
+            type: 2
+            enabled: true
+            mesh_id: 4362354799795059811
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 18334964929183568158
+        name: Box1155
+        enabled: true
+        component:
+          - id: 3276425784262992006
+            type: 1
+            enabled: true
+            position: [124.500008, -16.3999939, 60.1000061]
+            rotation: [3.07905794e-15, 1, 2.98023224e-08, 4.37113883e-08]
+            scale: [0.999999881, 0.999999881, 0.999999881]
+          - id: 12495769220022261060
+            type: 2
+            enabled: true
+            mesh_id: 17894934538969648377
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 12537889661605861814
+        name: Box1156
+        enabled: true
+        component:
+          - id: 14768461587348697030
+            type: 1
+            enabled: true
+            position: [123.100029, -16.3999939, 61.5000076]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6687569106877802810
+            type: 2
+            enabled: true
+            mesh_id: 7750502627533482785
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
+      - id: 8945965229763018402
+        name: Box1157
+        enabled: true
+        component:
+          - id: 6945313019192527814
+            type: 1
+            enabled: true
+            position: [126.000008, -16.3999939, 61.5000076]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 11650322891564064155
+            type: 2
+            enabled: true
+            mesh_id: 13869649046661736441
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6968672782998121404
+        name: Box1158
+        enabled: true
+        component:
+          - id: 16015597499081543628
+            type: 1
+            enabled: true
+            position: [148.599991, -15.0000029, 40.5]
+            rotation: [0.5, 0.5, 0.5, -0.5]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6056306985891915639
+            type: 2
+            enabled: true
+            mesh_id: 8892402281539372379
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 9747439030285689535
+        name: Box1159
+        enabled: true
+        component:
+          - id: 12411511318814335404
+            type: 1
+            enabled: true
+            position: [147.199982, -16.3999939, 40.5]
+            rotation: [2.10734274e-08, -0.707106829, -2.1073431e-08, 0.707106709]
+            scale: [0.999999881, 0.99999994, 0.99999994]
+          - id: 6020726335103230152
+            type: 2
+            enabled: true
+            mesh_id: 17893513533100003658
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 15948875740076613661
+        name: Box1160
+        enabled: true
+        component:
+          - id: 5875175693808043806
+            type: 1
+            enabled: true
+            position: [148.599991, -16.3999939, 41.8999786]
+            rotation: [0, 8.74227766e-08, -9.47312013e-16, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 11058944621031130013
+            type: 2
+            enabled: true
+            mesh_id: 8239086625873029119
+            navigable: false
+            visible: true
+            material_id: 6750369022920963075
+      - id: 6104833220763653839
+        name: Box1161
+        enabled: true
+        component:
+          - id: 11885926049861674510
+            type: 1
+            enabled: true
+            position: [148.599991, -16.3999939, 39]
+            rotation: [0, 8.74227766e-08, -9.47312013e-16, 1]
+            scale: [1, 0.999999881, 0.999999881]
+          - id: 1782226553893021502
+            type: 2
+            enabled: true
+            mesh_id: 15501397509916813598
+            navigable: true
+            visible: true
+            material_id: 6750369022920963075
