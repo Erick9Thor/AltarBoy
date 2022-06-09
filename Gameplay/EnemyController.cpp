@@ -237,7 +237,7 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 		return;
 	}
 
-	_state = BugState::MOVING_BACK;
+	_state = BugState::MOVING;
 
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
@@ -255,7 +255,7 @@ void Hachiko::Scripting::EnemyController::GoBack()
 		return;
 	}
 
-	_state = BugState::MOVING;
+	_state = BugState::MOVING_BACK;
 
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_spawn_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
@@ -290,7 +290,6 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
-	game_object->SetActive(false);
 	RELEASE(game_object);
 }
 
