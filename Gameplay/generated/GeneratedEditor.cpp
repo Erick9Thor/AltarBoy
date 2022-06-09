@@ -1,13 +1,13 @@
 #include "scriptingUtil/gameplaypch.h"
+#include "AudioManager.h"
 #include "BackToMainMenu.h"
-#include "BugAnimationManager.h"
 #include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
+#include "EnemyBulletController.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
 #include "MainMenuManager.h"
-#include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
@@ -15,17 +15,13 @@
 #include "Stats.h"
 
 
+void Hachiko::Scripting::AudioManager::OnEditor()
+{
+}
+
 void Hachiko::Scripting::BackToMainMenu::OnEditor()
 {
 	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
-}
-
-void Hachiko::Scripting::BugAnimationManager::OnEditor()
-{
-	Editor::Show<ComponentAnimation>("Animator", "ComponentAnimation*", _animator);
-	Editor::Show("State String", _state_string);
-	Editor::Show("Idle Index", _idle_index);
-	Editor::Show("Attacking Index", _attacking_index);
 }
 
 void Hachiko::Scripting::BulletController::OnEditor()
@@ -54,6 +50,13 @@ void Hachiko::Scripting::DynamicCamera::OnEditor()
 	Editor::Show("Lerp Position", _lerp_position);
 }
 
+void Hachiko::Scripting::EnemyBulletController::OnEditor()
+{
+	Editor::Show("Move Speed", _move_speed);
+	Editor::Show("Lifetime", _lifetime);
+	Editor::Show("Collider Radius", _collider_radius);
+}
+
 void Hachiko::Scripting::EnemyController::OnEditor()
 {
 	Editor::Show("Aggro Range", _aggro_range);
@@ -61,8 +64,11 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Spawn Pos", _spawn_pos);
 	Editor::Show("Spawn Is Initial", _spawn_is_initial);
 	Editor::Show("Player", _player);
+	Editor::Show("Enemy Body", _enemy_body);
+	Editor::Show("Parasite", _parasite);
 	Editor::Show("Attack Animation Duration", _attack_animation_duration);
 	Editor::Show("Attack Animation Timer", _attack_animation_timer);
+	Editor::Show("Is Ranged Attack", _is_ranged_attack);
 }
 
 void Hachiko::Scripting::FancyLights::OnEditor()
@@ -85,17 +91,6 @@ void Hachiko::Scripting::MainMenuManager::OnEditor()
 	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
 }
 
-void Hachiko::Scripting::PlayerAnimationManager::OnEditor()
-{
-	Editor::Show<ComponentAnimation>("Animator", "ComponentAnimation*", _animator);
-	Editor::Show("State String", _state_string);
-	Editor::Show("Idle Index", _idle_index);
-	Editor::Show("Walking Index", _walking_index);
-	Editor::Show("Dashing Index", _dashing_index);
-	Editor::Show("Melee Index", _melee_index);
-	Editor::Show("Ranged Index", _ranged_index);
-}
-
 void Hachiko::Scripting::PlayerCamera::OnEditor()
 {
 	Editor::Show("Relative Position To Player", _relative_position_to_player);
@@ -112,6 +107,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
 	Editor::Show("Attack Duration", _attack_duration);
+	Editor::Show("Attack Duration Distance", _attack_duration_distance);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);

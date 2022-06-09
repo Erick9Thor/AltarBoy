@@ -505,7 +505,6 @@
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
     <ClInclude Include="Scenes.h" />
-    <ClInclude Include="PlayerAnimationManager.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Sounds.h" />
     <ClInclude Include="PlayerSoundManager.h" />
@@ -773,7 +772,6 @@
     <ClCompile Include="generated\SaveAndLoadMethods.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAnimationManager.cpp" />
     <ClCompile Include="PlayerSoundManager.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="Stats.cpp" />
