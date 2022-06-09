@@ -20,10 +20,11 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
 	, _attack_duration(0.0f)
+	, _attack_duration_distance(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
-	, _state(PlayerState::IDLE)
+	, _state(PlayerState::INVALID)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
 {
@@ -63,8 +64,18 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_4);
 }
 
+void Hachiko::Scripting::PlayerController::OnStart()
+{
+	animation = game_object->GetComponent<ComponentAnimation>();
+	animation->StartAnimating();
+}
+
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
+	
+	CheckState();
+	
+
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -361,6 +372,7 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
 	_state = PlayerState::RANGED_ATTACKING;
+	_attack_current_duration = _attack_duration_distance;
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 	float3 attack_origin_position = _player_position;
@@ -642,6 +654,48 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 	_knock_end = _player_transform->GetGlobalPosition() + direction;
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
+}
+
+void Hachiko::Scripting::PlayerController::CheckState()
+{
+	PlayerState current_state = GetState();
+	bool state_changed = current_state != _previous_state;
+
+	if (!state_changed)
+	{
+		return;
+	}
+
+	_previous_state = current_state;
+
+	switch (current_state)
+	{
+	case PlayerState::IDLE:
+		animation->SendTrigger("idle");
+		break;
+	case PlayerState::WALKING:
+		animation->SendTrigger("isRunning");
+		break;
+	case PlayerState::MELEE_ATTACKING:
+		animation->SendTrigger("isAttacking");
+		break;
+	case PlayerState::RANGED_ATTACKING:
+		animation->SendTrigger("isShooting");
+		break;
+	case PlayerState::DASHING:
+		animation->SendTrigger("isDash");
+		break;
+	case PlayerState::FALLING:
+		animation->SendTrigger("isFalling");
+		break;
+	case PlayerState::DIE:
+		animation->SendTrigger("isDead");
+		break;
+
+	case PlayerState::INVALID:
+	default:
+		break;
+	}
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()

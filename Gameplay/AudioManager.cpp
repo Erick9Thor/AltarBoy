@@ -32,11 +32,6 @@ void Hachiko::Scripting::AudioManager::OnUpdate()
 				isPlayingMoving = true;
 				_audio_source->PostEvent(Sounds::PLAY_COMBAT);
 				_audio_source->PostEvent(Sounds::STOP_NAVIGATION);
-			} else if (current_state == BugState::MOVING_BACK && isPlayingMoving)
-			{
-				isPlayingMoving = false;
-				_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
-				_audio_source->PostEvent(Sounds::STOP_COMBAT);
 			}
 		}
 	}

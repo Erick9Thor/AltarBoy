@@ -36,6 +36,7 @@ public:
 	~PlayerController() override = default;
 
 	void OnAwake() override;
+	void OnStart() override;
 	void OnUpdate() override;
 
 	PlayerState GetState() const;
@@ -72,6 +73,8 @@ private:
 	void PickupParasite(const math::float3& current_position);
 	void RecieveKnockback(const math::float3 direction);
 
+	void CheckState();
+
 public:
 	void CheckGoal(const float3& current_position);
 	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
@@ -81,6 +84,7 @@ public:
 	bool _isInDebug = false;
 
 private:
+	Stats* _combat_stats;
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
@@ -89,6 +93,7 @@ private:
 	SERIALIZE_FIELD(int, _max_dash_charges);
 
 	SERIALIZE_FIELD(float, _attack_duration);
+	SERIALIZE_FIELD(float, _attack_duration_distance);
 
 	SERIALIZE_FIELD(float, _rotation_duration);
 
@@ -102,6 +107,8 @@ private:
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
 	ComponentTransform* _player_transform = nullptr;
+	ComponentAnimation* animation;
+
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _dash_start = float3::zero;
@@ -137,8 +144,7 @@ private:
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
-	Stats* _combat_stats;
-	bool _god_mode = false;
+	SERIALIZE_FIELD(PlayerState, _previous_state);
 };
 } // namespace Scripting
 } // namespace Hachiko
