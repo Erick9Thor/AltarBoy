@@ -44,7 +44,6 @@ Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 void Hachiko::Scripting::DebugManager::OnAwake()
 {
 	is_active = false;
-	is_god_mode = false;
 	is_wireframe = false;
 	is_performance = false;
 	
@@ -236,8 +235,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	// Player States
 	if (_god_mode->IsSelected())
 	{
-		is_god_mode = !is_god_mode;
-		_player_controller->_god_mode = is_god_mode;
+		_player_controller->_god_mode = !_player_controller->_god_mode;
 	}
 	/*
 
