@@ -91,6 +91,6 @@ void Hachiko::Scripting::AudioManager::OnUpdate()
 	//	_audio_source->PostEvent(Sounds::PLAY_COMBAT);
 	//	_audio_source->PostEvent(Sounds::STOP_NAVIGATION);
 	//}
-	//return;
+
 }
 

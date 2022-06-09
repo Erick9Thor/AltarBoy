@@ -1,14 +1,14 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "generated/Factory.h"
+#include "AudioManager.h"
 #include "BackToMainMenu.h"
-#include "BugAnimationManager.h"
 #include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DynamicCamera.h"
+#include "EnemyBulletController.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
 #include "MainMenuManager.h"
-#include "PlayerAnimationManager.h"
 #include "PlayerCamera.h"
 #include "PlayerController.h"
 #include "PlayerSoundManager.h"
@@ -18,14 +18,14 @@
 
 Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner, const std::string& script_name)
 {
+	if (script_name == "AudioManager")
+	{
+		return new Hachiko::Scripting::AudioManager(script_owner);
+	}
+
 	if (script_name == "BackToMainMenu")
 	{
 		return new Hachiko::Scripting::BackToMainMenu(script_owner);
-	}
-
-	if (script_name == "BugAnimationManager")
-	{
-		return new Hachiko::Scripting::BugAnimationManager(script_owner);
 	}
 
 	if (script_name == "BulletController")
@@ -43,6 +43,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 		return new Hachiko::Scripting::DynamicCamera(script_owner);
 	}
 
+	if (script_name == "EnemyBulletController")
+	{
+		return new Hachiko::Scripting::EnemyBulletController(script_owner);
+	}
+
 	if (script_name == "EnemyController")
 	{
 		return new Hachiko::Scripting::EnemyController(script_owner);
@@ -56,11 +61,6 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "MainMenuManager")
 	{
 		return new Hachiko::Scripting::MainMenuManager(script_owner);
-	}
-
-	if (script_name == "PlayerAnimationManager")
-	{
-		return new Hachiko::Scripting::PlayerAnimationManager(script_owner);
 	}
 
 	if (script_name == "PlayerCamera")

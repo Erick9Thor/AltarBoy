@@ -95,7 +95,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		}
 		else
 		{
-			if (animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+
+			if (animation->GetCurrentAnimation() != nullptr && animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
 			{
 				DropParasite();
 			}
