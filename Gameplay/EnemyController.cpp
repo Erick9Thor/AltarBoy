@@ -2,6 +2,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "EnemyController.h"
 #include "PlayerController.h"
+#include "AudioManager.h"
 #include "Stats.h"
 #include "Scenes.h"
 #include "EnemyBulletController.h"
@@ -29,6 +30,9 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _attack_animation_duration(0.0f)
 	, _attack_animation_timer(0.0f)
 	, _is_ranged_attack(false)
+	, _audio_manager(nullptr)
+	, _audio_manager_game_object(nullptr)
+	, _already_in_combat(false)
 {
 }
 
@@ -54,6 +58,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	{
 		_parasite->SetActive(false);
 	}
+
+	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
 }
 
@@ -193,7 +199,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 
 	if (_is_ranged_attack)
 	{
-		transform->LookAtTarget(_player_controller->GetGameObject()->GetTransform()->GetGlobalPosition());
+		transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 
 		// Make the enemy stop (quick fix)
 		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
@@ -209,7 +215,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 	
 	if (_is_ranged_attack) 
 	{
-		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
+		math::float3 forward = _player->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
 		forward = forward.Normalized();
 
 		// Spawn bullet (Passing the prefab can be improved)
@@ -219,7 +225,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 		bullet->GetTransform()->SetGlobalPosition(game_object->GetTransform()->GetGlobalPosition());
 
 		EnemyBulletController* ebc = bullet->GetComponent<EnemyBulletController>();
-		ebc->SetTarget(_player_controller->GetGameObject());
+		ebc->SetTarget(_player);
 		ebc->SetForward(forward);
 		ebc->SetDamage(_combat_stats->_attack_power);
 	}
@@ -320,6 +326,25 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	if (!state_changed)
 	{
 		return;
+	}
+
+	if ((_previous_state == BugState::ATTACKING || _previous_state == BugState::MOVING) && 
+		(current_state == BugState::IDLE || current_state == BugState::MOVING_BACK || current_state == BugState::DEAD))
+	{
+		if (_already_in_combat)
+		{
+			_audio_manager->UnregisterCombat();
+			_already_in_combat = false;
+		}
+	} 
+	else if ((current_state == BugState::ATTACKING || current_state == BugState::MOVING) &&
+		     (_previous_state == BugState::IDLE || _previous_state == BugState::MOVING_BACK || _previous_state == BugState::DEAD))
+	{
+		if (!_already_in_combat)
+		{
+			_audio_manager->RegisterCombat();
+			_already_in_combat = true;
+		}
 	}
 
 	_previous_state = current_state;
