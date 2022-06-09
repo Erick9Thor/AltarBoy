@@ -22,11 +22,22 @@
 void Hachiko::Scripting::AudioManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("enemics") != serialized_fields.end())
+	{
+		const SerializedField& enemics_sf = serialized_fields["enemics"];
+		if (enemics_sf.type_name == "std::vector<GameObject*>")
+		{
+			enemics = std::any_cast<std::vector<GameObject*>>(enemics_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::AudioManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["enemics"] = SerializedField(std::string("enemics"), std::make_any<std::vector<GameObject*>>(enemics), std::string("std::vector<GameObject*>"));
 }
 
 void Hachiko::Scripting::BackToMainMenu::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
