@@ -16,6 +16,8 @@
 
 #include "resources/ResourceAnimation.h"
 
+#include "Sounds.h"
+
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
 	, _stats()
@@ -34,6 +36,8 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	_stats = game_object->GetComponent<Stats>();
+
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -132,7 +136,7 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 {
-
+	_audio_source->PostEvent(Sounds::CRYSTAL);
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
 	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();

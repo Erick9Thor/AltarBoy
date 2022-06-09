@@ -48,6 +48,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _explosion_radius);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 
+			ComponentAudioSource* _audio_source;
 
 			math::float3 _player_pos;
 
