@@ -450,7 +450,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="58095053">
+		<SoundBank Id="3909959462" Language="SFX" Hash="542685332">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -500,6 +500,7 @@
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="707649828" Name="Stop_Pebble" ObjectPath="\Events\Default Work Unit\Stop_Pebble"/>
+				<Event Id="3173136834" Name="Stop_Wind" ObjectPath="\Events\Default Work Unit\Stop_Wind"/>
 			</IncludedEvents>
 		</SoundBank>
 	</SoundBanks>

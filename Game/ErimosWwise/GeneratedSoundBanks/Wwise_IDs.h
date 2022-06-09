@@ -29,6 +29,7 @@ namespace AK
         static const AkUniqueID STOP_COMBAT = 913896232U;
         static const AkUniqueID STOP_NAVIGATION = 445689598U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
+        static const AkUniqueID STOP_WIND = 3173136834U;
     } // namespace EVENTS
 
     namespace SWITCHES
