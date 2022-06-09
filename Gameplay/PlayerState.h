@@ -20,6 +20,6 @@ enum class BugState
 	IDLE,
 	MOVING,
 	MOVING_BACK,
-	ATTACKING
+	ATTACKING,
 	PARASITE
 };
