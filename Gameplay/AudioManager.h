@@ -20,14 +20,19 @@ namespace Hachiko
 			~AudioManager() override = default;
 
 			void OnAwake() override;
+			void OnStart() override;
 			void OnUpdate() override;
 		private:
 
 			ComponentAudioSource* _audio_source;
 
+			bool isPlayingMoving1 = false;
 			bool isPlayingMoving = false;
 
 			GameObject* enemy_pool;
+
+			SERIALIZE_FIELD(std::vector<GameObject*>, enemics);
+			int cont;
 		};
 	} // namespace Scripting
 } // namespace Hachiko
