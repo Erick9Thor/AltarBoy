@@ -5,6 +5,7 @@
 #include "Stats.h"
 #include "Scenes.h"
 #include "EnemyBulletController.h"
+#include "Sounds.h"
 
 #include <components/ComponentAnimation.h>
 #include <components/ComponentTransform.h>
@@ -42,6 +43,10 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
+
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
+
+
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
@@ -312,9 +317,11 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		animation->SendTrigger("idle");
 		break;
 	case BugState::ATTACKING:
+		_audio_source->PostEvent(Sounds::ENEMY_ATTACK);
 		animation->SendTrigger("isAttacking");
 		break;
 	case BugState::DEAD:
+		_audio_source->PostEvent(Sounds::ENEMY_DIE);
 		animation->SendTrigger("isDead");
 		break;
 	case BugState::MOVING:

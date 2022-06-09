@@ -4,8 +4,8 @@ enabled: true
 component:
   - type: 1
     enabled: true
-    position: [-69.7828979, 3.00204587, -71.4248276]
-    rotation: [0, 0, 0, 1]
+    position: [-10, -0.200000003, -10]
+    rotation: [0, 0.0688859746, 0, 0.997624576]
     scale: [1.39999998, 1.39999998, 1.39999998]
   - type: 18
     enabled: true
@@ -21,6 +21,16 @@ component:
     "'_detecting_radius@float'": 2
     "'_explosion_radius@float'": 10
     "'_explosive_crystal@bool'": false
+  - type: 15
+    enabled: true
+    class_name: Stats
+    "'_attack_power@int'": 1
+    "'_attack_cd@float'": 2
+    "'_attack_range@float'": 3.5
+    "'_move_speed@float'": 7
+    "'_max_hp@int'": 3
+  - type: 20
+    enabled: true
 child:
   - name: crystalSpike_mesh
     enabled: true
@@ -55,8 +65,7 @@ child:
         scale: [0.406699985, 0.406699985, 0.406699985]
       - type: 14
         enabled: true
-        animations:
-          - 9087701207749168962
+        state_machine: 4494346183400875454
     child:
       - name: Mesh
         enabled: true
@@ -65,7 +74,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [0.707106829, 0, 0, 0.707106709]
-            scale: [1, 0.999998629, 0.999998629]
+            scale: [1, 0.999992371, 0.999992371]
         child:
           - name: crystalSpikeTop_mesh
             enabled: true
