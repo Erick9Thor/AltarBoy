@@ -193,7 +193,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 
 	if (_is_ranged_attack)
 	{
-		transform->LookAtTarget(_player_controller->GetGameObject()->GetTransform()->GetGlobalPosition());
+		transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 
 		// Make the enemy stop (quick fix)
 		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
@@ -209,7 +209,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 	
 	if (_is_ranged_attack) 
 	{
-		math::float3 forward = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
+		math::float3 forward = _player->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
 		forward = forward.Normalized();
 
 		// Spawn bullet (Passing the prefab can be improved)
@@ -219,7 +219,7 @@ void Hachiko::Scripting::EnemyController::Attack()
 		bullet->GetTransform()->SetGlobalPosition(game_object->GetTransform()->GetGlobalPosition());
 
 		EnemyBulletController* ebc = bullet->GetComponent<EnemyBulletController>();
-		ebc->SetTarget(_player_controller->GetGameObject());
+		ebc->SetTarget(_player);
 		ebc->SetForward(forward);
 		ebc->SetDamage(_combat_stats->_attack_power);
 	}

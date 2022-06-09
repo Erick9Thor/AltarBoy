@@ -18,6 +18,7 @@ Hachiko::Scripting::EnemyBulletController::EnemyBulletController(Hachiko::GameOb
 
 void Hachiko::Scripting::EnemyBulletController::OnAwake()
 {
+	_transform = game_object->GetTransform();
 }
 
 void Hachiko::Scripting::EnemyBulletController::OnUpdate()
@@ -31,19 +32,19 @@ void Hachiko::Scripting::EnemyBulletController::OnUpdate()
 	if (_lifetime <= 0)
 	{
 		//	Disable
-		game_object->SetActive(false);
-		SceneManagement::Destroy(game_object);
+		//game_object->SetActive(false);
+		RELEASE(game_object);
 	}
 	else
 	{
 		// Move bullet forward
 		current_position += delta_pos;
-		game_object->GetComponent<ComponentTransform>()->SetGlobalPosition(current_position);
+		_transform->SetGlobalPosition(current_position);
 		// Check if it collides with an enemy
 		if (CheckCollisions())
 		{
 			//	If it hits enemy bullets is destroyed
-			SceneManagement::Destroy(game_object);
+			RELEASE(game_object);
 		}
 
 		_lifetime -= Time::DeltaTime();
@@ -52,11 +53,10 @@ void Hachiko::Scripting::EnemyBulletController::OnUpdate()
 
 bool Hachiko::Scripting::EnemyBulletController::CheckCollisions()
 {
-	ComponentTransform* transform = game_object->GetTransform();
 
-	if (_player->active && _collider_radius >= transform->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
+	if (_player->active && _collider_radius >= _transform->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
 	{
-		float3 dir = _player->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
+		float3 dir = _player->GetTransform()->GetGlobalPosition() - _transform->GetGlobalPosition();
 		_player->GetComponent<PlayerController>()->RegisterHit(_damage, false, dir);
 		return true;
 	}

@@ -4,7 +4,7 @@ enabled: true
 component:
   - type: 1
     enabled: true
-    position: [56.1426849, -14.1533022, 58.7003174]
+    position: [-60.0457001, -20.5221863, 50.7092018]
     rotation: [0, 0, 0, 1]
     scale: [4, 4, 4]
   - type: 14
@@ -109,7 +109,7 @@ child:
                                     enabled: true
                                     position: [0, 0, 0]
                                     rotation: [-0.0318660699, 0.0772754028, -0.30092302, 0.949978113]
-                                    scale: [1, 0.999999762, 0.999998569]
+                                    scale: [1, 0.999999762, 0.99999851]
                                 child:
                                   - name: Spine2_Jnt
                                     enabled: true
@@ -135,7 +135,7 @@ child:
                                               - type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
-                                                rotation: [0, 0, -0.388819247, 0.921314061]
+                                                rotation: [0, 0, -0.388819218, 0.921314061]
                                                 scale: [0.99999994, 0.99999994, 1]
                                             child:
                                               - name: Spine3_Jnt_$AssimpFbx$_Rotation
@@ -172,7 +172,7 @@ child:
                                                                 enabled: true
                                                                 position: [0, 0, 0]
                                                                 rotation: [-0.0156324822, 0.706933975, 0.0156324953, 0.706933975]
-                                                                scale: [1, 0.999998033, 0.99999994]
+                                                                scale: [1, 0.999997973, 0.99999994]
                                                             child:
                                                               - name: Spine4_Jnt
                                                                 enabled: true
@@ -198,8 +198,8 @@ child:
                                                                           - type: 1
                                                                             enabled: true
                                                                             position: [0, 0, 0]
-                                                                            rotation: [0.404130131, -0.58024168, -0.404129922, 0.580239236]
-                                                                            scale: [1.00000083, 1.00000024, 1.00000131]
+                                                                            rotation: [0.404130191, -0.58024174, -0.404129982, 0.580239117]
+                                                                            scale: [1.00000095, 1.00000036, 1.00000143]
                                                                         child:
                                                                           - name: Head_Jnt_$AssimpFbx$_Rotation
                                                                             enabled: true
@@ -235,7 +235,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [-0.404129297, 0.580241263, 0.404129416, 0.580240428]
-                                                                                            scale: [0.999998868, 1.00000048, 1.00000048]
+                                                                                            scale: [0.999998808, 1.00000048, 1.00000048]
                                                                                         child:
                                                                                           - name: Head2_Jnt_$AssimpFbx$_Rotation
                                                                                             enabled: true
@@ -278,7 +278,7 @@ child:
                                                                               - type: 1
                                                                                 enabled: true
                                                                                 position: [0, 0, 0]
-                                                                                rotation: [0.0473504625, -0.0119514465, -0.771928608, 0.633830667]
+                                                                                rotation: [0.0473504625, -0.0119514484, -0.771928608, 0.633830667]
                                                                                 scale: [1.00000048, 1.00000036, 0.999999821]
                                                                             child:
                                                                               - name: Arm1_jnt_L
@@ -404,7 +404,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [0.991873801, -0.123242788, 0.0313436314, -0.003894503]
-                                                                            scale: [1, 1.00000334, 1.00000703]
+                                                                            scale: [1, 1.00000334, 1.00000715]
                                                                         child:
                                                                           - name: Arm1_jnt_R_$AssimpFbx$_Rotation
                                                                             enabled: true
@@ -562,7 +562,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [0.735009968, -0.6780563, 2.96387572e-08, -3.21283551e-08]
-                                                                            scale: [1.00000024, 1.00000036, 1.00000286]
+                                                                            scale: [1.00000024, 1.00000024, 1.00000286]
                                                                         child:
                                                                           - name: Wing1_Jnt_L_$AssimpFbx$_Rotation
                                                                             enabled: true
@@ -597,7 +597,7 @@ child:
                                                                                           - type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0, 0, -0.0335023999, 0.999438643]
+                                                                                            rotation: [0, 0, -0.0335024036, 0.999438643]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: Wing2_Jnt_L_$AssimpFbx$_Rotation
@@ -728,7 +728,7 @@ child:
                                                                                           - type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0, 0, -0.0335023999, 0.999438643]
+                                                                                            rotation: [0, 0, -0.0335024036, 0.999438643]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - name: Wing2_Jnt_R_$AssimpFbx$_Rotation
@@ -791,7 +791,7 @@ child:
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
                                                                                                             rotation: [0, -0.70710665, 0, 0.707106888]
-                                                                                                            scale: [0.999998093, 1, 0.999998093]
+                                                                                                            scale: [0.999998033, 1, 0.999998033]
                                                                                                   - name: Wing_Middle_R
                                                                                                     enabled: true
                                                                                                     component:

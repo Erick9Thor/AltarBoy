@@ -30,6 +30,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _collider_radius);
 
             math::float3 _direction;
+            ComponentTransform* _transform;
             int _damage;
         };
     } // namespace Scripting
