@@ -46,7 +46,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
-
 	if (_enemy_body)
 	{
 		_enemy_body->SetActive(true);
@@ -140,8 +139,6 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			ChasePlayer();
 		}
 	}
-
-
 }
 
 BugState Hachiko::Scripting::EnemyController::GetState() const
@@ -224,7 +221,7 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 		return;
 	}
 
-	_state = BugState::MOVING;
+	_state = BugState::MOVING_BACK;
 
 	float3 corrected_pos = Navigation::GetCorrectedPosition(_player_pos, math::float3(10.0f, 10.0f, 10.0f));
 	if (corrected_pos.x < FLT_MAX)
@@ -325,6 +322,9 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		animation->SendTrigger("isDead");
 		break;
 	case BugState::MOVING:
+		animation->SendTrigger("isMoving");
+		break;
+	case BugState::MOVING_BACK:
 		animation->SendTrigger("isMoving");
 		break;
 

@@ -516,6 +516,7 @@
     <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="RoomTeleporter.h" />
     <ClInclude Include="EnemyBulletController.h" />
+    <ClInclude Include="AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -781,6 +782,7 @@
     <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="RoomTeleporter.cpp" />
     <ClCompile Include="EnemyBulletController.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

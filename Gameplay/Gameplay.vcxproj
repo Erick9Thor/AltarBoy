@@ -313,6 +313,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="BackToMainMenu.h" />
     <ClInclude Include="BulletController.h" />
     <ClInclude Include="CrystalExplosion.h" />
@@ -720,6 +721,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="BackToMainMenu.cpp" />
     <ClCompile Include="BulletController.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
