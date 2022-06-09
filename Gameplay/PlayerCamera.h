@@ -32,6 +32,7 @@ private:
 	SERIALIZE_FIELD(math::float3, _relative_position_to_player);
 	SERIALIZE_FIELD(GameObject*, _player);
 	SERIALIZE_FIELD(float, _follow_delay);
+	ComponentAudioSource* _audio_source;
 
 	math::float3 _look_ahead;
 	PlayerController* _player_ctrl;

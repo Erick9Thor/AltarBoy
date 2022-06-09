@@ -3,6 +3,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1020223172	Play_Wind			\Default Work Unit\Play_Wind	
 	1157125118	Play_Pebble			\Default Work Unit\Play_Pebble	
 	2035174344	Play_Crystal			\Default Work Unit\Play_Crystal	
+	3173136834	Stop_Wind			\Default Work Unit\Stop_Wind	
 
 Effect plug-ins	ID	Name	Type				Notes
 	48620415	Have_U_Ever_Been_Outside	Wwise RoomVerb			

@@ -9,10 +9,12 @@ namespace Hachiko::Sounds
 
 	// Enemy
 	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";
+	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyDie";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
-	constexpr const wchar_t* WIND = L"Play_Wind";
+	constexpr const wchar_t* PLAY_WIND = L"Play_Wind";
+	constexpr const wchar_t* STOP_WIND = L"Stop_Wind";
 	constexpr const wchar_t* PLAY_PEBBLE = L"Play_Pebble";
 	constexpr const wchar_t* STOP_PEBBLE = L"Stop_Pebble";
 
@@ -22,5 +24,6 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* STOP_NAVIGATION = L"Stop_Navigation";
 	constexpr const wchar_t* PLAY_COMBAT = L"Play_Combat";
 	constexpr const wchar_t* STOP_COMBAT = L"Stop_Combat";
+	constexpr const wchar_t* GAME_OVER = L"Play_GameOver";
 
 } // namespace Hachiko::Sounds

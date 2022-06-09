@@ -5,6 +5,7 @@
 #include <components/ComponentTransform.h>
 #include <core/Scene.h>
 #include <thread>
+#include "Sounds.h"
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
@@ -29,10 +30,15 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	_look_ahead = float3::zero;
 	// Seed the rand()
 	srand(static_cast <unsigned> (time(0)));
+
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()
 {
+	_audio_source->PostEvent(Sounds::PLAY_NAVIGATION);
+	_audio_source->PostEvent(Sounds::WIND);
+	_audio_source->PostEvent(Sounds::PLAY_PEBBLE);
 }
 
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
