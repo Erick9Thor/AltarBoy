@@ -11,7 +11,7 @@
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="2053433330">
+		<SoundBank Id="626769978" Language="SFX" Hash="2978759642">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -379,7 +379,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2142475735">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3080236728">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -397,6 +397,22 @@
 						<File Id="116007299" Language="SFX">
 							<ShortName>slime-squish.wav</ShortName>
 							<Path>SFX\slime-squish_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2402038236" Name="Play_EnemyDie" ObjectPath="\Events\Default Work Unit\Play_EnemyDie">
+					<IncludedMemoryFiles>
+						<File Id="719773623" Language="SFX">
+							<ShortName>monster-dying.wav</ShortName>
+							<Path>SFX\monster-dying_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3174629258" Name="Play_GameOver" ObjectPath="\Events\Default Work Unit\Play_GameOver">
+					<IncludedMemoryFiles>
+						<File Id="418495884" Language="SFX">
+							<ShortName>game-die.wav</ShortName>
+							<Path>SFX\game-die_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -434,7 +450,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3363133239">
+		<SoundBank Id="3909959462" Language="SFX" Hash="58095053">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
