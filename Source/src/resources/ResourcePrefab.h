@@ -14,5 +14,6 @@ namespace Hachiko
         ~ResourcePrefab() override = default;
         YAML::Node prefab_data;
         std::string name;
+        GameObject* root_node = nullptr;
     };
 } // namespace Hachiko

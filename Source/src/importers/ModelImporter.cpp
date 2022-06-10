@@ -126,7 +126,9 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     }
 
     // Create prefab
-    UID prefab_uid = prefab_importer.CreatePrefabAsset(filename.c_str(), model_root->children[0]);
+    UID prefab_uid = meta[PREFAB_ID].IsDefined() ? meta[PREFAB_ID].as<UID>() : UUID::GenerateUID();
+    std::string(GENERATED_FOLDER) + std::to_string(prefab_uid);
+    prefab_importer.CreateGeneratedPrefab(filename.c_str(), prefab_uid, model_root->children[0]);
     delete model_root;
     meta[PREFAB_ID] = prefab_uid;
 

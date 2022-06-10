@@ -38,6 +38,7 @@ bool ModuleResources::Init()
     {
         FileSystem::CreateDir(asset_path.second.c_str());
     }
+    FileSystem::CreateDir(ASSETS_FOLDER_GENERATED_PREFAB);
 
     AssetsLibraryCheck();
     ClearUnusedResources(managed_uids);
@@ -202,17 +203,15 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
         {
         case Resource::AssetType::MODEL:
             {
-                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
-                auto a = meta_node[PREFAB_ID].as<UID>();
-                importer->Load(meta_node[PREFAB_ID].as<UID>());
+                PrefabImporter importer;
+                importer.CreateObjectFromPrefab(meta_node[PREFAB_ID].as<UID>(), nullptr);
                 break;
             }
             
         case Resource::AssetType::PREFAB:
             {
-                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
-                // Prefab asset only contains a single prefab resource
-                importer->Load(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
+                PrefabImporter importer;
+                importer.CreateObjectFromPrefab(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>(), nullptr);    
                 break;
             }
         case Resource::AssetType::MATERIAL:
