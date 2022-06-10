@@ -11,20 +11,19 @@ void Hachiko::RenderList::PreUpdate()
     polycount_total = 0;
 }
 
-void Hachiko::RenderList::Update(ComponentCamera* camera, QuadtreeNode* quadtree)
+void Hachiko::RenderList::Update(ComponentCamera* camera, Quadtree* quadtree)
 {
     opaque_targets.clear();
     transparent_targets.clear();
-    const Frustum* frustum = camera->GetFrustum();
     const float3 camera_pos = camera->GetGameObject()->GetTransform()->GetGlobalPosition();
     CollectMeshes(camera, camera_pos, quadtree);
 }
 
-void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree)
+void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& camera_pos, Quadtree* quadtree)
 {
     const Frustum* frustum = camera->GetFrustum();
 
-    std::vector<ComponentMeshRenderer*> meshes;
+    std::set<ComponentMeshRenderer*> meshes;
 
     quadtree->GetIntersections(meshes, *frustum);
 
@@ -32,26 +31,6 @@ void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& c
     {
         CollectMesh(camera_pos, mesh_renderer);
     }
-
-    //const bool quad_inside = frustum->Intersects(quadtree->GetBox());
-    //// Check if node intersects camera
-    //if (quad_inside)
-    //{
-    //    // Check any gameobjects intersect
-    //    for (ComponentMeshRenderer* mesh : quadtree->GetMeshes())
-    //    {
-    //        CollectMesh(camera_pos, mesh);
-    //    }
-
-    //    // Call for all children (What to do if it is duplicated when collecting)?
-    //    if (!quadtree->IsLeaf())
-    //    {
-    //        for (QuadtreeNode* child : quadtree->children)
-    //        {
-    //            CollectMeshes(camera, camera_pos, child);
-    //        }
-    //    }
-    //}
 }
 
 void Hachiko::RenderList::CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh_renderer)

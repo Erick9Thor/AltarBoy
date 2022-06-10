@@ -138,8 +138,8 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
 
-    std::vector<GameObject*> game_objects;
-    quadtree->GetRoot()->GetIntersections(game_objects, segment);
+    std::set<GameObject*> game_objects;
+    quadtree->GetIntersections(game_objects, segment);
 
     for (GameObject* game_object : game_objects)
     {
