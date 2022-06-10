@@ -363,7 +363,9 @@ bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) co
 
         // If it resource is missing it is invalid
         if (!FileSystem::Exists(library_path.c_str()))
+        {
             return false;
+        }
 
         // If resource hash does not match meta it is invalid
         uint64_t meta_resource_hash = meta[RESOURCES][i][RESOURCE_HASH].IsDefined() ? meta[RESOURCES][i][RESOURCE_HASH].as<uint64_t>() : 0;

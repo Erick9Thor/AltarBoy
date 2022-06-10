@@ -13,8 +13,9 @@ void Hachiko::PrefabImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::PREFAB, resource_index, meta);
 
-    YAML::Node prefab_node = YAML::LoadFile(path);
-    FileSystem::Save(GetResourcePath(Resource::Type::PREFAB, uid).c_str(), prefab_node);
+    //YAML::Node prefab_node = YAML::LoadFile(path);
+    FileSystem::Copy(path, GetResourcePath(Resource::Type::PREFAB, uid).c_str());
+    //FileSystem::Save(GetResourcePath(Resource::Type::PREFAB, uid).c_str(), prefab_node);
 }
 
 void Hachiko::PrefabImporter::Save(UID id, const Resource* prefab)
