@@ -42,6 +42,8 @@ bool ModuleResources::Init()
     AssetsLibraryCheck();
     ClearUnusedResources(managed_uids);
 
+    HE_LOG("Finished aligning assets: %d assets imported, %d unused resources cleaned", imported_assets, cleaned_resources);
+
     std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
         std::filesystem::path file = e.GetPath();
@@ -71,7 +73,7 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
     return last_resource_path.parent_path();
 }
 
-std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path)
+std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path, bool force)
 {
     Resource::AssetType type = GetAssetTypeFromPath(path);
     
@@ -96,7 +98,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
     }
 
     // Handle asset when it is in correct path
-    return ImportAsset(destination.string());
+    return ImportAsset(destination.string(), force);
 }
 
 Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
@@ -271,7 +273,7 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
     }
 }
 
-std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path)
+std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path, bool force)
 {
     Resource::AssetType type = GetAssetTypeFromPath(asset_path);
     
@@ -299,8 +301,8 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     uint64_t previous_asset_hash = meta_node[ASSET_HASH].IsDefined() ? meta_node[ASSET_HASH].as<uint64_t>() : 0;
     uint64_t asset_hash = FileSystem::HashFromPath(asset_path.c_str());
 
-    // Get the asset hash and reimport if it has changed
-    if (previous_asset_hash != asset_hash)
+    // Get the asset hash and reimport if it has changed or if we force it
+    if (force || previous_asset_hash != asset_hash)
     {
         UpdateAssetHash(asset_path.c_str(), meta_node);
         return ImportAssetResources(asset_path, meta_node);
@@ -344,6 +346,8 @@ std::vector<UID> ModuleResources::ImportAssetResources(const std::string& asset_
     {
         FileSystem::Save(meta_path.c_str(), meta);
     }
+
+    ++imported_assets;
     return imported_ids;
 }
 
@@ -399,6 +403,7 @@ void Hachiko::ModuleResources::ClearLibrary(const PathNode& folder, const std::s
         if (seen_uids.find(file_name) == seen_uids.end())
         {
             FileSystem::Delete(path_node.path.c_str());
+            ++cleaned_resources;
         }
     }
 }

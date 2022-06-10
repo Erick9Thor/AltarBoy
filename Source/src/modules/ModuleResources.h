@@ -29,7 +29,7 @@ namespace Hachiko
         void ReleaseResource(UID id);
         
         void AssetsLibraryCheck();
-        std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
+        std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path, bool force = false);
         std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void LoadAsset(const std::string& path);
         GameObject* InstantiatePrefab(UID prefab_uid, GameObject* parent);
@@ -41,6 +41,8 @@ namespace Hachiko
             unsigned n_users = 0;
         };
         std::map<UID, ResourceInstance> loaded_resources;
+        unsigned imported_assets = 0;
+        unsigned cleaned_resources = 0;
         std::set<UID> managed_uids;
 
         std::vector<std::pair<Hachiko::Resource::AssetType, std::string>> supported_extensions = 
@@ -64,7 +66,7 @@ namespace Hachiko
         // Checks the current assets folder states and sets library to a valid state
         void GenerateLibrary(const PathNode& folder);
         // Gets an asset file and returns its related resources
-        std::vector<UID> ImportAsset(const std::string& asset_path);
+        std::vector<UID> ImportAsset(const std::string& asset_path, bool force = false);
         // From an asset file creates its resources and sets the corresponding ids and types on meta
         // Keeps Previously existing ids if they can be matched
         std::vector<UID> ImportAssetResources(const std::string& asset_path, YAML::Node& meta);

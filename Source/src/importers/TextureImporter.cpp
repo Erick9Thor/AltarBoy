@@ -125,14 +125,16 @@ void Hachiko::TextureImporter::SaveTextureAsset(const ResourceTexture* texture)
 {
     // Update the texture meta if edited from engine since we cannot modify the png
     // Separated because normal import already manages meta file and we need to have the data before it is loaded for import
-    // Here we only add to meta the required params and then manage import normally    
+    // Here we only add to meta the required params call force import since having the change in the meta would make it go unnoticed
     std::string meta_path = StringUtils::Concat(texture->path, META_EXTENSION);
     YAML::Node meta_node = YAML::LoadFile(meta_path);
     meta_node[TEXTURE_MAG_FILTER] = texture->min_filter;
     meta_node[TEXTURE_MIN_FILTER] = texture->mag_filter;
     meta_node[TEXTURE_WRAP_MODE] = texture->wrap;
     FileSystem::Save(meta_path.c_str(), meta_node);
-    App->resources->ImportAssetFromAnyPath(texture->path);
+
+    constexpr bool force = true;
+    App->resources->ImportAssetFromAnyPath(texture->path, force);
 }
 
 
