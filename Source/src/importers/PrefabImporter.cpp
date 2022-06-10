@@ -52,8 +52,6 @@ Hachiko::Resource* Hachiko::PrefabImporter::Load(UID id)
 
 Hachiko::GameObject* Hachiko::PrefabImporter::CreateObjectFromPrefab(UID prefab_uid, GameObject* parent)
 {
-    const std::string prefab_resource_path = GetResourcePath(Resource::Type::PREFAB, prefab_uid);
-    YAML::Node node = YAML::LoadFile(prefab_resource_path);
     ResourcePrefab* prefab = static_cast<ResourcePrefab*>(Load(prefab_uid));
 
     GameObject* prefab_root = prefab->root_node;
@@ -133,7 +131,7 @@ Hachiko::UID Hachiko::PrefabImporter::CreateGeneratedPrefab(const char* name, UI
 {
     // Pre creates the prefab meta so it already contains the desired uid decided by model importer
     ResourcePrefab* prefab = CreatePrefabResouce(name, uid, root);
-    const std::string prefab_asset_path = std::string(GENERATED_FOLDER) + std::to_string(uid);
+    const std::string prefab_asset_path = std::string(ASSETS_FOLDER_GENERATED_PREFAB) + std::to_string(uid) + PREFAB_EXTENSION;
     const std::string prefab_meta_path = prefab_asset_path + META_EXTENSION;
     FileSystem::Save(prefab_asset_path.c_str(), prefab->prefab_data);
     // Import normally
