@@ -32,7 +32,6 @@ namespace Hachiko
         std::vector<UID> ImportAssetFromAnyPath(const std::filesystem::path& path);
         std::vector<UID> CreateAsset(Resource::Type type, const std::string& name) const;
         void LoadAsset(const std::string& path);
-        void SaveResource(const Resource* resource) const;
         GameObject* InstantiatePrefab(UID prefab_uid, GameObject* parent);
 
     private:
@@ -68,7 +67,7 @@ namespace Hachiko
         std::vector<UID> ImportAsset(const std::string& asset_path);
         // From an asset file creates its resources and sets the corresponding ids and types on meta
         // Keeps Previously existing ids if they can be matched
-        std::vector<UID> ImportAssetResources(const std::filesystem::path& asset, YAML::Node& meta);
+        std::vector<UID> ImportAssetResources(const std::string& asset_path, YAML::Node& meta);
         // Checks if all the asset resource files exist in library
         bool ValidateAssetResources(const YAML::Node& meta) const;
 
