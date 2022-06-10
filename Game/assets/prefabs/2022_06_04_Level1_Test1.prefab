@@ -12699,7 +12699,7 @@ child:
                 mesh_id: 9965609463044144128
                 navigable: false
                 visible: true
-                material_id: 6520207381227701875
+                material_id: 12481897543049716719
   - name: floorTileBroken_017_$AssimpFbx$_Translation
     enabled: true
     component:
@@ -12854,7 +12854,7 @@ child:
                 mesh_id: 8117349607870723382
                 navigable: false
                 visible: true
-                material_id: 6520207381227701875
+                material_id: 12481897543049716719
   - name: wallPlainBroken002_$AssimpFbx$_Translation
     enabled: true
     component:
@@ -12886,7 +12886,7 @@ child:
                 mesh_id: 14659763818926166388
                 navigable: false
                 visible: true
-                material_id: 6520207381227701875
+                material_id: 12481897543049716719
   - name: Cylinder358_$AssimpFbx$_Translation
     enabled: true
     component:

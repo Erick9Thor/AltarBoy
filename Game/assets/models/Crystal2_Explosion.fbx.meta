@@ -16,17 +16,25 @@ animation_names:
 resources:
   - resource_id: 8491662251488687946
     resource_type: 3
+    resource_hash: 3970478146064880607
   - resource_id: 10892393975826750078
     resource_type: 3
+    resource_hash: 2499792457318142042
   - resource_id: 3913156033904217141
     resource_type: 3
+    resource_hash: 13243646644065659078
   - resource_id: 17187476894969531268
     resource_type: 3
+    resource_hash: 13545029072331471843
   - resource_id: 4869994198959428903
     resource_type: 3
+    resource_hash: 5412212488565543964
   - resource_id: 9460093468938292877
     resource_type: 1
+    resource_hash: 272969940194603915
   - resource_id: 10140546150993567985
     resource_type: 7
+    resource_hash: 11292511644681205996
   - resource_id: 16870432941048234143
     resource_type: 13
+    resource_hash: 5486967410847848776
