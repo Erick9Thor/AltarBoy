@@ -55,9 +55,13 @@ Hachiko::GameObject* Hachiko::PrefabImporter::CreateObjectFromPrefab(UID prefab_
     ResourcePrefab* prefab = static_cast<ResourcePrefab*>(Load(prefab_uid));
 
     GameObject* prefab_root = prefab->root_node;
-    prefab_root->SetNewParent(parent);
+    if (parent)
+    {
+        prefab_root->SetNewParent(parent);
 
-    App->resources->ReleaseResource(prefab);
+    }
+
+    delete prefab;
     
     return prefab_root;
 }
