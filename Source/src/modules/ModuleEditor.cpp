@@ -311,7 +311,9 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     if (ImGui::MenuItem(ICON_FA_PLUS "New"))
     {
         history.CleanUp();
-        App->scene_manager->CreateEmptyScene();
+        // Create new scene with engine stopped, passing id 0 does that
+        constexpr bool stop_scene = true;
+        App->scene_manager->ChangeSceneById(0, stop_scene);
         history.Init();
     }
     if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable

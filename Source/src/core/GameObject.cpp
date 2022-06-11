@@ -58,11 +58,6 @@ Hachiko::GameObject::~GameObject()
         parent->RemoveChild(this);
     }
 
-    if (scene_owner)
-    {
-        scene_owner->DestroyGameObject(this);
-    }
-
     for (GameObject* child : children)
     {
         child->parent = nullptr;
@@ -72,7 +67,6 @@ Hachiko::GameObject::~GameObject()
     {
         RELEASE(component);
     }
-    scene_owner = nullptr;
 }
 
 void Hachiko::GameObject::RemoveChild(GameObject* game_object)
@@ -247,16 +241,12 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
 
 void Hachiko::GameObject::SetActive(bool set_active)
 {
-    for (GameObject* child : children)
-    {
-        child->SetActive(set_active);
-    }
     if (!active && set_active)
     {
         Start();
     }
     active = set_active;
-
+    
     for (GameObject* child : children)
     {
         child->SetActive(set_active);

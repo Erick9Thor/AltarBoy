@@ -61,7 +61,7 @@ bool Hachiko::ModuleCamera::CleanUp()
 
     camera_buffer.erase(camera_buffer.begin());
     camera_buffer.clear();
-    delete rendering_camera->GetGameObject();
+    App->scene_manager->RemoveGameObject(rendering_camera->GetGameObject());
     return true;
 }
 
