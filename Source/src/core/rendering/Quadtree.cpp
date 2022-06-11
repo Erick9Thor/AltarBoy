@@ -255,7 +255,7 @@ void Hachiko::Quadtree::Reposition(ComponentMeshRenderer* mesh)
 
 void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 {
-    // Removes the element from insert commands to make sure it doesnt stay on the quadtree if refresh was called
+    // Removes the element from insert commands to make sure it doesnt stay on the quadtree if reposiiton was called
     if (to_insert.find(mesh) != to_insert.end())
     {
         to_insert.erase(mesh);
