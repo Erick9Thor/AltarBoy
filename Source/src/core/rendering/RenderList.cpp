@@ -23,7 +23,7 @@ void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& c
 {
     const Frustum* frustum = camera->GetFrustum();
 
-    std::set<ComponentMeshRenderer*> meshes;
+    std::unordered_set<ComponentMeshRenderer*> meshes;
 
     quadtree->GetIntersections(meshes, *frustum);
 
