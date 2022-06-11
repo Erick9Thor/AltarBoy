@@ -7,6 +7,7 @@
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentAnimation.h"
 #include "components/ComponentTransform.h"
@@ -127,7 +128,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     // Create prefab
     UID prefab_uid = prefab_importer.CreatePrefabAsset(filename.c_str(), model_root->children[0]);
-    delete model_root;
+    App->scene_manager->RemoveGameObject(model_root);
     meta[PREFAB_ID] = prefab_uid;
 
     for (unsigned i = 0; i < resource_ids.size(); ++i)

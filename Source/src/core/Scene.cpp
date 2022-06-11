@@ -49,14 +49,6 @@ void Hachiko::Scene::CleanScene()
     loaded = false;
 }
 
-void Hachiko::Scene::DestroyGameObject(GameObject* game_object)
-{
-    if (App->editor->GetSelectedGameObject() == game_object)
-    {
-        App->editor->SetSelectedGO(nullptr);
-    }
-}
-
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
     // This will return the first camera it comes across in the hierarchy in a 

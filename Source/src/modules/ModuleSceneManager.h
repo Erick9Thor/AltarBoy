@@ -26,7 +26,10 @@ namespace Hachiko
         bool IsScenePlaying();
         
         UpdateStatus Update(float delta) override;
+        UpdateStatus PostUpdate(float delta) override;
         bool CleanUp() override;
+
+        void RemoveGameObject(GameObject* go);
 
         GameObject* GetRoot()
         {
@@ -49,19 +52,19 @@ namespace Hachiko
         }
 
         void CreateEmptyScene(const char* name = nullptr);
+        void ChangeSceneById(UID new_scene_id);
+        void ReloadScene();
 
-        void LoadScene(UID new_scene_id);
+                
         void SaveScene(const char* file_path = nullptr);
 
         GameObject* Raycast(const float3& origin, const float3& destination);
         GameObject* BoundingRaycast(const float3& origin, const float3& destination);
-        void ChangeSceneById(UID new_scene_id);
-
-        void ReloadScene();
 
         void OptionsMenu();
 
     private:
+        void LoadScene(UID new_scene_id);
         void LoadScene(ResourceScene* scene, bool keep_navmesh = false);
         void ChangeMainScene(Scene* new_scene);
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
@@ -71,10 +74,13 @@ namespace Hachiko
         ResourcesPreferences* preferences = nullptr;
 
 
-        bool scene_ready_to_load = false;
+        bool scene_change_requested = false;
+        bool scene_reload_requested = false;
+        UID scene_to_load_id;
+        std::vector<GameObject*> to_remove;
+
         bool scene_autosave = false;
         ResourceScene* scene_resource;
         ResourceNavMesh* navmesh_resource;
-        UID scene_to_load_id;
     };
 } // namespace Hachiko

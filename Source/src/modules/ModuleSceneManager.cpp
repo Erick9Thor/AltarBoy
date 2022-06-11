@@ -7,6 +7,7 @@
 
 #include "resources/ResourceScene.h"
 #include "ModuleResources.h"
+#include "ModuleEditor.h"
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "core/preferences/src/EditorPreferences.h"
@@ -113,13 +114,43 @@ bool Hachiko::ModuleSceneManager::IsScenePlaying()
 
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
-    if (scene_ready_to_load)
-    {
-        scene_ready_to_load = false;
-        LoadScene(scene_to_load_id);
-    }
-
     main_scene->Update();
+    return UpdateStatus::UPDATE_CONTINUE;
+}
+
+UpdateStatus Hachiko::ModuleSceneManager::PostUpdate(float delta)
+{
+    if (scene_reload_requested)
+    {
+        // Use the scene resource refreshed when play is pressed to restore og state
+        // Basically scene serialized in memory
+        // Keeps the currently defined navmesh since the one saved in library is from the last time we saved
+        scene_reload_requested = false;
+        constexpr bool keep_navmesh = true;
+        LoadScene(scene_resource, keep_navmesh);
+        return UpdateStatus::UPDATE_CONTINUE;
+    }
+    
+    if (scene_change_requested)
+    {
+        scene_change_requested = false;
+        LoadScene(scene_to_load_id);
+        return UpdateStatus::UPDATE_CONTINUE;
+    }
+    
+    if (!to_remove.empty())
+    {
+        GameObject* selected_go = App->editor->GetSelectedGameObject();
+        for (GameObject* go : to_remove)
+        {
+            if (selected_go == go)
+            {
+                App->editor->SetSelectedGO(nullptr);
+            }
+            delete go;
+        }
+        to_remove.clear();
+    }
     return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -147,6 +178,21 @@ bool Hachiko::ModuleSceneManager::CleanUp()
     // Release because not owned by RM
 
     return true;
+}
+
+void Hachiko::ModuleSceneManager::RemoveGameObject(GameObject* go)
+{
+    if (go)
+    {
+        if (!go->scene_owner)
+        {
+            delete go;
+            go = nullptr;
+            return;
+        }
+        to_remove.push_back(go);
+        go = nullptr;
+    }
 }
 
 void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
@@ -219,17 +265,14 @@ Hachiko::GameObject* Hachiko::ModuleSceneManager::BoundingRaycast(const float3& 
 
 void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
 {
-    scene_ready_to_load = true;
+    scene_change_requested = true;
     scene_to_load_id = new_scene_id;
 }
 
 void Hachiko::ModuleSceneManager::ReloadScene()
 {
-    // Use the scene resource refreshed when play is pressed to restore og state
-    // Basically scene serialized in memory
-    // Keeps the currently defined navmesh since the one saved in library is from the last time we saved
-    constexpr bool keep_navmesh = true;
-    LoadScene(scene_resource, keep_navmesh);
+    // Set flag to reload current scene
+    scene_reload_requested = true;
 }
 
 void Hachiko::ModuleSceneManager::OptionsMenu()
@@ -283,6 +326,8 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::NOT_LOADED);
     App->event->Publish(scene_load);
 
+    // We are already releasing scene so we need to update the to remove_vector
+    to_remove.clear();
     RELEASE(main_scene);
     main_scene = new_scene;
 

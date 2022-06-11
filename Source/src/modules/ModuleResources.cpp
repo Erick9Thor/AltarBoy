@@ -224,7 +224,7 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
         case Resource::AssetType::SCENE:
             // Scene asset has to keep its scene id at the first position, navmesh is found inside scene serialization
             // It is also in resources array so it is reimported but no need to pass it here
-            App->scene_manager->LoadScene(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
+            App->scene_manager->ChangeSceneById(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
         }
     }
 }
