@@ -9,10 +9,7 @@ Hachiko::QuadtreeNode::QuadtreeNode(const AABB& box, QuadtreeNode* parent, int d
 
 Hachiko::QuadtreeNode::~QuadtreeNode()
 {
-    RELEASE(children[(int)Quadrants::NW]);
-    RELEASE(children[(int)Quadrants::NE]);
-    RELEASE(children[(int)Quadrants::SE]);
-    RELEASE(children[(int)Quadrants::SW]);
+    DeleteChildren();
 }
 
 void Hachiko::QuadtreeNode::Insert(const std::unordered_set<ComponentMeshRenderer*>& to_insert)
@@ -84,72 +81,91 @@ void Hachiko::QuadtreeNode::CreateChildren()
     children[static_cast<int>(Quadrants::SW)] = new QuadtreeNode(child_box, this, new_detph);
 }
 
-void Hachiko::QuadtreeNode::RearangeChildren()
+void Hachiko::QuadtreeNode::DeleteChildren()
 {
-    
-    // No split due to not enough objects
-    if (IsLeaf() && meshes.size() < QUADTREE_MAX_ITEMS)
-    {
-        return;
-    }
-
-    // No split due to minimum size
-    if (box.HalfSize().LengthSq() <= (QUADTREE_MIN_SIZE * QUADTREE_MIN_SIZE))
-    {
-        return;
-    }
-    // Rearrange children
-    if (IsLeaf())
-    {
-        CreateChildren();
-    }
-    
-    auto it = meshes.rbegin();
-    while (it != meshes.rend())
-    {
-        ComponentMeshRenderer* mesh = *it;
-        int intersection_count = 0;
-        bool intersects[static_cast<int>(Quadrants::COUNT)];
-        for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
-        {
-            intersects[i] = children[i]->box.Intersects(mesh->GetAABB());
-            if (intersects[i])
-            {
-                intersection_count += 1;
-            }
-        }
-
-        // If it intersects all there is no point in moving downwards
-        if (intersection_count > 1)
-        {
-            ++it;
-            continue;
-        }
-        it = decltype(it)(meshes.erase((it + 1).base()));
-
-        for (int i = 0; i < static_cast<int>(Quadrants::COUNT); ++i)
-        {
-            if (intersects[i])
-            {
-                children[i]->meshes.push_back(mesh);
-            }
-        }
-    }
-
-    for (QuadtreeNode* child : children)
-    {
-        child->RearangeChildren();
-    }
+    RELEASE(children[static_cast<int>(Quadrants::NW)]);
+    RELEASE(children[static_cast<int>(Quadrants::NE)]);
+    RELEASE(children[static_cast<int>(Quadrants::SE)]);
+    RELEASE(children[static_cast<int>(Quadrants::SW)]);
 }
 
-void Hachiko::QuadtreeNode::GetIntersections(
-    std::vector<ComponentMeshRenderer*>& intersected, const Frustum& frustum) const
+unsigned Hachiko::QuadtreeNode::RearangeChildren()
+{
+    // No split because already satisfies size conditions
+    if (IsLeaf() && meshes.size() < QUADTREE_MAX_ITEMS)
+    {
+        return meshes.size();
+    }
+    
+    // No split due to minimum size
+    if (depth >= (QUADTREE_MAX_DEPTH))
+    {
+        return meshes.size();
+    }
+
+    // Rearrange children
+    if (meshes.size() >= QUADTREE_MAX_ITEMS)
+    {
+        if (IsLeaf())
+        {
+            CreateChildren();
+        }
+        auto it = meshes.rbegin();
+        while (it != meshes.rend())
+        {
+            ComponentMeshRenderer* mesh = *it;
+            int intersection_count = 0;
+            bool intersects[static_cast<int>(Quadrants::COUNT)];
+            for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
+            {
+                intersects[i] = children[i]->box.Intersects(mesh->GetAABB());
+                if (intersects[i])
+                {
+                    intersection_count += 1;
+                }
+            }
+
+            // If it intersects more than desired dont go downwards
+            if (intersection_count > 1)
+            {
+                ++it;
+                continue;
+            }
+
+            for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
+            {
+                if (intersects[i])
+                {
+                    children[i]->meshes.push_back(mesh);
+                }
+            }
+
+            it = decltype(it)(meshes.erase((it + 1).base()));
+        }
+    }
+
+    unsigned childen_meshes = 0;
+    for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
+    {
+       childen_meshes += children[i]->RearangeChildren();
+    }
+
+    if (childen_meshes == 0)
+    {
+        DeleteChildren();
+    }
+
+    return childen_meshes + meshes.size();
+}
+
+
+void Hachiko::QuadtreeNode::GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const Frustum& frustum)
 {
     if (frustum.Intersects(box))
     {
         for (ComponentMeshRenderer* mesh : meshes)
         {
-            if (frustum.Intersects(mesh->GetOBB()))
+            if (frustum.Intersects(mesh->GetAABB()))
             {
                 intersected.push_back(mesh);
             }
@@ -224,33 +240,32 @@ void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 
 void Hachiko::Quadtree::Refresh()
 {
+    // This method assumes root exists
     bool dirty = false;
-    if (root)
-    {
-        if (!to_remove.empty())
-        {
-            root->Remove(to_remove);
-            to_remove.clear();
-            dirty = true;
-        }
-        if (!to_insert.empty())
-        {
-            root->Insert(to_insert);
-            to_insert.clear();
-            dirty = true;
-        }
 
-        if (dirty)
-        {
-            root->RearangeChildren();
-        }
+    if (!to_remove.empty())
+    {
+        root->Remove(to_remove);
+        to_remove.clear();
+        dirty = true;
+    }
+    if (!to_insert.empty())
+    {
+        root->Insert(to_insert);
+        to_insert.clear();
+        dirty = true;
+    }
+
+    if (dirty)
+    {
+        root->RearangeChildren();
     }
 }
-
-void Hachiko::Quadtree::DebugDraw() const
+void Hachiko::Quadtree::DebugDraw()
 {
     if (root)
     {
+        Refresh();
         root->DebugDraw();
     }
 }
