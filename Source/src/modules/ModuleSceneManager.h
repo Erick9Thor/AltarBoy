@@ -13,6 +13,7 @@ namespace Hachiko
 
     class ModuleSceneManager final : public Module
     {
+        friend class ModuleDebugMode;
     public:
         ModuleSceneManager() = default;
         ~ModuleSceneManager() override = default;
@@ -51,11 +52,8 @@ namespace Hachiko
             return main_scene;
         }
 
-        void CreateEmptyScene(const char* name = nullptr);
-        void ChangeSceneById(UID new_scene_id);
-        void ReloadScene();
-
-                
+        void ChangeSceneById(UID new_scene_id, bool stop_scene = false);
+        
         void SaveScene(const char* file_path = nullptr);
 
         GameObject* Raycast(const float3& origin, const float3& destination);
@@ -64,9 +62,13 @@ namespace Hachiko
         void OptionsMenu();
 
     private:
+        void StopScene();
         void LoadScene(UID new_scene_id);
         void LoadScene(ResourceScene* scene, bool keep_navmesh = false);
         void ChangeMainScene(Scene* new_scene);
+        void CreateEmptyScene(const char* name = nullptr);
+        void ReloadScene();
+
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
         void RefreshSceneResource();

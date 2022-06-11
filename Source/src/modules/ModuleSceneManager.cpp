@@ -93,16 +93,7 @@ void Hachiko::ModuleSceneManager::AttemptSceneStop()
 {
     if (GameTimer::running)
     {
-        Event game_state(Event::Type::GAME_STATE);
-        game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
-        App->event->Publish(game_state);
-
-        main_scene->SetCullingCamera(App->camera->GetEditorCamera());
-        App->camera->SetRenderingCamera(App->camera->GetEditorCamera());
-        main_scene->Stop();
-
-        GameTimer::Stop();
-
+        StopScene();
         ReloadScene();
     }
 }
@@ -223,6 +214,18 @@ void Hachiko::ModuleSceneManager::CreateEmptyScene(const char* name)
     SetSceneResource(scene_importer.CreateSceneResource(main_scene));
 }
 
+void Hachiko::ModuleSceneManager::StopScene()
+{
+    Event game_state(Event::Type::GAME_STATE);
+    game_state.SetEventData<GameStateEventPayload>(GameStateEventPayload::State::STOPPED);
+    App->event->Publish(game_state);
+
+    App->camera->SetRenderingCamera(App->camera->GetEditorCamera());
+    main_scene->SetCullingCamera(App->camera->GetEditorCamera());
+    main_scene->Stop();
+    GameTimer::Stop();
+}
+
 void Hachiko::ModuleSceneManager::LoadScene(UID new_scene_id)
 {
     ResourceScene* scene_resource = static_cast<ResourceScene*>(App->resources->GetResource(Resource::Type::SCENE, new_scene_id));
@@ -263,10 +266,14 @@ Hachiko::GameObject* Hachiko::ModuleSceneManager::BoundingRaycast(const float3& 
     return main_scene->Raycast(origin, destination);
 }
 
-void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id)
+void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id, bool stop_scene)
 {
     scene_change_requested = true;
     scene_to_load_id = new_scene_id;
+    if (stop_scene)
+    {
+        StopScene();
+    }
 }
 
 void Hachiko::ModuleSceneManager::ReloadScene()
