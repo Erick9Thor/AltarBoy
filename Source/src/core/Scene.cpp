@@ -89,7 +89,7 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     ComponentMeshRenderer* component_mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
     if (component_mesh_renderer != nullptr)
     {
-        component_mesh_renderer->AddResourceMaterial(material);
+        component_mesh_renderer->SetMaterialResource(material);
     }
 }
 
