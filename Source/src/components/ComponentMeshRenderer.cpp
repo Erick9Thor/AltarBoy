@@ -21,7 +21,10 @@
 Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
     : Component(Type::MESH_RENDERER, container)
 {
-    SetResourceMesh(res);
+    if (res)
+    {
+        SetResourceMesh(res);
+    }
 }
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
@@ -125,7 +128,8 @@ void Hachiko::ComponentMeshRenderer::OnTransformUpdated()
 
 void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
 {
-    assert(!res && "Component mesh renderer needs a mesh");
+    // Component mesh renderer needs a mesh
+    assert(res);
     
     App->resources->ReleaseResource(mesh);
     mesh = res;
@@ -157,7 +161,8 @@ void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
 {
     App->resources->ReleaseResource(material);
     material = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id));
-    assert(!material && "Component mesh renderer needs a material");
+    // Component mesh renderer needs a material
+    assert(material);
 }
 
 void Hachiko::ComponentMeshRenderer::DrawGui()
