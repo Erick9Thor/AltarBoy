@@ -29,7 +29,7 @@ namespace Hachiko
         ~QuadtreeNode();
 
         void Insert(const std::unordered_set<ComponentMeshRenderer*>& to_insert);
-        void Remove(const std::unordered_set<ComponentMeshRenderer*>& to_remove);
+        void Remove(std::unordered_set<ComponentMeshRenderer*>& to_remove);
         void CreateChildren();
         void DeleteChildren();
         unsigned RearangeChildren();

@@ -20,8 +20,13 @@ void Hachiko::QuadtreeNode::Insert(const std::unordered_set<ComponentMeshRendere
     }
 }
 
-void Hachiko::QuadtreeNode::Remove(const std::unordered_set<ComponentMeshRenderer*>& to_remove)
+void Hachiko::QuadtreeNode::Remove(std::unordered_set<ComponentMeshRenderer*>& to_remove)
 {
+    if (to_remove.empty())
+    {
+        return;
+    }
+    
     auto it = meshes.rbegin();
     while (it != meshes.rend())
     {
@@ -32,6 +37,14 @@ void Hachiko::QuadtreeNode::Remove(const std::unordered_set<ComponentMeshRendere
             continue;
         }
         it = decltype(it)(meshes.erase((it + 1).base()));
+        // If we only push back meshes when they interssect a single square we dont have duplicates
+        // This means we can remove it once removed
+        to_remove.erase(mesh);
+
+        if (to_remove.empty())
+        {
+            return;
+        }
     }
     
     if (!IsLeaf())
@@ -144,18 +157,27 @@ unsigned Hachiko::QuadtreeNode::RearangeChildren()
         }
     }
 
-    unsigned childen_meshes = 0;
+    unsigned children_meshes = 0;
     for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
     {
-       childen_meshes += children[i]->RearangeChildren();
+       children_meshes += children[i]->RearangeChildren();
     }
 
-    if (childen_meshes == 0)
+    // Reduce the tree size when possible
+    if ((children_meshes + meshes.size()) < QUADTREE_MAX_ITEMS)
     {
+        for (unsigned i = 0; i < static_cast<unsigned>(Quadrants::COUNT); ++i)
+        {
+            QuadtreeNode* child = children[i];
+            std::vector<ComponentMeshRenderer*>& child_meshes = child->meshes;
+            // No need to clear child meshes since it will be destroyed
+            meshes.insert(meshes.end(), child_meshes.begin(), child_meshes.end());
+        }
         DeleteChildren();
+        return meshes.size();
     }
 
-    return childen_meshes + meshes.size();
+    return children_meshes + meshes.size();
 }
 
 
