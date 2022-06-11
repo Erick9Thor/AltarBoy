@@ -125,8 +125,8 @@ unsigned Hachiko::QuadtreeNode::RearangeChildren()
                 }
             }
 
-            // If it intersects all there is no point in moving downwards
-            if (intersection_count == 4)
+            // If it intersects more than desired dont go downwards
+            if (intersection_count > 1)
             {
                 ++it;
                 continue;
@@ -159,7 +159,7 @@ unsigned Hachiko::QuadtreeNode::RearangeChildren()
 }
 
 
-void Hachiko::QuadtreeNode::GetIntersections(std::unordered_set<ComponentMeshRenderer*>& intersected, const Frustum& frustum)
+void Hachiko::QuadtreeNode::GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const Frustum& frustum)
 {
     if (frustum.Intersects(box))
     {
@@ -167,7 +167,7 @@ void Hachiko::QuadtreeNode::GetIntersections(std::unordered_set<ComponentMeshRen
         {
             if (frustum.Intersects(mesh->GetAABB()))
             {
-                intersected.insert(mesh);
+                intersected.push_back(mesh);
             }
         }
 

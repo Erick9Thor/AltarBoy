@@ -55,12 +55,12 @@ namespace Hachiko
 
     private:
         template<typename T>
-        void GetIntersections(std::unordered_set<GameObject*>& objects, const T& primitive);
+        void GetIntersections(std::vector<GameObject*>& objects, const T& primitive);
 
         template<typename T>
-        void GetIntersections(std::unordered_set<ComponentMeshRenderer*>& meshes, const T& primitive);
+        void GetIntersections(std::vector<ComponentMeshRenderer*>& meshes, const T& primitive);
 
-        void GetIntersections(std::unordered_set<ComponentMeshRenderer*>& objects, const Frustum& frustum);
+        void GetIntersections(std::vector<ComponentMeshRenderer*>& objects, const Frustum& frustum);
 
         int depth = 0;
         AABB box;
@@ -91,10 +91,10 @@ namespace Hachiko
         }
 
         template<typename T>
-        void GetIntersections(std::unordered_set<GameObject*>& intersected, const T& primitive);
+        void GetIntersections(std::vector<GameObject*>& intersected, const T& primitive);
 
         template<typename T>
-        void GetIntersections(std::unordered_set<ComponentMeshRenderer*>& intersected, const T& primitive);
+        void GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const T& primitive);
 
         void DebugDraw();
 
@@ -106,7 +106,7 @@ namespace Hachiko
     };
 
     template<typename T>
-    void Quadtree::GetIntersections(std::unordered_set<GameObject*>& intersected, const T& primitive)
+    void Quadtree::GetIntersections(std::vector<GameObject*>& intersected, const T& primitive)
     {
         if (root)
         {
@@ -117,7 +117,7 @@ namespace Hachiko
     }
 
     template<typename T>
-    void Quadtree::GetIntersections(std::unordered_set<ComponentMeshRenderer*>& intersected, const T& primitive)
+    void Quadtree::GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const T& primitive)
     {
         if (root)
         {
@@ -127,7 +127,7 @@ namespace Hachiko
     }
 
     template<typename T>
-    void QuadtreeNode::GetIntersections(std::unordered_set<GameObject*>& intersected, const T& primitive)
+    void QuadtreeNode::GetIntersections(std::vector<GameObject*>& intersected, const T& primitive)
     {
         if (primitive.Intersects(box))
         {
@@ -136,7 +136,7 @@ namespace Hachiko
             {
                 if (primitive.Intersects(mesh->GetOBB(), near_hit, far_hit))
                 {
-                    intersected.insert(mesh->GetGameObject());
+                    intersected.push_back(mesh->GetGameObject());
                 }
             }
 
@@ -152,7 +152,7 @@ namespace Hachiko
     }
 
     template<typename T>
-    void QuadtreeNode::GetIntersections(std::unordered_set<ComponentMeshRenderer*>& intersected, const T& primitive)
+    void QuadtreeNode::GetIntersections(std::vector<ComponentMeshRenderer*>& intersected, const T& primitive)
     {
         if (primitive.Intersects(box))
         {
