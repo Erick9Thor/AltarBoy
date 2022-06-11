@@ -230,9 +230,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     BatchManager* batch_manager = scene->GetBatchManager();
     
-    scene->GetQuadtree()->Refresh();
-
-    render_list.Update(culling, scene->GetQuadtree()->GetRoot());
+    render_list.Update(culling, scene->GetQuadtree());
     
     if (draw_deferred)
     {

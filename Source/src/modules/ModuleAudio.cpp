@@ -120,7 +120,7 @@ bool Hachiko::ModuleAudio::Init()
     HE_LOG("Wwise: Communications initialized");
 #endif // AK_OPTIMIZED
 
-    low_level_io.SetBasePath(AKTEXT("../Game/ErimosWwise/GeneratedSoundBanks/Windows"));
+    low_level_io.SetBasePath(AKTEXT("ErimosWwise/GeneratedSoundBanks/Windows"));
 
     AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
