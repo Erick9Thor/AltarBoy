@@ -69,7 +69,11 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 		if (enemies_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-			enemies_children[i]->GetComponent<EnemyController>()->RegisterHit(_damage, dir);
+			EnemyController* enemy = enemies_children[i]->GetComponent<EnemyController>();
+			if (enemy)
+			{
+				enemy->RegisterHit(_damage, dir);
+			}
 			return true;
 		}
 	}

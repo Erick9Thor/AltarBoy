@@ -77,7 +77,7 @@ namespace Hachiko
         void Clear();
         void SetBox(const AABB& box);
 
-        void Insert(ComponentMeshRenderer* mesh);
+        void Reposition(ComponentMeshRenderer* mesh);
         void Remove(ComponentMeshRenderer* mesh);
         
 

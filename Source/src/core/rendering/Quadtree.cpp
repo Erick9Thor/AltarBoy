@@ -244,21 +244,25 @@ void Hachiko::Quadtree::SetBox(const AABB& box)
     root = new QuadtreeNode(box, nullptr, 0);
 }
 
-void Hachiko::Quadtree::Insert(ComponentMeshRenderer* mesh)
+void Hachiko::Quadtree::Reposition(ComponentMeshRenderer* mesh)
 {
     if (root)
     {
+        to_remove.insert(mesh);
         to_insert.insert(mesh);
     }
 }
 
 void Hachiko::Quadtree::Remove(ComponentMeshRenderer* mesh)
 {
-    if (root)
+    // Removes the element from insert commands to make sure it doesnt stay on the quadtree if refresh was called
+    if (to_insert.find(mesh) != to_insert.end())
     {
-        to_remove.insert(mesh);
+        to_insert.erase(mesh);
     }
+    to_remove.insert(mesh);
 }
+
 
 void Hachiko::Quadtree::Refresh()
 {
