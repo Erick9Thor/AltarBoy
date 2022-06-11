@@ -83,10 +83,10 @@ void Hachiko::QuadtreeNode::CreateChildren()
 
 void Hachiko::QuadtreeNode::DeleteChildren()
 {
-    RELEASE(children[(int)Quadrants::NW]);
-    RELEASE(children[(int)Quadrants::NE]);
-    RELEASE(children[(int)Quadrants::SE]);
-    RELEASE(children[(int)Quadrants::SW]);
+    RELEASE(children[static_cast<int>(Quadrants::NW)]);
+    RELEASE(children[static_cast<int>(Quadrants::NE)]);
+    RELEASE(children[static_cast<int>(Quadrants::SE)]);
+    RELEASE(children[static_cast<int>(Quadrants::SW)]);
 }
 
 unsigned Hachiko::QuadtreeNode::RearangeChildren()
