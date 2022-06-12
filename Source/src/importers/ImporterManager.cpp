@@ -31,7 +31,7 @@ ImporterManager::ImporterManager()
     resource_importers.emplace(Resource::Type::STATE_MACHINE, &state_machine);
 }
 
-std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
+std::vector<UID> ImporterManager::ImportAsset(const std::string& asset_path, const Resource::AssetType asset_type, YAML::Node& meta)
 {
     // Find the corresponding importer for an asset, delegate import to it and them store the resulting meta
     Importer* importer = GetAssetImporter(asset_type);
@@ -42,11 +42,10 @@ std::vector<UID> ImporterManager::ImportAsset(const std::filesystem::path& asset
         return std::vector<UID>();
     }
 
-    importer->Import(asset_path.string().c_str(), meta);
+    importer->Import(asset_path.c_str(), meta);
 
-    std::string meta_path = StringUtils::Concat(asset_path.parent_path().string(), "\\", asset_path.filename().string(), META_EXTENSION);
-    FileSystem::Save(meta_path.c_str(), meta);
     std::vector<UID> generated_resource_ids;
+    
     for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
     {
         generated_resource_ids.push_back(meta[RESOURCES][i][RESOURCE_ID].as<UID>());

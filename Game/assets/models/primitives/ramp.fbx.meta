@@ -8,7 +8,10 @@ prefab_id: 1609264827053970015
 resources:
   - resource_id: 2805095063483466115
     resource_type: 3
+    resource_hash: 10174441749921550988
   - resource_id: 6750369022920963075
     resource_type: 1
+    resource_hash: 16862467338539988882
   - resource_id: 1609264827053970015
     resource_type: 13
+    resource_hash: 7107489893019015562
