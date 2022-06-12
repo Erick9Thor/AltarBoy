@@ -15,8 +15,9 @@ namespace Hachiko
     class ComponentMeshRenderer : public Component
     {
         friend class ModelImporter;
+        friend class Scene;
     public:
-        ComponentMeshRenderer(GameObject* container, UID id = UUID::GenerateUID(), ResourceMesh* res = nullptr);
+        ComponentMeshRenderer(GameObject* container);
         ~ComponentMeshRenderer() override;
 
         void Update() override;
@@ -82,13 +83,6 @@ namespace Hachiko
             return mesh->normals;
         }
 
-        void SetResourceMesh(ResourceMesh* res);
-
-        void AddResourceMaterial(ResourceMaterial* res)
-        {
-            material = res;
-        }
-
         [[nodiscard]] const ResourceMesh* GetResourceMesh() const
         {
             return mesh;
@@ -98,20 +92,20 @@ namespace Hachiko
         {
             return material;
         }
-
-        void LoadMesh(UID mesh_id);
-        void LoadMaterial(UID material_id);
+        
         void DrawGui() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
         // BONES
-        void UpdateSkinPalette(std::vector<float4x4>& palette) const;
+        const std::vector<float4x4>& GetPalette() const
+        {
+            return palette;
+        }
+        
 
-        void ChangeMaterial();
-
-        std::vector<float4x4> palette{}; // TODO: MOVE TO PRIVATE AGAIN
+        
 
         // Scripting
         [[nodiscard]] bool OverrideMaterialActive() const
@@ -126,6 +120,14 @@ namespace Hachiko
         }
 
     private:
+        void LoadMesh(UID mesh_id);
+        void LoadMaterial(UID material_id);
+        void SetMeshResource(ResourceMesh* res);
+        void SetMaterialResource(ResourceMaterial* res);
+
+        void UpdateSkinPalette(std::vector<float4x4>& palette) const;
+        void ChangeMaterial();
+
         void UpdateBoundingBoxes();
         bool visible = true;       
         bool navigable = false;
@@ -135,7 +137,8 @@ namespace Hachiko
       
         // SKINING
         const GameObject** node_cache = nullptr;
-        //std::vector<float4x4> palette{};
+        
+        std::vector<float4x4> palette{};
 
         ResourceMesh* mesh = nullptr;
         ResourceMaterial* material = nullptr;
