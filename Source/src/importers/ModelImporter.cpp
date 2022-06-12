@@ -126,7 +126,6 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     // Import scene tree into gameobjects
     GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
-    bool a = scene->HasAnimations();
 
     // If it has bones we dont want to combine intermediate nodes since they are used for animation
     ImportNode(model_root, scene, scene->mRootNode, meta, !has_bones);
@@ -169,22 +168,19 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     {
         dummy_node = false;
 
-        if (combine_intermediate_nodes)
+        if (combine_intermediate_nodes && node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
         {
-            if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
-            {
-                assimp_node = assimp_node->mChildren[0];
-                assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+            assimp_node = assimp_node->mChildren[0];
+            assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
 
-                pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
-                rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-                scale = float3(aiScale.x, aiScale.y, aiScale.z);
+            pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
+            rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+            scale = float3(aiScale.x, aiScale.y, aiScale.z);
 
-                transform = transform * float4x4::FromTRS(pos, rot, scale);;
+            transform = transform * float4x4::FromTRS(pos, rot, scale);;
 
-                node_name = assimp_node->mName.C_Str();
-                dummy_node = true;
-            }
+            node_name = assimp_node->mName.C_Str();
+            dummy_node = true;
         }
     }
 
@@ -208,7 +204,6 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     }
 
     go->GetTransform()->SetLocalTransform(transform);
-    go->GetTransform()->GetLocalMatrix();
 
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
