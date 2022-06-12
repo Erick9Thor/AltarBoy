@@ -198,7 +198,7 @@ void Hachiko::GeometryBatch::BatchData()
         int palette_offset = 0;
         for (const ComponentMeshRenderer* component : components)
         {
-            if (component->palette.size() <= 0)
+            if (component->GetPalette().size() <= 0)
             {
                 continue;
             }

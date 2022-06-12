@@ -33,7 +33,7 @@ void Hachiko::Scripting::EnemyBulletController::OnUpdate()
 	{
 		//	Disable
 		//game_object->SetActive(false);
-		RELEASE(game_object);
+		SceneManagement::Destroy(game_object);
 	}
 	else
 	{
@@ -44,7 +44,7 @@ void Hachiko::Scripting::EnemyBulletController::OnUpdate()
 		if (CheckCollisions())
 		{
 			//	If it hits enemy bullets is destroyed
-			RELEASE(game_object);
+			SceneManagement::Destroy(game_object);
 		}
 
 		_lifetime -= Time::DeltaTime();

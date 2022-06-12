@@ -52,7 +52,7 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	{
 		if (ca->GetCurrentState() == ResourceAnimation::State::STOPPED) 
 		{
-			RELEASE(game_object);
+			SceneManagement::Destroy(game_object);
 			return;
 		}
 	}

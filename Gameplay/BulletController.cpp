@@ -64,6 +64,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 	if (!enemies)	return false;
 
 	std::vector<GameObject*> enemies_children = enemies->children;
+	ComponentTransform* transform = game_object->GetTransform();
 	math::float4x4 inv_matrix = _transform->GetGlobalMatrix().Transposed();
 
 	for (int i = 0; i < enemies_children.size(); ++i)
@@ -74,7 +75,7 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 			EnemyController* enemy = enemies_children[i]->GetComponent<EnemyController>();
 			if (enemy)
 			{
-				enemy->RegisterHit(_damage, dir);
+				enemy->RegisterHit(_damage, dir, 0.2f);
 			}
 			return true;
 		}
