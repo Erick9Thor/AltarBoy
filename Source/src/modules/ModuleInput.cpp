@@ -81,7 +81,6 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                //const ImVec2 mouse_pos = ImGui::GetMousePos();
                 NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::CLICK);
             }
 
@@ -90,7 +89,6 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse[sdl_event.button.button - 1] = KeyState::KEY_UP;
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                //const ImVec2 mouse_pos = ImGui::GetMousePos();
                 NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::RELEASE);
             }
             break;
@@ -103,19 +101,19 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse_pixels_motion.y = sdl_event.motion.yrel;
 
             // Normalized mouse position of SDL:
-            mouse_normalized_position.x = sdl_event.motion.x * _window_width_inverse;
-            mouse_normalized_position.y = sdl_event.motion.y * _window_height_inverse;
+            mouse_normalized_position.x = static_cast<float>(sdl_event.motion.x) * _window_width_inverse;
+            mouse_normalized_position.y = static_cast<float>(sdl_event.motion.y) * _window_height_inverse;
 
             // Turn it to the same convention with ImGui and UI Components, and store it like that
             // to not have multiple coordinate systems:
-            float2 in_imgui_coords = float2(-1.0f + mouse_normalized_position.x * 2, -(-1.0f + mouse_normalized_position.y * 2));
+            float2 in_imgui_coords(-1.0f + mouse_normalized_position.x * 2, -(-1.0f + mouse_normalized_position.y * 2));
 
             int height, width;
             App->window->GetWindowSize(width, height);
 
             // Store pixel based position in the same coordinate system as well:
-            mouse_pixel_position.x = width * 0.5f * in_imgui_coords.x;
-            mouse_pixel_position.y = height * 0.5f * in_imgui_coords.y;
+            mouse_pixel_position.x = static_cast<float>(width) * 0.5f * in_imgui_coords.x;
+            mouse_pixel_position.y = static_cast<float>(height) * 0.5f * in_imgui_coords.y;
         }
         break;
         
