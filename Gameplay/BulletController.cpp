@@ -37,6 +37,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		//	Disable
 		game_object->SetActive(false);
 		SceneManagement::Destroy(game_object);
+		return;
 	}
 	else
 	{
@@ -47,7 +48,8 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		if (CheckCollisions())
 		{
 			//	If it hits enemy bullets is destroyed
-			RELEASE(game_object);
+			SceneManagement::Destroy(game_object);
+			return;
 		}
 
 		_lifetime -= Time::DeltaTime();
@@ -69,7 +71,11 @@ bool Hachiko::Scripting::BulletController::CheckCollisions()
 		if (enemies_children[i]->active && _collider_radius >= transform->GetGlobalPosition().Distance(enemies_children[i]->GetTransform()->GetGlobalPosition()))
 		{
 			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-			enemies_children[i]->GetComponent<EnemyController>()->RegisterHit(_damage, dir);
+			EnemyController* enemy = enemies_children[i]->GetComponent<EnemyController>();
+			if (enemy)
+			{
+				enemy->RegisterHit(_damage, dir);
+			}
 			return true;
 		}
 	}

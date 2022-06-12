@@ -55,6 +55,7 @@ namespace Hachiko
             {Hachiko::Resource::AssetType::FONT, FONT_EXTENSION},
             {Hachiko::Resource::AssetType::PREFAB, PREFAB_EXTENSION},
             {Hachiko::Resource::AssetType::SKYBOX, SKYBOX_EXTENSION},
+            {Hachiko::Resource::AssetType::STATE_MACHINE, STATE_MACHINE_EXTENSION},
         };
         
         Hachiko::ResourcesPreferences* preferences = nullptr;

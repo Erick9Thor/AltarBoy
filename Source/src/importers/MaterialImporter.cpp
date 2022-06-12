@@ -29,15 +29,13 @@ void Hachiko::MaterialImporter::Import(const char* path, YAML::Node& meta)
 
 void Hachiko::MaterialImporter::Save(UID id, const Resource* res)
 {
-    // Material changes are also reflected in the asset file since they are an asset we can edit from engine
+    // To save material we just update the asset and call the whole asset import pipeline
     const ResourceMaterial* material = static_cast<const ResourceMaterial*>(res);
-
-    const std::string material_library_path = GetResourcePath(Resource::Type::MATERIAL, id);
 
     GenerateMaterialAssetFile(material);
     const std::string material_asset_path = StringUtils::Concat(GetResourcesPreferences()->GetAssetsPath(Resource::AssetType::MATERIAL), 
         material->GetName(), MATERIAL_EXTENSION);
-    FileSystem::Copy(material_asset_path.c_str(), material_library_path.c_str());
+    App->resources->ImportAssetFromAnyPath(material_asset_path);
 }
 
 Hachiko::Resource* Hachiko::MaterialImporter::Load(UID id)

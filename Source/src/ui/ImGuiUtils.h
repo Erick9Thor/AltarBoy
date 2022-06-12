@@ -23,11 +23,11 @@ namespace Hachiko
 
         bool ToolbarButton(ImFont* const font, const char* font_icon, bool active, const char* tooltip_desc, const bool enabled = true);
 
-        static void DisplayTooltip(const char* desc);
+        void DisplayTooltip(const char* desc);
 
         void Combo(const char* label, std::vector<std::string> list, unsigned& index);
 
-        ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
+        //ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
 
     }; // namespace ImGuiUtils
 }

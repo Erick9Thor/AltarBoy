@@ -5,6 +5,10 @@
 			<ChildrenList>
 				<SoundBank Name="BackgroundMusic" ID="{3EA8A1A2-7429-4B2C-847E-AEA973584D2B}">
 					<ObjectInclusionList>
+						<ObjectRef Name="Stop_Navigation" ID="{D7EBD3F1-A44F-41C6-BB5F-F2012825BD2B}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Combat" ID="{DF59185F-C72C-4550-8276-02199898FFD6}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Navigation" ID="{C72B32F3-D0E9-476D-A101-B04D035F2671}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_Combat" ID="{5DE2B3AE-E618-4BF8-BEB5-34D4EABAE122}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_BackgroundMusic" ID="{88A4A1D0-45F5-4DD6-AA56-80482AADDF56}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
@@ -20,8 +24,19 @@
 				<SoundBank Name="Attacks" ID="{DB2C905B-568D-4B66-AC0A-61B413B8C327}">
 					<ObjectInclusionList>
 						<ObjectRef Name="Play_RangedAttack" ID="{1AB4989D-79DB-4814-8BB0-2FA70A13AC2C}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_EnemyAttack" ID="{416579A2-32FC-48B0-8308-5AEB9768B0CE}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Dash" ID="{A12C6C82-D071-492B-81CF-704393DEA18F}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_MeleeAttack" ID="{40AC6350-5EEA-49F4-A273-59760B0CCEE2}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+				<SoundBank Name="Enviroment" ID="{6E695F10-29FF-4E59-A778-2BB3D66E2CF8}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Play_Wind" ID="{82BFA4D8-2D61-4677-9935-C9ECF62165FD}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Pebble" ID="{7E7451A2-4336-4CCF-BE28-99A6CF205E0D}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Play_Crystal" ID="{422E26F2-F986-4E14-B6FC-38411475A3E4}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Stop_Pebble" ID="{3C2F1626-380B-4EF3-9CB2-4CA76FA289C8}" WorkUnitID="{0F9B892C-59E7-4D8D-A2DF-CB89FD4D78A1}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

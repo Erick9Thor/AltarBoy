@@ -7,6 +7,7 @@
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentAnimation.h"
 #include "components/ComponentTransform.h"
@@ -109,7 +110,11 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
                 animaiton_id = UUID::GenerateUID();
                 meta[ANIMATIONS][animation_index] = animaiton_id;
             }
+
+            
             aiAnimation* animation = scene->mAnimations[animation_index];
+
+            meta[ANIMATION_NAMES][animation_index] = animation->mName.C_Str();
             // Create animation from assimp, since its not a separate asset manage its id
             animation_importer.CreateAnimationFromAssimp(animation, animaiton_id);
             resource_ids.push_back(animaiton_id);
@@ -130,16 +135,11 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     if (meta[ANIMATIONS].IsDefined())
     {
         ComponentAnimation* animation = static_cast<ComponentAnimation*>(model_root->children[0]->CreateComponent(Component::Type::ANIMATION));
-        for (int i = 0; i < meta[ANIMATIONS].size(); i++)
-        {
-            ResourceAnimation* r_animation = static_cast<ResourceAnimation*>(App->resources->GetResource(Resource::Type::ANIMATION, meta[ANIMATIONS][i].as<UID>()));
-            animation->animations.push_back(r_animation);
-        }
     }
 
     // Create prefab
     UID prefab_uid = prefab_importer.CreatePrefabAsset(filename.c_str(), model_root->children[0]);
-    delete model_root;
+    App->scene_manager->RemoveGameObject(model_root);
     meta[PREFAB_ID] = prefab_uid;
 
     for (unsigned i = 0; i < resource_ids.size(); ++i)
@@ -203,8 +203,8 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(go->CreateComponent(Component::Type::MESH_RENDERER));
         ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, meta[MESHES][mesh_idx].as<UID>()));
         ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta[MATERIALS][material_idx].as<UID>()));
-        mesh_renderer->SetResourceMesh(mesh_resource);     
-        mesh_renderer->AddResourceMaterial(material_resource);
+        mesh_renderer->SetMeshResource(mesh_resource);     
+        mesh_renderer->SetMaterialResource(material_resource);
     }
 
     go->GetTransform()->SetLocalTransform(transform);

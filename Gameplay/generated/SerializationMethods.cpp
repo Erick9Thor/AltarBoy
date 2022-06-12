@@ -6,6 +6,7 @@
 #include "BugAnimationManager.h"
 #include "BulletController.h"
 #include "CrystalExplosion.h"
+#include "DebugManager.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
@@ -232,6 +233,335 @@ void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
 
 	serialized_fields["_explosive_crystal"] = SerializedField(std::string("_explosive_crystal"), std::make_any<bool>(_explosive_crystal), std::string("bool"));
+}
+
+void Hachiko::Scripting::DebugManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_player") != serialized_fields.end())
+	{
+		const SerializedField& _player_sf = serialized_fields["_player"];
+		if (_player_sf.type_name == "GameObject*")
+		{
+			_player = std::any_cast<GameObject*>(_player_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_button_back") != serialized_fields.end())
+	{
+		const SerializedField& _button_back_sf = serialized_fields["_button_back"];
+		if (_button_back_sf.type_name == "ComponentButton*")
+		{
+			_button_back = std::any_cast<ComponentButton*>(_button_back_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_teleport_next_pos") != serialized_fields.end())
+	{
+		const SerializedField& _teleport_next_pos_sf = serialized_fields["_teleport_next_pos"];
+		if (_teleport_next_pos_sf.type_name == "ComponentButton*")
+		{
+			_teleport_next_pos = std::any_cast<ComponentButton*>(_teleport_next_pos_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_teleport_prev_pos") != serialized_fields.end())
+	{
+		const SerializedField& _teleport_prev_pos_sf = serialized_fields["_teleport_prev_pos"];
+		if (_teleport_prev_pos_sf.type_name == "ComponentButton*")
+		{
+			_teleport_prev_pos = std::any_cast<ComponentButton*>(_teleport_prev_pos_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_teleport_add_pos") != serialized_fields.end())
+	{
+		const SerializedField& _teleport_add_pos_sf = serialized_fields["_teleport_add_pos"];
+		if (_teleport_add_pos_sf.type_name == "ComponentButton*")
+		{
+			_teleport_add_pos = std::any_cast<ComponentButton*>(_teleport_add_pos_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_add_health") != serialized_fields.end())
+	{
+		const SerializedField& _add_health_sf = serialized_fields["_add_health"];
+		if (_add_health_sf.type_name == "ComponentButton*")
+		{
+			_add_health = std::any_cast<ComponentButton*>(_add_health_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_remove_health") != serialized_fields.end())
+	{
+		const SerializedField& _remove_health_sf = serialized_fields["_remove_health"];
+		if (_remove_health_sf.type_name == "ComponentButton*")
+		{
+			_remove_health = std::any_cast<ComponentButton*>(_remove_health_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_max_hp") != serialized_fields.end())
+	{
+		const SerializedField& _increase_max_hp_sf = serialized_fields["_increase_max_hp"];
+		if (_increase_max_hp_sf.type_name == "ComponentButton*")
+		{
+			_increase_max_hp = std::any_cast<ComponentButton*>(_increase_max_hp_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_max_hp") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_max_hp_sf = serialized_fields["_decrease_max_hp"];
+		if (_decrease_max_hp_sf.type_name == "ComponentButton*")
+		{
+			_decrease_max_hp = std::any_cast<ComponentButton*>(_decrease_max_hp_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_move_speed") != serialized_fields.end())
+	{
+		const SerializedField& _increase_move_speed_sf = serialized_fields["_increase_move_speed"];
+		if (_increase_move_speed_sf.type_name == "ComponentButton*")
+		{
+			_increase_move_speed = std::any_cast<ComponentButton*>(_increase_move_speed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_move_speed") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_move_speed_sf = serialized_fields["_decrease_move_speed"];
+		if (_decrease_move_speed_sf.type_name == "ComponentButton*")
+		{
+			_decrease_move_speed = std::any_cast<ComponentButton*>(_decrease_move_speed_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_attack_cd") != serialized_fields.end())
+	{
+		const SerializedField& _increase_attack_cd_sf = serialized_fields["_increase_attack_cd"];
+		if (_increase_attack_cd_sf.type_name == "ComponentButton*")
+		{
+			_increase_attack_cd = std::any_cast<ComponentButton*>(_increase_attack_cd_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_attack_cd") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_attack_cd_sf = serialized_fields["_decrease_attack_cd"];
+		if (_decrease_attack_cd_sf.type_name == "ComponentButton*")
+		{
+			_decrease_attack_cd = std::any_cast<ComponentButton*>(_decrease_attack_cd_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_increase_attack_power") != serialized_fields.end())
+	{
+		const SerializedField& _increase_attack_power_sf = serialized_fields["_increase_attack_power"];
+		if (_increase_attack_power_sf.type_name == "ComponentButton*")
+		{
+			_increase_attack_power = std::any_cast<ComponentButton*>(_increase_attack_power_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_decrease_attack_power") != serialized_fields.end())
+	{
+		const SerializedField& _decrease_attack_power_sf = serialized_fields["_decrease_attack_power"];
+		if (_decrease_attack_power_sf.type_name == "ComponentButton*")
+		{
+			_decrease_attack_power = std::any_cast<ComponentButton*>(_decrease_attack_power_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_god_mode") != serialized_fields.end())
+	{
+		const SerializedField& _god_mode_sf = serialized_fields["_god_mode"];
+		if (_god_mode_sf.type_name == "ComponentButton*")
+		{
+			_god_mode = std::any_cast<ComponentButton*>(_god_mode_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_spawn_enemy") != serialized_fields.end())
+	{
+		const SerializedField& _spawn_enemy_sf = serialized_fields["_spawn_enemy"];
+		if (_spawn_enemy_sf.type_name == "ComponentButton*")
+		{
+			_spawn_enemy = std::any_cast<ComponentButton*>(_spawn_enemy_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_unlock_skills") != serialized_fields.end())
+	{
+		const SerializedField& _unlock_skills_sf = serialized_fields["_unlock_skills"];
+		if (_unlock_skills_sf.type_name == "ComponentButton*")
+		{
+			_unlock_skills = std::any_cast<ComponentButton*>(_unlock_skills_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_toggle_performance_output") != serialized_fields.end())
+	{
+		const SerializedField& _toggle_performance_output_sf = serialized_fields["_toggle_performance_output"];
+		if (_toggle_performance_output_sf.type_name == "ComponentButton*")
+		{
+			_toggle_performance_output = std::any_cast<ComponentButton*>(_toggle_performance_output_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_toggle_vsync") != serialized_fields.end())
+	{
+		const SerializedField& _toggle_vsync_sf = serialized_fields["_toggle_vsync"];
+		if (_toggle_vsync_sf.type_name == "ComponentButton*")
+		{
+			_toggle_vsync = std::any_cast<ComponentButton*>(_toggle_vsync_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_toggle_wireframe") != serialized_fields.end())
+	{
+		const SerializedField& _toggle_wireframe_sf = serialized_fields["_toggle_wireframe"];
+		if (_toggle_wireframe_sf.type_name == "ComponentButton*")
+		{
+			_toggle_wireframe = std::any_cast<ComponentButton*>(_toggle_wireframe_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_toggle_show_colliders") != serialized_fields.end())
+	{
+		const SerializedField& _toggle_show_colliders_sf = serialized_fields["_toggle_show_colliders"];
+		if (_toggle_show_colliders_sf.type_name == "ComponentButton*")
+		{
+			_toggle_show_colliders = std::any_cast<ComponentButton*>(_toggle_show_colliders_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_exit_debug") != serialized_fields.end())
+	{
+		const SerializedField& _exit_debug_sf = serialized_fields["_exit_debug"];
+		if (_exit_debug_sf.type_name == "ComponentButton*")
+		{
+			_exit_debug = std::any_cast<ComponentButton*>(_exit_debug_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_text_fps") != serialized_fields.end())
+	{
+		const SerializedField& _text_fps_sf = serialized_fields["_text_fps"];
+		if (_text_fps_sf.type_name == "ComponentText*")
+		{
+			_text_fps = std::any_cast<ComponentText*>(_text_fps_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_text_ms") != serialized_fields.end())
+	{
+		const SerializedField& _text_ms_sf = serialized_fields["_text_ms"];
+		if (_text_ms_sf.type_name == "ComponentText*")
+		{
+			_text_ms = std::any_cast<ComponentText*>(_text_ms_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tp_pos1") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos1_sf = serialized_fields["_tp_pos1"];
+		if (_tp_pos1_sf.type_name == "GameObject*")
+		{
+			_tp_pos1 = std::any_cast<GameObject*>(_tp_pos1_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tp_pos2") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos2_sf = serialized_fields["_tp_pos2"];
+		if (_tp_pos2_sf.type_name == "GameObject*")
+		{
+			_tp_pos2 = std::any_cast<GameObject*>(_tp_pos2_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_tp_pos3") != serialized_fields.end())
+	{
+		const SerializedField& _tp_pos3_sf = serialized_fields["_tp_pos3"];
+		if (_tp_pos3_sf.type_name == "GameObject*")
+		{
+			_tp_pos3 = std::any_cast<GameObject*>(_tp_pos3_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_performance_menu") != serialized_fields.end())
+	{
+		const SerializedField& _performance_menu_sf = serialized_fields["_performance_menu"];
+		if (_performance_menu_sf.type_name == "GameObject*")
+		{
+			_performance_menu = std::any_cast<GameObject*>(_performance_menu_sf.copy);
+		}
+	}
+}
+
+void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_player"] = SerializedField(std::string("_player"), std::make_any<GameObject*>(_player), std::string("GameObject*"));
+
+	serialized_fields["_button_back"] = SerializedField(std::string("_button_back"), std::make_any<ComponentButton*>(_button_back), std::string("ComponentButton*"));
+
+	serialized_fields["_teleport_next_pos"] = SerializedField(std::string("_teleport_next_pos"), std::make_any<ComponentButton*>(_teleport_next_pos), std::string("ComponentButton*"));
+
+	serialized_fields["_teleport_prev_pos"] = SerializedField(std::string("_teleport_prev_pos"), std::make_any<ComponentButton*>(_teleport_prev_pos), std::string("ComponentButton*"));
+
+	serialized_fields["_teleport_add_pos"] = SerializedField(std::string("_teleport_add_pos"), std::make_any<ComponentButton*>(_teleport_add_pos), std::string("ComponentButton*"));
+
+	serialized_fields["_add_health"] = SerializedField(std::string("_add_health"), std::make_any<ComponentButton*>(_add_health), std::string("ComponentButton*"));
+
+	serialized_fields["_remove_health"] = SerializedField(std::string("_remove_health"), std::make_any<ComponentButton*>(_remove_health), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_max_hp"] = SerializedField(std::string("_increase_max_hp"), std::make_any<ComponentButton*>(_increase_max_hp), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_max_hp"] = SerializedField(std::string("_decrease_max_hp"), std::make_any<ComponentButton*>(_decrease_max_hp), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_move_speed"] = SerializedField(std::string("_increase_move_speed"), std::make_any<ComponentButton*>(_increase_move_speed), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_move_speed"] = SerializedField(std::string("_decrease_move_speed"), std::make_any<ComponentButton*>(_decrease_move_speed), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_attack_cd"] = SerializedField(std::string("_increase_attack_cd"), std::make_any<ComponentButton*>(_increase_attack_cd), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_attack_cd"] = SerializedField(std::string("_decrease_attack_cd"), std::make_any<ComponentButton*>(_decrease_attack_cd), std::string("ComponentButton*"));
+
+	serialized_fields["_increase_attack_power"] = SerializedField(std::string("_increase_attack_power"), std::make_any<ComponentButton*>(_increase_attack_power), std::string("ComponentButton*"));
+
+	serialized_fields["_decrease_attack_power"] = SerializedField(std::string("_decrease_attack_power"), std::make_any<ComponentButton*>(_decrease_attack_power), std::string("ComponentButton*"));
+
+	serialized_fields["_god_mode"] = SerializedField(std::string("_god_mode"), std::make_any<ComponentButton*>(_god_mode), std::string("ComponentButton*"));
+
+	serialized_fields["_spawn_enemy"] = SerializedField(std::string("_spawn_enemy"), std::make_any<ComponentButton*>(_spawn_enemy), std::string("ComponentButton*"));
+
+	serialized_fields["_unlock_skills"] = SerializedField(std::string("_unlock_skills"), std::make_any<ComponentButton*>(_unlock_skills), std::string("ComponentButton*"));
+
+	serialized_fields["_toggle_performance_output"] = SerializedField(std::string("_toggle_performance_output"), std::make_any<ComponentButton*>(_toggle_performance_output), std::string("ComponentButton*"));
+
+	serialized_fields["_toggle_vsync"] = SerializedField(std::string("_toggle_vsync"), std::make_any<ComponentButton*>(_toggle_vsync), std::string("ComponentButton*"));
+
+	serialized_fields["_toggle_wireframe"] = SerializedField(std::string("_toggle_wireframe"), std::make_any<ComponentButton*>(_toggle_wireframe), std::string("ComponentButton*"));
+
+	serialized_fields["_toggle_show_colliders"] = SerializedField(std::string("_toggle_show_colliders"), std::make_any<ComponentButton*>(_toggle_show_colliders), std::string("ComponentButton*"));
+
+	serialized_fields["_exit_debug"] = SerializedField(std::string("_exit_debug"), std::make_any<ComponentButton*>(_exit_debug), std::string("ComponentButton*"));
+
+	serialized_fields["_text_fps"] = SerializedField(std::string("_text_fps"), std::make_any<ComponentText*>(_text_fps), std::string("ComponentText*"));
+
+	serialized_fields["_text_ms"] = SerializedField(std::string("_text_ms"), std::make_any<ComponentText*>(_text_ms), std::string("ComponentText*"));
+
+	serialized_fields["_tp_pos1"] = SerializedField(std::string("_tp_pos1"), std::make_any<GameObject*>(_tp_pos1), std::string("GameObject*"));
+
+	serialized_fields["_tp_pos2"] = SerializedField(std::string("_tp_pos2"), std::make_any<GameObject*>(_tp_pos2), std::string("GameObject*"));
+
+	serialized_fields["_tp_pos3"] = SerializedField(std::string("_tp_pos3"), std::make_any<GameObject*>(_tp_pos3), std::string("GameObject*"));
+
+	serialized_fields["_performance_menu"] = SerializedField(std::string("_performance_menu"), std::make_any<GameObject*>(_performance_menu), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

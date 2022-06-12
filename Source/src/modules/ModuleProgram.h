@@ -95,6 +95,11 @@ namespace Hachiko
             return ui_text_program;
         }
 
+        [[nodiscard]] Program* GetParticleProgram() const
+        {
+            return particle_program;
+        }
+
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
@@ -116,6 +121,7 @@ namespace Hachiko
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
+        Program* CreateParticleProgram();
         Program* CreateDeferredGeometryPassProgram();
         Program* CreateDeferredLightingPassProgram();
 
@@ -126,6 +132,7 @@ namespace Hachiko
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
+        Program* particle_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);

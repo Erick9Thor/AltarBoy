@@ -147,6 +147,7 @@ void Hachiko::ResourceTexture::DrawGui()
         // Notify Batch Manager that there is a change so it can rebuild the batches:
         App->scene_manager->GetActiveScene()->OnMeshesChanged();
         // Save the texture if there is a change:
-        App->resources->SaveResource(this);
+        TextureImporter texture_importer;
+        texture_importer.SaveTextureAsset(this);
     }
 }

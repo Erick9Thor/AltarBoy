@@ -24,12 +24,6 @@ void Hachiko::WindowHierarchy::Update()
     ImGui::End();
 }
 
-void Hachiko::WindowHierarchy::CleanUp()
-{
-    dragged_object = nullptr;
-    delete dragged_object;
-}
-
 void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
 {
     for (int i = 0; i < game_object->children.size(); ++i)
@@ -145,7 +139,7 @@ bool Hachiko::WindowHierarchy::DrawGameObject(GameObject* game_object, bool stop
         }
         if (ImGui::MenuItem("Delete Game Object"))
         {
-            RELEASE(game_object);
+            App->scene_manager->RemoveGameObject(game_object);
             dragged_object = nullptr;
             ImGui::CloseCurrentPopup();
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);

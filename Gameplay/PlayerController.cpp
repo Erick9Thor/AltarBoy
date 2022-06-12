@@ -69,6 +69,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
+	if (_combat_stats->_current_hp <= 0)
+	{
+		//SceneManagement::SwitchScene(Scenes::LOSE);
+		HE_LOG("YOU DIED");
+	}
+
 	// Handle player the input
 	HandleInputAndStatus();
 
@@ -337,7 +343,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	attack_origin_position.y += 0.5f;
 
 	// Spawn bullet (Passing the prefab can be improved)
-	GameObject* bullet = GameObject::Instantiate(14999767472668584259, game_object->scene_owner->GetRoot());
+	UID* bullet_uid = new UID(14999767472668584259);
+	GameObject* bullet = GameObject::Instantiate(bullet_uid, game_object->scene_owner->GetRoot());
 
 	bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
 	bullet->GetComponent<BulletController>()->SetForward(forward);

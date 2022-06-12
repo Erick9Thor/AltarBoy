@@ -24,6 +24,8 @@ namespace Hachiko
     class HACHIKO_API GameObject final
     {
         friend class Component;
+        friend class Scene;
+        friend class ModuleSceneManager;
 
     public:
         GameObject(const char* name = "Unnamed", UID uid = UUID::GenerateUID());
@@ -34,8 +36,11 @@ namespace Hachiko
                    const float3& translation = float3::zero,
                    const Quat& rotation = Quat::identity,
                    const float3& scale = float3::one);
-        virtual ~GameObject();
 
+    private:
+        ~GameObject();
+
+    public:
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
@@ -55,7 +60,7 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
-        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
+        static GameObject* Instantiate(UID* prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>

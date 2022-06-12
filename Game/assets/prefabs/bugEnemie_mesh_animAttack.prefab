@@ -9,8 +9,7 @@ component:
     scale: [1, 1, 1]
   - type: 14
     enabled: true
-    animations:
-      - 9054706964290541382
+    state_machine: 0
 child:
   - name: bug_grp_$AssimpFbx$_Translation
     enabled: true

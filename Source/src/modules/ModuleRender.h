@@ -56,6 +56,16 @@ namespace Hachiko
         void AddFrame(float delta);
         void SetOpenGLAttributes() const;
 
+        [[nodiscard]] float GetCurrentFps() const
+        {
+            return current_fps;
+        }
+
+        [[nodiscard]] unsigned int GetCurrentMs() const
+        {
+            return current_ms;
+        }
+
         [[nodiscard]] void* GetGLContext() const
         {
             return context;
@@ -76,16 +86,22 @@ namespace Hachiko
             return &render_list;
         }
 
-        void SetDrawSkybox(bool v)
+        [[nodiscard]] const unsigned& GetParticleVao() const
+        {
+            return particle_vao;
+        }
+        
+        void SetDrawSkybox(const bool v)
         {
             draw_skybox = v;
         }
+        
         [[nodiscard]] float2 GetFrameBufferSize() const;
 
     private:
         void GenerateFrameBuffer();
-        void ResizeFrameBuffer(int heigth, int width) const;
-        void ManageResolution(ComponentCamera* camera);
+        void ResizeFrameBuffer(int width, int height) const;
+        void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void DrawForward(BatchManager* batch_manager);
@@ -135,5 +151,11 @@ namespace Hachiko
         std::vector<float> ms_log;
         float current_fps = 0.0f;
         float current_ms = 0.0f;
+
+        // Particle System
+        void GenerateParticlesBuffers();
+        unsigned particle_vbo;
+        unsigned particle_ebo;
+        unsigned particle_vao;
     };
 }

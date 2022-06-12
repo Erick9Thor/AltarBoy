@@ -1,0 +1,19 @@
+name: SMBugEnemy
+default_node: 0
+clips:
+  - clip_name: idle
+    clips_id: 14184767561852842691
+    clips_loop: true
+  - clip_name: atack
+    clips_id: 0
+    clips_loop: true
+nodes:
+  - node_name: idle
+    node_clip_name: idle
+  - node_name: atack
+    node_clip_name: atack
+transitions:
+  - transition_source: idle
+    transition_target: atack
+    transition_trigger: isAttacking
+    transition_blend: 300

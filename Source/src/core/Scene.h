@@ -12,6 +12,7 @@ namespace Hachiko
     class ComponentDirLight;
     class ComponentPointLight;
     class ComponentSpotLight;
+    class ComponentBillboard;
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
@@ -121,13 +122,34 @@ namespace Hachiko
         void Load(const YAML::Node& node, bool meshes_only = false);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
+        
+        void AddParticleComponent(Component* new_particle)
+        {
+            particles.emplace_back(new_particle);
+        }
+
+        void RemoveParticleComponent(const UID& component_id)
+        {
+            auto it = std::find_if(particles.begin(), particles.end(), [&](const Component* component)
+                { 
+                    return component->GetID() == component_id;
+                }
+            );
+            if (it != particles.end())
+            {
+                particles.erase(it);
+            }
+        }
+
+        const std::vector<Component*>& GetSceneParticles()
+        {
+            return particles;
+        }
 
         std::vector<ComponentDirLight*> dir_lights{};
         std::vector<ComponentPointLight*> point_lights{};
         std::vector<ComponentSpotLight*> spot_lights{};
-
-        
-
+    
     private:
         std::string name;
         GameObject* root = nullptr;
@@ -141,6 +163,7 @@ namespace Hachiko
 
         bool rebuild_batch = true;
         BatchManager* batch_manager = nullptr;
+        std::vector<Component*> particles {};
 
     public:
         class Memento

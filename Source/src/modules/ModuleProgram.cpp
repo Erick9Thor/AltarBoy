@@ -29,9 +29,9 @@ bool Hachiko::ModuleProgram::Init()
     CreateUserInterfaceTextProgram();
     CreateDeferredGeometryPassProgram();
     CreateDeferredLightingPassProgram();
-
+    CreateParticleProgram();
     if (!forward_program || !skybox_program || !stencil_program || !ui_image_program || 
-        !ui_text_program || !deferred_geometry_program || !deferred_lighting_program)
+        !ui_text_program || !deferred_geometry_program || !deferred_lighting_program || !particle_program)
     {
         return false;
     }
@@ -180,6 +180,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateUserInterfaceTextProgram()
     return ui_text_program;
 }
 
+Hachiko::Program* Hachiko::ModuleProgram::CreateParticleProgram()
+{
+    particle_program = CreateProgram(SHADERS_FOLDER "vertex_particle.glsl", SHADERS_FOLDER "fragment_particle.glsl");
+    return particle_program;
+}
+
 Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredGeometryPassProgram()
 {
     deferred_geometry_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_geometry.glsl");
@@ -251,13 +257,16 @@ bool Hachiko::ModuleProgram::CleanUp()
     
     ui_text_program->CleanUp();
     delete ui_text_program;
-    
+
     deferred_geometry_program->CleanUp();
     delete deferred_geometry_program;
     
     deferred_lighting_program->CleanUp();
     delete deferred_lighting_program;
     
+    particle_program->CleanUp();
+    delete particle_program;
+
     return true;
 }
 

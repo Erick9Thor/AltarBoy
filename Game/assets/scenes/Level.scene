@@ -81,9 +81,6 @@ child:
           - id: 975773209534617855
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 11650224722633631183
             type: 17
             enabled: true
@@ -2532,9 +2529,6 @@ child:
           - id: 9633321807749065519
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 13207576338049288465
             type: 17
             enabled: true
@@ -4983,9 +4977,6 @@ child:
           - id: 15358832425436944865
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 15075779856399120003
             type: 17
             enabled: true
@@ -7434,9 +7425,6 @@ child:
           - id: 15477787192838557402
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 15888038046618767610
             type: 17
             enabled: true
@@ -9885,9 +9873,6 @@ child:
           - id: 16853421047535564402
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 16629499006795485118
             type: 17
             enabled: true
@@ -12336,9 +12321,6 @@ child:
           - id: 8346415169792144664
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 6802896319359786579
             type: 17
             enabled: true
@@ -14787,9 +14769,6 @@ child:
           - id: 16346464049016553894
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 9400885405532989546
             type: 17
             enabled: true
@@ -17238,9 +17217,6 @@ child:
           - id: 12243854055826020723
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 17638912797441015373
             type: 17
             enabled: true
@@ -19689,9 +19665,6 @@ child:
           - id: 14102439015750813785
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 16634940569396639171
             type: 17
             enabled: true
@@ -22140,9 +22113,6 @@ child:
           - id: 9001388102536520146
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 13679811430955402524
             type: 17
             enabled: true
@@ -24591,9 +24561,6 @@ child:
           - id: 6253036118950553994
             type: 14
             enabled: true
-            animations:
-              - 14184767561852842691
-              - 9054706964290541382
           - id: 12981278228212653959
             type: 17
             enabled: true
@@ -27117,8 +27084,6 @@ child:
               - id: 12415861617714663263
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 13790508632444277309
                 name: Mesh
@@ -27327,8 +27292,6 @@ child:
               - id: 15336292445992882524
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 4625335789074995838
                 name: Mesh
@@ -27537,8 +27500,6 @@ child:
               - id: 4230269701361532812
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 7252483854442074284
                 name: Mesh
@@ -27747,8 +27708,6 @@ child:
               - id: 2340429322797648971
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 1108437570172476257
                 name: Mesh
@@ -27957,8 +27916,6 @@ child:
               - id: 7811579308334021422
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 12918136519846944307
                 name: Mesh
@@ -28167,8 +28124,6 @@ child:
               - id: 4161973938958913453
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 10367681963446079842
                 name: Mesh
@@ -28377,8 +28332,6 @@ child:
               - id: 8029831167417555776
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 5332217352001749314
                 name: Mesh
@@ -28587,8 +28540,6 @@ child:
               - id: 16370921378983664697
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 12096246151018497274
                 name: Mesh
@@ -28797,8 +28748,6 @@ child:
               - id: 670176171307624697
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 9139580656722413535
                 name: Mesh
@@ -29007,8 +28956,6 @@ child:
               - id: 7182505558236716006
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 16572258584813700609
                 name: Mesh
@@ -29217,8 +29164,6 @@ child:
               - id: 1934524043669571193
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 5461943506205541436
                 name: Mesh
@@ -29427,8 +29372,6 @@ child:
               - id: 2298176359813340418
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 3892904102705495836
                 name: Mesh
@@ -29637,8 +29580,6 @@ child:
               - id: 15097489695729966410
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 3990134825894106337
                 name: Mesh
@@ -29847,8 +29788,6 @@ child:
               - id: 9502681600017057199
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 5146922203868626839
                 name: Mesh
@@ -30057,8 +29996,6 @@ child:
               - id: 9476156593588740792
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 14625928512011091893
                 name: Mesh
@@ -30267,8 +30204,6 @@ child:
               - id: 7813531109734392850
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 16848523182287486153
                 name: Mesh
@@ -30477,8 +30412,6 @@ child:
               - id: 12179705754339852146
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 1036728832704103254
                 name: Mesh
@@ -30687,8 +30620,6 @@ child:
               - id: 3777688565429964542
                 type: 14
                 enabled: true
-                animations:
-                  - 9087701207749168962
             child:
               - id: 15214162706467737417
                 name: Mesh
@@ -30833,9 +30764,7 @@ child:
       - id: 15106956091823123751
         type: 14
         enabled: true
-        animations:
-          - 1246325987446287226
-          - 2184831573162580743
+        state_machine: 10998250991341204431
       - id: 14578851630127373568
         type: 20
         enabled: true
@@ -32695,8 +32624,6 @@ child:
       - id: 9408275656303014655
         type: 14
         enabled: true
-        animations:
-          - 13765448837329734440
     child:
       - id: 7103714379645586805
         name: Plane051_$AssimpFbx$_Translation
@@ -47766,7 +47693,7 @@ child:
                     mesh_id: 9965609463044144128
                     navigable: false
                     visible: true
-                    material_id: 6520207381227701875
+                    material_id: 10306563509359622849
       - id: 14786395164214698177
         name: floorTileBroken_017_$AssimpFbx$_Translation
         enabled: true
@@ -47955,7 +47882,7 @@ child:
                     mesh_id: 8117349607870723382
                     navigable: false
                     visible: true
-                    material_id: 6520207381227701875
+                    material_id: 10306563509359622849
       - id: 15249413730258214089
         name: wallPlainBroken002_$AssimpFbx$_Translation
         enabled: true
@@ -47994,7 +47921,7 @@ child:
                     mesh_id: 14659763818926166388
                     navigable: false
                     visible: true
-                    material_id: 6520207381227701875
+                    material_id: 10306563509359622849
       - id: 5289649618061871783
         name: Cylinder358_$AssimpFbx$_Translation
         enabled: true

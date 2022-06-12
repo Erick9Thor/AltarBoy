@@ -47,6 +47,11 @@ void Hachiko::Program::BindUniformFloat4x4(const char* name, const float* data, 
     glUniformMatrix4fv(GetUniformLocation(name), 1, transpose, data);
 }
 
+void Hachiko::Program::BindUniformFloat2(const char* name, const float* data) const
+{
+    glUniform2fv(GetUniformLocation(name), 1, data);
+}
+
 void Hachiko::Program::BindUniformFloat3(const char* name, const float* data) const
 {
     glUniform3fv(GetUniformLocation(name), 1, data);
