@@ -1,5 +1,5 @@
 scene_name: TestScene
-navmesh_id: 5295013346551349010
+navmesh_id: 5295013346551349012
 skybox:
   right_cube_id: 1702588198696288572
   left_cube_id: 1739534624842796925
@@ -3105,12 +3105,180 @@ child:
                       - id: 9560143953870484547
                         type: 1
                         enabled: true
+                        position: [-0.395053506, 1.4850508, 0.147124633]
+                        rotation: [0.479975075, -0.566293955, -0.138840839, 0.655483246]
+                        scale: [1, 0.999999821, 1.00000024]
+                  - id: 872265333633079402
+                    name: Middle
+                    enabled: true
+                    component:
+                      - id: 6832292093043092201
+                        type: 1
+                        enabled: true
+                        position: [0.865905881, 0.869572341, 0.361112475]
+                        rotation: [-0.254299074, 0.797793448, 0.00895795971, 0.546605408]
+                        scale: [1.00000095, 1, 1.00000119]
+  - id: 7577865002841685786
+    name: Player
+    enabled: true
+    component:
+      - id: 8080814467956481956
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - id: 15106956091823123751
+        type: 14
+        enabled: true
+        state_machine: 10998250991341204431
+      - id: 14578851630127373568
+        type: 20
+        enabled: true
+      - id: 6929595236969383341
+        type: 15
+        enabled: true
+        class_name: PlayerController
+        "'_attack_indicator@GameObject*'": 4866793570773219617
+        "'_goal@GameObject*'": 18237002791232467726
+        "'_dash_duration@float'": 0.150000006
+        "'_dash_distance@float'": 6
+        "'_dash_cooldown@float'": 0.5
+        "'_max_dash_charges@int'": 2
+        "'_attack_duration@float'": 0.330000013
+        "'_rotation_duration@float'": 0.075000003
+        "'_hp_cell_1@GameObject*'": 10536630925920798614
+        "'_hp_cell_2@GameObject*'": 14186993655650306958
+        "'_hp_cell_3@GameObject*'": 14186993655650306958
+        "'_hp_cell_4@GameObject*'": 17375136022040484094
+        "'_camera@GameObject*'": 2223877946256215970
+        "'_ui_damage@GameObject*'": 0
+      - id: 15291422655893069505
+        type: 15
+        enabled: true
+        class_name: PlayerSoundManager
+        "'_audio_source@ComponentAudioSource*'": 7577865002841685786
+        "'_step_frequency@float'": 0.300000012
+        "'_melee_frequency@float'": 0.300000012
+        "'_ranged_frequency@float'": 0.300000012
+        "'_timer@float'": 0
+      - id: 14111613174296945059
+        type: 15
+        enabled: true
+        class_name: PlayerAnimationManager
+        "'_animator@ComponentAnimation*'": 7577865002841685786
+        "'_state_string@std::string'": ""
+        "'_idle_index@unsigned'": 0
+        "'_walking_index@unsigned'": 1
+        "'_dashing_index@unsigned'": 4
+        "'_melee_index@unsigned'": 2
+        "'_ranged_index@unsigned'": 3
+      - id: 2234105188966846900
+        type: 15
+        enabled: true
+        class_name: Stats
+        "'_attack_power@int'": 1
+        "'_attack_cd@int'": 2
+        "'_attack_range@float'": 3.5
+        "'_move_speed@float'": 7
+        "'_max_hp@int'": 3
+    child:
+      - id: 15218158254226999161
+        name: Legs_low_$AssimpFbx$_PreRotation
+        enabled: true
+        component:
+          - id: 8661975415615327024
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [1, 0.999996066, 0.999996066]
+        child:
+          - id: 7764132022733223854
+            name: Legs_low_$AssimpFbx$_Scaling
+            enabled: true
+            component:
+              - id: 9426379731020822589
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [2.00019312, 2.00019312, 2.00019312]
+            child:
+              - id: 7502755698615794626
+                name: Legs_low_$AssimpFbx$_GeometricTranslation
+                enabled: true
+                component:
+                  - id: 5388114505422410864
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0.291661114]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - id: 4063861212201409564
+                    name: Legs_low
+                    enabled: true
+                    component:
+                      - id: 5788990106362821280
+                        type: 1
+                        enabled: true
+                        position: [0, 0, -0.31464088]
+                        rotation: [0.707106829, 0, 0, 0.707106709]
+                        scale: [0.5, 0.49999848, 0.49999848]
+                      - id: 3428151599920119695
+                        type: 2
+                        enabled: true
+                        mesh_id: 10798962235149468010
+                        navigable: false
+                        visible: true
+                        material_id: 12924252210591909690
+      - id: 5827698496153448126
+        name: mixamorig:Hips
+        enabled: true
+        component:
+          - id: 14742961589178500469
+            type: 1
+            enabled: true
+            position: [0.00215073046, 0.999065518, -0.0040717423]
+            rotation: [-0.038771119, -0.367145211, -0.014528391, 0.929241717]
+            scale: [1, 1, 1]
+        child:
+          - id: 9329558821689094104
+            name: mixamorig:Spine_$AssimpFbx$_Translation
+            enabled: true
+            component:
+              - id: 12231379296344959795
+                type: 1
+                enabled: true
+                position: [0, 0.0964034796, -0.0270344093]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+            child:
+              - id: 10482669431030636465
+                name: mixamorig:Spine_$AssimpFbx$_PreRotation
+                enabled: true
+                component:
+                  - id: 11217506506287845590
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [-0.136278048, 0, 0, 0.990670621]
+                    scale: [1, 0.999999881, 0.999999881]
+                child:
+                  - id: 14159291792561565159
+                    name: mixamorig:Spine_$AssimpFbx$_Rotation
+                    enabled: true
+                    component:
+                      - id: 6701087740966857887
+                        type: 1
+                        enabled: true
                         position: [0, 0, 0]
-                        rotation: [-0.467824042, -0.530227304, 0.467824042, 0.530226707]
-                        scale: [1.00000036, 1.00000036, 1.0000006]
+                        rotation: [0.048563309, 0.0419725515, 0.00348788826, 0.997931719]
+                        scale: [0.999997139, 1, 1]
                     child:
-                      - id: 17018640463373328046
-                        name: Root_Jnt_$AssimpFbx$_Rotation
+                      - id: 13313853941742989021
+                        name: mixamorig:Spine
                         enabled: true
                         component:
                           - id: 4447432745978171725

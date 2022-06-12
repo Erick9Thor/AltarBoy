@@ -19,6 +19,13 @@ namespace Hachiko
         // Root will be replaced by scene root on load, should be empy
         // Prefabs are like scene subsets but without storing uids
         UID CreatePrefabAsset(const char* name, GameObject* root);
+        // To be used by model importer
+        UID CreateGeneratedPrefab(const char* name, UID uid, GameObject* root);
         GameObject* CreateObjectFromPrefab(UID prefab_uid, GameObject* parent);
+
+    private:
+        ResourcePrefab* CreatePrefabResouce(const char* name, UID uid, GameObject* root);
+        void SaveScriptReferences(ResourcePrefab* prefab, GameObject* root);
+        void LoadScriptReferences(ResourcePrefab* prefab, GameObject* root);
     };
 } // namespace Hachiko
