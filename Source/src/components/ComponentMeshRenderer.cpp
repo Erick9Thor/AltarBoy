@@ -18,10 +18,10 @@
 
 #include <debugdraw.h>
 
-Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container, UID id, ResourceMesh* res) 
+Hachiko::ComponentMeshRenderer::ComponentMeshRenderer(GameObject* container) 
     : Component(Type::MESH_RENDERER, container)
 {
-    SetResourceMesh(res);
+
 }
 
 Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer() 
@@ -37,7 +37,7 @@ Hachiko::ComponentMeshRenderer::~ComponentMeshRenderer()
 
 void Hachiko::ComponentMeshRenderer::Update()
 {
-    if (mesh == nullptr)
+    if (!mesh || ! material)
     {
         return;
 
@@ -72,7 +72,7 @@ void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* prog
 {
     OPTICK_CATEGORY("Draw", Optick::Category::Rendering);
 
-    if (mesh == nullptr || !visible)
+    if (!visible || !mesh)
     {
         return;
     }
@@ -80,7 +80,6 @@ void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* prog
     program->BindUniformFloat4x4("model", game_object->GetTransform()->GetGlobalMatrix().ptr());
 
     // SKINING
-
     if (!palette.empty())
     {
         glUniformMatrix4fv(glGetUniformLocation(program->GetId(), "palette"), palette.size(), true, palette[0].ptr());
@@ -94,7 +93,7 @@ void Hachiko::ComponentMeshRenderer::Draw(ComponentCamera* camera, Program* prog
 
 void Hachiko::ComponentMeshRenderer::DrawStencil(ComponentCamera* camera, Program* program) const
 {
-    if (mesh == nullptr)
+    if (!mesh)
     {
         return;
     }
@@ -123,13 +122,17 @@ void Hachiko::ComponentMeshRenderer::OnTransformUpdated()
     UpdateBoundingBoxes();
 }
 
-void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
+void Hachiko::ComponentMeshRenderer::SetMeshResource(ResourceMesh* res)
 {
+    // Component mesh renderer needs a mesh
+    assert(res);
+    
     App->resources->ReleaseResource(mesh);
     mesh = res;
 
     if (!mesh)
     {
+        
         return;
     }
 
@@ -144,16 +147,24 @@ void Hachiko::ComponentMeshRenderer::SetResourceMesh(ResourceMesh* res)
     }
 }
 
+void Hachiko::ComponentMeshRenderer::SetMaterialResource(ResourceMaterial* res)
+{
+    // Component mesh renderer needs a material
+    assert(res);
+    App->resources->ReleaseResource(material);
+    material = res;
+}
+
 void Hachiko::ComponentMeshRenderer::LoadMesh(UID mesh_id)
 {
     App->resources->ReleaseResource(mesh);
-    SetResourceMesh(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
+    SetMeshResource(static_cast<ResourceMesh*> (App->resources->GetResource(Resource::Type::MESH, mesh_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::LoadMaterial(UID material_id)
 {
     App->resources->ReleaseResource(material);
-    material = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id));
+    SetMaterialResource(static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, material_id)));
 }
 
 void Hachiko::ComponentMeshRenderer::DrawGui()
@@ -351,8 +362,6 @@ void Hachiko::ComponentMeshRenderer::UpdateBoundingBoxes()
     Scene* scene = game_object->scene_owner;
     if (scene)
     {
-        Quadtree* quadtree = scene->GetQuadtree();
-        quadtree->Remove(this);
-        quadtree->Insert(this);
+        scene->GetQuadtree()->Reposition(this);
     }
 }

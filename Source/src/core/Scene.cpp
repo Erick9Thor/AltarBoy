@@ -49,14 +49,6 @@ void Hachiko::Scene::CleanScene()
     loaded = false;
 }
 
-void Hachiko::Scene::DestroyGameObject(GameObject* game_object)
-{
-    if (App->editor->GetSelectedGameObject() == game_object)
-    {
-        App->editor->SetSelectedGO(nullptr);
-    }
-}
-
 Hachiko::ComponentCamera* Hachiko::Scene::GetMainCamera() const
 {
     // This will return the first camera it comes across in the hierarchy in a 
@@ -97,7 +89,7 @@ void Hachiko::Scene::HandleInputMaterial(ResourceMaterial* material)
     ComponentMeshRenderer* component_mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
     if (component_mesh_renderer != nullptr)
     {
-        component_mesh_renderer->AddResourceMaterial(material);
+        component_mesh_renderer->SetMaterialResource(material);
     }
 }
 
@@ -139,7 +131,7 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
     float closest_hit_distance = inf;
 
     std::vector<GameObject*> game_objects;
-    quadtree->GetRoot()->GetIntersections(game_objects, segment);
+    quadtree->GetIntersections(game_objects, segment);
 
     for (GameObject* game_object : game_objects)
     {
