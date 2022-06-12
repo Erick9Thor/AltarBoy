@@ -41,10 +41,6 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
 {
     UpdateInputMaps();
 
-    ImVec2 m_pos = ImGui::GetMousePos();
-    mouse_pixel_position.x = m_pos.x;
-    mouse_pixel_position.y = m_pos.y;
-
     mouse_normalized_motion.x = 0;
     mouse_normalized_motion.y = 0;
     mouse_pixels_motion.x = 0;
@@ -85,8 +81,8 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                const ImVec2 mouse_pos = ImGui::GetMousePos();
-                NotifyMouseAction(float2(mouse_pos.x, mouse_pos.y), MouseEventPayload::Action::CLICK);
+                //const ImVec2 mouse_pos = ImGui::GetMousePos();
+                NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::CLICK);
             }
 
             break;
@@ -94,21 +90,35 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             mouse[sdl_event.button.button - 1] = KeyState::KEY_UP;
             if (sdl_event.button.button == SDL_BUTTON_LEFT)
             {
-                const ImVec2 mouse_pos = ImGui::GetMousePos();
-                NotifyMouseAction(float2(mouse_pos.x, mouse_pos.y), MouseEventPayload::Action::RELEASE);
+                //const ImVec2 mouse_pos = ImGui::GetMousePos();
+                NotifyMouseAction(float2(mouse_pixel_position.x, mouse_pixel_position.y), MouseEventPayload::Action::RELEASE);
             }
             break;
-        case SDL_MOUSEMOTION:
+        case SDL_MOUSEMOTION:   
+        {
             mouse_normalized_motion.x = sdl_event.motion.xrel * _window_width_inverse;
             mouse_normalized_motion.y = sdl_event.motion.yrel * _window_height_inverse;
 
             mouse_pixels_motion.x = sdl_event.motion.xrel;
             mouse_pixels_motion.y = sdl_event.motion.yrel;
 
-            mouse_normalized_position.x = mouse_pixel_position.x * _window_width_inverse;
-            mouse_normalized_position.y = mouse_pixel_position.y * _window_height_inverse;
+            // Normalized mouse position of SDL:
+            mouse_normalized_position.x = sdl_event.motion.x * _window_width_inverse;
+            mouse_normalized_position.y = sdl_event.motion.y * _window_height_inverse;
 
-            break;
+            // Turn it to the same convention with ImGui and UI Components, and store it like that
+            // to not have multiple coordinate systems:
+            float2 in_imgui_coords = float2(-1.0f + mouse_normalized_position.x * 2, -(-1.0f + mouse_normalized_position.y * 2));
+
+            int height, width;
+            App->window->GetWindowSize(width, height);
+
+            // Store pixel based position in the same coordinate system as well:
+            mouse_pixel_position.x = width * 0.5f * in_imgui_coords.x;
+            mouse_pixel_position.y = height * 0.5f * in_imgui_coords.y;
+        }
+        break;
+        
         case SDL_MOUSEWHEEL:
             scroll_delta = sdl_event.wheel.y;
             break;
