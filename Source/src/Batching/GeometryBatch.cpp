@@ -209,7 +209,8 @@ void Hachiko::GeometryBatch::BatchData()
             palettes_per_instance.push_back(palette_per_instance);
 
             palettes.resize(palette_offset + palette_per_instance.numBones);
-            memcpy(&palettes[palette_offset], &component->palette[0], sizeof(float4x4) * palette_per_instance.numBones);
+            memcpy(&palettes[palette_offset], component->GetPalette().data(), sizeof(float4x4) * palette_per_instance.numBones);
+
             palette_offset += palette_per_instance.numBones;
         }
     }

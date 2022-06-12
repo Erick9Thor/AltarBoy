@@ -298,7 +298,8 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
-	RELEASE(game_object);
+	game_object->SetActive(false);
+	SceneManagement::Destroy(game_object);
 }
 
 void Hachiko::Scripting::EnemyController::DropParasite()

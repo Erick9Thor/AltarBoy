@@ -15,7 +15,7 @@ namespace Hachiko
         public:
             BulletController(GameObject* game_object);
             ~BulletController() override = default;
-
+            
             void OnAwake() override;
             void OnUpdate() override;
 
