@@ -27,7 +27,8 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
 
-        [[nodiscard]] float3 CalculateDirectionFromShape() const;
+        [[nodiscard]] float3 GetDirectionFromShape() const;
+        [[nodiscard]] float3 GetPositionFromShape() const;
 
         [[nodiscard]] const ResourceTexture* GetTexture() const;
         [[nodiscard]] int GetTextureTotalTiles() const;

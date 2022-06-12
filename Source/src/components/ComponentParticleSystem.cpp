@@ -605,7 +605,7 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
     }
 }
 
-float3 Hachiko::ComponentParticleSystem::CalculateDirectionFromShape() const
+float3 Hachiko::ComponentParticleSystem::GetDirectionFromShape() const
 {
     float3 particle_direction = float3::one;
     switch (emitter_type)
@@ -629,10 +629,43 @@ float3 Hachiko::ComponentParticleSystem::CalculateDirectionFromShape() const
     case ParticleSystem::Emitter::Type::BOX:
     case ParticleSystem::Emitter::Type::CIRCLE:
     case ParticleSystem::Emitter::Type::RECTANGLE:
+    {
+            particle_direction.x = RandomUtil::RandomSigned();
+            particle_direction.z = RandomUtil::RandomSigned();
         break;
+    }
     }
 
     return particle_direction;
+}
+
+float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
+{
+    float3 global_emitter_position = GetEmitterProperties().position + game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
+    switch (emitter_type)
+    {
+    case ParticleSystem::Emitter::Type::RECTANGLE:
+    {
+        float half_x = emitter_properties.scale.x * 0.5;
+        float x_random_pos = RandomUtil::RandomBetween(-half_x, half_x);
+        float half_z = emitter_properties.scale.z * 0.5;
+        float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
+
+        global_emitter_position = float3(global_emitter_position.x + x_random_pos,
+            global_emitter_position.y, global_emitter_position.z + z_random_pos);
+    }
+    case ParticleSystem::Emitter::Type::CIRCLE:
+    {
+    }
+    case ParticleSystem::Emitter::Type::CONE:
+    {
+    }
+    case ParticleSystem::Emitter::Type::SPHERE:
+    {
+    }
+
+        return global_emitter_position;
+    }
 }
 
 void Hachiko::ComponentParticleSystem::AddTexture()

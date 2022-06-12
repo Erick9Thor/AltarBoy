@@ -27,14 +27,11 @@ void Hachiko::Particle::Reset()
     SetCurrentLife(GetInitialLife());
     SetCurrentSize(GetInitialSize());
     SetCurrentSpeed(GetInitialSpeed());
-
-    const float3 position = emitter->GetEmitterProperties().position +
-                            emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalPosition();
-    SetCurrentPosition(position);
+    SetCurrentPosition(emitter->GetPositionFromShape());
 
     const float4x4 game_object_model = emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalMatrix();
-    const float3 shape_direction = emitter->CalculateDirectionFromShape();
-    const float4x4 emitter_model = float4x4::FromTRS(emitter->GetEmitterProperties().position,
+    const float3 shape_direction = emitter->GetDirectionFromShape();
+    const float4x4 emitter_model = float4x4::FromTRS(GetCurrentPosition(),
                                                      Quat::FromEulerXYZ(shape_direction.x, shape_direction.y, shape_direction.z),
                                                      emitter->GetEmitterProperties().scale);
     const float4x4 current_model = game_object_model * emitter_model;
