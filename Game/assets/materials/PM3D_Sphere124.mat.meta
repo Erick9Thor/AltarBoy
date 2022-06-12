@@ -2,3 +2,4 @@ asset_hash: 11000573798832495512
 resources:
   - resource_id: 3003390711770185065
     resource_type: 1
+    resource_hash: 11000573798832495512
