@@ -96,8 +96,8 @@ void Hachiko::PrefabImporter::SaveScriptReferences(ResourcePrefab* prefab, GameO
 void Hachiko::PrefabImporter::LoadScriptReferences(ResourcePrefab* prefab, GameObject* root)
 {
     // Wire script references by indexes
-    std::vector<const GameObject*> object_collector = std::vector<const GameObject*>();
-    std::vector<const Component*> component_collector = std::vector<const Component*>();
+    std::vector<const GameObject*> object_collector {};
+    std::vector<const Component*> component_collector {};
     // add a nullptr to 0 to reserve index 0 for missing references
     object_collector.push_back(nullptr);
     component_collector.push_back(nullptr);
@@ -135,7 +135,7 @@ Hachiko::UID Hachiko::PrefabImporter::CreateGeneratedPrefab(const char* name, UI
 {
     // Pre creates the prefab meta so it already contains the desired uid decided by model importer
     ResourcePrefab* prefab = CreatePrefabResouce(name, uid, root);
-    const std::string prefab_asset_path = std::string(ASSETS_FOLDER_GENERATED_PREFAB) + std::to_string(uid) + PREFAB_EXTENSION;
+    const std::string prefab_asset_path = StringUtils::Concat(ASSETS_FOLDER_GENERATED_PREFAB, std::to_string(uid), PREFAB_EXTENSION);
     const std::string prefab_meta_path = prefab_asset_path + META_EXTENSION;
     FileSystem::Save(prefab_asset_path.c_str(), prefab->prefab_data);
     // Import normally
