@@ -12,7 +12,6 @@ namespace Hachiko
         ~WindowHierarchy() override;
 
         void Update() override;
-        void CleanUp() override;
 
     private:
         void DrawHierarchyTree(const GameObject* game_object);

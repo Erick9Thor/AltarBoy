@@ -13,8 +13,8 @@
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
-Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container, UID id) 
-	: Component(Component::Type::BILLBOARD, container, id) 
+Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container) 
+	: Component(Component::Type::BILLBOARD, container) 
 {
     gradient = new ImGradient();
     PublishIntoScene();

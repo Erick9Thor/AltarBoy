@@ -7,6 +7,7 @@
 
 #include "core/preferences/src/ResourcesPreferences.h"
 #include "modules/ModuleResources.h"
+#include "modules/ModuleSceneManager.h"
 #include "components/ComponentMeshRenderer.h"
 #include "components/ComponentAnimation.h"
 #include "components/ComponentTransform.h"
@@ -128,7 +129,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     // Create prefab
     UID prefab_uid = meta[PREFAB_ID].IsDefined() ? meta[PREFAB_ID].as<UID>() : UUID::GenerateUID();
     prefab_importer.CreateGeneratedPrefab(filename.c_str(), prefab_uid, model_root->children[0]);
-    delete model_root;
+    App->scene_manager->RemoveGameObject(model_root);
     meta[PREFAB_ID] = prefab_uid;
 
     for (unsigned i = 0; i < resource_ids.size(); ++i)
@@ -192,8 +193,8 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
         ComponentMeshRenderer* mesh_renderer = static_cast<ComponentMeshRenderer*>(go->CreateComponent(Component::Type::MESH_RENDERER));
         ResourceMesh* mesh_resource = static_cast<ResourceMesh*>(App->resources->GetResource(Resource::Type::MESH, meta[MESHES][mesh_idx].as<UID>()));
         ResourceMaterial* material_resource = static_cast<ResourceMaterial*>(App->resources->GetResource(Resource::Type::MATERIAL, meta[MATERIALS][material_idx].as<UID>()));
-        mesh_renderer->SetResourceMesh(mesh_resource);     
-        mesh_renderer->AddResourceMaterial(material_resource);
+        mesh_renderer->SetMeshResource(mesh_resource);     
+        mesh_renderer->SetMaterialResource(material_resource);
     }
 
     go->GetTransform()->SetLocalTransform(transform);

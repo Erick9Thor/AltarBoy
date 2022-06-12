@@ -212,5 +212,5 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
-	RELEASE(game_object);
+	SceneManagement::Destroy(game_object);
 }

@@ -23,7 +23,7 @@ namespace Hachiko
     class ComponentBillboard : public Component
     {
     public:
-        ComponentBillboard(GameObject* container, UID id = 0);
+        ComponentBillboard(GameObject* container);
         ~ComponentBillboard() override;
         
         void Start() override;
