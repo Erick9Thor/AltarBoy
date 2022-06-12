@@ -3327,7 +3327,7 @@ child:
                       - id: 3428151599920119695
                         type: 2
                         enabled: true
-                        mesh_id: 12123928845219701760
+                        mesh_id: 10798962235149468010
                         navigable: false
                         visible: true
                         material_id: 12924252210591909690
