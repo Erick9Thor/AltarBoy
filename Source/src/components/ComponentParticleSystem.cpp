@@ -627,11 +627,13 @@ float3 Hachiko::ComponentParticleSystem::GetDirectionFromShape() const
         break;
     }
     case ParticleSystem::Emitter::Type::BOX:
+    {
+            break;
+    }
     case ParticleSystem::Emitter::Type::CIRCLE:
     case ParticleSystem::Emitter::Type::RECTANGLE:
     {
-            particle_direction.x = RandomUtil::RandomSigned();
-            particle_direction.z = RandomUtil::RandomSigned();
+        particle_direction = float3(0.0f, 1.0f, 0.0f);
         break;
     }
     }
@@ -653,9 +655,19 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
 
         global_emitter_position = float3(global_emitter_position.x + x_random_pos,
             global_emitter_position.y, global_emitter_position.z + z_random_pos);
+        break;
     }
     case ParticleSystem::Emitter::Type::CIRCLE:
     {
+        // Edge emission
+        const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
+        float x_position = emitter_properties.radius * RandomUtil::RandomSigned();
+        float z_position = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position) * RandomUtil::RandomSignedInt();
+       
+        global_emitter_position = float3(global_emitter_position.x + x_position,
+            global_emitter_position.y, global_emitter_position.z + z_position);
+        
+        break;
     }
     case ParticleSystem::Emitter::Type::CONE:
     {
@@ -663,9 +675,8 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
     case ParticleSystem::Emitter::Type::SPHERE:
     {
     }
-
-        return global_emitter_position;
     }
+    return global_emitter_position;
 }
 
 void Hachiko::ComponentParticleSystem::AddTexture()

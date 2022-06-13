@@ -19,5 +19,7 @@ namespace Hachiko
         static float RandomBetween(float a, float b);
         // (values.x; values.y) if x > y returns x
         static float RandomBetween(const float2& values);
+        // returns either 1 or -1
+        static int RandomSignedInt();
     };
 }
