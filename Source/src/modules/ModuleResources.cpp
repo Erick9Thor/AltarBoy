@@ -204,14 +204,16 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
         case Resource::AssetType::MODEL:
             {
                 PrefabImporter importer;
-                importer.CreateObjectFromPrefab(meta_node[PREFAB_ID].as<UID>(), nullptr);
+                constexpr unsigned n_instances = 1;
+                importer.CreateObjectsFromPrefab(meta_node[PREFAB_ID].as<UID>(), nullptr, n_instances);
                 break;
             }
             
         case Resource::AssetType::PREFAB:
             {
                 PrefabImporter importer;
-                importer.CreateObjectFromPrefab(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>(), nullptr);    
+                constexpr unsigned n_instances = 1;
+                importer.CreateObjectsFromPrefab(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>(), nullptr, n_instances);    
                 break;
             }
         case Resource::AssetType::MATERIAL:
@@ -232,9 +234,9 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
     }
 }
 
-GameObject* Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent)
+std::vector<Hachiko::GameObject*> Hachiko::ModuleResources::InstantiatePrefab(UID prefab_uid, GameObject* parent, unsigned n_instances)
 {
-    return importer_manager.prefab.CreateObjectFromPrefab(prefab_uid, parent);
+    return std::move(importer_manager.prefab.CreateObjectsFromPrefab(prefab_uid, parent, n_instances));
 }
 
 void Hachiko::ModuleResources::AssetsLibraryCheck()

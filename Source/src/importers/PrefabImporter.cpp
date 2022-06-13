@@ -35,35 +35,44 @@ Hachiko::Resource* Hachiko::PrefabImporter::Load(UID id)
     ResourcePrefab* prefab = new ResourcePrefab(id);
     prefab->prefab_data = node;
     prefab->name = node[PREFAB_NAME].as<std::string>();
-
-    Scene* scene = App->scene_manager->GetActiveScene();
-    GameObject* prefab_root = scene->CreateNewGameObject(nullptr, prefab->name.c_str());
-    prefab->root_node = prefab_root;
-
-    // Load generating new ids
-    constexpr bool as_prefab = true;
-    prefab_root->Load(prefab->prefab_data, as_prefab);
-
-    // Wire Script References
-    LoadScriptReferences(prefab, prefab_root);    
+    
 
     return prefab;
 }
 
-Hachiko::GameObject* Hachiko::PrefabImporter::CreateObjectFromPrefab(UID prefab_uid, GameObject* parent)
+std::vector<Hachiko::GameObject*> Hachiko::PrefabImporter::CreateObjectsFromPrefab(UID prefab_uid, GameObject* parent, unsigned n_instances)
 {
-    ResourcePrefab* prefab = static_cast<ResourcePrefab*>(Load(prefab_uid));
+    // For now this doesnt go through usual resource management
+    ResourcePrefab* prefab_resource = static_cast<ResourcePrefab*>(Load(prefab_uid));
 
-    GameObject* prefab_root = prefab->root_node;
-    if (parent)
+    Scene* scene = App->scene_manager->GetActiveScene();
+    std::vector<GameObject*> prefab_instances;
+    
+    prefab_instances.reserve(n_instances);
+
+    for (unsigned i = 0; i < n_instances; ++i)
     {
-        prefab_root->SetNewParent(parent);
+        GameObject* prefab_root = scene->CreateNewGameObject(nullptr, prefab_resource->name.c_str());
+        prefab_resource->root_node = prefab_root;
 
+        // Load generating new ids
+        constexpr bool as_prefab = true;
+        prefab_root->Load(prefab_resource->prefab_data, as_prefab);
+
+        // Wire Script References
+        LoadScriptReferences(prefab_resource, prefab_root);
+
+        if (parent)
+        {
+            prefab_root->SetNewParent(parent);
+        }
+
+        prefab_instances.push_back(prefab_root);
     }
 
-    delete prefab;
+    delete prefab_resource;
     
-    return prefab_root;
+    return prefab_instances;
 }
 
 Hachiko::ResourcePrefab* Hachiko::PrefabImporter::CreatePrefabResouce(const char* name, UID uid, GameObject* root)
