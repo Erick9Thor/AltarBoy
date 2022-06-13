@@ -498,6 +498,11 @@ const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleS
     return start_size;
 }
 
+const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesRotation() const
+{
+    return start_rotation;
+}
+
 const Hachiko::ParticleSystem::Emitter::Properties& Hachiko::ComponentParticleSystem::GetEmitterProperties() const
 {
     return emitter_properties;

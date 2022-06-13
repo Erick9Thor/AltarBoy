@@ -18,5 +18,6 @@ namespace Hachiko
     private:
         void UpdatePositionOverTime(Particle& particle);
         void UpdateDirectionOverTime(Particle& particle);
+        void UpdateRotationOverTime(Particle& particle);
     };
 }

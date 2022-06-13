@@ -15,8 +15,9 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
             continue;
         }
 
-        UpdateDirectionOverTime(particle);
         UpdatePositionOverTime(particle);
+        // UpdateDirectionOverTime(particle);
+        // UpdateRotationOverTime(particle);
     }
 }
 
@@ -49,4 +50,8 @@ void Hachiko::ForceParticleModifier::UpdateDirectionOverTime(Particle& particle)
     //direction = float3(Random::RandomFloat(), Random::RandomFloat(), Random::RandomFloat());
     //direction.Normalize();
     //particle.SetCurrentDirection(direction);
+}
+
+void Hachiko::ForceParticleModifier::UpdateRotationOverTime(Particle& particle) 
+{
 }
