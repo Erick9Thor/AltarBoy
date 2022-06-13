@@ -31,8 +31,6 @@ void Hachiko::Scripting::BugAnimationManager::OnEditor()
 
 void Hachiko::Scripting::BulletController::OnEditor()
 {
-	Editor::Show("Move Speed", _move_speed);
-	Editor::Show("Lifetime", _lifetime);
 	Editor::Show("Collider Radius", _collider_radius);
 }
 
@@ -140,6 +138,7 @@ void Hachiko::Scripting::PlayerCamera::OnEditor()
 void Hachiko::Scripting::PlayerController::OnEditor()
 {
 	Editor::Show("Attack Indicator", _attack_indicator);
+	Editor::Show("Bullet Emitter", _bullet_emitter);
 	Editor::Show("Goal", _goal);
 	Editor::Show("Dash Duration", _dash_duration);
 	Editor::Show("Dash Distance", _dash_distance);

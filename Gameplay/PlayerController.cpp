@@ -15,6 +15,7 @@
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
+	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
@@ -339,16 +340,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	_state = PlayerState::RANGED_ATTACKING;
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
-	float3 attack_origin_position = _player_position;
-	attack_origin_position.y += 0.5f;
 
-	// Spawn bullet (Passing the prefab can be improved)
-	UID* bullet_uid = new UID(14999767472668584259);
-	GameObject* bullet = GameObject::Instantiate(bullet_uid, game_object->scene_owner->GetRoot());
-
-	bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
-	bullet->GetComponent<BulletController>()->SetForward(forward);
-	bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
+	_bullet_emitter->GetComponent<BulletController>()->ShootBullet(_player_transform);
 
 	_attack_current_cd = _combat_stats->_attack_cd;
 }

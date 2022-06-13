@@ -65,6 +65,7 @@ public:
 
 private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
+	SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);

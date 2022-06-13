@@ -90,25 +90,11 @@ void Hachiko::Scripting::BugAnimationManager::OnLoad()
 
 void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
 {
-	node["'_move_speed@float'"] = _move_speed;
-
-	node["'_lifetime@float'"] = _lifetime;
-
 	node["'_collider_radius@float'"] = _collider_radius;
 }
 
 void Hachiko::Scripting::BulletController::OnLoad()
 {
-	if (load_node["'_move_speed@float'"].IsDefined())
-	{
-		_move_speed = load_node["'_move_speed@float'"].as<float>();
-	}
-
-	if (load_node["'_lifetime@float'"].IsDefined())
-	{
-		_lifetime = load_node["'_lifetime@float'"].as<float>();
-	}
-
 	if (load_node["'_collider_radius@float'"].IsDefined())
 	{
 		_collider_radius = load_node["'_collider_radius@float'"].as<float>();
@@ -1087,6 +1073,15 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 		node["'_attack_indicator@GameObject*'"] = 0;
 	}
 
+	if (_bullet_emitter != nullptr)
+	{
+		node["'_bullet_emitter@GameObject*'"] = _bullet_emitter->GetID();
+	}
+	else
+	{
+		node["'_bullet_emitter@GameObject*'"] = 0;
+	}
+
 	if (_goal != nullptr)
 	{
 		node["'_goal@GameObject*'"] = _goal->GetID();
@@ -1168,6 +1163,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_bullet_emitter@GameObject*'"].IsDefined())
+	{
+		_bullet_emitter = SceneManagement::FindInCurrentScene(load_node["'_bullet_emitter@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_goal@GameObject*'"].IsDefined())
