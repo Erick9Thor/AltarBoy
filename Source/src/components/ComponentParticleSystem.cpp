@@ -200,6 +200,10 @@ void Hachiko::ComponentParticleSystem::DrawGui()
                 DragFloat("Radius", emitter_properties.radius, &radius);
                 DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
                 DragFloat("Arc", emitter_properties.arc, &arc);
+                if (Widgets::Combo("Emit from", &emit_from, emit_from_options, IM_ARRAYSIZE(emit_from_options)))
+                {
+                    emitter_properties.emit_from = static_cast<ParticleSystem::Emitter::EmitFrom>(emit_from);
+                }
                 break;
             case ParticleSystem::Emitter::Type::RECTANGLE:
                 scale_config.enabled = bool3(true, false, true);
@@ -659,11 +663,19 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
     }
     case ParticleSystem::Emitter::Type::CIRCLE:
     {
-        // Edge emission
         const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-        float x_position = emitter_properties.radius * RandomUtil::RandomSigned();
-        float z_position = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position) * RandomUtil::RandomSignedInt();
-       
+        float x_position = effective_radius * RandomUtil::RandomSigned();
+
+        float z_position = sqrt(effective_radius * effective_radius - x_position * x_position);
+        if (emitter_properties.emit_from == ParticleSystem::Emitter::EmitFrom::EDGE)
+        {
+            z_position *= RandomUtil::RandomSignedInt();
+        }
+        else
+        {
+            z_position *= RandomUtil::RandomSigned();
+        }
+
         global_emitter_position = float3(global_emitter_position.x + x_position,
             global_emitter_position.y, global_emitter_position.z + z_position);
         
