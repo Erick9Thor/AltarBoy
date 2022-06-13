@@ -312,6 +312,7 @@
 #define SIZE "size"
 #define MODULE_COLOR "color"
 #define MODULE_FORCE "force"
+#define ROTATION "rotation"
 #define MODULE_ANIMATION "animation"
 #define SKIP_FRAMES "skip_frames"
 

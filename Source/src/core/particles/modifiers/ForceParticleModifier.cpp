@@ -4,6 +4,11 @@
 Hachiko::ForceParticleModifier::ForceParticleModifier(const std::string& name) :
     ParticleModifier(name, false)
 {
+    cfg.min = -100.0f;
+    cfg.max = 100.0f;
+    cfg.speed = 0.1f;
+    cfg.format = "%.2f";
+    cfg.tunning = 100.0f;
 }
 
 void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
@@ -17,24 +22,26 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
 
         UpdatePositionOverTime(particle);
         // UpdateDirectionOverTime(particle);
-        // UpdateRotationOverTime(particle);
+        UpdateRotationOverTime(particle);
     }
 }
 
 void Hachiko::ForceParticleModifier::DrawGui()
 {
-    ImGui::TextUnformatted("Force over lifetime content");
+    MultiTypeSelector("Rotation", rotation_delta, &cfg);
 }
 
 void Hachiko::ForceParticleModifier::Save(YAML::Node& node) const
 {
     YAML::Node force_module = node[MODULE_FORCE];
     ParticleModifier::Save(force_module);
+    force_module[ROTATION] = rotation_delta;
 }
 
 void Hachiko::ForceParticleModifier::Load(const YAML::Node& node)
 {
     ParticleModifier::Load(node[MODULE_FORCE]);
+    rotation_delta = node[MODULE_FORCE][ROTATION].IsDefined() ? node[MODULE_FORCE][ROTATION].as<ParticleSystem::VariableTypeProperty>() : rotation_delta;
 }
 
 void Hachiko::ForceParticleModifier::UpdatePositionOverTime(Particle& particle) 
@@ -54,4 +61,7 @@ void Hachiko::ForceParticleModifier::UpdateDirectionOverTime(Particle& particle)
 
 void Hachiko::ForceParticleModifier::UpdateRotationOverTime(Particle& particle) 
 {
+    float rotation = particle.GetCurrentRotation();
+    rotation += rotation_delta.GetValue(1 - (particle.GetCurrentLife() / particle.GetLife()));
+    particle.SetCurrentRotation(rotation);
 }

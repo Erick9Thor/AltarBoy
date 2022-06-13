@@ -16,6 +16,9 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
     private:
+        ParticleSystem::VariableTypeProperty rotation_delta {float2::zero};
+        Widgets::DragFloatConfig cfg;
+
         void UpdatePositionOverTime(Particle& particle);
         void UpdateDirectionOverTime(Particle& particle);
         void UpdateRotationOverTime(Particle& particle);
