@@ -68,10 +68,8 @@ void Hachiko::ColorParticleModifier::Load(const YAML::Node& node)
 
 void Hachiko::ColorParticleModifier::UpdateColorOverTime(Particle& particle) const
 {
-    const float particle_life = particle.GetLife();
-    const float color_frame = 1 - (particle.GetCurrentLife() / particle_life);
     float4 color = float4::one;
-    gradient->getColorAt(color_frame, color.ptr());
+    gradient->getColorAt(particle.GetCurrentLifeNormilized(), color.ptr());
     particle.SetCurrentColor(color);
 }
 
