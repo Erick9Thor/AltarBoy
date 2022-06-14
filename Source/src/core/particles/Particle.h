@@ -68,6 +68,7 @@ namespace Hachiko
         [[nodiscard]] float GetInitialLife();
         [[nodiscard]] float GetInitialSpeed() const;
         [[nodiscard]] float GetInitialSize() const;
+        [[nodiscard]] float GetInitialRotation() const;
         [[nodiscard]] const float2& GetTextureTiles() const;
 
         void SetEmitter(ComponentParticleSystem* particle_emitter);

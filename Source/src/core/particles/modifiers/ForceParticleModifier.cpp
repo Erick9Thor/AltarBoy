@@ -8,7 +8,6 @@ Hachiko::ForceParticleModifier::ForceParticleModifier(const std::string& name) :
     cfg.max = 100.0f;
     cfg.speed = 0.1f;
     cfg.format = "%.2f";
-    cfg.tunning = 100.0f;
 }
 
 void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
