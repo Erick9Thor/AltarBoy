@@ -14,7 +14,7 @@ Hachiko::Component::Component(const Type type, GameObject* container, UID id)
 
 bool Hachiko::Component::IsActive() const
 {
-    return active && game_object->IsActive();
+    return active;
 }
 
 bool Hachiko::Component::CanBeRemoved() const
