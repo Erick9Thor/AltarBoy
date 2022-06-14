@@ -35,6 +35,8 @@ namespace Hachiko
         void Activate();
         void Deactivate();
         
+        [[nodiscard]] float GetCurrentLifeNormilized() const;
+
         [[nodiscard]] float GetCurrentLife() const;
         void SetCurrentLife(float life);
 

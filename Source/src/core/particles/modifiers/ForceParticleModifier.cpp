@@ -20,7 +20,7 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
         }
 
         UpdatePositionOverTime(particle);
-        // UpdateDirectionOverTime(particle);
+        UpdateDirectionOverTime(particle);
         UpdateRotationOverTime(particle);
     }
 }
@@ -28,6 +28,9 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
 void Hachiko::ForceParticleModifier::DrawGui()
 {
     MultiTypeSelector("Rotation", rotation_delta, &cfg);
+    MultiTypeSelector("X force", x_force, &cfg);
+    MultiTypeSelector("Y force", y_force, &cfg);
+    MultiTypeSelector("Z force", z_force, &cfg);
 }
 
 void Hachiko::ForceParticleModifier::Save(YAML::Node& node) const
@@ -52,15 +55,18 @@ void Hachiko::ForceParticleModifier::UpdatePositionOverTime(Particle& particle)
 
 void Hachiko::ForceParticleModifier::UpdateDirectionOverTime(Particle& particle)
 {
-    //float3 direction = particle.GetCurrentDirection();
-    //direction = float3(Random::RandomFloat(), Random::RandomFloat(), Random::RandomFloat());
-    //direction.Normalize();
-    //particle.SetCurrentDirection(direction);
+    float3 direction = particle.GetCurrentDirection();
+    float particle_life = particle.GetCurrentLifeNormilized();
+    direction.x += x_force.GetValue(particle_life);
+    direction.y += y_force.GetValue(particle_life);
+    direction.z += z_force.GetValue(particle_life);
+    direction.Normalize();
+    particle.SetCurrentDirection(direction);
 }
 
 void Hachiko::ForceParticleModifier::UpdateRotationOverTime(Particle& particle) 
 {
     float rotation = particle.GetCurrentRotation();
-    rotation += rotation_delta.GetValue(1 - (particle.GetCurrentLife() / particle.GetLife()));
+    rotation += rotation_delta.GetValue(particle.GetCurrentLifeNormilized());
     particle.SetCurrentRotation(rotation);
 }

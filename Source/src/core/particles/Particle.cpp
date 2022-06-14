@@ -161,6 +161,11 @@ void Hachiko::Particle::Deactivate()
     active = false;
 }
 
+float Hachiko::Particle::GetCurrentLifeNormilized() const
+{
+    return 1 - (current_life / total_life);
+}
+
 bool Hachiko::Particle::HasTexture() const
 {
     return emitter->GetTexture() != nullptr;
