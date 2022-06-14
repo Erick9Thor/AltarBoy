@@ -42,14 +42,8 @@ UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
 {
     // On playbuild mouse position is taken from the Window, not ImGUI
 #ifdef PLAY_BUILD   
-    int height, width;
-    App->window->GetWindowSize(width, height);
-    
     float2 mouse_pos = Input::GetMousePixelPosition();
-    // We center the mouse:
-    mouse_pos = float2(mouse_pos.x - 0.5f, (mouse_pos.y - 0.5f) * -1); 
-     // We scale it from normalizedL
-    mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height);
+
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), 
         mouse_pos, false);
 #else
@@ -58,7 +52,7 @@ UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
     ImVec2 mouse_pos = ImGui::GetMousePos();
     float2 click_pos = w_scene->ImguiToScreenPos(
         float2(mouse_pos.x, mouse_pos.y));
-    
+
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), 
         click_pos, false);
 #endif
@@ -147,10 +141,6 @@ void Hachiko::ModuleUserInterface::HandleMouseAction(const float2& coords)
     App->window->GetWindowSize(width, height);
     
     float2 mouse_pos = Input::GetMousePixelPosition();
-    // We center the mouse:
-    mouse_pos = float2(mouse_pos.x - 0.5f, (mouse_pos.y - 0.5f) * -1);
-    // We scale it from normalized:
-    mouse_pos = float2(mouse_pos.x * width, mouse_pos.y * height);
     
     constexpr bool is_click = true;
     RecursiveCheckMousePos(App->scene_manager->GetActiveScene()->GetRoot(), mouse_pos, is_click);

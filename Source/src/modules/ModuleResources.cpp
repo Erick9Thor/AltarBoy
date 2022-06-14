@@ -38,9 +38,12 @@ bool ModuleResources::Init()
     {
         FileSystem::CreateDir(asset_path.second.c_str());
     }
+    FileSystem::CreateDir(ASSETS_FOLDER_GENERATED_PREFAB);
 
     AssetsLibraryCheck();
     //ClearUnusedResources(managed_uids);
+
+    HE_LOG("Finished aligning assets: %d assets imported, %d unused resources cleaned", imported_assets, cleaned_resources);
 
     std::function handleAddedFile = [&](Event& evt) {
         const auto& e = evt.GetEventData<FileAddedEventPayload>();
@@ -71,7 +74,7 @@ std::filesystem::path ModuleResources::GetLastResourceLoadedPath() const
     return last_resource_path.parent_path();
 }
 
-std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path)
+std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::path& path, bool force)
 {
     Resource::AssetType type = GetAssetTypeFromPath(path);
     
@@ -96,7 +99,7 @@ std::vector<UID> ModuleResources::ImportAssetFromAnyPath(const std::filesystem::
     }
 
     // Handle asset when it is in correct path
-    return ImportAsset(destination.string());
+    return ImportAsset(destination.string(), force);
 }
 
 Resource::AssetType ModuleResources::GetAssetTypeFromPath(const std::filesystem::path& path)
@@ -200,17 +203,15 @@ void Hachiko::ModuleResources::LoadAsset(const std::string& path)
         {
         case Resource::AssetType::MODEL:
             {
-                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
-                auto a = meta_node[PREFAB_ID].as<UID>();
-                importer->Load(meta_node[PREFAB_ID].as<UID>());
+                PrefabImporter importer;
+                importer.CreateObjectFromPrefab(meta_node[PREFAB_ID].as<UID>(), nullptr);
                 break;
             }
             
         case Resource::AssetType::PREFAB:
             {
-                Importer* importer = importer_manager.GetAssetImporter(Resource::AssetType::PREFAB);
-                // Prefab asset only contains a single prefab resource
-                importer->Load(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>());
+                PrefabImporter importer;
+                importer.CreateObjectFromPrefab(meta_node[RESOURCES][0][RESOURCE_ID].as<UID>(), nullptr);    
                 break;
             }
         case Resource::AssetType::MATERIAL:
@@ -273,7 +274,7 @@ void Hachiko::ModuleResources::GenerateLibrary(const PathNode& folder)
     }
 }
 
-std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path)
+std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_path, bool force)
 {
     Resource::AssetType type = GetAssetTypeFromPath(asset_path);
     
@@ -291,7 +292,7 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
         // If it doesnt have meta create asset from scratch, pass empty meta resources list to do so
         YAML::Node meta_node = CreateMeta();
         UpdateAssetHash(asset_path.c_str(), meta_node);
-        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+        return ImportAssetResources(asset_path, meta_node);
     }
 
     // If it has meta align on library and refresh if necessary
@@ -301,30 +302,18 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     uint64_t previous_asset_hash = meta_node[ASSET_HASH].IsDefined() ? meta_node[ASSET_HASH].as<uint64_t>() : 0;
     uint64_t asset_hash = FileSystem::HashFromPath(asset_path.c_str());
 
-    // Get the asset hash and reimport if it has changed
-    if (previous_asset_hash != asset_hash)
+    // Get the asset hash and reimport if it has changed or if we force it
+    if (force || previous_asset_hash != asset_hash)
     {
         UpdateAssetHash(asset_path.c_str(), meta_node);
-        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+        return ImportAssetResources(asset_path, meta_node);
     }
-
-    // If the asset serializes user defined data on meta (textures) we have extra checks for it)
-    if (type == Resource::AssetType::TEXTURE)
-    {
-        TextureImporter tex_importer;
-
-        if (tex_importer.OutdatedExtraHash(meta_node))
-        {
-            UpdateAssetHash(asset_path.c_str(), meta_node);
-            return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
-        }
-    }
-    
+        
     // Reimport if any lib file is missing
     bool valid_lib = ValidateAssetResources(meta_node);
     if (!valid_lib)
     {
-        return ImportAssetResources(std::filesystem::path(asset_path), meta_node);
+        return ImportAssetResources(asset_path, meta_node);
     }
     
     // If it exists and has a valid lib just collect the resource ids to return them
@@ -336,15 +325,32 @@ std::vector<UID> Hachiko::ModuleResources::ImportAsset(const std::string& asset_
     return resource_ids;
 }
 
-std::vector<UID> ModuleResources::ImportAssetResources(const std::filesystem::path& asset_path, YAML::Node& meta)
+std::vector<UID> ModuleResources::ImportAssetResources(const std::string& asset_path, YAML::Node& meta)
 {
-    // If meta exists, import resources from the asset resources list
-    // If the meta resources list is empty create all the resources it can from that asset
+    // Import asset with its corresponding importer
     Resource::AssetType asset_type = GetAssetTypeFromPath(asset_path);
-    // Returns all the generated resources uids
-    return importer_manager.ImportAsset(asset_path.string(), asset_type, meta);
-}
+    // Get and propagate outwards all the generated uids
+    std::vector<UID> imported_ids = importer_manager.ImportAsset(asset_path, asset_type, meta);
+    for (unsigned i = 0; i < imported_ids.size(); ++i)
+    {
+        // Refresh the meta file resource hashes
+        Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
+        std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(imported_ids[i]));
+        if (resource_type == Resource::Type::FONT)
+        {
+            library_path += FONT_EXTENSION;
+        }
+        meta[RESOURCES][i][RESOURCE_HASH] = FileSystem::HashFromPath(library_path.c_str());
+    }
+    std::string meta_path = asset_path + META_EXTENSION;
+    if (imported_ids.size() > 0)
+    {
+        FileSystem::Save(meta_path.c_str(), meta);
+    }
 
+    ++imported_assets;
+    return imported_ids;
+}
 
 bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) const
 {
@@ -353,10 +359,27 @@ bool Hachiko::ModuleResources::ValidateAssetResources(const YAML::Node& meta) co
     for (unsigned i = 0; i < meta[RESOURCES].size(); ++i)
     {
         UID resource_uid = meta[RESOURCES][i][RESOURCE_ID].as<UID>();
-        auto b = meta[RESOURCES][i][RESOURCE_TYPE].as<int>();
         Resource::Type resource_type = static_cast<Resource::Type>(meta[RESOURCES][i][RESOURCE_TYPE].as<int>());
         std::string library_path = StringUtils::Concat(preferences->GetLibraryPath(resource_type), std::to_string(resource_uid));
-        if (!FileSystem::Exists(library_path.c_str())) return false;
+        if (resource_type == Resource::Type::FONT)
+        {
+            library_path += FONT_EXTENSION;
+        }
+
+        // If it resource is missing it is invalid
+        if (!FileSystem::Exists(library_path.c_str()))
+        {
+            return false;
+        }
+
+        // If resource hash does not match meta it is invalid
+        uint64_t meta_resource_hash = meta[RESOURCES][i][RESOURCE_HASH].IsDefined() ? meta[RESOURCES][i][RESOURCE_HASH].as<uint64_t>() : 0;
+        uint64_t reosuce_hash = FileSystem::HashFromPath(library_path.c_str());
+
+        if (meta_resource_hash != reosuce_hash)
+        {
+            return false;
+        }
     }
     return true;
 }
@@ -381,6 +404,7 @@ void Hachiko::ModuleResources::ClearLibrary(const PathNode& folder, const std::s
         if (seen_uids.find(file_name) == seen_uids.end())
         {
             FileSystem::Delete(path_node.path.c_str());
+            ++cleaned_resources;
         }
     }
 }

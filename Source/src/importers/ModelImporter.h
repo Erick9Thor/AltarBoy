@@ -27,6 +27,6 @@ namespace Hachiko
 
     private:
         void ImportModel(const char* path, const aiScene* scene, YAML::Node& meta);
-        void ImportNode(GameObject* parent, const aiScene* scene, const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar);
+        void ImportNode(GameObject* parent, const aiScene* scene, const aiNode* assimp_node, YAML::Node& meta, bool combine_intermediate_nodes);
     };
 }

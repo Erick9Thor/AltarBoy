@@ -55,7 +55,15 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     meta.remove(RESOURCES);
     auto resource_ids = std::vector<UID>();
     auto resource_types = std::vector<Resource::Type>();
-    
+
+    bool has_bones = false;
+    for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
+    {
+        if (scene->mMeshes[mesh_index]->mNumBones > 0)
+        {
+            has_bones = true;
+        }
+    }
     for (unsigned mesh_index = 0; mesh_index < scene->mNumMeshes; ++mesh_index)
     {
         Hachiko::UID mesh_id;
@@ -118,7 +126,9 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
 
     // Import scene tree into gameobjects
     GameObject* model_root = new GameObject(scene->mRootNode->mName.C_Str());
-    ImportNode(model_root, scene, scene->mRootNode, meta, !scene->HasAnimations());
+
+    // If it has bones we dont want to combine intermediate nodes since they are used for animation
+    ImportNode(model_root, scene, scene->mRootNode, meta, !has_bones);
 
     // Import animations
     if (meta[ANIMATIONS].IsDefined())
@@ -127,7 +137,8 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     }
 
     // Create prefab
-    UID prefab_uid = prefab_importer.CreatePrefabAsset(filename.c_str(), model_root->children[0]);
+    UID prefab_uid = meta[PREFAB_ID].IsDefined() ? meta[PREFAB_ID].as<UID>() : UUID::GenerateUID();
+    prefab_importer.CreateGeneratedPrefab(filename.c_str(), prefab_uid, model_root->children[0]);
     App->scene_manager->RemoveGameObject(model_root);
     meta[PREFAB_ID] = prefab_uid;
 
@@ -140,7 +151,7 @@ void Hachiko::ModelImporter::ImportModel(const char* path, const aiScene* scene,
     // Remove extra resources if the amount of resources has decreased
 }
 
-void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool load_auxiliar)
+void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene ,const aiNode* assimp_node, YAML::Node& meta, bool combine_intermediate_nodes)
 {
     std::string node_name = assimp_node->mName.C_Str();
 
@@ -158,22 +169,19 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     {
         dummy_node = false;
 
-        if (load_auxiliar)
+        if (combine_intermediate_nodes && node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
         {
-            if (node_name.find(AUXILIAR_NODE) != std::string::npos && assimp_node->mNumChildren == 1)
-            {
-                assimp_node = assimp_node->mChildren[0];
-                assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
+            assimp_node = assimp_node->mChildren[0];
+            assimp_node->mTransformation.Decompose(aiScale, aiRotation, aiTranslation);
 
-                pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
-                rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
-                scale = float3(aiScale.x, aiScale.y, aiScale.z);
+            pos = float3(aiTranslation.x, aiTranslation.y, aiTranslation.z);
+            rot = Quat(aiRotation.x, aiRotation.y, aiRotation.z, aiRotation.w);
+            scale = float3(aiScale.x, aiScale.y, aiScale.z);
 
-                transform = transform * float4x4::FromTRS(pos, rot, scale);;
+            transform = transform * float4x4::FromTRS(pos, rot, scale);;
 
-                node_name = assimp_node->mName.C_Str();
-                dummy_node = true;
-            }
+            node_name = assimp_node->mName.C_Str();
+            dummy_node = true;
         }
     }
 
@@ -201,6 +209,6 @@ void Hachiko::ModelImporter::ImportNode(GameObject* parent, const aiScene* scene
     for (unsigned i = 0; i < assimp_node->mNumChildren; ++i)
     {
         auto child_node = assimp_node->mChildren[i];
-        ImportNode(go, scene, child_node, meta, load_auxiliar);
+        ImportNode(go, scene, child_node, meta, combine_intermediate_nodes);
     }    
 }

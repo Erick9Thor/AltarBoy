@@ -96,8 +96,8 @@ void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)
 
 void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_matrix) const
 {
-    auto transform = emitter->GetGameObject()->GetTransform();
-    float3 particle_size(current_size, current_size, 0.0f);
+    const auto transform = emitter->GetGameObject()->GetTransform();
+    const float3 particle_size(current_size, current_size, 0.0f);
     float3x3 particle_rotation_matrix = float3x3::identity;
 
     switch (emitter->GetParticlesProperties().orientation)
@@ -197,7 +197,7 @@ int Hachiko::Particle::GetTextureTotalTiles() const
     return emitter->GetTextureTotalTiles();
 }
 
-float Hachiko::Particle::GetLife()
+float Hachiko::Particle::GetLife() const
 {
     return total_life;
 }
@@ -287,12 +287,12 @@ unsigned Hachiko::Particle::GetCurrentAnimationFrame() const
     return current_animation_frame;
 }
 
-void Hachiko::Particle::SetCurrentAnimationFrame(unsigned current_animation_frame)
+void Hachiko::Particle::SetCurrentAnimationFrame(unsigned frame)
 {
-    this->current_animation_frame = current_animation_frame;
+    this->current_animation_frame = frame;
 }
 
-void Hachiko::Particle::SetEmitter(ComponentParticleSystem* emitter)
+void Hachiko::Particle::SetEmitter(ComponentParticleSystem* particle_emitter)
 {
-    this->emitter = emitter;
+    this->emitter = particle_emitter;
 }

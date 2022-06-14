@@ -12,7 +12,7 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
-#define EXTRA_HASH "extra_hash"
+#define RESOURCE_HASH "resource_hash"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
