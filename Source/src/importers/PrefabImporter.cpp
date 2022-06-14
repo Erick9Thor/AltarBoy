@@ -52,7 +52,7 @@ std::vector<Hachiko::GameObject*> Hachiko::PrefabImporter::CreateObjectsFromPref
 
     for (unsigned i = 0; i < n_instances; ++i)
     {
-        GameObject* prefab_root = scene->CreateNewGameObject(nullptr, prefab_resource->name.c_str());
+        GameObject* prefab_root = scene->CreateNewGameObject(parent, prefab_resource->name.c_str());
         prefab_resource->root_node = prefab_root;
 
         // Load generating new ids
@@ -61,12 +61,7 @@ std::vector<Hachiko::GameObject*> Hachiko::PrefabImporter::CreateObjectsFromPref
 
         // Wire Script References
         LoadScriptReferences(prefab_resource, prefab_root);
-
-        if (parent)
-        {
-            prefab_root->SetNewParent(parent);
-        }
-
+        
         prefab_instances.push_back(prefab_root);
     }
 

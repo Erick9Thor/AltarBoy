@@ -14,17 +14,17 @@ namespace Hachiko
 
             struct BulletStats
             {
-                float lifetime = 10.f;
-                float speed = 0.1f;
+                float lifetime = 3.f;
+                float speed = 50.f;
                 bool alive = false;
-                float3 direction = float3(0.f, 1.f, 1.f);
+                float3 direction = float3::zero;
+                float3 prev_position = float3::zero;
             };
         public:
             BulletController(GameObject* game_object);
-            ~BulletController() override = default;
+            ~BulletController() override;
             
             void OnAwake() override;
-            void OnStart() override;
             void OnUpdate() override;
 
             void SetDamage(int new_damage);
@@ -33,10 +33,10 @@ namespace Hachiko
             void ShootBullet(ComponentTransform* emiter_transform);
 
         private:
-            bool CheckCollisions();
+            bool CheckCollisions(unsigned bullet_idx);
         private:
             SERIALIZE_FIELD(float, _collider_radius);
-            unsigned _max_bullets = 5;
+            unsigned _max_bullets = 20;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
             
