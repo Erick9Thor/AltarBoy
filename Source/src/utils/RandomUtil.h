@@ -25,6 +25,8 @@ namespace Hachiko
         static float Random();
         //(-1.0; 1.0)
         static float RandomSigned();
+        //returns -1 or 1
+        static int RandomSignedInt();
         // (a; b) if a > b returns a
         static float RandomBetween(float a, float b);
         // (values.x; values.y) if x > y returns x
