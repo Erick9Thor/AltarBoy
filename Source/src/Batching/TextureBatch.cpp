@@ -46,6 +46,10 @@ void Hachiko::TextureBatch::AddMaterial(const ResourceMaterial* resource_materia
     {
         AddTexture(resource_material->normal);
     }
+    if (resource_material->HasMetalness())
+    {
+        AddTexture(resource_material->metalness);
+    }
     if (resource_material->HasEmissive())
     {
         AddTexture(resource_material->emissive);
