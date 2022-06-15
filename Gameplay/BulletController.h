@@ -22,6 +22,7 @@ namespace Hachiko
                 friend BulletController;
                 float charge_time = 1.f;
                 float lifetime = 3.f;
+                float size = 1.f;
                 float speed = 50.f;
                 float damage = 1.f;
                 float GetChargedPercent();
@@ -54,8 +55,8 @@ namespace Hachiko
             void SetBulletTrajectory(ComponentTransform* emitter_transform, unsigned bullet_idx);
 
             // Processes hit and returns hit distance to check what to damage
-            EnemyController* ProcessEnemies(GameObject* bullet, LineSegment& trajectory, float& closest_hit);
-            CrystalExplosion* ProcessObstacles(GameObject* bullet, LineSegment& trajectory, float& closest_hit);
+            EnemyController* ProcessEnemies(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
+            CrystalExplosion* ProcessObstacles(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
         private:
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};

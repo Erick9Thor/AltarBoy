@@ -69,6 +69,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		{
 			// Do not launch yet
 			stats.current_charge += Time::DeltaTime();
+			bullet->GetTransform()->SetLocalScale(float3(stats.GetChargedPercent()));
 			continue;
 		}
 
@@ -106,9 +107,9 @@ bool Hachiko::Scripting::BulletController::CheckCollisions(unsigned bullet_idx)
 	LineSegment trajectory = LineSegment(stats.prev_position, bullet->GetTransform()->GetGlobalPosition());
 
 	float closest_enemy_hit = FLT_MAX;
-	EnemyController* hit_enemy = ProcessEnemies(bullet, trajectory, closest_enemy_hit);
+	EnemyController* hit_enemy = ProcessEnemies(bullet, stats.size, trajectory, closest_enemy_hit);
 	float closest_obstacle_hit = FLT_MAX;
-	CrystalExplosion* hit_obstacle = ProcessObstacles(bullet, trajectory, closest_obstacle_hit);
+	CrystalExplosion* hit_obstacle = ProcessObstacles(bullet, stats.size, trajectory, closest_obstacle_hit);
 	
 	if (closest_enemy_hit < closest_obstacle_hit)
 	{
@@ -147,14 +148,17 @@ void Hachiko::Scripting::BulletController::SetBulletTrajectory(ComponentTransfor
 	GameObject* bullet = _bullets[bullet_idx];
 	BulletStats& stats = _bullet_stats[bullet_idx];
 	ComponentTransform* bullet_transform = bullet->GetTransform();
-	float3 emitter_position = emitter_transform->GetGlobalPosition();
+	const float bullet_offset = 1.25f;
+	float3 emitter_direction = emitter_transform->GetFront().Normalized();
+	float3 emitter_position = emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
+	
 	stats.prev_position = emitter_position;
 
-	stats.direction = emitter_transform->GetFront().Normalized(); stats.direction = emitter_transform->GetFront().Normalized();
+	stats.direction = emitter_direction;
 	bullet_transform->SetGlobalPosition(emitter_position);
 }
 
-Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::ProcessEnemies(GameObject* bullet, LineSegment& trajectory, float& closest_hit)
+Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::ProcessEnemies(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
 {
 	EnemyController* hit_target = nullptr;
 	
@@ -178,7 +182,7 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::Proce
 			continue;
 		}
 		float enemy_radius = agent->GetRadius();
-		Sphere hitbox = Sphere(enemy_position, enemy_radius);
+		Sphere hitbox = Sphere(enemy_position, enemy_radius + bullet_size);
 
 		if (enemy->active && trajectory.Intersects(hitbox))
 		{
@@ -197,7 +201,7 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::Proce
 	return hit_target;
 }
 
-Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::BulletController::ProcessObstacles(GameObject* bullet, LineSegment& trajectory, float& closest_hit)
+Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::BulletController::ProcessObstacles(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
 {
 	CrystalExplosion* hit_target = nullptr;
 
@@ -217,7 +221,7 @@ Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::BulletController::Proc
 		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
 		// Cylinder obstacles ignore z
 		float obstacle_radius = obstacle->GetComponent<ComponentObstacle>()->GetSize().x;
-		Sphere hitbox = Sphere(obstacle_position, obstacle_radius);
+		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
 		if (obstacle->active && trajectory.Intersects(hitbox))
 		{

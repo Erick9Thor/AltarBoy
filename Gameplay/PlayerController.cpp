@@ -348,6 +348,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		BulletController::BulletStats stats = BulletController::BulletStats();
 		stats.charge_time = 1.f;
 		stats.lifetime = 3.f;
+		stats.size = 1.f;
 		stats.speed = 50.f;
 		stats.damage = 1.f;
 		_attack_current_duration = stats.charge_time;
