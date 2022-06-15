@@ -90,15 +90,10 @@ void Hachiko::Scripting::BugAnimationManager::OnLoad()
 
 void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
 {
-	node["'_collider_radius@float'"] = _collider_radius;
 }
 
 void Hachiko::Scripting::BulletController::OnLoad()
 {
-	if (load_node["'_collider_radius@float'"].IsDefined())
-	{
-		_collider_radius = load_node["'_collider_radius@float'"].as<float>();
-	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const

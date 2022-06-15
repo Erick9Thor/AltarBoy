@@ -106,6 +106,7 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
+	unsigned* _current_bullet = nullptr;
 	
 
 	GameObject* enemies;

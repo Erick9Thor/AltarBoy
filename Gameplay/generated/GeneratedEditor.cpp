@@ -31,7 +31,6 @@ void Hachiko::Scripting::BugAnimationManager::OnEditor()
 
 void Hachiko::Scripting::BulletController::OnEditor()
 {
-	Editor::Show("Collider Radius", _collider_radius);
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnEditor()

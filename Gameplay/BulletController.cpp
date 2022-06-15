@@ -7,12 +7,13 @@
 #include "CrystalExplosion.h"
 
 #include <components/ComponentTransform.h>
+#include <components/ComponentAgent.h>
+#include <components/ComponentObstacle.h>
 
 #include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 	: Script(game_object, "BulletController")
-	, _collider_radius(2.0f)
 {
 }
 
@@ -60,26 +61,23 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		}
 		if(stats.lifetime <= 0)
 		{
-			//	Disable
-			stats.alive = false;
-			stats.lifetime = 0.f;
-			bullet->SetActive(false);
+			//	Disable if lifetime is ober
+			DeactivateBullet(i);
+			continue;
+		}
+		if (stats.current_charge < stats.charge_time)
+		{
+			// Do not launch yet
+			stats.current_charge += Time::DeltaTime();
 			continue;
 		}
 
 		// Move bullet forward
-		ComponentTransform* bullet_transform = bullet->GetTransform();
-		float3 current_position = bullet_transform->GetGlobalPosition();
-		stats.prev_position = current_position;	
-		float3 new_position = current_position + stats.direction * stats.speed * Time::DeltaTime();
-		bullet_transform->SetGlobalPosition(new_position);
+		UpdateBulletTrajectory(i);
 		// Check if it collides with an enemy
 		if (CheckCollisions(i))
 		{
-			// Disable
-			stats.alive = false;
-			stats.lifetime = 0.f;
-			bullet->SetActive(false);
+			DeactivateBullet(i);
 			continue;
 		}
 
@@ -88,59 +86,152 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 	}	
 }
 
+void Hachiko::Scripting::BulletController::UpdateBulletTrajectory(unsigned bullet_idx)
+{
+	GameObject* bullet = _bullets[bullet_idx];
+	BulletStats& stats = _bullet_stats[bullet_idx];
+	ComponentTransform* bullet_transform = bullet->GetTransform();
+	float3 current_position = bullet_transform->GetGlobalPosition();
+	stats.prev_position = current_position;
+	float3 new_position = current_position + stats.direction * stats.speed * Time::DeltaTime();
+	bullet_transform->SetGlobalPosition(new_position);
+}
+
 bool Hachiko::Scripting::BulletController::CheckCollisions(unsigned bullet_idx)
 {
-	// Enemy collisions
-	// TODO This should be a direct reference
-
-
-	GameObject* enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	if (!enemies)	return false;
+	// Process hit (if any) for closest enemy or obstacle
 
 	BulletStats& stats = _bullet_stats[bullet_idx];
 	GameObject* bullet = _bullets[bullet_idx];
 	LineSegment trajectory = LineSegment(stats.prev_position, bullet->GetTransform()->GetGlobalPosition());
 
-	std::vector<GameObject*> enemies_children = enemies->children;
-	ComponentTransform* transform = game_object->GetTransform();
-	math::float4x4 inv_matrix = transform->GetGlobalMatrix().Transposed();
-
-	for (int i = 0; i < enemies_children.size(); ++i)
+	float closest_enemy_hit = FLT_MAX;
+	EnemyController* hit_enemy = ProcessEnemies(bullet, trajectory, closest_enemy_hit);
+	float closest_obstacle_hit = FLT_MAX;
+	CrystalExplosion* hit_obstacle = ProcessObstacles(bullet, trajectory, closest_obstacle_hit);
+	
+	if (closest_enemy_hit < closest_obstacle_hit)
 	{
-		float3 enemy_position = enemies_children[i]->GetTransform()->GetGlobalPosition();
-		Sphere hitbox = Sphere(enemy_position, _collider_radius);
-		if (enemies_children[i]->active && trajectory.Intersects(hitbox))
+		if (hit_enemy)
 		{
-			
-			float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - transform->GetGlobalPosition();
-			EnemyController* enemy = enemies_children[i]->GetComponent<EnemyController>();
-			if (enemy)
-			{
-				enemy->RegisterHit(_damage, dir);
-			}
-			return true;
+			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
+			hit_enemy->RegisterHit(stats.damage, knockback_dir);
 		}
+		return true;
 	}
 
-	// Crystal collisions
-	// TODO This should be a direct reference
-	GameObject* crystals = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
-	if (!crystals)	return false;
-
-	std::vector<GameObject*> crystal_children = crystals->children;
-
-	for (int i = 0; i < crystal_children.size(); ++i)
+	if (hit_obstacle)
 	{
-		float3 crystal_position = crystal_children[i]->GetTransform()->GetGlobalPosition();
-		Sphere hitbox = Sphere(crystal_position, _collider_radius);
-		if (crystal_children[i]->active && trajectory.Intersects(hitbox))
-		{
-			crystal_children[i]->GetComponent<CrystalExplosion>()->RegisterHit(_damage);
-			return true;
-		}
+		hit_obstacle->RegisterHit(stats.damage);
+		return true;
 	}
 
 	return false;
+}
+
+void Hachiko::Scripting::BulletController::ActivateBullet(unsigned bullet_idx)
+{
+	_bullet_stats[bullet_idx].alive = true;
+	_bullet_stats[bullet_idx].current_charge = 0.f;
+	_bullets[bullet_idx]->SetActive(true);
+}
+
+void Hachiko::Scripting::BulletController::DeactivateBullet(unsigned bullet_idx)
+{
+	_bullet_stats[bullet_idx].alive = false;
+	_bullets[bullet_idx]->SetActive(false);
+}
+
+void Hachiko::Scripting::BulletController::SetBulletTrajectory(ComponentTransform* emitter_transform, unsigned bullet_idx)
+{
+	GameObject* bullet = _bullets[bullet_idx];
+	BulletStats& stats = _bullet_stats[bullet_idx];
+	ComponentTransform* bullet_transform = bullet->GetTransform();
+	float3 emitter_position = emitter_transform->GetGlobalPosition();
+	stats.prev_position = emitter_position;
+
+	stats.direction = emitter_transform->GetFront().Normalized(); stats.direction = emitter_transform->GetFront().Normalized();
+	bullet_transform->SetGlobalPosition(emitter_position);
+}
+
+Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::ProcessEnemies(GameObject* bullet, LineSegment& trajectory, float& closest_hit)
+{
+	EnemyController* hit_target = nullptr;
+	
+	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	if (!agent_container)
+	{
+		return nullptr;
+	}
+
+	float3 bullet_position = bullet->GetTransform()->GetGlobalPosition();
+
+
+	std::vector<GameObject*> enemies = agent_container->children;
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		GameObject* enemy = enemies[i];
+		float3 enemy_position = enemy->GetTransform()->GetGlobalPosition();
+		ComponentAgent* agent = enemy->GetComponent<ComponentAgent>();
+		if (!agent)
+		{
+			continue;
+		}
+		float enemy_radius = agent->GetRadius();
+		Sphere hitbox = Sphere(enemy_position, enemy_radius);
+
+		if (enemy->active && trajectory.Intersects(hitbox))
+		{
+
+			//float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
+			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
+			float hit_distance = bullet_position.Distance(enemy_position);
+			if (enemy_controller && hit_distance < closest_hit)
+			{
+				
+				closest_hit = hit_distance;
+				hit_target = enemy_controller;
+			}
+		}
+	}
+	return hit_target;
+}
+
+Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::BulletController::ProcessObstacles(GameObject* bullet, LineSegment& trajectory, float& closest_hit)
+{
+	CrystalExplosion* hit_target = nullptr;
+
+	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
+	if (!obstacle_container)
+	{
+		return nullptr;
+	}
+
+	float3 bullet_position = bullet->GetTransform()->GetGlobalPosition();
+
+
+	std::vector<GameObject*> obstacles = obstacle_container->children;
+	for (int i = 0; i < obstacles.size(); ++i)
+	{
+		GameObject* obstacle = obstacles[i];
+		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
+		// Cylinder obstacles ignore z
+		float obstacle_radius = obstacle->GetComponent<ComponentObstacle>()->GetSize().x;
+		Sphere hitbox = Sphere(obstacle_position, obstacle_radius);
+
+		if (obstacle->active && trajectory.Intersects(hitbox))
+		{
+			//float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
+			CrystalExplosion* obstacle_controller = obstacle->GetComponent<CrystalExplosion>();
+			float hit_distance = bullet_position.Distance(obstacle_position);
+			if (obstacle_controller && hit_distance < closest_hit)
+			{
+				closest_hit = hit_distance;
+				hit_target = obstacle_controller;
+			}
+		}
+	}
+	return hit_target;
 }
 
 void Hachiko::Scripting::BulletController::SetDamage(int new_damage)
@@ -153,13 +244,9 @@ void Hachiko::Scripting::BulletController::SetForward(float3 new_forward)
 	_direction = new_forward;
 }
 
-void Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* emiter_transform)
+unsigned* Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
-	//bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
-	//bullet->GetComponent<BulletController>()->SetForward(forward);
-	//bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
-	//_emitter_transform
-
+	// We use a pointer to represent when there is no bullet shoot
 	for (unsigned i = 0; i < _bullets.size(); i++)
 	{
 		BulletStats& stats = _bullet_stats[i];
@@ -168,18 +255,29 @@ void Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* emite
 			// Bullet already being used
 			continue;
 		}
-		// Reset stats and define shoot moment dependant parameters, improve this stat system so player can set them up
-		stats = BulletStats();
-		GameObject* bullet = _bullets[i];
-		ComponentTransform* bullet_transform = bullet->GetTransform();
-		stats.alive = true;
-		float3 emitter_position = emiter_transform->GetGlobalPosition();
-		stats.prev_position = emitter_position;
-		
-		stats.direction = emiter_transform->GetFront().Normalized(); stats.direction = emiter_transform->GetFront().Normalized();
-		bullet_transform->SetGlobalPosition(emitter_position);
-		bullet->SetActive(true);
+		// Update stats with the new bullet stats
+		stats = new_stats;
+		SetBulletTrajectory(emitter_transform, i);
+
+		ActivateBullet(i);
 		// After a bullet is generated exit
-		return;
+		return new unsigned(i);
 	}
+	return nullptr;
+}
+
+void Hachiko::Scripting::BulletController::StopBullet(unsigned bullet_index)
+{
+	DeactivateBullet(bullet_index);
+}
+
+const Hachiko::Scripting::BulletController::BulletStats& Hachiko::Scripting::BulletController::GetBulletStats(unsigned bullet_idx) const
+{
+	// TODO: insert return statement here
+	return _bullet_stats[bullet_idx];
+}
+
+float Hachiko::Scripting::BulletController::BulletStats::GetChargedPercent()
+{
+	return current_charge /charge_time;
 }

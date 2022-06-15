@@ -110,6 +110,18 @@ void Hachiko::ComponentAgent::SetTargetPosition(const float3& target_pos)
     }
 }
 
+void Hachiko::ComponentAgent::SetRadius(float new_radius)
+{
+    radius = new_radius;
+
+    dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    if (!agent)
+    {
+        return;
+    }
+    agent->params.maxSpeed = radius;
+}
+
 void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
 {
     max_speed = new_max_speed;
@@ -165,7 +177,7 @@ void Hachiko::ComponentAgent::AddToCrowd()
     // PARAMS INIT
     dtCrowdAgentParams ap;
     memset(&ap, 0, sizeof(ap));
-    ap.radius = navMesh->build_params.agent_radius;
+    ap.radius = radius;
     ap.height = navMesh->build_params.agent_height;
     ap.maxAcceleration = max_acceleration;
     ap.maxSpeed = max_speed;
@@ -263,6 +275,10 @@ void Hachiko::ComponentAgent::DrawGui()
         if (ImGui::Button("Feed position"))
         {
             SetTargetPosition(target_position);
+        }
+        if (ImGui::DragFloat("Radius", &radius, 0.1f, 100.0f))
+        {
+            SetRadius(radius);
         }
 
         if (ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f))

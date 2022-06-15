@@ -240,6 +240,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
+	_attack_indicator->SetActive(true);
 	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	if (enemies == nullptr && dynamic_envi == nullptr) {
@@ -337,12 +338,26 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	_state = PlayerState::RANGED_ATTACKING;
+	
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 
-	_bullet_emitter->GetComponent<BulletController>()->ShootBullet(_player_transform);
-
+	BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+	if (bullet_controller)
+	{
+		BulletController::BulletStats stats = BulletController::BulletStats();
+		stats.charge_time = 1.f;
+		stats.lifetime = 3.f;
+		stats.speed = 50.f;
+		stats.damage = 1.f;
+		_attack_current_duration = stats.charge_time;
+		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
+		if (_current_bullet)
+		{
+			_state = PlayerState::RANGED_ATTACKING;
+		}
+	}
+	
 	_attack_current_cd = _combat_stats->_attack_cd;
 }
 
@@ -493,37 +508,26 @@ void Hachiko::Scripting::PlayerController::WalkingOrientationController()
 
 void Hachiko::Scripting::PlayerController::AttackController()
 {
+	if (_attack_current_cd > 0.0f)
+	{
+		_attack_current_cd -= Time::DeltaTime();
+	}
+	
 	if (!IsAttacking())
 	{
 		return;
 	}
 
-	if (_attack_current_duration > 0.0f)
+	_attack_current_duration -= Time::DeltaTime();
+	// Finish attack action
+	if (_attack_current_duration <= 0.0f)
 	{
-		if (_attack_indicator)
-		{
-			_attack_indicator->SetActive(true);
-		}
-
-		_attack_current_duration -= Time::DeltaTime();
-	}
-	else
-	{
-		if (_attack_indicator)
+		if (_state == PlayerState::MELEE_ATTACKING)
 		{
 			_attack_indicator->SetActive(false);
 		}
-		// Set state to idle, it will be overriden if there is a movement:
+		// Melee attack
 		_state = PlayerState::IDLE;
-	}
-
-	if (_attack_current_cd > 0.0f)
-	{
-		if (_god_mode)
-		{
-			return;
-		}
-		_attack_current_cd -= Time::DeltaTime();
 	}
 }
 

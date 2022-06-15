@@ -37,6 +37,7 @@ namespace Hachiko
         
         void SetSize(const float3& new_size); // Changes the obstacle size
         // Reminder: Cylinder will ignore z value
+        float3 GetSize() const{ return size; }
 
         void SetType(ObstacleType new_type); // Changes the obstacle type
 

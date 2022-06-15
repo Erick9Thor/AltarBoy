@@ -108,22 +108,11 @@ void Hachiko::Scripting::BugAnimationManager::SerializeTo(std::unordered_map<std
 void Hachiko::Scripting::BulletController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
-
-	if(serialized_fields.find("_collider_radius") != serialized_fields.end())
-	{
-		const SerializedField& _collider_radius_sf = serialized_fields["_collider_radius"];
-		if (_collider_radius_sf.type_name == "float")
-		{
-			_collider_radius = std::any_cast<float>(_collider_radius_sf.copy);
-		}
-	}
 }
 
 void Hachiko::Scripting::BulletController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
-
-	serialized_fields["_collider_radius"] = SerializedField(std::string("_collider_radius"), std::make_any<float>(_collider_radius), std::string("float"));
 }
 
 void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
