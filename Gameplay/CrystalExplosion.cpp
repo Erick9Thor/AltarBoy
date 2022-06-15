@@ -43,10 +43,11 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	ResourceAnimation* ca = _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation();
-	if (!_stats->IsAlive() && ca)
+	ResourceAnimation* component_animation = _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation();
+
+	if (!_stats->IsAlive() && component_animation)
 	{
-		if (ca->GetCurrentState() == ResourceAnimation::State::STOPPED) 
+		if (component_animation->GetCurrentState() == ResourceAnimation::State::STOPPED) 
 		{
 			SceneManagement::Destroy(game_object);
 			return;
@@ -124,7 +125,7 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 		ExplodeCrystal();
 	}
 
-	if (_stats->_current_hp <= 0)
+	if (!_stats->IsAlive() && !isDestroyed)
 	{
 		DestroyCrystal();
 	}
@@ -132,7 +133,6 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 {
-
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
 	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
@@ -143,6 +143,7 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
 	if (exploding_animation)
 	{
+		isDestroyed = true;
 		exploding_animation->StartAnimating();
 	}
 }
