@@ -1161,6 +1161,8 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 	{
 		node["'_ui_damage@GameObject*'"] = 0;
 	}
+
+	node["'_dash_type@int'"] = _dash_type;
 }
 
 void Hachiko::Scripting::PlayerController::OnLoad()
@@ -1233,6 +1235,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_ui_damage@GameObject*'"].IsDefined())
 	{
 		_ui_damage = SceneManagement::FindInCurrentScene(load_node["'_ui_damage@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_dash_type@int'"].IsDefined())
+	{
+		_dash_type = load_node["'_dash_type@int'"].as<int>();
 	}
 }
 

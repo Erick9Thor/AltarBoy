@@ -1150,6 +1150,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_dash_type") != serialized_fields.end())
+	{
+		const SerializedField& _dash_type_sf = serialized_fields["_dash_type"];
+		if (_dash_type_sf.type_name == "int")
+		{
+			_dash_type = std::any_cast<int>(_dash_type_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_state") != serialized_fields.end())
 	{
 		const SerializedField& _state_sf = serialized_fields["_state"];
@@ -1191,6 +1200,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_camera"] = SerializedField(std::string("_camera"), std::make_any<GameObject*>(_camera), std::string("GameObject*"));
 
 	serialized_fields["_ui_damage"] = SerializedField(std::string("_ui_damage"), std::make_any<GameObject*>(_ui_damage), std::string("GameObject*"));
+
+	serialized_fields["_dash_type"] = SerializedField(std::string("_dash_type"), std::make_any<int>(_dash_type), std::string("int"));
 
 	serialized_fields["_state"] = SerializedField(std::string("_state"), std::make_any<PlayerState>(_state), std::string("PlayerState"));
 }
