@@ -568,11 +568,33 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 void Hachiko::Scripting::DoorController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+
+	if(serialized_fields.find("_door_open") != serialized_fields.end())
+	{
+		const SerializedField& _door_open_sf = serialized_fields["_door_open"];
+		if (_door_open_sf.type_name == "GameObject*")
+		{
+			_door_open = std::any_cast<GameObject*>(_door_open_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_door_closed") != serialized_fields.end())
+	{
+		const SerializedField& _door_closed_sf = serialized_fields["_door_closed"];
+		if (_door_closed_sf.type_name == "GameObject*")
+		{
+			_door_closed = std::any_cast<GameObject*>(_door_closed_sf.copy);
+		}
+	}
 }
 
 void Hachiko::Scripting::DoorController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
+
+	serialized_fields["_door_open"] = SerializedField(std::string("_door_open"), std::make_any<GameObject*>(_door_open), std::string("GameObject*"));
+
+	serialized_fields["_door_closed"] = SerializedField(std::string("_door_closed"), std::make_any<GameObject*>(_door_closed), std::string("GameObject*"));
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

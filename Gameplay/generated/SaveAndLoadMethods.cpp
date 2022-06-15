@@ -702,10 +702,36 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 
 void Hachiko::Scripting::DoorController::OnSave(YAML::Node& node) const
 {
+	if (_door_open != nullptr)
+	{
+		node["'_door_open@GameObject*'"] = _door_open->GetID();
+	}
+	else
+	{
+		node["'_door_open@GameObject*'"] = 0;
+	}
+
+	if (_door_closed != nullptr)
+	{
+		node["'_door_closed@GameObject*'"] = _door_closed->GetID();
+	}
+	else
+	{
+		node["'_door_closed@GameObject*'"] = 0;
+	}
 }
 
 void Hachiko::Scripting::DoorController::OnLoad()
 {
+	if (load_node["'_door_open@GameObject*'"].IsDefined())
+	{
+		_door_open = SceneManagement::FindInCurrentScene(load_node["'_door_open@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_door_closed@GameObject*'"].IsDefined())
+	{
+		_door_closed = SceneManagement::FindInCurrentScene(load_node["'_door_closed@GameObject*'"].as<unsigned long long>());
+	}
 }
 
 void Hachiko::Scripting::DynamicCamera::OnSave(YAML::Node& node) const

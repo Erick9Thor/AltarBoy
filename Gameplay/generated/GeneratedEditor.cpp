@@ -83,6 +83,8 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 
 void Hachiko::Scripting::DoorController::OnEditor()
 {
+	Editor::Show("Door Open", _door_open);
+	Editor::Show("Door Closed", _door_closed);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()
