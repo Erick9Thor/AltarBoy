@@ -318,6 +318,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="BugAnimationManager.h" />
     <ClInclude Include="CrystalExplosion.h" />
     <ClInclude Include="DebugManager.h" />
+    <ClInclude Include="DoorController.h" />
     <ClInclude Include="DynamicCamera.h" />
     <ClInclude Include="EnemyController.h" />
     <ClInclude Include="FancyLights.h" />
@@ -726,6 +727,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="BugAnimationManager.cpp" />
     <ClCompile Include="CrystalExplosion.cpp" />
     <ClCompile Include="DebugManager.cpp" />
+    <ClCompile Include="DoorController.cpp" />
     <ClCompile Include="DynamicCamera.cpp" />
     <ClCompile Include="EnemyController.cpp" />
     <ClCompile Include="FancyLights.cpp" />

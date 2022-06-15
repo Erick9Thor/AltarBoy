@@ -1,0 +1,622 @@
+prefab_name: Door(closed)
+name: Door(closed)
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [8.50709534, 3.74139166, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1.0000211, 1.00001013, 1.00000381]
+child:
+  - name: Cone926
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.111289978, -3.23586655, 4.52231693]
+        rotation: [-4.37113883e-08, 1, -4.37113883e-08, -4.37113883e-08]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 13906478852041188326
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone927
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.624782562, -5.66811752, 1.45664978]
+        rotation: [0.0921807811, 0.976951122, 0.191682398, 0.0180862546]
+        scale: [0.661037743, 0.661036909, 0.661037743]
+      - type: 2
+        enabled: true
+        mesh_id: 7122618531641682422
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone928
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.111289978, 4.42178345, 2.89655972]
+        rotation: [1, 5.59486466e-08, 4.37113883e-08, -4.37113883e-08]
+        scale: [0.799009025, 0.799009025, 0.799009025]
+      - type: 2
+        enabled: true
+        mesh_id: 8862223117954776733
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone929
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.958759308, 3.91037369, 1.17925644]
+        rotation: [0.948809564, 0.305641413, 0.079617627, 0.00223509129]
+        scale: [0.582180142, 0.582181752, 0.58218205]
+      - type: 2
+        enabled: true
+        mesh_id: 4730884288463815097
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone930
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.661048889, 5.63619995, -0.491199493]
+        rotation: [0.9462502, -0.203572139, -0.0528614447, 0.245712474]
+        scale: [0.431789041, 0.431788862, 0.431788862]
+      - type: 2
+        enabled: true
+        mesh_id: 10778617458930936918
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone931
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.99332428, -5.14193344, -0.491199493]
+        rotation: [-0.297353268, 0.921092927, 0.239179686, -0.0772136152]
+        scale: [0.431787997, 0.431789011, 0.431788981]
+      - type: 2
+        enabled: true
+        mesh_id: 16662327815918182481
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone932
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.356666565, -5.29684067, -0.9049263]
+        rotation: [-0.186376497, 0.949786782, 0.246630549, -0.0483963266]
+        scale: [0.250222087, 0.250222027, 0.250222057]
+      - type: 2
+        enabled: true
+        mesh_id: 12783433190119847602
+        navigable: false
+        visible: true
+        material_id: 11668224862314505665
+  - name: Cone933_$AssimpFbx$_Translation
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.422111511, 0.419158936, -0.755435944]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Cone933_$AssimpFbx$_Rotation
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-4.11634069e-08, 0.998392224, -4.11634069e-08, 0.0566845834]
+            scale: [1.00000191, 1, 1.00000191]
+        child:
+          - name: Cone933_$AssimpFbx$_Scaling
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1.25154996, 1.25154996, 1.25154996]
+            child:
+              - name: Cone933_$AssimpFbx$_GeometricTranslation
+                enabled: true
+                component:
+                  - type: 1
+                    enabled: true
+                    position: [0.0968194529, 0, -1.64975607]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - name: Cone933
+                    enabled: true
+                    component:
+                      - type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                      - type: 2
+                        enabled: true
+                        mesh_id: 12884146269848348795
+                        navigable: false
+                        visible: true
+                        material_id: 11668224862314505665
+  - name: Cone934_$AssimpFbx$_Translation
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.422111511, 0.419158936, -0.755435944]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Cone934_$AssimpFbx$_Rotation
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0.00984321162, 0.983224273, 0.173369184, 0.0558233671]
+            scale: [1, 0.999999881, 1.00000048]
+        child:
+          - name: Cone934_$AssimpFbx$_Scaling
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1.25154996, 1.25154996, 1.25154996]
+            child:
+              - name: Cone934_$AssimpFbx$_GeometricTranslation
+                enabled: true
+                component:
+                  - type: 1
+                    enabled: true
+                    position: [0.0968194529, 0, -1.64975607]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - name: Cone934
+                    enabled: true
+                    component:
+                      - type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                      - type: 2
+                        enabled: true
+                        mesh_id: 1289196701241275503
+                        navigable: false
+                        visible: true
+                        material_id: 11668224862314505665
+  - name: Cone935_$AssimpFbx$_Translation
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.422111511, 0.419158936, -0.755435944]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Cone935_$AssimpFbx$_Rotation
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.00984334946, 0.983224273, -0.173369065, 0.0558234081]
+            scale: [0.999999702, 1, 0.999999821]
+        child:
+          - name: Cone935_$AssimpFbx$_Scaling
+            enabled: true
+            component:
+              - type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1.25154996, 1.25154996, 1.25154996]
+            child:
+              - name: Cone935_$AssimpFbx$_GeometricTranslation
+                enabled: true
+                component:
+                  - type: 1
+                    enabled: true
+                    position: [0.0968194529, 0, -1.64975607]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+                child:
+                  - name: Cone935
+                    enabled: true
+                    component:
+                      - type: 1
+                        enabled: true
+                        position: [0, 0, 0]
+                        rotation: [0, 0, 0, 1]
+                        scale: [1, 1, 1]
+                      - type: 2
+                        enabled: true
+                        mesh_id: 14529108883657396585
+                        navigable: false
+                        visible: true
+                        material_id: 11668224862314505665
+  - name: Cylinder633
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.111289978, -3.51003647, -3.65037155]
+        rotation: [-0.707106829, 0, 0, 0.707106709]
+        scale: [1, 0.999999464, 0.999999464]
+      - type: 2
+        enabled: true
+        mesh_id: 10049109644484792385
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder634
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -2.93490219, -3.34710312]
+        rotation: [-0.386458874, 0, 0, 0.922306657]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 486991364649832313
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder635
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -4.56295395, 1.27015305]
+        rotation: [-0.829406202, 0, 0, 0.558645964]
+        scale: [1, 1.00000036, 1.00000036]
+      - type: 2
+        enabled: true
+        mesh_id: 6823884284186140039
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder636
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -4.1529808, 2.70719624]
+        rotation: [0.881562829, 0, 0, -0.47206676]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 5887913532830579198
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder637
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 3.72915649, -3.36153793]
+        rotation: [0.395697534, 0.0294664074, -0.0757821277, 0.914774418]
+        scale: [1, 0.999999881, 0.999999702]
+      - type: 2
+        enabled: true
+        mesh_id: 13961126316914744371
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder638
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 5.51443481, 0.929637909]
+        rotation: [0.798080206, 0, 0, 0.602551222]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 11629415419552509254
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder639
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -0.935756683, -3.56412125]
+        rotation: [-0.161037281, 0, 0, 0.986948311]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 10495999234880132799
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder640
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 1.06845093, -3.56955338]
+        rotation: [0.0871557891, 0, 0, 0.99619472]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 9419667955068030463
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder641
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 3.77645874, -3.32027054]
+        rotation: [-0.149547249, 0, 0, 0.98875457]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 9006371583864854819
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder642
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -4.41604233, 2.10208511]
+        rotation: [-0.22267656, 0, 0, 0.974892378]
+        scale: [1, 0.999999642, 0.999999642]
+      - type: 2
+        enabled: true
+        mesh_id: 15305833813080598118
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder643
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, -4.55544662, 0.485767365]
+        rotation: [-0.0400579199, 0, 0, 0.999197364]
+        scale: [1, 0.999999404, 0.999999404]
+      - type: 2
+        enabled: true
+        mesh_id: 3783591359073200693
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder644
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 5.65866089, 0.184337616]
+        rotation: [0.134605452, 0, 0, 0.990899265]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 9920125446944580525
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder645
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.10741806, -3.15695572, -3.67155075]
+        rotation: [0.349285185, 0, 0, 0.937016487]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 9873065584926481712
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Cylinder646
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.107414246, 4.21243286, -3.65386581]
+        rotation: [-0.351888925, 0, 0, 0.936041772]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 9467139166602584060
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane234
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131313324, -1.1206398, -0.80727005]
+        rotation: [0, 0.70710665, 0, 0.707106888]
+        scale: [0.999999464, 1, 0.999999464]
+      - type: 2
+        enabled: true
+        mesh_id: 4710841031395302689
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane235
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131309509, -1.04604721, 0.197078705]
+        rotation: [-0.159753993, 0.688824177, -0.159754097, 0.688824058]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 11495074302681706064
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane236
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.175685883, -0.419956207, -3.42005539]
+        rotation: [0.261894733, 0.656818926, 0.261894733, 0.656818986]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 175774558370866860
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane237
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.0442733765, 0.467926025, -1.99940109]
+        rotation: [0.213141978, 0.674218476, 0.213141918, 0.674218416]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 4226107133178188502
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane238
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131309509, 1.87631226, -0.805393219]
+        rotation: [-0.10533873, 0.699216425, -0.10533873, 0.699216604]
+        scale: [1, 1, 0.999999583]
+      - type: 2
+        enabled: true
+        mesh_id: 10127186359319152111
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane239
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131309509, 3.19210815, -2.3759346]
+        rotation: [0.151873112, 0.690604448, 0.151873112, 0.690604508]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 10007945742831508664
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane240
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131309509, -3.93484116, 0.389293671]
+        rotation: [0.394279212, 0.586979151, 0.394279122, 0.586978257]
+        scale: [1, 0.99999994, 1.0000006]
+      - type: 2
+        enabled: true
+        mesh_id: 14577232745724936581
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane241
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.0465927124, -3.23464584, -2.41435623]
+        rotation: [-0.147738159, 0.691500783, -0.147738233, 0.691500902]
+        scale: [0.999999642, 1, 0.999999464]
+      - type: 2
+        enabled: true
+        mesh_id: 14276334797073604491
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane242
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131313324, -1.74087906, -3.05129623]
+        rotation: [-0.255926937, 0.659167349, -0.255926847, 0.659167111]
+        scale: [1, 0.99999994, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 3434212641804830707
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Plane243
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.131313324, 3.81826401, -0.345783234]
+        rotation: [0.207352072, 0.676021516, 0.207352072, 0.676021576]
+        scale: [0.99999994, 0.999999881, 1.00000012]
+      - type: 2
+        enabled: true
+        mesh_id: 8307401949108115934
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Sphere232
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.227027893, 0.420013428, -0.560344696]
+        rotation: [-0.707106829, 0, 0, 0.707106709]
+        scale: [1, 0.999999464, 0.999999464]
+      - type: 2
+        enabled: true
+        mesh_id: 2312031126143983125
+        navigable: false
+        visible: true
+        material_id: 17821388502809448166
+  - name: Sphere233
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0.227027893, 0.420013428, -0.560344696]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 2
+        enabled: true
+        mesh_id: 7514730637074470907
+        navigable: false
+        visible: true
+        material_id: 11285242730856482115

@@ -7,6 +7,7 @@
 #include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DebugManager.h"
+#include "DoorController.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
@@ -562,6 +563,16 @@ void Hachiko::Scripting::DebugManager::SerializeTo(std::unordered_map<std::strin
 	serialized_fields["_tp_pos3"] = SerializedField(std::string("_tp_pos3"), std::make_any<GameObject*>(_tp_pos3), std::string("GameObject*"));
 
 	serialized_fields["_performance_menu"] = SerializedField(std::string("_performance_menu"), std::make_any<GameObject*>(_performance_menu), std::string("GameObject*"));
+}
+
+void Hachiko::Scripting::DoorController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
+}
+
+void Hachiko::Scripting::DoorController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+{
+	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 }
 
 void Hachiko::Scripting::DynamicCamera::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)

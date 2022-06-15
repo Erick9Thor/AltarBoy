@@ -4,6 +4,7 @@
 #include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DebugManager.h"
+#include "DoorController.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
@@ -78,6 +79,10 @@ void Hachiko::Scripting::DebugManager::OnEditor()
 	Editor::Show("Tp Pos 2", _tp_pos2);
 	Editor::Show("Tp Pos 3", _tp_pos3);
 	Editor::Show("Performance Menu", _performance_menu);
+}
+
+void Hachiko::Scripting::DoorController::OnEditor()
+{
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

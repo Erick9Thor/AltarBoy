@@ -6,6 +6,7 @@
 #include "BulletController.h"
 #include "CrystalExplosion.h"
 #include "DebugManager.h"
+#include "DoorController.h"
 #include "DynamicCamera.h"
 #include "EnemyController.h"
 #include "FancyLights.h"
@@ -697,6 +698,14 @@ void Hachiko::Scripting::DebugManager::OnLoad()
 	{
 		_performance_menu = SceneManagement::FindInCurrentScene(load_node["'_performance_menu@GameObject*'"].as<unsigned long long>());
 	}
+}
+
+void Hachiko::Scripting::DoorController::OnSave(YAML::Node& node) const
+{
+}
+
+void Hachiko::Scripting::DoorController::OnLoad()
+{
 }
 
 void Hachiko::Scripting::DynamicCamera::OnSave(YAML::Node& node) const
