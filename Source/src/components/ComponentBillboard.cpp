@@ -309,6 +309,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[COLOR_CYCLES] = color_cycles;
     node[COLOR_LOOP] = color_loop;
     node[COLOR_GRADIENT] = *gradient;
+    node[BILLBOARD_RENDER_MODE] = static_cast<int>(render_mode);
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -377,6 +378,10 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
                 ImColor(mark.color[0], mark.color[1], mark.color[2], mark.color[3]));
         }
     }
+
+    render_mode = node[BILLBOARD_RENDER_MODE].IsDefined() ? 
+        static_cast<BillboardRenderMode>(node[BILLBOARD_RENDER_MODE].as<int>()) :
+        render_mode;
 }
 
 void Hachiko::ComponentBillboard::AddTexture()
