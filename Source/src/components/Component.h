@@ -98,11 +98,7 @@ namespace Hachiko
             active = false;
         }
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
+        [[nodiscard]] bool IsActive() const;
         [[nodiscard]] const GameObject* GetGameObject() const
         {
             return game_object;
