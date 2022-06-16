@@ -337,44 +337,11 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 void Hachiko::Scripting::BulletController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
-
-	if(serialized_fields.find("_move_speed") != serialized_fields.end())
-	{
-		const SerializedField& _move_speed_sf = serialized_fields["_move_speed"];
-		if (_move_speed_sf.type_name == "float")
-		{
-			_move_speed = std::any_cast<float>(_move_speed_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_lifetime") != serialized_fields.end())
-	{
-		const SerializedField& _lifetime_sf = serialized_fields["_lifetime"];
-		if (_lifetime_sf.type_name == "float")
-		{
-			_lifetime = std::any_cast<float>(_lifetime_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_collider_radius") != serialized_fields.end())
-	{
-		const SerializedField& _collider_radius_sf = serialized_fields["_collider_radius"];
-		if (_collider_radius_sf.type_name == "float")
-		{
-			_collider_radius = std::any_cast<float>(_collider_radius_sf.copy);
-		}
-	}
 }
 
 void Hachiko::Scripting::BulletController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
-
-	serialized_fields["_move_speed"] = SerializedField(std::string("_move_speed"), std::make_any<float>(_move_speed), std::string("float"));
-
-	serialized_fields["_lifetime"] = SerializedField(std::string("_lifetime"), std::make_any<float>(_lifetime), std::string("float"));
-
-	serialized_fields["_collider_radius"] = SerializedField(std::string("_collider_radius"), std::make_any<float>(_collider_radius), std::string("float"));
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -531,6 +498,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_bullet_emitter") != serialized_fields.end())
+	{
+		const SerializedField& _bullet_emitter_sf = serialized_fields["_bullet_emitter"];
+		if (_bullet_emitter_sf.type_name == "GameObject*")
+		{
+			_bullet_emitter = std::any_cast<GameObject*>(_bullet_emitter_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_goal") != serialized_fields.end())
 	{
 		const SerializedField& _goal_sf = serialized_fields["_goal"];
@@ -663,6 +639,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_attack_indicator"] = SerializedField(std::string("_attack_indicator"), std::make_any<GameObject*>(_attack_indicator), std::string("GameObject*"));
+
+	serialized_fields["_bullet_emitter"] = SerializedField(std::string("_bullet_emitter"), std::make_any<GameObject*>(_bullet_emitter), std::string("GameObject*"));
 
 	serialized_fields["_goal"] = SerializedField(std::string("_goal"), std::make_any<GameObject*>(_goal), std::string("GameObject*"));
 

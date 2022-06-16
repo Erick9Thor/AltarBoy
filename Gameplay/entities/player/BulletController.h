@@ -27,9 +27,11 @@ namespace Hachiko
                 float GetChargedPercent();
             private:
                 bool alive = false;
+                float elapsed_lifetime = 0.f;
                 float current_charge = 0.f;
                 float3 direction = float3::zero;
                 float3 prev_position = float3::zero;
+                ComponentTransform* emitter_transform = nullptr;
             };
             
         public:
@@ -42,7 +44,8 @@ namespace Hachiko
             void SetDamage(int new_damage);
             void SetForward(float3 new_forward);
 
-            unsigned* ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats);
+            // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
+            int ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats);
             void StopBullet(unsigned bullet_index);
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 
@@ -51,7 +54,7 @@ namespace Hachiko
             bool CheckCollisions(unsigned bullet_idx);
             void ActivateBullet(unsigned bullet_idx);
             void DeactivateBullet(unsigned bullet_idx);
-            void SetBulletTrajectory(ComponentTransform* emitter_transform, unsigned bullet_idx);
+            void SetBulletTrajectory(unsigned bullet_idx);
 
             // Processes hit and returns hit distance to check what to damage
             EnemyController* ProcessEnemies(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);

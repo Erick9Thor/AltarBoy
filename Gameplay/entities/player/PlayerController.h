@@ -45,6 +45,7 @@ private:
 	void Dash();
 	void MeleeAttack();
 	void RangedAttack();
+	void CancelAttack();
 
 	// Player simulation
 	void MovementController();
@@ -106,7 +107,7 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-	unsigned* _current_bullet = nullptr;
+	int _current_bullet = -1;
 	
 
 	GameObject* enemies;

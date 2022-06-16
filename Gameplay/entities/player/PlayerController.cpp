@@ -177,6 +177,12 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		}
 	}
 
+	// Range attack charge cancel
+	if (_state == PlayerState::RANGED_ATTACKING && Input::IsMouseButtonUp(Input::MouseButton::RIGHT))
+	{
+		CancelAttack();
+	}
+
 	if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
 		_player_position += math::float3::unitY * 0.5f;
@@ -352,13 +358,24 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		stats.damage = 1.f;
 		_attack_current_duration = stats.charge_time;
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
-		if (_current_bullet)
+		if (_current_bullet >= 0)
 		{
 			_state = PlayerState::RANGED_ATTACKING;
 		}
 	}
 	
 	_attack_current_cd = _combat_stats->_attack_cd;
+}
+
+void Hachiko::Scripting::PlayerController::CancelAttack()
+{
+	// Indirectly cancells atack by putting its remaining duration to 0
+	_attack_current_duration = 0.f;
+	if (_state == PlayerState::RANGED_ATTACKING && _current_bullet >= 0)
+	{
+		BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+		bullet_controller->StopBullet(_current_bullet);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::MovementController()
@@ -518,17 +535,29 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		return;
 	}
 
-	_attack_current_duration -= Time::DeltaTime();
-	// Finish attack action
-	if (_attack_current_duration <= 0.0f)
+	if (_attack_current_duration > 0.0)
 	{
+		_attack_current_duration -= Time::DeltaTime();
+
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
 			_attack_indicator->SetActive(false);
+			return;
+			
 		}
 		// Melee attack
-		_state = PlayerState::IDLE;
+		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
+		return;
 	}
+
+	_state = PlayerState::IDLE;
+	if (_state == PlayerState::RANGED_ATTACKING)
+	{
+		// We only need the bullet reference to cancell it while charging
+		_current_bullet = -1;
+	}
+	// Melee attack
+	_attack_indicator->SetActive(false);
 }
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)

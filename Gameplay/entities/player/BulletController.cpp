@@ -1,13 +1,11 @@
 #include "scriptingUtil/gameplaypch.h"
 
-#include "Scenes.h"
-#include "EnemyController.h"
-#include "PlayerController.h"
-#include "CrystalExplosion.h"
+#include "BulletController.h"
 
-#include <components/ComponentTransform.h>
-#include <components/ComponentAgent.h>
-#include <components/ComponentObstacle.h>
+#include "constants/Scenes.h"
+#include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/PlayerController.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -59,7 +57,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 			// Already dead bullet
 			continue;
 		}
-		if(stats.lifetime <= 0)
+		if(stats.lifetime <= stats.elapsed_lifetime)
 		{
 			//	Disable if lifetime is ober
 			DeactivateBullet(i);
@@ -69,7 +67,8 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		{
 			// Do not launch yet
 			stats.current_charge += Time::DeltaTime();
-			bullet->GetTransform()->SetLocalScale(float3(stats.GetChargedPercent()));
+			bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
+			SetBulletTrajectory(i);
 			continue;
 		}
 
@@ -83,7 +82,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		}
 
 		// If no collision just lower lifetime
-		stats.lifetime -= Time::DeltaTime();
+		stats.elapsed_lifetime += Time::DeltaTime();
 	}	
 }
 
@@ -134,6 +133,7 @@ void Hachiko::Scripting::BulletController::ActivateBullet(unsigned bullet_idx)
 {
 	_bullet_stats[bullet_idx].alive = true;
 	_bullet_stats[bullet_idx].current_charge = 0.f;
+	_bullet_stats[bullet_idx].elapsed_lifetime = 0.f;
 	_bullets[bullet_idx]->SetActive(true);
 }
 
@@ -143,19 +143,21 @@ void Hachiko::Scripting::BulletController::DeactivateBullet(unsigned bullet_idx)
 	_bullets[bullet_idx]->SetActive(false);
 }
 
-void Hachiko::Scripting::BulletController::SetBulletTrajectory(ComponentTransform* emitter_transform, unsigned bullet_idx)
+void Hachiko::Scripting::BulletController::SetBulletTrajectory(unsigned bullet_idx)
 {
 	GameObject* bullet = _bullets[bullet_idx];
 	BulletStats& stats = _bullet_stats[bullet_idx];
 	ComponentTransform* bullet_transform = bullet->GetTransform();
 	const float bullet_offset = 1.25f;
-	float3 emitter_direction = emitter_transform->GetFront().Normalized();
-	float3 emitter_position = emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
+	float3 emitter_direction = stats.emitter_transform->GetFront().Normalized();
+	float3 emitter_position = stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
 	
 	stats.prev_position = emitter_position;
 
 	stats.direction = emitter_direction;
 	bullet_transform->SetGlobalPosition(emitter_position);
+	// If the bullet is out of culling nothing its updating its transform unless selected in engine
+	bullet_transform->GetLocalPosition();
 }
 
 Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::ProcessEnemies(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
@@ -248,7 +250,7 @@ void Hachiko::Scripting::BulletController::SetForward(float3 new_forward)
 	_direction = new_forward;
 }
 
-unsigned* Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
+int Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	// We use a pointer to represent when there is no bullet shoot
 	for (unsigned i = 0; i < _bullets.size(); i++)
@@ -261,13 +263,14 @@ unsigned* Hachiko::Scripting::BulletController::ShootBullet(ComponentTransform* 
 		}
 		// Update stats with the new bullet stats
 		stats = new_stats;
-		SetBulletTrajectory(emitter_transform, i);
+		stats.emitter_transform = emitter_transform;
+		SetBulletTrajectory(i);
 
 		ActivateBullet(i);
 		// After a bullet is generated exit
-		return new unsigned(i);
+		return static_cast<int>(i);
 	}
-	return nullptr;
+	return -1;
 }
 
 void Hachiko::Scripting::BulletController::StopBullet(unsigned bullet_index)
