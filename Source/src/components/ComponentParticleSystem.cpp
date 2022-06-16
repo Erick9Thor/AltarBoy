@@ -81,7 +81,7 @@ void Hachiko::ComponentParticleSystem::Update()
     {
         Start();
     }
-#endif // !PLAY_BUILD
+#endif //PLAY_BUILD
     if (emitter_state == ParticleSystem::Emitter::State::PLAYING)
     {
         UpdateEmitterTimes();
@@ -183,30 +183,30 @@ void Hachiko::ComponentParticleSystem::DrawGui()
 
             switch (emitter_type)
             {
-            case ParticleSystem::Emitter::Type::CONE:
-                top.speed = 0.01f;
-                top.min = 0.001f;
-                DragFloat("Top", emitter_properties.top, &top);
-                DragFloat("Radius", emitter_properties.radius, &radius);
-                DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
-                DragFloat("Arc", emitter_properties.arc, &arc);
+                case ParticleSystem::Emitter::Type::CONE:
+                    top.speed = 0.01f;
+                    top.min = 0.001f;
+                    DragFloat("Top", emitter_properties.top, &top);
+                    DragFloat("Radius", emitter_properties.radius, &radius);
+                    DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
+                    DragFloat("Arc", emitter_properties.arc, &arc);
 
-                break;
-            case ParticleSystem::Emitter::Type::BOX:
-                if (Widgets::Combo("Emit from", &emit_from, emit_from_options, IM_ARRAYSIZE(emit_from_options)))
-                {
-                    emitter_properties.emit_from = static_cast<ParticleSystem::Emitter::EmitFrom>(emit_from);
-                }
-                break;
-            case ParticleSystem::Emitter::Type::SPHERE:
-            case ParticleSystem::Emitter::Type::CIRCLE:
-                DragFloat("Radius", emitter_properties.radius, &radius);
-                DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
-                DragFloat("Arc", emitter_properties.arc, &arc);
-                break;
-            case ParticleSystem::Emitter::Type::RECTANGLE:
-                scale_config.enabled = bool3(true, false, true);
-                break;
+                    break;
+                case ParticleSystem::Emitter::Type::BOX:
+                    if (Widgets::Combo("Emit from", &emit_from, emit_from_options, IM_ARRAYSIZE(emit_from_options)))
+                    {
+                        emitter_properties.emit_from = static_cast<ParticleSystem::Emitter::EmitFrom>(emit_from);
+                    }
+                    break;
+                case ParticleSystem::Emitter::Type::SPHERE:
+                case ParticleSystem::Emitter::Type::CIRCLE:
+                    DragFloat("Radius", emitter_properties.radius, &radius);
+                    DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
+                    DragFloat("Arc", emitter_properties.arc, &arc);
+                    break;
+                case ParticleSystem::Emitter::Type::RECTANGLE:
+                    scale_config.enabled = bool3(true, false, true);
+                    break;
             }
 
             ImGuiUtils::DisplayTooltip("Selects the shape of this particle system");
@@ -355,34 +355,34 @@ void Hachiko::ComponentParticleSystem::DebugDraw()
     const float3 direction = (current_model.RotatePart() * float3::unitY).Normalized();
     switch (emitter_type)
     {
-    case ParticleSystem::Emitter::Type::CONE:
-        dd::cone(current_model.TranslatePart(),
-                 direction,
-                 dd::colors::White,
-                 emitter_properties.top,
-                 emitter_properties.radius);
-        dd::cone(current_model.TranslatePart(),
-                 direction,
-                 dd::colors::White,
-                 emitter_properties.top * (1 - emitter_properties.radius_thickness),
-                 emitter_properties.radius * (1 - emitter_properties.radius_thickness));
+        case ParticleSystem::Emitter::Type::CONE:
+            dd::cone(current_model.TranslatePart(),
+                     direction,
+                     dd::colors::White,
+                     emitter_properties.top,
+                     emitter_properties.radius);
+            dd::cone(current_model.TranslatePart(),
+                     direction,
+                     dd::colors::White,
+                     emitter_properties.top * (1 - emitter_properties.radius_thickness),
+                     emitter_properties.radius * (1 - emitter_properties.radius_thickness));
+            break;
+        case ParticleSystem::Emitter::Type::BOX:
+        {
+            dd::box(current_model.TranslatePart(), dd::colors::White, current_model.GetScale().x, current_model.GetScale().y, current_model.GetScale().z);
+        }
         break;
-    case ParticleSystem::Emitter::Type::BOX:
-    {
-        dd::box(current_model.TranslatePart(), dd::colors::White, current_model.GetScale().x, current_model.GetScale().y, current_model.GetScale().z);
-    }
-    break;
-    case ParticleSystem::Emitter::Type::SPHERE:
-        dd::sphere(current_model.TranslatePart(), dd::colors::White, emitter_properties.radius);
-        dd::sphere(current_model.TranslatePart(), dd::colors::White, emitter_properties.radius * (1 - emitter_properties.radius_thickness));
-        break;
-    case ParticleSystem::Emitter::Type::CIRCLE:
-        dd::circle(current_model.TranslatePart(), direction, dd::colors::White, emitter_properties.radius, 50.0f);
-        dd::circle(current_model.TranslatePart(), direction, dd::colors::White, emitter_properties.radius * (1 - emitter_properties.radius_thickness), 50.0f);
-        break;
-    case ParticleSystem::Emitter::Type::RECTANGLE:
-        dd::box(current_model.TranslatePart(), dd::colors::White, current_model.GetScale().x, 0.0001f, current_model.GetScale().z);
-        break;
+        case ParticleSystem::Emitter::Type::SPHERE:
+            dd::sphere(current_model.TranslatePart(), dd::colors::White, emitter_properties.radius);
+            dd::sphere(current_model.TranslatePart(), dd::colors::White, emitter_properties.radius * (1 - emitter_properties.radius_thickness));
+            break;
+        case ParticleSystem::Emitter::Type::CIRCLE:
+            dd::circle(current_model.TranslatePart(), direction, dd::colors::White, emitter_properties.radius, 50.0f);
+            dd::circle(current_model.TranslatePart(), direction, dd::colors::White, emitter_properties.radius * (1 - emitter_properties.radius_thickness), 50.0f);
+            break;
+        case ParticleSystem::Emitter::Type::RECTANGLE:
+            dd::box(current_model.TranslatePart(), dd::colors::White, current_model.GetScale().x, 0.0001f, current_model.GetScale().z);
+            break;
     }
 }
 
@@ -552,7 +552,6 @@ void Hachiko::ComponentParticleSystem::UpdateActiveParticles()
 
 void Hachiko::ComponentParticleSystem::UpdateModifiers()
 {
-
     for (const auto& particle_module : particle_modifiers)
     {
         particle_module->Update(particles);
@@ -791,11 +790,11 @@ void Hachiko::ComponentParticleSystem::DisplayControls()
     ImGui::SameLine();
     ImGui::Text(GetGameObject()->GetName().c_str());
 
-    char particlesSpawned[10];
-    sprintf_s(particlesSpawned, 10, "%.1f", rate_over_time.values.x);
+    char particles_spawned[10];
+    sprintf_s(particles_spawned, 10, "%.1f", rate_over_time.values.x);
     ImGui::Text("Particles rate");
     ImGui::SameLine();
-    ImGui::Text(particlesSpawned);
+    ImGui::Text(particles_spawned);
 
     char elapsed_time[10];
     sprintf_s(elapsed_time, 10, "%.1f", emitter_elapsed_time);

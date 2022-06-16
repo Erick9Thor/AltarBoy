@@ -29,12 +29,11 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
     glActiveTexture(GL_TEXTURE0);
-    int glTexture = 0;
     has_texture = 0;
     if (texture != nullptr)
     {
-        glTexture = texture->GetImageId();
-        Hachiko::ModuleTexture::Bind(glTexture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+        const int gl_texture = texture->GetImageId();
+        ModuleTexture::Bind(gl_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
         has_texture = 1;
     }
 
@@ -310,6 +309,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[COLOR_CYCLES] = color_cycles;
     node[COLOR_LOOP] = color_loop;
     node[COLOR_GRADIENT] = *gradient;
+    node[BILLBOARD_RENDER_MODE] = static_cast<int>(render_mode);
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -378,6 +378,10 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
                 ImColor(mark.color[0], mark.color[1], mark.color[2], mark.color[3]));
         }
     }
+
+    render_mode = node[BILLBOARD_RENDER_MODE].IsDefined() ? 
+        static_cast<BillboardRenderMode>(node[BILLBOARD_RENDER_MODE].as<int>()) :
+        render_mode;
 }
 
 void Hachiko::ComponentBillboard::AddTexture()

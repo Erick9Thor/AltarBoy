@@ -4,6 +4,9 @@
 
 #include <imgui_internal.h>
 
+#include "components/Component.h"
+#include "modules/ModuleEditor.h"
+
 bool Hachiko::ImGuiUtils::IconButton(const char* icon, const char* tooltip)
 {
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
@@ -74,14 +77,11 @@ bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, const Compon
 
     if (ImGui::BeginPopup(header_name))
     {
-        open = !game_object->AttemptRemoveComponent(component);
-
-        if (!open)
-        {
-            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
-        }
-
+        App->editor->to_remove = component;
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+        
         ImGui::EndPopup();
+        open = false;
     }
     ImGui::PopID();
 

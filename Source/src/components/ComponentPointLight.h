@@ -14,16 +14,6 @@ namespace Hachiko
 
         void DebugDraw() override;
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
-        void SetActive(bool is_active)
-        {
-            active = is_active;
-        }
-
         float3 GetPosition() const;
 
         void Save(YAML::Node& node) const override;
@@ -36,7 +26,6 @@ namespace Hachiko
         float radius = 250.0f;
 
     private:
-        bool active = true;
         bool draw_sphere = false;
     };
 }

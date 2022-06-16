@@ -13,6 +13,7 @@ namespace Hachiko
     class ComponentPointLight;
     class ComponentSpotLight;
     class ComponentBillboard;
+    class ComponentParticleSystem;
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
@@ -107,7 +108,6 @@ namespace Hachiko
         {
             navmesh_id = new_navmesh_id;
         }
-        
         [[nodiscard]] GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
@@ -125,17 +125,7 @@ namespace Hachiko
             particles.emplace_back(new_particle);
         }
 
-        void RemoveParticleComponent(const UID& component_id)
-        {
-            auto predicate = [&](const Component* component) {
-                return component->GetID() == component_id;
-            };
-            const auto it = std::find_if(particles.begin(), particles.end(), predicate);
-            if (it != particles.end())
-            {
-                particles.erase(it);
-            }
-        }
+        void RemoveParticleComponent(const UID& component_id);
 
         const std::vector<Component*>& GetSceneParticles()
         {

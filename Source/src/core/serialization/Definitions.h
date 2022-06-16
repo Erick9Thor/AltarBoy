@@ -263,6 +263,7 @@
 #define BILLBOARD_TYPE "billboard_type"
 #define BILLBOARD_LIFETIME "billboard_lifetime"
 #define BILLBOARD_PLAY_ON_AWAKE "play_on_awake"
+#define BILLBOARD_RENDER_MODE "render_mode"
 #define ANIMATION_CYCLES "animation_cycles"
 
 #define HAS_COLOR_GRADIENT "has_color_gradient"
