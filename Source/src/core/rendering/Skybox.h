@@ -40,11 +40,11 @@ namespace Hachiko
         unsigned vao{};
         unsigned vbo{};
 
-        bool activate_IBL = false;
-        unsigned diffuseIBL_id = 0;
-        unsigned prefilteredIBL_id = 0;
-        unsigned environmentBRDF_id = 0;
-        unsigned prefilteredIBL_numLevels = 0;
+        bool activate_ibl = false;
+        unsigned diffuse_ibl_id = 0;
+        unsigned prefiltered_ibl_id = 0;
+        unsigned environment_brdf_id = 0;
+        unsigned prefiltered_ibl_number_of_levels = 0;
 
     public:
         Skybox(const Skybox& other) = default;

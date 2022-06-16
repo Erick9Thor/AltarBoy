@@ -35,7 +35,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateParticleProgram();
 
     if (!forward_program || !deferred_geometry_program || !deferred_lighting_program || !skybox_program || 
-        !diffuseIBL_program || !prefilteredIBL_program || !environmentBRDF_program ||
+        !diffuse_ibl_program || !prefiltered_ibl_program || !environment_brdf_program ||
         !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
     {
         return false;
@@ -169,20 +169,20 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateDiffuseIBLProgram()
 {
-    diffuseIBL_program = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
-    return diffuseIBL_program;
+    diffuse_ibl_program = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
+    return diffuse_ibl_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreatePrefilteredIBLProgram()
 {
-    prefilteredIBL_program = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
-    return prefilteredIBL_program;
+    prefiltered_ibl_program = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
+    return prefiltered_ibl_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateEnvironmentBRDFProgram()
 {
-    environmentBRDF_program = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
-    return environmentBRDF_program;
+    environment_brdf_program = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
+    return environment_brdf_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
@@ -272,14 +272,14 @@ bool Hachiko::ModuleProgram::CleanUp()
     skybox_program->CleanUp();
     delete skybox_program;
 
-    diffuseIBL_program->CleanUp();
-    delete diffuseIBL_program;
+    diffuse_ibl_program->CleanUp();
+    delete diffuse_ibl_program;
 
-    prefilteredIBL_program->CleanUp();
-    delete prefilteredIBL_program;
+    prefiltered_ibl_program->CleanUp();
+    delete prefiltered_ibl_program;
     
-    environmentBRDF_program->CleanUp();
-    delete environmentBRDF_program;
+    environment_brdf_program->CleanUp();
+    delete environment_brdf_program;
 
     stencil_program->CleanUp();
     delete stencil_program;

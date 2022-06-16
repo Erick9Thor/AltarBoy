@@ -27,7 +27,7 @@ Hachiko::Skybox::~Skybox()
     glDeleteBuffers(1, &vbo);
     ReleaseCubemap();
 
-    glDeleteTextures(1, &diffuseIBL_id);
+    glDeleteTextures(1, &diffuse_ibl_id);
 }
 
 void Hachiko::Skybox::Draw(ComponentCamera* camera) const
@@ -81,7 +81,7 @@ void Hachiko::Skybox::DrawImGui()
         SelectSkyboxTexture(TextureCube::Side::BACK);
     }
 
-    ImGui::Checkbox("Activate IBL", &activate_IBL);
+    ImGui::Checkbox("Activate IBL", &activate_ibl);
     if (ImGui::Button("Build precomputed IBL"))
     {
         BuildIBL();
@@ -89,12 +89,12 @@ void Hachiko::Skybox::DrawImGui()
 
     if (ImGui::Button("Diffuse"))
     {
-        cube.id = diffuseIBL_id;
+        cube.id = diffuse_ibl_id;
     }
 
     if (ImGui::Button("Prefiltered"))
     {
-        cube.id = prefilteredIBL_id;
+        cube.id = prefiltered_ibl_id;
     }
 
     ImGui::PopID();
@@ -102,40 +102,40 @@ void Hachiko::Skybox::DrawImGui()
 
 void Hachiko::Skybox::BindImageBasedLightingUniforms(Program* program) const 
 {
-    if (activate_IBL)
+    if (activate_ibl)
     {
         program->BindUniformUInt("activate_IBL", 1);
 
         if (App->renderer->IsDeferred())
         {
             glActiveTexture(GL_TEXTURE5);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuse_ibl_id);
             program->BindUniformInt("diffuseIBL", 5);
 
             glActiveTexture(GL_TEXTURE6);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, prefiltered_ibl_id);
             program->BindUniformInt("prefilteredIBL", 6);
 
             glActiveTexture(GL_TEXTURE7);
-            glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
+            glBindTexture(GL_TEXTURE_2D, environment_brdf_id);
             program->BindUniformInt("environmentBRDF", 7);
         }
         else
         {
             glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, diffuse_ibl_id);
             program->BindUniformInt("diffuseIBL", 1);
 
             glActiveTexture(GL_TEXTURE2);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, prefiltered_ibl_id);
             program->BindUniformInt("prefilteredIBL", 2);
 
             glActiveTexture(GL_TEXTURE3);
-            glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
+            glBindTexture(GL_TEXTURE_2D, environment_brdf_id);
             program->BindUniformInt("environmentBRDF", 3);
         }
 
-        program->BindUniformUInt("prefilteredIBL_numLevels", prefilteredIBL_numLevels);
+        program->BindUniformUInt("prefilteredIBL_numLevels", prefiltered_ibl_number_of_levels);
     }
     else
     {
@@ -294,8 +294,8 @@ void Hachiko::Skybox::GenerateDiffuseIBL()
     }
 
     // Delete last irradiance cubemap
-    glDeleteTextures(1, &diffuseIBL_id);
-    diffuseIBL_id = 0;
+    glDeleteTextures(1, &diffuse_ibl_id);
+    diffuse_ibl_id = 0;
 
     // Initialize variables
     const float3 front[6] = {float3::unitX, -float3::unitX, float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ};
@@ -318,8 +318,8 @@ void Hachiko::Skybox::GenerateDiffuseIBL()
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
     // Generate irradiance cubemap
-    glGenTextures(1, &diffuseIBL_id);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, diffuseIBL_id);
+    glGenTextures(1, &diffuse_ibl_id);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, diffuse_ibl_id);
     for (unsigned i = 0; i < 6; ++i)
     {
         glTexImage2D(
@@ -343,7 +343,7 @@ void Hachiko::Skybox::GenerateDiffuseIBL()
     for (unsigned i = 0; i < 6; ++i)
     {
         unsigned attachment = GL_COLOR_ATTACHMENT0;
-        glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, diffuseIBL_id, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, diffuse_ibl_id, 0);
         glDrawBuffers(1, &attachment);
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -393,8 +393,8 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
     unsigned height = cube.resources[0]->height;
 
     // Delete last irradiance cubemap
-    glDeleteTextures(1, &prefilteredIBL_id);
-    prefilteredIBL_id = 0;
+    glDeleteTextures(1, &prefiltered_ibl_id);
+    prefiltered_ibl_id = 0;
 
     // Initialize variables
     const float3 front[6] = {float3::unitX, -float3::unitX, float3::unitY, -float3::unitY, float3::unitZ, -float3::unitZ};
@@ -415,8 +415,8 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
     // Generate irradiance cubemap
-    glGenTextures(1, &prefilteredIBL_id);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, prefilteredIBL_id);
+    glGenTextures(1, &prefiltered_ibl_id);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, prefiltered_ibl_id);
     for (unsigned i = 0; i < 6; ++i)
     {
         glTexImage2D(
@@ -431,14 +431,14 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
             0
         );
     }
-    prefilteredIBL_numLevels = int(log(float(cube.resources[0]->width)) / log(2));
+    prefiltered_ibl_number_of_levels = int(log(float(cube.resources[0]->width)) / log(2));
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_BASE_LEVEL, 0);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, prefilteredIBL_numLevels);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, prefiltered_ibl_number_of_levels);
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
-    for (int roughness = 0; roughness < prefilteredIBL_numLevels; ++roughness)
+    for (int roughness = 0; roughness < prefiltered_ibl_number_of_levels; ++roughness)
     {
         glViewport(0, 0, height, width); // IMPORTANT TODO: MOVE TO ADAPT FOR THE MIPMAP
 
@@ -446,7 +446,7 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
         for (unsigned i = 0; i < 6; ++i)
         {
             unsigned attachment = GL_COLOR_ATTACHMENT0;
-            glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilteredIBL_id, roughness);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefiltered_ibl_id, roughness);
             glDrawBuffers(1, &attachment);
 
             // Draw UnitCube using prefiltered environment map shader and roughness
@@ -458,7 +458,7 @@ void Hachiko::Skybox::GeneratePrefilteredIBL()
             frustum.SetFrame(float3::zero, front[i], up[i]);
             App->program->UpdateCamera(frustum);
 
-            float auxRoughness = float(roughness) / float(prefilteredIBL_numLevels - 1);
+            float auxRoughness = float(roughness) / float(prefiltered_ibl_number_of_levels - 1);
             program->BindUniformFloat("roughness", &auxRoughness);
 
             // Draw skybox
@@ -503,8 +503,8 @@ void Hachiko::Skybox::GenerateEnvironmentBRDF()
     const unsigned height = 512;
 
     // Delete last enviromentBRDF
-    glDeleteTextures(1, &environmentBRDF_id);
-    environmentBRDF_id = 0;
+    glDeleteTextures(1, &environment_brdf_id);
+    environment_brdf_id = 0;
 
     // Activate shader and deactivate the depth mask
     glDepthFunc(GL_ALWAYS);
@@ -519,8 +519,8 @@ void Hachiko::Skybox::GenerateEnvironmentBRDF()
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
 
     // Generate irradiance cubemap
-    glGenTextures(1, &environmentBRDF_id);
-    glBindTexture(GL_TEXTURE_2D, environmentBRDF_id);
+    glGenTextures(1, &environment_brdf_id);
+    glBindTexture(GL_TEXTURE_2D, environment_brdf_id);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0, GL_RG, GL_FLOAT, nullptr);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -529,7 +529,7 @@ void Hachiko::Skybox::GenerateEnvironmentBRDF()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     unsigned attachment = GL_COLOR_ATTACHMENT0;
-    glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, environmentBRDF_id, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, environment_brdf_id, 0);
     glDrawBuffers(1, &attachment);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)

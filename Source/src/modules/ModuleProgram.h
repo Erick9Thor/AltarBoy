@@ -82,17 +82,17 @@ namespace Hachiko
 
         [[nodiscard]] Program* GetDiffuseIBLProgram() const
         {
-            return diffuseIBL_program;
+            return diffuse_ibl_program;
         }
         
         [[nodiscard]] Program* GetPrefilteredIBLProgram() const
         {
-            return prefilteredIBL_program;
+            return prefiltered_ibl_program;
         }
         
         [[nodiscard]] Program* GetEnvironmentBRDFProgram() const
         {
-            return environmentBRDF_program;
+            return environment_brdf_program;
         }
 
         [[nodiscard]] Program* GetStencilProgram() const
@@ -148,9 +148,9 @@ namespace Hachiko
         Program* deferred_geometry_program = nullptr;
         Program* deferred_lighting_program = nullptr;
         Program* skybox_program = nullptr;
-        Program* diffuseIBL_program = nullptr;
-        Program* prefilteredIBL_program = nullptr;
-        Program* environmentBRDF_program = nullptr;
+        Program* diffuse_ibl_program = nullptr;
+        Program* prefiltered_ibl_program = nullptr;
+        Program* environment_brdf_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
