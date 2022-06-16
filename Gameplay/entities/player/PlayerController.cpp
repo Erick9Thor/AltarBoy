@@ -541,7 +541,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
-			_attack_indicator->SetActive(false);
+			_attack_indicator->SetActive(true);
 			return;
 			
 		}
