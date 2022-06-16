@@ -46,6 +46,7 @@ namespace Hachiko
         int skip_frames = 0;
         float time = 0.0f;
         float billboard_lifetime = 5.0f;
+        float blend_factor = 0.5f;
         BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
         
         // Orientation

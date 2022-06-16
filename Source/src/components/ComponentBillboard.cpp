@@ -73,6 +73,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     int flip_y = has_flip_y ? 1 : 0;
     program->BindUniformInts("flip_x", 1, &flip_x);
     program->BindUniformInts("flip_y", 1, &flip_y);
+    program->BindUniformFloat("blend_factor", &blend_factor);
     
     glBindVertexArray(App->renderer->GetParticleVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -104,6 +105,14 @@ void Hachiko::ComponentBillboard::DrawGui()
         }
         ImGui::DragFloat("Duration", &billboard_lifetime, 1.0f, 0, inf);
         ImGui::DragInt("Skip Frames", &skip_frames, 1.0f, 0, inf);
+
+        Widgets::DragFloatConfig cfg;
+        cfg.min = 0.0f;
+        cfg.max = 1.0f;
+        cfg.speed = 0.1f;
+        cfg.format = "%.2f";
+
+        Widgets::DragFloat("Blend factor", blend_factor, &cfg);
         ImGui::Checkbox("Play On Awake", &play_on_awake);
 
         const char* billboard_type_combo[] = {"LookAt", "Horitzontal", "Vertical"};
