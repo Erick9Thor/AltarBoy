@@ -22,7 +22,6 @@ void Hachiko::Scripting::DoorController::OnAwake()
 
 void Hachiko::Scripting::DoorController::OnStart()
 {
-	
 }
 
 void Hachiko::Scripting::DoorController::OnUpdate()
@@ -62,11 +61,12 @@ void Hachiko::Scripting::DoorController::UpdateDoorState()
 	case State::CLOSED:
 		_door_open->SetActive(false);
 		_door_closed->SetActive(true);
+		_door_closed->GetComponent<ComponentObstacle>()->AddObstacle();
 		break;
 	case State::OPEN:
 		_door_open->SetActive(true);
 		_door_closed->SetActive(false);
-		SceneManagement::Destroy(_door_closed);
+		_door_closed->GetComponent<ComponentObstacle>()->RemoveObstacle();
 		break;
 	}
 }
