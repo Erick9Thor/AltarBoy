@@ -1,11 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
 
-#include "BulletController.h"
 
 #include "constants/Scenes.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
+#include "entities/player/BulletController.h"
+
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -37,16 +38,15 @@ void Hachiko::Scripting::BulletController::OnAwake()
 		bullet->SetActive(false);
 		_bullet_stats.push_back(BulletStats());
 	}
-	//bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
-	//bullet->GetComponent<BulletController>()->SetForward(forward);
-	//bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
 }
 
 void Hachiko::Scripting::BulletController::OnUpdate()
 {
 	
-	if (!game_object->IsActive())	return;
-
+	if (!game_object->IsActive())
+	{
+		return;
+	}
 	for (unsigned i = 0; i < _bullets.size(); i++)
 	{
 		GameObject* bullet = _bullets[i];
@@ -59,7 +59,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 		}
 		if(stats.lifetime <= stats.elapsed_lifetime)
 		{
-			//	Disable if lifetime is ober
+			// Disable if lifetime is over
 			DeactivateBullet(i);
 			continue;
 		}

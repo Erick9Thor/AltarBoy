@@ -535,7 +535,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		return;
 	}
 
-	if (_attack_current_duration > 0.0)
+	if (_attack_current_duration > 0.0f)
 	{
 		_attack_current_duration -= Time::DeltaTime();
 
