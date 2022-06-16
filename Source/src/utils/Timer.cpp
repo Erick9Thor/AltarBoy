@@ -20,9 +20,13 @@ double Hachiko::Timer::Read()
 {
     unsigned int now;
     if (running)
+    {
         now = SDL_GetTicks();
+    }
     else
+    {
         now = stop_time;
+    }
 
     current_time = static_cast<double>(now - start_time); // ms
     return current_time;
@@ -57,14 +61,19 @@ void Hachiko::PerformanceTimer::Resume()
 double Hachiko::PerformanceTimer::Read()
 {
     static const auto frequency = static_cast<double>(SDL_GetPerformanceFrequency());
+    static const auto ms_frequency_factor = 1000.0 / frequency;
 
     unsigned long long now;
     if (running)
+    {
         now = SDL_GetPerformanceCounter();
+    }
     else
+    {
         now = stop_time;
+    }
 
-    current_time = (now - start_time) * 1000.0 / frequency;
+    current_time = (now - start_time) * ms_frequency_factor;
     return current_time;
 }
 
@@ -101,7 +110,9 @@ double Hachiko::GameTimer::Update()
     delta_time = (tick_time - prev_tick_time) / 1000.0;
     prev_tick_time = tick_time;
     if (running)
+    {
         total_time = timer.Read();
+    }
     return delta_time;
 }
 
@@ -148,6 +159,8 @@ double Hachiko::EngineTimer::Update()
     delta_time = (tick_time - prev_tick_time) / 1000.0;
     prev_tick_time = tick_time;
     if (running)
+    {
         total_time = timer.Read();
+    }
     return delta_time;
 }

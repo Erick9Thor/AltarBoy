@@ -14,8 +14,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
-#include "components/ComponentTransform.h"
-#include "resources/ResourceNavMesh.h"
+#include "components/ComponentParticleSystem.h"
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -197,6 +196,9 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
         App->navigation->DebugDraw();
     }
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     GLint polygonMode[2];
     glGetIntegerv(GL_POLYGON_MODE, polygonMode);
     if (polygonMode[0] == GL_LINE)
@@ -209,6 +211,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     {
         App->ui->DrawUI(active_scene);
     }
+    glDisable(GL_BLEND);
 
     // If in play build, blit frame_buffer to the default frame buffer and render to the whole 
     // screen, if not, bind default frame buffer:
@@ -392,7 +395,6 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     // Draw debug draw stuff:
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
 
-    
     const auto& scene_particles = scene->GetSceneParticles();
     if (!scene_particles.empty())
     {
@@ -464,7 +466,7 @@ void GLOptionCheck(GLenum option, bool enable)
 
 void Hachiko::ModuleRender::OptionsMenu()
 {
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
+    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Draw Options");
     ImGui::Checkbox("Debug Draw", &App->debug_draw->debug_draw);
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
     ImGui::Checkbox("Skybox", &draw_skybox);
@@ -551,8 +553,8 @@ void Hachiko::ModuleRender::DeferredOptions()
 
 void Hachiko::ModuleRender::PerformanceMenu()
 {
-    glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram_free);
-    const float vram_free_mb = vram_free / 1024.0f;
+
+    const float vram_free_mb = gpu.vram_free / 1024.0f;
     const float vram_usage_mb = gpu.vram_budget_mb - vram_free_mb;
     ImGui::Text("VRAM Budget: %.1f Mb", gpu.vram_budget_mb);
     ImGui::Text("Vram Usage:  %.1f Mb", vram_usage_mb);
@@ -649,9 +651,18 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     gpu.name = (unsigned char*)glGetString(GL_RENDERER);
     gpu.brand = (unsigned char*)glGetString(GL_VENDOR);
 
-    int vram_budget;
-    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram_budget);
-    gpu.vram_budget_mb = static_cast<float>(vram_budget) / 1024.0f;
+            GLint count;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &count);
+    for (GLint i = 0; i < count; ++i)
+    {
+        const char* extension = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
+        if (!strcmp(extension, "GL_NVX_gpu_memory_info"))
+        {    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &gpu.vram_budget_mb);
+            glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &gpu.vram_free);
+        }
+    }
+
+    gpu.vram_budget_mb /= 1024;
 }
 
 

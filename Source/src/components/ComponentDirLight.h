@@ -7,22 +7,11 @@ namespace Hachiko
     class ComponentDirLight : public Component
     {
     public:
-        // TODO: add more light types
         ComponentDirLight(GameObject* conatiner);
         ~ComponentDirLight() override;
 
         void DebugDraw() override;
-
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
-        void SetActive(bool is_active)
-        {
-            active = is_active;
-        }
-
+        
         [[nodiscard]] float3 GetDirection() const;
 
         void Save(YAML::Node& node) const override;
@@ -34,7 +23,6 @@ namespace Hachiko
         float intensity = 1.0f;
 
     private:
-        bool active = true;
         bool draw_direction = false;
     };
 }

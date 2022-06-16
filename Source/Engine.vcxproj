@@ -158,9 +158,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\core\rendering\GBuffer.cpp" />
+    <ClCompile Include="src\utils\Bool2.cpp" />
+    <ClCompile Include="src\utils\RandomUtil.cpp" />
+    <ClCompile Include="src\core\particles\Particle.cpp" />
     <ClCompile Include="src\batching\GeometryBatch.cpp" />
     <ClCompile Include="src\batching\BatchManager.cpp" />
     <ClCompile Include="src\batching\TextureBatch.cpp" />
+    <ClCompile Include="src\core\particles\modifiers\ColorParticleModifier.cpp" />
+    <ClCompile Include="src\core\particles\modifiers\ForceParticleModifier.cpp" />
+    <ClCompile Include="src\core\particles\modifiers\SizeParticleModifier.cpp" />
+    <ClCompile Include="src\core\particles\modifiers\VelocityParticleModifier.cpp" />
+    <ClCompile Include="src\core\particles\ParticleModifier.cpp" />
     <ClCompile Include="src\importers\NavmeshImporter.cpp" />
     <ClCompile Include="src\components\ComponentAudioListener.cpp" />
     <ClCompile Include="src\components\ComponentAudioSource.cpp" />
@@ -189,6 +197,7 @@
     <ClCompile Include="src\scripting\Script.cpp" />
     <ClCompile Include="src\modules\ModuleScriptingSystem.cpp" />
     <ClCompile Include="src\ui\WindowStateMachine.cpp" />
+    <ClCompile Include="src\utils\Bool3.cpp" />
     <ClCompile Include="src\utils\WindowsFileUtil.cpp" />
     <ClCompile Include="src\resources\ResourceAnimation.cpp" />
     <ClCompile Include="src\importers\AnimationImporter.cpp" />
@@ -217,6 +226,7 @@
     <ClCompile Include="src\modules\ModuleAudio.cpp" />
     <ClCompile Include="src\modules\ModuleDebugMode.cpp" />
     <ClCompile Include="src\modules\ModuleUserInterface.cpp" />
+    <ClCompile Include="src\core\particles\modifiers\AnimationParticleModifier.cpp" />
     <ClCompile Include="vendors\GLFont\FontAtlas.cpp" />
     <ClCompile Include="vendors\GLFont\FTLabel.cpp" />
     <ClCompile Include="vendors\GLFont\GLFont.cpp" />
@@ -230,7 +240,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp" />
+    <ClCompile Include="src\components\ComponentParticleSystem.cpp" />
+    <ClCompile Include="vendors\imgui\imgui_color_gradient.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="vendors\imgui\imgui_stdlib.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -677,9 +692,22 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\core\rendering\GBuffer.h" />
+    <ClInclude Include="src\ui\widgets\Checkbox.h" />
+    <ClInclude Include="src\ui\widgets\DragFloat2.h" />
+    <ClInclude Include="src\utils\Bool2.h" />
+    <ClInclude Include="src\utils\RandomUtil.h" />
+    <ClInclude Include="src\ui\widgets\DragFloat.h" />
+    <ClInclude Include="src\core\particles\Particle.h" />
     <ClInclude Include="src\batching\DrawCommand.h" />
     <ClInclude Include="src\batching\GeometryBatch.h" />
     <ClInclude Include="src\batching\BatchManager.h" />
+    <ClInclude Include="src\core\particles\modifiers\ColorParticleModifier.h" />
+    <ClInclude Include="src\core\particles\modifiers\ForceParticleModifier.h" />
+    <ClInclude Include="src\core\particles\modifiers\SizeParticleModifier.h" />
+    <ClInclude Include="src\core\particles\modifiers\VelocityParticleModifier.h" />
+    <ClInclude Include="src\core\particles\ParticleModifier.h" />
+    <ClInclude Include="src\core\particles\ParticleSystem.h" />
+    <ClInclude Include="src\events\CurveEditorEventPayload.h" />
     <ClInclude Include="src\importers\NavmeshImporter.h" />
     <ClInclude Include="src\components\ComponentAudioListener.h" />
     <ClInclude Include="src\components\ComponentAudioSource.h" />
@@ -747,11 +775,18 @@
     <ClInclude Include="src\modules\ModuleDebugMode.h" />
     <ClInclude Include="src\modules\ModuleUserInterface.h" />
     <ClInclude Include="src\ui\editor\Theme.h" />
+    <ClInclude Include="src\ui\widgets\DragFloat3.h" />
+    <ClInclude Include="src\ui\widgets\CollapsingHeader.h" />
+    <ClInclude Include="src\ui\widgets\Combo.h" />
+    <ClInclude Include="src\ui\widgets\MultiTypeSelector.h" />
+    <ClInclude Include="src\ui\widgets\Widgets.h" />
     <ClInclude Include="src\ui\WindowResource.h" />
     <ClInclude Include="src\ui\WindowStateMachine.h" />
+    <ClInclude Include="src\utils\Bool3.h" />
     <ClInclude Include="src\utils\Cache.h" />
     <ClInclude Include="src\utils\StringUtils.h" />
     <ClInclude Include="src\batching\TextureBatch.h" />
+    <ClInclude Include="src\core\particles\modifiers\AnimationParticleModifier.h" />
     <ClInclude Include="vendors\GLFont\FontAtlas.h" />
     <ClInclude Include="vendors\GLFont\FTLabel.h" />
     <ClInclude Include="vendors\GLFont\GLFont.h" />
@@ -1050,6 +1085,8 @@
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialogConfig.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image.h" />
     <ClInclude Include="vendors\ImGuiFileDialog-0.6.3\stb\stb_image_resize.h" />
+    <ClInclude Include="src\components\ComponentParticleSystem.h" />
+    <ClInclude Include="vendors\imgui\curve.h" />
     <ClInclude Include="vendors\imgui\imgui_color_gradient.h" />
     <ClInclude Include="vendors\imgui\imgui_stdlib.h" />
     <ClInclude Include="src\core\hepch.h" />
@@ -1093,7 +1130,7 @@
     <ClInclude Include="src\components\ComponentTransform.h" />
     <ClInclude Include="vendors\DebugDraw\debugdraw.h" />
     <ClInclude Include="vendors\DebugDraw\debug_draw.hpp" />
-    <ClInclude Include="vendors\imgui\IconsFontAwesome5.h" />
+    <ClInclude Include="vendors\imgui\IconsFontAwesome6.h" />
     <ClInclude Include="vendors\MathGeoLib\Math\assume.h" />
     <ClInclude Include="vendors\MathGeoLib\Math\BitFuncs.h" />
     <ClInclude Include="vendors\MathGeoLib\Math\BitOps.h" />
