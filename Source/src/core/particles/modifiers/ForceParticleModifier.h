@@ -16,7 +16,7 @@ namespace Hachiko
         void Load(const YAML::Node& node) override;
 
     private:
-        ParticleSystem::VariableTypeProperty rotation_delta {float2::zero, 0.01f};
+        ParticleSystem::VariableTypeProperty rotation_delta {float2::zero, 0.1f};
         ParticleSystem::VariableTypeProperty x_force {float2::zero, 0.1f};
         ParticleSystem::VariableTypeProperty y_force {float2::zero, 0.1f};
         ParticleSystem::VariableTypeProperty z_force {float2::zero, 0.1f};

@@ -561,7 +561,8 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if ((!loop && emitter_elapsed_time >= duration) || emitter_state != ParticleSystem::Emitter::State::PLAYING)
+    if ((!loop && emitter_elapsed_time >= duration) ||
+        emitter_state != ParticleSystem::Emitter::State::PLAYING)
     {
         able_to_emit = false;
         return;
@@ -569,6 +570,12 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 
     time += EngineTimer::delta_time;
     emitter_elapsed_time += EngineTimer::delta_time;
+
+    if (emitter_elapsed_time < start_delay.GetValue())
+    {
+        able_to_emit = false;
+        return;
+    }
 
     // constexpr float delta = 1- 
     if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue()) // TODO: Avoid division

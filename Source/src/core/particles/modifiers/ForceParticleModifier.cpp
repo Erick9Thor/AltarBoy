@@ -27,7 +27,7 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
 
 void Hachiko::ForceParticleModifier::DrawGui()
 {
-    MultiTypeSelector("Rotation", rotation_delta, &cfg);
+    MultiTypeSelector("Rotation over lifetime", rotation_delta, &cfg);
     MultiTypeSelector("X force", x_force, &cfg);
     MultiTypeSelector("Y force", y_force, &cfg);
     MultiTypeSelector("Z force", z_force, &cfg);
