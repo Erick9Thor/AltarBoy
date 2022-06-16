@@ -13,16 +13,6 @@ namespace Hachiko
 
         void DebugDraw() override;
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
-        void SetActive(bool is_active)
-        {
-            active = is_active;
-        }
-
         [[nodiscard]] float3 GetPosition() const;
         [[nodiscard]] float3 GetDirection() const;
 
@@ -38,7 +28,6 @@ namespace Hachiko
         float radius = 250.0f;
 
     private:
-        bool active = true;
         bool draw_cone = false;
     };
 }

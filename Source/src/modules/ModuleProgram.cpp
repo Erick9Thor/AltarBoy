@@ -349,8 +349,8 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     Lights lights_data;
     // Ambient
     lights_data.ambient = ambient_light;
-    // DirectionalS
-    if (dir_light && dir_light->IsActive())
+    // Directional Lights
+    if (dir_light && dir_light->IsActive() && dir_light->GetGameObject()->active)
     {
         lights_data.directional.direction = float4(dir_light->GetDirection(), 0.0f);
         lights_data.directional.color = dir_light->color;
@@ -361,11 +361,11 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
         lights_data.directional.intensity = 0.0f;
     }
 
-    // Point
+    // Point Lights
     lights_data.n_points = 0;
     for (const auto point_light : point_lights)
     {
-        if (point_light->IsActive())
+        if (point_light->IsActive() && point_light->GetGameObject()->active)
         {
             lights_data.points[lights_data.n_points].position = float4(point_light->GetPosition(), 0.0f);
             lights_data.points[lights_data.n_points].color = point_light->color;
@@ -382,7 +382,7 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     lights_data.n_spots = 0;
     for (const auto spot_light : spot_lights)
     {
-        if (spot_light->IsActive())
+        if (spot_light->IsActive() && spot_light->GetGameObject()->active)
         {
             lights_data.spots[lights_data.n_spots].position = float4(spot_light->GetPosition(), 0.0f);
             lights_data.spots[lights_data.n_spots].direction = float4(spot_light->GetDirection(), 0.0f);
