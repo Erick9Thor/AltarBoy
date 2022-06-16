@@ -28,16 +28,17 @@ namespace Hachiko
 			void OnUpdate() override;
 
 		private:
-			void SetDoorState(const State state);
+			void UpdateDoorState();
+			bool CheckOpeningConditions() const;
 
 		// Variables
 		public:
 			SERIALIZE_FIELD(GameObject*, _door_open);
 			SERIALIZE_FIELD(GameObject*, _door_closed);
+			SERIALIZE_FIELD(GameObject*, _enemies);	// Children of this object have to be defeated in order to open this door
 
 		private:
 			State _state = State::CLOSED;
-			
 		};
 	}
 	
