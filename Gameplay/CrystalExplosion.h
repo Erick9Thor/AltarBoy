@@ -47,6 +47,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _explosion_radius);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 
+			bool is_destroyed = false;
 
 			math::float3 _player_pos;
 
