@@ -7,42 +7,10 @@ component:
     position: [0, 0, 0]
     rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
-  - type: 15
-    enabled: true
-    class_name: DebugManager
-    "'_player@GameObject*'": 0
-    "'_button_back@ComponentButton*'": 0
-    "'_teleport_next_pos@ComponentButton*'": 0
-    "'_teleport_prev_pos@ComponentButton*'": 0
-    "'_teleport_add_pos@ComponentButton*'": 0
-    "'_add_health@ComponentButton*'": 0
-    "'_remove_health@ComponentButton*'": 0
-    "'_increase_max_hp@ComponentButton*'": 0
-    "'_decrease_max_hp@ComponentButton*'": 0
-    "'_increase_move_speed@ComponentButton*'": 0
-    "'_decrease_move_speed@ComponentButton*'": 0
-    "'_increase_attack_cd@ComponentButton*'": 0
-    "'_decrease_attack_cd@ComponentButton*'": 0
-    "'_increase_attack_power@ComponentButton*'": 0
-    "'_decrease_attack_power@ComponentButton*'": 0
-    "'_god_mode@ComponentButton*'": 0
-    "'_spawn_enemy@ComponentButton*'": 0
-    "'_unlock_skills@ComponentButton*'": 0
-    "'_toggle_performance_output@ComponentButton*'": 0
-    "'_toggle_vsync@ComponentButton*'": 0
-    "'_toggle_wireframe@ComponentButton*'": 0
-    "'_toggle_show_colliders@ComponentButton*'": 0
-    "'_exit_debug@ComponentButton*'": 0
-    "'_text_fps@ComponentText*'": 0
-    "'_text_ms@ComponentText*'": 0
-    "'_tp_pos1@GameObject*'": 27
-    "'_tp_pos2@GameObject*'": 28
-    "'_tp_pos3@GameObject*'": 29
-    "'_performance_menu@GameObject*'": 13
   - type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [1415, 767]
+    size: [1133, 630]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
@@ -50,7 +18,7 @@ component:
   - type: 8
     enabled: true
 child:
-  - name: Canvas
+  - name: DebugWindow
     enabled: true
     component:
       - type: 1
@@ -58,17 +26,73 @@ child:
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
+      - type: 15
+        enabled: true
+        class_name: DebugManager
+        "'_player@GameObject*'": 0
+        "'_button_back@ComponentButton*'": 0
+        "'_teleport_next_pos@ComponentButton*'": 0
+        "'_teleport_prev_pos@ComponentButton*'": 0
+        "'_teleport_add_pos@ComponentButton*'": 0
+        "'_add_health@ComponentButton*'": 0
+        "'_remove_health@ComponentButton*'": 0
+        "'_increase_max_hp@ComponentButton*'": 0
+        "'_decrease_max_hp@ComponentButton*'": 0
+        "'_increase_move_speed@ComponentButton*'": 0
+        "'_decrease_move_speed@ComponentButton*'": 0
+        "'_increase_attack_cd@ComponentButton*'": 0
+        "'_decrease_attack_cd@ComponentButton*'": 0
+        "'_increase_attack_power@ComponentButton*'": 0
+        "'_decrease_attack_power@ComponentButton*'": 0
+        "'_god_mode@ComponentButton*'": 0
+        "'_spawn_enemy@ComponentButton*'": 0
+        "'_unlock_skills@ComponentButton*'": 0
+        "'_toggle_performance_output@ComponentButton*'": 0
+        "'_toggle_vsync@ComponentButton*'": 0
+        "'_toggle_wireframe@ComponentButton*'": 0
+        "'_toggle_show_colliders@ComponentButton*'": 0
+        "'_exit_debug@ComponentButton*'": 0
+        "'_text_fps@ComponentText*'": 0
+        "'_text_ms@ComponentText*'": 0
+        "'_tp_pos1@GameObject*'": 3
+        "'_tp_pos2@GameObject*'": 4
+        "'_tp_pos3@GameObject*'": 5
+        "'_performance_menu@GameObject*'": 24
       - type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1415, 767]
+        size: [1133, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
-        anchor: [0.5, 0.300000012]
+        anchor: [0.5, 0.5]
       - type: 8
         enabled: true
     child:
+      - name: tpPos1
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-25, 0, -25]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: tpPos2
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-20, 0, -25]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+      - name: tpPos3
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [-15, 0, -25]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
       - name: Background
         enabled: true
         component:
@@ -79,7 +103,7 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [225, -220, 0]
+            position: [225.550003, -220, 0]
             size: [400, 400]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
@@ -345,149 +369,6 @@ child:
             hover_image_color: [1, 1, 1, 1]
           - type: 12
             enabled: true
-      - name: PerformanceMenu
-        enabled: true
-        component:
-          - type: 1
-            enabled: true
-            position: [0, 0, 0]
-            rotation: [0, 0, 0, 1]
-            scale: [1, 1, 1]
-          - type: 10
-            enabled: true
-            position: [0, 0, 0]
-            size: [1415, 767]
-            scale: [1, 1]
-            rotation: [0, 0, 0, 1]
-            pivot: [0.5, 0.5]
-            anchor: [0.5, 0.699999988]
-          - type: 8
-            enabled: true
-        child:
-          - name: FpsText
-            enabled: true
-            component:
-              - type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
-                scale: [1, 1, 1]
-              - type: 10
-                enabled: true
-                position: [-50, 0, 0]
-                size: [100, 100]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [1, 0]
-              - type: 9
-                enabled: true
-              - type: 16
-                enabled: true
-                font_id: 13446434311746485888
-                color: [1, 0, 1, 1]
-                size: 16
-                label_text: 999
-          - name: MsText
-            enabled: true
-            component:
-              - type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
-                scale: [1, 1, 1]
-              - type: 10
-                enabled: true
-                position: [-50, 30, 0]
-                size: [100, 100]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [1, 0]
-              - type: 9
-                enabled: true
-              - type: 16
-                enabled: true
-                font_id: 13446434311746485888
-                color: [1, 0, 1, 1]
-                size: 16
-                label_text: 999
-          - name: FpsLabel
-            enabled: true
-            component:
-              - type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
-                scale: [1, 1, 1]
-              - type: 10
-                enabled: true
-                position: [-80, 0, 0]
-                size: [100, 100]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [1, 0]
-              - type: 9
-                enabled: true
-              - type: 16
-                enabled: true
-                font_id: 13446434311746485888
-                color: [0, 0, 0, 1]
-                size: 16
-                label_text: "FPS: "
-          - name: MsLabel
-            enabled: true
-            component:
-              - type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
-                scale: [1, 1, 1]
-              - type: 10
-                enabled: true
-                position: [-80, 30, 0]
-                size: [100, 100]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [1, 0]
-              - type: 9
-                enabled: true
-              - type: 16
-                enabled: true
-                font_id: 13446434311746485888
-                color: [0, 0, 0, 1]
-                size: 16
-                label_text: "Ms: "
-          - name: Vsync
-            enabled: true
-            component:
-              - type: 1
-                enabled: true
-                position: [0, 0, 0]
-                rotation: [0, 0, 0, 1]
-                scale: [1, 1, 1]
-              - type: 10
-                enabled: true
-                position: [-140, -30, 0]
-                size: [45, 20]
-                scale: [1, 1]
-                rotation: [0, 0, 0, 1]
-                pivot: [0.5, 0.5]
-                anchor: [1, 1]
-              - type: 9
-                enabled: true
-              - type: 11
-                enabled: true
-                image_id: 578303436522520533
-                hover_image_id: 0
-                use_image: true
-                use_hover_image: false
-                image_color: [1, 1, 1, 1]
-                hover_image_color: [1, 1, 1, 1]
-              - type: 12
-                enabled: true
       - name: IncMovSpeed
         enabled: true
         component:
@@ -712,27 +593,146 @@ child:
             hover_image_color: [1, 1, 1, 1]
           - type: 12
             enabled: true
-  - name: tpPos1
+  - name: PerformanceMenu
     enabled: true
     component:
       - type: 1
         enabled: true
-        position: [-87.7180557, 4.08781862, -48.9046745]
+        position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
-  - name: tpPos2
-    enabled: true
-    component:
-      - type: 1
+      - type: 10
         enabled: true
-        position: [22.5770893, -9.81798172, -53.8951569]
+        position: [0, 0, 0]
+        size: [1133, 630]
+        scale: [1, 1]
         rotation: [0, 0, 0, 1]
-        scale: [1, 1, 1]
-  - name: tpPos3
-    enabled: true
-    component:
-      - type: 1
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 8
         enabled: true
-        position: [-40.1609612, -22.7224255, -67.9749908]
-        rotation: [0, 0, 0, 1]
-        scale: [1, 1, 1]
+    child:
+      - name: FpsText
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-50, 0, 0]
+            size: [100, 100]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0]
+          - type: 9
+            enabled: true
+          - type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [1, 0, 1, 1]
+            size: 16
+            label_text: 999
+      - name: MsText
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-50, 30, 0]
+            size: [100, 100]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0]
+          - type: 9
+            enabled: true
+          - type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [1, 0, 1, 1]
+            size: 16
+            label_text: 999
+      - name: FpsLabel
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-80, 0, 0]
+            size: [100, 100]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0]
+          - type: 9
+            enabled: true
+          - type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [0, 0, 0, 1]
+            size: 16
+            label_text: "FPS: "
+      - name: MsLabel
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-80, 30, 0]
+            size: [100, 100]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 0]
+          - type: 9
+            enabled: true
+          - type: 16
+            enabled: true
+            font_id: 13446434311746485888
+            color: [0, 0, 0, 1]
+            size: 16
+            label_text: "Ms: "
+      - name: Vsync
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-140, -30, 0]
+            size: [45, 20]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [1, 1]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 578303436522520533
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+          - type: 12
+            enabled: true

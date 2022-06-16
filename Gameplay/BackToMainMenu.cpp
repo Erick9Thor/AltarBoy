@@ -10,7 +10,6 @@ Hachiko::Scripting::BackToMainMenu::BackToMainMenu(GameObject* game_object)
 
 void Hachiko::Scripting::BackToMainMenu::OnAwake()
 {
-	_button_back = game_object->GetComponent<ComponentButton>();
 
 	if (_button_back == nullptr)
 	{
@@ -26,6 +25,7 @@ void Hachiko::Scripting::BackToMainMenu::OnUpdate()
 {
 	if (_button_back->IsSelected())
 	{
-		SceneManagement::SwitchScene(Scenes::MAIN_MENU);
+		HE_LOG("TEST_BUTTON");
+		//SceneManagement::SwitchScene(Scenes::MAIN_MENU);
 	}
 }

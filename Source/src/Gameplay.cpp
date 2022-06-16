@@ -155,6 +155,11 @@ bool Hachiko::Debug::GetVsync()
     return SDL_HINT_RENDER_VSYNC;
 }
 
+HACHIKO_API void Hachiko::Debug::DrawNavmesh(bool is_navmesh)
+{
+    return App->renderer->SetDrawNavmesh(is_navmesh);
+}
+
 
 /*---------------------------------------------------------------------------*/
 
