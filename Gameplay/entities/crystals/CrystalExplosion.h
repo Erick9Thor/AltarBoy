@@ -1,7 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "Stats.h"
+#include "entities/Stats.h"
 
 namespace Hachiko
 {

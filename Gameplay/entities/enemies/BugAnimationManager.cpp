@@ -1,6 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "BugAnimationManager.h"
-#include "EnemyController.h"
+#include "entities/enemies/BugAnimationManager.h"
+#include "entities/enemies/EnemyController.h"
 
 Hachiko::Scripting::BugAnimationManager::BugAnimationManager(Hachiko::GameObject* game_object)
 	: Script(game_object, "BugAnimationManager")

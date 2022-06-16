@@ -1,20 +1,13 @@
 #include "scriptingUtil/gameplaypch.h"
 
-#include "Stats.h"
+#include "entities/Stats.h"
+#include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/PlayerController.h"
 
-#include "CrystalExplosion.h"
-#include "PlayerController.h"
-#include "EnemyController.h"
-
-#include "core/GameObject.h"
-
-#include "components/ComponentTransform.h"
-#include "components/ComponentObstacle.h"
-#include "components/ComponentAnimation.h"
-
-#include "modules/ModuleSceneManager.h"
-
-#include "resources/ResourceAnimation.h"
+// TODO: These two includes must go:
+#include <modules/ModuleSceneManager.h>
+#include <resources/ResourceAnimation.h>
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")

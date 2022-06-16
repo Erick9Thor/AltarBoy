@@ -1,13 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "BulletController.h"
 
-#include "Scenes.h"
-#include "EnemyController.h"
-#include "PlayerController.h"
-#include "CrystalExplosion.h"
+#include "constants/Scenes.h"
+#include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/BulletController.h"
+#include "entities/player/PlayerController.h"
 
-#include <components/ComponentTransform.h>
-
+// TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)

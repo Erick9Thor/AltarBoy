@@ -1,7 +1,7 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "PlayerState.h"
+#include "entities/player/PlayerState.h"
 
 namespace Hachiko
 {

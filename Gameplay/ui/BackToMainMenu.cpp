@@ -1,6 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "BackToMainMenu.h"
-#include "Scenes.h"
+#include "constants/Scenes.h"
+#include "ui/BackToMainMenu.h"
 
 Hachiko::Scripting::BackToMainMenu::BackToMainMenu(GameObject* game_object)
 	: Script(game_object, "BackToMainMenu")

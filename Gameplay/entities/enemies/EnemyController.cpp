@@ -1,11 +1,10 @@
-
 #include "scriptingUtil/gameplaypch.h"
-#include "EnemyController.h"
-#include "PlayerController.h"
-#include "Stats.h"
-#include "Scenes.h"
-#include <components/ComponentTransform.h>
-#include <components/ComponentAgent.h>
+#include "constants/Scenes.h"
+#include "entities/Stats.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/PlayerController.h"
+
+// TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)

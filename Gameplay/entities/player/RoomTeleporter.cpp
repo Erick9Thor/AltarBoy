@@ -1,5 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "RoomTeleporter.h"
+#include "entities/player/RoomTeleporter.h"
 
 // NOTE FOR BERNAT: To scripts be able to work, you need to define it's 
 // constructor properly. Note the name field that is same with the class name.

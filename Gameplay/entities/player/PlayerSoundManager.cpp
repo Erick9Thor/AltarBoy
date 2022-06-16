@@ -1,7 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "PlayerSoundManager.h"
-#include "PlayerController.h"
-#include "Sounds.h"
+#include "constants/Sounds.h"
+#include "entities/player/PlayerController.h"
+#include "entities/player/PlayerSoundManager.h"
 
 Hachiko::Scripting::PlayerSoundManager::PlayerSoundManager(Hachiko::GameObject* game_object)
 	: Script(game_object, "PlayerSoundManager")

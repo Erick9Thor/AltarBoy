@@ -1,6 +1,6 @@
 #pragma once
 #include <scripting/Script.h>
-#include "PlayerState.h"
+#include "entities/enemies/BugState.h"
 
 namespace Hachiko
 {

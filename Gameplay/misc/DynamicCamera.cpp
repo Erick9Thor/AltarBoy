@@ -1,6 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "DynamicCamera.h"
-#include <components/ComponentTransform.h>
+#include "misc/DynamicCamera.h"
 
 Hachiko::Scripting::DynamicCamera::DynamicCamera(GameObject* game_object)
 	: Script(game_object, "DynamicCamera")

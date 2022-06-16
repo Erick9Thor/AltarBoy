@@ -11,11 +11,3 @@ enum class PlayerState
 	FALLING,
 	STUNNED,
 };
-
-enum class BugState
-{
-	INVALID,
-	DEAD,
-	IDLE,
-	ATTACKING
-};

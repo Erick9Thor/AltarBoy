@@ -1,6 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "MainMenuManager.h"
-#include "Scenes.h"
+#include "constants/Scenes.h"
+#include "ui/MainMenuManager.h"
 
 Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
 	: Script(game_object, "MainMenuManager")

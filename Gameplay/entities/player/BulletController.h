@@ -2,7 +2,6 @@
 
 #include <scripting/Script.h>
 
-
 namespace Hachiko
 {
     class GameObject;

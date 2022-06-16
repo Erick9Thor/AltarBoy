@@ -1,13 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "PlayerController.h"
-#include "Scenes.h"
-#include "EnemyController.h"
-#include "CrystalExplosion.h"
-#include "PlayerCamera.h"
-#include "BulletController.h"
+#include "constants/Scenes.h"
+#include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/BulletController.h"
+#include "entities/player/PlayerCamera.h"
+#include "entities/player/PlayerController.h"
 
-#include <components/ComponentTransform.h>
-#include <components/ComponentCamera.h>
+// TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
 #define RAD_TO_DEG 180.0f / math::pi

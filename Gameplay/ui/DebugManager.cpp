@@ -1,11 +1,10 @@
 #include "scriptingUtil/gameplaypch.h"
 
-#include "DebugManager.h"
-#include "PlayerController.h"
-#include "Scenes.h"
+#include "constants/Scenes.h"
+#include "entities/player/PlayerController.h"
+#include "ui/DebugManager.h"
 
 #include <Algorithm/Random/LCG.h>
-//#include <components/ComponentTransform.h>
 
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")

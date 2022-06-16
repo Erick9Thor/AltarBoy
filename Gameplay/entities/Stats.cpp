@@ -1,5 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
-#include <Stats.h>
+#include "entities/Stats.h"
 
 Hachiko::Scripting::Stats::Stats(GameObject* game_object)
 	: Script(game_object, "Stats")

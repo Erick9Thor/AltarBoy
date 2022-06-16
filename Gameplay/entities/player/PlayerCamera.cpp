@@ -1,10 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "PlayerCamera.h"
-#include "PlayerState.h"
-#include "PlayerController.h"
-#include <components/ComponentTransform.h>
+#include "entities/player/PlayerCamera.h"
+#include "entities/player/PlayerState.h"
+#include "entities/player/PlayerController.h"
+
+// TODO: Delete this include:
 #include <core/Scene.h>
-#include <thread>
+
+//#include <thread>
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")

@@ -1,6 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "PlayerAnimationManager.h"
-#include "PlayerController.h"
+#include "entities/player/PlayerAnimationManager.h"
+#include "entities/player/PlayerController.h"
 
 Hachiko::Scripting::PlayerAnimationManager::PlayerAnimationManager(GameObject* game_object)
 	: Script(game_object, "PlayerAnimationManager")

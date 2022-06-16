@@ -1,5 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "FancyLights.h"
+#include "misc/FancyLights.h"
 
 Hachiko::Scripting::FancyLights::FancyLights(Hachiko::GameObject* game_object)
 	: Script(game_object, "FancyLights")

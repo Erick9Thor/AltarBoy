@@ -1,8 +1,8 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "Stats.h"
-#include "PlayerState.h"
+#include "entities/Stats.h"
+#include "entities/enemies/BugState.h"
 
 namespace Hachiko
 {
