@@ -37,6 +37,7 @@ namespace Hachiko
 
 		private:
 			State _state = State::CLOSED;
+			
 		};
 	}
 	

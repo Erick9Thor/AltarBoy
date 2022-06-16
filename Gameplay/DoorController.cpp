@@ -39,6 +39,7 @@ void Hachiko::Scripting::DoorController::SetDoorState(const State state)
 	case State::OPEN:
 		_door_open->SetActive(true);
 		_door_closed->SetActive(false);
+		SceneManagement::Destroy(_door_closed);
 		break;
 	}
 }
