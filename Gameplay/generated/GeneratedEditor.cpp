@@ -1,39 +1,28 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "BackToMainMenu.h"
-#include "BugAnimationManager.h"
-#include "BulletController.h"
-#include "CrystalExplosion.h"
-#include "DebugManager.h"
-#include "DynamicCamera.h"
-#include "EnemyController.h"
-#include "FancyLights.h"
-#include "MainMenuManager.h"
-#include "PlayerAnimationManager.h"
-#include "PlayerCamera.h"
-#include "PlayerController.h"
-#include "PlayerSoundManager.h"
-#include "RoomTeleporter.h"
-#include "Stats.h"
+#include "entities/Stats.h"
+#include "entities/crystals/CrystalExplosion.h"
+#include "entities/enemies/BugAnimationManager.h"
+#include "entities/enemies/EnemyController.h"
+#include "entities/player/BulletController.h"
+#include "entities/player/PlayerAnimationManager.h"
+#include "entities/player/PlayerCamera.h"
+#include "entities/player/PlayerController.h"
+#include "entities/player/PlayerSoundManager.h"
+#include "entities/player/RoomTeleporter.h"
+#include "misc/DynamicCamera.h"
+#include "misc/FancyLights.h"
+#include "ui/BackToMainMenu.h"
+#include "ui/DebugManager.h"
+#include "ui/MainMenuManager.h"
 
 
-void Hachiko::Scripting::BackToMainMenu::OnEditor()
+void Hachiko::Scripting::Stats::OnEditor()
 {
-	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
-}
-
-void Hachiko::Scripting::BugAnimationManager::OnEditor()
-{
-	Editor::Show<ComponentAnimation>("Animator", "ComponentAnimation*", _animator);
-	Editor::Show("State String", _state_string);
-	Editor::Show("Idle Index", _idle_index);
-	Editor::Show("Attacking Index", _attacking_index);
-}
-
-void Hachiko::Scripting::BulletController::OnEditor()
-{
+	Editor::Show("Attack Power", _attack_power);
+	Editor::Show("Attack Cd", _attack_cd);
+	Editor::Show("Attack Range", _attack_range);
 	Editor::Show("Move Speed", _move_speed);
-	Editor::Show("Lifetime", _lifetime);
-	Editor::Show("Collider Radius", _collider_radius);
+	Editor::Show("Max Hp", _max_hp);
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnEditor()
@@ -47,45 +36,12 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("Explosive Crystal", _explosive_crystal);
 }
 
-void Hachiko::Scripting::DebugManager::OnEditor()
+void Hachiko::Scripting::BugAnimationManager::OnEditor()
 {
-	Editor::Show("Player", _player);
-	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
-	Editor::Show<ComponentButton>("Teleport Next Pos", "ComponentButton*", _teleport_next_pos);
-	Editor::Show<ComponentButton>("Teleport Prev Pos", "ComponentButton*", _teleport_prev_pos);
-	Editor::Show<ComponentButton>("Teleport Add Pos", "ComponentButton*", _teleport_add_pos);
-	Editor::Show<ComponentButton>("Add Health", "ComponentButton*", _add_health);
-	Editor::Show<ComponentButton>("Remove Health", "ComponentButton*", _remove_health);
-	Editor::Show<ComponentButton>("Increase Max Hp", "ComponentButton*", _increase_max_hp);
-	Editor::Show<ComponentButton>("Decrease Max Hp", "ComponentButton*", _decrease_max_hp);
-	Editor::Show<ComponentButton>("Increase Move Speed", "ComponentButton*", _increase_move_speed);
-	Editor::Show<ComponentButton>("Decrease Move Speed", "ComponentButton*", _decrease_move_speed);
-	Editor::Show<ComponentButton>("Increase Attack Cd", "ComponentButton*", _increase_attack_cd);
-	Editor::Show<ComponentButton>("Decrease Attack Cd", "ComponentButton*", _decrease_attack_cd);
-	Editor::Show<ComponentButton>("Increase Attack Power", "ComponentButton*", _increase_attack_power);
-	Editor::Show<ComponentButton>("Decrease Attack Power", "ComponentButton*", _decrease_attack_power);
-	Editor::Show<ComponentButton>("God Mode", "ComponentButton*", _god_mode);
-	Editor::Show<ComponentButton>("Spawn Enemy", "ComponentButton*", _spawn_enemy);
-	Editor::Show<ComponentButton>("Unlock Skills", "ComponentButton*", _unlock_skills);
-	Editor::Show<ComponentButton>("Toggle Performance Output", "ComponentButton*", _toggle_performance_output);
-	Editor::Show<ComponentButton>("Toggle Vsync", "ComponentButton*", _toggle_vsync);
-	Editor::Show<ComponentButton>("Toggle Wireframe", "ComponentButton*", _toggle_wireframe);
-	Editor::Show<ComponentButton>("Toggle Show Colliders", "ComponentButton*", _toggle_show_colliders);
-	Editor::Show<ComponentButton>("Exit Debug", "ComponentButton*", _exit_debug);
-	Editor::Show<ComponentText>("Text Fps", "ComponentText*", _text_fps);
-	Editor::Show<ComponentText>("Text Ms", "ComponentText*", _text_ms);
-	Editor::Show("Tp Pos 1", _tp_pos1);
-	Editor::Show("Tp Pos 2", _tp_pos2);
-	Editor::Show("Tp Pos 3", _tp_pos3);
-	Editor::Show("Performance Menu", _performance_menu);
-}
-
-void Hachiko::Scripting::DynamicCamera::OnEditor()
-{
-	Editor::Show("Start Point", _start_point);
-	Editor::Show("End Point", _end_point);
-	Editor::Show("Speed", _speed);
-	Editor::Show("Lerp Position", _lerp_position);
+	Editor::Show<ComponentAnimation>("Animator", "ComponentAnimation*", _animator);
+	Editor::Show("State String", _state_string);
+	Editor::Show("Idle Index", _idle_index);
+	Editor::Show("Attacking Index", _attacking_index);
 }
 
 void Hachiko::Scripting::EnemyController::OnEditor()
@@ -99,24 +55,11 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Attack Animation Timer", _attack_animation_timer);
 }
 
-void Hachiko::Scripting::FancyLights::OnEditor()
+void Hachiko::Scripting::BulletController::OnEditor()
 {
-	Editor::Show("Rotate On Y", _rotate_on_y);
-	Editor::Show("Angle", _angle);
-}
-
-void Hachiko::Scripting::MainMenuManager::OnEditor()
-{
-	Editor::Show("State Changed", _state_changed);
-	Editor::Show("Main Background", _main_background);
-	Editor::Show("Button Background", _button_background);
-	Editor::Show<ComponentButton>("Button Play", "ComponentButton*", _button_play);
-	Editor::Show<ComponentButton>("Button Quit", "ComponentButton*", _button_quit);
-	Editor::Show<ComponentButton>("Button Settings", "ComponentButton*", _button_settings);
-	Editor::Show<ComponentButton>("Button Credits", "ComponentButton*", _button_credits);
-	Editor::Show("Settings", _settings);
-	Editor::Show("Credits", _credits);
-	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
+	Editor::Show("Move Speed", _move_speed);
+	Editor::Show("Lifetime", _lifetime);
+	Editor::Show("Collider Radius", _collider_radius);
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::OnEditor()
@@ -176,11 +119,68 @@ void Hachiko::Scripting::RoomTeleporter::OnEditor()
 	Editor::Show("Blackout Duration", _blackout_duration);
 }
 
-void Hachiko::Scripting::Stats::OnEditor()
+void Hachiko::Scripting::DynamicCamera::OnEditor()
 {
-	Editor::Show("Attack Power", _attack_power);
-	Editor::Show("Attack Cd", _attack_cd);
-	Editor::Show("Attack Range", _attack_range);
-	Editor::Show("Move Speed", _move_speed);
-	Editor::Show("Max Hp", _max_hp);
+	Editor::Show("Start Point", _start_point);
+	Editor::Show("End Point", _end_point);
+	Editor::Show("Speed", _speed);
+	Editor::Show("Lerp Position", _lerp_position);
+}
+
+void Hachiko::Scripting::FancyLights::OnEditor()
+{
+	Editor::Show("Rotate On Y", _rotate_on_y);
+	Editor::Show("Angle", _angle);
+}
+
+void Hachiko::Scripting::BackToMainMenu::OnEditor()
+{
+	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
+}
+
+void Hachiko::Scripting::DebugManager::OnEditor()
+{
+	Editor::Show("Player", _player);
+	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
+	Editor::Show<ComponentButton>("Teleport Next Pos", "ComponentButton*", _teleport_next_pos);
+	Editor::Show<ComponentButton>("Teleport Prev Pos", "ComponentButton*", _teleport_prev_pos);
+	Editor::Show<ComponentButton>("Teleport Add Pos", "ComponentButton*", _teleport_add_pos);
+	Editor::Show<ComponentButton>("Add Health", "ComponentButton*", _add_health);
+	Editor::Show<ComponentButton>("Remove Health", "ComponentButton*", _remove_health);
+	Editor::Show<ComponentButton>("Increase Max Hp", "ComponentButton*", _increase_max_hp);
+	Editor::Show<ComponentButton>("Decrease Max Hp", "ComponentButton*", _decrease_max_hp);
+	Editor::Show<ComponentButton>("Increase Move Speed", "ComponentButton*", _increase_move_speed);
+	Editor::Show<ComponentButton>("Decrease Move Speed", "ComponentButton*", _decrease_move_speed);
+	Editor::Show<ComponentButton>("Increase Attack Cd", "ComponentButton*", _increase_attack_cd);
+	Editor::Show<ComponentButton>("Decrease Attack Cd", "ComponentButton*", _decrease_attack_cd);
+	Editor::Show<ComponentButton>("Increase Attack Power", "ComponentButton*", _increase_attack_power);
+	Editor::Show<ComponentButton>("Decrease Attack Power", "ComponentButton*", _decrease_attack_power);
+	Editor::Show<ComponentButton>("God Mode", "ComponentButton*", _god_mode);
+	Editor::Show<ComponentButton>("Spawn Enemy", "ComponentButton*", _spawn_enemy);
+	Editor::Show<ComponentButton>("Unlock Skills", "ComponentButton*", _unlock_skills);
+	Editor::Show<ComponentButton>("Toggle Performance Output", "ComponentButton*", _toggle_performance_output);
+	Editor::Show<ComponentButton>("Toggle Vsync", "ComponentButton*", _toggle_vsync);
+	Editor::Show<ComponentButton>("Toggle Wireframe", "ComponentButton*", _toggle_wireframe);
+	Editor::Show<ComponentButton>("Toggle Show Colliders", "ComponentButton*", _toggle_show_colliders);
+	Editor::Show<ComponentButton>("Exit Debug", "ComponentButton*", _exit_debug);
+	Editor::Show<ComponentText>("Text Fps", "ComponentText*", _text_fps);
+	Editor::Show<ComponentText>("Text Ms", "ComponentText*", _text_ms);
+	Editor::Show("Tp Pos 1", _tp_pos1);
+	Editor::Show("Tp Pos 2", _tp_pos2);
+	Editor::Show("Tp Pos 3", _tp_pos3);
+	Editor::Show("Performance Menu", _performance_menu);
+}
+
+void Hachiko::Scripting::MainMenuManager::OnEditor()
+{
+	Editor::Show("State Changed", _state_changed);
+	Editor::Show("Main Background", _main_background);
+	Editor::Show("Button Background", _button_background);
+	Editor::Show<ComponentButton>("Button Play", "ComponentButton*", _button_play);
+	Editor::Show<ComponentButton>("Button Quit", "ComponentButton*", _button_quit);
+	Editor::Show<ComponentButton>("Button Settings", "ComponentButton*", _button_settings);
+	Editor::Show<ComponentButton>("Button Credits", "ComponentButton*", _button_credits);
+	Editor::Show("Settings", _settings);
+	Editor::Show("Credits", _credits);
+	Editor::Show<ComponentButton>("Button Back", "ComponentButton*", _button_back);
 }
