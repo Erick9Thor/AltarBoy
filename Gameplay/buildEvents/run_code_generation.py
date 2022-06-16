@@ -21,6 +21,14 @@ editor_cpp_path = generated_path + 'GeneratedEditor.cpp'
 # Path to SaveAndLoadMethods.cpp:
 save_load_cpp_path = generated_path + 'SaveAndLoadMethods.cpp'
 
+# Get all files in the current directory recursively:
+file_paths = []
+for root, dirs, files in os.walk(current_dir):
+    for file in files:
+        file_path = os.path.join(root,file)
+        file_path = file_path.replace('\\', '/')
+        file_paths.append(file_path)
+
 # Name of all the files that are inside the scripts folder:
 files_in_directory = os.listdir(scripting_path)
 
@@ -261,42 +269,53 @@ def get_formatted_editor_label(current_name):
 
     return formatted_label
 
-
 print("Running Pre-Build Event \"Create ScriptFactory & Serialization\"")
 print("Using header files:")
 
 # Take all the script header files in the directory:
-script_classes = []
-for file_name in files_in_directory:
+script_classes_and_paths = {}
+
+for file_name in file_paths:
     # Only check header files:
     if file_name[-2:] == '.h':
-        header_file = open(scripting_path+file_name)
+        header_file = open(file_name)
         header_file_as_string = header_file.read()
         header_file_as_string = (delete_comments_from_file(header_file_as_string))
 
         # File content without spaces, tabs and new lines:
         header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
+
+        # Find the latest / in string:
+        last_slash = file_name.rindex('/')
         # Assume class name to be the same with the file name:
-        class_name = file_name[0:-2]
+        class_name = file_name[last_slash+1 : -2]
+        # class_name = file_name[0:-2]
+        
         # If the classs with the same name with the file name inherits 
         # from Script base class, then it's a script file:
         is_script_file = len(re.findall(re.escape('class'+class_name)+'(.*)'+re.escape(':publicScript'), header_file_as_string_without_spaces)) > 0
 
         if is_script_file:
-            print("Script: " + file_name)
-            script_classes.append(class_name)
+            print("Script: " + file_name[5:])
+            script_classes_and_paths[file_name] = class_name
 
 first_script = True
 
-for script_class in script_classes:
-    header_file = open(scripting_path + script_class + '.h')
+for script_class_path in script_classes_and_paths:
+
+    script_class = script_classes_and_paths[script_class_path]
+
+    header_file = open(script_class_path)
     header_file_as_string = header_file.read()
     header_file_as_string = (delete_comments_from_file(header_file_as_string))
 
     # File content without spaces, tabs and new lines:
     header_file_as_string_without_spaces = re.sub(r"[\n\t\s]*", "", header_file_as_string)
+    # Generate clean header path:
+    # 5: is for removing ./../ at the start of each script
+    current_header_file_path_clean = script_class_path[5:]
     # Include statement of the current script file from its file name:
-    current_include = include_start + scripting_folder + script_class + '.h' + '\"\n'
+    current_include = include_start + current_header_file_path_clean + '\"\n'
     # Generate include statements for GeneratedSerialization.cpp:
     generated_includes_serialization += current_include
     # Generate include statements for ScriptFactory.cpp:
@@ -457,7 +476,7 @@ for script_class in script_classes:
                 # Get the type without asterisk:
                 without_pointer = current_type[:-1]
                 # If the type without pointer is a script:
-                if without_pointer in script_classes:
+                if without_pointer in script_classes_and_paths.values():
                     on_editor_method_body += editor_show_components_format.format(
                         field_name_formatted = get_formatted_editor_label(current_name),
                         field_name = current_name,
