@@ -247,8 +247,8 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	if (_spawn_enemy->IsSelected())
 	{
 		HE_LOG("_spawn_enemy pressed");
-		UID* enemy_uid = new UID(11363594999076676195);
-		GameObject* enemy = GameObject::Instantiate(enemy_uid, game_object->parent->FindDescendantWithName("Enemies"));
+		UID enemy_uid = 11363594999076676195;
+		GameObject* enemy = SceneManagement::Instantiate(enemy_uid, game_object->parent->FindDescendantWithName("Enemies"), 1)[0];
 		float3 player_pos = _player->GetTransform()->GetGlobalPosition();
 		enemy->GetTransform()->SetGlobalPosition(player_pos + float3(-3, 0, 0));
 	}
