@@ -30,7 +30,8 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("Player", _player);
 	Editor::Show("Explosion Crystal", _explosion_crystal);
 	Editor::Show("Static Crystal", _static_crystal);
-	Editor::Show("Explosion Indicator", _explosion_indicator);
+	Editor::Show("Outer Explosion Indicator", _outer_explosion_indicator);
+	Editor::Show("Inner Explosion Indicator", _inner_explosion_indicator);
 	Editor::Show("Crashing Index", _crashing_index);
 	Editor::Show("Detecting Radius", _detecting_radius);
 	Editor::Show("Explosion Radius", _explosion_radius);

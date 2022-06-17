@@ -38,11 +38,13 @@ namespace Hachiko
 
 		private:
 			ComponentTransform* transform;
+			ComponentTransform* explosive_area;
 			SERIALIZE_FIELD(GameObject*, _player);
 
 			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
-			SERIALIZE_FIELD(GameObject*, _explosion_indicator);
+			SERIALIZE_FIELD(GameObject*, _outer_explosion_indicator);
+			SERIALIZE_FIELD(GameObject*, _inner_explosion_indicator);
 
 			SERIALIZE_FIELD(unsigned, _crashing_index);
 			SERIALIZE_FIELD(float, _detecting_radius);
@@ -54,6 +56,7 @@ namespace Hachiko
 			bool is_exploding = false;
 
 			math::float3 _player_pos;
+			float explosion_duration;
 
 			GameObject* enemies;
 		};

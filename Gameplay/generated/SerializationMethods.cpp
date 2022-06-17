@@ -115,12 +115,21 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_explosion_indicator") != serialized_fields.end())
+	if(serialized_fields.find("_outer_explosion_indicator") != serialized_fields.end())
 	{
-		const SerializedField& _explosion_indicator_sf = serialized_fields["_explosion_indicator"];
-		if (_explosion_indicator_sf.type_name == "GameObject*")
+		const SerializedField& _outer_explosion_indicator_sf = serialized_fields["_outer_explosion_indicator"];
+		if (_outer_explosion_indicator_sf.type_name == "GameObject*")
 		{
-			_explosion_indicator = std::any_cast<GameObject*>(_explosion_indicator_sf.copy);
+			_outer_explosion_indicator = std::any_cast<GameObject*>(_outer_explosion_indicator_sf.copy);
+		}
+	}
+
+	if(serialized_fields.find("_inner_explosion_indicator") != serialized_fields.end())
+	{
+		const SerializedField& _inner_explosion_indicator_sf = serialized_fields["_inner_explosion_indicator"];
+		if (_inner_explosion_indicator_sf.type_name == "GameObject*")
+		{
+			_inner_explosion_indicator = std::any_cast<GameObject*>(_inner_explosion_indicator_sf.copy);
 		}
 	}
 
@@ -180,7 +189,9 @@ void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
-	serialized_fields["_explosion_indicator"] = SerializedField(std::string("_explosion_indicator"), std::make_any<GameObject*>(_explosion_indicator), std::string("GameObject*"));
+	serialized_fields["_outer_explosion_indicator"] = SerializedField(std::string("_outer_explosion_indicator"), std::make_any<GameObject*>(_outer_explosion_indicator), std::string("GameObject*"));
+
+	serialized_fields["_inner_explosion_indicator"] = SerializedField(std::string("_inner_explosion_indicator"), std::make_any<GameObject*>(_inner_explosion_indicator), std::string("GameObject*"));
 
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
 

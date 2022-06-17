@@ -89,13 +89,22 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
-	if (_explosion_indicator != nullptr)
+	if (_outer_explosion_indicator != nullptr)
 	{
-		node["'_explosion_indicator@GameObject*'"] = _explosion_indicator->GetID();
+		node["'_outer_explosion_indicator@GameObject*'"] = _outer_explosion_indicator->GetID();
 	}
 	else
 	{
-		node["'_explosion_indicator@GameObject*'"] = 0;
+		node["'_outer_explosion_indicator@GameObject*'"] = 0;
+	}
+
+	if (_inner_explosion_indicator != nullptr)
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = _inner_explosion_indicator->GetID();
+	}
+	else
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = 0;
 	}
 
 	node["'_crashing_index@unsigned'"] = _crashing_index;
@@ -126,9 +135,14 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_explosion_indicator@GameObject*'"].IsDefined())
+	if (load_node["'_outer_explosion_indicator@GameObject*'"].IsDefined())
 	{
-		_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_explosion_indicator@GameObject*'"].as<unsigned long long>());
+		_outer_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_outer_explosion_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_inner_explosion_indicator@GameObject*'"].IsDefined())
+	{
+		_inner_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_inner_explosion_indicator@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
