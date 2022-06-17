@@ -318,6 +318,7 @@
 #define MODULE_ANIMATION "animation"
 #define ANIMATION_SPEED "animation_speed"
 #define BLEND_FACTOR "blend_factor"
+#define FIT_TO_LIFETIME "fit_to_lifetime"
 
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"

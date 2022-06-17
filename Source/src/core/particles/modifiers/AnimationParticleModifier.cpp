@@ -56,6 +56,7 @@ void Hachiko::AnimationParticleModifier::Save(YAML::Node& node) const
     ParticleModifier::Save(animation_modifier);
     animation_modifier[ANIMATION_SPEED] = animation_speed;
     animation_modifier[BLEND_FACTOR] = blend_factor;
+    animation_modifier[FIT_TO_LIFETIME] = fit_to_lifetime;
 }
 
 void Hachiko::AnimationParticleModifier::Load(const YAML::Node& node) 
@@ -63,7 +64,10 @@ void Hachiko::AnimationParticleModifier::Load(const YAML::Node& node)
     ParticleModifier::Load(node[MODULE_ANIMATION]);
     animation_speed = node[MODULE_ANIMATION][ANIMATION_SPEED].IsDefined() ?
         node[MODULE_ANIMATION][ANIMATION_SPEED].as<float>() : animation_speed;
-    blend_factor = node[MODULE_ANIMATION][BLEND_FACTOR].IsDefined() ? node[MODULE_ANIMATION][BLEND_FACTOR].as<float>() : blend_factor;
+    blend_factor = node[MODULE_ANIMATION][BLEND_FACTOR].IsDefined() ?
+        node[MODULE_ANIMATION][BLEND_FACTOR].as<float>() : blend_factor;
+    fit_to_lifetime = node[MODULE_ANIMATION][FIT_TO_LIFETIME].IsDefined() ?
+        node[MODULE_ANIMATION][FIT_TO_LIFETIME].as<bool>() : fit_to_lifetime;
 }
 
 void Hachiko::AnimationParticleModifier::UpdateAnimation(Particle& particle) 
