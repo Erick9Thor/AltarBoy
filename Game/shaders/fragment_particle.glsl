@@ -13,7 +13,7 @@ uniform int flip_y;
 uniform float x_factor; // inverse of the number of columns
 uniform float y_factor; // inverse of the number of rows
 uniform vec2 animation_index;
-uniform float blend_factor;
+uniform float animation_blend;
 
 // Color Over Lifetime
 uniform vec4 input_color;
@@ -36,7 +36,7 @@ void main()
     vec4 next_color = vec4(0, 0, 0, 0);
 
     // Blend tiles
-    if (blend_factor > epsilon)
+    if (animation_blend > epsilon)
     {
         vec2 next_index = vec2(0, 0);
         if ((animation_index.x + 1) <= (1 / x_factor) - 1)
@@ -55,5 +55,5 @@ void main()
         next_color = texture2D(diffuseMap,  vec2(u2, v2));
     }
 
-    output_color = has_texture * mix(current_color, next_color, blend_factor) * input_color + (1 - has_texture) * input_color;
+    output_color = has_texture * mix(current_color, next_color, animation_blend) * input_color + (1 - has_texture) * input_color;
 }

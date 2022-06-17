@@ -315,7 +315,8 @@
 #define MODULE_FORCE "force"
 #define ROTATION "rotation"
 #define MODULE_ANIMATION "animation"
-#define SKIP_FRAMES "skip_frames"
+#define ANIMATION_SPEED "animation_speed"
+#define BLEND_FACTOR "blend_factor"
 
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"

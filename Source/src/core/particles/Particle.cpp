@@ -83,6 +83,7 @@ void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)
     const int flip_y = emitter->GetFlipTexture().y ? 1 : 0;
     program->BindUniformInts("flip_x", 1, &flip_x);
     program->BindUniformInts("flip_y", 1, &flip_y);
+    program->BindUniformFloat("animation_blend", &animation_blend);
 
     glBindVertexArray(App->renderer->GetParticleVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -292,6 +293,16 @@ unsigned Hachiko::Particle::GetCurrentAnimationFrame() const
 void Hachiko::Particle::SetCurrentAnimationFrame(unsigned frame)
 {
     this->current_animation_frame = frame;
+}
+
+float Hachiko::Particle::GetAnimationBlend() const
+{
+    return animation_blend;
+}
+
+void Hachiko::Particle::SetAnimationBlend(float animation_blend)
+{
+    this->animation_blend = animation_blend;
 }
 
 void Hachiko::Particle::SetEmitter(ComponentParticleSystem* particle_emitter)

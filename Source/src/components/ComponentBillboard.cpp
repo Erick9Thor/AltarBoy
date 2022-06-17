@@ -73,7 +73,7 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     int flip_y = has_flip_y ? 1 : 0;
     program->BindUniformInts("flip_x", 1, &flip_x);
     program->BindUniformInts("flip_y", 1, &flip_y);
-    program->BindUniformFloat("blend_factor", &blend_factor);
+    program->BindUniformFloat("animation_blend", &blend_factor);
     
     glBindVertexArray(App->renderer->GetParticleVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -312,7 +312,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[FLIP] = has_flip_x;
     node[FLIP_Y] = has_flip_y;
     node[BILLBOARD_LIFETIME] = billboard_lifetime;
-    node[SKIP_FRAMES] = skip_frames;
+    node[ANIMATION_SPEED] = skip_frames;
     node[ANIMATION_LOOP] = animation_loop;
     node[HAS_COLOR_GRADIENT] = has_color_gradient;
     node[COLOR_CYCLES] = color_cycles;
@@ -356,8 +356,8 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     billboard_lifetime = node[BILLBOARD_LIFETIME].IsDefined() ?
         node[BILLBOARD_LIFETIME].as<float>() : 0.0f;
 
-    skip_frames = node[SKIP_FRAMES].IsDefined() ?
-        node[SKIP_FRAMES].as<int>() : 0;
+    skip_frames = node[ANIMATION_SPEED].IsDefined() ?
+        node[ANIMATION_SPEED].as<int>() : 0;
 
     animation_loop = node[ANIMATION_LOOP].IsDefined() ?
         node[ANIMATION_LOOP].as<bool>() : false;
