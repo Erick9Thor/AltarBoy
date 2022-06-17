@@ -7,8 +7,7 @@ Hachiko::AnimationParticleModifier::AnimationParticleModifier(const std::string&
     : ParticleModifier(name, false) 
 {
     cfg.min = 0.0f;
-    cfg.max = 10.0f;
-    cfg.speed = 0.05f;
+    cfg.max = 1.0f;
     cfg.format = "%.2f";
 }
 
@@ -44,9 +43,10 @@ void Hachiko::AnimationParticleModifier::DrawGui()
 {
     Widgets::Checkbox("Fit to lifetime", &fit_to_lifetime);
     cfg.enabled = !fit_to_lifetime;
+    cfg.speed = 0.01f;
     Widgets::DragFloat("Animation speed", animation_speed, &cfg);
     cfg.enabled = true;
-    cfg.max = 1.0f;
+    cfg.speed = 0.05f;
     DragFloat("Blend factor", blend_factor, &cfg);
 }
 
