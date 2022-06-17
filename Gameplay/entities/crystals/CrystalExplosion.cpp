@@ -16,6 +16,8 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _explosion_radius(10.0f)
 	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
+	, _explosion_indicator(nullptr)
+	, _timer_explosion(0.0f)
 {
 }
 
@@ -32,6 +34,10 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 void Hachiko::Scripting::CrystalExplosion::OnStart()
 {
 	transform = game_object->GetTransform();
+	if (_explosion_indicator)
+	{
+		_explosion_indicator->SetActive(false);
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
@@ -56,6 +62,26 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	{
 		CheckRadiusExplosion();
 	}
+
+	if (is_exploding)
+	{
+		if (_timer_explosion <= 0)
+		{
+			ExplodeCrystal();
+			DestroyCrystal();
+		}
+		else
+		{
+			_timer_explosion -= Time::DeltaTime();
+		}
+	}
+
+}
+
+void Hachiko::Scripting::CrystalExplosion::StartExplosion()
+{
+	is_exploding = true;
+	_explosion_indicator->SetActive(true);
 }
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
@@ -106,6 +132,8 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 			player_controller->RegisterHit(_stats->_attack_power, true, relative_dir.Normalized());
 		}
 	}
+	is_exploding = false;
+	_explosion_indicator->SetActive(false);
 }
 
 void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
@@ -113,14 +141,14 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 	if (!_stats)	return;
 
 	_stats->ReceiveDamage(damage);
-	if (_explosive_crystal)
-	{
-		ExplodeCrystal();
-	}
+
 
 	if (!_stats->IsAlive() && !is_destroyed)
 	{
-		DestroyCrystal();
+		if (_explosive_crystal)
+		{
+			StartExplosion();
+		}
 	}
 }
 

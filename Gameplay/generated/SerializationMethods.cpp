@@ -115,6 +115,15 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_explosion_indicator") != serialized_fields.end())
+	{
+		const SerializedField& _explosion_indicator_sf = serialized_fields["_explosion_indicator"];
+		if (_explosion_indicator_sf.type_name == "GameObject*")
+		{
+			_explosion_indicator = std::any_cast<GameObject*>(_explosion_indicator_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_crashing_index") != serialized_fields.end())
 	{
 		const SerializedField& _crashing_index_sf = serialized_fields["_crashing_index"];
@@ -142,6 +151,15 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_timer_explosion") != serialized_fields.end())
+	{
+		const SerializedField& _timer_explosion_sf = serialized_fields["_timer_explosion"];
+		if (_timer_explosion_sf.type_name == "float")
+		{
+			_timer_explosion = std::any_cast<float>(_timer_explosion_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_explosive_crystal") != serialized_fields.end())
 	{
 		const SerializedField& _explosive_crystal_sf = serialized_fields["_explosive_crystal"];
@@ -162,11 +180,15 @@ void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
+	serialized_fields["_explosion_indicator"] = SerializedField(std::string("_explosion_indicator"), std::make_any<GameObject*>(_explosion_indicator), std::string("GameObject*"));
+
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
 
 	serialized_fields["_detecting_radius"] = SerializedField(std::string("_detecting_radius"), std::make_any<float>(_detecting_radius), std::string("float"));
 
 	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
+
+	serialized_fields["_timer_explosion"] = SerializedField(std::string("_timer_explosion"), std::make_any<float>(_timer_explosion), std::string("float"));
 
 	serialized_fields["_explosive_crystal"] = SerializedField(std::string("_explosive_crystal"), std::make_any<bool>(_explosive_crystal), std::string("bool"));
 }

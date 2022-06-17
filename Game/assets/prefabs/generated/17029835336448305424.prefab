@@ -2,19 +2,22 @@ prefab_name: wormDistance_mesh
 name: RootNode
 enabled: true
 component:
-  - type: 1
+  - !<transform>
+    type: 1
     enabled: true
     position: [0, 0, 0]
     rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
-  - type: 14
+  - !<animation>
+    type: 14
     enabled: true
     state_machine: 0
 child:
   - name: Main_root
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
@@ -23,7 +26,8 @@ child:
       - name: Root
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0.0306319334, 0.155475691, 0.0598026738]
             rotation: [0, 0, 0, 1]
@@ -32,7 +36,8 @@ child:
           - name: Body_Jnt_$AssimpFbx$_PreRotation
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0, 0, 0]
                 rotation: [0, -0.70710665, 0, 0.707106888]
@@ -41,7 +46,8 @@ child:
               - name: Body_Jnt_$AssimpFbx$_Rotation
                 enabled: true
                 component:
-                  - type: 1
+                  - !<transform>
+                    type: 1
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0.124610029, 0, 0.992205799]
@@ -50,7 +56,8 @@ child:
                   - name: Body_Jnt
                     enabled: true
                     component:
-                      - type: 1
+                      - !<transform>
+                        type: 1
                         enabled: true
                         position: [0, 0, 0]
                         rotation: [0, 0, 0, 1]
@@ -59,7 +66,8 @@ child:
                       - name: Neck_Jnt_$AssimpFbx$_Translation
                         enabled: true
                         component:
-                          - type: 1
+                          - !<transform>
+                            type: 1
                             enabled: true
                             position: [0.276285022, 0, 0]
                             rotation: [0, 0, 0, 1]
@@ -68,7 +76,8 @@ child:
                           - name: Neck_Jnt_$AssimpFbx$_PreRotation
                             enabled: true
                             component:
-                              - type: 1
+                              - !<transform>
+                                type: 1
                                 enabled: true
                                 position: [0, 0, 0]
                                 rotation: [0, 0.70710665, 0, 0.707106888]
@@ -77,7 +86,8 @@ child:
                               - name: Neck_Jnt_$AssimpFbx$_Rotation
                                 enabled: true
                                 component:
-                                  - type: 1
+                                  - !<transform>
+                                    type: 1
                                     enabled: true
                                     position: [0, 0, 0]
                                     rotation: [0, 0.124610029, 0, 0.992205799]
@@ -86,7 +96,8 @@ child:
                                   - name: Neck_Jnt
                                     enabled: true
                                     component:
-                                      - type: 1
+                                      - !<transform>
+                                        type: 1
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0, 0, 0, 1]
@@ -95,7 +106,8 @@ child:
                                       - name: Head_Jnt_$AssimpFbx$_Translation
                                         enabled: true
                                         component:
-                                          - type: 1
+                                          - !<transform>
+                                            type: 1
                                             enabled: true
                                             position: [-7.88860888e-33, 3.5527136e-17, 0.219875604]
                                             rotation: [0, 0, 0, 1]
@@ -104,7 +116,8 @@ child:
                                           - name: Head_Jnt_$AssimpFbx$_PreRotation
                                             enabled: true
                                             component:
-                                              - type: 1
+                                              - !<transform>
+                                                type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0.445624322, 0.549016356, 0.445624322, 0.549016416]
@@ -113,7 +126,8 @@ child:
                                               - name: Head_Jnt_$AssimpFbx$_Rotation
                                                 enabled: true
                                                 component:
-                                                  - type: 1
+                                                  - !<transform>
+                                                    type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
                                                     rotation: [-0.0589419566, -0.0123877833, -5.83135276e-11, 0.998184562]
@@ -122,7 +136,8 @@ child:
                                                   - name: Head_Jnt
                                                     enabled: true
                                                     component:
-                                                      - type: 1
+                                                      - !<transform>
+                                                        type: 1
                                                         enabled: true
                                                         position: [0, 0, 0]
                                                         rotation: [0, 0, 0, 1]
@@ -131,7 +146,8 @@ child:
                                                       - name: Eye_Jnt_$AssimpFbx$_Translation
                                                         enabled: true
                                                         component:
-                                                          - type: 1
+                                                          - !<transform>
+                                                            type: 1
                                                             enabled: true
                                                             position: [0.122637726, 4.440892e-18, -2.72310455e-17]
                                                             rotation: [0, 0, 0, 1]
@@ -140,7 +156,8 @@ child:
                                                           - name: Eye_Jnt_$AssimpFbx$_PreRotation
                                                             enabled: true
                                                             component:
-                                                              - type: 1
+                                                              - !<transform>
+                                                                type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
                                                                 rotation: [-0.445624322, -0.549016356, -0.445624322, 0.549016356]
@@ -149,7 +166,8 @@ child:
                                                               - name: Eye_Jnt_$AssimpFbx$_Rotation
                                                                 enabled: true
                                                                 component:
-                                                                  - type: 1
+                                                                  - !<transform>
+                                                                    type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
                                                                     rotation: [-0.0558175147, -0.704940379, 0.0558112264, 0.704860687]
@@ -158,7 +176,8 @@ child:
                                                                   - name: Eye_Jnt
                                                                     enabled: true
                                                                     component:
-                                                                      - type: 1
+                                                                      - !<transform>
+                                                                        type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
                                                                         rotation: [0, 0, 0, 1]
@@ -166,7 +185,8 @@ child:
                                                       - name: Clamp_Start_Jnt_L_$AssimpFbx$_Translation
                                                         enabled: true
                                                         component:
-                                                          - type: 1
+                                                          - !<transform>
+                                                            type: 1
                                                             enabled: true
                                                             position: [-0.0914677605, 0.0338537917, 0.0747504011]
                                                             rotation: [0, 0, 0, 1]
@@ -175,7 +195,8 @@ child:
                                                           - name: Clamp_Start_Jnt_L_$AssimpFbx$_PreRotation
                                                             enabled: true
                                                             component:
-                                                              - type: 1
+                                                              - !<transform>
+                                                                type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
                                                                 rotation: [0.989858687, -0.110914156, -0.0842867047, 0.0278138109]
@@ -184,7 +205,8 @@ child:
                                                               - name: Clamp_Start_Jnt_L_$AssimpFbx$_Rotation
                                                                 enabled: true
                                                                 component:
-                                                                  - type: 1
+                                                                  - !<transform>
+                                                                    type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
                                                                     rotation: [0, 0, 0, 1]
@@ -193,7 +215,8 @@ child:
                                                                   - name: Clamp_Start_Jnt_L
                                                                     enabled: true
                                                                     component:
-                                                                      - type: 1
+                                                                      - !<transform>
+                                                                        type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
                                                                         rotation: [0, 0, 0, 1]
@@ -202,7 +225,8 @@ child:
                                                                       - name: Clamp_middle_Jnt_L
                                                                         enabled: true
                                                                         component:
-                                                                          - type: 1
+                                                                          - !<transform>
+                                                                            type: 1
                                                                             enabled: true
                                                                             position: [-0.155859396, -0.0440905318, -0.0201200917]
                                                                             rotation: [0, 0, 0, 1]
@@ -211,7 +235,8 @@ child:
                                                                           - name: Clamp_end_Jnt_L
                                                                             enabled: true
                                                                             component:
-                                                                              - type: 1
+                                                                              - !<transform>
+                                                                                type: 1
                                                                                 enabled: true
                                                                                 position: [0.0166936889, -0.0687169209, -0.0423900709]
                                                                                 rotation: [0, 0, 0, 1]
@@ -220,7 +245,8 @@ child:
                                                                               - name: zero_Jnt_L
                                                                                 enabled: true
                                                                                 component:
-                                                                                  - type: 1
+                                                                                  - !<transform>
+                                                                                    type: 1
                                                                                     enabled: true
                                                                                     position: [0.0664831698, -0.0209813546, -0.00781517755]
                                                                                     rotation: [0, 0, 0, 1]
@@ -228,7 +254,8 @@ child:
                                                       - name: Clamp_Start_Jnt_R_$AssimpFbx$_Translation
                                                         enabled: true
                                                         component:
-                                                          - type: 1
+                                                          - !<transform>
+                                                            type: 1
                                                             enabled: true
                                                             position: [-0.0914676711, 0.033853557, -0.0747503862]
                                                             rotation: [0, 0, 0, 1]
@@ -237,7 +264,8 @@ child:
                                                           - name: Clamp_Start_Jnt_R_$AssimpFbx$_PreRotation
                                                             enabled: true
                                                             component:
-                                                              - type: 1
+                                                              - !<transform>
+                                                                type: 1
                                                                 enabled: true
                                                                 position: [0, 0, 0]
                                                                 rotation: [0.110914111, 0.989858687, 0.0278138146, 0.0842867047]
@@ -246,7 +274,8 @@ child:
                                                               - name: Clamp_Start_Jnt_R_$AssimpFbx$_Rotation
                                                                 enabled: true
                                                                 component:
-                                                                  - type: 1
+                                                                  - !<transform>
+                                                                    type: 1
                                                                     enabled: true
                                                                     position: [0, 0, 0]
                                                                     rotation: [0, 0, 0, 1]
@@ -255,7 +284,8 @@ child:
                                                                   - name: Clamp_Start_Jnt_R
                                                                     enabled: true
                                                                     component:
-                                                                      - type: 1
+                                                                      - !<transform>
+                                                                        type: 1
                                                                         enabled: true
                                                                         position: [0, 0, 0]
                                                                         rotation: [0, 0, 0, 1]
@@ -264,7 +294,8 @@ child:
                                                                       - name: Clamp_middle_Jnt_R
                                                                         enabled: true
                                                                         component:
-                                                                          - type: 1
+                                                                          - !<transform>
+                                                                            type: 1
                                                                             enabled: true
                                                                             position: [0.155859396, 0.0440904312, 0.0201200023]
                                                                             rotation: [0, 0, 0, 1]
@@ -273,7 +304,8 @@ child:
                                                                           - name: Clamp_end_Jnt_R
                                                                             enabled: true
                                                                             component:
-                                                                              - type: 1
+                                                                              - !<transform>
+                                                                                type: 1
                                                                                 enabled: true
                                                                                 position: [-0.0166935921, 0.068717353, 0.0423897579]
                                                                                 rotation: [0, 0, 0, 1]
@@ -282,7 +314,8 @@ child:
                                                                               - name: zero_Jnt_R
                                                                                 enabled: true
                                                                                 component:
-                                                                                  - type: 1
+                                                                                  - !<transform>
+                                                                                    type: 1
                                                                                     enabled: true
                                                                                     position: [-0.0664828718, 0.0209816508, 0.00781573076]
                                                                                     rotation: [0, 0, 0, 1]
@@ -290,7 +323,8 @@ child:
           - name: Tail_first_Jnt_$AssimpFbx$_Translation
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0, 0, -0.224702761]
                 rotation: [0, 0, 0, 1]
@@ -299,7 +333,8 @@ child:
               - name: Tail_first_Jnt_$AssimpFbx$_PreRotation
                 enabled: true
                 component:
-                  - type: 1
+                  - !<transform>
+                    type: 1
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0, 0.70710665, 0, 0.707106888]
@@ -308,7 +343,8 @@ child:
                   - name: Tail_first_Jnt_$AssimpFbx$_Rotation
                     enabled: true
                     component:
-                      - type: 1
+                      - !<transform>
+                        type: 1
                         enabled: true
                         position: [0, 0, 0]
                         rotation: [0, 0.145895556, 0, 0.989300013]
@@ -317,7 +353,8 @@ child:
                       - name: Tail_first_Jnt
                         enabled: true
                         component:
-                          - type: 1
+                          - !<transform>
+                            type: 1
                             enabled: true
                             position: [0, 0, 0]
                             rotation: [0, 0, 0, 1]
@@ -326,7 +363,8 @@ child:
                           - name: Tail_middle_Jnt
                             enabled: true
                             component:
-                              - type: 1
+                              - !<transform>
+                                type: 1
                                 enabled: true
                                 position: [0.239311978, 3.5527136e-17, 0]
                                 rotation: [0, 0.0679765269, 0, 0.997686923]
@@ -335,7 +373,8 @@ child:
                               - name: Tail_end_Jnt_$AssimpFbx$_Translation
                                 enabled: true
                                 component:
-                                  - type: 1
+                                  - !<transform>
+                                    type: 1
                                     enabled: true
                                     position: [0.240222886, -1.7763568e-17, 0]
                                     rotation: [0, 0, 0, 1]
@@ -344,7 +383,8 @@ child:
                                   - name: Tail_end_Jnt_$AssimpFbx$_PreRotation
                                     enabled: true
                                     component:
-                                      - type: 1
+                                      - !<transform>
+                                        type: 1
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0, -0.70710665, 0, 0.707106888]
@@ -353,7 +393,8 @@ child:
                                       - name: Tail_end_Jnt_$AssimpFbx$_Rotation
                                         enabled: true
                                         component:
-                                          - type: 1
+                                          - !<transform>
+                                            type: 1
                                             enabled: true
                                             position: [0, 0, 0]
                                             rotation: [0, -0.0881195813, 0, 0.996109903]
@@ -362,7 +403,8 @@ child:
                                           - name: Tail_end_Jnt
                                             enabled: true
                                             component:
-                                              - type: 1
+                                              - !<transform>
+                                                type: 1
                                                 enabled: true
                                                 position: [0, 0, 0]
                                                 rotation: [0, 0, 0, 1]
@@ -370,7 +412,8 @@ child:
   - name: Geo
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
@@ -379,12 +422,14 @@ child:
       - name: worm_geo2
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 2
+          - !<mesh_renderer>
+            type: 2
             enabled: true
             mesh_id: 6237063063821742698
             navigable: false
