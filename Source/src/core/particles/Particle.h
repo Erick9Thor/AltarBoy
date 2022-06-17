@@ -24,7 +24,7 @@ namespace Hachiko
         float3 current_position = float3::zero;
         float3 current_direction = float3::unitY;
         float4 current_color = float4::zero;
-        unsigned current_animation_frame = 1;
+        unsigned current_animation_frame = 0;
         float animation_blend = 0.0f;
 
         ComponentParticleSystem* emitter = nullptr;        

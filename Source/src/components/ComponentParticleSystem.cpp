@@ -426,6 +426,7 @@ void Hachiko::ComponentParticleSystem::Save(YAML::Node& node) const
     }
     node[PARTICLES_TEXTURE][TILES] = tiles;
     node[PARTICLES_TEXTURE][FLIP] = flip_texture;
+    node[PARTICLES_TEXTURE][TOTAL_TILES] = total_tiles;
 
     YAML::Node modules;
     for (const auto& particle_module : particle_modifiers)
@@ -469,6 +470,9 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
         factor.x = 1.0f / tiles.x;
         factor.y = 1.0f / tiles.y;
     }
+
+    total_tiles = node[PARTICLES_TEXTURE][TOTAL_TILES].IsDefined() ?
+        node[PARTICLES_TEXTURE][TOTAL_TILES].as<float>() : total_tiles;
 
     const UID texture_id = node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].IsDefined() ? node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].as<UID>() : 0;
     if (texture_id)

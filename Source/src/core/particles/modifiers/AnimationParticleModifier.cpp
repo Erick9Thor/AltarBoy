@@ -20,9 +20,12 @@ void Hachiko::AnimationParticleModifier::Update(std::vector<Particle>& particles
     }
 
     time += EngineTimer::delta_time;
-    if (time <= animation_speed)
+    if (!fit_to_lifetime)
     {
-        return;
+        if (time <= animation_speed)
+        {
+            return;
+        }
     }
 
     time = 0.0f;
@@ -39,10 +42,11 @@ void Hachiko::AnimationParticleModifier::Update(std::vector<Particle>& particles
 
 void Hachiko::AnimationParticleModifier::DrawGui()
 {
-    Widgets::Checkbox("Fit to lifetime (WIP)", &fit_to_lifetime);
+    Widgets::Checkbox("Fit to lifetime", &fit_to_lifetime);
     cfg.enabled = !fit_to_lifetime;
-    DragFloat("Animation speed", animation_speed, &cfg);
+    Widgets::DragFloat("Animation speed", animation_speed, &cfg);
     cfg.enabled = true;
+    cfg.max = 1.0f;
     DragFloat("Blend factor", blend_factor, &cfg);
 }
 
@@ -57,7 +61,8 @@ void Hachiko::AnimationParticleModifier::Save(YAML::Node& node) const
 void Hachiko::AnimationParticleModifier::Load(const YAML::Node& node) 
 {
     ParticleModifier::Load(node[MODULE_ANIMATION]);
-    animation_speed = node[MODULE_ANIMATION][ANIMATION_SPEED].IsDefined() ? node[MODULE_ANIMATION][ANIMATION_SPEED].as<float>() : animation_speed;
+    animation_speed = node[MODULE_ANIMATION][ANIMATION_SPEED].IsDefined() ?
+        node[MODULE_ANIMATION][ANIMATION_SPEED].as<float>() : animation_speed;
     blend_factor = node[MODULE_ANIMATION][BLEND_FACTOR].IsDefined() ? node[MODULE_ANIMATION][BLEND_FACTOR].as<float>() : blend_factor;
 }
 
@@ -70,11 +75,22 @@ void Hachiko::AnimationParticleModifier::UpdateAnimation(Particle& particle)
 
     particle.SetAnimationBlend(blend_factor);
     unsigned animation_frame = particle.GetCurrentAnimationFrame();
+    
+    if (fit_to_lifetime)
+    {
+        unsigned fit_to_frame = static_cast<unsigned>(std::trunc((particle.GetCurrentLifeNormilized() * particle.GetTextureTotalTiles())));
+
+        if (animation_frame == fit_to_frame)
+        {
+            return;
+        }
+    }
+
     float2 animation_idx = particle.GetAnimationIndex();
     
-    if (animation_frame >= particle.GetTextureTotalTiles())
+    if (animation_frame >= particle.GetTextureTotalTiles() - 1)
     {
-        particle.SetCurrentAnimationFrame(1);
+        particle.SetCurrentAnimationFrame(0);
         particle.SetAnimationIndex(float2::zero);
         return;
     }
@@ -96,6 +112,6 @@ void Hachiko::AnimationParticleModifier::UpdateAnimation(Particle& particle)
         return;
     }
 
-    particle.SetCurrentAnimationFrame(1);
+    particle.SetCurrentAnimationFrame(0);
     particle.SetAnimationIndex(float2::zero);
 }

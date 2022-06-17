@@ -301,6 +301,7 @@
 #define PARTICLES_TEXTURE "texture"
 #define PARTICLES_TEXTURE_ID "texture_id"
 #define TILES "tiles"
+#define TOTAL_TILES "total_tiles"
 #define Y_TILES "y_tiles"
 #define FLIP "flip"
 #define FLIP_Y "flip_y"
