@@ -115,24 +115,6 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_outer_explosion_indicator") != serialized_fields.end())
-	{
-		const SerializedField& _outer_explosion_indicator_sf = serialized_fields["_outer_explosion_indicator"];
-		if (_outer_explosion_indicator_sf.type_name == "GameObject*")
-		{
-			_outer_explosion_indicator = std::any_cast<GameObject*>(_outer_explosion_indicator_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_inner_explosion_indicator") != serialized_fields.end())
-	{
-		const SerializedField& _inner_explosion_indicator_sf = serialized_fields["_inner_explosion_indicator"];
-		if (_inner_explosion_indicator_sf.type_name == "GameObject*")
-		{
-			_inner_explosion_indicator = std::any_cast<GameObject*>(_inner_explosion_indicator_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_crashing_index") != serialized_fields.end())
 	{
 		const SerializedField& _crashing_index_sf = serialized_fields["_crashing_index"];
@@ -160,15 +142,6 @@ void Hachiko::Scripting::CrystalExplosion::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_timer_explosion") != serialized_fields.end())
-	{
-		const SerializedField& _timer_explosion_sf = serialized_fields["_timer_explosion"];
-		if (_timer_explosion_sf.type_name == "float")
-		{
-			_timer_explosion = std::any_cast<float>(_timer_explosion_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_explosive_crystal") != serialized_fields.end())
 	{
 		const SerializedField& _explosive_crystal_sf = serialized_fields["_explosive_crystal"];
@@ -189,17 +162,11 @@ void Hachiko::Scripting::CrystalExplosion::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_static_crystal"] = SerializedField(std::string("_static_crystal"), std::make_any<GameObject*>(_static_crystal), std::string("GameObject*"));
 
-	serialized_fields["_outer_explosion_indicator"] = SerializedField(std::string("_outer_explosion_indicator"), std::make_any<GameObject*>(_outer_explosion_indicator), std::string("GameObject*"));
-
-	serialized_fields["_inner_explosion_indicator"] = SerializedField(std::string("_inner_explosion_indicator"), std::make_any<GameObject*>(_inner_explosion_indicator), std::string("GameObject*"));
-
 	serialized_fields["_crashing_index"] = SerializedField(std::string("_crashing_index"), std::make_any<unsigned>(_crashing_index), std::string("unsigned"));
 
 	serialized_fields["_detecting_radius"] = SerializedField(std::string("_detecting_radius"), std::make_any<float>(_detecting_radius), std::string("float"));
 
 	serialized_fields["_explosion_radius"] = SerializedField(std::string("_explosion_radius"), std::make_any<float>(_explosion_radius), std::string("float"));
-
-	serialized_fields["_timer_explosion"] = SerializedField(std::string("_timer_explosion"), std::make_any<float>(_timer_explosion), std::string("float"));
 
 	serialized_fields["_explosive_crystal"] = SerializedField(std::string("_explosive_crystal"), std::make_any<bool>(_explosive_crystal), std::string("bool"));
 }
@@ -370,44 +337,11 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 void Hachiko::Scripting::BulletController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
-
-	if(serialized_fields.find("_move_speed") != serialized_fields.end())
-	{
-		const SerializedField& _move_speed_sf = serialized_fields["_move_speed"];
-		if (_move_speed_sf.type_name == "float")
-		{
-			_move_speed = std::any_cast<float>(_move_speed_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_lifetime") != serialized_fields.end())
-	{
-		const SerializedField& _lifetime_sf = serialized_fields["_lifetime"];
-		if (_lifetime_sf.type_name == "float")
-		{
-			_lifetime = std::any_cast<float>(_lifetime_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_collider_radius") != serialized_fields.end())
-	{
-		const SerializedField& _collider_radius_sf = serialized_fields["_collider_radius"];
-		if (_collider_radius_sf.type_name == "float")
-		{
-			_collider_radius = std::any_cast<float>(_collider_radius_sf.copy);
-		}
-	}
 }
 
 void Hachiko::Scripting::BulletController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
-
-	serialized_fields["_move_speed"] = SerializedField(std::string("_move_speed"), std::make_any<float>(_move_speed), std::string("float"));
-
-	serialized_fields["_lifetime"] = SerializedField(std::string("_lifetime"), std::make_any<float>(_lifetime), std::string("float"));
-
-	serialized_fields["_collider_radius"] = SerializedField(std::string("_collider_radius"), std::make_any<float>(_collider_radius), std::string("float"));
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
@@ -564,6 +498,15 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
+	if(serialized_fields.find("_bullet_emitter") != serialized_fields.end())
+	{
+		const SerializedField& _bullet_emitter_sf = serialized_fields["_bullet_emitter"];
+		if (_bullet_emitter_sf.type_name == "GameObject*")
+		{
+			_bullet_emitter = std::any_cast<GameObject*>(_bullet_emitter_sf.copy);
+		}
+	}
+
 	if(serialized_fields.find("_goal") != serialized_fields.end())
 	{
 		const SerializedField& _goal_sf = serialized_fields["_goal"];
@@ -696,6 +639,8 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 
 	serialized_fields["_attack_indicator"] = SerializedField(std::string("_attack_indicator"), std::make_any<GameObject*>(_attack_indicator), std::string("GameObject*"));
+
+	serialized_fields["_bullet_emitter"] = SerializedField(std::string("_bullet_emitter"), std::make_any<GameObject*>(_bullet_emitter), std::string("GameObject*"));
 
 	serialized_fields["_goal"] = SerializedField(std::string("_goal"), std::make_any<GameObject*>(_goal), std::string("GameObject*"));
 

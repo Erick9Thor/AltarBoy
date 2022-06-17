@@ -89,31 +89,11 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
-	if (_outer_explosion_indicator != nullptr)
-	{
-		node["'_outer_explosion_indicator@GameObject*'"] = _outer_explosion_indicator->GetID();
-	}
-	else
-	{
-		node["'_outer_explosion_indicator@GameObject*'"] = 0;
-	}
-
-	if (_inner_explosion_indicator != nullptr)
-	{
-		node["'_inner_explosion_indicator@GameObject*'"] = _inner_explosion_indicator->GetID();
-	}
-	else
-	{
-		node["'_inner_explosion_indicator@GameObject*'"] = 0;
-	}
-
 	node["'_crashing_index@unsigned'"] = _crashing_index;
 
 	node["'_detecting_radius@float'"] = _detecting_radius;
 
 	node["'_explosion_radius@float'"] = _explosion_radius;
-
-	node["'_timer_explosion@float'"] = _timer_explosion;
 
 	node["'_explosive_crystal@bool'"] = _explosive_crystal;
 }
@@ -135,16 +115,6 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_outer_explosion_indicator@GameObject*'"].IsDefined())
-	{
-		_outer_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_outer_explosion_indicator@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_inner_explosion_indicator@GameObject*'"].IsDefined())
-	{
-		_inner_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_inner_explosion_indicator@GameObject*'"].as<unsigned long long>());
-	}
-
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
 	{
 		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
@@ -158,11 +128,6 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_explosion_radius@float'"].IsDefined())
 	{
 		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_timer_explosion@float'"].IsDefined())
-	{
-		_timer_explosion = load_node["'_timer_explosion@float'"].as<float>();
 	}
 
 	if (load_node["'_explosive_crystal@bool'"].IsDefined())
@@ -280,29 +245,10 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 
 void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
 {
-	node["'_move_speed@float'"] = _move_speed;
-
-	node["'_lifetime@float'"] = _lifetime;
-
-	node["'_collider_radius@float'"] = _collider_radius;
 }
 
 void Hachiko::Scripting::BulletController::OnLoad()
 {
-	if (load_node["'_move_speed@float'"].IsDefined())
-	{
-		_move_speed = load_node["'_move_speed@float'"].as<float>();
-	}
-
-	if (load_node["'_lifetime@float'"].IsDefined())
-	{
-		_lifetime = load_node["'_lifetime@float'"].as<float>();
-	}
-
-	if (load_node["'_collider_radius@float'"].IsDefined())
-	{
-		_collider_radius = load_node["'_collider_radius@float'"].as<float>();
-	}
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::OnSave(YAML::Node& node) const
@@ -416,6 +362,15 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 		node["'_attack_indicator@GameObject*'"] = 0;
 	}
 
+	if (_bullet_emitter != nullptr)
+	{
+		node["'_bullet_emitter@GameObject*'"] = _bullet_emitter->GetID();
+	}
+	else
+	{
+		node["'_bullet_emitter@GameObject*'"] = 0;
+	}
+
 	if (_goal != nullptr)
 	{
 		node["'_goal@GameObject*'"] = _goal->GetID();
@@ -497,6 +452,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_bullet_emitter@GameObject*'"].IsDefined())
+	{
+		_bullet_emitter = SceneManagement::FindInCurrentScene(load_node["'_bullet_emitter@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_goal@GameObject*'"].IsDefined())

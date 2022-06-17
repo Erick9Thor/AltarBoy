@@ -4,6 +4,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
 #include "modules/ModuleRender.h"
+#include "modules/ModuleResources.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -114,6 +115,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     unsigned long long id)
 {
     return App->scene_manager->GetRoot()->Find(id);
+}
+
+HACHIKO_API std::vector<Hachiko::GameObject*> Hachiko::SceneManagement::Instantiate(unsigned long long prefab_uid, GameObject* parent, unsigned n_instances)
+{
+    return App->resources->InstantiatePrefab(prefab_uid, parent, n_instances);
 }
 
 HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)

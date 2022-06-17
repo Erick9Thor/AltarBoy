@@ -45,6 +45,7 @@ private:
 	void Dash();
 	void MeleeAttack();
 	void RangedAttack();
+	void CancelAttack();
 
 	// Player simulation
 	void MovementController();
@@ -65,6 +66,7 @@ public:
 
 private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
+	SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 	SERIALIZE_FIELD(GameObject*, _goal);
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
@@ -105,6 +107,7 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
+	int _current_bullet = -1;
 	
 
 	GameObject* enemies;

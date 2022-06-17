@@ -30,12 +30,9 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("Player", _player);
 	Editor::Show("Explosion Crystal", _explosion_crystal);
 	Editor::Show("Static Crystal", _static_crystal);
-	Editor::Show("Outer Explosion Indicator", _outer_explosion_indicator);
-	Editor::Show("Inner Explosion Indicator", _inner_explosion_indicator);
 	Editor::Show("Crashing Index", _crashing_index);
 	Editor::Show("Detecting Radius", _detecting_radius);
 	Editor::Show("Explosion Radius", _explosion_radius);
-	Editor::Show("Timer Explosion", _timer_explosion);
 	Editor::Show("Explosive Crystal", _explosive_crystal);
 }
 
@@ -60,9 +57,6 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 
 void Hachiko::Scripting::BulletController::OnEditor()
 {
-	Editor::Show("Move Speed", _move_speed);
-	Editor::Show("Lifetime", _lifetime);
-	Editor::Show("Collider Radius", _collider_radius);
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::OnEditor()
@@ -86,6 +80,7 @@ void Hachiko::Scripting::PlayerCamera::OnEditor()
 void Hachiko::Scripting::PlayerController::OnEditor()
 {
 	Editor::Show("Attack Indicator", _attack_indicator);
+	Editor::Show("Bullet Emitter", _bullet_emitter);
 	Editor::Show("Goal", _goal);
 	Editor::Show("Dash Duration", _dash_duration);
 	Editor::Show("Dash Distance", _dash_distance);

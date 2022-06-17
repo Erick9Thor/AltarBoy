@@ -14,6 +14,7 @@
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
+	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
@@ -176,6 +177,12 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		}
 	}
 
+	// Range attack charge cancel
+	if (_state == PlayerState::RANGED_ATTACKING && Input::IsMouseButtonUp(Input::MouseButton::RIGHT))
+	{
+		CancelAttack();
+	}
+
 	if (_god_mode && Input::IsKeyPressed(Input::KeyCode::KEY_Q))
 	{
 		_player_position += math::float3::unitY * 0.5f;
@@ -238,6 +245,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
+	_attack_indicator->SetActive(true);
 	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	if (enemies == nullptr && dynamic_envi == nullptr) {
@@ -335,21 +343,39 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	_state = PlayerState::RANGED_ATTACKING;
+	
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
-	float3 attack_origin_position = _player_position;
-	attack_origin_position.y += 0.5f;
 
-	// Spawn bullet (Passing the prefab can be improved)
-	UID bullet_uid = 14999767472668584259;
-	GameObject* bullet = GameObject::Instantiate(&bullet_uid, game_object->scene_owner->GetRoot());
-
-	bullet->GetTransform()->SetGlobalPosition(attack_origin_position);
-	bullet->GetComponent<BulletController>()->SetForward(forward);
-	bullet->GetComponent<BulletController>()->SetDamage(_combat_stats->_attack_power);
-
+	BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+	if (bullet_controller)
+	{
+		BulletController::BulletStats stats = BulletController::BulletStats();
+		stats.charge_time = 1.f;
+		stats.lifetime = 3.f;
+		stats.size = 1.f;
+		stats.speed = 50.f;
+		stats.damage = 1.f;
+		_attack_current_duration = stats.charge_time;
+		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
+		if (_current_bullet >= 0)
+		{
+			_state = PlayerState::RANGED_ATTACKING;
+		}
+	}
+	
 	_attack_current_cd = _combat_stats->_attack_cd;
+}
+
+void Hachiko::Scripting::PlayerController::CancelAttack()
+{
+	// Indirectly cancells atack by putting its remaining duration to 0
+	_attack_current_duration = 0.f;
+	if (_state == PlayerState::RANGED_ATTACKING && _current_bullet >= 0)
+	{
+		BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+		bullet_controller->StopBullet(_current_bullet);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::MovementController()
@@ -499,6 +525,11 @@ void Hachiko::Scripting::PlayerController::WalkingOrientationController()
 
 void Hachiko::Scripting::PlayerController::AttackController()
 {
+	if (_attack_current_cd > 0.0f)
+	{
+		_attack_current_cd -= Time::DeltaTime();
+	}
+	
 	if (!IsAttacking())
 	{
 		return;
@@ -506,31 +537,27 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 	if (_attack_current_duration > 0.0f)
 	{
-		if (_attack_indicator)
+		_attack_current_duration -= Time::DeltaTime();
+
+		if (_state == PlayerState::MELEE_ATTACKING)
 		{
 			_attack_indicator->SetActive(true);
-		}
-
-		_attack_current_duration -= Time::DeltaTime();
-	}
-	else
-	{
-		if (_attack_indicator)
-		{
-			_attack_indicator->SetActive(false);
-		}
-		// Set state to idle, it will be overriden if there is a movement:
-		_state = PlayerState::IDLE;
-	}
-
-	if (_attack_current_cd > 0.0f)
-	{
-		if (_god_mode)
-		{
 			return;
+			
 		}
-		_attack_current_cd -= Time::DeltaTime();
+		// Melee attack
+		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
+		return;
 	}
+
+	_state = PlayerState::IDLE;
+	if (_state == PlayerState::RANGED_ATTACKING)
+	{
+		// We only need the bullet reference to cancell it while charging
+		_current_bullet = -1;
+	}
+	// Melee attack
+	_attack_indicator->SetActive(false);
 }
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
