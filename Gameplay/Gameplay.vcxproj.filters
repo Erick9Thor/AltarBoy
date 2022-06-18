@@ -72,16 +72,16 @@
     <ClInclude Include="generated\Factory.h">
       <Filter>Generated</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="DynamicCamera.h" />
-    <ClInclude Include="MainMenuManager.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="BackToMainMenu.h" />
-    <ClInclude Include="Scenes.h" />
+    <ClInclude Include="entities\player\PlayerController.h" />
+    <ClInclude Include="misc\DynamicCamera.h" />
+    <ClInclude Include="ui\MainMenuManager.h" />
+    <ClInclude Include="entities\player\PlayerCamera.h" />
+    <ClInclude Include="ui\BackToMainMenu.h" />
+    <ClInclude Include="constants\Scenes.h" />
     <ClInclude Include="..\Source\vendors\imgui\imgui_stdlib.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome5.h">
+    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome6.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\vendors\imgui\imconfig.h">
@@ -504,18 +504,20 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes.h" />
-    <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="Sounds.h" />
-    <ClInclude Include="PlayerSoundManager.h" />
-    <ClInclude Include="EnemyController.h" />
-    <ClInclude Include="Stats.h" />
-    <ClInclude Include="BulletController.h" />
-    <ClInclude Include="FancyLights.h" />
-    <ClInclude Include="CrystalExplosion.h" />
-    <ClInclude Include="RoomTeleporter.h" />
-    <ClInclude Include="EnemyBulletController.h" />
-    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="entities\player\PlayerAnimationManager.h" />
+    <ClInclude Include="constants\Sounds.h" />
+    <ClInclude Include="entities\player\PlayerSoundManager.h" />
+    <ClInclude Include="entities\enemies\EnemyController.h" />
+    <ClInclude Include="entities\Stats.h" />
+    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="misc\FancyLights.h" />
+    <ClInclude Include="entities\crystals\CrystalExplosion.h" />
+    <ClInclude Include="entities\enemies\BugAnimationManager.h" />
+    <ClInclude Include="entities\player\RoomTeleporter.h" />
+    <ClInclude Include="ui\DebugManager.h" />
+    <ClInclude Include="entities\player\PlayerState.h" />
+    <ClInclude Include="entities\enemies\BugState.h" />
+    <ClInclude Include="misc\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -527,11 +529,11 @@
     <ClCompile Include="generated\SerializationMethods.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
-    <ClCompile Include="MainMenuManager.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="BackToMainMenu.cpp" />
+    <ClCompile Include="entities\player\PlayerController.cpp" />
+    <ClCompile Include="misc\DynamicCamera.cpp" />
+    <ClCompile Include="ui\MainMenuManager.cpp" />
+    <ClCompile Include="entities\player\PlayerCamera.cpp" />
+    <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
@@ -772,15 +774,17 @@
     <ClCompile Include="generated\SaveAndLoadMethods.cpp">
       <Filter>Generated</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerSoundManager.cpp" />
-    <ClCompile Include="EnemyController.cpp" />
-    <ClCompile Include="Stats.cpp" />
-    <ClCompile Include="BulletController.cpp" />
-    <ClCompile Include="FancyLights.cpp" />
-    <ClCompile Include="CrystalExplosion.cpp" />
-    <ClCompile Include="RoomTeleporter.cpp" />
-    <ClCompile Include="EnemyBulletController.cpp" />
-    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="entities\player\PlayerAnimationManager.cpp" />
+    <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
+    <ClCompile Include="entities\enemies\EnemyController.cpp" />
+    <ClCompile Include="entities\Stats.cpp" />
+    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
+    <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
+    <ClCompile Include="entities\player\RoomTeleporter.cpp" />
+    <ClCompile Include="ui\DebugManager.cpp" />
+    <ClCompile Include="misc\FancyLights.cpp" />
+    <ClCompile Include="misc\AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

@@ -147,6 +147,7 @@ void Hachiko::ComponentImage::Update()
 
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
 {
+    node.SetTag("image");
     node[IMAGE_IMAGE_ID] = image ? image->GetID() : 0;
     node[IMAGE_HOVER_IMAGE_ID] = hover_image ? hover_image->GetID() : 0;
     node[USE_IMAGE] = use_image;

@@ -21,7 +21,7 @@ namespace Hachiko
         UID CreatePrefabAsset(const char* name, GameObject* root);
         // To be used by model importer
         UID CreateGeneratedPrefab(const char* name, UID uid, GameObject* root);
-        GameObject* CreateObjectFromPrefab(UID prefab_uid, GameObject* parent);
+        std::vector<GameObject*> CreateObjectsFromPrefab(UID prefab_uid, GameObject* parent, unsigned n_instances);
 
     private:
         ResourcePrefab* CreatePrefabResouce(const char* name, UID uid, GameObject* root);

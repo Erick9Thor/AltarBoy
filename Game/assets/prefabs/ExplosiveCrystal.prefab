@@ -2,18 +2,21 @@ prefab_name: ExplosiveCrystal
 name: ExplosiveCrystal
 enabled: true
 component:
-  - type: 1
+  - !<transform>
+    type: 1
     enabled: true
-    position: [-92.6832581, 3.42909813, -51.4262428]
+    position: [0, 0, -15.1319904]
     rotation: [0, 0.0688859746, 0, 0.997624576]
     scale: [1.39999998, 1.39999998, 1.39999998]
-  - type: 18
+  - !<obstacle>
+    type: 18
     enabled: true
     obstacle_type: 0
     obstacle_size: [0.800000012, 1, 1]
   - type: 20
     enabled: true
-  - type: 15
+  - !<script>
+    type: 15
     enabled: true
     class_name: CrystalExplosion
     "'_player@GameObject*'": 0
@@ -23,7 +26,8 @@ component:
     "'_detecting_radius@float'": 2
     "'_explosion_radius@float'": 5
     "'_explosive_crystal@bool'": true
-  - type: 15
+  - !<script>
+    type: 15
     enabled: true
     class_name: Stats
     "'_attack_power@int'": 2
@@ -35,7 +39,8 @@ child:
   - name: crystalSpike_mesh
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
@@ -44,12 +49,14 @@ child:
       - name: crystalSpike_mesh
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [1.2035023, 0.56883049, -1.08868277]
             rotation: [-0.640856445, 0.298836708, 0.298836529, 0.640855968]
             scale: [1.00000012, 1.0000006, 1.00000083]
-          - type: 2
+          - !<mesh_renderer>
+            type: 2
             enabled: true
             mesh_id: 12493242938431995642
             navigable: false
@@ -58,33 +65,38 @@ child:
   - name: crystalSpikeAnimacion_meshExplision
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0.0394845456, 0, -0.20355995]
         rotation: [0, 0, 0, 1]
         scale: [0.406699985, 0.406699985, 0.406699985]
-      - type: 14
+      - !<animation>
+        type: 14
         enabled: true
         state_machine: 4494346183400875454
     child:
       - name: Mesh
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0.707106829, 0, 0, 0.707106709]
-            scale: [1, 0.999991417, 0.999991417]
+            scale: [1, 0.999987125, 0.999987125]
         child:
           - name: crystalSpikeTop_mesh
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [-0.0761962608, 0.494708151, 0.10228952]
                 rotation: [-0.707106829, 0, 0, 0.707106769]
                 scale: [2.53999996, 2.53999901, 2.53999901]
-              - type: 2
+              - !<mesh_renderer>
+                type: 2
                 enabled: true
                 mesh_id: 2367252208710808329
                 navigable: false
@@ -93,12 +105,14 @@ child:
           - name: crystalSpikeBottom_mesh
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.0911449194, 0.299597561, 0.0456319116]
                 rotation: [-0.707106829, 0, 0, 0.707106769]
                 scale: [2.53999996, 2.53999901, 2.53999901]
-              - type: 2
+              - !<mesh_renderer>
+                type: 2
                 enabled: true
                 mesh_id: 11783699103939193595
                 navigable: false
@@ -107,12 +121,14 @@ child:
           - name: crystalSpikeMiddle_mesh
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.186976179, 0.484414041, 0.0622473769]
                 rotation: [-0.707106829, 0, 0, 0.707106769]
                 scale: [2.53999996, 2.53999901, 2.53999901]
-              - type: 2
+              - !<mesh_renderer>
+                type: 2
                 enabled: true
                 mesh_id: 10088262584487287873
                 navigable: false
@@ -121,12 +137,14 @@ child:
           - name: crystalSpikeBottom2_mesh
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.14534016, 0.256375641, 0.271769315]
                 rotation: [-0.707106829, 0, 0, 0.707106769]
                 scale: [2.53999996, 2.53999901, 2.53999901]
-              - type: 2
+              - !<mesh_renderer>
+                type: 2
                 enabled: true
                 mesh_id: 10784035645120420919
                 navigable: false
@@ -135,7 +153,8 @@ child:
       - name: Father
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0.00118318188, -0.00236636377, 0]
             rotation: [0, 0, 0, 1]
@@ -144,7 +163,8 @@ child:
           - name: Bottom2
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.144156978, 0.258742034, 0.271769315]
                 rotation: [0, 0, 0, 1]
@@ -152,7 +172,8 @@ child:
           - name: Bottom
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.0899617374, 0.301963925, 0.0456319116]
                 rotation: [0, 0, 0, 1]
@@ -160,7 +181,8 @@ child:
           - name: Top
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [-0.0773794428, 0.497074544, 0.10228952]
                 rotation: [0, 0, 0, 1]
@@ -168,7 +190,8 @@ child:
           - name: Middle
             enabled: true
             component:
-              - type: 1
+              - !<transform>
+                type: 1
                 enabled: true
                 position: [0.185792997, 0.486780435, 0.0622473769]
                 rotation: [0, 0, 0, 1]

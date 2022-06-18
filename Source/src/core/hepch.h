@@ -35,11 +35,7 @@
 #include <SDL.h>
 #include <glew.h>
 #include <optick.h>
-
-#define IMGUI_DEFINE_MATH_OPERATORS
-#include "ui/ImGuiUtils.h"
-
-#include <imgui_internal.h>
+#include <curve.h>
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include <imgui_impl_opengl3.h>
@@ -52,7 +48,7 @@
 #include <ilu.h>
 #include <physfs.h>
 #include <ImGuizmo.h>
-#include <IconsFontAwesome5.h>
+#include <IconsFontAwesome6.h>
 #include <MathGeoLib.h>
 #include <yaml-cpp/yaml.h>
 
@@ -100,19 +96,28 @@
 #include "utils/StringUtils.h"
 #include "utils/FileSystem.h"
 #include "utils/WindowsFileUtil.h"
+#include "utils/Bool3.h"
+#include "utils/RandomUtil.h"
+
+#include "modules/ModuleEvent.h"
 
 #include "components/Component.h"
 #include "importers/Importer.h"
 
 #include "ui/Window.h"
 #include "ui/editor/Theme.h"
+#include "ui/widgets/Widgets.h"
+#include "ui/ImGuiUtils.h"
 
 #include "resources/Resource.h"
 
-//TODO remove rapidjson from the project
-#include <rapidjson/rapidjson.h>
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/prettywriter.h>
-#include <rapidjson/error/en.h>
+#include "core/particles/ParticleModifier.h"
+#include "core/particles/ParticleSystem.h"
+#include "core/particles/Particle.h"
+
+//particle modules
+#include "core/particles/modifiers/ColorParticleModifier.h"
+#include "core/particles/modifiers/ForceParticleModifier.h"
+#include "core/particles/modifiers/SizeParticleModifier.h"
+#include "core/particles/modifiers/VelocityParticleModifier.h"
+#include "core/particles/modifiers/AnimationParticleModifier.h"

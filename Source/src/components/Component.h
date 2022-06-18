@@ -11,12 +11,6 @@
 
 namespace Hachiko
 {
-#define CREATE_HISTORY_ENTRY_AFTER_EDIT()                               \
-    if (ImGui::IsItemDeactivatedAfterEdit())                            \
-    {                                                                   \
-        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);  \
-    }
-
     class GameObject;
     class ComponentCamera;
     class Program;
@@ -48,6 +42,7 @@ namespace Hachiko
             AUDIO_LISTENER = 19,
             AUDIO_SOURCE = 20,
             BILLBOARD = 21,
+            PARTICLE_SYSTEM = 22,
             UNKNOWN
         };
 
@@ -98,17 +93,13 @@ namespace Hachiko
             active = false;
         }
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
+        [[nodiscard]] bool IsActive() const;
         [[nodiscard]] const GameObject* GetGameObject() const
         {
             return game_object;
         }
 
-        GameObject* GetGameObject()
+        [[nodiscard]] GameObject* GetGameObject()
         {
             return game_object;
         }

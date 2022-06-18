@@ -2,50 +2,58 @@ prefab_name: HUD
 name: HUD
 enabled: true
 component:
-  - type: 1
+  - !<transform>
+    type: 1
     enabled: true
     position: [0, 0, 0]
     rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
-  - type: 10
+  - !<transform_2d>
+    type: 10
     enabled: true
     position: [0, 0, 0]
-    size: [1415, 767]
+    size: [1065, 645]
     scale: [1, 1]
     rotation: [0, 0, 0, 1]
     pivot: [0.5, 0.5]
     anchor: [0.5, 0.5]
-  - type: 8
+  - !<canvas>
+    type: 8
     enabled: true
 child:
   - name: HealthBar
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
-      - type: 10
+      - !<transform_2d>
+        type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1415, 767]
+        size: [1065, 645]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
         anchor: [0.5, 0.5]
-      - type: 8
+      - !<canvas>
+        type: 8
         enabled: true
     child:
       - name: Overlay
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [300, -100, 0]
             size: [500, 100]
@@ -53,9 +61,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 5275570671231529455
             hover_image_id: 0
@@ -63,15 +73,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Cell_1
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [284.600006, -105, 0]
             size: [450, 115]
@@ -79,9 +92,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 4638752376260405207
             hover_image_id: 0
@@ -89,15 +104,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Cell_2
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [278.5, -105, 0]
             size: [450, 115]
@@ -105,9 +123,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 4721163576751640504
             hover_image_id: 0
@@ -115,15 +135,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Cell_3
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [272.700012, -105, 0]
             size: [450, 115]
@@ -131,9 +154,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 4127850956731736451
             hover_image_id: 0
@@ -141,15 +166,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Cell_4
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [265.049988, -105, 0]
             size: [450, 115]
@@ -157,9 +185,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 13112388861813353638
             hover_image_id: 0
@@ -167,15 +197,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Stamina_1
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [200, -135, 0]
             size: [60, 30]
@@ -183,9 +216,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 72551740062638533
             hover_image_id: 0
@@ -193,15 +228,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Stamina_2
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [250, -135, 0]
             size: [60, 30]
@@ -209,9 +247,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 72551740062638533
             hover_image_id: 0
@@ -219,15 +259,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Stamina_3
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [300, -135, 0]
             size: [60, 30]
@@ -235,9 +278,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 72551740062638533
             hover_image_id: 0
@@ -245,15 +290,18 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
       - name: Stamina_4
         enabled: true
         component:
-          - type: 1
+          - !<transform>
+            type: 1
             enabled: true
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
-          - type: 10
+          - !<transform_2d>
+            type: 10
             enabled: true
             position: [350, -135, 0]
             size: [60, 30]
@@ -261,9 +309,11 @@ child:
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0, 1]
-          - type: 9
+          - !<canvas_renderer>
+            type: 9
             enabled: true
-          - type: 11
+          - !<image>
+            type: 11
             enabled: true
             image_id: 72551740062638533
             hover_image_id: 0
@@ -271,3 +321,4 @@ child:
             use_hover_image: false
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
+            fill_window: false
