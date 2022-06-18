@@ -20,12 +20,14 @@ layout (binding = 4) uniform sampler2D g_emissive;
 
 void main()
 {
+
     vec3  fragment_diffuse = (texture(g_diffuse, texture_coords)).rgb;
-    vec3  fragment_specular = (texture(g_specular_smoothness, texture_coords)).rgb;
-    float fragment_smoothness = (texture(g_specular_smoothness, texture_coords)).a;
+    vec4 fragment_specular_smoothness = texture(g_specular_smoothness, texture_coords);
     vec3  fragment_normal = (texture(g_normal, texture_coords)).rgb;
     vec3  fragment_position = (texture(g_position, texture_coords)).rgb;
     vec3  fragment_emissive = (texture(g_emissive, texture_coords)).rgb;
+    vec3  fragment_specular = fragment_specular_smoothness.rgb;
+    float fragment_smoothness = fragment_specular_smoothness.a;
     vec3  view_direction = normalize(camera.pos - fragment_position);
     
     if (mode == 0)
@@ -46,7 +48,7 @@ void main()
             hdr_color +=  SpotPBR(fragment_position, fragment_normal, view_direction, lights.spots[i], fragment_diffuse, fragment_specular, fragment_smoothness);
         }
 
-        hdr_color += fragment_diffuse * lights.ambient.color.rgb * lights.ambient.intensity;
+        hdr_color += GetAmbientLight(fragment_normal, reflect(-view_direction, fragment_normal), dot(fragment_normal, view_direction), pow(1.0 - fragment_smoothness, 2), fragment_diffuse, fragment_specular);
 
         hdr_color += fragment_emissive;
 
