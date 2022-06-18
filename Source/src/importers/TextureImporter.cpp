@@ -13,15 +13,19 @@ void Hachiko::TextureImporter::Import(const char* path, YAML::Node& meta)
     static const int resource_index = 0;
     UID uid = ManageResourceUID(Resource::Type::TEXTURE, resource_index, meta);
     std::string extension = FileSystem::GetFileExtension(path);
-    // TODO: could we extract ModuleTexture functionality to this importer?
 
-    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, extension != TIF_TEXTURE_EXTENSION);
+    // TODO: could we extract ModuleTexture functionality to this importer?
+    ResourceTexture* texture = App->texture->ImportTextureResource(uid, path, meta, extension != TIF_TEXTURE_EXTENSION);
      
+    meta[TEXTURE_MAG_FILTER] = texture->min_filter;
+    meta[TEXTURE_MIN_FILTER] = texture->mag_filter;
+    meta[TEXTURE_WRAP_MODE] = texture->wrap;
+
     if (texture != nullptr)
     {
         Save(uid, texture);
     }
-
+    
     delete texture;
 }
 
@@ -115,6 +119,22 @@ void Hachiko::TextureImporter::Save(UID id, const Hachiko::Resource* res)
 
     FileSystem::Save(file_path.c_str(), file_buffer, file_size);
     delete[] file_buffer;
+}
+
+void Hachiko::TextureImporter::SaveTextureAsset(const ResourceTexture* texture)
+{
+    // Update the texture meta if edited from engine since we cannot modify the png
+    // Separated because normal import already manages meta file and we need to have the data before it is loaded for import
+    // Here we only add to meta the required params call force import since having the change in the meta would make it go unnoticed
+    std::string meta_path = StringUtils::Concat(texture->path, META_EXTENSION);
+    YAML::Node meta_node = YAML::LoadFile(meta_path);
+    meta_node[TEXTURE_MAG_FILTER] = texture->min_filter;
+    meta_node[TEXTURE_MIN_FILTER] = texture->mag_filter;
+    meta_node[TEXTURE_WRAP_MODE] = texture->wrap;
+    FileSystem::Save(meta_path.c_str(), meta_node);
+
+    constexpr bool force = true;
+    App->resources->ImportAssetFromAnyPath(texture->path, force);
 }
 
 

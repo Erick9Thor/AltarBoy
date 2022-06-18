@@ -134,6 +134,7 @@ void Hachiko::ComponentImage::Draw(ComponentTransform2D* transform, Program* pro
 
 void Hachiko::ComponentImage::Save(YAML::Node& node) const
 {
+    node.SetTag("image");
     node[IMAGE_IMAGE_ID] = image ? image->GetID() : 0;
     node[IMAGE_HOVER_IMAGE_ID] = hover_image ? hover_image->GetID() : 0;
     node[USE_IMAGE] = use_image;
@@ -145,6 +146,10 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
 {
     constexpr bool is_hover_image = true;
+    if (node[USE_IMAGE].IsDefined())
+    {
+        use_image = node[USE_IMAGE].as<bool>();    
+    }
     LoadImageResource(node[IMAGE_IMAGE_ID].as<UID>(), !is_hover_image);
     LoadImageResource(node[IMAGE_HOVER_IMAGE_ID].as<UID>(), is_hover_image);
     use_image = node[USE_IMAGE].as<bool>();

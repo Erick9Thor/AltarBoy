@@ -24,6 +24,8 @@ namespace Hachiko
     class HACHIKO_API GameObject final
     {
         friend class Component;
+        friend class Scene;
+        friend class ModuleSceneManager;
 
     public:
         GameObject(const char* name = "Unnamed", UID uid = UUID::GenerateUID());
@@ -34,12 +36,15 @@ namespace Hachiko
                    const float3& translation = float3::zero,
                    const Quat& rotation = Quat::identity,
                    const float3& scale = float3::one);
-        virtual ~GameObject();
 
+    private:
+        ~GameObject();
+
+    public:
         void SetNewParent(GameObject* new_parent);
 
         void AddComponent(Component* component);
-        bool AttemptRemoveComponent(Component* component);
+        bool AttemptRemoveComponent(const Component* component);
         /// <summary>
         /// Do not use this unless it's mandatory. Use AttemptRemoveComponent
         /// instead.
@@ -55,7 +60,6 @@ namespace Hachiko
         /// </summary>
         /// <returns>Created GameObject.</returns>
         static GameObject* Instantiate();
-        static GameObject* Instantiate(unsigned long long prefab_uid, GameObject* parent);
         /// <summary>
         /// Creates a new GameObject as child of this GameObject.
         /// </summary>
@@ -71,11 +75,6 @@ namespace Hachiko
 
         void SetActive(bool set_active);
 
-        [[nodiscard]] bool IsActive() const
-        {
-            return active;
-        }
-
         [[nodiscard]] GameObject* Find(UID id) const;
 
         void OnTransformUpdated();
@@ -83,16 +82,6 @@ namespace Hachiko
         void DebugDrawAll();
         void DebugDraw() const;
         void DrawBones() const;
-
-        [[nodiscard]] UID GetID() const
-        {
-            return uid;
-        }
-
-        void SetID(const UID new_id)
-        {
-            uid = new_id;
-        }
 
         void Save(YAML::Node& node, bool as_prefab = false) const;
         void CollectObjectsAndComponents(std::vector<const GameObject*>& object_collector, std::vector<const Component*>& component_collector);
@@ -122,6 +111,21 @@ namespace Hachiko
             name = new_name;
         }
 
+        [[nodiscard]] UID GetID() const
+        {
+            return uid;
+        }
+
+        void SetID(const UID new_id)
+        {
+            uid = new_id;
+        }
+
+        [[nodiscard]] bool IsActive() const
+        {
+            return active;
+        }
+
         template<typename RetComponent>
         RetComponent* GetComponent()
         {
@@ -137,7 +141,7 @@ namespace Hachiko
         }
 
         template<typename RetComponent>
-        std::vector<RetComponent*> GetComponents() const
+        [[nodiscard]] std::vector<RetComponent*> GetComponents() const
         {
             std::vector<RetComponent*> components_of_type;
 
@@ -206,8 +210,8 @@ namespace Hachiko
         [[nodiscard]] std::vector<Component*> GetComponents(Component::Type type) const;
         [[nodiscard]] std::vector<Component*> GetComponentsInDescendants(Component::Type type) const;
 
-        GameObject* GetFirstChildWithName(const std::string& child_name) const;
-        Hachiko::GameObject* FindDescendantWithName(const std::string& child_name) const;
+        [[nodiscard]] GameObject* GetFirstChildWithName(const std::string& child_name) const;
+        [[nodiscard]] GameObject* FindDescendantWithName(const std::string& child_name) const;
 
         void ChangeColor(float4 color, float time);
 

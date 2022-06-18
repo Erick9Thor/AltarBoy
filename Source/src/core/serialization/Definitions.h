@@ -12,9 +12,13 @@
 #define RESOURCE_ID "resource_id"
 #define RESOURCE_TYPE "resource_type"
 #define ASSET_HASH "asset_hash"
+#define RESOURCE_HASH "resource_hash"
 
 // Texture
 #define TEXTURE_FILE_PATH "file_path"
+#define TEXTURE_MIN_FILTER "min_filter"
+#define TEXTURE_MAG_FILTER "mag_filter"
+#define TEXTURE_WRAP_MODE "wrap_mode"
 
 // Model
 #define MESHES "meshes"
@@ -259,16 +263,57 @@
 #define BILLBOARD_TYPE "billboard_type"
 #define BILLBOARD_LIFETIME "billboard_lifetime"
 #define BILLBOARD_PLAY_ON_AWAKE "play_on_awake"
+#define BILLBOARD_RENDER_MODE "render_mode"
 #define ANIMATION_CYCLES "animation_cycles"
-#define X_TILES "x_tiles"
-#define Y_TILES "y_tiles"
-#define FLIP_X "flip_x"
-#define FLIP_Y "flip_y"
+
 #define HAS_COLOR_GRADIENT "has_color_gradient"
 #define COLOR_CYCLES "color_cycles"
 #define COLOR_LOOP "color_loop"
 #define COLOR_GRADIENT "color_gradient"
 #define ANIMATION_LOOP "animation_loop"
+
+// Component Particle System
+// sections
+#define PARTICLE_SECTIONS "sections"
+#define PARAMETER_SECTION "parameters"
+#define EMISSION_SECTION "emission"
+#define SHAPE_SECTION "shape"
+#define LIGHTS_SECTION "lights"
+#define RENDERER_SECTION "renderer"
+//particle config
+#define PARTICLE_PARAMETERS "parameters"
+#define PARTICLES_DURATION "duration"
+#define PARTICLES_LOOP "loop"
+#define PARTICLES_LIFE "life"
+#define PARTICLES_SPEED "speed"
+#define PARTICLES_SIZE "size"
+#define PARTICLES_ROTATION "rotation"
+#define PARTICLES_DELAY "delay"
+#define PARTICLES_PROPERTIES "properties"
+// emission
+#define PARTICLE_EMISSION "emission"
+#define RATE "rate"
+// emitter
+#define EMITTER "emitter_shape"
+#define EMITTER_TYPE "type"
+#define EMITTER_PROPERTIES "properties"
+// texture
+#define PARTICLES_TEXTURE "texture"
+#define PARTICLES_TEXTURE_ID "texture_id"
+#define TILES "tiles"
+#define Y_TILES "y_tiles"
+#define FLIP "flip"
+#define FLIP_Y "flip_y"
+// particle modifiers
+#define PARTICLE_MODIFIERS "modifiers"
+#define ACTIVE "active"
+#define MODULE_VELOCITY "velocity"
+#define SPEED "speed"
+#define MODULE_SIZE "size"
+#define SIZE "size"
+#define MODULE_COLOR "color"
+#define MODULE_FORCE "force"
+#define MODULE_ANIMATION "animation"
 #define SKIP_FRAMES "skip_frames"
 
 // ComponentMeshRenderer

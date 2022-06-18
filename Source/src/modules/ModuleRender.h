@@ -17,7 +17,8 @@ namespace Hachiko
     {
         unsigned char* name;
         unsigned char* brand;
-        float vram_budget_mb;
+        int vram_budget_mb = 0;
+        int vram_free = 0;
     };
 
     struct GlVersion
@@ -56,6 +57,16 @@ namespace Hachiko
         void AddFrame(float delta);
         void SetOpenGLAttributes() const;
 
+        [[nodiscard]] float GetCurrentFps() const
+        {
+            return current_fps;
+        }
+
+        [[nodiscard]] unsigned int GetCurrentMs() const
+        {
+            return current_ms;
+        }
+
         [[nodiscard]] void* GetGLContext() const
         {
             return context;
@@ -76,12 +87,7 @@ namespace Hachiko
             return &render_list;
         }
 
-        [[nodiscard]] const unsigned& GetParticleVao() const
-        {
-            return particle_vao;
-        }
-        
-        void SetDrawSkybox(bool v)
+        void SetDrawSkybox(const bool v)
         {
             draw_skybox = v;
         }
@@ -93,10 +99,16 @@ namespace Hachiko
             return draw_deferred;
         }
 
+
+        [[nodiscard]] const unsigned& GetParticleVao() const
+        {
+            return particle_vao;
+        }
+    
     private:
         void GenerateFrameBuffer();
-        void ResizeFrameBuffer(int heigth, int width) const;
-        void ManageResolution(ComponentCamera* camera);
+        void ResizeFrameBuffer(int width, int height) const;
+        void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void DrawForward(Scene* scene, BatchManager* batch_manager);
@@ -133,13 +145,13 @@ namespace Hachiko
         bool render_forward_pass = true;
 
         // float4 clear_color;
-        bool draw_skybox = true;
+        bool draw_skybox = false;
         bool draw_navmesh = false;
         bool outline_selection = true;
 
         GpuData gpu{};
         GlVersion gl{};
-        int vram_free{};
+
 
         static const unsigned n_bins = 50;
         std::vector<float> fps_log;

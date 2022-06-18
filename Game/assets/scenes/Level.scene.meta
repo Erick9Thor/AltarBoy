@@ -1,6 +1,8 @@
-asset_hash: 11376899942192758345
+asset_hash: 14559239002659791195
 resources:
   - resource_id: 3947210229329588811
     resource_type: 4
+    resource_hash: 14559239002659791195
   - resource_id: 5295014046551349010
     resource_type: 12
+    resource_hash: 9894073909132056828

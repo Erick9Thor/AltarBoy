@@ -10,13 +10,18 @@
 					    // Gameplay.h
 
 #include <components/Component.h>
+#include <components/ComponentText.h>
 #include <components/ComponentButton.h>
 #include <components/ComponentAnimation.h>
 #include <components/ComponentAudioSource.h>
+#include <components/ComponentCamera.h>
+#include <components/ComponentAgent.h>
 #include <components/ComponentImage.h>
 #include <components/ComponentTransform.h>
 #include <components/ComponentTransform2D.h>
 #include <components/ComponentPointLight.h>
+#include <components/ComponentObstacle.h>
+
 #include <core/GameObject.h>
 #include <Gameplay.h>
 #include <Globals.h>

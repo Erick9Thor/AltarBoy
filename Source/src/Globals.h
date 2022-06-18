@@ -11,6 +11,12 @@ inline Hachiko::ConsoleLogger logger;
 constexpr float TO_RAD = static_cast<float>(HACHIKO_PI) / 180.0f;
 constexpr float TO_DEG = 180.0f / static_cast<float>(HACHIKO_PI);
 
+#define CREATE_HISTORY_ENTRY_AFTER_EDIT()                               \
+    if (ImGui::IsItemDeactivatedAfterEdit())                            \
+    {                                                                   \
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);  \
+    }
+
 enum class UpdateStatus
 {
 	UPDATE_CONTINUE = 1,
@@ -65,6 +71,8 @@ enum class UpdateStatus
 #define ASSETS_FOLDER_SKYBOX ASSETS_FOLDER "skybox/"
 #define ASSETS_FOLDER_FONT ASSETS_FOLDER "fonts/"
 #define ASSETS_FOLDER_PREFAB ASSETS_FOLDER "prefabs/"
+#define GENERATED_FOLDER "generated/"
+#define ASSETS_FOLDER_GENERATED_PREFAB ASSETS_FOLDER_PREFAB GENERATED_FOLDER
 #define ASSETS_FOLDER_STATE_MACHINE ASSETS_FOLDER "state_machine/"
 
 #define LIBRARY_FOLDER_SCENE LIBRARY_FOLDER "scenes/"

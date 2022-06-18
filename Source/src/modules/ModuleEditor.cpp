@@ -199,13 +199,19 @@ UpdateStatus Hachiko::ModuleEditor::PostUpdate(const float delta)
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    ImGuiIO& io = ImGui::GetIO();
+    const ImGuiIO& io = ImGui::GetIO();
 
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
         SDL_GL_MakeCurrent(App->window->GetWindow(), App->renderer->GetGLContext());
+    }
+
+    if(to_remove)
+    {
+        to_remove->GetGameObject()->AttemptRemoveComponent(to_remove);
+        to_remove = nullptr;
     }
     return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -311,10 +317,12 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
     if (ImGui::MenuItem(ICON_FA_PLUS "New"))
     {
         history.CleanUp();
-        App->scene_manager->CreateEmptyScene();
+        // Create new scene with engine stopped, passing id 0 does that
+        constexpr bool stop_scene = true;
+        App->scene_manager->ChangeSceneById(0, stop_scene);
         history.Init();
     }
-    if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
+    if (ImGui::MenuItem(ICON_FA_FLOPPY_DISK "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
         // TODO: Add the option to specify a name (no name uses scene internal name)
         App->scene_manager->SaveScene();
@@ -449,11 +457,11 @@ void Hachiko::ModuleEditor::EditMenu()
         return;
     }
 
-    if (ImGui::MenuItem(ICON_FA_UNDO "Undo", "CTRL+Z", false, CanUndo()))
+    if (ImGui::MenuItem(ICON_FA_ROTATE_LEFT "Undo", "CTRL+Z", false, CanUndo()))
     {
         Undo();
     }
-    if (ImGui::MenuItem(ICON_FA_REDO "Redo", "CTRL+Y", false, CanRedo()))
+    if (ImGui::MenuItem(ICON_FA_ROTATE_RIGHT "Redo", "CTRL+Y", false, CanRedo()))
     {
         Redo();
     }

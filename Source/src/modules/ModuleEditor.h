@@ -60,6 +60,9 @@ namespace Hachiko
         void SetSelectedGO(GameObject* const selected_game_object)
         {
             selected_go = selected_game_object;
+            Event evt(Event::Type::SELECTION_CHANGED);
+            evt.SetEventData<SelectionChangedEventPayload>(selected_go);
+            App->event->Publish(evt);
         }
 
         [[nodiscard]] const WindowScene* GetSceneWindow() const
@@ -88,6 +91,7 @@ namespace Hachiko
         unsigned dock_down_id = 0;
 
         mutable float4 scene_background{0.1f, 0.1f, 0.1f, 0.1f};
+        Component* to_remove = nullptr;
 
     private:
         void GenerateDockingSpace();

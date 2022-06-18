@@ -6,8 +6,8 @@
 #include "modules/ModuleScriptingSystem.h"
 #include "scripting/Script.h"
 
-Hachiko::WindowInspector::WindowInspector() 
-    : Window("Inspector", true) 
+Hachiko::WindowInspector::WindowInspector() :
+    Window("Inspector", true)
 {
 }
 
@@ -32,8 +32,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         return;
     }
 
-    std::string add_script_modal_name = "Add Script to " + 
-        game_object->GetName();
+    std::string add_script_modal_name = "Add Script to " + game_object->GetName();
 
     char game_object_name[50];
     strcpy_s(game_object_name, 50, game_object->GetName().c_str());
@@ -51,7 +50,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         game_object->SetActive(activate);
         App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
     }
-
+    
     std::vector<Component*> game_object_components = game_object->GetComponents();
     for (auto it = game_object_components.begin(); it != game_object_components.end(); ++it)
     {
@@ -59,15 +58,24 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
     }
 
     ImGui::Separator();
-    const float x = (ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()).x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f;
-    ImGui::SetCursorPosX(x);
-    if (ImGui::Button(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str()))
+    if (ImGui::Button(StringUtils::Concat(ICON_FA_PLUS, " ", "Add component").c_str(), ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
     {
         ImGui::OpenPopup("AddComponentPopup");
     }
 
     static bool add_script = false;
 
+    const auto current_pos = ImGui::GetCurrentWindow()->DC.CursorPos;
+    float pivot_y = 0.0f;
+    float adjust_y = 0.0f;
+    constexpr float default_popup_size_y = 250.0f;
+    if (ImGui::GetCurrentWindow()->Size.y - current_pos.y < default_popup_size_y)
+    {
+        pivot_y = 1.0f;
+        adjust_y = ImGui::GetCurrentWindow()->DC.PrevLineSize.y + ImGui::GetStyle().WindowPadding.y;
+    }
+    ImGui::SetNextWindowSize(ImVec2(ImGui::GetContentRegionAvail().x, default_popup_size_y));
+    ImGui::SetNextWindowPos(ImVec2(current_pos.x, current_pos.y - adjust_y), 0, ImVec2(0, pivot_y));
     if (ImGui::BeginPopup("AddComponentPopup"))
     {
         if (ImGui::MenuItem("Camera"))
@@ -77,21 +85,21 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Point Light"))
+        if (ImGui::MenuItem("Point light"))
         {
             game_object->CreateComponent(Component::Type::POINTLIGHT);
             ImGui::CloseCurrentPopup();
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Spot Light"))
+        if (ImGui::MenuItem("Spotlight"))
         {
             game_object->CreateComponent(Component::Type::SPOTLIGHT);
             ImGui::CloseCurrentPopup();
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Dir Light"))
+        if (ImGui::MenuItem("Directional Light"))
         {
             game_object->CreateComponent(Component::Type::DIRLIGHT);
             ImGui::CloseCurrentPopup();
@@ -115,14 +123,15 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         {
             game_object->CreateComponent(Component::Type::OBSTACLE);
             ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
         if (ImGui::MenuItem("Agent"))
         {
             game_object->CreateComponent(Component::Type::AGENT);
             ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
-           
 
         // TODO: Group these UI stuff in a parent UI MenuItem and select
         // those like that.
@@ -136,7 +145,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
         }
 
         if (ImGui::MenuItem("Button"))
-        {                
+        {
             game_object->CreateComponent(Component::Type::TRANSFORM_2D);
             game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
             game_object->CreateComponent(Component::Type::BUTTON);
@@ -153,7 +162,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Progress Bar"))
+        if (ImGui::MenuItem("Progress bar"))
         {
             game_object->CreateComponent(Component::Type::PROGRESS_BAR);
             game_object->CreateComponent(Component::Type::TRANSFORM_2D);
@@ -169,7 +178,7 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Text Label"))
+        if (ImGui::MenuItem("Text label"))
         {
             game_object->CreateComponent(Component::Type::TRANSFORM_2D);
             game_object->CreateComponent(Component::Type::CANVAS_RENDERER);
@@ -178,16 +187,25 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
             App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Audio Listener"))
+        if (ImGui::MenuItem("Audio listener"))
         {
             game_object->CreateComponent(Component::Type::AUDIO_LISTENER);
             ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
-        if (ImGui::MenuItem("Audio Source"))
+        if (ImGui::MenuItem("Audio source"))
         {
             game_object->CreateComponent(Component::Type::AUDIO_SOURCE);
             ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
+        }
+
+        if (ImGui::MenuItem("Particle system"))
+        {
+            game_object->CreateComponent(Component::Type::PARTICLE_SYSTEM);
+            ImGui::CloseCurrentPopup();
+            App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         }
 
         if (ImGui::MenuItem("Billboard"))
@@ -208,28 +226,24 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
     }
 
     ImGui::SetNextWindowSize(ImVec2(300, 100));
-    ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, 
-        ImVec2(0.5f, 0.5f));
-    if (ImGui::BeginPopupModal(add_script_modal_name.c_str(), 
-        NULL, ImGuiWindowFlags_NoCollapse))
+    const ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+    if (ImGui::BeginPopupModal(add_script_modal_name.c_str(), nullptr, ImGuiWindowFlags_NoCollapse))
     {
         char script_name_buffer[MAX_PATH] = "Script Name\0";
 
         ImGui::SetItemDefaultFocus();
-        if (ImGui::InputText("Script Name", script_name_buffer, 
-            MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
+        if (ImGui::InputText("Script Name", script_name_buffer, MAX_PATH, ImGuiInputTextFlags_EnterReturnsTrue))
         {
-            std::string script_name = script_name_buffer;
-            Scripting::Script* script = App->scripting_system->
-                InstantiateScript(script_name, game_object);
+            const std::string script_name = script_name_buffer;
+            Scripting::Script* script = App->scripting_system->InstantiateScript(script_name, game_object);
 
             if (script != nullptr)
             {
                 game_object->AddComponent(script);
                 App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
-               
+
             ImGui::CloseCurrentPopup();
             add_script = false;
         }

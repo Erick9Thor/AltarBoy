@@ -9,10 +9,37 @@
 #include <assimp/vector3.h>
 #include <assimp/matrix4x4.h>
 #include <imgui_color_gradient.h>
-#include "utils/UUID.h"
+#include "core/particles/ParticleSystem.h"
+#include "utils/Bool2.h"
+#include "utils/Bool3.h"
 
 namespace YAML
 {
+    template<>
+    struct convert<ImVec2>
+    {
+        static Node encode(const ImVec2& rhs)
+        {
+            Node node;
+            node.push_back(rhs.x);
+            node.push_back(rhs.y);
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, ImVec2& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 2)
+            {
+                return false;
+            }
+
+            rhs.x = node[0].as<float>();
+            rhs.y = node[1].as<float>();
+            return true;
+        }
+    };
+
     template<>
     struct convert<float2>
     {
@@ -156,8 +183,7 @@ namespace YAML
 
         static bool decode(const Node& node, float4x4& rhs)
         {
-            if (!node.IsSequence() || 
-                node.size() != 16)
+            if (!node.IsSequence() || node.size() != 16)
             {
                 return false;
             }
@@ -273,7 +299,7 @@ namespace YAML
             return true;
         }
     };
-    
+
     template<>
     struct convert<FILETIME>
     {
@@ -286,7 +312,7 @@ namespace YAML
             node.SetStyle(EmitterStyle::Flow);
             return node;
         }
-        
+
         static bool decode(const Node& node, FILETIME& rhs)
         {
             if (!node.IsSequence() || node.size() != 2)
@@ -356,22 +382,167 @@ namespace YAML
         }
     };
 
-    /* template<>
-    struct convert<uint64_t>
+    template<>
+    struct convert<Hachiko::ParticleSystem::VariableTypeProperty>
     {
-        static Node encode(const uint64_t& rhs)
+        static Node encode(const Hachiko::ParticleSystem::VariableTypeProperty& rhs)
         {
             Node node;
-            node = static_cast<unsigned long long>(rhs);
 
+            node.push_back(rhs.constant_enabled);
+            node.push_back(rhs.curve_enabled);
+            node.push_back(static_cast<int>(rhs.selected_option));
+            node.push_back(rhs.values);
+            node.push_back(rhs.multiplier);
+            for (const auto& curve : rhs.curve)
+            {
+                node.push_back(curve);
+            }
+            node.SetStyle(EmitterStyle::Flow);
             return node;
         }
 
-        static bool decode(const Node& node, uint64_t& rhs)
+        static bool decode(const Node& node, Hachiko::ParticleSystem::VariableTypeProperty& rhs)
         {
-            rhs = node.as<unsigned long long>();
+            constexpr int offset = 5; //fixed values
+            if (!node.IsSequence() || node.size() != offset + Hachiko::ParticleSystem::CURVE_TICKS)
+            {
+                return false;
+            }
+
+            rhs.constant_enabled = node[0].as<bool>();
+            rhs.curve_enabled = node[1].as<bool>();
+            rhs.selected_option = static_cast<Hachiko::ParticleSystem::Selection>(node[2].as<int>());
+            rhs.values = node[3].as<float2>();
+            rhs.multiplier = node[4].as<float>();
+
+            for (int i = 0; i < Hachiko::ParticleSystem::CURVE_TICKS; ++i)
+            {
+                rhs.curve[i] = node[i + offset].as<ImVec2>();
+            }
+            return true;
+        }
+    };
+
+    template<>
+    struct convert<Hachiko::ParticleSystem::Emitter::Properties>
+    {
+        static Node encode(const Hachiko::ParticleSystem::Emitter::Properties& rhs)
+        {
+            Node node;
+            node.push_back(rhs.arc);
+            node.push_back(static_cast<int>(rhs.emit_from));
+            node.push_back(rhs.position);
+            node.push_back(rhs.radius);
+            node.push_back(rhs.radius_thickness);
+            node.push_back(rhs.rotation);
+            node.push_back(rhs.scale);
+            node.push_back(rhs.top);
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, Hachiko::ParticleSystem::Emitter::Properties& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 8)
+            {
+                return false;
+            }
+
+            rhs.arc = node[0].as<float>();
+            rhs.emit_from = static_cast<Hachiko::ParticleSystem::Emitter::EmitFrom>(node[1].as<int>());
+            rhs.position = node[2].as<float3>();
+            rhs.radius = node[3].as<float>();
+            rhs.radius_thickness = node[4].as<float>();
+            rhs.rotation = node[5].as<float3>();
+            rhs.scale = node[6].as<float3>();
+            rhs.top = node[7].as<float>();
 
             return true;
         }
-    };*/
+    };
+
+    template<>
+    struct convert<Hachiko::ParticleSystem::ParticleProperties>
+    {
+        static Node encode(const Hachiko::ParticleSystem::ParticleProperties& rhs)
+        {
+            Node node;
+            node.push_back(rhs.alpha);
+            node.push_back(static_cast<int>(rhs.orientation));
+            node.push_back(static_cast<int>(rhs.render_mode));
+            node.push_back(rhs.orientate_to_direction);
+
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, Hachiko::ParticleSystem::ParticleProperties& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 4)
+            {
+                return false;
+            }
+
+            rhs.alpha = node[0].as<float>();
+            rhs.orientation = static_cast<Hachiko::ParticleSystem::ParticleOrientation>(node[1].as<int>());
+            rhs.render_mode = static_cast<Hachiko::ParticleSystem::ParticleRenderMode>(node[2].as<int>());
+            rhs.orientate_to_direction = node[3].as<bool>();
+
+            return true;
+        }
+    };
+
+    template<>
+    struct convert<Hachiko::bool2>
+    {
+        static Node encode(const Hachiko::bool2& rhs)
+        {
+            Node node;
+            node.push_back(rhs.x);
+            node.push_back(rhs.y);
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, Hachiko::bool2& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 2)
+            {
+                return false;
+            }
+
+            rhs.x = node[0].as<bool>();
+            rhs.y = node[1].as<bool>();
+            return true;
+        }
+    };
+
+    template<>
+    struct convert<Hachiko::bool3>
+    {
+        static Node encode(const Hachiko::bool3& rhs)
+        {
+            Node node;
+            node.push_back(rhs.x);
+            node.push_back(rhs.y);
+            node.push_back(rhs.z);
+            node.SetStyle(EmitterStyle::Flow);
+            return node;
+        }
+
+        static bool decode(const Node& node, Hachiko::bool3& rhs)
+        {
+            if (!node.IsSequence() || node.size() != 3)
+            {
+                return false;
+            }
+
+            rhs.x = node[0].as<bool>();
+            rhs.y = node[1].as<bool>();
+            rhs.z = node[2].as<bool>();
+            return true;
+        }
+    };
 } // namespace YAML

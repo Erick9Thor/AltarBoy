@@ -4,6 +4,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
 #include "modules/ModuleRender.h"
+#include "modules/ModuleResources.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -116,9 +117,14 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     return App->scene_manager->GetRoot()->Find(id);
 }
 
+HACHIKO_API std::vector<Hachiko::GameObject*> Hachiko::SceneManagement::Instantiate(unsigned long long prefab_uid, GameObject* parent, unsigned n_instances)
+{
+    return App->resources->InstantiatePrefab(prefab_uid, parent, n_instances);
+}
+
 HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
 {
-    delete game_object;
+    App->scene_manager->RemoveGameObject(game_object);
 }
 
 /*---------------------------------------------------------------------------*/
@@ -129,6 +135,32 @@ const Hachiko::ComponentCamera* Hachiko::Debug::GetRenderingCamera()
 {
     return App->camera->GetRenderingCamera();
 }
+
+float Hachiko::Debug::GetFps()
+{
+    return App->renderer->GetCurrentFps();
+}
+
+unsigned int Hachiko::Debug::GetMs()
+{
+    return App->renderer->GetCurrentMs();
+}
+
+void Hachiko::Debug::SetPolygonMode(bool is_fill) 
+{
+    glPolygonMode(GL_FRONT_AND_BACK, is_fill ? GL_FILL : GL_LINE);
+}
+
+void Hachiko::Debug::SetVsync(bool is_vsync)
+{
+    SDL_GL_SetSwapInterval(is_vsync);
+}
+
+bool Hachiko::Debug::GetVsync()
+{
+    return SDL_HINT_RENDER_VSYNC;
+}
+
 
 /*---------------------------------------------------------------------------*/
 

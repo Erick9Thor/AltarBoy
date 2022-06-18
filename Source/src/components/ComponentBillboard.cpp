@@ -13,8 +13,8 @@
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
 
-Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container, UID id) 
-	: Component(Component::Type::BILLBOARD, container, id) 
+Hachiko::ComponentBillboard::ComponentBillboard(GameObject* container) 
+	: Component(Component::Type::BILLBOARD, container) 
 {
     gradient = new ImGradient();
     PublishIntoScene();
@@ -29,12 +29,11 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
     glActiveTexture(GL_TEXTURE0);
-    int gl_texture = 0;
     has_texture = 0;
     if (texture != nullptr)
     {
-        has_texture = texture->GetImageId();
-        Hachiko::ModuleTexture::Bind(has_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+        const int gl_texture = texture->GetImageId();
+        ModuleTexture::Bind(gl_texture, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
         has_texture = 1;
     }
 
@@ -292,15 +291,16 @@ inline void Hachiko::ComponentBillboard::Reset()
 
 void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
 {
+    node.SetTag("billboard");
     node[BILLBOARD_TYPE] = static_cast<int>(type);
     node[BILLBOARD_PLAY_ON_AWAKE] = play_on_awake;
     if (texture != nullptr)
     {
         node[BILLBOARD_TEXTURE_ID] = texture->GetID();
     }
-    node[X_TILES] = x_tiles;
+    node[TILES] = x_tiles;
     node[Y_TILES] = y_tiles;
-    node[FLIP_X] = has_flip_x;
+    node[FLIP] = has_flip_x;
     node[FLIP_Y] = has_flip_y;
     node[BILLBOARD_LIFETIME] = billboard_lifetime;
     node[SKIP_FRAMES] = skip_frames;
@@ -309,6 +309,7 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[COLOR_CYCLES] = color_cycles;
     node[COLOR_LOOP] = color_loop;
     node[COLOR_GRADIENT] = *gradient;
+    node[BILLBOARD_RENDER_MODE] = static_cast<int>(render_mode);
 }
 
 void Hachiko::ComponentBillboard::Load(const YAML::Node& node) 
@@ -330,9 +331,9 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
         node[BILLBOARD_PLAY_ON_AWAKE].as<bool>() : false;
 
     x_tiles = 1;
-    if (node[X_TILES].IsDefined() && !node[X_TILES].IsNull())
+    if (node[TILES].IsDefined() && !node[TILES].IsNull())
     {
-        x_tiles = node[X_TILES].as<int>();
+        x_tiles = node[TILES].as<int>();
         x_factor = 1 / (float)x_tiles;
     }
 
@@ -352,8 +353,8 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     animation_loop = node[ANIMATION_LOOP].IsDefined() ?
         node[ANIMATION_LOOP].as<bool>() : false;
 
-    has_flip_x = node[FLIP_X].IsDefined() ?
-        node[FLIP_X].as<bool>() : false;
+    has_flip_x = node[FLIP].IsDefined() ?
+        node[FLIP].as<bool>() : false;
 
     has_flip_y = node[FLIP_Y].IsDefined() ?
         node[FLIP_Y].as<bool>() : false;
@@ -377,6 +378,10 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
                 ImColor(mark.color[0], mark.color[1], mark.color[2], mark.color[3]));
         }
     }
+
+    render_mode = node[BILLBOARD_RENDER_MODE].IsDefined() ? 
+        static_cast<BillboardRenderMode>(node[BILLBOARD_RENDER_MODE].as<int>()) :
+        render_mode;
 }
 
 void Hachiko::ComponentBillboard::AddTexture()

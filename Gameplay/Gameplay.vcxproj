@@ -60,7 +60,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)..\Game\gameplayBin</OutDir>
-    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)vendors;</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -184,7 +184,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\imGuizmo\ImGuizmo.h" />
     <ClInclude Include="..\Source\vendors\imGuizmo\ImSequencer.h" />
     <ClInclude Include="..\Source\vendors\imGuizmo\ImZoomSlider.h" />
-    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome5.h" />
+    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome6.h" />
     <ClInclude Include="..\Source\vendors\imgui\imconfig.h" />
     <ClInclude Include="..\Source\vendors\imgui\imgui.h" />
     <ClInclude Include="..\Source\vendors\imgui\imgui_impl_opengl3.h" />
@@ -313,26 +313,28 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
-    <ClInclude Include="BackToMainMenu.h" />
-    <ClInclude Include="BulletController.h" />
-    <ClInclude Include="BugAnimationManager.h" />
-    <ClInclude Include="CrystalExplosion.h" />
-    <ClInclude Include="DynamicCamera.h" />
-    <ClInclude Include="EnemyController.h" />
-    <ClInclude Include="FancyLights.h" />
+    <ClInclude Include="entities\enemies\BugState.h" />
+    <ClInclude Include="entities\player\PlayerState.h" />
+    <ClInclude Include="ui\BackToMainMenu.h" />
+    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="entities\enemies\BugAnimationManager.h" />
+    <ClInclude Include="entities\crystals\CrystalExplosion.h" />
+    <ClInclude Include="ui\DebugManager.h" />
+    <ClInclude Include="misc\DynamicCamera.h" />
+    <ClInclude Include="entities\enemies\EnemyController.h" />
+    <ClInclude Include="misc\FancyLights.h" />
     <ClInclude Include="generated\Factory.h" />
-    <ClInclude Include="MainMenuManager.h" />
-    <ClInclude Include="PlayerAnimationManager.h" />
-    <ClInclude Include="PlayerCamera.h" />
-    <ClInclude Include="PlayerController.h" />
-    <ClInclude Include="PlayerSoundManager.h" />
-    <ClInclude Include="PlayerState.h" />
-    <ClInclude Include="RoomTeleporter.h" />
-    <ClInclude Include="Scenes.h" />
+    <ClInclude Include="ui\MainMenuManager.h" />
+    <ClInclude Include="entities\player\PlayerAnimationManager.h" />
+    <ClInclude Include="entities\player\PlayerCamera.h" />
+    <ClInclude Include="entities\player\PlayerController.h" />
+    <ClInclude Include="entities\player\PlayerSoundManager.h" />
+    <ClInclude Include="entities\player\RoomTeleporter.h" />
+    <ClInclude Include="constants\Scenes.h" />
     <ClInclude Include="scriptingUtil\framework.h" />
     <ClInclude Include="scriptingUtil\gameplaypch.h" />
-    <ClInclude Include="Stats.h" />
-    <ClInclude Include="Sounds.h" />
+    <ClInclude Include="entities\Stats.h" />
+    <ClInclude Include="constants\Sounds.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\vendors\ImGuiFileDialog-0.6.3\ImGuiFileDialog.cpp">
@@ -720,29 +722,30 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="BackToMainMenu.cpp" />
-    <ClCompile Include="BulletController.cpp" />
-    <ClCompile Include="BugAnimationManager.cpp" />
-    <ClCompile Include="CrystalExplosion.cpp" />
-    <ClCompile Include="DynamicCamera.cpp" />
-    <ClCompile Include="EnemyController.cpp" />
-    <ClCompile Include="FancyLights.cpp" />
+    <ClCompile Include="ui\BackToMainMenu.cpp" />
+    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
+    <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
+    <ClCompile Include="ui\DebugManager.cpp" />
+    <ClCompile Include="misc\DynamicCamera.cpp" />
+    <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SaveAndLoadMethods.cpp" />
     <ClCompile Include="generated\SerializationMethods.cpp" />
-    <ClCompile Include="MainMenuManager.cpp" />
-    <ClCompile Include="PlayerAnimationManager.cpp" />
-    <ClCompile Include="PlayerCamera.cpp" />
-    <ClCompile Include="PlayerController.cpp" />
-    <ClCompile Include="PlayerSoundManager.cpp" />
-    <ClCompile Include="RoomTeleporter.cpp" />
+    <ClCompile Include="ui\MainMenuManager.cpp" />
+    <ClCompile Include="misc\FancyLights.cpp" />
+    <ClCompile Include="entities\player\PlayerAnimationManager.cpp" />
+    <ClCompile Include="entities\player\PlayerCamera.cpp" />
+    <ClCompile Include="entities\player\PlayerController.cpp" />
+    <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
+    <ClCompile Include="entities\player\RoomTeleporter.cpp" />
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Stats.cpp" />
+    <ClCompile Include="entities\Stats.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Geometry\KDTree.inl" />

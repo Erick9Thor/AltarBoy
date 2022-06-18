@@ -9,6 +9,7 @@ namespace Hachiko
     class GameObject;
     class ComponentMeshRenderer;
     class ComponentCamera;
+    class Quadtree;
     class QuadtreeNode;
 
     struct RenderTarget
@@ -23,7 +24,7 @@ namespace Hachiko
     {
     public:
         void PreUpdate();
-        void Update(ComponentCamera* camera, QuadtreeNode* quadtree);
+        void Update(ComponentCamera* camera, Quadtree* quadtree);
 
         std::vector<RenderTarget>& GetOpaqueTargets()
         {
@@ -46,7 +47,7 @@ namespace Hachiko
         }
 
     private:
-        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, QuadtreeNode* quadtree);
+        void CollectMeshes(ComponentCamera* camera, const float3& camera_pos, Quadtree* quadtree);
         void CollectMesh(const float3& camera_pos, ComponentMeshRenderer* mesh);
 
         std::vector<RenderTarget> opaque_targets;

@@ -76,15 +76,15 @@ void Hachiko::WindowScene::CleanUp()
 
 void Hachiko::WindowScene::GuizmoOptionsController()
 {
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_ALT, guizmo_operation == ImGuizmo::TRANSLATE, "Move Tool"))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROWS_UP_DOWN_LEFT_RIGHT, guizmo_operation == ImGuizmo::TRANSLATE, "Move Tool"))
     {
         guizmo_operation = ImGuizmo::TRANSLATE;
     }
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_UNDO, guizmo_operation == ImGuizmo::ROTATE, "Rotate Tool"))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_ARROW_ROTATE_LEFT, guizmo_operation == ImGuizmo::ROTATE, "Rotate Tool"))
     {
         guizmo_operation = ImGuizmo::ROTATE;
     }
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_EXPAND_ALT, guizmo_operation == ImGuizmo::SCALE, "Scale Tool"))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_MAXIMIZE, guizmo_operation == ImGuizmo::SCALE, "Scale Tool"))
     {
         guizmo_operation = ImGuizmo::SCALE;
     }
@@ -93,7 +93,7 @@ void Hachiko::WindowScene::GuizmoOptionsController()
     ImGui::SeparatorEx(ImGuiSeparatorFlags_Vertical);
     ImGui::SameLine();
 
-    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOME, guizmo_mode == ImGuizmo::LOCAL, "Switches to Local Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
+    if (ImGuiUtils::ToolbarButton(App->editor->m_big_icon_font, ICON_FA_HOUSE, guizmo_mode == ImGuizmo::LOCAL, "Switches to Local Gizmos mode.", guizmo_operation != ImGuizmo::SCALE))
     {
         guizmo_mode = ImGuizmo::LOCAL;
     }
@@ -134,13 +134,20 @@ void Hachiko::WindowScene::DrawScene()
     ImVec2 size = ImGui::GetContentRegionAvail();
     bool size_changed = size.x != texture_size.x || size.y != texture_size.y;
     bool size_valid = (size.x > 0 && size.y > 0);
-    
+
     if (size_changed && size_valid)
     {
         texture_size = {
             size.x,
             size.y,
         };
+        viewport_position = float2(ImGui::GetWindowPos().x,
+                                   ImGui::GetWindowPos().y
+                                   + ImGui::GetStyle().WindowPadding.y * 2
+                                   + ImGui::GetStyle().FramePadding.y * 2
+                                   + ImGui::GetTextLineHeight() * 2
+                                   + ImGui::GetStyle().ItemSpacing.y);
+        viewport_size = float2(size.x, size.y);
         App->camera->OnResize(static_cast<unsigned>(texture_size.x), static_cast<unsigned>(texture_size.y));
     }
 
@@ -226,7 +233,7 @@ void Hachiko::WindowScene::Controller() const
 {
     if (!using_guizmo && focused && hovering && App->input->IsMouseButtonPressed(SDL_BUTTON_LEFT))
     {
-        Scene* scene = App->scene_manager->GetActiveScene();
+        const Scene* scene = App->scene_manager->GetActiveScene();
         GameObject* picked = SelectObject(App->camera->GetRenderingCamera(), scene);
         if (picked)
         {
@@ -235,7 +242,7 @@ void Hachiko::WindowScene::Controller() const
     }
 }
 
-Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera, Scene* scene) const
+Hachiko::GameObject* Hachiko::WindowScene::SelectObject(const ComponentCamera* camera, const Scene* scene) const
 {
     // sdl -> (0, 0) top left, (w, h) bottom right
     // // imgui -> (0,0) botton left
@@ -257,8 +264,8 @@ Hachiko::GameObject* Hachiko::WindowScene::SelectObject(ComponentCamera* camera,
 
 float2 Hachiko::WindowScene::ImguiToScreenPos(const float2& mouse_pos) const
 {
-    float2 mouse_viewport_pos = float2(mouse_pos.x - guizmo_rect_origin.x, mouse_pos.y - guizmo_rect_origin.y);
-    float2 center = texture_size / 2;
+    const float2 mouse_viewport_pos = float2(mouse_pos.x - guizmo_rect_origin.x, mouse_pos.y - guizmo_rect_origin.y);
+    const float2 center = texture_size * 0.5f;
     float2 mouse_ui_pos = float2(mouse_viewport_pos.x - center.x, (-mouse_viewport_pos.y) + center.y);
     return mouse_ui_pos;
 }
@@ -269,4 +276,14 @@ float2 Hachiko::WindowScene::GetInterfaceClickPos() const
     // interface -> center 0,0 top right pos bot left neg
     const ImVec2 mouse_pos = ImGui::GetMousePos();
     return ImguiToScreenPos(float2(mouse_pos.x, mouse_pos.y));
+}
+
+const float2& Hachiko::WindowScene::GetViewportSize() const
+{
+    return viewport_size;
+}
+
+const float2& Hachiko::WindowScene::GetViewportPosition() const
+{
+    return viewport_position;
 }

@@ -41,7 +41,7 @@ bool Hachiko::ModuleTexture::CleanUp()
     return true;
 }
 
-Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid, const char* path, bool flip)
+Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid, const char* path, YAML::Node& meta, bool flip)
 {
     std::filesystem::path texture_path = path;
 
@@ -55,10 +55,9 @@ Hachiko::ResourceTexture* Hachiko::ModuleTexture::ImportTextureResource(UID uid,
     ResourceTexture* texture = new ResourceTexture(uid);
     texture->path = path;
     texture->SetName(texture_path.filename().replace_extension().string().c_str());
-    texture->min_filter = GL_LINEAR_MIPMAP_LINEAR;
-    texture->mag_filter = GL_LINEAR;
-    texture->wrap = GL_CLAMP;
-
+    texture->min_filter = meta[TEXTURE_MAG_FILTER].IsDefined() ? meta[TEXTURE_MAG_FILTER].as<unsigned>() : GL_LINEAR_MIPMAP_LINEAR;
+    texture->mag_filter = meta[TEXTURE_MIN_FILTER].IsDefined() ? meta[TEXTURE_MIN_FILTER].as<unsigned>() : GL_LINEAR;
+    texture->wrap = meta[TEXTURE_WRAP_MODE].IsDefined() ? meta[TEXTURE_WRAP_MODE].as<unsigned>() : GL_CLAMP;
     texture->bpp = ilGetInteger(IL_IMAGE_BPP);
     texture->width = ilGetInteger(IL_IMAGE_WIDTH);
     texture->height = ilGetInteger(IL_IMAGE_HEIGHT);

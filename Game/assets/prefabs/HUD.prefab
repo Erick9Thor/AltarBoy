@@ -37,9 +37,9 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-320, 210, 0]
+            position: [-309.399994, 210, 0]
             size: [20, 20]
-            scale: [20, 6]
+            scale: [23, 6]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -47,7 +47,7 @@ child:
             enabled: true
           - type: 11
             enabled: true
-            image_id: 10482571268862899118
+            image_id: 5275570671231529455
             hover_image_id: 0
             use_image: true
             use_hover_image: false
@@ -63,9 +63,9 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-367.5, 210, 0]
+            position: [-296.200012, 209.449997, 0]
             size: [20, 20]
-            scale: [3.5, 1.20000005]
+            scale: [26, 7]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -73,7 +73,7 @@ child:
             enabled: true
           - type: 11
             enabled: true
-            image_id: 2627443166751613316
+            image_id: 4638752376260405207
             hover_image_id: 0
             use_image: true
             use_hover_image: false
@@ -89,9 +89,9 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-300, 210, 0]
+            position: [-307.75, 209.050003, 0]
             size: [20, 20]
-            scale: [3.5, 1.20000005]
+            scale: [24, 6]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -99,7 +99,7 @@ child:
             enabled: true
           - type: 11
             enabled: true
-            image_id: 2627443166751613316
+            image_id: 4721163576751640504
             hover_image_id: 0
             use_image: true
             use_hover_image: false
@@ -115,9 +115,9 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-233, 210, 0]
+            position: [-304.399994, 208.100006, 0]
             size: [20, 20]
-            scale: [3.5, 1.20000005]
+            scale: [20, 6]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -125,7 +125,7 @@ child:
             enabled: true
           - type: 11
             enabled: true
-            image_id: 2627443166751613316
+            image_id: 4127850956731736451
             hover_image_id: 0
             use_image: true
             use_hover_image: false
@@ -141,9 +141,9 @@ child:
             scale: [1, 1, 1]
           - type: 10
             enabled: true
-            position: [-166, 210, 0]
+            position: [-307.299988, 208.149994, 0]
             size: [20, 20]
-            scale: [3.5, 1.20000005]
+            scale: [20, 5.5]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -151,7 +151,111 @@ child:
             enabled: true
           - type: 11
             enabled: true
-            image_id: 2627443166751613316
+            image_id: 13112388861813353638
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Stamina_1
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-405.350006, 184.899994, 0]
+            size: [20, 20]
+            scale: [3, 1.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 72551740062638533
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Stamina_2
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-356.25, 184.899994, 0]
+            size: [20, 20]
+            scale: [3, 1.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 72551740062638533
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Stamina_3
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-306.850006, 184.899994, 0]
+            size: [20, 20]
+            scale: [3, 1.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 72551740062638533
+            hover_image_id: 0
+            use_image: true
+            use_hover_image: false
+            image_color: [1, 1, 1, 1]
+            hover_image_color: [1, 1, 1, 1]
+      - name: Stamina_4
+        enabled: true
+        component:
+          - type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - type: 10
+            enabled: true
+            position: [-257.350006, 184.899994, 0]
+            size: [20, 20]
+            scale: [3, 1.5]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - type: 9
+            enabled: true
+          - type: 11
+            enabled: true
+            image_id: 72551740062638533
             hover_image_id: 0
             use_image: true
             use_hover_image: false

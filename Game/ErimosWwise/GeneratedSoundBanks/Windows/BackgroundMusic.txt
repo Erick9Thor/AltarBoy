@@ -1,6 +1,12 @@
 Event	ID	Name			Wwise Object Path	Notes
+	445689598	Stop_Navigation			\Default Work Unit\Stop_Navigation	
+	513571230	Play_Combat			\Default Work Unit\Play_Combat	
 	548088167	Play_BackgroundMusic			\Default Work Unit\Play_BackgroundMusic	
+	913896232	Stop_Combat			\Default Work Unit\Stop_Combat	
+	3849525492	Play_Navigation			\Default Work Unit\Play_Navigation	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	125142864	BackgroundMusic	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\BackgroundMusic_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\BackgroundMusic		23357852
+	363091743	PlaceholderCombat	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\PlaceholderBlackShroudBattleTheme_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\PlaceholderCombat		23739520
+	743935933	PlaceholderNavigation	C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\SFX\PlaceholderAmhAraeng_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\PlaceholderNavigation		54075456
 
