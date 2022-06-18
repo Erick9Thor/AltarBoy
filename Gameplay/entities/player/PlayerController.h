@@ -75,6 +75,7 @@ private:
 	void RecieveKnockback(const math::float3 direction);
 
 	void CheckState();
+	void ResetPlayer();
 
 public:
 	void CheckGoal(const float3& current_position);
@@ -148,6 +149,7 @@ private:
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
 	SERIALIZE_FIELD(PlayerState, _previous_state);
+	float3 _initial_pos = float3::zero;
 
 	Stats* _combat_stats;
 	bool _god_mode = false;

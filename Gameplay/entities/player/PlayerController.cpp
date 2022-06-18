@@ -68,6 +68,7 @@ void Hachiko::Scripting::PlayerController::OnStart()
 {
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
+	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -82,8 +83,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	if (_combat_stats->_current_hp <= 0)
 	{
-		//SceneManagement::SwitchScene(Scenes::LOSE);
+		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
+		// Temporary behavior to reset player in the same scene
+		ResetPlayer();
 	}
 
 	if (_god_mode_trigger)
@@ -660,12 +663,6 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
-
-	// Player is dead
-	if (!_combat_stats->IsAlive())
-	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
-	}
 }
 
 void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 direction)
@@ -719,6 +716,13 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	}
 }
 
+void Hachiko::Scripting::PlayerController::ResetPlayer()
+{
+	_player_position = _initial_pos;
+	_combat_stats->_current_hp = 4;
+	UpdateHealthBar();
+}
+
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 {
 	if (hp_cells.size() < 1)
@@ -763,6 +767,6 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(12124061992092393469);
+		//SceneManagement::SwitchScene(12124061992092393469);
 	}
 }
