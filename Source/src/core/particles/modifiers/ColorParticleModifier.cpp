@@ -14,8 +14,6 @@ Hachiko::ColorParticleModifier::~ColorParticleModifier()
 
 void Hachiko::ColorParticleModifier::Update(std::vector<Particle>& particles)
 {
-
-
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
@@ -25,7 +23,7 @@ void Hachiko::ColorParticleModifier::Update(std::vector<Particle>& particles)
 
         if (!IsActive())
         {
-            particle.SetCurrentColor(float4::one);
+            particle.SetCurrentColor(float4(1.0f, 0.0f, 1.0f, 1.0f));
             continue;
         }
 

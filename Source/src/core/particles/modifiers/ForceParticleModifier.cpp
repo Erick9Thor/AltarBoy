@@ -20,8 +20,12 @@ void Hachiko::ForceParticleModifier::Update(std::vector<Particle>& particles)
         }
 
         UpdatePositionOverTime(particle);
-        UpdateDirectionOverTime(particle);
-        UpdateRotationOverTime(particle);
+
+        if (IsActive())
+        {
+            UpdateDirectionOverTime(particle);
+            UpdateRotationOverTime(particle);
+        }
     }
 }
 
