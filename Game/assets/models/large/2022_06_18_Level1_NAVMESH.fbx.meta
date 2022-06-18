@@ -1,0 +1,17 @@
+asset_hash: 5356201364365044922
+model_name: 2022_06_18_Level1_NAVMESH
+meshes:
+  - 10977660915431518764
+materials:
+  - 6750369022920963075
+prefab_id: 17967084842006225802
+resources:
+  - resource_id: 10977660915431518764
+    resource_type: 3
+    resource_hash: 16438552750100556356
+  - resource_id: 6750369022920963075
+    resource_type: 1
+    resource_hash: 16862467338539988882
+  - resource_id: 17967084842006225802
+    resource_type: 13
+    resource_hash: 13049629405787177341
