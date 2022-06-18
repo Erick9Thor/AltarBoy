@@ -423,6 +423,7 @@ HACHIKO_API unsigned int GetMs();
 HACHIKO_API void SetPolygonMode(bool is_fill);
 HACHIKO_API void SetVsync(bool is_vsync);
 HACHIKO_API bool GetVsync();
+HACHIKO_API void DebugDraw(const OBB& box);
 } // namespace Hachiko::Debug
 
 

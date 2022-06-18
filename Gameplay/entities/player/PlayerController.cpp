@@ -245,7 +245,6 @@ void Hachiko::Scripting::PlayerController::Dash()
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
-	_attack_indicator->SetActive(true);
 	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float attack_angle = 60.0f; // This can vary in the future deppending of weapon
@@ -254,9 +253,25 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	stats.damage = 1.f;
 	stats.knockback_distance = 0.f;
 
+	_attack_swtich = !_attack_swtich;
+
 	if (combat_manager)
 	{
-		bool hit = combat_manager->PlayerConeAttack(_player_transform->GetGlobalMatrix(), attack_angle, _combat_stats->_attack_range, stats);
+		bool hit = false;
+		if (_attack_swtich)
+		{
+			hit = combat_manager->PlayerConeAttack(_player_transform->GetGlobalMatrix(), attack_angle, _combat_stats->_attack_range, stats);
+		}
+		else
+		{
+			// Offset the center of the attack
+			float3 emitter_direction = _player_transform->GetFront().Normalized();
+			
+			float3 emitter_position = _player_transform->GetGlobalPosition() + emitter_direction * (_combat_stats->_attack_range/ 2.f);
+			float4x4 emitter = float4x4::FromTRS(emitter_position, _player_transform->GetGlobalRotation(), _player_transform->GetGlobalScale());
+			hit = combat_manager->PlayerRectangleAttack(emitter, 1.5f, _combat_stats->_attack_range, stats);
+		}
+		
 		if (hit)
 		{
 			_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
@@ -495,7 +510,11 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
-			_attack_indicator->SetActive(true);
+			if (_attack_swtich)
+			{
+				_attack_indicator->SetActive(true);
+			}
+			
 			return;
 			
 		}

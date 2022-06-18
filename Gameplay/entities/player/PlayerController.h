@@ -108,6 +108,8 @@ private:
 	bool _should_rotate = false;
 	bool _is_falling = false;
 	int _current_bullet = -1;
+
+	bool _attack_swtich = true;
 	
 
 	GameObject* enemies;

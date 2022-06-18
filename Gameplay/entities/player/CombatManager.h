@@ -59,7 +59,6 @@ namespace Hachiko
             bool EnemyConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats);
             bool EnemyRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats);
 
-
             // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
             // Player only system for now
             int ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats);
@@ -67,13 +66,23 @@ namespace Hachiko
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 
         private:
-            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats&);
-            bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats&);
+            // Evaluate for all units
+            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            bool ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
+
+            // Specifics of the collision check
             bool ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
-            bool ConeHitsObstacle(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
+            bool ConeHitsObstacle(GameObject* obstacle_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
+            bool OBBHitsAgent(GameObject* agent_go, const OBB& attack_box);
+            bool OBBHitsObstacle(GameObject* obstacle_go, const OBB& attack_box);
+
+            // What to do when system wants to register a hit
             void HitObstacle(CrystalExplosion* obstacle, float damage);
             void HitEnemy(EnemyController* enemy, float damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
+            // Bullet specific management operations
             void RunBulletSimulation();
             void UpdateBulletTrajectory(unsigned bullet_idx);
             bool CheckBulletCollisions(unsigned bullet_idx);
@@ -84,11 +93,14 @@ namespace Hachiko
             // Processes hit and returns hit distance to check what to damage
             EnemyController* FindBulletClosestEnemyHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
             CrystalExplosion* FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
+        
         private:
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
             
+            bool draw_debug_hitbox = false;
+            OBB debug_hitbox;
 
             math::float3 _direction;
             int _damage;

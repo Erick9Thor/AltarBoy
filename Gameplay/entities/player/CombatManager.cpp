@@ -48,6 +48,11 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 		return;
 	}
 
+	if (draw_debug_hitbox)
+	{
+		Debug::DebugDraw(debug_hitbox);
+	}
+
 	RunBulletSimulation();
 }
 
@@ -65,6 +70,14 @@ bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin,
 
 bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats)
 {
+	OBB hitbox = OBB(origin.Col3(3), float3(width / 2.f, 1.f, length / 2.f), origin.WorldX().Normalized(), origin.WorldY().Normalized(), origin.WorldZ().Normalized());
+	bool hit = false;
+	debug_hitbox = hitbox;
+	draw_debug_hitbox = true;
+
+	hit = hit || ProcessAgentsOBB(hitbox, attack_stats);
+	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
+	
 	return false;
 }
 
@@ -229,7 +242,7 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::CombatManager::FindBull
 		float enemy_radius = agent->GetRadius();
 		Sphere hitbox = Sphere(enemy_position, enemy_radius + bullet_size);
 
-		if (enemy->active && trajectory.Intersects(hitbox))
+		if (hitbox.Intersects(hitbox))
 		{
 			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
 			float hit_distance = bullet_position.Distance(enemy_position);
@@ -266,15 +279,15 @@ Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::CombatManager::FindBul
 			continue;
 		}
 
-		ComponentObstacle* obstacle_script = obstacle->GetComponent<ComponentObstacle>();
-		if (!obstacle_script)
+		ComponentObstacle* obstacle_cpomponent = obstacle->GetComponent<ComponentObstacle>();
+		if (!obstacle_cpomponent)
 		{
 			continue;
 		}
 		
 		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
 		// Cylinder obstacles ignore z
-		float obstacle_radius = obstacle_script->GetSize().x;
+		float obstacle_radius = obstacle_cpomponent->GetSize().x;
 		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
 		if (obstacle->active && trajectory.Intersects(hitbox))
@@ -394,6 +407,72 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 	return hit;
 }
 
+bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats)
+{
+	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+
+	if (!agent_container)
+	{
+		return false;
+	}
+
+	bool hit = false;
+	std::vector<GameObject*> enemies = agent_container->children;
+	for (int i = 0; i < enemies.size(); ++i)
+	{
+		GameObject* enemy = enemies[i];
+		if (!enemy->IsActive())
+		{
+			continue;
+		}
+
+		if (OBBHitsAgent(enemy, attack_box))
+		{
+			// Hit enemy here
+			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
+			if (enemy_controller)
+			{
+				// TODO: Add Knockback
+				hit = true;
+				HitEnemy(enemy_controller, attack_stats.damage);
+			}
+		}
+	}
+	return hit;
+}
+
+bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats)
+{
+	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
+	if (!obstacle_container)
+	{
+		return false;
+	}
+
+	bool hit = false;
+	std::vector<GameObject*> obstacles = obstacle_container->children;
+	for (int i = 0; i < obstacles.size(); ++i)
+	{
+		GameObject* obstacle = obstacles[i];
+		if (!obstacle->IsActive())
+		{
+			continue;
+		}
+
+		if (OBBHitsObstacle(obstacle, attack_box))
+		{
+			// Hit enemy here
+			CrystalExplosion* csystal_controller = obstacle->GetComponent<CrystalExplosion>();
+			if (csystal_controller)
+			{
+				hit = true;
+				HitObstacle(csystal_controller, attack_stats.damage);
+			}
+		}
+	}
+	return hit;
+}
+
 bool Hachiko::Scripting::CombatManager::ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance)
 {
 	ComponentAgent* agent = agent_go->GetComponent<ComponentAgent>();
@@ -419,15 +498,15 @@ bool Hachiko::Scripting::CombatManager::ConeHitsAgent(GameObject* agent_go, cons
 	return valid_distance;
 }
 
-bool Hachiko::Scripting::CombatManager::ConeHitsObstacle(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance)
+bool Hachiko::Scripting::CombatManager::ConeHitsObstacle(GameObject* obstacle_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance)
 {
-	ComponentObstacle* obstacle = agent_go->GetComponent<ComponentObstacle>();
+	ComponentObstacle* obstacle = obstacle_go->GetComponent<ComponentObstacle>();
 	if (!obstacle)
 	{
 		return false;
 	}
 
-	float3 obstacle_position = agent_go->GetTransform()->GetGlobalPosition();
+	float3 obstacle_position = obstacle_go->GetTransform()->GetGlobalPosition();
 	float3 source_to_obstacle_dir = (obstacle_position - attack_source_pos).Normalized();
 	// Assume obstacle is a cylinder for now
 	float obstacle_radius = obstacle->GetSize().x;
@@ -443,6 +522,37 @@ bool Hachiko::Scripting::CombatManager::ConeHitsObstacle(GameObject* agent_go, c
 	bool valid_distance = obstacle_distance <= hit_distance;
 
 	return valid_distance;
+}
+
+bool Hachiko::Scripting::CombatManager::OBBHitsAgent(GameObject* agent_go, const OBB& attack_box)
+{
+	ComponentAgent* agent = agent_go->GetComponent<ComponentAgent>();
+	if (!agent)
+	{
+		return false;
+	}
+
+	float3 enemy_position = agent_go->GetTransform()->GetGlobalPosition();
+	float enemy_radius = agent->GetRadius();
+	Sphere hitbox = Sphere(enemy_position, enemy_radius);
+
+	return attack_box.Intersects(hitbox);
+}
+
+bool Hachiko::Scripting::CombatManager::OBBHitsObstacle(GameObject* obstacle_go, const OBB& attack_box)
+{
+	ComponentObstacle* obstacle_cpomponent = obstacle_go->GetComponent<ComponentObstacle>();
+	if (!obstacle_cpomponent)
+	{
+		return false;
+	}
+
+	float3 enemy_position = obstacle_go->GetTransform()->GetGlobalPosition();
+	// Assume it is in cylinder mode
+	float enemy_radius = obstacle_cpomponent->GetSize().x;
+	Sphere hitbox = Sphere(enemy_position, enemy_radius);
+
+	return attack_box.Intersects(hitbox);
 }
 
 void Hachiko::Scripting::CombatManager::HitObstacle(CrystalExplosion* obstacle, float damage)
