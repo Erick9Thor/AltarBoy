@@ -5,7 +5,7 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -243,11 +243,11 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::CombatManager::OnSave(YAML::Node& node) const
 {
 }
 
-void Hachiko::Scripting::BulletController::OnLoad()
+void Hachiko::Scripting::CombatManager::OnLoad()
 {
 }
 

@@ -504,13 +504,12 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes.h" />
     <ClInclude Include="entities\player\PlayerAnimationManager.h" />
     <ClInclude Include="constants\Sounds.h" />
     <ClInclude Include="entities\player\PlayerSoundManager.h" />
     <ClInclude Include="entities\enemies\EnemyController.h" />
     <ClInclude Include="entities\Stats.h" />
-    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="misc\FancyLights.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -778,7 +777,7 @@
     <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
     <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="entities\Stats.cpp" />
-    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\player\RoomTeleporter.cpp" />

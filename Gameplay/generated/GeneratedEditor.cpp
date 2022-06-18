@@ -3,7 +3,7 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -55,7 +55,7 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Attack Animation Timer", _attack_animation_timer);
 }
 
-void Hachiko::Scripting::BulletController::OnEditor()
+void Hachiko::Scripting::CombatManager::OnEditor()
 {
 }
 

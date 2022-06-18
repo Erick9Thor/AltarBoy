@@ -6,7 +6,7 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -334,12 +334,12 @@ void Hachiko::Scripting::EnemyController::SerializeTo(std::unordered_map<std::st
 	serialized_fields["_attack_animation_timer"] = SerializedField(std::string("_attack_animation_timer"), std::make_any<float>(_attack_animation_timer), std::string("float"));
 }
 
-void Hachiko::Scripting::BulletController::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
+void Hachiko::Scripting::CombatManager::DeserializeFrom(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::DeserializeFrom(serialized_fields);
 }
 
-void Hachiko::Scripting::BulletController::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
+void Hachiko::Scripting::CombatManager::SerializeTo(std::unordered_map<std::string, SerializedField>& serialized_fields)
 {
 	Hachiko::Scripting::Script::SerializeTo(serialized_fields);
 }

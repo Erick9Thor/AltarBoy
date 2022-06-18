@@ -2,7 +2,7 @@
 #include "constants/Scenes.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
 
@@ -248,66 +248,20 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_attack_indicator->SetActive(true);
 	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
-	if (enemies == nullptr && dynamic_envi == nullptr) {
-		return;
-	}
+	const float attack_angle = 60.0f; // This can vary in the future deppending of weapon
+	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
+	CombatManager::AttackStats stats = CombatManager::AttackStats();
+	stats.damage = 1.f;
+	stats.knockback_distance = 0.f;
 
-	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
-	std::vector<GameObject*> environment = dynamic_envi ? dynamic_envi->children : std::vector<GameObject*>();
-
-	// MELEE
-
-	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
-
-	GameObject* inter = game_object->scene_owner->GetRoot();
-
-	std::vector<GameObject*> elements_hit = {};
-	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
-	math::float4x4 inv_matrix = _player_transform->GetGlobalMatrix().Transposed();
-	for (int i = 0; i < enemy_children.size(); ++i)
+	if (combat_manager)
 	{
-		if (enemy_children[i]->active && _combat_stats->_attack_range >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		bool hit = combat_manager->PlayerConeAttack(_player_transform->GetGlobalMatrix(), attack_angle, _combat_stats->_attack_range, stats);
+		if (hit)
 		{
-			float3 normalized_center = _player_transform->GetFront().Normalized();
-			float3 normalized_enemy = (enemy_children[i]->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition()).Normalized();
-			float dot_product = normalized_center.Dot(normalized_enemy);
-			float angle_of_enemy = std::acos(dot_product) * RAD_TO_DEG;
-			float attack_angle = 60.0f; // This can vary in the future deppending of weapon
-			if (angle_of_enemy < attack_angle)
-			{
-				elements_hit.push_back(enemy_children[i]);
-			}
+			_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 		}
 	}
-
-	//loop in enemies hit
-	for (Hachiko::GameObject* element : elements_hit)
-	{
-
-		EnemyController* enemy_controller = element->GetComponent<EnemyController>();
-		CrystalExplosion* crystal_explotion = element->GetComponent<CrystalExplosion>();
-
-		float3 relative_dir = element->GetTransform()->GetGlobalPosition() - _player_transform->GetGlobalPosition();
-
-		if (enemy_controller != nullptr)
-		{
-			enemy_controller->RegisterHit(_combat_stats->_attack_power, relative_dir.Normalized());
-		}
-		else if (crystal_explotion != nullptr)
-		{
-			crystal_explotion->RegisterHit(_combat_stats->_attack_power);
-		}
-	}
-
-	if (elements_hit.size() > 0)
-	{
-		_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
-	}
-
-	// Move player a bit forward on melee attack
-	_player_position += _player_transform->GetFront() * 0.3f;
-	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
-	_attack_current_cd = _combat_stats->_attack_cd;
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -347,10 +301,10 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 
-	BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+	CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 	if (bullet_controller)
 	{
-		BulletController::BulletStats stats = BulletController::BulletStats();
+		CombatManager::BulletStats stats = CombatManager::BulletStats();
 		stats.charge_time = 1.f;
 		stats.lifetime = 3.f;
 		stats.size = 1.f;
@@ -373,7 +327,7 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 	_attack_current_duration = 0.f;
 	if (_state == PlayerState::RANGED_ATTACKING && _current_bullet >= 0)
 	{
-		BulletController* bullet_controller = _bullet_emitter->GetComponent<BulletController>();
+		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
 	}
 }
