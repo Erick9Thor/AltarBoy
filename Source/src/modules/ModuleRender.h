@@ -99,6 +99,12 @@ namespace Hachiko
         
         [[nodiscard]] float2 GetFrameBufferSize() const;
 
+        [[nodiscard]] bool IsDeferred() const 
+        {
+            return draw_deferred;
+        }
+
+
         [[nodiscard]] const unsigned& GetParticleVao() const
         {
             return particle_vao;
@@ -110,7 +116,7 @@ namespace Hachiko
         void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
-        void DrawForward(BatchManager* batch_manager);
+        void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         void SetRenderMode(bool is_deferred);
 

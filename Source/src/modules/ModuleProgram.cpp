@@ -24,14 +24,19 @@ bool Hachiko::ModuleProgram::Init()
 
     CreateForwardProgram();
     CreateSkyboxProgram();
+    CreateDiffuseIBLProgram();
+    CreatePrefilteredIBLProgram();
+    CreateEnvironmentBRDFProgram();
     CreateStencilProgram();
     CreateUserInterfaceImageProgram();
     CreateUserInterfaceTextProgram();
     CreateDeferredGeometryPassProgram();
     CreateDeferredLightingPassProgram();
     CreateParticleProgram();
-    if (!forward_program || !skybox_program || !stencil_program || !ui_image_program || 
-        !ui_text_program || !deferred_geometry_program || !deferred_lighting_program || !particle_program)
+
+    if (!forward_program || !deferred_geometry_program || !deferred_lighting_program || !skybox_program || 
+        !diffuse_ibl_program || !prefiltered_ibl_program || !environment_brdf_program ||
+        !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
     {
         return false;
     }
@@ -162,6 +167,24 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
     return skybox_program;
 }
 
+Hachiko::Program* Hachiko::ModuleProgram::CreateDiffuseIBLProgram()
+{
+    diffuse_ibl_program = CreateProgram(SHADERS_FOLDER "vertex_diffuseIBL.glsl", SHADERS_FOLDER "fragment_diffuseIBL.glsl");
+    return diffuse_ibl_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreatePrefilteredIBLProgram()
+{
+    prefiltered_ibl_program = CreateProgram(SHADERS_FOLDER "vertex_prefilteredIBL.glsl", SHADERS_FOLDER "fragment_prefilteredIBL.glsl");
+    return prefiltered_ibl_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateEnvironmentBRDFProgram()
+{
+    environment_brdf_program = CreateProgram(SHADERS_FOLDER "vertex_environmentBRDF.glsl", SHADERS_FOLDER "fragment_environmentBRDF.glsl");
+    return environment_brdf_program;
+}
+
 Hachiko::Program* Hachiko::ModuleProgram::CreateStencilProgram()
 {
     stencil_program = CreateProgram(SHADERS_FOLDER "vertex_stencil.glsl", SHADERS_FOLDER "fragment_stencil.glsl");
@@ -248,7 +271,16 @@ bool Hachiko::ModuleProgram::CleanUp()
     
     skybox_program->CleanUp();
     delete skybox_program;
+
+    diffuse_ibl_program->CleanUp();
+    delete diffuse_ibl_program;
+
+    prefiltered_ibl_program->CleanUp();
+    delete prefiltered_ibl_program;
     
+    environment_brdf_program->CleanUp();
+    delete environment_brdf_program;
+
     stencil_program->CleanUp();
     delete stencil_program;
     
@@ -275,6 +307,17 @@ void Hachiko::ModuleProgram::UpdateCamera(const ComponentCamera* camera) const
     CameraData camera_data;
     camera_data.view = camera->GetViewMatrix();
     camera_data.proj = camera->GetProjectionMatrix();
+    // TODO: Understand why camera_data.view.TranslatePart() does not give the position
+    camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
+
+    UpdateUBO(UBOPoints::CAMERA, sizeof(CameraData), &camera_data);
+}
+
+void Hachiko::ModuleProgram::UpdateCamera(const Frustum& frustum) const
+{
+    CameraData camera_data;
+    camera_data.view = float4x4(frustum.ViewMatrix());
+    camera_data.proj = frustum.ProjectionMatrix();
     // TODO: Understand why camera_data.view.TranslatePart() does not give the position
     camera_data.pos = camera_data.view.RotatePart().Transposed().Transform(-camera_data.view.TranslatePart());
 
