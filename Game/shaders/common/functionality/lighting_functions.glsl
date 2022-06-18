@@ -36,7 +36,7 @@ vec3 PBR(const vec3 normal, const vec3 view_dir, const vec3 light_dir,  const ve
     // Phong specular strength
     float VdR =  max(dot(view_dir, reflect_dir), 0.00001);
 
-    float roughness = Square(1.0 - smoothness);
+    float roughness = max(Square(1.0 - smoothness), 0.00001);
 
     vec3 halfway_dir = normalize(light_dir + view_dir);
     float LdotH = max(dot(light_dir, halfway_dir), 0.00001);
@@ -124,6 +124,7 @@ vec3 GetAmbientLight(in vec3 normal, in vec3 R, float NdotV, float roughness, in
         vec3 diffuse = (diffuse_color * (1 - specular_color));
 
         return diffuse * irradiance + radiance * (specular_color * fab.x + fab.y);
+        //return irradiance * (diffuse_color * (1 - specular_color)); // only the diffuse part
     }
     return diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
 }

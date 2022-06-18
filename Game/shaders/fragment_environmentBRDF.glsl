@@ -33,5 +33,5 @@ void main()
             fb += Fc * V_pdf;
         }
     }
-    fragColor = vec4(4.0*fa/float(NUM_SAMPLES), 4.0*fb/float(NUM_SAMPLES), 1.0, 1.0);
+    fragColor = vec4(4.0*fa/float(NUM_SAMPLES), 4.0*fb/float(NUM_SAMPLES), 0.0, 1.0);
 }
