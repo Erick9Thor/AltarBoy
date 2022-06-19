@@ -5,7 +5,7 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/CombatManager.h"
+#include "entities/player/BulletController.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -300,11 +300,11 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::CombatManager::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
 {
 }
 
-void Hachiko::Scripting::CombatManager::OnLoad()
+void Hachiko::Scripting::BulletController::OnLoad()
 {
 }
 
@@ -445,6 +445,10 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_max_dash_charges@int'"] = _max_dash_charges;
 
+	node["'_attack_duration@float'"] = _attack_duration;
+
+	node["'_attack_duration_distance@float'"] = _attack_duration_distance;
+
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
 	if (_hp_cell_1 != nullptr)
@@ -537,6 +541,16 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_max_dash_charges@int'"].IsDefined())
 	{
 		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
+	}
+
+	if (load_node["'_attack_duration@float'"].IsDefined())
+	{
+		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_attack_duration_distance@float'"].IsDefined())
+	{
+		_attack_duration_distance = load_node["'_attack_duration_distance@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())

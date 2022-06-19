@@ -3,7 +3,7 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/CombatManager.h"
+#include "entities/player/BulletController.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -61,7 +61,7 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Is Ranged Attack", _is_ranged_attack);
 }
 
-void Hachiko::Scripting::CombatManager::OnEditor()
+void Hachiko::Scripting::BulletController::OnEditor()
 {
 }
 
@@ -92,6 +92,8 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Dash Distance", _dash_distance);
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
+	Editor::Show("Attack Duration", _attack_duration);
+	Editor::Show("Attack Duration Distance", _attack_duration_distance);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);
