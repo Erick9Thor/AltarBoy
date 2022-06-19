@@ -1,6 +1,12 @@
 #ifndef _LIGHTS_UNIFORM_INCLUDE_
 #define _LIGHTS_UNIFORM_INCLUDE_
 
+uniform uint activate_IBL;
+layout (binding = 5) uniform samplerCube diffuseIBL;
+layout (binding = 6) uniform samplerCube prefilteredIBL;
+layout (binding = 7) uniform sampler2D environmentBRDF;
+uniform uint prefilteredIBL_numLevels;
+
 layout(std140, binding = 2) uniform Lights
 {
     AmbientLight ambient;
