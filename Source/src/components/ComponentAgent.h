@@ -34,6 +34,7 @@ namespace Hachiko
 		void Load(const YAML::Node& node) override;
 
 		void DrawGui() override;
+
 	private:
         float3 closest_point_half_range = float3(10.f, 10.f, 10.f);
         float3 target_position = float3::zero;
@@ -48,6 +49,8 @@ namespace Hachiko
 		bool use_pathfinder = true;
 
 		bool show_debug_info = false;
+
+		bool player = false;
 	};
 }
 

@@ -12,6 +12,10 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
+    if (game_object->name == "PlayerN")
+    {
+        player = true;
+    }
 }
 
 Hachiko::ComponentAgent::~ComponentAgent()
@@ -32,15 +36,36 @@ void Hachiko::ComponentAgent::Update()
         // No agent no update
         return;
     }
+
     // Move agent through NavMesh
-    const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
-    ComponentTransform* transform = game_object->GetTransform();
-    transform->SetGlobalPosition(float3(dt_agent->npos));
+    if (!player)
+    {
+        const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
+        ComponentTransform* transform = game_object->GetTransform();
+        transform->SetGlobalPosition(float3(dt_agent->npos));
+    }
+    else
+    {
+        dtCrowdAgent* dt_agent = App->navigation->GetEditableAgent(agent_id);
+        ComponentTransform* transform = game_object->GetTransform();
+        dt_agent->npos[0] = transform->GetGlobalPosition().x;
+        dt_agent->npos[1] = transform->GetGlobalPosition().y;
+        dt_agent->npos[2] = transform->GetGlobalPosition().z;
+    }
 }
 
 void Hachiko::ComponentAgent::Start()
 {
     AddToCrowd();
+    if (player)
+    {
+        dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+        if (!agent)
+        {
+            return;
+        }
+        agent->params.radius = 2.0f;
+    }
 }
 
 void Hachiko::ComponentAgent::Stop()
@@ -119,7 +144,7 @@ void Hachiko::ComponentAgent::SetRadius(float new_radius)
     {
         return;
     }
-    agent->params.maxSpeed = radius;
+    agent->params.radius = radius;
 }
 
 void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
@@ -251,58 +276,64 @@ void Hachiko::ComponentAgent::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Agent Component"))
     {
-        if (agent_id != -1)
+        ImGui::Checkbox("Player agent", &player);
+
+        if (!player)
         {
-            if (ImGui::Button("Remove From Navmesh"))
+            if (agent_id != -1)
             {
-                RemoveFromCrowd();
+                if (ImGui::Button("Remove From Navmesh"))
+                {
+                    RemoveFromCrowd();
+                }
             }
-        }
-        else
-        {
-            if (ImGui::Button("Add To Namesh"))
+            else
             {
-                AddToCrowd();
+                if (ImGui::Button("Add To Namesh"))
+                {
+                    AddToCrowd();
+                }
+
+                if (ImGui::Button("Move To Nearest Navmesh Point"))
+                {
+                    MoveToNearestNavmeshPoint();
+                }
             }
 
-            if (ImGui::Button("Move To Nearest Navmesh Point"))
+            ImGui::DragFloat3("Target Position", target_position.ptr(), 1.0f, -inf, inf);
+            if (ImGui::Button("Feed position"))
             {
-                MoveToNearestNavmeshPoint();
-            }    
-        }
+                SetTargetPosition(target_position);
+            }
 
-        ImGui::DragFloat3("Target Position", target_position.ptr(), 1.0f, -inf, inf);
-        if (ImGui::Button("Feed position"))
-        {
-            SetTargetPosition(target_position);
-        }
-        if (ImGui::DragFloat("Radius", &radius, 0.1f, 100.0f))
-        {
-            SetRadius(radius);
-        }
+            if (ImGui::DragFloat("Radius", &radius, 0.1f, 100.0f))
+            {
+                SetRadius(radius);
+            }
 
-        if (ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f))
-        {
-            SetMaxSpeed(max_speed);
-        }
-        if (ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f))
-        {
-            SetMaxAcceleration(max_acceleration);
-        }
-        if (ImGui::Checkbox("Use Pathfinding", &use_pathfinder))
-        {
-            // Updates target wih new pathfinding value
-            SetTargetPosition(target_position);
-        }
-        if (ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles))
-        {
-            SetObstacleAvoidance(avoid_obstacles);
-        }
+            if (ImGui::DragFloat("Max Speed", &max_speed, 1.0f, 0.0f))
+            {
+                SetMaxSpeed(max_speed);
+            }
+            if (ImGui::DragFloat("Max Acceleration", &max_acceleration, 1.0f, 0.0f))
+            {
+                SetMaxAcceleration(max_acceleration);
+            }
+            if (ImGui::Checkbox("Use Pathfinding", &use_pathfinder))
+            {
+                // Updates target wih new pathfinding value
+                SetTargetPosition(target_position);
+            }
+            if (ImGui::Checkbox("Avoid obstacles (Pathfinding)", &avoid_obstacles))
+            {
+                SetObstacleAvoidance(avoid_obstacles);
+            }
 
-        ImGui::Checkbox("Debug info", &show_debug_info);
-        if (show_debug_info)
-        {
-            DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+            ImGui::Checkbox("Debug info", &show_debug_info);
+            if (show_debug_info)
+            {
+                DebugAgentInfo(App->navigation->GetCrowd()->getAgent(agent_id));
+            }
         }
     }
     ImGui::PopID();
