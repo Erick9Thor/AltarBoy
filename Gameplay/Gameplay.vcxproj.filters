@@ -504,7 +504,6 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes.h" />
     <ClInclude Include="entities\player\PlayerAnimationManager.h" />
     <ClInclude Include="constants\Sounds.h" />
     <ClInclude Include="entities\player\PlayerSoundManager.h" />
@@ -518,6 +517,7 @@
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="entities\enemies\BugState.h" />
+    <ClInclude Include="misc\AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -784,6 +784,7 @@
     <ClCompile Include="entities\player\RoomTeleporter.cpp" />
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\FancyLights.cpp" />
+    <ClCompile Include="misc\AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

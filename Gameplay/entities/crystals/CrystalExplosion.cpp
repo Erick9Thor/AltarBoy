@@ -4,10 +4,12 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
+#include "constants/Sounds.h"
 
 // TODO: These two includes must go:
 #include <modules/ModuleSceneManager.h>
 #include <resources/ResourceAnimation.h>
+
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
@@ -27,6 +29,8 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	_stats = game_object->GetComponent<Stats>();
+
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
@@ -98,7 +102,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized());
+			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized(), 0.7f);
 		}
 
 		if (player_controller != nullptr)
@@ -126,6 +130,7 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 {
+	_audio_source->PostEvent(Sounds::CRYSTAL);
 	_static_crystal->SetActive(false);
 	_explosion_crystal->SetActive(true);
 	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();

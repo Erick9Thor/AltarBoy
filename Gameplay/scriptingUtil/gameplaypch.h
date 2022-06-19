@@ -7,7 +7,7 @@
 #include <vector>
 #include <unordered_map>
 #include <MathGeoLib.h> // Order matters, this should be included before 
-					    // Gameplay.h
+// Gameplay.h
 
 #include <components/Component.h>
 #include <components/ComponentText.h>

@@ -58,6 +58,7 @@ Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, c
 
 Hachiko::GameObject::~GameObject()
 {
+    App->scene_manager->RemovedGameObject(this);
     if (parent)
     {
         parent->RemoveChild(this);
@@ -93,11 +94,6 @@ Hachiko::GameObject* Hachiko::GameObject::CreateChild()
 Hachiko::GameObject* Hachiko::GameObject::Instantiate()
 {
     return App->scene_manager->GetActiveScene()->GetRoot()->CreateChild();
-}
-
-Hachiko::GameObject* Hachiko::GameObject::Instantiate(UID* prefab_uid, GameObject* parent)
-{
-    return App->resources->InstantiatePrefab(*prefab_uid, parent);
 }
 
 void Hachiko::GameObject::SetNewParent(GameObject* new_parent)

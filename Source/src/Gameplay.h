@@ -411,6 +411,7 @@ HACHIKO_API void SetSkyboxActive(bool v);
 HACHIKO_API GameObject* Raycast(const float3& origin, const float3& destination);
 HACHIKO_API GameObject* BoundingRaycast(const float3& origin, const float3& destination);
 HACHIKO_API GameObject* FindInCurrentScene(unsigned long long id);
+HACHIKO_API std::vector<GameObject*> Instantiate(unsigned long long prefab_uid, GameObject* parent, unsigned n_instances);
 HACHIKO_API void Destroy(GameObject* game_object);
 } // namespace Hachiko::SceneManagement
 
@@ -422,6 +423,7 @@ HACHIKO_API unsigned int GetMs();
 HACHIKO_API void SetPolygonMode(bool is_fill);
 HACHIKO_API void SetVsync(bool is_vsync);
 HACHIKO_API bool GetVsync();
+HACHIKO_API void DrawNavmesh(bool is_navmesh);
 } // namespace Hachiko::Debug
 
 

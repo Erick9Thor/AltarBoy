@@ -5,8 +5,8 @@
 
 // TODO: Delete this include:
 #include <core/Scene.h>
-
-//#include <thread>
+#include <thread>
+#include "constants/Sounds.h"
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
@@ -31,6 +31,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 	_look_ahead = float3::zero;
 	// Seed the rand()
 	srand(static_cast <unsigned> (time(0)));
+
 }
 
 void Hachiko::Scripting::PlayerCamera::OnStart()

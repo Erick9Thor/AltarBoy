@@ -131,15 +131,15 @@ UpdateStatus Hachiko::ModuleSceneManager::PostUpdate(float delta)
 
     if (!to_remove.empty())
     {
-        for (const GameObject* go : to_remove)
+        while (!to_remove.empty())
         {
+            GameObject* go = to_remove[to_remove.size() - 1];
             if (App->editor->GetSelectedGameObject() == go)
             {
                 App->editor->SetSelectedGO(nullptr);
             }
             delete go;
         }
-        to_remove.clear();
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -181,6 +181,15 @@ void Hachiko::ModuleSceneManager::RemoveGameObject(GameObject* go)
             return;
         }
         to_remove.push_back(go);
+    }
+}
+
+void Hachiko::ModuleSceneManager::RemovedGameObject(GameObject* go)
+{
+    for (auto it = std::find(to_remove.begin(), to_remove.end(), go); it != to_remove.end();)
+    {
+        to_remove.erase(it);
+        it = std::find(to_remove.begin(), to_remove.end(), go);
     }
 }
 

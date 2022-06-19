@@ -15,11 +15,13 @@ namespace Hachiko
         void Stop() override;
 		
 		void SetTargetPosition(const float3& target_pos);
+        void SetRadius(float new_radius);
 		void SetMaxSpeed(float new_max_speed);
 		void SetMaxAcceleration(float new_max_acceleration);
 		void SetObstacleAvoidance(bool obstacle_avoidance);
 
 		float GetMaxSpeed() const { return max_speed; }
+        float GetRadius() const{ return radius; }
 		float GetMaxAcceleration() const { return max_acceleration; }
 		bool IsAvoidingObstacles() const { return avoid_obstacles; }
 
@@ -37,6 +39,8 @@ namespace Hachiko
         float3 target_position = float3::zero;
 		unsigned int target_poly = 0;
 		int agent_id = -1;
+
+		float radius = 0.5f;
 
 		float max_speed = 5.0f;
 		float max_acceleration = 2.0f;

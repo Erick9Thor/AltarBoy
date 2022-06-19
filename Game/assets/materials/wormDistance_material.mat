@@ -1,9 +1,9 @@
 name: wormDistance_material
-diffuse: 0
-specular: 0
-normals: 0
+diffuse: 6973891237982858810
+specular: 4622791947965923789
+normals: 3824705025037091944
 metalness: 0
-emissive: 0
+emissive: 17205450179432709214
 diffuse_color: [0.800000012, 0.800000012, 0.800000012, 1]
 specular_color: [0, 0, 0, 0]
 emissive_color: [0, 0, 0, 1]

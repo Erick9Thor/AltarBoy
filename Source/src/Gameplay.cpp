@@ -4,6 +4,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleAudio.h"
 #include "modules/ModuleRender.h"
+#include "modules/ModuleResources.h"
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "components/ComponentAgent.h"
@@ -116,6 +117,11 @@ Hachiko::GameObject* Hachiko::SceneManagement::FindInCurrentScene(
     return App->scene_manager->GetRoot()->Find(id);
 }
 
+HACHIKO_API std::vector<Hachiko::GameObject*> Hachiko::SceneManagement::Instantiate(unsigned long long prefab_uid, GameObject* parent, unsigned n_instances)
+{
+    return App->resources->InstantiatePrefab(prefab_uid, parent, n_instances);
+}
+
 HACHIKO_API void Hachiko::SceneManagement::Destroy(GameObject* game_object)
 {
     App->scene_manager->RemoveGameObject(game_object);
@@ -153,6 +159,11 @@ void Hachiko::Debug::SetVsync(bool is_vsync)
 bool Hachiko::Debug::GetVsync()
 {
     return SDL_HINT_RENDER_VSYNC;
+}
+
+HACHIKO_API void Hachiko::Debug::DrawNavmesh(bool is_navmesh)
+{
+    return App->renderer->SetDrawNavmesh(is_navmesh);
 }
 
 

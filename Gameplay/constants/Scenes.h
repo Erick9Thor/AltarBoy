@@ -2,8 +2,8 @@
 
 namespace Hachiko::Scenes
 {
-	static UID GAME = 0;
-	static UID WIN = 1;
-	static UID LOSE = 2;
-	static UID MAIN_MENU = 3;
+	static UID GAME = 3947210229329588811;
+	static UID WIN = 3083261127926411514;
+	static UID LOSE = 3083261127926411514;
+	static UID MAIN_MENU = 3083261127926411514;
 }

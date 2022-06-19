@@ -75,6 +75,16 @@ void Hachiko::Scripting::PlayerSoundManager::OnUpdate()
 		}
 		_timer = 0.0f;
 		break;
+	case PlayerState::DIE:
+		if (state_changed)
+		{
+			_audio_source->PostEvent(Sounds::GAME_OVER);
+			_audio_source->PostEvent(Sounds::STOP_COMBAT);
+			_audio_source->PostEvent(Sounds::STOP_PEBBLE);
+			_audio_source->PostEvent(Sounds::STOP_WIND);
+		}
+		_timer = 0.0f;
+		break;
 	case PlayerState::INVALID:
 	default:
 		_timer = 0.0f;

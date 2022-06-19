@@ -54,7 +54,6 @@ void Hachiko::ComponentCanvas::UpdateSize(bool force)
             size_y = height;
         }        
     }
-
 }
 
 bool Hachiko::ComponentCanvas::HasDependentComponents(GameObject* game_object) const

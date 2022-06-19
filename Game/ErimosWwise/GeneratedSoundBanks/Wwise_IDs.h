@@ -18,7 +18,9 @@ namespace AK
         static const AkUniqueID PLAY_CRYSTAL = 2035174344U;
         static const AkUniqueID PLAY_DASH = 2211787386U;
         static const AkUniqueID PLAY_ENEMYATTACK = 1824944578U;
+        static const AkUniqueID PLAY_ENEMYDIE = 2402038236U;
         static const AkUniqueID PLAY_FOOTSTEP = 1602358412U;
+        static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
         static const AkUniqueID PLAY_MELEEATTACK = 2988676654U;
         static const AkUniqueID PLAY_NAVIGATION = 3849525492U;
         static const AkUniqueID PLAY_PEBBLE = 1157125118U;
@@ -27,6 +29,7 @@ namespace AK
         static const AkUniqueID STOP_COMBAT = 913896232U;
         static const AkUniqueID STOP_NAVIGATION = 445689598U;
         static const AkUniqueID STOP_PEBBLE = 707649828U;
+        static const AkUniqueID STOP_WIND = 3173136834U;
     } // namespace EVENTS
 
     namespace SWITCHES
