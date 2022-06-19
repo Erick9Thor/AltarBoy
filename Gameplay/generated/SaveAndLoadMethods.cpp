@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
+#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
@@ -19,6 +20,54 @@
 #include "ui/MainMenuManager.h"
 
 
+
+void Hachiko::Scripting::CrystalPlatform::OnSave(YAML::Node& node) const
+{
+	node["'_seconds_before_shaking@float'"] = _seconds_before_shaking;
+
+	node["'_seconds_shaking@float'"] = _seconds_shaking;
+
+	if (_invisible_obstacle != nullptr)
+	{
+		node["'_invisible_obstacle@GameObject*'"] = _invisible_obstacle->GetID();
+	}
+	else
+	{
+		node["'_invisible_obstacle@GameObject*'"] = 0;
+	}
+
+	if (_crystal_explotion != nullptr)
+	{
+		node["'_crystal_explotion@GameObject*'"] = _crystal_explotion->GetID();
+	}
+	else
+	{
+		node["'_crystal_explotion@GameObject*'"] = 0;
+	}
+}
+
+void Hachiko::Scripting::CrystalPlatform::OnLoad()
+{
+	if (load_node["'_seconds_before_shaking@float'"].IsDefined())
+	{
+		_seconds_before_shaking = load_node["'_seconds_before_shaking@float'"].as<float>();
+	}
+
+	if (load_node["'_seconds_shaking@float'"].IsDefined())
+	{
+		_seconds_shaking = load_node["'_seconds_shaking@float'"].as<float>();
+	}
+
+	if (load_node["'_invisible_obstacle@GameObject*'"].IsDefined())
+	{
+		_invisible_obstacle = SceneManagement::FindInCurrentScene(load_node["'_invisible_obstacle@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_crystal_explotion@GameObject*'"].IsDefined())
+	{
+		_crystal_explotion = SceneManagement::FindInCurrentScene(load_node["'_crystal_explotion@GameObject*'"].as<unsigned long long>());
+	}
+}
 
 void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
