@@ -562,7 +562,7 @@ void Hachiko::Scripting::CombatManager::HitObstacle(CrystalExplosion* obstacle, 
 
 void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, float damage, float knockback, float3 knockback_dir)
 {
-	enemy->RegisterHit(damage, knockback_dir);
+	enemy->RegisterHit(damage, knockback_dir, knockback);
 }
 
 float Hachiko::Scripting::CombatManager::BulletStats::GetChargedPercent()
