@@ -10,6 +10,7 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
+#include "misc/AudioManager.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
 #include "ui/BackToMainMenu.h"
@@ -67,6 +68,11 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "RoomTeleporter")
 	{
 		return new Hachiko::Scripting::RoomTeleporter(script_owner);
+	}
+
+	if (script_name == "AudioManager")
+	{
+		return new Hachiko::Scripting::AudioManager(script_owner);
 	}
 
 	if (script_name == "DynamicCamera")

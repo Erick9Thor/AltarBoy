@@ -10,4 +10,5 @@ enum class PlayerState
 	DASHING,
 	FALLING,
 	STUNNED,
+	DIE,
 };

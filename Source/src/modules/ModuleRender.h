@@ -91,6 +91,11 @@ namespace Hachiko
         {
             draw_skybox = v;
         }
+
+        void SetDrawNavmesh(const bool v)
+        {
+            draw_navmesh = v;
+        }
         
         [[nodiscard]] float2 GetFrameBufferSize() const;
 

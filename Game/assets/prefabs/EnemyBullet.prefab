@@ -1,0 +1,30 @@
+prefab_name: EnemyBullet
+name: EnemyBullet
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [2.6936202, 0, 6.37177181]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 15
+    enabled: true
+    class_name: EnemyBulletController
+    "'_move_speed@float'": 0.5
+    "'_lifetime@float'": 2
+    "'_collider_radius@float'": 1
+child:
+  - name: Sphere001
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [-0.70710665, 0, 0, 0.707106888]
+        scale: [0.200000003, 0.200000003, 0.200000003]
+      - type: 2
+        enabled: true
+        mesh_id: 9734251747031717595
+        navigable: false
+        visible: true
+        material_id: 16701671250394061912

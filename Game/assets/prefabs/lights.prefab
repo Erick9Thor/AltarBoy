@@ -1,0 +1,685 @@
+prefab_name: lights
+name: lights
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: pathlight1
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [20.6457024, -8.06671238, -54.5474434]
+        rotation: [0.0883361101, 0.863835573, 0.319985092, 0.378938526]
+        scale: [1.00000811, 0.999995887, 1.00000703]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.390243769, 1, 1]
+        intensity: 100
+        radius: 25
+        draw_sphere: true
+  - name: rocklight
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-73.6222916, 7.37424421, -75.935463]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight2
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [16.8810425, -8.06947803, -50.9081802]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight3
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [57.2647171, -7.6192317, 6.58722115]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight4
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [63.6173325, -9.70889568, -6.78344774]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight5
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [58.0643311, -5.31769276, 26.2802582]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight6
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [25.5193558, -11.4467411, 39.5550003]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight7
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [31.4965668, -11.5887241, 53.4055328]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight8
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-45.9743614, -17.9762516, 56.8653717]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight9
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-38.4198303, -17.0901527, 46.8951149]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight10
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-64.4736938, -17.2232571, 5.76671696]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight11
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-64.6818619, -19.3772392, -17.8622112]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight12
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-34.9636383, -18.2767124, -34.4493217]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: rocklight13
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-46.9554939, -17.9762516, -40.9810715]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 0.0487804413, 1, 1]
+        intensity: 30
+        radius: 5
+        draw_sphere: true
+  - name: spinnyboi_light1
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-24.6992035, 7.37805176, -62.5698433]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0.634146214, 0, 1, 1]
+        intensity: 3.5
+        radius: 5
+        draw_sphere: false
+  - name: spinnyboi_light2
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [31.3550682, 1.82193756, -8.64916039]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0.634146214, 0, 1, 1]
+        intensity: 3.5
+        radius: 5
+        draw_sphere: false
+  - name: spinnyboi_light3
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-0.721529126, -17.816576, 55.400959]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0.634146214, 0, 1, 1]
+        intensity: 3.5
+        radius: 5
+        draw_sphere: false
+  - name: spinnyboi_light4
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-42.0245132, -17.816637, 58.9876595]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0.634146214, 0, 1, 1]
+        intensity: 3.5
+        radius: 5
+        draw_sphere: false
+  - name: spinnyboi_light5
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-74.9418106, -18.3495159, 25.3053246]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0.634146214, 0, 1, 1]
+        intensity: 3.5
+        radius: 5
+        draw_sphere: false
+  - name: crystalblue_light2
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [38.4185486, -1.06950784, -3.08397055]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 15
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light3
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [41.9453011, -1.20625353, -3.08397055]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 15
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light1
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [82.3683167, 3.11727333, -11.3282166]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 15
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light4
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [37.8523026, -10.0382948, -5.02761936]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 15
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light5
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [23.272604, -8.9578619, -73.4242783]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 20
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light6
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [34.3738823, -20.9065018, -70.8168793]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 20
+        radius: 25
+        draw_sphere: true
+  - name: crystalblue_light7
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [66.8701706, -7.18449259, 58.0596733]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 25
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light8
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [23.6238289, -8.60616207, 43.4261475]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 10
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light9
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-1.94871902, -21.517004, 27.607399]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 15
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light10
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-24.5232162, -16.0997219, 28.3050079]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 25
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light11
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-56.1122894, -23.4403782, -62.5061188]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 10
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light12
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-48.9379997, -19.8982544, -51.5908508]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 7
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light13
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-29.9193726, -20.044733, -46.5754013]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 7
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light14
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-31.9429913, -20.9726219, -60.1264153]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 7
+        radius: 20
+        draw_sphere: true
+  - name: crystalblue_light15
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-47.5748596, -18.3458347, -63.6009789]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 10
+        radius: 20
+        draw_sphere: true
+  - name: exitDoor_light2
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-39.6514549, -13.4860058, -80.7309113]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0, 1]
+        intensity: 35
+        radius: 50
+        draw_sphere: true
+  - name: exitDoor_light1
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-39.6514549, -4.44211912, -80.7309113]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0, 1]
+        intensity: 35
+        radius: 50
+        draw_sphere: true
+  - name: exitDoor_light3
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-39.6514549, -20.0906448, -80.7309113]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0, 1]
+        intensity: 35
+        radius: 50
+        draw_sphere: true
+  - name: crystalpurlpe_light1
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-43.0205383, -24.4238129, 15.4896526]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 15
+        radius: 30
+        draw_sphere: true
+  - name: crystalpurlpe_light2
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-39.6543541, -38.1979141, 16.410759]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 10
+        radius: 30
+        draw_sphere: true
+  - name: crystalpurlpe_light3
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [-36.1999397, -14.6075277, -23.9189034]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 20
+        radius: 30
+        draw_sphere: true
+  - name: crystalpurlpe_light4
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [14.8986235, -7.0714674, -60.4636803]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 20
+        radius: 30
+        draw_sphere: true
+  - name: crystalpurlpe_light5
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [36.6181641, -12.5643167, -3.57198334]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 10
+        radius: 30
+        draw_sphere: true
+  - name: crystalpurlpe_light6
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [64.5576019, -7.41479683, 60.4923019]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [1, 0, 0.975610256, 1]
+        intensity: 10
+        radius: 30
+        draw_sphere: true
+  - name: crystalblue_light16
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [34.6158371, -10.0557165, 40.0001526]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 3
+        radius: 10
+        draw_sphere: true
+  - name: crystalblue_light17
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [32.0087547, -10.5939713, 38.166954]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 6
+        enabled: true
+        light_type: 6
+        color: [0, 1, 0.829268217, 1]
+        intensity: 3
+        radius: 10
+        draw_sphere: true

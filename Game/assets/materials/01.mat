@@ -1,0 +1,14 @@
+name: 01
+diffuse: 18304310759459768143
+specular: 16646994170522691986
+normals: 10503706798313029468
+metalness: 0
+emissive: 7696474200451592203
+diffuse_color: [0.588, 0.588, 0.588, 1]
+specular_color: [0, 0, 0, 1]
+emissive_color: [0, 0, 0, 1]
+smoothness: 0.0700000003
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 1
+is_transparent: 0

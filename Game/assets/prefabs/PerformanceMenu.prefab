@@ -1,0 +1,144 @@
+prefab_name: PerformanceMenu
+name: PerformanceMenu
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 10
+    enabled: true
+    position: [0, 0, 0]
+    size: [1133, 630]
+    scale: [1, 1]
+    rotation: [0, 0, 0, 1]
+    pivot: [0.5, 0.5]
+    anchor: [0.5, 0.5]
+  - type: 8
+    enabled: true
+child:
+  - name: FpsText
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-50, 0, 0]
+        size: [100, 100]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [1, 0]
+      - type: 9
+        enabled: true
+      - type: 16
+        enabled: true
+        font_id: 13446434311746485888
+        color: [1, 0, 1, 1]
+        size: 16
+        label_text: 999
+  - name: MsText
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-50, 30, 0]
+        size: [100, 100]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [1, 0]
+      - type: 9
+        enabled: true
+      - type: 16
+        enabled: true
+        font_id: 13446434311746485888
+        color: [1, 0, 1, 1]
+        size: 16
+        label_text: 999
+  - name: FpsLabel
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-80, 0, 0]
+        size: [100, 100]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [1, 0]
+      - type: 9
+        enabled: true
+      - type: 16
+        enabled: true
+        font_id: 13446434311746485888
+        color: [0, 0, 0, 1]
+        size: 16
+        label_text: "FPS: "
+  - name: MsLabel
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-80, 30, 0]
+        size: [100, 100]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [1, 0]
+      - type: 9
+        enabled: true
+      - type: 16
+        enabled: true
+        font_id: 13446434311746485888
+        color: [0, 0, 0, 1]
+        size: 16
+        label_text: "Ms: "
+  - name: Vsync
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-140, -30, 0]
+        size: [45, 20]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [1, 1]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 578303436522520533
+        hover_image_id: 0
+        use_image: true
+        use_hover_image: false
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+      - type: 12
+        enabled: true

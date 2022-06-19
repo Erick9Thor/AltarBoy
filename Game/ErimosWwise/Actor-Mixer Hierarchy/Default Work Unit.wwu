@@ -1990,6 +1990,52 @@
 						<ActiveSource Name="slime-squish" ID="{AE69E905-F297-4FA6-9595-474C18D2126D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="GameOver" ID="{32D439DA-1494-42FF-BB83-CCCAEE4EB7F4}" ShortID="194308339">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="game-die" ID="{F5E1AABF-42BE-41A6-8065-0DEB42BB899E}">
+							<Language>SFX</Language>
+							<AudioFile>game-die.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="418495884"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="game-die" ID="{F5E1AABF-42BE-41A6-8065-0DEB42BB899E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="MonsterDying" ID="{7B3E37F7-5F18-428F-B8A3-9A96AB53B3F6}" ShortID="77596972">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}">
+							<Language>SFX</Language>
+							<AudioFile>monster-dying.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="719773623"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

@@ -6,6 +6,7 @@
 
 #include <Algorithm/Random/LCG.h>
 
+
 Hachiko::Scripting::DebugManager::DebugManager(GameObject* game_object)
 	: Script(game_object, "DebugManager")
 	, _player(nullptr)
@@ -45,9 +46,9 @@ void Hachiko::Scripting::DebugManager::OnAwake()
 	is_active = false;
 	is_wireframe = false;
 	is_performance = false;
-	
+	is_navmesh = false;
 
-	if (_tp_pos1) 
+	if (_tp_pos1)
 	{
 		teleport_positions.push_back(_tp_pos1->GetTransform()->GetGlobalPosition());
 	}
@@ -66,17 +67,22 @@ void Hachiko::Scripting::DebugManager::OnStart()
 {
 	_player_controller = _player->GetComponent<PlayerController>();
 	is_vsync = Debug::GetVsync();
+	_performance_menu->SetActive(is_performance);
 
 	for (GameObject* child : game_object->children)
 	{
 		child->SetActive(is_active);
+	}
+	if (_button_back == nullptr)
+	{
+		HE_LOG("MAAAAL TODO MAL");
 	}
 
 }
 
 void Hachiko::Scripting::DebugManager::OnUpdate()
 {
-	
+
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F2))
 	{
 		_player_controller->_isInDebug = !_player_controller->_isInDebug;
@@ -87,25 +93,22 @@ void Hachiko::Scripting::DebugManager::OnUpdate()
 		}
 	}
 
-	if(!is_active)
-	{
-		return;
-	}
-
-
-	_performance_menu->SetActive(is_performance);
-
-	// register button interactions
-	HandleButtonInteraction();
-
 	if (is_performance)
 	{
-		std::string fps =  std::to_string(int(Debug::GetFps()));
+		std::string fps = std::to_string(int(Debug::GetFps()));
 		std::string ms = std::to_string(Debug::GetMs());
 
 		_text_fps->SetText(fps.c_str());
 		_text_ms->SetText(ms.c_str());
 	}
+
+	if (!is_active)
+	{
+		return;
+	}
+
+	// register button interactions
+	HandleButtonInteraction();
 
 }
 
@@ -166,23 +169,18 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 	}
 
 	// Edit Character Stats
-	
+
 	if (_add_health->IsSelected())
 	{
-		if (_player_controller->_combat_stats->_current_hp < _player_controller->_combat_stats->_max_hp)
-		{
-			_player_controller->_combat_stats->_current_hp += 1;
-			HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
-		}
-		else
-		{
-			HE_LOG("Max health reached %u", _player_controller->_combat_stats->_current_hp);
-		}
+		_player_controller->_combat_stats->Heal(1);
+		HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
+		_player_controller->UpdateHealthBar();
 	}
 	if (_remove_health->IsSelected())
 	{
-		_player_controller->_combat_stats->_current_hp -= 1;
+		_player_controller->_combat_stats->ReceiveDamage(1);
 		HE_LOG("Health now %i", _player_controller->_combat_stats->_current_hp);
+		_player_controller->UpdateHealthBar();
 	}
 	/*
 	if (_increase_max_hp->IsSelected())
@@ -196,7 +194,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		HE_LOG("Max health now %d", _player_controller->_stats._max_hp);
 	}
 	*/
-	
+
 	if (_increase_move_speed->IsSelected())
 	{
 		_player_controller->_combat_stats->_move_speed += 1.0f;
@@ -213,7 +211,7 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_stats._attack_cd += 0.1f;
 		HE_LOG("Attack speed now %f", _player_controller->_stats._attack_cd);
 	}
-	
+
 	if (_decrease_attack_cd->IsSelected())
 	{
 		_player_controller->_stats._attack_cd -= 0.1f;
@@ -230,12 +228,14 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		_player_controller->_combat_stats->_attack_power -= 1;
 		HE_LOG("Attack power now %d", _player_controller->_combat_stats->_attack_power);
 	}
-	
+
 	// Player States
 	if (_god_mode->IsSelected())
 	{
-		_player_controller->_god_mode = !_player_controller->_god_mode;
+		HE_LOG("GOD MODE pressed");
+		_player_controller->_god_mode_trigger = true;
 	}
+
 	/*
 
 	if (_unlock_skills->IsSelected())
@@ -253,43 +253,38 @@ void Hachiko::Scripting::DebugManager::HandleButtonInteraction()
 		enemy->GetTransform()->SetGlobalPosition(player_pos + float3(-3, 0, 0));
 	}
 
-	// NOTE: This nullptr check is just for experiment purposes on the new exposed component text. 
-	// Marius will probably gonna set this button from editor and save it so it will be never 
-	// nullptr in the future.
-	// TODO: Delete this when the previous note is addressed.
-	if (_toggle_performance_output != nullptr)
+	if (_toggle_performance_output->IsSelected())
 	{
-		if (_toggle_performance_output->IsSelected())
-		{
-			is_performance = !is_performance;
-		}
+		is_performance = !is_performance;
+		_performance_menu->SetActive(is_performance);
+	}
 
-		if (_toggle_vsync->IsSelected())
-		{
-			is_vsync = !is_vsync;
-			Debug::SetVsync(is_vsync);
-		}
+	if (_toggle_vsync->IsSelected())
+	{
+		is_vsync = !is_vsync;
+		Debug::SetVsync(is_vsync);
+	}
 
-		if (_toggle_show_colliders->IsSelected())
-		{
-			HE_LOG("_toggle_show_colliders pressed");
-		}
+	if (_toggle_show_colliders->IsSelected())
+	{
+		HE_LOG("_toggle_show_colliders pressed");
+		is_navmesh = !is_navmesh;
+		Debug::DrawNavmesh(is_navmesh);
+	}
 
-		if (_toggle_wireframe->IsSelected())
-		{
-			is_wireframe = !is_wireframe;
-			// Set polygon mode to GL_FILL if is_wireframe is false, GL_LINE if true:
-			Debug::SetPolygonMode(!is_wireframe);
-		}
+	if (_toggle_wireframe->IsSelected())
+	{
+		is_wireframe = !is_wireframe;
+		Debug::SetPolygonMode(!is_wireframe);
+	}
 
-		if (_exit_debug->IsSelected())
+	if (_exit_debug->IsSelected())
+	{
+		is_active = !is_active;
+		for (GameObject* child : game_object->children)
 		{
-			is_active = !is_active;
-			for (GameObject* child : game_object->children)
-			{
-				_player_controller->_isInDebug = !_player_controller->_isInDebug;
-				child->SetActive(is_active);
-			}
+			_player_controller->_isInDebug = !_player_controller->_isInDebug;
+			child->SetActive(is_active);
 		}
 	}
 }
