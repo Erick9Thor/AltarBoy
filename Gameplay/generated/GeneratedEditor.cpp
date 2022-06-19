@@ -9,6 +9,7 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
+#include "misc/AudioManager.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
 #include "ui/BackToMainMenu.h"
@@ -51,8 +52,13 @@ void Hachiko::Scripting::EnemyController::OnEditor()
 	Editor::Show("Spawn Pos", _spawn_pos);
 	Editor::Show("Spawn Is Initial", _spawn_is_initial);
 	Editor::Show("Player", _player);
+	Editor::Show("Enemy Body", _enemy_body);
+	Editor::Show("Parasite", _parasite);
+	Editor::Show("Audio Manager Game Object", _audio_manager_game_object);
+	Editor::Show("Already In Combat", _already_in_combat);
 	Editor::Show("Attack Animation Duration", _attack_animation_duration);
 	Editor::Show("Attack Animation Timer", _attack_animation_timer);
+	Editor::Show("Is Ranged Attack", _is_ranged_attack);
 }
 
 void Hachiko::Scripting::CombatManager::OnEditor()
@@ -87,6 +93,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
 	Editor::Show("Attack Duration", _attack_duration);
+	Editor::Show("Attack Duration Distance", _attack_duration_distance);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);
@@ -114,6 +121,12 @@ void Hachiko::Scripting::RoomTeleporter::OnEditor()
 	Editor::Show<ComponentImage>("Fade Image", "ComponentImage*", _fade_image);
 	Editor::Show("Fade Duration", _fade_duration);
 	Editor::Show("Blackout Duration", _blackout_duration);
+}
+
+void Hachiko::Scripting::AudioManager::OnEditor()
+{
+	Editor::Show("Enemies In Combat", _enemies_in_combat);
+	Editor::Show("Previous In Combat", _previous_in_combat);
 }
 
 void Hachiko::Scripting::DynamicCamera::OnEditor()

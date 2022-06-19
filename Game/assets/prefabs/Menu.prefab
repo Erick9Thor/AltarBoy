@@ -1,0 +1,286 @@
+prefab_name: Menu
+name: Menu
+enabled: true
+component:
+  - type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - type: 10
+    enabled: true
+    position: [0, 0, 0]
+    size: [1158, 753]
+    scale: [1, 1]
+    rotation: [0, 0, 0, 1]
+    pivot: [0.5, 0.5]
+    anchor: [0.5, 0.5]
+  - type: 8
+    enabled: true
+  - type: 15
+    enabled: true
+    class_name: MainMenuManager
+    "'_state_changed@bool'": false
+    "'_main_background@GameObject*'": 2
+    "'_button_background@GameObject*'": 3
+    "'_button_play@ComponentButton*'": 0
+    "'_button_quit@ComponentButton*'": 0
+    "'_button_settings@ComponentButton*'": 0
+    "'_button_credits@ComponentButton*'": 0
+    "'_settings@GameObject*'": 5
+    "'_credits@GameObject*'": 8
+    "'_button_back@ComponentButton*'": 0
+child:
+  - name: button_whitebackground
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1158, 753]
+        scale: [1, 1.20000005]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 3892815591083320296
+        hover_image_id: 0
+        use_image: true
+        use_hover_image: false
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: true
+  - name: button_background
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-1, 0, 0]
+        size: [800, 168]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 2119038066994049673
+        hover_image_id: 0
+        use_image: true
+        use_hover_image: false
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: button_play
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-290, 5, 0]
+        size: [110, 50]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 12
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 17690140760809255635
+        hover_image_id: 4831253430678197813
+        use_image: true
+        use_hover_image: true
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: button_settings
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [-110, 5, 0]
+        size: [193, 51]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 12
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 9931964557502554486
+        hover_image_id: 7072296968830034774
+        use_image: true
+        use_hover_image: true
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: button_credits
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [100, 5, 0]
+        size: [163, 51]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 12
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 15642433059796057761
+        hover_image_id: 4682609256175005790
+        use_image: true
+        use_hover_image: true
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: button_quit
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [260, 5, 0]
+        size: [92, 51]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 12
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 3462935206210766786
+        hover_image_id: 2150939344710026210
+        use_image: true
+        use_hover_image: true
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: credits
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1158, 753]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 9470256371827250406
+        hover_image_id: 0
+        use_image: true
+        use_hover_image: false
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: true
+  - name: button_back
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [310, 100]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.75, 0.850000024]
+      - type: 9
+        enabled: true
+      - type: 12
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 12801498884348566920
+        hover_image_id: 14223851074699602382
+        use_image: true
+        use_hover_image: true
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false
+  - name: settings
+    enabled: true
+    component:
+      - type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1191, 174]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - type: 9
+        enabled: true
+      - type: 11
+        enabled: true
+        image_id: 927562492423652741
+        hover_image_id: 0
+        use_image: true
+        use_hover_image: false
+        image_color: [1, 1, 1, 1]
+        hover_image_color: [1, 1, 1, 1]
+        fill_window: false

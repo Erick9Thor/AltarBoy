@@ -424,6 +424,7 @@ HACHIKO_API void SetPolygonMode(bool is_fill);
 HACHIKO_API void SetVsync(bool is_vsync);
 HACHIKO_API bool GetVsync();
 HACHIKO_API void DebugDraw(const OBB& box);
+HACHIKO_API void DrawNavmesh(bool is_navmesh);
 } // namespace Hachiko::Debug
 
 

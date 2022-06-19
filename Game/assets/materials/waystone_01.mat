@@ -1,0 +1,14 @@
+name: waystone_01
+diffuse: 10282143149778050759
+specular: 3737442799224112183
+normals: 15487546073675858618
+metalness: 0
+emissive: 5842217487698712737
+diffuse_color: [0.5, 0.5, 0.5, 1]
+specular_color: [1, 1, 1, 1]
+emissive_color: [1, 1, 1, 1]
+smoothness: 0.5
+metalness_value: 0.5
+is_metallic: 0
+smoothness_alpha: 1
+is_transparent: 0

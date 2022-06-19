@@ -80,6 +80,21 @@ namespace Hachiko
             return skybox_program;
         }
 
+        [[nodiscard]] Program* GetDiffuseIBLProgram() const
+        {
+            return diffuse_ibl_program;
+        }
+        
+        [[nodiscard]] Program* GetPrefilteredIBLProgram() const
+        {
+            return prefiltered_ibl_program;
+        }
+        
+        [[nodiscard]] Program* GetEnvironmentBRDFProgram() const
+        {
+            return environment_brdf_program;
+        }
+
         [[nodiscard]] Program* GetStencilProgram() const
         {
             return stencil_program;
@@ -101,6 +116,7 @@ namespace Hachiko
         }
 
         void UpdateCamera(const ComponentCamera* camera) const;
+        void UpdateCamera(const Frustum& frustum) const;
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
@@ -118,6 +134,9 @@ namespace Hachiko
 
         Program* CreateForwardProgram();
         Program* CreateSkyboxProgram();
+        Program* CreateDiffuseIBLProgram();
+        Program* CreatePrefilteredIBLProgram();
+        Program* CreateEnvironmentBRDFProgram();
         Program* CreateStencilProgram();
         Program* CreateUserInterfaceImageProgram();
         Program* CreateUserInterfaceTextProgram();
@@ -129,6 +148,9 @@ namespace Hachiko
         Program* deferred_geometry_program = nullptr;
         Program* deferred_lighting_program = nullptr;
         Program* skybox_program = nullptr;
+        Program* diffuse_ibl_program = nullptr;
+        Program* prefiltered_ibl_program = nullptr;
+        Program* environment_brdf_program = nullptr;
         Program* stencil_program = nullptr;
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;

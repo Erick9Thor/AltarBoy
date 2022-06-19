@@ -20,10 +20,11 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
 	, _attack_duration(0.0f)
+	, _attack_duration_distance(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
-	, _state(PlayerState::IDLE)
+	, _state(PlayerState::INVALID)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
 {
@@ -63,18 +64,37 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_4);
 }
 
+void Hachiko::Scripting::PlayerController::OnStart()
+{
+	animation = game_object->GetComponent<ComponentAnimation>();
+	animation->StartAnimating();
+	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
+}
+
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
+	
+	CheckState();
+	
+
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
 	if (_combat_stats->_current_hp <= 0)
 	{
-		//SceneManagement::SwitchScene(Scenes::LOSE);
+		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
+		// Temporary behavior to reset player in the same scene
+		ResetPlayer();
 	}
 
+	if (_god_mode_trigger)
+	{
+		_god_mode = !_god_mode;
+		ToggleGodMode();
+		_god_mode_trigger = false;
+	}
 	// Handle player the input
 	HandleInputAndStatus();
 
@@ -196,17 +216,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		_god_mode = !_god_mode;
 
-		_state = PlayerState::IDLE;
-		if (!_god_mode)
-		{
-			float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
-			if (corrected_position.x < FLT_MAX)
-			{
-				_player_position = corrected_position;
-			}
-			// Started falling
-			_state = PlayerState::FALLING;
-		}
+		ToggleGodMode();
+	}
+	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
+	{
+		PickupParasite(_player_position);
 	}
 }
 
@@ -277,6 +291,28 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 			_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 		}
 	}
+
+	// Move player a bit forward on melee attack
+	_player_position += _player_transform->GetFront() * 0.3f;
+	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
+	_attack_current_cd = _combat_stats->_attack_cd;
+
+	// Fast and Scuffed, has to be changed when changing attack indicator
+	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	switch (weapon)
+	{
+	case WeaponUsed::RED:
+		attack_color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+		break;
+	case WeaponUsed::BLUE:
+		attack_color = float4(0.0f, 0.0f, 255.0f, 255.0f);
+		break;
+	case WeaponUsed::GREEN:
+		attack_color = float4(0.0f, 255.0f, 0.0f, 255.0f);
+		break;
+	}
+
+	_attack_indicator->ChangeColor(attack_color, _attack_duration);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -533,6 +569,45 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	_attack_indicator->SetActive(false);
 }
 
+void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
+{
+	if (enemies == nullptr) {
+		return;
+	}
+
+	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
+
+	for (int i = 0; i < enemy_children.size(); ++i)
+	{
+		if (enemy_children[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		{
+			EnemyController* enemy_controller = enemy_children[i]->GetComponent<EnemyController>();
+
+			if (enemy_controller->isAlive() == false)
+			{
+				enemy_controller->GetParasite();
+				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
+				_combat_stats->Heal(1);
+				UpdateHealthBar();
+
+				// Generate a random number for the weapon
+				std::random_device rd;
+				std::mt19937 gen(rd());
+				int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
+				std::uniform_int_distribution<> dist(0, num_of_weapons);
+				int new_wpn_num = dist(gen);
+				weapon = static_cast<WeaponUsed>(dist(gen));
+				_combat_stats->ChangeWeapon(
+					weapons[new_wpn_num].attack,
+					weapons[new_wpn_num].cooldown,
+					weapons[new_wpn_num].range
+				);
+				return;
+			}
+		}
+	}
+}
+
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
 	if (_god_mode)	return;
@@ -563,21 +638,64 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 			_camera->GetComponent<PlayerCamera>()->Shake(0.2f, 0.05f);
 		}
 	}
-
-	// Player is dead
-	if (!_combat_stats->IsAlive())
-	{
-		SceneManagement::SwitchScene(Scenes::LOSE);
-	}
 }
 
-void Hachiko::Scripting::PlayerController::RecieveKnockback(math::float3 direction)
+void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 direction)
 {
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
 	_knock_end = _player_transform->GetGlobalPosition() + direction;
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
+}
+
+void Hachiko::Scripting::PlayerController::CheckState()
+{
+	PlayerState current_state = GetState();
+	bool state_changed = current_state != _previous_state;
+
+	if (!state_changed)
+	{
+		return;
+	}
+
+	_previous_state = current_state;
+
+	switch (current_state)
+	{
+	case PlayerState::IDLE:
+		animation->SendTrigger("idle");
+		break;
+	case PlayerState::WALKING:
+		animation->SendTrigger("isRunning");
+		break;
+	case PlayerState::MELEE_ATTACKING:
+		animation->SendTrigger("isAttacking");
+		break;
+	case PlayerState::RANGED_ATTACKING:
+		animation->SendTrigger("isShooting");
+		break;
+	case PlayerState::DASHING:
+		animation->SendTrigger("isDash");
+		break;
+	case PlayerState::FALLING:
+		animation->SendTrigger("isFalling");
+		break;
+	case PlayerState::DIE:
+		animation->SendTrigger("isDead");
+		break;
+
+	case PlayerState::INVALID:
+	default:
+		break;
+	}
+}
+
+void Hachiko::Scripting::PlayerController::ResetPlayer()
+{
+	_player_position = _initial_pos;
+	_combat_stats->_current_hp = 4;
+	UpdateHealthBar();
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
@@ -595,6 +713,26 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		{
 			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Disable();
 		}
+		else
+		{
+			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::ToggleGodMode()
+{
+	_state = PlayerState::IDLE;
+	if (!_god_mode)
+	{
+		HE_LOG("FALLING");
+		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+		if (corrected_position.x < FLT_MAX)
+		{
+			_player_position = corrected_position;
+		}
+		// Started falling
+		_state = PlayerState::FALLING;
 	}
 }
 
@@ -604,6 +742,6 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		SceneManagement::SwitchScene(12124061992092393469);
+		//SceneManagement::SwitchScene(12124061992092393469);
 	}
 }

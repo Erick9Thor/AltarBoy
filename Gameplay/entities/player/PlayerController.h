@@ -4,6 +4,22 @@
 #include "entities/Stats.h"
 #include "entities/player/PlayerState.h"
 
+enum class WeaponUsed
+{
+	RED = 0,
+	GREEN,
+	BLUE,
+	SIZE
+};
+
+struct Weapon
+{
+	int attack;
+	float cooldown;
+	float range;
+	float knockback;
+};
+
 namespace Hachiko
 { 
 class GameObject;
@@ -20,6 +36,7 @@ public:
 	~PlayerController() override = default;
 
 	void OnAwake() override;
+	void OnStart() override;
 	void OnUpdate() override;
 
 	PlayerState GetState() const;
@@ -54,12 +71,17 @@ private:
 	void WalkingOrientationController();
 	void AttackController();
 
-	void RecieveKnockback(math::float3 direction);
+	void PickupParasite(const math::float3& current_position);
+	void RecieveKnockback(const math::float3 direction);
+
+	void CheckState();
+	void ResetPlayer();
 
 public:
 	void CheckGoal(const float3& current_position);
 	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
 	void UpdateHealthBar();
+	void ToggleGodMode();
 	
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }
 	bool _isInDebug = false;
@@ -74,6 +96,7 @@ private:
 	SERIALIZE_FIELD(int, _max_dash_charges);
 
 	SERIALIZE_FIELD(float, _attack_duration);
+	SERIALIZE_FIELD(float, _attack_duration_distance);
 
 	SERIALIZE_FIELD(float, _rotation_duration);
 
@@ -87,6 +110,8 @@ private:
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
 
 	ComponentTransform* _player_transform = nullptr;
+	ComponentAnimation* animation;
+
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _dash_start = float3::zero;
@@ -105,8 +130,16 @@ private:
 	float _stun_time = 0.0f;
 	float _stun_duration = 0.5f;
 	float _falling_distance = 10.0f;
+	WeaponUsed weapon = WeaponUsed::RED;
 	bool _should_rotate = false;
 	bool _is_falling = false;
+
+	std::vector<Weapon> weapons =
+	{
+		Weapon{1, 0.33f, 3.5f, 0.5f},
+		Weapon{2, 1.0f, 3.5f, 0.7f},
+		Weapon{1, 0.6f, 3.5f, 2.0f}
+	};
 	int _current_bullet = -1;
 
 	bool _attack_swtich = true;
@@ -117,8 +150,12 @@ private:
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
+	SERIALIZE_FIELD(PlayerState, _previous_state);
+	float3 _initial_pos = float3::zero;
+
 	Stats* _combat_stats;
 	bool _god_mode = false;
+	bool _god_mode_trigger = false;
 };
 } // namespace Scripting
 } // namespace Hachiko

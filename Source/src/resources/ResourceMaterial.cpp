@@ -14,6 +14,10 @@ void Hachiko::ResourceMaterial::DrawGui()
     ImGui::Text("Material: %s", name.c_str());
 
     ImGuiUtils::Combo("Material Type", material_types, is_metallic);
+    if (!is_metallic)
+    {
+        ImGui::TextDisabled("Keep in mind that the specular workflow is not fully suported!");
+    }
 
     bool was_transparent = is_transparent;
     ImGuiUtils::Combo("Transparency", transparency, is_transparent);

@@ -1,0 +1,18 @@
+prefab_name: AudioManager
+name: AudioManager
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: AudioManager
+    "'_enemies_in_combat@int'": 0
+    "'_previous_in_combat@bool'": false
+  - type: 20
+    enabled: true

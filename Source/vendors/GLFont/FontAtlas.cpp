@@ -38,7 +38,7 @@ FontAtlas::FontAtlas(FT_Face face, int pixelSize) :
     glBindTexture(GL_TEXTURE_2D, _tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    HE_LOG("Texture id %d", _tex);
+    //HE_LOG("Texture id %d", _tex);
     // Set texture parameters 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

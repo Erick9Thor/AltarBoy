@@ -177,6 +177,11 @@ void Hachiko::Debug::DebugDraw(const OBB& box)
     dd::box(p, dd::colors::White);
 }
 
+HACHIKO_API void Hachiko::Debug::DrawNavmesh(bool is_navmesh)
+{
+    return App->renderer->SetDrawNavmesh(is_navmesh);
+}
+
 
 /*---------------------------------------------------------------------------*/
 
