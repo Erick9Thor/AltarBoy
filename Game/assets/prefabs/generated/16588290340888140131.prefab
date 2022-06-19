@@ -21,7 +21,7 @@ child:
         mesh_id: 15417489233916492426
         navigable: false
         visible: true
-        material_id: 779413896744454882
+        material_id: 14344857796862453353
   - name: Arm_01
     enabled: true
     component:
@@ -35,19 +35,19 @@ child:
         mesh_id: 6825625381101298616
         navigable: false
         visible: true
-        material_id: 779413896744454882
+        material_id: 14344857796862453353
       - type: 2
         enabled: true
         mesh_id: 7931117650464535034
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
       - type: 2
         enabled: true
         mesh_id: 12966638051790020970
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
   - name: Leg_01
     enabled: true
     component:
@@ -61,7 +61,7 @@ child:
         mesh_id: 2620627679532038903
         navigable: false
         visible: true
-        material_id: 779413896744454882
+        material_id: 14344857796862453353
   - name: TorsoArmour_01
     enabled: true
     component:
@@ -75,13 +75,13 @@ child:
         mesh_id: 14215175710258194067
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
       - type: 2
         enabled: true
         mesh_id: 492702412559852976
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
   - name: HipArmour_01
     enabled: true
     component:
@@ -95,7 +95,7 @@ child:
         mesh_id: 1715900030195424151
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
   - name: MechanicLeg_01
     enabled: true
     component:
@@ -109,13 +109,13 @@ child:
         mesh_id: 2154420379989870412
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
       - type: 2
         enabled: true
         mesh_id: 11990669548665173842
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
   - name: MaskPiece_01
     enabled: true
     component:
@@ -129,13 +129,13 @@ child:
         mesh_id: 9690104152344260425
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
       - type: 2
         enabled: true
         mesh_id: 1248698053874246545
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
   - name: MechanicArm_01
     enabled: true
     component:
@@ -149,13 +149,13 @@ child:
         mesh_id: 9802222454163498197
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
       - type: 2
         enabled: true
         mesh_id: 8005919720121740191
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
   - name: Reproportion_01
     enabled: true
     component:
@@ -169,25 +169,25 @@ child:
         mesh_id: 3190431119747523934
         navigable: false
         visible: true
-        material_id: 10080861512363700876
+        material_id: 17391238928593233710
       - type: 2
         enabled: true
         mesh_id: 17272673726904041534
         navigable: false
         visible: true
-        material_id: 16392420064499746625
+        material_id: 8508343560657574651
       - type: 2
         enabled: true
         mesh_id: 14750993830365075161
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809
       - type: 2
         enabled: true
         mesh_id: 16019881623299926241
         navigable: false
         visible: true
-        material_id: 779413896744454882
+        material_id: 14344857796862453353
   - name: Jetpack_01
     enabled: true
     component:
@@ -201,16 +201,16 @@ child:
         mesh_id: 17414516408912328845
         navigable: false
         visible: true
-        material_id: 779413896744454882
+        material_id: 14344857796862453353
       - type: 2
         enabled: true
         mesh_id: 8447702738076971672
         navigable: false
         visible: true
-        material_id: 5087556023984012752
+        material_id: 7184434814575062647
       - type: 2
         enabled: true
         mesh_id: 14816985851976778809
         navigable: false
         visible: true
-        material_id: 4909964070981436824
+        material_id: 7240910165889597809

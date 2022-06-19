@@ -1,24 +1,24 @@
 asset_hash: 7360938489393507728
 model_name: Running
 meshes:
-  - 2512171253866590231
+  - 12267903123424216882
 materials:
   - 12924252210591909690
 animations:
-  - 16477442206840998159
+  - 2184831573162580743
+prefab_id: 7219544235080641170
 animation_names:
   - mixamo.com
-prefab_id: 10479077871501408730
 resources:
-  - resource_id: 2512171253866590231
+  - resource_id: 12267903123424216882
     resource_type: 3
-    resource_hash: 10462689014657690823
+    resource_hash: 11902716342101496020
   - resource_id: 12924252210591909690
     resource_type: 1
     resource_hash: 13958780837481233391
-  - resource_id: 16477442206840998159
+  - resource_id: 2184831573162580743
     resource_type: 7
     resource_hash: 15611405413945092904
-  - resource_id: 10479077871501408730
+  - resource_id: 7219544235080641170
     resource_type: 13
-    resource_hash: 14864755210797494069
+    resource_hash: 12880530721253164838

@@ -24,10 +24,12 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 
+			void StartExplosion();
 			void CheckRadiusExplosion();
 			void ExplodeCrystal();
 
 			void RegisterHit(int damage);
+			bool isAlive() { return _stats->IsAlive(); };
 
 		private:
 			void DestroyCrystal();
@@ -37,19 +39,26 @@ namespace Hachiko
 
 		private:
 			ComponentTransform* transform;
+			ComponentTransform* explosive_area;
 			SERIALIZE_FIELD(GameObject*, _player);
 
 			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
+			SERIALIZE_FIELD(GameObject*, _outer_explosion_indicator);
+			SERIALIZE_FIELD(GameObject*, _inner_explosion_indicator);
 
 			SERIALIZE_FIELD(unsigned, _crashing_index);
 			SERIALIZE_FIELD(float, _detecting_radius);
 			SERIALIZE_FIELD(float, _explosion_radius);
+			SERIALIZE_FIELD(float, _timer_explosion);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 
+			ComponentAudioSource* _audio_source;
 			bool is_destroyed = false;
+			bool is_exploding = false;
 
 			math::float3 _player_pos;
+			float explosion_duration;
 
 			GameObject* enemies;
 		};

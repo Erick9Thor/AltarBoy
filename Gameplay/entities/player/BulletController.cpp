@@ -18,10 +18,6 @@ Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 
 Hachiko::Scripting::BulletController::~BulletController()
 {
-	for (unsigned i = 0; i < _bullets.size(); i++)
-	{
-		SceneManagement::Destroy(_bullets[i]);
-	}
 }
 
 void Hachiko::Scripting::BulletController::OnAwake()
@@ -42,7 +38,7 @@ void Hachiko::Scripting::BulletController::OnAwake()
 
 void Hachiko::Scripting::BulletController::OnUpdate()
 {
-	
+
 	if (!game_object->IsActive())
 	{
 		return;
@@ -57,7 +53,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 			// Already dead bullet
 			continue;
 		}
-		if(stats.lifetime <= stats.elapsed_lifetime)
+		if (stats.lifetime <= stats.elapsed_lifetime)
 		{
 			// Disable if lifetime is over
 			DeactivateBullet(i);
@@ -83,7 +79,7 @@ void Hachiko::Scripting::BulletController::OnUpdate()
 
 		// If no collision just lower lifetime
 		stats.elapsed_lifetime += Time::DeltaTime();
-	}	
+	}
 }
 
 void Hachiko::Scripting::BulletController::UpdateBulletTrajectory(unsigned bullet_idx)
@@ -109,13 +105,13 @@ bool Hachiko::Scripting::BulletController::CheckCollisions(unsigned bullet_idx)
 	EnemyController* hit_enemy = ProcessEnemies(bullet, stats.size, trajectory, closest_enemy_hit);
 	float closest_obstacle_hit = FLT_MAX;
 	CrystalExplosion* hit_obstacle = ProcessObstacles(bullet, stats.size, trajectory, closest_obstacle_hit);
-	
+
 	if (closest_enemy_hit < closest_obstacle_hit)
 	{
 		if (hit_enemy)
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
-			hit_enemy->RegisterHit(stats.damage, knockback_dir);
+			hit_enemy->RegisterHit(stats.damage, knockback_dir, 1.f);
 		}
 		return true;
 	}
@@ -151,7 +147,7 @@ void Hachiko::Scripting::BulletController::SetBulletTrajectory(unsigned bullet_i
 	const float bullet_offset = 1.25f;
 	float3 emitter_direction = stats.emitter_transform->GetFront().Normalized();
 	float3 emitter_position = stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
-	
+
 	stats.prev_position = emitter_position;
 
 	stats.direction = emitter_direction;
@@ -163,7 +159,7 @@ void Hachiko::Scripting::BulletController::SetBulletTrajectory(unsigned bullet_i
 Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::ProcessEnemies(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
 {
 	EnemyController* hit_target = nullptr;
-	
+
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	if (!agent_container)
 	{
@@ -194,7 +190,7 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::BulletController::Proce
 			float hit_distance = bullet_position.Distance(enemy_position);
 			if (enemy_controller && hit_distance < closest_hit)
 			{
-				
+
 				closest_hit = hit_distance;
 				hit_target = enemy_controller;
 			}
@@ -286,5 +282,5 @@ const Hachiko::Scripting::BulletController::BulletStats& Hachiko::Scripting::Bul
 
 float Hachiko::Scripting::BulletController::BulletStats::GetChargedPercent()
 {
-	return current_charge /charge_time;
+	return current_charge / charge_time;
 }
