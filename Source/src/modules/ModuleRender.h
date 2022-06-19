@@ -139,6 +139,12 @@ namespace Hachiko
         unsigned fb_height = 0;
         unsigned fb_width = 0;
 
+        // Shadow Map related:
+        unsigned shadow_map_fbo = 0;
+        unsigned shadow_map_texture = 0;
+        unsigned int shadow_width = 2048;
+        unsigned int shadow_height = 2048;
+
         bool draw_deferred = true;
 
         // Deferred rendering:

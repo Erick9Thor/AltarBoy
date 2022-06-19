@@ -14,6 +14,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
+#include "components/ComponentDirLight.h"
 #include "components/ComponentParticleSystem.h"
 
 Hachiko::ModuleRender::ModuleRender() = default;
@@ -33,6 +34,30 @@ bool Hachiko::ModuleRender::Init()
 
     GenerateDeferredQuad();
     GenerateFrameBuffer();
+
+    // Generate shadow map frame buffer object that we will only use the depth 
+    // of:
+    glGenFramebuffers(1, &shadow_map_fbo);
+    // Generate shadow map texture:
+    glGenTextures(1, &shadow_map_texture);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
+        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // With the generated shadow map texture, attach it as the shadow map frame
+    // buffer's depth buffer:
+    glBindFramebuffer(1, shadow_map_fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 
+        shadow_map_texture, 0);
+    // Since we will only use the depth, disable draw and read for color:
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+    // Unbind the shadow map frame buffer:
+    glBindBuffer(GL_FRAMEBUFFER, 0);
+
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -262,6 +287,42 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     {
         render_forward_pass = !render_forward_pass;
     }
+
+    // Render to shadowmap here:
+
+    // Set the directional light position:
+    float3 directional_light_position(0.0f, 0.0f, 0.0f);
+    // Set the directional light direction:
+    float3 directional_light_direction = App->scene_manager->GetActiveScene()->
+        dir_lights[0]->GetDirection().Normalized();
+    // Get the 8 corners of frustum and store them in an array:
+    float3 camera_frustum_corner_points[8];
+    camera->GetFrustum()->GetCornerPoints(camera_frustum_corner_points);
+    
+    // Calculate the sphere that minimally encloses the 8 corners of frustum:
+    Sphere camera_frustum_sphere;
+    camera_frustum_sphere.Enclose(camera_frustum_corner_points, 8);
+
+    // Get the radius of the sphere that encloses the frustum:
+    float camera_frustum_sphere_radius = camera_frustum_sphere.r;
+    float3 camera_frustum_sphere_center = camera_frustum_sphere.Centroid();
+
+    // Form the directional light frustum:
+    Frustum directional_light_frustum;
+    // Set the orthographic width and height of the light frustum to be the 
+    // diameter of enclosing sphere of camera frustum:
+    float orthographic_size = camera_frustum_sphere_radius * 2.0f;
+    directional_light_frustum.SetOrthographic(orthographic_size, orthographic_size);
+    // Set far plane to be same with orthographic width and height, and set 
+    // near to be 0:
+    directional_light_frustum.SetViewPlaneDistances(0.0f, orthographic_size);
+    // Set position of the light frustum:
+    directional_light_frustum.SetPos(camera_frustum_sphere_center - 
+        directional_light_direction * camera_frustum_sphere_radius);
+    // Set light frustum's front to be the direction of the light:
+    directional_light_frustum.SetFront(directional_light_direction);
+
+
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
