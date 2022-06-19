@@ -18,10 +18,6 @@ Hachiko::Scripting::BulletController::BulletController(GameObject* game_object)
 
 Hachiko::Scripting::BulletController::~BulletController()
 {
-	for (unsigned i = 0; i < _bullets.size(); i++)
-	{
-		SceneManagement::Destroy(_bullets[i]);
-	}
 }
 
 void Hachiko::Scripting::BulletController::OnAwake()
