@@ -108,6 +108,7 @@ namespace Hachiko
         {
             navmesh_id = new_navmesh_id;
         }
+
         [[nodiscard]] GameObject* Find(UID id) const;
 
         void SetName(const char* new_name)
