@@ -260,15 +260,17 @@
 
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"
-#define BILLBOARD_TYPE "billboard_type"
 #define BILLBOARD_LIFETIME "billboard_lifetime"
 #define BILLBOARD_PLAY_ON_AWAKE "play_on_awake"
-#define BILLBOARD_RENDER_MODE "render_mode"
 #define ANIMATION_CYCLES "animation_cycles"
+#define ANIMATION_SECTION "animation_section"
+#define COLOR_SECTION "color_section"
+#define START_DELAY "start_delay"
+#define START_SIZE "start_size"
+#define START_ROTATION "start_rotation"
+#define BILLBOARD_PROPERTIES "properties"
 
-#define HAS_COLOR_GRADIENT "has_color_gradient"
 #define COLOR_CYCLES "color_cycles"
-#define COLOR_LOOP "color_loop"
 #define COLOR_GRADIENT "color_gradient"
 #define ANIMATION_LOOP "animation_loop"
 

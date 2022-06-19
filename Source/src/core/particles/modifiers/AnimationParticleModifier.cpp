@@ -19,12 +19,9 @@ void Hachiko::AnimationParticleModifier::Update(std::vector<Particle>& particles
     }
 
     time += EngineTimer::delta_time;
-    if (!fit_to_lifetime)
+    if (!fit_to_lifetime && time <= animation_speed)
     {
-        if (time <= animation_speed)
-        {
-            return;
-        }
+        return;
     }
 
     time = 0.0f;

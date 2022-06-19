@@ -7,20 +7,7 @@ struct ImGradientMark;
 
 namespace Hachiko
 {
-    enum class BillboardType
-    {
-        NORMAL,
-        HORIZONTAL,
-        VERTICAL
-    };
-
-    enum class BillboardRenderMode
-    {
-        B_ADDITIVE,
-        B_TRANSPARENT
-    };
-
-    class ComponentBillboard : public Component
+    class HACHIKO_API ComponentBillboard : public Component
     {
     public:
         ComponentBillboard(GameObject* container);
@@ -28,7 +15,10 @@ namespace Hachiko
         
         void Start() override;
         void Update() override;
+
         void Play();
+        void Pause();
+        void Restart();
         void Stop() override;
 
         void Save(YAML::Node& node) const override;
@@ -38,59 +28,69 @@ namespace Hachiko
         void Draw(ComponentCamera* camera, Program* program) override;
 
     private:
-        // General
         bool in_scene = false;
-        bool is_playing = false;
-        bool play_on_awake = false;
-        int frame_counter = 0;
-        int skip_frames = 0;
-        float time = 0.0f;
-        float billboard_lifetime = 5.0f;
-        float blend_factor = 0.0f;
-        BillboardRenderMode render_mode = BillboardRenderMode::B_ADDITIVE;
+        ParticleSystem::Emitter::State state = ParticleSystem::Emitter::State::STOPPED;
+        float elapsed_time = 0.0f;
+
+        // Sections
+        bool parameters_section = true;
+        bool renderer_section = true;
+        bool texture_section = true;
+        bool animation_section = false;
+        bool color_section = false;
         
-        // Orientation
-        bool is_horizontal = false;
-        float4x4 model_stretch = float4x4::identity;
-        float3 direction = float3::zero;
-        BillboardType type = BillboardType::HORIZONTAL;
+        // Parameters
+        bool loop = false;
+        bool play_on_awake = false;
+        float duration = 5.0f;
+        ParticleSystem::VariableTypeProperty start_delay {float2::zero, 1.0f, false, true};
+        ParticleSystem::VariableTypeProperty start_size {float2::one, 1.0f};
+        ParticleSystem::VariableTypeProperty start_rotation {float2::zero, 1.0f};
+
+        // Render
+        ParticleSystem::ParticleProperties properties;
 
         // Texture
-        bool flip_texture[2] = {false, false};
-        UID textureID = 0;
+        bool2 flip_texture = bool2::False;
+        float2 tiles = float2::one;
+        float2 factor = float2::one;
         ResourceTexture* texture = nullptr;
-        
+
         // Animation
-        bool animation_loop = true;
-        bool play_animation = false;
-        bool has_flip_x = false;
-        bool has_flip_y = false;
-        int x_tiles = 1;
-        int y_tiles = 1;
-        int has_texture = 0;
-        float x_factor = 1.0f;
-        float y_factor = 1.0f;
+        float animation_speed = 0.0f;
         float current_frame = 0.0f;
         float2 animation_index = {0.0f, 0.0f};
+        float blend_factor = 0.0f;
+        float total_tiles = 1.0f;
 
-        // Color gradient
-        bool has_color_gradient = false;
-        bool play_color_gradient = false;
-        bool color_loop = true;
+        // Color
         int color_cycles = 1.0f;
         float color_frame = 0.0f;
         ImGradient* gradient = nullptr;
         ImGradientMark* dragging_gradient = nullptr;
         ImGradientMark* selected_gradient = nullptr;
 
-    private:
+        // General
+        int frame_counter = 0;
+        float time = 0.0f;
+        
+        // Orientation
+        bool is_horizontal = false;
+        float4x4 model_stretch = float4x4::identity;
+        float3 direction = float3::zero;
         void Reset();
-        void AddTexture();
-        void RemoveTexture();
-        void UpdateAnimationData();
-        void UpdateColorOverLifetime();
         void PublishIntoScene();
         void DetachFromScene();
+
+        inline bool HasTexture();
+        void AddTexture();
+        void RemoveTexture();
+        
+        void UpdateAnimationData();
+        void UpdateColorOverLifetime();
+
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
+        void DisplayControls();
+
     };
 }

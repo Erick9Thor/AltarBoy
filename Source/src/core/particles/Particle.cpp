@@ -99,7 +99,7 @@ void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_ma
 {
     auto transform = emitter->GetGameObject()->GetTransform();
     float3 particle_size(current_size, current_size, 0.0f);
-    float3x3 particle_rotation_matrix = float3x3::identity;
+    float3x3 particle_rotation_matrix = float3x3::identity.RotateZ(current_rotation);
 
     switch (emitter->GetParticlesProperties().orientation)
     {
@@ -109,7 +109,7 @@ void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_ma
                 float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
                 float4x4 global_model_matrix = transform->GetGlobalMatrix();
                 out_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
-                out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * rotate_part * particle_rotation_matrix.RotateZ(current_rotation), particle_size);
+                out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * rotate_part * particle_rotation_matrix, particle_size);
                 break;
             }
         case ParticleSystem::ParticleOrientation::HORIZONTAL:
@@ -132,7 +132,7 @@ void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_ma
                 else
                 {
                     out_matrix = float4x4::LookAt(float3::unitZ, float3::unitY, float3::unitY, float3::unitY);
-                    out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * particle_rotation_matrix.RotateZ(current_rotation), particle_size);
+                    out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * particle_rotation_matrix, particle_size);
                 }
                 break;
             }
@@ -141,7 +141,7 @@ void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_ma
                 const float3 camera_position = camera->GetFrustum()->Pos();
                 const float3 camera_direction = (float3(camera_position.x, current_position.y, camera_position.z) - current_position).Normalized();
                 out_matrix = float4x4::LookAt(float3::unitZ, camera_direction, float3::unitY, float3::unitY);
-                out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * particle_rotation_matrix.RotateZ(current_rotation), particle_size);
+                out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * particle_rotation_matrix, particle_size);
                 break;
             }
     }
