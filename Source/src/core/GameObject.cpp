@@ -58,6 +58,7 @@ Hachiko::GameObject::GameObject(GameObject* parent, const char* name, UID uid, c
 
 Hachiko::GameObject::~GameObject()
 {
+    App->scene_manager->RemovedGameObject(this);
     if (parent)
     {
         parent->RemoveChild(this);

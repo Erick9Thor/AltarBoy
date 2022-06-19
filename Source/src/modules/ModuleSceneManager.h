@@ -31,6 +31,7 @@ namespace Hachiko
         bool CleanUp() override;
 
         void RemoveGameObject(GameObject* go);
+        void RemovedGameObject(GameObject* go);
 
         GameObject* GetRoot()
         {
