@@ -3,22 +3,8 @@
 #include <scripting/Script.h>
 #include "entities/Stats.h"
 #include "entities/player/PlayerState.h"
+#include "entities/player/CombatManager.h"
 
-enum class WeaponUsed
-{
-	RED = 0,
-	GREEN,
-	BLUE,
-	SIZE
-};
-
-struct Weapon
-{
-	int attack;
-	float cooldown;
-	float range;
-	float knockback;
-};
 
 namespace Hachiko
 { 
@@ -30,6 +16,31 @@ class PlayerCamera;
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
+
+	enum class WeaponUsed
+	{
+		RED = 0,
+		GREEN,
+		BLUE,
+		SIZE
+	};
+
+	struct PlayerAttack
+	{
+		float hit_delay = 0.f;
+		float duration = 0.f;
+		CombatManager::AttackStats stats;
+	};
+
+	struct Weapon
+	{
+		std::string name = "Undefined Weapon";
+		CombatManager::BulletStats bullet;
+		// Here we define the combo of attacks		
+		float4 color = float4::zero;
+		GameObject* weapon_go = nullptr;
+		std::vector<PlayerAttack> attacks;
+	};
 
 public:
 	PlayerController(GameObject* game_object);
@@ -54,6 +65,9 @@ private:
 	bool IsStunned() const;
 	bool IsFalling() const;
 	bool IsActionLocked() const;
+
+	const Weapon& GetCurrentWeapon() const;
+	const PlayerAttack& GetCurrentAttack() const;
 
 	// Input and status management
 	void HandleInputAndStatus();
@@ -95,9 +109,6 @@ private:
 	SERIALIZE_FIELD(float, _dash_cooldown);
 	SERIALIZE_FIELD(int, _max_dash_charges);
 
-	SERIALIZE_FIELD(float, _attack_duration);
-	SERIALIZE_FIELD(float, _attack_duration_distance);
-
 	SERIALIZE_FIELD(float, _rotation_duration);
 
 	SERIALIZE_FIELD(GameObject*, _hp_cell_1);
@@ -112,6 +123,9 @@ private:
 	ComponentTransform* _player_transform = nullptr;
 	ComponentAnimation* animation;
 
+	std::vector<Weapon> weapons{};
+
+	// Internal state variables
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _dash_start = float3::zero;
@@ -126,25 +140,19 @@ private:
 	float _dash_charging_time = 0.0f;
 	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
+	float _attack_current_delay = 0.0f;
 	float _rotation_progress = 0.0f;
 	float _stun_time = 0.0f;
 	float _stun_duration = 0.5f;
 	float _falling_distance = 10.0f;
-	WeaponUsed weapon = WeaponUsed::RED;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-
-	std::vector<Weapon> weapons =
-	{
-		Weapon{1, 0.33f, 3.5f, 0.5f},
-		Weapon{2, 1.0f, 3.5f, 0.7f},
-		Weapon{1, 0.6f, 3.5f, 2.0f}
-	};
+	
 	int _current_bullet = -1;
 
-	bool _attack_swtich = true;
+	unsigned _next_attack_idx = 0;
+	unsigned _current_weapon = 0;
 	
-
 	GameObject* enemies;
 	GameObject* dynamic_envi;
 

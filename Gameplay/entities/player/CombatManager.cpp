@@ -56,21 +56,21 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 	RunBulletSimulation();
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats)
+bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	
 	float3 attack_dir = origin.WorldZ().Normalized();
-	float min_dot_product = std::cos(math::DegToRad(hit_angle_deg));
+	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
 	bool hit = false;
-	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, hit_distance, attack_stats);
-	hit = hit || ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, hit_distance, attack_stats);
+	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	hit = hit || ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats)
+bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
-	OBB hitbox = OBB(origin.Col3(3), float3(width / 2.f, 1.f, length / 2.f), origin.WorldX().Normalized(), origin.WorldY().Normalized(), origin.WorldZ().Normalized());
+	OBB hitbox = OBB(origin.Col3(3), float3(attack_stats.width / 2.f, 1.f, attack_stats.range / 2.f), origin.WorldX().Normalized(), origin.WorldY().Normalized(), origin.WorldZ().Normalized());
 	bool hit = false;
 	debug_hitbox = hitbox;
 	draw_debug_hitbox = true;
@@ -79,6 +79,15 @@ bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& or
 	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
 	
 	return false;
+}
+
+bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
+{
+	if (attack_stats.type == AttackType::RECTANGLE)
+	{
+		return PlayerRectangleAttack(origin, attack_stats);
+	}
+	return PlayerConeAttack(origin, attack_stats);
 }
 
 bool Hachiko::Scripting::CombatManager::EnemyConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats)

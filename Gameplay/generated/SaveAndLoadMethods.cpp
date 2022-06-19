@@ -445,10 +445,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_max_dash_charges@int'"] = _max_dash_charges;
 
-	node["'_attack_duration@float'"] = _attack_duration;
-
-	node["'_attack_duration_distance@float'"] = _attack_duration_distance;
-
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
 	if (_hp_cell_1 != nullptr)
@@ -541,16 +537,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_max_dash_charges@int'"].IsDefined())
 	{
 		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
-	}
-
-	if (load_node["'_attack_duration@float'"].IsDefined())
-	{
-		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_attack_duration_distance@float'"].IsDefined())
-	{
-		_attack_duration_distance = load_node["'_attack_duration_distance@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())

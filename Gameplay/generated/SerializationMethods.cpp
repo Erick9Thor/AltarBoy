@@ -619,24 +619,6 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 		}
 	}
 
-	if(serialized_fields.find("_attack_duration") != serialized_fields.end())
-	{
-		const SerializedField& _attack_duration_sf = serialized_fields["_attack_duration"];
-		if (_attack_duration_sf.type_name == "float")
-		{
-			_attack_duration = std::any_cast<float>(_attack_duration_sf.copy);
-		}
-	}
-
-	if(serialized_fields.find("_attack_duration_distance") != serialized_fields.end())
-	{
-		const SerializedField& _attack_duration_distance_sf = serialized_fields["_attack_duration_distance"];
-		if (_attack_duration_distance_sf.type_name == "float")
-		{
-			_attack_duration_distance = std::any_cast<float>(_attack_duration_distance_sf.copy);
-		}
-	}
-
 	if(serialized_fields.find("_rotation_duration") != serialized_fields.end())
 	{
 		const SerializedField& _rotation_duration_sf = serialized_fields["_rotation_duration"];
@@ -736,10 +718,6 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 	serialized_fields["_dash_cooldown"] = SerializedField(std::string("_dash_cooldown"), std::make_any<float>(_dash_cooldown), std::string("float"));
 
 	serialized_fields["_max_dash_charges"] = SerializedField(std::string("_max_dash_charges"), std::make_any<int>(_max_dash_charges), std::string("int"));
-
-	serialized_fields["_attack_duration"] = SerializedField(std::string("_attack_duration"), std::make_any<float>(_attack_duration), std::string("float"));
-
-	serialized_fields["_attack_duration_distance"] = SerializedField(std::string("_attack_duration_distance"), std::make_any<float>(_attack_duration_distance), std::string("float"));
 
 	serialized_fields["_rotation_duration"] = SerializedField(std::string("_rotation_duration"), std::make_any<float>(_rotation_duration), std::string("float"));
 

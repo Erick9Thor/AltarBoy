@@ -92,8 +92,6 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Dash Distance", _dash_distance);
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
-	Editor::Show("Attack Duration", _attack_duration);
-	Editor::Show("Attack Duration Distance", _attack_duration_distance);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);

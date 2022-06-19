@@ -37,11 +37,21 @@ namespace Hachiko
                 ComponentTransform* emitter_transform = nullptr;
             };
 
+            enum AttackType
+            {
+                CONE,
+                RECTANGLE
+            };
+
             struct AttackStats
             {
                 friend CombatManager;
+                AttackType type = AttackType::RECTANGLE;
                 float damage = 1.f;
                 float knockback_distance = 0.f;
+                // Width is used as degrees for cone
+                float width = 0.f;
+                float range = 0.f;
                 // Status effect
             };
             
@@ -53,8 +63,7 @@ namespace Hachiko
             void OnUpdate() override;
 
             // Bool indicates if it hit something
-            bool PlayerConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance,const AttackStats& attack_stats);
-            bool PlayerRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats);
+            bool PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             bool EnemyConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats);
             bool EnemyRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats);
@@ -66,6 +75,10 @@ namespace Hachiko
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 
         private:
+            // Start attack depending on its type
+            bool PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            bool PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
+
             // Evaluate for all units
             bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
             bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);

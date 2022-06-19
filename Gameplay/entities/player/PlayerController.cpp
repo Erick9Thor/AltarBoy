@@ -19,8 +19,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
-	, _attack_duration(0.0f)
-	, _attack_duration_distance(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
@@ -28,6 +26,52 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
 {
+	CombatManager::BulletStats common_bullet;
+	common_bullet.charge_time = 1.f;
+	common_bullet.lifetime = 3.f;
+	common_bullet.size = 1.f;
+	common_bullet.speed = 50.f;
+	common_bullet.damage = 1.f;
+
+	PlayerAttack common_attack;
+	common_attack.hit_delay = 0.f;
+	common_attack.duration = 0.5f;
+	common_attack.stats.type = CombatManager::AttackType::RECTANGLE;
+	common_attack.stats.damage = 1.f;
+	common_attack.stats.knockback_distance = 0.f;
+	// If its cone use degrees on width
+	common_attack.stats.width = 1.f;
+	common_attack.stats.range = 2.f;
+	
+	
+	Weapon red;
+	red.name = "Red";
+	red.bullet = common_bullet;
+	red.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+	red.attacks.push_back(common_attack);
+	red.attacks.push_back(common_attack);
+	
+	
+
+	Weapon blue;
+	blue.name = "Blue";
+	blue.bullet = common_bullet;
+	blue.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
+	red.attacks.push_back(common_attack);
+	red.attacks.push_back(common_attack);
+
+	Weapon green;
+	blue.name = "Green";
+	blue.bullet = common_bullet;
+	blue.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
+	red.attacks.push_back(common_attack);
+	red.attacks.push_back(common_attack);
+
+	weapons.push_back(red);
+	weapons.push_back(blue);
+	weapons.push_back(green);
+
+	_current_weapon;
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
@@ -259,38 +303,15 @@ void Hachiko::Scripting::PlayerController::Dash()
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
-	_attack_current_duration = _attack_duration; // For now we'll focus on melee attacks
+	const Weapon& weapon = GetCurrentWeapon();
+	const PlayerAttack& attack = GetCurrentAttack();
+	_attack_current_duration = attack.duration;
+
+	// Attack will occur in the attack simulation after the delay
+	_attack_current_delay = attack.hit_delay;
+
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
-	const float attack_angle = 60.0f; // This can vary in the future deppending of weapon
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
-	CombatManager::AttackStats stats = CombatManager::AttackStats();
-	stats.damage = 1.f;
-	stats.knockback_distance = 0.f;
-
-	_attack_swtich = !_attack_swtich;
-
-	if (combat_manager)
-	{
-		bool hit = false;
-		if (_attack_swtich)
-		{
-			hit = combat_manager->PlayerConeAttack(_player_transform->GetGlobalMatrix(), attack_angle, _combat_stats->_attack_range, stats);
-		}
-		else
-		{
-			// Offset the center of the attack
-			float3 emitter_direction = _player_transform->GetFront().Normalized();
-			
-			float3 emitter_position = _player_transform->GetGlobalPosition() + emitter_direction * (_combat_stats->_attack_range/ 2.f);
-			float4x4 emitter = float4x4::FromTRS(emitter_position, _player_transform->GetGlobalRotation(), _player_transform->GetGlobalScale());
-			hit = combat_manager->PlayerRectangleAttack(emitter, 1.5f, _combat_stats->_attack_range, stats);
-		}
-		
-		if (hit)
-		{
-			_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
-		}
-	}
 
 	// Move player a bit forward on melee attack
 	_player_position += _player_transform->GetFront() * 0.3f;
@@ -299,20 +320,8 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	switch (weapon)
-	{
-	case WeaponUsed::RED:
-		attack_color = float4(255.0f, 0.0f, 0.0f, 255.0f);
-		break;
-	case WeaponUsed::BLUE:
-		attack_color = float4(0.0f, 0.0f, 255.0f, 255.0f);
-		break;
-	case WeaponUsed::GREEN:
-		attack_color = float4(0.0f, 255.0f, 0.0f, 255.0f);
-		break;
-	}
 
-	_attack_indicator->ChangeColor(attack_color, _attack_duration);
+	_attack_indicator->ChangeColor(attack_color, attack.duration);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -344,6 +353,17 @@ bool Hachiko::Scripting::PlayerController::IsFalling() const
 bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 {
 	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
+}
+
+const Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon() const
+{
+	// TODO: insert return statement here
+	return weapons[_current_weapon];
+}
+
+const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::PlayerController::GetCurrentAttack() const
+{
+	return GetCurrentWeapon().attacks[_next_attack_idx];
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
@@ -544,13 +564,45 @@ void Hachiko::Scripting::PlayerController::AttackController()
 	{
 		_attack_current_duration -= Time::DeltaTime();
 
+
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
-			if (_attack_swtich)
+			auto attack = GetCurrentAttack();
+
+			if (attack.stats.type == CombatManager::AttackType::CONE)
 			{
 				_attack_indicator->SetActive(true);
 			}
-			
+
+			if (_attack_current_delay >= 0.f)
+			{
+				_attack_current_delay -= Time::DeltaTime();
+				
+				if (_attack_current_delay < 0.f)
+				{
+					bool hit = false;
+					CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
+					if (combat_manager)
+					{
+						// Offset the center of the attack if its a rectangle
+						if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
+						{
+							float3 emitter_direction = _player_transform->GetFront().Normalized();
+							float3 emitter_position = _player_transform->GetGlobalPosition() + emitter_direction * (attack.stats.range / 2.f);
+							float4x4 emitter = float4x4::FromTRS(emitter_position, _player_transform->GetGlobalRotation(), _player_transform->GetGlobalScale());
+							hit = combat_manager->PlayerMeleeAttack(emitter, attack.stats);
+						}
+						else
+						{
+							hit = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
+						}
+					}
+					if (hit)
+					{
+						_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
+					}
+				}
+			}	
 			return;
 			
 		}
@@ -594,14 +646,9 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				std::random_device rd;
 				std::mt19937 gen(rd());
 				int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
-				std::uniform_int_distribution<> dist(0, num_of_weapons);
+				std::uniform_int_distribution<> dist(0, weapons.size()-1);
 				int new_wpn_num = dist(gen);
-				weapon = static_cast<WeaponUsed>(dist(gen));
-				_combat_stats->ChangeWeapon(
-					weapons[new_wpn_num].attack,
-					weapons[new_wpn_num].cooldown,
-					weapons[new_wpn_num].range
-				);
+				_current_weapon = new_wpn_num;
 				return;
 			}
 		}
