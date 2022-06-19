@@ -2,7 +2,8 @@ prefab_name: cylinder
 name: RootNode
 enabled: true
 component:
-  - type: 1
+  - !<transform>
+    type: 1
     enabled: true
     position: [0, 0, 0]
     rotation: [0, 0, 0, 1]
@@ -11,12 +12,14 @@ child:
   - name: Cylinder001
     enabled: true
     component:
-      - type: 1
+      - !<transform>
+        type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [-0.707106709, 0, 0, 0.707106829]
         scale: [1, 0.99999994, 0.99999994]
-      - type: 2
+      - !<mesh_renderer>
+        type: 2
         enabled: true
         mesh_id: 10210867973034302559
         navigable: false
