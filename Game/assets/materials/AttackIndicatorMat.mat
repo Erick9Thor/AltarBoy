@@ -4,8 +4,8 @@ specular: 0
 normals: 0
 metalness: 0
 emissive: 0
-diffuse_color: [1, 0, 0, 1]
-specular_color: [0, 0, 0, 1]
+diffuse_color: [0, 0, 0, 0.588235319]
+specular_color: [0, 0, 0, 0.392156869]
 emissive_color: [0, 0, 0, 1]
 smoothness: 0.5
 metalness_value: 0.5

@@ -5,5 +5,8 @@ enum class BugState
 	INVALID,
 	DEAD,
 	IDLE,
-	ATTACKING
+	MOVING,
+	MOVING_BACK,
+	ATTACKING,
+	PARASITE
 };

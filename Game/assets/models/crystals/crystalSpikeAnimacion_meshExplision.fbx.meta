@@ -9,7 +9,7 @@ materials:
   - 5759363592208955763
 animations:
   - 9087701207749168962
-prefab_id: 13176835927502188974
+prefab_id: 7517619833700867939
 animation_names:
   - Explision
 resources:
@@ -27,10 +27,10 @@ resources:
     resource_hash: 994353538779278260
   - resource_id: 5759363592208955763
     resource_type: 1
-    resource_hash: 12811764291715772044
+    resource_hash: 8913166766105190624
   - resource_id: 9087701207749168962
     resource_type: 7
     resource_hash: 5082877176210099806
-  - resource_id: 13176835927502188974
+  - resource_id: 7517619833700867939
     resource_type: 13
     resource_hash: 3266261963093791939

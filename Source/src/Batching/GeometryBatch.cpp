@@ -198,6 +198,10 @@ void Hachiko::GeometryBatch::BatchData()
         int palette_offset = 0;
         for (const ComponentMeshRenderer* component : components)
         {
+            if (component->GetPalette().size() <= 0)
+            {
+                continue;
+            }
             transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
 
             palette_per_instance.numBones = component->GetResourceMesh()->num_bones;

@@ -1,0 +1,136 @@
+name: MC2
+default_node: 0
+clips:
+  - clip_name: idle
+    clips_id: 10540881652907659399
+    clips_loop: true
+  - clip_name: run
+    clips_id: 11782767167669230189
+    clips_loop: true
+  - clip_name: mele
+    clips_id: 9538430472669005689
+    clips_loop: true
+  - clip_name: dash
+    clips_id: 10007216864859728623
+    clips_loop: true
+  - clip_name: shoot
+    clips_id: 9086986923693935750
+    clips_loop: true
+  - clip_name: fall
+    clips_id: 4695158682872337926
+    clips_loop: true
+  - clip_name: death
+    clips_id: 16942577690113617624
+    clips_loop: true
+nodes:
+  - node_name: idle
+    node_clip_name: idle
+  - node_name: run
+    node_clip_name: run
+  - node_name: mele
+    node_clip_name: mele
+  - node_name: dash
+    node_clip_name: dash
+  - node_name: shoot
+    node_clip_name: shoot
+  - node_name: fall
+    node_clip_name: fall
+  - node_name: death
+    node_clip_name: death
+transitions:
+  - transition_source: idle
+    transition_target: run
+    transition_trigger: isRunning
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: mele
+    transition_trigger: isAttacking
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: dash
+    transition_trigger: isDash
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: shoot
+    transition_trigger: isShooting
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: fall
+    transition_trigger: isFalling
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: run
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: fall
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: mele
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: death
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: dash
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: shoot
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: mele
+    transition_target: dash
+    transition_trigger: isDash
+    transition_blend: 300
+  - transition_source: dash
+    transition_target: mele
+    transition_trigger: isAttacking
+    transition_blend: 300
+  - transition_source: dash
+    transition_target: shoot
+    transition_trigger: isShooting
+    transition_blend: 300
+  - transition_source: shoot
+    transition_target: dash
+    transition_trigger: isDash
+    transition_blend: 300
+  - transition_source: fall
+    transition_target: shoot
+    transition_trigger: isShooting
+    transition_blend: 300
+  - transition_source: shoot
+    transition_target: fall
+    transition_trigger: isFalling
+    transition_blend: 300
+  - transition_source: death
+    transition_target: fall
+    transition_trigger: isFalling
+    transition_blend: 300
+  - transition_source: fall
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: run
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: death
+    transition_target: run
+    transition_trigger: isRunning
+    transition_blend: 300
+  - transition_source: run
+    transition_target: shoot
+    transition_trigger: isShooting
+    transition_blend: 300
+  - transition_source: mele
+    transition_target: shoot
+    transition_trigger: isShooting
+    transition_blend: 300

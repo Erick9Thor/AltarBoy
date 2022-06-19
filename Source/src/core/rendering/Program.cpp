@@ -72,9 +72,19 @@ void Hachiko::Program::BindUniformBool(const char* name, bool value) const
     glUniform1i(GetUniformLocation(name), value);
 }
 
+void Hachiko::Program::BindUniformInt(const char* name, int value) const
+{
+    glUniform1i(GetUniformLocation(name), value);
+}
+
 void Hachiko::Program::BindUniformInts(const char* name, unsigned size, const int* data) const
 {
     glUniform1iv(GetUniformLocation(name), size, data);
+}
+
+void Hachiko::Program::BindUniformUInt(const char* name, unsigned value) const
+{
+    glUniform1ui(GetUniformLocation(name), value);
 }
 
 int Hachiko::Program::GetUniformLocation(const char* key) const

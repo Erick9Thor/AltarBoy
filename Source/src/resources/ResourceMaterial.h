@@ -107,8 +107,8 @@ namespace Hachiko
         float4 emissive_color = float4::zero;
         float smoothness = 0.5f;
         float metalness_value = 0.5f;
-        unsigned is_metallic = 0;
-        unsigned smoothness_alpha = 0;
+        unsigned is_metallic = 1;
+        unsigned smoothness_alpha = 1;
         unsigned is_transparent = 0;
 
     private:

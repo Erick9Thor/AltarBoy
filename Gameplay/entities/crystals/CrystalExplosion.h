@@ -29,6 +29,7 @@ namespace Hachiko
 			void ExplodeCrystal();
 
 			void RegisterHit(int damage);
+			bool isAlive() { return _stats->IsAlive(); };
 
 		private:
 			void DestroyCrystal();
@@ -52,6 +53,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _timer_explosion);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
 
+			ComponentAudioSource* _audio_source;
 			bool is_destroyed = false;
 			bool is_exploding = false;
 

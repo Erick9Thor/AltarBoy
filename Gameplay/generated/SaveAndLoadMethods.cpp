@@ -11,6 +11,7 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
+#include "misc/AudioManager.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
 #include "ui/BackToMainMenu.h"
@@ -23,7 +24,7 @@ void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
 	node["'_attack_power@int'"] = _attack_power;
 
-	node["'_attack_cd@int'"] = _attack_cd;
+	node["'_attack_cd@float'"] = _attack_cd;
 
 	node["'_attack_range@float'"] = _attack_range;
 
@@ -39,9 +40,9 @@ void Hachiko::Scripting::Stats::OnLoad()
 		_attack_power = load_node["'_attack_power@int'"].as<int>();
 	}
 
-	if (load_node["'_attack_cd@int'"].IsDefined())
+	if (load_node["'_attack_cd@float'"].IsDefined())
 	{
-		_attack_cd = load_node["'_attack_cd@int'"].as<int>();
+		_attack_cd = load_node["'_attack_cd@float'"].as<float>();
 	}
 
 	if (load_node["'_attack_range@float'"].IsDefined())
@@ -200,9 +201,40 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 		node["'_player@GameObject*'"] = 0;
 	}
 
+	if (_enemy_body != nullptr)
+	{
+		node["'_enemy_body@GameObject*'"] = _enemy_body->GetID();
+	}
+	else
+	{
+		node["'_enemy_body@GameObject*'"] = 0;
+	}
+
+	if (_parasite != nullptr)
+	{
+		node["'_parasite@GameObject*'"] = _parasite->GetID();
+	}
+	else
+	{
+		node["'_parasite@GameObject*'"] = 0;
+	}
+
+	if (_audio_manager_game_object != nullptr)
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = _audio_manager_game_object->GetID();
+	}
+	else
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = 0;
+	}
+
+	node["'_already_in_combat@bool'"] = _already_in_combat;
+
 	node["'_attack_animation_duration@float'"] = _attack_animation_duration;
 
 	node["'_attack_animation_timer@float'"] = _attack_animation_timer;
+
+	node["'_is_ranged_attack@bool'"] = _is_ranged_attack;
 }
 
 void Hachiko::Scripting::EnemyController::OnLoad()
@@ -232,6 +264,26 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
+	if (load_node["'_enemy_body@GameObject*'"].IsDefined())
+	{
+		_enemy_body = SceneManagement::FindInCurrentScene(load_node["'_enemy_body@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_parasite@GameObject*'"].IsDefined())
+	{
+		_parasite = SceneManagement::FindInCurrentScene(load_node["'_parasite@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_audio_manager_game_object@GameObject*'"].IsDefined())
+	{
+		_audio_manager_game_object = SceneManagement::FindInCurrentScene(load_node["'_audio_manager_game_object@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_already_in_combat@bool'"].IsDefined())
+	{
+		_already_in_combat = load_node["'_already_in_combat@bool'"].as<bool>();
+	}
+
 	if (load_node["'_attack_animation_duration@float'"].IsDefined())
 	{
 		_attack_animation_duration = load_node["'_attack_animation_duration@float'"].as<float>();
@@ -240,6 +292,11 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	if (load_node["'_attack_animation_timer@float'"].IsDefined())
 	{
 		_attack_animation_timer = load_node["'_attack_animation_timer@float'"].as<float>();
+	}
+
+	if (load_node["'_is_ranged_attack@bool'"].IsDefined())
+	{
+		_is_ranged_attack = load_node["'_is_ranged_attack@bool'"].as<bool>();
 	}
 }
 
@@ -390,6 +447,8 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_attack_duration@float'"] = _attack_duration;
 
+	node["'_attack_duration_distance@float'"] = _attack_duration_distance;
+
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
 	if (_hp_cell_1 != nullptr)
@@ -487,6 +546,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_attack_duration@float'"].IsDefined())
 	{
 		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
+	}
+
+	if (load_node["'_attack_duration_distance@float'"].IsDefined())
+	{
+		_attack_duration_distance = load_node["'_attack_duration_distance@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
@@ -661,6 +725,26 @@ void Hachiko::Scripting::RoomTeleporter::OnLoad()
 	if (load_node["'_blackout_duration@float'"].IsDefined())
 	{
 		_blackout_duration = load_node["'_blackout_duration@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::AudioManager::OnSave(YAML::Node& node) const
+{
+	node["'_enemies_in_combat@int'"] = _enemies_in_combat;
+
+	node["'_previous_in_combat@bool'"] = _previous_in_combat;
+}
+
+void Hachiko::Scripting::AudioManager::OnLoad()
+{
+	if (load_node["'_enemies_in_combat@int'"].IsDefined())
+	{
+		_enemies_in_combat = load_node["'_enemies_in_combat@int'"].as<int>();
+	}
+
+	if (load_node["'_previous_in_combat@bool'"].IsDefined())
+	{
+		_previous_in_combat = load_node["'_previous_in_combat@bool'"].as<bool>();
 	}
 }
 

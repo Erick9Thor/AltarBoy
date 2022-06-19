@@ -33,11 +33,11 @@ namespace Hachiko
                 float3 prev_position = float3::zero;
                 ComponentTransform* emitter_transform = nullptr;
             };
-            
+
         public:
             BulletController(GameObject* game_object);
             ~BulletController() override;
-            
+
             void OnAwake() override;
             void OnUpdate() override;
 
@@ -63,7 +63,7 @@ namespace Hachiko
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
-            
+
 
             math::float3 _direction;
             int _damage;
