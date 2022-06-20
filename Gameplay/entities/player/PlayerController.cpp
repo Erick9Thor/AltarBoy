@@ -48,7 +48,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	PlayerAttack common_attack_2;
 	common_attack_2.hit_delay = 0.18f;
 	common_attack_2.duration = 0.2f;
-	common_attack_2.cooldown = 5.f;
+	common_attack_2.cooldown = 0.2f;
 	common_attack_2.dash_distance = 1.5f;
 	common_attack_2.stats.type = CombatManager::AttackType::RECTANGLE;
 	common_attack_2.stats.damage = 1.f;
