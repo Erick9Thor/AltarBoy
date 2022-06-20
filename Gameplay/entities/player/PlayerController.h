@@ -97,6 +97,7 @@ private:
 	void MeleeAttack();
 	void RangedAttack();
 	void CancelAttack();
+	float4x4 GetMeleeAttackOrigin(float attack_range) const;
 
 	// Player simulation
 	void MovementController();

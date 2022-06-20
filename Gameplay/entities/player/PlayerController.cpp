@@ -58,7 +58,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_attack_2.stats.width = 3.f;
 	common_attack_2.stats.range = 4.f;
 
-
 	PlayerAttack common_attack_3;
 	common_attack_3.hit_delay = 0.2f;
 	common_attack_3.duration = 0.3f;
@@ -517,6 +516,14 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 	}
 }
 
+float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack_range) const
+{
+	float3 emitter_direction = _player_transform->GetFront().Normalized();
+	float3 emitter_position = _player_transform->GetGlobalPosition() + emitter_direction * (attack_range / 2.f);
+	float4x4 emitter = float4x4::FromTRS(emitter_position, _player_transform->GetGlobalRotation(), _player_transform->GetGlobalScale());
+	return emitter;
+}
+
 void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
@@ -680,10 +687,19 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
 			const PlayerAttack& attack = GetCurrentAttack();
+			const Weapon& weapon = GetCurrentWeapon();
+			CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 			if (attack.stats.type == CombatManager::AttackType::CONE)
 			{
 				_attack_indicator->SetActive(true);
+			}
+			else
+			{
+				if (combat_manager)
+				{
+					Debug::DebugDraw(combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack.stats.range), attack.stats), weapon.color.Float3Part());
+				}
 			}
 
 			if (_attack_current_delay > 0.f)
@@ -693,16 +709,13 @@ void Hachiko::Scripting::PlayerController::AttackController()
 				if (_attack_current_delay <= 0.f)
 				{
 					bool hit = false;
-					CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
+					
 					if (combat_manager)
 					{
 						// Offset the center of the attack if its a rectangle
 						if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
 						{
-							float3 emitter_direction = _player_transform->GetFront().Normalized();
-							float3 emitter_position = _player_transform->GetGlobalPosition() + emitter_direction * (attack.stats.range / 2.f);
-							float4x4 emitter = float4x4::FromTRS(emitter_position, _player_transform->GetGlobalRotation(), _player_transform->GetGlobalScale());
-							hit = combat_manager->PlayerMeleeAttack(emitter, attack.stats);
+							hit = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range) , attack.stats);
 						}
 						else
 						{

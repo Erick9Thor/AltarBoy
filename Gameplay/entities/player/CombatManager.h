@@ -74,6 +74,8 @@ namespace Hachiko
             void StopBullet(unsigned bullet_index);
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 
+            OBB CreateAttackHitbox(const float4x4& origin, const AttackStats& attack_stats) const;
+
         private:
             // Start attack depending on its type
             bool PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
@@ -111,9 +113,6 @@ namespace Hachiko
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
-            
-            bool draw_debug_hitbox = false;
-            OBB debug_hitbox;
 
             math::float3 _direction;
             int _damage;

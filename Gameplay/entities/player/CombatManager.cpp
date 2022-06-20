@@ -44,11 +44,6 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 		return;
 	}
 
-	if (draw_debug_hitbox)
-	{
-		Debug::DebugDraw(debug_hitbox);
-	}
-
 	RunBulletSimulation();
 }
 
@@ -66,10 +61,8 @@ bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin,
 
 bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
-	OBB hitbox = OBB(origin.Col3(3), float3(attack_stats.width / 2.f, 1.f, attack_stats.range / 2.f), origin.WorldX().Normalized(), origin.WorldY().Normalized(), origin.WorldZ().Normalized());
+	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
 	bool hit = false;
-	debug_hitbox = hitbox;
-	draw_debug_hitbox = true;
 
 	hit = hit || ProcessAgentsOBB(hitbox, attack_stats);
 	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
@@ -342,6 +335,11 @@ const Hachiko::Scripting::CombatManager::BulletStats& Hachiko::Scripting::Combat
 {
 	// TODO: insert return statement here
 	return _bullet_stats[bullet_idx];
+}
+
+OBB Hachiko::Scripting::CombatManager::CreateAttackHitbox(const float4x4& origin, const AttackStats& attack_stats) const
+{
+	return OBB(origin.Col3(3), float3(attack_stats.width / 2.f, 1.f, attack_stats.range / 2.f), origin.WorldX().Normalized(), origin.WorldY().Normalized(), origin.WorldZ().Normalized());
 }
 
 bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
