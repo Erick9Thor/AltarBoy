@@ -41,7 +41,6 @@ namespace Hachiko
 			void Shaking();
 
 			float3 Shake();
-			void Shake(float time, float intensity);
 
 		public:
 			PlatformState _state = PlatformState::INVALID;
@@ -55,16 +54,17 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(float, _seconds_before_shaking);
 			SERIALIZE_FIELD(float, _seconds_shaking);
+			SERIALIZE_FIELD(float, _shake_intensity);
+
 			SERIALIZE_FIELD(PlatformState, _previous_state);
 
 			SERIALIZE_FIELD(GameObject*, _invisible_obstacle);
 			SERIALIZE_FIELD(GameObject*, _crystal);
 			SERIALIZE_FIELD(GameObject*, _crystal_platform);
 
-			float shake_elapsed;
-			float shake_time;
-			float shake_intensity;
-			float shake_magnitude;
+
+			float shake_elapsed = 0.0f;
+			float shake_magnitude = 1.0f;
 		};
 	}
 }

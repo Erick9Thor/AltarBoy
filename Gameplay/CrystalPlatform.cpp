@@ -11,6 +11,7 @@ Hachiko::Scripting::CrystalPlatform::CrystalPlatform(GameObject* game_object)
 	: Script(game_object, "CrystalPlatform")
 	, _seconds_before_shaking(5.0f)
 	, _seconds_shaking(4.0f)
+	, _shake_intensity(0.5f)
 	, _invisible_obstacle(nullptr)
 	, _crystal(nullptr)
 	, _crystal_platform(nullptr)
@@ -140,39 +141,32 @@ void Hachiko::Scripting::CrystalPlatform::Shaking()
 {
 	is_shaking = true;
 
-	float3 shake_offset = float3::zero;
+	/*float3 shake_offset = float3::zero;
 
 	shake_offset = Shake();
 
 	_crystal_platform->GetComponent<ComponentTransform>()->SetGlobalPosition(
 		game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()
-		+ shake_offset);
+		+ shake_offset);*/
 }
 
-void Hachiko::Scripting::CrystalPlatform::Shake(float time, float intensity)
-{
-	shake_time = time;
-	shake_elapsed = 0.0f;
-	shake_intensity = intensity;
-	shake_magnitude = 1.0f;
-}
 
 float3 Hachiko::Scripting::CrystalPlatform::Shake()
 {
-	if (shake_elapsed < shake_time)
+	if (shake_elapsed < _seconds_shaking)
 	{
 		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float x = (r - 0.5f) * shake_magnitude * shake_intensity;
+		float x = (r - 0.5f) * shake_magnitude * 0.2f;
 		r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float z = (r - 0.5f) * shake_magnitude * shake_intensity;
+		float z = (r - 0.5f) * shake_magnitude * 0.2f;
 
 		shake_elapsed += Time::DeltaTime();
-		shake_magnitude = (1 - (shake_elapsed / shake_time)) * (1 - (shake_elapsed / shake_time));
+		shake_magnitude = (1 - (shake_elapsed / _seconds_shaking)) * (1 - (shake_elapsed / _seconds_shaking));
 		return float3(x, 0, z);
 	}
 	else
 	{
-		shake_time = 0.0f;
+		_seconds_shaking = 0.0f;
 		shake_elapsed = 0.0f;
 		return float3::zero;
 	}
