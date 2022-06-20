@@ -32,11 +32,15 @@ bool Hachiko::ModuleProgram::Init()
     CreateUserInterfaceTextProgram();
     CreateDeferredGeometryPassProgram();
     CreateDeferredLightingPassProgram();
+    CreateShadowMappingProgram();
     CreateParticleProgram();
 
-    if (!forward_program || !deferred_geometry_program || !deferred_lighting_program || !skybox_program || 
-        !diffuse_ibl_program || !prefiltered_ibl_program || !environment_brdf_program ||
-        !stencil_program || !ui_image_program || !ui_text_program || !particle_program)
+    if (!forward_program || !deferred_geometry_program || 
+        !deferred_lighting_program || !skybox_program || 
+        !diffuse_ibl_program || !prefiltered_ibl_program || 
+        !environment_brdf_program || !stencil_program || 
+        !ui_image_program || !ui_text_program || 
+        !particle_program || !shadow_mapping_program)
     {
         return false;
     }
@@ -219,6 +223,13 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
 {
     deferred_lighting_program = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_deferred_lighting.glsl");
     return deferred_lighting_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
+{
+    shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
+
+    return shadow_mapping_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)

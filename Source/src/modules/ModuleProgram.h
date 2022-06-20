@@ -75,6 +75,11 @@ namespace Hachiko
             return deferred_lighting_program;
         }
 
+        [[nodiscard]] Program* GetShadowMappingProgram() const
+        {
+            return shadow_mapping_program;
+        }
+
         [[nodiscard]] Program* GetSkyboxProgram() const
         {
             return skybox_program;
@@ -143,10 +148,12 @@ namespace Hachiko
         Program* CreateParticleProgram();
         Program* CreateDeferredGeometryPassProgram();
         Program* CreateDeferredLightingPassProgram();
+        Program* CreateShadowMappingProgram();
 
         Program* forward_program = nullptr;
         Program* deferred_geometry_program = nullptr;
         Program* deferred_lighting_program = nullptr;
+        Program* shadow_mapping_program = nullptr;
         Program* skybox_program = nullptr;
         Program* diffuse_ibl_program = nullptr;
         Program* prefiltered_ibl_program = nullptr;
