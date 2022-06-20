@@ -57,6 +57,10 @@ void Hachiko::ComponentCamera::SetCameraInitialPos()
     camera_pinned_pos = GetGameObject()->GetTransform()->GetGlobalPosition();
 }
 
+void Hachiko::ComponentCamera::SetFrame(const float3& position, const float3& front, const float3& up) 
+{
+    frustum.SetFrame(position, front, up);
+}
 
 void Hachiko::ComponentCamera::SetNearPlane(float distance)
 {

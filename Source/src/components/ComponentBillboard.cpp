@@ -493,16 +493,16 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
     float3 position = transform->GetGlobalPosition();
     float3 scale = transform->GetGlobalScale();
-    float3 camera_position = camera->GetFrustum()->Pos();
+    float3 camera_position = camera->GetFrustum().Pos();
 
     switch (type)
     {
     case BillboardType::NORMAL:
         {
-            Frustum* frustum = camera->GetFrustum();
+            const Frustum& frustum = camera->GetFrustum();
             float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
             float4x4 global_model_matrix = transform->GetGlobalMatrix();
-            model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
+            model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum.Front(), rotate_part.Col(1), float3::unitY);
             model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotate_part, scale);
             break;
         }

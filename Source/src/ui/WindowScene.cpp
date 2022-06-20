@@ -188,7 +188,7 @@ void Hachiko::WindowScene::DrawScene()
     if (ImGui::IsWindowFocused())
     {
         float4x4 new_camera_view = view.InverseTransposed();
-        App->camera->GetRenderingCamera()->GetFrustum()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
+        App->camera->GetRenderingCamera()->SetFrame(new_camera_view.Col(3).xyz(), -new_camera_view.Col(2).xyz(), new_camera_view.Col(1).xyz());
     }
 
     GameObject* selected_object = App->editor->GetSelectedGameObject();
