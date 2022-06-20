@@ -30,8 +30,6 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 
-			void RegisterHit(int damage);
-
 			PlatformState GetState() {
 				return _state;
 			}
@@ -45,9 +43,7 @@ namespace Hachiko
 			float3 Shake();
 			void Shake(float time, float intensity);
 
-
 		public:
-
 			PlatformState _state = PlatformState::INVALID;
 
 			bool is_platform_active = false;

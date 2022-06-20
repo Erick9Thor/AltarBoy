@@ -41,12 +41,12 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 	}
 
 	// If the platform is generated and animation it's finished
+	// && exploding_platform->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) Add this when we have animations
 	if (!is_shaking
-		&& is_platform_active
-		&& exploding_platform->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
+		&& is_platform_active)
 	{
 		// Destroy the navmesh obstacle
-		if (obstacle != nullptr)
+		if (obstacle != nullptr && obstacle->IsInNavMesh())
 		{
 			obstacle->RemoveObstacle();
 		}
@@ -79,22 +79,26 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 	UpdatePlatformStatus();
 }
 
-void Hachiko::Scripting::CrystalPlatform::RegisterHit(int damage)
-{
-}
-
 void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 {
-	exploding_platform->StartAnimating();
 	is_platform_active = true;
+
+	if (exploding_platform) 
+	{
+		exploding_platform->StartAnimating();
+		// is_platform_active = true; // TODO: When we have animation this should be heare inside aniamtion
+	}
 }
 
 void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 {
-	exploding_platform->SendTrigger("isRegenereted");
-	stats->_current_hp = 10;
-	is_platform_active = false;
-	is_shaking = false;
+	if (exploding_platform && stats) 
+	{
+		exploding_platform->SendTrigger("isRegenereted");
+		stats->_current_hp = 10;
+		is_platform_active = false;
+		is_shaking = false;
+	}
 }
 
 void Hachiko::Scripting::CrystalPlatform::UpdatePlatformStatus()
@@ -135,7 +139,7 @@ void Hachiko::Scripting::CrystalPlatform::Shaking()
 
 	shake_offset = Shake();
 
-	game_object->GetComponent<ComponentTransform>()->SetGlobalPosition(
+	_crystal_platform->GetComponent<ComponentTransform>()->SetGlobalPosition(
 		game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()
 		+ shake_offset);
 }
