@@ -347,8 +347,8 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	const Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
-	_current_attack_cooldown = attack.cooldown;
-
+	_after_attack_timer = attack.cooldown; +_combo_grace_period;
+	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
 
@@ -368,7 +368,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	}
 
 	// Set cooldown back
-	_after_attack_timer = _current_attack_cooldown + _combo_grace_period;
+	
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -409,7 +409,7 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 
 bool Hachiko::Scripting::PlayerController::IsAttackOnCooldown() const
 {
-	return _after_attack_timer - _combo_grace_period > _current_attack_cooldown;
+	return _after_attack_timer - _combo_grace_period > 0;
 }
 
 bool Hachiko::Scripting::PlayerController::IsInComboWindow() const
@@ -638,15 +638,9 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		return;
 	}
 
-	if (_attack_current_duration != _dash_progress)
-	{
-		int a = 1;
-	}
-
 	if (_attack_current_duration > 0.0f)
 	{
 		_attack_current_duration -= Time::DeltaTime();
-
 
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
@@ -679,7 +673,6 @@ void Hachiko::Scripting::PlayerController::AttackController()
 						{
 							hit = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
 						}
-						_after_attack_timer -= Time::DeltaTime();
 					}
 					if (hit)
 					{
