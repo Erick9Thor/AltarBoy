@@ -17,6 +17,8 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentParticleSystem.h"
 
+#include <debugdraw.h>
+
 Hachiko::ModuleRender::ModuleRender() = default;
 
 Hachiko::ModuleRender::~ModuleRender() = default;
@@ -41,22 +43,26 @@ bool Hachiko::ModuleRender::Init()
     // Generate shadow map texture:
     glGenTextures(1, &shadow_map_texture);
     glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+    // Instead of Depth we go for GL_RG32F, and GLRGB, COLOR_ATTACHMENT_0 for variance mapping.
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
         shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
+
     // With the generated shadow map texture, attach it as the shadow map frame
     // buffer's depth buffer:
-    glBindFramebuffer(1, shadow_map_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 
         shadow_map_texture, 0);
     // Since we will only use the depth, disable draw and read for color:
     glDrawBuffer(GL_NONE);
     glReadBuffer(GL_NONE);
     // Unbind the shadow map frame buffer:
-    glBindBuffer(GL_FRAMEBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 
 #ifdef _DEBUG
@@ -259,7 +265,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     BatchManager* batch_manager = scene->GetBatchManager();
     
-    render_list.Update(culling, scene->GetQuadtree());
+    //render_list.Update(culling->GetFrustum(), scene->GetQuadtree());
     
     if (draw_deferred)
     {
@@ -288,48 +294,62 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         render_forward_pass = !render_forward_pass;
     }
 
+    float4x4 light_view_matrix = float4x4::identity;
+    float4x4 light_projection_matrix = float4x4::identity;
+
     // Render to shadowmap here:
+    if (scene->dir_lights.size() > 0)
+    {
+        ComponentDirLight* directional_light = scene->dir_lights[0];
+        directional_light->UpdateFrustum(camera);
 
-    // Set the directional light position:
-    float3 directional_light_position(0.0f, 0.0f, 0.0f);
-    // Set the directional light direction:
-    float3 directional_light_direction = App->scene_manager->GetActiveScene()->
-        dir_lights[0]->GetDirection().Normalized();
-    // Get the 8 corners of frustum and store them in an array:
-    float3 camera_frustum_corner_points[8];
-    camera->GetFrustum()->GetCornerPoints(camera_frustum_corner_points);
-    
-    // Calculate the sphere that minimally encloses the 8 corners of frustum:
-    Sphere camera_frustum_sphere;
-    camera_frustum_sphere.Enclose(camera_frustum_corner_points, 8);
+        light_projection_matrix = directional_light->GetFrustum().ProjectionMatrix();
+        light_view_matrix = directional_light->GetFrustum().ViewMatrix();
 
-    // Get the radius of the sphere that encloses the frustum:
-    float camera_frustum_sphere_radius = camera_frustum_sphere.r;
-    float3 camera_frustum_sphere_center = camera_frustum_sphere.Centroid();
+        render_list.Update(directional_light->GetFrustum(), scene->GetQuadtree());
 
-    // Form the directional light frustum:
-    Frustum directional_light_frustum;
-    // Set the orthographic width and height of the light frustum to be the 
-    // diameter of enclosing sphere of camera frustum:
-    float orthographic_size = camera_frustum_sphere_radius * 2.0f;
-    directional_light_frustum.SetOrthographic(orthographic_size, orthographic_size);
-    // Set far plane to be same with orthographic width and height, and set 
-    // near to be 0:
-    directional_light_frustum.SetViewPlaneDistances(0.0f, orthographic_size);
-    // Set position of the light frustum:
-    directional_light_frustum.SetPos(camera_frustum_sphere_center - 
-        directional_light_direction * camera_frustum_sphere_radius);
-    // Set light frustum's front to be the direction of the light:
-    directional_light_frustum.SetFront(directional_light_direction);
+        // Clear Batches Lists:
+        batch_manager->ClearOpaqueBatchesDrawList();
+        batch_manager->ClearTransparentBatchesDrawList();
 
+        for (const RenderTarget& target : render_list.GetOpaqueTargets())
+        {
+            batch_manager->AddDrawComponent(target.mesh_renderer);
+        }
+        // TODO: Only do this if the forward pass is enabled.
+        for (const RenderTarget& target : render_list.GetTransparentTargets())
+        {
+            batch_manager->AddDrawComponent(target.mesh_renderer);
+        }
 
+        // Draw collected meshes with shadow mapping program:
+        program = App->program->GetShadowMappingProgram();
+        program->Activate();
+        // TODO: Store these uniform names somewhere.
+        program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
+        program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
+
+        glViewport(0, 0, shadow_width, shadow_height);
+        glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
+        glClear(GL_DEPTH_BUFFER_BIT);
+        //glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
+
+        batch_manager->DrawOpaqueBatches(program);
+        batch_manager->DrawTransparentBatches(program);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        //glCullFace(GL_BACK);
+
+        Program::Deactivate();
+    }
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
+    glViewport(0, 0, fb_width, fb_height);
+    render_list.Update(camera->GetFrustum(), scene->GetQuadtree());
     g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
     // Disable blending for deferred rendering as the meshes with transparent
     // materials are gonna be rendered with forward rendering after the
@@ -343,7 +363,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     for (const RenderTarget& target : render_list.GetOpaqueTargets())
     {
         batch_manager->AddDrawComponent(target.mesh_renderer);
-        // target.mesh_renderer->Draw(camera, program);
     }
 
     // Draw collected meshes with geometry pass rogram:
@@ -361,11 +380,19 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program = App->program->GetDeferredLightingProgram();
     program->Activate();
 
+    // TODO: Store these uniform names somewhere.
+    program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
+    program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
+    program->BindUniformFloat("shadow_bias", &shadow_bias);
+
     // Bind ImageBasedLighting uniforms
-    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
+    //scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
+    // Bind shadow map texture:
+    glActiveTexture(GL_TEXTURE5);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
 
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
@@ -541,6 +568,11 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Checkbox("Skybox", &draw_skybox);
     ImGui::Checkbox("Navmesh", &draw_navmesh);
 
+    ImGui::NewLine();
+    ImGui::Text("Shadow");
+    ImGui::Separator();
+    ImGui::DragFloat("Bias", &shadow_bias, 0.001f, 0.0f, 1.0f);
+    
     ImGui::NewLine();
     ImGui::Text("Rendering Mode");
     ImGui::Separator();

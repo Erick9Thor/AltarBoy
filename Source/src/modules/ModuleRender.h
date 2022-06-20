@@ -144,6 +144,7 @@ namespace Hachiko
         unsigned shadow_map_texture = 0;
         unsigned int shadow_width = 2048;
         unsigned int shadow_height = 2048;
+        float shadow_bias = 0.005;
 
         bool draw_deferred = true;
 
