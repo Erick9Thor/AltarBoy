@@ -31,13 +31,11 @@ void Hachiko::Particle::Reset()
     SetCurrentRotation(GetInitialRotation());
 
     const float4x4 game_object_model = emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalMatrix();
-    const float3 shape_direction = emitter->GetDirectionFromShape();
+    const float3 direction = emitter->GetDirectionFromShape();
     const float4x4 emitter_model = float4x4::FromTRS(GetCurrentPosition(),
-                                                     Quat::FromEulerXYZ(shape_direction.x, shape_direction.y, shape_direction.z),
-                                                     emitter->GetEmitterProperties().scale);
-    const float4x4 current_model = game_object_model * emitter_model;
-    const float3 direction = (current_model.RotatePart() * float3::unitY).Normalized();
-    SetCurrentDirection(direction);
+        Quat::FromEulerXYZ(direction.x, direction.y, direction.z),
+        emitter->GetEmitterProperties().scale);
+    SetCurrentDirection(direction.Normalized());
 }
 
 void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)

@@ -638,10 +638,9 @@ float3 Hachiko::ComponentParticleSystem::GetDirectionFromShape() const
     }
     case ParticleSystem::Emitter::Type::SPHERE:
     {
-        // TODO: This is not working perfectly. Emission depends on the size of the radius and it shouldn't
         const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
         particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
-        particle_direction.y = emitter_properties.rotation.y * (RandomUtil::RandomSigned() > 0.0f ? 1.0f : -1.0f);
+        particle_direction.y = emitter_properties.rotation.y + effective_radius * RandomUtil::RandomSigned();
         particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
         break;
     }
@@ -650,6 +649,10 @@ float3 Hachiko::ComponentParticleSystem::GetDirectionFromShape() const
             break;
     }
     case ParticleSystem::Emitter::Type::CIRCLE:
+    {
+        particle_direction = float3(RandomUtil::RandomSigned(), 0.0f, RandomUtil::RandomSigned());
+        break;
+    }
     case ParticleSystem::Emitter::Type::RECTANGLE:
     {
         particle_direction = float3(0.0f, 1.0f, 0.0f);
