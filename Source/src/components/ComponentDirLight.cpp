@@ -2,6 +2,7 @@
 
 #include "ComponentDirLight.h"
 #include "ComponentTransform.h"
+#include "ComponentCamera.h"
 #include "modules/ModuleEvent.h"
 
 #include <debugdraw.h>
@@ -12,6 +13,8 @@ Hachiko::ComponentDirLight::ComponentDirLight(GameObject* conatiner) :
     if (game_object->scene_owner)
     {
         game_object->scene_owner->dir_lights.push_back(this);
+
+        UpdateFrustum(game_object->scene_owner->GetMainCamera());
     }
 }
 
@@ -79,4 +82,48 @@ void Hachiko::ComponentDirLight::DrawGui()
         CREATE_HISTORY_ENTRY_AFTER_EDIT()
     }
     ImGui::PopID();
+}
+
+void Hachiko::ComponentDirLight::UpdateFrustum(ComponentCamera* camera) 
+{
+    constexpr const size_t NUM_CORNERS = 8;
+    float3 camera_frustum_corners[NUM_CORNERS];
+    camera->GetFrustum().GetCornerPoints(camera_frustum_corners);
+
+    // Calculate sphere center:
+    float3 camera_frustum_sphere_center = float3::zero;
+    for (size_t i = 0; i < NUM_CORNERS; ++i)
+    {
+        camera_frustum_sphere_center += camera_frustum_corners[i];
+    }
+    camera_frustum_sphere_center = camera_frustum_sphere_center / 8.0f;
+
+    // Calculate the sphere radius, it's the maximum of distances between
+    // center and frustum corners:
+    float camera_frustum_sphere_radius = 0.0f;
+    for (size_t i = 0; i < NUM_CORNERS; ++i)
+    {
+        camera_frustum_sphere_radius = std::max(
+            camera_frustum_sphere_center.Distance(camera_frustum_corners[i]), 
+            camera_frustum_sphere_radius);
+    }
+
+    // Set frustum kind:
+    frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
+    // Set the orthographic width and height of the light frustum to be the
+    // diameter of enclosing sphere of camera frustum:
+    float orthographic_size = camera_frustum_sphere_radius * 2.0f;
+    frustum.SetOrthographic(orthographic_size, orthographic_size);
+    // Set far plane to be same with orthographic width and height, and set
+    // near to be 0:
+    frustum.SetViewPlaneDistances(0.0f, orthographic_size);
+    // Set the directional light direction:
+    float3 direction = GetDirection().Normalized();
+    // Calculate right to get up:
+    float3 right = direction.Cross(float3::unitY).Normalized();
+    // Set position, front and up of the light frustum:
+    frustum.SetFrame(
+        camera_frustum_sphere_center - direction * camera_frustum_sphere_radius,
+        direction,
+        right.Cross(direction).Normalized());
 }
