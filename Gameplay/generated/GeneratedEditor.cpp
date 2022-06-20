@@ -1,4 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
+#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
@@ -17,6 +18,15 @@
 #include "ui/MainMenuManager.h"
 
 
+void Hachiko::Scripting::CrystalPlatform::OnEditor()
+{
+	Editor::Show("Seconds Before Shaking", _seconds_before_shaking);
+	Editor::Show("Seconds Shaking", _seconds_shaking);
+	Editor::Show("Invisible Obstacle", _invisible_obstacle);
+	Editor::Show("Crystal", _crystal);
+	Editor::Show("Crystal Platform", _crystal_platform);
+}
+
 void Hachiko::Scripting::Stats::OnEditor()
 {
 	Editor::Show("Attack Power", _attack_power);
@@ -31,9 +41,12 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("Player", _player);
 	Editor::Show("Explosion Crystal", _explosion_crystal);
 	Editor::Show("Static Crystal", _static_crystal);
+	Editor::Show("Outer Explosion Indicator", _outer_explosion_indicator);
+	Editor::Show("Inner Explosion Indicator", _inner_explosion_indicator);
 	Editor::Show("Crashing Index", _crashing_index);
 	Editor::Show("Detecting Radius", _detecting_radius);
 	Editor::Show("Explosion Radius", _explosion_radius);
+	Editor::Show("Timer Explosion", _timer_explosion);
 	Editor::Show("Explosive Crystal", _explosive_crystal);
 }
 

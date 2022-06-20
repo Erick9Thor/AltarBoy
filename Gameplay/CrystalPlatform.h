@@ -47,7 +47,7 @@ namespace Hachiko
 
 
 		public:
-			Stats* _stats;
+
 			PlatformState _state = PlatformState::INVALID;
 
 			bool is_platform_active = false;
@@ -55,13 +55,15 @@ namespace Hachiko
 
 			ComponentAnimation* exploding_platform;
 			ComponentObstacle* obstacle;
+			Stats* stats;
 
 			SERIALIZE_FIELD(float, _seconds_before_shaking);
 			SERIALIZE_FIELD(float, _seconds_shaking);
 			SERIALIZE_FIELD(PlatformState, _previous_state);
 
 			SERIALIZE_FIELD(GameObject*, _invisible_obstacle);
-			SERIALIZE_FIELD(GameObject*, _crystal_explotion);
+			SERIALIZE_FIELD(GameObject*, _crystal);
+			SERIALIZE_FIELD(GameObject*, _crystal_platform);
 
 			float shake_elapsed;
 			float shake_time;

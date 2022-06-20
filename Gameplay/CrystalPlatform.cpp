@@ -9,30 +9,33 @@
 
 Hachiko::Scripting::CrystalPlatform::CrystalPlatform(GameObject* game_object)
 	: Script(game_object, "CrystalPlatform")
-	, _stats()
+	, _seconds_before_shaking(5.0f)
+	, _seconds_shaking(4.0f)
 	, _invisible_obstacle(nullptr)
+	, _crystal(nullptr)
+	, _crystal_platform(nullptr)
 {
 }
 
 void Hachiko::Scripting::CrystalPlatform::OnAwake()
+{}
+
+void Hachiko::Scripting::CrystalPlatform::OnStart()
 {
-	// In case the invisible obstacle it's not active
+	exploding_platform = _crystal_platform->GetComponent<ComponentAnimation>();
+	obstacle = _invisible_obstacle->GetComponent<ComponentObstacle>();
+	stats = _crystal->GetComponent<Stats>();
+
 	if (_invisible_obstacle && !_invisible_obstacle->IsActive())
 	{
 		_invisible_obstacle->SetActive(true);
 	}
 }
 
-void Hachiko::Scripting::CrystalPlatform::OnStart()
-{
-	exploding_platform = game_object->GetComponent<ComponentAnimation>();
-	obstacle = game_object->GetComponent<ComponentObstacle>();
-}
-
 void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 {
 	// Check if crystal it's alive
-	if (!_stats->IsAlive() && !is_platform_active)
+	if (!stats->IsAlive() && !is_platform_active)
 	{
 		_state = PlatformState::PLATFORM;
 	}
@@ -67,7 +70,7 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 	{
 		_state = PlatformState::IDLE;
 	}
-	else
+	else if (GetState() == PlatformState::SHAKING)
 	{
 		_seconds_shaking -= Time::DeltaTime();
 		return;
@@ -89,7 +92,7 @@ void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 {
 	exploding_platform->SendTrigger("isRegenereted");
-	_stats->_current_hp = 10;
+	stats->_current_hp = 10;
 	is_platform_active = false;
 	is_shaking = false;
 }

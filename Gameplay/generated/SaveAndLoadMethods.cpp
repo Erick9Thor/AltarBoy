@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
+#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
@@ -19,6 +20,68 @@
 #include "ui/MainMenuManager.h"
 
 
+
+void Hachiko::Scripting::CrystalPlatform::OnSave(YAML::Node& node) const
+{
+	node["'_seconds_before_shaking@float'"] = _seconds_before_shaking;
+
+	node["'_seconds_shaking@float'"] = _seconds_shaking;
+
+	if (_invisible_obstacle != nullptr)
+	{
+		node["'_invisible_obstacle@GameObject*'"] = _invisible_obstacle->GetID();
+	}
+	else
+	{
+		node["'_invisible_obstacle@GameObject*'"] = 0;
+	}
+
+	if (_crystal != nullptr)
+	{
+		node["'_crystal@GameObject*'"] = _crystal->GetID();
+	}
+	else
+	{
+		node["'_crystal@GameObject*'"] = 0;
+	}
+
+	if (_crystal_platform != nullptr)
+	{
+		node["'_crystal_platform@GameObject*'"] = _crystal_platform->GetID();
+	}
+	else
+	{
+		node["'_crystal_platform@GameObject*'"] = 0;
+	}
+}
+
+void Hachiko::Scripting::CrystalPlatform::OnLoad()
+{
+	if (load_node["'_seconds_before_shaking@float'"].IsDefined())
+	{
+		_seconds_before_shaking = load_node["'_seconds_before_shaking@float'"].as<float>();
+	}
+
+	if (load_node["'_seconds_shaking@float'"].IsDefined())
+	{
+		_seconds_shaking = load_node["'_seconds_shaking@float'"].as<float>();
+	}
+
+	if (load_node["'_invisible_obstacle@GameObject*'"].IsDefined())
+	{
+		_invisible_obstacle = SceneManagement::FindInCurrentScene(load_node["'_invisible_obstacle@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_crystal@GameObject*'"].IsDefined())
+	{
+		_crystal = SceneManagement::FindInCurrentScene(load_node["'_crystal@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_crystal_platform@GameObject*'"].IsDefined())
+	{
+		_crystal_platform = SceneManagement::FindInCurrentScene(load_node["'_crystal_platform@GameObject*'"].as<unsigned long long>());
+	}
+}
 
 void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
@@ -90,11 +153,31 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
+	if (_outer_explosion_indicator != nullptr)
+	{
+		node["'_outer_explosion_indicator@GameObject*'"] = _outer_explosion_indicator->GetID();
+	}
+	else
+	{
+		node["'_outer_explosion_indicator@GameObject*'"] = 0;
+	}
+
+	if (_inner_explosion_indicator != nullptr)
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = _inner_explosion_indicator->GetID();
+	}
+	else
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = 0;
+	}
+
 	node["'_crashing_index@unsigned'"] = _crashing_index;
 
 	node["'_detecting_radius@float'"] = _detecting_radius;
 
 	node["'_explosion_radius@float'"] = _explosion_radius;
+
+	node["'_timer_explosion@float'"] = _timer_explosion;
 
 	node["'_explosive_crystal@bool'"] = _explosive_crystal;
 }
@@ -116,6 +199,16 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
+	if (load_node["'_outer_explosion_indicator@GameObject*'"].IsDefined())
+	{
+		_outer_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_outer_explosion_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_inner_explosion_indicator@GameObject*'"].IsDefined())
+	{
+		_inner_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_inner_explosion_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
 	{
 		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
@@ -129,6 +222,11 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_explosion_radius@float'"].IsDefined())
 	{
 		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
+	}
+
+	if (load_node["'_timer_explosion@float'"].IsDefined())
+	{
+		_timer_explosion = load_node["'_timer_explosion@float'"].as<float>();
 	}
 
 	if (load_node["'_explosive_crystal@bool'"].IsDefined())
