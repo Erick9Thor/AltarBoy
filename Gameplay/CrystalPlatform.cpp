@@ -39,42 +39,42 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 	{
 		_state = PlatformState::PLATFORM;
 	}
-
-	// If the platform is generated and animation it's finished
-	// && exploding_platform->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED) Add this when we have animations
-	if (!is_shaking
-		&& is_platform_active)
+	
+	if (GetState() == PlatformState::PLATFORM)
+	// && exploding_platform->AnimationIsStopped()) Add this when we have animations
 	{
-		// Destroy the navmesh obstacle
 		if (obstacle != nullptr && obstacle->IsInNavMesh())
 		{
 			obstacle->RemoveObstacle();
 		}
 
 		// Wait until start shaking
-		if (_seconds_before_shaking <= 0)
+		if (_seconds_before_shaking <= 0 && !is_shaking && is_platform_active)
 		{
 			_state = PlatformState::SHAKING;
+			_seconds_before_shaking = 0;
 		}
 		else
 		{
 			_seconds_before_shaking -= Time::DeltaTime();
-			return;
 		}
 	}
 
-	// Is platform shaking
-	if (is_shaking
-		&& _seconds_shaking <= 0)
-		// Add this line in case shaking is animation = && exploding_platform->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED))
+	if (GetState() == PlatformState::SHAKING) 
 	{
-		_state = PlatformState::IDLE;
+		// Is platform shaking
+		if (_seconds_shaking <= 0 && is_shaking)
+		// Add this line in case shaking is animation = && exploding_platform->AnimationIsStopped()))
+		{
+			_state = PlatformState::IDLE;
+			_seconds_shaking = 0;
+		}
+		else
+		{
+			_seconds_shaking -= Time::DeltaTime();
+		}
 	}
-	else if (GetState() == PlatformState::SHAKING)
-	{
-		_seconds_shaking -= Time::DeltaTime();
-		return;
-	}
+
 
 	UpdatePlatformStatus();
 }
@@ -82,7 +82,6 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 {
 	is_platform_active = true;
-
 	if (exploding_platform) 
 	{
 		exploding_platform->StartAnimating();
@@ -92,12 +91,18 @@ void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 
 void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 {
-	if (exploding_platform && stats) 
+	if (stats) 
+	// && exploding_platform
 	{
-		exploding_platform->SendTrigger("isRegenereted");
-		stats->_current_hp = 10;
-		is_platform_active = false;
+		// exploding_platform->SendTrigger("isRegenereted");
+		stats->_current_hp = 1;
 		is_shaking = false;
+		is_platform_active = false;
+
+		if (obstacle != nullptr && !obstacle->IsInNavMesh())
+		{
+			obstacle->AddObstacle();
+		}
 	}
 }
 
