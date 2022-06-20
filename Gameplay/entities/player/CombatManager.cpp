@@ -18,10 +18,6 @@ Hachiko::Scripting::CombatManager::CombatManager(GameObject* game_object)
 
 Hachiko::Scripting::CombatManager::~CombatManager()
 {
-	for (unsigned i = 0; i < _bullets.size(); i++)
-	{
-		SceneManagement::Destroy(_bullets[i]);
-	}
 }
 
 void Hachiko::Scripting::CombatManager::OnAwake()

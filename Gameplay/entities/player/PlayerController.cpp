@@ -42,6 +42,27 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	// If its cone use degrees on width
 	common_attack.stats.width = 1.f;
 	common_attack.stats.range = 2.f;
+
+	PlayerAttack common_attack_2;
+	common_attack_2.hit_delay = 0.1f;
+	common_attack_2.duration = 0.6f;
+	common_attack_2.stats.type = CombatManager::AttackType::RECTANGLE;
+	common_attack_2.stats.damage = 1.f;
+	common_attack_2.stats.knockback_distance = 0.f;
+	// If its cone use degrees on width
+	common_attack_2.stats.width = 3.f;
+	common_attack_2.stats.range = 4.f;
+
+
+	PlayerAttack common_attack_3;
+	common_attack_3.hit_delay = 0.1f;
+	common_attack_3.duration = 0.6f;
+	common_attack_3.stats.type = CombatManager::AttackType::RECTANGLE;
+	common_attack_3.stats.damage = 1.f;
+	common_attack_3.stats.knockback_distance = 0.f;
+	// If its cone use degrees on width
+	common_attack_3.stats.width = 5.f;
+	common_attack_3.stats.range = 10.f;
 	
 	
 	Weapon red;
@@ -49,7 +70,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	red.bullet = common_bullet;
 	red.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
 	red.attacks.push_back(common_attack);
-	red.attacks.push_back(common_attack);
+	red.attacks.push_back(common_attack_2);
+	red.attacks.push_back(common_attack_3);
 	
 	
 
@@ -57,15 +79,17 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	blue.name = "Blue";
 	blue.bullet = common_bullet;
 	blue.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
-	red.attacks.push_back(common_attack);
-	red.attacks.push_back(common_attack);
+	blue.attacks.push_back(common_attack);
+	blue.attacks.push_back(common_attack_2);
+	blue.attacks.push_back(common_attack_3);
 
 	Weapon green;
-	blue.name = "Green";
-	blue.bullet = common_bullet;
-	blue.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
-	red.attacks.push_back(common_attack);
-	red.attacks.push_back(common_attack);
+	green.name = "Green";
+	green.bullet = common_bullet;
+	green.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
+	green.attacks.push_back(common_attack);
+	green.attacks.push_back(common_attack_2);
+	green.attacks.push_back(common_attack_3);
 
 	weapons.push_back(red);
 	weapons.push_back(blue);
@@ -220,11 +244,17 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
-			RangedAttack();
+			if (!IsAttackOnCooldown())
+			{
+				RangedAttack();
+			}
 		}
 		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
 		{
-			MeleeAttack();
+			if (!IsAttackOnCooldown())
+			{
+				MeleeAttack();
+			}
 		}
 		// Keep dash here since it uses the input movement direction
 		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
@@ -304,7 +334,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
 	const Weapon& weapon = GetCurrentWeapon();
-	const PlayerAttack& attack = GetCurrentAttack();
+	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
 
 	// Attack will occur in the attack simulation after the delay
@@ -316,7 +346,9 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	// Move player a bit forward on melee attack
 	_player_position += _player_transform->GetFront() * 0.3f;
 	_player_position = Navigation::GetCorrectedPosition(_player_position, float3(2.0f, 1.0f, 2.0f));
-	_attack_current_cd = _combat_stats->_attack_cd;
+
+	// Set cooldown back
+	_after_attack_timer = _attack_cooldown + _combo_grace_period;
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -355,15 +387,42 @@ bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
 }
 
+bool Hachiko::Scripting::PlayerController::IsAttackOnCooldown() const
+{
+	return _after_attack_timer - _combo_grace_period > _attack_cooldown;
+}
+
+bool Hachiko::Scripting::PlayerController::IsInComboWindow() const
+{
+	return _after_attack_timer > 0;
+}
+
 const Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon() const
 {
 	// TODO: insert return statement here
 	return weapons[_current_weapon];
 }
 
+const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::PlayerController::GetNextAttack()
+{
+	if (IsInComboWindow())
+	{
+		++_attack_idx;
+		if (_attack_idx >= GetCurrentWeapon().attacks.size())
+		{
+			_attack_idx = 0;
+		}
+	}
+	else
+	{
+		_attack_idx = 0;
+	}
+	return GetCurrentAttack();
+}
+
 const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::PlayerController::GetCurrentAttack() const
 {
-	return GetCurrentWeapon().attacks[_next_attack_idx];
+	return GetCurrentWeapon().attacks[_attack_idx];
 }
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
@@ -389,7 +448,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		}
 	}
 	
-	_attack_current_cd = _combat_stats->_attack_cd;
+	_after_attack_timer = _attack_cooldown;
 }
 
 void Hachiko::Scripting::PlayerController::CancelAttack()
@@ -550,13 +609,12 @@ void Hachiko::Scripting::PlayerController::WalkingOrientationController()
 
 void Hachiko::Scripting::PlayerController::AttackController()
 {
-	if (_attack_current_cd > 0.0f)
-	{
-		_attack_current_cd -= Time::DeltaTime();
-	}
-	
 	if (!IsAttacking())
 	{
+		if (_after_attack_timer > 0.0f)
+		{
+			_after_attack_timer -= Time::DeltaTime();
+		}
 		return;
 	}
 
@@ -567,7 +625,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 		if (_state == PlayerState::MELEE_ATTACKING)
 		{
-			auto attack = GetCurrentAttack();
+			const PlayerAttack& attack = GetCurrentAttack();
 
 			if (attack.stats.type == CombatManager::AttackType::CONE)
 			{
@@ -596,6 +654,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 						{
 							hit = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
 						}
+						_after_attack_timer -= Time::DeltaTime();
 					}
 					if (hit)
 					{
@@ -604,13 +663,12 @@ void Hachiko::Scripting::PlayerController::AttackController()
 				}
 			}	
 			return;
-			
 		}
-		// Melee attack
+		// Range attack
 		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 		return;
 	}
-
+	// When attack is over
 	_state = PlayerState::IDLE;
 	if (_state == PlayerState::RANGED_ATTACKING)
 	{

@@ -52,6 +52,14 @@ public:
 
 	PlayerState GetState() const;
 
+	void CheckGoal(const float3& current_position);
+	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
+	void UpdateHealthBar();
+	void ToggleGodMode();
+
+	bool IsAlive() { return _combat_stats->_current_hp > 0; }
+	bool _isInDebug = false;
+
 private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
@@ -65,8 +73,11 @@ private:
 	bool IsStunned() const;
 	bool IsFalling() const;
 	bool IsActionLocked() const;
+	bool IsAttackOnCooldown() const;
+	bool IsInComboWindow() const;
 
 	const Weapon& GetCurrentWeapon() const;
+	const PlayerAttack& GetNextAttack();
 	const PlayerAttack& GetCurrentAttack() const;
 
 	// Input and status management
@@ -92,13 +103,16 @@ private:
 	void ResetPlayer();
 
 public:
-	void CheckGoal(const float3& current_position);
-	void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
-	void UpdateHealthBar();
-	void ToggleGodMode();
-	
-	bool IsAlive() { return _combat_stats->_current_hp > 0; }
-	bool _isInDebug = false;
+
+
+public:
+	SERIALIZE_FIELD(PlayerState, _state);
+	SERIALIZE_FIELD(PlayerState, _previous_state);
+	float3 _initial_pos = float3::zero;
+
+	Stats* _combat_stats;
+	bool _god_mode = false;
+	bool _god_mode_trigger = false;
 
 private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
@@ -138,7 +152,6 @@ private:
 	float _dash_charges = 0.0f;
 	float _dash_progress = 0.0f;
 	float _dash_charging_time = 0.0f;
-	float _attack_current_cd = 0.0f;
 	float _attack_current_duration = 0.0f;
 	float _attack_current_delay = 0.0f;
 	float _rotation_progress = 0.0f;
@@ -147,23 +160,18 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
+	const float _attack_cooldown = 0.2f;
+	const float _combo_grace_period = 0.6f;
+	float _after_attack_timer;
 	
 	int _current_bullet = -1;
 
-	unsigned _next_attack_idx = 0;
+	unsigned _attack_idx = 0;
 	unsigned _current_weapon = 0;
 	
 	GameObject* enemies;
 	GameObject* dynamic_envi;
 
-public:
-	SERIALIZE_FIELD(PlayerState, _state);
-	SERIALIZE_FIELD(PlayerState, _previous_state);
-	float3 _initial_pos = float3::zero;
-
-	Stats* _combat_stats;
-	bool _god_mode = false;
-	bool _god_mode_trigger = false;
 };
 } // namespace Scripting
 } // namespace Hachiko
