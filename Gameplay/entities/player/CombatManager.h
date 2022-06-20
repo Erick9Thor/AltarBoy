@@ -47,7 +47,7 @@ namespace Hachiko
             {
                 friend CombatManager;
                 AttackType type = AttackType::RECTANGLE;
-                float damage = 1.f;
+                unsigned damage = 1.f;
                 float knockback_distance = 0.f;
                 // Width is used as degrees for cone
                 float width = 0.f;

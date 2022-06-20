@@ -664,9 +664,9 @@ void Hachiko::Scripting::PlayerController::DeserializeFrom(std::unordered_map<st
 	if(serialized_fields.find("_max_dash_charges") != serialized_fields.end())
 	{
 		const SerializedField& _max_dash_charges_sf = serialized_fields["_max_dash_charges"];
-		if (_max_dash_charges_sf.type_name == "int")
+		if (_max_dash_charges_sf.type_name == "unsigned")
 		{
-			_max_dash_charges = std::any_cast<int>(_max_dash_charges_sf.copy);
+			_max_dash_charges = std::any_cast<unsigned>(_max_dash_charges_sf.copy);
 		}
 	}
 
@@ -754,7 +754,7 @@ void Hachiko::Scripting::PlayerController::SerializeTo(std::unordered_map<std::s
 
 	serialized_fields["_dash_cooldown"] = SerializedField(std::string("_dash_cooldown"), std::make_any<float>(_dash_cooldown), std::string("float"));
 
-	serialized_fields["_max_dash_charges"] = SerializedField(std::string("_max_dash_charges"), std::make_any<int>(_max_dash_charges), std::string("int"));
+	serialized_fields["_max_dash_charges"] = SerializedField(std::string("_max_dash_charges"), std::make_any<unsigned>(_max_dash_charges), std::string("unsigned"));
 
 	serialized_fields["_rotation_duration"] = SerializedField(std::string("_rotation_duration"), std::make_any<float>(_rotation_duration), std::string("float"));
 

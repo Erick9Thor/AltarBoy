@@ -4,7 +4,9 @@
 #include "entities/Stats.h"
 #include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
+#include "Gameplay.h"
 
+#include <queue>
 
 namespace Hachiko
 { 
@@ -86,6 +88,9 @@ private:
 
 	// Input and status management
 	void HandleInputAndStatus();
+	void HandleInputBuffering();
+	Input::MouseButton GetBufferedClick();
+	void ResetClickBuffer();
 
 	// Actions called by handle input
 	void Dash();
@@ -122,7 +127,9 @@ private:
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
-	SERIALIZE_FIELD(int, _max_dash_charges);
+	SERIALIZE_FIELD(unsigned, _max_dash_charges);
+	const float _ranged_attack_cooldown = 0.2f;
+	const float _combo_grace_period = 0.4f;
 
 	SERIALIZE_FIELD(float, _rotation_duration);
 
@@ -141,38 +148,49 @@ private:
 	std::vector<Weapon> weapons{};
 
 	// Internal state variables
-	float3 _player_position = float3::zero;
-	float3 _movement_direction = float3::zero;
+	
+
+	// Input buffer
+	// Use for combo for now, reset when combo ends
+	std::queue<Input::MouseButton> click_buffer{};
+
+	// Dash management
+	unsigned _dash_charges;
+	float _current_dash_duration = 0.f;
+	float _dash_progress = 0.0f;
+	float _dash_charging_time = 0.0f;
+
 	float3 _dash_start = float3::zero;
 	float3 _dash_end = float3::zero;
 	float3 _dash_direction = float3::zero;
-	float3 _knock_start = float3::zero;
-	float3 _knock_end = float3::zero;
-	Quat _rotation_start = Quat::identity;
-	Quat _rotation_target = Quat::identity;
-	float _dash_charges = 0.0f;
-	float _dash_progress = 0.0f;
-	float _dash_charging_time = 0.0f;
-	float _current_dash_duration = 0.f;
+
+	// Atack management	
 	float _attack_current_duration = 0.0f;
 	float _current_attack_cooldown = 0.f;
 	float _attack_current_delay = 0.0f;
-	float _rotation_progress = 0.0f;
+	float _after_attack_timer = 0.f;;
+	int _current_bullet = -1;
+	unsigned _attack_idx = 0;
+	unsigned _current_weapon = 0;
+	
+	
+	// Movement management
 	float _stun_time = 0.0f;
 	float _stun_duration = 0.5f;
+	float _rotation_progress = 0.0f;
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
 
-	const float _ranged_attack_cooldown = 0.2f;
-	const float _combo_grace_period = 0.25f;
-	const float _attack_forward_movement = 0.8f;
-	float _after_attack_timer;
-	
-	int _current_bullet = -1;
+	float3 _player_position = float3::zero;
+	float3 _movement_direction = float3::zero;
+	float3 _knock_start = float3::zero;
+	float3 _knock_end = float3::zero;
+	Quat _rotation_start = Quat::identity;
+	Quat _rotation_target = Quat::identity;
 
-	unsigned _attack_idx = 0;
-	unsigned _current_weapon = 0;
+	
+	
 	
 	GameObject* enemies;
 	GameObject* dynamic_envi;

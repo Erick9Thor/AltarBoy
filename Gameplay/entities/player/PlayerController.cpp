@@ -33,25 +33,26 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 
+	// Make hit delay shorter than duration!
 	PlayerAttack common_attack;
-	common_attack.hit_delay = 0.18f;
-	common_attack.duration = 0.2f;
+	common_attack.hit_delay = 0.05f;
+	common_attack.duration = 0.1f;
 	common_attack.cooldown = 0.2f;
-	common_attack.dash_distance = 1.5f;
+	common_attack.dash_distance = 0.5f;
 	common_attack.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack.stats.damage = 1.f;
+	common_attack.stats.damage = 1;
 	common_attack.stats.knockback_distance = 0.f;
 	// If its cone use degrees on width
-	common_attack.stats.width = 1.f;
-	common_attack.stats.range = 2.f;
+	common_attack.stats.width = 2.f;
+	common_attack.stats.range = 2.5f;
 
 	PlayerAttack common_attack_2;
-	common_attack_2.hit_delay = 0.18f;
+	common_attack_2.hit_delay = 0.1f;
 	common_attack_2.duration = 0.2f;
 	common_attack_2.cooldown = 0.2f;
-	common_attack_2.dash_distance = 1.5f;
+	common_attack_2.dash_distance = 0.5f;
 	common_attack_2.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack_2.stats.damage = 1.f;
+	common_attack_2.stats.damage = 1;
 	common_attack_2.stats.knockback_distance = 0.f;
 	// If its cone use degrees on width
 	common_attack_2.stats.width = 3.f;
@@ -59,16 +60,16 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 
 	PlayerAttack common_attack_3;
-	common_attack_3.hit_delay = 0.28f;
+	common_attack_3.hit_delay = 0.2f;
 	common_attack_3.duration = 0.3f;
 	common_attack_3.cooldown = 0.8f;
-	common_attack_3.dash_distance = 0.f;
+	common_attack_3.dash_distance = 1.5f;
 	common_attack_3.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack_3.stats.damage = 1.f;
+	common_attack_3.stats.damage = 1;
 	common_attack_3.stats.knockback_distance = 0.f;
 	// If its cone use degrees on width
-	common_attack_3.stats.width = 5.f;
-	common_attack_3.stats.range = 10.f;
+	common_attack_3.stats.width = 4.f;
+	common_attack_3.stats.range = 4.5f;
 	
 	
 	Weapon red;
@@ -252,19 +253,14 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 	if (!IsActionLocked())
 	{
-		if (Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
+		
+		if (!IsAttackOnCooldown() && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
-			if (!IsAttackOnCooldown())
-			{
-				RangedAttack();
-			}
+			RangedAttack();
 		}
-		else if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
+		else if (!IsAttackOnCooldown() && (Input::IsMouseButtonDown(Input::MouseButton::LEFT) || GetBufferedClick() == Input::MouseButton::LEFT))
 		{
-			if (!IsAttackOnCooldown())
-			{
-				MeleeAttack();
-			}
+			MeleeAttack();
 		}
 		// Keep dash here since it uses the input movement direction
 		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
@@ -279,6 +275,10 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		{
 			_state = PlayerState::IDLE;
 		}
+	}	
+	else
+	{
+		HandleInputBuffering();
 	}
 
 	// Range attack charge cancel
@@ -306,6 +306,41 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		PickupParasite(_player_position);
 	}
+}
+
+void Hachiko::Scripting::PlayerController::HandleInputBuffering()
+{
+	if (Input::IsMouseButtonDown(Input::MouseButton::LEFT))
+	{
+		// Melee combo input buffer
+		click_buffer.push(Input::MouseButton::LEFT);
+	}
+}
+
+Hachiko::Input::MouseButton Hachiko::Scripting::PlayerController::GetBufferedClick()
+{
+	Input::MouseButton next_click = Input::MouseButton::UNKNOWN;
+
+	if (click_buffer.empty())
+	{
+		return next_click;
+	}
+
+	if (_attack_idx == GetCurrentWeapon().attacks.size() - 1)
+	{
+		ResetClickBuffer();
+		return next_click;
+	}
+
+	next_click = click_buffer.front();
+	click_buffer.pop();
+	return next_click;
+}
+
+void Hachiko::Scripting::PlayerController::ResetClickBuffer()
+{
+	std::queue<Input::MouseButton> new_buffer;
+	std::swap(click_buffer, new_buffer);
 }
 
 void Hachiko::Scripting::PlayerController::Dash()
@@ -361,7 +396,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_current_dash_duration = attack.duration;
 	_dash_start = _player_position;
 	_dash_end = _player_position;
-	float3 corrected_position = GetCorrectedPosition(_player_position + _player_transform->GetFront().Normalized() * _attack_forward_movement);
+	float3 corrected_position = GetCorrectedPosition(_player_position + _player_transform->GetFront().Normalized() * attack.dash_distance);
 	if (corrected_position.x < FLT_MAX)
 	{
 		_dash_end = corrected_position;

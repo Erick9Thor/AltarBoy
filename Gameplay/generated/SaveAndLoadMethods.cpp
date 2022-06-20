@@ -479,7 +479,7 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
-	node["'_max_dash_charges@int'"] = _max_dash_charges;
+	node["'_max_dash_charges@unsigned'"] = _max_dash_charges;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
@@ -571,9 +571,9 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_max_dash_charges@int'"].IsDefined())
+	if (load_node["'_max_dash_charges@unsigned'"].IsDefined())
 	{
-		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
+		_max_dash_charges = load_node["'_max_dash_charges@unsigned'"].as<unsigned>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
