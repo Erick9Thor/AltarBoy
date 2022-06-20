@@ -29,6 +29,8 @@ class PlayerController : public Script
 	{
 		float hit_delay = 0.f;
 		float duration = 0.f;
+		float dash_distance = 0.f;
+		float cooldown = 0.2f;
 		CombatManager::AttackStats stats;
 	};
 
@@ -63,6 +65,8 @@ public:
 private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
+
+	float3 GetCorrectedPosition(const float3& target_pos) const;
 
 	void SpawnGameObject() const;
 
@@ -101,9 +105,6 @@ private:
 
 	void CheckState();
 	void ResetPlayer();
-
-public:
-
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
@@ -152,7 +153,9 @@ private:
 	float _dash_charges = 0.0f;
 	float _dash_progress = 0.0f;
 	float _dash_charging_time = 0.0f;
+	float _current_dash_duration = 0.f;
 	float _attack_current_duration = 0.0f;
+	float _current_attack_cooldown = 0.f;
 	float _attack_current_delay = 0.0f;
 	float _rotation_progress = 0.0f;
 	float _stun_time = 0.0f;
@@ -160,8 +163,10 @@ private:
 	float _falling_distance = 10.0f;
 	bool _should_rotate = false;
 	bool _is_falling = false;
-	const float _attack_cooldown = 0.2f;
-	const float _combo_grace_period = 0.6f;
+
+	const float _ranged_attack_cooldown = 0.2f;
+	const float _combo_grace_period = 0.25f;
+	const float _attack_forward_movement = 0.8f;
 	float _after_attack_timer;
 	
 	int _current_bullet = -1;
