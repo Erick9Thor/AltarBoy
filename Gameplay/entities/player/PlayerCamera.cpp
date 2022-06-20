@@ -24,7 +24,7 @@ void Hachiko::Scripting::PlayerCamera::OnAwake()
 		_player_ctrl = _objective->GetComponent<PlayerController>();
 	}
 	_look_ahead = float3::zero;
-	_relative_pos_aux = _relative_position_to_player;
+	_relative_pososition_aux = _relative_position_to_player;
 	// Seed the rand() for the shaking
 	srand(static_cast <unsigned> (time(0)));
 }
@@ -172,13 +172,7 @@ float3 Hachiko::Scripting::PlayerCamera::Shake()
 	}
 }
 
-/// <summary>
-/// Changes Camera relative position to the one defined. 
-/// If time is defined it will revert to its previous position once said time has passed
-/// </summary>
-/// <param name="new_rel_pos"></param>
-/// <param name="time"></param>
-void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_rel_pos, float time)
+void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, float time)
 {
 	if (time > 0.0f)
 	{
@@ -187,31 +181,24 @@ void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_r
 		_is_temporary_moved = true;
 		_position_timer = time;
 	}
-	_relative_pos_aux = _relative_position_to_player;
-	_relative_position_to_player = new_rel_pos;
+	_relative_pososition_aux = _relative_position_to_player;
+	_relative_position_to_player = new_relative_position;
 }
 
-/// <summary>
-/// Reverts Camera relative position to its previous position
-/// </summary>
 void Hachiko::Scripting::PlayerCamera::RevertRelativePosition()
 {
-	_relative_position_to_player = _relative_pos_aux;
+	_relative_position_to_player = _relative_pososition_aux;
 }
 
-/// <summary>
-/// Switches between the defined relative position and its previous one
-/// </summary>
-/// <param name="new_rel_pos"></param>
-void Hachiko::Scripting::PlayerCamera::SwitchRelativePosition(math::float3 new_rel_pos)
+void Hachiko::Scripting::PlayerCamera::SwitchRelativePosition(math::float3 new_relative_position)
 {
-	if (new_rel_pos.Equals(_relative_position_to_player))
+	if (new_relative_position.Equals(_relative_position_to_player))
 	{
 		RevertRelativePosition();
 	}
 	else
 	{
-		ChangeRelativePosition(new_rel_pos);
+		ChangeRelativePosition(new_relative_position);
 	}
 }
 
