@@ -29,7 +29,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = 1.f;
 	common_bullet.lifetime = 3.f;
-	common_bullet.size = 1.f;
+	common_bullet.size = 0.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 
@@ -466,7 +466,6 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 			_state = PlayerState::RANGED_ATTACKING;
 		}
 	}
-	
 	_after_attack_timer = _ranged_attack_cooldown;
 }
 

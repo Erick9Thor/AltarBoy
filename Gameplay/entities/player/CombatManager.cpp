@@ -240,7 +240,7 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::CombatManager::FindBull
 		float enemy_radius = agent->GetRadius();
 		Sphere hitbox = Sphere(enemy_position, enemy_radius + bullet_size);
 
-		if (hitbox.Intersects(hitbox))
+		if (trajectory.Intersects(hitbox))
 		{
 			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
 			float hit_distance = bullet_position.Distance(enemy_position);

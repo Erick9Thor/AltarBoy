@@ -36,6 +36,8 @@ component:
     enabled: true
     obstacle_type: 0
     obstacle_size: [1, 1, 1]
+  - type: 20
+    enabled: true
 child:
   - name: crystalSpike_mesh
     enabled: true
@@ -215,7 +217,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999998927, 0.999997079]
+            scale: [1, 0.999998629, 0.999996781]
           - !<mesh_renderer>
             type: 2
             enabled: true
@@ -241,7 +243,7 @@ child:
             enabled: true
             position: [0, 0, 0]
             rotation: [-0.70710665, 0, 0, 0.707106888]
-            scale: [1, 0.999998987, 0.999998987]
+            scale: [1, 0.999998689, 0.999998689]
           - !<mesh_renderer>
             type: 2
             enabled: true
