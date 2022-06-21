@@ -103,7 +103,7 @@ void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 {
-	if (_detecting_radius >= transform->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
+	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
 	{
 		RegisterHit(_stats->_max_hp);
 	}
