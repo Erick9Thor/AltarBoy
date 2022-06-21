@@ -308,6 +308,16 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
 {
+    // TODO: Refactor this whole load logic and event handling to be as clear 
+    // as possible.
+
+    // Stop the scene if it was playing to avoid scripts calling Start:
+    bool was_scene_playing = IsScenePlaying();
+    if (was_scene_playing)
+    {
+        StopScene();
+    }
+
     SetSceneResource(new_resource);
 
     Scene* new_scene = new Scene();
@@ -317,6 +327,7 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
         {
             App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
         }
+
         new_scene->Load(scene_resource->scene_data);
     }
     else
@@ -331,6 +342,12 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     }
 
     ChangeMainScene(new_scene);
+
+    // If the scene was playing previously, continue playing:
+    if (was_scene_playing)
+    {
+        AttemptScenePlay();
+    }
 }
 
 void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
