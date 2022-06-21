@@ -12,10 +12,6 @@
 
 Hachiko::ComponentAgent::ComponentAgent(GameObject* container) : Component(Type::AGENT, container)
 {
-    if (game_object->name == "PlayerN")
-    {
-        player = true;
-    }
 }
 
 Hachiko::ComponentAgent::~ComponentAgent()
@@ -38,7 +34,7 @@ void Hachiko::ComponentAgent::Update()
     }
 
     // Move agent through NavMesh
-    if (!player)
+    if (!is_player)
     {
         const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
         ComponentTransform* transform = game_object->GetTransform();
@@ -57,15 +53,6 @@ void Hachiko::ComponentAgent::Update()
 void Hachiko::ComponentAgent::Start()
 {
     AddToCrowd();
-    if (player)
-    {
-        dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
-        if (!agent)
-        {
-            return;
-        }
-        agent->params.radius = 2.0f;
-    }
 }
 
 void Hachiko::ComponentAgent::Stop()
@@ -190,6 +177,11 @@ void Hachiko::ComponentAgent::SetObstacleAvoidance(bool obstacle_avoidance)
     }
 }
 
+void Hachiko::ComponentAgent::SetAsPlayer(bool new_is_player) 
+{
+    is_player = new_is_player;
+}
+
 void Hachiko::ComponentAgent::AddToCrowd()
 {
     ResourceNavMesh* navMesh = App->navigation->GetNavMesh();
@@ -276,9 +268,12 @@ void Hachiko::ComponentAgent::DrawGui()
     ImGui::PushID(this);
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Agent Component"))
     {
-        ImGui::Checkbox("Player agent", &player);
+        if (ImGui::Checkbox("Player agent", &is_player))
+        {
+            SetAsPlayer(is_player);
+        }
 
-        if (!player)
+        if (!is_player)
         {
             if (agent_id != -1)
             {
@@ -345,6 +340,7 @@ void Hachiko::ComponentAgent::Save(YAML::Node& node) const
     node[MAX_SPEED] = max_speed;
     node[MAX_ACCELERATION] = max_acceleration;
     node[AVOID_OBSTACLES] = avoid_obstacles;
+    node["radius"] = radius;
 }
 
 void Hachiko::ComponentAgent::Load(const YAML::Node& node)
@@ -352,4 +348,5 @@ void Hachiko::ComponentAgent::Load(const YAML::Node& node)
     max_speed = node[MAX_SPEED].as<float>();
     max_acceleration = node[MAX_ACCELERATION].as<float>();
     avoid_obstacles = node[AVOID_OBSTACLES].as<bool>();
+    SetRadius(node["radius"] ? node["radius"].as<float>() : 0.5f);
 }
