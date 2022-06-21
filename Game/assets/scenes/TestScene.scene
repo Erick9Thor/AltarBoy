@@ -42,7 +42,7 @@ child:
         class_name: PlayerCamera
         "'_relative_position_to_player@math::float3'": [0, 19, 13]
         "'_objective@GameObject*'": 7577865002841685786
-        "'_follow_delay@float'": 0
+        "'_follow_delay@float'": 0.600000024
   - id: 9705719939553527500
     name: DirLight
     enabled: true
@@ -3002,7 +3002,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1197, 667]
+            size: [990, 467]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -3126,7 +3126,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1197, 667]
+        size: [990, 467]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
