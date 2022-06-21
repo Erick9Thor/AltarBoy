@@ -156,7 +156,7 @@ private:
 	std::queue<Input::MouseButton> click_buffer{};
 
 	// Dash management
-	unsigned _dash_charges;
+	unsigned _dash_charges = 2;
 	float _current_dash_duration = 0.f;
 	float _dash_progress = 0.0f;
 	float _dash_charging_time = 0.0f;
