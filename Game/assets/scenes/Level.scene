@@ -43,9 +43,9 @@ child:
         type: 15
         enabled: true
         class_name: PlayerCamera
-        "'_relative_position_to_player@math::float3'": [0, 0, 0]
-        "'_player@GameObject*'": 6175393298541025425
-        "'_follow_delay@float'": 0
+        "'_relative_position_to_player@math::float3'": [0, 19, 13]
+        "'_objective@GameObject*'": 6175393298541025425
+        "'_follow_delay@float'": 0.600000024
   - id: 9705719939553527500
     name: DirLight
     enabled: true
@@ -22782,9 +22782,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 186483731231135853
             "'_static_crystal@GameObject*'": 10596636722425909089
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 11224111609055920027
@@ -23017,9 +23020,12 @@ child:
             "'_player@GameObject*'": 6175393298541025425
             "'_explosion_crystal@GameObject*'": 17025371335600156851
             "'_static_crystal@GameObject*'": 3040478351652148147
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": true
           - !<script>
             id: 14032575893428541774
@@ -23252,9 +23258,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 12778564408259191481
             "'_static_crystal@GameObject*'": 5499095288112221786
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 7541567032227490919
@@ -23487,9 +23496,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 12324565080254007985
             "'_static_crystal@GameObject*'": 5035666476775517132
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 11519981936436380879
@@ -23722,9 +23734,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 9026806301053137717
             "'_static_crystal@GameObject*'": 5445259781615189906
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 4634563660101776753
@@ -23957,9 +23972,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 1773835186548185368
             "'_static_crystal@GameObject*'": 3123536155299058951
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 2422724144059177088
@@ -24192,9 +24210,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 6872777608070528934
             "'_static_crystal@GameObject*'": 14260835845976645992
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 11975192189942731534
@@ -24427,9 +24448,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 4817410453117814144
             "'_static_crystal@GameObject*'": 13605744003169186758
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 2146142459128031070
@@ -24662,9 +24686,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 18305818395433142292
             "'_static_crystal@GameObject*'": 2461133499982104952
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 3192714594676274300
@@ -24897,9 +24924,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 2966418613093696798
             "'_static_crystal@GameObject*'": 13551880645044743200
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 10140357832263553466
@@ -25132,9 +25162,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 6524610589043593190
             "'_static_crystal@GameObject*'": 7822592748013279118
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 2910764793751853742
@@ -25367,9 +25400,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 13875059857952831787
             "'_static_crystal@GameObject*'": 10197120689479486222
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 8709388735944502433
@@ -25602,9 +25638,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 13422602808356670257
             "'_static_crystal@GameObject*'": 111015139532287684
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 6418681883966580031
@@ -25837,9 +25876,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 4611897604329841935
             "'_static_crystal@GameObject*'": 8000941132741368351
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 11731714140078298633
@@ -26072,9 +26114,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 6934572684400445035
             "'_static_crystal@GameObject*'": 17194145320403349674
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 10423826233554267495
@@ -26307,9 +26352,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 16216132632225845419
             "'_static_crystal@GameObject*'": 9416159308499339802
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 16868861705919706971
@@ -26542,9 +26590,12 @@ child:
             "'_player@GameObject*'": 6175393298541025425
             "'_explosion_crystal@GameObject*'": 15255496072989196384
             "'_static_crystal@GameObject*'": 13827024315489577408
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": true
           - !<script>
             id: 13793761030728145843
@@ -26777,9 +26828,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 6243135652510142035
             "'_static_crystal@GameObject*'": 13853474076231817899
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 12754312904185716234
@@ -27012,9 +27066,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 4366100275813449709
             "'_static_crystal@GameObject*'": 10084230305731436326
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 12663910314429399490
@@ -27247,9 +27304,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 13168538457804057420
             "'_static_crystal@GameObject*'": 13326812428745713266
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 14226479495463386676
@@ -27482,9 +27542,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 11889146844627635419
             "'_static_crystal@GameObject*'": 7547962826007538245
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 12064272561303014887
@@ -27717,9 +27780,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 12675409897164474977
             "'_static_crystal@GameObject*'": 8176935017496688672
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 1679804548313490576
@@ -27952,9 +28018,12 @@ child:
             "'_player@GameObject*'": 0
             "'_explosion_crystal@GameObject*'": 17510647656980300958
             "'_static_crystal@GameObject*'": 15235934071599872677
+            "'_outer_explosion_indicator@GameObject*'": 0
+            "'_inner_explosion_indicator@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
+            "'_timer_explosion@float'": 0
             "'_explosive_crystal@bool'": false
           - !<script>
             id: 995188830338359710
@@ -30069,6 +30138,9 @@ child:
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
+      - id: 4466560451398792787
+        type: 20
+        enabled: true
       - !<script>
         id: 11083565726506741947
         type: 15
@@ -30076,9 +30148,6 @@ child:
         class_name: AudioManager
         "'_enemies_in_combat@int'": 0
         "'_previous_in_combat@bool'": false
-      - id: 4466560451398792787
-        type: 20
-        enabled: true
   - id: 11473209214733494098
     name: HUD
     enabled: true
@@ -30095,7 +30164,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1065, 643]
+        size: [1197, 667]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -30121,7 +30190,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1197, 667]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -30471,7 +30540,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1065, 643]
+        size: [1197, 667]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -30492,6 +30561,20 @@ child:
             position: [0, 0, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
+          - !<transform_2d>
+            id: 9617117112077516800
+            type: 10
+            enabled: true
+            position: [0, -150, 0]
+            size: [1197, 667]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas>
+            id: 14597509113810312821
+            type: 8
+            enabled: true
           - !<script>
             id: 13563537298821954573
             type: 15
@@ -30526,20 +30609,6 @@ child:
             "'_tp_pos2@GameObject*'": 6376988885626609710
             "'_tp_pos3@GameObject*'": 12571748229165329679
             "'_performance_menu@GameObject*'": 6086255652677161461
-          - !<transform_2d>
-            id: 9617117112077516800
-            type: 10
-            enabled: true
-            position: [0, -150, 0]
-            size: [1065, 643]
-            scale: [1, 1]
-            rotation: [0, 0, 0, 1]
-            pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
-          - !<canvas>
-            id: 14597509113810312821
-            type: 8
-            enabled: true
         child:
           - id: 12500285811614183017
             name: tpPos1
@@ -31302,7 +31371,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1197, 667]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]

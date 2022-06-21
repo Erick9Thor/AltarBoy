@@ -736,7 +736,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
 				_combat_stats->Heal(1);
 				UpdateHealthBar();
-
 				// Generate a random number for the weapon
 				std::random_device rd;
 				std::mt19937 gen(rd());
