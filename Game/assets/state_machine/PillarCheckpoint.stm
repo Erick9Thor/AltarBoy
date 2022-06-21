@@ -1,0 +1,9 @@
+name: PillarCheckpoint
+default_node: 0
+clips:
+  - clip_name: Activate
+    clips_id: 7844331904865628762
+    clips_loop: true
+nodes:
+  - node_name: Activate
+    node_clip_name: Activate

@@ -316,6 +316,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="entities\enemies\BugState.h" />
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="PillarCheckpoint.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\BulletController.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -724,6 +725,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="PillarCheckpoint.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\BulletController.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
