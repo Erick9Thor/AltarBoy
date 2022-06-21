@@ -164,7 +164,7 @@ bool Hachiko::Debug::GetVsync()
     return SDL_HINT_RENDER_VSYNC;
 }
 
-void Hachiko::Debug::DebugDraw(const OBB& box)
+void Hachiko::Debug::DebugDraw(const OBB& box, float3 color)
 {
     ddVec3 p[8];
     // This order was pure trial and error, i dont know how to really do it
@@ -174,7 +174,7 @@ void Hachiko::Debug::DebugDraw(const OBB& box)
     {
         p[i] = box.CornerPoint(order[i]);
     }
-    dd::box(p, dd::colors::White);
+    dd::box(p, color);
 }
 
 HACHIKO_API void Hachiko::Debug::DrawNavmesh(bool is_navmesh)

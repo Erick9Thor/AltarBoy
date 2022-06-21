@@ -386,7 +386,8 @@ enum class HACHIKO_API MouseButton
     // These are taken from SDL source code.
     LEFT = 1,
     MIDDLE = 2,
-    RIGHT = 3
+    RIGHT = 3,
+    UNKNOWN = 4
 };
 
 HACHIKO_API bool IsKeyPressed(KeyCode key);
@@ -423,7 +424,7 @@ HACHIKO_API unsigned int GetMs();
 HACHIKO_API void SetPolygonMode(bool is_fill);
 HACHIKO_API void SetVsync(bool is_vsync);
 HACHIKO_API bool GetVsync();
-HACHIKO_API void DebugDraw(const OBB& box);
+HACHIKO_API void DebugDraw(const OBB& box, float3 color = float3(1.0, 1.0, 1.0));
 HACHIKO_API void DrawNavmesh(bool is_navmesh);
 } // namespace Hachiko::Debug
 
