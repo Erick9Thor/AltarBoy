@@ -31,10 +31,10 @@ void Hachiko::Particle::Reset()
     SetCurrentRotation(GetInitialRotation());
 
     const float4x4 game_object_model = emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalMatrix();
-    const float3 direction = emitter->GetDirectionFromShape();
-    const float4x4 emitter_model = float4x4::FromTRS(GetCurrentPosition(),
-        Quat::FromEulerXYZ(direction.x, direction.y, direction.z),
-        emitter->GetEmitterProperties().scale);
+    const float3 shape_direction = GetInitialDirection();
+    const float4x4 emitter_model = float4x4::FromTRS(GetCurrentPosition(), Quat::FromEulerXYZ(shape_direction.x, shape_direction.y, shape_direction.z), emitter->GetEmitterProperties().scale);
+    const float4x4 current_model = game_object_model * emitter_model;
+    const float3 direction = (current_model.RotatePart() * shape_direction).Normalized();
     SetCurrentDirection(direction.Normalized());
 }
 
@@ -189,6 +189,49 @@ float Hachiko::Particle::GetInitialSize() const
 float Hachiko::Particle::GetInitialRotation() const
 {
     return emitter->GetParticlesRotation().GetValue();
+}
+
+float3 Hachiko::Particle::GetInitialDirection() const
+{
+    float3 particle_direction = float3::one;
+    const auto& emitter_properties = emitter->GetEmitterProperties();
+    const auto& emitter_position = emitter->GetGameObject()->GetTransform()->GetLocalPosition();
+
+    switch (emitter->GetEmitterType())
+    {
+        case ParticleSystem::Emitter::Type::CONE:
+            {
+                particle_direction.x = (current_position.x - emitter_position.x) * (emitter_properties.top - emitter_properties.radius);
+                particle_direction.z = (current_position.z - emitter_position.z) * (emitter_properties.top - emitter_properties.radius);
+                break;
+            }
+        case ParticleSystem::Emitter::Type::SPHERE:
+            {
+                const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
+                particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
+                particle_direction.y = emitter_properties.rotation.y + effective_radius * RandomUtil::RandomSigned();
+                particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
+                break;
+            }
+        case ParticleSystem::Emitter::Type::BOX:
+            {
+                break;
+            }
+        case ParticleSystem::Emitter::Type::CIRCLE:
+            {
+                particle_direction.y = 0.0f;
+                particle_direction.x = (current_position.x - emitter_position.x);
+                particle_direction.z = (current_position.z - emitter_position.z);
+                break;
+            }
+        case ParticleSystem::Emitter::Type::RECTANGLE:
+            {
+                particle_direction = float3(0.0f, 1.0f, 0.0f);
+                break;
+            }
+    }
+
+    return particle_direction;
 }
 
 const float2& Hachiko::Particle::GetTextureTiles() const

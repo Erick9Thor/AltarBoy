@@ -624,87 +624,43 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
     }
 }
 
-float3 Hachiko::ComponentParticleSystem::GetDirectionFromShape() const
-{
-    float3 particle_direction = float3::one;
-    switch (emitter_type)
-    {
-    case ParticleSystem::Emitter::Type::CONE:
-    {
-        const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-        particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
-        particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
-        break;
-    }
-    case ParticleSystem::Emitter::Type::SPHERE:
-    {
-        const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-        particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
-        particle_direction.y = emitter_properties.rotation.y + effective_radius * RandomUtil::RandomSigned();
-        particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
-        break;
-    }
-    case ParticleSystem::Emitter::Type::BOX:
-    {
-            break;
-    }
-    case ParticleSystem::Emitter::Type::CIRCLE:
-    {
-        particle_direction = float3(RandomUtil::RandomSigned(), 0.0f, RandomUtil::RandomSigned());
-        break;
-    }
-    case ParticleSystem::Emitter::Type::RECTANGLE:
-    {
-        particle_direction = float3(0.0f, 1.0f, 0.0f);
-        break;
-    }
-    }
-
-    return particle_direction;
-}
-
 float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
 {
     float3 global_emitter_position = GetEmitterProperties().position + game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
     switch (emitter_type)
     {
-    case ParticleSystem::Emitter::Type::RECTANGLE:
-    {
-        float half_x = emitter_properties.scale.x * 0.5;
-        float x_random_pos = RandomUtil::RandomBetween(-half_x, half_x);
-        float half_z = emitter_properties.scale.z * 0.5;
-        float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
-
-        global_emitter_position = float3(global_emitter_position.x + x_random_pos,
-            global_emitter_position.y, global_emitter_position.z + z_random_pos);
-        break;
-    }
-    case ParticleSystem::Emitter::Type::CIRCLE:
-    {
-        const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-        float x_position = effective_radius * RandomUtil::RandomSigned();
-
-        float z_position = sqrt(effective_radius * effective_radius - x_position * x_position);
-        if (emitter_properties.emit_from == ParticleSystem::Emitter::EmitFrom::EDGE)
+        case ParticleSystem::Emitter::Type::CIRCLE:
+        case ParticleSystem::Emitter::Type::CONE:
         {
-            z_position *= RandomUtil::RandomSignedInt();
-        }
-        else
-        {
-            z_position *= RandomUtil::RandomSigned();
-        }
+            float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
+            float x_position = RandomUtil::RandomSigned() * emitter_properties.radius;
+            float z_min = 0.0f;
 
-        global_emitter_position = float3(global_emitter_position.x + x_position,
-            global_emitter_position.y, global_emitter_position.z + z_position);
-        
-        break;
-    }
-    case ParticleSystem::Emitter::Type::CONE:
-    {
-    }
-    case ParticleSystem::Emitter::Type::SPHERE:
-    {
-    }
+            if (std::abs(x_position) < effective_radius)
+            {
+                z_min = sqrt((effective_radius * effective_radius) - (x_position * x_position));
+            }
+
+            float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
+            float z_position = RandomUtil::RandomBetween(z_min, z_max) * RandomUtil::RandomSignedInt();
+            global_emitter_position = float3(global_emitter_position.x + x_position, global_emitter_position.y, global_emitter_position.z + z_position);
+            break;
+        }
+        case ParticleSystem::Emitter::Type::RECTANGLE:
+        {
+            float half_x = emitter_properties.scale.x * 0.5;
+            float x_random_pos = RandomUtil::RandomBetween(-half_x, half_x);
+            float half_z = emitter_properties.scale.z * 0.5;
+            float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
+
+            global_emitter_position = float3(global_emitter_position.x + x_random_pos,
+                global_emitter_position.y, global_emitter_position.z + z_random_pos);
+            break;
+        }
+        case ParticleSystem::Emitter::Type::SPHERE:
+        {
+            break;
+        }
     }
     return global_emitter_position;
 }
@@ -761,6 +717,11 @@ bool Hachiko::ComponentParticleSystem::IsLoop() const
 Hachiko::ParticleSystem::Emitter::State Hachiko::ComponentParticleSystem::GetEmitterState() const
 {
     return emitter_state;
+}
+
+Hachiko::ParticleSystem::Emitter::Type Hachiko::ComponentParticleSystem::GetEmitterType() const
+{
+    return emitter_type;
 }
 
 void Hachiko::ComponentParticleSystem::Play()
