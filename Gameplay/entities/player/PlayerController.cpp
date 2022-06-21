@@ -64,7 +64,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	weapons.push_back(blue);
 	weapons.push_back(green);
 
-	_current_weapon;
+	_current_weapon = 0;
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
