@@ -160,15 +160,15 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 	
 	if (closest_enemy_hit < closest_obstacle_hit)
 	{
-		if (hit_enemy)
+		if (hit_enemy && hit_enemy->isAlive())
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
 			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir);
+			return true;
 		}
-		return true;
 	}
 
-	if (hit_obstacle)
+	if (hit_obstacle && hit_obstacle->isAlive())
 	{
 		HitObstacle(hit_obstacle, stats.damage);
 		return true;
@@ -366,7 +366,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 		{
 			// Hit enemy here
 			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
-			if (enemy_controller)
+			if (enemy_controller && enemy_controller->isAlive())
 			{
 				// TODO: Add Knockback
 				hit = true;
@@ -399,11 +399,11 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 		if (ConeHitsObstacle(obstacle, attack_source_pos, attack_dir, min_dot_prod, hit_distance))
 		{
 			// Hit enemy here
-			CrystalExplosion* csystal_controller = obstacle->GetComponent<CrystalExplosion>();
-			if (csystal_controller)
+			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
+			if (crystal_controller && crystal_controller->isAlive())
 			{
 				hit = true;
-				HitObstacle(csystal_controller, attack_stats.damage);
+				HitObstacle(crystal_controller, attack_stats.damage);
 			}
 		}
 	}
@@ -433,7 +433,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 		{
 			// Hit enemy here
 			EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
-			if (enemy_controller)
+			if (enemy_controller && enemy_controller->isAlive())
 			{
 				// TODO: Add Knockback
 				hit = true;
@@ -465,11 +465,11 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 		if (OBBHitsObstacle(obstacle, attack_box))
 		{
 			// Hit enemy here
-			CrystalExplosion* csystal_controller = obstacle->GetComponent<CrystalExplosion>();
-			if (csystal_controller)
+			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
+			if (crystal_controller && crystal_controller->isAlive())
 			{
 				hit = true;
-				HitObstacle(csystal_controller, attack_stats.damage);
+				HitObstacle(crystal_controller, attack_stats.damage);
 			}
 		}
 	}
