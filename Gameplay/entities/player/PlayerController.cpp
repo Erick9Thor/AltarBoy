@@ -274,11 +274,8 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 
 	enemy_children.insert(enemy_children.end(), environment.begin(), environment.end());
 
-	GameObject* inter = game_object->scene_owner->GetRoot();
-
 	std::vector<GameObject*> elements_hit = {};
 	//EnemyControler* enemy_ctrl = _player->GetComponent<PlayerController>();
-	math::float4x4 inv_matrix = _player_transform->GetGlobalMatrix().Transposed();
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{
 		if (enemy_children[i]->active && _combat_stats->_attack_range >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
@@ -615,7 +612,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
 				_combat_stats->Heal(1);
 				UpdateHealthBar();
-
 				// Generate a random number for the weapon
 				std::random_device rd;
 				std::mt19937 gen(rd());
@@ -628,6 +624,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					weapons[new_wpn_num].cooldown,
 					weapons[new_wpn_num].range
 				);
+
+				// This is mostly for testing purposes
+				_camera->GetComponent<PlayerCamera>()->ChangeRelativePosition(float3(0.0f, 10.0f, 6.0f), 1.0f);
+
 				return;
 			}
 		}
