@@ -245,7 +245,15 @@ void Hachiko::Scripting::PlayerController::Dash()
 	float3 corrected_dash_final_position;
 	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
 	
-	_dash_end = dash_final_position;
+	corrected_dash_final_position = Navigation::GetCorrectedPosition(corrected_dash_final_position, float3(0.5f, 0.1f, 0.5f));
+	if (corrected_dash_final_position.x < FLT_MAX)
+	{
+		_dash_end = corrected_dash_final_position;
+	}
+	else
+	{
+		_dash_end = dash_final_position;
+	}
 }
 
 
