@@ -27,6 +27,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _state(PlayerState::INVALID)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
+	, _dash_trail(nullptr)
+	, _trail_enlarger(10.0f)
 {
 }
 
@@ -42,6 +44,12 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_ui_damage->SetActive(false);
 	}
+
+	if (_dash_trail)
+	{
+		_dash_trail->SetActive(false);
+	}
+
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 
@@ -69,6 +77,20 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
 	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
+
+	if (_dash_trail) // Init dash trail start/end positions and scale
+	{
+		_trail_start_pos = _dash_trail->GetTransform()->GetLocalPosition();
+		_trail_start_scale = _dash_trail->GetTransform()->GetLocalScale();
+
+		//Position only applies on -Z axis
+		_trail_end_pos = _dash_trail->GetTransform()->GetLocalPosition();
+		_trail_end_pos = math::float3(_trail_end_pos.x, _trail_end_pos.y, _trail_end_pos.z * (_trail_enlarger+1.0f)/2); // Magic formula to maintain ratio
+
+		//Scale only applies on +X axis
+		_trail_end_scale = _dash_trail->GetTransform()->GetLocalScale();
+		_trail_end_scale = math::float3(_trail_end_scale.x * _trail_enlarger, _trail_end_scale.y, _trail_end_scale.z);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -470,11 +492,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 void Hachiko::Scripting::PlayerController::DashController()
 {
 	DashChargesManager();
-
 	if (!IsDashing())
 	{
 		return;
 	}
+
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
@@ -483,6 +505,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 	// of an acceleration.
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		_dash_progress);
+	DashTrailManager(_dash_progress);
 
 	if (_dash_progress >= 1.0f)
 	{
@@ -508,6 +531,29 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 		{
 			_dash_charges += 1;
 		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
+{
+	if (!_show_dashtrail)
+	{
+		_show_dashtrail = true;
+		_dash_trail->SetActive(_show_dashtrail);
+	}
+	
+	_dash_trail->GetTransform()->SetLocalPosition(math::float3::Lerp(_trail_start_pos, _trail_end_pos,
+		_dash_progress));
+	_dash_trail->GetTransform()->SetLocalScale(math::float3::Lerp(_trail_start_scale, _trail_end_scale,
+		_dash_progress));
+
+	if (_dash_progress >= 1.0f)
+	{
+		_dash_trail->GetTransform()->SetLocalPosition(_trail_start_pos);
+		_dash_trail->GetTransform()->SetLocalScale(_trail_start_scale);
+		_show_dashtrail = false;
+		_dash_trail->SetActive(_show_dashtrail);
+
 	}
 }
 

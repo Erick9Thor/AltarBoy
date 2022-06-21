@@ -68,6 +68,7 @@ private:
 	void MovementController();
 	void DashController();
 	void DashChargesManager();
+	void DashTrailManager(float dash_progress);
 	void WalkingOrientationController();
 	void AttackController();
 
@@ -108,6 +109,8 @@ private:
 
 	SERIALIZE_FIELD(GameObject*, _camera);
 	SERIALIZE_FIELD(GameObject*, _ui_damage);
+	SERIALIZE_FIELD(GameObject*, _dash_trail); 
+	SERIALIZE_FIELD(float, _trail_enlarger);
 
 	ComponentTransform* _player_transform = nullptr;
 	ComponentAnimation* animation;
@@ -117,6 +120,10 @@ private:
 	float3 _dash_start = float3::zero;
 	float3 _dash_end = float3::zero;
 	float3 _dash_direction = float3::zero;
+	float3 _trail_start_pos = float3::zero;
+	float3 _trail_start_scale = float3::zero;
+	float3 _trail_end_pos = float3::zero;
+	float3 _trail_end_scale = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
 	Quat _rotation_start = Quat::identity;
@@ -133,6 +140,7 @@ private:
 	WeaponUsed weapon = WeaponUsed::RED;
 	bool _should_rotate = false;
 	bool _is_falling = false;
+	bool _show_dashtrail = false;
 
 	std::vector<Weapon> weapons =
 	{
