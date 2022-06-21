@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Play|x64">
@@ -317,6 +317,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="entities\enemies\BugState.h" />
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="Shake.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\BulletController.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -726,6 +727,7 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="Shake.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\BulletController.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />

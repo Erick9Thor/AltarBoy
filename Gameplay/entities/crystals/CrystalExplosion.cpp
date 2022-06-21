@@ -55,11 +55,11 @@ void Hachiko::Scripting::CrystalExplosion::OnStart()
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	ResourceAnimation* resource_animation = _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation();
+	ComponentAnimation* resource_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
 
 	if (!_stats->IsAlive() && resource_animation)
 	{
-		if (resource_animation->GetCurrentState() == ResourceAnimation::State::STOPPED) 
+		if (resource_animation->AnimationIsStopped()) 
 		{
 			SceneManagement::Destroy(game_object);
 			return;

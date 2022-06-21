@@ -68,14 +68,17 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 		// Add this line in case shaking is animation = && exploding_platform->AnimationIsStopped()))
 		{
 			_state = PlatformState::IDLE;
-			_seconds_shaking = 0;
 		}
-		else
-		{
-			_seconds_shaking -= Time::DeltaTime();
-		}
-	}
 
+		ComponentTransform* transform = game_object->GetTransform();
+		math::float3 current_position = transform->GetGlobalPosition();
+
+		float3 shake_offset = float3::zero;
+
+		shake_offset = Shake();
+
+		transform->SetGlobalPosition(current_position + shake_offset);
+	}
 
 	UpdatePlatformStatus();
 }
@@ -130,35 +133,21 @@ void Hachiko::Scripting::CrystalPlatform::UpdatePlatformStatus()
 		ShowPlatform();
 		break;
 	case PlatformState::SHAKING:
-		Shaking();
+		is_shaking = true;
 		break;
 	default:
 		break;
 	}
 }
 
-void Hachiko::Scripting::CrystalPlatform::Shaking()
-{
-	is_shaking = true;
-
-	/*float3 shake_offset = float3::zero;
-
-	shake_offset = Shake();
-
-	_crystal_platform->GetComponent<ComponentTransform>()->SetGlobalPosition(
-		game_object->GetComponent<ComponentTransform>()->GetGlobalPosition()
-		+ shake_offset);*/
-}
-
-
 float3 Hachiko::Scripting::CrystalPlatform::Shake()
 {
 	if (shake_elapsed < _seconds_shaking)
 	{
 		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float x = (r - 0.5f) * shake_magnitude * 0.2f;
+		float x = (r - 0.5f) * shake_magnitude * _shake_intensity;
 		r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float z = (r - 0.5f) * shake_magnitude * 0.2f;
+		float z = (r - 0.5f) * shake_magnitude * _shake_intensity;
 
 		shake_elapsed += Time::DeltaTime();
 		shake_magnitude = (1 - (shake_elapsed / _seconds_shaking)) * (1 - (shake_elapsed / _seconds_shaking));
