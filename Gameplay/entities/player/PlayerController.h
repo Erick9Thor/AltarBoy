@@ -27,6 +27,19 @@ class PlayerController : public Script
 		SIZE
 	};
 
+	enum class AttackType
+	{
+		COMMON_1 = 0,
+		COMMON_2,
+		COMMON_3,
+		QUICK_1,
+		QUICK_2,
+		QUICK_3,
+		HEAVY_1,
+		HEAVY_2,
+		HEAVY_3
+	};
+
 	struct PlayerAttack
 	{
 		float hit_delay = 0.f;
@@ -69,6 +82,8 @@ private:
 		const math::float3& current_position) const;
 
 	float3 GetCorrectedPosition(const float3& target_pos) const;
+
+	PlayerAttack GetAttackType(AttackType attack_type);
 
 	void SpawnGameObject() const;
 

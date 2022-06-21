@@ -33,67 +33,32 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 
-	// Make hit delay shorter than duration!
-	PlayerAttack common_attack;
-	common_attack.hit_delay = 0.05f;
-	common_attack.duration = 0.1f;
-	common_attack.cooldown = 0.2f;
-	common_attack.dash_distance = 0.5f;
-	common_attack.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack.stats.damage = 1;
-	common_attack.stats.knockback_distance = 0.f;
-	// If its cone use degrees on width
-	common_attack.stats.width = 2.f;
-	common_attack.stats.range = 2.5f;
-
-	PlayerAttack common_attack_2;
-	common_attack_2.hit_delay = 0.1f;
-	common_attack_2.duration = 0.2f;
-	common_attack_2.cooldown = 0.2f;
-	common_attack_2.dash_distance = 0.5f;
-	common_attack_2.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack_2.stats.damage = 1;
-	common_attack_2.stats.knockback_distance = 0.f;
-	// If its cone use degrees on width
-	common_attack_2.stats.width = 3.f;
-	common_attack_2.stats.range = 4.f;
-
-	PlayerAttack common_attack_3;
-	common_attack_3.hit_delay = 0.2f;
-	common_attack_3.duration = 0.3f;
-	common_attack_3.cooldown = 0.8f;
-	common_attack_3.dash_distance = 1.5f;
-	common_attack_3.stats.type = CombatManager::AttackType::RECTANGLE;
-	common_attack_3.stats.damage = 1;
-	common_attack_3.stats.knockback_distance = 0.f;
-	// If its cone use degrees on width
-	common_attack_3.stats.width = 4.f;
-	common_attack_3.stats.range = 4.5f;
+	
 	
 	
 	Weapon red;
 	red.name = "Red";
 	red.bullet = common_bullet;
 	red.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
-	red.attacks.push_back(common_attack);
-	red.attacks.push_back(common_attack_2);
-	red.attacks.push_back(common_attack_3);	
+	red.attacks.push_back(GetAttackType(AttackType::COMMON_1));
+	red.attacks.push_back(GetAttackType(AttackType::COMMON_2));
+	red.attacks.push_back(GetAttackType(AttackType::COMMON_3));
 
 	Weapon blue;
 	blue.name = "Blue";
 	blue.bullet = common_bullet;
 	blue.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
-	blue.attacks.push_back(common_attack);
-	blue.attacks.push_back(common_attack_2);
-	blue.attacks.push_back(common_attack_3);
+	blue.attacks.push_back(GetAttackType(AttackType::QUICK_1));
+	blue.attacks.push_back(GetAttackType(AttackType::QUICK_2));
+	blue.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 
 	Weapon green;
 	green.name = "Green";
 	green.bullet = common_bullet;
 	green.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
-	green.attacks.push_back(common_attack);
-	green.attacks.push_back(common_attack_2);
-	green.attacks.push_back(common_attack_3);
+	green.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
+	green.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
+	green.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
 
 	weapons.push_back(red);
 	weapons.push_back(blue);
@@ -381,7 +346,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	const Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
-	_after_attack_timer = attack.cooldown; +_combo_grace_period;
+	_after_attack_timer = attack.cooldown +_combo_grace_period;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -921,4 +886,133 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 	{
 		//SceneManagement::SwitchScene(12124061992092393469);
 	}
+}
+
+Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerController::GetAttackType(Hachiko::Scripting::PlayerController::AttackType attack_type)
+{
+	PlayerAttack attack;
+	switch (attack_type)
+	{
+	// COMMON ATTACKS
+	case AttackType::COMMON_1:
+		// Make hit delay shorter than duration!
+		attack.hit_delay = 0.05f;
+		attack.duration = 0.1f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.3f;
+		// If its cone use degrees on width
+		attack.stats.width = 3.f;
+		attack.stats.range = 3.5f;
+		break;
+
+	case AttackType::COMMON_2:
+		attack.hit_delay = 0.1f;
+		attack.duration = 0.2f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.3f;
+		// If its cone use degrees on width
+		attack.stats.width = 3.f;
+		attack.stats.range = 3.5f;
+		break;
+
+	case AttackType::COMMON_3:
+		attack.hit_delay = 0.2f;
+		attack.duration = 0.3f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 2.f;
+		attack.stats.range = 6.f;
+		break;
+
+	// COMMON ATTACKS
+	case AttackType::QUICK_1:
+		attack.hit_delay = 0.05f;
+		attack.duration = 0.1f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.f;
+		// If its cone use degrees on width
+		attack.stats.width = 3.f;
+		attack.stats.range = 2.5f;
+		break;
+
+	case AttackType::QUICK_2:
+		attack.hit_delay = 0.05f;
+		attack.duration = 0.1f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.f;
+		// If its cone use degrees on width
+		attack.stats.width = 3.f;
+		attack.stats.range = 2.5f;
+		break;
+
+	case AttackType::QUICK_3:
+		attack.hit_delay = 0.05f;
+		attack.duration = 0.1f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 1.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 0.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.5f;
+		break;
+
+	// COMMON ATTACKS
+	case AttackType::HEAVY_1:
+		attack.hit_delay = 0.1f;
+		attack.duration = 0.3f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+
+	case AttackType::HEAVY_2:
+		attack.hit_delay = 0.1f;
+		attack.duration = 0.3f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 1;
+		attack.stats.knockback_distance = 1.f;
+		// If its cone use degrees on width
+		attack.stats.width = 5.f;
+		attack.stats.range = 3.f;
+		break;
+
+	case AttackType::HEAVY_3:
+		attack.hit_delay = 0.5f;
+		attack.duration = 0.8f;
+		attack.cooldown = 0.1f;
+		attack.dash_distance = 0.5f;
+		attack.stats.type = CombatManager::AttackType::RECTANGLE;
+		attack.stats.damage = 2;
+		attack.stats.knockback_distance = 2.f;
+		// If its cone use degrees on width
+		attack.stats.width = 4.f;
+		attack.stats.range = 4.5f;
+		break;
+	}
+	return attack;
 }
