@@ -31,6 +31,7 @@ namespace Hachiko
         bool in_scene = false;
         ParticleSystem::Emitter::State state = ParticleSystem::Emitter::State::STOPPED;
         float elapsed_time = 0.0f;
+        float time = 0.0f;
 
         // Sections
         bool parameters_section = true;
@@ -38,7 +39,9 @@ namespace Hachiko
         bool texture_section = true;
         bool animation_section = false;
         bool color_section = false;
-        
+        bool size_section = false;
+        bool rotation_section = false;
+
         // Parameters
         bool loop = false;
         bool play_on_awake = false;
@@ -70,14 +73,14 @@ namespace Hachiko
         ImGradientMark* dragging_gradient = nullptr;
         ImGradientMark* selected_gradient = nullptr;
 
-        // General
-        int frame_counter = 0;
-        float time = 0.0f;
+        // Size over time
+        float size = start_size.GetValue();
+        ParticleSystem::VariableTypeProperty size_over_time {float2::one, 0.1f, false, true};
         
-        // Orientation
-        bool is_horizontal = false;
-        float4x4 model_stretch = float4x4::identity;
-        float3 direction = float3::zero;
+        // Rotation over time
+        float rotation = start_rotation.GetValue();
+        ParticleSystem::VariableTypeProperty rotation_over_time {float2::one, 0.1f, false, true};
+
         void Reset();
         void PublishIntoScene();
         void DetachFromScene();
@@ -88,6 +91,8 @@ namespace Hachiko
         
         void UpdateAnimationData();
         void UpdateColorOverLifetime();
+        void UpdateRotationOverLifetime();
+        void UpdateSizeOverLifetime();
 
         void GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix);
         void DisplayControls();
