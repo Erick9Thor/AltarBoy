@@ -641,7 +641,7 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
             }
 
             float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
-            float z_position = RandomUtil::RandomBetween(z_min, z_max) * RandomUtil::RandomSignedInt();
+            float z_position = RandomUtil::RandomBetween(z_min, z_max) * RandomUtil::RandomSign();
             global_emitter_position = float3(global_emitter_position.x + x_position, global_emitter_position.y, global_emitter_position.z + z_position);
             break;
         }
