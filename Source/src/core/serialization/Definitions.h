@@ -257,6 +257,7 @@
 #define MAX_SPEED "max_speed"
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
+#define AGENT_RADIUS "radius"
 
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"
