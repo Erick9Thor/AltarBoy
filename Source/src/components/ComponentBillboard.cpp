@@ -74,8 +74,8 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     program->BindUniformFloat4("input_color", color.ptr());
     program->BindUniformInts("has_texture", 1, &has_texture);
 
-    int flip_x = flip_texture.x ? 1 : 0;
-    int flip_y = flip_texture.y ? 1 : 0;
+    int flip_x(flip_texture.x);
+    int flip_y(flip_texture.y);
     program->BindUniformInts("flip_x", 1, &flip_x);
     program->BindUniformInts("flip_y", 1, &flip_y);
     program->BindUniformFloat("animation_blend", &blend_factor);

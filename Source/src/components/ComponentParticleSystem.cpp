@@ -580,7 +580,6 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
         return;
     }
 
-    // constexpr float delta = 1- 
     if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue()) // TODO: Avoid division
     {
         able_to_emit = false;

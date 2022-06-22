@@ -7,7 +7,7 @@ struct ImGradientMark;
 
 namespace Hachiko
 {
-    class HACHIKO_API ComponentBillboard : public Component
+    class ComponentBillboard : public Component
     {
     public:
         ComponentBillboard(GameObject* container);
@@ -16,10 +16,10 @@ namespace Hachiko
         void Start() override;
         void Update() override;
 
-        void Play();
-        void Pause();
-        void Restart();
-        void Stop() override;
+        HACHIKO_API void Play();
+        HACHIKO_API void Pause();
+        HACHIKO_API void Restart();
+        HACHIKO_API void Stop() override;
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
