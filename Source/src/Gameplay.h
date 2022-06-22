@@ -384,7 +384,7 @@ enum class HACHIKO_API KeyCode
 enum class HACHIKO_API MouseButton
 {
     // These are taken from SDL source code.
-    UNKOWN = 0,
+    UNKNOWN = 0,
     LEFT = 1,
     MIDDLE = 2,
     RIGHT = 3
