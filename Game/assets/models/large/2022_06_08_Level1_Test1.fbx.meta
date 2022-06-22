@@ -5618,7 +5618,4 @@ resources:
     resource_hash: 10940546278022882495
   - resource_id: 2702219939595620777
     resource_type: 7
-    resource_hash: 3728474647828341585
-  - resource_id: 407555986936710339
-    resource_type: 13
-    resource_hash: 6694288475864064609
+    resource_hash: 372847464
