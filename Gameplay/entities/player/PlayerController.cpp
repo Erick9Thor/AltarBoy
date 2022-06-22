@@ -80,12 +80,16 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 	if (_dash_trail) // Init dash trail start/end positions and scale
 	{
+		/*The relation for start_pos and start_scale must be always --> start_scale.x = -start_pos.z / 2
+		* make sure to set correctly the local transform in the engine
+		* E.g. if scale = (5, Y, Z) then position = (X, Y, -2.5)
+		*/
 		_trail_start_pos = _dash_trail->GetTransform()->GetLocalPosition();
 		_trail_start_scale = _dash_trail->GetTransform()->GetLocalScale();
 
 		//Position only applies on -Z axis
 		_trail_end_pos = _dash_trail->GetTransform()->GetLocalPosition();
-		_trail_end_pos = math::float3(_trail_end_pos.x, _trail_end_pos.y, _trail_end_pos.z * (_trail_enlarger+1.0f)/2); // Magic formula to maintain ratio
+		_trail_end_pos = math::float3(_trail_end_pos.x, _trail_end_pos.y, _trail_end_pos.z * _trail_enlarger);
 
 		//Scale only applies on +X axis
 		_trail_end_scale = _dash_trail->GetTransform()->GetLocalScale();
