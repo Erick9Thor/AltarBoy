@@ -36,48 +36,7 @@ bool Hachiko::ModuleRender::Init()
 
     GenerateDeferredQuad();
     GenerateFrameBuffer();
-
-    // TODO: Free these at the end of the app.
-    // Generate shadow map frame buffer object that we will only use the depth 
-    // of:
-    glGenFramebuffers(1, &shadow_map_fbo);
-    // Generate shadow map texture:
-    glGenTextures(1, &shadow_map_texture);
-    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
-    
-    // Instead of Depth we go for GL_RG32F, and GLRGB, COLOR_ATTACHMENT_0 for variance mapping.
-    /*glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
-        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);*/
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
-
-    // With the generated shadow map texture, attach it as the shadow map frame
-    // buffer's depth buffer:
-    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 
-        shadow_map_texture, 0);
-
-    // TODO: Store in class and delete.
-    unsigned int depthBuffer;
-    glGenRenderbuffers(1, &depthBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, shadow_width, shadow_height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
-
-
-    //// Since we will only use the depth, disable draw and read for color:
-    //glDrawBuffer(GL_NONE);
-    //glReadBuffer(GL_NONE);
-    // Unbind the shadow map frame buffer:
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+    GenerateShadowMap();
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -134,6 +93,47 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
     }
    
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Hachiko::ModuleRender::GenerateShadowMap() 
+{
+    // TODO: Free these at the end of the app.
+    // Generate shadow map frame buffer object that we will only use the depth
+    // of:
+    glGenFramebuffers(1, &shadow_map_fbo);
+    // Generate shadow map texture:
+    glGenTextures(1, &shadow_map_texture);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+
+    // Instead of Depth we go for GL_RG32F, and GLRGB, COLOR_ATTACHMENT_0 for variance mapping.
+    /*glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
+        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);*/
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
+
+    // With the generated shadow map texture, attach it as the shadow map frame
+    // buffer's depth buffer:
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadow_map_texture, 0);
+
+    // TODO: Store in class and delete.
+    glGenRenderbuffers(1, &shadow_map_depth);
+    glBindRenderbuffer(GL_RENDERBUFFER, shadow_map_depth);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, shadow_width, shadow_height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadow_map_depth);
+
+    //// Since we will only use the depth, disable draw and read for color:
+    //glDrawBuffer(GL_NONE);
+    //glReadBuffer(GL_NONE);
+    // Unbind the shadow map frame buffer:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
@@ -311,51 +311,12 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     float4x4 light_view_matrix = float4x4::identity;
     float4x4 light_projection_matrix = float4x4::identity;
 
-    // Render to shadowmap here:
-    if (scene->dir_lights.size() > 0)
+    bool shadow_map_drawn = DrawToShadowMap(scene, camera, batch_manager);
+
+    if (shadow_map_drawn)
     {
-        ComponentDirLight* directional_light = scene->dir_lights[0];
-        directional_light->UpdateFrustum(camera);
-
-        light_projection_matrix = directional_light->GetFrustum().ProjectionMatrix();
-        light_view_matrix = directional_light->GetFrustum().ViewMatrix();
-
-        render_list.Update(directional_light->GetFrustum(), scene->GetQuadtree());
-
-        // Clear Batches Lists:
-        batch_manager->ClearOpaqueBatchesDrawList();
-        batch_manager->ClearTransparentBatchesDrawList();
-
-        for (const RenderTarget& target : render_list.GetOpaqueTargets())
-        {
-            batch_manager->AddDrawComponent(target.mesh_renderer);
-        }
-        // TODO: Only do this if the forward pass is enabled.
-        for (const RenderTarget& target : render_list.GetTransparentTargets())
-        {
-            batch_manager->AddDrawComponent(target.mesh_renderer);
-        }
-
-        // Draw collected meshes with shadow mapping program:
-        program = App->program->GetShadowMappingProgram();
-        program->Activate();
-        // TODO: Store these uniform names somewhere.
-        program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
-        program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-        glViewport(0, 0, shadow_width, shadow_height);
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
-
-        batch_manager->DrawOpaqueBatches(program);
-        batch_manager->DrawTransparentBatches(program);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glCullFace(GL_BACK);
-
-        Program::Deactivate();
+        light_view_matrix = scene->dir_lights[0]->GetFrustum().ViewMatrix();
+        light_projection_matrix = scene->dir_lights[0]->GetFrustum().ProjectionMatrix();
     }
 
     // ----------------------------- GEOMETRY PASS ----------------------------
@@ -395,7 +356,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program = App->program->GetDeferredLightingProgram();
     program->Activate();
 
-    // TODO: Store these uniform names somewhere.
+    // TODO: Store these uniform names somewhere. 
+    // TODO: Pack these uniform stuff to a separate method.
     program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
     program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
     program->BindUniformFloat("shadow_bias", &shadow_bias);
@@ -535,6 +497,59 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
         glEnable(GL_DEPTH_TEST);
     }*/
 }
+
+bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager) 
+{
+    if (scene->dir_lights.size() < 0)
+    {
+        return false;
+    }
+
+    ComponentDirLight* directional_light = scene->dir_lights[0];
+    directional_light->UpdateFrustum(camera);
+
+    float4x4 light_projection_matrix = directional_light->GetFrustum().ProjectionMatrix();
+    float4x4 light_view_matrix = directional_light->GetFrustum().ViewMatrix();
+
+    render_list.Update(directional_light->GetFrustum(), scene->GetQuadtree());
+
+    // Clear Batches Lists:
+    batch_manager->ClearOpaqueBatchesDrawList();
+    batch_manager->ClearTransparentBatchesDrawList();
+
+    for (const RenderTarget& target : render_list.GetOpaqueTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);
+    }
+    // TODO: Only do this if the forward pass is enabled.
+    for (const RenderTarget& target : render_list.GetTransparentTargets())
+    {
+        batch_manager->AddDrawComponent(target.mesh_renderer);
+    }
+
+    // Draw collected meshes with shadow mapping program:
+    Program* program = App->program->GetShadowMappingProgram();
+    program->Activate();
+    // TODO: Store these uniform names somewhere.
+    program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
+    program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
+    glViewport(0, 0, shadow_width, shadow_height);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
+
+    batch_manager->DrawOpaqueBatches(program);
+    batch_manager->DrawTransparentBatches(program);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glCullFace(GL_BACK);
+
+    Program::Deactivate();
+
+    return true;
+}   
 
 void Hachiko::ModuleRender::SetRenderMode(bool is_deferred) 
 {
