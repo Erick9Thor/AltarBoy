@@ -98,7 +98,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			else
 			{
 				float alpha_transition = math::Pow(_parasite_dissolving, _parasite_lifespan - _parasite_lifetime);
-				_parasite->ChangeColor(float4(1, 1, 1, alpha_transition), 0.05f);
+				_parasite->ChangeTintColor(float4(255, 255, 255, alpha_transition));
 				_parasite_lifetime += Time::DeltaTime();
 			}
 		}
@@ -112,8 +112,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 				}
 				else
 				{
-					float alpha_transition = math::Pow(_enemy_dissolving, _enemy_lifespan - _enemy_lifetime);
-					_enemy_body->ChangeColor(float4(1, 1, 1, alpha_transition), 0.05f);
+					float alpha_transition = 51 * _enemy_lifetime;//math::Pow(_enemy_dissolving, _enemy_lifespan - _enemy_lifetime);
+					_enemy_body->ChangeTintColor(float4(1, 1, 1, alpha_transition));
 					_enemy_lifetime += Time::DeltaTime();
 				}
 			}
@@ -185,7 +185,7 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat

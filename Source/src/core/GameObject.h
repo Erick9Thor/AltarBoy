@@ -213,7 +213,8 @@ namespace Hachiko
         [[nodiscard]] GameObject* GetFirstChildWithName(const std::string& child_name) const;
         [[nodiscard]] GameObject* FindDescendantWithName(const std::string& child_name) const;
 
-        void ChangeColor(float4 color, float time);
+        void ChangeEmissiveColor(float4 color, float time);
+        void ChangeTintColor(float4 color);
 
     public:
         std::string name;
