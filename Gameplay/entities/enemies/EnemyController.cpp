@@ -91,21 +91,31 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		if (_state == BugState::PARASITE)
 		{
-			if (_current_lifetime >= _parasite_lifespan)
+			if (_parasite_lifetime >= _parasite_lifespan)
 			{
 				DestroyEntity();
 			}
 			else
 			{
-				_current_lifetime += Time::DeltaTime();
+				float alpha_transition = math::Pow(_parasite_dissolving, _parasite_lifespan - _parasite_lifetime);
+				_parasite->ChangeColor(float4(1, 1, 1, alpha_transition), 0.05f);
+				_parasite_lifetime += Time::DeltaTime();
 			}
 		}
 		else
 		{
-
 			if (animation->GetCurrentAnimation() != nullptr && animation->GetCurrentAnimation()->GetCurrentState() == ResourceAnimation::State::STOPPED)
 			{
-				DropParasite();
+				if (_enemy_lifetime >= _enemy_lifespan)
+				{
+					DropParasite();
+				}
+				else
+				{
+					float alpha_transition = math::Pow(_enemy_dissolving, _enemy_lifespan - _enemy_lifetime);
+					_enemy_body->ChangeColor(float4(1, 1, 1, alpha_transition), 0.05f);
+					_enemy_lifetime += Time::DeltaTime();
+				}
 			}
 		}
 		return;

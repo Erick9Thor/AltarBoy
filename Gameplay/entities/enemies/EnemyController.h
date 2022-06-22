@@ -82,8 +82,12 @@ namespace Hachiko
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;
             float _speed = 0.0f;
-            float _parasite_lifespan = 5.0f;
-            float _current_lifetime = 0.0f;
+            float _enemy_lifespan = 5.0f;
+            float _enemy_lifetime = 0.0f;
+            float _enemy_dissolving = 0.2;
+            float _parasite_lifespan = 10.0f;
+            float _parasite_lifetime = 0.0f;
+            float _parasite_dissolving = 0.2;
             float3 _knockback_pos = float3::zero;
 
         };
