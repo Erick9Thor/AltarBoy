@@ -37,17 +37,22 @@ bool Hachiko::ModuleRender::Init()
     GenerateDeferredQuad();
     GenerateFrameBuffer();
 
+    // TODO: Free these at the end of the app.
     // Generate shadow map frame buffer object that we will only use the depth 
     // of:
     glGenFramebuffers(1, &shadow_map_fbo);
     // Generate shadow map texture:
     glGenTextures(1, &shadow_map_texture);
     glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+    
     // Instead of Depth we go for GL_RG32F, and GLRGB, COLOR_ATTACHMENT_0 for variance mapping.
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
-        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    /*glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
+        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);*/
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -56,11 +61,20 @@ bool Hachiko::ModuleRender::Init()
     // With the generated shadow map texture, attach it as the shadow map frame
     // buffer's depth buffer:
     glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 
         shadow_map_texture, 0);
-    // Since we will only use the depth, disable draw and read for color:
-    glDrawBuffer(GL_NONE);
-    glReadBuffer(GL_NONE);
+
+    // TODO: Store in class and delete.
+    unsigned int depthBuffer;
+    glGenRenderbuffers(1, &depthBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, shadow_width, shadow_height);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+
+
+    //// Since we will only use the depth, disable draw and read for color:
+    //glDrawBuffer(GL_NONE);
+    //glReadBuffer(GL_NONE);
     // Unbind the shadow map frame buffer:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -329,16 +343,17 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
         program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
 
-        glViewport(0, 0, shadow_width, shadow_height);
+        glBindTexture(GL_TEXTURE_2D, 0);
         glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-        glClear(GL_DEPTH_BUFFER_BIT);
-        //glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
+        glViewport(0, 0, shadow_width, shadow_height);
+        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
 
         batch_manager->DrawOpaqueBatches(program);
         batch_manager->DrawTransparentBatches(program);
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        //glCullFace(GL_BACK);
+        glCullFace(GL_BACK);
 
         Program::Deactivate();
     }

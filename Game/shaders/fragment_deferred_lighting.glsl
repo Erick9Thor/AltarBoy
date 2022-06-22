@@ -53,6 +53,47 @@ float CalculateShadow(vec4 fragment_position_from_light, sampler2D shadow_map_te
     return shadow; 
 }
 
+float linstep(float low, float high, float v)
+{
+    return clamp((v - low) / (high - low), 0.0, 1.0);
+}
+
+float CalculateShadowVariance(sampler2D shadow_map_texture, vec4 fragment_position_from_light)
+{
+    // Perform perspective division:
+    // NOTE: On the tutorials it is said that since we are using an orthographic projection,
+    // this division is actually meaningless as w is always 1.0. However this step is necessary
+    // when using perspective projection so we do it anyways to support perspective projection
+    // out of the box.
+    vec3 projection_coordinates = fragment_position_from_light.xyz / fragment_position_from_light.w;
+
+    // The projection_coordinates will be returned in the range [-1, 1]. Because the depth from 
+    // the shadow map is in the range [0,1] and we also want to use projection_coordinates from 
+    // the shadow map, we transform the NDC coordinates to the range [0,1]:
+    projection_coordinates = projection_coordinates * 0.5 + 0.5;
+
+    // We can get the current depth at this fragment by retrieving the projected vector's z coords
+    // which equals to the depth of this fragment from the light's perspective:
+    float current_depth = projection_coordinates.z;
+
+    vec2 moments = texture(shadow_map_texture, projection_coordinates.xy).xy;
+
+    if (current_depth <= moments.x)
+    {
+        return 1.0;
+    }
+
+    float variance = max(moments.y - moments.x * moments.x, 0.00000002f);
+
+    float distance_depth = current_depth - moments.x;
+    // float p_max = variance / (variance + distance_depth * distance_depth);
+
+    float p_max = variance / (variance + distance_depth * distance_depth);
+          p_max = linstep(0.3, 1.0, p_max);
+
+    return min(p_max, 1.0);
+}
+
 void main()
 {
 
@@ -65,14 +106,13 @@ void main()
     vec3  fragment_specular = fragment_specular_smoothness.rgb;
     float fragment_smoothness = fragment_specular_smoothness.a;
     vec3  view_direction = normalize(camera.pos - fragment_position);
-    float shadow_map_depth = texture(shadow_map, texture_coords).r;
     
     if (mode == 0)
     {
         vec3 hdr_color = vec3(0.0);
-        float fragment_shadow = CalculateShadow(fragment_position_from_light, shadow_map, shadow_bias);
+        float fragment_shadow = CalculateShadowVariance(shadow_map, fragment_position_from_light);
         
-        hdr_color += (1.0 -fragment_shadow) * DirectionalPBR(fragment_normal, view_direction, lights.directional, fragment_diffuse, fragment_specular, fragment_smoothness);
+        hdr_color += (fragment_shadow) * DirectionalPBR(fragment_normal, view_direction, lights.directional, fragment_diffuse, fragment_specular, fragment_smoothness);
         
         for(uint i=0; i<lights.n_points; ++i)
         {
