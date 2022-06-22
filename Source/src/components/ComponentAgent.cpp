@@ -37,16 +37,16 @@ void Hachiko::ComponentAgent::Update()
     if (!is_player)
     {
         const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
-        ComponentTransform* transform = game_object->GetTransform();
-        transform->SetGlobalPosition(float3(dt_agent->npos));
+        float3 agent_position(dt_agent->npos[0], dt_agent->npos[1], dt_agent->npos[2]);
+        game_object->GetTransform()->SetGlobalPosition(agent_position);
     }
     else
     {
         dtCrowdAgent* dt_agent = App->navigation->GetEditableAgent(agent_id);
-        ComponentTransform* transform = game_object->GetTransform();
-        dt_agent->npos[0] = transform->GetGlobalPosition().x;
-        dt_agent->npos[1] = transform->GetGlobalPosition().y;
-        dt_agent->npos[2] = transform->GetGlobalPosition().z;
+        const float3& position = game_object->GetTransform()->GetGlobalPosition();
+        dt_agent->npos[0] = position.x;
+        dt_agent->npos[1] = position.y;
+        dt_agent->npos[2] = position.z;
     }
 }
 
@@ -127,10 +127,12 @@ void Hachiko::ComponentAgent::SetRadius(float new_radius)
     radius = new_radius;
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    
     if (!agent)
     {
         return;
     }
+    
     agent->params.radius = radius;
 }
 
@@ -139,10 +141,12 @@ void Hachiko::ComponentAgent::SetMaxSpeed(float new_max_speed)
     max_speed = new_max_speed;
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    
     if (!agent)
     {
         return;
     }
+    
     agent->params.maxSpeed = max_speed;
 }
 
@@ -151,10 +155,12 @@ void Hachiko::ComponentAgent::SetMaxAcceleration(float new_max_acceleration)
     max_acceleration = new_max_acceleration;
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    
     if (!agent)
     {
         return;
     }
+    
     agent->params.maxAcceleration = max_acceleration;
 }
 
@@ -163,10 +169,12 @@ void Hachiko::ComponentAgent::SetObstacleAvoidance(bool obstacle_avoidance)
     avoid_obstacles = obstacle_avoidance;
 
     dtCrowdAgent* agent = App->navigation->GetEditableAgent(agent_id);
+    
     if (!agent)
     {
         return;
     }
+    
     if (avoid_obstacles)
     {
         agent->params.updateFlags |= DT_CROWD_OBSTACLE_AVOIDANCE;
@@ -206,7 +214,9 @@ void Hachiko::ComponentAgent::AddToCrowd()
     ap.updateFlags |= DT_CROWD_OPTIMIZE_VIS;
     ap.updateFlags |= DT_CROWD_OPTIMIZE_TOPO;
     ap.updateFlags |= DT_CROWD_SEPARATION;
-    if (avoid_obstacles) {
+    
+    if (avoid_obstacles) 
+    {
         ap.updateFlags |= DT_CROWD_OBSTACLE_AVOIDANCE;
     }
 
@@ -340,7 +350,7 @@ void Hachiko::ComponentAgent::Save(YAML::Node& node) const
     node[MAX_SPEED] = max_speed;
     node[MAX_ACCELERATION] = max_acceleration;
     node[AVOID_OBSTACLES] = avoid_obstacles;
-    node["radius"] = radius;
+    node[AGENT_RADIUS] = radius;
 }
 
 void Hachiko::ComponentAgent::Load(const YAML::Node& node)
@@ -348,5 +358,7 @@ void Hachiko::ComponentAgent::Load(const YAML::Node& node)
     max_speed = node[MAX_SPEED].as<float>();
     max_acceleration = node[MAX_ACCELERATION].as<float>();
     avoid_obstacles = node[AVOID_OBSTACLES].as<bool>();
-    SetRadius(node["radius"] ? node["radius"].as<float>() : 0.5f);
+    
+    float radius = node[AGENT_RADIUS].IsDefined() ? node[AGENT_RADIUS].as<float>() : 0.5f;
+    SetRadius(radius);
 }
