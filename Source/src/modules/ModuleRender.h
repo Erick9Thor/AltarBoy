@@ -120,6 +120,7 @@ namespace Hachiko
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
+        void ApplyFilterToShadowMap() const;
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();
@@ -144,12 +145,14 @@ namespace Hachiko
         // Shadow Map related:
         unsigned shadow_map_fbo = 0;
         unsigned shadow_map_texture = 0;
+        unsigned shadow_map_filtered_fbo = 0;
         unsigned shadow_map_filtered_texture = 0;
         unsigned shadow_map_depth = 0;
-        unsigned int shadow_width = 2048;
-        unsigned int shadow_height = 2048;
-        // TODO: We don't need this after the shadow maps anymore.
-        float shadow_bias = 0.005;
+        unsigned int shadow_width = 4096;
+        unsigned int shadow_height = 4096;
+        float shadow_gaussian_blur_amount = 1.0f;
+        float min_variance = 0.00000002f;
+        float light_bleeding_reduction_amount = 0.2f;
 
         bool draw_deferred = true;
 

@@ -102,21 +102,17 @@ void Hachiko::ModuleRender::GenerateShadowMap()
     // Generate shadow map frame buffer object that we will only use the depth
     // of:
     glGenFramebuffers(1, &shadow_map_fbo);
+    
+    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    
     // Generate shadow map texture:
     glGenTextures(1, &shadow_map_texture);
     glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
-
-    // Instead of Depth we go for GL_RG32F, and GLRGB, COLOR_ATTACHMENT_0 for variance mapping.
-    /*glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, shadow_width, 
-        shadow_height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);*/
-
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
-
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
 
     // With the generated shadow map texture, attach it as the shadow map frame
@@ -135,6 +131,21 @@ void Hachiko::ModuleRender::GenerateShadowMap()
     //glReadBuffer(GL_NONE);
     // Unbind the shadow map frame buffer:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    // Generate filtered shadow map fbo:
+    glGenFramebuffers(1, &shadow_map_filtered_fbo);
+    // Generate filtered shadow map texture:
+    glGenTextures(1, &shadow_map_filtered_texture);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_filtered_texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
+    // Bind shadow_map_filtered_texture on 0 color attachment of shadow_map_filtered_fbo:
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_filtered_fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadow_map_filtered_texture, 0);
 }
 
 void Hachiko::ModuleRender::ResizeFrameBuffer(const int width, const int height) const
@@ -317,6 +328,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     {
         light_view_matrix = scene->dir_lights[0]->GetFrustum().ViewMatrix();
         light_projection_matrix = scene->dir_lights[0]->GetFrustum().ProjectionMatrix();
+
+        
     }
 
     // ----------------------------- GEOMETRY PASS ----------------------------
@@ -360,7 +373,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // TODO: Pack these uniform stuff to a separate method.
     program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
     program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
-    program->BindUniformFloat("shadow_bias", &shadow_bias);
+    program->BindUniformFloat("light_bleeding_reduction_amount", &light_bleeding_reduction_amount);
+    program->BindUniformFloat("min_variance", &min_variance);
 
     // Bind ImageBasedLighting uniforms
     //scene->GetSkybox()->BindImageBasedLightingUniforms(program);
@@ -538,17 +552,61 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
     glViewport(0, 0, shadow_width, shadow_height);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
+    //glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
 
     batch_manager->DrawOpaqueBatches(program);
     batch_manager->DrawTransparentBatches(program);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glCullFace(GL_BACK);
+    //glCullFace(GL_BACK);
 
     Program::Deactivate();
 
+    ApplyFilterToShadowMap();
+
     return true;
+}
+
+void Hachiko::ModuleRender::ApplyFilterToShadowMap() const
+{
+    // Blur x-axis:
+    
+    // Bind shadow map texture:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+    
+    App->program->GetGaussianFilteringProgram()->Activate();
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_filtered_fbo);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    float3 blur_scale(shadow_gaussian_blur_amount * 1.0f / static_cast<float>(shadow_width), 0.0f, 0.0f);
+
+    App->program->GetGaussianFilteringProgram()->BindUniformFloat3("blur_scale", blur_scale.ptr());
+
+    RenderDeferredQuad();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    Program::Deactivate();
+
+    // Blur y-axis:
+
+    // Bind temp shadow map texture:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, shadow_map_filtered_texture);
+
+    App->program->GetGaussianFilteringProgram()->Activate();
+    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    blur_scale = float3(0.0f, shadow_gaussian_blur_amount * 1.0f / static_cast<float>(shadow_height), 0.0f);
+
+    App->program->GetGaussianFilteringProgram()->BindUniformFloat3("blur_scale", blur_scale.ptr());
+
+    RenderDeferredQuad();
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    Program::Deactivate();
+
 }   
 
 void Hachiko::ModuleRender::SetRenderMode(bool is_deferred) 
@@ -601,7 +659,9 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::NewLine();
     ImGui::Text("Shadow");
     ImGui::Separator();
-    ImGui::DragFloat("Bias", &shadow_bias, 0.001f, 0.0f, 1.0f);
+    ImGui::DragFloat("Light Bleeding Reduction", &light_bleeding_reduction_amount, 0.000000001f, 0.0f, 1.0f, "%.9f");
+    ImGui::DragFloat("Min Variance", &min_variance, 0.000000001f, 0.0f, 1.0f, "%.9f");
+    ImGui::DragFloat("Gaussian Blur Amount", &shadow_gaussian_blur_amount, 0.01f, 0.0f, FLT_MAX, "%.9f");
     
     ImGui::NewLine();
     ImGui::Text("Rendering Mode");

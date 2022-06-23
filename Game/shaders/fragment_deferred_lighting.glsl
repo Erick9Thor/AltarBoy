@@ -11,7 +11,8 @@ out vec4 fragment_color;
 in vec2 texture_coords;
 
 uniform int mode;
-uniform float shadow_bias;
+uniform float light_bleeding_reduction_amount;
+uniform float min_variance;
 uniform mat4 light_projection;
 uniform mat4 light_view;
 
@@ -58,7 +59,7 @@ float linstep(float low, float high, float v)
     return clamp((v - low) / (high - low), 0.0, 1.0);
 }
 
-float CalculateShadowVariance(sampler2D shadow_map_texture, vec4 fragment_position_from_light)
+float CalculateShadowVariance(sampler2D shadow_map_texture, vec4 fragment_position_from_light, float min_variance_value, float light_bleeding_reduction_amount_value)
 {
     // Perform perspective division:
     // NOTE: On the tutorials it is said that since we are using an orthographic projection,
@@ -83,13 +84,12 @@ float CalculateShadowVariance(sampler2D shadow_map_texture, vec4 fragment_positi
         return 1.0;
     }
 
-    float variance = max(moments.y - moments.x * moments.x, 0.00000002f);
+    float variance = max(moments.y - moments.x * moments.x, min_variance_value);
 
     float distance_depth = current_depth - moments.x;
-    // float p_max = variance / (variance + distance_depth * distance_depth);
 
     float p_max = variance / (variance + distance_depth * distance_depth);
-          p_max = linstep(0.3, 1.0, p_max);
+          p_max = linstep(light_bleeding_reduction_amount_value, 1.0, p_max);
 
     return min(p_max, 1.0);
 }
@@ -110,7 +110,7 @@ void main()
     if (mode == 0)
     {
         vec3 hdr_color = vec3(0.0);
-        float fragment_shadow = CalculateShadowVariance(shadow_map, fragment_position_from_light);
+        float fragment_shadow = CalculateShadowVariance(shadow_map, fragment_position_from_light, min_variance, light_bleeding_reduction_amount);
         
         hdr_color += (fragment_shadow) * DirectionalPBR(fragment_normal, view_direction, lights.directional, fragment_diffuse, fragment_specular, fragment_smoothness);
         
