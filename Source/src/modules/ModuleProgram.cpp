@@ -23,6 +23,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateGLSLIncludes();
 
     CreateForwardProgram();
+    CreateGaussianFilteringProgram();
     CreateSkyboxProgram();
     CreateDiffuseIBLProgram();
     CreatePrefilteredIBLProgram();
@@ -40,7 +41,8 @@ bool Hachiko::ModuleProgram::Init()
         !diffuse_ibl_program || !prefiltered_ibl_program || 
         !environment_brdf_program || !stencil_program || 
         !ui_image_program || !ui_text_program || 
-        !particle_program || !shadow_mapping_program)
+        !particle_program || !shadow_mapping_program ||
+        !gaussian_filtering_program)
     {
         return false;
     }
@@ -163,6 +165,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateForwardProgram()
 {
     forward_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_forward.glsl");
     return forward_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateGaussianFilteringProgram()
+{
+    gaussian_filtering_program = CreateProgram(SHADERS_FOLDER "vertex_gaussian_filter.glsl", SHADERS_FOLDER "fragment_gaussian_filter.glsl");
+    return gaussian_filtering_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateSkyboxProgram()
@@ -309,6 +317,12 @@ bool Hachiko::ModuleProgram::CleanUp()
     
     particle_program->CleanUp();
     delete particle_program;
+
+    shadow_mapping_program->CleanUp();
+    delete shadow_mapping_program;
+
+    gaussian_filtering_program->CleanUp();
+    delete gaussian_filtering_program;
     
     return true;
 }
