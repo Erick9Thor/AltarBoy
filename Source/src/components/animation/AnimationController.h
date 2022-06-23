@@ -38,7 +38,7 @@ namespace Hachiko
         ~AnimationController();
 
         void Play(ResourceAnimation* current_animation, bool loop, unsigned fade_time);
-        void Update(unsigned elapsed);
+        void Update(unsigned elapsed, bool reverse);
         void Stop();
 
         bool GetTransform(Instance* instance, const std::string& channel_name, math::float3& position, Quat& rotation) const;
@@ -67,7 +67,7 @@ namespace Hachiko
         Quat Interpolate(Quat& first, Quat& second, float lambda) const;
 
         // MANAGE INSTANCES
-        void UpdateInstance(Instance* instance, unsigned elapsed);
+        void UpdateInstance(Instance* instance, unsigned elapsed, bool reverse);
         void ReleaseInstance(Instance* instance);
 
         State current_state = State::UNSET;

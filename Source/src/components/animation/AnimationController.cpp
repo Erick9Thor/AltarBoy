@@ -27,11 +27,11 @@ void Hachiko::AnimationController::Play(ResourceAnimation* current_animation, bo
     current = new_instance;
 }
 
-void Hachiko::AnimationController::Update(unsigned elapsed)
+void Hachiko::AnimationController::Update(unsigned elapsed, bool reverse)
 {
     if (current != nullptr)
     {
-        UpdateInstance(current, elapsed);
+        UpdateInstance(current, elapsed, reverse);
     }
 }
 
@@ -45,48 +45,95 @@ void Hachiko::AnimationController::Stop()
     }
 }
 
-void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned elapsed) 
+void Hachiko::AnimationController::UpdateInstance(Instance* instance, unsigned elapsed, bool reverse)
 {
-    if (current->current_animation != nullptr && current->current_animation->GetDuration() > 0)
+    if (reverse)
     {
-        unsigned me_elapsed = unsigned(elapsed * instance->speed);
-        me_elapsed = me_elapsed % current->current_animation->GetDuration(); // REMOVE
-        unsigned to_end = current->current_animation->GetDuration() - instance->time;
+        if (current->current_animation != nullptr && current->current_animation->GetDuration() > 0)
+        {
+            unsigned me_elapsed = unsigned(elapsed * instance->speed);
+            unsigned to_end = instance->time;
 
-        if (me_elapsed <= to_end)
-        {
-            instance->time += me_elapsed;
-        }
-        else if (instance->loop)
-        {
-            instance->time = (me_elapsed - to_end);
-        }
-        else
-        {
-            instance->time = current->current_animation->GetDuration();
+            if (me_elapsed <= to_end)
+            {
+                instance->time -= me_elapsed;
+            }
+            else if (instance->loop)
+            {
+                instance->time = current->current_animation->GetDuration() + (to_end - me_elapsed);
+            }
+            else
+            {
+                instance->time = 0;
+            }
+
+            if (instance->time == 0)
+            {
+                SetCurrentState(AnimationController::State::STOPPED);
+            }
         }
 
-        instance->time = instance->time > current->current_animation->GetDuration() ? current->current_animation->GetDuration() : instance->time;
-
-        if (to_end == 0)
+        /*
+        if (instance->previous != nullptr)
         {
-            SetCurrentState(AnimationController::State::STOPPED);
+            unsigned to_end = instance->fade_duration - instance->fade_time;
+            if (elapsed <= to_end)
+            {
+                instance->fade_time += elapsed;
+                UpdateInstance(instance->previous, elapsed, reverse);
+            }
+            else
+            {
+                ReleaseInstance(instance->previous);
+                instance->previous = nullptr;
+                instance->fade_time = instance->fade_duration = 0;
+            }
         }
+        */
     }
-
-    if (instance->previous != nullptr)
+    else
     {
-        unsigned to_end = instance->fade_duration - instance->fade_time;
-        if (elapsed <= to_end)
+        if (current->current_animation != nullptr && current->current_animation->GetDuration() > 0)
         {
-            instance->fade_time += elapsed;
-            UpdateInstance(instance->previous, elapsed);
+            unsigned me_elapsed = unsigned(elapsed * instance->speed);
+            //me_elapsed = me_elapsed % current->current_animation->GetDuration(); // REMOVE
+            unsigned to_end = current->current_animation->GetDuration() - instance->time;
+
+            if (me_elapsed <= to_end)
+            {
+                instance->time += me_elapsed;
+            }
+            else if (instance->loop)
+            {
+                instance->time = (me_elapsed - to_end);
+            }
+            else
+            {
+                instance->time = current->current_animation->GetDuration();
+            }
+
+            //instance->time = instance->time > current->current_animation->GetDuration() ? current->current_animation->GetDuration() : instance->time;
+
+            if (to_end == 0)
+            {
+                SetCurrentState(AnimationController::State::STOPPED);
+            }
         }
-        else
+
+        if (instance->previous != nullptr)
         {
-            ReleaseInstance(instance->previous);
-            instance->previous = nullptr;
-            instance->fade_time = instance->fade_duration = 0;
+            unsigned to_end = instance->fade_duration - instance->fade_time;
+            if (elapsed <= to_end)
+            {
+                instance->fade_time += elapsed;
+                UpdateInstance(instance->previous, elapsed, reverse);
+            }
+            else
+            {
+                ReleaseInstance(instance->previous);
+                instance->previous = nullptr;
+                instance->fade_time = instance->fade_duration = 0;
+            }
         }
     }
 }

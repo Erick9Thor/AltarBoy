@@ -85,7 +85,7 @@ std::string Hachiko::ComponentAnimation::GetActiveNode() const
 
 void Hachiko::ComponentAnimation::Update()
 {
-    controller->Update(EngineTimer::delta_time * 1000);
+    controller->Update(EngineTimer::delta_time * 1000, reverse);
 
     if (game_object != nullptr)
     {
@@ -145,6 +145,8 @@ void Hachiko::ComponentAnimation::DrawGui()
 
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Animation"))
     {
+        ImGui::Checkbox("Reverse", &reverse);
+
         /* LOAD STATE MACHINE */
 
         LoadStateMachine();

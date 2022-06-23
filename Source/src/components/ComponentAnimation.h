@@ -35,6 +35,11 @@ namespace Hachiko
             return controller->GetCurrentState() == AnimationController::State::STOPPED;
         }
 
+
+        // TEST
+        bool reverse = false;
+        //
+
     private:
         void LoadStateMachine();
         void AnimationSelector(unsigned clip_idx);
