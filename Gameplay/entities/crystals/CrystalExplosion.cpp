@@ -58,7 +58,7 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 
 	if (!_stats->IsAlive() && component_anim)
 	{
-		if (component_anim->AnimationIsStopped())
+		if (component_anim->IsAnimationStopped())
 		{
 			SceneManagement::Destroy(game_object);
 			return;

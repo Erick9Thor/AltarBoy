@@ -102,7 +102,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		}
 		else
 		{
-			if (animation != nullptr && animation->AnimationIsStopped())
+			if (animation != nullptr && animation->IsAnimationStopped())
 			{
 				DropParasite();
 			}
