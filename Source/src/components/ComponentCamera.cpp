@@ -15,7 +15,7 @@ Hachiko::ComponentCamera::ComponentCamera(GameObject* container) :
     horizontal_fov(65.0f)
 {
     frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
-    frustum.SetViewPlaneDistances(0.1f, 1000.0f);
+    frustum.SetViewPlaneDistances(1.0f, 100.0f);
     
     float2 frame_buffer_size = App->renderer->GetFrameBufferSize();    
     SetResolution(frame_buffer_size.x, frame_buffer_size.y);
