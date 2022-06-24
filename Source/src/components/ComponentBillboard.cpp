@@ -116,6 +116,8 @@ void Hachiko::ComponentBillboard::DrawGui()
             params_cfg.min = 0.0f;
             MultiTypeSelector("Start size", start_size, &params_cfg);
             Widgets::MultiTypeSelector("Start rotation", start_rotation);
+
+            Widgets::DragFloat3("Position", emitter_properties.position);
         }
 
         if (CollapsingHeader("Renderer", &renderer_section, Widgets::CollapsibleHeaderType::Checkbox))
@@ -571,7 +573,7 @@ void Hachiko::ComponentBillboard::UpdateRotationOverLifetime()
         return;
     }
 
-    rotation += rotation_over_time.GetValue();
+    rotation += rotation_over_time.GetValue() * EngineTimer::delta_time;
 }
 
 void Hachiko::ComponentBillboard::UpdateSizeOverLifetime()
@@ -581,7 +583,7 @@ void Hachiko::ComponentBillboard::UpdateSizeOverLifetime()
         return;
     }
 
-    size += size_over_time.GetValue();
+    size += size_over_time.GetValue() * EngineTimer::delta_time;
 }
 
 void Hachiko::ComponentBillboard::PublishIntoScene()
@@ -609,7 +611,7 @@ void Hachiko::ComponentBillboard::DetachFromScene()
 void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix)
 {
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
-    float3 position = transform->GetGlobalPosition();
+    float3 position = transform->GetGlobalPosition() + emitter_properties.position;
     float3 scale = transform->GetGlobalScale() * size;
     float3 camera_position = camera->GetFrustum()->Pos();
     float3x3 rotation_matrix = float3x3::identity.RotateZ(rotation);

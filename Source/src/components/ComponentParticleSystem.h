@@ -82,6 +82,7 @@ namespace Hachiko
 
         //render
         bool in_scene = false;
+        float stretch = 0.0f;
 
         //particles
         std::vector<Particle> particles{1000};

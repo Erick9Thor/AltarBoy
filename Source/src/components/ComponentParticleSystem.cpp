@@ -168,6 +168,7 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             Widgets::DragFloatConfig top;
             Widgets::DragFloatConfig radius;
             radius.min = 0.001f;
+            radius.max = emitter_properties.top;
             radius.speed = 0.05f;
 
             Widgets::DragFloatConfig thickness;
@@ -185,7 +186,7 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             {
                 case ParticleSystem::Emitter::Type::CONE:
                     top.speed = 0.01f;
-                    top.min = 0.001f;
+                    top.min = emitter_properties.radius;
                     DragFloat("Top", emitter_properties.top, &top);
                     DragFloat("Radius", emitter_properties.radius, &radius);
                     DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
@@ -297,6 +298,16 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             if (particle_properties.orientation == ParticleSystem::ParticleOrientation::HORIZONTAL)
             {
                 ImGui::Checkbox("Orientate to direction", &particle_properties.orientate_to_direction);
+            }
+
+            if (particle_properties.orientation == ParticleSystem::ParticleOrientation::STRETCH)
+            {
+                Widgets::DragFloatConfig stretch_config;
+                stretch_config.format = "%.2f";
+                stretch_config.speed = 0.01f;
+                stretch_config.min = 0.00f;
+                stretch_config.max = 1.00f;
+                Widgets::DragFloat("Stretch", stretch, &stretch_config);
             }
 
             int render_mode = static_cast<int>(particle_properties.render_mode);
