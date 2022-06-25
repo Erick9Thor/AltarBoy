@@ -24,6 +24,7 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSpeed() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSize() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesRotation() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesStretch() const;
 
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
@@ -82,7 +83,7 @@ namespace Hachiko
 
         //render
         bool in_scene = false;
-        float stretch = 0.0f;
+        ParticleSystem::VariableTypeProperty stretch = {float2::one, 0.1, false, false};
 
         //particles
         std::vector<Particle> particles{1000};

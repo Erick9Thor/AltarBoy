@@ -305,9 +305,9 @@ void Hachiko::ComponentParticleSystem::DrawGui()
                 Widgets::DragFloatConfig stretch_config;
                 stretch_config.format = "%.2f";
                 stretch_config.speed = 0.01f;
-                stretch_config.min = 0.00f;
-                stretch_config.max = 1.00f;
-                Widgets::DragFloat("Stretch", stretch, &stretch_config);
+                stretch_config.min = 0.0f;
+                stretch_config.max = 1.0f;
+                Widgets::MultiTypeSelector("Stretch", stretch, &stretch_config);
             }
 
             int render_mode = static_cast<int>(particle_properties.render_mode);
@@ -515,6 +515,11 @@ const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleS
 const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesRotation() const
 {
     return start_rotation;
+}
+
+const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesStretch() const
+{
+    return stretch;
 }
 
 const Hachiko::ParticleSystem::Emitter::Properties& Hachiko::ComponentParticleSystem::GetEmitterProperties() const
