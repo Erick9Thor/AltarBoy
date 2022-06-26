@@ -2,12 +2,12 @@
 
 #include "Component.h"
 
-#include "resources/ResourceAnimation.h"
+#include "animation/AnimationController.h"
 
 namespace Hachiko
 {
     class GameObject;
-    class AnimationController;
+    class ResourceAnimation;
     class ResourceStateMachine;
 
     class WindowStateMachine;
@@ -30,15 +30,15 @@ namespace Hachiko
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
 
-        bool AnimationIsStopped()
+        bool IsAnimationStopped()
         {
-            return current_animation->GetCurrentState() == ResourceAnimation::State::STOPPED;
+            return controller->GetCurrentState() == AnimationController::State::STOPPED;
         }
 
-        ResourceAnimation* GetCurrentAnimation()
-        {
-            return current_animation;
-        }
+
+        // TEST
+        bool reverse = false;
+        //
 
     private:
         void LoadStateMachine();
@@ -52,7 +52,6 @@ namespace Hachiko
     private:
         AnimationController* controller = nullptr;
         unsigned int active_node = 0;
-        ResourceAnimation* current_animation = nullptr;
 
         // SM CONTROL
         WindowStateMachine* windowStateMachine = nullptr;

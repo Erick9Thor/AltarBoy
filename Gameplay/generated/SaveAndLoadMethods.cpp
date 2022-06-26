@@ -1,12 +1,11 @@
 #include "scriptingUtil/gameplaypch.h"
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
-#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
@@ -20,68 +19,6 @@
 #include "ui/MainMenuManager.h"
 
 
-
-void Hachiko::Scripting::CrystalPlatform::OnSave(YAML::Node& node) const
-{
-	node["'_seconds_before_shaking@float'"] = _seconds_before_shaking;
-
-	node["'_seconds_shaking@float'"] = _seconds_shaking;
-
-	if (_invisible_obstacle != nullptr)
-	{
-		node["'_invisible_obstacle@GameObject*'"] = _invisible_obstacle->GetID();
-	}
-	else
-	{
-		node["'_invisible_obstacle@GameObject*'"] = 0;
-	}
-
-	if (_crystal != nullptr)
-	{
-		node["'_crystal@GameObject*'"] = _crystal->GetID();
-	}
-	else
-	{
-		node["'_crystal@GameObject*'"] = 0;
-	}
-
-	if (_crystal_platform != nullptr)
-	{
-		node["'_crystal_platform@GameObject*'"] = _crystal_platform->GetID();
-	}
-	else
-	{
-		node["'_crystal_platform@GameObject*'"] = 0;
-	}
-}
-
-void Hachiko::Scripting::CrystalPlatform::OnLoad()
-{
-	if (load_node["'_seconds_before_shaking@float'"].IsDefined())
-	{
-		_seconds_before_shaking = load_node["'_seconds_before_shaking@float'"].as<float>();
-	}
-
-	if (load_node["'_seconds_shaking@float'"].IsDefined())
-	{
-		_seconds_shaking = load_node["'_seconds_shaking@float'"].as<float>();
-	}
-
-	if (load_node["'_invisible_obstacle@GameObject*'"].IsDefined())
-	{
-		_invisible_obstacle = SceneManagement::FindInCurrentScene(load_node["'_invisible_obstacle@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_crystal@GameObject*'"].IsDefined())
-	{
-		_crystal = SceneManagement::FindInCurrentScene(load_node["'_crystal@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_crystal_platform@GameObject*'"].IsDefined())
-	{
-		_crystal_platform = SceneManagement::FindInCurrentScene(load_node["'_crystal_platform@GameObject*'"].as<unsigned long long>());
-	}
-}
 
 void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
@@ -398,11 +335,11 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::CombatManager::OnSave(YAML::Node& node) const
 {
 }
 
-void Hachiko::Scripting::BulletController::OnLoad()
+void Hachiko::Scripting::CombatManager::OnLoad()
 {
 }
 
@@ -541,11 +478,7 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
-	node["'_max_dash_charges@int'"] = _max_dash_charges;
-
-	node["'_attack_duration@float'"] = _attack_duration;
-
-	node["'_attack_duration_distance@float'"] = _attack_duration_distance;
+	node["'_max_dash_charges@unsigned'"] = _max_dash_charges;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
@@ -636,19 +569,9 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_max_dash_charges@int'"].IsDefined())
+	if (load_node["'_max_dash_charges@unsigned'"].IsDefined())
 	{
-		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
-	}
-
-	if (load_node["'_attack_duration@float'"].IsDefined())
-	{
-		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_attack_duration_distance@float'"].IsDefined())
-	{
-		_attack_duration_distance = load_node["'_attack_duration_distance@float'"].as<float>();
+		_max_dash_charges = load_node["'_max_dash_charges@unsigned'"].as<unsigned>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
