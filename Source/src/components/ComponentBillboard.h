@@ -32,7 +32,8 @@ namespace Hachiko
         ParticleSystem::Emitter::State state = ParticleSystem::Emitter::State::STOPPED;
         ParticleSystem::Emitter::Properties emitter_properties;
         float elapsed_time = 0.0f;
-        float time = 0.0f;
+        float color_time = 0.0f;
+        float animation_time = 0.0f;
 
         // Sections
         bool parameters_section = true;

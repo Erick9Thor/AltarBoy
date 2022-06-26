@@ -83,7 +83,6 @@ namespace Hachiko
 
         //render
         bool in_scene = false;
-        ParticleSystem::VariableTypeProperty stretch = {float2::one, 0.1, false, false};
 
         //particles
         std::vector<Particle> particles{1000};
