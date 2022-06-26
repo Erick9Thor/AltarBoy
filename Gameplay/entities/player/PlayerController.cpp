@@ -588,8 +588,12 @@ void Hachiko::Scripting::PlayerController::DashController()
 	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
 	// of an acceleration.
 	_player_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
-	DashTrailManager(_dash_progress);
 
+	if (_state != PlayerState::MELEE_ATTACKING)
+	{
+		DashTrailManager(_dash_progress);
+	}
+	
 	// Attack status is stopped in attack controller
 	if (_dash_progress >= 1.0f && IsDashing())
 	{
