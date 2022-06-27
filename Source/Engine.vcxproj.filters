@@ -660,6 +660,7 @@
     <ClCompile Include="src\utils\Bool2.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\ShadowMappingProperties.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2495,6 +2496,7 @@
     <ClInclude Include="src\core\HachikoApiDefine.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\rendering\ShadowMappingProperties.h" />
     <ClInclude Include="src\core\rendering\Uniforms.h" />
   </ItemGroup>
   <ItemGroup>
