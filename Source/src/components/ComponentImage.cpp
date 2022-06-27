@@ -199,30 +199,27 @@ void Hachiko::ComponentImage::Update()
     {
         UpdateSize();
     }
-    if (image != nullptr)
+    if (image != nullptr && is_tiled)
     {
-        if (is_tiled)
-        {
-            elapse += EngineTimer::delta_time;
+        elapse += EngineTimer::delta_time;
         
-            while (elapse >= time_per_frame) 
+        while (elapse >= time_per_frame) 
+        {
+            elapse -= time_per_frame;
+
+            if (animation_index.x < x_tiles - 1)
             {
-                elapse -= time_per_frame;
-
-                if (animation_index.x < x_tiles - 1)
-                {
-                    animation_index.x += 1.0f;
-                    break;
-                }
-                else if (animation_index.y < y_tiles - 1)
-                {
-                    animation_index.x = 0.0f;
-                    animation_index.y += 1.0f;
-                    break;
-                }
-
-                animation_index = {0.0f, 0.0f};
+                animation_index.x += 1.0f;
+                break;
             }
+            else if (animation_index.y < y_tiles - 1)
+            {
+                animation_index.x = 0.0f;
+                animation_index.y += 1.0f;
+                break;
+            }
+
+            animation_index = {0.0f, 0.0f};
         }
     }
 }

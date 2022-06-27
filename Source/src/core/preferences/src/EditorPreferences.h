@@ -136,7 +136,7 @@ namespace Hachiko
             undo_redo_active = value;
         }
 
-        [[nodiscard]] bool GetUndoRedoActive()
+        [[nodiscard]] bool GetUndoRedoActive() const
         {
             return undo_redo_active;
         }
