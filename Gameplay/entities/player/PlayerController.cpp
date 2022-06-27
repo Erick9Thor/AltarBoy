@@ -34,9 +34,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_bullet.size = 0.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
-
-	
-	
 	
 	Weapon red;
 	red.name = "Red";
@@ -71,6 +68,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
+	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
+	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	
 	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
@@ -86,9 +86,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_dash_trail->SetActive(false);
 	}
-
-	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 2;
@@ -354,7 +351,19 @@ void Hachiko::Scripting::PlayerController::Dash()
 
 	float3 corrected_dash_final_position;
 	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
-	corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	// Correct by wall hit
+	bool hit_terrain = GetTerrainCollision(_dash_start, dash_final_position, corrected_dash_final_position);
+	if (hit_terrain)
+	{
+		dash_final_position = corrected_dash_final_position;
+		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
+		corrected_dash_final_position = Navigation::GetCorrectedPosition(dash_final_position, float3(5.f, 0.5f, 5.f));
+	}
+	else
+	{
+		// Correct normally by navmesh
+		corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	}
 	if (corrected_dash_final_position.x < FLT_MAX)
 	{
 		_dash_end = corrected_dash_final_position;
@@ -363,6 +372,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 	{
 		_dash_end = dash_final_position;
 	}
+	
 }
 
 
@@ -514,6 +524,12 @@ float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack
 	return emitter;
 }
 
+bool Hachiko::Scripting::PlayerController::GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const
+{
+	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	return terrain_hit != nullptr;
+}
+
 void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
@@ -531,7 +547,8 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		_player_position.y -= 0.25f;
+		constexpr float fall_speed = 25.f;
+		_player_position.y -= fall_speed * Time::DeltaTime();
 
 		if (_dash_start.y - _player_position.y > _falling_distance)
 		{
@@ -772,11 +789,11 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
-	if (enemies == nullptr) {
+	if (_enemies == nullptr) {
 		return;
 	}
 
-	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
+	std::vector<GameObject*> enemy_children = _enemies ? _enemies->children : std::vector<GameObject*>();
 
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{
