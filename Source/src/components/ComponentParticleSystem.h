@@ -55,7 +55,7 @@ namespace Hachiko
         bool shape_section = true;
         bool lights_section = false;
         bool renderer_section = true;
-        bool texture_section = true;
+        bool texture_section = false;
 
         //particle config
         ParticleSystem::ParticleProperties particle_properties;
