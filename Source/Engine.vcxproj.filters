@@ -2495,6 +2495,7 @@
     <ClInclude Include="src\core\HachikoApiDefine.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\rendering\Uniforms.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
