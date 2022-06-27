@@ -142,6 +142,28 @@ void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_ma
                 out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart() * particle_rotation_matrix, particle_size);
                 break;
             }
+        case ParticleSystem::ParticleOrientation::STRETCH:
+            {
+                particle_size.x = particle_size.x * emitter->GetParticlesStretch().values.x; 
+                particle_size.y = particle_size.y * emitter->GetParticlesStretch().values.y;
+                
+                float4x4 particle_model = float4x4::FromTRS(current_position, float3x3::identity, float3::one);
+                float3 global_direction = (particle_model.RotatePart() * current_direction).Normalized();
+
+				float3 camera_position = camera->GetFrustum()->Pos();
+                float3 camera_direction = (float3(camera_position.x, current_position.y, camera_position.z) - current_position).Normalized();
+                float3 up_direction = Cross(global_direction, camera_direction);
+                float3 new_camera_direction = Cross(global_direction, up_direction);
+
+                float3x3 rotation;
+                rotation.SetCol(0, up_direction);
+                rotation.SetCol(1, global_direction);
+                rotation.SetCol(2, new_camera_direction);
+
+                out_matrix = float4x4::identity * rotation;
+                out_matrix = float4x4::FromTRS(current_position, out_matrix.RotatePart(), particle_size);
+                break;
+            }
     }
 }
 

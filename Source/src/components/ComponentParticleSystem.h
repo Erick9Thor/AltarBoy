@@ -24,6 +24,7 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSpeed() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSize() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesRotation() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesStretch() const;
 
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
