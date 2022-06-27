@@ -108,12 +108,13 @@ void Hachiko::ModuleRender::GenerateShadowMap()
     // Generate shadow map texture:
     glGenTextures(1, &shadow_map_texture);
     glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
+    glGenerateMipmap(shadow_map_texture);
 
     // With the generated shadow map texture, attach it as the shadow map frame
     // buffer's depth buffer:
@@ -126,9 +127,6 @@ void Hachiko::ModuleRender::GenerateShadowMap()
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, shadow_width, shadow_height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadow_map_depth);
 
-    //// Since we will only use the depth, disable draw and read for color:
-    //glDrawBuffer(GL_NONE);
-    //glReadBuffer(GL_NONE);
     // Unbind the shadow map frame buffer:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -137,12 +135,13 @@ void Hachiko::ModuleRender::GenerateShadowMap()
     // Generate filtered shadow map texture:
     glGenTextures(1, &shadow_map_filtered_texture);
     glBindTexture(GL_TEXTURE_2D, shadow_map_filtered_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
+    glGenerateMipmap(shadow_map_filtered_texture);
     // Bind shadow_map_filtered_texture on 0 color attachment of shadow_map_filtered_fbo:
     glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_filtered_fbo);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadow_map_filtered_texture, 0);
@@ -328,8 +327,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     {
         light_view_matrix = scene->dir_lights[0]->GetFrustum().ViewMatrix();
         light_projection_matrix = scene->dir_lights[0]->GetFrustum().ProjectionMatrix();
-
-        
     }
 
     // ----------------------------- GEOMETRY PASS ----------------------------
@@ -375,9 +372,11 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
     program->BindUniformFloat("light_bleeding_reduction_amount", &light_bleeding_reduction_amount);
     program->BindUniformFloat("min_variance", &min_variance);
+    program->BindUniformFloat("shadow_bias", &shadow_bias);
+    program->BindUniformFloat("exponent", &exponent);
 
     // Bind ImageBasedLighting uniforms
-    //scene->GetSkybox()->BindImageBasedLightingUniforms(program);
+    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
@@ -547,6 +546,7 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     // TODO: Store these uniform names somewhere.
     program->BindUniformFloat4x4("light_projection", light_projection_matrix.ptr());
     program->BindUniformFloat4x4("light_view", light_view_matrix.ptr());
+    program->BindUniformFloat("exponent", &exponent);
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
@@ -662,6 +662,8 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::DragFloat("Light Bleeding Reduction", &light_bleeding_reduction_amount, 0.000000001f, 0.0f, 1.0f, "%.9f");
     ImGui::DragFloat("Min Variance", &min_variance, 0.000000001f, 0.0f, 1.0f, "%.9f");
     ImGui::DragFloat("Gaussian Blur Amount", &shadow_gaussian_blur_amount, 0.01f, 0.0f, FLT_MAX, "%.9f");
+    ImGui::DragFloat("Exponent", &exponent, 0.01f, 0.0f, FLT_MAX, "%.9f");
+    ImGui::DragFloat("Bias", &shadow_bias, 0.000000001f, 0.0f, 1.0f, "%.9f");
     
     ImGui::NewLine();
     ImGui::Text("Rendering Mode");

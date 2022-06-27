@@ -150,9 +150,13 @@ namespace Hachiko
         unsigned shadow_map_depth = 0;
         unsigned int shadow_width = 4096;
         unsigned int shadow_height = 4096;
-        float shadow_gaussian_blur_amount = 1.0f;
-        float min_variance = 0.00000002f;
-        float light_bleeding_reduction_amount = 0.2f;
+        
+        // TODO: Move these to Directional Light:
+        float shadow_gaussian_blur_amount = 0.62f;
+        float min_variance = 0.001f;
+        float light_bleeding_reduction_amount = 0.25f;
+        float shadow_bias = 0.00001f;
+        float exponent = 14.37f;
 
         bool draw_deferred = true;
 

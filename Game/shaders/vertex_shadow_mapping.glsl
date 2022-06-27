@@ -33,6 +33,8 @@ readonly layout(std430, row_major, binding = 5) buffer PalettesPerInstances
  PalettePerInstance paletteInstanceInfo[];
 };
 
+layout (location = 0) out vec4 light_space_position;
+
 void main()
 {
     vec4 position = vec4(in_position, 1.0);
@@ -51,5 +53,6 @@ void main()
         normal = (skin_transform*vec4(in_normal, 0.0));
     }
 
-    gl_Position = light_projection * light_view * models[instance] * position;
+    light_space_position = light_projection * light_view * models[instance] * position;
+    gl_Position = light_space_position;
 }
