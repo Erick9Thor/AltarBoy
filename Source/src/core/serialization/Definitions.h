@@ -121,6 +121,7 @@
 #define DISPLAY_QUADTREE "display_quadtree"
 #define DISPLAY_SKYBOX "display_skybox"
 #define DISPLAY_NAVMESH "display_navmesh"
+#define UNDO_REDO_ACTIVE "undo_redo_active"
 #define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
