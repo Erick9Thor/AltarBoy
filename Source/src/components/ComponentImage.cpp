@@ -60,11 +60,9 @@ void Hachiko::ComponentImage::DrawGui()
             ImGuiFileDialog::Instance()->Close();
         }
 
-        if (!use_image || !image)
-        {
-            ImGuiUtils::CompactColorPicker("Image Color", color.ptr());
-        }
-        else
+        ImGui::ColorEdit4("Image Color", &color[0]);
+
+        if (use_image)
         {
             if (ImGui::Checkbox("Is tiled", &is_tiled))
             {
@@ -123,7 +121,7 @@ void Hachiko::ComponentImage::DrawGui()
 
         if (!use_hover_image || !hover_image)
         {
-            ImGuiUtils::CompactColorPicker("Hover Color", hover_color.ptr());
+            ImGui::ColorEdit4("Hover Color", &hover_color[0]);
         }
 
         ImGui::Text("Image Loaded %d", image != nullptr);
@@ -211,7 +209,10 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
     node[USE_HOVER_IMAGE] = use_hover_image;
     node[IMAGE_COLOR] = color;
     node[IMAGE_HOVER_COLOR] = hover_color;
-    node["fill_window"] = fill_window;
+    node[IMAGE_TILED] = is_tiled;
+    node[IMAGE_X_TILES] = x_tiles;
+    node[IMAGE_Y_TILES] = y_tiles;
+    node[IMAGE_TILES_PER_SEC] = frames_per_second;
 }
 
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
@@ -228,6 +229,13 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     color = node[IMAGE_COLOR].as<float4>();
     hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
     fill_window = node["fill_window"].IsDefined() ? node["fill_window"].as<bool>() : false;
+
+    is_tiled = node[IMAGE_TILED].IsDefined() ? node[IMAGE_TILED].as<bool>() : false;
+    x_tiles = node[IMAGE_X_TILES].IsDefined() ? node[IMAGE_X_TILES].as<int>() : 1;
+    y_tiles = node[IMAGE_Y_TILES].IsDefined() ? node[IMAGE_Y_TILES].as<int>() : 1;
+    frames_per_second = node[IMAGE_TILES_PER_SEC].IsDefined() ? node[IMAGE_TILES_PER_SEC].as<int>() : 1;
+    factor = float2(1.0f / x_tiles, 1.0f / y_tiles);
+    time_per_frame = 1.0f / frames_per_second;
 }
 
 void Hachiko::ComponentImage::UpdateSize()
