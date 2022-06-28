@@ -1,6 +1,7 @@
 #pragma once
 
 #include "components/Component.h"
+#include "core/rendering/ShadowMappingProperties.h"
 
 namespace Hachiko
 {
@@ -32,8 +33,14 @@ namespace Hachiko
             return frustum;
         }
 
+        ShadowMappingProperties& GetShadowProperties() 
+        {
+            return shadow_properties;
+        }
+
     private:
         bool draw_direction = false;
+        ShadowMappingProperties shadow_properties;
         Frustum frustum;
     };
 }

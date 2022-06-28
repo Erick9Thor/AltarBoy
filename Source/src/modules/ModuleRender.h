@@ -120,7 +120,10 @@ namespace Hachiko
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
-        void ApplyFilterToShadowMap() const;
+        void ApplyFilterToShadowMap(float gaussian_blur_scale) const;
+        void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
+            unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
+            unsigned width, unsigned height, const Program* program) const;
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();
@@ -150,13 +153,6 @@ namespace Hachiko
         unsigned shadow_map_depth = 0;
         unsigned int shadow_width = 4096;
         unsigned int shadow_height = 4096;
-        
-        // TODO: Move these to Directional Light:
-        float shadow_gaussian_blur_amount = 0.62f;
-        float min_variance = 0.001f;
-        float light_bleeding_reduction_amount = 0.25f;
-        float shadow_bias = 0.00001f;
-        float exponent = 14.37f;
 
         bool draw_deferred = true;
 
