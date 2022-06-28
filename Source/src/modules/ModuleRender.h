@@ -109,6 +109,10 @@ namespace Hachiko
         {
             return particle_vao;
         }
+
+        void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
+            unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
+            unsigned width, unsigned height, const Program* program) const;
     
     private:
         void GenerateFrameBuffer();
@@ -121,9 +125,7 @@ namespace Hachiko
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void ApplyFilterToShadowMap(float gaussian_blur_scale) const;
-        void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
-            unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
-            unsigned width, unsigned height, const Program* program) const;
+        
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();

@@ -38,6 +38,11 @@ namespace Hachiko
             return shadow_properties;
         }
 
+        const ShadowMappingProperties& GetShadowProperties() const
+        {
+            return shadow_properties;
+        }
+
     private:
         bool draw_direction = false;
         ShadowMappingProperties shadow_properties;

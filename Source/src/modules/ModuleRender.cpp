@@ -367,8 +367,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program = App->program->GetDeferredLightingProgram();
     program->Activate();
 
-    // TODO: Store these uniform names somewhere. 
-    // TODO: Pack these uniform stuff to a separate method.
     // Bind shadow specific necessary uniforms for lighting pass:
     program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, light_projection_matrix.ptr());
     program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, light_view_matrix.ptr());

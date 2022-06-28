@@ -661,6 +661,7 @@
       <Filter>Core\Util</Filter>
     </ClCompile>
     <ClCompile Include="src\core\rendering\ShadowMappingProperties.cpp" />
+    <ClCompile Include="src\core\rendering\ShadowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2498,6 +2499,7 @@
     </ClInclude>
     <ClInclude Include="src\core\rendering\ShadowMappingProperties.h" />
     <ClInclude Include="src\core\rendering\Uniforms.h" />
+    <ClInclude Include="src\core\rendering\ShadowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
