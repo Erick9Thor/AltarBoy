@@ -5,6 +5,7 @@
 #include "batching/BatchManager.h"
 #include "core/rendering/RenderList.h"
 #include "core/rendering/GBuffer.h"
+#include "core/rendering/ShadowManager.h"
 
 #include <vector>
 
@@ -116,7 +117,6 @@ namespace Hachiko
     
     private:
         void GenerateFrameBuffer();
-        void GenerateShadowMap();
         void ResizeFrameBuffer(int width, int height) const;
         void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
@@ -124,7 +124,6 @@ namespace Hachiko
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
-        void ApplyFilterToShadowMap(float gaussian_blur_scale) const;
         
         void SetRenderMode(bool is_deferred);
 
@@ -148,13 +147,14 @@ namespace Hachiko
         unsigned fb_width = 0;
 
         // Shadow Map related:
-        unsigned shadow_map_fbo = 0;
-        unsigned shadow_map_texture = 0;
-        unsigned shadow_map_filtered_fbo = 0;
-        unsigned shadow_map_filtered_texture = 0;
-        unsigned shadow_map_depth = 0;
-        unsigned int shadow_width = 4096;
-        unsigned int shadow_height = 4096;
+        ShadowManager shadow_manager;
+        //unsigned shadow_map_fbo = 0;
+        //unsigned shadow_map_texture = 0;
+        //unsigned shadow_map_filtered_fbo = 0;
+        //unsigned shadow_map_filtered_texture = 0;
+        //unsigned shadow_map_depth = 0;
+        //unsigned int shadow_width = 4096;
+        //unsigned int shadow_height = 4096;
 
         bool draw_deferred = true;
 

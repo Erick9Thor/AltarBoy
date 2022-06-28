@@ -24,6 +24,8 @@ public:
     void BindBufferForDrawing() const;
     void UnbindBuffer() const;
 
+    [[nodiscard]] const Frustum& GetDirectionalLightFrustum() const;
+
 private:
     const ComponentDirLight* GetDirectionalLight() const;
     void BindCommonUniforms(const Program* program) const;
@@ -31,14 +33,21 @@ private:
     bool DetectLightChanges();
 
 private:
+    // Light frustum related:
     float4x4 _directional_light_projection = float4x4::identity;
     float4x4 _directional_light_view = float4x4::identity;
+    Frustum _directional_light_frustum = {};
+    
+    // Cache variables for checking for changes to avoid constant reconstruction
+    // of _directional_light_frustum each frame:
     float3 _directional_light_direction = float3::zero;
     float4x4 _camera_transform = float4x4::identity;
     float4x4 _camera_projection = float4x4::identity;
     float4x4 _camera_view = float4x4::identity;
     bool _camera_exists = false;
     bool _light_exists = false;
+    
+    // Shadow map texture related:
     unsigned _shadow_map_fbo = 0;
     unsigned _shadow_map_texture = 0;
     unsigned _shadow_map_depth = 0;

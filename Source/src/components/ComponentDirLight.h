@@ -25,14 +25,6 @@ namespace Hachiko
         float4 color = float4(1.0f, 1.0f, 1.0f, 1.0f);
         float intensity = 1.0f;
 
-        // TODO: Only update when needed.
-        void UpdateFrustum(ComponentCamera* camera);
-
-        const Frustum& GetFrustum() const 
-        {
-            return frustum;
-        }
-
         ShadowMappingProperties& GetShadowProperties() 
         {
             return shadow_properties;
@@ -46,6 +38,5 @@ namespace Hachiko
     private:
         bool draw_direction = false;
         ShadowMappingProperties shadow_properties;
-        Frustum frustum;
     };
 }

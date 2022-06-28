@@ -125,26 +125,28 @@ void Hachiko::ShadowManager::CalculateLightFrustum()
         camera_frustum_sphere_radius = std::max(camera_frustum_sphere_center.Distance(camera_frustum_corners[i]), camera_frustum_sphere_radius);
     }
 
-    Frustum frustum;
     // Set frustum kind:
-    frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
+    _directional_light_frustum.SetKind(FrustumSpaceGL, FrustumRightHanded);
     // Set the orthographic width and height of the light frustum to be the
     // diameter of enclosing sphere of camera frustum:
     float orthographic_size = camera_frustum_sphere_radius * 2.0f;
-    frustum.SetOrthographic(orthographic_size, orthographic_size);
+    _directional_light_frustum.SetOrthographic(orthographic_size, orthographic_size);
     // Set far plane to be same with orthographic width and height, and set
     // near to be 0:
-    frustum.SetViewPlaneDistances(0.0f, orthographic_size);
+    _directional_light_frustum.SetViewPlaneDistances(0.0f, orthographic_size);
     // Set the directional light direction:
     float3 direction = _directional_light_direction.Normalized();
     // Calculate right to get up:
     float3 right = direction.Cross(float3::unitY).Normalized();
     // Set position, front and up of the light frustum:
-    frustum.SetFrame(camera_frustum_sphere_center - direction * camera_frustum_sphere_radius, direction, right.Cross(direction).Normalized());
+    _directional_light_frustum.SetFrame(
+        camera_frustum_sphere_center - direction * camera_frustum_sphere_radius, 
+        direction, 
+        right.Cross(direction).Normalized());
 
     // Assign projection and view matrices from the calculated frustum:
-    _directional_light_projection = frustum.ProjectionMatrix();
-    _directional_light_view = frustum.ViewMatrix();
+    _directional_light_projection = _directional_light_frustum.ProjectionMatrix();
+    _directional_light_view = _directional_light_frustum.ViewMatrix();
 }
 
 void Hachiko::ShadowManager::BindShadowMapGenerationPassUniforms(const Program* program) const 
@@ -208,6 +210,11 @@ void Hachiko::ShadowManager::UnbindBuffer() const
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+const Frustum& Hachiko::ShadowManager::GetDirectionalLightFrustum() const
+{
+    return _directional_light_frustum;
+}
+
 const Hachiko::ComponentDirLight* Hachiko::ShadowManager::GetDirectionalLight() const
 {
     if (App->scene_manager->GetActiveScene()->dir_lights.size() <= 0)
@@ -220,8 +227,8 @@ const Hachiko::ComponentDirLight* Hachiko::ShadowManager::GetDirectionalLight() 
 
 void Hachiko::ShadowManager::BindCommonUniforms(const Program* program) const 
 {
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, _directional_light_projection.ptr());
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, _directional_light_view.ptr());
+    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, _directional_light_frustum.ProjectionMatrix().ptr());
+    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, _directional_light_frustum.ViewMatrix().ptr());
 }
 
 bool Hachiko::ShadowManager::DetectCameraChanges()

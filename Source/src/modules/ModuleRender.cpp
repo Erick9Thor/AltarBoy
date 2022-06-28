@@ -37,7 +37,8 @@ bool Hachiko::ModuleRender::Init()
 
     GenerateDeferredQuad();
     GenerateFrameBuffer();
-    GenerateShadowMap();
+
+    shadow_manager.GenerateShadowMap();
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -95,57 +96,6 @@ void Hachiko::ModuleRender::GenerateFrameBuffer()
    
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
-
-void Hachiko::ModuleRender::GenerateShadowMap() 
-{
-    // TODO: Free these at the end of the app.
-    // Generate shadow map frame buffer object that we will only use the depth
-    // of:
-    glGenFramebuffers(1, &shadow_map_fbo);
-    
-    float clamp_color[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-    
-    // Generate shadow map texture:
-    glGenTextures(1, &shadow_map_texture);
-    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
-    glGenerateMipmap(shadow_map_texture);
-
-    // With the generated shadow map texture, attach it as the shadow map frame
-    // buffer's depth buffer:
-    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadow_map_texture, 0);
-
-    // TODO: Store in class and delete.
-    glGenRenderbuffers(1, &shadow_map_depth);
-    glBindRenderbuffer(GL_RENDERBUFFER, shadow_map_depth);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, shadow_width, shadow_height);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, shadow_map_depth);
-
-    // Unbind the shadow map frame buffer:
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    // Generate filtered shadow map fbo:
-    glGenFramebuffers(1, &shadow_map_filtered_fbo);
-    // Generate filtered shadow map texture:
-    glGenTextures(1, &shadow_map_filtered_texture);
-    glBindTexture(GL_TEXTURE_2D, shadow_map_filtered_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, shadow_width, shadow_height, 0, GL_RGBA, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
-    glGenerateMipmap(shadow_map_filtered_texture);
-    // Bind shadow_map_filtered_texture on 0 color attachment of shadow_map_filtered_fbo:
-    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_filtered_fbo);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, shadow_map_filtered_texture, 0);
 }
 
 void Hachiko::ModuleRender::ResizeFrameBuffer(const int width, const int height) const
@@ -318,17 +268,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     {
         render_forward_pass = !render_forward_pass;
     }
-
-    float4x4 light_view_matrix = float4x4::identity;
-    float4x4 light_projection_matrix = float4x4::identity;
-
-    bool shadow_map_drawn = DrawToShadowMap(scene, camera, batch_manager);
-
-    if (shadow_map_drawn)
-    {
-        light_view_matrix = scene->dir_lights[0]->GetFrustum().ViewMatrix();
-        light_projection_matrix = scene->dir_lights[0]->GetFrustum().ProjectionMatrix();
-    }
+    
+    // Generate shadow map from the scene:
+    DrawToShadowMap(scene, camera, batch_manager);
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
@@ -368,21 +310,15 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program->Activate();
 
     // Bind shadow specific necessary uniforms for lighting pass:
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, light_projection_matrix.ptr());
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, light_view_matrix.ptr());
-    if (shadow_map_drawn)
-    {
-        scene->dir_lights[0]->GetShadowProperties().BindForLightingPass(program);
-    }
+    shadow_manager.BindLightingPassUniforms(program);
 
     // Bind ImageBasedLighting uniforms
     scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
-    // Bind shadow map texture:
-    glActiveTexture(GL_TEXTURE5);
-    glBindTexture(GL_TEXTURE_2D, shadow_map_texture);
+    // Bind Shadow map texture to texture slot 5:
+    shadow_manager.BindShadowMapTexture(5);
 
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
@@ -518,13 +454,11 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
         return false;
     }
 
-    ComponentDirLight* directional_light = scene->dir_lights[0];
-    directional_light->UpdateFrustum(camera);
-
-    float4x4 light_projection_matrix = directional_light->GetFrustum().ProjectionMatrix();
-    float4x4 light_view_matrix = directional_light->GetFrustum().ViewMatrix();
-
-    render_list.Update(directional_light->GetFrustum(), scene->GetQuadtree());
+    // Update directional light frustum if there are any changes:
+    shadow_manager.CalculateLightFrustum();
+    
+    // Cull the scene with directional light frustum:
+    render_list.Update(shadow_manager.GetDirectionalLightFrustum(), scene->GetQuadtree());
 
     // Clear Batches Lists:
     batch_manager->ClearOpaqueBatchesDrawList();
@@ -545,39 +479,22 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     program->Activate();
     
     // Bind shadow map generation specific necessary uniforms:
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, light_projection_matrix.ptr());
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, light_view_matrix.ptr());
-    directional_light->GetShadowProperties().BindForShadowMapGenerationPass(program);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, shadow_map_fbo);
-    glViewport(0, 0, shadow_width, shadow_height);
-    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    //glCullFace(GL_FRONT); // For avoiding peter panning because of bias.
+    shadow_manager.BindShadowMapGenerationPassUniforms(program);
+    // Bind shadow map fbo for drawing and adjust viewport size etc.:
+    shadow_manager.BindBufferForDrawing();
 
     batch_manager->DrawOpaqueBatches(program);
     batch_manager->DrawTransparentBatches(program);
 
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    //glCullFace(GL_BACK);
+    // Unbind shadow map fbo:
+    shadow_manager.UnbindBuffer();
 
     Program::Deactivate();
 
-    ApplyFilterToShadowMap(directional_light->GetShadowProperties().GetGaussianFilterBlurAmount());
-
+    // Smoothen the shadow map by applying gaussian filtering:
+    shadow_manager.ApplyGaussianBlur(App->program->GetGaussianFilteringProgram());
+   
     return true;
-}
-
-void Hachiko::ModuleRender::ApplyFilterToShadowMap(float gaussian_blur_scale) const
-{
-    ApplyGaussianFilter(shadow_map_fbo,
-                        shadow_map_texture,
-                        shadow_map_filtered_fbo,
-                        shadow_map_filtered_texture,
-                        gaussian_blur_scale,
-                        shadow_width,
-                        shadow_height,
-                        App->program->GetGaussianFilteringProgram());
 }
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
@@ -668,15 +585,6 @@ void Hachiko::ModuleRender::OptionsMenu()
     ImGui::Checkbox("Skybox", &draw_skybox);
     ImGui::Checkbox("Navmesh", &draw_navmesh);
 
-    //ImGui::NewLine();
-    //ImGui::Text("Shadow");
-    //ImGui::Separator();
-    //ImGui::DragFloat("Light Bleeding Reduction", &light_bleeding_reduction_amount, 0.000000001f, 0.0f, 1.0f, "%.9f");
-    //ImGui::DragFloat("Min Variance", &min_variance, 0.000000001f, 0.0f, 1.0f, "%.9f");
-    //ImGui::DragFloat("Gaussian Blur Amount", &shadow_gaussian_blur_amount, 0.01f, 0.0f, FLT_MAX, "%.9f");
-    //ImGui::DragFloat("Exponent", &exponent, 0.01f, 0.0f, FLT_MAX, "%.9f");
-    //ImGui::DragFloat("Bias", &shadow_bias, 0.000000001f, 0.0f, 1.0f, "%.9f");
-    //
     ImGui::NewLine();
     ImGui::Text("Rendering Mode");
     ImGui::Separator();
