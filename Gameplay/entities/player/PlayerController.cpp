@@ -87,6 +87,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_dash_trail->SetActive(false);
 	}
 
+	if (_walking_dust)
+	{
+		_walking_dust->SetActive(false);
+	}
+
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 
@@ -518,6 +523,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
 	WalkingOrientationController();
+	WalkingDustManager();
 
 	if (IsWalking())
 	{
@@ -643,6 +649,13 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 		_dash_trail->SetActive(_show_dashtrail);
 
 	}
+}
+
+void Hachiko::Scripting::PlayerController::WalkingDustManager()
+{
+	_walking_dust->SetActive(IsWalking());
+	//ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	//dust_particles->Play();
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()
