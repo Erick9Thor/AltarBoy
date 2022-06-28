@@ -30,8 +30,10 @@ namespace Hachiko
     private:
         bool in_scene = false;
         ParticleSystem::Emitter::State state = ParticleSystem::Emitter::State::STOPPED;
+        ParticleSystem::Emitter::Properties emitter_properties;
         float elapsed_time = 0.0f;
-        float time = 0.0f;
+        float color_time = 0.0f;
+        float animation_time = 0.0f;
 
         // Sections
         bool parameters_section = true;
@@ -47,7 +49,7 @@ namespace Hachiko
         bool play_on_awake = false;
         float duration = 5.0f;
         ParticleSystem::VariableTypeProperty start_delay {float2::zero, 1.0f, false, true};
-        ParticleSystem::VariableTypeProperty start_size {float2::one, 1.0f};
+        ParticleSystem::VariableTypeProperty start_size {float2::zero, 1.0f};
         ParticleSystem::VariableTypeProperty start_rotation {float2::zero, 1.0f};
 
         // Render

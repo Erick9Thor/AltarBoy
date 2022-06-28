@@ -25,6 +25,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _state(PlayerState::INVALID)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
+	, _dash_trail(nullptr)
+	, _trail_enlarger(10.0f)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = 1.f;
@@ -32,9 +34,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_bullet.size = 0.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
-
-	
-	
 	
 	Weapon red;
 	red.name = "Red";
@@ -69,6 +68,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
+	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
+	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	
 	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
@@ -79,8 +81,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_ui_damage->SetActive(false);
 	}
-	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
+
+	if (_dash_trail)
+	{
+		_dash_trail->SetActive(false);
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 2;
@@ -106,6 +111,24 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
 	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
+
+	if (_dash_trail) // Init dash trail start/end positions and scale
+	{
+		/*The relation for start_pos and start_scale must be always --> start_scale.x = -start_pos.z / 2
+		* make sure to set correctly the local transform in the engine
+		* E.g. if scale = (5, Y, Z) then position = (X, Y, -2.5)
+		*/
+		_trail_start_pos = _dash_trail->GetTransform()->GetLocalPosition();
+		_trail_start_scale = _dash_trail->GetTransform()->GetLocalScale();
+
+		//Position only applies on -Z axis
+		_trail_end_pos = _dash_trail->GetTransform()->GetLocalPosition();
+		_trail_end_pos = math::float3(_trail_end_pos.x, _trail_end_pos.y, _trail_end_pos.z * _trail_enlarger);
+
+		//Scale only applies on +X axis
+		_trail_end_scale = _dash_trail->GetTransform()->GetLocalScale();
+		_trail_end_scale = math::float3(_trail_end_scale.x * _trail_enlarger, _trail_end_scale.y, _trail_end_scale.z);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
@@ -328,7 +351,19 @@ void Hachiko::Scripting::PlayerController::Dash()
 
 	float3 corrected_dash_final_position;
 	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
-	corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	// Correct by wall hit
+	bool hit_terrain = GetTerrainCollision(_dash_start, dash_final_position, corrected_dash_final_position);
+	if (hit_terrain)
+	{
+		dash_final_position = corrected_dash_final_position;
+		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
+		corrected_dash_final_position = Navigation::GetCorrectedPosition(dash_final_position, float3(5.f, 0.5f, 5.f));
+	}
+	else
+	{
+		// Correct normally by navmesh
+		corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	}
 	if (corrected_dash_final_position.x < FLT_MAX)
 	{
 		_dash_end = corrected_dash_final_position;
@@ -337,6 +372,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 	{
 		_dash_end = dash_final_position;
 	}
+	
 }
 
 
@@ -488,6 +524,12 @@ float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack
 	return emitter;
 }
 
+bool Hachiko::Scripting::PlayerController::GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const
+{
+	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	return terrain_hit != nullptr;
+}
+
 void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
@@ -505,7 +547,8 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		_player_position.y -= 0.25f;
+		constexpr float fall_speed = 25.f;
+		_player_position.y -= fall_speed * Time::DeltaTime();
 
 		if (_dash_start.y - _player_position.y > _falling_distance)
 		{
@@ -555,6 +598,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 		return;
 	}
 
+
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
 
@@ -562,6 +606,11 @@ void Hachiko::Scripting::PlayerController::DashController()
 	// of an acceleration.
 	_player_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
 
+	if (_state != PlayerState::MELEE_ATTACKING)
+	{
+		DashTrailManager(_dash_progress);
+	}
+	
 	// Attack status is stopped in attack controller
 	if (_dash_progress >= 1.0f && IsDashing())
 	{
@@ -587,6 +636,29 @@ void Hachiko::Scripting::PlayerController::DashChargesManager()
 		{
 			_dash_charges += 1;
 		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
+{
+	if (!_show_dashtrail)
+	{
+		_show_dashtrail = true;
+		_dash_trail->SetActive(_show_dashtrail);
+	}
+	
+	_dash_trail->GetTransform()->SetLocalPosition(math::float3::Lerp(_trail_start_pos, _trail_end_pos,
+		_dash_progress));
+	_dash_trail->GetTransform()->SetLocalScale(math::float3::Lerp(_trail_start_scale, _trail_end_scale,
+		_dash_progress));
+
+	if (_dash_progress >= 1.0f)
+	{
+		_dash_trail->GetTransform()->SetLocalPosition(_trail_start_pos);
+		_dash_trail->GetTransform()->SetLocalScale(_trail_start_scale);
+		_show_dashtrail = false;
+		_dash_trail->SetActive(_show_dashtrail);
+
 	}
 }
 
@@ -717,11 +789,11 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
-	if (enemies == nullptr) {
+	if (_enemies == nullptr) {
 		return;
 	}
 
-	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
+	std::vector<GameObject*> enemy_children = _enemies ? _enemies->children : std::vector<GameObject*>();
 
 	for (int i = 0; i < enemy_children.size(); ++i)
 	{

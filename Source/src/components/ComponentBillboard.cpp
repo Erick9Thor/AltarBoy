@@ -116,6 +116,8 @@ void Hachiko::ComponentBillboard::DrawGui()
             params_cfg.min = 0.0f;
             MultiTypeSelector("Start size", start_size, &params_cfg);
             Widgets::MultiTypeSelector("Start rotation", start_rotation);
+
+            Widgets::DragFloat3("Position", emitter_properties.position);
         }
 
         if (CollapsingHeader("Renderer", &renderer_section, Widgets::CollapsibleHeaderType::Checkbox))
@@ -323,7 +325,6 @@ void Hachiko::ComponentBillboard::Update()
     else if (state == ParticleSystem::Emitter::State::PLAYING)
     {
         elapsed_time += EngineTimer::delta_time;
-        time += EngineTimer::delta_time;
         
         // Delay
         if (elapsed_time < start_delay.GetValue())
@@ -331,11 +332,11 @@ void Hachiko::ComponentBillboard::Update()
             return;
         }
 
-        if (!loop && time >= duration)
+        if (!loop && elapsed_time >= duration)
         {
             state = ParticleSystem::Emitter::State::STOPPED;
         }
-        else if (loop && time >= duration)
+        else if (loop && elapsed_time >= duration)
         {
             Reset();
         }
@@ -359,6 +360,8 @@ void Hachiko::ComponentBillboard::Pause()
 
 void Hachiko::ComponentBillboard::Restart()
 {
+    color_time = 0.0f;
+    animation_time = 0.0f;
     Reset();
     Play();
 }
@@ -372,7 +375,6 @@ inline void Hachiko::ComponentBillboard::Stop()
 
 inline void Hachiko::ComponentBillboard::Reset()
 {
-    time = 0.0f;
     elapsed_time = 0.0f;
     size = start_size.GetValue();
 }
@@ -527,10 +529,14 @@ inline void Hachiko::ComponentBillboard::UpdateAnimationData()
         return;
     }
     
-    if (time <= animation_speed)
+    animation_time += EngineTimer::delta_time;
+
+    if (animation_time <= animation_speed)
     {
         return;
     }
+    
+    animation_time = 0.0f;
 
     if (animation_index.x < tiles.x - 1)
     {
@@ -553,13 +559,14 @@ inline void Hachiko::ComponentBillboard::UpdateColorOverLifetime()
     {
         return;
     }
-
-    float time_mod = fmod(time, duration / color_cycles);
+    
+    color_time += EngineTimer::delta_time;
+    float time_mod = fmod(color_time, duration / color_cycles);
     color_frame = time_mod / duration * color_cycles;
 
-    if (time > duration)
+    if (color_time > duration)
     {
-        time = 0.0f;
+        color_time = 0.0f;
         color_frame = 0.0f;
     }
 }
@@ -571,7 +578,7 @@ void Hachiko::ComponentBillboard::UpdateRotationOverLifetime()
         return;
     }
 
-    rotation += rotation_over_time.GetValue();
+    rotation += rotation_over_time.GetValue() * EngineTimer::delta_time;
 }
 
 void Hachiko::ComponentBillboard::UpdateSizeOverLifetime()
@@ -581,7 +588,7 @@ void Hachiko::ComponentBillboard::UpdateSizeOverLifetime()
         return;
     }
 
-    size += size_over_time.GetValue();
+    size += size_over_time.GetValue() * EngineTimer::delta_time;
 }
 
 void Hachiko::ComponentBillboard::PublishIntoScene()
@@ -609,7 +616,7 @@ void Hachiko::ComponentBillboard::DetachFromScene()
 void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, float4x4& model_matrix)
 {
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
-    float3 position = transform->GetGlobalPosition();
+    float3 position = transform->GetGlobalPosition() + emitter_properties.position;
     float3 scale = transform->GetGlobalScale() * size;
     float3 camera_position = camera->GetFrustum().Pos();
     float3x3 rotation_matrix = float3x3::identity.RotateZ(rotation);

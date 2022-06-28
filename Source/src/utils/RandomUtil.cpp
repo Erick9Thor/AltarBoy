@@ -30,7 +30,7 @@ float Hachiko::RandomUtil::RandomBetween(const float2& values)
     return RandomBetween(values.x, values.y);
 }
 
-int Hachiko::RandomUtil::RandomSign() 
+int Hachiko::RandomUtil::RandomInt() 
 {
     return std::rand() & 1 ? 1 : -1;
 }

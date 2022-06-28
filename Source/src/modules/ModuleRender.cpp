@@ -2,6 +2,7 @@
 
 #include "core/ErrorHandler.h"
 #include "core/rendering/Uniforms.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
@@ -51,6 +52,9 @@ bool Hachiko::ModuleRender::Init()
     ms_log = std::vector<float>(n_bins);
 
     GenerateParticlesBuffers();
+
+    draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
+    draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
 
     return true;
 }
@@ -869,5 +873,7 @@ bool Hachiko::ModuleRender::CleanUp()
 
     SDL_GL_DeleteContext(context);
 
+    App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
+    App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
     return true;
 }
