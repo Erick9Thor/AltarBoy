@@ -15,14 +15,6 @@ class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
 
-		enum class DashType
-		{
-			LINEAR = 0,
-			EASEIN,
-			EASEOUT,
-			EASEINOUT,
-		};
-
 public:
 	PlayerController(GameObject* game_object);
 	~PlayerController() override = default;
@@ -77,6 +69,7 @@ private:
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
+	SERIALIZE_FIELD(int, _dash_scaler);
 	SERIALIZE_FIELD(int, _max_dash_charges);
 
 	SERIALIZE_FIELD(float, _attack_duration);
@@ -98,7 +91,6 @@ private:
 	float3 _dash_start = float3::zero;
 	float3 _dash_end = float3::zero;
 	float3 _dash_direction = float3::zero;
-	SERIALIZE_FIELD(int, _dash_type);
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
 	Quat _rotation_start = Quat::identity;

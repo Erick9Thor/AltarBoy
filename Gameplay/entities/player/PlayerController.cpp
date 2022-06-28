@@ -18,6 +18,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _dash_scaler(1)
 	, _attack_duration(0.0f)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
@@ -25,7 +26,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _state(PlayerState::IDLE)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
-	, _dash_type(0)
 {
 }
 
@@ -174,24 +174,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		else
 		{
 			_state = PlayerState::IDLE;
-		}
-
-		// set dash interporlation formulae
-		if (Input::IsKeyDown(Input::KeyCode::KEY_1))
-		{
-			_dash_type = (int)DashType::LINEAR;
-		}
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_2))
-		{
-			_dash_type = (int)DashType::EASEIN;
-		}
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_3))
-		{
-			_dash_type = (int)DashType::EASEOUT;
-		}
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_4))
-		{
-			_dash_type = (int)DashType::EASEINOUT;
 		}
 	}
 
@@ -442,28 +424,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
 	
 	// using y = x^p
-	float acceleration;
-	switch (_dash_type)
-	{
-		case (int)DashType::LINEAR:
-			acceleration = _dash_progress;
-			break;
-		case (int)DashType::EASEIN:
-			acceleration = math::Pow(_dash_progress / 1.0f, 5);
-			break;
-		case (int)DashType::EASEOUT:
-			acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, 5);
-			break;
-		case (int)DashType::EASEINOUT:
-			acceleration = math::Lerp(
-				math::Pow(_dash_progress / 1.0f, 5),
-				1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, 5),
-				_dash_progress / 1.0f);
-			break;
-	default:
-		acceleration = _dash_progress;
-		break;
-	}
+	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, _dash_scaler);
 	
 
 	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
