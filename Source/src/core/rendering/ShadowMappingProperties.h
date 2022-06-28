@@ -44,11 +44,11 @@ private:
     void BindCommon(const Program* program) const;
 
 private:
-    float gaussian_filter_blur_amount = 0.0f;
-    float min_variance = 0.0f;
-    float light_bleeding_reduction_amount = 0.0f;
-    float bias = 0.0f;
-    float exponent = 0.0f;
+    float _gaussian_filter_blur_amount = 0.0f;
+    float _min_variance = 0.0f;
+    float _light_bleeding_reduction_amount = 0.0f;
+    float _bias = 0.0f;
+    float _exponent = 0.0f;
 };
 
 } // namespace Hachiko

@@ -20,18 +20,18 @@ void Hachiko::ShadowMappingProperties::BindForLightingPass(const Program* progra
 
     program->BindUniformFloat(
         Uniforms::ShadowMap::LIGHT_BLEEDING_REDUCTION_AMOUNT, 
-        &light_bleeding_reduction_amount);
-    program->BindUniformFloat(Uniforms::ShadowMap::MIN_VARIANCE, &min_variance);
-    program->BindUniformFloat(Uniforms::ShadowMap::BIAS, &bias);
+        &_light_bleeding_reduction_amount);
+    program->BindUniformFloat(Uniforms::ShadowMap::MIN_VARIANCE, &_min_variance);
+    program->BindUniformFloat(Uniforms::ShadowMap::BIAS, &_bias);
 }
 
 void Hachiko::ShadowMappingProperties::Save(YAML::Node& node) const 
 {
-    node[Uniforms::ShadowMap::LIGHT_BLEEDING_REDUCTION_AMOUNT] = light_bleeding_reduction_amount;
-    node[Uniforms::ShadowMap::BIAS] = bias;
-    node[Uniforms::ShadowMap::MIN_VARIANCE] = min_variance;
-    node[Uniforms::ShadowMap::EXPONENT] = exponent;
-    node[Uniforms::Filtering::GAUSSIAN_BLUR_SCALE] = gaussian_filter_blur_amount;
+    node[Uniforms::ShadowMap::LIGHT_BLEEDING_REDUCTION_AMOUNT] = _light_bleeding_reduction_amount;
+    node[Uniforms::ShadowMap::BIAS] = _bias;
+    node[Uniforms::ShadowMap::MIN_VARIANCE] = _min_variance;
+    node[Uniforms::ShadowMap::EXPONENT] = _exponent;
+    node[Uniforms::Filtering::GAUSSIAN_BLUR_SCALE] = _gaussian_filter_blur_amount;
 }
 
 void Hachiko::ShadowMappingProperties::Load(const YAML::Node& node) 
@@ -41,73 +41,73 @@ void Hachiko::ShadowMappingProperties::Load(const YAML::Node& node)
 
     if (node[Uniforms::ShadowMap::LIGHT_BLEEDING_REDUCTION_AMOUNT].IsDefined())
     {
-        light_bleeding_reduction_amount = node
+        _light_bleeding_reduction_amount = node
             [Uniforms::ShadowMap::LIGHT_BLEEDING_REDUCTION_AMOUNT].as<float>();
     }
 
     if (node[Uniforms::ShadowMap::BIAS].IsDefined())
     {
-        bias = node[Uniforms::ShadowMap::BIAS].as<float>();
+        _bias = node[Uniforms::ShadowMap::BIAS].as<float>();
     }
 
     if (node[Uniforms::ShadowMap::MIN_VARIANCE].IsDefined())
     {
-        min_variance = node[Uniforms::ShadowMap::MIN_VARIANCE].as<float>();
+        _min_variance = node[Uniforms::ShadowMap::MIN_VARIANCE].as<float>();
     }
 
     if (node[Uniforms::ShadowMap::EXPONENT].IsDefined())
     {
-        exponent = node[Uniforms::ShadowMap::EXPONENT].as<float>();
+        _exponent = node[Uniforms::ShadowMap::EXPONENT].as<float>();
     }
 
     if (node[Uniforms::Filtering::GAUSSIAN_BLUR_SCALE].IsDefined())
     {
-        gaussian_filter_blur_amount = node[Uniforms::Filtering::GAUSSIAN_BLUR_SCALE].as<float>();
+        _gaussian_filter_blur_amount = node[Uniforms::Filtering::GAUSSIAN_BLUR_SCALE].as<float>();
     }
 }
 
 void Hachiko::ShadowMappingProperties::ResetToDefaults() 
 {
-    gaussian_filter_blur_amount = ShadowMappingDefaults::GAUSSIAN_FILTER_BLUR_AMOUNT;
-    min_variance = ShadowMappingDefaults::MIN_VARIANCE;
-    light_bleeding_reduction_amount = ShadowMappingDefaults::LIGHT_BLEEDING_REDUCTION_AMOUNT;
-    bias = ShadowMappingDefaults::BIAS;
-    exponent = ShadowMappingDefaults::EXPONENT;
+    _gaussian_filter_blur_amount = ShadowMappingDefaults::GAUSSIAN_FILTER_BLUR_AMOUNT;
+    _min_variance = ShadowMappingDefaults::MIN_VARIANCE;
+    _light_bleeding_reduction_amount = ShadowMappingDefaults::LIGHT_BLEEDING_REDUCTION_AMOUNT;
+    _bias = ShadowMappingDefaults::BIAS;
+    _exponent = ShadowMappingDefaults::EXPONENT;
 }
 
 void Hachiko::ShadowMappingProperties::SetGaussianFilterBlurAmount(float value)
 {
-    gaussian_filter_blur_amount = value;
+    _gaussian_filter_blur_amount = value;
 
-    std::clamp<float>(gaussian_filter_blur_amount, 0.0f, FLT_MAX);
+    std::clamp<float>(_gaussian_filter_blur_amount, 0.0f, FLT_MAX);
 }
 
 void Hachiko::ShadowMappingProperties::SetMinVariance(float value) 
 {
-    min_variance = value;
+    _min_variance = value;
 
-    std::clamp<float>(min_variance, 0.0f, 1.0f);
+    std::clamp<float>(_min_variance, 0.0f, 1.0f);
 }
 
 void Hachiko::ShadowMappingProperties::SetLightBleedingReductionAmount(float value) 
 {
-    light_bleeding_reduction_amount = value;
+    _light_bleeding_reduction_amount = value;
 
-    std::clamp<float>(light_bleeding_reduction_amount, 0.0f, 1.0f);
+    std::clamp<float>(_light_bleeding_reduction_amount, 0.0f, 1.0f);
 }
 
 void Hachiko::ShadowMappingProperties::SetBias(float value) 
 {
-    bias = value;
+    _bias = value;
 
-    std::clamp<float>(bias, 0.0f, 1.0f);
+    std::clamp<float>(_bias, 0.0f, 1.0f);
 }
 
 void Hachiko::ShadowMappingProperties::SetExponent(float value) 
 {
-    exponent = value;
+    _exponent = value;
 
-    std::clamp<float>(exponent, 0.0f, FLT_MAX);
+    std::clamp<float>(_exponent, 0.0f, FLT_MAX);
 }
 
 bool Hachiko::ShadowMappingProperties::DrawEditorContent() 
@@ -122,27 +122,27 @@ bool Hachiko::ShadowMappingProperties::DrawEditorContent()
 
     bool changes_made = false;
 
-    if (Widgets::DragFloat("Bias", bias, &config_2))
+    if (Widgets::DragFloat("Bias", _bias, &config_2))
     {
         changes_made = true;
     }
 
-    if (Widgets::DragFloat("Light Bleeding Reduction", light_bleeding_reduction_amount, &config_2)) 
+    if (Widgets::DragFloat("Light Bleeding Reduction", _light_bleeding_reduction_amount, &config_2)) 
     {
         changes_made = true;
     }
 
-    if (Widgets::DragFloat("Min Variance", min_variance, &config_2))
+    if (Widgets::DragFloat("Min Variance", _min_variance, &config_2))
     {
         changes_made = true;
     }
 
-    if (Widgets::DragFloat("Exponent", exponent, &config_1))
+    if (Widgets::DragFloat("Exponent", _exponent, &config_1))
     {
         changes_made = true;
     }
 
-    if (Widgets::DragFloat("Gaussian Blur Amount", gaussian_filter_blur_amount, &config_1))
+    if (Widgets::DragFloat("Gaussian Blur Amount", _gaussian_filter_blur_amount, &config_1))
     {
         changes_made = true;
     }
@@ -158,30 +158,30 @@ bool Hachiko::ShadowMappingProperties::DrawEditorContent()
 
 float Hachiko::ShadowMappingProperties::GetGaussianFilterBlurAmount() const
 {
-    return gaussian_filter_blur_amount;
+    return _gaussian_filter_blur_amount;
 }
 
 float Hachiko::ShadowMappingProperties::GetMinVariance() const
 {
-    return min_variance;
+    return _min_variance;
 }
 
 float Hachiko::ShadowMappingProperties::GetLightBleedingReductionAmount() const
 {
-    return light_bleeding_reduction_amount;
+    return _light_bleeding_reduction_amount;
 }
 
 float Hachiko::ShadowMappingProperties::GetBias() const
 {
-    return bias;
+    return _bias;
 }
 
 float Hachiko::ShadowMappingProperties::GetExponent() const
 {
-    return exponent;
+    return _exponent;
 }
 
 void Hachiko::ShadowMappingProperties::BindCommon(const Program* program) const 
 {
-    program->BindUniformFloat(Uniforms::ShadowMap::EXPONENT, &exponent);
+    program->BindUniformFloat(Uniforms::ShadowMap::EXPONENT, &_exponent);
 }
