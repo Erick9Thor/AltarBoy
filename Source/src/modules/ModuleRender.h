@@ -17,7 +17,8 @@ namespace Hachiko
     {
         unsigned char* name;
         unsigned char* brand;
-        float vram_budget_mb;
+        int vram_budget_mb = 0;
+        int vram_free = 0;
     };
 
     struct GlVersion
@@ -86,25 +87,36 @@ namespace Hachiko
             return &render_list;
         }
 
-        [[nodiscard]] const unsigned& GetParticleVao() const
-        {
-            return particle_vao;
-        }
-        
         void SetDrawSkybox(const bool v)
         {
             draw_skybox = v;
         }
+
+        void SetDrawNavmesh(const bool v)
+        {
+            draw_navmesh = v;
+        }
         
         [[nodiscard]] float2 GetFrameBufferSize() const;
 
+        [[nodiscard]] bool IsDeferred() const 
+        {
+            return draw_deferred;
+        }
+
+
+        [[nodiscard]] const unsigned& GetParticleVao() const
+        {
+            return particle_vao;
+        }
+    
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
         void ManageResolution(const ComponentCamera* camera);
         void Draw(Scene* scene, ComponentCamera* camera, ComponentCamera* culling);
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
-        void DrawForward(BatchManager* batch_manager);
+        void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         void SetRenderMode(bool is_deferred);
 
@@ -138,13 +150,13 @@ namespace Hachiko
         bool render_forward_pass = true;
 
         // float4 clear_color;
-        bool draw_skybox = true;
+        bool draw_skybox = false;
         bool draw_navmesh = false;
         bool outline_selection = true;
 
         GpuData gpu{};
         GlVersion gl{};
-        int vram_free{};
+
 
         static const unsigned n_bins = 50;
         std::vector<float> fps_log;

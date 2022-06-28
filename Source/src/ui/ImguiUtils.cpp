@@ -1,10 +1,9 @@
 #include "core/hepch.h"
 #include "ImGuiUtils.h"
-#include <IconsFontAwesome5.h>
+#include "core/GameObject.h"
 
 #include <imgui_internal.h>
 
-#include "core/GameObject.h"
 #include "components/Component.h"
 #include "modules/ModuleEditor.h"
 
@@ -62,29 +61,29 @@ bool Hachiko::ImGuiUtils::CompactColorPicker(const char* name, float* color)
 
 bool Hachiko::ImGuiUtils::CollapsingHeader(GameObject* game_object, Component* component, const char* header_name)
 {
+    ImGui::PushID(component);
     bool open = ImGui::CollapsingHeader(header_name, ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_DefaultOpen);
-
+    const float spacing = ImGui::GetStyle().IndentSpacing + ImGui::GetStyle().FramePadding.x + 1;
     ImGui::SameLine();
-    if (ImGui::GetWindowWidth() > 170)
-    {
-        ImGui::Indent(ImGui::GetWindowWidth() - 43);
-    }
-    if (ImGui::Button(std::string(ICON_FA_TIMES).c_str()))
+
+    ImGui::Indent(ImGui::GetWindowContentRegionMax().x - spacing);
+
+    if (ImGui::Button(std::string(ICON_FA_XMARK).c_str()))
     {
         ImGui::OpenPopup(header_name);
     }
-    if (ImGui::GetWindowWidth() > 170)
-    {
-        ImGui::Unindent(ImGui::GetWindowWidth() - 43);
-    }
+
+    ImGui::Unindent(ImGui::GetWindowContentRegionMax().x - spacing);
 
     if (ImGui::BeginPopup(header_name))
     {
         App->editor->to_remove = component;
+        App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
         
         ImGui::EndPopup();
-        return false;
+        open = false;
     }
+    ImGui::PopID();
 
     return open;
 }
@@ -101,10 +100,12 @@ bool Hachiko::ImGuiUtils::ToolbarButton(ImFont* const font, const char* font_ico
         ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
         bg_color.w = 0.5f;
     }
-    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
+
+    const ImVec4 color{0, 0, 0, 0};
+    ImGui::PushStyleColor(ImGuiCol_FrameBg, color);
     ImGui::PushStyleColor(ImGuiCol_Text, bg_color);
-    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Button, color);
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, color);
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, ImGui::GetStyle().FramePadding.y));
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, frame_padding);
     ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
@@ -160,9 +161,3 @@ void Hachiko::ImGuiUtils::Combo(const char* label, std::vector<std::string> list
         ImGui::EndCombo();
     }
 }
-
-/*
-ImVec2 Hachiko::ImGuiUtils::operator+(const ImVec2& lhs, const ImVec2& rhs)
-{
-    return {lhs.x + rhs.x, lhs.y + rhs.y};
-}*/

@@ -1,0 +1,27 @@
+prefab_name: parasiteConsumable
+name: RootNode
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+child:
+  - name: PM3D_Sphere124
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 8953689370358422284
+        navigable: false
+        visible: true
+        material_id: 3003390711770185065

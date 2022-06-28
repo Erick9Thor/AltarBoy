@@ -116,19 +116,23 @@ bool Hachiko::ModuleEditor::Init()
 
     editor_prefs = App->preferences->GetEditorPreference();
     theme = editor_prefs->GetTheme();
+    undo_redo_active = editor_prefs->GetUndoRedoActive();
     UpdateTheme();
 
 #ifndef PLAY_BUILD
-    std::function create_history_entry = [&](Event& evt) {
-        CreateSnapshot();
-    };
-    App->event->Subscribe(Event::Type::CREATE_EDITOR_HISTORY_ENTRY, create_history_entry);
+    if (undo_redo_active)
+    {
+        std::function create_history_entry = [&](Event& evt) {
+            CreateSnapshot();
+        };
+        App->event->Subscribe(Event::Type::CREATE_EDITOR_HISTORY_ENTRY, create_history_entry);
 
-    std::function enable_history = [&](Event& evt) {
-        const auto state = evt.GetEventData<GameStateEventPayload>().GetState();
-        history_enabled = state == GameStateEventPayload::State::STOPPED;
-    };
-    App->event->Subscribe(Event::Type::GAME_STATE, enable_history);
+        std::function enable_history = [&](Event& evt) {
+            const auto state = evt.GetEventData<GameStateEventPayload>().GetState();
+            history_enabled = state == GameStateEventPayload::State::STOPPED;
+        };
+        App->event->Subscribe(Event::Type::GAME_STATE, enable_history);
+    }
 #endif
     return true;
 }
@@ -322,7 +326,7 @@ UpdateStatus Hachiko::ModuleEditor::FileMenu()
         App->scene_manager->ChangeSceneById(0, stop_scene);
         history.Init();
     }
-    if (ImGui::MenuItem(ICON_FA_SAVE "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
+    if (ImGui::MenuItem(ICON_FA_FLOPPY_DISK "Save", nullptr, false, true)) // TODO: Use internal timer to disable/enable
     {
         // TODO: Add the option to specify a name (no name uses scene internal name)
         App->scene_manager->SaveScene();
@@ -457,11 +461,11 @@ void Hachiko::ModuleEditor::EditMenu()
         return;
     }
 
-    if (ImGui::MenuItem(ICON_FA_UNDO "Undo", "CTRL+Z", false, CanUndo()))
+    if (ImGui::MenuItem(ICON_FA_ROTATE_LEFT "Undo", "CTRL+Z", false, CanUndo()))
     {
         Undo();
     }
-    if (ImGui::MenuItem(ICON_FA_REDO "Redo", "CTRL+Y", false, CanRedo()))
+    if (ImGui::MenuItem(ICON_FA_ROTATE_RIGHT "Redo", "CTRL+Y", false, CanRedo()))
     {
         Redo();
     }
@@ -517,6 +521,7 @@ bool Hachiko::ModuleEditor::CleanUp()
     ImGui::DestroyContext();
 
     editor_prefs->SetTheme(theme);
+    editor_prefs->SetUndoRedoActive(undo_redo_active);
     return true;
 }
 

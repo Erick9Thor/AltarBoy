@@ -73,6 +73,7 @@ namespace Hachiko
 			bool is_wireframe = false;
 			bool is_performance = false;
 			bool is_vsync = false;
+			bool is_navmesh = false;
 		};
 	} // namespace Scripting
 } // namespace Hachiko

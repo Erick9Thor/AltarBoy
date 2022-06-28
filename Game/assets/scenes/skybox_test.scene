@@ -1,5 +1,5 @@
 scene_name: skybox_test
-navmesh_id: 17061674138956787295
+navmesh_id: 17061674138956787296
 skybox:
   right_cube_id: 1702588198696288572
   left_cube_id: 1739534624842796925

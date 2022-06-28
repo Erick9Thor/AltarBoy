@@ -2,6 +2,7 @@
 
 #include "ModuleDebugDraw.h"
 #include "ModuleSceneManager.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 #define DEBUG_DRAW_IMPLEMENTATION
 #define DEBUG_DRAW_CXX11_SUPPORTED 1
@@ -555,6 +556,10 @@ bool Hachiko::ModuleDebugDraw::Init()
     HE_LOG("INITIALIZING MODULE: DEBUG DRAW");
     implementation = new DDRenderInterfaceCoreGL;
     initialize(implementation);
+
+    debug_draw = App->preferences->GetEditorPreference()->GetDisplayDebugDraw();
+    draw_quadtree = App->preferences->GetEditorPreference()->GetDrawQuadtree();
+
     return true;
 }
 
@@ -565,17 +570,19 @@ bool Hachiko::ModuleDebugDraw::CleanUp()
     delete implementation;
     implementation = nullptr;
 
+    App->preferences->GetEditorPreference()->SetDisplayDebugDraw(debug_draw);
+    App->preferences->GetEditorPreference()->SetDrawQuadtree(draw_quadtree);
+
     return true;
 }
 
 UpdateStatus Hachiko::ModuleDebugDraw::Update(const float delta)
 {
-#ifndef PLAY_BUILD
-    dd::xzSquareGrid(-30, 30, -0.1f, 1.0f, dd::colors::Gray);
-#endif
-
     if (debug_draw)
     {
+#ifndef PLAY_BUILD
+        dd::xzSquareGrid(-30, 30, -0.1f, 1.0f, dd::colors::Gray);
+#endif
         Scene* scene = App->scene_manager->GetActiveScene();
         if (scene)
         {

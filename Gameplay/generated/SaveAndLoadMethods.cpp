@@ -5,12 +5,13 @@
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
 #include "entities/enemies/EnemyController.h"
-#include "entities/player/BulletController.h"
+#include "entities/player/CombatManager.h"
 #include "entities/player/PlayerAnimationManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
+#include "misc/AudioManager.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
 #include "ui/BackToMainMenu.h"
@@ -23,7 +24,7 @@ void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
 	node["'_attack_power@int'"] = _attack_power;
 
-	node["'_attack_cd@int'"] = _attack_cd;
+	node["'_attack_cd@float'"] = _attack_cd;
 
 	node["'_attack_range@float'"] = _attack_range;
 
@@ -39,9 +40,9 @@ void Hachiko::Scripting::Stats::OnLoad()
 		_attack_power = load_node["'_attack_power@int'"].as<int>();
 	}
 
-	if (load_node["'_attack_cd@int'"].IsDefined())
+	if (load_node["'_attack_cd@float'"].IsDefined())
 	{
-		_attack_cd = load_node["'_attack_cd@int'"].as<int>();
+		_attack_cd = load_node["'_attack_cd@float'"].as<float>();
 	}
 
 	if (load_node["'_attack_range@float'"].IsDefined())
@@ -89,11 +90,31 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
+	if (_outer_explosion_indicator != nullptr)
+	{
+		node["'_outer_explosion_indicator@GameObject*'"] = _outer_explosion_indicator->GetID();
+	}
+	else
+	{
+		node["'_outer_explosion_indicator@GameObject*'"] = 0;
+	}
+
+	if (_inner_explosion_indicator != nullptr)
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = _inner_explosion_indicator->GetID();
+	}
+	else
+	{
+		node["'_inner_explosion_indicator@GameObject*'"] = 0;
+	}
+
 	node["'_crashing_index@unsigned'"] = _crashing_index;
 
 	node["'_detecting_radius@float'"] = _detecting_radius;
 
 	node["'_explosion_radius@float'"] = _explosion_radius;
+
+	node["'_timer_explosion@float'"] = _timer_explosion;
 
 	node["'_explosive_crystal@bool'"] = _explosive_crystal;
 }
@@ -115,6 +136,16 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
+	if (load_node["'_outer_explosion_indicator@GameObject*'"].IsDefined())
+	{
+		_outer_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_outer_explosion_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_inner_explosion_indicator@GameObject*'"].IsDefined())
+	{
+		_inner_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_inner_explosion_indicator@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
 	{
 		_crashing_index = load_node["'_crashing_index@unsigned'"].as<unsigned>();
@@ -128,6 +159,11 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 	if (load_node["'_explosion_radius@float'"].IsDefined())
 	{
 		_explosion_radius = load_node["'_explosion_radius@float'"].as<float>();
+	}
+
+	if (load_node["'_timer_explosion@float'"].IsDefined())
+	{
+		_timer_explosion = load_node["'_timer_explosion@float'"].as<float>();
 	}
 
 	if (load_node["'_explosive_crystal@bool'"].IsDefined())
@@ -200,9 +236,40 @@ void Hachiko::Scripting::EnemyController::OnSave(YAML::Node& node) const
 		node["'_player@GameObject*'"] = 0;
 	}
 
+	if (_enemy_body != nullptr)
+	{
+		node["'_enemy_body@GameObject*'"] = _enemy_body->GetID();
+	}
+	else
+	{
+		node["'_enemy_body@GameObject*'"] = 0;
+	}
+
+	if (_parasite != nullptr)
+	{
+		node["'_parasite@GameObject*'"] = _parasite->GetID();
+	}
+	else
+	{
+		node["'_parasite@GameObject*'"] = 0;
+	}
+
+	if (_audio_manager_game_object != nullptr)
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = _audio_manager_game_object->GetID();
+	}
+	else
+	{
+		node["'_audio_manager_game_object@GameObject*'"] = 0;
+	}
+
+	node["'_already_in_combat@bool'"] = _already_in_combat;
+
 	node["'_attack_animation_duration@float'"] = _attack_animation_duration;
 
 	node["'_attack_animation_timer@float'"] = _attack_animation_timer;
+
+	node["'_is_ranged_attack@bool'"] = _is_ranged_attack;
 }
 
 void Hachiko::Scripting::EnemyController::OnLoad()
@@ -232,6 +299,26 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
 	}
 
+	if (load_node["'_enemy_body@GameObject*'"].IsDefined())
+	{
+		_enemy_body = SceneManagement::FindInCurrentScene(load_node["'_enemy_body@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_parasite@GameObject*'"].IsDefined())
+	{
+		_parasite = SceneManagement::FindInCurrentScene(load_node["'_parasite@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_audio_manager_game_object@GameObject*'"].IsDefined())
+	{
+		_audio_manager_game_object = SceneManagement::FindInCurrentScene(load_node["'_audio_manager_game_object@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_already_in_combat@bool'"].IsDefined())
+	{
+		_already_in_combat = load_node["'_already_in_combat@bool'"].as<bool>();
+	}
+
 	if (load_node["'_attack_animation_duration@float'"].IsDefined())
 	{
 		_attack_animation_duration = load_node["'_attack_animation_duration@float'"].as<float>();
@@ -241,33 +328,19 @@ void Hachiko::Scripting::EnemyController::OnLoad()
 	{
 		_attack_animation_timer = load_node["'_attack_animation_timer@float'"].as<float>();
 	}
+
+	if (load_node["'_is_ranged_attack@bool'"].IsDefined())
+	{
+		_is_ranged_attack = load_node["'_is_ranged_attack@bool'"].as<bool>();
+	}
 }
 
-void Hachiko::Scripting::BulletController::OnSave(YAML::Node& node) const
+void Hachiko::Scripting::CombatManager::OnSave(YAML::Node& node) const
 {
-	node["'_move_speed@float'"] = _move_speed;
-
-	node["'_lifetime@float'"] = _lifetime;
-
-	node["'_collider_radius@float'"] = _collider_radius;
 }
 
-void Hachiko::Scripting::BulletController::OnLoad()
+void Hachiko::Scripting::CombatManager::OnLoad()
 {
-	if (load_node["'_move_speed@float'"].IsDefined())
-	{
-		_move_speed = load_node["'_move_speed@float'"].as<float>();
-	}
-
-	if (load_node["'_lifetime@float'"].IsDefined())
-	{
-		_lifetime = load_node["'_lifetime@float'"].as<float>();
-	}
-
-	if (load_node["'_collider_radius@float'"].IsDefined())
-	{
-		_collider_radius = load_node["'_collider_radius@float'"].as<float>();
-	}
 }
 
 void Hachiko::Scripting::PlayerAnimationManager::OnSave(YAML::Node& node) const
@@ -340,13 +413,13 @@ void Hachiko::Scripting::PlayerCamera::OnSave(YAML::Node& node) const
 {
 	node["'_relative_position_to_player@math::float3'"] = _relative_position_to_player;
 
-	if (_player != nullptr)
+	if (_objective != nullptr)
 	{
-		node["'_player@GameObject*'"] = _player->GetID();
+		node["'_objective@GameObject*'"] = _objective->GetID();
 	}
 	else
 	{
-		node["'_player@GameObject*'"] = 0;
+		node["'_objective@GameObject*'"] = 0;
 	}
 
 	node["'_follow_delay@float'"] = _follow_delay;
@@ -359,9 +432,9 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 		_relative_position_to_player = load_node["'_relative_position_to_player@math::float3'"].as<math::float3>();
 	}
 
-	if (load_node["'_player@GameObject*'"].IsDefined())
+	if (load_node["'_objective@GameObject*'"].IsDefined())
 	{
-		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+		_objective = SceneManagement::FindInCurrentScene(load_node["'_objective@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_follow_delay@float'"].IsDefined())
@@ -381,6 +454,15 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 		node["'_attack_indicator@GameObject*'"] = 0;
 	}
 
+	if (_bullet_emitter != nullptr)
+	{
+		node["'_bullet_emitter@GameObject*'"] = _bullet_emitter->GetID();
+	}
+	else
+	{
+		node["'_bullet_emitter@GameObject*'"] = 0;
+	}
+
 	if (_goal != nullptr)
 	{
 		node["'_goal@GameObject*'"] = _goal->GetID();
@@ -396,9 +478,18 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
-	node["'_max_dash_charges@int'"] = _max_dash_charges;
+	node["'_max_dash_charges@unsigned'"] = _max_dash_charges;
 
-	node["'_attack_duration@float'"] = _attack_duration;
+	if (_dash_trail != nullptr)
+	{
+		node["'_dash_trail@GameObject*'"] = _dash_trail->GetID();
+	}
+	else
+	{
+		node["'_dash_trail@GameObject*'"] = 0;
+	}
+
+	node["'_trail_enlarger@float'"] = _trail_enlarger;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
@@ -464,6 +555,11 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
 	}
 
+	if (load_node["'_bullet_emitter@GameObject*'"].IsDefined())
+	{
+		_bullet_emitter = SceneManagement::FindInCurrentScene(load_node["'_bullet_emitter@GameObject*'"].as<unsigned long long>());
+	}
+
 	if (load_node["'_goal@GameObject*'"].IsDefined())
 	{
 		_goal = SceneManagement::FindInCurrentScene(load_node["'_goal@GameObject*'"].as<unsigned long long>());
@@ -484,14 +580,19 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
 	}
 
-	if (load_node["'_max_dash_charges@int'"].IsDefined())
+	if (load_node["'_max_dash_charges@unsigned'"].IsDefined())
 	{
-		_max_dash_charges = load_node["'_max_dash_charges@int'"].as<int>();
+		_max_dash_charges = load_node["'_max_dash_charges@unsigned'"].as<unsigned>();
 	}
 
-	if (load_node["'_attack_duration@float'"].IsDefined())
+	if (load_node["'_dash_trail@GameObject*'"].IsDefined())
 	{
-		_attack_duration = load_node["'_attack_duration@float'"].as<float>();
+		_dash_trail = SceneManagement::FindInCurrentScene(load_node["'_dash_trail@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_trail_enlarger@float'"].IsDefined())
+	{
+		_trail_enlarger = load_node["'_trail_enlarger@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())
@@ -666,6 +767,26 @@ void Hachiko::Scripting::RoomTeleporter::OnLoad()
 	if (load_node["'_blackout_duration@float'"].IsDefined())
 	{
 		_blackout_duration = load_node["'_blackout_duration@float'"].as<float>();
+	}
+}
+
+void Hachiko::Scripting::AudioManager::OnSave(YAML::Node& node) const
+{
+	node["'_enemies_in_combat@int'"] = _enemies_in_combat;
+
+	node["'_previous_in_combat@bool'"] = _previous_in_combat;
+}
+
+void Hachiko::Scripting::AudioManager::OnLoad()
+{
+	if (load_node["'_enemies_in_combat@int'"].IsDefined())
+	{
+		_enemies_in_combat = load_node["'_enemies_in_combat@int'"].as<int>();
+	}
+
+	if (load_node["'_previous_in_combat@bool'"].IsDefined())
+	{
+		_previous_in_combat = load_node["'_previous_in_combat@bool'"].as<bool>();
 	}
 }
 

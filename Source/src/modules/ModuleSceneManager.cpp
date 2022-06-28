@@ -131,15 +131,15 @@ UpdateStatus Hachiko::ModuleSceneManager::PostUpdate(float delta)
 
     if (!to_remove.empty())
     {
-        for (const GameObject* go : to_remove)
+        while (!to_remove.empty())
         {
+            GameObject* go = to_remove[to_remove.size() - 1];
             if (App->editor->GetSelectedGameObject() == go)
             {
                 App->editor->SetSelectedGO(nullptr);
             }
             delete go;
         }
-        to_remove.clear();
     }
 
     return UpdateStatus::UPDATE_CONTINUE;
@@ -159,9 +159,12 @@ bool Hachiko::ModuleSceneManager::CleanUp()
 
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     editor_prefs->SetAutosave(scene_autosave);
+
+    #ifndef PLAY_BUILD
     // If it was a temporary scene it will set id to 0 which will generate a new temporary scene on load
     preferences->SetSceneUID(scene_resource->GetID());
     preferences->SetSceneName(scene_resource->name.c_str());
+    #endif
 
     SetSceneResource(nullptr);
 
@@ -181,6 +184,15 @@ void Hachiko::ModuleSceneManager::RemoveGameObject(GameObject* go)
             return;
         }
         to_remove.push_back(go);
+    }
+}
+
+void Hachiko::ModuleSceneManager::RemovedGameObject(GameObject* go)
+{
+    for (auto it = std::find(to_remove.begin(), to_remove.end(), go); it != to_remove.end();)
+    {
+        to_remove.erase(it);
+        it = std::find(to_remove.begin(), to_remove.end(), go);
     }
 }
 
@@ -254,14 +266,14 @@ void Hachiko::ModuleSceneManager::SaveScene(const char* save_name)
     UID saved_scene_uid = scene_importer.CreateSceneAsset(main_scene);
 }
 
-Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination)
+Hachiko::GameObject* Hachiko::ModuleSceneManager::Raycast(const float3& origin, const float3& destination, float3* closest_hit, GameObject* parent_filter)
 {
-    return main_scene->Raycast(origin, destination);
+    return main_scene->Raycast(origin, destination, closest_hit, parent_filter);
 }
 
-Hachiko::GameObject* Hachiko::ModuleSceneManager::BoundingRaycast(const float3& origin, const float3& destination)
+Hachiko::GameObject* Hachiko::ModuleSceneManager::BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter)
 {
-    return main_scene->Raycast(origin, destination);
+    return main_scene->Raycast(origin, destination, nullptr, parent_filter);
 }
 
 void Hachiko::ModuleSceneManager::ChangeSceneById(UID new_scene_id, bool stop_scene)
@@ -299,6 +311,16 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
 {
+    // TODO: Refactor this whole load logic and event handling to be as clear 
+    // as possible.
+
+    // Stop the scene if it was playing to avoid scripts calling Start:
+    bool was_scene_playing = IsScenePlaying();
+    if (was_scene_playing)
+    {
+        StopScene();
+    }
+
     SetSceneResource(new_resource);
 
     Scene* new_scene = new Scene();
@@ -308,6 +330,7 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
         {
             App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
         }
+
         new_scene->Load(scene_resource->scene_data);
     }
     else
@@ -322,6 +345,12 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     }
 
     ChangeMainScene(new_scene);
+
+    // If the scene was playing previously, continue playing:
+    if (was_scene_playing)
+    {
+        AttemptScenePlay();
+    }
 }
 
 void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)

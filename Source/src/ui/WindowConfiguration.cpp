@@ -20,7 +20,7 @@ Hachiko::WindowConfiguration::WindowConfiguration() :
 void Hachiko::WindowConfiguration::Update()
 {
     ImGui::SetNextWindowDockID(App->editor->dock_right_id, ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin((std::string(ICON_FA_COG " ") + name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
+    if (!ImGui::Begin((std::string(ICON_FA_GEAR " ") + name).c_str(), &active, ImGuiWindowFlags_NoNavInputs))
     {
         ImGui::End();
         return;
@@ -45,9 +45,9 @@ void Hachiko::WindowConfiguration::Update()
 
     if (ImGui::CollapsingHeader("Engine"))
     {
+        ImGui::Checkbox("Undo/Redo", &App->editor->undo_redo_active);
         App->window->OptionsMenu();
         App->renderer->PerformanceMenu();
-
     }
 
     if (ImGui::CollapsingHeader("Batching"))

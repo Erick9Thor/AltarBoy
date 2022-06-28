@@ -14,8 +14,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
-#include "components/ComponentTransform.h"
-#include "resources/ResourceNavMesh.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -46,6 +45,9 @@ bool Hachiko::ModuleRender::Init()
     ms_log = std::vector<float>(n_bins);
 
     GenerateParticlesBuffers();
+
+    draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
+    draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
 
     return true;
 }
@@ -114,6 +116,7 @@ void Hachiko::ModuleRender::ManageResolution(const ComponentCamera* camera)
 {
     unsigned res_x, res_y;
     camera->GetResolution(res_x, res_y);
+
     if (res_x != fb_height || res_y != fb_width)
     {
         ResizeFrameBuffer(res_x, res_y);
@@ -197,6 +200,9 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
         App->navigation->DebugDraw();
     }
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     GLint polygonMode[2];
     glGetIntegerv(GL_POLYGON_MODE, polygonMode);
     if (polygonMode[0] == GL_LINE)
@@ -209,6 +215,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     {
         App->ui->DrawUI(active_scene);
     }
+    glDisable(GL_BLEND);
 
     // If in play build, blit frame_buffer to the default frame buffer and render to the whole 
     // screen, if not, bind default frame buffer:
@@ -240,7 +247,7 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
     {
         DrawPreForwardPass(scene, camera);
         // TODO: Forward rendering still has that weird stuttering bug, fix this.
-        DrawForward(batch_manager);
+        DrawForward(scene, batch_manager);
     }
 }
 
@@ -264,6 +271,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
     // Disable blending for deferred rendering as the meshes with transparent
     // materials are gonna be rendered with forward rendering after the
@@ -294,6 +302,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // Use Deferred rendering lighting pass program:
     program = App->program->GetDeferredLightingProgram();
     program->Activate();
+
+    // Bind ImageBasedLighting uniforms
+    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
@@ -353,10 +364,13 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     Program::Deactivate();
 }
 
-void Hachiko::ModuleRender::DrawForward(BatchManager* batch_manager) 
+void Hachiko::ModuleRender::DrawForward(Scene* scene, BatchManager* batch_manager) 
 {
     Program* program = App->program->GetForwardProgram();
     program->Activate();
+
+    // Bind ImageBasedLighting uniforms
+    scene->GetSkybox()->BindImageBasedLightingUniforms(program);
 
     batch_manager->ClearOpaqueBatchesDrawList();
     batch_manager->ClearTransparentBatchesDrawList();
@@ -391,7 +405,6 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
 
     // Draw debug draw stuff:
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
-
     
     const auto& scene_particles = scene->GetSceneParticles();
     if (!scene_particles.empty())
@@ -464,7 +477,7 @@ void GLOptionCheck(GLenum option, bool enable)
 
 void Hachiko::ModuleRender::OptionsMenu()
 {
-    ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), "Draw Options");
+    ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Draw Options");
     ImGui::Checkbox("Debug Draw", &App->debug_draw->debug_draw);
     ImGui::Checkbox("Quadtree", &App->debug_draw->draw_quadtree);
     ImGui::Checkbox("Skybox", &draw_skybox);
@@ -551,8 +564,8 @@ void Hachiko::ModuleRender::DeferredOptions()
 
 void Hachiko::ModuleRender::PerformanceMenu()
 {
-    glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram_free);
-    const float vram_free_mb = vram_free / 1024.0f;
+
+    const float vram_free_mb = gpu.vram_free / 1024.0f;
     const float vram_usage_mb = gpu.vram_budget_mb - vram_free_mb;
     ImGui::Text("VRAM Budget: %.1f Mb", gpu.vram_budget_mb);
     ImGui::Text("Vram Usage:  %.1f Mb", vram_usage_mb);
@@ -649,9 +662,18 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     gpu.name = (unsigned char*)glGetString(GL_RENDERER);
     gpu.brand = (unsigned char*)glGetString(GL_VENDOR);
 
-    int vram_budget;
-    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram_budget);
-    gpu.vram_budget_mb = static_cast<float>(vram_budget) / 1024.0f;
+            GLint count;
+    glGetIntegerv(GL_NUM_EXTENSIONS, &count);
+    for (GLint i = 0; i < count; ++i)
+    {
+        const char* extension = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
+        if (!strcmp(extension, "GL_NVX_gpu_memory_info"))
+        {    glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &gpu.vram_budget_mb);
+            glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &gpu.vram_free);
+        }
+    }
+
+    gpu.vram_budget_mb /= 1024;
 }
 
 
@@ -745,5 +767,7 @@ bool Hachiko::ModuleRender::CleanUp()
 
     SDL_GL_DeleteContext(context);
 
+    App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
+    App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
     return true;
 }

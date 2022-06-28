@@ -31,6 +31,7 @@ namespace Hachiko
         bool CleanUp() override;
 
         void RemoveGameObject(GameObject* go);
+        void RemovedGameObject(GameObject* go);
 
         GameObject* GetRoot()
         {
@@ -56,8 +57,8 @@ namespace Hachiko
         
         void SaveScene(const char* file_path = nullptr);
 
-        GameObject* Raycast(const float3& origin, const float3& destination);
-        GameObject* BoundingRaycast(const float3& origin, const float3& destination);
+        GameObject* Raycast(const float3& origin, const float3& destination, float3* closest_hit = nullptr, GameObject* parent_filter = nullptr);
+        GameObject* BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter = nullptr);
 
         void OptionsMenu();
 

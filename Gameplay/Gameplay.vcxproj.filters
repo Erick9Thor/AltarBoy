@@ -81,7 +81,7 @@
     <ClInclude Include="..\Source\vendors\imgui\imgui_stdlib.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome5.h">
+    <ClInclude Include="..\Source\vendors\imgui\IconsFontAwesome6.h">
       <Filter>Vendors\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\vendors\imgui\imconfig.h">
@@ -504,13 +504,12 @@
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\contrib\graphbuilder.h">
       <Filter>Vendors\Yaml-cpp\Contrib</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes.h" />
     <ClInclude Include="entities\player\PlayerAnimationManager.h" />
     <ClInclude Include="constants\Sounds.h" />
     <ClInclude Include="entities\player\PlayerSoundManager.h" />
     <ClInclude Include="entities\enemies\EnemyController.h" />
     <ClInclude Include="entities\Stats.h" />
-    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="misc\FancyLights.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -518,6 +517,8 @@
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="entities\enemies\BugState.h" />
+    <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="CrystalPlatform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -778,12 +779,14 @@
     <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
     <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="entities\Stats.cpp" />
-    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\player\RoomTeleporter.cpp" />
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\FancyLights.cpp" />
+    <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="CrystalPlatform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

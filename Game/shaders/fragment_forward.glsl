@@ -45,10 +45,10 @@ void main()
         material.metallic_map.layerIndex,
         material.specular_map.layerIndex,
         material.diffuse_map.layerIndex,
+        material.tint_color,
         smoothness, 
         diffuse, 
         specular);
-
 
     vec3 normal = CalculateNormal(
         material.normal_flag,
@@ -60,7 +60,7 @@ void main()
     
     vec3 view_direction = normalize(camera.pos - fragment.pos);
     
-    vec3 hdr_color = vec3(0.0);
+    vec3 hdr_color = GetAmbientLight(normal, reflect(-view_direction, normal), dot(normal, view_direction), pow(1.0 - smoothness, 2), diffuse.rgb, specular);
     hdr_color += DirectionalPBR(normal, view_direction, lights.directional, diffuse.rgb, specular, smoothness);
     
     for(uint i=0; i<lights.n_points; ++i)
@@ -71,9 +71,7 @@ void main()
     for(uint i=0; i<lights.n_spots; ++i)
     {
         hdr_color +=  SpotPBR(fragment.pos, normal, view_direction, lights.spots[i], diffuse.rgb, specular, smoothness);
-    }   
-
-    hdr_color += diffuse.rgb * lights.ambient.color.rgb * lights.ambient.intensity;
+    }
 
     // Calculate emissive color:
     vec3 emissive = CalculateEmissive(

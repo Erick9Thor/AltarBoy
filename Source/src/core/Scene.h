@@ -13,6 +13,7 @@ namespace Hachiko
     class ComponentPointLight;
     class ComponentSpotLight;
     class ComponentBillboard;
+    class ComponentParticleSystem;
     class Skybox;
     class Quadtree;
     class ResourceMaterial;
@@ -43,10 +44,9 @@ namespace Hachiko
 
         void RebuildBatching();
 
-
-        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination) const;
-        [[nodiscard]] GameObject* BoundingRaycast(const float3& origin, const float3& destination) const;
-        [[nodiscard]] GameObject* Raycast(const LineSegment& segment, bool triangle_level = true) const;
+        [[nodiscard]] GameObject* Raycast(const float3& origin, const float3& destination, float3* closest_hit = nullptr, GameObject* parent_filter = nullptr) const;
+        [[nodiscard]] GameObject* BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter = nullptr) const;
+        [[nodiscard]] GameObject* Raycast(const LineSegment& segment, bool triangle_level = true, float3* closest_hit = nullptr, GameObject* parent_filter = nullptr) const;
 
         [[nodiscard]] GameObject* GetRoot() const
         {
@@ -108,8 +108,6 @@ namespace Hachiko
         {
             navmesh_id = new_navmesh_id;
         }
-        
-
 
         [[nodiscard]] GameObject* Find(UID id) const;
 
@@ -122,24 +120,13 @@ namespace Hachiko
         void Load(const YAML::Node& node, bool meshes_only = false);
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
-        
+
         void AddParticleComponent(Component* new_particle)
         {
             particles.emplace_back(new_particle);
         }
 
-        void RemoveParticleComponent(const UID& component_id)
-        {
-            auto it = std::find_if(particles.begin(), particles.end(), [&](const Component* component)
-                { 
-                    return component->GetID() == component_id;
-                }
-            );
-            if (it != particles.end())
-            {
-                particles.erase(it);
-            }
-        }
+        void RemoveParticleComponent(const UID& component_id);
 
         const std::vector<Component*>& GetSceneParticles()
         {
@@ -149,7 +136,7 @@ namespace Hachiko
         std::vector<ComponentDirLight*> dir_lights{};
         std::vector<ComponentPointLight*> point_lights{};
         std::vector<ComponentSpotLight*> spot_lights{};
-    
+
     private:
         std::string name;
         GameObject* root = nullptr;
@@ -163,7 +150,9 @@ namespace Hachiko
 
         bool rebuild_batch = true;
         BatchManager* batch_manager = nullptr;
-        std::vector<Component*> particles {};
+        std::vector<Component*> particles{};
+
+        
 
     public:
         class Memento
@@ -171,7 +160,7 @@ namespace Hachiko
         public:
             Memento(std::string content) :
                 // content(std::move(content))
-            content(std::move(content))
+                content(std::move(content))
             {
             }
 
@@ -181,7 +170,7 @@ namespace Hachiko
             {
                 return content;
             }
-            
+
         private:
             std::string content;
         };

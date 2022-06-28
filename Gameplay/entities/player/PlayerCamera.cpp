@@ -5,31 +5,27 @@
 
 // TODO: Delete this include:
 #include <core/Scene.h>
-
-//#include <thread>
+#include <thread>
+#include "constants/Sounds.h"
 
 Hachiko::Scripting::PlayerCamera::PlayerCamera(GameObject* game_object)
 	: Script(game_object, "PlayerCamera")
-	, _relative_position_to_player(math::float3::zero)
-	, _player(nullptr)
-	, _follow_delay(0.0f)
+	, _relative_position_to_player(math::float3(0.0f, 19.0f, 13.0f))
+	, _objective(nullptr)
+	, _follow_delay(0.6f)
 {
 }
 
 void Hachiko::Scripting::PlayerCamera::OnAwake()
 {
-	_relative_position_to_player = math::float3(0.0f, 15.0f, 10.0f);
-	// This is until we have saving for scripts. Because of this, this
-	// script needs to be a direct child of scene root, and there must
-	// be a GameObject of name "PlayerC" which is our player.
-	//_player = game_object->parent->GetFirstChildWithName("PlayerC");
-	if (_player != nullptr)
+	if (_objective != nullptr)
 	{
-		_player_ctrl = _player->GetComponent<PlayerController>();
+		_current_objective = _objective;
+		_player_ctrl = _objective->GetComponent<PlayerController>();
 	}
-	_follow_delay = 0.6f;
 	_look_ahead = float3::zero;
-	// Seed the rand()
+	_relative_pososition_aux = _relative_position_to_player;
+	// Seed the rand() for the shaking
 	srand(static_cast <unsigned> (time(0)));
 }
 
@@ -39,40 +35,56 @@ void Hachiko::Scripting::PlayerCamera::OnStart()
 
 void Hachiko::Scripting::PlayerCamera::OnUpdate()
 {
-	if (_player_ctrl == nullptr)
+	CheckForObjective();
+
+	RecalculateRelativePos();
+
+	SetLookAhead();
+
+	MoveCamera();
+}
+
+/// <summary>
+/// Checks if the objective has changed
+/// </summary>
+void Hachiko::Scripting::PlayerCamera::CheckForObjective()
+{
+	if (_current_objective != _objective)
 	{
-		if (_player != nullptr)
+		_current_objective = _objective;
+		if (_current_objective != nullptr)
 		{
-			_player_ctrl = _player->GetComponent<PlayerController>();
+			_player_ctrl = _current_objective->GetComponent<PlayerController>();
 		}
-		return;
 	}
-	// TODO: set some camera offset
+}
 
-	const math::float2 mouse_movement_x_z = MoveCameraWithMouse();
-	const math::float3 mouse_movement = float3(mouse_movement_x_z.x, 0.0f, mouse_movement_x_z.y);
-	ScrollWheelZoom(&_relative_position_to_player);
-
-	float delay = _follow_delay;
-
-	if (_player_ctrl->_state == PlayerState::WALKING)
+void Hachiko::Scripting::PlayerCamera::SetLookAhead()
+{
+	if (_player_ctrl && _player_ctrl->_state == PlayerState::WALKING)
 	{
 		const float look_ahead_time = Time::DeltaTime() / 0.8f;
 		Clamp<float>(look_ahead_time, 0.0f, 1.0f);
-		_look_ahead = math::float3::Lerp(_look_ahead, _player->GetTransform()->GetFront() * 4, look_ahead_time);
-		delay *= 0.25f;
+		_look_ahead = math::float3::Lerp(_look_ahead, _current_objective->GetTransform()->GetFront() * 5, look_ahead_time);
 	}
 	else
 	{
 		_look_ahead = float3::zero;
 	}
+}
 
-	const math::float3 final_position = _player->GetTransform()->GetGlobalPosition()
+void Hachiko::Scripting::PlayerCamera::MoveCamera()
+{
+	const math::float2 mouse_movement_x_z = MoveCameraWithMouse();
+	const math::float3 mouse_movement = float3(mouse_movement_x_z.x, 0.0f, mouse_movement_x_z.y);
+	ScrollWheelZoom(&_relative_position_to_player);
+
+	const math::float3 final_position = _current_objective->GetTransform()->GetGlobalPosition()
 		+ _relative_position_to_player + _look_ahead + mouse_movement;
 	ComponentTransform* transform = game_object->GetTransform();
 	math::float3 current_position = transform->GetGlobalPosition();
 
-	const float delayed_time = Time::DeltaTime() / delay;
+	const float delayed_time = Time::DeltaTime() / _follow_delay;
 	Clamp<float>(delayed_time, 0.0f, 1.0f);
 
 	// Lerp to the pre-defined relative position to the player with a delay: 
@@ -84,10 +96,6 @@ void Hachiko::Scripting::PlayerCamera::OnUpdate()
 	shake_offset = Shake();
 
 	transform->SetGlobalPosition(current_position + shake_offset);
-
-	// Uncomment the following line if you want the camera to turn itself towards
-	// curent player position:
-	// transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 }
 
 float2 Hachiko::Scripting::PlayerCamera::MoveCameraWithMouse()
@@ -161,5 +169,51 @@ float3 Hachiko::Scripting::PlayerCamera::Shake()
 		shake_time = 0.0f;
 		shake_elapsed = 0.0f;
 		return float3::zero;
+	}
+}
+
+void Hachiko::Scripting::PlayerCamera::ChangeRelativePosition(math::float3 new_relative_position, float time)
+{
+	if (time > 0.0f)
+	{
+		// By reverting position we prevent overlaping
+		RevertRelativePosition();
+		_is_temporary_moved = true;
+		_position_timer = time;
+	}
+	_relative_pososition_aux = _relative_position_to_player;
+	_relative_position_to_player = new_relative_position;
+}
+
+void Hachiko::Scripting::PlayerCamera::RevertRelativePosition()
+{
+	_relative_position_to_player = _relative_pososition_aux;
+}
+
+void Hachiko::Scripting::PlayerCamera::SwitchRelativePosition(math::float3 new_relative_position)
+{
+	if (new_relative_position.Equals(_relative_position_to_player))
+	{
+		RevertRelativePosition();
+	}
+	else
+	{
+		ChangeRelativePosition(new_relative_position);
+	}
+}
+
+void Hachiko::Scripting::PlayerCamera::RecalculateRelativePos()
+{
+	if (_is_temporary_moved)
+	{
+		if (_position_timer <= 0.0f)
+		{
+			RevertRelativePosition();
+			_is_temporary_moved = false;
+		}
+		else
+		{
+			_position_timer -= Time::DeltaTime();
+		}
 	}
 }
