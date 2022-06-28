@@ -654,8 +654,8 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 void Hachiko::Scripting::PlayerController::WalkingDustManager()
 {
 	_walking_dust->SetActive(IsWalking());
-	//ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
-	//dust_particles->Play();
+	ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	dust_particles->Play();
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()
