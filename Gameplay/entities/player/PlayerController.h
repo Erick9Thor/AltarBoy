@@ -114,6 +114,8 @@ private:
 	void CancelAttack();
 	float4x4 GetMeleeAttackOrigin(float attack_range) const;
 
+	bool GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const;
+
 	// Player simulation
 	void MovementController();
 	void DashController();
@@ -215,10 +217,9 @@ private:
 	float3 _knock_end = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
-
 	
-	GameObject* enemies;
-	GameObject* dynamic_envi;
+	GameObject* _enemies;
+	GameObject* _terrain;
 
 };
 } // namespace Scripting
