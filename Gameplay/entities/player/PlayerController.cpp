@@ -793,28 +793,39 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 		return;
 	}
 
-	std::vector<GameObject*> enemy_children = _enemies ? _enemies->children : std::vector<GameObject*>();
-
-	for (int i = 0; i < enemy_children.size(); ++i)
+	std::vector<GameObject*>& enemy_packs = _enemies->children;
+	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
-		if (enemy_children[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		GameObject* pack = enemy_packs[i];
+		if (!pack->IsActive())
 		{
-			EnemyController* enemy_controller = enemy_children[i]->GetComponent<EnemyController>();
+			continue;
+		}
 
-			if (enemy_controller->isAlive() == false)
+		std::vector<GameObject*>& enemies = pack->children;
+
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			if (enemies[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 			{
-				enemy_controller->GetParasite();
-				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
-				_combat_stats->Heal(1);
-				UpdateHealthBar();
-				// Generate a random number for the weapon
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
-				std::uniform_int_distribution<> dist(0, weapons.size()-1);
-				int new_wpn_num = dist(gen);
-				_current_weapon = new_wpn_num;
-				return;
+				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
+
+				if (enemy_controller->IsAlive() == false)
+				{
+					enemy_controller->GetParasite();
+					game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
+					_combat_stats->Heal(1);
+					UpdateHealthBar();
+					// Generate a random number for the weapon
+					std::random_device rd;
+					std::mt19937 gen(rd());
+					int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
+					std::uniform_int_distribution<> dist(0, weapons.size() - 1);
+					int new_wpn_num = dist(gen);
+					_current_weapon = new_wpn_num;
+					return;
+				}
 			}
 		}
 	}
