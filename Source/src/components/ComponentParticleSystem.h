@@ -62,8 +62,9 @@ namespace Hachiko
 
         //emission
         bool loop = false;
+        bool burst = false;
         float duration = 5.0f;
-        bool able_to_emit = false;
+        bool able_to_emit = true;
         float time = 0.0f;
         float emitter_elapsed_time = 0.0f;
         ParticleSystem::VariableTypeProperty rate_over_time{float2(10)};

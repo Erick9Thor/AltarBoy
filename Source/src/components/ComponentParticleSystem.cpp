@@ -123,7 +123,6 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             Widgets::DragFloatConfig duration_cfg;
             duration_cfg.min = 0.05f;
             duration_cfg.speed = 0.05f;
-            duration_cfg.enabled = !loop;
 
             DragFloat("Duration", duration, &duration_cfg);
             Widgets::Checkbox("Loop", &loop);
@@ -145,6 +144,7 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             rate_cfg.min = 0.0f;
 
             MultiTypeSelector("Rate over time", rate_over_time, &rate_cfg);
+            Widgets::Checkbox("Burst", &burst);
             ImGui::EndDisabled();
         }
 
@@ -589,6 +589,16 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
         return;
     }
 
+    if (burst)
+    {
+        if (time >= start_life.values.x)
+        {
+            able_to_emit = true;
+            time = 0.0f;
+        }
+        return;
+    }
+    
     if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time) / duration) // TODO: Avoid division
     {
         able_to_emit = false;
@@ -611,6 +621,8 @@ void Hachiko::ComponentParticleSystem::ResetActiveParticles()
 void Hachiko::ComponentParticleSystem::Reset()
 {
     emitter_elapsed_time = 0.0f;
+    time = 0.0f;
+    able_to_emit = true;
     ResetActiveParticles();
 }
 
@@ -618,6 +630,23 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
 {
     if (!able_to_emit)
     {
+        return;
+    }
+
+    if (burst)
+    {
+        int count = static_cast<int>(std::trunc(rate_over_time.values.x));
+        for (int i = 0; count != 0 || i == particles.size(); ++i)
+        {
+            if (!particles[i].IsActive())
+            {
+                particles[i].Reset(); // For particles to set current emitter configuration
+                particles[i].Activate();
+                --count;
+            }
+        }
+
+        able_to_emit = false;
         return;
     }
 
