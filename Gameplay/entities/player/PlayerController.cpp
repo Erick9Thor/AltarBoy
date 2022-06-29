@@ -607,7 +607,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, _dash_scaler);
 	
 
-	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
+	
 	// of an acceleration.
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);
