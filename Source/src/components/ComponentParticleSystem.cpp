@@ -669,10 +669,10 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
     }
 }
 
-float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
+float3 Hachiko::ComponentParticleSystem::GetLocalPositionFromShape() const
 {
     const float theta = RandomUtil::RandomBetween(0, emitter_properties.arc) * TO_RAD;
-    float3 global_emitter_position = GetEmitterProperties().position + game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
+    float3 local_emitter_position = float3::zero;
     switch (emitter_type)
     {
         case ParticleSystem::Emitter::Type::CONE:
@@ -690,7 +690,7 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
 
             const float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
             const float z_position = RandomUtil::RandomBetween(z_min, z_max) * sin(theta);
-            global_emitter_position = float3(global_emitter_position.x + x_position, global_emitter_position.y, global_emitter_position.z + z_position);
+            local_emitter_position = float3(+ x_position, 0.0f, z_position);
             break;
         }
         case ParticleSystem::Emitter::Type::RECTANGLE:
@@ -700,19 +700,19 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
             const float half_z = emitter_properties.scale.z * 0.5f;
             const float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
 
-            global_emitter_position = float3(global_emitter_position.x + x_random_pos, global_emitter_position.y, global_emitter_position.z + z_random_pos);
+            local_emitter_position = float3(x_random_pos, 0.0f, z_random_pos);
             break;
         }
         case ParticleSystem::Emitter::Type::SPHERE:
         {
             const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-            global_emitter_position.x = emitter_properties.rotation.x + effective_radius * cos(theta);
-            global_emitter_position.y = emitter_properties.rotation.y + effective_radius * cos(RandomUtil::Random() * pi);
-            global_emitter_position.z = emitter_properties.rotation.z + effective_radius * sin(theta);
+            local_emitter_position.x = emitter_properties.rotation.x + effective_radius * cos(theta);
+            local_emitter_position.y = emitter_properties.rotation.y + effective_radius * cos(RandomUtil::Random() * pi);
+            local_emitter_position.z = emitter_properties.rotation.z + effective_radius * sin(theta);
             break;
         }
     }
-    return global_emitter_position;
+    return local_emitter_position;
 }
 
 void Hachiko::ComponentParticleSystem::AddTexture()
@@ -815,7 +815,7 @@ void Hachiko::ComponentParticleSystem::DisplayControls()
 
     char particles_spawned[10];
     sprintf_s(particles_spawned, 10, "%d", active_particles);
-    ImGui::Text("Particles rate");
+    ImGui::Text("Active particles");
     ImGui::SameLine();
     ImGui::Text(particles_spawned);
 

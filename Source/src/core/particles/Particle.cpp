@@ -27,19 +27,29 @@ void Hachiko::Particle::Reset()
     SetCurrentLife(GetInitialLife());
     SetCurrentSize(GetInitialSize());
     SetCurrentSpeed(GetInitialSpeed());
-    SetCurrentPosition(emitter->GetPositionFromShape());
     SetCurrentRotation(GetInitialRotation());
+    SetCurrentPosition(emitter->GetLocalPositionFromShape());
 
     const float4x4 game_object_model = emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalMatrix();
+    
+    // Calculate emitter matrix
     const float3 emitter_rotation = DegToRad(emitter->GetEmitterProperties().rotation);
     const float4x4 emitter_model = float4x4::FromTRS(emitter->GetEmitterProperties().position,
             Quat::FromEulerXYZ(emitter_rotation.x, emitter_rotation.y, emitter_rotation.z).Normalized(),
             emitter->GetEmitterProperties().scale);
 
+    // Calculate particle matrix
     const float3 shape_direction = GetInitialDirection();
     const float3 rotation = DegToRad(shape_direction);
-    const float4x4 particle_model = float4x4::FromTRS(current_position, Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), emitter->GetEmitterProperties().scale);
+    const float4x4 particle_model = float4x4::FromTRS(current_position,
+        Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), emitter->GetEmitterProperties().scale);
+    
+    // Final model matrix
     const float4x4 current_model = game_object_model * emitter_model * particle_model;
+    
+    // Update rotated position
+    SetCurrentPosition(current_model.TranslatePart());
+
     const float3 direction = (current_model.RotatePart() * shape_direction).Normalized();
     SetCurrentDirection(direction);
 }
