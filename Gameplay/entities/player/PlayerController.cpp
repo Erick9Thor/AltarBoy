@@ -19,6 +19,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _dash_scaler(3)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
@@ -601,10 +602,15 @@ void Hachiko::Scripting::PlayerController::DashController()
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
+	
+	// using y = x^p
+	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, (int)_dash_scaler);
+	
 
-	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
-	// of an acceleration.
-	_player_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
+	
+	
+	_player_position = math::float3::Lerp(_dash_start, _dash_end,
+		acceleration);
 
 	if (_state != PlayerState::MELEE_ATTACKING)
 	{
