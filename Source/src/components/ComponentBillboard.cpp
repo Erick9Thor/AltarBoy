@@ -396,6 +396,10 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[COLOR_GRADIENT] = *gradient;
     node[ANIMATION_SECTION] = animation_section;
     node[COLOR_SECTION] = color_section;
+    node[SIZE_SECTION] = size_section;
+    node[SIZE_OVERTIME] = size_over_time;
+    node[ROTATION_SECTION] = rotation_section;
+    node[ROTATION_OVERTIME] = rotation_over_time;
     node[START_DELAY] = start_delay;
     node[START_SIZE] = start_size;
     node[START_ROTATION] = start_rotation;
@@ -462,6 +466,16 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
     color_section = node[COLOR_SECTION].IsDefined() ?
         node[COLOR_SECTION].as<bool>() : color_section;
+
+    size_section = node[SIZE_SECTION].IsDefined() ? 
+        node[SIZE_SECTION].as<bool>() : size_section;
+    size_over_time = node[SIZE_OVERTIME].IsDefined() ? 
+        node[SIZE_OVERTIME].as<ParticleSystem::VariableTypeProperty>() : size_over_time;
+
+    rotation_section = node[ROTATION_SECTION].IsDefined() ? 
+        node[ROTATION_SECTION].as<bool>() : rotation_section;
+    rotation_over_time = node[ROTATION_OVERTIME].IsDefined() ? 
+        node[ROTATION_OVERTIME].as<ParticleSystem::VariableTypeProperty>() : rotation_over_time;
 
     start_delay = node[START_DELAY].IsDefined() ?
         node[START_DELAY].as<ParticleSystem::VariableTypeProperty>() : start_delay;
