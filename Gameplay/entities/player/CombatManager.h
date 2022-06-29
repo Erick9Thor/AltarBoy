@@ -75,6 +75,12 @@ namespace Hachiko
             const BulletStats& GetBulletStats(unsigned bullet_idx) const;
 
             OBB CreateAttackHitbox(const float4x4& origin, const AttackStats& attack_stats) const;
+            
+            bool IsPackDead(GameObject* pack) const;
+            bool IsPackDead(unsigned pack_idx) const;
+            void ResetEnemyPack(GameObject* pack);
+            void ActivateEnemyPack(GameObject* pack);
+            void DeactivateEnemyPack(GameObject* pack);
 
         private:
             // Start attack depending on its type
@@ -108,11 +114,17 @@ namespace Hachiko
             // Processes hit and returns hit distance to check what to damage
             EnemyController* FindBulletClosestEnemyHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
             CrystalExplosion* FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
+
+            // Enemy management
+            void SerializeEnemyPacks();
         
         private:
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
+
+            GameObject* _enemy_packs_container;
+            std::vector<std::vector<float4x4> > _initial_transforms;
 
             math::float3 _direction;
             int _damage;
