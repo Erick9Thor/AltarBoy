@@ -39,15 +39,15 @@ void Hachiko::ForceParticleModifier::DrawGui()
 
 void Hachiko::ForceParticleModifier::Save(YAML::Node& node) const
 {
-    YAML::Node force_module = node[MODULE_FORCE];
+    YAML::Node force_module = node[MODIFIER_FORCE];
     ParticleModifier::Save(force_module);
     force_module[ROTATION] = rotation_delta;
 }
 
 void Hachiko::ForceParticleModifier::Load(const YAML::Node& node)
 {
-    ParticleModifier::Load(node[MODULE_FORCE]);
-    rotation_delta = node[MODULE_FORCE][ROTATION].IsDefined() ? node[MODULE_FORCE][ROTATION].as<ParticleSystem::VariableTypeProperty>() : rotation_delta;
+    ParticleModifier::Load(node[MODIFIER_FORCE]);
+    rotation_delta = node[MODIFIER_FORCE][ROTATION].IsDefined() ? node[MODIFIER_FORCE][ROTATION].as<ParticleSystem::VariableTypeProperty>() : rotation_delta;
 }
 
 void Hachiko::ForceParticleModifier::UpdatePositionOverTime(Particle& particle) 
@@ -60,7 +60,7 @@ void Hachiko::ForceParticleModifier::UpdatePositionOverTime(Particle& particle)
 void Hachiko::ForceParticleModifier::UpdateDirectionOverTime(Particle& particle)
 {
     float3 direction = particle.GetCurrentDirection();
-    float particle_life = particle.GetCurrentLifeNormilized();
+    float particle_life = particle.GetCurrentLifeNormalized();
     direction.x += x_force.GetValue(particle_life) * EngineTimer::delta_time;
     direction.y += y_force.GetValue(particle_life) * EngineTimer::delta_time;
     direction.z += z_force.GetValue(particle_life) * EngineTimer::delta_time;
@@ -71,6 +71,6 @@ void Hachiko::ForceParticleModifier::UpdateDirectionOverTime(Particle& particle)
 void Hachiko::ForceParticleModifier::UpdateRotationOverTime(Particle& particle) 
 {
     float rotation = particle.GetCurrentRotation();
-    rotation += rotation_delta.GetValue(particle.GetCurrentLifeNormilized()) * EngineTimer::delta_time;
+    rotation += rotation_delta.GetValue(particle.GetCurrentLifeNormalized()) * EngineTimer::delta_time;
     particle.SetCurrentRotation(rotation);
 }

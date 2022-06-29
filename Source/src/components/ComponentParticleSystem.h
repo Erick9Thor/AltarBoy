@@ -24,6 +24,7 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSpeed() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSize() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesRotation() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesStretch() const;
 
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
@@ -54,7 +55,7 @@ namespace Hachiko
         bool shape_section = true;
         bool lights_section = false;
         bool renderer_section = true;
-        bool texture_section = true;
+        bool texture_section = false;
 
         //particle config
         ParticleSystem::ParticleProperties particle_properties;
