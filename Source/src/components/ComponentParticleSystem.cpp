@@ -83,7 +83,7 @@ void Hachiko::ComponentParticleSystem::Update()
         Start();
     }
 #endif //PLAY_BUILD
-    if (emitter_state == ParticleSystem::Emitter::State::PLAYING)
+    if (emitter_state != ParticleSystem::Emitter::State::PAUSED)
     {
         UpdateEmitterTimes();
         ActivateParticles();
@@ -94,11 +94,6 @@ void Hachiko::ComponentParticleSystem::Update()
 
 void Hachiko::ComponentParticleSystem::Draw(ComponentCamera* camera, Program* program)
 {
-    if (emitter_state == ParticleSystem::Emitter::State::STOPPED)
-    {
-        return;
-    }
-
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
@@ -582,8 +577,7 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if ((!loop && emitter_elapsed_time >= duration) ||
-        emitter_state != ParticleSystem::Emitter::State::PLAYING)
+    if ((!loop && emitter_elapsed_time >= duration))
     {
         able_to_emit = false;
         return;
@@ -592,7 +586,8 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
     time += EngineTimer::delta_time;
     emitter_elapsed_time += EngineTimer::delta_time;
 
-    if (emitter_elapsed_time < start_delay.GetValue())
+    if (emitter_elapsed_time < start_delay.GetValue() ||
+        emitter_state != ParticleSystem::Emitter::State::PLAYING)
     {
         able_to_emit = false;
         return;
@@ -637,6 +632,11 @@ void Hachiko::ComponentParticleSystem::Reset()
 
 void Hachiko::ComponentParticleSystem::ActivateParticles()
 {
+    if (emitter_state == ParticleSystem::Emitter::State::STOPPED)
+    {
+        return;
+    }
+
     if (burst && burst_emit)
     {
         int count = static_cast<int>(std::trunc(rate_burst.values.x));
@@ -797,7 +797,6 @@ void Hachiko::ComponentParticleSystem::Restart()
 
 void Hachiko::ComponentParticleSystem::Stop()
 {
-    Reset();
     emitter_state = ParticleSystem::Emitter::State::STOPPED;
 }
 
