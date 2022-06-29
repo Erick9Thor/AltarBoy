@@ -35,9 +35,10 @@ void Hachiko::ComponentImage::DrawGui()
         const std::string title = "Select Image";
         if (ImGui::Button(title.c_str()))
         {
+            const char* filters = "Image files{.png,.tif,.jpg,.tga}";
             ImGuiFileDialog::Instance()->OpenDialog(title,
                                                     title,
-                                                    ".png",
+                                                    filters,
                                                     ASSETS_FOLDER_TEXTURE,
                                                     1,
                                                     nullptr,
@@ -88,6 +89,10 @@ void Hachiko::ComponentImage::DrawGui()
                     animation_index = {0.0f, 0.0f};
                     factor = float2::one;
                 }
+                else
+                {
+                    factor = float2(1.0f / x_tiles, 1.0f / y_tiles);
+                }
             }
             if (is_tiled)
             {
@@ -112,9 +117,10 @@ void Hachiko::ComponentImage::DrawGui()
         const std::string hover_title = "Select Hover Image";
         if (ImGui::Button(hover_title.c_str()))
         {
+            const char* filters = "Image files{.png,.tif,.jpg,.tga}";
             ImGuiFileDialog::Instance()->OpenDialog(hover_title,
                                                     hover_title,
-                                                    ".png",
+                                                    filters,
                                                     ASSETS_FOLDER_TEXTURE,
                                                     1,
                                                     nullptr,
