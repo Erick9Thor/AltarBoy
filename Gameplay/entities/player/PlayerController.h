@@ -147,7 +147,7 @@ private:
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
-	SERIALIZE_FIELD(unsigned int, _dash_scaler);
+	SERIALIZE_FIELD(unsigned, _dash_scaler);
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
 	SERIALIZE_FIELD(float, _trail_enlarger);

@@ -604,7 +604,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
 	
 	// using y = x^p
-	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, _dash_scaler);
+	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, (int)_dash_scaler);
 	
 
 	
