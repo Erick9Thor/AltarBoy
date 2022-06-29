@@ -6,7 +6,6 @@
 
 namespace Hachiko
 {
-    class GameObject;
     class ComponentTransform;
 
     namespace Scripting
@@ -94,7 +93,7 @@ namespace Hachiko
             bool OBBHitsObstacle(GameObject* obstacle_go, const OBB& attack_box);
 
             // What to do when system wants to register a hit
-            void HitObstacle(CrystalExplosion* obstacle, float damage);
+            void HitObstacle(GameObject* obstacle, float damage);
             void HitEnemy(EnemyController* enemy, float damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations
@@ -107,8 +106,9 @@ namespace Hachiko
 
             // Processes hit and returns hit distance to check what to damage
             EnemyController* FindBulletClosestEnemyHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
-            CrystalExplosion* FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
-        
+            GameObject* FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit);
+
+
         private:
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
