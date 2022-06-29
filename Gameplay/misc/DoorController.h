@@ -24,8 +24,10 @@ namespace Hachiko
 			~DoorController() override = default;
 
 			void OnAwake() override;
-			void OnStart() override;
 			void OnUpdate() override;
+
+			void Open();
+			void Close();
 
 		private:
 			void UpdateDoorState();
@@ -33,9 +35,7 @@ namespace Hachiko
 
 		// Variables
 		public:
-			SERIALIZE_FIELD(GameObject*, _door_open);
-			SERIALIZE_FIELD(GameObject*, _door_closed);
-			SERIALIZE_FIELD(GameObject*, _enemies);	// Children of this object have to be defeated in order to open this door
+			SERIALIZE_FIELD(GameObject*, _door);
 
 		private:
 			State _state = State::CLOSED;
