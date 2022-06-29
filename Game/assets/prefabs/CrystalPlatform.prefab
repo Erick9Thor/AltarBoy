@@ -14,11 +14,10 @@ component:
     class_name: CrystalPlatform
     "'_seconds_before_shaking@float'": 5
     "'_seconds_shaking@float'": 4
-    "'_shake_intensity@float'": 0.5
+    "'_shake_intensity@float'": 0.1
     "'_invisible_obstacle@GameObject*'": 117
     "'_crystal@GameObject*'": 0
     "'_crystal_platform@GameObject*'": 2
-    "'_VFX@GameObject*'": 0
 child:
   - name: crystalPlataform_mesh_anim
     enabled: true

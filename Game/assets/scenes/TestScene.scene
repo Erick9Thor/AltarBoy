@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9987, 1, 0.9987]
+        scale: [0.9982, 1, 0.9982]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -152,8 +152,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
-                    scale: [1, 1, 1]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
+                    scale: [1, 0.9999, 0.9999]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -396,8 +396,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
-                    scale: [1, 1, 1]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
+                    scale: [1, 0.9999, 0.9999]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -560,7 +560,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9987, 1, 0.9987]
+                        scale: [0.9982, 1, 0.9982]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -673,19 +673,34 @@ child:
             "'_move_speed@float'": 7
             "'_max_hp@int'": 1
             "'_current_hp@int'": 1
-      - id: 10132969902100410717
+      - id: 17945604955759407253
         name: Crystal_trigger_platform_2
         enabled: true
         component:
           - !<transform>
-            id: 11610986301292852236
+            id: 16086680324090058401
             type: 1
             enabled: true
-            position: [0, 0, 0]
-            rotation: [0, 0, 0, 1]
+            position: [30.5, -0.4394, 6.264]
+            rotation: [-0.7071, 0, 0, 0.7071]
             scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 13893647534157922635
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: false
+            material_id: 6750369022920963075
+            tint_color: [1, 1, 1, 1]
+          - !<obstacle>
+            id: 12118107659064525049
+            type: 18
+            enabled: true
+            obstacle_type: 0
+            obstacle_size: [1, 2, 1]
           - !<script>
-            id: 18351340033751476539
+            id: 13317416724636742060
             type: 15
             enabled: true
             class_name: Stats
@@ -693,8 +708,8 @@ child:
             "'_attack_cd@float'": 2
             "'_attack_range@float'": 3.5
             "'_move_speed@float'": 7
-            "'_max_hp@int'": 3
-            "'_current_hp@int'": 3
+            "'_max_hp@int'": 1
+            "'_current_hp@int'": 1
   - id: 7577865002841685786
     name: Player
     enabled: true
@@ -2307,7 +2322,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0.001, 0.0096, 0.994, -0.1085]
-                    scale: [0.9974, 0.9974, 1]
+                    scale: [0.9964, 0.9964, 1]
                 child:
                   - id: 7371629505677526311
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -2510,7 +2525,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-0.0011, 0.0096, 0.994, 0.1085]
-                    scale: [0.9974, 0.9974, 1]
+                    scale: [0.9964, 0.9964, 1]
                 child:
                   - id: 4481323456209268566
                     name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
@@ -2822,7 +2837,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1467, 879]
+            size: [1442, 879]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2949,7 +2964,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1467, 879]
+        size: [1442, 879]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -3190,7 +3205,7 @@ child:
         class_name: CrystalPlatform
         "'_seconds_before_shaking@float'": 5
         "'_seconds_shaking@float'": 4
-        "'_shake_intensity@float'": 0.5
+        "'_shake_intensity@float'": 0.1
         "'_invisible_obstacle@GameObject*'": 7662036754798983349
         "'_crystal@GameObject*'": 12332680665318740147
         "'_crystal_platform@GameObject*'": 3151263736917155251
@@ -4726,10 +4741,10 @@ child:
         class_name: CrystalPlatform
         "'_seconds_before_shaking@float'": 5
         "'_seconds_shaking@float'": 4
-        "'_shake_intensity@float'": 0.5
+        "'_shake_intensity@float'": 0.1
         "'_invisible_obstacle@GameObject*'": 17586779013351054031
-        "'_crystal@GameObject*'": 9307565729473794536
-        "'_crystal_platform@GameObject*'": 10132969902100410717
+        "'_crystal@GameObject*'": 17945604955759407253
+        "'_crystal_platform@GameObject*'": 11424558742716807808
     child:
       - id: 11424558742716807808
         name: crystalPlataform_mesh_anim
