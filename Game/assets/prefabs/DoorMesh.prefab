@@ -1,0 +1,23 @@
+prefab_name: DoorMesh
+name: DoorMesh
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [-17.37, 3.848, -71.1]
+    rotation: [0, -0.6458, 0, 0.7635]
+    scale: [0.01, 0.01, 0.01]
+  - !<mesh_renderer>
+    type: 2
+    enabled: true
+    mesh_id: 867735284092474584
+    navigable: false
+    visible: true
+    material_id: 6339253229162858782
+    tint_color: [1, 1, 1, 1]
+  - !<obstacle>
+    type: 18
+    enabled: true
+    obstacle_type: 2
+    obstacle_size: [2, 10, 13]

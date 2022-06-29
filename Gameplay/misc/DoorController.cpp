@@ -39,11 +39,11 @@ void Hachiko::Scripting::DoorController::UpdateDoorState()
 	{
 	case State::CLOSED:
 		_door->SetActive(true);
-		game_object->GetComponent<ComponentObstacle>()->AddObstacle();
+		_door->GetComponent<ComponentObstacle>()->AddObstacle();
 		break;
 	case State::OPEN:
 		_door->SetActive(false);
-		game_object->GetComponent<ComponentObstacle>()->RemoveObstacle();
+		_door->GetComponent<ComponentObstacle>()->RemoveObstacle();
 		break;
 	}
 }
