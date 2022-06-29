@@ -145,6 +145,10 @@ void Hachiko::ComponentParticleSystem::DrawGui()
 
             MultiTypeSelector("Rate over time", rate_over_time, &rate_cfg);
             Widgets::Checkbox("Burst", &burst);
+            rate_cfg.min = 0.0f;
+            rate_cfg.enabled = burst;
+            MultiTypeSelector("Burst rate", rate_burst, &rate_cfg);
+
             ImGui::EndDisabled();
         }
 
@@ -591,15 +595,16 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 
     if (burst)
     {
-        if (time >= start_life.values.x)
+        burst_time += EngineTimer::delta_time;
+
+        if (burst_time >= start_life.values.x)
         {
-            able_to_emit = true;
-            time = 0.0f;
+            burst_emit = true;
+            burst_time = 0.0f;
         }
-        return;
     }
     
-    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time) / duration) // TODO: Avoid division
+    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time)) // TODO: Avoid division
     {
         able_to_emit = false;
     }
@@ -622,20 +627,14 @@ void Hachiko::ComponentParticleSystem::Reset()
 {
     emitter_elapsed_time = 0.0f;
     time = 0.0f;
-    able_to_emit = true;
     ResetActiveParticles();
 }
 
 void Hachiko::ComponentParticleSystem::ActivateParticles()
 {
-    if (!able_to_emit)
+    if (burst && burst_emit)
     {
-        return;
-    }
-
-    if (burst)
-    {
-        int count = static_cast<int>(std::trunc(rate_over_time.values.x));
+        int count = static_cast<int>(std::trunc(rate_burst.values.x));
         for (int i = 0; count != 0 || i == particles.size(); ++i)
         {
             if (!particles[i].IsActive())
@@ -646,7 +645,11 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
             }
         }
 
-        able_to_emit = false;
+        burst_emit = false;
+    }
+
+    if (!able_to_emit)
+    {
         return;
     }
 
