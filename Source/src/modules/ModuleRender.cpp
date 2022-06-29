@@ -16,6 +16,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
+#include "components/ComponentTransform.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentParticleSystem.h"
 
@@ -276,10 +277,11 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // Generate shadow map from the scene:
     DrawToShadowMap(scene, camera, batch_manager, DRAW_CONFIG_OPAQUE);
 
+    render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree());
+    
     // ----------------------------- GEOMETRY PASS ----------------------------
 
     glViewport(0, 0, fb_width, fb_height);
-    render_list.Update(camera->GetFrustum(), scene->GetQuadtree());
     g_buffer.BindForDrawing();
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -331,8 +333,11 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // Render the final texture from deferred rendering on a quad that is,
     // 1x1 on NDC:
     RenderDeferredQuad();
+    glBindVertexArray(0);
 
+    g_buffer.UnbindTextures();
     Program::Deactivate();
+
 
     // Blit g_buffer depth buffer to frame_buffer to be used for forward
     // rendering pass:
@@ -525,14 +530,16 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned so
     float3 blur_scale_height(0.0f, blur_scale_y, 0.0f);
 
     // X Axis Blur Pass:
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, source_texture);
-
-    program->Activate();
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, temp_fbo);
+    glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    program->Activate();
 
     program->BindUniformFloat3(Uniforms::Filtering::GAUSSIAN_BLUR_SCALE, blur_scale_width.ptr());
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, source_texture);
 
     RenderDeferredQuad();
 
@@ -540,14 +547,15 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned so
     Program::Deactivate();
 
     // Y Axis Blur Pass:
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, source_fbo);
+    glViewport(0, 0, width, height);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    program->Activate();
+    program->BindUniformFloat3(Uniforms::Filtering::GAUSSIAN_BLUR_SCALE, blur_scale_height.ptr());
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, temp_texture);
-
-    program->Activate();
-    glBindFramebuffer(GL_FRAMEBUFFER, source_fbo);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    program->BindUniformFloat3(Uniforms::Filtering::GAUSSIAN_BLUR_SCALE, blur_scale_height.ptr());
 
     RenderDeferredQuad();
 

@@ -60,6 +60,7 @@ namespace Hachiko
         void BuildBatch(unsigned component_count);
 
         void Draw(const Program* program, const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
+        void Clear();
 
         void ImGuiWindow();
 

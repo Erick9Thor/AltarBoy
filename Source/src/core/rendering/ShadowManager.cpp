@@ -31,13 +31,13 @@ void Hachiko::ShadowManager::GenerateShadowMap()
     // Generate shadow map texture:
     glGenTextures(1, &_shadow_map_texture);
     glBindTexture(GL_TEXTURE_2D, _shadow_map_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, _shadow_map_width, _shadow_map_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, _shadow_map_width, _shadow_map_height, 0, GL_RGBA, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
-    glGenerateMipmap(_shadow_map_texture);
+    glGenerateTextureMipmap(_shadow_map_texture);
     // Bind it to the color attachment 0 of shadow map fbo:
     glBindFramebuffer(GL_FRAMEBUFFER, _shadow_map_fbo);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _shadow_map_texture, 0);
@@ -57,13 +57,12 @@ void Hachiko::ShadowManager::GenerateShadowMap()
     // Generate temporary shadow map texture:
     glGenTextures(1, &_shadow_map_texture_temp);
     glBindTexture(GL_TEXTURE_2D, _shadow_map_texture_temp);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F_ARB, _shadow_map_width, _shadow_map_height, 0, GL_RGBA, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, _shadow_map_width, _shadow_map_height, 0, GL_RGBA, GL_FLOAT, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, clamp_color);
-    glGenerateMipmap(_shadow_map_texture_temp);
     // Bind shadow_map_filtered_texture on 0 color attachment of shadow_map_filtered_fbo:
     glBindFramebuffer(GL_FRAMEBUFFER, _shadow_map_fbo_temp);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _shadow_map_texture_temp, 0);
