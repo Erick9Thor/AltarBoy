@@ -274,7 +274,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     }
     
     // Generate shadow map from the scene:
-    DrawToShadowMap(scene, camera, batch_manager);
+    DrawToShadowMap(scene, camera, batch_manager, DRAW_CONFIG_OPAQUE);
 
     // ----------------------------- GEOMETRY PASS ----------------------------
 
@@ -451,7 +451,9 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
     }*/
 }
 
-bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager) 
+bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camera,
+    BatchManager* batch_manager,
+    DrawConfig draw_config)
 {
     if (scene->dir_lights.size() < 0)
     {
@@ -464,20 +466,6 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     // Cull the scene with directional light frustum:
     render_list.Update(shadow_manager.GetDirectionalLightFrustum(), scene->GetQuadtree());
 
-    // Clear Batches Lists:
-    batch_manager->ClearOpaqueBatchesDrawList();
-    batch_manager->ClearTransparentBatchesDrawList();
-
-    for (const RenderTarget& target : render_list.GetOpaqueTargets())
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-    // TODO: Only do this if the forward pass is enabled.
-    for (const RenderTarget& target : render_list.GetTransparentTargets())
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-
     // Draw collected meshes with shadow mapping program:
     Program* program = App->program->GetShadowMappingProgram();
     program->Activate();
@@ -487,8 +475,33 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     // Bind shadow map fbo for drawing and adjust viewport size etc.:
     shadow_manager.BindBufferForDrawing();
 
-    batch_manager->DrawOpaqueBatches(program);
-    batch_manager->DrawTransparentBatches(program);
+    if ((draw_config & DRAW_CONFIG_OPAQUE) != 0)
+    {
+        // Collect and draw opaque meshes to shadow map:
+
+        batch_manager->ClearOpaqueBatchesDrawList();
+        
+        for (const RenderTarget& target : render_list.GetOpaqueTargets())
+        {
+            batch_manager->AddDrawComponent(target.mesh_renderer);
+        }
+
+        batch_manager->DrawOpaqueBatches(program);
+    }
+
+    if ((draw_config & DRAW_CONFIG_TRANSPARENT) != 0)
+    {
+        // Collect and draw transparent meshes to shadow map:
+
+        batch_manager->ClearTransparentBatchesDrawList();
+        
+        for (const RenderTarget& target : render_list.GetTransparentTargets())
+        {
+            batch_manager->AddDrawComponent(target.mesh_renderer);
+        }
+
+        batch_manager->DrawTransparentBatches(program);
+    }
 
     // Unbind shadow map fbo:
     shadow_manager.UnbindBuffer();

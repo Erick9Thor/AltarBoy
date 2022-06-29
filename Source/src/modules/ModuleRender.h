@@ -29,6 +29,13 @@ namespace Hachiko
         unsigned char* glsl;
     };
 
+    typedef int DrawConfig;
+    enum DrawConfigFlags
+    {
+        DRAW_CONFIG_TRANSPARENT = 1 << 1,
+        DRAW_CONFIG_OPAQUE = 1 << 2
+    };
+
     class ModuleRender : public Module
     {
     public:
@@ -123,7 +130,7 @@ namespace Hachiko
         void DrawDeferred(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
-        bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager);
+        bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager, DrawConfig draw_config);
         
         void SetRenderMode(bool is_deferred);
 
