@@ -608,7 +608,7 @@ void Hachiko::Scripting::PlayerController::DashController()
 	
 
 	
-	// of an acceleration.
+	
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);
 
