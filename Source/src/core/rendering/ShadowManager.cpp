@@ -145,8 +145,8 @@ void Hachiko::ShadowManager::CalculateLightFrustum()
         right.Cross(direction).Normalized());
 
     // Assign projection and view matrices from the calculated frustum:
-    _directional_light_projection = _directional_light_frustum.ProjectionMatrix();
-    _directional_light_view = _directional_light_frustum.ViewMatrix();
+    _directional_light_projection = _directional_light_frustum.ComputeProjectionMatrix();
+    _directional_light_view = _directional_light_frustum.ComputeViewMatrix();
 }
 
 void Hachiko::ShadowManager::BindShadowMapGenerationPassUniforms(const Program* program) const 
@@ -227,8 +227,8 @@ const Hachiko::ComponentDirLight* Hachiko::ShadowManager::GetDirectionalLight() 
 
 void Hachiko::ShadowManager::BindCommonUniforms(const Program* program) const 
 {
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, _directional_light_frustum.ProjectionMatrix().ptr());
-    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, _directional_light_frustum.ViewMatrix().ptr());
+    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_PROJECTION, _directional_light_projection.ptr());
+    program->BindUniformFloat4x4(Uniforms::ShadowMap::LIGHT_VIEW, _directional_light_view.ptr());
 }
 
 bool Hachiko::ShadowManager::DetectCameraChanges()
