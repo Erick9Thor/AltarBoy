@@ -61,6 +61,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _crystal);
 			SERIALIZE_FIELD(GameObject*, _crystal_platform);
 
+			float aux_seconds_before_shaking = 0.0f;
+			float aux_seconds_shaking = 0.0f;
 
 			float shake_elapsed = 0.0f;
 			float shake_magnitude = 1.0f;

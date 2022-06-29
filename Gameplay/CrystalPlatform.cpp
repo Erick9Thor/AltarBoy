@@ -21,6 +21,9 @@ void Hachiko::Scripting::CrystalPlatform::OnStart()
 	obstacle = _invisible_obstacle->GetComponent<ComponentObstacle>();
 	stats = _crystal->GetComponent<Stats>();
 
+	aux_seconds_before_shaking = _seconds_before_shaking;
+	aux_seconds_shaking = _seconds_shaking;
+
 	if (_invisible_obstacle && !_invisible_obstacle->IsActive())
 	{
 		_invisible_obstacle->SetActive(true);
@@ -93,6 +96,9 @@ void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 		stats->_current_hp = 1;
 		is_shaking = false;
 		is_platform_active = false;
+
+		_seconds_before_shaking = aux_seconds_before_shaking;
+		_seconds_shaking = aux_seconds_shaking;
 
 		if (obstacle != nullptr && !obstacle->IsInNavMesh())
 		{
