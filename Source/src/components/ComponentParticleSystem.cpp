@@ -145,9 +145,13 @@ void Hachiko::ComponentParticleSystem::DrawGui()
 
             MultiTypeSelector("Rate over time", rate_over_time, &rate_cfg);
             Widgets::Checkbox("Burst", &burst);
-            rate_cfg.min = 0.0f;
-            rate_cfg.enabled = burst;
-            MultiTypeSelector("Burst rate", rate_burst, &rate_cfg);
+            
+            if (burst)
+            {
+                rate_cfg.min = 0.0f;
+                rate_cfg.enabled = burst;
+                MultiTypeSelector("Burst rate", rate_burst, &rate_cfg);
+            }
 
             ImGui::EndDisabled();
         }
@@ -556,13 +560,14 @@ const float2& Hachiko::ComponentParticleSystem::GetFactor() const
 
 void Hachiko::ComponentParticleSystem::UpdateActiveParticles()
 {
+    active_particles = 0;
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
         {
             continue;
         }
-
+        ++active_particles;
         particle.Update();
     }
 }
@@ -809,7 +814,7 @@ void Hachiko::ComponentParticleSystem::DisplayControls()
     ImGui::Text(GetGameObject()->GetName().c_str());
 
     char particles_spawned[10];
-    sprintf_s(particles_spawned, 10, "%.1f", rate_over_time.values.x);
+    sprintf_s(particles_spawned, 10, "%d", active_particles);
     ImGui::Text("Particles rate");
     ImGui::SameLine();
     ImGui::Text(particles_spawned);

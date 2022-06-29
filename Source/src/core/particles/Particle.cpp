@@ -31,10 +31,15 @@ void Hachiko::Particle::Reset()
     SetCurrentRotation(GetInitialRotation());
 
     const float4x4 game_object_model = emitter->GetGameObject()->GetComponent<ComponentTransform>()->GetGlobalMatrix();
+    const float3 emitter_rotation = DegToRad(emitter->GetEmitterProperties().rotation);
+    const float4x4 emitter_model = float4x4::FromTRS(emitter->GetEmitterProperties().position,
+            Quat::FromEulerXYZ(emitter_rotation.x, emitter_rotation.y, emitter_rotation.z).Normalized(),
+            emitter->GetEmitterProperties().scale);
+
     const float3 shape_direction = GetInitialDirection();
     const float3 rotation = DegToRad(shape_direction);
-    const float4x4 emitter_model = float4x4::FromTRS(GetCurrentPosition(), Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), emitter->GetEmitterProperties().scale);
-    const float4x4 current_model = game_object_model * emitter_model;
+    const float4x4 particle_model = float4x4::FromTRS(current_position, Quat::FromEulerXYZ(rotation.x, rotation.y, rotation.z).Normalized(), emitter->GetEmitterProperties().scale);
+    const float4x4 current_model = game_object_model * emitter_model * particle_model;
     const float3 direction = (current_model.RotatePart() * shape_direction).Normalized();
     SetCurrentDirection(direction);
 }
@@ -218,8 +223,7 @@ float3 Hachiko::Particle::GetInitialDirection() const
 {
     float3 particle_direction = float3::zero;
     const auto& emitter_properties = emitter->GetEmitterProperties();
-    const auto& emitter_position = emitter->GetGameObject()->GetTransform()->GetLocalPosition();
-    const float theta = RandomUtil::RandomBetween(0, emitter_properties.arc) * TO_RAD;
+    const auto& emitter_position = emitter->GetGameObject()->GetTransform()->GetLocalPosition() + emitter_properties.position;
     switch (emitter->GetEmitterType())
     {
         case ParticleSystem::Emitter::Type::CONE:
