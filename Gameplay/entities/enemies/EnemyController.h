@@ -31,6 +31,7 @@ namespace Hachiko
             bool IsAlive() { return _combat_stats->IsAlive(); };
             void RegisterHit(int player_atk, math::float3 direction, float knockback);
             void GetParasite();
+            void Spawn();
 
             void CheckState();
 
@@ -61,6 +62,8 @@ namespace Hachiko
             SERIALIZE_FIELD(BugState, _previous_state);
             SERIALIZE_FIELD(bool, _already_in_combat);
 
+            SERIALIZE_FIELD(bool, _is_from_gautlet);
+
             AudioManager* _audio_manager;
             PlayerController* _player_controller;
             ComponentTransform* transform;
@@ -86,6 +89,8 @@ namespace Hachiko
             float _current_lifetime = 0.0f;
             float3 _knockback_pos = float3::zero;
 
+            float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
+            bool has_spawned = false;
         };
     } // namespace Scripting
 } // namespace Hachiko*/

@@ -32,6 +32,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager(nullptr)
 	, _audio_manager_game_object(nullptr)
 	, _already_in_combat(false)
+	, _is_from_gautlet(false)
 {
 }
 
@@ -86,6 +87,15 @@ void Hachiko::Scripting::EnemyController::OnStart()
 void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	CheckState();
+	if (_state == BugState::SPAWNING)
+	{
+		spawning_time -= Time::DeltaTime();
+		if (spawning_time < 0.0f)
+		{
+			_state = BugState::IDLE;
+		}
+		return;
+	}
 
 	if (!_combat_stats->IsAlive())
 	{
@@ -144,7 +154,8 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		_state = BugState::IDLE;
 	}
 
-	if (dist_to_player > _aggro_range)
+	// If an enemy is from a gautlet, it will always follow the player
+	if (!_is_from_gautlet && dist_to_player > _aggro_range)
 	{
 		GoBack();
 	}
@@ -156,7 +167,10 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		}
 		else
 		{
-			ChasePlayer();
+			if (!has_spawned)
+				Spawn();
+			else
+				ChasePlayer();
 		}
 	}
 }
@@ -173,8 +187,13 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
+	if (_state == BugState::SPAWNING)
+	{
+		return; // Inmune while spawning
+	}
+
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
+	_enemy_body->ChangeColor(float4(255, 255, 255, 255), 0.3f);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
@@ -309,6 +328,17 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 	DestroyEntity();
 }
 
+void Hachiko::Scripting::EnemyController::Spawn()
+{
+	game_object->SetActive(true);
+	_enemy_body->SetActive(true);
+	_parasite->SetActive(false);
+
+	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time);
+	has_spawned = true;
+	_state = BugState::SPAWNING;
+}
+
 void Hachiko::Scripting::EnemyController::CheckState()
 {
 	BugState current_state = GetState();
@@ -359,7 +389,9 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	case BugState::MOVING_BACK:
 		animation->SendTrigger("isMoving");
 		break;
-
+	//case BugState::SPAWNING:
+	//	  animation->SendTrigger("isSpawning");
+	//	  break;
 	case BugState::INVALID:
 	default:
 		break;
