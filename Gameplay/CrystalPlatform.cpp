@@ -1,17 +1,11 @@
 #include "scriptingUtil/gameplaypch.h"
-
-#include "core/GameObject.h"
-
 #include "CrystalPlatform.h"
-
-#include <resources/ResourceAnimation.h>
-
 
 Hachiko::Scripting::CrystalPlatform::CrystalPlatform(GameObject* game_object)
 	: Script(game_object, "CrystalPlatform")
 	, _seconds_before_shaking(5.0f)
 	, _seconds_shaking(4.0f)
-	, _shake_intensity(0.5f)
+	, _shake_intensity(0.1f)
 	, _invisible_obstacle(nullptr)
 	, _crystal(nullptr)
 	, _crystal_platform(nullptr)
@@ -27,6 +21,9 @@ void Hachiko::Scripting::CrystalPlatform::OnStart()
 	obstacle = _invisible_obstacle->GetComponent<ComponentObstacle>();
 	stats = _crystal->GetComponent<Stats>();
 
+	aux_seconds_before_shaking = _seconds_before_shaking;
+	aux_seconds_shaking = _seconds_shaking;
+
 	if (_invisible_obstacle && !_invisible_obstacle->IsActive())
 	{
 		_invisible_obstacle->SetActive(true);
@@ -41,8 +38,7 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 		_state = PlatformState::PLATFORM;
 	}
 	
-	if (GetState() == PlatformState::PLATFORM)
-	// && exploding_platform->AnimationIsStopped()) Add this when we have animations
+	if (GetState() == PlatformState::PLATFORM && exploding_platform->IsAnimationStopped())
 	{
 		if (obstacle != nullptr && obstacle->IsInNavMesh())
 		{
@@ -85,23 +81,24 @@ void Hachiko::Scripting::CrystalPlatform::OnUpdate()
 
 void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 {
-	is_platform_active = true;
 	if (exploding_platform) 
 	{
 		exploding_platform->StartAnimating();
-		// is_platform_active = true; // TODO: When we have animation this should be heare inside aniamtion
+		is_platform_active = true;
 	}
 }
 
 void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 {
-	if (stats) 
-	// && exploding_platform
+	if (stats && exploding_platform)
 	{
-		// exploding_platform->SendTrigger("isRegenereted");
+		exploding_platform->SendTrigger("isClose");
 		stats->_current_hp = 1;
 		is_shaking = false;
 		is_platform_active = false;
+
+		_seconds_before_shaking = aux_seconds_before_shaking;
+		_seconds_shaking = aux_seconds_shaking;
 
 		if (obstacle != nullptr && !obstacle->IsInNavMesh())
 		{
