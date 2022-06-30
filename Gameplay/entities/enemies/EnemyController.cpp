@@ -91,20 +91,33 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		if (_state == BugState::PARASITE)
 		{
-			if (_current_lifetime >= _parasite_lifespan)
+			if (_parasite_lifetime >= _parasite_lifespan)
 			{
 				DestroyEntity();
 			}
 			else
 			{
-				_current_lifetime += Time::DeltaTime();
+				float alpha_transition = math::Sqrt(_parasite_lifespan - _parasite_lifetime) * 1 / math::Sqrt(_parasite_lifespan); //0.2f * (5 - _parasite_lifetime); //255 - math::Pow(_parasite_dissolving, _parasite_lifespan - _parasite_lifetime);
+				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
+				_parasite_lifetime += Time::DeltaTime();
 			}
 		}
 		else
 		{
 			if (animation != nullptr && animation->IsAnimationStopped())
 			{
-				DropParasite();
+				if (_enemy_lifetime >= _enemy_lifespan)
+				{
+					DropParasite();
+				}
+				else
+				{
+					//float alpha_transition = math::Pow(/*_enemy_dissolving*/2, _enemy_lifespan - _enemy_lifetime) * 0.03125f; //0.2f * (5 -_enemy_lifetime);
+					float alpha_transition = math::Sqrt(_enemy_lifespan - _enemy_lifetime) * 1 / math::Sqrt(_enemy_lifespan);
+					//alpha_transition = alpha_transition > 0 ? alpha_transition : 0.0f;
+					_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
+					_enemy_lifetime += Time::DeltaTime();
+				}
 			}
 		}
 		return;
@@ -174,7 +187,7 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
@@ -302,6 +315,8 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	if (_parasite) {
 		_parasite->SetActive(true);
 	}
+	
+	game_object->AttemptRemoveComponent(game_object->GetComponent<ComponentAgent>());
 }
 
 void Hachiko::Scripting::EnemyController::GetParasite()
