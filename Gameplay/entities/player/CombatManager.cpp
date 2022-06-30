@@ -71,7 +71,7 @@ bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& or
 	hit = hit || ProcessAgentsOBB(hitbox, attack_stats);
 	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
 	
-	return false;
+	return hit;
 }
 
 bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
