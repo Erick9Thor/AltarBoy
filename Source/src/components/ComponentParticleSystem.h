@@ -41,10 +41,10 @@ namespace Hachiko
         [[nodiscard]] ParticleSystem::Emitter::State GetEmitterState() const;
         [[nodiscard]] ParticleSystem::Emitter::Type GetEmitterType() const;
 
-        void HACHIKO_API Play();
-        void HACHIKO_API Pause();
-        void Restart();
-        void HACHIKO_API Stop() override;
+        HACHIKO_API void Play();
+        HACHIKO_API void Pause();
+        HACHIKO_API void Restart();
+        HACHIKO_API void Stop() override;
 
     private:
         ParticleSystem::Emitter::State emitter_state = ParticleSystem::Emitter::State::STOPPED;

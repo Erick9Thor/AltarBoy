@@ -569,6 +569,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
+			FallingDustManager();
 		}
 	}
 	else if (!IsDashing())
@@ -651,11 +652,17 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 	}
 }
 
+void Hachiko::Scripting::PlayerController::FallingDustManager()
+{
+	ComponentParticleSystem* dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
+	dust_particles->Restart();
+}
+
 void Hachiko::Scripting::PlayerController::WalkingDustManager()
 {
 	_walking_dust->SetActive(IsWalking());
-	ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
-	dust_particles->Play();
+	//ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	//dust_particles->Play();
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()

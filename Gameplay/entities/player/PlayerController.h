@@ -119,6 +119,7 @@ private:
 	void DashController();
 	void DashChargesManager();
 	void DashTrailManager(float dash_progress);
+	void FallingDustManager();
 	void WalkingDustManager();
 	void WalkingOrientationController();
 	void AttackController();
@@ -149,6 +150,7 @@ private:
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
 	SERIALIZE_FIELD(float, _trail_enlarger);
+	SERIALIZE_FIELD(GameObject*, _falling_dust);
 	SERIALIZE_FIELD(GameObject*, _walking_dust);
 
 	const float _ranged_attack_cooldown = 0.2f;
