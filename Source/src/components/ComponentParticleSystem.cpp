@@ -581,7 +581,7 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if ((!loop && emitter_elapsed_time >= duration))
+    if (!loop && emitter_elapsed_time >= duration)
     {
         able_to_emit = false;
         return;
@@ -608,7 +608,7 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
         }
     }
     
-    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time)) // TODO: Avoid division
+    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time))
     {
         able_to_emit = false;
     }
