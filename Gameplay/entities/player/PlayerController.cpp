@@ -10,6 +10,7 @@
 #include <modules/ModuleSceneManager.h>
 
 #define RAD_TO_DEG 180.0f / math::pi
+const int MAX_AMMO = 4;
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -106,6 +107,18 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	if (!_ammo_cell_1 || !_ammo_cell_2 || !_ammo_cell_3 || !_ammo_cell_4)
+	{
+		HE_LOG("Error loading Ammo Cells UI");
+		return;
+	}
+
+	ammo_cells.push_back(_ammo_cell_1);
+	ammo_cells.push_back(_ammo_cell_2);
+	ammo_cells.push_back(_ammo_cell_3);
+	ammo_cells.push_back(_ammo_cell_4);
+	_ammo_count = MAX_AMMO;
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -256,7 +269,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	if (!IsActionLocked())
 	{
 		
-		if (!IsAttackOnCooldown() && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
+		if (!IsAttackOnCooldown() && _ammo_count > 0 && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
 			RangedAttack();
 		}
@@ -525,6 +538,8 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
 		{
+			math::Clamp(--_ammo_count, 0, MAX_AMMO);
+			UpdateAmmoUI();
 			_state = PlayerState::RANGED_ATTACKING;
 		}
 	}
@@ -539,6 +554,8 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 	{
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
+		math::Clamp(++_ammo_count, 0, MAX_AMMO);
+		UpdateAmmoUI();
 	}
 }
 
@@ -791,6 +808,8 @@ void Hachiko::Scripting::PlayerController::AttackController()
 					}
 					if (hit)
 					{
+						_ammo_count = math::Clamp(++_ammo_count, 0, MAX_AMMO);
+						UpdateAmmoUI();
 						_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 					}
 				}
@@ -970,6 +989,27 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		else
 		{
 			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::UpdateAmmoUI()
+{
+	if (ammo_cells.size() < 1)
+	{
+		HE_LOG("Error. PlayerController is missing Ammo UI references");
+		return;
+	}
+
+	for(int i = 0; i < ammo_cells.size(); ++i)
+	{
+		if (i >= _ammo_count)
+		{
+			ammo_cells[i]->GetComponent(Component::Type::IMAGE)->Disable();
+		}
+		else
+		{
+			ammo_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
 		}
 	}
 }
