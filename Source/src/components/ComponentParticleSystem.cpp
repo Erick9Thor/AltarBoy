@@ -420,6 +420,8 @@ void Hachiko::ComponentParticleSystem::Save(YAML::Node& node) const
 
     // emission
     node[PARTICLE_EMISSION][RATE] = rate_over_time;
+    node[PARTICLE_EMISSION][RATE_BURST] = rate_burst;
+    node[PARTICLE_EMISSION][BURST] = burst;
 
     // emitter
     YAML::Node emitter;
@@ -465,6 +467,8 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
 
     // emission
     rate_over_time = node[PARTICLE_EMISSION][RATE].as<ParticleSystem::VariableTypeProperty>();
+    rate_burst = node[PARTICLE_EMISSION][RATE_BURST].IsDefined() ? node[PARTICLE_EMISSION][BURST].as<ParticleSystem::VariableTypeProperty>() : rate_burst;
+    burst = node[PARTICLE_EMISSION][BURST].IsDefined() ? node[PARTICLE_EMISSION][BURST].as<bool>() : burst;
 
     // emitter
     emitter_type = static_cast<ParticleSystem::Emitter::Type>(node[EMITTER][EMITTER_TYPE].as<int>());
