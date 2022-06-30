@@ -673,6 +673,7 @@ float3 Hachiko::ComponentParticleSystem::GetLocalPositionFromShape() const
 {
     const float theta = RandomUtil::RandomBetween(0, emitter_properties.arc) * TO_RAD;
     float3 local_emitter_position = float3::zero;
+
     switch (emitter_type)
     {
         case ParticleSystem::Emitter::Type::CONE:
@@ -690,7 +691,7 @@ float3 Hachiko::ComponentParticleSystem::GetLocalPositionFromShape() const
 
             const float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
             const float z_position = RandomUtil::RandomBetween(z_min, z_max) * sin(theta);
-            local_emitter_position = float3(+ x_position, 0.0f, z_position);
+            local_emitter_position = float3(local_emitter_position.x + x_position, local_emitter_position.y, local_emitter_position.z + z_position);
             break;
         }
         case ParticleSystem::Emitter::Type::RECTANGLE:
@@ -700,7 +701,7 @@ float3 Hachiko::ComponentParticleSystem::GetLocalPositionFromShape() const
             const float half_z = emitter_properties.scale.z * 0.5f;
             const float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
 
-            local_emitter_position = float3(x_random_pos, 0.0f, z_random_pos);
+            local_emitter_position = float3(local_emitter_position.x + x_random_pos, local_emitter_position.y, local_emitter_position.z + z_random_pos);
             break;
         }
         case ParticleSystem::Emitter::Type::SPHERE:
