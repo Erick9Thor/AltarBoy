@@ -49,6 +49,6 @@ void Hachiko::VelocityParticleModifier::Load(const YAML::Node& node)
 void Hachiko::VelocityParticleModifier::UpdateVelocityOverTime(Particle& particle)
 {
     float particle_speed = particle.GetCurrentSpeed();
-    particle_speed += delta_speed.GetValue();
+    particle_speed += delta_speed.GetValue(particle.GetCurrentLifeNormalized());
     particle.SetCurrentSpeed(particle_speed);
 }
