@@ -16,7 +16,8 @@ Hachiko::ComponentParticleSystem::ComponentParticleSystem(GameObject* container)
     particle_modifiers.push_back(std::make_shared<SizeParticleModifier>("Size over lifetime"));
     particle_modifiers.push_back(std::make_shared<ColorParticleModifier>("Color over lifetime"));
     particle_modifiers.push_back(std::make_shared<ForceParticleModifier>("Force over lifetime"));
-    particle_modifiers.push_back(std::make_shared<AnimationParticleModifier>("Animation over lifetime"));
+    particle_modifiers.push_back(std::make_shared<AnimationParticleModifier>("Animation"));
+    particle_modifiers.push_back(std::make_shared<NoiseParticleModifier>("Noise"));
 }
 
 Hachiko::ComponentParticleSystem::~ComponentParticleSystem()
@@ -35,7 +36,6 @@ void Hachiko::ComponentParticleSystem::Start()
         App->scene_manager->GetActiveScene()->AddParticleComponent(this);
         in_scene = true;
     }
-
     for (auto& particle : particles)
     {
         particle.SetEmitter(this);
@@ -169,6 +169,7 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             Widgets::DragFloatConfig top;
             Widgets::DragFloatConfig radius;
             radius.min = 0.001f;
+            radius.max = emitter_properties.top;
             radius.speed = 0.05f;
 
             Widgets::DragFloatConfig thickness;
@@ -186,7 +187,7 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             {
                 case ParticleSystem::Emitter::Type::CONE:
                     top.speed = 0.01f;
-                    top.min = 0.001f;
+                    top.min = emitter_properties.radius;
                     DragFloat("Top", emitter_properties.top, &top);
                     DragFloat("Radius", emitter_properties.radius, &radius);
                     DragFloat("Radius thickness", emitter_properties.radius_thickness, &thickness);
@@ -278,13 +279,6 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             ImGui::EndDisabled();
         }
 
-        // if (CollapsingHeader("Lights", &lights_section, Widgets::CollapsibleHeaderType::Checkbox))
-        // {
-        //     ImGui::BeginDisabled(!renderer_section);
-        //
-        //     ImGui::EndDisabled();
-        // }
-
         if (CollapsingHeader("Renderer", &renderer_section, Widgets::CollapsibleHeaderType::Checkbox))
         {
             ImGui::BeginDisabled(!renderer_section);
@@ -298,6 +292,16 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             if (particle_properties.orientation == ParticleSystem::ParticleOrientation::HORIZONTAL)
             {
                 ImGui::Checkbox("Orientate to direction", &particle_properties.orientate_to_direction);
+            }
+
+            if (particle_properties.orientation == ParticleSystem::ParticleOrientation::STRETCH)
+            {
+                Widgets::DragFloatConfig stretch_config;
+                stretch_config.format = "%.2f";
+                stretch_config.speed = 0.01f;
+                stretch_config.min = 0.0f;
+                stretch_config.max = 1.0f;
+                Widgets::MultiTypeSelector("Stretch", particle_properties.stretch, &stretch_config);
             }
 
             int render_mode = static_cast<int>(particle_properties.render_mode);
@@ -427,6 +431,7 @@ void Hachiko::ComponentParticleSystem::Save(YAML::Node& node) const
     }
     node[PARTICLES_TEXTURE][TILES] = tiles;
     node[PARTICLES_TEXTURE][FLIP] = flip_texture;
+    node[PARTICLES_TEXTURE][TOTAL_TILES] = total_tiles;
 
     YAML::Node modules;
     for (const auto& particle_module : particle_modifiers)
@@ -471,6 +476,8 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
         factor.y = 1.0f / tiles.y;
     }
 
+    total_tiles = node[PARTICLES_TEXTURE][TOTAL_TILES].IsDefined() ? node[PARTICLES_TEXTURE][TOTAL_TILES].as<float>() : total_tiles;
+
     const UID texture_id = node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].IsDefined() ? node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].as<UID>() : 0;
     if (texture_id)
     {
@@ -496,6 +503,16 @@ const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleS
 const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesSize() const
 {
     return start_size;
+}
+
+const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesRotation() const
+{
+    return start_rotation;
+}
+
+const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesStretch() const
+{
+    return particle_properties.stretch;
 }
 
 const Hachiko::ParticleSystem::Emitter::Properties& Hachiko::ComponentParticleSystem::GetEmitterProperties() const
@@ -556,7 +573,8 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if ((!loop && emitter_elapsed_time >= duration) || emitter_state != ParticleSystem::Emitter::State::PLAYING)
+    if ((!loop && emitter_elapsed_time >= duration) ||
+        emitter_state != ParticleSystem::Emitter::State::PLAYING)
     {
         able_to_emit = false;
         return;
@@ -565,7 +583,13 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
     time += EngineTimer::delta_time;
     emitter_elapsed_time += EngineTimer::delta_time;
 
-    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue()) // TODO: Avoid division
+    if (emitter_elapsed_time < start_delay.GetValue())
+    {
+        able_to_emit = false;
+        return;
+    }
+
+    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time) / duration) // TODO: Avoid division
     {
         able_to_emit = false;
     }
@@ -608,39 +632,55 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
     }
 }
 
-float3 Hachiko::ComponentParticleSystem::CalculateDirectionFromShape() const
+float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
 {
-    float3 particle_direction = float3::one;
+    const float theta = RandomUtil::RandomBetween(0, emitter_properties.arc) * TO_RAD;
+    float3 global_emitter_position = GetEmitterProperties().position + game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
     switch (emitter_type)
     {
         case ParticleSystem::Emitter::Type::CONE:
+        case ParticleSystem::Emitter::Type::CIRCLE:
         {
+            
             const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-            particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
-            particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
+            const float x_position = emitter_properties.radius * cos(theta);
+            float z_min = 0.0f;
+
+            if (std::abs(x_position) < effective_radius)
+            {
+                z_min = sqrt((effective_radius * effective_radius) - (x_position * x_position));
+            }
+
+            const float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
+            const float z_position = RandomUtil::RandomBetween(z_min, z_max) * sin(theta);
+            global_emitter_position = float3(global_emitter_position.x + x_position, global_emitter_position.y, global_emitter_position.z + z_position);
+            break;
+        }
+        case ParticleSystem::Emitter::Type::RECTANGLE:
+        {
+            const float half_x = emitter_properties.scale.x * 0.5f;
+            const float x_random_pos = RandomUtil::RandomBetween(-half_x, half_x);
+            const float half_z = emitter_properties.scale.z * 0.5f;
+            const float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
+
+            global_emitter_position = float3(global_emitter_position.x + x_random_pos, global_emitter_position.y, global_emitter_position.z + z_random_pos);
             break;
         }
         case ParticleSystem::Emitter::Type::SPHERE:
         {
-            // TODO: This is not working perfectly. Emission depends on the size of the radius and it shouldn't
             const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-            particle_direction.x = emitter_properties.rotation.x + effective_radius * RandomUtil::RandomSigned();
-            particle_direction.y = emitter_properties.rotation.y * (RandomUtil::RandomSigned() > 0.0f ? 1.0f : -1.0f);
-            particle_direction.z = emitter_properties.rotation.z + effective_radius * RandomUtil::RandomSigned();
+            global_emitter_position.x = emitter_properties.rotation.x + effective_radius * cos(theta);
+            global_emitter_position.y = emitter_properties.rotation.y + effective_radius * cos(RandomUtil::Random() * pi);
+            global_emitter_position.z = emitter_properties.rotation.z + effective_radius * sin(theta);
             break;
         }
-        case ParticleSystem::Emitter::Type::BOX:
-        case ParticleSystem::Emitter::Type::CIRCLE:
-        case ParticleSystem::Emitter::Type::RECTANGLE:
-            break;
     }
-
-    return particle_direction;
+    return global_emitter_position;
 }
 
 void Hachiko::ComponentParticleSystem::AddTexture()
 {
-    const char* title = "Select billboard texture";
+    const char* title = "Select texture";
     std::string texture_path;
     ResourceTexture* res = nullptr;
 
@@ -697,6 +737,11 @@ Hachiko::ParticleSystem::Emitter::State Hachiko::ComponentParticleSystem::GetEmi
     return emitter_state;
 }
 
+Hachiko::ParticleSystem::Emitter::Type Hachiko::ComponentParticleSystem::GetEmitterType() const
+{
+    return emitter_type;
+}
+
 void Hachiko::ComponentParticleSystem::Play()
 {
     emitter_state = ParticleSystem::Emitter::State::PLAYING;
@@ -745,18 +790,18 @@ void Hachiko::ComponentParticleSystem::DisplayControls()
 
     ImGui::Separator();
 
-    if (emitter_state == ParticleSystem::Emitter::State::PAUSED || emitter_state == ParticleSystem::Emitter::State::STOPPED)
-    {
-        if (ImGui::Button("Play"))
-        {
-            Play();
-        }
-    }
     if (emitter_state == ParticleSystem::Emitter::State::PLAYING)
     {
         if (ImGui::Button("Pause"))
         {
             Pause();
+        }
+    }
+    else
+    {
+        if (ImGui::Button("Play"))
+        {
+            Play();
         }
     }
     ImGui::SameLine();

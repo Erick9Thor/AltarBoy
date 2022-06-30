@@ -413,13 +413,13 @@ void Hachiko::Scripting::PlayerCamera::OnSave(YAML::Node& node) const
 {
 	node["'_relative_position_to_player@math::float3'"] = _relative_position_to_player;
 
-	if (_player != nullptr)
+	if (_objective != nullptr)
 	{
-		node["'_player@GameObject*'"] = _player->GetID();
+		node["'_objective@GameObject*'"] = _objective->GetID();
 	}
 	else
 	{
-		node["'_player@GameObject*'"] = 0;
+		node["'_objective@GameObject*'"] = 0;
 	}
 
 	node["'_follow_delay@float'"] = _follow_delay;
@@ -432,9 +432,9 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 		_relative_position_to_player = load_node["'_relative_position_to_player@math::float3'"].as<math::float3>();
 	}
 
-	if (load_node["'_player@GameObject*'"].IsDefined())
+	if (load_node["'_objective@GameObject*'"].IsDefined())
 	{
-		_player = SceneManagement::FindInCurrentScene(load_node["'_player@GameObject*'"].as<unsigned long long>());
+		_objective = SceneManagement::FindInCurrentScene(load_node["'_objective@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_follow_delay@float'"].IsDefined())
@@ -445,7 +445,6 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 
 void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 {
-
 	if (_attack_indicator != nullptr)
 	{
 		node["'_attack_indicator@GameObject*'"] = _attack_indicator->GetID();
@@ -480,6 +479,17 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
 
 	node["'_max_dash_charges@unsigned'"] = _max_dash_charges;
+
+	if (_dash_trail != nullptr)
+	{
+		node["'_dash_trail@GameObject*'"] = _dash_trail->GetID();
+	}
+	else
+	{
+		node["'_dash_trail@GameObject*'"] = 0;
+	}
+
+	node["'_trail_enlarger@float'"] = _trail_enlarger;
 
 	node["'_rotation_duration@float'"] = _rotation_duration;
 
@@ -540,7 +550,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerController::OnLoad()
 {
-
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
@@ -574,6 +583,16 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_max_dash_charges@unsigned'"].IsDefined())
 	{
 		_max_dash_charges = load_node["'_max_dash_charges@unsigned'"].as<unsigned>();
+	}
+
+	if (load_node["'_dash_trail@GameObject*'"].IsDefined())
+	{
+		_dash_trail = SceneManagement::FindInCurrentScene(load_node["'_dash_trail@GameObject*'"].as<unsigned long long>());
+	}
+
+	if (load_node["'_trail_enlarger@float'"].IsDefined())
+	{
+		_trail_enlarger = load_node["'_trail_enlarger@float'"].as<float>();
 	}
 
 	if (load_node["'_rotation_duration@float'"].IsDefined())

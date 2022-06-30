@@ -8,7 +8,6 @@
 
 // TODO: These two includes must go:
 #include <modules/ModuleSceneManager.h>
-#include <resources/ResourceAnimation.h>
 
 
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
@@ -18,9 +17,9 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _explosion_radius(10.0f)
 	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
-	, _outer_explosion_indicator(nullptr)
-	, _inner_explosion_indicator(nullptr)
+	, _explosion_indicator_helper(nullptr)
 	, _timer_explosion(0.0f)
+	, _explosion_effect(nullptr)
 {
 }
 
@@ -40,26 +39,27 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 void Hachiko::Scripting::CrystalExplosion::OnStart()
 {
 	transform = game_object->GetTransform();
-	if (_inner_explosion_indicator)
+
+	if (_explosion_indicator_helper)
 	{
-		explosive_area = _inner_explosion_indicator->GetTransform();
-		explosive_area->SetLocalScale(float3(0.1f, 0.1f, 0.1f));
-		_inner_explosion_indicator->SetActive(false);
+		_explosion_indicator_helper->SetActive(false);
 	}
-	if (_outer_explosion_indicator)
+	if (_explosion_effect)
 	{
-		_outer_explosion_indicator->GetTransform()->SetLocalScale(float3(_explosion_radius, 0.1f, _explosion_radius));
-		_outer_explosion_indicator->SetActive(false);
+		for (GameObject* child : _explosion_effect->children)
+		{
+			child->SetActive(false);
+		}
 	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	ResourceAnimation* resource_animation = _explosion_crystal->GetComponent<ComponentAnimation>()->GetCurrentAnimation();
+	ComponentAnimation* component_anim = _explosion_crystal->GetComponent<ComponentAnimation>();
 
-	if (!_stats->IsAlive() && resource_animation)
+	if (!_stats->IsAlive() && component_anim)
 	{
-		if (resource_animation->GetCurrentState() == ResourceAnimation::State::STOPPED) 
+		if (component_anim->IsAnimationStopped())
 		{
 			SceneManagement::Destroy(game_object);
 			return;
@@ -68,8 +68,7 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 
 	if (is_exploding)
 	{
-		explosive_area->SetLocalScale(math::float3::Lerp(float3(0.1f, 0.1f, 0.1f), float3(_explosion_radius, 0.1f, _explosion_radius),
-			(explosion_duration - _timer_explosion) / explosion_duration));
+
 		if (_timer_explosion <= 0)
 		{
 			ExplodeCrystal();
@@ -97,8 +96,11 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 {
 	is_exploding = true;
-	_inner_explosion_indicator->SetActive(true);
-	_outer_explosion_indicator->SetActive(true);
+
+	for (GameObject* child : _explosion_effect->children)
+	{
+		child->SetActive(true);
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
@@ -150,8 +152,11 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 		}
 	}
 	is_exploding = false;
-	_outer_explosion_indicator->SetActive(false);
-	_inner_explosion_indicator->SetActive(false);
+
+	for (GameObject* child : _explosion_effect->children)
+	{
+		child->SetActive(false);
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)

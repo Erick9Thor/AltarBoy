@@ -23,11 +23,13 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesLife() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSpeed() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSize() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesRotation() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesStretch() const;
 
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
 
-        [[nodiscard]] float3 CalculateDirectionFromShape() const;
+        [[nodiscard]] float3 GetPositionFromShape() const;
 
         [[nodiscard]] const ResourceTexture* GetTexture() const;
         [[nodiscard]] int GetTextureTotalTiles() const;
@@ -37,6 +39,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsLoop() const;
         [[nodiscard]] ParticleSystem::Emitter::State GetEmitterState() const;
+        [[nodiscard]] ParticleSystem::Emitter::Type GetEmitterType() const;
 
         void Play();
         void Pause();
@@ -52,7 +55,7 @@ namespace Hachiko
         bool shape_section = true;
         bool lights_section = false;
         bool renderer_section = true;
-        bool texture_section = true;
+        bool texture_section = false;
 
         //particle config
         ParticleSystem::ParticleProperties particle_properties;

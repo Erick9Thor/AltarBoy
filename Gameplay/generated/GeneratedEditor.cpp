@@ -82,7 +82,7 @@ void Hachiko::Scripting::PlayerAnimationManager::OnEditor()
 void Hachiko::Scripting::PlayerCamera::OnEditor()
 {
 	Editor::Show("Relative Position To Player", _relative_position_to_player);
-	Editor::Show("Player", _player);
+	Editor::Show("Objective", _objective);
 	Editor::Show("Follow Delay", _follow_delay);
 }
 
@@ -95,6 +95,8 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Dash Distance", _dash_distance);
 	Editor::Show("Dash Cooldown", _dash_cooldown);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
+	Editor::Show("Dash Trail", _dash_trail);
+	Editor::Show("Trail Enlarger", _trail_enlarger);
 	Editor::Show("Rotation Duration", _rotation_duration);
 	Editor::Show("Hp Cell 1", _hp_cell_1);
 	Editor::Show("Hp Cell 2", _hp_cell_2);
@@ -102,6 +104,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Hp Cell 4", _hp_cell_4);
 	Editor::Show("Camera", _camera);
 	Editor::Show("Ui Damage", _ui_damage);
+	Editor::Show("Dash Type", _dash_type);
 }
 
 void Hachiko::Scripting::PlayerSoundManager::OnEditor()

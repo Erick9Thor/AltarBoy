@@ -28,7 +28,7 @@ namespace Hachiko
             BugState GetState() const;
 
             const Stats* GetStats();
-            bool isAlive() { return _combat_stats->IsAlive(); };
+            bool IsAlive() { return _combat_stats->IsAlive(); };
             void RegisterHit(int player_atk, math::float3 direction, float knockback);
             void GetParasite();
 
