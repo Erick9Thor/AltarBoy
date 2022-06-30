@@ -19,14 +19,15 @@ namespace Hachiko
 			~GauntletManager() override = default;
 
 			void OnAwake() override;
+			void OnStart() override;
 			void OnUpdate() override;
 
-			SERIALIZE_FIELD(CombatManager*, _combat_manager);
+			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);
 			SERIALIZE_FIELD(bool, _use_trigger);
 
-			SERIALIZE_FIELD(DoorController*, _door_1);
-			SERIALIZE_FIELD(DoorController*, _door_2);
+			SERIALIZE_FIELD(GameObject*, _door_1);
+			SERIALIZE_FIELD(GameObject*, _door_2);
 
 			SERIALIZE_FIELD(GameObject*, _pack_1);
 			SERIALIZE_FIELD(GameObject*, _pack_2);
@@ -34,13 +35,17 @@ namespace Hachiko
 
 		private:
 
+			void Start();
+			void Reset();
 			void CheckRoundStatus();
 			void OpenDoors();
 			void CloseDoors();
+			void SpawnRound(unsigned round);
 
 			unsigned current_round = 0;
 			bool completed = false;
 			bool started = false;
+			CombatManager* _combat_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};
 

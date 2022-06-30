@@ -372,7 +372,7 @@ bool Hachiko::Scripting::CombatManager::IsPackDead(GameObject* pack) const
 	for (GameObject* enemy : pack->children)
 	{
 		EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
-		if (enemy_controller && !enemy_controller->IsAlive())
+		if (enemy_controller && enemy_controller->IsAlive())
 		{
 			return false;
 		}
