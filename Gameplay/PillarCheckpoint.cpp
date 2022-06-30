@@ -2,6 +2,9 @@
 #include "PillarCheckpoint.h"
 #include "entities/player/PlayerController.h"
 
+// TODO: This include must go
+#include <resources/ResourceAnimation.h>
+
 Hachiko::Scripting::PillarCheckpoint::PillarCheckpoint(GameObject* game_object)
 	: Script(game_object, "PillarCheckpoint")
 	, _is_active(false)
@@ -37,18 +40,39 @@ void Hachiko::Scripting::PillarCheckpoint::OnUpdate()
 
 	if (!_is_active && IsPlayerInRange())
 	{
-		_is_active = true;
-		// Save Checkpoint
-		_player->GetComponent<PlayerController>()->_initial_pos = _restart_position;
-		// Activate animation
-		if (!_animation)
-		{
-			HE_LOG("No animation found. Could not play.");
-			return;
-		}
-		_animation->StartAnimating();
-		
+		ActivateCheckpoint();
 	}
+
+	if (_is_active)
+	{
+		ResourceAnimation* spinning_animation = _animation->GetCurrentAnimation();
+
+		if (spinning_animation)
+		{
+			if (spinning_animation->GetCurrentState() == ResourceAnimation::State::STOPPED)
+			{
+				_animation->SendTrigger("finishedSpinning");
+			}
+		}
+	}
+}
+
+void Hachiko::Scripting::PillarCheckpoint::ActivateCheckpoint()
+{
+	_is_active = true;
+
+	// Save Checkpoint on player variable
+	_player->GetComponent<PlayerController>()->_initial_pos = _restart_position;
+
+	// Activate animation
+	if (!_animation)
+	{
+		HE_LOG("No animation found. Could not play.");
+		return;
+	}
+
+	_animation->StartAnimating();
+	_animation->SendTrigger("isActive");
 }
 
 bool Hachiko::Scripting::PillarCheckpoint::IsPlayerInRange()

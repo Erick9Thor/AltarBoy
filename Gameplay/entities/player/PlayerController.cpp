@@ -430,7 +430,8 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 		if (_dash_start.y - _player_position.y > _falling_distance)
 		{
-			_player_position = _dash_start;
+			//_player_position = _dash_start;
+			_player_position = _initial_pos;
 		}
 	}
 	else if (IsStunned())

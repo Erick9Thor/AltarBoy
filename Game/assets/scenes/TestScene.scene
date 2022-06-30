@@ -3336,7 +3336,7 @@ child:
         id: 3343951729532735009
         type: 1
         enabled: true
-        position: [0, 2.4368484, 6.87357378]
+        position: [-10.1618814, 2.4368484, 19.2097759]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
       - !<animation>
@@ -3344,6 +3344,14 @@ child:
         type: 14
         enabled: true
         state_machine: 3647268182634800656
+      - !<script>
+        id: 17276555188916855439
+        type: 15
+        enabled: true
+        class_name: PillarCheckpoint
+        "'_player@GameObject*'": 7577865002841685786
+        "'_restart_position@float3'": [0, 0, 0]
+        "'_activation_range@float'": 5
     child:
       - id: 9437954094990891537
         name: Root

@@ -25,6 +25,7 @@ namespace Hachiko
             bool IsActive() { return _is_active; }
         private:
             bool IsPlayerInRange();
+            void ActivateCheckpoint();
         public:
             SERIALIZE_FIELD(GameObject*, _player);
         private:
