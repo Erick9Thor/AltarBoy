@@ -35,6 +35,7 @@ namespace Hachiko
 		// Variables
 		public:
 			SERIALIZE_FIELD(GameObject*, _door);
+			ComponentObstacle* door_obstacle = nullptr;
 
 		private:
 			State _state = State::CLOSED;

@@ -15,28 +15,23 @@ component:
     "'_combat_manager_go@GameObject*'": 0
     "'_trigger_radius@float'": 0
     "'_use_trigger@bool'": false
-    "'_door_1@GameObject*'": 2
+    "'_door_1@GameObject*'": 0
     "'_door_2@GameObject*'": 0
     "'_pack_1@GameObject*'": 0
     "'_pack_2@GameObject*'": 0
     "'_pack_3@GameObject*'": 0
 child:
-  - name: DoorLogic
+  - name: DoorController
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.869, 0]
-        rotation: [0, 0.7071, 0, 0.7071]
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
       - !<script>
         type: 15
         enabled: true
         class_name: DoorController
         "'_door@GameObject*'": 0
-      - !<obstacle>
-        type: 18
-        enabled: true
-        obstacle_type: 2
-        obstacle_size: [1.8, 5, 10]

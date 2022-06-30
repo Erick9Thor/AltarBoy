@@ -75,13 +75,14 @@ void Hachiko::Scripting::GauntletManager::Reset()
 
 void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 {
-	if(!_combat_manager->IsPackDead(_enemy_packs[current_round])) return;
-	++current_round;
 	if (current_round >= _enemy_packs.size()) {
 		completed = true;
 		OpenDoors();
 		return;
 	}
+
+	if(!_combat_manager->IsPackDead(_enemy_packs[current_round])) return;
+	++current_round;
 	SpawnRound(current_round);
 }
 

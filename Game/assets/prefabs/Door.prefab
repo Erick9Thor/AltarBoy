@@ -5,34 +5,34 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [0, 1.869, 0]
-    rotation: [0, 0.7071, 0, 0.7071]
-    scale: [1, 1, 1]
-  - !<script>
-    type: 15
+    position: [6.582, 2.931, -0]
+    rotation: [0, 0.9997, 0, -0.0234]
+    scale: [0.01, 0.01, 0.01]
+  - !<mesh_renderer>
+    type: 2
     enabled: true
-    class_name: DoorController
-    "'_door@GameObject*'": 2
-  - !<obstacle>
-    type: 18
-    enabled: true
-    obstacle_type: 2
-    obstacle_size: [1.8, 5, 10]
+    mesh_id: 867735284092474584
+    navigable: false
+    visible: true
+    material_id: 6339253229162858782
+    tint_color: [1, 1, 1, 1]
 child:
-  - name: DoorMesh
+  - name: DoorObstacle
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 1.808, 0]
+        position: [0, -180.8, -0]
         rotation: [0, 0, 0, 1]
-        scale: [0.01, 0.01, 0.01]
-      - !<mesh_renderer>
-        type: 2
+        scale: [100, 100, 100]
+      - !<script>
+        type: 15
         enabled: true
-        mesh_id: 867735284092474584
-        navigable: false
-        visible: true
-        material_id: 6339253229162858782
-        tint_color: [1, 1, 1, 1]
+        class_name: DoorController
+        "'_door@GameObject*'": 1
+      - !<obstacle>
+        type: 18
+        enabled: true
+        obstacle_type: 2
+        obstacle_size: [1.8, 5, 10]
