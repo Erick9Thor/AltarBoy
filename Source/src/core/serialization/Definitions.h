@@ -121,6 +121,7 @@
 #define DISPLAY_QUADTREE "display_quadtree"
 #define DISPLAY_SKYBOX "display_skybox"
 #define DISPLAY_NAVMESH "display_navmesh"
+#define UNDO_REDO_ACTIVE "undo_redo_active"
 #define FULLSCREEN_NODE "fullscreen"
 #define THEME "theme"
 #define VSYNC "vsync"
@@ -236,8 +237,10 @@
 #define IMAGE_HOVER_IMAGE_ID "hover_image_id"
 #define IMAGE_COLOR "image_color"
 #define IMAGE_HOVER_COLOR "hover_image_color"
-#define USE_IMAGE "use_image"
-#define USE_HOVER_IMAGE "use_hover_image"
+#define IMAGE_TILED "image_is_tiled"
+#define IMAGE_X_TILES "image_x_tiles"
+#define IMAGE_Y_TILES "image_y_tiles"
+#define IMAGE_TILES_PER_SEC "image_tiles_per_second"
 
 // Component Text
 #define FONT_ID "font_id"
@@ -343,6 +346,7 @@
 // ComponentMeshRenderer
 #define RENDERER_MESH_ID "mesh_id"
 #define RENDERER_MATERIAL_ID "material_id"
+#define RENDERER_TINT_COLOR "tint_color"
 
 // Script
 #define SCRIPT_NAME "class_name"

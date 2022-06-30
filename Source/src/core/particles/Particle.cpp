@@ -233,7 +233,6 @@ float3 Hachiko::Particle::GetInitialDirection() const
 {
     float3 particle_direction = float3::zero;
     const auto& emitter_properties = emitter->GetEmitterProperties();
-
     switch (emitter->GetEmitterType())
     {
         case ParticleSystem::Emitter::Type::CONE:
