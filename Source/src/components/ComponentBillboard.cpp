@@ -300,7 +300,10 @@ void Hachiko::ComponentBillboard::DisplayControls()
 
 void Hachiko::ComponentBillboard::Start()
 {
-    PublishIntoScene();
+    if (!in_scene)
+    {
+        PublishIntoScene();
+    }
 
     if (play_on_awake)
     {
