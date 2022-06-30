@@ -65,6 +65,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	weapons.push_back(green);
 
 	_current_weapon = 0;
+	_current_cam_setting = 0;
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
@@ -105,6 +106,19 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	// First position and rotation set if no camera is found
+	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
+
+	_cam_positions.push_back(float3(0.0f, 4.0f, 12.0f));
+	_cam_rotations.push_back(float3(165.0f, 0.0f, 180.0f));
+
+	if (_camera != nullptr)
+	{
+		_cam_positions[0] = _camera->GetComponent<PlayerCamera>()->GetRelativePosition();
+		_cam_rotations[0] = _camera->GetTransform()->GetLocalRotationEuler();
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -293,6 +307,17 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
 	{
 		PickupParasite(_player_position);
+	}
+	// Testing for camera
+	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
+	{
+		++_current_cam_setting;
+		if (_current_cam_setting >= _cam_positions.size())
+		{
+			_current_cam_setting = 0;
+		}
+		_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[_current_cam_setting], 1.0f);
+		_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[_current_cam_setting], 1.0f);
 	}
 }
 
