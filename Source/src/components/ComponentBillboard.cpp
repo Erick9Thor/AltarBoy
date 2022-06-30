@@ -42,16 +42,14 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     }
 
     glDepthMask(GL_FALSE);
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
     float4 color = float4::one;
     if (properties.render_mode == ParticleSystem::ParticleRenderMode::PARTICLE_ADDITIVE)
     {
-        glBlendFunc(GL_ONE, GL_ONE);
+        ModuleRender::EnableBlending(GL_ONE, GL_ONE, GL_FUNC_ADD);
     }
     else
     {
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        ModuleRender::EnableBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
         color.w = properties.alpha;
     }
 
@@ -86,8 +84,8 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     // Clear
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
+    ModuleRender::DisableBlending();
 }
 
 void Hachiko::ComponentBillboard::DrawGui()

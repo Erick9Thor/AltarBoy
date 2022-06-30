@@ -51,15 +51,13 @@ void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)
     }
 
     glDepthMask(GL_FALSE);
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
     if (emitter->GetParticlesProperties().render_mode == ParticleSystem::ParticleRenderMode::PARTICLE_ADDITIVE)
     {
-        glBlendFunc(GL_ONE, GL_ONE);
+        ModuleRender::EnableBlending(GL_ONE, GL_ONE, GL_FUNC_ADD);
     }
     else
     {
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        ModuleRender::EnableBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
         current_color.w = emitter->GetParticlesProperties().alpha;
     }
 
@@ -90,8 +88,8 @@ void Hachiko::Particle::Draw(ComponentCamera* camera, const Program* program)
     // Clear
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
+    ModuleRender::DisableBlending();
 }
 
 void Hachiko::Particle::GetModelMatrix(ComponentCamera* camera, float4x4& out_matrix) const
