@@ -13,7 +13,8 @@ Hachiko::Scripting::CrystalPlatform::CrystalPlatform(GameObject* game_object)
 }
 
 void Hachiko::Scripting::CrystalPlatform::OnAwake()
-{}
+{
+}
 
 void Hachiko::Scripting::CrystalPlatform::OnStart()
 {
@@ -28,6 +29,8 @@ void Hachiko::Scripting::CrystalPlatform::OnStart()
 	{
 		_invisible_obstacle->SetActive(true);
 	}
+
+	_initial_transform = game_object->GetTransform()->GetGlobalMatrix();
 }
 
 void Hachiko::Scripting::CrystalPlatform::OnUpdate()
@@ -90,6 +93,8 @@ void Hachiko::Scripting::CrystalPlatform::ShowPlatform()
 
 void Hachiko::Scripting::CrystalPlatform::RegenerateCrystal()
 {
+	game_object->GetTransform()->SetGlobalTransform(_initial_transform);
+
 	if (stats && exploding_platform)
 	{
 		exploding_platform->SendTrigger("isClose");
