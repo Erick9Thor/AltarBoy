@@ -31,7 +31,6 @@ namespace Hachiko
 
 		private:
 			void UpdateDoorState();
-			bool CheckOpeningConditions() const;
 
 		// Variables
 		public:

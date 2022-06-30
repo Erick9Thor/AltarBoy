@@ -318,6 +318,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="misc\DoorController.h" />
+    <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -728,6 +729,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
+    <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />

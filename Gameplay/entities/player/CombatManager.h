@@ -62,6 +62,8 @@ namespace Hachiko
             void OnAwake() override;
             void OnUpdate() override;
 
+            GameObject* GetPlayer() { return _player; }
+
             // Bool indicates if it hit something
             bool PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
@@ -119,6 +121,7 @@ namespace Hachiko
             void SerializeEnemyPacks();
         
         private:
+            GameObject* _player = nullptr;
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;

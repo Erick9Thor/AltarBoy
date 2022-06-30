@@ -35,6 +35,7 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 		_bullet_stats.push_back(BulletStats());
 	}
 
+	_player = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Player");
 	_enemy_packs_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	SerializeEnemyPacks();
