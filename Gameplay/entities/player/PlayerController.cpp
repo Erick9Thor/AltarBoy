@@ -31,9 +31,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _trail_enlarger(10.0f)
 {
 	CombatManager::BulletStats common_bullet;
-	common_bullet.charge_time = 1.f;
+	common_bullet.charge_time = .5f;
 	common_bullet.lifetime = 3.f;
-	common_bullet.size = 0.f;
+	common_bullet.size = 1.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 	
@@ -528,12 +528,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 	if (bullet_controller)
 	{
-		CombatManager::BulletStats stats = CombatManager::BulletStats();
-		stats.charge_time = 1.f;
-		stats.lifetime = 3.f;
-		stats.size = 1.f;
-		stats.speed = 50.f;
-		stats.damage = 1.f;
+		CombatManager::BulletStats stats = GetCurrentWeapon().bullet;
 		_attack_current_duration = stats.charge_time;
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
@@ -593,9 +588,9 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		constexpr float fall_speed = 25.f;
 		_player_position.y -= fall_speed * Time::DeltaTime();
 
-		if (_dash_start.y - _player_position.y > _falling_distance)
+		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
-			_player_position = _dash_start;
+			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
 		}
 	}
 	else if (IsStunned())
@@ -628,7 +623,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	else if (!IsDashing())
 	{
 		// Started falling
-		_state = PlayerState::FALLING;
+		if (!IsFalling())
+		{
+			_start_fall_pos = _player_position;
+			_state = PlayerState::FALLING;
+		}
 	}
 }
 

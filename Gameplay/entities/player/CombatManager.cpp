@@ -7,7 +7,6 @@
 #include "entities/player/PlayerController.h"
 #include "entities/player/CombatManager.h"
 
-
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
@@ -160,7 +159,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 	float closest_enemy_hit = FLT_MAX;
 	EnemyController* hit_enemy = FindBulletClosestEnemyHit(bullet, stats.size, trajectory, closest_enemy_hit);
 	float closest_obstacle_hit = FLT_MAX;
-	CrystalExplosion* hit_obstacle = FindBulletClosestObstacleHit(bullet, stats.size, trajectory, closest_obstacle_hit);
+	GameObject* hit_obstacle = FindBulletClosestObstacleHit(bullet, stats.size, trajectory, closest_obstacle_hit);
 	
 	if (closest_enemy_hit < closest_obstacle_hit)
 	{
@@ -172,7 +171,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 		}
 	}
 
-	if (hit_obstacle && hit_obstacle->isAlive())
+	if (hit_obstacle)
 	{
 		HitObstacle(hit_obstacle, stats.damage);
 		return true;
@@ -268,9 +267,9 @@ Hachiko::Scripting::EnemyController* Hachiko::Scripting::CombatManager::FindBull
 	return hit_target;
 }
 
-Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::CombatManager::FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
+Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacleHit(GameObject* bullet, float bullet_size, LineSegment& trajectory, float& closest_hit)
 {
-	CrystalExplosion* hit_target = nullptr;
+	GameObject* hit_target = nullptr;
 
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
@@ -295,7 +294,7 @@ Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::CombatManager::FindBul
 		{
 			continue;
 		}
-		
+
 		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
 		// Cylinder obstacles ignore z
 		float obstacle_radius = obstacle_cpomponent->GetSize().x;
@@ -303,13 +302,11 @@ Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::CombatManager::FindBul
 
 		if (obstacle->active && trajectory.Intersects(hitbox))
 		{
-			//float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
-			CrystalExplosion* obstacle_controller = obstacle->GetComponent<CrystalExplosion>();
 			float hit_distance = bullet_position.Distance(obstacle_position);
-			if (obstacle_controller && hit_distance < closest_hit)
+			if (hit_distance < closest_hit)
 			{
 				closest_hit = hit_distance;
-				hit_target = obstacle_controller;
+				hit_target = obstacle;
 			}
 		}
 	}
@@ -484,12 +481,11 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 		// Col3(3) Is the world position without doing decompose
 		if (ConeHitsObstacle(obstacle, attack_source_pos, attack_dir, min_dot_prod, hit_distance))
 		{
-			// Hit enemy here
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
 				hit = true;
-				HitObstacle(crystal_controller, attack_stats.damage);
+				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
 	}
@@ -565,7 +561,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 			if (crystal_controller && crystal_controller->isAlive())
 			{
 				hit = true;
-				HitObstacle(crystal_controller, attack_stats.damage);
+				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
 	}
@@ -654,9 +650,16 @@ bool Hachiko::Scripting::CombatManager::OBBHitsObstacle(GameObject* obstacle_go,
 	return attack_box.Intersects(hitbox);
 }
 
-void Hachiko::Scripting::CombatManager::HitObstacle(CrystalExplosion* obstacle, float damage)
+void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float damage)
 {
-	obstacle->RegisterHit(damage);
+	CrystalExplosion* is_crystal_explotion = obstacle->GetComponent<CrystalExplosion>();
+	if (is_crystal_explotion) {
+		is_crystal_explotion->RegisterHit(damage);
+	}
+	else // Case is a platform crystal trigger
+	{
+		obstacle->GetComponent<Stats>()->ReceiveDamage(damage);
+	}
 }
 
 void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, float damage, float knockback, float3 knockback_dir)
