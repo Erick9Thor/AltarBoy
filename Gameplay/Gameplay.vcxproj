@@ -315,7 +315,6 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="entities\enemies\BugState.h" />
-    <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />

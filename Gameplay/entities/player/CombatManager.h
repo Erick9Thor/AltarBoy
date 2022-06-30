@@ -101,7 +101,7 @@ namespace Hachiko
 
             // What to do when system wants to register a hit
             void HitObstacle(CrystalExplosion* obstacle, float damage);
-            void HitEnemy(EnemyController* enemy, float damage, float knockback = 0, float3 knockback_dir = float3::zero);
+            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations
             void RunBulletSimulation();

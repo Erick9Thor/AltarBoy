@@ -187,7 +187,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_transform->SetGlobalPosition(_player_position);
 }
 
-PlayerState Hachiko::Scripting::PlayerController::GetState() const
+Hachiko::Scripting::PlayerState Hachiko::Scripting::PlayerController::GetState() const
 {
 	return _state;
 }

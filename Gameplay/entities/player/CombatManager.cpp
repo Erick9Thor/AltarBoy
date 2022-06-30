@@ -303,7 +303,6 @@ Hachiko::Scripting::CrystalExplosion* Hachiko::Scripting::CombatManager::FindBul
 
 		if (obstacle->active && trajectory.Intersects(hitbox))
 		{
-			//float3 dir = enemies_children[i]->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
 			CrystalExplosion* obstacle_controller = obstacle->GetComponent<CrystalExplosion>();
 			float hit_distance = bullet_position.Distance(obstacle_position);
 			if (obstacle_controller && hit_distance < closest_hit)
@@ -659,7 +658,7 @@ void Hachiko::Scripting::CombatManager::HitObstacle(CrystalExplosion* obstacle, 
 	obstacle->RegisterHit(damage);
 }
 
-void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, float damage, float knockback, float3 knockback_dir)
+void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir)
 {
 	enemy->RegisterHit(damage, knockback_dir, knockback);
 }

@@ -2,7 +2,6 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
-#include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
 #include "Gameplay.h"
 
@@ -15,6 +14,20 @@ class ComponentMeshRenderer;
 namespace Scripting
 {
 class PlayerCamera;
+
+enum class PlayerState
+{
+	INVALID,
+	IDLE,
+	WALKING,
+	MELEE_ATTACKING,
+	RANGED_ATTACKING,
+	DASHING,
+	FALLING,
+	STUNNED,
+	DIE,
+};
+
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
