@@ -212,10 +212,16 @@ private:
 	bool _should_rotate = false;
 	bool _is_falling = false;
 
+	// Camera management
+	int _current_cam_setting = 0;
+	std::vector<float3> _cam_positions = {};
+	std::vector<float3> _cam_rotations = {};
+
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
+	float3 _start_fall_pos = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	

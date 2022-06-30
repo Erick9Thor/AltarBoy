@@ -30,9 +30,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _trail_enlarger(10.0f)
 {
 	CombatManager::BulletStats common_bullet;
-	common_bullet.charge_time = 1.f;
+	common_bullet.charge_time = .5f;
 	common_bullet.lifetime = 3.f;
-	common_bullet.size = 0.f;
+	common_bullet.size = 1.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 	
@@ -65,6 +65,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	weapons.push_back(green);
 
 	_current_weapon = 0;
+	_current_cam_setting = 0;
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
@@ -105,6 +106,19 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	// First position and rotation set if no camera is found
+	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
+
+	_cam_positions.push_back(float3(0.0f, 4.0f, 12.0f));
+	_cam_rotations.push_back(float3(165.0f, 0.0f, 180.0f));
+
+	if (_camera != nullptr)
+	{
+		_cam_positions[0] = _camera->GetComponent<PlayerCamera>()->GetRelativePosition();
+		_cam_rotations[0] = _camera->GetTransform()->GetLocalRotationEuler();
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -293,6 +307,17 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
 	{
 		PickupParasite(_player_position);
+	}
+	// Testing for camera
+	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
+	{
+		++_current_cam_setting;
+		if (_current_cam_setting >= _cam_positions.size())
+		{
+			_current_cam_setting = 0;
+		}
+		_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[_current_cam_setting], 1.0f);
+		_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[_current_cam_setting], 1.0f);
 	}
 }
 
@@ -490,12 +515,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 	if (bullet_controller)
 	{
-		CombatManager::BulletStats stats = CombatManager::BulletStats();
-		stats.charge_time = 1.f;
-		stats.lifetime = 3.f;
-		stats.size = 1.f;
-		stats.speed = 50.f;
-		stats.damage = 1.f;
+		CombatManager::BulletStats stats = GetCurrentWeapon().bullet;
 		_attack_current_duration = stats.charge_time;
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
@@ -551,9 +571,9 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		constexpr float fall_speed = 25.f;
 		_player_position.y -= fall_speed * Time::DeltaTime();
 
-		if (_dash_start.y - _player_position.y > _falling_distance)
+		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
-			_player_position = _dash_start;
+			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
 		}
 	}
 	else if (IsStunned())
@@ -586,7 +606,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	else if (!IsDashing())
 	{
 		// Started falling
-		_state = PlayerState::FALLING;
+		if (!IsFalling())
+		{
+			_start_fall_pos = _player_position;
+			_state = PlayerState::FALLING;
+		}
 	}
 }
 
