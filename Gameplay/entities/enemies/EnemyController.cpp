@@ -18,7 +18,7 @@
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
-	, _attack_range(1.5f)
+	, _attack_range(3.5f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
