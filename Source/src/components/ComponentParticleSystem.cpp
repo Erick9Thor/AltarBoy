@@ -467,7 +467,7 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
 
     // emission
     rate_over_time = node[PARTICLE_EMISSION][RATE].as<ParticleSystem::VariableTypeProperty>();
-    rate_burst = node[PARTICLE_EMISSION][RATE_BURST].IsDefined() ? node[PARTICLE_EMISSION][BURST].as<ParticleSystem::VariableTypeProperty>() : rate_burst;
+    rate_burst = node[PARTICLE_EMISSION][RATE_BURST].IsDefined() ? node[PARTICLE_EMISSION][RATE_BURST].as<ParticleSystem::VariableTypeProperty>() : rate_burst;
     burst = node[PARTICLE_EMISSION][BURST].IsDefined() ? node[PARTICLE_EMISSION][BURST].as<bool>() : burst;
 
     // emitter
