@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9982, 1, 0.9982]
+        scale: [0.9981, 1, 0.9981]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -112,8 +112,8 @@ child:
             "'_player@GameObject*'": 7577865002841685786
             "'_explosion_crystal@GameObject*'": 308697077325262737
             "'_static_crystal@GameObject*'": 147639783983525316
-            "'_outer_explosion_indicator@GameObject*'": 0
-            "'_inner_explosion_indicator@GameObject*'": 0
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 2
             "'_explosion_radius@float'": 5
@@ -152,8 +152,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -347,8 +347,8 @@ child:
             "'_player@GameObject*'": 7577865002841685786
             "'_explosion_crystal@GameObject*'": 8672196143902357848
             "'_static_crystal@GameObject*'": 4598006700238350617
-            "'_outer_explosion_indicator@GameObject*'": 427274444283020248
-            "'_inner_explosion_indicator@GameObject*'": 16847500768186729728
+            "'_explosion_indicator_helper@GameObject*'": 0
+            "'_explosion_effect@GameObject*'": 0
             "'_crashing_index@unsigned'": 0
             "'_detecting_radius@float'": 1
             "'_explosion_radius@float'": 10
@@ -396,8 +396,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -560,7 +560,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9982, 1, 0.9982]
+                        scale: [0.9981, 1, 0.9981]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -2322,7 +2322,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0.001, 0.0096, 0.994, -0.1085]
-                    scale: [0.9964, 0.9964, 1]
+                    scale: [0.9962, 0.9962, 1]
                 child:
                   - id: 7371629505677526311
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -2525,7 +2525,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-0.0011, 0.0096, 0.994, 0.1085]
-                    scale: [0.9964, 0.9964, 1]
+                    scale: [0.9962, 0.9962, 1]
                 child:
                   - id: 4481323456209268566
                     name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
@@ -2837,7 +2837,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1442, 879]
+            size: [1316, 764]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2964,7 +2964,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1442, 879]
+        size: [1316, 764]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -5931,8 +5931,8 @@ child:
                     id: 7575555725868332776
                     type: 1
                     enabled: true
-                    position: [0, 0.0468, -0.0171]
-                    rotation: [0.2261, -0.0005, 0.0025, 0.9741]
+                    position: [-0.0013, 0.0483, -0.0171]
+                    rotation: [-0.1867, -0.166, 0.0601, 0.9664]
                     scale: [1, 1, 1]
               - id: 12256690071488565538
                 name: Jnt_Rock_UP_L
@@ -5942,8 +5942,8 @@ child:
                     id: 3363454858197428470
                     type: 1
                     enabled: true
-                    position: [0.0202, 0.0345, -0.0158]
-                    rotation: [0.1256, -0.3494, 0.006, 0.9285]
+                    position: [0.0229, 0.0345, -0.0158]
+                    rotation: [-0.0889, 0.1006, -0.0089, 0.9909]
                     scale: [1, 1, 1]
               - id: 10043927552305729318
                 name: Jnt_Rock_Down_L
@@ -5953,8 +5953,8 @@ child:
                     id: 9870519831575334797
                     type: 1
                     enabled: true
-                    position: [0.0127, 0.0131, -0.0146]
-                    rotation: [-0.1956, -0.0689, 0.0138, 0.9782]
+                    position: [0.0146, 0.011, -0.0146]
+                    rotation: [0.2954, 0.0882, 0.0168, 0.9511]
                     scale: [1, 1, 1]
               - id: 15697320278256587572
                 name: Jnt_Rock_Down_R
@@ -5964,8 +5964,8 @@ child:
                     id: 7413968499406774294
                     type: 1
                     enabled: true
-                    position: [-0.0056, 0.0101, -0.0126]
-                    rotation: [-0.1929, 0.0168, -0.0033, 0.9811]
+                    position: [-0.0072, 0.0088, -0.0126]
+                    rotation: [0.2032, -0.1698, -0.0658, 0.9621]
                     scale: [1, 1, 1]
               - id: 4923865704607306199
                 name: Jnt_Rock_UP_R
@@ -5975,8 +5975,8 @@ child:
                     id: 7474540181313249016
                     type: 1
                     enabled: true
-                    position: [-0.0193, 0.0285, -0.0131]
-                    rotation: [0.0719, 0.1677, 0.0011, 0.9832]
+                    position: [-0.0198, 0.0304, -0.0131]
+                    rotation: [-0.1304, -0.3926, -0.0172, 0.9102]
                     scale: [1, 1, 1]
               - id: 5111348615992612122
                 name: Jnt_CrystalStar_One_$AssimpFbx$_Translation
@@ -5986,7 +5986,7 @@ child:
                     id: 225946389771447086
                     type: 1
                     enabled: true
-                    position: [-0.0057, 0.0145, -0.0517]
+                    position: [-0.0123, 0.0223, -0.0072]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
                 child:
@@ -6011,7 +6011,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [0.0232, 0.0547, 0.0388, 0.9975]
+                            rotation: [0.0215, 0.0089, 0.0269, 0.9994]
                             scale: [1, 1, 1]
                         child:
                           - id: 5835971623081425393
@@ -6033,7 +6033,7 @@ child:
                     id: 2580442613758638954
                     type: 1
                     enabled: true
-                    position: [-0.0065, 0.0231, -0.0498]
+                    position: [-0.0065, 0.0231, -0.0053]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
                 child:
@@ -6080,7 +6080,7 @@ child:
                     id: 8739342790241309498
                     type: 1
                     enabled: true
-                    position: [0.0006, 0.0231, -0.0584]
+                    position: [0.0006, 0.0231, -0.0139]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
                 child:
@@ -6127,7 +6127,7 @@ child:
                     id: 4868088404915114779
                     type: 1
                     enabled: true
-                    position: [0.0034, 0.024, -0.0496]
+                    position: [0.0061, 0.0231, -0.0051]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
                 child:
@@ -6174,7 +6174,7 @@ child:
                     id: 1516377005960393158
                     type: 1
                     enabled: true
-                    position: [0.0036, 0.0204, -0.0546]
+                    position: [0.0103, 0.0223, -0.0101]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
                 child:
@@ -6199,7 +6199,7 @@ child:
                             type: 1
                             enabled: true
                             position: [0, 0, 0]
-                            rotation: [0, -0.0062, 0, 1]
+                            rotation: [0, 0, 0, 1]
                             scale: [1, 1, 1]
                         child:
                           - id: 6080706552693088445

@@ -61,6 +61,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _crystal);
 			SERIALIZE_FIELD(GameObject*, _crystal_platform);
 
+			float4x4 _initial_transform = float4x4::identity;
+
 			float aux_seconds_before_shaking = 0.0f;
 			float aux_seconds_shaking = 0.0f;
 

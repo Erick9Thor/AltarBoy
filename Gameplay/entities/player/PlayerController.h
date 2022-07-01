@@ -221,6 +221,7 @@ private:
 	float3 _movement_direction = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
+	float3 _start_fall_pos = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	
