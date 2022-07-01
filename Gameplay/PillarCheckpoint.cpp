@@ -43,17 +43,9 @@ void Hachiko::Scripting::PillarCheckpoint::OnUpdate()
 		ActivateCheckpoint();
 	}
 
-	if (_is_active)
+	if (_is_active && _animation->IsAnimationStopped())
 	{
-		ResourceAnimation* spinning_animation = _animation->GetCurrentAnimation();
-
-		if (spinning_animation)
-		{
-			if (spinning_animation->GetCurrentState() == ResourceAnimation::State::STOPPED)
-			{
-				_animation->SendTrigger("finishedSpinning");
-			}
-		}
+		_animation->SendTrigger("finishedSpinning");
 	}
 }
 
