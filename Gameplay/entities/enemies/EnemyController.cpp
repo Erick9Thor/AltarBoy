@@ -44,7 +44,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	//_attack_range = 1.5f;
-	ResetStats();
+	ResetEnemy();
 
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
@@ -72,6 +72,7 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	if (_spawn_is_initial)
 	{
 		_spawn_pos = transform->GetGlobalPosition();
+		_spawn_rot = transform->GetGlobalRotation();
 	}
 	animation->StartAnimating();
 }
@@ -359,7 +360,7 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	}
 }
 
-void Hachiko::Scripting::EnemyController::ResetStats()
+void Hachiko::Scripting::EnemyController::ResetEnemy()
 {
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -369,4 +370,12 @@ void Hachiko::Scripting::EnemyController::ResetStats()
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
+	_state = BugState::IDLE;
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
+{
+	transform->SetGlobalPosition(_spawn_pos);
+	transform->SetGlobalRotation(_spawn_rot);
 }

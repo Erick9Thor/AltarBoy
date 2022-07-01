@@ -23,7 +23,7 @@ namespace Hachiko
 			void OnUpdate() override;
 			void ResetGauntlet();
 			bool IsCompleted() const {return completed;}
-			bool IsLastRound() const;
+			bool IsFinished() const;
 
 			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);

@@ -6242,8 +6242,8 @@ child:
             type: 1
             enabled: true
             position: [0.0038, 0.0338, 0.0179]
-            rotation: [.nan, .nan, .nan, .nan]
-            scale: [.nan, .nan, .nan]
+            rotation: [0.0, 0.0, 0.0, 0.0]
+            scale: [0.0, 0.0, 0.0]
           - !<mesh_renderer>
             id: 13222178636795954840
             type: 2
@@ -6259,11 +6259,11 @@ child:
             enabled: true
             obstacle_type: 1
             obstacle_size: [1, 1, 6]
-asset_hash: 5595726628572536250
+asset_hash: 7780458686953314416
 resources:
   - resource_id: 8433224429532790136
     resource_type: 4
-    resource_hash: 5595726628572536250
+    resource_hash: 7780458686953314416
   - resource_id: 5295013346551349012
     resource_type: 12
     resource_hash: 12510497789439918405

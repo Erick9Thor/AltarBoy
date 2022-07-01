@@ -36,8 +36,6 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	_player = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Player");
 	_enemy_packs_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-
-	SerializeEnemyPacks();
 }
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
@@ -314,20 +312,6 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 	return hit_target;
 }
 
-void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
-{
-	for (unsigned i = 0; i < _enemy_packs_container->children.size(); ++i)
-	{
-		GameObject* pack = _enemy_packs_container->children[i];
-		_initial_transforms.push_back(std::vector<float4x4>());
-		for (unsigned j = 0; j < pack->children.size(); ++j)
-		{
-			GameObject* enemy = pack->children[j];
-			_initial_transforms[i].push_back(enemy->GetTransform()->GetGlobalMatrix());
-		}
-	}
-}
-
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	// We use a pointer to represent when there is no bullet shoot
@@ -391,28 +375,24 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack)
 	auto it = std::find(_enemy_packs_container->children.begin(), _enemy_packs_container->children.end(), pack);
 
 	if (it == _enemy_packs_container->children.end()) return;
-
+	
 	unsigned pack_idx = std::distance(_enemy_packs_container->children.begin(), it);
 
-	std::vector<float4x4>& pack_data = _initial_transforms[pack_idx];
-
 	GameObject* enemies = *it;	
-	assert(pack_data.size() == enemies->children.size());
 
-	
 	for (int i = 0; i < enemies->children.size(); ++i)
 	{
-		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
-		if (enemy_controller)
-		{
-			enemy_controller->ResetStats();
-		}
 		ComponentAgent* agent = enemies->children[i]->GetComponent<ComponentAgent>();
 		if (agent)
 		{
 			agent->RemoveFromCrowd();
 		}
-		enemies->children[i]->GetTransform()->SetGlobalTransform(pack_data[i]);
+		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
+		if (enemy_controller)
+		{
+			enemy_controller->ResetEnemy();
+			enemy_controller->ResetEnemyPosition();
+		}		
 		if (agent)
 		{
 			agent->AddToCrowd();

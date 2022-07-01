@@ -82,9 +82,9 @@ void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 	remaining_between_round_time = 0.f;
 }
 
-bool Hachiko::Scripting::GauntletManager::IsLastRound() const
+bool Hachiko::Scripting::GauntletManager::IsFinished() const
 {
-	return current_round == _enemy_packs.size() - 1;
+	return current_round >= _enemy_packs.size();
 }
 
 void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
@@ -99,15 +99,18 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 
 	if (!changing_rounds)
 	{
+		changing_rounds = true;
+		
 		// If it is the last round end instantly
-		if (IsLastRound())
+		if (IsFinished())
 		{
-			++current_round;
+			remaining_between_round_time = _complete_wait_time;
 			return;
 		}
-		changing_rounds = true;
-		remaining_between_round_time = _round_wait_time;
-		
+		else
+		{
+			remaining_between_round_time = _round_wait_time;
+		}
 	}
 
 	remaining_between_round_time -= Time::DeltaTime();
@@ -116,11 +119,12 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 	{
 		changing_rounds = false;
 		++current_round;
+		if (IsFinished())
+		{
+			return;
+		}
 		SpawnRound(current_round);
-	}
-	
-	
-	
+	}	
 }
 
 void Hachiko::Scripting::GauntletManager::OpenDoors()
