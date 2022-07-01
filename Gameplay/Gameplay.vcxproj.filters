@@ -521,6 +521,7 @@
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
+    <ClInclude Include="misc\LevelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -791,6 +792,7 @@
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
+    <ClCompile Include="misc\LevelManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
