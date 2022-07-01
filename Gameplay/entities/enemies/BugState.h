@@ -9,5 +9,6 @@ enum class BugState
 	MOVING_BACK,
 	ATTACKING,
 	PARASITE,
-	SPAWNING
+	SPAWNING,
+	PATROL
 };

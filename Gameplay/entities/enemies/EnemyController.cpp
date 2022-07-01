@@ -33,6 +33,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager_game_object(nullptr)
 	, _already_in_combat(false)
 	, _is_from_gautlet(false)
+	, _idle_cooldown(2.0f)
 {
 }
 
@@ -66,6 +67,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		_spawn_pos = transform->GetGlobalPosition();
 	}
 	animation->StartAnimating();
+	srand((unsigned)time(NULL));
 }
 
 void Hachiko::Scripting::EnemyController::OnStart()
@@ -160,7 +162,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	// If an enemy is from a gautlet, it will always follow the player
 	if (!_is_from_gautlet && dist_to_player > _aggro_range)
 	{
-		GoBack();
+		//GoBack();
 	}
 	else
 	{
@@ -171,6 +173,24 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		else
 		{
 			ChasePlayer();
+		}
+	}
+
+	if (_state == BugState::IDLE)
+	{
+		_idle_cooldown -= Time::DeltaTime();
+		if (_idle_cooldown <= 0.0f)
+		{
+			PatrolMovement();
+		}
+	}
+
+	if (_state == BugState::PATROL)
+	{
+		if (_current_pos.Distance(_target_pos) > 0.3f) 
+		{
+			_state = BugState::IDLE;
+			_idle_cooldown = 2.0f;
 		}
 	}
 }
@@ -259,6 +279,9 @@ void Hachiko::Scripting::EnemyController::ChasePlayer()
 	{
 		_target_pos = corrected_pos;
 		transform->LookAtTarget(_target_pos);
+		_speed = _combat_stats->_move_speed;
+		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+		agc->SetMaxSpeed(_speed);
 		MoveInNavmesh();
 	}
 }
@@ -301,6 +324,26 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 {
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	agc->SetTargetPosition(_target_pos);
+}
+
+void Hachiko::Scripting::EnemyController::PatrolMovement()
+{
+	_state = BugState::PATROL;
+
+	float random = ((float(rand()) / float(RAND_MAX)) * (5.0f - -5.0f)) + -5.0f;
+
+	float3 _new_pos = float3(_spawn_pos.x + random, _spawn_pos.y, _spawn_pos.z + random);
+
+	float3 corrected_pos = Navigation::GetCorrectedPosition(_new_pos, math::float3(10.0f, 10.0f, 10.0f));
+	if (corrected_pos.x < FLT_MAX)
+	{
+		_target_pos = corrected_pos;
+		transform->LookAtTarget(_target_pos);
+		_speed = 3.0f;
+		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+		agc->SetMaxSpeed(_speed);
+		MoveInNavmesh();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::DestroyEntity()
@@ -392,6 +435,9 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		animation->SendTrigger("isMoving");
 		break;
 	case BugState::MOVING_BACK:
+		animation->SendTrigger("isMoving");
+		break;
+	case BugState::PATROL:
 		animation->SendTrigger("isMoving");
 		break;
 	//case BugState::SPAWNING:

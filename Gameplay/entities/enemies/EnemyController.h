@@ -43,6 +43,7 @@ namespace Hachiko
             void Stop();
 
             void MoveInNavmesh();
+            void PatrolMovement();
             void DropParasite();
             void DestroyEntity();
 
@@ -75,6 +76,7 @@ namespace Hachiko
             math::float3 _target_pos;
             math::float3 _current_pos;
             float _attack_cooldown;
+            float _idle_cooldown;
 
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);
