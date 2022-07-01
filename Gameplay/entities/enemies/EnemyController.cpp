@@ -38,12 +38,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	
-
-}
-
-void Hachiko::Scripting::EnemyController::OnStart()
-{
 	//_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -55,16 +49,6 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	_is_stunned = false;
 
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
-
-	if (_enemy_body)
-	{
-		_enemy_body->SetActive(true);
-	}
-	if (_parasite)
-	{
-		_parasite->SetActive(false);
-	}
-
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
 	if (_player != nullptr)
@@ -82,6 +66,25 @@ void Hachiko::Scripting::EnemyController::OnStart()
 		_spawn_pos = transform->GetGlobalPosition();
 	}
 	animation->StartAnimating();
+}
+
+void Hachiko::Scripting::EnemyController::OnStart()
+{
+	if (_has_spawned == false)
+	{
+		Spawn();
+	}
+	else
+	{
+		if (_enemy_body)
+		{
+			_enemy_body->SetActive(true);
+		}
+		if (_parasite)
+		{
+			_parasite->SetActive(false);
+		}
+	}
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
@@ -167,10 +170,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		}
 		else
 		{
-			if (!has_spawned)
-				Spawn();
-			else
-				ChasePlayer();
+			ChasePlayer();
 		}
 	}
 }
@@ -330,12 +330,17 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 
 void Hachiko::Scripting::EnemyController::Spawn()
 {
-	game_object->SetActive(true);
-	_enemy_body->SetActive(true);
-	_parasite->SetActive(false);
+	if (_enemy_body)
+	{
+		_enemy_body->SetActive(true);
+	}
+	if (_parasite)
+	{
+		_parasite->SetActive(false);
+	}
 
 	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time);
-	has_spawned = true;
+	_has_spawned = true;
 	_state = BugState::SPAWNING;
 }
 

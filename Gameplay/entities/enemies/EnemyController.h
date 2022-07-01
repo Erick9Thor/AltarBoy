@@ -90,7 +90,7 @@ namespace Hachiko
             float3 _knockback_pos = float3::zero;
 
             float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
-            bool has_spawned = false;
+            bool _has_spawned = false;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
