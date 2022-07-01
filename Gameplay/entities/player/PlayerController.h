@@ -4,6 +4,7 @@
 #include "entities/Stats.h"
 #include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
+#include "misc/LevelManager.h"
 #include "Gameplay.h"
 
 #include <queue>
@@ -227,6 +228,8 @@ private:
 	
 	GameObject* _enemies;
 	GameObject* _terrain;
+
+	LevelManager* _level_manager;
 
 };
 } // namespace Scripting
