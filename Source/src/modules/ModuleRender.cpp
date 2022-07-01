@@ -14,7 +14,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
-#include "components/ComponentParticleSystem.h"
+#include "core/preferences/src/EditorPreferences.h"
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -45,6 +45,9 @@ bool Hachiko::ModuleRender::Init()
     ms_log = std::vector<float>(n_bins);
 
     GenerateParticlesBuffers();
+
+    draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
+    draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
 
     return true;
 }
@@ -197,8 +200,7 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
         App->navigation->DebugDraw();
     }
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    EnableBlending();
 
     GLint polygonMode[2];
     glGetIntegerv(GL_POLYGON_MODE, polygonMode);
@@ -212,7 +214,8 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     {
         App->ui->DrawUI(active_scene);
     }
-    glDisable(GL_BLEND);
+
+    DisableBlending();
 
     // If in play build, blit frame_buffer to the default frame buffer and render to the whole 
     // screen, if not, bind default frame buffer:
@@ -320,10 +323,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // rendering pass:
     g_buffer.BlitDepth(frame_buffer, fb_width, fb_height);
 
-    // Enable blending for the next passes:
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
     // ------------------------------ PRE FORWARD -----------------------------
     
     DrawPreForwardPass(scene, camera);
@@ -357,7 +356,13 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     // Forward rendering pass for transparent game objects:
     program = App->program->GetForwardProgram();
     program->Activate();
+
+    EnableBlending();
+
     batch_manager->DrawTransparentBatches(program);
+
+    DisableBlending();
+    
     Program::Deactivate();
 }
 
@@ -400,6 +405,8 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
         scene->GetSkybox()->Draw(camera);
     }
 
+    EnableBlending();
+
     // Draw debug draw stuff:
     ModuleDebugDraw::Draw(camera->GetViewMatrix(), camera->GetProjectionMatrix(), fb_height, fb_width);
     
@@ -414,6 +421,8 @@ void Hachiko::ModuleRender::DrawPreForwardPass(Scene* scene, ComponentCamera* ca
         }
         Program::Deactivate();
     }
+
+    DisableBlending();
 
     //GameObject* selected_go = App->editor->GetSelectedGameObject();
     /*if (outline_selection && selected_go)
@@ -764,5 +773,7 @@ bool Hachiko::ModuleRender::CleanUp()
 
     SDL_GL_DeleteContext(context);
 
+    App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
+    App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
     return true;
 }

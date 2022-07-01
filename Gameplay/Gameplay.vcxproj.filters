@@ -509,7 +509,7 @@
     <ClInclude Include="entities\player\PlayerSoundManager.h" />
     <ClInclude Include="entities\enemies\EnemyController.h" />
     <ClInclude Include="entities\Stats.h" />
-    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="misc\FancyLights.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -519,6 +519,7 @@
     <ClInclude Include="entities\enemies\BugState.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="PillarCheckpoint.h" />
+    <ClInclude Include="CrystalPlatform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -779,7 +780,7 @@
     <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
     <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="entities\Stats.cpp" />
-    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\player\RoomTeleporter.cpp" />
@@ -787,6 +788,7 @@
     <ClCompile Include="misc\FancyLights.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="PillarCheckpoint.cpp" />
+    <ClCompile Include="CrystalPlatform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

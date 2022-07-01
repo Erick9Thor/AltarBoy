@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Play|x64">
@@ -66,13 +66,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\Game\gameplayBin</OutDir>
-    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)vendors;</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Play|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)..\Game\gameplayBin\</OutDir>
-    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)bin\build\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)vendors;</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -313,12 +313,13 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\stlemitter.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
+    <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="entities\enemies\BugState.h" />
     <ClInclude Include="entities\player\PlayerState.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="PillarCheckpoint.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
-    <ClInclude Include="entities\player\BulletController.h" />
+    <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
     <ClInclude Include="ui\DebugManager.h" />
@@ -724,10 +725,11 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="PillarCheckpoint.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
-    <ClCompile Include="entities\player\BulletController.cpp" />
+    <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
     <ClCompile Include="ui\DebugManager.cpp" />

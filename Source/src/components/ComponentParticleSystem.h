@@ -23,11 +23,13 @@ namespace Hachiko
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesLife() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSpeed() const;
         [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesSize() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesRotation() const;
+        [[nodiscard]] const ParticleSystem::VariableTypeProperty& GetParticlesStretch() const;
 
         [[nodiscard]] const ParticleSystem::Emitter::Properties& GetEmitterProperties() const;
         [[nodiscard]] const ParticleSystem::ParticleProperties& GetParticlesProperties() const;
 
-        [[nodiscard]] float3 CalculateDirectionFromShape() const;
+        [[nodiscard]] float3 GetLocalPositionFromShape() const;
 
         [[nodiscard]] const ResourceTexture* GetTexture() const;
         [[nodiscard]] int GetTextureTotalTiles() const;
@@ -37,6 +39,7 @@ namespace Hachiko
 
         [[nodiscard]] bool IsLoop() const;
         [[nodiscard]] ParticleSystem::Emitter::State GetEmitterState() const;
+        [[nodiscard]] ParticleSystem::Emitter::Type GetEmitterType() const;
 
         void Play();
         void Pause();
@@ -52,18 +55,23 @@ namespace Hachiko
         bool shape_section = true;
         bool lights_section = false;
         bool renderer_section = true;
-        bool texture_section = true;
+        bool texture_section = false;
 
         //particle config
         ParticleSystem::ParticleProperties particle_properties;
 
         //emission
         bool loop = false;
-        float duration = 5.0f;
-        bool able_to_emit = false;
+        bool burst = false;
+        bool able_to_emit = true;
+        bool burst_emit = true;
+        int active_particles = 0;
         float time = 0.0f;
+        float burst_time = 0.0f;
+        float duration = 5.0f;
         float emitter_elapsed_time = 0.0f;
         ParticleSystem::VariableTypeProperty rate_over_time{float2(10)};
+        ParticleSystem::VariableTypeProperty rate_burst{float2(10)};
 
         ParticleSystem::VariableTypeProperty start_delay{float2::zero, 1.0f, false};
         ParticleSystem::VariableTypeProperty start_life = {float2(5.0f)};
