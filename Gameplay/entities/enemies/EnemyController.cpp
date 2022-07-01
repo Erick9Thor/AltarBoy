@@ -43,9 +43,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	//_attack_range = 1.5f;
-	ResetEnemy();
-
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
 	if (_enemy_body)
@@ -75,6 +72,9 @@ void Hachiko::Scripting::EnemyController::OnStart()
 		_spawn_rot = transform->GetGlobalRotation();
 	}
 	animation->StartAnimating();
+
+	//_attack_range = 1.5f;
+	ResetEnemy();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
