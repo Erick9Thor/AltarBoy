@@ -33,6 +33,7 @@ namespace Hachiko
             void GetParasite();
 
             void CheckState();
+            void ResetStats();
 
         private:
             void Attack();

@@ -27,7 +27,6 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);
-			SERIALIZE_FIELD(bool, _spawn_with_trigger);
 			SERIALIZE_FIELD(float, _round_wait_time);
 			SERIALIZE_FIELD(float, _complete_wait_time);
 

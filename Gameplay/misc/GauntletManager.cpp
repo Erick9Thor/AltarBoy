@@ -3,6 +3,7 @@
 #include "GauntletManager.h"
 
 #include "misc/LevelManager.h"
+#include "constants/Scenes.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -10,7 +11,6 @@
 Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	: Script(game_object, "GauntletManager")
 	, _trigger_radius(5.f)
-	, _spawn_with_trigger(true)
 	, _round_wait_time(3.f)
 	, _complete_wait_time(2.f)
 	, _door_1(nullptr)
@@ -38,11 +38,6 @@ void Hachiko::Scripting::GauntletManager::OnStart()
 	game_object->SetVisible(false, false);
 
 	ResetGauntlet();
-
-	if (!_spawn_with_trigger)
-	{
-		StartGauntlet();
-	}
 }
 
 void Hachiko::Scripting::GauntletManager::OnUpdate()
@@ -71,7 +66,7 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 	SpawnRound(current_round);
 
 	// Notify level manager
-	LevelManager* level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+	LevelManager* level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 	level_manager->SetLastGauntlet(this);
 }
 
@@ -82,6 +77,7 @@ void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 	{
 		_combat_manager->DeactivateEnemyPack(enemy_pack);
 	}
+	started = false;
 	current_round = 0;
 	remaining_between_round_time = 0.f;
 }

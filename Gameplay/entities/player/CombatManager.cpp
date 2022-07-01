@@ -402,7 +402,21 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack)
 	
 	for (int i = 0; i < enemies->children.size(); ++i)
 	{
+		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
+		if (enemy_controller)
+		{
+			enemy_controller->ResetStats();
+		}
+		ComponentAgent* agent = enemies->children[i]->GetComponent<ComponentAgent>();
+		if (agent)
+		{
+			agent->RemoveFromCrowd();
+		}
 		enemies->children[i]->GetTransform()->SetGlobalTransform(pack_data[i]);
+		if (agent)
+		{
+			agent->AddToCrowd();
+		}
 	}
 }
 

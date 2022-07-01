@@ -44,14 +44,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 void Hachiko::Scripting::EnemyController::OnStart()
 {
 	//_attack_range = 1.5f;
-	_combat_stats = game_object->GetComponent<Stats>();
-	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	_combat_stats->_move_speed = 4;
-	_combat_stats->_max_hp = 2;
-	_combat_stats->_current_hp = _combat_stats->_max_hp;
-	_stun_time = 0.0f;
-	_is_stunned = false;
+	ResetStats();
 
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
@@ -287,7 +280,7 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
-	SceneManagement::Destroy(game_object);
+	//SceneManagement::Destroy(game_object);
 }
 
 void Hachiko::Scripting::EnemyController::DropParasite()
@@ -364,4 +357,16 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	default:
 		break;
 	}
+}
+
+void Hachiko::Scripting::EnemyController::ResetStats()
+{
+	_combat_stats = game_object->GetComponent<Stats>();
+	_combat_stats->_attack_power = 1;
+	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
+	_combat_stats->_move_speed = 4;
+	_combat_stats->_max_hp = 2;
+	_combat_stats->_current_hp = _combat_stats->_max_hp;
+	_stun_time = 0.0f;
+	_is_stunned = false;
 }
