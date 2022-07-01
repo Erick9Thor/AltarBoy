@@ -108,17 +108,17 @@ void Hachiko::Scene::RebuildBatching()
     rebuild_batch = false;
 }
 
-Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const float3& origin, const float3& destination, float3* closest_hit, GameObject* parent_filter) const
 {
     LineSegment line_seg(origin, destination);
-    return Raycast(line_seg);
+    return Raycast(line_seg, true, closest_hit, parent_filter);
 }
 
-Hachiko::GameObject* Hachiko::Scene::BoundingRaycast(const float3& origin, const float3& destination) const
+Hachiko::GameObject* Hachiko::Scene::BoundingRaycast(const float3& origin, const float3& destination, GameObject* parent_filter) const
 {
     LineSegment line_seg(origin, destination);
     // Pass false to not use triangles
-    return Raycast(line_seg, false);
+    return Raycast(line_seg, false, nullptr, parent_filter);
 }
 
 Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
@@ -126,7 +126,7 @@ Hachiko::GameObject* Hachiko::Scene::Find(UID id) const
     return root->Find(id);
 }
 
-Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool triangle_level) const
+Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool triangle_level, float3* closest_hit, GameObject* parent_filter) const
 {
     GameObject* selected = nullptr;
     float closest_hit_distance = inf;
@@ -136,6 +136,8 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
 
     for (GameObject* game_object : game_objects)
     {
+        if (parent_filter && parent_filter != game_object->parent) continue;
+        
         auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
         if (mesh_renderer)
         {
@@ -162,6 +164,10 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
                         {
                             closest_hit_distance = hit_distance;
                             selected = game_object;
+                            if (closest_hit)
+                            {
+                                *closest_hit = hit_point;
+                            }
                         }
                     }
                 }
@@ -174,12 +180,19 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
             {
                 if (hit_distance < closest_hit_distance)
                 {
+                    // Bounding box raycast does not set intersection point
                     closest_hit_distance = hit_distance;
                     selected = game_object;
                 }
             }
         }
     }
+
+    if (selected && closest_hit)
+    {
+        *closest_hit = (selected->GetTransform()->GetGlobalMatrix() * float4(*closest_hit, 1)).Float3Part();
+    }
+
     return selected;
 }
 

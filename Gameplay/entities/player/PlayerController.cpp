@@ -19,6 +19,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _dash_scaler(3)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
 	, _max_dash_charges(0)
@@ -29,14 +30,11 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _trail_enlarger(10.0f)
 {
 	CombatManager::BulletStats common_bullet;
-	common_bullet.charge_time = 1.f;
+	common_bullet.charge_time = .5f;
 	common_bullet.lifetime = 3.f;
-	common_bullet.size = 0.f;
+	common_bullet.size = 1.f;
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
-
-	
-	
 	
 	Weapon red;
 	red.name = "Red";
@@ -67,10 +65,14 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	weapons.push_back(green);
 
 	_current_weapon = 0;
+	_current_cam_setting = 0;
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
+	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
+	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	
 	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
@@ -86,14 +88,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_dash_trail->SetActive(false);
 	}
-
-	if (_walking_dust)
-	{
-		_walking_dust->SetActive(false);
-	}
-
-	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	dynamic_envi = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 2;
@@ -112,6 +106,19 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	// First position and rotation set if no camera is found
+	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
+	_cam_rotations.push_back(float3(125.0f, 0.0f, 180.0f));
+
+	_cam_positions.push_back(float3(0.0f, 4.0f, 12.0f));
+	_cam_rotations.push_back(float3(165.0f, 0.0f, 180.0f));
+
+	if (_camera != nullptr)
+	{
+		_cam_positions[0] = _camera->GetComponent<PlayerCamera>()->GetRelativePosition();
+		_cam_rotations[0] = _camera->GetTransform()->GetLocalRotationEuler();
+	}
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -301,6 +308,17 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	{
 		PickupParasite(_player_position);
 	}
+	// Testing for camera
+	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
+	{
+		++_current_cam_setting;
+		if (_current_cam_setting >= _cam_positions.size())
+		{
+			_current_cam_setting = 0;
+		}
+		_camera->GetComponent<PlayerCamera>()->SwitchRelativePosition(_cam_positions[_current_cam_setting], 1.0f);
+		_camera->GetComponent<PlayerCamera>()->RotateCameraTo(_cam_rotations[_current_cam_setting], 1.0f);
+	}
 }
 
 void Hachiko::Scripting::PlayerController::HandleInputBuffering()
@@ -359,7 +377,19 @@ void Hachiko::Scripting::PlayerController::Dash()
 
 	float3 corrected_dash_final_position;
 	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
-	corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	// Correct by wall hit
+	bool hit_terrain = GetTerrainCollision(_dash_start, dash_final_position, corrected_dash_final_position);
+	if (hit_terrain)
+	{
+		dash_final_position = corrected_dash_final_position;
+		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
+		corrected_dash_final_position = Navigation::GetCorrectedPosition(dash_final_position, float3(5.f, 0.5f, 5.f));
+	}
+	else
+	{
+		// Correct normally by navmesh
+		corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+	}
 	if (corrected_dash_final_position.x < FLT_MAX)
 	{
 		_dash_end = corrected_dash_final_position;
@@ -368,6 +398,7 @@ void Hachiko::Scripting::PlayerController::Dash()
 	{
 		_dash_end = dash_final_position;
 	}
+	
 }
 
 
@@ -484,12 +515,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 	CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 	if (bullet_controller)
 	{
-		CombatManager::BulletStats stats = CombatManager::BulletStats();
-		stats.charge_time = 1.f;
-		stats.lifetime = 3.f;
-		stats.size = 1.f;
-		stats.speed = 50.f;
-		stats.damage = 1.f;
+		CombatManager::BulletStats stats = GetCurrentWeapon().bullet;
 		_attack_current_duration = stats.charge_time;
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
@@ -519,11 +545,16 @@ float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack
 	return emitter;
 }
 
+bool Hachiko::Scripting::PlayerController::GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const
+{
+	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	return terrain_hit != nullptr;
+}
+
 void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
 	WalkingOrientationController();
-	WalkingDustManager();
 
 	if (IsWalking())
 	{
@@ -537,11 +568,12 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 	if (IsFalling())
 	{
-		_player_position.y -= 0.25f;
+		constexpr float fall_speed = 25.f;
+		_player_position.y -= fall_speed * Time::DeltaTime();
 
-		if (_dash_start.y - _player_position.y > _falling_distance)
+		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
-			_player_position = _dash_start;
+			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
 		}
 	}
 	else if (IsStunned())
@@ -569,13 +601,16 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
-			FallingDustManager();
 		}
 	}
 	else if (!IsDashing())
 	{
 		// Started falling
-		_state = PlayerState::FALLING;
+		if (!IsFalling())
+		{
+			_start_fall_pos = _player_position;
+			_state = PlayerState::FALLING;
+		}
 	}
 }
 
@@ -591,10 +626,15 @@ void Hachiko::Scripting::PlayerController::DashController()
 
 	_dash_progress += Time::DeltaTime() / _dash_duration;
 	_dash_progress = _dash_progress > 1.0f ? 1.0f : _dash_progress;
+	
+	// using y = x^p
+	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, (int)_dash_scaler);
+	
 
-	// TODO: Instead of approaching to _dash_end linearly, dash must have some sort
-	// of an acceleration.
-	_player_position = math::float3::Lerp(_dash_start, _dash_end, _dash_progress);
+	
+	
+	_player_position = math::float3::Lerp(_dash_start, _dash_end,
+		acceleration);
 
 	if (_state != PlayerState::MELEE_ATTACKING)
 	{
@@ -650,19 +690,6 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 		_dash_trail->SetActive(_show_dashtrail);
 
 	}
-}
-
-void Hachiko::Scripting::PlayerController::FallingDustManager()
-{
-	ComponentParticleSystem* dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
-	dust_particles->Restart();
-}
-
-void Hachiko::Scripting::PlayerController::WalkingDustManager()
-{
-	_walking_dust->SetActive(IsWalking());
-	//ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
-	//dust_particles->Play();
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()
@@ -792,32 +819,43 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
-	if (enemies == nullptr) {
+	if (_enemies == nullptr) {
 		return;
 	}
 
-	std::vector<GameObject*> enemy_children = enemies ? enemies->children : std::vector<GameObject*>();
-
-	for (int i = 0; i < enemy_children.size(); ++i)
+	std::vector<GameObject*>& enemy_packs = _enemies->children;
+	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
-		if (enemy_children[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemy_children[i]->GetTransform()->GetGlobalPosition()))
+		GameObject* pack = enemy_packs[i];
+		if (!pack->IsActive())
 		{
-			EnemyController* enemy_controller = enemy_children[i]->GetComponent<EnemyController>();
+			continue;
+		}
 
-			if (enemy_controller->isAlive() == false)
+		std::vector<GameObject*>& enemies = pack->children;
+
+
+		for (int i = 0; i < enemies.size(); ++i)
+		{
+			if (enemies[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
 			{
-				enemy_controller->GetParasite();
-				game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
-				_combat_stats->Heal(1);
-				UpdateHealthBar();
-				// Generate a random number for the weapon
-				std::random_device rd;
-				std::mt19937 gen(rd());
-				int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
-				std::uniform_int_distribution<> dist(0, weapons.size()-1);
-				int new_wpn_num = dist(gen);
-				_current_weapon = new_wpn_num;
-				return;
+				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
+
+				if (enemy_controller->IsAlive() == false)
+				{
+					enemy_controller->GetParasite();
+					game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
+					_combat_stats->Heal(1);
+					UpdateHealthBar();
+					// Generate a random number for the weapon
+					std::random_device rd;
+					std::mt19937 gen(rd());
+					int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
+					std::uniform_int_distribution<> dist(0, weapons.size() - 1);
+					int new_wpn_num = dist(gen);
+					_current_weapon = new_wpn_num;
+					return;
+				}
 			}
 		}
 	}

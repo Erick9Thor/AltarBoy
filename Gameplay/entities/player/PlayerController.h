@@ -114,6 +114,8 @@ private:
 	void CancelAttack();
 	float4x4 GetMeleeAttackOrigin(float attack_range) const;
 
+	bool GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const;
+
 	// Player simulation
 	void MovementController();
 	void DashController();
@@ -147,6 +149,7 @@ private:
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
+	SERIALIZE_FIELD(unsigned, _dash_scaler);
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
 	SERIALIZE_FIELD(float, _trail_enlarger);
@@ -213,16 +216,21 @@ private:
 	bool _should_rotate = false;
 	bool _is_falling = false;
 
+	// Camera management
+	int _current_cam_setting = 0;
+	std::vector<float3> _cam_positions = {};
+	std::vector<float3> _cam_rotations = {};
+
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
+	float3 _start_fall_pos = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
-
 	
-	GameObject* enemies;
-	GameObject* dynamic_envi;
+	GameObject* _enemies;
+	GameObject* _terrain;
 
 };
 } // namespace Scripting
