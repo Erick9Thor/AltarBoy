@@ -70,20 +70,19 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
+
+	if (_enemy_body != nullptr)
+	{
+		_enemy_body->SetActive(true);
+	}
+	if (_parasite != nullptr)
+	{
+		_parasite->SetActive(false);
+	}
+
 	if (_has_spawned == false)
 	{
 		Spawn();
-	}
-	else
-	{
-		if (_enemy_body)
-		{
-			_enemy_body->SetActive(true);
-		}
-		if (_parasite)
-		{
-			_parasite->SetActive(false);
-		}
 	}
 }
 
@@ -330,15 +329,6 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 
 void Hachiko::Scripting::EnemyController::Spawn()
 {
-	if (_enemy_body)
-	{
-		_enemy_body->SetActive(true);
-	}
-	if (_parasite)
-	{
-		_parasite->SetActive(false);
-	}
-
 	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time);
 	_has_spawned = true;
 	_state = BugState::SPAWNING;
