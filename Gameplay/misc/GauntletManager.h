@@ -21,6 +21,8 @@ namespace Hachiko
 			void OnAwake() override;
 			void OnStart() override;
 			void OnUpdate() override;
+			void ResetGauntlet();
+			bool IsCompleted() const {return completed;}
 
 			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);
@@ -36,7 +38,6 @@ namespace Hachiko
 		private:
 
 			void StartGauntlet();
-			void ResetGauntlet();
 			void CheckRoundStatus();
 			void OpenDoors();
 			void CloseDoors();
