@@ -29,11 +29,11 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 
 void Hachiko::Scripting::GauntletManager::OnStart()
 {
-	Reset();
+	ResetGauntlet();
 
 	if (!_use_trigger)
 	{
-		Start();
+		StartGauntlet();
 	}
 }
 
@@ -46,7 +46,7 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 		if (_trigger_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(_combat_manager->GetPlayer()->GetTransform()->GetGlobalPosition()))
 		{
 			// Here we would start spawning the first round
-			Start();
+			StartGauntlet();
 		}
 	}
 	else
@@ -56,14 +56,14 @@ void Hachiko::Scripting::GauntletManager::OnUpdate()
 
 }
 
-void Hachiko::Scripting::GauntletManager::Start()
+void Hachiko::Scripting::GauntletManager::StartGauntlet()
 {
 	started = true;
 	current_round = 0;
 	SpawnRound(current_round);
 }
 
-void Hachiko::Scripting::GauntletManager::Reset()
+void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 {
 	CloseDoors();
 	for (GameObject* enemy_pack : _enemy_packs)

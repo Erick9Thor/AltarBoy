@@ -15,7 +15,7 @@ component:
     "'_combat_manager_go@GameObject*'": 0
     "'_trigger_radius@float'": 0
     "'_use_trigger@bool'": false
-    "'_door_1@GameObject*'": 0
+    "'_door_1@GameObject*'": 2
     "'_door_2@GameObject*'": 0
     "'_pack_1@GameObject*'": 0
     "'_pack_2@GameObject*'": 0

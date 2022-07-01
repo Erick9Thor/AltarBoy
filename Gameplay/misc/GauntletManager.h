@@ -35,8 +35,8 @@ namespace Hachiko
 
 		private:
 
-			void Start();
-			void Reset();
+			void StartGauntlet();
+			void ResetGauntlet();
 			void CheckRoundStatus();
 			void OpenDoors();
 			void CloseDoors();

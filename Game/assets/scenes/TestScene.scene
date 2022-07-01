@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9968, 1, 0.9968]
+        scale: [0.9965, 1, 0.9965]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -796,7 +796,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9988]
+                                                                                                                                    scale: [1, 1, 0.9985]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -853,7 +853,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9987, 1, 0.9987]
+                                                                                            scale: [0.9984, 1, 0.9984]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -2006,7 +2006,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9988]
+                                                                                                                                    scale: [1, 1, 0.9985]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -2063,7 +2063,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9987, 1, 0.9987]
+                                                                                            scale: [0.9984, 1, 0.9984]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -2573,8 +2573,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -2817,8 +2817,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -2981,7 +2981,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9968, 1, 0.9968]
+                        scale: [0.9965, 1, 0.9965]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -6482,7 +6482,7 @@ child:
         "'_combat_manager_go@GameObject*'": 1137480282892310891
         "'_trigger_radius@float'": 0
         "'_use_trigger@bool'": false
-        "'_door_1@GameObject*'": 0
+        "'_door_1@GameObject*'": 1125404691131067851
         "'_door_2@GameObject*'": 0
         "'_pack_1@GameObject*'": 5317749766860736839
         "'_pack_2@GameObject*'": 12450366604727127906
@@ -6931,7 +6931,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [-0.067, 0.0158, 0.0672]
-                                            rotation: [0.2178, -0.0972, 0.1077, 0.9651]
+                                            rotation: [0.2178, -0.0972, 0.1077, 0.9652]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 12006823027129689013
@@ -7193,7 +7193,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [0, 0, 0.8756, 0.483]
-                                                            scale: [0.9989, 0.9989, 1]
+                                                            scale: [0.9986, 0.9986, 1]
                                                         child:
                                                           - id: 7300229523316383905
                                                             name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
@@ -7241,7 +7241,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [-0.483, 0.8756, 0, 0]
-                                                                            scale: [0.9989, 1, 0.9989]
+                                                                            scale: [0.9986, 1, 0.9986]
                                                                         child:
                                                                           - id: 10254065945951643898
                                                                             name: Zero
@@ -7395,7 +7395,7 @@ child:
                                             enabled: true
                                             position: [0, 0, 0]
                                             rotation: [0, 0, 0.9832, 0.1824]
-                                            scale: [0.9989, 0.9989, 1]
+                                            scale: [0.9986, 0.9986, 1]
                                         child:
                                           - id: 15976547221592480175
                                             name: RightWing_$AssimpFbx$_Rotation
