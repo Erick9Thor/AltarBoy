@@ -466,7 +466,10 @@ void Hachiko::ModuleScriptingSystem::AwakeAllScriptsOnCurrentScene() const
 
     for (Component* script : scripts)
     {
-        static_cast<Scripting::Script*>(script)->Start();
+        if (script->GetGameObject()->IsActive())
+        {
+            static_cast<Scripting::Script*>(script)->Start();
+        }
     }
 
     scripts.clear();
