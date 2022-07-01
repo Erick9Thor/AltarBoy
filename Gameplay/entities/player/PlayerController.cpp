@@ -72,7 +72,8 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
 	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	
+	_level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+
 	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
@@ -946,7 +947,7 @@ void Hachiko::Scripting::PlayerController::CheckState()
 
 void Hachiko::Scripting::PlayerController::ResetPlayer()
 {
-	_player_position = _initial_pos;
+	_player_position = _level_manager->GetRespawnPosition(); // _initial_pos;
 	_combat_stats->_current_hp = 4;
 	UpdateHealthBar();
 }

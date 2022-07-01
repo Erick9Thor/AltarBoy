@@ -2,6 +2,11 @@
 
 #include "GauntletManager.h"
 
+#include "misc/LevelManager.h"
+
+// TODO: Delete this include:
+#include <modules/ModuleSceneManager.h>
+
 Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	: Script(game_object, "GauntletManager")
 	, _trigger_radius(0.f)
@@ -61,6 +66,10 @@ void Hachiko::Scripting::GauntletManager::StartGauntlet()
 	started = true;
 	current_round = 0;
 	SpawnRound(current_round);
+
+	// Notify level manager
+	LevelManager* level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+	level_manager->SetLastGauntlet(this);
 }
 
 void Hachiko::Scripting::GauntletManager::ResetGauntlet()
