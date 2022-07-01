@@ -182,6 +182,7 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 	if (obstacle)
 	{
 		obstacle->RemoveObstacle();
+		obstacle->Disable();
 	}
 	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
 	if (exploding_animation)

@@ -290,18 +290,18 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 			continue;
 		}
 
-		ComponentObstacle* obstacle_cpomponent = obstacle->GetComponent<ComponentObstacle>();
-		if (!obstacle_cpomponent)
+		ComponentObstacle* obstacle_component = obstacle->GetComponent<ComponentObstacle>();
+		if (!obstacle_component)
 		{
 			continue;
 		}
 
 		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
 		// Cylinder obstacles ignore z
-		float obstacle_radius = obstacle_cpomponent->GetSize().x;
+		float obstacle_radius = obstacle_component->GetSize().x;
 		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
-		if (obstacle->active && trajectory.Intersects(hitbox))
+		if (obstacle->active && obstacle_component->IsActive() && trajectory.Intersects(hitbox))
 		{
 			float hit_distance = bullet_position.Distance(obstacle_position);
 			if (hit_distance < closest_hit)
