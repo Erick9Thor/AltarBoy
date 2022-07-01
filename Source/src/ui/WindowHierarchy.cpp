@@ -58,6 +58,7 @@ void Hachiko::WindowHierarchy::DrawHierarchyTree(const GameObject* game_object)
     
     if (selected_object_ancestors.size() > 0)
     {
+        index = 0;
         selected_object_ancestors.clear();
     }
 }
