@@ -725,7 +725,6 @@ void Hachiko::GameObject::ChangeTintColor(float4 color)
     for (int i = 0; i < v_mesh_renderer.size(); ++i)
     {
         v_mesh_renderer[i]->SetTintColor(color);
-        HE_LOG("%f", color.w);
     }
 
     for (GameObject* child : children)

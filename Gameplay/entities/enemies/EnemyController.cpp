@@ -18,7 +18,7 @@
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
-	, _attack_range(3.5f)
+	, _attack_range(3)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
@@ -97,7 +97,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			}
 			else
 			{
-				float alpha_transition = math::Sqrt(_parasite_lifespan - _parasite_lifetime) * 1 / math::Sqrt(_parasite_lifespan); //0.2f * (5 - _parasite_lifetime); //255 - math::Pow(_parasite_dissolving, _parasite_lifespan - _parasite_lifetime);
+				float alpha_transition = math::Sqrt(_parasite_lifespan - _parasite_lifetime) * _parasite_dissolving;
 				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
 				_parasite_lifetime += Time::DeltaTime();
 			}
@@ -112,9 +112,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 				}
 				else
 				{
-					//float alpha_transition = math::Pow(/*_enemy_dissolving*/2, _enemy_lifespan - _enemy_lifetime) * 0.03125f; //0.2f * (5 -_enemy_lifetime);
-					float alpha_transition = math::Sqrt(_enemy_lifespan - _enemy_lifetime) * 1 / math::Sqrt(_enemy_lifespan);
-					//alpha_transition = alpha_transition > 0 ? alpha_transition : 0.0f;
+					float alpha_transition = math::Sqrt(_enemy_lifespan - _enemy_lifetime) * _enemy_dissolving;
 					_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
 					_enemy_lifetime += Time::DeltaTime();
 				}

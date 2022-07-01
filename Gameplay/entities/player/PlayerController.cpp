@@ -867,7 +867,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
-	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f);
 
 	// Activate vignette
 	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
