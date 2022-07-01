@@ -195,6 +195,7 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 	{
 		_state = BugState::DEAD;
 		animation->SendTrigger("isDead");
+		game_object->GetComponent<ComponentAgent>()->SetAsDead(true);
 	}
 }
 
@@ -313,8 +314,6 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	if (_parasite) {
 		_parasite->SetActive(true);
 	}
-	
-	game_object->AttemptRemoveComponent(game_object->GetComponent<ComponentAgent>());
 }
 
 void Hachiko::Scripting::EnemyController::GetParasite()

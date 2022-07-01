@@ -36,9 +36,12 @@ void Hachiko::ComponentAgent::Update()
     // Move agent through NavMesh
     if (!is_player)
     {
-        const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
-        float3 agent_position(dt_agent->npos[0], dt_agent->npos[1], dt_agent->npos[2]);
-        game_object->GetTransform()->SetGlobalPosition(agent_position);
+        if (!is_dead)
+        {
+            const dtCrowdAgent* dt_agent = App->navigation->GetCrowd()->getAgent(agent_id);
+            float3 agent_position(dt_agent->npos[0], dt_agent->npos[1], dt_agent->npos[2]);
+            game_object->GetTransform()->SetGlobalPosition(agent_position);
+        }
     }
     else
     {
@@ -188,6 +191,11 @@ void Hachiko::ComponentAgent::SetObstacleAvoidance(bool obstacle_avoidance)
 void Hachiko::ComponentAgent::SetAsPlayer(bool new_is_player) 
 {
     is_player = new_is_player;
+}
+
+void Hachiko::ComponentAgent::SetAsDead(bool new_is_dead) 
+{
+    is_dead = new_is_dead;
 }
 
 void Hachiko::ComponentAgent::AddToCrowd()
