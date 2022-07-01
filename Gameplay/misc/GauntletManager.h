@@ -23,10 +23,13 @@ namespace Hachiko
 			void OnUpdate() override;
 			void ResetGauntlet();
 			bool IsCompleted() const {return completed;}
+			bool IsLastRound() const;
 
 			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);
-			SERIALIZE_FIELD(bool, _use_trigger);
+			SERIALIZE_FIELD(bool, _spawn_with_trigger);
+			SERIALIZE_FIELD(float, _round_wait_time);
+			SERIALIZE_FIELD(float, _complete_wait_time);
 
 			SERIALIZE_FIELD(GameObject*, _door_1);
 			SERIALIZE_FIELD(GameObject*, _door_2);
@@ -46,6 +49,8 @@ namespace Hachiko
 			unsigned current_round = 0;
 			bool completed = false;
 			bool started = false;
+			bool changing_rounds = false;
+			float remaining_between_round_time;
 			CombatManager* _combat_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};

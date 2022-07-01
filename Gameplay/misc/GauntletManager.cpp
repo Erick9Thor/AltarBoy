@@ -4,7 +4,10 @@
 
 Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	: Script(game_object, "GauntletManager")
-	, _trigger_radius(0.f)
+	, _trigger_radius(5.f)
+	, _spawn_with_trigger(true)
+	, _round_wait_time(3.f)
+	, _complete_wait_time(2.f)
 	, _door_1(nullptr)
 	, _door_2(nullptr)
 	, _pack_1(nullptr)
@@ -15,7 +18,6 @@ Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 void Hachiko::Scripting::GauntletManager::OnAwake()
 {
 	_combat_manager = _combat_manager_go->GetComponent<CombatManager>();
-	
 	_doors.clear();
 	if (_door_1 && _door_1->GetComponent<DoorController>()) _doors.push_back(_door_1->GetComponent<DoorController>());
 	if (_door_2 && _door_2->GetComponent<DoorController>()) _doors.push_back(_door_2->GetComponent<DoorController>());
@@ -23,15 +25,16 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 	_enemy_packs.clear();
 	if (_pack_1) _enemy_packs.push_back(_pack_1);
 	if (_pack_2) _enemy_packs.push_back(_pack_2);
-	if (_pack_3) _enemy_packs.push_back(_pack_3);	
-
+	if (_pack_3) _enemy_packs.push_back(_pack_3);
 }
 
 void Hachiko::Scripting::GauntletManager::OnStart()
 {
+	game_object->SetVisible(false, false);
+
 	ResetGauntlet();
 
-	if (!_use_trigger)
+	if (!_spawn_with_trigger)
 	{
 		StartGauntlet();
 	}
@@ -71,6 +74,12 @@ void Hachiko::Scripting::GauntletManager::ResetGauntlet()
 		_combat_manager->DeactivateEnemyPack(enemy_pack);
 	}
 	current_round = 0;
+	remaining_between_round_time = 0.f;
+}
+
+bool Hachiko::Scripting::GauntletManager::IsLastRound() const
+{
+	return current_round == _enemy_packs.size() - 1;
 }
 
 void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
@@ -82,8 +91,31 @@ void Hachiko::Scripting::GauntletManager::CheckRoundStatus()
 	}
 
 	if(!_combat_manager->IsPackDead(_enemy_packs[current_round])) return;
-	++current_round;
-	SpawnRound(current_round);
+
+	if (!changing_rounds)
+	{
+		// If it is the last round end instantly
+		if (IsLastRound())
+		{
+			++current_round;
+			return;
+		}
+		changing_rounds = true;
+		remaining_between_round_time = _round_wait_time;
+		
+	}
+
+	remaining_between_round_time -= Time::DeltaTime();
+
+	if (remaining_between_round_time <= 0.f)
+	{
+		changing_rounds = false;
+		++current_round;
+		SpawnRound(current_round);
+	}
+	
+	
+	
 }
 
 void Hachiko::Scripting::GauntletManager::OpenDoors()
