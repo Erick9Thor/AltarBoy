@@ -1,6 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "entities/player/PlayerCamera.h"
-#include "entities/player/PlayerState.h"
 #include "entities/player/PlayerController.h"
 
 // TODO: Delete this include:

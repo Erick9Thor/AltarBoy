@@ -1,7 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
 #include "entities/Stats.h"
-#include "entities/enemies/BugState.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Sounds.h"
@@ -194,7 +193,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}
 }
 
-BugState Hachiko::Scripting::EnemyController::GetState() const
+Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
 {
 	return _state;
 }

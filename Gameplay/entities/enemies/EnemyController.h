@@ -2,7 +2,6 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
-#include "entities/enemies/BugState.h"
 
 namespace Hachiko
 {
@@ -13,6 +12,18 @@ namespace Hachiko
     {
         class AudioManager;
         class PlayerController;
+
+        enum class BugState
+        {
+            INVALID,
+            DEAD,
+            IDLE,
+            MOVING,
+            MOVING_BACK,
+            ATTACKING,
+            PARASITE
+        };
+
         class EnemyController : public Script
         {
             SERIALIZATION_METHODS(false)
