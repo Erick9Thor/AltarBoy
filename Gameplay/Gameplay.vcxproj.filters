@@ -515,7 +515,6 @@
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
     <ClInclude Include="entities\player\RoomTeleporter.h" />
     <ClInclude Include="ui\DebugManager.h" />
-    <ClInclude Include="entities\enemies\BugState.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="CrystalPlatform.h" />
   </ItemGroup>
