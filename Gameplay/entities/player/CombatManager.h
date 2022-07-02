@@ -11,6 +11,7 @@ namespace Hachiko
     namespace Scripting
     {
         class EnemyController;
+        class PlayerController;
         class CrystalExplosion;
 
         class CombatManager : public Script
@@ -27,6 +28,7 @@ namespace Hachiko
                 float damage = 1.f;
                 // Status effect
                 float GetChargedPercent();
+                bool update_ui = false;
             private:
                 bool alive = false;
                 float elapsed_lifetime = 0.f;
@@ -127,6 +129,9 @@ namespace Hachiko
 
             math::float3 _direction;
             int _damage;
+
+            SERIALIZE_FIELD(GameObject*, _player);
+            PlayerController* _player_controller;
         };
     } // namespace Scripting
 } // namespace Hachiko

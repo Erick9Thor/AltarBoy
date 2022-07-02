@@ -36,6 +36,11 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	_enemy_packs_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
+	if (_player)
+	{
+		_player_controller = _player->GetComponent<PlayerController>();
+	}
+
 	SerializeEnemyPacks();
 }
 
@@ -120,9 +125,18 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			stats.current_charge += Time::DeltaTime();
 			bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
+			stats.update_ui = true;
 			continue;
 		}
 
+		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
+		{
+			if (!_player_controller)	return;
+
+			_player_controller->UpdateAmmoUI();
+			stats.update_ui = false;
+		}
+		
 		// Move bullet forward
 		UpdateBulletTrajectory(i);
 		// Check if it collides with an enemy

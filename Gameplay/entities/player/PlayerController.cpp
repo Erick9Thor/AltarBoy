@@ -534,7 +534,6 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		if (_current_bullet >= 0)
 		{
 			math::Clamp(--_ammo_count, 0, MAX_AMMO);
-			UpdateAmmoUI();
 			_state = PlayerState::RANGED_ATTACKING;
 		}
 	}
@@ -550,7 +549,6 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
 		math::Clamp(++_ammo_count, 0, MAX_AMMO);
-		UpdateAmmoUI();
 	}
 }
 
