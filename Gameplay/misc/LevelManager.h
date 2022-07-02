@@ -9,6 +9,7 @@ namespace Hachiko
 	class ComponentTransform;
 	namespace Scripting
 	{
+		class PlayerController;
 		class LevelManager : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -22,20 +23,17 @@ namespace Hachiko
 				_last_gauntlet = last_gauntlet;
 			}
 
-			void SetRespawnPosition(float3& new_respawn_position) 
+			void SetRespawnPosition(const float3& new_respawn_position) 
 			{
 				_respawn_position = new_respawn_position;
 			}
 
 			[[nodiscard]] float3 GetRespawnPosition() const
 			{
-				if (_last_gauntlet != nullptr && !_last_gauntlet->IsCompleted())
-				{
-					_last_gauntlet->ResetGauntlet();
-				}
-
 				return _respawn_position;
 			}
+
+			void Respawn(PlayerController* player);
 
 			SERIALIZE_FIELD(float3, _respawn_position);
 

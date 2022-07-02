@@ -16,8 +16,3 @@ component:
     visible: true
     material_id: 6339253229162858782
     tint_color: [1, 1, 1, 1]
-  - !<obstacle>
-    type: 18
-    enabled: true
-    obstacle_type: 2
-    obstacle_size: [2, 10, 13]

@@ -9,7 +9,7 @@ Hachiko::Scripting::DoorController::DoorController(GameObject* game_object)
 
 void Hachiko::Scripting::DoorController::OnAwake()
 {
-	door_obstacle = _door->children[0]->GetComponent<ComponentObstacle>();
+	door_obstacle = _door->GetComponent<ComponentObstacle>();
 }
 
 void Hachiko::Scripting::DoorController::OnUpdate()
@@ -42,8 +42,8 @@ void Hachiko::Scripting::DoorController::UpdateDoorState()
 		door_obstacle->AddObstacle();
 		break;
 	case State::OPEN:
-		_door->SetActive(false);
 		door_obstacle->RemoveObstacle();
+		_door->SetActive(false);
 		break;
 	}
 }

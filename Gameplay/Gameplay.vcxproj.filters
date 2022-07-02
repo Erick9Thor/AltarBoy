@@ -516,7 +516,7 @@
     <ClInclude Include="entities\player\RoomTeleporter.h" />
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="misc\AudioManager.h" />
-    <ClInclude Include="PillarCheckpoint.h" />
+    <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
@@ -788,7 +788,7 @@
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\FancyLights.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
-    <ClCompile Include="PillarCheckpoint.cpp" />
+    <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />

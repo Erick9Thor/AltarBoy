@@ -92,22 +92,13 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
+	// Player doesnt use all combat stats since some depend on weapon
 	_combat_stats->_attack_power = 2;
 	_combat_stats->_attack_cd = 1;
 	_combat_stats->_move_speed = 7.0f;
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 
-	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
-	{
-		HE_LOG("Error loading HP Cells UI");
-		return;
-	}
-
-	hp_cells.push_back(_hp_cell_1);
-	hp_cells.push_back(_hp_cell_2);
-	hp_cells.push_back(_hp_cell_3);
-	hp_cells.push_back(_hp_cell_4);
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -121,6 +112,16 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_cam_positions[0] = _camera->GetComponent<PlayerCamera>()->GetRelativePosition();
 		_cam_rotations[0] = _camera->GetTransform()->GetLocalRotationEuler();
 	}
+	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
+	{
+		HE_LOG("Error loading HP Cells UI");
+		return;
+	}
+
+	hp_cells.push_back(_hp_cell_1);
+	hp_cells.push_back(_hp_cell_2);
+	hp_cells.push_back(_hp_cell_3);
+	hp_cells.push_back(_hp_cell_4);
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -128,6 +129,8 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
 	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
+
+	_level_manager->SetRespawnPosition(game_object->GetTransform()->GetGlobalPosition());
 
 	if (_dash_trail) // Init dash trail start/end positions and scale
 	{
@@ -152,7 +155,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	
 	CheckState();	
-
+	
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -161,8 +164,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
-		// Temporary behavior to reset player in the same scene
-		ResetPlayer();
+		_level_manager->Respawn(this);
 	}
 
 	if (_god_mode_trigger)
@@ -949,11 +951,12 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	}
 }
 
-void Hachiko::Scripting::PlayerController::ResetPlayer()
+void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 {
-	_player_position = _level_manager->GetRespawnPosition(); // _initial_pos;
+	_player_position = spawn_pos; // _initial_pos;
 	_combat_stats->_current_hp = 4;
 	UpdateHealthBar();
+	// Reset properly
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()

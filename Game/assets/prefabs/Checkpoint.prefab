@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-10.1618814, 2.4368484, 19.2097759]
+    position: [-10.16, 2.437, 19.21]
     rotation: [0, 0, 0, 1]
     scale: [1, 1, 1]
   - !<animation>
@@ -16,8 +16,7 @@ component:
     type: 15
     enabled: true
     class_name: PillarCheckpoint
-    "'_player@GameObject*'": 0
-    "'_restart_position@float3'": [0, 0, 0]
+    "'_respawn_go@GameObject*'": 6
     "'_activation_range@float'": 5
 child:
   - name: Root
@@ -26,7 +25,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.00469001941, -0.944041729, 0]
+        position: [-0.0047, -0.944, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
     child:
@@ -36,7 +35,7 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [0.00469001941, 1.00207937, 0]
+            position: [0.0047, 1.002, 0]
             rotation: [0, 0, 0, 1]
             scale: [1, 1, 1]
   - name: Floating_pilarGRP
@@ -65,3 +64,21 @@ child:
             navigable: false
             visible: true
             material_id: 7555422350562069233
+            tint_color: [1, 1, 1, 1]
+  - name: Trigger
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [1.755, -2.437, -0.9206]
+        rotation: [-0.7071, 0, 0, 0.7071]
+        scale: [0.39, 0.39, 0.39]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10210867973034302559
+        navigable: false
+        visible: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]

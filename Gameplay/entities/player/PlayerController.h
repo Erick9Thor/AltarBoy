@@ -33,6 +33,8 @@ class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
 
+	friend class LevelManager;
+	
 	enum class WeaponUsed
 	{
 		RED = 0,
@@ -142,7 +144,7 @@ private:
 	void RecieveKnockback(const math::float3 direction);
 
 	void CheckState();
-	void ResetPlayer();
+	void ResetPlayer(float3 spawn_pos);
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
