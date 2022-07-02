@@ -789,23 +789,23 @@ void Hachiko::Scripting::PlayerController::AttackController()
 				
 				if (_attack_current_delay <= 0.f)
 				{
-					bool hit = false;
+					int hit_count = 0;
 					
 					if (combat_manager)
 					{
 						// Offset the center of the attack if its a rectangle
 						if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
 						{
-							hit = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range) , attack.stats);
+							hit_count = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range) , attack.stats);
 						}
 						else
 						{
-							hit = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
+							hit_count = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
 						}
 					}
-					if (hit)
+					if (hit_count > 0)
 					{
-						_ammo_count = math::Clamp(++_ammo_count, 0, MAX_AMMO);
+						_ammo_count = math::Clamp(_ammo_count += hit_count, 0, MAX_AMMO);
 						UpdateAmmoUI();
 						_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 					}

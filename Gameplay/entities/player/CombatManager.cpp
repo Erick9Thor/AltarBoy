@@ -55,30 +55,30 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 	RunBulletSimulation();
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
-	bool hit = false;
-	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
-	hit = hit || ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	int hit = 0;
+	hit += ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	hit += ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
-	bool hit = false;
+	int hit = 0;
 
-	hit = hit || ProcessAgentsOBB(hitbox, attack_stats);
-	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
+	hit += ProcessAgentsOBB(hitbox, attack_stats);
+	hit += ProcessObstaclesOBB(hitbox, attack_stats);
 	
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	if (attack_stats.type == AttackType::RECTANGLE)
 	{
@@ -429,16 +429,16 @@ void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 	pack->SetActive(false);
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	if (!agent_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*>& enemy_packs = _enemy_packs_container->children;
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
@@ -465,7 +465,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
 					// TODO: Add Knockback
-					hit = true;
+					hit++;
 					HitEnemy(enemy_controller, attack_stats.damage);
 				}
 			}
@@ -474,15 +474,15 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
 {
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
 	{
-		return false;
+		return 0;
 	}
 	
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*> obstacles = obstacle_container->children;
 	for (int i = 0; i < obstacles.size(); ++i)
 	{
@@ -498,7 +498,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
-				hit = true;
+				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
@@ -506,16 +506,16 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	if (!agent_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*>& enemy_packs = _enemy_packs_container->children;
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
@@ -541,7 +541,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
 					// TODO: Add Knockback
-					hit = true;
+					hit++;
 					HitEnemy(enemy_controller, attack_stats.damage);
 				}
 			}
@@ -550,15 +550,15 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats)
 {
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*> obstacles = obstacle_container->children;
 	for (int i = 0; i < obstacles.size(); ++i)
 	{
@@ -574,7 +574,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
-				hit = true;
+				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}

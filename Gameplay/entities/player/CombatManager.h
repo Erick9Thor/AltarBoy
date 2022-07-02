@@ -63,8 +63,7 @@ namespace Hachiko
             void OnAwake() override;
             void OnUpdate() override;
 
-            // Bool indicates if it hit something
-            bool PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             bool EnemyConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats);
             bool EnemyRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats);
@@ -85,14 +84,14 @@ namespace Hachiko
 
         private:
             // Start attack depending on its type
-            bool PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
-            bool PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // Evaluate for all units
-            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats);
-            bool ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            int ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            int ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            int ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            int ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
 
             // Specifics of the collision check
             bool ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
