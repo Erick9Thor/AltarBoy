@@ -84,23 +84,21 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		if (_state == BugState::PARASITE)
 		{
-			if (_enemy_body->IsActive())
+			if (_enemy_dissolve_time >= _enemy_dissolving_time_progress)
 			{
-				_enemy_disolving_time_progress += Time::DeltaTime();
-				float alpha_transition = math::Sqrt(_enemy_disolve_time - _enemy_disolving_time_progress) * _enemy_dissolving;
+				_enemy_dissolving_time_progress += Time::DeltaTime();
+				float alpha_transition = math::Sqrt(_enemy_dissolve_time - _enemy_dissolving_time_progress) * _enemy_dissolving;
 				_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
-				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.f));
 			}
-
-			if (_enemy_disolving_time_progress >= _enemy_disolve_time)
+			else 
 			{
 				_enemy_body->SetActive(false);
-				_parasyte_disolving_time_progress += Time::DeltaTime();
-				float alpha_transition = math::Sqrt(_parasyte_disolve_time - _parasyte_disolving_time_progress) * _parasite_dissolving;
-				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
+				_parasite_dissolving_time_progress += Time::DeltaTime();
+				float alpha_transition = math::Sqrt(_parasite_dissolve_time - _parasite_dissolving_time_progress) * _parasite_dissolving;
+				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
 			}
-			
-			if (_parasyte_disolving_time_progress >= _parasyte_disolve_time)
+
+			if (_parasite_dissolving_time_progress >= _parasite_dissolve_time)
 			{
 				DestroyEntity();
 			}
@@ -382,8 +380,8 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_is_stunned = false;
 	_state = BugState::IDLE;
 	animation->SendTrigger("idle");
-	_parasyte_disolving_time_progress = 0.f;
-	_enemy_disolving_time_progress = 0.f;
+	_parasite_dissolving_time_progress = 0.f;
+	_enemy_dissolving_time_progress = 0.f;
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()

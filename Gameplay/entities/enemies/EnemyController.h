@@ -98,12 +98,12 @@ namespace Hachiko
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;
             float _speed = 0.0f;
-            float _enemy_disolve_time = 3.0f;
-            float _enemy_disolving_time_progress = 0.0f;
-            const float _enemy_dissolving = 1 / math::Sqrt(_enemy_disolve_time);
-            float _parasyte_disolve_time = 10.0f;
-            float _parasyte_disolving_time_progress = 0.0f;
-            const float _parasite_dissolving = 1 / math::Sqrt(_parasyte_disolve_time);
+            float _enemy_dissolve_time = 3.0f;
+            float _enemy_dissolving_time_progress = 0.0f;
+            const float _enemy_dissolving = 1 / math::Sqrt(_enemy_dissolve_time);
+            float _parasite_dissolve_time = 10.0f;
+            float _parasite_dissolving_time_progress = 0.0f;
+            const float _parasite_dissolving = 1 / math::Sqrt(_parasite_dissolve_time);
             float3 _knockback_pos = float3::zero;
 
         };
