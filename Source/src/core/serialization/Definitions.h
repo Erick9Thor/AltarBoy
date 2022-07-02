@@ -307,6 +307,8 @@
 // emission
 #define PARTICLE_EMISSION "emission"
 #define RATE "rate"
+#define RATE_BURST "rate_burst"
+#define BURST "burst"
 // emitter
 #define EMITTER "emitter_shape"
 #define EMITTER_TYPE "type"
@@ -328,6 +330,9 @@
 #define SIZE "size"
 #define MODIFIER_COLOR "color"
 #define MODIFIER_FORCE "force"
+#define X_FORCE "x_force"
+#define Y_FORCE "y_force"
+#define Z_FORCE "z_force"
 #define ROTATION "rotation"
 #define MODIFIER_ANIMATION "animation"
 #define ANIMATION_SPEED "animation_speed"

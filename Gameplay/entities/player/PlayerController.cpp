@@ -16,6 +16,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _attack_indicator(nullptr)
 	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
+	, _geo(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
@@ -72,7 +73,8 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
 	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	
+	_level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+
 	_dash_charges = _max_dash_charges;
 
 	if (_attack_indicator)
@@ -90,22 +92,13 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
+	// Player doesnt use all combat stats since some depend on weapon
 	_combat_stats->_attack_power = 2;
 	_combat_stats->_attack_cd = 1;
 	_combat_stats->_move_speed = 7.0f;
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 
-	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
-	{
-		HE_LOG("Error loading HP Cells UI");
-		return;
-	}
-
-	hp_cells.push_back(_hp_cell_1);
-	hp_cells.push_back(_hp_cell_2);
-	hp_cells.push_back(_hp_cell_3);
-	hp_cells.push_back(_hp_cell_4);
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -119,6 +112,16 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_cam_positions[0] = _camera->GetComponent<PlayerCamera>()->GetRelativePosition();
 		_cam_rotations[0] = _camera->GetTransform()->GetLocalRotationEuler();
 	}
+	if (!_hp_cell_1 || !_hp_cell_2 || !_hp_cell_3 || !_hp_cell_4)
+	{
+		HE_LOG("Error loading HP Cells UI");
+		return;
+	}
+
+	hp_cells.push_back(_hp_cell_1);
+	hp_cells.push_back(_hp_cell_2);
+	hp_cells.push_back(_hp_cell_3);
+	hp_cells.push_back(_hp_cell_4);
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -126,6 +129,8 @@ void Hachiko::Scripting::PlayerController::OnStart()
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
 	_initial_pos = game_object->GetTransform()->GetGlobalPosition();
+
+	_level_manager->SetRespawnPosition(game_object->GetTransform()->GetGlobalPosition());
 
 	if (_dash_trail) // Init dash trail start/end positions and scale
 	{
@@ -150,7 +155,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	
 	CheckState();	
-
+	
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -159,8 +164,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
-		// Temporary behavior to reset player in the same scene
-		ResetPlayer();
+		_level_manager->Respawn(this);
 	}
 
 	if (_god_mode_trigger)
@@ -187,7 +191,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_transform->SetGlobalPosition(_player_position);
 }
 
-PlayerState Hachiko::Scripting::PlayerController::GetState() const
+Hachiko::Scripting::PlayerState Hachiko::Scripting::PlayerController::GetState() const
 {
 	return _state;
 }
@@ -434,7 +438,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration);
+	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -844,7 +848,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
-					game_object->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);
+					if (_geo != nullptr) 
+					{
+						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
 					// Generate a random number for the weapon
@@ -867,7 +874,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
-	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 
 	// Activate vignette
 	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
@@ -944,11 +951,12 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	}
 }
 
-void Hachiko::Scripting::PlayerController::ResetPlayer()
+void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 {
-	_player_position = _initial_pos;
+	_player_position = spawn_pos; // _initial_pos;
 	_combat_stats->_current_hp = 4;
 	UpdateHealthBar();
+	// Reset properly
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()

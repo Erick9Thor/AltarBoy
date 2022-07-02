@@ -61,6 +61,8 @@ namespace Hachiko
             void OnAwake() override;
             void OnUpdate() override;
 
+            GameObject* GetPlayer() { return _player; }
+
             // Bool indicates if it hit something
             bool PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
@@ -100,7 +102,7 @@ namespace Hachiko
 
             // What to do when system wants to register a hit
             void HitObstacle(GameObject* obstacle, float damage);
-            void HitEnemy(EnemyController* enemy, float damage, float knockback = 0, float3 knockback_dir = float3::zero);
+            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations
             void RunBulletSimulation();
@@ -118,12 +120,12 @@ namespace Hachiko
             void SerializeEnemyPacks();
 
         private:
+            GameObject* _player = nullptr;
             unsigned _max_bullets = 5;
             std::vector<GameObject*> _bullets{};
             std::vector<BulletStats> _bullet_stats;
 
             GameObject* _enemy_packs_container;
-            std::vector<std::vector<float4x4> > _initial_transforms;
 
             math::float3 _direction;
             int _damage;

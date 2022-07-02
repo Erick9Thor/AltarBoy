@@ -42,12 +42,18 @@ void Hachiko::ForceParticleModifier::Save(YAML::Node& node) const
     YAML::Node force_module = node[MODIFIER_FORCE];
     ParticleModifier::Save(force_module);
     force_module[ROTATION] = rotation_delta;
+    force_module[X_FORCE] = x_force;
+    force_module[Y_FORCE] = y_force;
+    force_module[Z_FORCE] = z_force;
 }
 
 void Hachiko::ForceParticleModifier::Load(const YAML::Node& node)
 {
     ParticleModifier::Load(node[MODIFIER_FORCE]);
     rotation_delta = node[MODIFIER_FORCE][ROTATION].IsDefined() ? node[MODIFIER_FORCE][ROTATION].as<ParticleSystem::VariableTypeProperty>() : rotation_delta;
+    x_force = node[MODIFIER_FORCE][X_FORCE].IsDefined() ? node[MODIFIER_FORCE][X_FORCE].as<ParticleSystem::VariableTypeProperty>() : x_force;
+    y_force = node[MODIFIER_FORCE][Y_FORCE].IsDefined() ? node[MODIFIER_FORCE][Y_FORCE].as<ParticleSystem::VariableTypeProperty>() : y_force;
+    z_force = node[MODIFIER_FORCE][Z_FORCE].IsDefined() ? node[MODIFIER_FORCE][Z_FORCE].as<ParticleSystem::VariableTypeProperty>() : z_force;
 }
 
 void Hachiko::ForceParticleModifier::UpdatePositionOverTime(Particle& particle) 
