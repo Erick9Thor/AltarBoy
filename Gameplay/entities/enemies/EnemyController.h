@@ -68,6 +68,7 @@ namespace Hachiko
             void DropParasite();
             void DestroyEntity();
 
+            float4x4 GetMeleeAttackOrigin(float attack_range) const;
             bool IsAttacking() const
             {
                 return _state == BugState::ATTACKING;
@@ -77,7 +78,7 @@ namespace Hachiko
             Stats* _combat_stats;
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
-
+            SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
@@ -118,7 +119,7 @@ namespace Hachiko
             float _parasite_lifespan = 5.0f;
             float _current_lifetime = 0.0f;
             float3 _knockback_pos = float3::zero;
-
+            float _attack_current_delay = 0.f;
             float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
             bool _has_spawned = false;
         };

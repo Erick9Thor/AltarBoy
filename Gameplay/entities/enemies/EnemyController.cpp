@@ -18,6 +18,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
 	, _attack_range(1.5f)
+	, _attack_delay(0.3f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
@@ -43,13 +44,13 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	//_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	_combat_stats->_move_speed = 4;
-	_combat_stats->_max_hp = 2;
+	//_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
+	//_combat_stats->_move_speed = 4;
+	//_combat_stats->_max_hp = 2;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
-
+	_attack_delay = 0.3f;
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
@@ -84,13 +85,12 @@ void Hachiko::Scripting::EnemyController::OnStart()
 		_parasite->SetActive(false);
 	}
 
+	ResetEnemy();
+
 	if (_has_spawned == false)
 	{
 		Spawn();
 	}
-
-	//_attack_range = 1.5f;
-	ResetEnemy();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
@@ -118,9 +118,10 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
+	IdleController();
+
 	AttackController();
 
-	IdleController();
 }
 
 Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
@@ -186,7 +187,9 @@ void Hachiko::Scripting::EnemyController::AttackController()
 {
 	float dist_to_player = _current_pos.Distance(_player_pos);
 
-	// TODO: Delete these after seminar and write a better version.
+	_attack_cooldown -= Time::DeltaTime();
+	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
+
 	if (IsAttacking())
 	{
 		_attack_animation_timer += Time::DeltaTime();
@@ -195,10 +198,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 		{
 			_attack_animation_timer = 0.0f;
 			_state = BugState::IDLE;
-		}
-		else
-		{
-			return;
+			_idle_cooldown = 2.0f;
 		}
 	}
 	else {
@@ -264,12 +264,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 // Needs to be improved. Player should be able to dodge when enemy starts attacking.
 void Hachiko::Scripting::EnemyController::Attack()
 {
-	if (_state == BugState::DEAD)
+	if (_state == BugState::DEAD || _attack_cooldown > 0.0f)
 	{
 		return;
 	}
-	_attack_cooldown -= Time::DeltaTime();
-	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
 	//if (_is_ranged_attack)
 	//{
@@ -279,13 +277,19 @@ void Hachiko::Scripting::EnemyController::Attack()
 	//	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	//	agc->SetTargetPosition(game_object->GetTransform()->GetGlobalPosition());
 	//}
+	// 
+	if (_attack_current_delay <= 0.0f || _previous_state != BugState::ATTACKING)
+	{
+		_attack_current_delay = _attack_delay;
+		_state = BugState::ATTACKING;
+	}
 
-	if (_attack_cooldown > 0.0f)
+	_attack_current_delay -= Time::DeltaTime();
+
+	if (_attack_current_delay > 0.0f)
 	{
 		return;
 	}
-
-	_state = BugState::ATTACKING;
 	
 	if (_is_ranged_attack) 
 	{
@@ -295,11 +299,23 @@ void Hachiko::Scripting::EnemyController::Attack()
 	}
 	else
 	{
-		_player_controller->RegisterHit(_combat_stats->_attack_power);
+		CombatManager::AttackStats attack_stats;
+		attack_stats.damage = _combat_stats->_attack_power;
+		attack_stats.knockback_distance = 0.0f;
+		attack_stats.width = 4.f;
+		attack_stats.range = _attack_range * 1.1f; // a bit bigger than its attack activation range
+		attack_stats.type = CombatManager::AttackType::RECTANGLE;
+
+		Debug::DebugDraw(_combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack_stats.range), attack_stats), float3(1.0f, 1.0f, 0.0f));
+		
+		_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
+		
 		transform->LookAtTarget(_player_pos);
 		Stop();
+
+		_attack_cooldown = _combat_stats->_attack_cd;
 	}
-	_attack_cooldown = _combat_stats->_attack_cd;
+
 }
 
 void Hachiko::Scripting::EnemyController::ChasePlayer()
@@ -410,7 +426,7 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 
 void Hachiko::Scripting::EnemyController::Spawn()
 {
-	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time);
+	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time, true);
 	_has_spawned = true;
 	_state = BugState::SPAWNING;
 }
@@ -479,14 +495,16 @@ void Hachiko::Scripting::EnemyController::CheckState()
 
 void Hachiko::Scripting::EnemyController::ResetEnemy()
 {
-	_combat_stats = game_object->GetComponent<Stats>();
-	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	_combat_stats->_move_speed = 4;
-	_combat_stats->_max_hp = 2;
+	//_combat_stats = game_object->GetComponent<Stats>();
+	//_combat_stats->_attack_power = 1;
+	//_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
+	//_combat_stats->_move_speed = 4;
+	//_combat_stats->_max_hp = 2;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
+	_has_spawned = false;
+	_attack_delay = 0.3f;
 	_state = BugState::IDLE;
 	animation->SendTrigger("idle");
 }
@@ -495,4 +513,13 @@ void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 {
 	transform->SetGlobalPosition(_spawn_pos);
 	transform->SetGlobalRotation(_spawn_rot);
+}
+
+float4x4 Hachiko::Scripting::EnemyController::GetMeleeAttackOrigin(float attack_range) const
+{
+	ComponentTransform* enemy_transform = game_object->GetTransform();
+	float3 emitter_direction = enemy_transform->GetFront().Normalized();
+	float3 emitter_position = _current_pos + emitter_direction * (attack_range / 2.f);
+	float4x4 emitter = float4x4::FromTRS(emitter_position, enemy_transform->GetGlobalRotation(), enemy_transform->GetGlobalScale());
+	return emitter;
 }

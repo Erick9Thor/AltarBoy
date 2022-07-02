@@ -20,6 +20,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _invulnerability_time(1.0f)
 	, _dash_scaler(3)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
@@ -165,6 +166,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
 		_level_manager->Respawn(this);
+	}
+
+	if (_invulnerability_time_remaining > 0.0f)
+	{
+		_invulnerability_time_remaining -= Time::DeltaTime();
 	}
 
 	if (_god_mode_trigger)
@@ -870,8 +876,9 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	if (_god_mode)	return;
+	if (_god_mode || _invulnerability_time_remaining > 0.0f)	return;
 
+	_invulnerability_time_remaining = _invulnerability_time;
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
 	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3, true);
