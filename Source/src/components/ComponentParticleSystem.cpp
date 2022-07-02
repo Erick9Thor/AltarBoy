@@ -83,7 +83,7 @@ void Hachiko::ComponentParticleSystem::Update()
         Start();
     }
 #endif //PLAY_BUILD
-    if (emitter_state == ParticleSystem::Emitter::State::PLAYING)
+    if (emitter_state != ParticleSystem::Emitter::State::PAUSED)
     {
         UpdateEmitterTimes();
         ActivateParticles();
@@ -94,11 +94,6 @@ void Hachiko::ComponentParticleSystem::Update()
 
 void Hachiko::ComponentParticleSystem::Draw(ComponentCamera* camera, Program* program)
 {
-    if (emitter_state == ParticleSystem::Emitter::State::STOPPED)
-    {
-        return;
-    }
-
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
@@ -123,7 +118,6 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             Widgets::DragFloatConfig duration_cfg;
             duration_cfg.min = 0.05f;
             duration_cfg.speed = 0.05f;
-            duration_cfg.enabled = !loop;
 
             DragFloat("Duration", duration, &duration_cfg);
             Widgets::Checkbox("Loop", &loop);
@@ -145,6 +139,15 @@ void Hachiko::ComponentParticleSystem::DrawGui()
             rate_cfg.min = 0.0f;
 
             MultiTypeSelector("Rate over time", rate_over_time, &rate_cfg);
+            Widgets::Checkbox("Burst", &burst);
+            
+            if (burst)
+            {
+                rate_cfg.min = 0.0f;
+                rate_cfg.enabled = burst;
+                MultiTypeSelector("Burst rate", rate_burst, &rate_cfg);
+            }
+
             ImGui::EndDisabled();
         }
 
@@ -417,6 +420,8 @@ void Hachiko::ComponentParticleSystem::Save(YAML::Node& node) const
 
     // emission
     node[PARTICLE_EMISSION][RATE] = rate_over_time;
+    node[PARTICLE_EMISSION][RATE_BURST] = rate_burst;
+    node[PARTICLE_EMISSION][BURST] = burst;
 
     // emitter
     YAML::Node emitter;
@@ -462,6 +467,8 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
 
     // emission
     rate_over_time = node[PARTICLE_EMISSION][RATE].as<ParticleSystem::VariableTypeProperty>();
+    rate_burst = node[PARTICLE_EMISSION][RATE_BURST].IsDefined() ? node[PARTICLE_EMISSION][RATE_BURST].as<ParticleSystem::VariableTypeProperty>() : rate_burst;
+    burst = node[PARTICLE_EMISSION][BURST].IsDefined() ? node[PARTICLE_EMISSION][BURST].as<bool>() : burst;
 
     // emitter
     emitter_type = static_cast<ParticleSystem::Emitter::Type>(node[EMITTER][EMITTER_TYPE].as<int>());
@@ -552,13 +559,14 @@ const float2& Hachiko::ComponentParticleSystem::GetFactor() const
 
 void Hachiko::ComponentParticleSystem::UpdateActiveParticles()
 {
+    active_particles = 0;
     for (auto& particle : particles)
     {
         if (!particle.IsActive())
         {
             continue;
         }
-
+        ++active_particles;
         particle.Update();
     }
 }
@@ -573,8 +581,7 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if ((!loop && emitter_elapsed_time >= duration) ||
-        emitter_state != ParticleSystem::Emitter::State::PLAYING)
+    if (!loop && emitter_elapsed_time >= duration)
     {
         able_to_emit = false;
         return;
@@ -583,13 +590,25 @@ void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
     time += EngineTimer::delta_time;
     emitter_elapsed_time += EngineTimer::delta_time;
 
-    if (emitter_elapsed_time < start_delay.GetValue())
+    if (emitter_elapsed_time < start_delay.GetValue() ||
+        emitter_state != ParticleSystem::Emitter::State::PLAYING)
     {
         able_to_emit = false;
         return;
     }
 
-    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time) / duration) // TODO: Avoid division
+    if (burst)
+    {
+        burst_time += EngineTimer::delta_time;
+
+        if (burst_time >= start_life.values.x)
+        {
+            burst_emit = true;
+            burst_time = 0.0f;
+        }
+    }
+    
+    if (time * 1000.0f <= ONE_SEC_IN_MS / rate_over_time.GetValue(time))
     {
         able_to_emit = false;
     }
@@ -611,11 +630,33 @@ void Hachiko::ComponentParticleSystem::ResetActiveParticles()
 void Hachiko::ComponentParticleSystem::Reset()
 {
     emitter_elapsed_time = 0.0f;
+    time = 0.0f;
     ResetActiveParticles();
 }
 
 void Hachiko::ComponentParticleSystem::ActivateParticles()
 {
+    if (emitter_state == ParticleSystem::Emitter::State::STOPPED)
+    {
+        return;
+    }
+
+    if (burst && burst_emit)
+    {
+        int count = static_cast<int>(std::trunc(rate_burst.values.x));
+        for (int i = 0; count != 0 || i == particles.size(); ++i)
+        {
+            if (!particles[i].IsActive())
+            {
+                particles[i].Reset(); // For particles to set current emitter configuration
+                particles[i].Activate();
+                --count;
+            }
+        }
+
+        burst_emit = false;
+    }
+
     if (!able_to_emit)
     {
         return;
@@ -632,10 +673,11 @@ void Hachiko::ComponentParticleSystem::ActivateParticles()
     }
 }
 
-float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
+float3 Hachiko::ComponentParticleSystem::GetLocalPositionFromShape() const
 {
     const float theta = RandomUtil::RandomBetween(0, emitter_properties.arc) * TO_RAD;
-    float3 global_emitter_position = GetEmitterProperties().position + game_object->GetComponent<ComponentTransform>()->GetGlobalPosition();
+    float3 local_emitter_position = float3::zero;
+
     switch (emitter_type)
     {
         case ParticleSystem::Emitter::Type::CONE:
@@ -653,7 +695,7 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
 
             const float z_max = sqrt(emitter_properties.radius * emitter_properties.radius - x_position * x_position);
             const float z_position = RandomUtil::RandomBetween(z_min, z_max) * sin(theta);
-            global_emitter_position = float3(global_emitter_position.x + x_position, global_emitter_position.y, global_emitter_position.z + z_position);
+            local_emitter_position = float3(local_emitter_position.x + x_position, local_emitter_position.y, local_emitter_position.z + z_position);
             break;
         }
         case ParticleSystem::Emitter::Type::RECTANGLE:
@@ -663,19 +705,19 @@ float3 Hachiko::ComponentParticleSystem::GetPositionFromShape() const
             const float half_z = emitter_properties.scale.z * 0.5f;
             const float z_random_pos = RandomUtil::RandomBetween(-half_z, half_z);
 
-            global_emitter_position = float3(global_emitter_position.x + x_random_pos, global_emitter_position.y, global_emitter_position.z + z_random_pos);
+            local_emitter_position = float3(local_emitter_position.x + x_random_pos, local_emitter_position.y, local_emitter_position.z + z_random_pos);
             break;
         }
         case ParticleSystem::Emitter::Type::SPHERE:
         {
             const float effective_radius = emitter_properties.radius * (1 - emitter_properties.radius_thickness);
-            global_emitter_position.x = emitter_properties.rotation.x + effective_radius * cos(theta);
-            global_emitter_position.y = emitter_properties.rotation.y + effective_radius * cos(RandomUtil::Random() * pi);
-            global_emitter_position.z = emitter_properties.rotation.z + effective_radius * sin(theta);
+            local_emitter_position.x = emitter_properties.rotation.x + effective_radius * cos(theta);
+            local_emitter_position.y = emitter_properties.rotation.y + effective_radius * cos(RandomUtil::Random() * pi);
+            local_emitter_position.z = emitter_properties.rotation.z + effective_radius * sin(theta);
             break;
         }
     }
-    return global_emitter_position;
+    return local_emitter_position;
 }
 
 void Hachiko::ComponentParticleSystem::AddTexture()
@@ -760,7 +802,6 @@ void Hachiko::ComponentParticleSystem::Restart()
 
 void Hachiko::ComponentParticleSystem::Stop()
 {
-    Reset();
     emitter_state = ParticleSystem::Emitter::State::STOPPED;
 }
 
@@ -777,8 +818,8 @@ void Hachiko::ComponentParticleSystem::DisplayControls()
     ImGui::Text(GetGameObject()->GetName().c_str());
 
     char particles_spawned[10];
-    sprintf_s(particles_spawned, 10, "%.1f", rate_over_time.values.x);
-    ImGui::Text("Particles rate");
+    sprintf_s(particles_spawned, 10, "%d", active_particles);
+    ImGui::Text("Active particles");
     ImGui::SameLine();
     ImGui::Text(particles_spawned);
 

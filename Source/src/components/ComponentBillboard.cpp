@@ -42,16 +42,14 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     }
 
     glDepthMask(GL_FALSE);
-    glEnable(GL_BLEND);
-    glBlendEquation(GL_FUNC_ADD);
     float4 color = float4::one;
     if (properties.render_mode == ParticleSystem::ParticleRenderMode::PARTICLE_ADDITIVE)
     {
-        glBlendFunc(GL_ONE, GL_ONE);
+        ModuleRender::EnableBlending(GL_ONE, GL_ONE, GL_FUNC_ADD);
     }
     else
     {
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        ModuleRender::EnableBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_FUNC_ADD);
         color.w = properties.alpha;
     }
 
@@ -86,8 +84,8 @@ void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program
     // Clear
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
+    ModuleRender::DisableBlending();
 }
 
 void Hachiko::ComponentBillboard::DrawGui()
@@ -300,7 +298,10 @@ void Hachiko::ComponentBillboard::DisplayControls()
 
 void Hachiko::ComponentBillboard::Start()
 {
-    PublishIntoScene();
+    if (!in_scene)
+    {
+        PublishIntoScene();
+    }
 
     if (play_on_awake)
     {
@@ -398,6 +399,10 @@ void Hachiko::ComponentBillboard::Save(YAML::Node& node) const
     node[COLOR_GRADIENT] = *gradient;
     node[ANIMATION_SECTION] = animation_section;
     node[COLOR_SECTION] = color_section;
+    node[SIZE_SECTION] = size_section;
+    node[SIZE_OVERTIME] = size_over_time;
+    node[ROTATION_SECTION] = rotation_section;
+    node[ROTATION_OVERTIME] = rotation_over_time;
     node[START_DELAY] = start_delay;
     node[START_SIZE] = start_size;
     node[START_ROTATION] = start_rotation;
@@ -464,6 +469,16 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
 
     color_section = node[COLOR_SECTION].IsDefined() ?
         node[COLOR_SECTION].as<bool>() : color_section;
+
+    size_section = node[SIZE_SECTION].IsDefined() ? 
+        node[SIZE_SECTION].as<bool>() : size_section;
+    size_over_time = node[SIZE_OVERTIME].IsDefined() ? 
+        node[SIZE_OVERTIME].as<ParticleSystem::VariableTypeProperty>() : size_over_time;
+
+    rotation_section = node[ROTATION_SECTION].IsDefined() ? 
+        node[ROTATION_SECTION].as<bool>() : rotation_section;
+    rotation_over_time = node[ROTATION_OVERTIME].IsDefined() ? 
+        node[ROTATION_OVERTIME].as<ParticleSystem::VariableTypeProperty>() : rotation_over_time;
 
     start_delay = node[START_DELAY].IsDefined() ?
         node[START_DELAY].as<ParticleSystem::VariableTypeProperty>() : start_delay;
