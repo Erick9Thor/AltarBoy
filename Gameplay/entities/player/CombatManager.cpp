@@ -34,9 +34,8 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 		_bullet_stats.push_back(BulletStats());
 	}
 
+	_player = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Player");
 	_enemy_packs_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-
-	SerializeEnemyPacks();
 }
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
@@ -289,18 +288,18 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 			continue;
 		}
 
-		ComponentObstacle* obstacle_cpomponent = obstacle->GetComponent<ComponentObstacle>();
-		if (!obstacle_cpomponent)
+		ComponentObstacle* obstacle_component = obstacle->GetComponent<ComponentObstacle>();
+		if (!obstacle_component)
 		{
 			continue;
 		}
 
 		float3 obstacle_position = obstacle->GetTransform()->GetGlobalPosition();
 		// Cylinder obstacles ignore z
-		float obstacle_radius = obstacle_cpomponent->GetSize().x;
+		float obstacle_radius = obstacle_component->GetSize().x;
 		Sphere hitbox = Sphere(obstacle_position, obstacle_radius + bullet_size);
 
-		if (obstacle->active && trajectory.Intersects(hitbox))
+		if (obstacle->active && obstacle_component->IsActive() && trajectory.Intersects(hitbox))
 		{
 			float hit_distance = bullet_position.Distance(obstacle_position);
 			if (hit_distance < closest_hit)
@@ -311,20 +310,6 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 		}
 	}
 	return hit_target;
-}
-
-void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
-{
-	for (unsigned i = 0; i < _enemy_packs_container->children.size(); ++i)
-	{
-		GameObject* pack = _enemy_packs_container->children[i];
-		_initial_transforms.push_back(std::vector<float4x4>());
-		for (unsigned j = 0; j < pack->children.size(); ++j)
-		{
-			GameObject* enemy = pack->children[j];
-			_initial_transforms[i].push_back(enemy->GetTransform()->GetGlobalMatrix());
-		}
-	}
 }
 
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
@@ -371,7 +356,7 @@ bool Hachiko::Scripting::CombatManager::IsPackDead(GameObject* pack) const
 	for (GameObject* enemy : pack->children)
 	{
 		EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
-		if (enemy_controller && !enemy_controller->IsAlive())
+		if (enemy_controller && enemy_controller->IsAlive())
 		{
 			return false;
 		}
@@ -390,18 +375,28 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack)
 	auto it = std::find(_enemy_packs_container->children.begin(), _enemy_packs_container->children.end(), pack);
 
 	if (it == _enemy_packs_container->children.end()) return;
-
+	
 	unsigned pack_idx = std::distance(_enemy_packs_container->children.begin(), it);
 
-	std::vector<float4x4>& pack_data = _initial_transforms[pack_idx];
-
 	GameObject* enemies = *it;	
-	assert(pack_data.size() == enemies->children.size());
 
-	
 	for (int i = 0; i < enemies->children.size(); ++i)
 	{
-		enemies->children[i]->GetTransform()->SetGlobalTransform(pack_data[i]);
+		ComponentAgent* agent = enemies->children[i]->GetComponent<ComponentAgent>();
+		if (agent)
+		{
+			agent->RemoveFromCrowd();
+		}
+		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
+		if (enemy_controller)
+		{
+			enemy_controller->ResetEnemy();
+			enemy_controller->ResetEnemyPosition();
+		}		
+		if (agent)
+		{
+			agent->AddToCrowd();
+		}
 	}
 }
 

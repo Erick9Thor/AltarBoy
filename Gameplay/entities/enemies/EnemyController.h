@@ -47,6 +47,8 @@ namespace Hachiko
             void Spawn();
 
             void CheckState();
+            void ResetEnemy();
+            void ResetEnemyPosition();
 
         private:
             void SpawnController();
@@ -95,6 +97,8 @@ namespace Hachiko
             ComponentAnimation* animation;
             CombatManager* _combat_manager;
             ComponentAudioSource* _audio_source;
+
+            Quat _spawn_rot;
 
             math::float3 _player_pos;
             math::float3 _target_pos;
