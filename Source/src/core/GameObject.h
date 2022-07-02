@@ -214,7 +214,7 @@ namespace Hachiko
         [[nodiscard]] GameObject* FindDescendantWithName(const std::string& child_name) const;
 
         void ChangeEmissiveColor(float4 color, float time, bool include_children = false);
-        void ChangeTintColor(float4 color);
+        void ChangeTintColor(float4 color, bool include_children = false);
         void SetVisible(bool v, bool include_children = false);
 
     public:

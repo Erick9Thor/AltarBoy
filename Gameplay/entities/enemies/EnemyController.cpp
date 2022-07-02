@@ -84,31 +84,32 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	{
 		if (_state == BugState::PARASITE)
 		{
-			if (_parasite_lifetime >= _parasite_lifespan)
+			if (_enemy_body->IsActive())
+			{
+				_enemy_disolving_time_progress += Time::DeltaTime();
+				float alpha_transition = math::Sqrt(_enemy_disolve_time - _enemy_disolving_time_progress) * _enemy_dissolving;
+				_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition), true);
+				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.f));
+			}
+
+			if (_enemy_disolving_time_progress >= _enemy_disolve_time)
+			{
+				_enemy_body->SetActive(false);
+				_parasyte_disolving_time_progress += Time::DeltaTime();
+				float alpha_transition = math::Sqrt(_parasyte_disolve_time - _parasyte_disolving_time_progress) * _parasite_dissolving;
+				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
+			}
+			
+			if (_parasyte_disolving_time_progress >= _parasyte_disolve_time)
 			{
 				DestroyEntity();
-			}
-			else
-			{
-				float alpha_transition = math::Sqrt(_parasite_lifespan - _parasite_lifetime) * _parasite_dissolving;
-				_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
-				_parasite_lifetime += Time::DeltaTime();
 			}
 		}
 		else
 		{
 			if (animation != nullptr && animation->IsAnimationStopped())
 			{
-				if (_enemy_lifetime >= _enemy_lifespan)
-				{
-					DropParasite();
-				}
-				else
-				{
-					float alpha_transition = math::Sqrt(_enemy_lifespan - _enemy_lifetime) * _enemy_dissolving;
-					_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, alpha_transition));
-					_enemy_lifetime += Time::DeltaTime();
-				}
+				DropParasite();
 			}
 		}
 		return;
@@ -178,7 +179,7 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f, true);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
@@ -300,10 +301,6 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	Stop();
 	_state = BugState::PARASITE;
 	//TODO: Check if in scene there's already a parasite? Maybe?
-	if (_enemy_body) {
-		_enemy_body->SetActive(false);
-	}
-
 	if (_parasite) {
 		_parasite->SetActive(true);
 	}
@@ -385,6 +382,8 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_is_stunned = false;
 	_state = BugState::IDLE;
 	animation->SendTrigger("idle");
+	_parasyte_disolving_time_progress = 0.f;
+	_enemy_disolving_time_progress = 0.f;
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
