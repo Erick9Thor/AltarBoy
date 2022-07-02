@@ -21,7 +21,9 @@ namespace Hachiko
             MOVING,
             MOVING_BACK,
             ATTACKING,
-            PARASITE
+            PARASITE,
+            SPAWNING,
+            PATROL
         };
 
         class EnemyController : public Script
