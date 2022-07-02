@@ -27,6 +27,9 @@
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="Dash" ID="{B75B22B5-FAC6-47B7-8987-A1453FAB6935}" ShortID="446657081">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -44,12 +47,18 @@
 							</MediaIDList>
 						</AudioFileSource>
 					</ChildrenList>
+					<PositioningInfo>
+						<Position Name="" ID="{339FF094-6CEF-4B9F-AECC-0D03B1172BA6}"/>
+					</PositioningInfo>
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="Dash" ID="{68B287AD-23F8-430D-9896-A47A65775699}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 				<Sound Name="RangedAttack" ID="{8943FF7B-D917-452B-9718-55ECD946B1B6}" ShortID="667791007">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -73,6 +82,9 @@
 					</ActiveSourceList>
 				</Sound>
 				<RandomSequenceContainer Name="MeleeAttack" ID="{3D78327C-F61C-4EDF-90CD-41BC8B4183A3}" ShortID="1027414203">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -1712,6 +1724,7 @@
 				</Sound>
 				<RandomSequenceContainer Name="Crystals" ID="{DF9BB866-7CA0-4C5A-B15B-22BA9A7EE109}" ShortID="280822724">
 					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
 					</PropertyList>
 					<ReferenceList>
@@ -1793,6 +1806,22 @@
 							</ActiveSourceList>
 						</Sound>
 					</ChildrenList>
+					<PositioningInfo>
+						<Position Name="" ID="{7E0075B4-C7CC-408E-AA57-9BA608DD7419}">
+							<ChildrenList>
+								<Path2D Name="Crystals_Path" ID="{C2F8559E-818E-4491-81C8-2FECA31DB6FF}">
+									<PointList>
+										<Point>
+											<XPos>-75.63452</XPos>
+											<YPos>-52.82486</YPos>
+											<Flags>12</Flags>
+											<Time>0</Time>
+										</Point>
+									</PointList>
+								</Path2D>
+							</ChildrenList>
+						</Position>
+					</PositioningInfo>
 					<ObjectLists/>
 				</RandomSequenceContainer>
 				<RandomSequenceContainer Name="Pebbles" ID="{217D4A68-FD9D-45A7-BC72-81E275EFC3BD}" ShortID="566197860">
@@ -2034,6 +2063,78 @@
 					<ObjectLists/>
 					<ActiveSourceList>
 						<ActiveSource Name="monster-dying" ID="{F6CC589C-BBBF-4128-BAEF-B4F7FC7616BE}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="UIHover" ID="{6AAD6C1F-2868-4EDA-9CA9-3C2308038DDB}" ShortID="745608545">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ui-hover" ID="{3ED77442-F2F5-4F69-BB7F-CB2487FBAF87}">
+							<Language>SFX</Language>
+							<AudioFile>UI\ui-hover.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1007111854"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="ui-hover" ID="{3ED77442-F2F5-4F69-BB7F-CB2487FBAF87}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="DoorOpenSlime" ID="{943C9847-A1AA-4DDF-AE5D-0AF1D773F76E}" ShortID="309443166">
+					<PropertyList>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="DoorOpenSlime" ID="{2917132D-5975-49DE-87BD-FAD0CB34B628}">
+							<Language>SFX</Language>
+							<AudioFile>DoorOpenSlime.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="291347773"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="DoorOpenSlime" ID="{2917132D-5975-49DE-87BD-FAD0CB34B628}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="UIClick" ID="{6B07A1D7-C4E3-45CB-8B04-34F388BF07EF}" ShortID="797972336">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="ui-confirmation" ID="{280F220A-6581-4E23-A544-AFED69C44FE2}">
+							<Language>SFX</Language>
+							<AudioFile>UI\ui-confirmation.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="702924850"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="ui-confirmation" ID="{280F220A-6581-4E23-A544-AFED69C44FE2}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

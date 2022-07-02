@@ -49,6 +49,29 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
+		<SoundBank Id="1551306167" Language="SFX" Hash="3948287601">
+			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
+			<ShortName>UI</ShortName>
+			<Path>UI.bnk</Path>
+			<IncludedEvents>
+				<Event Id="1615720664" Name="Play_UIClick" ObjectPath="\Events\Default Work Unit\Play_UIClick">
+					<IncludedMemoryFiles>
+						<File Id="702924850" Language="SFX">
+							<ShortName>UI\ui-confirmation.wav</ShortName>
+							<Path>SFX\UI\ui-confirmation_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2502251926" Name="Play_UIHover" ObjectPath="\Events\Default Work Unit\Play_UIHover">
+					<IncludedMemoryFiles>
+						<File Id="1007111854" Language="SFX">
+							<ShortName>UI\ui-hover.wav</ShortName>
+							<Path>SFX\UI\ui-hover_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+			</IncludedEvents>
+		</SoundBank>
 		<SoundBank Id="2385628198" Language="SFX" Hash="1974466695">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
@@ -379,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2287555459">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3319688554">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -450,7 +473,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="555205365">
+		<SoundBank Id="3909959462" Language="SFX" Hash="3907211052">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -468,6 +491,14 @@
 						<File Id="706795758" Language="SFX">
 							<ShortName>Crystal\cristal broken 3.wav</ShortName>
 							<Path>SFX\Crystal\cristal broken 3_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1196441153" Name="Play_DoorOpens" ObjectPath="\Events\Default Work Unit\Play_DoorOpens">
+					<IncludedMemoryFiles>
+						<File Id="291347773" Language="SFX">
+							<ShortName>DoorOpenSlime.wav</ShortName>
+							<Path>SFX\DoorOpenSlime_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
