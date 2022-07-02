@@ -16,6 +16,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _attack_indicator(nullptr)
 	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
+	, _geo(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
@@ -845,7 +846,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				if (enemy_controller->IsAlive() == false)
 				{
 					enemy_controller->GetParasite();
-					game_object->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+					if (_geo != nullptr) 
+					{
+						_geo->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
 					// Generate a random number for the weapon
