@@ -1,0 +1,67 @@
+prefab_name: Checkpoint
+name: Checkpoint
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [-10.1618814, 2.4368484, 19.2097759]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - !<animation>
+    type: 14
+    enabled: true
+    state_machine: 3647268182634800656
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: PillarCheckpoint
+    "'_player@GameObject*'": 0
+    "'_restart_position@float3'": [0, 0, 0]
+    "'_activation_range@float'": 5
+child:
+  - name: Root
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.00469001941, -0.944041729, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: MainJoint
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0.00469001941, 1.00207937, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+  - name: Floating_pilarGRP
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: floatingPilar_2
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 5306447057776503981
+            navigable: false
+            visible: true
+            material_id: 7555422350562069233

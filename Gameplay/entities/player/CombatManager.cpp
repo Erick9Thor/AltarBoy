@@ -657,7 +657,7 @@ void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float 
 	}
 }
 
-void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, float damage, float knockback, float3 knockback_dir)
+void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir)
 {
 	enemy->RegisterHit(damage, knockback_dir, knockback);
 }
