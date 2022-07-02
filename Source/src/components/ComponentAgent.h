@@ -20,7 +20,6 @@ namespace Hachiko
 		void SetMaxAcceleration(float new_max_acceleration);
 		void SetObstacleAvoidance(bool obstacle_avoidance);
         void SetAsPlayer(bool is_player);
-        void SetAsDead(bool is_dead);
 
 		float GetMaxSpeed() const { return max_speed; }
         float GetRadius() const{ return radius; }

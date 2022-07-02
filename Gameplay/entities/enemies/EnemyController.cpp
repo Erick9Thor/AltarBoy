@@ -81,12 +81,6 @@ void Hachiko::Scripting::EnemyController::OnStart()
 		_spawn_pos = transform->GetGlobalPosition();
 	}
 	animation->StartAnimating();
-
-	_obstacle = game_object->GetComponent<ComponentObstacle>();
-	if (_obstacle != nullptr)
-	{
-		_obstacle->Disable();
-	}
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
@@ -201,11 +195,7 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 	{
 		_state = BugState::DEAD;
 		animation->SendTrigger("isDead");
-		game_object->GetComponent<ComponentAgent>()->SetAsDead(true);
-		if (_obstacle != nullptr)
-		{
-			_obstacle->Enable();
-		}
+		game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
 	}
 }
 
@@ -323,11 +313,6 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 
 	if (_parasite) {
 		_parasite->SetActive(true);
-	}
-
-	if (_obstacle != nullptr)
-	{
-		game_object->AttemptRemoveComponent(_obstacle);
 	}
 
 	_parasite_dropped = true;
