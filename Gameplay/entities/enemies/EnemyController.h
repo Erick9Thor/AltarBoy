@@ -66,6 +66,11 @@ namespace Hachiko
             void DropParasite();
             void DestroyEntity();
 
+            bool IsAttacking() const
+            {
+                return _state == BugState::ATTACKING;
+            }
+
         private:
             Stats* _combat_stats;
             SERIALIZE_FIELD(int, _aggro_range);

@@ -183,7 +183,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 	float dist_to_player = _current_pos.Distance(_player_pos);
 
 	// TODO: Delete these after seminar and write a better version.
-	if (_state == BugState::ATTACKING)
+	if (IsAttacking())
 	{
 		_attack_animation_timer += Time::DeltaTime();
 
@@ -191,6 +191,10 @@ void Hachiko::Scripting::EnemyController::AttackController()
 		{
 			_attack_animation_timer = 0.0f;
 			_state = BugState::IDLE;
+		}
+		else
+		{
+			return;
 		}
 	}
 	else {
@@ -288,6 +292,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 	else
 	{
 		_player_controller->RegisterHit(_combat_stats->_attack_power);
+		transform->LookAtTarget(_player_pos);
+		Stop();
 	}
 	_attack_cooldown = _combat_stats->_attack_cd;
 }
