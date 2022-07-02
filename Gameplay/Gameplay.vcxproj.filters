@@ -516,6 +516,7 @@
     <ClInclude Include="entities\player\RoomTeleporter.h" />
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="PillarCheckpoint.h" />
     <ClInclude Include="CrystalPlatform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -784,6 +785,7 @@
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\FancyLights.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="PillarCheckpoint.cpp" />
     <ClCompile Include="CrystalPlatform.cpp" />
   </ItemGroup>
   <ItemGroup>

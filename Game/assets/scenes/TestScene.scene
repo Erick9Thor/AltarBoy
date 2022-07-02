@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9981, 1, 0.9981]
+        scale: [0.9979, 1, 0.9979]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -560,7 +560,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9981, 1, 0.9981]
+                        scale: [0.9979, 1, 0.9979]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -2322,7 +2322,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0.001, 0.0096, 0.994, -0.1085]
-                    scale: [0.9962, 0.9962, 1]
+                    scale: [0.9958, 0.9958, 1]
                 child:
                   - id: 7371629505677526311
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -2525,7 +2525,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-0.0011, 0.0096, 0.994, 0.1085]
-                    scale: [0.9962, 0.9962, 1]
+                    scale: [0.9958, 0.9958, 1]
                 child:
                   - id: 4481323456209268566
                     name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
@@ -2837,7 +2837,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1316, 764]
+            size: [1133, 630]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2964,7 +2964,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1316, 764]
+        size: [1133, 630]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -5976,7 +5976,7 @@ child:
                     type: 1
                     enabled: true
                     position: [-0.0198, 0.0304, -0.0131]
-                    rotation: [-0.1304, -0.3926, -0.0172, 0.9102]
+                    rotation: [-0.1304, -0.3926, -0.0172, 0.9103]
                     scale: [1, 1, 1]
               - id: 5111348615992612122
                 name: Jnt_CrystalStar_One_$AssimpFbx$_Translation
@@ -6259,3 +6259,83 @@ child:
             enabled: true
             obstacle_type: 1
             obstacle_size: [1, 1, 6]
+  - id: 9274007593867374722
+    name: Checkpoint
+    enabled: true
+    component:
+      - !<transform>
+        id: 10258211303903947772
+        type: 1
+        enabled: true
+        position: [-10.16, 2.437, 19.21]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - !<animation>
+        id: 9940239920740756017
+        type: 14
+        enabled: true
+        state_machine: 3647268182634800656
+      - !<script>
+        id: 17410804338203460458
+        type: 15
+        enabled: true
+        class_name: PillarCheckpoint
+        "'_player@GameObject*'": 7577865002841685786
+        "'_restart_position@float3'": [-8, 2, 20]
+        "'_activation_range@float'": 5
+    child:
+      - id: 5477312163886178780
+        name: Root
+        enabled: true
+        component:
+          - !<transform>
+            id: 16838532496225501137
+            type: 1
+            enabled: true
+            position: [-0.0047, -0.944, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 11580166481284099685
+            name: MainJoint
+            enabled: true
+            component:
+              - !<transform>
+                id: 254832003090837992
+                type: 1
+                enabled: true
+                position: [0.0047, 1.002, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+      - id: 14584876938287187725
+        name: Floating_pilarGRP
+        enabled: true
+        component:
+          - !<transform>
+            id: 10765717922781268482
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+        child:
+          - id: 862947750800756073
+            name: floatingPilar_2
+            enabled: true
+            component:
+              - !<transform>
+                id: 15844866451109498957
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 7106699274594971117
+                type: 2
+                enabled: true
+                mesh_id: 5306447057776503981
+                navigable: false
+                visible: true
+                material_id: 7555422350562069233
+                tint_color: [1, 1, 1, 1]
