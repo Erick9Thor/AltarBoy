@@ -841,7 +841,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 			{
 				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
 
-				if (enemy_controller->IsAlive() == false)
+				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
 					game_object->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f);

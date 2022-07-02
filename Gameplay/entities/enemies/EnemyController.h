@@ -31,6 +31,7 @@ namespace Hachiko
             bool IsAlive() { return _combat_stats->IsAlive(); };
             void RegisterHit(int player_atk, math::float3 direction, float knockback);
             void GetParasite();
+            bool ParasiteDropped() { return _parasite_dropped; };
 
             void CheckState();
 
@@ -79,6 +80,7 @@ namespace Hachiko
 
             SERIALIZE_FIELD(bool, _is_ranged_attack);
 
+            bool _parasite_dropped = false;
             bool _is_stunned = false;
             float _stun_time = 0.0f;
             float _acceleration = 0.0f;

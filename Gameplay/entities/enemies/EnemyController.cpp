@@ -329,6 +329,8 @@ void Hachiko::Scripting::EnemyController::DropParasite()
 	{
 		game_object->AttemptRemoveComponent(_obstacle);
 	}
+
+	_parasite_dropped = true;
 }
 
 void Hachiko::Scripting::EnemyController::GetParasite()
