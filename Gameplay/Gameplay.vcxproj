@@ -315,7 +315,10 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="misc\AudioManager.h" />
-    <ClInclude Include="PillarCheckpoint.h" />
+    <ClInclude Include="misc\DoorController.h" />
+    <ClInclude Include="misc\GauntletManager.h" />
+    <ClInclude Include="misc\LevelManager.h" />
+    <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -725,7 +728,10 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
-    <ClCompile Include="PillarCheckpoint.cpp" />
+    <ClCompile Include="misc\DoorController.cpp" />
+    <ClCompile Include="misc\GauntletManager.cpp" />
+    <ClCompile Include="misc\LevelManager.cpp" />
+    <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />

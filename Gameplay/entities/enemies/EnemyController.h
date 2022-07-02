@@ -44,6 +44,8 @@ namespace Hachiko
             void GetParasite();
 
             void CheckState();
+            void ResetEnemy();
+            void ResetEnemyPosition();
 
         private:
             void Attack();
@@ -78,6 +80,8 @@ namespace Hachiko
             ComponentAnimation* animation;
             
             ComponentAudioSource* _audio_source;
+
+            Quat _spawn_rot;
 
             math::float3 _player_pos;
             math::float3 _target_pos;
