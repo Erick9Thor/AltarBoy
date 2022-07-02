@@ -38,6 +38,8 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
+	//TODO: Get Player and CombatManager from Scene script once its merged
+	_combat_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("CombatManager")->GetComponent<CombatManager>();
 	//_attack_range = 1.5f;
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -92,41 +94,74 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	CheckState();
 	if (_state == BugState::SPAWNING)
 	{
-		spawning_time -= Time::DeltaTime();
-		if (spawning_time < 0.0f)
-		{
-			_state = BugState::IDLE;
-		}
+		SpawnController();
 		return;
 	}
 
 	if (!_combat_stats->IsAlive())
 	{
-		if (_state == BugState::PARASITE)
-		{
-			if (_current_lifetime >= _parasite_lifespan)
-			{
-				DestroyEntity();
-			}
-			else
-			{
-				_current_lifetime += Time::DeltaTime();
-			}
-		}
-		else
-		{
-			if (animation != nullptr && animation->IsAnimationStopped())
-			{
-				DropParasite();
-			}
-		}
+		DeathController();
+		return;
+	}
+
+	StunController();
+
+	if (_is_stunned)
+	{
 		return;
 	}
 
 	_player_pos = _player->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
-	float dist_to_player = _current_pos.Distance(_player_pos);
 
+	AttackController();
+
+	IdleController();
+}
+
+Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
+{
+	return _state;
+}
+
+const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
+{
+	return _combat_stats;
+}
+
+void Hachiko::Scripting::EnemyController::SpawnController()
+{
+	spawning_time -= Time::DeltaTime();
+	if (spawning_time < 0.0f)
+	{
+		_state = BugState::IDLE;
+	}
+}
+
+void Hachiko::Scripting::EnemyController::DeathController()
+{
+	if (_state == BugState::PARASITE)
+	{
+		if (_current_lifetime >= _parasite_lifespan)
+		{
+			DestroyEntity();
+		}
+		else
+		{
+			_current_lifetime += Time::DeltaTime();
+		}
+	}
+	else
+	{
+		if (animation != nullptr && animation->IsAnimationStopped())
+		{
+			DropParasite();
+		}
+	}
+}
+
+void Hachiko::Scripting::EnemyController::StunController()
+{
 	if (_is_stunned)
 	{
 		if (_stun_time > 0.0f)
@@ -141,12 +176,17 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		agc->SetMaxAcceleration(_acceleration);
 		agc->SetMaxSpeed(_speed);
 	}
+}
+
+void Hachiko::Scripting::EnemyController::AttackController()
+{
+	float dist_to_player = _current_pos.Distance(_player_pos);
 
 	// TODO: Delete these after seminar and write a better version.
 	if (_state == BugState::ATTACKING)
 	{
 		_attack_animation_timer += Time::DeltaTime();
-		
+
 		if (_attack_animation_timer >= _attack_animation_duration)
 		{
 			_attack_animation_timer = 0.0f;
@@ -158,11 +198,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}
 
 	// If an enemy is from a gautlet, it will always follow the player
-	if (!_is_from_gautlet && dist_to_player > _aggro_range)
-	{
-		//GoBack();
-	}
-	else
+	if (_is_from_gautlet || dist_to_player < _aggro_range)
 	{
 		if (dist_to_player <= _attack_range)
 		{
@@ -173,7 +209,10 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 			ChasePlayer();
 		}
 	}
+}
 
+void Hachiko::Scripting::EnemyController::IdleController()
+{
 	if (_state == BugState::IDLE)
 	{
 		_idle_cooldown -= Time::DeltaTime();
@@ -185,22 +224,12 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 
 	if (_state == BugState::PATROL)
 	{
-		if (_current_pos.Distance(_target_pos) > 0.3f) 
+		if (_current_pos.Distance(_target_pos) > 0.3f)
 		{
 			_state = BugState::IDLE;
 			_idle_cooldown = 2.0f;
 		}
 	}
-}
-
-Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
-{
-	return _state;
-}
-
-const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
-{
-	return _combat_stats;
 }
 
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
@@ -234,14 +263,14 @@ void Hachiko::Scripting::EnemyController::Attack()
 	_attack_cooldown -= Time::DeltaTime();
 	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
-	if (_is_ranged_attack)
-	{
-		transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
+	//if (_is_ranged_attack)
+	//{
+	//	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
 
-		// Make the enemy stop (quick fix)
-		ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-		agc->SetTargetPosition(game_object->GetTransform()->GetGlobalPosition());
-	}
+	//	// Make the enemy stop (quick fix)
+	//	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
+	//	agc->SetTargetPosition(game_object->GetTransform()->GetGlobalPosition());
+	//}
 
 	if (_attack_cooldown > 0.0f)
 	{
@@ -252,8 +281,8 @@ void Hachiko::Scripting::EnemyController::Attack()
 	
 	if (_is_ranged_attack) 
 	{
-		math::float3 forward = _player->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
-		forward = forward.Normalized();
+		//math::float3 forward = _player->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
+		//forward = forward.Normalized();
 		// Removed bullet
 	}
 	else

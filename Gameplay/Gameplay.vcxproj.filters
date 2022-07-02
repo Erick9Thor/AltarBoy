@@ -518,6 +518,7 @@
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="PillarCheckpoint.h" />
     <ClInclude Include="CrystalPlatform.h" />
+    <ClInclude Include="misc\Spawner.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -787,6 +788,7 @@
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="PillarCheckpoint.cpp" />
     <ClCompile Include="CrystalPlatform.cpp" />
+    <ClCompile Include="misc\Spawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

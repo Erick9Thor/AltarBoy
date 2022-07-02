@@ -12,7 +12,7 @@ namespace Hachiko
     {
         class AudioManager;
         class PlayerController;
-
+        class CombatManager;
         enum class BugState
         {
             INVALID,
@@ -49,6 +49,12 @@ namespace Hachiko
             void CheckState();
 
         private:
+            void SpawnController();
+            void DeathController();
+            void StunController();
+            void AttackController();
+            void IdleController();
+
             void Attack();
             void ChasePlayer();
             void GoBack();
@@ -82,7 +88,7 @@ namespace Hachiko
             PlayerController* _player_controller;
             ComponentTransform* transform;
             ComponentAnimation* animation;
-            
+            CombatManager* _combat_manager;
             ComponentAudioSource* _audio_source;
 
             math::float3 _player_pos;
