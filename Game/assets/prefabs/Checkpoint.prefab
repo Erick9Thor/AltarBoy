@@ -65,13 +65,13 @@ child:
             visible: true
             material_id: 7555422350562069233
             tint_color: [1, 1, 1, 1]
-  - name: Trigger
+  - name: SpawnPos
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [1.755, -2.437, -0.9206]
+        position: [11.25, -2.437, -0.9206]
         rotation: [-0.7071, 0, 0, 0.7071]
         scale: [0.39, 0.39, 0.39]
       - !<mesh_renderer>
