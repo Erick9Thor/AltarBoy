@@ -876,7 +876,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	if (_god_mode || _invulnerability_time_remaining > 0.0f)	return;
+	if (_god_mode || _invulnerability_time_remaining > 0.0f)
+	{
+	    return;
+	}
 
 	_invulnerability_time_remaining = _invulnerability_time;
 	_combat_stats->ReceiveDamage(damage_received);
