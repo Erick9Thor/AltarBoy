@@ -412,7 +412,10 @@ void Hachiko::Scripting::EnemyController::GetParasite()
 
 void Hachiko::Scripting::EnemyController::Spawn()
 {
-	_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time, true);
+	if (_enemy_body)
+	{
+		_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time, true);
+	}
 	_has_spawned = true;
 	_state = BugState::SPAWNING;
 }
