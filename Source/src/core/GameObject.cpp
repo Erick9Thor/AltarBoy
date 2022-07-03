@@ -486,6 +486,10 @@ void Hachiko::GameObject::CollectObjectsAndComponents(std::vector<const GameObje
 
 void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool meshes_only)
 {
+    // Save the enabled state of the game object:
+    bool is_active = node[GAME_OBJECT_ENABLED].IsDefined() ? node[GAME_OBJECT_ENABLED].as<bool>() : true;
+    SetActive(is_active);
+
     const YAML::Node components_node = node[COMPONENT_NODE];
     for (unsigned i = 0; i < components_node.size(); ++i)
     {
@@ -499,7 +503,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
             component_id = UUID::GenerateUID();
         }
 
-        bool active = components_node[i][COMPONENT_ENABLED].as<bool>();
+        bool component_is_active = components_node[i][COMPONENT_ENABLED].as<bool>();
         const auto type = static_cast<Component::Type>(components_node[i][COMPONENT_TYPE].as<int>());
 
         Component* component = nullptr;
@@ -531,7 +535,7 @@ void Hachiko::GameObject::Load(const YAML::Node& node, bool as_prefab, bool mesh
         {
             component->SetID(component_id);
             component->Load(components_node[i]);
-            active ? component->Enable() : component->Disable();
+            component_is_active ? component->Enable() : component->Disable();
         }
     }
 
