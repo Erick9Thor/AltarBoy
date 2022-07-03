@@ -1,0 +1,118 @@
+prefab_name: floatingpilar_mesh_anim
+name: RootNode
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - !<animation>
+    type: 14
+    enabled: true
+    state_machine: 0
+child:
+  - name: GEO
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: floatingPilar
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 1.52938092, -1.57673323e-08]
+            rotation: [-0.70710665, 0, 0, 0.707106888]
+            scale: [0.00454914011, 0.0162712354, 0.00732027926]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 1203891621113514067
+            navigable: false
+            visible: true
+            material_id: 6520207381227701875
+  - name: left_$AssimpFbx$_Translation
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-10.0009995, 1.56279707, 1.01226628]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: left_$AssimpFbx$_Rotation
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, -0.70710665, 0, 0.707106888]
+            scale: [0.999999881, 1, 0.999999881]
+        child:
+          - name: left_$AssimpFbx$_PostRotation
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0.70710665, 0, 0.707106888]
+                scale: [0.999999881, 1, 0.999999881]
+            child:
+              - name: left
+                enabled: true
+                component:
+                  - !<transform>
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0]
+                    rotation: [0, 0, 0, 1]
+                    scale: [1, 1, 1]
+  - name: Root
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0.00407965994, 0.194608375, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Pilar
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0.0118159503, 1.64088953, 0.0536818765]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+  - name: Ctrl_Pilar
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 1.69776618, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: Control_Pilar
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0.137731686, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]

@@ -2,8 +2,8 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
-#include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
+#include "misc/LevelManager.h"
 #include "Gameplay.h"
 
 #include <queue>
@@ -15,10 +15,26 @@ class ComponentMeshRenderer;
 namespace Scripting
 {
 class PlayerCamera;
+
+enum class PlayerState
+{
+	INVALID,
+	IDLE,
+	WALKING,
+	MELEE_ATTACKING,
+	RANGED_ATTACKING,
+	DASHING,
+	FALLING,
+	STUNNED,
+	DIE,
+};
+
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
 
+	friend class LevelManager;
+	
 	enum class WeaponUsed
 	{
 		RED = 0,
@@ -130,7 +146,7 @@ private:
 	void RecieveKnockback(const math::float3 direction);
 
 	void CheckState();
-	void ResetPlayer();
+	void ResetPlayer(float3 spawn_pos);
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
@@ -145,6 +161,7 @@ private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 	SERIALIZE_FIELD(GameObject*, _goal);
+	SERIALIZE_FIELD(GameObject*, _geo);
 
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
@@ -231,6 +248,8 @@ private:
 	
 	GameObject* _enemies;
 	GameObject* _terrain;
+
+	LevelManager* _level_manager;
 
 };
 } // namespace Scripting

@@ -1,0 +1,60 @@
+prefab_name: floatingPilar_mesh
+name: RootNode
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [0, 0, 0]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - !<animation>
+    type: 14
+    enabled: true
+    state_machine: 0
+child:
+  - name: Root
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.00469001941, -0.944041729, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: MainJoint
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0.00469001941, 1.172894, 0]
+            rotation: [0, -0.0839972645, 0, 0.996465981]
+            scale: [1, 1, 1]
+  - name: Floating_pilarGRP
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - name: floatingPilar_2
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.697330117, 0.117178254, 0.117178239, 0.697330058]
+            scale: [0.00299211987, 0.00287273992, 0.00485647982]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 5306447057776503981
+            navigable: false
+            visible: true
+            material_id: 7555422350562069233

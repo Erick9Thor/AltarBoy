@@ -1,7 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
 #include "entities/Stats.h"
-#include "entities/enemies/BugState.h"
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Sounds.h"
@@ -43,16 +42,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-	//_attack_range = 1.5f;
-	_combat_stats = game_object->GetComponent<Stats>();
-	_combat_stats->_attack_power = 1;
-	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	_combat_stats->_move_speed = 4;
-	_combat_stats->_max_hp = 2;
-	_combat_stats->_current_hp = _combat_stats->_max_hp;
-	_stun_time = 0.0f;
-	_is_stunned = false;
-
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
 	if (_enemy_body)
@@ -79,8 +68,12 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	if (_spawn_is_initial)
 	{
 		_spawn_pos = transform->GetGlobalPosition();
+		_spawn_rot = transform->GetGlobalRotation();
 	}
 	animation->StartAnimating();
+
+	//_attack_range = 1.5f;
+	ResetEnemy();
 }
 
 void Hachiko::Scripting::EnemyController::OnUpdate()
@@ -161,7 +154,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 	}
 }
 
-BugState Hachiko::Scripting::EnemyController::GetState() const
+Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
 {
 	return _state;
 }
@@ -174,7 +167,7 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
 {
 	_combat_stats->ReceiveDamage(damage);
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f);
+	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3f, true);
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
@@ -287,7 +280,7 @@ void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
-	SceneManagement::Destroy(game_object);
+	//SceneManagement::Destroy(game_object);
 }
 
 void Hachiko::Scripting::EnemyController::DropParasite()
@@ -364,4 +357,24 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	default:
 		break;
 	}
+}
+
+void Hachiko::Scripting::EnemyController::ResetEnemy()
+{
+	_combat_stats = game_object->GetComponent<Stats>();
+	_combat_stats->_attack_power = 1;
+	_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
+	_combat_stats->_move_speed = 4;
+	_combat_stats->_max_hp = 2;
+	_combat_stats->_current_hp = _combat_stats->_max_hp;
+	_stun_time = 0.0f;
+	_is_stunned = false;
+	_state = BugState::IDLE;
+	animation->SendTrigger("idle");
+}
+
+void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
+{
+	transform->SetGlobalPosition(_spawn_pos);
+	transform->SetGlobalRotation(_spawn_rot);
 }
