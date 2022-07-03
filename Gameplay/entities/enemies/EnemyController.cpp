@@ -34,7 +34,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager_game_object(nullptr)
 	, _already_in_combat(false)
 	, _is_from_gautlet(false)
-	, _idle_cooldown(2.0f)
 {
 }
 
@@ -195,7 +194,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 		{
 			_attack_animation_timer = 0.0f;
 			_state = BugState::IDLE;
-			_idle_cooldown = 2.0f;
+			_current_idle_cooldown = _idle_cooldown;
 		}
 	}
 	else {
@@ -220,8 +219,8 @@ void Hachiko::Scripting::EnemyController::IdleController()
 {
 	if (_state == BugState::IDLE)
 	{
-		_idle_cooldown -= Time::DeltaTime();
-		if (_idle_cooldown <= 0.0f)
+		_current_idle_cooldown -= Time::DeltaTime();
+		if (_current_idle_cooldown <= 0.0f)
 		{
 			PatrolMovement();
 		}
@@ -232,7 +231,7 @@ void Hachiko::Scripting::EnemyController::IdleController()
 		if (_current_pos.Distance(_target_pos) > 0.3f)
 		{
 			_state = BugState::IDLE;
-			_idle_cooldown = 2.0f;
+			_current_idle_cooldown = _idle_cooldown;
 		}
 	}
 }

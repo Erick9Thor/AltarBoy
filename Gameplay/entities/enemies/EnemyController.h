@@ -118,6 +118,7 @@ namespace Hachiko
             float _speed = 0.0f;
             float _parasite_lifespan = 5.0f;
             float _current_lifetime = 0.0f;
+            float _current_idle_cooldown = 0.0f;
             float3 _knockback_pos = float3::zero;
             float _attack_current_delay = 0.f;
             float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
