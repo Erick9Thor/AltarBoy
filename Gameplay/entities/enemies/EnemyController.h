@@ -79,6 +79,7 @@ namespace Hachiko
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(int, _attack_range);
             SERIALIZE_FIELD(float, _attack_delay);
+            SERIALIZE_FIELD(float, _idle_cooldown);
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
             SERIALIZE_FIELD(GameObject*, _player);
@@ -105,7 +106,6 @@ namespace Hachiko
             math::float3 _target_pos;
             math::float3 _current_pos;
             float _attack_cooldown;
-            float _idle_cooldown;
 
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);

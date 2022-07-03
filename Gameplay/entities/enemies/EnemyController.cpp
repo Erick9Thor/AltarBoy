@@ -19,6 +19,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _aggro_range(4)
 	, _attack_range(1.5f)
 	, _attack_delay(0.3f)
+	, _idle_cooldown(2.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
@@ -41,12 +42,9 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	//TODO: Get Player and CombatManager from Scene script once its merged
 	_combat_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("CombatManager")->GetComponent<CombatManager>();
-	//_attack_range = 1.5f;
+
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
-	//_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	//_combat_stats->_move_speed = 4;
-	//_combat_stats->_max_hp = 2;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
@@ -268,15 +266,6 @@ void Hachiko::Scripting::EnemyController::Attack()
 		return;
 	}
 
-	//if (_is_ranged_attack)
-	//{
-	//	transform->LookAtTarget(_player->GetTransform()->GetGlobalPosition());
-
-	//	// Make the enemy stop (quick fix)
-	//	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
-	//	agc->SetTargetPosition(game_object->GetTransform()->GetGlobalPosition());
-	//}
-	// 
 	if (_attack_current_delay <= 0.0f || _previous_state != BugState::ATTACKING)
 	{
 		_attack_current_delay = _attack_delay;
@@ -289,31 +278,22 @@ void Hachiko::Scripting::EnemyController::Attack()
 	{
 		return;
 	}
-	
-	if (_is_ranged_attack) 
-	{
-		//math::float3 forward = _player->GetTransform()->GetGlobalPosition() - game_object->GetTransform()->GetGlobalPosition();
-		//forward = forward.Normalized();
-		// Removed bullet
-	}
-	else
-	{
-		CombatManager::AttackStats attack_stats;
-		attack_stats.damage = _combat_stats->_attack_power;
-		attack_stats.knockback_distance = 0.0f;
-		attack_stats.width = 4.f;
-		attack_stats.range = _attack_range * 1.1f; // a bit bigger than its attack activation range
-		attack_stats.type = CombatManager::AttackType::RECTANGLE;
 
-		Debug::DebugDraw(_combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack_stats.range), attack_stats), float3(1.0f, 1.0f, 0.0f));
-		
-		_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
-		
-		transform->LookAtTarget(_player_pos);
-		Stop();
+	CombatManager::AttackStats attack_stats;
+	attack_stats.damage = _combat_stats->_attack_power;
+	attack_stats.knockback_distance = 0.0f;
+	attack_stats.width = 4.f;
+	attack_stats.range = _attack_range * 1.1f; // a bit bigger than its attack activation range
+	attack_stats.type = CombatManager::AttackType::RECTANGLE;
 
-		_attack_cooldown = _combat_stats->_attack_cd;
-	}
+	Debug::DebugDraw(_combat_manager->CreateAttackHitbox(GetMeleeAttackOrigin(attack_stats.range), attack_stats), float3(1.0f, 1.0f, 0.0f));
+
+	_combat_manager->EnemyMeleeAttack(GetMeleeAttackOrigin(attack_stats.range), attack_stats);
+
+	transform->LookAtTarget(_player_pos);
+	Stop();
+
+	_attack_cooldown = _combat_stats->_attack_cd;
 
 }
 
@@ -483,9 +463,6 @@ void Hachiko::Scripting::EnemyController::CheckState()
 	case BugState::PATROL:
 		animation->SendTrigger("isMoving");
 		break;
-	//case BugState::SPAWNING:
-	//	  animation->SendTrigger("isSpawning");
-	//	  break;
 	case BugState::INVALID:
 	default:
 		break;
