@@ -587,7 +587,6 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 
 bool Hachiko::Scripting::CombatManager::ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats)
 {
-
 	if (!_player)
 	{
 		return false;
