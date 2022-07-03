@@ -94,7 +94,7 @@ void Hachiko::ComponentBillboard::DrawGui()
     if (ImGuiUtils::CollapsingHeader(game_object, this, "Billboard"))
     {
         const char* particle_render_modes[] = {"Additive", "Transparent"};
-        const char* billboards[] = {"Normal", "Vertical", "Horizontal", "Stretch"};
+        const char* billboards[] = {"Normal", "Vertical", "Horizontal", "Stretch", "World"};
         ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
         ImGui::Indent();
         if (CollapsingHeader("Parameters", &parameters_section, Widgets::CollapsibleHeaderType::Icon, ICON_FA_BURST))
@@ -134,6 +134,8 @@ void Hachiko::ComponentBillboard::DrawGui()
                 properties.render_mode = static_cast<ParticleSystem::ParticleRenderMode>(render_mode);
                 App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
+
+            ImGui::Checkbox("Orientate to direction", &properties.orientate_to_direction); // AAAAAAAAAAAAAAAAAAAAAAAAA
 
             Widgets::DragFloatConfig alpha_config;
             alpha_config.format = "%.2f";
@@ -635,10 +637,26 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
         case ParticleSystem::ParticleOrientation::NORMAL:
         {
             Frustum* frustum = camera->GetFrustum();
-            float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
-            float4x4 global_model_matrix = transform->GetGlobalMatrix();
-            model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
-            model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotate_part * rotation_matrix, scale);
+            if (properties.orientate_to_direction)
+            {
+                float3 forward = transform->GetGlobalRotation().WorldZ();
+                float3 right = Cross(-frustum->Front(), forward).Normalized();
+                forward = Cross(right, -frustum->Front()).Normalized();
+
+                float3x3 new_rotation;
+                new_rotation.SetCol(1, right);
+                new_rotation.SetCol(2, -frustum->Front());
+                new_rotation.SetCol(0, forward);
+
+                model_matrix = float4x4::FromTRS(position, new_rotation, scale);
+            }
+            else
+            {
+                float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
+                float4x4 global_model_matrix = transform->GetGlobalMatrix();
+                model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
+                model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotate_part * rotation_matrix, scale);
+            }
             break;
         }
         case ParticleSystem::ParticleOrientation::HORIZONTAL:
@@ -669,6 +687,11 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
             float3 camera_direction = (float3(camera_position.x, position.y, camera_position.z) - position).Normalized();
             model_matrix = float4x4::LookAt(float3::unitZ, camera_direction, float3::unitY, float3::unitY);
             model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotation_matrix, scale);
+            break;
+        }
+        case ParticleSystem::ParticleOrientation::WORLD:
+        {
+            model_matrix = game_object->GetTransform()->GetGlobalMatrix();
             break;
         }
     }
