@@ -112,7 +112,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 7175973830034604660
                 type: 20
                 enabled: true
@@ -122,7 +121,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -1311,7 +1310,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 10849076995603293050
                 type: 20
                 enabled: true
@@ -1321,7 +1319,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -2510,7 +2508,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 11315985336320508720
                 type: 20
                 enabled: true
@@ -2520,7 +2517,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -3709,7 +3706,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 8411897412414165789
                 type: 20
                 enabled: true
@@ -4318,7 +4314,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 4933922320860633641
                 type: 20
                 enabled: true
@@ -4328,7 +4323,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -5517,7 +5512,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 11190739134947408478
                 type: 20
                 enabled: true
@@ -5527,7 +5521,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -6716,7 +6710,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 6818601220679016815
                 type: 20
                 enabled: true
@@ -6726,7 +6719,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -7915,7 +7908,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 6166562751473323128
                 type: 20
                 enabled: true
@@ -8524,7 +8516,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 7392475890301603863
                 type: 20
                 enabled: true
@@ -8534,7 +8525,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -9723,7 +9714,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 11661690627182358617
                 type: 20
                 enabled: true
@@ -9733,7 +9723,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -10922,7 +10912,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 15208408733818746371
                 type: 20
                 enabled: true
@@ -10932,7 +10921,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -12133,7 +12122,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 484522878455405761
                 type: 20
                 enabled: true
@@ -12143,7 +12131,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -13332,7 +13320,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 4073189805139416453
                 type: 20
                 enabled: true
@@ -13342,7 +13329,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -14531,7 +14518,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 9412106404508333103
                 type: 20
                 enabled: true
@@ -14541,7 +14527,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -15742,7 +15728,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 13335297551963334527
                 type: 20
                 enabled: true
@@ -15752,7 +15737,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -16941,7 +16926,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 17014922951776359851
                 type: 20
                 enabled: true
@@ -16951,7 +16935,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -18140,7 +18124,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 11828546522065238094
                 type: 20
                 enabled: true
@@ -18150,7 +18133,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -19339,7 +19322,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 1025617234449900379
                 type: 20
                 enabled: true
@@ -19349,7 +19331,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -20538,7 +20520,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 4648214418732474242
                 type: 20
                 enabled: true
@@ -21147,7 +21128,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 16145024246886843638
                 type: 20
                 enabled: true
@@ -21157,7 +21137,7 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 3
+                "'_attack_range@int'": 1
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 6175393298541025425
@@ -22346,7 +22326,6 @@ child:
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
-                is_player: false
               - id: 7046705983172530988
                 type: 20
                 enabled: true
@@ -61222,19 +61201,19 @@ child:
             visible: true
             material_id: 4402598573736767734
             tint_color: [1, 1, 1, 1]
-  - id: 9236950464493996757
+  - id: 8002262312438975456
     name: LevelManager
     enabled: true
     component:
       - !<transform>
-        id: 16261704772467180744
+        id: 13573853879419289838
         type: 1
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
       - !<script>
-        id: 461778716685280607
+        id: 17504927595294855026
         type: 15
         enabled: true
         class_name: LevelManager
