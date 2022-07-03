@@ -153,6 +153,15 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
+	if (!_combat_stats->IsAlive())
+	{
+		//SceneManagement::SwitchScene(Scenes::GAME);
+		HE_LOG("YOU DIED");
+		_state = PlayerState::IDLE; // this should change
+		_level_manager->Respawn(this);
+
+		game_object->GetComponent<ComponentTransform>()->SetGlobalPosition(_player_position);
+	}
 	
 	CheckState();	
 	
@@ -160,12 +169,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	if (_combat_stats->_current_hp <= 0)
-	{
-		//SceneManagement::SwitchScene(Scenes::GAME);
-		HE_LOG("YOU DIED");
-		_level_manager->Respawn(this);
-	}
 
 	if (_god_mode_trigger)
 	{
@@ -181,8 +184,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Run movement simulation
 	MovementController();
-
-
 
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
@@ -887,6 +888,11 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 	
 	if(is_heavy)
 	{
+		if (IsDashing()) 
+		{
+			_dash_trail->SetActive(false);
+			_show_dashtrail = false;
+		}
 		RecieveKnockback(direction);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
 	}
