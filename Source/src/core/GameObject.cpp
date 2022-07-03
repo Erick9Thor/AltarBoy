@@ -742,3 +742,14 @@ void Hachiko::GameObject::SetVisible(bool v, bool include_children)
         child->SetVisible(v, include_children);
     }
 }
+
+const OBB* Hachiko::GameObject::GetFirstMeshRendererOBB() const
+{
+    std::vector<ComponentMeshRenderer*> comp_mesh_renderer = GetComponents<ComponentMeshRenderer>();
+
+    if (!comp_mesh_renderer.empty())
+    {
+        return &comp_mesh_renderer[0]->GetOBB();
+    }
+    return nullptr;
+}

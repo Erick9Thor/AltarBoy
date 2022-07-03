@@ -317,6 +317,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
+    <ClInclude Include="misc\LaserController.h" />
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
@@ -730,6 +731,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
+    <ClCompile Include="misc\LaserController.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />

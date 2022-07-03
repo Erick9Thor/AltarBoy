@@ -216,6 +216,8 @@ namespace Hachiko
         void ChangeColor(float4 color, float time, bool include_children = false);
         void SetVisible(bool v, bool include_children = false);
 
+        const OBB* GetFirstMeshRendererOBB() const;
+
     public:
         std::string name;
         Scene* scene_owner = nullptr;
