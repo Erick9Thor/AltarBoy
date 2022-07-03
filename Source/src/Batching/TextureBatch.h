@@ -59,17 +59,12 @@ namespace Hachiko
 
         void BuildBatch(unsigned component_count);
 
-        void Draw(const Program* program, const std::vector<const ComponentMeshRenderer*>& components, bool use_first_segment, unsigned component_count);
+        void UpdateBatch(int segment, const std::vector<const ComponentMeshRenderer*>& components, unsigned component_count);
+        void BindBatch(int segment, const Program* program, unsigned component_count);
 
         void ImGuiWindow();
 
     private:
-        void GenerateMaterials(const std::vector<const ComponentMeshRenderer*>& components);
-        void UpdateBuffers(bool use_first_segment, unsigned component_count);
-
-        void BindTextures(const Program* program);
-        void BindBuffers(bool use_first_segment, int component_count);
-
         bool EqualLayout(const TextureArray& texuteLayout, const ResourceTexture& texture);
 
         std::map<const ResourceTexture*, TexAddress*> resources; // contains all the Texture resources and their address
