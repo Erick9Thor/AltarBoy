@@ -494,11 +494,6 @@ void Hachiko::Scripting::EnemyController::CheckState()
 
 void Hachiko::Scripting::EnemyController::ResetEnemy()
 {
-	//_combat_stats = game_object->GetComponent<Stats>();
-	//_combat_stats->_attack_power = 1;
-	//_combat_stats->_attack_cd = _is_ranged_attack ? 2.0f : 1.0f;
-	//_combat_stats->_move_speed = 4;
-	//_combat_stats->_max_hp = 2;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
 	_is_stunned = false;
