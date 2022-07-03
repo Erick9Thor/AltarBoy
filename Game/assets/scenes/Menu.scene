@@ -48,7 +48,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1800, 1005]
+        size: [1904, 1083]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -89,8 +89,8 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1804, 1226]
-            scale: [1, 1.2]
+            size: [1904, 1083]
+            scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
             anchor: [0.5, 0.5]
@@ -110,6 +110,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: true
       - id: 12216311029793036440
         name: button_play
         enabled: true
@@ -125,11 +126,11 @@ child:
             id: 11573762086171599171
             type: 10
             enabled: true
-            position: [0, 0, 0]
+            position: [400, 90, 0]
             size: [249, 79]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
-            pivot: [0, 0]
+            pivot: [0.5, 0.5]
             anchor: [0, 0]
           - !<canvas_renderer>
             id: 6340919664879631665
@@ -151,6 +152,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 5517220911348165701
         name: button_settings
         enabled: true
@@ -166,12 +168,12 @@ child:
             id: 12485261860033650679
             type: 10
             enabled: true
-            position: [-154.8, -300, 0]
+            position: [775, 90, 0]
             size: [449, 79]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [0, 0]
           - !<canvas_renderer>
             id: 13961633755337133385
             type: 9
@@ -192,6 +194,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 5507085151890769082
         name: button_credits
         enabled: true
@@ -207,12 +210,12 @@ child:
             id: 4231912232200162890
             type: 10
             enabled: true
-            position: [165, -300, 0]
+            position: [-770, 90, 0]
             size: [426, 82]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [1, 0]
           - !<canvas_renderer>
             id: 16549682737339658831
             type: 9
@@ -233,6 +236,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 16104174435079696891
         name: button_quit
         enabled: true
@@ -248,12 +252,12 @@ child:
             id: 12612247618848250662
             type: 10
             enabled: true
-            position: [430, -300, 0]
+            position: [-400, 90, 0]
             size: [259, 84]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
-            anchor: [0.5, 0.5]
+            anchor: [1, 0]
           - !<canvas_renderer>
             id: 7984435262585265924
             type: 9
@@ -274,6 +278,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 15157299374494226041
         name: credits
         enabled: false
@@ -311,6 +316,7 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 7162107976364272364
         name: button_back
         enabled: true
@@ -352,9 +358,10 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: false
       - id: 831669987700788447
         name: settings
-        enabled: false
+        enabled: true
         component:
           - !<transform>
             id: 7997944686208799566
@@ -368,7 +375,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1191, 174]
+            size: [1904, 1083]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -381,7 +388,7 @@ child:
             id: 4807624678484144569
             type: 11
             enabled: true
-            image_id: 927562492423652741
+            image_id: 18244565694302770990
             hover_image_id: 0
             image_color: [1, 1, 1, 1]
             hover_image_color: [1, 1, 1, 1]
@@ -389,3 +396,4 @@ child:
             image_x_tiles: 1
             image_y_tiles: 1
             image_tiles_per_second: 1
+            fill_window: true
