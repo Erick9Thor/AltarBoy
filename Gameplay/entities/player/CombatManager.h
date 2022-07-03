@@ -90,10 +90,10 @@ namespace Hachiko
             bool PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // Evaluate for all units
-            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player);
             bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
             bool ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, bool is_from_player);
             bool ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
             bool ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats);
 
@@ -107,7 +107,7 @@ namespace Hachiko
 
             // What to do when system wants to register a hit
             void HitObstacle(GameObject* obstacle, float damage);
-            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero);
+            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero, bool is_from_player = false);
             void HitPlayer(int damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations

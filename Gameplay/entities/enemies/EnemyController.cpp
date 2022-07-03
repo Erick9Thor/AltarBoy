@@ -186,6 +186,9 @@ void Hachiko::Scripting::EnemyController::AttackController()
 	_attack_cooldown -= Time::DeltaTime();
 	_attack_cooldown = _attack_cooldown < 0.0f ? 0.0f : _attack_cooldown;
 
+	_enraged -= Time::DeltaTime();
+	_enraged = _enraged < 0.0f ? 0.0f : _enraged;
+
 	if (IsAttacking())
 	{
 		_attack_animation_timer += Time::DeltaTime();
@@ -202,7 +205,7 @@ void Hachiko::Scripting::EnemyController::AttackController()
 	}
 
 	// If an enemy is from a gautlet, it will always follow the player
-	if (_is_from_gautlet || dist_to_player < _aggro_range)
+	if (_is_from_gautlet || dist_to_player < _aggro_range || _enraged > 0.0f)
 	{
 		if (dist_to_player <= _attack_range)
 		{
@@ -236,11 +239,16 @@ void Hachiko::Scripting::EnemyController::IdleController()
 	}
 }
 
-void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
 {
 	if (_state == BugState::SPAWNING)
 	{
 		return; // Inmune while spawning
+	}
+
+	if (is_from_player)
+	{
+		_enraged = 5.0f;
 	}
 
 	_combat_stats->ReceiveDamage(damage);

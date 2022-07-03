@@ -56,7 +56,7 @@ bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin,
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
 	bool hit = false;
-	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats, true);
 	hit = hit || ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 	return hit;
 }
@@ -66,7 +66,7 @@ bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& or
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
 	bool hit = false;
 
-	hit = hit || ProcessAgentsOBB(hitbox, attack_stats);
+	hit = hit || ProcessAgentsOBB(hitbox, attack_stats, true);
 	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
 	
 	return hit;
@@ -182,7 +182,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 		if (hit_enemy && hit_enemy->IsAlive())
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
-			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir);
+			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true);
 			return true;
 		}
 	}
@@ -427,7 +427,7 @@ void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 	pack->SetActive(false);
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
@@ -464,7 +464,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 				{
 					// TODO: Add Knockback
 					hit = true;
-					HitEnemy(enemy_controller, attack_stats.damage);
+					HitEnemy(enemy_controller, attack_stats.damage, is_from_player);
 				}
 			}
 		}
@@ -509,7 +509,7 @@ bool Hachiko::Scripting::CombatManager::ProcessPlayerCone(const float3& attack_s
 	return false;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats)
+bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
@@ -715,9 +715,9 @@ void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float 
 	}
 }
 
-void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir)
+void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player)
 {
-	enemy->RegisterHit(damage, knockback_dir, knockback);
+	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player);
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)
