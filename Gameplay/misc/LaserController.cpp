@@ -109,7 +109,7 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision()
 
 	if (laser_obb->Intersects(hitbox, &intersection_point))
 	{
-		ComponentTransform* transform = _laser->GetComponent<ComponentTransform>();
+		/*ComponentTransform* transform = _laser->GetComponent<ComponentTransform>();
 		float3 point_in_line = transform->GetGlobalPosition();
 		float3 line = transform->GetFront();
 		float torque = line.x * (intersection_point.z - point_in_line.z) - line.y * (intersection_point.x - point_in_line.x);
@@ -120,7 +120,9 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision()
 			knockback *= -1;
 		}
 
-		_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback);
+		_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback);*/
+
+		_player->GetComponent<PlayerController>()->RegisterHit(_damage);
 	}
 }
 
