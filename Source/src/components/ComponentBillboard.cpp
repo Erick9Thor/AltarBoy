@@ -135,7 +135,7 @@ void Hachiko::ComponentBillboard::DrawGui()
                 App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
 
-            ImGui::Checkbox("Orientate to direction", &properties.orientate_to_direction); // AAAAAAAAAAAAAAAAAAAAAAAAA
+            Widgets::Checkbox("Orientate to direction", &properties.orientate_to_direction);
 
             Widgets::DragFloatConfig alpha_config;
             alpha_config.format = "%.2f";
