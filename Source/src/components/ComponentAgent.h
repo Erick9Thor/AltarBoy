@@ -52,7 +52,6 @@ namespace Hachiko
 		bool show_debug_info = false;
 
 		bool is_player = false;
-        bool is_dead = false;
 	};
 }
 
