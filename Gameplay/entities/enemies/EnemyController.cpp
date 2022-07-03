@@ -75,7 +75,6 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 void Hachiko::Scripting::EnemyController::OnStart()
 {
-
 	if (_enemy_body != nullptr)
 	{
 		_enemy_body->SetActive(true);
