@@ -65,6 +65,7 @@ namespace Hachiko
 
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
+            SERIALIZE_FIELD(GameObject*, _geo);
             SERIALIZE_FIELD(GameObject*, _player);
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
