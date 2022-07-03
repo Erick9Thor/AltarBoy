@@ -1,5 +1,6 @@
 #include "core/hepch.h"
-#include "RandomUtil.h"
+#include "utils/RandomUtilDefinitions.h"
+#include "utils/RandomUtil.h"
 
 float Hachiko::RandomUtil::Random()
 {
