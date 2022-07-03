@@ -5,8 +5,8 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-0, -0.3948, -0.446]
-    rotation: [0, 0.7071, 0.7071, -0]
+    position: [0, -0.3948, -0.446]
+    rotation: [0, 0.7071, 0.7071, 0]
     scale: [15.26, 1.41, 5.609]
   - !<mesh_renderer>
     type: 2
@@ -22,19 +22,19 @@ component:
     obstacle_type: 2
     obstacle_size: [12, 5, 1]
 child:
-  - name: DoorMesh
+  - name: ClosedDoor
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0, 0.609]
+        position: [-0, -0.0022, 0.648]
         rotation: [0.5, 0.5, 0.5001, 0.5]
-        scale: [0.0071, 0.0018, 0.0007]
+        scale: [0.2979, 0.0749, 0.0275]
       - !<mesh_renderer>
         type: 2
         enabled: true
-        mesh_id: 867735284092474584
+        mesh_id: 15685009350389098136
         navigable: false
         visible: true
         material_id: 6339253229162858782
