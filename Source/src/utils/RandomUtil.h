@@ -23,4 +23,23 @@ namespace Hachiko
         // (values.x; values.y) if x > y returns x
         HACHIKO_API static float RandomBetween(const float2& values);
     };
+
+    class HACHIKO_API PerlinNoise1D
+    {
+    public:
+        PerlinNoise1D();
+        PerlinNoise1D(unsigned int seed);
+
+        float Random(float previous);
+        float RandomRange(float previous, float min, float max);
+        
+    private:
+        float Fade(float t);
+        float Gradient(float value);
+        void Initialize();
+        
+    private:
+        unsigned int _seed;
+        std::vector<int> _permutations;
+    };
 }
