@@ -32,9 +32,11 @@ namespace Hachiko
 
         void DebugMenu();
 
+        static const int max_segments = 2;
+
     private:
         void ShowDebugMenuForBatches(const std::vector<GeometryBatch*>& batches) const;
-        void DrawSingleBatch(GeometryBatch* geometry_batch, const Program* program, bool use_first_segment) const;
+        void DrawSingleBatch(GeometryBatch* geometry_batch, const Program* program, int segment) const;
 
     private:
         unsigned material_ssbo;
@@ -44,7 +46,7 @@ namespace Hachiko
         std::vector<GeometryBatch*> geometry_batches_transparent {};
 
         // Indicates if the first or the second segment of the persistent buffers are begin used
-        bool use_first_segment_opaque = true;
-        bool use_first_segment_transparent = true;
+        int opaque_buffers_segment = 0;
+        int transparent_buffers_segment = 0;
     };
 } // namespace Hachiko
