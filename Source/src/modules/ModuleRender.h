@@ -121,6 +121,18 @@ namespace Hachiko
         void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
             unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
             unsigned width, unsigned height, const Program* program) const;
+            
+        static void EnableBlending(GLenum blend_func_sfactor = GL_SRC_ALPHA, GLenum blend_func_dfactor = GL_ONE_MINUS_SRC_ALPHA, GLenum blend_equation = GL_FUNC_ADD) 
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(blend_func_sfactor, blend_func_dfactor);
+            glBlendEquation(blend_equation);
+        }
+
+        static void DisableBlending()
+        {
+            glDisable(GL_BLEND);
+        }
     
     private:
         void GenerateFrameBuffer();

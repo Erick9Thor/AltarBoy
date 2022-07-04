@@ -85,8 +85,6 @@
 #define SM_TRANSITION_TRIGGER "transition_trigger"
 #define SM_TRANSITION_BLEND "transition_blend"
 
-
-
 //////////////////////////
 //						//
 // Importer extensions  //
@@ -241,6 +239,7 @@
 #define IMAGE_X_TILES "image_x_tiles"
 #define IMAGE_Y_TILES "image_y_tiles"
 #define IMAGE_TILES_PER_SEC "image_tiles_per_second"
+#define IMAGE_FILL_WINDOW "fill_window"
 
 // Component Text
 #define FONT_ID "font_id"
@@ -264,6 +263,7 @@
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
 #define AGENT_RADIUS "radius"
+#define AGENT_IS_PLAYER "is_player"
 
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"
@@ -272,6 +272,10 @@
 #define ANIMATION_CYCLES "animation_cycles"
 #define ANIMATION_SECTION "animation_section"
 #define COLOR_SECTION "color_section"
+#define SIZE_SECTION "size_section"
+#define SIZE_OVERTIME "size_over_time"
+#define ROTATION_SECTION "rotation_section"
+#define ROTATION_OVERTIME "rotation_over_time"
 #define START_DELAY "start_delay"
 #define START_SIZE "start_size"
 #define START_ROTATION "start_rotation"
@@ -302,6 +306,8 @@
 // emission
 #define PARTICLE_EMISSION "emission"
 #define RATE "rate"
+#define RATE_BURST "rate_burst"
+#define BURST "burst"
 // emitter
 #define EMITTER "emitter_shape"
 #define EMITTER_TYPE "type"
@@ -323,6 +329,9 @@
 #define SIZE "size"
 #define MODIFIER_COLOR "color"
 #define MODIFIER_FORCE "force"
+#define X_FORCE "x_force"
+#define Y_FORCE "y_force"
+#define Z_FORCE "z_force"
 #define ROTATION "rotation"
 #define MODIFIER_ANIMATION "animation"
 #define ANIMATION_SPEED "animation_speed"
