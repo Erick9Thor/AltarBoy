@@ -2,8 +2,8 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
-#include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
+#include "misc/LevelManager.h"
 #include "Gameplay.h"
 
 #include <queue>
@@ -15,10 +15,26 @@ class ComponentMeshRenderer;
 namespace Scripting
 {
 class PlayerCamera;
+
+enum class PlayerState
+{
+	INVALID,
+	IDLE,
+	WALKING,
+	MELEE_ATTACKING,
+	RANGED_ATTACKING,
+	DASHING,
+	FALLING,
+	STUNNED,
+	DIE,
+};
+
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
 
+	friend class LevelManager;
+	
 	enum class WeaponUsed
 	{
 		RED = 0,
@@ -129,7 +145,7 @@ private:
 	void RecieveKnockback(const math::float3 direction);
 
 	void CheckState();
-	void ResetPlayer();
+	void ResetPlayer(float3 spawn_pos);
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
@@ -144,10 +160,12 @@ private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 	SERIALIZE_FIELD(GameObject*, _goal);
+	SERIALIZE_FIELD(GameObject*, _geo);
 
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
+	SERIALIZE_FIELD(float, _invulnerability_time);
 	SERIALIZE_FIELD(unsigned, _dash_scaler);
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
@@ -211,6 +229,7 @@ private:
 	int _current_bullet = -1;
 	unsigned _attack_idx = 0;
 	unsigned _current_weapon = 0;
+	float _invulnerability_time_remaining = 0.0f;
 	
 	// Movement management
 	float _stun_time = 0.0f;
@@ -235,6 +254,8 @@ private:
 	
 	GameObject* _enemies;
 	GameObject* _terrain;
+
+	LevelManager* _level_manager;
 
 };
 } // namespace Scripting

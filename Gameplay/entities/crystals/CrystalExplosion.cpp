@@ -143,7 +143,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 		if (enemy_controller != nullptr)
 		{
-			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized(), 0.7f);
+			enemy_controller->RegisterHit(_stats->_attack_power, relative_dir.Normalized(), 0.7f, false);
 		}
 
 		if (player_controller != nullptr)
@@ -188,6 +188,7 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 	if (obstacle)
 	{
 		obstacle->RemoveObstacle();
+		obstacle->Disable();
 	}
 	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
 	if (exploding_animation)
