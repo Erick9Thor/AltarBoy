@@ -34,7 +34,7 @@ namespace Hachiko
 
 		// Variables
 		public:
-			SERIALIZE_FIELD(GameObject*, _door);
+			SERIALIZE_FIELD(GameObject*, _door_prefab);
 			GameObject* _closed_door_mesh = nullptr;
 			GameObject* _open_door_mesh = nullptr;
 			ComponentObstacle* door_obstacle = nullptr;

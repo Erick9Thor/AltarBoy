@@ -13,8 +13,8 @@ Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	, _trigger_radius(5.f)
 	, _round_wait_time(3.f)
 	, _complete_wait_time(2.f)
-	, _door_1(nullptr)
-	, _door_2(nullptr)
+	, _door_controller_1(nullptr)
+	, _door_controller_2(nullptr)
 	, _pack_1(nullptr)
 	, _pack_2(nullptr)
 	, _pack_3(nullptr)
@@ -24,8 +24,8 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 {
 	_combat_manager = _combat_manager_go->GetComponent<CombatManager>();
 	_doors.clear();
-	if (_door_1 && _door_1->GetComponent<DoorController>()) _doors.push_back(_door_1->GetComponent<DoorController>());
-	if (_door_2 && _door_2->GetComponent<DoorController>()) _doors.push_back(_door_2->GetComponent<DoorController>());
+	if (_door_controller_1 && _door_controller_1->GetComponent<DoorController>()) _doors.push_back(_door_controller_1->GetComponent<DoorController>());
+	if (_door_controller_2 && _door_controller_2->GetComponent<DoorController>()) _doors.push_back(_door_controller_2->GetComponent<DoorController>());
 	
 	_enemy_packs.clear();
 	if (_pack_1) _enemy_packs.push_back(_pack_1);

@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9942, 1, 0.9942]
+        scale: [0.9937, 1, 0.9937]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -796,7 +796,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9962]
+                                                                                                                                    scale: [1, 1, 0.9957]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -853,7 +853,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9961, 1, 0.9961]
+                                                                                            scale: [0.9956, 1, 0.9956]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -2006,7 +2006,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9962]
+                                                                                                                                    scale: [1, 1, 0.9957]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -2063,7 +2063,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9961, 1, 0.9961]
+                                                                                            scale: [0.9956, 1, 0.9956]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -2573,8 +2573,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -2817,8 +2817,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -2981,7 +2981,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9942, 1, 0.9942]
+                        scale: [0.9937, 1, 0.9937]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -3311,19 +3311,19 @@ child:
                     visible: true
                     material_id: 6750369022920963075
                     tint_color: [1, 1, 1, 1]
-      - id: 18444318965422765493
+      - id: 14590417297968470978
         name: Door
         enabled: true
         component:
           - !<transform>
-            id: 17049826578879360407
+            id: 13530831671868529587
             type: 1
             enabled: true
-            position: [0, -0.3948, -0.446]
-            rotation: [0, 0.7071, 0.7071, 0]
+            position: [5.116, -0.3948, -0.0001]
+            rotation: [-0.5, 0.5, 0.5, 0.5]
             scale: [15.26, 1.41, 5.609]
           - !<mesh_renderer>
-            id: 4155965653864395572
+            id: 14205761505498538896
             type: 2
             enabled: true
             mesh_id: 1654487118907036717
@@ -3332,25 +3332,25 @@ child:
             material_id: 6750369022920963075
             tint_color: [1, 1, 1, 1]
           - !<obstacle>
-            id: 16689359114329617934
+            id: 13458050973309750457
             type: 18
             enabled: true
             obstacle_type: 2
             obstacle_size: [12, 5, 1]
         child:
-          - id: 15709586985259562812
+          - id: 18130623624257477061
             name: ClosedDoor
             enabled: true
             component:
               - !<transform>
-                id: 2272323171702896613
+                id: 12299272029407826070
                 type: 1
                 enabled: true
-                position: [-0, -0.0022, 0.648]
+                position: [0, 0, 0.65]
                 rotation: [0.5, 0.5, 0.5001, 0.5]
                 scale: [0.2979, 0.0749, 0.0275]
               - !<mesh_renderer>
-                id: 5304969098827976919
+                id: 15472507063047983779
                 type: 2
                 enabled: true
                 mesh_id: 15685009350389098136
@@ -3358,58 +3358,26 @@ child:
                 visible: true
                 material_id: 6339253229162858782
                 tint_color: [1, 1, 1, 1]
-          - id: 13347152840003525570
+          - id: 1706039807795591899
             name: OpenDoor
             enabled: true
             component:
               - !<transform>
-                id: 3980156861125820840
+                id: 17751855561298410549
                 type: 1
                 enabled: true
-                position: [-0, 0.3163, 0.0704]
+                position: [0, 0, 0.65]
                 rotation: [0.5, 0.5, 0.5001, 0.5]
-                scale: [0.7092, 0.1783, 0.0655]
-            child:
-              - id: 9458514736199694460
-                name: Chimney
+                scale: [0.2979, 0.0749, 0.0275]
+              - !<mesh_renderer>
+                id: 3441092210203119362
+                type: 2
                 enabled: true
-                component:
-                  - !<transform>
-                    id: 10056175256463168910
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0.7071, 0, 0, 0.7071]
-                    scale: [100, 100, 100]
-                  - !<mesh_renderer>
-                    id: 2811478716512163012
-                    type: 2
-                    enabled: true
-                    mesh_id: 7544551443759936381
-                    navigable: false
-                    visible: true
-                    material_id: 7765775954106249835
-                    tint_color: [1, 1, 1, 1]
-              - id: 12500973200401387870
-                name: Baker_house
-                enabled: true
-                component:
-                  - !<transform>
-                    id: 886195111274819638
-                    type: 1
-                    enabled: true
-                    position: [0, 0, 0]
-                    rotation: [-0.7071, 0, 0, 0.7071]
-                    scale: [100, 100, 100]
-                  - !<mesh_renderer>
-                    id: 18354743578705193116
-                    type: 2
-                    enabled: true
-                    mesh_id: 3581704332068092856
-                    navigable: false
-                    visible: true
-                    material_id: 7765775954106249835
-                    tint_color: [1, 1, 1, 1]
+                mesh_id: 5883127849286108160
+                navigable: false
+                visible: true
+                material_id: 12778734868932773470
+                tint_color: [1, 1, 1, 1]
   - id: 1137480282892310891
     name: CombatManager
     enabled: true
@@ -6946,7 +6914,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [-0.067, 0.0158, 0.0672]
-                                            rotation: [0.2178, -0.0972, 0.1077, 0.9651]
+                                            rotation: [0.2178, -0.0972, 0.1077, 0.9652]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 12006823027129689013
@@ -7208,7 +7176,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [0, 0, 0.8756, 0.483]
-                                                            scale: [0.9963, 0.9963, 1]
+                                                            scale: [0.9958, 0.9958, 1]
                                                         child:
                                                           - id: 7300229523316383905
                                                             name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
@@ -7256,7 +7224,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [-0.483, 0.8756, 0, 0]
-                                                                            scale: [0.9963, 1, 0.9963]
+                                                                            scale: [0.9958, 1, 0.9958]
                                                                         child:
                                                                           - id: 10254065945951643898
                                                                             name: Zero
@@ -7410,7 +7378,7 @@ child:
                                             enabled: true
                                             position: [0, 0, 0]
                                             rotation: [0, 0, 0.9832, 0.1824]
-                                            scale: [0.9963, 0.9963, 1]
+                                            scale: [0.9958, 0.9958, 1]
                                         child:
                                           - id: 15976547221592480175
                                             name: RightWing_$AssimpFbx$_Rotation
@@ -8011,8 +7979,8 @@ child:
         "'_trigger_radius@float'": 5
         "'_round_wait_time@float'": 5
         "'_complete_wait_time@float'": 2
-        "'_door_1@GameObject*'": 1125404691131067851
-        "'_door_2@GameObject*'": 0
+        "'_door_controller_1@GameObject*'": 1125404691131067851
+        "'_door_controller_2@GameObject*'": 0
         "'_pack_1@GameObject*'": 5317749766860736839
         "'_pack_2@GameObject*'": 12450366604727127906
         "'_pack_3@GameObject*'": 0
@@ -8033,7 +8001,7 @@ child:
             type: 15
             enabled: true
             class_name: DoorController
-            "'_door@GameObject*'": 18444318965422765493
+            "'_door_prefab@GameObject*'": 14590417297968470978
   - id: 12840129701802123026
     name: LevelManager
     enabled: true

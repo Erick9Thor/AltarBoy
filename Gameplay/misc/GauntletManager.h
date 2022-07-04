@@ -30,8 +30,8 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _round_wait_time);
 			SERIALIZE_FIELD(float, _complete_wait_time);
 
-			SERIALIZE_FIELD(GameObject*, _door_1);
-			SERIALIZE_FIELD(GameObject*, _door_2);
+			SERIALIZE_FIELD(GameObject*, _door_controller_1);
+			SERIALIZE_FIELD(GameObject*, _door_controller_2);
 
 			SERIALIZE_FIELD(GameObject*, _pack_1);
 			SERIALIZE_FIELD(GameObject*, _pack_2);
