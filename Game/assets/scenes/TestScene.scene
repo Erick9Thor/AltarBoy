@@ -118,7 +118,8 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 1
+                "'_attack_range@int'": 3
+                "'_attack_delay@float'": 0.3
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 109370777503151113
@@ -126,7 +127,8 @@ child:
                 "'_parasite@GameObject*'": 8432818627888009998
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_attack_animation_duration@float'": 1
+                "'_is_from_gautlet@bool'": false
+                "'_attack_animation_duration@float'": 0.5
                 "'_attack_animation_timer@float'": 0
                 "'_is_ranged_attack@bool'": false
               - !<script>
@@ -1328,7 +1330,8 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 1
+                "'_attack_range@int'": 3
+                "'_attack_delay@float'": 0.3
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 109370777503151113
@@ -1336,7 +1339,8 @@ child:
                 "'_parasite@GameObject*'": 4254431287090470372
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_attack_animation_duration@float'": 1
+                "'_is_from_gautlet@bool'": false
+                "'_attack_animation_duration@float'": 0.5
                 "'_attack_animation_timer@float'": 0
                 "'_is_ranged_attack@bool'": false
               - !<script>
@@ -3199,7 +3203,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1184, 585]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -6514,10 +6518,11 @@ child:
         "'_attack_indicator@GameObject*'": 12137440155160422725
         "'_bullet_emitter@GameObject*'": 1137480282892310891
         "'_goal@GameObject*'": 12847107905599264921
-        "'_geo@GameObject*'": 0
+        "'_geo@GameObject*'": 2603687148837292350
         "'_dash_duration@float'": 0.15
         "'_dash_distance@float'": 6
         "'_dash_cooldown@float'": 0.5
+        "'_invulnerability_time@float'": 1
         "'_dash_scaler@unsigned'": 3
         "'_max_dash_charges@unsigned'": 2
         "'_dash_trail@GameObject*'": 857099571519134413
@@ -7572,7 +7577,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1065, 643]
+        size: [1184, 585]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -7598,7 +7603,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1184, 585]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
