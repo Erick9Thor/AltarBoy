@@ -64,7 +64,7 @@ int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, 
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
 	int hit = 0;
-	hit += ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	hit += ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats, true);
 	hit += ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 
 	return hit;
@@ -75,7 +75,7 @@ int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& ori
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
 	int hit = 0;
 
-	hit += ProcessAgentsOBB(hitbox, attack_stats);
+	hit += ProcessAgentsOBB(hitbox, attack_stats, true);
 	hit += ProcessObstaclesOBB(hitbox, attack_stats);
 
 	return hit;
@@ -347,6 +347,20 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 	return hit_target;
 }
 
+void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
+{
+	for (unsigned i = 0; i < _enemy_packs_container->children.size(); ++i)
+	{
+		GameObject* pack = _enemy_packs_container->children[i];
+		_initial_transforms.push_back(std::vector<float4x4>());
+		for (unsigned j = 0; j < pack->children.size(); ++j)
+		{
+			GameObject* enemy = pack->children[j];
+			_initial_transforms[i].push_back(enemy->GetTransform()->GetGlobalMatrix());
+		}
+	}
+}
+
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	// We use a pointer to represent when there is no bullet shoot
@@ -446,7 +460,7 @@ void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 }
 
 
-int Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 

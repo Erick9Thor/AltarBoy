@@ -134,11 +134,11 @@ namespace Hachiko
             std::vector<BulletStats> _bullet_stats;
 
             GameObject* _enemy_packs_container;
+            std::vector<std::vector<float4x4> > _initial_transforms;
 
             math::float3 _direction;
             int _damage;
 
-            SERIALIZE_FIELD(GameObject*, _player);
             PlayerController* _player_controller;
         };
     } // namespace Scripting
