@@ -183,8 +183,11 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
 void Hachiko::TextureBatch::UpdateBatch(int segment, const std::vector<const ComponentMeshRenderer*>& components, unsigned component_count)
 {
     // Update material data
+    materials.clear();
     materials.resize(components.size());
 
+    size_t offset = component_count * segment;
+    
     for (unsigned i = 0; i < components.size(); ++i)
     {
         const ResourceMaterial* material = components[i]->GetResourceMaterial();
@@ -236,21 +239,21 @@ void Hachiko::TextureBatch::UpdateBatch(int segment, const std::vector<const Com
             materials[i].emissive_flag = 0;
             materials[i].emissive_color = components[i]->GetOverrideEmissiveColor();
         }
-    }
 
-    // Update material persistent buffers
-    memcpy(&material_buffer_data[component_count * segment], materials.data(), materials.size() * sizeof(Material));
+        // Copy material to persistent buffer:
+        material_buffer_data[offset + i] = materials[i];
+    }
 }
 
 void Hachiko::TextureBatch::BindBatch(int segment, const Program* program, unsigned component_count)
 {
     // Bind textures
-    const std::vector<int> texture_slots = {4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+    const std::vector<int> texture_slots = {7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23};
     program->BindUniformInts("allMyTextures", texture_arrays.size(), &texture_slots[0]);
 
     for (unsigned i = 0; i < texture_arrays.size(); ++i)
     {
-        glActiveTexture(GL_TEXTURE4 + i);
+        glActiveTexture(GL_TEXTURE7 + i);
         glBindTexture(GL_TEXTURE_2D_ARRAY, texture_arrays[i]->id);
     }
 
