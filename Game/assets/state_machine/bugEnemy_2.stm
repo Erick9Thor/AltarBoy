@@ -55,3 +55,11 @@ transitions:
     transition_target: idle
     transition_trigger: idle
     transition_blend: 300
+  - transition_source: move
+    transition_target: attack
+    transition_trigger: isAttacking
+    transition_blend: 300
+  - transition_source: attack
+    transition_target: move
+    transition_trigger: isMoving
+    transition_blend: 300
