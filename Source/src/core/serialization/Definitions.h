@@ -85,8 +85,6 @@
 #define SM_TRANSITION_TRIGGER "transition_trigger"
 #define SM_TRANSITION_BLEND "transition_blend"
 
-
-
 //////////////////////////
 //						//
 // Importer extensions  //
@@ -241,6 +239,7 @@
 #define IMAGE_X_TILES "image_x_tiles"
 #define IMAGE_Y_TILES "image_y_tiles"
 #define IMAGE_TILES_PER_SEC "image_tiles_per_second"
+#define IMAGE_FILL_WINDOW "fill_window"
 
 // Component Text
 #define FONT_ID "font_id"
@@ -264,6 +263,7 @@
 #define MAX_ACCELERATION "max_acceleration"
 #define AVOID_OBSTACLES "avoid_obstacles"
 #define AGENT_RADIUS "radius"
+#define AGENT_IS_PLAYER "is_player"
 
 // Component Billboard
 #define BILLBOARD_TEXTURE_ID "texture_id"

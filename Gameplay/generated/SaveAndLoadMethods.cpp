@@ -1,7 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include <yaml-cpp/yaml.h>
 #include <core/serialization/TypeConverter.h>
-#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
@@ -13,87 +12,13 @@
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
 #include "misc/AudioManager.h"
-#include "misc/BlinkingLight.h"
-#include "misc/DoorController.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
-#include "misc/GauntletManager.h"
-#include "misc/LevelManager.h"
-#include "misc/PillarCheckpoint.h"
 #include "ui/BackToMainMenu.h"
 #include "ui/DebugManager.h"
 #include "ui/MainMenuManager.h"
 
 
-
-void Hachiko::Scripting::CrystalPlatform::OnSave(YAML::Node& node) const
-{
-	node["'_seconds_before_shaking@float'"] = _seconds_before_shaking;
-
-	node["'_seconds_shaking@float'"] = _seconds_shaking;
-
-	node["'_shake_intensity@float'"] = _shake_intensity;
-
-	if (_invisible_obstacle != nullptr)
-	{
-		node["'_invisible_obstacle@GameObject*'"] = _invisible_obstacle->GetID();
-	}
-	else
-	{
-		node["'_invisible_obstacle@GameObject*'"] = 0;
-	}
-
-	if (_crystal != nullptr)
-	{
-		node["'_crystal@GameObject*'"] = _crystal->GetID();
-	}
-	else
-	{
-		node["'_crystal@GameObject*'"] = 0;
-	}
-
-	if (_crystal_platform != nullptr)
-	{
-		node["'_crystal_platform@GameObject*'"] = _crystal_platform->GetID();
-	}
-	else
-	{
-		node["'_crystal_platform@GameObject*'"] = 0;
-	}
-}
-
-void Hachiko::Scripting::CrystalPlatform::OnLoad()
-{
-	if (load_node["'_seconds_before_shaking@float'"].IsDefined())
-	{
-		_seconds_before_shaking = load_node["'_seconds_before_shaking@float'"].as<float>();
-	}
-
-	if (load_node["'_seconds_shaking@float'"].IsDefined())
-	{
-		_seconds_shaking = load_node["'_seconds_shaking@float'"].as<float>();
-	}
-
-	if (load_node["'_shake_intensity@float'"].IsDefined())
-	{
-		_shake_intensity = load_node["'_shake_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_invisible_obstacle@GameObject*'"].IsDefined())
-	{
-		_invisible_obstacle = SceneManagement::FindInCurrentScene(load_node["'_invisible_obstacle@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_crystal@GameObject*'"].IsDefined())
-	{
-		_crystal = SceneManagement::FindInCurrentScene(load_node["'_crystal@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_crystal_platform@GameObject*'"].IsDefined())
-	{
-		_crystal_platform = SceneManagement::FindInCurrentScene(load_node["'_crystal_platform@GameObject*'"].as<unsigned long long>());
-	}
-}
 
 void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 {
@@ -106,8 +31,6 @@ void Hachiko::Scripting::Stats::OnSave(YAML::Node& node) const
 	node["'_move_speed@float'"] = _move_speed;
 
 	node["'_max_hp@int'"] = _max_hp;
-
-	node["'_current_hp@int'"] = _current_hp;
 }
 
 void Hachiko::Scripting::Stats::OnLoad()
@@ -135,11 +58,6 @@ void Hachiko::Scripting::Stats::OnLoad()
 	if (load_node["'_max_hp@int'"].IsDefined())
 	{
 		_max_hp = load_node["'_max_hp@int'"].as<int>();
-	}
-
-	if (load_node["'_current_hp@int'"].IsDefined())
-	{
-		_current_hp = load_node["'_current_hp@int'"].as<int>();
 	}
 }
 
@@ -172,22 +90,22 @@ void Hachiko::Scripting::CrystalExplosion::OnSave(YAML::Node& node) const
 		node["'_static_crystal@GameObject*'"] = 0;
 	}
 
-	if (_explosion_indicator_helper != nullptr)
+	if (_outer_explosion_indicator != nullptr)
 	{
-		node["'_explosion_indicator_helper@GameObject*'"] = _explosion_indicator_helper->GetID();
+		node["'_outer_explosion_indicator@GameObject*'"] = _outer_explosion_indicator->GetID();
 	}
 	else
 	{
-		node["'_explosion_indicator_helper@GameObject*'"] = 0;
+		node["'_outer_explosion_indicator@GameObject*'"] = 0;
 	}
 
-	if (_explosion_effect != nullptr)
+	if (_inner_explosion_indicator != nullptr)
 	{
-		node["'_explosion_effect@GameObject*'"] = _explosion_effect->GetID();
+		node["'_inner_explosion_indicator@GameObject*'"] = _inner_explosion_indicator->GetID();
 	}
 	else
 	{
-		node["'_explosion_effect@GameObject*'"] = 0;
+		node["'_inner_explosion_indicator@GameObject*'"] = 0;
 	}
 
 	node["'_crashing_index@unsigned'"] = _crashing_index;
@@ -218,14 +136,14 @@ void Hachiko::Scripting::CrystalExplosion::OnLoad()
 		_static_crystal = SceneManagement::FindInCurrentScene(load_node["'_static_crystal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_explosion_indicator_helper@GameObject*'"].IsDefined())
+	if (load_node["'_outer_explosion_indicator@GameObject*'"].IsDefined())
 	{
-		_explosion_indicator_helper = SceneManagement::FindInCurrentScene(load_node["'_explosion_indicator_helper@GameObject*'"].as<unsigned long long>());
+		_outer_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_outer_explosion_indicator@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_explosion_effect@GameObject*'"].IsDefined())
+	if (load_node["'_inner_explosion_indicator@GameObject*'"].IsDefined())
 	{
-		_explosion_effect = SceneManagement::FindInCurrentScene(load_node["'_explosion_effect@GameObject*'"].as<unsigned long long>());
+		_inner_explosion_indicator = SceneManagement::FindInCurrentScene(load_node["'_inner_explosion_indicator@GameObject*'"].as<unsigned long long>());
 	}
 
 	if (load_node["'_crashing_index@unsigned'"].IsDefined())
@@ -527,7 +445,6 @@ void Hachiko::Scripting::PlayerCamera::OnLoad()
 
 void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 {
-
 	if (_attack_indicator != nullptr)
 	{
 		node["'_attack_indicator@GameObject*'"] = _attack_indicator->GetID();
@@ -555,22 +472,11 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 		node["'_goal@GameObject*'"] = 0;
 	}
 
-	if (_geo != nullptr)
-	{
-		node["'_geo@GameObject*'"] = _geo->GetID();
-	}
-	else
-	{
-		node["'_geo@GameObject*'"] = 0;
-	}
-
 	node["'_dash_duration@float'"] = _dash_duration;
 
 	node["'_dash_distance@float'"] = _dash_distance;
 
 	node["'_dash_cooldown@float'"] = _dash_cooldown;
-
-	node["'_dash_scaler@unsigned'"] = _dash_scaler;
 
 	node["'_max_dash_charges@unsigned'"] = _max_dash_charges;
 
@@ -644,7 +550,6 @@ void Hachiko::Scripting::PlayerController::OnSave(YAML::Node& node) const
 
 void Hachiko::Scripting::PlayerController::OnLoad()
 {
-
 	if (load_node["'_attack_indicator@GameObject*'"].IsDefined())
 	{
 		_attack_indicator = SceneManagement::FindInCurrentScene(load_node["'_attack_indicator@GameObject*'"].as<unsigned long long>());
@@ -660,11 +565,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 		_goal = SceneManagement::FindInCurrentScene(load_node["'_goal@GameObject*'"].as<unsigned long long>());
 	}
 
-	if (load_node["'_geo@GameObject*'"].IsDefined())
-	{
-		_geo = SceneManagement::FindInCurrentScene(load_node["'_geo@GameObject*'"].as<unsigned long long>());
-	}
-
 	if (load_node["'_dash_duration@float'"].IsDefined())
 	{
 		_dash_duration = load_node["'_dash_duration@float'"].as<float>();
@@ -678,11 +578,6 @@ void Hachiko::Scripting::PlayerController::OnLoad()
 	if (load_node["'_dash_cooldown@float'"].IsDefined())
 	{
 		_dash_cooldown = load_node["'_dash_cooldown@float'"].as<float>();
-	}
-
-	if (load_node["'_dash_scaler@unsigned'"].IsDefined())
-	{
-		_dash_scaler = load_node["'_dash_scaler@unsigned'"].as<unsigned>();
 	}
 
 	if (load_node["'_max_dash_charges@unsigned'"].IsDefined())
@@ -895,168 +790,37 @@ void Hachiko::Scripting::AudioManager::OnLoad()
 	}
 }
 
-void Hachiko::Scripting::BlinkingLight::OnSave(YAML::Node& node) const
-{
-	node["'_use_perlin_noise@bool'"] = _use_perlin_noise;
-
-	node["'_min_radius@float'"] = _min_radius;
-
-	node["'_max_radius@float'"] = _max_radius;
-
-	node["'_radius_amplitude@float'"] = _radius_amplitude;
-
-	node["'_min_duration@float'"] = _min_duration;
-
-	node["'_max_duration@float'"] = _max_duration;
-
-	node["'_duration_amplitude@float'"] = _duration_amplitude;
-
-	node["'_min_intensity@float'"] = _min_intensity;
-
-	node["'_max_intensity@float'"] = _max_intensity;
-
-	node["'_intensity_amplitude@float'"] = _intensity_amplitude;
-
-	node["'_starting_intensity@float'"] = _starting_intensity;
-
-	node["'_starting_radius@float'"] = _starting_radius;
-
-	node["'_current_intensity@float'"] = _current_intensity;
-
-	node["'_current_duration@float'"] = _current_duration;
-
-	node["'_current_radius@float'"] = _current_radius;
-
-	node["'_next_duration@float'"] = _next_duration;
-
-	node["'_next_intensity@float'"] = _next_intensity;
-
-	node["'_next_radius@float'"] = _next_radius;
-}
-
-void Hachiko::Scripting::BlinkingLight::OnLoad()
-{
-	if (load_node["'_use_perlin_noise@bool'"].IsDefined())
-	{
-		_use_perlin_noise = load_node["'_use_perlin_noise@bool'"].as<bool>();
-	}
-
-	if (load_node["'_min_radius@float'"].IsDefined())
-	{
-		_min_radius = load_node["'_min_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_max_radius@float'"].IsDefined())
-	{
-		_max_radius = load_node["'_max_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_radius_amplitude@float'"].IsDefined())
-	{
-		_radius_amplitude = load_node["'_radius_amplitude@float'"].as<float>();
-	}
-
-	if (load_node["'_min_duration@float'"].IsDefined())
-	{
-		_min_duration = load_node["'_min_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_max_duration@float'"].IsDefined())
-	{
-		_max_duration = load_node["'_max_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_duration_amplitude@float'"].IsDefined())
-	{
-		_duration_amplitude = load_node["'_duration_amplitude@float'"].as<float>();
-	}
-
-	if (load_node["'_min_intensity@float'"].IsDefined())
-	{
-		_min_intensity = load_node["'_min_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_max_intensity@float'"].IsDefined())
-	{
-		_max_intensity = load_node["'_max_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_intensity_amplitude@float'"].IsDefined())
-	{
-		_intensity_amplitude = load_node["'_intensity_amplitude@float'"].as<float>();
-	}
-
-	if (load_node["'_starting_intensity@float'"].IsDefined())
-	{
-		_starting_intensity = load_node["'_starting_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_starting_radius@float'"].IsDefined())
-	{
-		_starting_radius = load_node["'_starting_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_current_intensity@float'"].IsDefined())
-	{
-		_current_intensity = load_node["'_current_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_current_duration@float'"].IsDefined())
-	{
-		_current_duration = load_node["'_current_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_current_radius@float'"].IsDefined())
-	{
-		_current_radius = load_node["'_current_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_next_duration@float'"].IsDefined())
-	{
-		_next_duration = load_node["'_next_duration@float'"].as<float>();
-	}
-
-	if (load_node["'_next_intensity@float'"].IsDefined())
-	{
-		_next_intensity = load_node["'_next_intensity@float'"].as<float>();
-	}
-
-	if (load_node["'_next_radius@float'"].IsDefined())
-	{
-		_next_radius = load_node["'_next_radius@float'"].as<float>();
-	}
-}
-
-void Hachiko::Scripting::DoorController::OnSave(YAML::Node& node) const
-{
-	if (_door != nullptr)
-	{
-		node["'_door@GameObject*'"] = _door->GetID();
-	}
-	else
-	{
-		node["'_door@GameObject*'"] = 0;
-	}
-}
-
-void Hachiko::Scripting::DoorController::OnLoad()
-{
-	if (load_node["'_door@GameObject*'"].IsDefined())
-	{
-		_door = SceneManagement::FindInCurrentScene(load_node["'_door@GameObject*'"].as<unsigned long long>());
-	}
-}
-
 void Hachiko::Scripting::DynamicCamera::OnSave(YAML::Node& node) const
 {
+	node["'_start_point@math::float3'"] = _start_point;
+
+	node["'_end_point@math::float3'"] = _end_point;
+
 	node["'_speed@float'"] = _speed;
+
+	node["'_lerp_position@float'"] = _lerp_position;
 }
 
 void Hachiko::Scripting::DynamicCamera::OnLoad()
 {
+	if (load_node["'_start_point@math::float3'"].IsDefined())
+	{
+		_start_point = load_node["'_start_point@math::float3'"].as<math::float3>();
+	}
+
+	if (load_node["'_end_point@math::float3'"].IsDefined())
+	{
+		_end_point = load_node["'_end_point@math::float3'"].as<math::float3>();
+	}
+
 	if (load_node["'_speed@float'"].IsDefined())
 	{
 		_speed = load_node["'_speed@float'"].as<float>();
+	}
+
+	if (load_node["'_lerp_position@float'"].IsDefined())
+	{
+		_lerp_position = load_node["'_lerp_position@float'"].as<float>();
 	}
 }
 
@@ -1077,157 +841,6 @@ void Hachiko::Scripting::FancyLights::OnLoad()
 	if (load_node["'_angle@float'"].IsDefined())
 	{
 		_angle = load_node["'_angle@float'"].as<float>();
-	}
-}
-
-void Hachiko::Scripting::GauntletManager::OnSave(YAML::Node& node) const
-{
-	if (_combat_manager_go != nullptr)
-	{
-		node["'_combat_manager_go@GameObject*'"] = _combat_manager_go->GetID();
-	}
-	else
-	{
-		node["'_combat_manager_go@GameObject*'"] = 0;
-	}
-
-	node["'_trigger_radius@float'"] = _trigger_radius;
-
-	node["'_round_wait_time@float'"] = _round_wait_time;
-
-	node["'_complete_wait_time@float'"] = _complete_wait_time;
-
-	if (_door_1 != nullptr)
-	{
-		node["'_door_1@GameObject*'"] = _door_1->GetID();
-	}
-	else
-	{
-		node["'_door_1@GameObject*'"] = 0;
-	}
-
-	if (_door_2 != nullptr)
-	{
-		node["'_door_2@GameObject*'"] = _door_2->GetID();
-	}
-	else
-	{
-		node["'_door_2@GameObject*'"] = 0;
-	}
-
-	if (_pack_1 != nullptr)
-	{
-		node["'_pack_1@GameObject*'"] = _pack_1->GetID();
-	}
-	else
-	{
-		node["'_pack_1@GameObject*'"] = 0;
-	}
-
-	if (_pack_2 != nullptr)
-	{
-		node["'_pack_2@GameObject*'"] = _pack_2->GetID();
-	}
-	else
-	{
-		node["'_pack_2@GameObject*'"] = 0;
-	}
-
-	if (_pack_3 != nullptr)
-	{
-		node["'_pack_3@GameObject*'"] = _pack_3->GetID();
-	}
-	else
-	{
-		node["'_pack_3@GameObject*'"] = 0;
-	}
-}
-
-void Hachiko::Scripting::GauntletManager::OnLoad()
-{
-	if (load_node["'_combat_manager_go@GameObject*'"].IsDefined())
-	{
-		_combat_manager_go = SceneManagement::FindInCurrentScene(load_node["'_combat_manager_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_trigger_radius@float'"].IsDefined())
-	{
-		_trigger_radius = load_node["'_trigger_radius@float'"].as<float>();
-	}
-
-	if (load_node["'_round_wait_time@float'"].IsDefined())
-	{
-		_round_wait_time = load_node["'_round_wait_time@float'"].as<float>();
-	}
-
-	if (load_node["'_complete_wait_time@float'"].IsDefined())
-	{
-		_complete_wait_time = load_node["'_complete_wait_time@float'"].as<float>();
-	}
-
-	if (load_node["'_door_1@GameObject*'"].IsDefined())
-	{
-		_door_1 = SceneManagement::FindInCurrentScene(load_node["'_door_1@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_door_2@GameObject*'"].IsDefined())
-	{
-		_door_2 = SceneManagement::FindInCurrentScene(load_node["'_door_2@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_pack_1@GameObject*'"].IsDefined())
-	{
-		_pack_1 = SceneManagement::FindInCurrentScene(load_node["'_pack_1@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_pack_2@GameObject*'"].IsDefined())
-	{
-		_pack_2 = SceneManagement::FindInCurrentScene(load_node["'_pack_2@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_pack_3@GameObject*'"].IsDefined())
-	{
-		_pack_3 = SceneManagement::FindInCurrentScene(load_node["'_pack_3@GameObject*'"].as<unsigned long long>());
-	}
-}
-
-void Hachiko::Scripting::LevelManager::OnSave(YAML::Node& node) const
-{
-	node["'_respawn_position@float3'"] = _respawn_position;
-}
-
-void Hachiko::Scripting::LevelManager::OnLoad()
-{
-	if (load_node["'_respawn_position@float3'"].IsDefined())
-	{
-		_respawn_position = load_node["'_respawn_position@float3'"].as<float3>();
-	}
-}
-
-void Hachiko::Scripting::PillarCheckpoint::OnSave(YAML::Node& node) const
-{
-	if (_respawn_go != nullptr)
-	{
-		node["'_respawn_go@GameObject*'"] = _respawn_go->GetID();
-	}
-	else
-	{
-		node["'_respawn_go@GameObject*'"] = 0;
-	}
-
-	node["'_activation_range@float'"] = _activation_range;
-}
-
-void Hachiko::Scripting::PillarCheckpoint::OnLoad()
-{
-	if (load_node["'_respawn_go@GameObject*'"].IsDefined())
-	{
-		_respawn_go = SceneManagement::FindInCurrentScene(load_node["'_respawn_go@GameObject*'"].as<unsigned long long>());
-	}
-
-	if (load_node["'_activation_range@float'"].IsDefined())
-	{
-		_activation_range = load_node["'_activation_range@float'"].as<float>();
 	}
 }
 

@@ -1,5 +1,4 @@
 #include "scriptingUtil/gameplaypch.h"
-#include "CrystalPlatform.h"
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
 #include "entities/enemies/BugAnimationManager.h"
@@ -11,27 +10,12 @@
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
 #include "misc/AudioManager.h"
-#include "misc/BlinkingLight.h"
-#include "misc/DoorController.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
-#include "misc/GauntletManager.h"
-#include "misc/LevelManager.h"
-#include "misc/PillarCheckpoint.h"
 #include "ui/BackToMainMenu.h"
 #include "ui/DebugManager.h"
 #include "ui/MainMenuManager.h"
 
-
-void Hachiko::Scripting::CrystalPlatform::OnEditor()
-{
-	Editor::Show("Seconds Before Shaking", _seconds_before_shaking);
-	Editor::Show("Seconds Shaking", _seconds_shaking);
-	Editor::Show("Shake Intensity", _shake_intensity);
-	Editor::Show("Invisible Obstacle", _invisible_obstacle);
-	Editor::Show("Crystal", _crystal);
-	Editor::Show("Crystal Platform", _crystal_platform);
-}
 
 void Hachiko::Scripting::Stats::OnEditor()
 {
@@ -40,7 +24,6 @@ void Hachiko::Scripting::Stats::OnEditor()
 	Editor::Show("Attack Range", _attack_range);
 	Editor::Show("Move Speed", _move_speed);
 	Editor::Show("Max Hp", _max_hp);
-	Editor::Show("Current Hp", _current_hp);
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnEditor()
@@ -48,8 +31,8 @@ void Hachiko::Scripting::CrystalExplosion::OnEditor()
 	Editor::Show("Player", _player);
 	Editor::Show("Explosion Crystal", _explosion_crystal);
 	Editor::Show("Static Crystal", _static_crystal);
-	Editor::Show("Explosion Indicator Helper", _explosion_indicator_helper);
-	Editor::Show("Explosion Effect", _explosion_effect);
+	Editor::Show("Outer Explosion Indicator", _outer_explosion_indicator);
+	Editor::Show("Inner Explosion Indicator", _inner_explosion_indicator);
 	Editor::Show("Crashing Index", _crashing_index);
 	Editor::Show("Detecting Radius", _detecting_radius);
 	Editor::Show("Explosion Radius", _explosion_radius);
@@ -108,11 +91,9 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Attack Indicator", _attack_indicator);
 	Editor::Show("Bullet Emitter", _bullet_emitter);
 	Editor::Show("Goal", _goal);
-	Editor::Show("Geo", _geo);
 	Editor::Show("Dash Duration", _dash_duration);
 	Editor::Show("Dash Distance", _dash_distance);
 	Editor::Show("Dash Cooldown", _dash_cooldown);
-	Editor::Show("Dash Scaler", _dash_scaler);
 	Editor::Show("Max Dash Charges", _max_dash_charges);
 	Editor::Show("Dash Trail", _dash_trail);
 	Editor::Show("Trail Enlarger", _trail_enlarger);
@@ -123,6 +104,7 @@ void Hachiko::Scripting::PlayerController::OnEditor()
 	Editor::Show("Hp Cell 4", _hp_cell_4);
 	Editor::Show("Camera", _camera);
 	Editor::Show("Ui Damage", _ui_damage);
+	Editor::Show("Dash Type", _dash_type);
 }
 
 void Hachiko::Scripting::PlayerSoundManager::OnEditor()
@@ -151,66 +133,18 @@ void Hachiko::Scripting::AudioManager::OnEditor()
 	Editor::Show("Previous In Combat", _previous_in_combat);
 }
 
-void Hachiko::Scripting::BlinkingLight::OnEditor()
-{
-	Editor::Show("Use Perlin Noise", _use_perlin_noise);
-	Editor::Show("Min Radius", _min_radius);
-	Editor::Show("Max Radius", _max_radius);
-	Editor::Show("Radius Amplitude", _radius_amplitude);
-	Editor::Show("Min Duration", _min_duration);
-	Editor::Show("Max Duration", _max_duration);
-	Editor::Show("Duration Amplitude", _duration_amplitude);
-	Editor::Show("Min Intensity", _min_intensity);
-	Editor::Show("Max Intensity", _max_intensity);
-	Editor::Show("Intensity Amplitude", _intensity_amplitude);
-	Editor::Show("Starting Intensity", _starting_intensity);
-	Editor::Show("Starting Radius", _starting_radius);
-	Editor::Show("Current Intensity", _current_intensity);
-	Editor::Show("Current Duration", _current_duration);
-	Editor::Show("Current Radius", _current_radius);
-	Editor::Show("Next Duration", _next_duration);
-	Editor::Show("Next Intensity", _next_intensity);
-	Editor::Show("Next Radius", _next_radius);
-}
-
-void Hachiko::Scripting::DoorController::OnEditor()
-{
-	Editor::Show("Door", _door);
-}
-
 void Hachiko::Scripting::DynamicCamera::OnEditor()
 {
+	Editor::Show("Start Point", _start_point);
+	Editor::Show("End Point", _end_point);
 	Editor::Show("Speed", _speed);
+	Editor::Show("Lerp Position", _lerp_position);
 }
 
 void Hachiko::Scripting::FancyLights::OnEditor()
 {
 	Editor::Show("Rotate On Y", _rotate_on_y);
 	Editor::Show("Angle", _angle);
-}
-
-void Hachiko::Scripting::GauntletManager::OnEditor()
-{
-	Editor::Show("Combat Manager Go", _combat_manager_go);
-	Editor::Show("Trigger Radius", _trigger_radius);
-	Editor::Show("Round Wait Time", _round_wait_time);
-	Editor::Show("Complete Wait Time", _complete_wait_time);
-	Editor::Show("Door 1", _door_1);
-	Editor::Show("Door 2", _door_2);
-	Editor::Show("Pack 1", _pack_1);
-	Editor::Show("Pack 2", _pack_2);
-	Editor::Show("Pack 3", _pack_3);
-}
-
-void Hachiko::Scripting::LevelManager::OnEditor()
-{
-	Editor::Show("Respawn Position", _respawn_position);
-}
-
-void Hachiko::Scripting::PillarCheckpoint::OnEditor()
-{
-	Editor::Show("Respawn Go", _respawn_go);
-	Editor::Show("Activation Range", _activation_range);
 }
 
 void Hachiko::Scripting::BackToMainMenu::OnEditor()

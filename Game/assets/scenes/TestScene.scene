@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9944, 1, 0.9944]
+        scale: [0.9941, 1, 0.9941]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -118,7 +118,8 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 1
+                "'_attack_range@int'": 3
+                "'_attack_delay@float'": 0.3
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 109370777503151113
@@ -126,7 +127,8 @@ child:
                 "'_parasite@GameObject*'": 8432818627888009998
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_attack_animation_duration@float'": 1
+                "'_is_from_gautlet@bool'": false
+                "'_attack_animation_duration@float'": 0.5
                 "'_attack_animation_timer@float'": 0
                 "'_is_ranged_attack@bool'": false
               - !<script>
@@ -796,7 +798,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9964]
+                                                                                                                                    scale: [1, 1, 0.9961]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -853,7 +855,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9963, 1, 0.9963]
+                                                                                            scale: [0.996, 1, 0.996]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -1328,7 +1330,8 @@ child:
                 enabled: true
                 class_name: EnemyController
                 "'_aggro_range@int'": 10
-                "'_attack_range@int'": 1
+                "'_attack_range@int'": 3
+                "'_attack_delay@float'": 0.3
                 "'_spawn_pos@float3'": [0, 0, 0]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 109370777503151113
@@ -1336,7 +1339,8 @@ child:
                 "'_parasite@GameObject*'": 4254431287090470372
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_attack_animation_duration@float'": 1
+                "'_is_from_gautlet@bool'": false
+                "'_attack_animation_duration@float'": 0.5
                 "'_attack_animation_timer@float'": 0
                 "'_is_ranged_attack@bool'": false
               - !<script>
@@ -2006,7 +2010,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9964]
+                                                                                                                                    scale: [1, 1, 0.9961]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -2063,7 +2067,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9963, 1, 0.9963]
+                                                                                            scale: [0.996, 1, 0.996]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -2573,8 +2577,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -2817,8 +2821,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
-                    scale: [1, 0.9999, 0.9999]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
+                    scale: [1, 1, 1]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -2981,7 +2985,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9944, 1, 0.9944]
+                        scale: [0.9941, 1, 0.9941]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -3199,7 +3203,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1184, 585]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -6493,10 +6497,11 @@ child:
         "'_attack_indicator@GameObject*'": 12137440155160422725
         "'_bullet_emitter@GameObject*'": 1137480282892310891
         "'_goal@GameObject*'": 12847107905599264921
-        "'_geo@GameObject*'": 0
+        "'_geo@GameObject*'": 2603687148837292350
         "'_dash_duration@float'": 0.15
         "'_dash_distance@float'": 6
         "'_dash_cooldown@float'": 0.5
+        "'_invulnerability_time@float'": 1
         "'_dash_scaler@unsigned'": 3
         "'_max_dash_charges@unsigned'": 2
         "'_dash_trail@GameObject*'": 857099571519134413
@@ -6893,7 +6898,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [-0.067, 0.0158, 0.0672]
-                                            rotation: [0.2178, -0.0972, 0.1077, 0.9651]
+                                            rotation: [0.2178, -0.0972, 0.1077, 0.9652]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 12006823027129689013
@@ -7155,7 +7160,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [0, 0, 0.8756, 0.483]
-                                                            scale: [0.9965, 0.9965, 1]
+                                                            scale: [0.9962, 0.9962, 1]
                                                         child:
                                                           - id: 7300229523316383905
                                                             name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
@@ -7203,7 +7208,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [-0.483, 0.8756, 0, 0]
-                                                                            scale: [0.9965, 1, 0.9965]
+                                                                            scale: [0.9962, 1, 0.9962]
                                                                         child:
                                                                           - id: 10254065945951643898
                                                                             name: Zero
@@ -7357,7 +7362,7 @@ child:
                                             enabled: true
                                             position: [0, 0, 0]
                                             rotation: [0, 0, 0.9832, 0.1824]
-                                            scale: [0.9965, 0.9965, 1]
+                                            scale: [0.9962, 0.9962, 1]
                                         child:
                                           - id: 15976547221592480175
                                             name: RightWing_$AssimpFbx$_Rotation
@@ -7551,7 +7556,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1065, 643]
+        size: [1184, 585]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -7577,7 +7582,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1065, 643]
+            size: [1184, 585]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
