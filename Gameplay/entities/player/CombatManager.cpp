@@ -23,7 +23,8 @@ Hachiko::Scripting::CombatManager::~CombatManager()
 void Hachiko::Scripting::CombatManager::OnAwake()
 {
 	// Spawn bullet (Passing the prefab can be improved)
-	UID bullet_uid = 14999767472668584259;
+	//UID bullet_uid = 14999767472668584259;
+	UID bullet_uid = 329775617723033719;
 	_bullets = SceneManagement::Instantiate(bullet_uid, game_object, _max_bullets);
 
 	_bullet_stats.reserve(_bullets.size());
