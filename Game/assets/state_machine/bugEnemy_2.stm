@@ -51,3 +51,7 @@ transitions:
     transition_target: death
     transition_trigger: isDead
     transition_blend: 300
+  - transition_source: death
+    transition_target: idle
+    transition_trigger: idle
+    transition_blend: 300

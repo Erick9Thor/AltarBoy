@@ -1,0 +1,54 @@
+prefab_name: Laser
+name: Laser
+enabled: true
+component:
+  - !<transform>
+    type: 1
+    enabled: true
+    position: [-10, 0, -5]
+    rotation: [0, 0, 0, 1]
+    scale: [1, 1, 1]
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: LaserController
+    "'_laser@GameObject*'": 3
+    "'_max_length@float'": 5
+    "'_max_scale@float'": 0.2
+    "'_activation_time@float'": 1
+    "'_damage@float'": 1
+child:
+  - name: Box001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0.5]
+        rotation: [-0.7071, 0, 0, 0.7071]
+        scale: [1, 1, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 1654487118907036717
+        navigable: false
+        visible: true
+        material_id: 6750369022920963075
+        tint_color: [1, 1, 1, 1]
+  - name: Cylinder001
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0.5, 0]
+        rotation: [1, 0, 0, 0]
+        scale: [0.2, 0.2, 1]
+      - !<mesh_renderer>
+        type: 2
+        enabled: true
+        mesh_id: 10210867973034302559
+        navigable: false
+        visible: true
+        material_id: 5638565975614595118
+        tint_color: [1, 1, 1, 1]
