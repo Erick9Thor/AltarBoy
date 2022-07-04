@@ -29,4 +29,4 @@ extern "C" const GAMEPLAY_API char* __cdecl SCRIPT_NAMES[SCRIPT_COUNT] =
 	"BackToMainMenu",
 	"DebugManager",
 	"MainMenuManager"
-}
+};

@@ -226,16 +226,16 @@ void Hachiko::WindowInspector::DrawGameObject(GameObject* game_object) const
 
     ImGui::SetNextWindowSize(ImVec2(ImGui::GetContentRegionAvail().x, default_popup_size_y));
     ImGui::SetNextWindowPos(ImVec2(current_pos.x, current_pos.y - adjust_y), 0, ImVec2(0, pivot_y));
-    if (ImGui::BeginPopup(add_script_modal_name.c_str(), ImGuiWindowFlags_Popup))
+    if (ImGui::BeginPopup(add_script_modal_name.c_str()))
     {
         std::string selected_name = "";
+        add_script = false;
 
         for (const std::string& name : App->scripting_system->GetLoadedScriptNames())
         {
             if (ImGui::MenuItem(name.c_str()))
             {
-                selected_name = name;
-                add_script = false;
+                selected_name = name;   
                 ImGui::CloseCurrentPopup();
             }
         }
