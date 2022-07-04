@@ -557,7 +557,8 @@ float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack
 
 bool Hachiko::Scripting::PlayerController::GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const
 {
-	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	constexpr bool active_only = true;
+	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain, true);
 	return terrain_hit != nullptr;
 }
 

@@ -82,15 +82,15 @@ void Hachiko::Scripting::EnemyController::OnStart()
 	}
 
 	ResetEnemy();
-}
 
-void Hachiko::Scripting::EnemyController::OnUpdate()
-{
 	if (_has_spawned == false)
 	{
 		Spawn();
 	}
+}
 
+void Hachiko::Scripting::EnemyController::OnUpdate()
+{
 	CheckState();
 	if (_state == BugState::SPAWNING)
 	{
@@ -132,8 +132,8 @@ const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 
 void Hachiko::Scripting::EnemyController::SpawnController()
 {
-	spawning_time_passed += Time::DeltaTime();
-	if (spawning_time_passed >= spawning_time)
+	spawning_time -= Time::DeltaTime();
+	if (spawning_time < 0.0f)
 	{
 		_state = BugState::IDLE;
 	}
@@ -494,13 +494,11 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_stun_time = 0.0f;
 	_is_stunned = false;
 	_has_spawned = false;
-	spawning_time_passed = 0.f;
 	_attack_delay = 0.3f;
 	_state = BugState::IDLE;
 	animation->SendTrigger("idle");
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
-	_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.f), true);
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
