@@ -65,3 +65,11 @@ transitions:
     transition_target: Appear
     transition_trigger: isAppear
     transition_blend: 300
+  - transition_source: Hit
+    transition_target: Dead
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: Hit
+    transition_target: Hide
+    transition_trigger: isHide
+    transition_blend: 300
