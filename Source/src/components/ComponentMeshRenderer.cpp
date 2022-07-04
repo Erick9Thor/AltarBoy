@@ -339,7 +339,7 @@ void Hachiko::ComponentMeshRenderer::ChangeMaterial()
                 material = res;
 
                 // TODO: Do this only when the material is actually changed.
-                App->scene_manager->GetActiveScene()->OnMeshesChanged();
+                App->scene_manager->RebuildBatches();
             }
         }
 

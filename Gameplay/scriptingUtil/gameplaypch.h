@@ -9,6 +9,8 @@
 #include <MathGeoLib.h> // Order matters, this should be included before 
 // Gameplay.h
 
+#include <utils/RandomUtil.h>
+
 #include <components/Component.h>
 #include <components/ComponentText.h>
 #include <components/ComponentButton.h>

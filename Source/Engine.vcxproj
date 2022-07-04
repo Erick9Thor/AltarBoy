@@ -698,6 +698,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\utils\RandomUtilDefinitions.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\core\rendering\ShadowManager.h" />
     <ClInclude Include="src\core\particles\modifiers\NoiseParticleModifier.h" />

@@ -522,6 +522,7 @@
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="misc\LevelManager.h" />
+    <ClInclude Include="misc\BlinkingLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -795,6 +796,7 @@
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
+    <ClCompile Include="misc\BlinkingLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
@@ -818,5 +820,6 @@
     <None Include="..\Source\vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl">
       <Filter>Vendors\MathGeoLib\Geometry</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

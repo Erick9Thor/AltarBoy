@@ -42,6 +42,7 @@ namespace Hachiko
 
             const Stats* GetStats();
             bool IsAlive() { return _combat_stats->IsAlive(); };
+            void SetIsFromGauntlet(bool v) { _is_from_gautlet = v; }
             void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
             void GetParasite();
             void Spawn();
@@ -129,6 +130,7 @@ namespace Hachiko
             float3 _knockback_pos = float3::zero;
             float _attack_current_delay = 0.f;
             float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
+            float spawning_time_passed = 0.f;
             bool _has_spawned = false;
         };
     } // namespace Scripting
