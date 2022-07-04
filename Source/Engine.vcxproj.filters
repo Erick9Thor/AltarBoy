@@ -2504,6 +2504,9 @@
     <ClInclude Include="vendors\OpenSimplex\OpenSimplex2S.h">
       <Filter>Vendors\OpenSimplex</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\RandomUtilDefinitions.h">
+      <Filter>Core\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
