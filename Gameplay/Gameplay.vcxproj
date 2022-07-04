@@ -315,6 +315,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="misc\BlinkingLight.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="misc\LevelManager.h" />
@@ -728,6 +729,7 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="misc\BlinkingLight.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
@@ -765,6 +767,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <None Include="..\Source\vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl" />
     <None Include="..\Source\vendors\MathGeoLib\Math\Matrix.inl" />
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,8 +12,13 @@
 #include "entities/player/PlayerSoundManager.h"
 #include "entities/player/RoomTeleporter.h"
 #include "misc/AudioManager.h"
+#include "misc/BlinkingLight.h"
+#include "misc/DoorController.h"
 #include "misc/DynamicCamera.h"
 #include "misc/FancyLights.h"
+#include "misc/GauntletManager.h"
+#include "misc/LevelManager.h"
+#include "misc/PillarCheckpoint.h"
 #include "ui/BackToMainMenu.h"
 #include "ui/DebugManager.h"
 #include "ui/MainMenuManager.h"
@@ -81,6 +86,16 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 		return new Hachiko::Scripting::AudioManager(script_owner);
 	}
 
+	if (script_name == "BlinkingLight")
+	{
+		return new Hachiko::Scripting::BlinkingLight(script_owner);
+	}
+
+	if (script_name == "DoorController")
+	{
+		return new Hachiko::Scripting::DoorController(script_owner);
+	}
+
 	if (script_name == "DynamicCamera")
 	{
 		return new Hachiko::Scripting::DynamicCamera(script_owner);
@@ -89,6 +104,21 @@ Hachiko::Scripting::Script* InstantiateScript(Hachiko::GameObject* script_owner,
 	if (script_name == "FancyLights")
 	{
 		return new Hachiko::Scripting::FancyLights(script_owner);
+	}
+
+	if (script_name == "GauntletManager")
+	{
+		return new Hachiko::Scripting::GauntletManager(script_owner);
+	}
+
+	if (script_name == "LevelManager")
+	{
+		return new Hachiko::Scripting::LevelManager(script_owner);
+	}
+
+	if (script_name == "PillarCheckpoint")
+	{
+		return new Hachiko::Scripting::PillarCheckpoint(script_owner);
 	}
 
 	if (script_name == "BackToMainMenu")
