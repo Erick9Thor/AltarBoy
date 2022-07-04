@@ -19,7 +19,7 @@ child:
       - !<transform>
         type: 1
         enabled: true
-        position: [-0.00469001941, -0.944041729, 0]
+        position: [-0.0047, -0.944, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
     child:
@@ -29,8 +29,8 @@ child:
           - !<transform>
             type: 1
             enabled: true
-            position: [0.00469001941, 1.172894, 0]
-            rotation: [0, -0.0839972645, 0, 0.996465981]
+            position: [0.0047, 1.173, 0]
+            rotation: [0, -0.084, 0, 0.9965]
             scale: [1, 1, 1]
   - name: Floating_pilarGRP
     enabled: true
@@ -49,8 +49,8 @@ child:
             type: 1
             enabled: true
             position: [0, 0, 0]
-            rotation: [-0.697330117, 0.117178254, 0.117178239, 0.697330058]
-            scale: [0.00299211987, 0.00287273992, 0.00485647982]
+            rotation: [-0.6973, 0.1172, 0.1172, 0.6973]
+            scale: [0.003, 0.0029, 0.0049]
           - !<mesh_renderer>
             type: 2
             enabled: true
@@ -58,3 +58,4 @@ child:
             navigable: false
             visible: true
             material_id: 7555422350562069233
+            tint_color: [1, 1, 1, 1]
