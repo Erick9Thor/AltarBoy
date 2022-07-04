@@ -17,7 +17,7 @@
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
-	, _attack_range(1.5f)
+	, _attack_range(3.0f)
 	, _attack_delay(0.3f)
 	, _idle_cooldown(2.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
@@ -423,7 +423,7 @@ void Hachiko::Scripting::EnemyController::Spawn()
 {
 	if (_enemy_body)
 	{
-		_enemy_body->ChangeColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time, true);
+		_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), spawning_time, true);
 	}
 	_has_spawned = true;
 	_state = BugState::SPAWNING;
