@@ -91,10 +91,8 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_dash_trail->SetActive(false);
 	}
 
-	if (_walking_dust)
-	{
-		_walking_dust->SetActive(false);
-	}
+	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
+	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -564,11 +562,15 @@ void Hachiko::Scripting::PlayerController::MovementController()
 {
 	DashController();
 	WalkingOrientationController();
-	WalkingDustManager();
 
 	if (IsWalking())
 	{
 		_player_position += (_movement_direction * _combat_stats->_move_speed * Time::DeltaTime());
+		_walking_dust_particles->Play();
+	}
+	else
+	{
+		_walking_dust_particles->Stop();
 	}
 
 	if (_god_mode)
@@ -611,7 +613,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
-			FallingDustManager();
+			_falling_dust_particles->Restart();
 		}
 	}
 	else if (!IsDashing())
@@ -701,19 +703,6 @@ void Hachiko::Scripting::PlayerController::DashTrailManager(float dash_progress)
 		_dash_trail->SetActive(_show_dashtrail);
 
 	}
-}
-
-void Hachiko::Scripting::PlayerController::FallingDustManager()
-{
-	ComponentParticleSystem* dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
-	dust_particles->Restart();
-}
-
-void Hachiko::Scripting::PlayerController::WalkingDustManager()
-{
-	_walking_dust->SetActive(IsWalking());
-	//ComponentParticleSystem* dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
-	//dust_particles->Play();
 }
 
 void Hachiko::Scripting::PlayerController::WalkingOrientationController()

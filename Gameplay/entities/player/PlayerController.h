@@ -137,8 +137,6 @@ private:
 	void DashController();
 	void DashChargesManager();
 	void DashTrailManager(float dash_progress);
-	void FallingDustManager();
-	void WalkingDustManager();
 	void WalkingOrientationController();
 	void AttackController();
 
@@ -190,6 +188,8 @@ private:
 
 	ComponentTransform* _player_transform = nullptr;
 	ComponentAnimation* animation;
+	ComponentParticleSystem* _falling_dust_particles;
+	ComponentParticleSystem* _walking_dust_particles;
 
 	std::vector<Weapon> weapons{};
 
