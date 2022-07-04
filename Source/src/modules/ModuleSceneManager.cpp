@@ -103,6 +103,14 @@ bool Hachiko::ModuleSceneManager::IsScenePlaying()
     return GameTimer::running && !GameTimer::paused;
 }
 
+void Hachiko::ModuleSceneManager::RebuildBatches()
+{
+    if (main_scene)
+    {
+        main_scene->RebuildBatches();
+    }
+}
+
 UpdateStatus Hachiko::ModuleSceneManager::Update(const float delta)
 {
     main_scene->Update();

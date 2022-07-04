@@ -25,6 +25,8 @@ namespace Hachiko
         void AttemptScenePlay();
         void AttemptSceneStop();
         bool IsScenePlaying();
+
+        void RebuildBatches();
         
         UpdateStatus Update(float delta) override;
         UpdateStatus PostUpdate(float delta) override;

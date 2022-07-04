@@ -70,7 +70,7 @@ namespace Hachiko
         }
 
         // --- Batching --- //
-        void OnMeshesChanged()
+        void RebuildBatches()
         {
             rebuild_batch = true;
         }
