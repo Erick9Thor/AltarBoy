@@ -20,6 +20,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _invulnerability_time(1.0f)
 	, _dash_scaler(3)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
@@ -165,6 +166,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
 		_level_manager->Respawn(this);
+	}
+
+	if (_invulnerability_time_remaining > 0.0f)
+	{
+		_invulnerability_time_remaining -= Time::DeltaTime();
 	}
 
 	if (_god_mode_trigger)
@@ -438,7 +444,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	_attack_indicator->ChangeColor(attack_color, attack.duration, true);
+	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -845,12 +851,12 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 			{
 				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
 
-				if (enemy_controller->IsAlive() == false)
+				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
 					if (_geo != nullptr) 
 					{
-						_geo->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
@@ -870,11 +876,15 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	if (_god_mode)	return;
+	if (_god_mode || _invulnerability_time_remaining > 0.0f)
+	{
+	    return;
+	}
 
+	_invulnerability_time_remaining = _invulnerability_time;
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
-	game_object->ChangeColor(float4(255, 255, 255, 255), 0.3, true);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 
 	// Activate vignette
 	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)

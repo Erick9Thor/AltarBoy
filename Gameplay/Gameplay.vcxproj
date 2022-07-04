@@ -315,6 +315,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="CrystalPlatform.h" />
     <ClInclude Include="misc\AudioManager.h" />
+    <ClInclude Include="misc\Spawner.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="misc\LevelManager.h" />
@@ -728,6 +729,7 @@ RD /S /Q "$(TargetDir)"</Command>
     </ClCompile>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
+    <ClCompile Include="misc\Spawner.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
