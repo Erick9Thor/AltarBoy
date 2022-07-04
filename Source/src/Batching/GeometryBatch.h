@@ -32,16 +32,16 @@ namespace Hachiko
 
         void BuildBatch();
         void BatchMeshes();
+        void BatchData();
+
+        void UpdateWithTextureBatch(const Program* program, bool use_first_segment);
 
         void ClearDrawList();
 
-        void GenerateVAO();
-        void UpdateVAO();
+        void BindBuffers(bool use_first_segment);
         void GenerateBuffers();
-
-        void UpdateCommands();
-        void UpdateBatch(int segment);
-        void BindBatch(int segment, const Program* program);
+        void UpdateBuffers();
+        void GenerateCommands();        
 
         void ImGuiWindow();
 
@@ -50,11 +50,6 @@ namespace Hachiko
             return commands;
         }
         
-        const int GetCommandAmount() const
-        {
-            return commands.size();
-        }
-
         std::vector<const ComponentMeshRenderer*> components; // contains all ComponentMeshes in the batch
         // Commands will be used as templates for the final command list
         std::unordered_map<const ResourceMesh*, DrawCommand*> resources; // contains unique ResourceMeshes and their position in the buffer
