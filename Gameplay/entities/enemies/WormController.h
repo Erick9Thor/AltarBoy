@@ -13,17 +13,15 @@ namespace Hachiko
         class AudioManager;
         class PlayerController;
         class CombatManager;
-        enum class BugState
+        enum class WormState
         {
             INVALID,
             DEAD,
             IDLE,
-            MOVING,
-            MOVING_BACK,
+            HIDEN,
             ATTACKING,
             PARASITE,
-            SPAWNING,
-            PATROL
+            SPAWNING
         };
 
         class WormController : public Script
@@ -38,7 +36,7 @@ namespace Hachiko
             void OnStart() override;
             void OnUpdate() override;
 
-            BugState GetState() const;
+            WormState GetState() const;
 
             //const Stats* GetStats();
             //bool IsAlive() { return _combat_stats->IsAlive(); };
