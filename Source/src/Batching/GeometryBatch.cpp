@@ -15,7 +15,7 @@ Hachiko::GeometryBatch::GeometryBatch(ResourceMesh::Layout batch_layout) {
 
     texture_batch = new TextureBatch();
 
-    GenerateBuffers();
+    GenerateVAO();
 }
 
 Hachiko::GeometryBatch::~GeometryBatch() {
@@ -64,7 +64,8 @@ void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMeshRenderer* mesh)
 void Hachiko::GeometryBatch::BuildBatch() {
 
     BatchMeshes();
-    UpdateBuffers();
+    UpdateVAO();
+    GenerateBuffers();
 
     texture_batch->BuildBatch(component_count);
 }
@@ -157,38 +158,29 @@ void Hachiko::GeometryBatch::BatchMeshes()
     }
 }
 
-void Hachiko::GeometryBatch::UpdateWithTextureBatch(const Program* program, bool use_first_segment)
+void Hachiko::GeometryBatch::UpdateCommands() 
 {
-    BatchData();
-    GenerateCommands();
+    // Update commands data
+    commands.reserve(components.size());
 
-    glBindVertexArray(batch->vao);
+    unsigned instance = 0;
+    for (const ComponentMeshRenderer* component : components)
+    {
+        const ResourceMesh* r = component->GetResourceMesh();
+        DrawCommand command = (*resources[r]);
+        command.base_instance = instance;
+        commands.emplace_back(command);
+        ++instance;
+    }
+
+    // Update commands buffers
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
-
-    if (use_first_segment)
-    {
-        memcpy(transform_buffer_data, transforms.data(), transforms.size() * sizeof(float4x4));
-        if (batch->layout.bones)
-        {
-            memcpy(palettes_buffer_data, palettes.data(), palettes.size() * sizeof(float4x4));
-            memcpy(palettes_per_instances_buffer_data, palettes_per_instance.data(), palettes_per_instance.size() * sizeof(PalettePerInstance));
-        }
-    }
-    else
-    {
-        memcpy(&transform_buffer_data[component_count], transforms.data(), transforms.size() * sizeof(float4x4));
-        if (batch->layout.bones)
-        {
-            memcpy(&palettes_buffer_data[component_palette_count], palettes.data(), palettes.size() * sizeof(float4x4));
-            memcpy(&palettes_per_instances_buffer_data[component_count], palettes_per_instance.data(), palettes_per_instance.size() * sizeof(PalettePerInstance));
-        }
-    }
-
-    texture_batch->Draw(program, components, use_first_segment, component_count);
+    glBufferData(GL_DRAW_INDIRECT_BUFFER, commands.size() * sizeof(DrawCommand), commands.data(), GL_DYNAMIC_DRAW);
 }
 
-void Hachiko::GeometryBatch::BatchData()
+void Hachiko::GeometryBatch::UpdateBatch(int segment)
 {
+    // Update transforms, palletes, palletes_per_instance data
     transforms.reserve(components.size());
     if (batch->layout.bones)
     {
@@ -221,24 +213,53 @@ void Hachiko::GeometryBatch::BatchData()
             transforms.push_back(component->GetGameObject()->GetTransform()->GetGlobalMatrix());
         }
     }
-}
 
-void Hachiko::GeometryBatch::GenerateCommands()
-{
-    commands.reserve(components.size());
-
-    unsigned instance = 0;
-    for (const ComponentMeshRenderer* component : components)
+    // Update persistent buffers
+    memcpy(&transform_buffer_data[component_count * segment], transforms.data(), transforms.size() * sizeof(float4x4));
+    if (batch->layout.bones)
     {
-        const ResourceMesh* r = component->GetResourceMesh();
-        DrawCommand command = (*resources[r]);
-        command.base_instance = instance;
-        commands.emplace_back(command);
-        ++instance;
+        memcpy(&palettes_buffer_data[component_palette_count * segment], palettes.data(), palettes.size() * sizeof(float4x4));
+        memcpy(&palettes_per_instances_buffer_data[component_count * segment], palettes_per_instance.data(), palettes_per_instance.size() * sizeof(PalettePerInstance));
     }
 
+    // Update texture batch
+    texture_batch->UpdateBatch(segment, components, component_count);
+}
+
+void Hachiko::GeometryBatch::BindBatch(int segment, const Program* program)
+{
+    // Bind vao & commands
+    glBindVertexArray(batch->vao);
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, indirect_buffer_id);
-    glBufferData(GL_DRAW_INDIRECT_BUFFER, commands.size() * sizeof(DrawCommand), commands.data(), GL_DYNAMIC_DRAW);
+
+    // Bind persistent buffers
+    glBindBuffer(GL_ARRAY_BUFFER, transform_buffer);
+    glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MODEL), transform_buffer, (component_count * sizeof(float4x4)) * segment, component_count * sizeof(float4x4));
+
+    if (batch->layout.bones)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, palettes_buffer);
+        glBindBufferRange(GL_SHADER_STORAGE_BUFFER,
+                          static_cast<int>(ModuleProgram::BINDING::PALETTE),
+                          palettes_buffer,
+                          (component_palette_count * sizeof(float4x4)) * segment,
+                          component_palette_count * sizeof(float4x4));
+
+        glBindBuffer(GL_ARRAY_BUFFER, palettes_per_instances_buffer);
+        glBindBufferRange(GL_SHADER_STORAGE_BUFFER,
+                          static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE),
+                          palettes_per_instances_buffer,
+                          (component_count * sizeof(PalettePerInstance)) * segment,
+                          component_count * sizeof(PalettePerInstance));
+    }
+
+    // Bind texture batch
+    texture_batch->BindBatch(segment, program, component_count);
+
+    // Bind extra uniforms
+    program->BindUniformBool("has_bones", batch->layout.bones);
+    int persistent_offset = component_count * segment;
+    program->BindUniformInts("persistent_offset", 1, &persistent_offset);
 }
 
 void Hachiko::GeometryBatch::ClearDrawList()
@@ -251,47 +272,7 @@ void Hachiko::GeometryBatch::ClearDrawList()
     palettes_per_instance.clear();
 }
 
-void Hachiko::GeometryBatch::BindBuffers(bool use_first_segment)
-{
-    if (use_first_segment)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, transform_buffer);
-        glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MODEL), transform_buffer, 0, component_count * sizeof(float4x4));
-
-        if (batch->layout.bones)
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, palettes_buffer);
-            glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::PALETTE), palettes_buffer, 0, component_palette_count * sizeof(float4x4));
-
-            glBindBuffer(GL_ARRAY_BUFFER, palettes_per_instances_buffer);
-            glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE), palettes_per_instances_buffer, 0, component_count * sizeof(PalettePerInstance));
-        }
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, transform_buffer);
-        glBindBufferRange(GL_SHADER_STORAGE_BUFFER, static_cast<int>(ModuleProgram::BINDING::MODEL), transform_buffer, component_count * sizeof(float4x4), component_count * sizeof(float4x4));
-
-        if (batch->layout.bones)
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, palettes_buffer);
-            glBindBufferRange(GL_SHADER_STORAGE_BUFFER,
-                              static_cast<int>(ModuleProgram::BINDING::PALETTE),
-                              palettes_buffer,
-                              component_palette_count * sizeof(float4x4),
-                              component_palette_count * sizeof(float4x4));
-
-            glBindBuffer(GL_ARRAY_BUFFER, palettes_per_instances_buffer);
-            glBindBufferRange(GL_SHADER_STORAGE_BUFFER,
-                              static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE),
-                              palettes_per_instances_buffer,
-                              component_count * sizeof(PalettePerInstance),
-                              component_count * sizeof(PalettePerInstance));
-        }
-    }
-}
-
-void Hachiko::GeometryBatch::GenerateBuffers()
+void Hachiko::GeometryBatch::GenerateVAO()
 {
     glGenVertexArrays(1, &batch->vao);
     glBindVertexArray(batch->vao);
@@ -354,7 +335,7 @@ void Hachiko::GeometryBatch::GenerateBuffers()
     batch->loaded = true;
 }
 
-void Hachiko::GeometryBatch::UpdateBuffers()
+void Hachiko::GeometryBatch::UpdateVAO()
 {
     glBindVertexArray(batch->vao);
     glBindBuffer(GL_ARRAY_BUFFER, batch->buffer_ids[static_cast<int>(ResourceMesh::Buffers::VERTICES)]);
@@ -388,18 +369,22 @@ void Hachiko::GeometryBatch::UpdateBuffers()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, batch->buffer_sizes[static_cast<int>(ResourceMesh::Buffers::INDICES)] * sizeof(unsigned), batch->indices, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(0);
+}
 
+void Hachiko::GeometryBatch::GenerateBuffers() 
+{
+    //glDeleteBuffers(1, &transform_buffer);
     transform_buffer_data = static_cast<float4x4*>(
-        App->program->CreatePersistentBuffers(transform_buffer, static_cast<int>(ModuleProgram::BINDING::MODEL), 2 * component_count * sizeof(float4x4))
-    );
+        App->program->CreatePersistentBuffers(transform_buffer, static_cast<int>(ModuleProgram::BINDING::MODEL), BatchManager::max_segments * component_count * sizeof(float4x4)));
     if (batch->layout.bones)
     {
+        //glDeleteBuffers(1, &palettes_buffer);
         palettes_buffer_data = static_cast<float4x4*>(
-            App->program->CreatePersistentBuffers(palettes_buffer, static_cast<int>(ModuleProgram::BINDING::PALETTE), 2 * component_palette_count * sizeof(float4x4))
-        );
-        palettes_per_instances_buffer_data = static_cast<PalettePerInstance*>(
-            App->program->CreatePersistentBuffers(palettes_per_instances_buffer, static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE), 2 * component_count * sizeof(PalettePerInstance))
-        );
+            App->program->CreatePersistentBuffers(palettes_buffer, static_cast<int>(ModuleProgram::BINDING::PALETTE), BatchManager::max_segments * component_palette_count * sizeof(float4x4)));
+        //glDeleteBuffers(1, &palettes_per_instances_buffer);
+        palettes_per_instances_buffer_data = static_cast<PalettePerInstance*>(App->program->CreatePersistentBuffers(palettes_per_instances_buffer,
+                                                                                                                    static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE),
+                                                                                                                    BatchManager::max_segments * component_count * sizeof(PalettePerInstance)));
     }
 }
 
