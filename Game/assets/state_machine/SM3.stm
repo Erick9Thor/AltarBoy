@@ -93,3 +93,11 @@ transitions:
     transition_target: idle
     transition_trigger: isIdle
     transition_blend: 300
+  - transition_source: run
+    transition_target: pickUp
+    transition_trigger: isPickUp
+    transition_blend: 300
+  - transition_source: pickUp
+    transition_target: run
+    transition_trigger: isRun
+    transition_blend: 300

@@ -284,6 +284,11 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		{
 			_state = PlayerState::IDLE;
 		}
+
+		if (Input::IsKeyDown(Input::KeyCode::KEY_F))
+		{
+			PickupParasite(_player_position);
+		}
 	}	
 	else
 	{
@@ -311,10 +316,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 		ToggleGodMode();
 	}
-	if (Input::IsKeyDown(Input::KeyCode::KEY_F))
-	{
-		PickupParasite(_player_position);
-	}
+	
 	// Testing for camera
 	if (Input::IsKeyDown(Input::KeyCode::KEY_C))
 	{
@@ -571,7 +573,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		return;
 	}
 
-	if (IsPickUp() && animation->IsAnimationStopped())
+	if (IsPickUp() && animation->IsAnimationStopped() && isPickingUp)
 	{
 		_state = PlayerState::IDLE;
 	}
