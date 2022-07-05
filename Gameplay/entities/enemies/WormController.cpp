@@ -39,11 +39,11 @@ void Hachiko::Scripting::WormController::OnAwake()
 	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 	if (_small_dust)
 	{
-		//_small_dust_particles = _small_dust->GetComponent<ComponentParticleSystem>();
+		_small_dust_particles = _small_dust->GetComponent<ComponentParticleSystem>();
 	}
 	if (_big_dust)
 	{
-		//_big_dust_particles = _big_dust->GetComponent<ComponentParticleSystem>();
+		_big_dust_particles = _big_dust->GetComponent<ComponentParticleSystem>();
 	}
 	_has_spawned = false;
 }
@@ -84,7 +84,7 @@ void Hachiko::Scripting::WormController::SpawnController()
 	{
 		_player_camera->Shake(0.5f, 0.8f);
 		_enemy_body->SetActive(true);
-		//_big_dust_particles->Play();
+		_big_dust_particles->Play();
 		//Push the player back
 		_combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
 		return;
@@ -111,7 +111,7 @@ void Hachiko::Scripting::WormController::Spawn()
 		_enemy_body->SetActive(false);
 	}
 	_state = WormState::INVALID;
-	//_small_dust_particles->Play();
+	_small_dust_particles->Play();
 	_current_spawning_time = _spawning_time;
 	_player_camera->Shake(_spawning_time, 0.2f);
 }
