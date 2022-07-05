@@ -55,7 +55,7 @@ transitions:
     transition_blend: 300
   - transition_source: Appear
     transition_target: Iddle
-    transition_trigger: isIddle
+    transition_trigger: idle
     transition_blend: 300
   - transition_source: RangeAttack
     transition_target: Hide
@@ -72,4 +72,16 @@ transitions:
   - transition_source: Hit
     transition_target: Hide
     transition_trigger: isHide
+    transition_blend: 300
+  - transition_source: RangeAttack
+    transition_target: Iddle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: Hit
+    transition_target: Iddle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: RangeAttack
+    transition_target: Hit
+    transition_trigger: isHit
     transition_blend: 300
