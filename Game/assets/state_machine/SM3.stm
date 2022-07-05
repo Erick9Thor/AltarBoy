@@ -1,0 +1,95 @@
+name: SM3
+default_node: 0
+clips:
+  - clip_name: idle
+    clips_id: 18303446198230088858
+    clips_loop: true
+  - clip_name: run
+    clips_id: 17063392249428625345
+    clips_loop: true
+  - clip_name: meleeOne
+    clips_id: 12839013068754891223
+    clips_loop: false
+  - clip_name: meleeTwo
+    clips_id: 4842440324179260068
+    clips_loop: false
+  - clip_name: meleeThree
+    clips_id: 9741971980889188744
+    clips_loop: false
+  - clip_name: shot
+    clips_id: 14680319140328100188
+    clips_loop: false
+  - clip_name: dash
+    clips_id: 786971983245796595
+    clips_loop: true
+  - clip_name: pickUp
+    clips_id: 8564100870197687525
+    clips_loop: false
+  - clip_name: swordOne
+    clips_id: 9740314812815850799
+    clips_loop: false
+  - clip_name: swordTwo
+    clips_id: 6590039955794754110
+    clips_loop: false
+  - clip_name: swordThree
+    clips_id: 10386541432644636515
+    clips_loop: false
+  - clip_name: idleSword
+    clips_id: 13909209450348895464
+    clips_loop: true
+  - clip_name: idleClaw
+    clips_id: 18247599405522135789
+    clips_loop: true
+  - clip_name: clawOne
+    clips_id: 4355919634760094504
+    clips_loop: false
+  - clip_name: clawTwo
+    clips_id: 2544338032988874273
+    clips_loop: false
+  - clip_name: clawThree
+    clips_id: 778731922562382948
+    clips_loop: false
+nodes:
+  - node_name: idle
+    node_clip_name: idle
+  - node_name: run
+    node_clip_name: run
+  - node_name: dash
+    node_clip_name: dash
+  - node_name: shot
+    node_clip_name: shot
+  - node_name: pickUp
+    node_clip_name: pickUp
+transitions:
+  - transition_source: idle
+    transition_target: run
+    transition_trigger: isRun
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: dash
+    transition_trigger: isDash
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: shot
+    transition_trigger: isShot
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: pickUp
+    transition_trigger: isPickUp
+    transition_blend: 300
+  - transition_source: run
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: pickUp
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: dash
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: shot
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300

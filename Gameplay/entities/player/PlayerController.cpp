@@ -823,6 +823,7 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
+	_state = PlayerState::PICK_UP;
 	if (_enemies == nullptr) {
 		return;
 	}
@@ -928,19 +929,22 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	switch (current_state)
 	{
 	case PlayerState::IDLE:
-		animation->SendTrigger("idle");
+		animation->SendTrigger("isIdle");
 		break;
 	case PlayerState::WALKING:
-		animation->SendTrigger("isRunning");
+		animation->SendTrigger("isRun");
 		break;
-	case PlayerState::MELEE_ATTACKING:
-		animation->SendTrigger("isAttacking");
+	case PlayerState::PICK_UP:
+		animation->SendTrigger("isPickUp");
 		break;
 	case PlayerState::RANGED_ATTACKING:
-		animation->SendTrigger("isShooting");
+		animation->SendTrigger("isShot");
 		break;
 	case PlayerState::DASHING:
 		animation->SendTrigger("isDash");
+		break;
+	case PlayerState::MELEE_ATTACKING:
+		animation->SendTrigger("isAttacking");
 		break;
 	case PlayerState::FALLING:
 		animation->SendTrigger("isFalling");
