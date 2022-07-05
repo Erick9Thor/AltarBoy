@@ -2137,6 +2137,200 @@
 						<ActiveSource Name="ui-confirmation" ID="{280F220A-6581-4E23-A544-AFED69C44FE2}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="LaserStart" ID="{E52F1E0E-B538-4CA7-AB1E-33B36327CBB1}" ShortID="805193297">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Noise - Swirly Spinner" ID="{80D5B3A8-3F46-4072-8184-4861CF5F18E6}">
+							<PropertyList>
+								<Property Name="FadeOutDuration" Type="Real64" Value="1.73124224762604"/>
+								<Property Name="FadeOutShape" Type="int16" Value="2"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimEnd" Type="Real64" Value="2.14543147589005"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Laser\Noise - Swirly Spinner.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="781381782"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Noise - Swirly Spinner" ID="{80D5B3A8-3F46-4072-8184-4861CF5F18E6}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<RandomSequenceContainer Name="Laser" ID="{63DBFACE-AF05-4862-98E5-8EA87741DF91}" ShortID="6661607">
+					<PropertyList>
+						<Property Name="RandomOrSequence" Type="int16" Value="0"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<StateInfo>
+						<StateGroupList>
+							<StateGroupInfo>
+								<StateGroupRef Name="Start" ID="{B78BB9F6-F298-410A-B616-9A451A1A8DEF}"/>
+							</StateGroupInfo>
+						</StateGroupList>
+					</StateInfo>
+					<ObjectLists/>
+				</RandomSequenceContainer>
+				<Sound Name="LaserLoop" ID="{7C294618-BEB3-4A00-A87A-8D0019917B06}" ShortID="492085068">
+					<PropertyList>
+						<Property Name="InitialDelay" Type="Real64">
+							<ValueList>
+								<Value>2.5</Value>
+							</ValueList>
+						</Property>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-15</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Sub - Sub Bees" ID="{91C760BB-64DB-4F15-8582-C3BA973DCF54}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="0.0304955404383965"/>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.0203303602922649"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="0.396442025699169"/>
+								<Property Name="TrimEnd" Type="Real64" Value="5.22490259511212"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Laser\Sub - Sub Bees.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="786404871"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Sub - Sub Bees" ID="{91C760BB-64DB-4F15-8582-C3BA973DCF54}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="LaserLoop2" ID="{266001FC-14CB-47CE-AAA8-F4542C5EA4D6}" ShortID="111566544">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Sub - Subtle Meanie" ID="{E8A88A2C-6136-4009-97A7-606A7BC7A6F4}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="0.0277332728647015"/>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.00924442428823458"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimBegin" Type="Real64" Value="0.101688667170572"/>
+								<Property Name="TrimEnd" Type="Real64" Value="4.86818533401819"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Laser\Sub - Subtle Meanie.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="985470147"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Sub - Subtle Meanie" ID="{E8A88A2C-6136-4009-97A7-606A7BC7A6F4}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="LaserStop" ID="{289F1559-4473-4A79-A9BE-E5FA2C91E0B9}" ShortID="929922742">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Short - Bass Boy" ID="{99D2AC78-A75F-4348-9FAC-C6FA7830B223}">
+							<Language>SFX</Language>
+							<AudioFile>Laser\Short - Bass Boy.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="866544607"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Short - Bass Boy" ID="{99D2AC78-A75F-4348-9FAC-C6FA7830B223}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Laser_Hit" ID="{6D7E54CD-08B9-4F32-95B3-4FB05B15EB41}" ShortID="313103427">
+					<PropertyList>
+						<Property Name="Lowpass" Type="int16">
+							<ValueList>
+								<Value>15</Value>
+							</ValueList>
+						</Property>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>3</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Swish - Call And Response" ID="{302EC327-6034-42A5-B493-5042626E2555}">
+							<PropertyList>
+								<Property Name="FadeOutDuration" Type="Real64" Value="0.0671995767195767"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+								<Property Name="TrimEnd" Type="Real64" Value="1.52319040564374"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Laser\Swish - Call And Response.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="1053424550"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists/>
+					<ActiveSourceList>
+						<ActiveSource Name="Swish - Call And Response" ID="{302EC327-6034-42A5-B493-5042626E2555}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

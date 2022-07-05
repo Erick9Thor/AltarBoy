@@ -48,6 +48,7 @@ namespace Hachiko
 
 			GameObject* _terrain;
 			GameObject* _player;
+			ComponentAudioSource* _audio_source;
 		};
 	}
 	

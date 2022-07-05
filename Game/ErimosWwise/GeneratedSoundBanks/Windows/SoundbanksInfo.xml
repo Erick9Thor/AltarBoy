@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="12" SoundbankVersion="140">
 	<RootPaths>
-		<ProjectRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
-		<SourceFilesRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
-		<SoundBanksRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ProjectRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows\</SoundBanksRoot>
 		<ExternalSourcesInputFile></ExternalSourcesInputFile>
-		<ExternalSourcesOutputRoot>C:\Users\MO\Documents\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
+		<ExternalSourcesOutputRoot>C:\Users\SoppelsA\OneDrive - HP Inc\Documents\Personal Folder\Master UPC\Hachiko-Engine\Game\ErimosWwise\GeneratedSoundBanks\Windows</ExternalSourcesOutputRoot>
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles/>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="626769978" Language="SFX" Hash="1691533705">
+		<SoundBank Id="626769978" Language="SFX" Hash="1880952237">
 			<ObjectPath>\SoundBanks\Default Work Unit\BackgroundMusic</ObjectPath>
 			<ShortName>BackgroundMusic</ShortName>
 			<Path>BackgroundMusic.bnk</Path>
@@ -44,12 +44,12 @@
 				<Event Id="445689598" Name="Stop_Navigation" ObjectPath="\Events\Default Work Unit\Stop_Navigation"/>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="1355168291" Language="SFX" Hash="1147299202">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1505528289">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="3948287601">
+		<SoundBank Id="1551306167" Language="SFX" Hash="1778293802">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -72,7 +72,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="2385628198" Language="SFX" Hash="1974466695">
+		<SoundBank Id="2385628198" Language="SFX" Hash="193242147">
 			<ObjectPath>\SoundBanks\Default Work Unit\Footsteps</ObjectPath>
 			<ShortName>Footsteps</ShortName>
 			<Path>Footsteps.bnk</Path>
@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3319688554">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3255924596">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -473,7 +473,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3907211052">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2679162046">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -499,6 +499,30 @@
 						<File Id="291347773" Language="SFX">
 							<ShortName>DoorOpenSlime.wav</ShortName>
 							<Path>SFX\DoorOpenSlime_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser">
+					<IncludedMemoryFiles>
+						<File Id="781381782" Language="SFX">
+							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
+							<Path>SFX\Laser\Noise - Swirly Spinner_E8155999.wem</Path>
+						</File>
+						<File Id="786404871" Language="SFX">
+							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
+							<Path>SFX\Laser\Sub - Sub Bees_CC01CEA9.wem</Path>
+						</File>
+						<File Id="985470147" Language="SFX">
+							<ShortName>Laser\Sub - Subtle Meanie.wav</ShortName>
+							<Path>SFX\Laser\Sub - Subtle Meanie_EE217E7E.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="4092857357" Name="Play_Laser_Hit" ObjectPath="\Events\Default Work Unit\Play_Laser_Hit">
+					<IncludedMemoryFiles>
+						<File Id="1053424550" Language="SFX">
+							<ShortName>Laser\Swish - Call And Response.wav</ShortName>
+							<Path>SFX\Laser\Swish - Call And Response_097AA784.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -530,6 +554,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="738066393" Name="Stop_Laser" ObjectPath="\Events\Default Work Unit\Stop_Laser"/>
 				<Event Id="707649828" Name="Stop_Pebble" ObjectPath="\Events\Default Work Unit\Stop_Pebble"/>
 				<Event Id="3173136834" Name="Stop_Wind" ObjectPath="\Events\Default Work Unit\Stop_Wind"/>
 			</IncludedEvents>

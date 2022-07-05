@@ -17,6 +17,9 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* STOP_WIND = L"Stop_Wind";
 	constexpr const wchar_t* PLAY_PEBBLE = L"Play_Pebble";
 	constexpr const wchar_t* STOP_PEBBLE = L"Stop_Pebble";
+	constexpr const wchar_t* PLAY_LASER = L"Play_Laser";
+	constexpr const wchar_t* STOP_LASER = L"Stop_Laser";
+	constexpr const wchar_t* PLAY_LASER_HIT = L"Play_Laser_Hit";
 
 	// Background Music
 	constexpr const wchar_t* BACKGROUNDMUSIC = L"Play_BackgroundMusic";

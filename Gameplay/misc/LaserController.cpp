@@ -1,6 +1,7 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "LaserController.h"
 #include "constants/Scenes.h"
+#include "constants/Sounds.h"
 #include "entities/player/PlayerController.h"
 
 //#include "components/ComponentObstacle.h"
@@ -15,12 +16,16 @@ Hachiko::Scripting::LaserController::LaserController(GameObject* game_object)
 	, _max_scale(0.2f)
 	, _activation_time(1.0f)
 	, _damage(1.0f)
+	, _audio_source(nullptr)
 {}
 
 void Hachiko::Scripting::LaserController::OnAwake()
 {
 	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
 	_player = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Player");
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
+	_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER);
+
 	//door_obstacle = _door->GetComponent<ComponentObstacle>();
 }
 
@@ -63,12 +68,15 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 		_elapse_time = 0.0f;
 		_scale = 0.0f;
 		AdjustLength();
+		_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER);
 
 		// TODO: change tint color to 0 alpha
 		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 1.0f), _activation_time, true); // remove this when tint is here
 		_laser->SetActive(true);
 		break;
 	case State::INACTIVE:
+		_audio_source->PostEvent(Hachiko::Sounds::STOP_LASER);
+
 		_laser->SetActive(false);
 		break;
 	}
@@ -120,6 +128,7 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision()
 			knockback *= -1;
 		}
 
+		_audio_source->PostEvent(Hachiko::Sounds::PLAY_LASER_HIT);
 		_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback);
 
 		//_player->GetComponent<PlayerController>()->RegisterHit(_damage);

@@ -261,6 +261,56 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_Laser" ID="{944F2DC9-1865-4DE5-A41F-7D847F3A9945}">
+					<ChildrenList>
+						<Action Name="" ID="{35B12973-E9B1-4FB1-82ED-EE15C0191375}" ShortID="450398650">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LaserStart" ID="{E52F1E0E-B538-4CA7-AB1E-33B36327CBB1}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{5163E96D-5B54-4211-A094-520F7C66F09F}" ShortID="383578617">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LaserLoop" ID="{7C294618-BEB3-4A00-A87A-8D0019917B06}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{5677888F-2678-406F-94EE-3DA44BAAB355}" ShortID="308411869">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LaserLoop2" ID="{266001FC-14CB-47CE-AAA8-F4542C5EA4D6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Laser" ID="{3C13283E-EB38-4E39-A6B6-331AC2181D30}">
+					<ChildrenList>
+						<Action Name="" ID="{A563AAC7-67FA-4D53-87D6-A715B8358CCF}" ShortID="509249289">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LaserStop" ID="{289F1559-4473-4A79-A9BE-E5FA2C91E0B9}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_Laser_Hit" ID="{A0BD3D63-D265-4CA9-B88D-C6E42632F4E3}">
+					<ChildrenList>
+						<Action Name="" ID="{CB163FD7-4F16-4043-9D06-F491AA88D91D}" ShortID="342317155">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Laser_Hit" ID="{6D7E54CD-08B9-4F32-95B3-4FB05B15EB41}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
