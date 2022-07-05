@@ -110,6 +110,8 @@ namespace Hachiko
 			bool IsWalking() const;
 			bool IsStunned() const;
 			bool IsFalling() const;
+			bool IsPickUp() const;
+
 			bool IsActionLocked() const;
 			bool IsAttackOnCooldown() const;
 			bool IsInComboWindow() const;

@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9923, 1, 0.9923]
+        scale: [0.9919, 1, 0.9919]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -800,7 +800,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9943]
+                                                                                                                                    scale: [1, 1, 0.9939]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: false
@@ -857,7 +857,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9942, 1, 0.9942]
+                                                                                            scale: [0.9938, 1, 0.9938]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -2014,7 +2014,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9943]
+                                                                                                                                    scale: [1, 1, 0.9939]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: false
@@ -2071,7 +2071,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9942, 1, 0.9942]
+                                                                                            scale: [0.9938, 1, 0.9938]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -7851,7 +7851,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0.2065, -0.119, 0.8415, 0.4848]
-                                        scale: [0.9991, 0.9991, 1]
+                                        scale: [0.9987, 0.9987, 1]
                                     child:
                                       - id: 2061975018426111614
                                         name: CenterShoulder_$AssimpFbx$_Rotation
@@ -8173,7 +8173,7 @@ child:
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
                                                                                                                 rotation: [0, 0.9999, 0, 0.0118]
-                                                                                                                scale: [0.9991, 1, 0.9991]
+                                                                                                                scale: [0.9987, 1, 0.9987]
                                                                                                             child:
                                                                                                               - id: 14791280733211636134
                                                                                                                 name: Claw_Jnt
@@ -8209,7 +8209,7 @@ child:
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
                                                                                                                             rotation: [0, 0.9999, 0, -0.0118]
-                                                                                                                            scale: [0.9991, 1, 0.9991]
+                                                                                                                            scale: [0.9987, 1, 0.9987]
                                                                                                                         child:
                                                                                                                           - id: 9172988829641446427
                                                                                                                             name: Claw_Mid_Jnt
@@ -8245,7 +8245,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, -0.7329, 0, 0.6803]
-                                                                                                                                        scale: [0.9992, 1, 0.9992]
+                                                                                                                                        scale: [0.9988, 1, 0.9988]
                                                                                                                                     child:
                                                                                                                                       - id: 3745618777605501704
                                                                                                                                         name: Thumb_Start_$AssimpFbx$_Rotation
@@ -8519,7 +8519,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, 0.9979, 0, 0.0641]
-                                                                                                                                        scale: [0.9982, 1, 0.9982]
+                                                                                                                                        scale: [0.9974, 1, 0.9974]
                                                                                                                                     child:
                                                                                                                                       - id: 5139635733711661381
                                                                                                                                         name: Index_start_$AssimpFbx$_Rotation
@@ -8567,7 +8567,7 @@ child:
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
                                                                                                                                                         rotation: [0, 0.9979, 0, -0.0641]
-                                                                                                                                                        scale: [0.9982, 1, 0.9982]
+                                                                                                                                                        scale: [0.9974, 1, 0.9974]
                                                                                                                                                     child:
                                                                                                                                                       - id: 16556071898568015693
                                                                                                                                                         name: Index_finish_$AssimpFbx$_Rotation
@@ -8792,7 +8792,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [-0.3566, -0.5758, -0.3468, 0.6488]
-                                        scale: [0.9996, 1, 0.9996]
+                                        scale: [0.9994, 1, 0.9994]
                                     child:
                                       - id: 9984503216677874160
                                         name: JetPack_$AssimpFbx$_Rotation
@@ -9036,8 +9036,8 @@ child:
             id: 15251283143474827617
             type: 1
             enabled: true
-            position: [0, 3.509, -2.5]
-            rotation: [-0, 0.7071, -0, 0.7071]
+            position: [-0.1581, 3.509, -1.329]
+            rotation: [0, 0.7071, 0, 0.7071]
             scale: [2.036, 0.4071, 4.071]
         child:
           - id: 17374699040677219966

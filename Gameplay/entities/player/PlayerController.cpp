@@ -154,9 +154,8 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	
-	CheckState();	
-	
+	CheckState();
+
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -188,13 +187,12 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Run movement simulation
 	MovementController();
 
-
-
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
 
 	// Apply the position after everything is simulated
 	_player_transform->SetGlobalPosition(_player_position);
+
 }
 
 Hachiko::Scripting::PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -265,7 +263,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 
 	if (!IsActionLocked())
 	{
-		
 		if (!IsAttackOnCooldown() && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
 			RangedAttack();
@@ -465,10 +462,14 @@ bool Hachiko::Scripting::PlayerController::IsFalling() const
 	return _state == PlayerState::FALLING;
 }
 
+bool Hachiko::Scripting::PlayerController::IsPickUp() const
+{
+	return _state == PlayerState::PICK_UP;
+}
 
 bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 {
-	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
+	return IsDashing() || IsStunned() || IsAttacking() || IsFalling() || IsPickUp();
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttackOnCooldown() const
@@ -568,6 +569,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	if (_god_mode)
 	{
 		return;
+	}
+
+	if (IsPickUp() && animation->IsAnimationStopped())
+	{
+		_state = PlayerState::IDLE;
 	}
 
 	if (IsFalling())
