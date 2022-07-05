@@ -523,6 +523,7 @@
     <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\BlinkingLight.h" />
+    <ClInclude Include="generated\GeneratedProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
