@@ -154,7 +154,6 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	CheckState();
 
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
@@ -193,6 +192,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Apply the position after everything is simulated
 	_player_transform->SetGlobalPosition(_player_position);
 
+	CheckState();
 }
 
 Hachiko::Scripting::PlayerState Hachiko::Scripting::PlayerController::GetState() const
@@ -573,7 +573,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		return;
 	}
 
-	if (IsPickUp() && animation->IsAnimationStopped() && isPickingUp)
+	if (IsPickUp() && animation->IsAnimationStopped())
 	{
 		_state = PlayerState::IDLE;
 	}
@@ -952,7 +952,21 @@ void Hachiko::Scripting::PlayerController::CheckState()
 		animation->SendTrigger("isDash");
 		break;
 	case PlayerState::MELEE_ATTACKING:
-		animation->SendTrigger("isAttacking");
+		if (_current_weapon == 0)
+		{
+			if (_attack_idx == 0)
+			{
+				animation->SendTrigger("isMeleeOne");
+			}
+			else if (_attack_idx == 1)
+			{
+				animation->SendTrigger("isMeleeTwo");
+			}
+			else if (_attack_idx == 2)
+			{
+				animation->SendTrigger("isMeleeThree");
+			}
+		}
 		break;
 	case PlayerState::FALLING:
 		animation->SendTrigger("isFalling");
@@ -1032,7 +1046,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_1:
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.1f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1045,7 +1059,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.2f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1058,7 +1072,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_3:
 		attack.hit_delay = 0.2f;
-		attack.duration = 0.3f;
+		attack.duration = 0.5f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1072,7 +1086,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// COMMON ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.1f;
+		attack.duration = 0.3f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1085,7 +1099,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.1f;
+		attack.duration = 0.3f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1098,7 +1112,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_3:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.1f;
+		attack.duration = 0.3f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;

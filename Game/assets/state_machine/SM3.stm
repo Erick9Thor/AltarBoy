@@ -60,6 +60,12 @@ nodes:
     node_clip_name: shot
   - node_name: pickUp
     node_clip_name: pickUp
+  - node_name: meleeOne
+    node_clip_name: meleeOne
+  - node_name: meleeTwo
+    node_clip_name: meleeTwo
+  - node_name: meleeThree
+    node_clip_name: meleeThree
 transitions:
   - transition_source: idle
     transition_target: run
@@ -100,4 +106,36 @@ transitions:
   - transition_source: pickUp
     transition_target: run
     transition_trigger: isRun
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: meleeOne
+    transition_trigger: isMeleeOne
+    transition_blend: 300
+  - transition_source: meleeOne
+    transition_target: meleeTwo
+    transition_trigger: isMeleeTwo
+    transition_blend: 300
+  - transition_source: meleeTwo
+    transition_target: meleeThree
+    transition_trigger: isMeleeThree
+    transition_blend: 300
+  - transition_source: meleeOne
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: meleeTwo
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: meleeThree
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: meleeTwo
+    transition_trigger: isMeleeTwo
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: meleeThree
+    transition_trigger: isMeleeThree
     transition_blend: 300
