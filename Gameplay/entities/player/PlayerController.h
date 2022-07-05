@@ -125,6 +125,7 @@ private:
 
 	// Actions called by handle input
 	void Dash();
+	void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
 	void MeleeAttack();
 	void RangedAttack();
 	void CancelAttack();

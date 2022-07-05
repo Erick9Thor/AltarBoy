@@ -415,7 +415,7 @@ bool Hachiko::Scripting::CombatManager::IsPackDead(unsigned pack_idx) const
 	return IsPackDead(_enemy_packs_container->children[pack_idx]);
 }
 
-void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack)
+void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack, bool is_gauntlet)
 {
 	// Make sure that pack exist in serialization
 	auto it = std::find(_enemy_packs_container->children.begin(), _enemy_packs_container->children.end(), pack);
@@ -436,6 +436,7 @@ void Hachiko::Scripting::CombatManager::ResetEnemyPack(GameObject* pack)
 		EnemyController* enemy_controller = enemies->children[i]->GetComponent<EnemyController>();
 		if (enemy_controller)
 		{
+			enemy_controller->SetIsFromGauntlet(is_gauntlet);
 			enemy_controller->ResetEnemy();
 			enemy_controller->ResetEnemyPosition();
 		}		
