@@ -17,6 +17,15 @@ component:
     "'_max_scale@float'": 0.2
     "'_activation_time@float'": 1
     "'_damage@float'": 1
+    "'_spin_movement@bool'": false
+    "'_spin_clockwise@bool'": true
+    "'_spin_speed@float'": 20
+    "'_horizonal_movement@bool'": false
+    "'_movement_speed@float'": 1
+    "'_movement_target@GameObject*'": 0
+    "'_toggle_activation@bool'": false
+    "'_toggle_active_time@float'": 1
+    "'_toggle_inactive_time@float'": 1
 child:
   - name: Box001
     enabled: true
