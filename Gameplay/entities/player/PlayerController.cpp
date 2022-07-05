@@ -874,7 +874,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
+void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, float knockback, float3 direction)
 {
 	if (_god_mode || _invulnerability_time_remaining > 0.0f)
 	{
@@ -892,9 +892,9 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 		_ui_damage->SetActive(true);
 	}
 	
-	if(is_heavy)
+	if(knockback > 0.0f)
 	{
-		RecieveKnockback(direction);
+		RecieveKnockback(direction * knockback);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
 	}
 	else
@@ -914,7 +914,7 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 {
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
-	_knock_end = _player_transform->GetGlobalPosition() + direction;
+	_knock_end = Navigation::GetCorrectedPosition(_player_transform->GetGlobalPosition() + direction, float3(10.0f, 10.0f, 10.0f));
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
 }

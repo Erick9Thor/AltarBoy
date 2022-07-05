@@ -19,68 +19,83 @@ Hachiko::Scripting::WormController::WormController(GameObject* game_object)
 	: Script(game_object, "WormController")
 	, _spawning_time(2.0f)
 	, _enemy_body(nullptr)
+	, _small_dust_particles(nullptr)
+	, _big_dust_particles(nullptr)
 {
 
 	// Push attack
 	push_attack.damage = 0;
-	push_attack.knockback_distance = 10.0f;
-	push_attack.width = 359.f;
-	push_attack.range = 10.0f; // a bit bigger than its attack activation range
-	push_attack.type = CombatManager::AttackType::CONE;
+	push_attack.knockback_distance = 5.0f;
+	push_attack.width = 0.f;
+	push_attack.range = 5.0f; // a bit bigger than its attack activation range
+	push_attack.type = CombatManager::AttackType::CIRCLE;
 }
 
 void Hachiko::Scripting::WormController::OnAwake()
 {
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
-
+	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
 	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
+	if (_small_dust)
+	{
+		//_small_dust_particles = _small_dust->GetComponent<ComponentParticleSystem>();
+	}
+	if (_big_dust)
+	{
+		//_big_dust_particles = _big_dust->GetComponent<ComponentParticleSystem>();
+	}
 	_has_spawned = false;
 }
 
 void Hachiko::Scripting::WormController::OnStart()
 {
 	transform = game_object->GetTransform();
-	//if (!_has_spawned)
-	//{
-	//	Spawn();
-	//}
+	if (!_has_spawned)
+	{
+		Spawn();
+	}
 }
 
 void Hachiko::Scripting::WormController::OnUpdate()
 {
-	//if (!_has_spawned)
-	//{
-	//	return;
-	//}
+	if (!_has_spawned)
+	{
+		return;
+	}
 	CheckState();
-	//SpawnController();
+	SpawnController();
 }
 
 void Hachiko::Scripting::WormController::SpawnController()
 {
-	//if (_enemy_body->IsActive() && _state == WormState::SPAWNING)
-	//{
-	//	return;
-	//}
+	if (_enemy_body->IsActive() && _state != WormState::SPAWNING)
+	{
+		return;
+	}
 
-	//if (_state == WormState::SPAWNING && _enemy_body)
-	//{
-	//	_player_camera->Shake(0.5f, 1.0f);
-	//	_enemy_body->SetActive(true);
-	//	
-	//	//Push the player back
-	//	
-	//	_combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
-	//	return;
-	//}
+	if (_enemy_body->IsActive() && _state == WormState::SPAWNING && animation->IsAnimationStopped())
+	{
+		_state = WormState::IDLE;
+		return;
+	}
 
-	//_current_spawning_time -= Time::DeltaTime();
-	//if (_current_spawning_time < 0.0f)
-	//{
-	//	_state = WormState::SPAWNING;
-	//	animation->ResetState();
-	//}
+	if (_state == WormState::SPAWNING && _enemy_body)
+	{
+		_player_camera->Shake(0.5f, 0.8f);
+		_enemy_body->SetActive(true);
+		//_big_dust_particles->Play();
+		//Push the player back
+		_combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
+		return;
+	}
+
+	_current_spawning_time -= Time::DeltaTime();
+	if (_current_spawning_time <= 0.0f)
+	{
+		_state = WormState::SPAWNING;
+		animation->ResetState();
+	}
 }
 
 Hachiko::Scripting::WormState Hachiko::Scripting::WormController::GetState() const
@@ -96,8 +111,9 @@ void Hachiko::Scripting::WormController::Spawn()
 		_enemy_body->SetActive(false);
 	}
 	_state = WormState::INVALID;
+	//_small_dust_particles->Play();
 	_current_spawning_time = _spawning_time;
-	_player_camera->Shake(_spawning_time, 0.3f);
+	_player_camera->Shake(_spawning_time, 0.2f);
 }
 
 void Hachiko::Scripting::WormController::CheckState()

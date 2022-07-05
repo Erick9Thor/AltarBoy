@@ -36,7 +36,7 @@ transitions:
   - transition_source: Iddle
     transition_target: Appear
     transition_trigger: isAppear
-    transition_blend: 300
+    transition_blend: 0
   - transition_source: Iddle
     transition_target: RangeAttack
     transition_trigger: isAttack
@@ -64,7 +64,7 @@ transitions:
   - transition_source: Hide
     transition_target: Appear
     transition_trigger: isAppear
-    transition_blend: 300
+    transition_blend: 1
   - transition_source: Hit
     transition_target: Dead
     transition_trigger: isDead
@@ -84,4 +84,8 @@ transitions:
   - transition_source: RangeAttack
     transition_target: Hit
     transition_trigger: isHit
+    transition_blend: 300
+  - transition_source: Hide
+    transition_target: Appear
+    transition_trigger: ""
     transition_blend: 300
