@@ -2,6 +2,7 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
+#include "entities/player/CombatManager.h"
 
 namespace Hachiko
 {
@@ -13,6 +14,8 @@ namespace Hachiko
         class AudioManager;
         class PlayerController;
         class CombatManager;
+        class PlayerCamera;
+
         enum class WormState
         {
             INVALID,
@@ -21,7 +24,8 @@ namespace Hachiko
             HIDEN,
             ATTACKING,
             PARASITE,
-            SPAWNING
+            SPAWNING,
+            HIT
         };
 
         class WormController : public Script
@@ -39,31 +43,27 @@ namespace Hachiko
             WormState GetState() const;
 
             //const Stats* GetStats();
-            //bool IsAlive() { return _combat_stats->IsAlive(); };
+            bool IsAlive() { return _combat_stats->IsAlive(); };
             //void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
             //void GetParasite();
-            //void Spawn();
+            void Spawn();
             //bool ParasiteDropped() { return _parasite_dropped; };
 
-            //void CheckState();
+            void CheckState();
             //void ResetEnemy();
             //void ResetEnemyPosition();
 
         private:
-            //void SpawnController();
+            void SpawnController();
             //void DeathController();
             //void StunController();
             //void AttackController();
             //void IdleController();
 
             //void Attack();
-            //void ChasePlayer();
             //void GoBack();
             //void RecieveKnockback();
-            //void Stop();
 
-            //void MoveInNavmesh();
-            //void PatrolMovement();
             //void DropParasite();
             //void DestroyEntity();
 
@@ -74,29 +74,29 @@ namespace Hachiko
             //}
 
         private:
-            //Stats* _combat_stats;
+            Stats* _combat_stats;
             //SERIALIZE_FIELD(int, _aggro_range);
             //SERIALIZE_FIELD(float, _attack_range);
             //SERIALIZE_FIELD(float, _attack_delay);
+            SERIALIZE_FIELD(float, _spawning_time);
             //SERIALIZE_FIELD(float, _idle_cooldown);
             //SERIALIZE_FIELD(float3, _spawn_pos);
             //SERIALIZE_FIELD(bool, _spawn_is_initial);
             //SERIALIZE_FIELD(GameObject*, _player);
-            //SERIALIZE_FIELD(GameObject*, _enemy_body);
+            SERIALIZE_FIELD(GameObject*, _enemy_body);
             //SERIALIZE_FIELD(GameObject*, _parasite);
             //SERIALIZE_FIELD(GameObject*, _audio_manager_game_object);
 
-            //SERIALIZE_FIELD(BugState, _state);
-            //SERIALIZE_FIELD(BugState, _previous_state);
             //SERIALIZE_FIELD(bool, _already_in_combat);
 
             //SERIALIZE_FIELD(bool, _is_from_gautlet);
 
             //AudioManager* _audio_manager;
-            //PlayerController* _player_controller;
-            //ComponentTransform* transform;
-            //ComponentAnimation* animation;
-            //CombatManager* _combat_manager;
+            PlayerController* _player_controller = nullptr;
+            PlayerCamera* _player_camera = nullptr;
+            ComponentTransform* transform = nullptr;
+            ComponentAnimation* animation = nullptr;
+            CombatManager* _combat_manager;
             //ComponentAudioSource* _audio_source;
 
             //Quat _spawn_rot;
@@ -106,11 +106,11 @@ namespace Hachiko
             //math::float3 _current_pos;
             //float _attack_cooldown;
 
-            //SERIALIZE_FIELD(float, _attack_animation_duration);
-            //SERIALIZE_FIELD(float, _attack_animation_timer);
+            SERIALIZE_FIELD(float, _attack_animation_duration);
+            SERIALIZE_FIELD(float, _attack_animation_timer);
 
-            //SERIALIZE_FIELD(bool, _is_ranged_attack);
-
+            WormState _state = WormState::SPAWNING;
+            WormState _previous_state = WormState::INVALID;
             //bool _parasite_dropped = false;
             //bool _is_stunned = false;
             //float _stun_time = 0.0f;
@@ -126,8 +126,11 @@ namespace Hachiko
             //const float _parasite_dissolving = 1 / math::Sqrt(_parasite_dissolve_time);
             //float3 _knockback_pos = float3::zero;
             //float _attack_current_delay = 0.f;
-            //float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
-            //bool _has_spawned = false;
+            float _current_spawning_time = 0.0f;
+            bool _has_spawned = false;
+
+            // Special attacks
+            CombatManager::AttackStats push_attack;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
