@@ -45,14 +45,14 @@ namespace Hachiko
 
             //const Stats* GetStats();
             bool IsAlive() { return _combat_stats->IsAlive(); };
-            //void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
+            void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
             //void GetParasite();
             void Spawn();
             //bool ParasiteDropped() { return _parasite_dropped; };
 
             void CheckState();
-            //void ResetEnemy();
-            //void ResetEnemyPosition();
+            void ResetEnemy();
+            void ResetEnemyPosition();
 
         private:
             void SpawnController();
@@ -93,6 +93,8 @@ namespace Hachiko
             //SERIALIZE_FIELD(bool, _already_in_combat);
 
             //SERIALIZE_FIELD(bool, _is_from_gautlet);
+
+            SERIALIZE_FIELD(bool, _will_die);
 
             //AudioManager* _audio_manager;
             PlayerController* _player_controller = nullptr;

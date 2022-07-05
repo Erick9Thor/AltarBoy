@@ -21,6 +21,7 @@ Hachiko::Scripting::WormController::WormController(GameObject* game_object)
 	, _enemy_body(nullptr)
 	, _small_dust_particles(nullptr)
 	, _big_dust_particles(nullptr)
+	, _will_die(false)
 {
 
 	// Push attack
@@ -35,6 +36,9 @@ void Hachiko::Scripting::WormController::OnAwake()
 {
 	animation = game_object->GetComponent<ComponentAnimation>();
 	animation->StartAnimating();
+	_combat_stats = game_object->GetComponent<Stats>();
+	_combat_stats->_attack_power = 1;
+	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
 	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
 	if (_small_dust)
@@ -116,6 +120,35 @@ void Hachiko::Scripting::WormController::Spawn()
 	_player_camera->Shake(_spawning_time, 0.2f);
 }
 
+void Hachiko::Scripting::WormController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
+{
+	if (_state == WormState::SPAWNING)
+	{
+		return; // Inmune while spawning
+	}
+
+	//if (is_from_player)
+	//{
+	//	_enraged = 5.0f;
+	//}
+
+	_combat_stats->ReceiveDamage(damage);
+	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+
+	if (!_combat_stats->IsAlive() && _will_die)
+	{
+		_state = WormState::DEAD;
+		game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
+		return;
+	}
+
+	if (!_combat_stats->IsAlive() && !_will_die)
+	{
+		_state = WormState::HIDEN;
+		game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
+	}
+}
+
 void Hachiko::Scripting::WormController::CheckState()
 {
 	WormState current_state = GetState();
@@ -173,4 +206,19 @@ void Hachiko::Scripting::WormController::CheckState()
 	default:
 		break;
 	}
+}
+
+void Hachiko::Scripting::WormController::ResetEnemy()
+{
+	_combat_stats->_current_hp = _combat_stats->_max_hp;
+	_has_spawned = false;
+	_state = WormState::INVALID;
+	//_parasite_dissolving_time_progress = 0.f;
+	//_enemy_dissolving_time_progress = 0.f;
+}
+
+void Hachiko::Scripting::WormController::ResetEnemyPosition()
+{
+	//transform->SetGlobalPosition(_spawn_pos);
+	//transform->SetGlobalRotation(_spawn_rot);
 }
