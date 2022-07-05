@@ -512,6 +512,7 @@
     <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="misc\FancyLights.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
+    <ClInclude Include="entities\enemies\BugAnimationManager.h" />
     <ClInclude Include="entities\player\RoomTeleporter.h" />
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="misc\AudioManager.h" />
@@ -524,7 +525,6 @@
     <ClInclude Include="misc\BlinkingLight.h" />
     <ClInclude Include="entities\enemies\WormController.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
-    <ClInclude Include="entities\enemies\BeetleController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -783,9 +783,11 @@
     </ClCompile>
     <ClCompile Include="entities\player\PlayerAnimationManager.cpp" />
     <ClCompile Include="entities\player\PlayerSoundManager.cpp" />
+    <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="entities\Stats.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
+    <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\player\RoomTeleporter.cpp" />
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\FancyLights.cpp" />
@@ -798,7 +800,6 @@
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
     <ClCompile Include="entities\enemies\WormController.cpp" />
-    <ClCompile Include="entities\enemies\BeetleController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

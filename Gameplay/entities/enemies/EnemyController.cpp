@@ -1,8 +1,12 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
-#include "entities/enemies/BeetleController.h"
+#include "entities/Stats.h"
+#include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Sounds.h"
+
+// TODO: Delete this include:
+#include <modules/ModuleSceneManager.h>
 
 #include <resources/ResourceAnimation.h>
 #include <components/ComponentAgent.h>
@@ -10,13 +14,14 @@
 
 #include "misc/AudioManager.h"
 
-Hachiko::Scripting::BeetleController::BeetleController(GameObject* game_object)
-	: Script(game_object, "BeetleController"), EnemyController()
+Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
+	: Script(game_object, "EnemyController")
 	, _aggro_range(4)
 	, _attack_range(3.0f)
 	, _attack_delay(0.3f)
 	, _idle_cooldown(2.0f)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
+	, _combat_stats()
 	, _spawn_is_initial(false)
 	, _player(nullptr)
 	, _enemy_body(nullptr)
@@ -32,10 +37,10 @@ Hachiko::Scripting::BeetleController::BeetleController(GameObject* game_object)
 {
 }
 
-void Hachiko::Scripting::BeetleController::OnAwake()
+void Hachiko::Scripting::EnemyController::OnAwake()
 {
 	//TODO: Get Player and CombatManager from Scene script once its merged
-	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
+	_combat_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("CombatManager")->GetComponent<CombatManager>();
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -65,7 +70,7 @@ void Hachiko::Scripting::BeetleController::OnAwake()
 	srand((unsigned)time(NULL));
 }
 
-void Hachiko::Scripting::BeetleController::OnStart()
+void Hachiko::Scripting::EnemyController::OnStart()
 {
 	if (_enemy_body != nullptr)
 	{
@@ -84,7 +89,7 @@ void Hachiko::Scripting::BeetleController::OnStart()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::OnUpdate()
+void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	CheckState();
 	if (_state == BugState::SPAWNING)
@@ -115,17 +120,17 @@ void Hachiko::Scripting::BeetleController::OnUpdate()
 
 }
 
-Hachiko::Scripting::BugState Hachiko::Scripting::BeetleController::GetState() const
+Hachiko::Scripting::BugState Hachiko::Scripting::EnemyController::GetState() const
 {
 	return _state;
 }
 
-Hachiko::Scripting::Stats* Hachiko::Scripting::BeetleController::GetStats()
+const Hachiko::Scripting::Stats* Hachiko::Scripting::EnemyController::GetStats()
 {
 	return _combat_stats;
 }
 
-void Hachiko::Scripting::BeetleController::SpawnController()
+void Hachiko::Scripting::EnemyController::SpawnController()
 {
 	spawning_time -= Time::DeltaTime();
 	if (spawning_time < 0.0f)
@@ -134,7 +139,7 @@ void Hachiko::Scripting::BeetleController::SpawnController()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::DeathController()
+void Hachiko::Scripting::EnemyController::DeathController()
 {
 	if (_state == BugState::PARASITE)
 	{
@@ -166,7 +171,7 @@ void Hachiko::Scripting::BeetleController::DeathController()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::StunController()
+void Hachiko::Scripting::EnemyController::StunController()
 {
 	if (_is_stunned)
 	{
@@ -184,7 +189,7 @@ void Hachiko::Scripting::BeetleController::StunController()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::AttackController()
+void Hachiko::Scripting::EnemyController::AttackController()
 {
 	float dist_to_player = _current_pos.Distance(_player_pos);
 
@@ -223,7 +228,7 @@ void Hachiko::Scripting::BeetleController::AttackController()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::IdleController()
+void Hachiko::Scripting::EnemyController::IdleController()
 {
 	if (_state == BugState::IDLE)
 	{
@@ -244,7 +249,7 @@ void Hachiko::Scripting::BeetleController::IdleController()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
 {
 	if (_state == BugState::SPAWNING)
 	{
@@ -272,7 +277,7 @@ void Hachiko::Scripting::BeetleController::RegisterHit(int damage, float3 direct
 }
 
 // Needs to be improved. Player should be able to dodge when enemy starts attacking.
-void Hachiko::Scripting::BeetleController::Attack()
+void Hachiko::Scripting::EnemyController::Attack()
 {
 	if (_state == BugState::DEAD || _attack_cooldown > 0.0f)
 	{
@@ -310,7 +315,7 @@ void Hachiko::Scripting::BeetleController::Attack()
 
 }
 
-void Hachiko::Scripting::BeetleController::ChasePlayer()
+void Hachiko::Scripting::EnemyController::ChasePlayer()
 {
 	if (_state == BugState::DEAD)
 	{
@@ -331,7 +336,7 @@ void Hachiko::Scripting::BeetleController::ChasePlayer()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::GoBack()
+void Hachiko::Scripting::EnemyController::GoBack()
 {
 	if (_state == BugState::DEAD)
 	{
@@ -349,13 +354,13 @@ void Hachiko::Scripting::BeetleController::GoBack()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::Stop()
+void Hachiko::Scripting::EnemyController::Stop()
 {
 	_target_pos = transform->GetGlobalPosition();
 	MoveInNavmesh();
 }
 
-void Hachiko::Scripting::BeetleController::RecieveKnockback()
+void Hachiko::Scripting::EnemyController::RecieveKnockback()
 {
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	_target_pos = Navigation::GetCorrectedPosition(_knockback_pos, math::float3(10.0f, 1.0f, 10.0f));
@@ -365,13 +370,13 @@ void Hachiko::Scripting::BeetleController::RecieveKnockback()
 	agc->SetTargetPosition(_target_pos);
 }
 
-void Hachiko::Scripting::BeetleController::MoveInNavmesh()
+void Hachiko::Scripting::EnemyController::MoveInNavmesh()
 {
 	ComponentAgent* agc = game_object->GetComponent<ComponentAgent>();
 	agc->SetTargetPosition(_target_pos);
 }
 
-void Hachiko::Scripting::BeetleController::PatrolMovement()
+void Hachiko::Scripting::EnemyController::PatrolMovement()
 {
 	_state = BugState::PATROL;
 
@@ -391,13 +396,13 @@ void Hachiko::Scripting::BeetleController::PatrolMovement()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::DestroyEntity()
+void Hachiko::Scripting::EnemyController::DestroyEntity()
 {
 	game_object->SetActive(false);
 	//SceneManagement::Destroy(game_object);
 }
 
-void Hachiko::Scripting::BeetleController::DropParasite()
+void Hachiko::Scripting::EnemyController::DropParasite()
 {
 	Stop();
 	_state = BugState::PARASITE;
@@ -409,12 +414,12 @@ void Hachiko::Scripting::BeetleController::DropParasite()
 	_parasite_dropped = true;
 }
 
-void Hachiko::Scripting::BeetleController::GetParasite()
+void Hachiko::Scripting::EnemyController::GetParasite()
 {
 	DestroyEntity();
 }
 
-void Hachiko::Scripting::BeetleController::Spawn()
+void Hachiko::Scripting::EnemyController::Spawn()
 {
 	if (_enemy_body)
 	{
@@ -424,7 +429,7 @@ void Hachiko::Scripting::BeetleController::Spawn()
 	_state = BugState::SPAWNING;
 }
 
-void Hachiko::Scripting::BeetleController::CheckState()
+void Hachiko::Scripting::EnemyController::CheckState()
 {
 	BugState current_state = GetState();
 	bool state_changed = current_state != _previous_state;
@@ -483,7 +488,7 @@ void Hachiko::Scripting::BeetleController::CheckState()
 	}
 }
 
-void Hachiko::Scripting::BeetleController::ResetEnemy()
+void Hachiko::Scripting::EnemyController::ResetEnemy()
 {
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 	_stun_time = 0.0f;
@@ -496,13 +501,13 @@ void Hachiko::Scripting::BeetleController::ResetEnemy()
 	_enemy_dissolving_time_progress = 0.f;
 }
 
-void Hachiko::Scripting::BeetleController::ResetEnemyPosition()
+void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
 {
 	transform->SetGlobalPosition(_spawn_pos);
 	transform->SetGlobalRotation(_spawn_rot);
 }
 
-float4x4 Hachiko::Scripting::BeetleController::GetMeleeAttackOrigin(float attack_range) const
+float4x4 Hachiko::Scripting::EnemyController::GetMeleeAttackOrigin(float attack_range) const
 {
 	ComponentTransform* enemy_transform = game_object->GetTransform();
 	float3 emitter_direction = enemy_transform->GetFront().Normalized();
