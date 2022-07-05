@@ -1,35 +1,13 @@
 #pragma once
 
-#include <scripting/Script.h>
-#include "entities/Stats.h"
+#include "entities/enemies/EnemyController.h"
 #include "entities/player/CombatManager.h"
 
 namespace Hachiko
 {
-    class GameObject;
-    class ComponentTransform;
-    class ComponentParticleSystem;
-
     namespace Scripting
     {
-        class AudioManager;
-        class PlayerController;
-        class CombatManager;
-        class PlayerCamera;
-
-        enum class WormState
-        {
-            INVALID,
-            DEAD,
-            IDLE,
-            HIDEN,
-            ATTACKING,
-            PARASITE,
-            SPAWNING,
-            HIT
-        };
-
-        class WormController : public Script
+        class WormController : public Script, public EnemyController
         {
             SERIALIZATION_METHODS(false)
 
@@ -44,13 +22,13 @@ namespace Hachiko
             WormState GetState() const;
 
             //const Stats* GetStats();
-            bool IsAlive() { return _combat_stats->IsAlive(); };
+            bool IsAlive() override { return _combat_stats->IsAlive(); };
             //void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
             //void GetParasite();
-            void Spawn();
+            void Spawn() override;
             //bool ParasiteDropped() { return _parasite_dropped; };
 
-            void CheckState();
+            void CheckState() override;
             //void ResetEnemy();
             //void ResetEnemyPosition();
 
@@ -75,7 +53,6 @@ namespace Hachiko
             //}
 
         private:
-            Stats* _combat_stats;
             //SERIALIZE_FIELD(int, _aggro_range);
             //SERIALIZE_FIELD(float, _attack_range);
             //SERIALIZE_FIELD(float, _attack_delay);

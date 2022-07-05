@@ -314,6 +314,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\traits.h" />
     <ClInclude Include="..\Source\vendors\yaml-cpp\include\yaml-cpp\yaml.h" />
     <ClInclude Include="CrystalPlatform.h" />
+    <ClInclude Include="entities\enemies\BeetleController.h" />
     <ClInclude Include="entities\enemies\WormController.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
     <ClInclude Include="misc\AudioManager.h" />
@@ -325,7 +326,6 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
-    <ClInclude Include="entities\enemies\BugAnimationManager.h" />
     <ClInclude Include="entities\crystals\CrystalExplosion.h" />
     <ClInclude Include="ui\DebugManager.h" />
     <ClInclude Include="misc\DynamicCamera.h" />
@@ -731,6 +731,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Play|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="CrystalPlatform.cpp" />
+    <ClCompile Include="entities\enemies\BeetleController.cpp" />
     <ClCompile Include="entities\enemies\WormController.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
@@ -741,11 +742,9 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
-    <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />
     <ClCompile Include="entities\crystals\CrystalExplosion.cpp" />
     <ClCompile Include="ui\DebugManager.cpp" />
     <ClCompile Include="misc\DynamicCamera.cpp" />
-    <ClCompile Include="entities\enemies\EnemyController.cpp" />
     <ClCompile Include="generated\Factory.cpp" />
     <ClCompile Include="generated\GeneratedEditor.cpp" />
     <ClCompile Include="generated\SaveAndLoadMethods.cpp" />
