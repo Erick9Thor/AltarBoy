@@ -26,4 +26,8 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* STOP_COMBAT = L"Stop_Combat";
 	constexpr const wchar_t* GAME_OVER = L"Play_GameOver";
 
+	//UI
+	constexpr const wchar_t* CLICK = L"Play_UIClick";
+	constexpr const wchar_t* HOVER = L"Play_UIHover";
+
 } // namespace Hachiko::Sounds
