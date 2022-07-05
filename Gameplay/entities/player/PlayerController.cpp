@@ -38,33 +38,35 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	common_bullet.speed = 50.f;
 	common_bullet.damage = 1.f;
 	
-	Weapon red;
-	red.name = "Red";
-	red.bullet = common_bullet;
-	red.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
-	red.attacks.push_back(GetAttackType(AttackType::COMMON_1));
-	red.attacks.push_back(GetAttackType(AttackType::COMMON_2));
-	red.attacks.push_back(GetAttackType(AttackType::COMMON_3));
+	Weapon melee;
+	melee.name = "Melee";
+	melee.bullet = common_bullet;
+	melee.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+	melee.attacks.push_back(GetAttackType(AttackType::COMMON_1));
+	melee.attacks.push_back(GetAttackType(AttackType::COMMON_2));
+	melee.attacks.push_back(GetAttackType(AttackType::COMMON_3));
 
-	Weapon blue;
-	blue.name = "Blue";
-	blue.bullet = common_bullet;
-	blue.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
-	blue.attacks.push_back(GetAttackType(AttackType::QUICK_1));
-	blue.attacks.push_back(GetAttackType(AttackType::QUICK_2));
-	blue.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 
-	Weapon green;
-	green.name = "Green";
-	green.bullet = common_bullet;
-	green.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
-	green.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
-	green.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
-	green.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
+	Weapon claw;
+	claw.name = "Claw";
+	claw.bullet = common_bullet;
+	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
+	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
+	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
+	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
 
-	weapons.push_back(red);
-	weapons.push_back(blue);
-	weapons.push_back(green);
+
+	Weapon sword;
+	sword.name = "Sword";
+	sword.bullet = common_bullet;
+	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
+	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
+	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
+	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
+
+	weapons.push_back(melee);
+	weapons.push_back(claw);
+	weapons.push_back(sword);
 
 	_current_weapon = 0;
 	_current_cam_setting = 0;
@@ -486,7 +488,6 @@ bool Hachiko::Scripting::PlayerController::IsInComboWindow() const
 
 const Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon() const
 {
-	// TODO: insert return statement here
 	return weapons[_current_weapon];
 }
 
@@ -952,21 +953,7 @@ void Hachiko::Scripting::PlayerController::CheckState()
 		animation->SendTrigger("isDash");
 		break;
 	case PlayerState::MELEE_ATTACKING:
-		if (_current_weapon == 0)
-		{
-			if (_attack_idx == 0)
-			{
-				animation->SendTrigger("isMeleeOne");
-			}
-			else if (_attack_idx == 1)
-			{
-				animation->SendTrigger("isMeleeTwo");
-			}
-			else if (_attack_idx == 2)
-			{
-				animation->SendTrigger("isMeleeThree");
-			}
-		}
+		CheckComboAnimation();
 		break;
 	case PlayerState::FALLING:
 		animation->SendTrigger("isFalling");
@@ -978,6 +965,56 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	case PlayerState::INVALID:
 	default:
 		break;
+	}
+}
+
+// TODO: This is for Alpha, we need to find a better option to trigger this animations
+void Hachiko::Scripting::PlayerController::CheckComboAnimation()
+{
+	if (_current_weapon == 0)
+	{
+		if (_attack_idx == 0)
+		{
+			animation->SendTrigger("isMeleeOne");
+		}
+		else if (_attack_idx == 1)
+		{
+			animation->SendTrigger("isMeleeTwo");
+		}
+		else if (_attack_idx == 2)
+		{
+			animation->SendTrigger("isMeleeThree");
+		}
+	}
+	if (_current_weapon == 1)
+	{
+		if (_attack_idx == 0)
+		{
+			animation->SendTrigger("isSwordOne");
+		}
+		else if (_attack_idx == 1)
+		{
+			animation->SendTrigger("isSwordTwo");
+		}
+		else if (_attack_idx == 2)
+		{
+			animation->SendTrigger("isSwordThree");
+		}
+	}
+	if (_current_weapon == 2)
+	{
+		if (_attack_idx == 0)
+		{
+			animation->SendTrigger("isClawOne");
+		}
+		else if (_attack_idx == 1)
+		{
+			animation->SendTrigger("isClawTwo");
+		}
+		else if (_attack_idx == 2)
+		{
+			animation->SendTrigger("isClawThree");
+		}
 	}
 }
 
@@ -1046,7 +1083,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_1:
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.5f;
+		attack.duration = 0.5f; // 11 frames .45ms
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1059,7 +1096,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.5f;
+		attack.duration = 0.40f; // 11 frames .45ms
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
@@ -1072,7 +1109,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_3:
 		attack.hit_delay = 0.2f;
-		attack.duration = 0.5f;
+		attack.duration = 0.6f;
 		attack.cooldown = 0.1f;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;

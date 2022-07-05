@@ -148,6 +148,7 @@ namespace Hachiko
 			void RecieveKnockback(const math::float3 direction);
 
 			void CheckState();
+			void CheckComboAnimation();
 			void ResetPlayer(float3 spawn_pos);
 
 		public:
@@ -188,6 +189,9 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
 
+			SERIALIZE_FIELD(GameObject*, _melee_weapon);
+			SERIALIZE_FIELD(GameObject*, _sword_weapon);
+			SERIALIZE_FIELD(GameObject*, _claw_weapon);
 
 			ComponentTransform* _player_transform = nullptr;
 			ComponentAnimation* animation;
