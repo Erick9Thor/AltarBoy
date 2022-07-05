@@ -167,6 +167,7 @@ namespace Hachiko
 
         // Shadow Map related:
         ShadowManager shadow_manager;
+        bool shadow_pass_enabled = true;
 
         bool draw_deferred = true;
 

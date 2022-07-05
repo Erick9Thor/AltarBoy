@@ -12,6 +12,7 @@ out vec4 fragment_color;
 in vec2 texture_coords;
 
 uniform int mode;
+uniform int render_shadows;
 uniform float shadow_bias;
 uniform float exponent;
 uniform float light_bleeding_reduction_amount;
@@ -42,13 +43,13 @@ void main()
     if (mode == 0)
     {
         vec3 hdr_color = vec3(0.0);
-        float fragment_shadow = CalculateShadowExponentialVariance(
+        float fragment_shadow = render_shadows == 1.0 ? CalculateShadowExponentialVariance(
             shadow_map, 
             fragment_position_from_light, 
             min_variance, 
             light_bleeding_reduction_amount, 
             shadow_bias, 
-            exponent);
+            exponent) : 1.0;
             
         hdr_color += vec3(fragment_shadow) * DirectionalPBR(fragment_normal, view_direction, lights.directional, fragment_diffuse, fragment_specular, fragment_smoothness);
         

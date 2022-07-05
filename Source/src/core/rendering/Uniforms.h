@@ -2,6 +2,10 @@
 
 namespace Hachiko::Uniforms
 {
+    namespace DeferredRendering
+    {
+        constexpr const char* MODE = "mode";
+    }
 
     namespace ShadowMap
     {
@@ -11,6 +15,7 @@ namespace Hachiko::Uniforms
         constexpr const char* LIGHT_BLEEDING_REDUCTION_AMOUNT = "light_bleeding_reduction_amount";
         constexpr const char* LIGHT_PROJECTION = "light_projection";
         constexpr const char* LIGHT_VIEW = "light_view";
+        constexpr const char* RENDER_MODE = "render_shadows";
 
     } // namespace ShadowMap
 

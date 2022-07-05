@@ -56,6 +56,7 @@ bool Hachiko::ModuleRender::Init()
 
     draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
     draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
+    shadow_pass_enabled = App->preferences->GetEditorPreference()->GetShadowPassEnabled();
 
     shadow_manager.SetGaussianBlurringEnabled(
         App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
@@ -277,9 +278,12 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         render_forward_pass = !render_forward_pass;
     }
     
-    // Generate shadow map from the scene:
-    DrawToShadowMap(scene, camera, batch_manager, DRAW_CONFIG_OPAQUE);
-
+    if (shadow_pass_enabled)
+    {
+        // Generate shadow map from the scene:
+        DrawToShadowMap(scene, camera, batch_manager, DRAW_CONFIG_OPAQUE | DRAW_CONFIG_TRANSPARENT);
+    }
+    
     render_list.Update(scene->GetCullingCamera()->GetFrustum(), scene->GetQuadtree());
     
     // ----------------------------- GEOMETRY PASS ----------------------------
@@ -326,12 +330,17 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // Bind all g-buffer textures:
     g_buffer.BindTextures();
-    // Bind Shadow map texture to texture slot 5:
-    shadow_manager.BindShadowMapTexture(5);
+    if (shadow_pass_enabled)
+    {
+        // Bind Shadow map texture to texture slot 5:
+        shadow_manager.BindShadowMapTexture(5);
+    }
 
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
-    program->BindUniformInts("mode", 1, &deferred_mode);
+    int render_shadows = static_cast<int>(shadow_pass_enabled);
+    program->BindUniformInts(Uniforms::ShadowMap::RENDER_MODE, 1, &render_shadows);
+    program->BindUniformInts(Uniforms::DeferredRendering::MODE, 1, &deferred_mode);
 
     // Render the final texture from deferred rendering on a quad that is,
     // 1x1 on NDC:
@@ -704,6 +713,11 @@ void Hachiko::ModuleRender::DeferredOptions()
     }
 
     ImGui::Checkbox("Forward Rendering Pass", &render_forward_pass);
+
+    if (ImGui::Checkbox("Render Shadows", &shadow_pass_enabled))
+    {
+        App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
+    }
 
     ImGui::NewLine();
 
