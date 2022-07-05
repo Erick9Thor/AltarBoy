@@ -17,9 +17,9 @@ child:
         id: 10172179169732309591
         type: 1
         enabled: true
-        position: [0, 0, 0]
+        position: [3.464, 19.48, 23.03]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9914, 1, 0.9914]
+        scale: [0.9988, 1, 0.9988]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -28,7 +28,7 @@ child:
           near_distance: 0.1
           far_distance: 1000
           fov: 65
-          position: [0, 0, 0]
+          position: [3.464, 19.48, 23.03]
           front: [0, -0.8191, -0.5736]
           up: [0, 0.5736, -0.8191]
           pinned_camera: [0, 0, 0]
@@ -40,7 +40,7 @@ child:
         type: 15
         enabled: true
         class_name: PlayerCamera
-        "'_relative_position_to_player@math::float3'": [0, 19, 13]
+        "'_relative_position_to_player@math::float3'": [0, 19.5, 13.3]
         "'_objective@GameObject*'": 10886238617659092412
         "'_follow_delay@float'": 0.6
   - id: 9705719939553527500
@@ -93,8 +93,8 @@ child:
                 id: 4025963775179962411
                 type: 1
                 enabled: true
-                position: [1.375, 0, 9.653]
-                rotation: [0, 0, 0, 1]
+                position: [-2.453, -0.0154, 9.662]
+                rotation: [0, -0.7452, 0, 0.6668]
                 scale: [4, 4, 4]
               - !<animation>
                 id: 15445094073171861923
@@ -105,7 +105,7 @@ child:
                 id: 4943677105743836897
                 type: 17
                 enabled: true
-                max_speed: 5
+                max_speed: 7
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
@@ -122,16 +122,16 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
-                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_spawn_pos@float3'": [1.375, 0, 9.653]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 10886238617659092412
                 "'_enemy_body@GameObject*'": 4910652326621726217
                 "'_parasite@GameObject*'": 8432818627888009998
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_is_from_gautlet@bool'": false
+                "'_is_from_gautlet@bool'": true
                 "'_attack_animation_duration@float'": 0.5
-                "'_attack_animation_timer@float'": 0
+                "'_attack_animation_timer@float'": 0.1333
                 "'_is_ranged_attack@bool'": false
               - !<script>
                 id: 4992987705076948943
@@ -143,7 +143,7 @@ child:
                 "'_attack_range@float'": 3.5
                 "'_move_speed@float'": 7
                 "'_max_hp@int'": 3
-                "'_current_hp@int'": 3
+                "'_current_hp@int'": 0
             child:
               - id: 14862833783929233565
                 name: Root
@@ -370,7 +370,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0483, 0.1246, -0.0155, 0.9909]
+                                                                                            rotation: [0, 0, -0.1007, 0.9949]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - id: 6488066623050965801
@@ -418,7 +418,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0.1507, -0.7268, -0.0318, 0.6694]
+                                                                                                            rotation: [0.4098, -0.6889, 0.2847, 0.5258]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 17474369023703219090
@@ -514,7 +514,7 @@ child:
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
                                                                                                             rotation: [0.0213, -0.0111, -0.4897, 0.8716]
-                                                                                                            scale: [0.9999, 0.9999, 1]
+                                                                                                            scale: [0.9998, 0.9998, 1]
                                                                                                         child:
                                                                                                           - id: 15505296600020956743
                                                                                                             name: Arm2_jnt_L
@@ -800,7 +800,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9934]
+                                                                                                                                    scale: [1, 1, 0.9904]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: false
@@ -856,8 +856,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9933, 1, 0.9933]
+                                                                                            rotation: [0.523, 0.5233, 0.4801, 0.4713]
+                                                                                            scale: [0.9915, 1, 0.9915]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -904,7 +904,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0.0059, 0.1987, -0.0046, 0.98]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 12880117085643578153
@@ -1032,8 +1032,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0272, 0.7297, -0.0169, 0.683]
-                                                                                            scale: [1, 1, 1]
+                                                                                            rotation: [0.0269, 0.7217, -0.0167, 0.6915]
+                                                                                            scale: [0.9999, 1, 0.9999]
                                                                                         child:
                                                                                           - id: 4296293250561333414
                                                                                             name: Wing1_Jnt_R
@@ -1080,7 +1080,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0.0645, 0.2036, 0.0122, 0.9768]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 15018086222011930479
@@ -1254,7 +1254,7 @@ child:
                                         navigable: false
                                         visible: true
                                         material_id: 16615586293878050055
-                                        tint_color: [1, 1, 1, 1]
+                                        tint_color: [1, 1, 1, 0.6667]
               - id: 8432818627888009998
                 name: parasiteConsumable
                 enabled: false
@@ -1307,8 +1307,8 @@ child:
                 id: 5992189130091653634
                 type: 1
                 enabled: true
-                position: [-7.13, 0, 9.653]
-                rotation: [0, 0, 0, 1]
+                position: [-4.446, -0.0154, 12.88]
+                rotation: [0, 0.7284, 0, 0.6852]
                 scale: [4, 4, 4]
               - !<animation>
                 id: 2933202914626779302
@@ -1319,7 +1319,7 @@ child:
                 id: 16793402598485648252
                 type: 17
                 enabled: true
-                max_speed: 5
+                max_speed: 7
                 max_acceleration: 10
                 avoid_obstacles: false
                 radius: 0.5
@@ -1336,16 +1336,16 @@ child:
                 "'_attack_range@float'": 3
                 "'_attack_delay@float'": 0.3
                 "'_idle_cooldown@float'": 2
-                "'_spawn_pos@float3'": [0, 0, 0]
+                "'_spawn_pos@float3'": [-7.13, 0, 9.653]
                 "'_spawn_is_initial@bool'": true
                 "'_player@GameObject*'": 10886238617659092412
                 "'_enemy_body@GameObject*'": 14288041232643970759
                 "'_parasite@GameObject*'": 4254431287090470372
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
-                "'_is_from_gautlet@bool'": false
+                "'_is_from_gautlet@bool'": true
                 "'_attack_animation_duration@float'": 0.5
-                "'_attack_animation_timer@float'": 0
+                "'_attack_animation_timer@float'": 0.1501
                 "'_is_ranged_attack@bool'": false
               - !<script>
                 id: 1454023596491184944
@@ -1357,7 +1357,7 @@ child:
                 "'_attack_range@float'": 3.5
                 "'_move_speed@float'": 7
                 "'_max_hp@int'": 3
-                "'_current_hp@int'": 3
+                "'_current_hp@int'": 0
             child:
               - id: 14357812073231090021
                 name: Root
@@ -1584,7 +1584,7 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0483, 0.1246, -0.0155, 0.9909]
+                                                                                            rotation: [0, 0, -0.1007, 0.9949]
                                                                                             scale: [1, 1, 1]
                                                                                         child:
                                                                                           - id: 13311800481646824580
@@ -1632,7 +1632,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0.1507, -0.7268, -0.0318, 0.6694]
+                                                                                                            rotation: [0.4098, -0.6889, 0.2847, 0.5258]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 14373891457011876513
@@ -1728,7 +1728,7 @@ child:
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
                                                                                                             rotation: [0.0213, -0.0111, -0.4897, 0.8716]
-                                                                                                            scale: [0.9999, 0.9999, 1]
+                                                                                                            scale: [0.9998, 0.9998, 1]
                                                                                                         child:
                                                                                                           - id: 9740811907884869291
                                                                                                             name: Arm2_jnt_L
@@ -2014,7 +2014,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9934]
+                                                                                                                                    scale: [1, 1, 0.9904]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: false
@@ -2070,8 +2070,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9933, 1, 0.9933]
+                                                                                            rotation: [0.523, 0.5233, 0.4801, 0.4713]
+                                                                                            scale: [0.9915, 1, 0.9915]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -2118,7 +2118,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0.0059, 0.1987, -0.0046, 0.98]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 14091026636474839114
@@ -2246,8 +2246,8 @@ child:
                                                                                             type: 1
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
-                                                                                            rotation: [0.0272, 0.7297, -0.0169, 0.683]
-                                                                                            scale: [1, 1, 1]
+                                                                                            rotation: [0.0269, 0.7217, -0.0167, 0.6915]
+                                                                                            scale: [0.9999, 1, 0.9999]
                                                                                         child:
                                                                                           - id: 3250768147685296302
                                                                                             name: Wing1_Jnt_R
@@ -2294,7 +2294,7 @@ child:
                                                                                                             type: 1
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
-                                                                                                            rotation: [0, 0, 0, 1]
+                                                                                                            rotation: [-0.0645, 0.2036, 0.0122, 0.9768]
                                                                                                             scale: [1, 1, 1]
                                                                                                         child:
                                                                                                           - id: 7856040318691943769
@@ -2468,7 +2468,7 @@ child:
                                         navigable: false
                                         visible: true
                                         material_id: 16615586293878050055
-                                        tint_color: [1, 1, 1, 1]
+                                        tint_color: [1, 1, 1, 0.7674]
               - id: 4254431287090470372
                 name: parasiteConsumable
                 enabled: false
@@ -2558,7 +2558,7 @@ child:
             "'_attack_range@float'": 3.5
             "'_move_speed@float'": 0
             "'_max_hp@int'": 1
-            "'_current_hp@int'": 3
+            "'_current_hp@int'": 1
         child:
           - id: 147639783983525316
             name: crystalSpike_mesh
@@ -2594,7 +2594,7 @@ child:
                     tint_color: [1, 1, 1, 1]
           - id: 308697077325262737
             name: crystalSpikeAnimacion_meshExplision
-            enabled: true
+            enabled: false
             component:
               - !<transform>
                 id: 1568070685315986142
@@ -2611,7 +2611,7 @@ child:
             child:
               - id: 10364845109812472938
                 name: Mesh
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     id: 506124945693981324
@@ -2623,7 +2623,7 @@ child:
                 child:
                   - id: 665945366317496660
                     name: crystalSpikeTop_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 2120338590140607455
@@ -2643,7 +2643,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 202970809293397751
                     name: crystalSpikeBottom_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 8962879095189958942
@@ -2663,7 +2663,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 2122361857392146060
                     name: crystalSpikeMiddle_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 11032401127102431153
@@ -2683,7 +2683,7 @@ child:
                         tint_color: [1, 1, 1, 1]
                   - id: 16109191972338777274
                     name: crystalSpikeBottom2_mesh
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 11575466999870049838
@@ -2703,7 +2703,7 @@ child:
                         tint_color: [1, 1, 1, 1]
               - id: 15531263440702262529
                 name: Father
-                enabled: true
+                enabled: false
                 component:
                   - !<transform>
                     id: 11180258172135649448
@@ -2715,7 +2715,7 @@ child:
                 child:
                   - id: 7619004261714579967
                     name: Bottom2
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 9378368315299358766
@@ -2726,7 +2726,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 14857061160596517856
                     name: Bottom
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 15217842607388792571
@@ -2737,7 +2737,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 4630927698015298456
                     name: Top
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 2503637240568890661
@@ -2748,7 +2748,7 @@ child:
                         scale: [1, 1, 1]
                   - id: 420359126156693406
                     name: Middle
-                    enabled: true
+                    enabled: false
                     component:
                       - !<transform>
                         id: 8278670559661044423
@@ -2899,7 +2899,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1207, 827]
+            size: [1354, 809]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -3060,7 +3060,7 @@ child:
                 tint_color: [1, 1, 1, 1]
           - id: 1706039807795591899
             name: OpenDoor
-            enabled: false
+            enabled: true
             component:
               - !<transform>
                 id: 17751855561298410549
@@ -3094,6 +3094,167 @@ child:
         type: 15
         enabled: true
         class_name: CombatManager
+    child:
+      - id: 3566794617695125112
+        name: Bullet
+        enabled: false
+        component:
+          - !<transform>
+            id: 17169529346647039976
+            type: 1
+            enabled: true
+            position: [-5.72, -0.0154, 16.57]
+            rotation: [0, 0, 0, 1]
+            scale: [0.2332, 0.2332, 0.2332]
+        child:
+          - id: 783833976115106945
+            name: Sphere001
+            enabled: false
+            component:
+              - !<transform>
+                id: 15876558010453509031
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0.7071, 0, 0, 0.7071]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 1795447627038185529
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 1911167035976575794
+        name: Bullet
+        enabled: false
+        component:
+          - !<transform>
+            id: 2282860889531294661
+            type: 1
+            enabled: true
+            position: [0, 2.872, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [0.3, 0.3, 0.3]
+        child:
+          - id: 7014283517813330652
+            name: Sphere001
+            enabled: false
+            component:
+              - !<transform>
+                id: 4544883008479222337
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0.7071, 0, 0, 0.7071]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 2852111796617953485
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 3954386127243620210
+        name: Bullet
+        enabled: false
+        component:
+          - !<transform>
+            id: 13632387806985409665
+            type: 1
+            enabled: true
+            position: [0, 2.872, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [0.3, 0.3, 0.3]
+        child:
+          - id: 941846429923059005
+            name: Sphere001
+            enabled: false
+            component:
+              - !<transform>
+                id: 17839724757498465522
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0.7071, 0, 0, 0.7071]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 17413783266615879101
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 1189475870875166128
+        name: Bullet
+        enabled: false
+        component:
+          - !<transform>
+            id: 7463557293203583786
+            type: 1
+            enabled: true
+            position: [0, 2.872, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [0.3, 0.3, 0.3]
+        child:
+          - id: 6071426872934815887
+            name: Sphere001
+            enabled: false
+            component:
+              - !<transform>
+                id: 3573650038731473843
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0.7071, 0, 0, 0.7071]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 10418731722154724943
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
+      - id: 13613041351972962648
+        name: Bullet
+        enabled: false
+        component:
+          - !<transform>
+            id: 17159757504191757358
+            type: 1
+            enabled: true
+            position: [0, 2.872, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [0.3, 0.3, 0.3]
+        child:
+          - id: 1783603479211238143
+            name: Sphere001
+            enabled: false
+            component:
+              - !<transform>
+                id: 5611239647094395848
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [-0.7071, 0, 0, 0.7071]
+                scale: [1, 1, 1]
+              - !<mesh_renderer>
+                id: 5216406698730925046
+                type: 2
+                enabled: true
+                mesh_id: 9734251747031717595
+                navigable: false
+                visible: true
+                material_id: 6750369022920963075
+                tint_color: [1, 1, 1, 1]
   - id: 13722226791976009516
     name: CrystalPlatform
     enabled: true
@@ -6203,7 +6364,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1207, 827]
+        size: [1354, 809]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -6229,7 +6390,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1207, 827]
+            size: [1354, 809]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -6598,7 +6759,7 @@ child:
         enabled: true
         mesh_id: 10210867973034302559
         navigable: false
-        visible: true
+        visible: false
         material_id: 6750369022920963075
         tint_color: [1, 1, 1, 1]
       - !<script>
@@ -6649,7 +6810,7 @@ child:
         type: 15
         enabled: true
         class_name: LevelManager
-        "'_respawn_position@float3'": [0, 0, 0]
+        "'_respawn_position@float3'": [-3.301, 0, -17.36]
   - id: 10886238617659092412
     name: Player
     enabled: true
@@ -6658,9 +6819,9 @@ child:
         id: 749225725095219916
         type: 1
         enabled: true
-        position: [-3.301, 0, -17.36]
-        rotation: [0, -0.8513, 0, 0.5247]
-        scale: [0.45, 0.45, 0.45]
+        position: [4.961, -0.0154, -14.29]
+        rotation: [0, 0.886, 0, -0.4636]
+        scale: [0.4489, 0.45, 0.4489]
       - !<animation>
         id: 147578534105100990
         type: 14
@@ -6685,7 +6846,7 @@ child:
         "'_dash_scaler@unsigned'": 3
         "'_max_dash_charges@unsigned'": 2
         "'_dash_trail@GameObject*'": 15265978411687079308
-        "'_trail_enlarger@float'": 15
+        "'_trail_enlarger@float'": 8
         "'_rotation_duration@float'": 0.075
         "'_hp_cell_1@GameObject*'": 9209290808179456846
         "'_hp_cell_2@GameObject*'": 14491496159405339717
@@ -6693,9 +6854,6 @@ child:
         "'_hp_cell_4@GameObject*'": 10506178639632514201
         "'_camera@GameObject*'": 2223877946256215970
         "'_ui_damage@GameObject*'": 0
-        "'_melee_weapon@GameObject*'": 0
-        "'_sword_weapon@GameObject*'": 0
-        "'_claw_weapon@GameObject*'": 10005672500855046388
       - !<script>
         id: 1525097650859307058
         type: 15
@@ -6705,7 +6863,7 @@ child:
         "'_step_frequency@float'": 0.4
         "'_melee_frequency@float'": 0.3
         "'_ranged_frequency@float'": 0.3
-        "'_timer@float'": 0.006
+        "'_timer@float'": 0.0666
       - !<script>
         id: 15917466306479538906
         type: 15
@@ -6716,7 +6874,7 @@ child:
         "'_attack_range@float'": 3.5
         "'_move_speed@float'": 7
         "'_max_hp@int'": 4
-        "'_current_hp@int'": 3
+        "'_current_hp@int'": 4
     child:
       - id: 16548503927958416370
         name: GEO
@@ -7054,7 +7212,7 @@ child:
                 id: 13051035672534148845
                 type: 1
                 enabled: true
-                position: [0, 0.2265, -0.1247]
+                position: [0, 0.1649, -0.1247]
                 rotation: [0, 0, 0, 1]
                 scale: [1, 1, 1]
             child:
@@ -7103,7 +7261,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [0.0649, 0.0538, 0.3604, 0.929]
+                                rotation: [0.0807, 0.0847, 0.4263, 0.897]
                                 scale: [1, 1, 1]
                             child:
                               - id: 8618606089511999483
@@ -7127,7 +7285,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [0.4062, 0, -0.1398]
-                                        rotation: [-0.0794, -0.0572, -0.1974, 0.9754]
+                                        rotation: [-0.1244, -0.073, -0.2913, 0.9457]
                                         scale: [1, 1, 1]
                                     child:
                                       - id: 4585127741224998182
@@ -7150,8 +7308,8 @@ child:
                                                 id: 16606562193707066826
                                                 type: 1
                                                 enabled: true
-                                                position: [0.0844, 0.1574, 0.0094]
-                                                rotation: [0.0317, 0.0122, -0.1749, 0.984]
+                                                position: [0.0771, 0.1602, 0.0194]
+                                                rotation: [0.0598, 0.0097, -0.1525, 0.9864]
                                                 scale: [1, 1, 1]
                                             child:
                                               - id: 6308081088761991081
@@ -7198,7 +7356,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0, 0, 0]
-                                rotation: [-0.1333, 0.1489, 0.0582, 0.9781]
+                                rotation: [-0.1092, 0.1925, 0.1026, 0.9698]
                                 scale: [1, 1, 1]
                             child:
                               - id: 3098587606917152661
@@ -7222,7 +7380,7 @@ child:
                                         type: 1
                                         enabled: true
                                         position: [-0.4062, 0, 0.1398]
-                                        rotation: [-0.0781, -0.0566, -0.1946, 0.9761]
+                                        rotation: [-0.1231, -0.0727, -0.2889, 0.9466]
                                         scale: [1, 1, 1]
                                     child:
                                       - id: 5292273920605220462
@@ -7245,8 +7403,8 @@ child:
                                                 id: 8458215507740261907
                                                 type: 1
                                                 enabled: true
-                                                position: [0.02, -0.1582, -0.0811]
-                                                rotation: [0.2322, -0.0595, 0.1143, 0.9641]
+                                                position: [0.0339, -0.1492, -0.0926]
+                                                rotation: [0.271, -0.0676, 0.1515, 0.9482]
                                                 scale: [1, 1, 1]
                                             child:
                                               - id: 5814313674763459973
@@ -7305,7 +7463,7 @@ child:
                                 type: 1
                                 enabled: true
                                 position: [0.2502, 0, 0]
-                                rotation: [-0.0296, -0.017, 0.0039, 0.9994]
+                                rotation: [-0.0303, -0.0158, 0.0451, 0.9984]
                                 scale: [1, 1, 1]
                             child:
                               - id: 13095819334306298671
@@ -7316,7 +7474,7 @@ child:
                                     id: 4901375051783198222
                                     type: 1
                                     enabled: true
-                                    position: [0.2428, 0.203, 0.0086]
+                                    position: [0.2519, 0.2077, 0.0086]
                                     rotation: [0, 0, 0, 1]
                                     scale: [1, 1, 1]
                                 child:
@@ -7436,7 +7594,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0.1071, -0.2462, -0.0954, 0.9586]
+                                            rotation: [0.1204, -0.3032, -0.1047, 0.9395]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 3799625122648654729
@@ -7459,7 +7617,7 @@ child:
                                                     id: 10737474986866900196
                                                     type: 1
                                                     enabled: true
-                                                    position: [0.2603, 0.0037, 0.1435]
+                                                    position: [0.278, 0.0182, 0.1519]
                                                     rotation: [0, 0, 0, 1]
                                                     scale: [1, 1, 1]
                                                 child:
@@ -7484,7 +7642,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0.0411, -0.0808, -0.2706, 0.9584]
+                                                            rotation: [0.0317, -0.1139, -0.2719, 0.955]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 11586472968316553158
@@ -7854,7 +8012,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0.2065, -0.119, 0.8415, 0.4848]
-                                        scale: [0.9982, 0.9982, 1]
+                                        scale: [0.9952, 0.9952, 1]
                                     child:
                                       - id: 2061975018426111614
                                         name: CenterShoulder_$AssimpFbx$_Rotation
@@ -7865,7 +8023,7 @@ child:
                                             type: 1
                                             enabled: true
                                             position: [0, 0, 0]
-                                            rotation: [0.0005, 0.0036, -0.0003, 1]
+                                            rotation: [0.0066, 0.0498, -0.0039, 0.9987]
                                             scale: [1, 1, 1]
                                         child:
                                           - id: 4147425829044359546
@@ -7888,7 +8046,7 @@ child:
                                                     id: 18164912575912783755
                                                     type: 1
                                                     enabled: true
-                                                    position: [-0.1844, -0.001, -0.0582]
+                                                    position: [-0.178, -0.0109, -0.0412]
                                                     rotation: [0, 0, 0, 1]
                                                     scale: [1, 1, 1]
                                                 child:
@@ -7913,7 +8071,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [0.0226, 0.1047, -0.1478, 0.9832]
+                                                            rotation: [0.0203, 0.1053, -0.1896, 0.976]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 13260002570065296716
@@ -8069,7 +8227,7 @@ child:
                                                                                                                 type: 1
                                                                                                                 enabled: true
                                                                                                                 position: [0.0944, 0.0526, -0.0407]
-                                                                                                                rotation: [0.169, 0.8884, 0.3419, 0.2556]
+                                                                                                                rotation: [-0.228, -0.2851, -0.1358, 0.921]
                                                                                                                 scale: [1, 1, 1]
                                                                                           - id: 3503103339153689531
                                                                                             name: MouthDown_$AssimpFbx$_Translation
@@ -8079,7 +8237,7 @@ child:
                                                                                                 id: 14984864093654036718
                                                                                                 type: 1
                                                                                                 enabled: true
-                                                                                                position: [-0.4535, 0.1205, 0.0353]
+                                                                                                position: [-0.4199, 0.1991, 0.0735]
                                                                                                 rotation: [0, 0, 0, 1]
                                                                                                 scale: [1, 1, 1]
                                                                                             child:
@@ -8104,7 +8262,7 @@ child:
                                                                                                         type: 1
                                                                                                         enabled: true
                                                                                                         position: [0, 0, 0]
-                                                                                                        rotation: [0, -0.0033, 0.0071, 1]
+                                                                                                        rotation: [0.0052, -0.045, 0.0973, 0.9942]
                                                                                                         scale: [1, 1, 1]
                                                                                                     child:
                                                                                                       - id: 4804150408699767090
@@ -8176,7 +8334,7 @@ child:
                                                                                                                 enabled: true
                                                                                                                 position: [0, 0, 0]
                                                                                                                 rotation: [0, 0.9999, 0, 0.0118]
-                                                                                                                scale: [0.9982, 1, 0.9982]
+                                                                                                                scale: [0.9952, 1, 0.9952]
                                                                                                             child:
                                                                                                               - id: 14791280733211636134
                                                                                                                 name: Claw_Jnt
@@ -8212,7 +8370,7 @@ child:
                                                                                                                             enabled: true
                                                                                                                             position: [0, 0, 0]
                                                                                                                             rotation: [0, 0.9999, 0, -0.0118]
-                                                                                                                            scale: [0.9982, 1, 0.9982]
+                                                                                                                            scale: [0.9952, 1, 0.9952]
                                                                                                                         child:
                                                                                                                           - id: 9172988829641446427
                                                                                                                             name: Claw_Mid_Jnt
@@ -8248,7 +8406,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, -0.7329, 0, 0.6803]
-                                                                                                                                        scale: [0.9983, 1, 0.9983]
+                                                                                                                                        scale: [0.9953, 1, 0.9953]
                                                                                                                                     child:
                                                                                                                                       - id: 3745618777605501704
                                                                                                                                         name: Thumb_Start_$AssimpFbx$_Rotation
@@ -8522,7 +8680,7 @@ child:
                                                                                                                                         enabled: true
                                                                                                                                         position: [0, 0, 0]
                                                                                                                                         rotation: [0, 0.9979, 0, 0.0641]
-                                                                                                                                        scale: [0.9964, 1, 0.9964]
+                                                                                                                                        scale: [0.9904, 1, 0.9904]
                                                                                                                                     child:
                                                                                                                                       - id: 5139635733711661381
                                                                                                                                         name: Index_start_$AssimpFbx$_Rotation
@@ -8570,7 +8728,7 @@ child:
                                                                                                                                                         enabled: true
                                                                                                                                                         position: [0, 0, 0]
                                                                                                                                                         rotation: [0, 0.9979, 0, -0.0641]
-                                                                                                                                                        scale: [0.9964, 1, 0.9964]
+                                                                                                                                                        scale: [0.9904, 1, 0.9904]
                                                                                                                                                     child:
                                                                                                                                                       - id: 16556071898568015693
                                                                                                                                                         name: Index_finish_$AssimpFbx$_Rotation
@@ -8781,7 +8939,7 @@ child:
                                     id: 13334063888559663643
                                     type: 1
                                     enabled: true
-                                    position: [0.2435, -0.0017, 0.0094]
+                                    position: [0.2526, 0.0031, 0.0094]
                                     rotation: [0, 0, 0, 1]
                                     scale: [1, 1, 1]
                                 child:
@@ -8795,7 +8953,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [-0.3566, -0.5758, -0.3468, 0.6489]
-                                        scale: [0.9991, 1, 0.9991]
+                                        scale: [0.9976, 1, 0.9976]
                                     child:
                                       - id: 9984503216677874160
                                         name: JetPack_$AssimpFbx$_Rotation
@@ -8854,7 +9012,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0047, 0.0009, -0.0079, 1]
+                                                            rotation: [-0.0566, 0.0105, -0.0943, 0.9939]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 5282796969287073565
@@ -8937,7 +9095,7 @@ child:
                                                             type: 1
                                                             enabled: true
                                                             position: [0, 0, 0]
-                                                            rotation: [-0.0047, 0.0009, -0.0079, 1]
+                                                            rotation: [-0.0566, 0.0105, -0.0943, 0.9939]
                                                             scale: [1, 1, 1]
                                                         child:
                                                           - id: 741385855496215106
@@ -8995,7 +9153,7 @@ child:
                     id: 9975281583551630992
                     type: 1
                     enabled: true
-                    position: [-0.3263, -0.8003, -0.3238]
+                    position: [-0.3263, -0.7387, -0.3238]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
               - id: 1489091694125232352
@@ -9006,7 +9164,7 @@ child:
                     id: 15023190844455254058
                     type: 1
                     enabled: true
-                    position: [0.3264, -0.8003, 0.3066]
+                    position: [0.3264, -0.7387, 0.3066]
                     rotation: [0, 0, 0, 1]
                     scale: [1, 1, 1]
       - id: 12847107905599264921
@@ -9022,7 +9180,7 @@ child:
             scale: [2.444, 2.444, 2.444]
       - id: 1208463257695642431
         name: AttackIndicator
-        enabled: true
+        enabled: false
         component:
           - !<transform>
             id: 6246503759639328920
@@ -9039,9 +9197,9 @@ child:
             id: 15251283143474827617
             type: 1
             enabled: true
-            position: [-0.1581, 3.509, -1.329]
+            position: [0, 3.48, -1.02]
             rotation: [0, 0.7071, 0, 0.7071]
-            scale: [2.036, 0.4071, 4.071]
+            scale: [2.04, 0.4071, 2.17]
         child:
           - id: 17374699040677219966
             name: Plane001

@@ -46,7 +46,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	melee.attacks.push_back(GetAttackType(AttackType::COMMON_2));
 	melee.attacks.push_back(GetAttackType(AttackType::COMMON_3));
 
-
 	Weapon claw;
 	claw.name = "Claw";
 	claw.bullet = common_bullet;
@@ -54,8 +53,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
-
-
+	
 	Weapon sword;
 	sword.name = "Sword";
 	sword.bullet = common_bullet;
@@ -125,6 +123,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	// TODO: Make this as an Serializable field on script
+	_claw_weapon = _geo->FindDescendantWithName("weaponClaw");
+	_sword_upper = _geo->FindDescendantWithName("parasite_low");
+	_sword_weapon = _geo->FindDescendantWithName("blade_low");
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -413,7 +416,6 @@ void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& 
 	}
 }
 
-
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
@@ -439,6 +441,27 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
 	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
+}
+
+void Hachiko::Scripting::PlayerController::ChangeGOWeapon()
+{
+	if (_current_weapon == 0) { // MELEE
+		_claw_weapon->SetActive(false);
+		_sword_upper->SetActive(false);
+		_sword_weapon->SetActive(false);
+	}
+	else if (_current_weapon == 1) // CLAW
+	{
+		_claw_weapon->SetActive(true);
+		_sword_upper->SetActive(false);
+		_sword_weapon->SetActive(false);
+	}
+	else if (_current_weapon == 2) // SWORD
+	{
+		_claw_weapon->SetActive(false);
+		_sword_upper->SetActive(true);
+		_sword_weapon->SetActive(true);
+	}
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -871,11 +894,14 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					std::uniform_int_distribution<> dist(0, weapons.size() - 1);
 					int new_wpn_num = dist(gen);
 					_current_weapon = new_wpn_num;
-					return;
+					break;
 				}
 			}
 		}
+
 	}
+	
+	ChangeGOWeapon();
 }
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
@@ -986,22 +1012,7 @@ void Hachiko::Scripting::PlayerController::CheckComboAnimation()
 			animation->SendTrigger("isMeleeThree");
 		}
 	}
-	if (_current_weapon == 1)
-	{
-		if (_attack_idx == 0)
-		{
-			animation->SendTrigger("isSwordOne");
-		}
-		else if (_attack_idx == 1)
-		{
-			animation->SendTrigger("isSwordTwo");
-		}
-		else if (_attack_idx == 2)
-		{
-			animation->SendTrigger("isSwordThree");
-		}
-	}
-	if (_current_weapon == 2)
+	else if (_current_weapon == 1) // CLAW
 	{
 		if (_attack_idx == 0)
 		{
@@ -1014,6 +1025,21 @@ void Hachiko::Scripting::PlayerController::CheckComboAnimation()
 		else if (_attack_idx == 2)
 		{
 			animation->SendTrigger("isClawThree");
+		}
+	}
+	else if (_current_weapon == 2) // SWORD
+	{
+		if (_attack_idx == 0)
+		{
+			animation->SendTrigger("isSwordOne");
+		}
+		else if (_attack_idx == 1)
+		{
+			animation->SendTrigger("isSwordTwo");
+		}
+		else if (_attack_idx == 2)
+		{
+			animation->SendTrigger("isSwordThree");
 		}
 	}
 }
@@ -1083,8 +1109,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::COMMON_1:
 		// Make hit delay shorter than duration!
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.5f; // 11 frames .45ms
-		attack.cooldown = 0.1f;
+		attack.duration = 0.5f; // 10 frames .45ms
+		attack.cooldown = 0;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1096,8 +1122,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.40f; // 11 frames .45ms
-		attack.cooldown = 0.1f;
+		attack.duration = 0.40f; // 9 frames .45ms
+		attack.cooldown = 0;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1109,8 +1135,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::COMMON_3:
 		attack.hit_delay = 0.2f;
-		attack.duration = 0.6f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.6f; // 12 frames
+		attack.cooldown = 0;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1123,8 +1149,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// COMMON ATTACKS
 	case AttackType::QUICK_1:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.3f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.5f;
+		attack.cooldown = 0;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1136,8 +1162,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_2:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.3f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.40f;
+		attack.cooldown = 0;
 		attack.dash_distance = 1.f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1149,8 +1175,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::QUICK_3:
 		attack.hit_delay = 0.05f;
-		attack.duration = 0.3f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.50f;
+		attack.cooldown = 0;
 		attack.dash_distance = 1.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1163,8 +1189,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	// COMMON ATTACKS
 	case AttackType::HEAVY_1:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.3f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.6f;
+		attack.cooldown = 0;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1176,8 +1202,8 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 
 	case AttackType::HEAVY_2:
 		attack.hit_delay = 0.1f;
-		attack.duration = 0.3f;
-		attack.cooldown = 0.1f;
+		attack.duration = 0.4f;
+		attack.cooldown = 0;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 1;
@@ -1190,7 +1216,7 @@ Hachiko::Scripting::PlayerController::PlayerAttack Hachiko::Scripting::PlayerCon
 	case AttackType::HEAVY_3:
 		attack.hit_delay = 0.5f;
 		attack.duration = 0.8f;
-		attack.cooldown = 0.1f;
+		attack.cooldown = 0;
 		attack.dash_distance = 0.5f;
 		attack.stats.type = CombatManager::AttackType::RECTANGLE;
 		attack.stats.damage = 2;

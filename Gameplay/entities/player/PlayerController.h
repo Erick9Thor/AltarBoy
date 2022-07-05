@@ -130,6 +130,7 @@ namespace Hachiko
 			void Dash();
 			void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
 			void MeleeAttack();
+			void ChangeGOWeapon();
 			void RangedAttack();
 			void CancelAttack();
 			float4x4 GetMeleeAttackOrigin(float attack_range) const;
@@ -189,9 +190,9 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
 
-			SERIALIZE_FIELD(GameObject*, _melee_weapon);
-			SERIALIZE_FIELD(GameObject*, _sword_weapon);
-			SERIALIZE_FIELD(GameObject*, _claw_weapon);
+			GameObject* _sword_weapon = nullptr;
+			GameObject* _sword_upper = nullptr;
+			GameObject* _claw_weapon = nullptr;
 
 			ComponentTransform* _player_transform = nullptr;
 			ComponentAnimation* animation;
