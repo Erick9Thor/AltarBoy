@@ -72,9 +72,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
-	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	_level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+	_terrain = Scenes::GetTerrainContainer();
+	_enemies = Scenes::GetEnemiesContainer();
+	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 
 	_dash_charges = _max_dash_charges;
 
@@ -92,8 +92,14 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_dash_trail->SetActive(false);
 	}
 
-	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
-	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	if (_falling_dust != nullptr) 
+	{
+		_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
+	}
+	if (_walking_dust != nullptr) 
+	{
+		_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
