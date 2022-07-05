@@ -178,6 +178,11 @@ void Hachiko::ShadowManager::BindLightingPassUniforms(const Program* program) co
 
 void Hachiko::ShadowManager::ApplyGaussianBlur(const Program* program) const 
 {
+    if (!_gaussian_blurring_enabled)
+    {
+        return;
+    }
+
     const ComponentDirLight* light = GetDirectionalLight();
 
     if (light == nullptr)
@@ -209,9 +214,19 @@ void Hachiko::ShadowManager::UnbindBuffer() const
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void Hachiko::ShadowManager::SetGaussianBlurringEnabled(bool enabled) 
+{
+    _gaussian_blurring_enabled = enabled;
+}
+
 const Frustum& Hachiko::ShadowManager::GetDirectionalLightFrustum() const
 {
     return _directional_light_frustum;
+}
+
+bool Hachiko::ShadowManager::IsGaussianBlurringEnabled() const
+{
+    return _gaussian_blurring_enabled;
 }
 
 const Hachiko::ComponentDirLight* Hachiko::ShadowManager::GetDirectionalLight() const

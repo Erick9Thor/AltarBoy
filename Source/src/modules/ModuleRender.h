@@ -167,13 +167,6 @@ namespace Hachiko
 
         // Shadow Map related:
         ShadowManager shadow_manager;
-        //unsigned shadow_map_fbo = 0;
-        //unsigned shadow_map_texture = 0;
-        //unsigned shadow_map_filtered_fbo = 0;
-        //unsigned shadow_map_filtered_texture = 0;
-        //unsigned shadow_map_depth = 0;
-        //unsigned int shadow_width = 4096;
-        //unsigned int shadow_height = 4096;
 
         bool draw_deferred = true;
 

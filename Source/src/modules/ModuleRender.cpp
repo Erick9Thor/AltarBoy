@@ -57,6 +57,9 @@ bool Hachiko::ModuleRender::Init()
     draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
     draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
 
+    shadow_manager.SetGaussianBlurringEnabled(
+        App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
+
     return true;
 }
 
@@ -636,6 +639,18 @@ void Hachiko::ModuleRender::OptionsMenu()
     if (draw_deferred)
     {
         DeferredOptions();
+    }
+
+    ImGui::NewLine();
+    ImGui::Text("Shadowmap Blurring Mode");
+    ImGui::Separator();
+    ImGui::TextWrapped("Enable for soft shadows, disable for hard shadows.");
+    bool shadow_map_gaussian_blur_enabled = shadow_manager.IsGaussianBlurringEnabled();
+
+    if (ImGui::Checkbox("Apply Gaussian Blur", &shadow_map_gaussian_blur_enabled))
+    {
+        shadow_manager.SetGaussianBlurringEnabled(shadow_map_gaussian_blur_enabled);
+        App->preferences->GetEditorPreference()->SetShadowMappingGaussianBlurringEnabled(shadow_map_gaussian_blur_enabled);
     }
 
     if (!draw_skybox)

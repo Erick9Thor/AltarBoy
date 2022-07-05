@@ -24,7 +24,10 @@ public:
     void BindBufferForDrawing() const;
     void UnbindBuffer() const;
 
+    void SetGaussianBlurringEnabled(bool enabled);
+
     [[nodiscard]] const Frustum& GetDirectionalLightFrustum() const;
+    [[nodiscard]] bool IsGaussianBlurringEnabled() const;
 
 private:
     const ComponentDirLight* GetDirectionalLight() const;
@@ -46,6 +49,7 @@ private:
     float4x4 _camera_view = float4x4::identity;
     bool _camera_exists = false;
     bool _light_exists = false;
+    bool _gaussian_blurring_enabled = true;
     
     // Shadow map texture related:
     unsigned _shadow_map_fbo = 0;

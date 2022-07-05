@@ -73,6 +73,11 @@ void EditorPreferences::LoadConfigurationData(const YAML::Node& node)
         {
             undo_redo_active = it->second.as<bool>();
         }
+
+        if (it->first.as<std::string>()._Equal(SHADOW_MAP_GAUSSIAN_BLURRING_ENABLED))
+        {
+            shadow_mapping_gaussian_blurring_enabled = it->second.as<bool>();
+        }
     }
 }
 
@@ -89,4 +94,5 @@ void EditorPreferences::SaveConfigurationData(YAML::Node& node)
     node[group_name][DISPLAY_QUADTREE] = draw_quadtree;
     node[group_name][DISPLAY_NAVMESH] = draw_navmesh;
     node[group_name][UNDO_REDO_ACTIVE] = undo_redo_active;
+    node[group_name][SHADOW_MAP_GAUSSIAN_BLURRING_ENABLED] = shadow_mapping_gaussian_blurring_enabled;
 }
