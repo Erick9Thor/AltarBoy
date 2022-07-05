@@ -65,9 +65,10 @@ namespace Hachiko
 
             // Bool indicates if it hit something
             bool PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            bool EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
-            bool EnemyConeAttack(const float4x4& origin, float hit_angle_deg, float hit_distance, const AttackStats& attack_stats);
-            bool EnemyRectangleAttack(const float4x4& origin, float width, float length, const AttackStats& attack_stats);
+            bool EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            bool EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
             // Player only system for now
@@ -79,7 +80,7 @@ namespace Hachiko
             
             bool IsPackDead(GameObject* pack) const;
             bool IsPackDead(unsigned pack_idx) const;
-            void ResetEnemyPack(GameObject* pack);
+            void ResetEnemyPack(GameObject* pack, bool is_gauntlet = false);
             void ActivateEnemyPack(GameObject* pack);
             void DeactivateEnemyPack(GameObject* pack);
 
@@ -89,20 +90,25 @@ namespace Hachiko
             bool PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // Evaluate for all units
-            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            bool ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player);
             bool ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            bool ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            bool ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, bool is_from_player);
             bool ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            bool ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats);
 
             // Specifics of the collision check
             bool ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
             bool ConeHitsObstacle(GameObject* obstacle_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
+            bool ConeHitsPlayer(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
             bool OBBHitsAgent(GameObject* agent_go, const OBB& attack_box);
             bool OBBHitsObstacle(GameObject* obstacle_go, const OBB& attack_box);
+            bool OBBHitsPlayer(const OBB& attack_box);
 
             // What to do when system wants to register a hit
             void HitObstacle(GameObject* obstacle, float damage);
-            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero);
+            void HitEnemy(EnemyController* enemy, int damage, float knockback = 0, float3 knockback_dir = float3::zero, bool is_from_player = false);
+            void HitPlayer(int damage, float knockback = 0, float3 knockback_dir = float3::zero);
 
             // Bullet specific management operations
             void RunBulletSimulation();

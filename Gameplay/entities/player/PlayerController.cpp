@@ -20,6 +20,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
+	, _invulnerability_time(1.0f)
 	, _dash_scaler(3)
 	, _rotation_duration(0.0f)
 	, _combat_stats()
@@ -169,6 +170,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
+
+	if (_invulnerability_time_remaining > 0.0f)
+	{
+		_invulnerability_time_remaining -= Time::DeltaTime();
+	}
 
 	if (_god_mode_trigger)
 	{
@@ -381,29 +387,30 @@ void Hachiko::Scripting::PlayerController::Dash()
 	_dash_direction.Normalize();
 
 	float3 corrected_dash_final_position;
-	float3 dash_final_position = _dash_start + _dash_direction * _dash_distance;
+	_dash_end = _dash_start + _dash_direction * _dash_distance;
 	// Correct by wall hit
-	bool hit_terrain = GetTerrainCollision(_dash_start, dash_final_position, corrected_dash_final_position);
+	CorrectDashDestination(_dash_start, _dash_end);
+}
+
+void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& dash_source, float3& dash_destination)
+{
+	float3 corrected_dash_destination;
+	bool hit_terrain = GetTerrainCollision(dash_source, dash_destination, corrected_dash_destination);
 	if (hit_terrain)
 	{
-		dash_final_position = corrected_dash_final_position;
+		dash_destination = corrected_dash_destination;
 		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
-		corrected_dash_final_position = Navigation::GetCorrectedPosition(dash_final_position, float3(5.f, 0.5f, 5.f));
+		corrected_dash_destination = Navigation::GetCorrectedPosition(dash_destination, float3(5.f, 0.5f, 5.f));
 	}
 	else
 	{
 		// Correct normally by navmesh
-		corrected_dash_final_position = GetCorrectedPosition(dash_final_position);
+		corrected_dash_destination = GetCorrectedPosition(dash_destination);
 	}
-	if (corrected_dash_final_position.x < FLT_MAX)
+	if (corrected_dash_destination.x < FLT_MAX)
 	{
-		_dash_end = corrected_dash_final_position;
+		dash_destination = corrected_dash_destination;
 	}
-	else
-	{
-		_dash_end = dash_final_position;
-	}
-	
 }
 
 
@@ -421,25 +428,17 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
-	// Move player a bit forward if it wouldnt fall
-	
+	// Move player a bit forward if it wouldnt fall	
 	_dash_progress = 0.f;
 	_current_dash_duration = attack.duration;
 	_dash_start = _player_position;
-	_dash_end = _player_position;
-	float3 corrected_position = GetCorrectedPosition(_player_position + _player_transform->GetFront().Normalized() * attack.dash_distance);
-	if (corrected_position.x < FLT_MAX)
-	{
-		_dash_end = corrected_position;
-	}
-
-	// Set cooldown back
-	
+	_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
+	CorrectDashDestination(_dash_start, _dash_end);
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
 
-	_attack_indicator->ChangeColor(attack_color, attack.duration, true);
+	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttacking() const
@@ -552,7 +551,8 @@ float4x4 Hachiko::Scripting::PlayerController::GetMeleeAttackOrigin(float attack
 
 bool Hachiko::Scripting::PlayerController::GetTerrainCollision(const float3& start, const float3& end, float3& collision_point) const
 {
-	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain);
+	constexpr bool active_only = true;
+	GameObject* terrain_hit = SceneManagement::Raycast(start, end, &collision_point, _terrain, true);
 	return terrain_hit != nullptr;
 }
 
@@ -846,12 +846,12 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 			{
 				EnemyController* enemy_controller = enemies[i]->GetComponent<EnemyController>();
 
-				if (enemy_controller->IsAlive() == false)
+				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
 					if (_geo != nullptr) 
 					{
-						_geo->ChangeColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
@@ -871,8 +871,12 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	if (_god_mode)	return;
+	if (_god_mode || _invulnerability_time_remaining > 0.0f)
+	{
+	    return;
+	}
 
+	_invulnerability_time_remaining = _invulnerability_time;
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
 	if (_geo != nullptr)
