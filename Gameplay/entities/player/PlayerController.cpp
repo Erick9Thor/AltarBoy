@@ -881,7 +881,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 	UpdateHealthBar();
 	if (_geo != nullptr)
 	{
-		_geo->ChangeColor(float4(255, 255, 255, 255), 0.3, true);
+		_geo->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3, true);
 	}
 
 	// Activate vignette

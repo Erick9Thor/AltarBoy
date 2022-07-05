@@ -65,7 +65,7 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 		AdjustLength();
 
 		// TODO: change tint color to 0 alpha
-		_laser->ChangeColor(float4(1.0f, 1.0f, 1.0f, 1.0f), _activation_time, true); // remove this when tint is here
+		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 1.0f), _activation_time, true); // remove this when tint is here
 		_laser->SetActive(true);
 		break;
 	case State::INACTIVE:
