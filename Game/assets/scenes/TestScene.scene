@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9999, 1, 0.9999]
+        scale: [0.9998, 1, 0.9998]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -151,8 +151,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
-                    scale: [1, 1, 1]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
+                    scale: [1, 0.9999, 0.9999]
                   - !<mesh_renderer>
                     id: 6854847498623374605
                     type: 2
@@ -394,8 +394,8 @@ child:
                     type: 1
                     enabled: true
                     position: [1.203, 0.5688, -1.089]
-                    rotation: [-0.6409, 0.2988, 0.2988, 0.6408]
-                    scale: [1, 1, 1]
+                    rotation: [-0.6409, 0.2988, 0.2988, 0.6409]
+                    scale: [1, 0.9999, 0.9999]
                   - !<mesh_renderer>
                     id: 8856581706252130949
                     type: 2
@@ -558,7 +558,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9999, 1, 0.9999]
+                        scale: [0.9998, 1, 0.9998]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -2245,7 +2245,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [0.001, 0.0096, 0.994, -0.1085]
-                    scale: [0.9998, 0.9998, 1]
+                    scale: [0.9996, 0.9996, 1]
                 child:
                   - id: 7371629505677526311
                     name: mixamorig:LeftUpLeg_$AssimpFbx$_Rotation
@@ -2448,7 +2448,7 @@ child:
                     enabled: true
                     position: [0, 0, 0]
                     rotation: [-0.0011, 0.0096, 0.994, 0.1085]
-                    scale: [0.9998, 0.9998, 1]
+                    scale: [0.9996, 0.9996, 1]
                 child:
                   - id: 4481323456209268566
                     name: mixamorig:RightUpLeg_$AssimpFbx$_Rotation
@@ -2728,7 +2728,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1133, 630]
+            size: [1788, 973]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -2855,7 +2855,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1133, 630]
+        size: [1788, 973]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -3089,73 +3089,24 @@ child:
         position: [0, 1.035, 0]
         rotation: [0, 0, 0, 1]
         scale: [1, 1, 1]
-    child:
-      - id: 8016202327429723177
-        name: Bullet
+      - !<billboard>
+        id: 2437994461734620251
+        type: 21
         enabled: true
-        component:
-          - !<transform>
-            id: 5338630990763287668
-            type: 1
-            enabled: true
-            position: [-2.257, 2.261, 11.12]
-            rotation: [0, 0, 0, 1]
-            scale: [1, 1, 1]
-          - !<particle_system>
-            id: 2482492440704369800
-            type: 22
-            enabled: true
-            sections:
-              parameters: true
-              emission: true
-              shape: true
-              lights: false
-              renderer: true
-            parameters:
-              duration: 5
-              loop: true
-              life: [true, true, 0, [0.1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              speed: [true, true, 0, [0, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              size: [true, true, 0, [10, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              properties: [1, 0, 1, true, [false, false, 1, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
-            emission:
-              rate: [true, true, 0, [5, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-            emitter_shape:
-              type: 0
-              properties: [360, 0, [0, 0, 0], 0.1, 0, [120, 0, 0], [1, 1, 1], 0.5]
-            texture:
-              texture_id: 9624166589911938546
-              tiles: [1, 1]
-              flip: [false, false]
-              total_tiles: 1
-            modifiers:
-              velocity:
-                active: false
-                speed: [true, true, 0, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              size:
-                active: false
-                size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              color:
-                active: true
-                color_gradient: [[0.312, 1, 0.1792, 0, 0]]
-                color_cycles: 1
-              force:
-                active: false
-                rotation: [true, true, 0, [25.8, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-              animation:
-                active: false
-                animation_speed: 0
-                blend_factor: 0
-                fit_to_lifetime: false
-              noise:
-                active: false
-                separate_axes: false
-                strength:
-                  x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                  y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                  z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-                scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        play_on_awake: true
+        texture_id: 9624166589911938546
+        tiles: [1, 1]
+        flip: [false, false]
+        billboard_lifetime: 5
+        properties: [1, 0, 1, true, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+        animation_speed: 0
+        total_tiles: 1
+        animation_loop: true
+        color_cycles: 1
+        color_gradient: [[0, 1, 0.1503, 0, 1]]
+        animation_section: false
+        color_section: true
+        start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_size: [true, true, 0, [3, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+        blend_factor: 0
