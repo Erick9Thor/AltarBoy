@@ -12,6 +12,7 @@
 #include <resources/ResourceAnimation.h>
 #include <components/ComponentAgent.h>
 #include <components/ComponentTransform.h>
+#include "constants/Scenes.h"
 
 #include "misc/AudioManager.h"
 
@@ -130,6 +131,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 
 	transform = game_object->GetTransform();
 
+	_player = Scenes::GetPlayer();
 	if (_player != nullptr)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();

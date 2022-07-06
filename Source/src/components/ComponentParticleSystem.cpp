@@ -85,8 +85,8 @@ void Hachiko::ComponentParticleSystem::Update()
 #endif //PLAY_BUILD
     if (emitter_state != ParticleSystem::Emitter::State::PAUSED)
     {
-        UpdateEmitterTimes();
         ActivateParticles();
+        UpdateEmitterTimes();
         UpdateActiveParticles();
         UpdateModifiers();
     }
@@ -581,16 +581,17 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if (!loop && emitter_elapsed_time >= duration)
-    {
-        able_to_emit = false;
-        return;
-    }
-
     if(active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
     {
         able_to_emit = false;
-        emitter_elapsed_time = 0;
+        emitter_elapsed_time = 0.0f;
+        return;
+    }
+
+    if (!loop && emitter_elapsed_time >= duration)
+    {
+        Stop();
+        able_to_emit = false;
         return;
     }
 
@@ -638,6 +639,8 @@ void Hachiko::ComponentParticleSystem::Reset()
 {
     emitter_elapsed_time = 0.0f;
     time = 0.0f;
+    burst_time = 0.0f;
+    burst_emit = true;
     ResetActiveParticles();
 }
 

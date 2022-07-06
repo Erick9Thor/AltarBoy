@@ -31,7 +31,6 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	}
 	enemies = Scenes::GetEnemiesContainer();
 	_player = Scenes::GetPlayer();
-
 	_stats = game_object->GetComponent<Stats>();
 	explosion_duration = _timer_explosion;
 
@@ -119,7 +118,10 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 	if (enemies != nullptr)
 	{
-		check_hit = enemies->children;
+		for (GameObject* enemy_pack : enemies->children)
+		{
+			check_hit.insert(check_hit.end(), enemy_pack->children.begin(), enemy_pack->children.end());
+		}
 	}
 
 	check_hit.push_back(_player);
