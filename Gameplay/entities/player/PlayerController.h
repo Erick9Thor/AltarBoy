@@ -88,6 +88,7 @@ public:
 	void CheckGoal(const float3& current_position);
 	void RegisterHit(float damage_received, float knockback = 0, math::float3 direction = float3::zero);
 	void UpdateHealthBar();
+	void UpdateAmmoUI();
 	void ToggleGodMode();
 
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }
@@ -183,6 +184,13 @@ private:
 	SERIALIZE_FIELD(GameObject*, _hp_cell_3);
 	SERIALIZE_FIELD(GameObject*, _hp_cell_4);
 	std::vector<GameObject*> hp_cells;
+
+	SERIALIZE_FIELD(GameObject*, _ammo_cell_1);
+	SERIALIZE_FIELD(GameObject*, _ammo_cell_2);
+	SERIALIZE_FIELD(GameObject*, _ammo_cell_3);
+	SERIALIZE_FIELD(GameObject*, _ammo_cell_4);
+	std::vector<GameObject*> ammo_cells;
+	int _ammo_count;
 
 	SERIALIZE_FIELD(GameObject*, _camera);
 	SERIALIZE_FIELD(GameObject*, _ui_damage);

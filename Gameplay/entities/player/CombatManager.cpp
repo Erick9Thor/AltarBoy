@@ -36,6 +36,14 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	_player = Scenes::GetPlayer();
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
+
+	if (_player)
+	{
+		_player_controller = _player->GetComponent<PlayerController>();
+	}
+
+	SerializeEnemyPacks();
+
 }
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
@@ -49,40 +57,41 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 	RunBulletSimulation();
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
-	bool hit = false;
-	hit = hit || ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats, true);
-	hit = hit || ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	int hit = 0;
+	hit += ProcessAgentsCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats, true);
+	hit += ProcessObstaclesCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
-	bool hit = false;
+	int hit = 0;
 
-	hit = hit || ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
-	hit = hit || ProcessObstaclesOBB(hitbox, attack_stats);
+	hit +=  ProcessAgentsOBB(hitbox, attack_stats, origin.Col3(3), true);
+	hit +=  ProcessObstaclesOBB(hitbox, attack_stats);
 	
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
-	bool hit = false;
+	int hit = 0;
 
-	hit = hit || ProcessAgentsCircle(origin.Col3(3), attack_stats, true);
-	hit = hit || ProcessObstaclesCircle(origin.Col3(3), attack_stats);
+	hit +=  ProcessAgentsCircle(origin.Col3(3), attack_stats, true);
+	hit +=  ProcessObstaclesCircle(origin.Col3(3), attack_stats);
 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	switch (attack_stats.type)
 	{
@@ -95,38 +104,38 @@ bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin
 	}
 }
 
-bool Hachiko::Scripting::CombatManager::EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 
-	bool hit = false;
-	hit = hit || ProcessPlayerCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
+	int hit = 0;
+	hit += ProcessPlayerCone(origin.Col3(3), attack_dir, min_dot_product, attack_stats.range, attack_stats);
 	
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
-	bool hit = false;
+	int hit = 0;
 
-	hit = hit || ProcessPlayerOBB(hitbox, attack_stats, origin.Col3(3));
+	hit += ProcessPlayerOBB(hitbox, attack_stats, origin.Col3(3));
 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::EnemyCircleAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::EnemyCircleAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	OBB hitbox = CreateAttackHitbox(origin, attack_stats);
-	bool hit = false;
+	int hit = 0;
 
-	hit = hit || ProcessPlayerCircle(origin.Col3(3), attack_stats);
+	hit += ProcessPlayerCircle(origin.Col3(3), attack_stats);
 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
 	switch (attack_stats.type)
 	{
@@ -137,7 +146,7 @@ bool Hachiko::Scripting::CombatManager::EnemyMeleeAttack(const float4x4& origin,
 	case AttackType::CIRCLE:
 		return EnemyCircleAttack(origin, attack_stats);
 	default:
-		return false;
+		return 0;
 	}
 }
 
@@ -165,9 +174,18 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 			stats.current_charge += Time::DeltaTime();
 			bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
+			stats.update_ui = true;
 			continue;
 		}
 
+		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
+		{
+			if (!_player_controller)	return;
+
+			_player_controller->UpdateAmmoUI();
+			stats.update_ui = false;
+		}
+		
 		// Move bullet forward
 		UpdateBulletTrajectory(i);
 		// Check if it collides with an enemy
@@ -358,6 +376,20 @@ Hachiko::GameObject* Hachiko::Scripting::CombatManager::FindBulletClosestObstacl
 	return hit_target;
 }
 
+void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
+{
+	for (unsigned i = 0; i < _enemy_packs_container->children.size(); ++i)
+	{
+		GameObject* pack = _enemy_packs_container->children[i];
+		_initial_transforms.push_back(std::vector<float4x4>());
+		for (unsigned j = 0; j < pack->children.size(); ++j)
+		{
+			GameObject* enemy = pack->children[j];
+			_initial_transforms[i].push_back(enemy->GetTransform()->GetGlobalMatrix());
+		}
+	}
+}
+
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
 	// We use a pointer to represent when there is no bullet shoot
@@ -457,16 +489,17 @@ void Hachiko::Scripting::CombatManager::DeactivateEnemyPack(GameObject* pack)
 	pack->SetActive(false);
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player)
+
+int Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	if (!agent_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*>& enemy_packs = _enemy_packs_container->children;
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
@@ -492,7 +525,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 				EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
-					hit = true;
+					hit++;
 					HitEnemy(enemy_controller, attack_stats.damage, attack_stats.knockback_distance, attack_dir, is_from_player);
 				}
 			}
@@ -501,15 +534,15 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
 {
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
 	{
-		return false;
+		return 0;
 	}
 	
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*> obstacles = obstacle_container->children;
 	for (int i = 0; i < obstacles.size(); ++i)
 	{
@@ -525,7 +558,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
-				hit = true;
+				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
@@ -533,21 +566,21 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCone(const float3& attac
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats)
 {
 	if (!_player)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 
 	if (ConeHitsPlayer(attack_source_pos, attack_dir, min_dot_prod, hit_distance))
 	{
 		// Hit enemy here
 		if (_player->GetComponent<PlayerController>()->IsAlive())
 		{
-			hit = true;
+			hit++;
 			//TODO: add knockback
 			HitPlayer(attack_stats.damage, attack_stats.knockback_distance, attack_dir);
 		}
@@ -555,16 +588,16 @@ bool Hachiko::Scripting::CombatManager::ProcessPlayerCone(const float3& attack_s
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos, bool is_from_player)
+int Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	if (!agent_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*>& enemy_packs = _enemy_packs_container->children;
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
@@ -589,7 +622,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 				EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
-					hit = true;
+					hit++;
 					float3 knockback_dir = enemy->GetTransform()->GetGlobalPosition() - attack_source_pos;
 					knockback_dir.y = 0;
 					knockback_dir.Normalize();
@@ -601,15 +634,15 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats)
 {
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*> obstacles = obstacle_container->children;
 	for (int i = 0; i < obstacles.size(); ++i)
 	{
@@ -625,7 +658,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
-				hit = true;
+				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
@@ -633,21 +666,21 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesOBB(const OBB& attack_bo
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos)
+int Hachiko::Scripting::CombatManager::ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos)
 {
 	if (!_player)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 
 	if (OBBHitsPlayer(attack_box))
 	{
 		// Hit enemy here
 		if (_player->GetComponent<PlayerController>()->IsAlive())
 		{
-			hit = true;
+			hit++;
 			float3 knockback_dir = _player->GetTransform()->GetGlobalPosition() - attack_source_pos;
 			knockback_dir.y = 0;
 			knockback_dir.Normalize();
@@ -657,16 +690,16 @@ bool Hachiko::Scripting::CombatManager::ProcessPlayerOBB(const OBB& attack_box, 
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessAgentsCircle(const float3& attack_source_pos, const AttackStats& attack_stats, bool is_from_player)
+int Hachiko::Scripting::CombatManager::ProcessAgentsCircle(const float3& attack_source_pos, const AttackStats& attack_stats, bool is_from_player)
 {
 	GameObject* agent_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
 	if (!agent_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*>& enemy_packs = _enemy_packs_container->children;
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
@@ -691,7 +724,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCircle(const float3& attack
 				EnemyController* enemy_controller = enemy->GetComponent<EnemyController>();
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
-					hit = true;
+					hit++;
 					float3 knockback_dir = enemy->GetTransform()->GetGlobalPosition() - attack_source_pos;
 					knockback_dir.y = 0;
 					knockback_dir.Normalize();
@@ -703,15 +736,15 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCircle(const float3& attack
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessObstaclesCircle(const float3& attack_source_pos, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessObstaclesCircle(const float3& attack_source_pos, const AttackStats& attack_stats)
 {
 	GameObject* obstacle_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Crystals");
 	if (!obstacle_container)
 	{
-		return false;
+		return 0;
 	}
 
-	bool hit = false;
+	int hit = 0;
 	std::vector<GameObject*> obstacles = obstacle_container->children;
 	for (int i = 0; i < obstacles.size(); ++i)
 	{
@@ -727,7 +760,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCircle(const float3& att
 			CrystalExplosion* crystal_controller = obstacle->GetComponent<CrystalExplosion>();
 			if (crystal_controller && crystal_controller->isAlive())
 			{
-				hit = true;
+				hit++;
 				HitObstacle(obstacle, attack_stats.damage);
 			}
 		}
@@ -735,7 +768,7 @@ bool Hachiko::Scripting::CombatManager::ProcessObstaclesCircle(const float3& att
 	return hit;
 }
 
-bool Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_source_pos, const AttackStats& attack_stats)
+int Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack_source_pos, const AttackStats& attack_stats)
 {
 	if (CircleHitsPlayer(attack_source_pos, attack_stats.range))
 	{
@@ -743,9 +776,9 @@ bool Hachiko::Scripting::CombatManager::ProcessPlayerCircle(const float3& attack
 		knockback_dir.y = 0;
 		knockback_dir.Normalize();
 		HitPlayer(attack_stats.damage, attack_stats.knockback_distance, knockback_dir);
-		return true;
+		return 1;
 	}
-	return false;
+	return 0;
 }
 
 bool Hachiko::Scripting::CombatManager::ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance)
