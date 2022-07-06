@@ -50,26 +50,31 @@ void Hachiko::RenderList::CollectMesh(const float3& camera_pos, ComponentMeshRen
 
     // Decide in which list this target should be placed in based on its
     // material's transparency:
-    if (mesh_renderer->GetResourceMaterial()->is_transparent)
-    {
-        // Get sorted by distance to camera in ascending order:
-        const auto it = std::lower_bound(transparent_targets.begin(), transparent_targets.end(), target, 
-            [](const RenderTarget& it_target, const RenderTarget& new_target) 
-            { 
-                return it_target.distance > new_target.distance; 
-            });
 
-        transparent_targets.insert(it, target);
-    }
-    else
+    if (mesh_renderer->GetResourceMaterial())
     {
-        // Get sorted by distance to camera in ascending order:
-        const auto it = std::lower_bound(opaque_targets.begin(), opaque_targets.end(), target, 
-            [](const RenderTarget& it_target, const RenderTarget& new_target) 
-            { 
-                return it_target.distance < new_target.distance; 
-            });
+        if (mesh_renderer->GetResourceMaterial()->is_transparent)
+        {
+            // Get sorted by distance to camera in ascending order:
+            const auto it = std::lower_bound(transparent_targets.begin(), transparent_targets.end(), target, 
+                [](const RenderTarget& it_target, const RenderTarget& new_target) 
+                { 
+                    return it_target.distance > new_target.distance; 
+                });
 
-        opaque_targets.insert(it, target);
+            transparent_targets.insert(it, target);
+        }
+        else
+        {
+            // Get sorted by distance to camera in ascending order:
+            const auto it = std::lower_bound(opaque_targets.begin(), opaque_targets.end(), target, 
+                [](const RenderTarget& it_target, const RenderTarget& new_target) 
+                { 
+                    return it_target.distance < new_target.distance; 
+                });
+
+            opaque_targets.insert(it, target);
+        }
     }
+
 }
