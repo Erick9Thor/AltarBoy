@@ -31,7 +31,6 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 		_explosion_crystal->SetActive(false);
 	}
 	enemies = Scenes::GetEnemiesContainer();
-	_player = Scenes::GetPlayer();
 	_stats = game_object->GetComponent<Stats>();
 	explosion_duration = _timer_explosion;
 
