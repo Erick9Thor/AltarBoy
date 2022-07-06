@@ -52,7 +52,7 @@ namespace Hachiko
 
 		private:
 			State _state = State::ACTIVE;
-			float _elapse_time = 0.0f;
+			float _elapsed_time = 0.0f;
 			float _length = 0.0f;
 			float _scale = 0.2f;
 

@@ -3,8 +3,6 @@
 #include "constants/Scenes.h"
 #include "entities/player/PlayerController.h"
 
-//#include "components/ComponentObstacle.h"
-
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
@@ -30,7 +28,6 @@ void Hachiko::Scripting::LaserController::OnAwake()
 {
 	_terrain = Scenes::GetTerrainContainer();
 	_player = Scenes::GetPlayer();
-	//door_obstacle = _door->GetComponent<ComponentObstacle>();
 
 	_initial_position = game_object->GetTransform()->GetGlobalPosition();
 }
@@ -77,8 +74,8 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 		CheckPlayerCollision();
 		if (_toggle_activation) 
 		{
-			_elapse_time += Time::DeltaTime();
-			if (_elapse_time >= _toggle_active_time)
+			_elapsed_time += Time::DeltaTime();
+			if (_elapsed_time >= _toggle_active_time)
 			{
 				ChangeState(State::INACTIVE);
 			}
@@ -92,9 +89,9 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 		}
 
 		AdjustLength();
-		_elapse_time += Time::DeltaTime();
-		_scale = (_elapse_time / _activation_time) * _max_scale;
-		if (_elapse_time >= _activation_time) 
+		_elapsed_time += Time::DeltaTime();
+		_scale = (_elapsed_time / _activation_time) * _max_scale;
+		if (_elapsed_time >= _activation_time) 
 		{
 			ChangeState(State::ACTIVE);
 		}
@@ -103,8 +100,8 @@ void Hachiko::Scripting::LaserController::OnUpdate()
 	case State::INACTIVE:
 		if (_toggle_activation) 
 		{
-			_elapse_time += Time::DeltaTime();
-			if (_elapse_time >= _toggle_inactive_time)
+			_elapsed_time += Time::DeltaTime();
+			if (_elapsed_time >= _toggle_inactive_time)
 			{
 				ChangeState(State::ACTIVATING);
 			}
@@ -118,19 +115,19 @@ void Hachiko::Scripting::LaserController::ChangeState(State new_state)
 	switch (new_state)
 	{
 	case State::ACTIVE:
-		_elapse_time = 0.0f;
+		_elapsed_time = 0.0f;
 		_scale = _max_scale;
 		break;
 
 	case State::ACTIVATING:
-		_elapse_time = 0.0f;
+		_elapsed_time = 0.0f;
 		_scale = 0.0f;
 		AdjustLength();
 		_laser->ChangeEmissiveColor(float4(1.0f, 1.0f, 1.0f, 0.2f), _activation_time, true);
 		break;
 
 	case State::INACTIVE:
-		_elapse_time = 0.0f;
+		_elapsed_time = 0.0f;
 		_laser->SetActive(false);
 		break;
 	}
@@ -181,8 +178,6 @@ void Hachiko::Scripting::LaserController::CheckPlayerCollision()
 		}
 
 		_player->GetComponent<PlayerController>()->RegisterHit(_damage, true, knockback);
-
-		//_player->GetComponent<PlayerController>()->RegisterHit(_damage);
 	}
 }
 

@@ -16,7 +16,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _attack_indicator(nullptr)
 	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
-	, _geo(nullptr)
+	, _player_geometry(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
@@ -165,7 +165,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 {
 	if (!_combat_stats->IsAlive())
 	{
-		//SceneManagement::SwitchScene(Scenes::GAME);
 		HE_LOG("YOU DIED");
 		_state = PlayerState::IDLE; // this should change
 		_level_manager->Respawn(this);
@@ -864,9 +863,9 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
-					if (_geo != nullptr) 
+					if (_player_geometry != nullptr)
 					{
-						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
@@ -895,9 +894,9 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 	_combat_stats->ReceiveDamage(damage_received);
 	UpdateHealthBar();
 
-	if (_geo != nullptr)
+	if (_player_geometry != nullptr)
 	{
-		_geo->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+		_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 	}
 
 	// Activate vignette
