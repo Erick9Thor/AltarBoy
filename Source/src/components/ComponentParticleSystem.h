@@ -63,7 +63,7 @@ namespace Hachiko
         //emission
         bool loop = false;
         bool burst = false;
-        bool able_to_emit = true;
+        bool able_to_emit = false;
         bool burst_emit = true;
         int active_particles = 0;
         float time = 0.0f;
