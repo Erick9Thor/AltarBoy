@@ -51,7 +51,7 @@ clips:
     clips_loop: false
   - clip_name: death
     clips_id: 17554408115023876718
-    clips_loop: true
+    clips_loop: false
   - clip_name: fall
     clips_id: 18424576933785159401
     clips_loop: true

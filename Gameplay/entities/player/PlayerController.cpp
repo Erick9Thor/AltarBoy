@@ -124,7 +124,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
 
-	// TODO: Make this as an Serializable field on script
 	_claw_weapon = _geo->FindDescendantWithName("weaponClaw");
 	_sword_upper = _geo->FindDescendantWithName("parasite_low");
 	_sword_weapon = _geo->FindDescendantWithName("blade_low");
@@ -164,10 +163,14 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	if (_combat_stats->_current_hp <= 0)
+	if (!IsAlive())
 	{
-		//SceneManagement::SwitchScene(Scenes::GAME);
-		HE_LOG("YOU DIED");
+		_state = PlayerState::DIE;
+	}
+
+	if (animation->IsAnimationStopped() && IsDying())
+	{
+		_state = PlayerState::IDLE;
 		_level_manager->Respawn(this);
 	}
 
@@ -294,6 +297,8 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		{
 			PickupParasite(_player_position);
 		}
+
+
 	}	
 	else
 	{
@@ -494,9 +499,14 @@ bool Hachiko::Scripting::PlayerController::IsPickUp() const
 	return _state == PlayerState::PICK_UP;
 }
 
+bool Hachiko::Scripting::PlayerController::IsDying() const
+{
+	return _state == PlayerState::DIE;
+}
+
 bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 {
-	return IsDashing() || IsStunned() || IsAttacking() || IsFalling() || IsPickUp();
+	return IsDashing() || IsStunned() || IsAttacking() || IsFalling() || IsPickUp() || IsDying();
 }
 
 bool Hachiko::Scripting::PlayerController::IsAttackOnCooldown() const
