@@ -581,7 +581,7 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if(active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
+    if (active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
     {
         able_to_emit = false;
         emitter_elapsed_time = 0.0f;
