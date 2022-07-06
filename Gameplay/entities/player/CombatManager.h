@@ -140,6 +140,12 @@ namespace Hachiko
             int _damage;
 
             PlayerController* _player_controller;
+
+            SERIALIZE_FIELD(GameObject*, _charge_vfx);
+            SERIALIZE_FIELD(GameObject*, _shot_vfx);
+
+            ComponentParticleSystem* _charge_particles;
+            ComponentParticleSystem* _shot_particles;
         };
     } // namespace Scripting
 } // namespace Hachiko

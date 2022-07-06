@@ -38,6 +38,9 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 	_player = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Player");
 	_enemy_packs_container = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 
+	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
+	_shot_particles = _shot_vfx->GetComponent<ComponentParticleSystem>();
+
 	if (_player)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
@@ -153,6 +156,9 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
 		{
 			bullet->SetActive(true);
+			_charge_particles->Stop();
+			_shot_particles->Play();
+			_shot_particles->Restart();
 			if (!_player_controller)	return;
 
 			_player_controller->UpdateAmmoUI();
@@ -370,6 +376,9 @@ void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
 
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
+	_charge_particles->Play();
+	_charge_particles->Restart();
+
 	// We use a pointer to represent when there is no bullet shoot
 	for (unsigned i = 0; i < _bullets.size(); i++)
 	{
@@ -393,6 +402,7 @@ int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_t
 
 void Hachiko::Scripting::CombatManager::StopBullet(unsigned bullet_index)
 {
+	_charge_particles->Stop();
 	DeactivateBullet(bullet_index);
 }
 
