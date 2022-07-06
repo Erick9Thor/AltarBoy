@@ -68,7 +68,7 @@ namespace Hachiko
 
             // Bool indicates if it hit something
             int PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
-            bool EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
             // Player only system for now
