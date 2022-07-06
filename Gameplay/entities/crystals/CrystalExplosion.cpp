@@ -29,7 +29,6 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 	{
 		_explosion_crystal->SetActive(false);
 	}
-	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
 	enemies = Scenes::GetEnemiesContainer();
 	_player = Scenes::GetPlayer();
 	_stats = game_object->GetComponent<Stats>();

@@ -87,7 +87,7 @@ namespace Hachiko
 			PlayerState GetState() const;
 
 			void CheckGoal(const float3& current_position);
-			void RegisterHit(float damage_received, bool is_heavy = false, math::float3 direction = float3::zero);
+			void RegisterHit(float damage_received, float knockback = 0, math::float3 direction = float3::zero);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
 			void ToggleGodMode();
