@@ -182,6 +182,10 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	if (_invulnerability_time_remaining > 0.0f)
 	{
 		_invulnerability_time_remaining -= Time::DeltaTime();
+		if (_invulnerability_time_remaining <= 0.0f && _player_geometry != nullptr)
+		{
+			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+		}
 	}
 
 	if (_god_mode_trigger)
@@ -885,24 +889,31 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
 {
-	if (_god_mode || _invulnerability_time_remaining > 0.0f)
+	if (_god_mode)
 	{
 	    return;
 	}
 
-	_invulnerability_time_remaining = _invulnerability_time;
-	_combat_stats->ReceiveDamage(damage_received);
-	UpdateHealthBar();
-
-	if (_player_geometry != nullptr)
+	if (_invulnerability_time_remaining <= 0.0f)
 	{
-		_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
-	}
+		_invulnerability_time_remaining = _invulnerability_time;
+		if (_player_geometry != nullptr) 
+		{
+			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
+		}
+		_combat_stats->ReceiveDamage(damage_received);
+		UpdateHealthBar();
+		
+		if (_player_geometry != nullptr)
+		{
+			_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+		}
 
-	// Activate vignette
-	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
-	{
-		_ui_damage->SetActive(true);
+		// Activate vignette
+		if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
+		{
+			_ui_damage->SetActive(true);
+		}
 	}
 	
 	if(is_heavy)

@@ -27,13 +27,13 @@ component:
     "'_toggle_active_time@float'": 1
     "'_toggle_inactive_time@float'": 1
 child:
-  - name: Box001
+  - name: Box
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0, 0.5]
+        position: [0, 0, 0]
         rotation: [-0.7071, 0, 0, 0.7071]
         scale: [1, 1, 1]
       - !<mesh_renderer>
@@ -44,13 +44,13 @@ child:
         visible: true
         material_id: 6750369022920963075
         tint_color: [1, 1, 1, 1]
-  - name: Cylinder001
+  - name: Cylinder
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0.5, 0]
+        position: [0, 0.5, -0.5]
         rotation: [1, 0, 0, 0]
         scale: [0.2, 0.2, 1]
       - !<mesh_renderer>
