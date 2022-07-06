@@ -263,6 +263,7 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
