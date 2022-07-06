@@ -144,7 +144,7 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 		{
 			// Do not launch yet
 			stats.current_charge += Time::DeltaTime();
-			bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
+			//bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
 			stats.update_ui = true;
 			continue;
@@ -152,6 +152,7 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 
 		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
 		{
+			bullet->SetActive(true);
 			if (!_player_controller)	return;
 
 			_player_controller->UpdateAmmoUI();
@@ -220,7 +221,9 @@ void Hachiko::Scripting::CombatManager::ActivateBullet(unsigned bullet_idx)
 	_bullet_stats[bullet_idx].alive = true;
 	_bullet_stats[bullet_idx].current_charge = 0.f;
 	_bullet_stats[bullet_idx].elapsed_lifetime = 0.f;
-	_bullets[bullet_idx]->SetActive(true);
+
+	_bullets[bullet_idx]->GetTransform()->SetGlobalScale(float3(_bullet_stats[bullet_idx].size));
+	//_bullets[bullet_idx]->SetActive(true);
 }
 
 void Hachiko::Scripting::CombatManager::DeactivateBullet(unsigned bullet_idx)
@@ -235,8 +238,9 @@ void Hachiko::Scripting::CombatManager::SetBulletTrajectory(unsigned bullet_idx)
 	BulletStats& stats = _bullet_stats[bullet_idx];
 	ComponentTransform* bullet_transform = bullet->GetTransform();
 	const float bullet_offset = 1.25f;
+	const float3 bullet_vertical_offset = float3(.0f, 1.0f, .0f);
 	float3 emitter_direction = stats.emitter_transform->GetFront().Normalized();
-	float3 emitter_position = stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
+	float3 emitter_position = (stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset) + bullet_vertical_offset;
 	
 	stats.prev_position = emitter_position;
 

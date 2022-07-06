@@ -23,7 +23,7 @@ namespace Hachiko
                 friend CombatManager;
                 float charge_time = 1.f;
                 float lifetime = 3.f;
-                float size = 1.f;
+                float size = .6f;
                 float speed = 50.f;
                 float damage = 1.f;
                 // Status effect
