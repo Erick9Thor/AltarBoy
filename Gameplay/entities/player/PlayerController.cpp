@@ -12,6 +12,7 @@
 #include <modules/ModuleSceneManager.h>
 
 #define RAD_TO_DEG 180.0f / math::pi
+const int MAX_AMMO = 4;
 
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
@@ -96,6 +97,9 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 		_dash_trail->SetActive(false);
 	}
 
+	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
+	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
 	_combat_stats->_attack_power = 2;
@@ -104,6 +108,18 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 
+
+	if (!_ammo_cell_1 || !_ammo_cell_2 || !_ammo_cell_3 || !_ammo_cell_4)
+	{
+		HE_LOG("Error loading Ammo Cells UI");
+		return;
+	}
+
+	ammo_cells.push_back(_ammo_cell_1);
+	ammo_cells.push_back(_ammo_cell_2);
+	ammo_cells.push_back(_ammo_cell_3);
+	ammo_cells.push_back(_ammo_cell_4);
+	_ammo_count = MAX_AMMO;
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -271,7 +287,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 	if (!IsActionLocked())
 	{
 		
-		if (!IsAttackOnCooldown() && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
+		if (!IsAttackOnCooldown() && _ammo_count > 0 && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))
 		{
 			RangedAttack();
 		}
@@ -528,6 +544,7 @@ void Hachiko::Scripting::PlayerController::RangedAttack()
 		_current_bullet = bullet_controller->ShootBullet(_player_transform, stats);
 		if (_current_bullet >= 0)
 		{
+			math::Clamp(--_ammo_count, 0, MAX_AMMO);
 			_state = PlayerState::RANGED_ATTACKING;
 		}
 	}
@@ -542,6 +559,7 @@ void Hachiko::Scripting::PlayerController::CancelAttack()
 	{
 		CombatManager* bullet_controller = _bullet_emitter->GetComponent<CombatManager>();
 		bullet_controller->StopBullet(_current_bullet);
+		math::Clamp(++_ammo_count, 0, MAX_AMMO);
 	}
 }
 
@@ -568,6 +586,11 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	if (IsWalking())
 	{
 		_player_position += (_movement_direction * _combat_stats->_move_speed * Time::DeltaTime());
+		_walking_dust_particles->Play();
+	}
+	else
+	{
+		_walking_dust_particles->Stop();
 	}
 
 	if (_god_mode)
@@ -610,6 +633,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
+			_falling_dust_particles->Restart();
 		}
 	}
 	else if (!IsDashing())
@@ -783,22 +807,24 @@ void Hachiko::Scripting::PlayerController::AttackController()
 				
 				if (_attack_current_delay <= 0.f)
 				{
-					bool hit = false;
+					int hit_count = 0;
 					
 					if (combat_manager)
 					{
 						// Offset the center of the attack if its a rectangle
 						if (attack.stats.type == CombatManager::AttackType::RECTANGLE)
 						{
-							hit = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range) , attack.stats);
+							hit_count = combat_manager->PlayerMeleeAttack(GetMeleeAttackOrigin(attack.stats.range) , attack.stats);
 						}
 						else
 						{
-							hit = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
+							hit_count = combat_manager->PlayerMeleeAttack(_player_transform->GetGlobalMatrix(), attack.stats);
 						}
 					}
-					if (hit)
+					if (hit_count > 0)
 					{
+						_ammo_count = math::Clamp(_ammo_count += hit_count, 0, MAX_AMMO);
+						UpdateAmmoUI();
 						_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 					}
 				}
@@ -995,6 +1021,27 @@ void Hachiko::Scripting::PlayerController::UpdateHealthBar()
 		else
 		{
 			hp_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
+		}
+	}
+}
+
+void Hachiko::Scripting::PlayerController::UpdateAmmoUI()
+{
+	if (ammo_cells.size() < 1)
+	{
+		HE_LOG("Error. PlayerController is missing Ammo UI references");
+		return;
+	}
+
+	for(int i = 0; i < ammo_cells.size(); ++i)
+	{
+		if (i >= _ammo_count)
+		{
+			ammo_cells[i]->GetComponent(Component::Type::IMAGE)->Disable();
+		}
+		else
+		{
+			ammo_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
 		}
 	}
 }
