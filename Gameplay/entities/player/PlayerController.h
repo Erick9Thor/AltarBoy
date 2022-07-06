@@ -126,6 +126,7 @@ private:
 
 	// Actions called by handle input
 	void Dash();
+	void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
 	void MeleeAttack();
 	void RangedAttack();
 	void CancelAttack();
@@ -170,6 +171,8 @@ private:
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
 	SERIALIZE_FIELD(float, _trail_enlarger);
+	SERIALIZE_FIELD(GameObject*, _falling_dust);
+	SERIALIZE_FIELD(GameObject*, _walking_dust);
 
 	const float _ranged_attack_cooldown = 0.2f;
 	const float _combo_grace_period = 0.4f;
@@ -195,6 +198,8 @@ private:
 
 	ComponentTransform* _player_transform = nullptr;
 	ComponentAnimation* animation;
+	ComponentParticleSystem* _falling_dust_particles;
+	ComponentParticleSystem* _walking_dust_particles;
 
 	std::vector<Weapon> weapons{};
 
