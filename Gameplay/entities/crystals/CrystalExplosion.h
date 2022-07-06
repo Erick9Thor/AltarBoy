@@ -39,7 +39,7 @@ namespace Hachiko
 
 		private:
 			ComponentTransform* transform;
-			SERIALIZE_FIELD(GameObject*, _player);
+			GameObject* _player = NULL;
 
 			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
