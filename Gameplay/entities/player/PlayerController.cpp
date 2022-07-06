@@ -466,11 +466,24 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 	// Move player a bit forward if it wouldnt fall	
-	_dash_progress = 0.f;
-	_current_dash_duration = attack.duration;
-	_dash_start = _player_position;
-	_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
-	CorrectDashDestination(_dash_start, _dash_end);
+	if (attack.dash_distance != 0.0f)
+	{
+		_dash_progress = 0.f;
+		_current_dash_duration = attack.duration;
+		_dash_start = _player_position;
+		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
+
+		// Instead of using "CorrectDashDestination(_dash_start, _dash_end);", since its an attack dash use a greater correction 
+		float3 corrected_dash_destination = Navigation::GetCorrectedPosition(_dash_end, float3(1.0f, 0.5f, 1.0f));
+		if (corrected_dash_destination.x < FLT_MAX)
+		{
+			_dash_end = corrected_dash_destination;
+		}
+		else
+		{
+			_dash_end = _dash_start;
+		}
+	}
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
