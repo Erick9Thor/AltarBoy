@@ -2,8 +2,8 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
-#include "entities/player/PlayerState.h"
 #include "entities/player/CombatManager.h"
+#include "misc/LevelManager.h"
 #include "Gameplay.h"
 
 #include <queue>
@@ -15,10 +15,26 @@ class ComponentMeshRenderer;
 namespace Scripting
 {
 class PlayerCamera;
+
+enum class PlayerState
+{
+	INVALID,
+	IDLE,
+	WALKING,
+	MELEE_ATTACKING,
+	RANGED_ATTACKING,
+	DASHING,
+	FALLING,
+	STUNNED,
+	DIE,
+};
+
 class PlayerController : public Script
 {
 	SERIALIZATION_METHODS(false)
 
+	friend class LevelManager;
+	
 	enum class WeaponUsed
 	{
 		RED = 0,
@@ -109,6 +125,7 @@ private:
 
 	// Actions called by handle input
 	void Dash();
+	void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
 	void MeleeAttack();
 	void RangedAttack();
 	void CancelAttack();
@@ -128,7 +145,7 @@ private:
 	void RecieveKnockback(const math::float3 direction);
 
 	void CheckState();
-	void ResetPlayer();
+	void ResetPlayer(float3 spawn_pos);
 
 public:
 	SERIALIZE_FIELD(PlayerState, _state);
@@ -143,14 +160,18 @@ private:
 	SERIALIZE_FIELD(GameObject*, _attack_indicator);
 	SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 	SERIALIZE_FIELD(GameObject*, _goal);
+	SERIALIZE_FIELD(GameObject*, _geo);
 
 	SERIALIZE_FIELD(float, _dash_duration);
 	SERIALIZE_FIELD(float, _dash_distance);
 	SERIALIZE_FIELD(float, _dash_cooldown);
+	SERIALIZE_FIELD(float, _invulnerability_time);
 	SERIALIZE_FIELD(unsigned, _dash_scaler);
 	SERIALIZE_FIELD(unsigned, _max_dash_charges);
 	SERIALIZE_FIELD(GameObject*, _dash_trail);
 	SERIALIZE_FIELD(float, _trail_enlarger);
+	SERIALIZE_FIELD(GameObject*, _falling_dust);
+	SERIALIZE_FIELD(GameObject*, _walking_dust);
 
 	const float _ranged_attack_cooldown = 0.2f;
 	const float _combo_grace_period = 0.4f;
@@ -169,6 +190,8 @@ private:
 
 	ComponentTransform* _player_transform = nullptr;
 	ComponentAnimation* animation;
+	ComponentParticleSystem* _falling_dust_particles;
+	ComponentParticleSystem* _walking_dust_particles;
 
 	std::vector<Weapon> weapons{};
 
@@ -203,6 +226,7 @@ private:
 	int _current_bullet = -1;
 	unsigned _attack_idx = 0;
 	unsigned _current_weapon = 0;
+	float _invulnerability_time_remaining = 0.0f;
 	
 	// Movement management
 	float _stun_time = 0.0f;
@@ -212,15 +236,23 @@ private:
 	bool _should_rotate = false;
 	bool _is_falling = false;
 
+	// Camera management
+	int _current_cam_setting = 0;
+	std::vector<float3> _cam_positions = {};
+	std::vector<float3> _cam_rotations = {};
+
 	float3 _player_position = float3::zero;
 	float3 _movement_direction = float3::zero;
 	float3 _knock_start = float3::zero;
 	float3 _knock_end = float3::zero;
+	float3 _start_fall_pos = float3::zero;
 	Quat _rotation_start = Quat::identity;
 	Quat _rotation_target = Quat::identity;
 	
 	GameObject* _enemies;
 	GameObject* _terrain;
+
+	LevelManager* _level_manager;
 
 };
 } // namespace Scripting

@@ -25,19 +25,20 @@ void Hachiko::ComponentImage::DrawGui()
 
     ImGui::PushID(this);
 
-    ImGui::Checkbox("Fill Window", &fill_window);
 
     if (ImGui::CollapsingHeader("Image", ImGuiTreeNodeFlags_DefaultOpen))
     {   
+        ImGui::Checkbox("Fill Window", &fill_window);
 
         ImGui::Text("Normal Image");
 
         const std::string title = "Select Image";
         if (ImGui::Button(title.c_str()))
         {
+            const char* filters = "Image files{.png,.tif,.jpg,.tga}";
             ImGuiFileDialog::Instance()->OpenDialog(title,
                                                     title,
-                                                    ".png",
+                                                    filters,
                                                     ASSETS_FOLDER_TEXTURE,
                                                     1,
                                                     nullptr,
@@ -88,6 +89,10 @@ void Hachiko::ComponentImage::DrawGui()
                     animation_index = {0.0f, 0.0f};
                     factor = float2::one;
                 }
+                else
+                {
+                    factor = float2(1.0f / x_tiles, 1.0f / y_tiles);
+                }
             }
             if (is_tiled)
             {
@@ -112,9 +117,10 @@ void Hachiko::ComponentImage::DrawGui()
         const std::string hover_title = "Select Hover Image";
         if (ImGui::Button(hover_title.c_str()))
         {
+            const char* filters = "Image files{.png,.tif,.jpg,.tga}";
             ImGuiFileDialog::Instance()->OpenDialog(hover_title,
                                                     hover_title,
-                                                    ".png",
+                                                    filters,
                                                     ASSETS_FOLDER_TEXTURE,
                                                     1,
                                                     nullptr,
@@ -235,6 +241,7 @@ void Hachiko::ComponentImage::Save(YAML::Node& node) const
     node[IMAGE_X_TILES] = x_tiles;
     node[IMAGE_Y_TILES] = y_tiles;
     node[IMAGE_TILES_PER_SEC] = frames_per_second;
+    node[IMAGE_FILL_WINDOW] = fill_window;
 }
 
 void Hachiko::ComponentImage::Load(const YAML::Node& node)
@@ -244,11 +251,11 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     LoadImageResource(node[IMAGE_HOVER_IMAGE_ID].as<UID>(), is_hover_image);
     color = node[IMAGE_COLOR].as<float4>();
     hover_color = node[IMAGE_HOVER_COLOR].as<float4>();
-    fill_window = node["fill_window"].IsDefined() ? node["fill_window"].as<bool>() : false;
-
+    fill_window = node[IMAGE_FILL_WINDOW].IsDefined() ? node[IMAGE_FILL_WINDOW].as<bool>() : false;
     is_tiled = node[IMAGE_TILED].IsDefined() ? node[IMAGE_TILED].as<bool>() : false;
     x_tiles = node[IMAGE_X_TILES].IsDefined() ? node[IMAGE_X_TILES].as<int>() : 1;
     y_tiles = node[IMAGE_Y_TILES].IsDefined() ? node[IMAGE_Y_TILES].as<int>() : 1;
+
     frames_per_second = node[IMAGE_TILES_PER_SEC].IsDefined() ? node[IMAGE_TILES_PER_SEC].as<int>() : 1;
     factor = float2(1.0f / x_tiles, 1.0f / y_tiles);
     time_per_frame = 1.0f / frames_per_second;
