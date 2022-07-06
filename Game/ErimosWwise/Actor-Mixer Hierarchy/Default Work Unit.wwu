@@ -2437,6 +2437,295 @@
 							</ChildrenList>
 							<ObjectLists/>
 						</RandomSequenceContainer>
+						<Sound Name="EmptyShoot" ID="{8986E151-8B48-468A-A5DC-9CACC3185B58}" ShortID="159411393">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="No ammo" ID="{15FB4A7F-8417-445F-9F07-18FF37080F03}">
+									<Language>SFX</Language>
+									<AudioFile>Player\Ranged attack\No ammo.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="415761682"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="No ammo" ID="{15FB4A7F-8417-445F-9F07-18FF37080F03}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<RandomSequenceContainer Name="ReceiveDamage" ID="{9DC3C388-B4D1-4A6E-AC81-AD894F5F2C8B}" ShortID="913166787">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="Damage 1" ID="{57EB11D7-7FA0-482B-BA4F-8A20B634C16F}" ShortID="706076178">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 1" ID="{905F29C5-BC84-4CC4-A9B4-D0C3DD7F5FA3}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 1.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="515641933"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 1" ID="{905F29C5-BC84-4CC4-A9B4-D0C3DD7F5FA3}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 2" ID="{63F1278D-45FF-45B6-8C8A-FE69400BEC75}" ShortID="397416954">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 2" ID="{3E53F700-0E50-4ACD-8795-317C2C594B81}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 2.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="584020214"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 2" ID="{3E53F700-0E50-4ACD-8795-317C2C594B81}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 3" ID="{83141F36-23F8-44EC-99AF-A70B1A8A0551}" ShortID="76318972">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 3" ID="{FFDCD485-9739-48F1-AD7F-7FD1BC4378A1}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 3.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="606139754"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 3" ID="{FFDCD485-9739-48F1-AD7F-7FD1BC4378A1}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 4" ID="{2A7B2665-36D9-4BAC-A33E-C4A575D759BE}" ShortID="123830593">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 4" ID="{8764CB5C-24C7-46A2-B9F1-1018DDB43D8B}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 4.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="516771156"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 4" ID="{8764CB5C-24C7-46A2-B9F1-1018DDB43D8B}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 5" ID="{CAFEB33D-6393-4386-8F2E-4BECBA5E2770}" ShortID="391102225">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 5" ID="{1317FDE6-198B-4B52-8048-BE1221DE0A31}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 5.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="620616950"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 5" ID="{1317FDE6-198B-4B52-8048-BE1221DE0A31}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 6" ID="{5732A88E-6D84-4913-A515-F452E3750ADE}" ShortID="844217465">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 6" ID="{F065159C-FAE0-420F-9325-DEA892E81803}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 6.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="392689559"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 6" ID="{F065159C-FAE0-420F-9325-DEA892E81803}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 7" ID="{2D9F4B4D-DC21-4F43-A895-88753AF95EA9}" ShortID="249344037">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 7" ID="{541549F3-E371-4EB9-B8CF-937E2968F099}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 7.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="132796318"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 7" ID="{541549F3-E371-4EB9-B8CF-937E2968F099}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 8" ID="{952C2EBF-E260-4265-B5ED-248D775ECAD5}" ShortID="635251352">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 8" ID="{46599633-8285-48EA-A56A-F6D15D7CF0A6}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 8.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="825601952"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 8" ID="{46599633-8285-48EA-A56A-F6D15D7CF0A6}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 9" ID="{7E905F0E-A06B-470C-ADBD-D17F86F9EE19}" ShortID="406712680">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 9" ID="{736B9752-9052-441E-856C-7FB812F0F7DC}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 9.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1072732608"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 9" ID="{736B9752-9052-441E-856C-7FB812F0F7DC}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Damage 10" ID="{90FFA1E9-87B2-4F67-8214-436D97DFEB65}" ShortID="183932418">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Damage 10" ID="{CA2E5F71-6D91-46DF-BEA1-9ECB3D60D51A}">
+											<Language>SFX</Language>
+											<AudioFile>Player\Damage\Damage 10.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="858343118"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists/>
+									<ActiveSourceList>
+										<ActiveSource Name="Damage 10" ID="{CA2E5F71-6D91-46DF-BEA1-9ECB3D60D51A}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+							</ChildrenList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+						<Sound Name="LoadingAmmo" ID="{F7DC184F-431F-41F7-BB78-843436F10AA3}" ShortID="593517325">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="LoadingAmmo" ID="{8C81D7D3-5871-483F-8091-A969CAD57D0C}">
+									<Language>SFX</Language>
+									<AudioFile>Player\Ranged attack\LoadingAmmo.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="842217555"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ObjectLists/>
+							<ActiveSourceList>
+								<ActiveSource Name="LoadingAmmo" ID="{8C81D7D3-5871-483F-8091-A969CAD57D0C}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -322,6 +322,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Play_ShootNoAmmo" ID="{7BB2ABDB-C806-47F0-9B66-71A5BF844916}">
+					<ChildrenList>
+						<Action Name="" ID="{C07AF4EA-93A2-4D6E-8415-C6DF10905D31}" ShortID="100808085">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="EmptyShoot" ID="{8986E151-8B48-468A-A5DC-9CACC3185B58}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_ReceiveDamage" ID="{009EFC75-6F1D-4AE0-84A0-23C30571893A}">
+					<ChildrenList>
+						<Action Name="" ID="{F435679F-078C-4CC3-90A8-46985293C9A0}" ShortID="714901367">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ReceiveDamage" ID="{9DC3C388-B4D1-4A6E-AC81-AD894F5F2C8B}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_LoadingAmmo" ID="{C4E09ED1-0447-4268-A2B0-E11B7585FA34}">
+					<ChildrenList>
+						<Action Name="" ID="{22BE2C01-F926-41A8-A3BA-FEBC48B0760E}" ShortID="783416063">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="LoadingAmmo" ID="{F7DC184F-431F-41F7-BB78-843436F10AA3}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

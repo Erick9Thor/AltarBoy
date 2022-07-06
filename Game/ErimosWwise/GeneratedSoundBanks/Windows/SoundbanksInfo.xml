@@ -49,7 +49,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="449859083">
+		<SoundBank Id="1551306167" Language="SFX" Hash="245703994">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -402,16 +402,16 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="1624381710">
+		<SoundBank Id="3768541028" Language="SFX" Hash="483853074">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
 			<IncludedEvents>
 				<Event Id="2211787386" Name="Play_Dash" ObjectPath="\Events\Default Work Unit\Play_Dash">
 					<IncludedMemoryFiles>
-						<File Id="977051301" Language="SFX">
-							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
-							<Path>SFX\Player\Dash\Impact - Cease Fire_8F1E76CF.wem</Path>
+						<File Id="171904615" Language="SFX">
+							<ShortName>Dash.wav</ShortName>
+							<Path>SFX\Dash_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -481,7 +481,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="2241693317">
+		<SoundBank Id="3909959462" Language="SFX" Hash="3965893716">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
