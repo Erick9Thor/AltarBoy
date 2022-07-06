@@ -660,6 +660,8 @@
     <ClCompile Include="src\utils\Bool2.cpp">
       <Filter>Core\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\core\rendering\ShadowMappingProperties.cpp" />
+    <ClCompile Include="src\core\rendering\ShadowManager.cpp" />
     <ClCompile Include="src\core\particles\modifiers\NoiseParticleModifier.cpp">
       <Filter>Core\Particles\Modifiers</Filter>
     </ClCompile>
@@ -2498,6 +2500,9 @@
     <ClInclude Include="src\core\HachikoApiDefine.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\core\rendering\ShadowMappingProperties.h" />
+    <ClInclude Include="src\core\rendering\Uniforms.h" />
+    <ClInclude Include="src\core\rendering\ShadowManager.h" />
     <ClInclude Include="src\core\particles\modifiers\NoiseParticleModifier.h">
       <Filter>Core\Particles\Modifiers</Filter>
     </ClInclude>
