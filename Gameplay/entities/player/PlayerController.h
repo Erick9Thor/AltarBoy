@@ -171,7 +171,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _attack_indicator);
 			SERIALIZE_FIELD(GameObject*, _bullet_emitter);
 			SERIALIZE_FIELD(GameObject*, _goal);
-			SERIALIZE_FIELD(GameObject*, _geo);
+			SERIALIZE_FIELD(GameObject*, _player_geometry);
 
 			SERIALIZE_FIELD(float, _dash_duration);
 			SERIALIZE_FIELD(float, _dash_distance);

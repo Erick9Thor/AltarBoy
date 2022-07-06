@@ -17,7 +17,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
 	, _goal(nullptr)
-	, _geo(nullptr)
+	, _player_geometry(nullptr)
 	, _dash_duration(0.0f)
 	, _dash_distance(0.0f)
 	, _dash_cooldown(0.0f)
@@ -96,11 +96,15 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_dash_trail->SetActive(false);
 	}
-	
-	if(_falling_dust)
+
+	if (_falling_dust != nullptr) 
+	{
 		_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
-	if(_walking_dust)
+	}
+	if (_walking_dust != nullptr) 
+	{
 		_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -176,7 +180,6 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-
 	_player_transform = game_object->GetTransform();
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
@@ -190,11 +193,17 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		_state = PlayerState::IDLE;
 		_level_manager->Respawn(this);
+
+		_player_transform->SetGlobalPosition(_player_position);
 	}
 
 	if (_invulnerability_time_remaining > 0.0f)
 	{
 		_invulnerability_time_remaining -= Time::DeltaTime();
+		if (_invulnerability_time_remaining <= 0.0f && _player_geometry != nullptr)
+		{
+			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+		}
 	}
 
 	if (_god_mode_trigger)
@@ -920,9 +929,9 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
 					enemy_controller->GetParasite();
-					if (_geo != nullptr) 
+					if (_player_geometry != nullptr)
 					{
-						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
+						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
@@ -945,24 +954,40 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, float knockback, float3 direction)
 {
-	if (_god_mode || _invulnerability_time_remaining > 0.0f)
+	if (_god_mode)
 	{
 	    return;
 	}
 
-	_invulnerability_time_remaining = _invulnerability_time;
-	_combat_stats->ReceiveDamage(damage_received);
-	UpdateHealthBar();
-	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
-
-	// Activate vignette
-	if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
+	if (_invulnerability_time_remaining <= 0.0f)
 	{
-		_ui_damage->SetActive(true);
+		_invulnerability_time_remaining = _invulnerability_time;
+		if (_player_geometry != nullptr) 
+		{
+			_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 0.5f), true);
+		}
+		_combat_stats->ReceiveDamage(damage_received);
+		UpdateHealthBar();
+		
+		if (_player_geometry != nullptr)
+		{
+			_player_geometry->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+		}
+
+		// Activate vignette
+		if (_ui_damage && _combat_stats->_current_hp / _combat_stats->_max_hp < 0.25f)
+		{
+			_ui_damage->SetActive(true);
+		}
 	}
 	
 	if(knockback > 0.0f)
 	{
+		if (IsDashing()) 
+		{
+			_dash_trail->SetActive(false);
+			_show_dashtrail = false;
+		}
 		RecieveKnockback(direction * knockback);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
 	}
