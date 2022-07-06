@@ -5,7 +5,7 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [23.52, -1.431, 6.909]
+    position: [-6.848, -20.24, 30.72]
     rotation: [0, 0, 0, 1]
     scale: [50.81, 50.81, 50.81]
   - !<script>
