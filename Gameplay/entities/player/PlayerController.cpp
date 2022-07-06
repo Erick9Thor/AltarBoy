@@ -30,6 +30,11 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _ui_damage(nullptr)
 	, _dash_trail(nullptr)
 	, _trail_enlarger(10.0f)
+	, _attack_billboard_container1(nullptr)
+	, _attack_billboard_container2(nullptr)
+	, _attack_billboard_container3(nullptr)
+	, _attack_billboards({})
+	, _current_attack_billboard_index(0)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = .5f;
@@ -95,6 +100,12 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
 	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
 
+	_attack_billboards.clear();
+	_attack_billboards.resize(3);
+	_attack_billboards[0] = _attack_billboard_container1->GetComponent<ComponentBillboard>();
+	_attack_billboards[1] = _attack_billboard_container2->GetComponent<ComponentBillboard>();
+	_attack_billboards[2] = _attack_billboard_container3->GetComponent<ComponentBillboard>();
+
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
 	_combat_stats->_attack_power = 2;
@@ -102,7 +113,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_combat_stats->_move_speed = 7.0f;
 	_combat_stats->_max_hp = 4;
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
-
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -157,7 +167,6 @@ void Hachiko::Scripting::PlayerController::OnStart()
 
 void Hachiko::Scripting::PlayerController::OnUpdate()
 {
-	
 	CheckState();	
 	
 	_player_transform = game_object->GetTransform();
@@ -188,10 +197,11 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Run attack simulation
 	AttackController();
 
+	// Play Attack VFX:
+	ExecuteAttackVFX();
+
 	// Run movement simulation
 	MovementController();
-
-
 
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
@@ -468,7 +478,6 @@ bool Hachiko::Scripting::PlayerController::IsFalling() const
 	return _state == PlayerState::FALLING;
 }
 
-
 bool Hachiko::Scripting::PlayerController::IsActionLocked() const
 {
 	return IsDashing() || IsStunned() || IsAttacking() || IsFalling();
@@ -504,6 +513,7 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 	{
 		_attack_idx = 0;
 	}
+
 	return GetCurrentAttack();
 }
 
@@ -828,6 +838,60 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		// When attack is over
 		_state = PlayerState::IDLE;
 	}
+}
+
+void Hachiko::Scripting::PlayerController::ExecuteAttackVFX()
+{
+	if (_state != PlayerState::MELEE_ATTACKING)
+	{
+		return;
+	}
+
+	ComponentBillboard* current_attack_billboard = _attack_billboards[_current_attack_billboard_index];
+
+	if (current_attack_billboard == nullptr)
+	{
+		return;
+	}
+	
+	const PlayerAttack& attack = GetCurrentAttack();
+
+	math::float4x4 attack_origin = GetMeleeAttackOrigin(attack.stats.range);
+	math::float3 attack_position = attack_origin.TranslatePart();
+
+	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(attack_position);
+
+	current_attack_billboard->Play();
+
+	// YOU ARE FUCKING HERE U DUMBASS.
+	// TODO: Give height to billboard.
+
+	/*switch (_attack_idx)
+	{
+	case 0:
+	{
+		
+		break;
+	}
+
+	case 1:
+	{
+
+		break;
+	}
+
+	case 2:
+	{
+
+		break;
+	}
+
+	default:
+		break;
+	}*/
+
+	// Increment the used billboard index for the next attack:
+	_current_attack_billboard_index = (_current_attack_billboard_index + 1) % 3;
 }
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)

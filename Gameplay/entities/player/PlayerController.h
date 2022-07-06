@@ -140,6 +140,7 @@ private:
 	void DashTrailManager(float dash_progress);
 	void WalkingOrientationController();
 	void AttackController();
+	void ExecuteAttackVFX();
 
 	void PickupParasite(const math::float3& current_position);
 	void RecieveKnockback(const math::float3 direction);
@@ -253,6 +254,13 @@ private:
 	GameObject* _terrain;
 
 	LevelManager* _level_manager;
+
+	// Attack VFX Management:
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container1);
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container2);
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container3);
+	std::vector<ComponentBillboard*> _attack_billboards;
+	SERIALIZE_FIELD(unsigned, _current_attack_billboard_index);
 
 };
 } // namespace Scripting
