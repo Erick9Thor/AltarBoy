@@ -105,6 +105,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
 	}
+	if (_heal_effect != nullptr)
+	{
+		_heal_effect_particles_1 = _heal_effect->GetComponent<ComponentParticleSystem>();
+		_heal_effect_particles_2 = _heal_effect->GetComponentInDescendants<ComponentParticleSystem>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -452,7 +457,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	const Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
-	_after_attack_timer = attack.cooldown + _combo_grace_period;
+	_after_attack_timer = attack.cooldown +_combo_grace_period;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -461,24 +466,11 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 	// Move player a bit forward if it wouldnt fall	
-	if (attack.dash_distance != 0.0f)
-	{
-		_dash_progress = 0.f;
-		_current_dash_duration = attack.duration;
-		_dash_start = _player_position;
-		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
-
-		// Instead of using "CorrectDashDestination(_dash_start, _dash_end);", since its an attack dash use a greater correction 
-		float3 corrected_dash_destination = Navigation::GetCorrectedPosition(_dash_end, float3(1.0f, 0.5f, 1.0f));
-		if (corrected_dash_destination.x < FLT_MAX)
-		{
-			_dash_end = corrected_dash_destination;
-		}
-		else 
-		{
-			_dash_end = _dash_start;
-		}
-	}
+	_dash_progress = 0.f;
+	_current_dash_duration = attack.duration;
+	_dash_start = _player_position;
+	_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
+	CorrectDashDestination(_dash_start, _dash_end);
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -947,6 +939,10 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
+					_heal_effect_particles_1->Restart();
+					_heal_effect_particles_2->Restart();
+					_heal_effect_particles_1->Start();
+					_heal_effect_particles_2->Start();
 					UpdateHealthBar();
 					// Generate a random number for the weapon
 					std::random_device rd;
