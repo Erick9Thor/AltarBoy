@@ -159,6 +159,10 @@ namespace Hachiko
 			SERIALIZE_FIELD(PlayerState, _previous_state);
 			float3 _initial_pos = float3::zero;
 
+			SERIALIZE_FIELD(GameObject*, _sword_weapon);
+			SERIALIZE_FIELD(GameObject*, _sword_upper);
+			SERIALIZE_FIELD(GameObject*, _claw_weapon);
+
 			Stats* _combat_stats;
 			bool _god_mode = false;
 			bool _god_mode_trigger = false;
@@ -201,9 +205,7 @@ namespace Hachiko
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
 
-			GameObject* _sword_weapon = nullptr;
-			GameObject* _sword_upper = nullptr;
-			GameObject* _claw_weapon = nullptr;
+			
 
 			ComponentTransform* _player_transform = nullptr;
 			ComponentAnimation* animation;

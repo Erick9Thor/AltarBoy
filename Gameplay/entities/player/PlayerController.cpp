@@ -30,6 +30,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _camera(nullptr)
 	, _ui_damage(nullptr)
 	, _dash_trail(nullptr)
+	, _sword_weapon(nullptr)
+	, _sword_upper(nullptr)
+	, _claw_weapon(nullptr)
 	, _trail_enlarger(10.0f)
 {
 	CombatManager::BulletStats common_bullet;
@@ -139,10 +142,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
-
-	_claw_weapon = _geo->FindDescendantWithName("weaponClaw");
-	_sword_upper = _geo->FindDescendantWithName("parasite_low");
-	_sword_weapon = _geo->FindDescendantWithName("blade_low");
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
