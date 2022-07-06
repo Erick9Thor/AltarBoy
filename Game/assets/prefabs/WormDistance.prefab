@@ -5,23 +5,58 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-74.63, 3.566, -69.95]
+    position: [-74.63, 3.687, -69.95]
     rotation: [0, 0, 0, 1]
     scale: [5, 5, 5]
   - !<animation>
     type: 14
     enabled: true
     state_machine: 17649947854538430141
+  - type: 20
+    enabled: true
+  - !<agent>
+    type: 17
+    enabled: true
+    max_speed: 0
+    max_acceleration: 0
+    avoid_obstacles: false
+    radius: 1.2
+    is_player: false
   - !<script>
     type: 15
     enabled: true
-    class_name: WormController
+    class_name: EnemyController
+    "'_worm@bool'": true
+    "'_aggro_range@int'": 4
+    "'_attack_range@float'": 3
+    "'_attack_delay@float'": 0.3
+    "'_idle_cooldown@float'": 2
     "'_spawning_time@float'": 2
+    "'_spawn_pos@float3'": [0, 0, 0]
+    "'_spawn_is_initial@bool'": true
     "'_enemy_body@GameObject*'": 2
+    "'_parasite@GameObject*'": 48
     "'_small_dust@GameObject*'": 46
     "'_big_dust@GameObject*'": 47
-    "'_attack_animation_duration@float'": 0.2
+    "'_attack_zone@GameObject*'": 50
+    "'_inner_indicator@GameObject*'": 51
+    "'_outer_indicator@GameObject*'": 52
+    "'_already_in_combat@bool'": false
+    "'_is_from_gautlet@bool'": false
+    "'_will_die@bool'": true
+    "'_attack_animation_duration@float'": 0
     "'_attack_animation_timer@float'": 0
+    "'_current_spawning_time@float'": 0
+  - !<script>
+    type: 15
+    enabled: true
+    class_name: Stats
+    "'_attack_power@int'": 1
+    "'_attack_cd@float'": 2
+    "'_attack_range@float'": 0.5
+    "'_move_speed@float'": 7
+    "'_max_hp@int'": 4
+    "'_current_hp@int'": 3
 child:
   - name: Geo
     enabled: true
@@ -225,8 +260,8 @@ child:
                                                     type: 1
                                                     enabled: true
                                                     position: [0, 0, 0]
-                                                    rotation: [0.2915, -0.6442, -0.2915, 0.6442]
-                                                    scale: [1, 1, 1]
+                                                    rotation: [0.2915, -0.6442, -0.2915, 0.6443]
+                                                    scale: [0.9999, 1, 0.9999]
                                                 child:
                                                   - name: Jaw_Start_R_$AssimpFbx$_Rotation
                                                     enabled: true
@@ -306,7 +341,7 @@ child:
                                                                                     enabled: true
                                                                                     position: [0, 0, 0]
                                                                                     rotation: [0.8948, 0.4464, 0, 0]
-                                                                                    scale: [1, 0.9986, 0.9986]
+                                                                                    scale: [1, 0.9939, 0.9939]
                                                                                 child:
                                                                                   - name: Jaw_End_R_$AssimpFbx$_Rotation
                                                                                     enabled: true
@@ -608,3 +643,106 @@ child:
             position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+  - name: parasiteConsumable
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [0.1617, 0.1617, 0.1617]
+    child:
+      - name: PM3D_Sphere124
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 2.55, -6.851]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            type: 2
+            enabled: true
+            mesh_id: 8953689370358422284
+            navigable: false
+            visible: true
+            material_id: 3003390711770185065
+            tint_color: [1, 1, 1, 1]
+  - name: AttackTarget
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [-0.0096, 0, 0.6233]
+        rotation: [0, 0, 0, 1]
+        scale: [0.2, 0.2, 0.2]
+    child:
+      - name: InnerEffect
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 15537058005441777461
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 2, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 0
+            color_gradient: [[0.763, 0, 0, 0, 0]]
+            animation_section: false
+            color_section: true
+            size_section: true
+            size_over_time: [true, false, 0, [75, 10], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: false
+            rotation_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0
+      - name: OuterEffect
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [6, 6, 6]
+          - !<billboard>
+            type: 21
+            enabled: true
+            play_on_awake: false
+            texture_id: 1822181409804484943
+            tiles: [1, 1]
+            flip: [false, false]
+            billboard_lifetime: 1
+            properties: [1, 2, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            animation_speed: 0
+            total_tiles: 1
+            animation_loop: false
+            color_cycles: 1
+            color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+            animation_section: false
+            color_section: false
+            size_section: false
+            size_over_time: [true, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            rotation_section: true
+            rotation_over_time: [true, false, 0, [5, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_size: [true, true, 0, [1, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            start_rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+            blend_factor: 0

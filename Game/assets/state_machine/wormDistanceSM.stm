@@ -39,7 +39,7 @@ transitions:
     transition_blend: 0
   - transition_source: Iddle
     transition_target: RangeAttack
-    transition_trigger: isAttack
+    transition_trigger: isAttacking
     transition_blend: 300
   - transition_source: Iddle
     transition_target: Dead
