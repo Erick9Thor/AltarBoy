@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="483853074">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2740567804">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -436,6 +436,14 @@
 						<File Id="418495884" Language="SFX">
 							<ShortName>game-die.wav</ShortName>
 							<Path>SFX\game-die_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="998505444" Name="Play_LoadingAmmo" ObjectPath="\Events\Default Work Unit\Play_LoadingAmmo">
+					<IncludedMemoryFiles>
+						<File Id="562576200" Language="SFX">
+							<ShortName>Player\Ranged attack\Impact - Lightweight.wav</ShortName>
+							<Path>SFX\Player\Ranged attack\Impact - Lightweight_71F41519.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -476,6 +484,38 @@
 						<File Id="1016931998" Language="SFX">
 							<ShortName>Player\Ranged attack\Impact - Robot Punch.wav</ShortName>
 							<Path>SFX\Player\Ranged attack\Impact - Robot Punch_E2E3A2D3.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3438014598" Name="Play_ReceiveDamage" ObjectPath="\Events\Default Work Unit\Play_ReceiveDamage">
+					<IncludedMemoryFiles>
+						<File Id="132796318" Language="SFX">
+							<ShortName>Player\Damage\Damage 7.wav</ShortName>
+							<Path>SFX\Player\Damage\Damage 7_10C4C929.wem</Path>
+						</File>
+						<File Id="392689559" Language="SFX">
+							<ShortName>Player\Damage\Damage 6.wav</ShortName>
+							<Path>SFX\Player\Damage\Damage 6_10C4C929.wem</Path>
+						</File>
+						<File Id="620616950" Language="SFX">
+							<ShortName>Player\Damage\Damage 5.wav</ShortName>
+							<Path>SFX\Player\Damage\Damage 5_10C4C929.wem</Path>
+						</File>
+						<File Id="825601952" Language="SFX">
+							<ShortName>Player\Damage\Damage 8.wav</ShortName>
+							<Path>SFX\Player\Damage\Damage 8_10C4C929.wem</Path>
+						</File>
+						<File Id="1072732608" Language="SFX">
+							<ShortName>Player\Damage\Damage 9.wav</ShortName>
+							<Path>SFX\Player\Damage\Damage 9_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1388583332" Name="Play_ShootNoAmmo" ObjectPath="\Events\Default Work Unit\Play_ShootNoAmmo">
+					<IncludedMemoryFiles>
+						<File Id="415761682" Language="SFX">
+							<ShortName>Player\Ranged attack\No ammo.wav</ShortName>
+							<Path>SFX\Player\Ranged attack\No ammo_F3617047.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

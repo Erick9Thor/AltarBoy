@@ -24,11 +24,14 @@ namespace AK
         static const AkUniqueID PLAY_GAMEOVER = 3174629258U;
         static const AkUniqueID PLAY_LASER = 2270376495U;
         static const AkUniqueID PLAY_LASER_HIT = 4092857357U;
+        static const AkUniqueID PLAY_LOADINGAMMO = 998505444U;
         static const AkUniqueID PLAY_MELEEATTACK = 2988676654U;
         static const AkUniqueID PLAY_NAVIGATION = 3849525492U;
         static const AkUniqueID PLAY_PARASITEPICKUP = 3772493585U;
         static const AkUniqueID PLAY_PEBBLE = 1157125118U;
         static const AkUniqueID PLAY_RANGEDATTACK = 3766948527U;
+        static const AkUniqueID PLAY_RECEIVEDAMAGE = 3438014598U;
+        static const AkUniqueID PLAY_SHOOTNOAMMO = 1388583332U;
         static const AkUniqueID PLAY_UICLICK = 1615720664U;
         static const AkUniqueID PLAY_UIHOVER = 2502251926U;
         static const AkUniqueID PLAY_WIND = 1020223172U;
