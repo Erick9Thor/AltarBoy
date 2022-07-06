@@ -9,11 +9,11 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* LOADING_AMMO = L"Play_LoadingAmmo";
 	constexpr const wchar_t* SHOOT_NO_AMMO = L"Play_ShootNoAmmo";
 	constexpr const wchar_t* RECEIVE_DAMAGE = L"Play_ReceiveDamage";
+	constexpr const wchar_t* PARASITE_PICKUP = L"Play_ParasitePickUp";
 
 	// Enemy
 	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";
 	constexpr const wchar_t* ENEMY_DIE = L"Play_EnemyDie";
-	constexpr const wchar_t* PARASITE_PLAY_PICKUP = L"Play_ParasitePickUp";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";
