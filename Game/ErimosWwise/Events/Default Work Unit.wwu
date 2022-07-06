@@ -41,7 +41,7 @@
 						<Action Name="" ID="{DCBDCED5-A018-4A13-A545-C38A9951CEE9}" ShortID="383038571">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="RangedAttack" ID="{8943FF7B-D917-452B-9718-55ECD946B1B6}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+									<ObjectRef Name="Ranged" ID="{5CFE7FE7-1D64-4EE6-9C60-DD9AB9A36BA7}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -306,6 +306,17 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Laser_Hit" ID="{6D7E54CD-08B9-4F32-95B3-4FB05B15EB41}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Play_ParasitePickUp" ID="{4760CDA1-AB7E-4214-8F3A-DA9ACB675859}">
+					<ChildrenList>
+						<Action Name="" ID="{39D4C357-D48E-448E-A7DF-25A1142A34F8}" ShortID="1056883581">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="ParasitePickUp" ID="{E5700962-4928-4CD6-9BCB-52CB644B4DE9}" WorkUnitID="{15DB735D-2232-4613-91A1-A3EB99D3794E}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3255924596">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2328560150">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -441,33 +441,45 @@
 				</Event>
 				<Event Id="2988676654" Name="Play_MeleeAttack" ObjectPath="\Events\Default Work Unit\Play_MeleeAttack">
 					<IncludedMemoryFiles>
-						<File Id="132983356" Language="SFX">
-							<ShortName>Melee\Meele_05.wav</ShortName>
-							<Path>SFX\Melee\Meele_05_10C4C929.wem</Path>
+						<File Id="916160990" Language="SFX">
+							<ShortName>Player\Melee attack\Punch - Whack A Bot.wav</ShortName>
+							<Path>SFX\Player\Melee attack\Punch - Whack A Bot_10C4C929.wem</Path>
 						</File>
-						<File Id="701692506" Language="SFX">
-							<ShortName>Melee\Meele_04.wav</ShortName>
-							<Path>SFX\Melee\Meele_04_10C4C929.wem</Path>
+						<File Id="944417870" Language="SFX">
+							<ShortName>Player\Melee attack\Punch - Pop.wav</ShortName>
+							<Path>SFX\Player\Melee attack\Punch - Pop_10C4C929.wem</Path>
 						</File>
-						<File Id="723959887" Language="SFX">
-							<ShortName>Melee\Meele_02.wav</ShortName>
-							<Path>SFX\Melee\Meele_02_10C4C929.wem</Path>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3772493585" Name="Play_ParasitePickUp" ObjectPath="\Events\Default Work Unit\Play_ParasitePickUp">
+					<IncludedMemoryFiles>
+						<File Id="184664915" Language="SFX">
+							<ShortName>Player\Parasite pick up\Parasite pick up 2.wav</ShortName>
+							<Path>SFX\Player\Parasite pick up\Parasite pick up 2_10C4C929.wem</Path>
 						</File>
-						<File Id="911303618" Language="SFX">
-							<ShortName>Melee\Meele_01.wav</ShortName>
-							<Path>SFX\Melee\Meele_01_10C4C929.wem</Path>
+						<File Id="537717095" Language="SFX">
+							<ShortName>Player\Parasite pick up\Parasite pick up 1.wav</ShortName>
+							<Path>SFX\Player\Parasite pick up\Parasite pick up 1_10C4C929.wem</Path>
 						</File>
-						<File Id="929993214" Language="SFX">
-							<ShortName>Melee\Meele_03.wav</ShortName>
-							<Path>SFX\Melee\Meele_03_10C4C929.wem</Path>
+						<File Id="609605835" Language="SFX">
+							<ShortName>Player\Parasite pick up\Parasite pick up 3.wav</ShortName>
+							<Path>SFX\Player\Parasite pick up\Parasite pick up 3_10C4C929.wem</Path>
+						</File>
+						<File Id="658527925" Language="SFX">
+							<ShortName>Player\Parasite pick up\Parasite pick up 4.wav</ShortName>
+							<Path>SFX\Player\Parasite pick up\Parasite pick up 4_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="3766948527" Name="Play_RangedAttack" ObjectPath="\Events\Default Work Unit\Play_RangedAttack">
 					<IncludedMemoryFiles>
-						<File Id="277816369" Language="SFX">
-							<ShortName>weapons-plasma-shot.wav</ShortName>
-							<Path>SFX\weapons-plasma-shot_10C4C929.wem</Path>
+						<File Id="154933663" Language="SFX">
+							<ShortName>Player\Ranged attack\Impact - Lightweight.wav</ShortName>
+							<Path>SFX\Player\Ranged attack\Impact - Lightweight_65627AAC.wem</Path>
+						</File>
+						<File Id="1016931998" Language="SFX">
+							<ShortName>Player\Ranged attack\Impact - Robot Punch.wav</ShortName>
+							<Path>SFX\Player\Ranged attack\Impact - Robot Punch_BAC38BA3.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
