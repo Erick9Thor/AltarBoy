@@ -1007,8 +1007,7 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		//SceneManagement::SwitchScene(12124061992092393469);
-		SceneManagement::SwitchScene(3083261127926411514);
+		SceneManagement::SwitchScene(Scenes::LEVEL2);
 	}
 }
 
