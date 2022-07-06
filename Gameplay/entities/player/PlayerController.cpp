@@ -5,6 +5,7 @@
 #include "entities/player/CombatManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
+#include "constants/Scenes.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -15,7 +16,6 @@ const int MAX_AMMO = 4;
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
-	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
 	, _geo(nullptr)
 	, _dash_duration(0.0f)
@@ -76,9 +76,10 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 void Hachiko::Scripting::PlayerController::OnAwake()
 {
-	_terrain = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Level");
-	_enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
-	_level_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("LevelManager")->GetComponent<LevelManager>();
+	_terrain = Scenes::GetTerrainContainer();
+	_enemies = Scenes::GetEnemiesContainer();
+	_bullet_emitter = Scenes::GetCombatManager();
+	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 
 	_dash_charges = _max_dash_charges;
 
