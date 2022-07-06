@@ -9,6 +9,29 @@ namespace Hachiko
 {
     class ComponentBillboard : public Component
     {
+        class TextureProperties
+        {
+        public:
+            TextureProperties();
+            ~TextureProperties() = default;
+
+            void HACHIKO_API SetFlip(const bool2& new_flip_texture);
+            void HACHIKO_API SetTiles(const float2 new_tiles);
+            void HACHIKO_API SetTexture(const std::string& path);
+            void HACHIKO_API SetTexture(ResourceTexture* resource);
+
+            const HACHIKO_API bool2& GetFlip() const;
+            const HACHIKO_API float2& GetTiles() const;
+            const HACHIKO_API float2& GetFactor() const;
+            const ResourceTexture* GetTexture() const;
+
+        private:
+            bool2 flip_texture = bool2::False;
+            float2 tiles = float2::one;
+            float2 factor = float2::one;
+            ResourceTexture* texture = nullptr;
+        };
+
     public:
         ComponentBillboard(GameObject* container);
         ~ComponentBillboard() override;
@@ -26,6 +49,11 @@ namespace Hachiko
         
         void DrawGui() override;
         void Draw(ComponentCamera* camera, Program* program) override;
+
+        HACHIKO_API [[nodiscard]] TextureProperties& GetTextureProperties() 
+        {
+            return texture_properties;
+        }
 
     private:
         bool in_scene = false;
@@ -53,13 +81,10 @@ namespace Hachiko
         ParticleSystem::VariableTypeProperty start_rotation {float2::zero, 1.0f};
 
         // Render
-        ParticleSystem::ParticleProperties properties;
+        ParticleSystem::ParticleProperties render_properties;
 
         // Texture
-        bool2 flip_texture = bool2::False;
-        float2 tiles = float2::one;
-        float2 factor = float2::one;
-        ResourceTexture* texture = nullptr;
+        TextureProperties texture_properties = {};
 
         // Animation
         float animation_speed = 0.0f;
