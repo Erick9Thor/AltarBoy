@@ -47,20 +47,23 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 	
 	if (!_stats->IsAlive())
 	{
-		ComponentAnimation* component_anim = _explosion_crystal->GetComponent<ComponentAnimation>();
-		if (component_anim && component_anim->IsAnimationStopped() && visible)
+		ComponentAnimation* explosion_anim = _explosion_crystal->GetComponent<ComponentAnimation>();
+		if (explosion_anim && explosion_anim->IsAnimationStopped() && visible)
 		{
 			SetVisible(false);
 			return;
 		}
 
-		if (!visible)
+
+		if (!visible && _current_regen_time == 0.f)
 		{
-			_current_regen_time += Time::DeltaTime();
-			if (_current_regen_time >= _regen_time)
-			{
-				ResetCrystal();
-			}
+			RegenCrystal();
+		}
+		_current_regen_time += Time::DeltaTime();
+
+		if (_current_regen_time >= _regen_time)
+		{
+			ResetCrystal();
 		}
 	}
 
@@ -106,6 +109,8 @@ void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 
 void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 {
+	is_exploding = false;
+	
 	std::vector<GameObject*> check_hit = {};
 
 	if (enemies != nullptr)
@@ -144,7 +149,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 			player_controller->RegisterHit(_stats->_attack_power, true, relative_dir.Normalized());
 		}
 	}
-	is_exploding = false;
+	
 
 	for (GameObject* child : _explosion_effect->children)
 	{
@@ -180,6 +185,8 @@ void Hachiko::Scripting::CrystalExplosion::SetVisible(bool v)
 
 void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 {
+	is_exploding = false;
+	is_destroyed = false;
 	_stats->SetHealth(1);
 	_static_crystal->SetActive(true);
 	_explosion_crystal->SetActive(false);
@@ -199,6 +206,13 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 			child->SetActive(false);
 		}
 	}
+
+	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
+	if (exploding_animation)
+	{
+		exploding_animation->StopAnimating();
+		exploding_animation->ResetState();
+	}
 }
 
 void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
@@ -217,5 +231,18 @@ void Hachiko::Scripting::CrystalExplosion::DestroyCrystal()
 	{
 		is_destroyed = true;
 		exploding_animation->StartAnimating();
+	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::RegenCrystal()
+{
+	_current_regen_time = 0.f;
+	_static_crystal->SetActive(true);
+	_static_crystal->SetVisible(true, false);
+	ComponentAnimation* regen_animation = _static_crystal->GetComponent<ComponentAnimation>();
+	if (regen_animation)
+	{
+		regen_animation->ResetState();
+		regen_animation->StartAnimating();
 	}
 }

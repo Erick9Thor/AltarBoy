@@ -35,6 +35,7 @@ namespace Hachiko
 			void SetVisible(bool v);
 			void ResetCrystal();
 			void DestroyCrystal();
+			void RegenCrystal();
 
 		public:
 			Stats* _stats;
