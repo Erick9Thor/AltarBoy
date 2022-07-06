@@ -84,7 +84,7 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _idle_cooldown);
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
-            SERIALIZE_FIELD(GameObject*, _player);
+            
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
             SERIALIZE_FIELD(GameObject*, _audio_manager_game_object);
@@ -104,6 +104,7 @@ namespace Hachiko
 
             Quat _spawn_rot;
 
+            GameObject* _player = nullptr;
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;

@@ -5,6 +5,7 @@
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Sounds.h"
+#include "constants/Scenes.h"
 
 // TODO: These two includes must go:
 #include <modules/ModuleSceneManager.h>
@@ -13,7 +14,6 @@
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
 	, _stats()
-	, _player(nullptr)
 	, _explosion_radius(10.0f)
 	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
@@ -30,6 +30,8 @@ void Hachiko::Scripting::CrystalExplosion::OnAwake()
 		_explosion_crystal->SetActive(false);
 	}
 	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	enemies = Scenes::GetEnemiesContainer();
+	_player = Scenes::GetPlayer();
 	_stats = game_object->GetComponent<Stats>();
 	explosion_duration = _timer_explosion;
 
@@ -117,7 +119,10 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 	if (enemies != nullptr)
 	{
-		check_hit = enemies->children;
+		for (GameObject* enemy_pack : enemies->children)
+		{
+			check_hit.insert(check_hit.end(), enemy_pack->children.begin(), enemy_pack->children.end());
+		}
 	}
 
 	check_hit.push_back(_player);

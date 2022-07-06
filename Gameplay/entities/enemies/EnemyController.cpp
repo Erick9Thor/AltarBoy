@@ -11,6 +11,7 @@
 #include <resources/ResourceAnimation.h>
 #include <components/ComponentAgent.h>
 #include <components/ComponentTransform.h>
+#include "constants/Scenes.h"
 
 #include "misc/AudioManager.h"
 
@@ -23,7 +24,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
-	, _player(nullptr)
 	, _enemy_body(nullptr)
 	, _parasite(nullptr)
 	, _state(BugState::INVALID)
@@ -51,6 +51,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
+	_player = Scenes::GetPlayer();
 	if (_player != nullptr)
 	{
 		_player_controller = _player->GetComponent<PlayerController>();
