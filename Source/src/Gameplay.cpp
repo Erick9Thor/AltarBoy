@@ -8,6 +8,7 @@
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "modules/ModuleDebugDraw.h"
+#include "utils/FileSystem.h"
 #include "debugdraw.h"
 
 #include "components/ComponentAgent.h"
@@ -345,6 +346,15 @@ math::float3 Hachiko::Navigation::GetCorrectedPosition(const math::float3& posit
 void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::float3& extents)
 {
     return App->navigation->CorrectPosition(position, extents);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*PROPERTIES-----------------------------------------------------------------*/
+
+HACHIKO_API const std::string& Hachiko::FileUtility::GetWorkingDirectory()
+{
+    return App->file_system.GetWorkingDirectory();
 }
 
 /*---------------------------------------------------------------------------*/
