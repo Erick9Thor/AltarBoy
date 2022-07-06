@@ -262,6 +262,7 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		_enraged = 5.0f;
 	}
 
+	_blood_trail_particles->Enable();
 	_blood_trail_particles->Restart();
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
@@ -502,6 +503,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	animation->SendTrigger("idle");
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
+	_blood_trail_particles->Disable();
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
