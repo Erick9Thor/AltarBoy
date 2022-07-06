@@ -241,11 +241,13 @@ void Hachiko::Scripting::CombatManager::SetBulletTrajectory(unsigned bullet_idx)
 	const float3 bullet_vertical_offset = float3(.0f, 1.0f, .0f);
 	float3 emitter_direction = stats.emitter_transform->GetFront().Normalized();
 	float3 emitter_position = (stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset) + bullet_vertical_offset;
+	Quat emitter_rotation = stats.emitter_transform->GetGlobalRotation();
 	
 	stats.prev_position = emitter_position;
 
 	stats.direction = emitter_direction;
 	bullet_transform->SetGlobalPosition(emitter_position);
+	bullet_transform->SetGlobalRotation(emitter_rotation);
 	// If the bullet is out of culling nothing its updating its transform unless selected in engine
 	bullet_transform->GetLocalPosition();
 }
