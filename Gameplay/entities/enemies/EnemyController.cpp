@@ -77,6 +77,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		_attack_delay = 0.3f;
 		_audio_source = game_object->GetComponent<ComponentAudioSource>();
 		_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
+    _blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
 
 		_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 		_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
@@ -91,6 +92,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		_attack_delay = 0.3f;
 		_audio_source = game_object->GetComponent<ComponentAudioSource>();
 		_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
+    _blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
 
 		if (_small_dust)
 		{
@@ -483,6 +485,8 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		_enraged = 5.0f;
 	}
 
+	_blood_trail_particles->Enable();
+	_blood_trail_particles->Restart();
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 
@@ -669,6 +673,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_previous_state = BugState::INVALID;
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
+	_blood_trail_particles->Disable();
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()
