@@ -40,7 +40,6 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
 {
-	
 	if (!game_object->IsActive())
 	{
 		return;
@@ -51,7 +50,6 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 
 bool Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
-	
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
@@ -78,6 +76,7 @@ bool Hachiko::Scripting::CombatManager::PlayerMeleeAttack(const float4x4& origin
 	{
 		return PlayerRectangleAttack(origin, attack_stats);
 	}
+
 	return PlayerConeAttack(origin, attack_stats);
 }
 

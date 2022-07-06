@@ -259,6 +259,9 @@ private:
 	SERIALIZE_FIELD(GameObject*, _attack_billboard_container1);
 	SERIALIZE_FIELD(GameObject*, _attack_billboard_container2);
 	SERIALIZE_FIELD(GameObject*, _attack_billboard_container3);
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container4);
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container5);
+	SERIALIZE_FIELD(GameObject*, _attack_billboard_container6);
 	std::vector<ComponentBillboard*> _attack_billboards;
 	SERIALIZE_FIELD(unsigned, _current_attack_billboard_index);
 
