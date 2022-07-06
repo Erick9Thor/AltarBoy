@@ -188,7 +188,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Run movement simulation
 	MovementController();
 
-
+	CheckGoal(_player_position);
 
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
@@ -1008,6 +1008,7 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
 		//SceneManagement::SwitchScene(12124061992092393469);
+		SceneManagement::SwitchScene(3083261127926411514);
 	}
 }
 
