@@ -5,6 +5,7 @@
 #include "entities/enemies/EnemyController.h"
 #include "entities/player/PlayerController.h"
 #include "constants/Sounds.h"
+#include "constants/Scenes.h"
 
 // TODO: These two includes must go:
 #include <modules/ModuleSceneManager.h>
@@ -20,56 +21,53 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _explosion_indicator_helper(nullptr)
 	, _timer_explosion(0.0f)
 	, _explosion_effect(nullptr)
+	, _regen_time(2.f)
 {
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnAwake()
 {
-	if (_explosion_crystal->IsActive()) 
-	{
-		_explosion_crystal->SetActive(false);
-	}
-	enemies = game_object->scene_owner->GetRoot()->GetFirstChildWithName("Enemies");
+	enemies = Scenes::GetEnemiesContainer();
 	_stats = game_object->GetComponent<Stats>();
-	explosion_duration = _timer_explosion;
-
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
+	transform = game_object->GetTransform();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnStart()
 {
-	transform = game_object->GetTransform();
-
-	if (_explosion_indicator_helper)
-	{
-		_explosion_indicator_helper->SetActive(false);
-	}
-	if (_explosion_effect)
-	{
-		for (GameObject* child : _explosion_effect->children)
-		{
-			child->SetActive(false);
-		}
-	}
+	ResetCrystal();
 }
 
 void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 {
-	ComponentAnimation* component_anim = _explosion_crystal->GetComponent<ComponentAnimation>();
-
-	if (!_stats->IsAlive() && component_anim)
+	if (!_stats)
 	{
-		if (component_anim->IsAnimationStopped())
+		return;
+	}
+	
+	if (!_stats->IsAlive())
+	{
+		ComponentAnimation* component_anim = _explosion_crystal->GetComponent<ComponentAnimation>();
+		if (component_anim && component_anim->IsAnimationStopped() && visible)
 		{
-			SceneManagement::Destroy(game_object);
+			SetVisible(false);
 			return;
+		}
+
+		if (!visible)
+		{
+			_current_regen_time += Time::DeltaTime();
+			if (_current_regen_time >= _regen_time)
+			{
+				ResetCrystal();
+			}
 		}
 	}
 
 	if (is_exploding)
 	{
 
-		if (_timer_explosion <= 0)
+		if (_current_explosion_timer >= _timer_explosion)
 		{
 			ExplodeCrystal();
 			DestroyCrystal();
@@ -77,14 +75,9 @@ void Hachiko::Scripting::CrystalExplosion::OnUpdate()
 		}
 		else
 		{
-			_timer_explosion -= Time::DeltaTime();
+			_current_explosion_timer += Time::DeltaTime();
 			return;
 		}
-	}
-
-	if (!_stats || !_stats->IsAlive())
-	{
-		return;
 	}
 
 	if (_explosive_crystal)
@@ -175,6 +168,35 @@ void Hachiko::Scripting::CrystalExplosion::RegisterHit(int damage)
 		else
 		{
 			DestroyCrystal();
+		}
+	}
+}
+
+void Hachiko::Scripting::CrystalExplosion::SetVisible(bool v)
+{
+	visible = v;
+	game_object->SetVisible(v, true);
+}
+
+void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
+{
+	_stats->SetHealth(1);
+	_static_crystal->SetActive(true);
+	_explosion_crystal->SetActive(false);
+	SetVisible(true);
+	_current_explosion_timer = 0.f;
+	_current_regen_time = 0.f;
+
+	if (_explosion_indicator_helper)
+	{
+		_explosion_indicator_helper->SetActive(false);
+	}
+
+	if (_explosion_effect)
+	{
+		for (GameObject* child : _explosion_effect->children)
+		{
+			child->SetActive(false);
 		}
 	}
 }
