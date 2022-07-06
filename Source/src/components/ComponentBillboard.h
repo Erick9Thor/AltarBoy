@@ -9,6 +9,8 @@ namespace Hachiko
 {
     class ComponentBillboard : public Component
     {
+        // TODO: Move this to ParticleSystem namespace after the ALPHA 1 so 
+        // particles also reuse this class.
         class TextureProperties
         {
         public:
