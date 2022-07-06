@@ -23,7 +23,7 @@ Hachiko::ComponentParticleSystem::ComponentParticleSystem(GameObject* container)
 Hachiko::ComponentParticleSystem::~ComponentParticleSystem()
 {
     App->event->Unsubscribe(Event::Type::CURVE_EDITOR, GetID());
-    App->event->Unsubscribe(Event::Type::SELECTION_CHANGED, GetID());
+    //App->event->Unsubscribe(Event::Type::SELECTION_CHANGED, GetID());
     particle_modifiers.clear();
     App->scene_manager->GetActiveScene()->RemoveParticleComponent(GetID());
     current_curve_editing_property = nullptr;
@@ -71,7 +71,7 @@ void Hachiko::ComponentParticleSystem::Start()
             Play();
         }
     };
-    App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());
+    //App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());
     emitter_state = ParticleSystem::Emitter::State::PLAYING;
 }
 
@@ -85,8 +85,8 @@ void Hachiko::ComponentParticleSystem::Update()
 #endif //PLAY_BUILD
     if (emitter_state != ParticleSystem::Emitter::State::PAUSED)
     {
-        UpdateEmitterTimes();
         ActivateParticles();
+        UpdateEmitterTimes();
         UpdateActiveParticles();
         UpdateModifiers();
     }

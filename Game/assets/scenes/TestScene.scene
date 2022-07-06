@@ -19,7 +19,7 @@ child:
         enabled: true
         position: [0, 0, 0]
         rotation: [0, 0.887, -0.4617, 0]
-        scale: [0.9935, 1, 0.9935]
+        scale: [0.9911, 1, 0.9911]
       - !<camera>
         id: 1219616210356617501
         type: 4
@@ -127,6 +127,7 @@ child:
                 "'_player@GameObject*'": 109370777503151113
                 "'_enemy_body@GameObject*'": 4910652326621726217
                 "'_parasite@GameObject*'": 8432818627888009998
+                "'_blood_trail@GameObject*'": 1489768778137493132
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
@@ -800,7 +801,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9955]
+                                                                                                                                    scale: [1, 1, 0.9931]
                                                                                                               - id: 12596003370000302713
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -857,7 +858,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9954, 1, 0.9954]
+                                                                                            scale: [0.993, 1, 0.993]
                                                                                         child:
                                                                                           - id: 4795010356529047988
                                                                                             name: Wing1_Jnt_L
@@ -1287,6 +1288,80 @@ child:
                         visible: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
+              - id: 1489768778137493132
+                name: BloodTrail
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 15385126979323078741
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0.1]
+                    rotation: [0, 0, 0, 1]
+                    scale: [0.25, 0.25, 0.25]
+                  - !<particle_system>
+                    id: 172279631354884065
+                    type: 22
+                    enabled: true
+                    sections:
+                      parameters: true
+                      emission: true
+                      shape: true
+                      lights: false
+                      renderer: true
+                    parameters:
+                      duration: 0.75
+                      loop: false
+                      life: [true, true, 0, [0.75, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      speed: [true, true, 0, [0, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      size: [true, true, 0, [25, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      rotation: [true, true, 1, [0, 360], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    emission:
+                      rate: [true, true, 0, [0, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      rate_burst: [true, true, 0, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      burst: true
+                    emitter_shape:
+                      type: 0
+                      properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [1, 1, 1], 0.5]
+                    texture:
+                      texture_id: 16529898061671093590
+                      tiles: [4, 2]
+                      flip: [false, false]
+                      total_tiles: 8
+                    modifiers:
+                      velocity:
+                        active: false
+                        speed: [true, true, 0, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      size:
+                        active: true
+                        size: [true, true, 0, [1, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      color:
+                        active: false
+                        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0.9855]]
+                        color_cycles: 1
+                      force:
+                        active: false
+                        rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      animation:
+                        active: true
+                        animation_speed: 0.1
+                        blend_factor: 1
+                        fit_to_lifetime: false
+                      noise:
+                        active: false
+                        separate_axes: false
+                        strength:
+                          x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                          y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                          z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
       - id: 12450366604727127906
         name: Round2
         enabled: true
@@ -1341,6 +1416,7 @@ child:
                 "'_player@GameObject*'": 109370777503151113
                 "'_enemy_body@GameObject*'": 14288041232643970759
                 "'_parasite@GameObject*'": 4254431287090470372
+                "'_blood_trail@GameObject*'": 11348591620375082931
                 "'_audio_manager_game_object@GameObject*'": 13880847686867911932
                 "'_already_in_combat@bool'": false
                 "'_is_from_gautlet@bool'": false
@@ -2014,7 +2090,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [-0.6647, -0.2755, 0.1059, 0.6863]
-                                                                                                                                    scale: [1, 1, 0.9955]
+                                                                                                                                    scale: [1, 1, 0.9931]
                                                                                                               - id: 16017741298732437500
                                                                                                                 name: loc_Forearm
                                                                                                                 enabled: true
@@ -2071,7 +2147,7 @@ child:
                                                                                             enabled: true
                                                                                             position: [0, 0, 0]
                                                                                             rotation: [0.4893, 0.5564, 0.5127, 0.4337]
-                                                                                            scale: [0.9954, 1, 0.9954]
+                                                                                            scale: [0.993, 1, 0.993]
                                                                                         child:
                                                                                           - id: 11876778912096561444
                                                                                             name: Wing1_Jnt_L
@@ -2501,6 +2577,80 @@ child:
                         visible: true
                         material_id: 3003390711770185065
                         tint_color: [1, 1, 1, 1]
+              - id: 11348591620375082931
+                name: BloodTrail
+                enabled: true
+                component:
+                  - !<transform>
+                    id: 17534892897654771504
+                    type: 1
+                    enabled: true
+                    position: [0, 0, 0.1]
+                    rotation: [0, 0, 0, 1]
+                    scale: [0.25, 0.25, 0.25]
+                  - !<particle_system>
+                    id: 6726178995741008591
+                    type: 22
+                    enabled: true
+                    sections:
+                      parameters: true
+                      emission: true
+                      shape: true
+                      lights: false
+                      renderer: true
+                    parameters:
+                      duration: 0.75
+                      loop: false
+                      life: [true, true, 0, [0.75, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      speed: [true, true, 0, [0, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      size: [true, true, 0, [25, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      rotation: [true, true, 1, [0, 360], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      properties: [1, 0, 1, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+                    emission:
+                      rate: [true, true, 0, [0, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      rate_burst: [true, true, 0, [1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      burst: true
+                    emitter_shape:
+                      type: 0
+                      properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [1, 1, 1], 0.5]
+                    texture:
+                      texture_id: 16529898061671093590
+                      tiles: [4, 2]
+                      flip: [false, false]
+                      total_tiles: 8
+                    modifiers:
+                      velocity:
+                        active: false
+                        speed: [true, true, 0, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      size:
+                        active: true
+                        size: [true, true, 0, [1, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      color:
+                        active: false
+                        color_gradient: [[0, 0, 0, 0, 0], [1, 1, 1, 0, 1]]
+                        color_cycles: 1
+                      force:
+                        active: false
+                        rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                      animation:
+                        active: true
+                        animation_speed: 0.1
+                        blend_factor: 1
+                        fit_to_lifetime: false
+                      noise:
+                        active: false
+                        separate_axes: false
+                        strength:
+                          x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                          y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                          z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                        scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
   - id: 10533314505781200958
     name: Crystals
     enabled: true
@@ -2989,7 +3139,7 @@ child:
                         enabled: true
                         position: [-1.683, 0.1156, 0.2152]
                         rotation: [-0.5954, 0.7709, 0.1589, -0.161]
-                        scale: [0.9935, 1, 0.9935]
+                        scale: [0.9911, 1, 0.9911]
                   - id: 4894605393649602083
                     name: Middle
                     enabled: true
@@ -3207,7 +3357,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1096, 681]
+            size: [726, 473]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -6531,6 +6681,8 @@ child:
         "'_max_dash_charges@unsigned'": 2
         "'_dash_trail@GameObject*'": 857099571519134413
         "'_trail_enlarger@float'": 15
+        "'_falling_dust@GameObject*'": 4725203297666301744
+        "'_walking_dust@GameObject*'": 14832001001954005998
         "'_rotation_duration@float'": 0.075
         "'_hp_cell_1@GameObject*'": 9209290808179456846
         "'_hp_cell_2@GameObject*'": 14491496159405339717
@@ -7185,7 +7337,7 @@ child:
                                                             enabled: true
                                                             position: [0, 0, 0]
                                                             rotation: [0, 0, 0.8756, 0.483]
-                                                            scale: [0.9956, 0.9956, 1]
+                                                            scale: [0.9932, 0.9932, 1]
                                                         child:
                                                           - id: 7300229523316383905
                                                             name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
@@ -7233,7 +7385,7 @@ child:
                                                                             enabled: true
                                                                             position: [0, 0, 0]
                                                                             rotation: [-0.483, 0.8756, 0, 0]
-                                                                            scale: [0.9956, 1, 0.9956]
+                                                                            scale: [0.9932, 1, 0.9932]
                                                                         child:
                                                                           - id: 10254065945951643898
                                                                             name: Zero
@@ -7387,7 +7539,7 @@ child:
                                             enabled: true
                                             position: [0, 0, 0]
                                             rotation: [0, 0, 0.9832, 0.1824]
-                                            scale: [0.9956, 0.9956, 1]
+                                            scale: [0.9932, 0.9932, 1]
                                         child:
                                           - id: 15976547221592480175
                                             name: RightWing_$AssimpFbx$_Rotation
@@ -7565,6 +7717,154 @@ child:
                 visible: true
                 material_id: 13674522304467685866
                 tint_color: [1, 1, 1, 1]
+      - id: 4725203297666301744
+        name: FallingDust
+        enabled: true
+        component:
+          - !<transform>
+            id: 2580641930175995544
+            type: 1
+            enabled: true
+            position: [0, 2, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [10, 10, 10]
+          - !<particle_system>
+            id: 5181019597153346513
+            type: 22
+            enabled: true
+            sections:
+              parameters: true
+              emission: true
+              shape: true
+              lights: false
+              renderer: true
+            parameters:
+              duration: 0.5
+              loop: false
+              life: [true, true, 1, [0.5, 1], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              speed: [true, true, 1, [1, 2], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size: [true, true, 1, [3, 6], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rotation: [true, true, 1, [0, 360], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            emission:
+              rate: [true, true, 1, [100, 200], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              burst: false
+            emitter_shape:
+              type: 0
+              properties: [360, 0, [0, 0, 0], 0.75, 0, [0, 0, 0], [1, 1, 1], 1]
+            texture:
+              texture_id: 11026875507602932596
+              tiles: [3, 2]
+              flip: [false, false]
+              total_tiles: 6
+            modifiers:
+              velocity:
+                active: false
+                speed: [true, true, 0, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size:
+                active: false
+                size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              color:
+                active: true
+                color_gradient: [[0, 0, 0, 0, 0], [0.7333, 0.4, 0.0235, 0, 0.1453], [1, 1, 1, 0, 0.6513], [0, 0, 0, 0, 0.9952]]
+                color_cycles: 1
+              force:
+                active: false
+                rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              animation:
+                active: true
+                animation_speed: 0
+                blend_factor: 0
+                fit_to_lifetime: true
+              noise:
+                active: false
+                separate_axes: false
+                strength:
+                  x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+      - id: 14832001001954005998
+        name: WalkingDust
+        enabled: true
+        component:
+          - !<transform>
+            id: 15134789243019557349
+            type: 1
+            enabled: true
+            position: [0, 2, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [10, 10, 10]
+          - !<particle_system>
+            id: 14206221834087059381
+            type: 22
+            enabled: true
+            sections:
+              parameters: true
+              emission: true
+              shape: true
+              lights: false
+              renderer: true
+            parameters:
+              duration: 5
+              loop: true
+              life: [true, true, 1, [0.2, 0.5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              speed: [true, true, 1, [1, 2], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size: [true, true, 1, [2, 5], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rotation: [true, true, 1, [0, 360], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              properties: [1, 0, 0, false, [false, false, 0, [1, 1], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]]
+            emission:
+              rate: [true, true, 1, [10, 20], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              rate_burst: [true, true, 0, [10, 10], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              burst: false
+            emitter_shape:
+              type: 0
+              properties: [360, 0, [0, 0, 0], 0.5, 0, [0, 0, 0], [1, 1, 1], 1]
+            texture:
+              texture_id: 11026875507602932596
+              tiles: [3, 2]
+              flip: [false, false]
+              total_tiles: 6
+            modifiers:
+              velocity:
+                active: false
+                speed: [true, true, 0, [0, 0], 0.001, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              size:
+                active: false
+                size: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              color:
+                active: true
+                color_gradient: [[0, 0, 0, 0, 0], [0.7333, 0.4, 0.0235, 0, 0.138], [1, 1, 1, 0, 0.6562], [0, 0, 0, 0, 0.9806]]
+                color_cycles: 1
+              force:
+                active: false
+                rotation: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                x_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                y_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                z_force: [true, true, 0, [0, 0], 0.1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+              animation:
+                active: true
+                animation_speed: 0
+                blend_factor: 0
+                fit_to_lifetime: true
+              noise:
+                active: false
+                separate_axes: false
+                strength:
+                  x: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  y: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                  z: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+                scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
   - id: 10386920901194318477
     name: HUD
     enabled: true
@@ -7581,7 +7881,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1096, 681]
+        size: [726, 473]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -7607,7 +7907,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1096, 681]
+            size: [726, 473]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
