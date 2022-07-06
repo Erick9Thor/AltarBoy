@@ -7,7 +7,7 @@ component:
     enabled: true
     position: [4.961, -0.0154, -14.29]
     rotation: [0, 0.886, 0, -0.4636]
-    scale: [0.4483, 0.45, 0.4483]
+    scale: [0.4475, 0.45, 0.4475]
   - !<animation>
     type: 14
     enabled: true
@@ -24,7 +24,7 @@ component:
     "'_attack_indicator@GameObject*'": 192
     "'_bullet_emitter@GameObject*'": 0
     "'_goal@GameObject*'": 191
-    "'_geo@GameObject*'": 2
+    "'_player_geometry@GameObject*'": 2
     "'_dash_duration@float'": 0.15
     "'_dash_distance@float'": 6
     "'_dash_cooldown@float'": 0.5
@@ -36,14 +36,14 @@ component:
     "'_falling_dust@GameObject*'": 196
     "'_walking_dust@GameObject*'": 195
     "'_rotation_duration@float'": 0.075
-    "'_hp_cell_1@GameObject*'": 0
-    "'_hp_cell_2@GameObject*'": 0
-    "'_hp_cell_3@GameObject*'": 0
-    "'_hp_cell_4@GameObject*'": 0
-    "'_ammo_cell_1@GameObject*'": 0
-    "'_ammo_cell_2@GameObject*'": 0
-    "'_ammo_cell_3@GameObject*'": 0
-    "'_ammo_cell_4@GameObject*'": 0
+    "'_hp_cell_1@GameObject*'": 200
+    "'_hp_cell_2@GameObject*'": 201
+    "'_hp_cell_3@GameObject*'": 202
+    "'_hp_cell_4@GameObject*'": 203
+    "'_ammo_cell_1@GameObject*'": 204
+    "'_ammo_cell_2@GameObject*'": 205
+    "'_ammo_cell_3@GameObject*'": 206
+    "'_ammo_cell_4@GameObject*'": 207
     "'_camera@GameObject*'": 0
     "'_ui_damage@GameObject*'": 0
   - !<script>
@@ -1013,7 +1013,7 @@ child:
                                     enabled: true
                                     position: [0, 0, 0]
                                     rotation: [0.2065, -0.119, 0.8415, 0.4848]
-                                    scale: [0.9946, 0.9946, 1]
+                                    scale: [0.9938, 0.9938, 1]
                                 child:
                                   - name: CenterShoulder_$AssimpFbx$_Rotation
                                     enabled: true
@@ -1281,7 +1281,7 @@ child:
                                                                                                             enabled: true
                                                                                                             position: [0, 0, 0]
                                                                                                             rotation: [0, 0.9999, 0, 0.0118]
-                                                                                                            scale: [0.9946, 1, 0.9946]
+                                                                                                            scale: [0.9938, 1, 0.9938]
                                                                                                         child:
                                                                                                           - name: Claw_Jnt
                                                                                                             enabled: true
@@ -1311,7 +1311,7 @@ child:
                                                                                                                         enabled: true
                                                                                                                         position: [0, 0, 0]
                                                                                                                         rotation: [0, 0.9999, 0, -0.0118]
-                                                                                                                        scale: [0.9946, 1, 0.9946]
+                                                                                                                        scale: [0.9938, 1, 0.9938]
                                                                                                                     child:
                                                                                                                       - name: Claw_Mid_Jnt
                                                                                                                         enabled: true
@@ -1341,7 +1341,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [0, -0.7329, 0, 0.6803]
-                                                                                                                                    scale: [0.9947, 1, 0.9947]
+                                                                                                                                    scale: [0.9939, 1, 0.9939]
                                                                                                                                 child:
                                                                                                                                   - name: Thumb_Start_$AssimpFbx$_Rotation
                                                                                                                                     enabled: true
@@ -1569,7 +1569,7 @@ child:
                                                                                                                                     enabled: true
                                                                                                                                     position: [0, 0, 0]
                                                                                                                                     rotation: [0, 0.9979, 0, 0.0641]
-                                                                                                                                    scale: [0.9892, 1, 0.9892]
+                                                                                                                                    scale: [0.9876, 1, 0.9876]
                                                                                                                                 child:
                                                                                                                                   - name: Index_start_$AssimpFbx$_Rotation
                                                                                                                                     enabled: true
@@ -1609,7 +1609,7 @@ child:
                                                                                                                                                     enabled: true
                                                                                                                                                     position: [0, 0, 0]
                                                                                                                                                     rotation: [0, 0.9979, 0, -0.0641]
-                                                                                                                                                    scale: [0.9892, 1, 0.9892]
+                                                                                                                                                    scale: [0.9876, 1, 0.9876]
                                                                                                                                                 child:
                                                                                                                                                   - name: Index_finish_$AssimpFbx$_Rotation
                                                                                                                                                     enabled: true
@@ -1796,7 +1796,7 @@ child:
                                     enabled: true
                                     position: [0, 0, 0]
                                     rotation: [-0.3566, -0.5758, -0.3468, 0.6489]
-                                    scale: [0.9973, 1, 0.9973]
+                                    scale: [0.9969, 1, 0.9969]
                                 child:
                                   - name: JetPack_$AssimpFbx$_Rotation
                                     enabled: true
@@ -2161,3 +2161,344 @@ child:
             position: [true, true, 0, [1, 1], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             rotation: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
             scale: [true, true, 0, [0, 0], 0.01, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+  - name: HUD
+    enabled: true
+    component:
+      - !<transform>
+        type: 1
+        enabled: true
+        position: [32.54, 0.0342, -9.09]
+        rotation: [0, 0.886, 0, 0.4636]
+        scale: [2.233, 2.222, 2.233]
+      - !<transform_2d>
+        type: 10
+        enabled: true
+        position: [0, 0, 0]
+        size: [1171, 681]
+        scale: [1, 1]
+        rotation: [0, 0, 0, 1]
+        pivot: [0.5, 0.5]
+        anchor: [0.5, 0.5]
+      - !<canvas>
+        type: 8
+        enabled: true
+    child:
+      - name: HealthBar
+        enabled: true
+        component:
+          - !<transform>
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [0, 0, 0, 1]
+            scale: [1, 1, 1]
+          - !<transform_2d>
+            type: 10
+            enabled: true
+            position: [0, 0, 0]
+            size: [1171, 681]
+            scale: [1, 1]
+            rotation: [0, 0, 0, 1]
+            pivot: [0.5, 0.5]
+            anchor: [0.5, 0.5]
+          - !<canvas>
+            type: 8
+            enabled: true
+        child:
+          - name: Overlay
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [300, -100, 0]
+                size: [500, 100]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 5275570671231529455
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Cell_1
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [284.6, -105, 0]
+                size: [450, 115]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 4638752376260405207
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Cell_2
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [278.5, -105, 0]
+                size: [450, 115]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 4721163576751640504
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Cell_3
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [272.7, -105, 0]
+                size: [450, 115]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 4127850956731736451
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Cell_4
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [265, -105, 0]
+                size: [450, 115]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 13112388861813353638
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Stamina_1
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [200, -135, 0]
+                size: [60, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 72551740062638533
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Stamina_2
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [250, -135, 0]
+                size: [60, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 72551740062638533
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Stamina_3
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [300, -135, 0]
+                size: [60, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 72551740062638533
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
+          - name: Stamina_4
+            enabled: true
+            component:
+              - !<transform>
+                type: 1
+                enabled: true
+                position: [0, 0, 0]
+                rotation: [0, 0, 0, 1]
+                scale: [1, 1, 1]
+              - !<transform_2d>
+                type: 10
+                enabled: true
+                position: [350, -135, 0]
+                size: [60, 30]
+                scale: [1, 1]
+                rotation: [0, 0, 0, 1]
+                pivot: [0.5, 0.5]
+                anchor: [0, 1]
+              - !<canvas_renderer>
+                type: 9
+                enabled: true
+              - !<image>
+                type: 11
+                enabled: true
+                image_id: 72551740062638533
+                hover_image_id: 0
+                image_color: [1, 1, 1, 1]
+                hover_image_color: [1, 1, 1, 1]
+                image_is_tiled: false
+                image_x_tiles: 1
+                image_y_tiles: 1
+                image_tiles_per_second: 1
+                fill_window: false
