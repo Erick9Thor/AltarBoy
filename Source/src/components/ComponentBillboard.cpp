@@ -317,6 +317,8 @@ void Hachiko::ComponentBillboard::Start()
     {
         state = ParticleSystem::Emitter::State::PLAYING;
     }
+
+    Restart();
 }
 
 void Hachiko::ComponentBillboard::Update()
