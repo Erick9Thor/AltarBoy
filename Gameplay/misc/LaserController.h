@@ -27,8 +27,9 @@ namespace Hachiko
 			void OnAwake() override;
 			void OnUpdate() override;
 
-		private:
 			void ChangeState(State new_state);
+
+		private:
 			void AdjustLength();
 			void CheckPlayerCollision();
 
@@ -39,12 +40,25 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _max_scale);
 			SERIALIZE_FIELD(float, _activation_time);
 			SERIALIZE_FIELD(float, _damage);
+			SERIALIZE_FIELD(bool, _spin_movement);
+			SERIALIZE_FIELD(bool, _spin_clockwise);
+			SERIALIZE_FIELD(float, _spin_speed);
+			SERIALIZE_FIELD(bool, _horizonal_movement);
+			SERIALIZE_FIELD(float, _movement_speed);
+			SERIALIZE_FIELD(GameObject*, _movement_target);
+			SERIALIZE_FIELD(bool, _toggle_activation);
+			SERIALIZE_FIELD(float, _toggle_active_time);
+			SERIALIZE_FIELD(float, _toggle_inactive_time);
 
 		private:
 			State _state = State::ACTIVE;
-			float _elapse_time = 0.0f;
+			float _elapsed_time = 0.0f;
 			float _length = 0.0f;
 			float _scale = 0.2f;
+
+			float3 _initial_position = float3::zero;
+			bool _movement_forward_direction = true;
+			float _movement_position = 0.0f;
 
 			GameObject* _terrain;
 			GameObject* _player;

@@ -17,14 +17,23 @@ component:
     "'_max_scale@float'": 0.2
     "'_activation_time@float'": 1
     "'_damage@float'": 1
+    "'_spin_movement@bool'": false
+    "'_spin_clockwise@bool'": true
+    "'_spin_speed@float'": 20
+    "'_horizonal_movement@bool'": false
+    "'_movement_speed@float'": 1
+    "'_movement_target@GameObject*'": 0
+    "'_toggle_activation@bool'": false
+    "'_toggle_active_time@float'": 1
+    "'_toggle_inactive_time@float'": 1
 child:
-  - name: Box001
+  - name: Box
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0, 0.5]
+        position: [0, 0, 0]
         rotation: [-0.7071, 0, 0, 0.7071]
         scale: [1, 1, 1]
       - !<mesh_renderer>
@@ -35,13 +44,13 @@ child:
         visible: true
         material_id: 6750369022920963075
         tint_color: [1, 1, 1, 1]
-  - name: Cylinder001
+  - name: Cylinder
     enabled: true
     component:
       - !<transform>
         type: 1
         enabled: true
-        position: [0, 0.5, 0]
+        position: [0, 0.5, -0.5]
         rotation: [1, 0, 0, 0]
         scale: [0.2, 0.2, 1]
       - !<mesh_renderer>
