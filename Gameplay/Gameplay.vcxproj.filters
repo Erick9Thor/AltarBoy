@@ -523,7 +523,6 @@
     <ClInclude Include="misc\GauntletManager.h" />
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\BlinkingLight.h" />
-    <ClInclude Include="entities\enemies\WormController.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
   </ItemGroup>
   <ItemGroup>
@@ -799,7 +798,6 @@
     <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
-    <ClCompile Include="entities\enemies\WormController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">
