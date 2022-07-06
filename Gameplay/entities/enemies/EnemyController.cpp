@@ -293,7 +293,7 @@ void Hachiko::Scripting::EnemyController::DeathController()
 		}
 		break;
 	default:
-		if (!_will_die)
+		if (!_will_die && _enemy_type == EnemyType::WORM)
 		{
 			_state = BugState::HIDEN;
 			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
