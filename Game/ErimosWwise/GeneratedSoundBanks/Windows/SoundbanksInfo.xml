@@ -402,16 +402,16 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2740567804">
+		<SoundBank Id="3768541028" Language="SFX" Hash="3355570962">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
 			<IncludedEvents>
 				<Event Id="2211787386" Name="Play_Dash" ObjectPath="\Events\Default Work Unit\Play_Dash">
 					<IncludedMemoryFiles>
-						<File Id="171904615" Language="SFX">
-							<ShortName>Dash.wav</ShortName>
-							<Path>SFX\Dash_10C4C929.wem</Path>
+						<File Id="977051301" Language="SFX">
+							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
+							<Path>SFX\Player\Dash\Impact - Cease Fire_9FEA8B16.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

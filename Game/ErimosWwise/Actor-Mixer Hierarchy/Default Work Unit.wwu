@@ -714,6 +714,11 @@
 						<Sound Name="Dash" ID="{B75B22B5-FAC6-47B7-8987-A1453FAB6935}" ShortID="446657081">
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="OutputBusLowpass" Type="int16">
+									<ValueList>
+										<Value>31</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -724,11 +729,18 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="Dash" ID="{68B287AD-23F8-430D-9896-A47A65775699}">
+								<AudioFileSource Name="Impact - Cease Fire" ID="{0B50DD44-2C70-4B89-99AD-DFECFF587190}">
+									<PropertyList>
+										<Property Name="FadeInDuration" Type="Real64" Value="0.195428242686421"/>
+										<Property Name="FadeOutDuration" Type="Real64" Value="0.156983342485813"/>
+										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+										<Property Name="TrimBegin" Type="Real64" Value="1.58905587495844"/>
+										<Property Name="TrimEnd" Type="Real64" Value="2.77764403949389"/>
+									</PropertyList>
 									<Language>SFX</Language>
-									<AudioFile>Dash.wav</AudioFile>
+									<AudioFile>Player\Dash\Impact - Cease Fire.wav</AudioFile>
 									<MediaIDList>
-										<MediaID ID="171904615"/>
+										<MediaID ID="977051301"/>
 									</MediaIDList>
 								</AudioFileSource>
 							</ChildrenList>
@@ -737,7 +749,7 @@
 							</PositioningInfo>
 							<ObjectLists/>
 							<ActiveSourceList>
-								<ActiveSource Name="Dash" ID="{68B287AD-23F8-430D-9896-A47A65775699}" Platform="Linked"/>
+								<ActiveSource Name="Impact - Cease Fire" ID="{0B50DD44-2C70-4B89-99AD-DFECFF587190}" Platform="Linked"/>
 							</ActiveSourceList>
 						</Sound>
 						<SwitchContainer Name="Footsteps" ID="{A14E74A9-F76D-46FB-92B7-0FD1A7464A60}" ShortID="204878910">
