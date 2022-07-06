@@ -95,9 +95,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_dash_trail->SetActive(false);
 	}
-
-	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
-	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
+	
+	if(_falling_dust)
+		_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
+	if(_walking_dust)
+		_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -615,11 +617,13 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	if (IsWalking())
 	{
 		_player_position += (_movement_direction * _combat_stats->_move_speed * Time::DeltaTime());
-		_walking_dust_particles->Play();
+		if(_walking_dust_particles)
+			_walking_dust_particles->Play();
 	}
 	else
 	{
-		_walking_dust_particles->Stop();
+		if (_walking_dust_particles)
+			_walking_dust_particles->Stop();
 	}
 
 	if (_god_mode)
@@ -667,7 +671,8 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
-			_falling_dust_particles->Restart();
+			if (_falling_dust_particles)
+				_falling_dust_particles->Restart();
 		}
 	}
 	else if (!IsDashing())
