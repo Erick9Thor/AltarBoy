@@ -10,6 +10,7 @@ namespace Hachiko::Sounds
 	// Enemy
 	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";
 	constexpr const wchar_t* ENEMY_DIE = L"Play_EnemyDie";
+	constexpr const wchar_t* PARASITE_PLAY_PICKUP = L"Play_ParasitePickUp";
 
 	// Enviroment
 	constexpr const wchar_t* CRYSTAL = L"Play_Crystal";

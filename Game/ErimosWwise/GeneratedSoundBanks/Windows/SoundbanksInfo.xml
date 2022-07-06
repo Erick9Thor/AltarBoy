@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2328560150">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2223613039">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -457,10 +457,6 @@
 							<ShortName>Player\Parasite pick up\Parasite pick up 2.wav</ShortName>
 							<Path>SFX\Player\Parasite pick up\Parasite pick up 2_10C4C929.wem</Path>
 						</File>
-						<File Id="537717095" Language="SFX">
-							<ShortName>Player\Parasite pick up\Parasite pick up 1.wav</ShortName>
-							<Path>SFX\Player\Parasite pick up\Parasite pick up 1_10C4C929.wem</Path>
-						</File>
 						<File Id="609605835" Language="SFX">
 							<ShortName>Player\Parasite pick up\Parasite pick up 3.wav</ShortName>
 							<Path>SFX\Player\Parasite pick up\Parasite pick up 3_10C4C929.wem</Path>
@@ -485,7 +481,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="2679162046">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2807447867">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
