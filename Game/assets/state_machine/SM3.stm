@@ -41,14 +41,20 @@ clips:
     clips_id: 4056876361213600651
     clips_loop: true
   - clip_name: clawOne
-    clips_id: 1597767154357058355
+    clips_id: 7241399800701620650
     clips_loop: false
   - clip_name: clawTwo
-    clips_id: 7917566900753032533
+    clips_id: 17728068144856436913
     clips_loop: false
   - clip_name: clawThree
-    clips_id: 18116489316269816990
+    clips_id: 12871651413963507001
     clips_loop: false
+  - clip_name: death
+    clips_id: 17554408115023876718
+    clips_loop: true
+  - clip_name: fall
+    clips_id: 18424576933785159401
+    clips_loop: true
 nodes:
   - node_name: idle
     node_clip_name: idle
@@ -78,6 +84,10 @@ nodes:
     node_clip_name: swordTwo
   - node_name: swordThree
     node_clip_name: swordThree
+  - node_name: death
+    node_clip_name: death
+  - node_name: fall
+    node_clip_name: fall
 transitions:
   - transition_source: idle
     transition_target: run
@@ -254,4 +264,28 @@ transitions:
   - transition_source: run
     transition_target: swordThree
     transition_trigger: isSwordThree
+    transition_blend: 300
+  - transition_source: death
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: idle
+    transition_target: fall
+    transition_trigger: isFalling
+    transition_blend: 300
+  - transition_source: fall
+    transition_target: idle
+    transition_trigger: isIdle
+    transition_blend: 300
+  - transition_source: run
+    transition_target: death
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: run
+    transition_target: fall
+    transition_trigger: isFalling
     transition_blend: 300
