@@ -196,17 +196,19 @@ void Hachiko::Editor::ShowGameObjectDragDropArea(const char* field_name,
 {
     changed = false;
 
-    if ((*game_object) != nullptr)
+    if ((*game_object) != nullptr && game_object != nullptr)
     {
         ImGui::Text((*game_object)->GetName().c_str());
         
         ImGui::SameLine();
         
+        ImGui::PushID(StringUtils::Concat(field_type, "@", field_name, ":CloseButton").c_str());
         if (ImGui::Button("X"))
         {
             *game_object = nullptr;
             changed = true;
         }
+        ImGui::PopID();
         
         ImGui::SameLine();
     }
