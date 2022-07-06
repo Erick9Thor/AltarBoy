@@ -135,7 +135,6 @@ namespace Hachiko
 
             Quat _spawn_rot;
 
-            GameObject* _player = nullptr;
             math::float3 _player_pos;
             math::float3 _target_pos;
             math::float3 _current_pos;
