@@ -49,7 +49,7 @@
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
 		</SoundBank>
-		<SoundBank Id="1551306167" Language="SFX" Hash="1778293802">
+		<SoundBank Id="1551306167" Language="SFX" Hash="449859083">
 			<ObjectPath>\SoundBanks\Default Work Unit\UI</ObjectPath>
 			<ShortName>UI</ShortName>
 			<Path>UI.bnk</Path>
@@ -402,16 +402,16 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2223613039">
+		<SoundBank Id="3768541028" Language="SFX" Hash="1624381710">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
 			<IncludedEvents>
 				<Event Id="2211787386" Name="Play_Dash" ObjectPath="\Events\Default Work Unit\Play_Dash">
 					<IncludedMemoryFiles>
-						<File Id="171904615" Language="SFX">
-							<ShortName>Dash.wav</ShortName>
-							<Path>SFX\Dash_10C4C929.wem</Path>
+						<File Id="977051301" Language="SFX">
+							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
+							<Path>SFX\Player\Dash\Impact - Cease Fire_8F1E76CF.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -471,17 +471,17 @@
 					<IncludedMemoryFiles>
 						<File Id="154933663" Language="SFX">
 							<ShortName>Player\Ranged attack\Impact - Lightweight.wav</ShortName>
-							<Path>SFX\Player\Ranged attack\Impact - Lightweight_65627AAC.wem</Path>
+							<Path>SFX\Player\Ranged attack\Impact - Lightweight_C96353A1.wem</Path>
 						</File>
 						<File Id="1016931998" Language="SFX">
 							<ShortName>Player\Ranged attack\Impact - Robot Punch.wav</ShortName>
-							<Path>SFX\Player\Ranged attack\Impact - Robot Punch_BAC38BA3.wem</Path>
+							<Path>SFX\Player\Ranged attack\Impact - Robot Punch_E2E3A2D3.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="2807447867">
+		<SoundBank Id="3909959462" Language="SFX" Hash="2241693317">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -514,15 +514,15 @@
 					<IncludedMemoryFiles>
 						<File Id="781381782" Language="SFX">
 							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
-							<Path>SFX\Laser\Noise - Swirly Spinner_E8155999.wem</Path>
+							<Path>SFX\Laser\Noise - Swirly Spinner_86AE19BA.wem</Path>
 						</File>
 						<File Id="786404871" Language="SFX">
 							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
-							<Path>SFX\Laser\Sub - Sub Bees_CC01CEA9.wem</Path>
+							<Path>SFX\Laser\Sub - Sub Bees_AA994B59.wem</Path>
 						</File>
 						<File Id="985470147" Language="SFX">
 							<ShortName>Laser\Sub - Subtle Meanie.wav</ShortName>
-							<Path>SFX\Laser\Sub - Subtle Meanie_EE217E7E.wem</Path>
+							<Path>SFX\Laser\Sub - Subtle Meanie_CAC3EAAE.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -530,7 +530,7 @@
 					<IncludedMemoryFiles>
 						<File Id="1053424550" Language="SFX">
 							<ShortName>Laser\Swish - Call And Response.wav</ShortName>
-							<Path>SFX\Laser\Swish - Call And Response_097AA784.wem</Path>
+							<Path>SFX\Laser\Swish - Call And Response_EB955B5F.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

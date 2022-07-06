@@ -6,6 +6,9 @@ namespace Hachiko::Sounds
 	constexpr const wchar_t* MELEE_ATTACK = L"Play_MeleeAttack";
 	constexpr const wchar_t* RANGED_ATTACK = L"Play_RangedAttack";
 	constexpr const wchar_t* DASH = L"Play_Dash";
+	constexpr const wchar_t* LOADING_AMMO = L"Play_LoadingAmmo";
+	constexpr const wchar_t* SHOOT_NO_AMMO = L"Play_ShootNoAmmo";
+	constexpr const wchar_t* RECEIVE_DAMAGE = L"Play_ReceiveDamage";
 
 	// Enemy
 	constexpr const wchar_t* ENEMY_ATTACK = L"Play_EnemyAttack";

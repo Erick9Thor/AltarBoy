@@ -261,7 +261,6 @@ private:
 	GameObject* _terrain;
 
 	LevelManager* _level_manager;
-	ComponentAudioSource* _audio_source;
 };
 } // namespace Scripting
 } // namespace Hachiko

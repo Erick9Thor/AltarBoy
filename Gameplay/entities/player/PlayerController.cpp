@@ -33,7 +33,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _ui_damage(nullptr)
 	, _dash_trail(nullptr)
 	, _trail_enlarger(10.0f)
-	, _audio_source(nullptr)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = .5f;
@@ -72,7 +71,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 
 	_current_weapon = 0;
 	_current_cam_setting = 0;
-	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 }
 
 void Hachiko::Scripting::PlayerController::OnAwake()
@@ -883,7 +881,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					{
 						_geo->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
-					_audio_source->PostEvent(Hachiko::Sounds::PARASITE_PLAY_PICKUP);
 					_combat_stats->Heal(1);
 					UpdateHealthBar();
 					// Generate a random number for the weapon

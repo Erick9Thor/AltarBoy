@@ -217,6 +217,11 @@
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
 								<Property Name="NormalOrShuffle" Type="int16" Value="0"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -2186,6 +2191,7 @@
 						<RandomSequenceContainer Name="MeleeAttack" ID="{3D78327C-F61C-4EDF-90CD-41BC8B4183A3}" ShortID="1027414203">
 							<PropertyList>
 								<Property Name="3DSpatialization" Type="int16" Value="1"/>
+								<Property Name="RandomAvoidRepeating" Type="bool" Value="False"/>
 							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
@@ -2196,16 +2202,11 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<Sound Name="Melee 7" ID="{31CF9CC7-6D09-4D03-8639-88C1211BEB93}" ShortID="987353900">
+								<Sound Name="Punch - Whack A Bot" ID="{7F1BC4F9-7B1D-4EE0-9A88-0545BBF9C52B}" ShortID="1068930316">
 									<PropertyList>
-										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>2</Value>
-											</ValueList>
-										</Property>
 										<Property Name="Weight" Type="Real64">
 											<ValueList>
-												<Value>45</Value>
+												<Value>10</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -2218,64 +2219,24 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Melee 7" ID="{D8752251-7CC0-4E4F-887A-F83F717F5890}">
-											<PropertyList>
-												<Property Name="LoopBegin" Type="Real64" Value="0.0255063340891912"/>
-												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-												<Property Name="TrimBegin" Type="Real64" Value="0.0255063340891912"/>
-											</PropertyList>
+										<AudioFileSource Name="Punch - Whack A Bot" ID="{C59CB450-82A1-4033-B5D5-675A55306108}">
 											<Language>SFX</Language>
-											<AudioFile>Player\Melee attack\Melee 7.wav</AudioFile>
+											<AudioFile>Player\Melee attack\Punch - Whack A Bot.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="542082841"/>
+												<MediaID ID="916160990"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ObjectLists/>
 									<ActiveSourceList>
-										<ActiveSource Name="Melee 7" ID="{D8752251-7CC0-4E4F-887A-F83F717F5890}" Platform="Linked"/>
+										<ActiveSource Name="Punch - Whack A Bot" ID="{C59CB450-82A1-4033-B5D5-675A55306108}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
-								<Sound Name="Melee 8" ID="{6CB400DC-013F-4A01-A03B-5543EBE2EF77}" ShortID="1048617848">
+								<Sound Name="Punch - Pop" ID="{013914D9-F6AB-4363-BADF-E1C0EB0BE837}" ShortID="1011426614">
 									<PropertyList>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>3</Value>
-											</ValueList>
-										</Property>
-										<Property Name="Weight" Type="Real64">
-											<ValueList>
-												<Value>55</Value>
-											</ValueList>
-										</Property>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="Melee 8" ID="{827CF9F1-0495-437F-87F6-64938FFBEAFE}">
-											<Language>SFX</Language>
-											<AudioFile>Player\Melee attack\Melee 8.wav</AudioFile>
-											<MediaIDList>
-												<MediaID ID="751278227"/>
-											</MediaIDList>
-										</AudioFileSource>
-									</ChildrenList>
-									<ObjectLists/>
-									<ActiveSourceList>
-										<ActiveSource Name="Melee 8" ID="{827CF9F1-0495-437F-87F6-64938FFBEAFE}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
-								<Sound Name="Melee 4" ID="{8E6AED5D-9BDE-4299-B40B-DEADDEC20302}" ShortID="388985181">
-									<PropertyList>
-										<Property Name="Volume" Type="Real64">
-											<ValueList>
-												<Value>3</Value>
+												<Value>5</Value>
 											</ValueList>
 										</Property>
 										<Property Name="Weight" Type="Real64">
@@ -2293,28 +2254,30 @@
 										</Reference>
 									</ReferenceList>
 									<ChildrenList>
-										<AudioFileSource Name="Melee 4" ID="{DFCA3C41-B09E-4B06-9ACA-E6C41B12FD18}">
-											<PropertyList>
-												<Property Name="LoopBegin" Type="Real64" Value="0.0248647417485513"/>
-												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-												<Property Name="TrimBegin" Type="Real64" Value="0.0248647417485513"/>
-											</PropertyList>
+										<AudioFileSource Name="Punch - Pop" ID="{A833DEA7-2925-45AC-9531-8BA854B2B162}">
 											<Language>SFX</Language>
-											<AudioFile>Player\Melee attack\Melee 4.wav</AudioFile>
+											<AudioFile>Player\Melee attack\Punch - Pop.wav</AudioFile>
 											<MediaIDList>
-												<MediaID ID="642974993"/>
+												<MediaID ID="944417870"/>
 											</MediaIDList>
 										</AudioFileSource>
 									</ChildrenList>
 									<ObjectLists/>
 									<ActiveSourceList>
-										<ActiveSource Name="Melee 4" ID="{DFCA3C41-B09E-4B06-9ACA-E6C41B12FD18}" Platform="Linked"/>
+										<ActiveSource Name="Punch - Pop" ID="{A833DEA7-2925-45AC-9531-8BA854B2B162}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>
 							<ObjectLists/>
 						</RandomSequenceContainer>
 						<RandomSequenceContainer Name="ParasitePickUp" ID="{E5700962-4928-4CD6-9BCB-52CB644B4DE9}" ShortID="779190873">
+							<PropertyList>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
@@ -2324,29 +2287,6 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<Sound Name="Parasite pick up 1" ID="{C5042876-AE73-4592-8AD9-6E92EAA86A3E}" ShortID="651644883">
-									<ReferenceList>
-										<Reference Name="Conversion">
-											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
-										</Reference>
-										<Reference Name="OutputBus">
-											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{01681752-C368-40CF-BF48-D452F37FFBE5}"/>
-										</Reference>
-									</ReferenceList>
-									<ChildrenList>
-										<AudioFileSource Name="Parasite pick up 1" ID="{D7AB3E6C-DE27-494A-82C8-B17DE1E4049F}">
-											<Language>SFX</Language>
-											<AudioFile>Player\Parasite pick up\Parasite pick up 1.wav</AudioFile>
-											<MediaIDList>
-												<MediaID ID="537717095"/>
-											</MediaIDList>
-										</AudioFileSource>
-									</ChildrenList>
-									<ObjectLists/>
-									<ActiveSourceList>
-										<ActiveSource Name="Parasite pick up 1" ID="{D7AB3E6C-DE27-494A-82C8-B17DE1E4049F}" Platform="Linked"/>
-									</ActiveSourceList>
-								</Sound>
 								<Sound Name="Parasite pick up 2" ID="{EA78E099-E6EA-4CAA-B59C-2FE678124E18}" ShortID="1034184415">
 									<ReferenceList>
 										<Reference Name="Conversion">
@@ -2394,6 +2334,13 @@
 									</ActiveSourceList>
 								</Sound>
 								<Sound Name="Parasite pick up 4" ID="{1932B95C-8ADC-4474-8135-A3588ED8305A}" ShortID="597923119">
+									<PropertyList>
+										<Property Name="Weight" Type="Real64">
+											<ValueList>
+												<Value>64</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
 									<ReferenceList>
 										<Reference Name="Conversion">
 											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{26705DC5-E31B-46D5-83DF-C11FE3FB6B93}"/>
