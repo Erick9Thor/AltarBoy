@@ -87,6 +87,7 @@ namespace Hachiko
             SERIALIZE_FIELD(GameObject*, _player);
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
+            SERIALIZE_FIELD(GameObject*, _blood_trail);
             SERIALIZE_FIELD(GameObject*, _audio_manager_game_object);
             
             SERIALIZE_FIELD(BugState, _state);
@@ -100,6 +101,7 @@ namespace Hachiko
             ComponentTransform* transform;
             ComponentAnimation* animation;
             CombatManager* _combat_manager;
+            ComponentParticleSystem* _blood_trail_particles;
             ComponentAudioSource* _audio_source;
 
             Quat _spawn_rot;

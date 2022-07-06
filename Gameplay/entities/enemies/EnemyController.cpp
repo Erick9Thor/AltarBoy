@@ -50,6 +50,7 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_attack_delay = 0.3f;
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
+	_blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
 
 	if (_player != nullptr)
 	{
@@ -261,8 +262,10 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 		_enraged = 5.0f;
 	}
 
+	_blood_trail_particles->Restart();
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
+
 	// Knockback
 	_is_stunned = true;
 	_stun_time = 0.8f; // Once we have weapons stun duration might be moved to each weapon stat
