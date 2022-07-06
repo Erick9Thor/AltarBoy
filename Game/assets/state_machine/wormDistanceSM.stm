@@ -36,10 +36,10 @@ transitions:
   - transition_source: Iddle
     transition_target: Appear
     transition_trigger: isAppear
-    transition_blend: 300
+    transition_blend: 0
   - transition_source: Iddle
     transition_target: RangeAttack
-    transition_trigger: isAttack
+    transition_trigger: isAttacking
     transition_blend: 300
   - transition_source: Iddle
     transition_target: Dead
@@ -55,7 +55,7 @@ transitions:
     transition_blend: 300
   - transition_source: Appear
     transition_target: Iddle
-    transition_trigger: isIddle
+    transition_trigger: idle
     transition_blend: 300
   - transition_source: RangeAttack
     transition_target: Hide
@@ -64,4 +64,28 @@ transitions:
   - transition_source: Hide
     transition_target: Appear
     transition_trigger: isAppear
+    transition_blend: 1
+  - transition_source: Hit
+    transition_target: Dead
+    transition_trigger: isDead
+    transition_blend: 300
+  - transition_source: Hit
+    transition_target: Hide
+    transition_trigger: isHide
+    transition_blend: 300
+  - transition_source: RangeAttack
+    transition_target: Iddle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: Hit
+    transition_target: Iddle
+    transition_trigger: idle
+    transition_blend: 300
+  - transition_source: RangeAttack
+    transition_target: Hit
+    transition_trigger: isHit
+    transition_blend: 300
+  - transition_source: Hide
+    transition_target: Appear
+    transition_trigger: ""
     transition_blend: 300
