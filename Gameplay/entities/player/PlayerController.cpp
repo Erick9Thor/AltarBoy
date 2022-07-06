@@ -297,8 +297,6 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		{
 			PickupParasite(_player_position);
 		}
-
-
 	}	
 	else
 	{
