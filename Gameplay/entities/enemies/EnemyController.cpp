@@ -23,7 +23,6 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _spawn_pos(0.0f, 0.0f, 0.0f)
 	, _combat_stats()
 	, _spawn_is_initial(false)
-	, _player(nullptr)
 	, _enemy_body(nullptr)
 	, _parasite(nullptr)
 	, _state(BugState::INVALID)
@@ -51,10 +50,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
 
-	if (_player != nullptr)
-	{
-		_player_controller = _player->GetComponent<PlayerController>();
-	}
+
+	_player_controller = Scenes::GetPlayer()->GetComponent<PlayerController>();
 
 	animation = game_object->GetComponent<ComponentAnimation>();
 
@@ -111,7 +108,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		return;
 	}
 
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
+	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
 	IdleController();

@@ -1,4 +1,5 @@
 #include "scriptingUtil/gameplaypch.h"
+#include "constants/Scenes.h"
 
 #include "entities/Stats.h"
 #include "entities/crystals/CrystalExplosion.h"
@@ -13,7 +14,6 @@
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
 	, _stats()
-	, _player(nullptr)
 	, _explosion_radius(10.0f)
 	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
@@ -105,7 +105,7 @@ void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 
 void Hachiko::Scripting::CrystalExplosion::CheckRadiusExplosion()
 {
-	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(_player->GetTransform()->GetGlobalPosition()))
+	if (_detecting_radius >= game_object->GetTransform()->GetGlobalPosition().Distance(Scenes::GetPlayer()->GetTransform()->GetGlobalPosition()))
 	{
 		RegisterHit(_stats->_max_hp);
 	}
@@ -120,7 +120,7 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 		check_hit = enemies->children;
 	}
 
-	check_hit.push_back(_player);
+	check_hit.push_back(Scenes::GetPlayer());
 
 	std::vector<GameObject*> elements_hit = {};
 
