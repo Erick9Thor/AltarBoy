@@ -15,6 +15,7 @@ namespace Hachiko::Scenes
 	static const char* terrain_container_go_name = "Level";
 	static const char* audio_manager_go_name = "AudioManager";
 	static const char* combat_manager_go_name = "CombatManager";
+	static const char* main_camera_go_name = "Main Camera";
 
 
 	static GameObject* GetPlayer()
@@ -45,5 +46,10 @@ namespace Hachiko::Scenes
 	static GameObject* GetCombatManager()
 	{
 		return SceneManagement::FindInCurrentScene(combat_manager_go_name);
+	}
+
+	static GameObject* GetMainCamera()
+	{
+		return SceneManagement::FindInCurrentScene(main_camera_go_name);
 	}
 }

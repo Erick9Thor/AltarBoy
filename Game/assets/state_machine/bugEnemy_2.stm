@@ -3,10 +3,10 @@ default_node: 0
 clips:
   - clip_name: idle
     clips_id: 6536326424371413636
-    clips_loop: false
+    clips_loop: true
   - clip_name: attack
     clips_id: 7969598165910296841
-    clips_loop: true
+    clips_loop: false
   - clip_name: move
     clips_id: 3638796766103889006
     clips_loop: true
