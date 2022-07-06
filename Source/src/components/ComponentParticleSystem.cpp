@@ -23,7 +23,7 @@ Hachiko::ComponentParticleSystem::ComponentParticleSystem(GameObject* container)
 Hachiko::ComponentParticleSystem::~ComponentParticleSystem()
 {
     App->event->Unsubscribe(Event::Type::CURVE_EDITOR, GetID());
-    //App->event->Unsubscribe(Event::Type::SELECTION_CHANGED, GetID());
+    App->event->Unsubscribe(Event::Type::SELECTION_CHANGED, GetID());
     particle_modifiers.clear();
     App->scene_manager->GetActiveScene()->RemoveParticleComponent(GetID());
     current_curve_editing_property = nullptr;
@@ -71,7 +71,7 @@ void Hachiko::ComponentParticleSystem::Start()
             Play();
         }
     };
-    //App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());
+    App->event->Subscribe(Event::Type::SELECTION_CHANGED, selection_changed, GetID());
     emitter_state = ParticleSystem::Emitter::State::PLAYING;
 }
 
@@ -581,16 +581,17 @@ void Hachiko::ComponentParticleSystem::UpdateModifiers()
 
 void Hachiko::ComponentParticleSystem::UpdateEmitterTimes()
 {
-    if (!loop && emitter_elapsed_time >= duration)
+    if (active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
     {
         able_to_emit = false;
+        emitter_elapsed_time = 0.0f;
         return;
     }
 
-    if(active_particles == 0 && emitter_state == ParticleSystem::Emitter::State::STOPPED)
+    if (!loop && emitter_elapsed_time >= duration)
     {
+        Stop();
         able_to_emit = false;
-        emitter_elapsed_time = 0;
         return;
     }
 
@@ -638,6 +639,8 @@ void Hachiko::ComponentParticleSystem::Reset()
 {
     emitter_elapsed_time = 0.0f;
     time = 0.0f;
+    burst_time = 0.0f;
+    burst_emit = true;
     ResetActiveParticles();
 }
 
