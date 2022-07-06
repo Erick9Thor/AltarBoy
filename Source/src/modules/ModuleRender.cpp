@@ -726,7 +726,6 @@ void Hachiko::ModuleRender::DeferredOptions()
 
 void Hachiko::ModuleRender::PerformanceMenu()
 {
-
     const float vram_free_mb = gpu.vram_free / 1024.0f;
     const float vram_usage_mb = gpu.vram_budget_mb - vram_free_mb;
     ImGui::Text("VRAM Budget: %.1f Mb", gpu.vram_budget_mb);
