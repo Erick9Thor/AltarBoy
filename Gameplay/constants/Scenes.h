@@ -10,12 +10,13 @@ namespace Hachiko::Scenes
 	static UID MAIN_MENU = 3083261127926411514;
 	static UID LEVEL2 = 8516499815050636676;
 	static const char* player_go_name = "Player";
+	static const char* main_camera_go_name = "Main Camera";
 	static const char* enemies_go_name = "Enemies";
 	static const char* level_manager_go_name = "LevelManager";
 	static const char* terrain_container_go_name = "Level";
 	static const char* audio_manager_go_name = "AudioManager";
 	static const char* combat_manager_go_name = "CombatManager";
-	static const char* main_camera_go_name = "Main Camera";
+	static const char* combat_visual_effects_pool_go_name = "CombatVisualEffectsPool";
 
 
 	static GameObject* GetPlayer()
@@ -46,6 +47,11 @@ namespace Hachiko::Scenes
 	static GameObject* GetCombatManager()
 	{
 		return SceneManagement::FindInCurrentScene(combat_manager_go_name);
+	}
+
+	static GameObject* GetCombatVisualEffectsPool()
+	{
+		return SceneManagement::FindInCurrentScene(combat_visual_effects_pool_go_name);
 	}
 
 	static GameObject* GetMainCamera()

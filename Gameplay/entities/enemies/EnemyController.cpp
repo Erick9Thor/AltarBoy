@@ -14,6 +14,7 @@
 #include <components/ComponentTransform.h>
 #include "constants/Scenes.h"
 
+#include "entities/player/CombatVisualEffectsPool.h"
 #include "misc/AudioManager.h"
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
@@ -33,6 +34,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager(nullptr)
 	, _already_in_combat(false)
 	, _is_from_gautlet(false)
+	, _combat_visual_effects_pool(nullptr)
 	, _worm(false)
 	, _small_dust(nullptr)
 	, _big_dust(nullptr)
@@ -51,7 +53,7 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 }
 
 void Hachiko::Scripting::EnemyController::OnAwake()
-{
+{	
 	if (_worm)
 	{
 		_enemy_type = EnemyType::WORM;
@@ -65,6 +67,8 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 	_audio_manager_game_object = Scenes::GetAudioManager();
 	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
 	_player_camera = Scenes::GetMainCamera()->GetComponent<PlayerCamera>();
+	_combat_visual_effects_pool = 
+		Scenes::GetCombatVisualEffectsPool()->GetComponent<CombatVisualEffectsPool>();
 
 	switch (_enemy_type)
 	{
@@ -77,8 +81,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		_attack_delay = 0.3f;
 		_audio_source = game_object->GetComponent<ComponentAudioSource>();
 		_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
-    _blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
 
+		if (_blood_trail != nullptr)
+		{
+			_blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
+		}
 		_acceleration = game_object->GetComponent<ComponentAgent>()->GetMaxAcceleration();
 		_speed = game_object->GetComponent<ComponentAgent>()->GetMaxSpeed();
 		break;
@@ -92,7 +99,11 @@ void Hachiko::Scripting::EnemyController::OnAwake()
 		_attack_delay = 0.3f;
 		_audio_source = game_object->GetComponent<ComponentAudioSource>();
 		_audio_manager = _audio_manager_game_object->GetComponent<AudioManager>();
-    _blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
+		
+		if (_blood_trail != nullptr)
+		{
+			_blood_trail_particles = _blood_trail->GetComponent<ComponentParticleSystem>();
+		}
 
 		if (_small_dust)
 		{
@@ -462,7 +473,7 @@ void Hachiko::Scripting::EnemyController::IdleController()
 	}
 }
 
-void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player, bool is_ranged)
 {
 	if (_state == BugState::SPAWNING || !_enemy_body->IsActive() || _inmune)
 	{
@@ -483,10 +494,24 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 	if (is_from_player)
 	{
 		_enraged = 5.0f;
+
+		// TODO: Trigger this via an event of player, that is subscribed by
+		// combat visual effects pool.
+		if (!is_ranged)
+		{
+			_combat_visual_effects_pool->PlayPlayerAttackEffect(
+				_player_controller->GetCurrentWeaponType(),
+				_player_controller->GetAttackIndex(),
+				game_object->GetTransform()->GetGlobalPosition());
+		}
 	}
 
-	_blood_trail_particles->Enable();
-	_blood_trail_particles->Restart();
+	if (_blood_trail_particles != nullptr)
+	{
+		_blood_trail_particles->Enable();
+		_blood_trail_particles->Restart();
+	}
+
 	_combat_stats->ReceiveDamage(damage);
 	game_object->ChangeEmissiveColor(float4(255, 255, 255, 255), 0.3f, true);
 	// Knockback
@@ -672,7 +697,11 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_previous_state = BugState::INVALID;
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
-	_blood_trail_particles->Disable();
+
+	if (_blood_trail_particles != nullptr)
+	{
+		_blood_trail_particles->Disable();
+	}
 }
 
 void Hachiko::Scripting::EnemyController::ResetEnemyPosition()

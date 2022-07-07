@@ -95,10 +95,19 @@ namespace Hachiko
 			bool IsAlive() { return _combat_stats->_current_hp > 0; }
 			bool _isInDebug = false;
 
+			int GetAttackIndex() const
+			{
+				return _attack_idx;
+			}
+
+			WeaponUsed GetCurrentWeaponType() const
+			{
+				return static_cast<WeaponUsed>(_current_weapon);
+			}
+
 		private:
 			math::float3 GetRaycastPosition(
 				const math::float3& current_position) const;
-
 			float3 GetCorrectedPosition(const float3& target_pos) const;
 
 			PlayerAttack GetAttackType(AttackType attack_type);
