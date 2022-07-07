@@ -937,12 +937,13 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
-	_state = PlayerState::PICK_UP;
-	if (_enemies == nullptr) {
+	if (_enemies == nullptr) 
+	{
 		return;
 	}
 
 	std::vector<GameObject*>& enemy_packs = _enemies->children;
+	
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
 		GameObject* pack = enemy_packs[i];
@@ -953,7 +954,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 		std::vector<GameObject*>& enemies = pack->children;
 
-
 		for (int i = 0; i < enemies.size(); ++i)
 		{
 			if (enemies[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
@@ -962,27 +962,32 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
+
+					_state = PlayerState::PICK_UP;
+
 					enemy_controller->GetParasite();
+
+					// Make player invulnerable for a period of time:
+					_invulnerability_time_remaining = _invulnerability_time;
+					
 					if (_player_geometry != nullptr)
 					{
 						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
+
 					_combat_stats->Heal(1);
+
 					_heal_effect_particles_1->Restart();
 					_heal_effect_particles_2->Restart();
+
 					UpdateHealthBar();
-					// Generate a random number for the weapon
-					std::random_device rd;
-					std::mt19937 gen(rd());
-					int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
-					std::uniform_int_distribution<> dist(0, weapons.size() - 1);
-					int new_wpn_num = dist(gen);
-					_current_weapon = new_wpn_num;
+
+					// Select a random weapon:
+					_current_weapon = RandomUtil::RandomIntBetween(0, weapons.size() - 1);
 					break;
 				}
 			}
 		}
-
 	}
 	
 	ChangeGOWeapon();
