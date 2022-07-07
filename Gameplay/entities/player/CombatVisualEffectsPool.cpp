@@ -49,22 +49,25 @@ void Hachiko::Scripting::CombatVisualEffectsPool::PlayPlayerAttackEffect(PlayerC
 	{
 	case PlayerController::WeaponUsed::RED:
 	{
+		
+		break;
+	}
+	case PlayerController::WeaponUsed::BLUE:
+	{
 		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_sprite.png";
 
 		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
 		current_attack_billboard->GetTextureProperties().SetTiles(float2(3.0f, 4.0f));
+		
 		break;
 	}
-	case PlayerController::WeaponUsed::BLUE:
+	case PlayerController::WeaponUsed::GREEN:
 	{
 		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_vfx.png";
 
 		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
 		current_attack_billboard->GetTextureProperties().SetTiles(float2(5.0f, 2.0f));
-		break;
-	}
-	case PlayerController::WeaponUsed::GREEN:
-	{
+
 		break;
 	}
 	default:
