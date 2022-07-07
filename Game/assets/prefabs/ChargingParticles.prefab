@@ -5,9 +5,9 @@ component:
   - !<transform>
     type: 1
     enabled: true
-    position: [-8.714, 14.58, 31.19]
-    rotation: [0, 0.7071, 0.7071, 0]
-    scale: [9.091, 9.091, 9.091]
+    position: [-0.8439, 2.157, 3.179]
+    rotation: [0, 0.7071, 0.7071, -0]
+    scale: [2, 2, 2]
   - !<particle_system>
     type: 22
     enabled: true
