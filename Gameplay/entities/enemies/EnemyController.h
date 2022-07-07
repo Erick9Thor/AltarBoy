@@ -104,11 +104,13 @@ namespace Hachiko
             
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
+            SERIALIZE_FIELD(GameObject*, _blood_trail);
             SERIALIZE_FIELD(GameObject*, _small_dust);
             SERIALIZE_FIELD(GameObject*, _big_dust);
             SERIALIZE_FIELD(GameObject*, _attack_zone);
             SERIALIZE_FIELD(GameObject*, _inner_indicator);
             SERIALIZE_FIELD(GameObject*, _outer_indicator);
+
             
             SERIALIZE_FIELD(bool, _already_in_combat);
 
@@ -125,6 +127,7 @@ namespace Hachiko
             ComponentAnimation* animation = nullptr;
             CombatManager* _combat_manager = nullptr;
             ComponentAudioSource* _audio_source = nullptr;
+            ComponentParticleSystem* _blood_trail_particles = nullptr; 
             ComponentParticleSystem* _small_dust_particles = nullptr;
             ComponentParticleSystem* _big_dust_particles = nullptr;
             ComponentBillboard* _inner_indicator_billboard = nullptr;

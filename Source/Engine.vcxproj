@@ -157,8 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\rendering\ShadowManager.cpp" />
     <ClCompile Include="src\core\particles\modifiers\NoiseParticleModifier.cpp" />
     <ClCompile Include="src\core\rendering\GBuffer.cpp" />
+    <ClCompile Include="src\core\rendering\ShadowMappingProperties.cpp" />
     <ClCompile Include="src\utils\Bool2.cpp" />
     <ClCompile Include="src\utils\RandomUtil.cpp" />
     <ClCompile Include="src\core\particles\Particle.cpp" />
@@ -698,8 +700,11 @@
   <ItemGroup>
     <ClInclude Include="src\utils\RandomUtilDefinitions.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\core\rendering\ShadowManager.h" />
     <ClInclude Include="src\core\particles\modifiers\NoiseParticleModifier.h" />
     <ClInclude Include="src\core\rendering\GBuffer.h" />
+    <ClInclude Include="src\core\rendering\ShadowMappingProperties.h" />
+    <ClInclude Include="src\core\rendering\Uniforms.h" />
     <ClInclude Include="src\ui\widgets\Checkbox.h" />
     <ClInclude Include="src\ui\widgets\DragFloat2.h" />
     <ClInclude Include="src\utils\Bool2.h" />
