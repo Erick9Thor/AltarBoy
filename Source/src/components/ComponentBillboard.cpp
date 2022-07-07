@@ -27,7 +27,7 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    if (state == ParticleSystem::Emitter::State::STOPPED)
+    if (state == ParticleSystem::Emitter::State::STOPPED || !game_object->IsActive())
     {
         return;
     }
@@ -317,6 +317,8 @@ void Hachiko::ComponentBillboard::Start()
     {
         state = ParticleSystem::Emitter::State::PLAYING;
     }
+
+    Restart();
 }
 
 void Hachiko::ComponentBillboard::Update()
