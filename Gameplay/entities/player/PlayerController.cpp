@@ -7,6 +7,8 @@
 #include "entities/player/PlayerController.h"
 #include "constants/Scenes.h"
 
+#include "constants/Sounds.h"
+
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
 
