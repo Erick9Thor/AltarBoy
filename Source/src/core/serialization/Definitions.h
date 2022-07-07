@@ -128,6 +128,8 @@
 #define THEME_DARK "dark"
 #define SCENE_BACKGROUND_COLOR "scene_background_color"
 #define SCENE_AUTOSAVE "scene_autosave"
+#define SHADOW_MAP_GAUSSIAN_BLURRING_ENABLED "shadow_map_gaussian_blurring"
+#define SHADOW_PASS_ENABLED "shadow_pass_enabled"
 
 // Resources
 #define RESOURCES_NODE "resources"

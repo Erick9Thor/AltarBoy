@@ -1,5 +1,6 @@
 #include "scriptingUtil/gameplaypch.h"
 #include "constants/Scenes.h"
+#include "constants/Sounds.h"
 #include "ui/MainMenuManager.h"
 
 Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
@@ -15,12 +16,15 @@ Hachiko::Scripting::MainMenuManager::MainMenuManager(GameObject* game_object)
 	, _credits(nullptr)
 	, _settings(nullptr)
 	, _button_back(nullptr)
+	, _audio_source(nullptr)
 {
 }
 
 void Hachiko::Scripting::MainMenuManager::OnAwake()
 {
 	bool any_null = false;
+
+	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 
 	_main_background = game_object->GetFirstChildWithName(
 		"button_whitebackground");
@@ -86,6 +90,10 @@ void Hachiko::Scripting::MainMenuManager::OnUpdate()
 		case Hachiko::Scripting::MainMenuManager::State::CREDITS:
 			OnUpdateCredits();
 		break;
+
+		case Hachiko::Scripting::MainMenuManager::State::PLAY:
+			SceneManagement::SwitchScene(Scenes::GAME);
+		break;
 		
 		default:
 			HE_LOG("This should never happen.");
@@ -119,13 +127,16 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 	// YAML based serialization.
 	if (_button_play->IsSelected())
 	{
-		SceneManagement::SwitchScene(Scenes::GAME);
+		_audio_source->PostEvent(Sounds::CLICK);
+		_state = State::PLAY;
+		_state_changed = true;
 
 		return;
 	}
 
 	if (_button_settings->IsSelected())
 	{
+		_audio_source->PostEvent(Sounds::CLICK);
 		_state = State::SETTINGS;
 		_state_changed = true;
 
@@ -134,6 +145,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 
 	if (_button_credits->IsSelected())
 	{
+		_audio_source->PostEvent(Sounds::CLICK);
 		_state = State::CREDITS;
 		_state_changed = true;
 
@@ -142,6 +154,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateMain()
 
 	if (_button_quit->IsSelected())
 	{
+		_audio_source->PostEvent(Sounds::CLICK);
 		HE_LOG("This should quit the game");
 		
 		return;
@@ -172,6 +185,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateSettings()
 	
 	if (_button_back->IsSelected())
 	{
+		_audio_source->PostEvent(Sounds::CLICK);
 		_state = State::MAIN;
 		_state_changed = true;
 	}
@@ -201,6 +215,7 @@ void Hachiko::Scripting::MainMenuManager::OnUpdateCredits()
 
 	if (_button_back->IsSelected())
 	{
+		_audio_source->PostEvent(Sounds::CLICK);
 		_state = State::MAIN;
 		_state_changed = true;
 	}

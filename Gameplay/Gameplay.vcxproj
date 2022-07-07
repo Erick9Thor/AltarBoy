@@ -127,7 +127,7 @@ RD /S /Q "$(TargetDir)"</Command>
       <AdditionalLibraryDirectories>$(OutDir)..\;$(SolutionDir)vendors\glew-2.1.0\lib;$(SolutionDir)vendors\DevIL\lib;$(SolutionDir)vendors\SDL\lib;$(SolutionDir)vendors\assimp\lib;$(SolutionDir)vendors\optick\lib;;$(SolutionDir)vendors\yaml-cpp\lib\x64\Release</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>call $(ProjectDir)buildEvents\generate_code.bat;</Command>
+      <Command>call "$(ProjectDir)buildEvents\generate_code.bat";</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy "$(TargetDir)\$(TargetName).exp" "$(TargetDir)..\" /Y
@@ -317,9 +317,11 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="generated\GeneratedProperties.h" />
     <ClInclude Include="misc\AudioManager.h" />
     <ClInclude Include="misc\BlinkingLight.h" />
+    <ClInclude Include="misc\CameraPosChange.h" />
     <ClInclude Include="misc\Spawner.h" />
     <ClInclude Include="misc\DoorController.h" />
     <ClInclude Include="misc\GauntletManager.h" />
+    <ClInclude Include="misc\LaserController.h" />
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="entities\player\CombatVisualEffectsPool.h" />
@@ -733,9 +735,11 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="CrystalPlatform.cpp" />
     <ClCompile Include="misc\AudioManager.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
+    <ClCompile Include="misc\CameraPosChange.cpp" />
     <ClCompile Include="misc\Spawner.cpp" />
     <ClCompile Include="misc\DoorController.cpp" />
     <ClCompile Include="misc\GauntletManager.cpp" />
+    <ClCompile Include="misc\LaserController.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="entities\player\CombatVisualEffectsPool.cpp" />

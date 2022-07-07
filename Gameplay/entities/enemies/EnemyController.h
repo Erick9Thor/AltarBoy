@@ -2,30 +2,43 @@
 
 #include <scripting/Script.h>
 #include "entities/Stats.h"
+#include "entities/player/CombatManager.h"
 
 namespace Hachiko
 {
     class GameObject;
     class ComponentTransform;
+    class ComponentParticleSystem;
+    class ComponentBillboard;
 
     namespace Scripting
     {
         class AudioManager;
         class PlayerController;
-        class CombatManager;
         class CombatVisualEffectsPool;
 
+        class PlayerCamera;
+
+        enum class EnemyType
+        {
+            BEETLE,
+            WORM
+        };
         enum class BugState
         {
             INVALID,
             DEAD,
             IDLE,
-            MOVING,
-            MOVING_BACK,
             ATTACKING,
             PARASITE,
             SPAWNING,
-            PATROL
+            // Beetle unique states
+            MOVING,
+            MOVING_BACK,
+            PATROL,
+            // Worm unique states
+            HIDEN,
+            HIT
         };
 
         class EnemyController : public Script
@@ -67,6 +80,8 @@ namespace Hachiko
             void RecieveKnockback();
             void Stop();
 
+            void WormSpit();
+
             void MoveInNavmesh();
             void PatrolMovement();
             void DropParasite();
@@ -80,29 +95,45 @@ namespace Hachiko
 
         private:
             Stats* _combat_stats;
+            SERIALIZE_FIELD(bool, _worm);
             SERIALIZE_FIELD(int, _aggro_range);
             SERIALIZE_FIELD(float, _attack_range);
             SERIALIZE_FIELD(float, _attack_delay);
             SERIALIZE_FIELD(float, _idle_cooldown);
+            SERIALIZE_FIELD(float, _spawning_time);
             SERIALIZE_FIELD(float3, _spawn_pos);
             SERIALIZE_FIELD(bool, _spawn_is_initial);
-            SERIALIZE_FIELD(GameObject*, _player);
+            
             SERIALIZE_FIELD(GameObject*, _enemy_body);
             SERIALIZE_FIELD(GameObject*, _parasite);
-            SERIALIZE_FIELD(GameObject*, _audio_manager_game_object);
+            SERIALIZE_FIELD(GameObject*, _blood_trail);
+            SERIALIZE_FIELD(GameObject*, _small_dust);
+            SERIALIZE_FIELD(GameObject*, _big_dust);
+            SERIALIZE_FIELD(GameObject*, _attack_zone);
+            SERIALIZE_FIELD(GameObject*, _inner_indicator);
+            SERIALIZE_FIELD(GameObject*, _outer_indicator);
+
             
-            SERIALIZE_FIELD(BugState, _state);
-            SERIALIZE_FIELD(BugState, _previous_state);
             SERIALIZE_FIELD(bool, _already_in_combat);
 
             SERIALIZE_FIELD(bool, _is_from_gautlet);
 
-            AudioManager* _audio_manager;
-            PlayerController* _player_controller;
-            ComponentTransform* transform;
-            ComponentAnimation* animation;
-            CombatManager* _combat_manager;
-            ComponentAudioSource* _audio_source;
+            SERIALIZE_FIELD(bool, _will_die);
+
+            GameObject* _player = nullptr;
+            GameObject* _audio_manager_game_object = nullptr;
+            AudioManager* _audio_manager = nullptr;
+            PlayerController* _player_controller = nullptr;
+            PlayerCamera* _player_camera = nullptr;
+            ComponentTransform* transform = nullptr;
+            ComponentAnimation* animation = nullptr;
+            CombatManager* _combat_manager = nullptr;
+            ComponentAudioSource* _audio_source = nullptr;
+            ComponentParticleSystem* _blood_trail_particles = nullptr; 
+            ComponentParticleSystem* _small_dust_particles = nullptr;
+            ComponentParticleSystem* _big_dust_particles = nullptr;
+            ComponentBillboard* _inner_indicator_billboard = nullptr;
+            ComponentBillboard* _outer_indicator_billboard = nullptr;
 
             Quat _spawn_rot;
 
@@ -114,7 +145,8 @@ namespace Hachiko
             SERIALIZE_FIELD(float, _attack_animation_duration);
             SERIALIZE_FIELD(float, _attack_animation_timer);
 
-            SERIALIZE_FIELD(bool, _is_ranged_attack);
+            BugState _state = BugState::SPAWNING;
+            BugState _previous_state = BugState::INVALID;
 
             bool _parasite_dropped = false;
             bool _is_stunned = false;
@@ -131,9 +163,17 @@ namespace Hachiko
             const float _parasite_dissolving = 1 / math::Sqrt(_parasite_dissolve_time);
             float3 _knockback_pos = float3::zero;
             float _attack_current_delay = 0.f;
-            float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
-            float spawning_time_passed = 0.f;
+            SERIALIZE_FIELD(float, _current_spawning_time);
+            //float _current_spawning_time = 0.f;
             bool _has_spawned = false;
+
+            bool _inmune = false;
+            bool _attack_landing = false;
+
+            EnemyType _enemy_type = EnemyType::BEETLE;
+
+            // Special attacks
+            CombatManager::AttackStats push_attack;
 
             // Visual Effects:
             CombatVisualEffectsPool* _combat_visual_effects_pool;

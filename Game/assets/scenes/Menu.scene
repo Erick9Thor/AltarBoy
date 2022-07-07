@@ -32,6 +32,9 @@ child:
           front: [0, 0, 1]
           up: [0, 1, 0]
           pinned_camera: [0, 0, 0]
+      - id: 4941240349392024818
+        type: 19
+        enabled: true
   - id: 10370232042376018679
     name: Menu
     enabled: true
@@ -48,7 +51,7 @@ child:
         type: 10
         enabled: true
         position: [0, 0, 0]
-        size: [1904, 1083]
+        size: [1931, 1001]
         scale: [1, 1]
         rotation: [0, 0, 0, 1]
         pivot: [0.5, 0.5]
@@ -72,6 +75,9 @@ child:
         "'_settings@GameObject*'": 5517220911348165701
         "'_credits@GameObject*'": 15157299374494226041
         "'_button_back@ComponentButton*'": 7162107976364272364
+      - id: 2073226486703277877
+        type: 20
+        enabled: true
     child:
       - id: 5872684667760369802
         name: button_whitebackground
@@ -89,7 +95,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1904, 1083]
+            size: [1931, 1001]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]
@@ -375,7 +381,7 @@ child:
             type: 10
             enabled: true
             position: [0, 0, 0]
-            size: [1904, 1083]
+            size: [1931, 1001]
             scale: [1, 1]
             rotation: [0, 0, 0, 1]
             pivot: [0.5, 0.5]

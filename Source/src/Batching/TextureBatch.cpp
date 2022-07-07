@@ -317,6 +317,11 @@ void Hachiko::TextureBatch::BindTextures(const Program* program)
     }
 }
 
+void Hachiko::TextureBatch::Clear() 
+{
+    materials.clear();
+}
+
 void Hachiko::TextureBatch::BindBuffers(bool use_first_segment, int component_count)
 {
     if (use_first_segment)

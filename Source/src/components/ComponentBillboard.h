@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "core/particles/ParticleSystem.h"
 
 class ImGradient;
 struct ImGradientMark;
