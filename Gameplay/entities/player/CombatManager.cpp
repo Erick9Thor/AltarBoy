@@ -22,7 +22,8 @@ Hachiko::Scripting::CombatManager::~CombatManager()
 void Hachiko::Scripting::CombatManager::OnAwake()
 {
 	// Spawn bullet (Passing the prefab can be improved)
-	UID bullet_uid = 14999767472668584259;
+	//UID bullet_uid = 14999767472668584259;
+	UID bullet_uid = 329775617723033719;
 	_bullets = SceneManagement::Instantiate(bullet_uid, game_object, _max_bullets);
 
 	_bullet_stats.reserve(_bullets.size());
@@ -36,6 +37,9 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 	_player = Scenes::GetPlayer();
 	_enemy_packs_container = Scenes::GetEnemiesContainer();
+
+	_charge_particles = _charge_vfx->GetComponent<ComponentParticleSystem>();
+	_shot_particles = _shot_vfx->GetComponent<ComponentParticleSystem>();
 
 	if (_player)
 	{
@@ -172,7 +176,7 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 		{
 			// Do not launch yet
 			stats.current_charge += Time::DeltaTime();
-			bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
+			//bullet->GetTransform()->SetGlobalScale(float3(stats.GetChargedPercent()));
 			SetBulletTrajectory(i);
 			stats.update_ui = true;
 			continue;
@@ -180,6 +184,10 @@ void Hachiko::Scripting::CombatManager::RunBulletSimulation()
 
 		if (stats.current_charge >= stats.charge_time && stats.update_ui)	// When a bullet starts moving only update ui once
 		{
+			bullet->SetActive(true);
+			_charge_particles->Stop();
+			_shot_particles->Play();
+			_shot_particles->Restart();
 			if (!_player_controller)	return;
 
 			_player_controller->UpdateAmmoUI();
@@ -248,7 +256,9 @@ void Hachiko::Scripting::CombatManager::ActivateBullet(unsigned bullet_idx)
 	_bullet_stats[bullet_idx].alive = true;
 	_bullet_stats[bullet_idx].current_charge = 0.f;
 	_bullet_stats[bullet_idx].elapsed_lifetime = 0.f;
-	_bullets[bullet_idx]->SetActive(true);
+
+	_bullets[bullet_idx]->GetTransform()->SetGlobalScale(float3(_bullet_stats[bullet_idx].size));
+	//_bullets[bullet_idx]->SetActive(true);
 }
 
 void Hachiko::Scripting::CombatManager::DeactivateBullet(unsigned bullet_idx)
@@ -263,13 +273,16 @@ void Hachiko::Scripting::CombatManager::SetBulletTrajectory(unsigned bullet_idx)
 	BulletStats& stats = _bullet_stats[bullet_idx];
 	ComponentTransform* bullet_transform = bullet->GetTransform();
 	const float bullet_offset = 1.25f;
+	const float3 bullet_vertical_offset = float3(.0f, 1.0f, .0f);
 	float3 emitter_direction = stats.emitter_transform->GetFront().Normalized();
-	float3 emitter_position = stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset;
+	float3 emitter_position = (stats.emitter_transform->GetGlobalPosition() + emitter_direction * bullet_offset) + bullet_vertical_offset;
+	Quat emitter_rotation = stats.emitter_transform->GetGlobalRotation();
 	
 	stats.prev_position = emitter_position;
 
 	stats.direction = emitter_direction;
 	bullet_transform->SetGlobalPosition(emitter_position);
+	bullet_transform->SetGlobalRotation(emitter_rotation);
 	// If the bullet is out of culling nothing its updating its transform unless selected in engine
 	bullet_transform->GetLocalPosition();
 }
@@ -392,6 +405,9 @@ void Hachiko::Scripting::CombatManager::SerializeEnemyPacks()
 
 int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_transform, BulletStats new_stats)
 {
+	_charge_particles->Play();
+	_charge_particles->Restart();
+
 	// We use a pointer to represent when there is no bullet shoot
 	for (unsigned i = 0; i < _bullets.size(); i++)
 	{
@@ -415,6 +431,7 @@ int Hachiko::Scripting::CombatManager::ShootBullet(ComponentTransform* emitter_t
 
 void Hachiko::Scripting::CombatManager::StopBullet(unsigned bullet_index)
 {
+	_charge_particles->Stop();
 	DeactivateBullet(bullet_index);
 }
 
