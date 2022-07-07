@@ -5,6 +5,9 @@
 #include "entities/player/CombatManager.h"
 #include "entities/player/PlayerCamera.h"
 #include "entities/player/PlayerController.h"
+#include "constants/Scenes.h"
+
+#include "constants/Sounds.h"
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
@@ -15,7 +18,6 @@ const int MAX_AMMO = 4;
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
-	, _bullet_emitter(nullptr)
 	, _goal(nullptr)
 	, _player_geometry(nullptr)
 	, _dash_duration(0.0f)
@@ -78,6 +80,7 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 {
 	_terrain = Scenes::GetTerrainContainer();
 	_enemies = Scenes::GetEnemiesContainer();
+	_bullet_emitter = Scenes::GetCombatManager();
 	_level_manager = Scenes::GetLevelManager()->GetComponent<LevelManager>();
 
 	_dash_charges = _max_dash_charges;
@@ -451,7 +454,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	const Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
-	_after_attack_timer = attack.cooldown +_combo_grace_period;
+	_after_attack_timer = attack.cooldown + _combo_grace_period;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -460,11 +463,24 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 	// Move player a bit forward if it wouldnt fall	
-	_dash_progress = 0.f;
-	_current_dash_duration = attack.duration;
-	_dash_start = _player_position;
-	_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
-	CorrectDashDestination(_dash_start, _dash_end);
+	if (attack.dash_distance != 0.0f)
+	{
+		_dash_progress = 0.f;
+		_current_dash_duration = attack.duration;
+		_dash_start = _player_position;
+		_dash_end = _player_position + _player_transform->GetFront().Normalized() * attack.dash_distance;
+
+		// Instead of using "CorrectDashDestination(_dash_start, _dash_end);", since its an attack dash use a greater correction 
+		float3 corrected_dash_destination = Navigation::GetCorrectedPosition(_dash_end, float3(1.0f, 0.5f, 1.0f));
+		if (corrected_dash_destination.x < FLT_MAX)
+		{
+			_dash_end = corrected_dash_destination;
+		}
+		else 
+		{
+			_dash_end = _dash_start;
+		}
+	}
 
 	// Fast and Scuffed, has to be changed when changing attack indicator
 	float4 attack_color = float4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -626,11 +642,13 @@ void Hachiko::Scripting::PlayerController::MovementController()
 	if (IsWalking())
 	{
 		_player_position += (_movement_direction * _combat_stats->_move_speed * Time::DeltaTime());
-		_walking_dust_particles->Play();
+		if(_walking_dust_particles)
+			_walking_dust_particles->Play();
 	}
 	else
 	{
-		_walking_dust_particles->Stop();
+		if (_walking_dust_particles)
+			_walking_dust_particles->Stop();
 	}
 
 	if (_god_mode)
@@ -678,7 +696,8 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		{
 			// Stopped falling
 			_state = PlayerState::IDLE;
-			_falling_dust_particles->Restart();
+			if (_falling_dust_particles)
+				_falling_dust_particles->Restart();
 		}
 	}
 	else if (!IsDashing())
@@ -948,7 +967,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	ChangeGOWeapon();
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bool is_heavy, float3 direction)
+void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, float knockback, float3 direction)
 {
 	if (_god_mode)
 	{
@@ -977,14 +996,14 @@ void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, bo
 		}
 	}
 	
-	if(is_heavy)
+	if(knockback > 0.0f)
 	{
 		if (IsDashing()) 
 		{
 			_dash_trail->SetActive(false);
 			_show_dashtrail = false;
 		}
-		RecieveKnockback(direction);
+		RecieveKnockback(direction * knockback);
 		_camera->GetComponent<PlayerCamera>()->Shake(0.5f, 0.5f);
 	}
 	else
@@ -1004,7 +1023,7 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 {
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
-	_knock_end = _player_transform->GetGlobalPosition() + direction;
+	_knock_end = Navigation::GetCorrectedPosition(_player_transform->GetGlobalPosition() + direction, float3(10.0f, 10.0f, 10.0f));
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
 }

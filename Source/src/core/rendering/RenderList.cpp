@@ -11,25 +11,24 @@ void Hachiko::RenderList::PreUpdate()
     polycount_total = 0;
 }
 
-void Hachiko::RenderList::Update(ComponentCamera* camera, Quadtree* quadtree)
+void Hachiko::RenderList::Update(const Frustum& camera_frustum, Quadtree* quadtree)
 {
     opaque_targets.clear();
     transparent_targets.clear();
-    const float3 camera_pos = camera->GetGameObject()->GetTransform()->GetGlobalPosition();
-    CollectMeshes(camera, camera_pos, quadtree);
+    CollectMeshes(camera_frustum, quadtree);
 }
 
-void Hachiko::RenderList::CollectMeshes(ComponentCamera* camera, const float3& camera_pos, Quadtree* quadtree)
+void Hachiko::RenderList::CollectMeshes(const Frustum& camera_frustum, Quadtree* quadtree)
 {
-    const Frustum* frustum = camera->GetFrustum();
-
     std::vector<ComponentMeshRenderer*> meshes;
 
-    quadtree->GetIntersections(meshes, *frustum);
+    quadtree->GetIntersections(meshes, camera_frustum);
+
+    float3 camera_position = camera_frustum.Pos();
 
     for (ComponentMeshRenderer* mesh_renderer : meshes)
     {
-        CollectMesh(camera_pos, mesh_renderer);
+        CollectMesh(camera_position, mesh_renderer);
     }
 }
 

@@ -14,7 +14,6 @@
 Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	: Script(game_object, "CrystalExplosion")
 	, _stats()
-	, _player(nullptr)
 	, _explosion_radius(10.0f)
 	, _detecting_radius(1.0f)
 	, _explosive_crystal(false)
@@ -27,7 +26,12 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 
 void Hachiko::Scripting::CrystalExplosion::OnAwake()
 {
+	if (_explosion_crystal->IsActive()) 
+	{
+		_explosion_crystal->SetActive(false);
+	}
 	enemies = Scenes::GetEnemiesContainer();
+	_player = Scenes::GetPlayer();
 	_stats = game_object->GetComponent<Stats>();
 	_audio_source = game_object->GetComponent<ComponentAudioSource>();
 	transform = game_object->GetTransform();
@@ -115,7 +119,10 @@ void Hachiko::Scripting::CrystalExplosion::ExplodeCrystal()
 
 	if (enemies != nullptr)
 	{
-		check_hit = enemies->children;
+		for (GameObject* enemy_pack : enemies->children)
+		{
+			check_hit.insert(check_hit.end(), enemy_pack->children.begin(), enemy_pack->children.end());
+		}
 	}
 
 	check_hit.push_back(_player);
