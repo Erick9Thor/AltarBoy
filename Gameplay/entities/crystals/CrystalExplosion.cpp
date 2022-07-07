@@ -20,7 +20,7 @@ Hachiko::Scripting::CrystalExplosion::CrystalExplosion(GameObject* game_object)
 	, _explosion_indicator_helper(nullptr)
 	, _timer_explosion(0.0f)
 	, _explosion_effect(nullptr)
-	, _regen_time(2.f)
+	, _regen_time(5.f)
 {
 }
 
@@ -99,6 +99,7 @@ void Hachiko::Scripting::CrystalExplosion::StartExplosion()
 
 	for (GameObject* child : _explosion_effect->children)
 	{
+		child->GetComponent<ComponentBillboard>()->Restart();
 		child->SetActive(true);
 	}
 }
@@ -212,6 +213,13 @@ void Hachiko::Scripting::CrystalExplosion::ResetCrystal()
 		{
 			child->SetActive(false);
 		}
+	}
+
+	ComponentObstacle* obstacle = game_object->GetComponent<ComponentObstacle>();
+	if (obstacle)
+	{
+		obstacle->Enable();
+		obstacle->AddObstacle();
 	}
 
 	ComponentAnimation* exploding_animation = _explosion_crystal->GetComponent<ComponentAnimation>();
