@@ -27,7 +27,7 @@ Hachiko::ComponentBillboard::~ComponentBillboard()
 
 void Hachiko::ComponentBillboard::Draw(ComponentCamera* camera, Program* program)
 {
-    if (state == ParticleSystem::Emitter::State::STOPPED || !game_object->IsActive())
+    if (state == ParticleSystem::Emitter::State::STOPPED)
     {
         return;
     }
@@ -317,8 +317,6 @@ void Hachiko::ComponentBillboard::Start()
     {
         state = ParticleSystem::Emitter::State::PLAYING;
     }
-
-    Restart();
 }
 
 void Hachiko::ComponentBillboard::Update()
@@ -631,23 +629,23 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
     float3 position = transform->GetGlobalPosition() + emitter_properties.position;
     float3 scale = transform->GetGlobalScale() * size;
-    float3 camera_position = camera->GetFrustum()->Pos();
+    float3 camera_position = camera->GetFrustum().Pos();
     float3x3 rotation_matrix = float3x3::identity.RotateZ(rotation);
 
     switch (properties.orientation)
     {
         case ParticleSystem::ParticleOrientation::NORMAL:
         {
-            Frustum* frustum = camera->GetFrustum();
+            const Frustum& frustum = camera->GetFrustum();
             if (properties.orientate_to_direction)
             {
                 float3 forward = transform->GetGlobalRotation().WorldZ();
-                float3 right = Cross(-frustum->Front(), forward).Normalized();
-                forward = Cross(right, -frustum->Front()).Normalized();
+                float3 right = Cross(-frustum.Front(), forward).Normalized();
+                forward = Cross(right, -frustum.Front()).Normalized();
 
                 float3x3 new_rotation;
                 new_rotation.SetCol(1, right);
-                new_rotation.SetCol(2, -frustum->Front());
+                new_rotation.SetCol(2, -frustum.Front());
                 new_rotation.SetCol(0, forward);
 
                 model_matrix = float4x4::FromTRS(position, new_rotation, scale);
@@ -656,7 +654,7 @@ void Hachiko::ComponentBillboard::GetOrientationMatrix(ComponentCamera* camera, 
             {
                 float3x3 rotate_part = transform->GetGlobalMatrix().RotatePart();
                 float4x4 global_model_matrix = transform->GetGlobalMatrix();
-                model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum->Front(), rotate_part.Col(1), float3::unitY);
+                model_matrix = global_model_matrix.LookAt(rotate_part.Col(2), -frustum.Front(), rotate_part.Col(1), float3::unitY);
                 model_matrix = float4x4::FromTRS(position, model_matrix.RotatePart() * rotate_part * rotation_matrix, scale);
             }
             break;

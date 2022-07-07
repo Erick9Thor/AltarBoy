@@ -41,7 +41,8 @@ namespace Hachiko
             enum AttackType
             {
                 CONE,
-                RECTANGLE
+                RECTANGLE,
+                CIRCLE
             };
 
             struct AttackStats
@@ -67,10 +68,7 @@ namespace Hachiko
 
             // Bool indicates if it hit something
             int PlayerMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
-            bool EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
-
-            bool EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats);
-            bool EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int EnemyMeleeAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // If the emitter is deleted u are obligated to stop its bullet at that point to be safe
             // Player only system for now
@@ -90,14 +88,22 @@ namespace Hachiko
             // Start attack depending on its type
             int PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats);
             int PlayerRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int PlayerCircleAttack(const float4x4& origin, const AttackStats& attack_stats);
+
+            int EnemyConeAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int EnemyRectangleAttack(const float4x4& origin, const AttackStats& attack_stats);
+            int EnemyCircleAttack(const float4x4& origin, const AttackStats& attack_stats);
 
             // Evaluate for all units
             int ProcessAgentsCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats, bool is_from_player);
             int ProcessObstaclesCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            bool ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
-            int ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, bool is_from_player);
+            int ProcessPlayerCone(const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance, const AttackStats& attack_stats);
+            int ProcessAgentsOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos, bool is_from_player);
             int ProcessObstaclesOBB(const OBB& attack_box, const AttackStats& attack_stats);
-            bool ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats);
+            int ProcessPlayerOBB(const OBB& attack_box, const AttackStats& attack_stats, const float3& attack_source_pos);
+            int ProcessAgentsCircle(const float3& attack_source_pos, const AttackStats& attack_stats, bool is_from_player);
+            int ProcessObstaclesCircle(const float3& attack_source_pos, const AttackStats& attack_stats);
+            int ProcessPlayerCircle(const float3& attack_source_pos, const AttackStats& attack_stats);
 
             // Specifics of the collision check
             bool ConeHitsAgent(GameObject* agent_go, const float3& attack_source_pos, const float3& attack_dir, float min_dot_prod, float hit_distance);
@@ -106,6 +112,9 @@ namespace Hachiko
             bool OBBHitsAgent(GameObject* agent_go, const OBB& attack_box);
             bool OBBHitsObstacle(GameObject* obstacle_go, const OBB& attack_box);
             bool OBBHitsPlayer(const OBB& attack_box);
+            bool CircleHitsAgent(GameObject* agent_go, const float3& attack_source_pos, float radius);
+            bool CircleHitsObstacle(GameObject* obstacle_go, const float3& attack_source_pos, float radius);
+            bool CircleHitsPlayer(const float3& attack_source_pos, float radius);
 
             // What to do when system wants to register a hit
             void HitObstacle(GameObject* obstacle, float damage);

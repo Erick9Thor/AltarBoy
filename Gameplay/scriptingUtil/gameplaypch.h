@@ -27,6 +27,7 @@
 #include <core/particles/Particle.h>
 #include <core/particles/ParticleSystem.h>
 #include <components/ComponentParticleSystem.h>
+#include <components/ComponentBillboard.h>
 
 #include <core/GameObject.h>
 #include <Gameplay.h>
