@@ -436,6 +436,10 @@ void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& 
 		dash_destination = corrected_dash_destination;
 		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
 		corrected_dash_destination = Navigation::GetCorrectedPosition(dash_destination, float3(5.f, 0.5f, 5.f));
+		if (corrected_dash_destination.x >= FLT_MAX)
+		{
+			_level_manager->Respawn(this);
+		}
 	}
 	else
 	{
@@ -656,6 +660,10 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
+			if (_player_position.x >= FLT_MAX)
+			{
+				_level_manager->Respawn(this);
+			}
 		}
 	}
 	else if (IsStunned())
@@ -671,6 +679,10 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		else
 		{
 			_player_position = GetCorrectedPosition(_knock_end);
+			if (_player_position.x >= FLT_MAX)
+			{
+				_player_position = _knock_end;
+			}
 			_state = PlayerState::IDLE;
 		}
 	}
@@ -1011,6 +1023,10 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
 	_knock_end = Navigation::GetCorrectedPosition(_player_transform->GetGlobalPosition() + direction, float3(10.0f, 10.0f, 10.0f));
+	if (_knock_end.x >= FLT_MAX)
+	{
+		_knock_end = _knock_start;
+	}
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
 }
@@ -1166,11 +1182,15 @@ void Hachiko::Scripting::PlayerController::ToggleGodMode()
 	_state = PlayerState::IDLE;
 	if (!_god_mode)
 	{
-		HE_LOG("FALLING");
-		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+		_dash_start = _player_position;
+		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(1500.0f, 1500.0f, 1500.0f));
 		if (corrected_position.x < FLT_MAX)
 		{
 			_player_position = corrected_position;
+		}
+		else
+		{
+			_player_position = float3::zero;
 		}
 		// Started falling
 		_state = PlayerState::FALLING;
