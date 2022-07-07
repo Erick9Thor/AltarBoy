@@ -52,7 +52,6 @@ void Hachiko::Scripting::CombatManager::OnAwake()
 
 void Hachiko::Scripting::CombatManager::OnUpdate()
 {
-	
 	if (!game_object->IsActive())
 	{
 		return;
@@ -63,7 +62,6 @@ void Hachiko::Scripting::CombatManager::OnUpdate()
 
 int Hachiko::Scripting::CombatManager::PlayerConeAttack(const float4x4& origin, const AttackStats& attack_stats)
 {
-	
 	float3 attack_dir = origin.WorldZ().Normalized();
 	float min_dot_product = std::cos(math::DegToRad(attack_stats.width));
 	
@@ -237,7 +235,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 		if (hit_enemy && hit_enemy->IsAlive())
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
-			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true);
+			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true, true);
 			return true;
 		}
 	}
@@ -543,7 +541,7 @@ int Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_so
 				if (enemy_controller && enemy_controller->IsAlive())
 				{
 					hit++;
-					HitEnemy(enemy_controller, attack_stats.damage, attack_stats.knockback_distance, attack_dir, is_from_player);
+					HitEnemy(enemy_controller, attack_stats.damage, attack_stats.knockback_distance, attack_dir, is_from_player, false);
 				}
 			}
 		}
@@ -643,7 +641,7 @@ int Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, c
 					float3 knockback_dir = enemy->GetTransform()->GetGlobalPosition() - attack_source_pos;
 					knockback_dir.y = 0;
 					knockback_dir.Normalize();
-					HitEnemy(enemy_controller, attack_stats.damage, attack_stats.knockback_distance, knockback_dir, is_from_player);
+					HitEnemy(enemy_controller, attack_stats.damage, attack_stats.knockback_distance, knockback_dir, is_from_player, false);
 				}
 			}
 		}
@@ -953,9 +951,9 @@ void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float 
 	}
 }
 
-void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player)
+void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
 {
-	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player);
+	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player, is_ranged);
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)

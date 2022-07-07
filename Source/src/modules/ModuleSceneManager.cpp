@@ -189,6 +189,7 @@ void Hachiko::ModuleSceneManager::RemoveGameObject(GameObject* go)
         if (!go->scene_owner)
         {
             delete go;
+            go = nullptr;
             return;
         }
         to_remove.push_back(go);

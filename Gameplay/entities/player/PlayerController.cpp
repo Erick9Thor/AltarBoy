@@ -15,6 +15,8 @@
 #define RAD_TO_DEG 180.0f / math::pi
 const int MAX_AMMO = 4;
 
+constexpr const int ATTACK_VFX_POOL_SIZE = 6;
+
 Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	: Script(game_object, "PlayerController")
 	, _attack_indicator(nullptr)
@@ -583,6 +585,7 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 	{
 		_attack_idx = 0;
 	}
+
 	return GetCurrentAttack();
 }
 
@@ -731,9 +734,6 @@ void Hachiko::Scripting::PlayerController::DashController()
 	
 	// using y = x^p
 	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, (int)_dash_scaler);
-	
-
-	
 	
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);

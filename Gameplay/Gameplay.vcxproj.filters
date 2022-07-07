@@ -525,6 +525,7 @@
     <ClInclude Include="misc\LaserController.h" />
     <ClInclude Include="misc\BlinkingLight.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
+    <ClInclude Include="entities\player\CombatVisualEffectsPool.h" />
     <ClInclude Include="misc\CameraPosChange.h" />
   </ItemGroup>
   <ItemGroup>
@@ -801,6 +802,7 @@
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\LaserController.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
+    <ClCompile Include="entities\player\CombatVisualEffectsPool.cpp" />
     <ClCompile Include="misc\CameraPosChange.cpp" />
   </ItemGroup>
   <ItemGroup>
