@@ -93,6 +93,16 @@ public:
 	bool IsAlive() { return _combat_stats->_current_hp > 0; }
 	bool _isInDebug = false;
 
+	int GetAttackIndex() const
+	{
+		return _attack_idx;
+	}
+
+	WeaponUsed GetCurrentWeaponType() const
+	{
+		return static_cast<WeaponUsed>(_current_weapon);
+	}
+
 private:
 	math::float3 GetRaycastPosition(
 		const math::float3& current_position) const;
@@ -140,7 +150,7 @@ private:
 	void DashTrailManager(float dash_progress);
 	void WalkingOrientationController();
 	void AttackController();
-	void ExecuteAttackVFX();
+	//void ExecuteAttackVFX();
 
 	void PickupParasite(const math::float3& current_position);
 	void RecieveKnockback(const math::float3 direction);
@@ -255,15 +265,15 @@ private:
 
 	LevelManager* _level_manager;
 
-	// Attack VFX Management:
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container1);
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container2);
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container3);
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container4);
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container5);
-	SERIALIZE_FIELD(GameObject*, _attack_billboard_container6);
-	std::vector<ComponentBillboard*> _attack_billboards;
-	SERIALIZE_FIELD(unsigned, _current_attack_billboard_index);
+	//// Attack VFX Management:
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container1);
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container2);
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container3);
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container4);
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container5);
+	//SERIALIZE_FIELD(GameObject*, _attack_billboard_container6);
+	//std::vector<ComponentBillboard*> _attack_billboards;
+	//SERIALIZE_FIELD(unsigned, _current_attack_billboard_index);
 
 };
 } // namespace Scripting

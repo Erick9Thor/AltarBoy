@@ -181,7 +181,7 @@ bool Hachiko::Scripting::CombatManager::CheckBulletCollisions(unsigned bullet_id
 		if (hit_enemy && hit_enemy->IsAlive())
 		{
 			float3 knockback_dir = hit_enemy->GetGameObject()->GetTransform()->GetGlobalPosition() - bullet->GetTransform()->GetGlobalPosition();
-			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true);
+			HitEnemy(hit_enemy, stats.damage, 0.f, knockback_dir, true, true);
 			return true;
 		}
 	}
@@ -464,7 +464,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsCone(const float3& attack_s
 				{
 					// TODO: Add Knockback
 					hit = true;
-					HitEnemy(enemy_controller, attack_stats.damage, is_from_player);
+					HitEnemy(enemy_controller, attack_stats.damage, 0, float3::zero, is_from_player, false);
 				}
 			}
 		}
@@ -545,7 +545,7 @@ bool Hachiko::Scripting::CombatManager::ProcessAgentsOBB(const OBB& attack_box, 
 				{
 					// TODO: Add Knockback
 					hit = true;
-					HitEnemy(enemy_controller, attack_stats.damage);
+					HitEnemy(enemy_controller, attack_stats.damage, 0.0f, float3::zero, is_from_player, false);
 				}
 			}
 		}
@@ -715,9 +715,9 @@ void Hachiko::Scripting::CombatManager::HitObstacle(GameObject* obstacle, float 
 	}
 }
 
-void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player)
+void Hachiko::Scripting::CombatManager::HitEnemy(EnemyController* enemy, int damage, float knockback, float3 knockback_dir, bool is_from_player, bool is_ranged)
 {
-	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player);
+	enemy->RegisterHit(damage, knockback_dir, knockback, is_from_player, is_ranged);
 }
 
 void Hachiko::Scripting::CombatManager::HitPlayer(int damage, float knockback, float3 knockback_dir)

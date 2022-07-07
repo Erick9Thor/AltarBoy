@@ -12,6 +12,7 @@
 #include <components/ComponentAgent.h>
 #include <components/ComponentTransform.h>
 
+#include "entities/player/CombatVisualEffectsPool.h"
 #include "misc/AudioManager.h"
 
 Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
@@ -34,13 +35,16 @@ Hachiko::Scripting::EnemyController::EnemyController(GameObject* game_object)
 	, _audio_manager_game_object(nullptr)
 	, _already_in_combat(false)
 	, _is_from_gautlet(false)
+	, _combat_visual_effects_pool(nullptr)
 {
 }
 
 void Hachiko::Scripting::EnemyController::OnAwake()
 {
-	//TODO: Get Player and CombatManager from Scene script once its merged
-	_combat_manager = game_object->scene_owner->GetRoot()->GetFirstChildWithName("CombatManager")->GetComponent<CombatManager>();
+	_combat_manager = Scenes::GetCombatManager()->GetComponent<CombatManager>();
+	
+	_combat_visual_effects_pool = 
+		Scenes::GetCombatVisualEffectsPool()->GetComponent<CombatVisualEffectsPool>();
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	_combat_stats->_attack_power = 1;
@@ -249,7 +253,7 @@ void Hachiko::Scripting::EnemyController::IdleController()
 	}
 }
 
-void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player)
+void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 direction, float knockback, bool is_from_player, bool is_ranged)
 {
 	if (_state == BugState::SPAWNING)
 	{
@@ -259,6 +263,16 @@ void Hachiko::Scripting::EnemyController::RegisterHit(int damage, float3 directi
 	if (is_from_player)
 	{
 		_enraged = 5.0f;
+
+		// TODO: Trigger this via an event of player, that is subscribed by
+		// combat visual effects pool.
+		if (!is_ranged)
+		{
+			_combat_visual_effects_pool->PlayPlayerAttackEffect(
+				_player_controller->GetCurrentWeaponType(),
+				_player_controller->GetAttackIndex(),
+				game_object->GetTransform()->GetGlobalPosition());
+		}
 	}
 
 	_combat_stats->ReceiveDamage(damage);

@@ -32,14 +32,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	, _ui_damage(nullptr)
 	, _dash_trail(nullptr)
 	, _trail_enlarger(10.0f)
-	, _attack_billboard_container1(nullptr)
-	, _attack_billboard_container2(nullptr)
-	, _attack_billboard_container3(nullptr)
-	, _attack_billboard_container4(nullptr)
-	, _attack_billboard_container5(nullptr)
-	, _attack_billboard_container6(nullptr)
-	, _attack_billboards({})
-	, _current_attack_billboard_index(0)
 {
 	CombatManager::BulletStats common_bullet;
 	common_bullet.charge_time = .5f;
@@ -104,15 +96,6 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 
 	_falling_dust_particles = _falling_dust->GetComponent<ComponentParticleSystem>();
 	_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
-
-	_attack_billboards.clear();
-	_attack_billboards.resize(ATTACK_VFX_POOL_SIZE);
-	_attack_billboards[0] = _attack_billboard_container1->GetComponent<ComponentBillboard>();
-	_attack_billboards[1] = _attack_billboard_container2->GetComponent<ComponentBillboard>();
-	_attack_billboards[2] = _attack_billboard_container3->GetComponent<ComponentBillboard>();
-	_attack_billboards[3] = _attack_billboard_container4->GetComponent<ComponentBillboard>();
-	_attack_billboards[4] = _attack_billboard_container5->GetComponent<ComponentBillboard>();
-	_attack_billboards[5] = _attack_billboard_container6->GetComponent<ComponentBillboard>();
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -204,9 +187,6 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 
 	// Run attack simulation
 	AttackController();
-
-	// Play Attack VFX:
-	// ExecuteAttackVFX();
 
 	// Run movement simulation
 	MovementController();
@@ -503,7 +483,6 @@ bool Hachiko::Scripting::PlayerController::IsInComboWindow() const
 
 const Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon() const
 {
-	// TODO: insert return statement here
 	return weapons[_current_weapon];
 }
 
@@ -660,9 +639,6 @@ void Hachiko::Scripting::PlayerController::DashController()
 	
 	// using y = x^p
 	float acceleration = 1.0f - math::Pow((1.0f - _dash_progress) / 1.0f, (int)_dash_scaler);
-	
-
-	
 	
 	_player_position = math::float3::Lerp(_dash_start, _dash_end,
 		acceleration);
@@ -821,8 +797,6 @@ void Hachiko::Scripting::PlayerController::AttackController()
 					}
 					if (hit)
 					{
-						ExecuteAttackVFX();
-
 						_camera->GetComponent<PlayerCamera>()->Shake(0.6f, 0.2f);
 					}
 				}
@@ -848,95 +822,6 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		// When attack is over
 		_state = PlayerState::IDLE;
 	}
-}
-
-void Hachiko::Scripting::PlayerController::ExecuteAttackVFX()
-{
-	/*if (_state != PlayerState::MELEE_ATTACKING || (_attack_current_delay > 0.0f && _attack_current_duration > 0.0f))
-	{
-		return;
-	}*/
-
-	// This should never happen:
-	if (_current_attack_billboard_index >= ATTACK_VFX_POOL_SIZE)
-	{
-		return;
-	}
-
-	ComponentBillboard* current_attack_billboard = _attack_billboards[_current_attack_billboard_index];
-
-	if (current_attack_billboard == nullptr)
-	{
-		return;
-	}
-	
-	const PlayerAttack& attack = GetCurrentAttack();
-
-	math::float4x4 attack_origin = GetMeleeAttackOrigin(attack.stats.range);
-	math::float3 attack_position = attack_origin.TranslatePart() + game_object->GetTransform()->GetGlobalPosition();
-	attack_position *= 0.5f;
-
-	current_attack_billboard->GetGameObject()->GetTransform()->SetGlobalPosition(attack_position + float3::unitY * 1.5f);
-
-	switch (_current_weapon)
-	{
-	case static_cast<unsigned>(WeaponUsed::RED):
-	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_sprite.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(3.0f, 4.0f));
-		break;
-	}
-	case static_cast<unsigned>(WeaponUsed::BLUE):
-	{
-		std::string texture_file_name = FileUtility::GetWorkingDirectory() + "/assets/textures/vfx/slash_vfx.png";
-
-		current_attack_billboard->GetTextureProperties().SetTexture(texture_file_name);
-		current_attack_billboard->GetTextureProperties().SetTiles(float2(5.0f, 2.0f));
-		break;
-	}
-	case static_cast<unsigned>(WeaponUsed::GREEN):
-	{
-		break;
-	}
-	default:
-		break;
-	}
-
-	// TODO: Give height to billboard.
-
-	switch (_attack_idx)
-	{
-	case 0:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(false, true));
-
-		break;
-	}
-
-	case 1:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(true, false));
-
-		break;
-	}
-
-	case 2:
-	{
-		current_attack_billboard->GetTextureProperties().SetFlip(Hachiko::bool2(false, false));
-
-		break;
-	}
-
-	default:
-		break;
-	}
-	
-	current_attack_billboard->Restart();
-
-	// Increment the used billboard index for the next attack:
-	_current_attack_billboard_index = (_current_attack_billboard_index + 1) % ATTACK_VFX_POOL_SIZE;
 }
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)

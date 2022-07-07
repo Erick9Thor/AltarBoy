@@ -524,6 +524,7 @@
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\BlinkingLight.h" />
     <ClInclude Include="generated\GeneratedProperties.h" />
+    <ClInclude Include="entities\player\CombatVisualEffectsPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scriptingUtil\gameplaypch.cpp">
@@ -798,6 +799,7 @@
     <ClCompile Include="misc\GauntletManager.cpp" />
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\BlinkingLight.cpp" />
+    <ClCompile Include="entities\player\CombatVisualEffectsPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Source\vendors\MathGeoLib\Math\float2.inl">

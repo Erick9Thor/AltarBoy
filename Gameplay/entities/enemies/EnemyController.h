@@ -13,6 +13,8 @@ namespace Hachiko
         class AudioManager;
         class PlayerController;
         class CombatManager;
+        class CombatVisualEffectsPool;
+
         enum class BugState
         {
             INVALID,
@@ -43,7 +45,7 @@ namespace Hachiko
             const Stats* GetStats();
             bool IsAlive() { return _combat_stats->IsAlive(); };
             void SetIsFromGauntlet(bool v) { _is_from_gautlet = v; }
-            void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player);
+            void RegisterHit(int player_atk, math::float3 direction, float knockback, bool is_from_player, bool is_ranged);
             void GetParasite();
             void Spawn();
             bool ParasiteDropped() { return _parasite_dropped; };
@@ -132,6 +134,9 @@ namespace Hachiko
             float spawning_time = 2.0f; // Once we have spawning animations this will be calculated by the animation duration
             float spawning_time_passed = 0.f;
             bool _has_spawned = false;
+
+            // Visual Effects:
+            CombatVisualEffectsPool* _combat_visual_effects_pool;
         };
     } // namespace Scripting
 } // namespace Hachiko*/
