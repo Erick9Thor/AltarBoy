@@ -457,7 +457,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	const Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
 	_attack_current_duration = attack.duration;
-	_after_attack_timer = attack.cooldown +_combo_grace_period;
+	_after_attack_timer = attack.cooldown + _combo_grace_period;
 	
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
@@ -954,8 +954,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					_combat_stats->Heal(1);
 					_heal_effect_particles_1->Restart();
 					_heal_effect_particles_2->Restart();
-					_heal_effect_particles_1->Start();
-					_heal_effect_particles_2->Start();
 					UpdateHealthBar();
 					// Generate a random number for the weapon
 					std::random_device rd;
