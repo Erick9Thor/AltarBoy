@@ -146,6 +146,6 @@ void Hachiko::Scripting::GauntletManager::CloseDoors()
 void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 {
 	if (round >= _enemy_packs.size()) return;
-	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
+	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
 }

@@ -155,7 +155,7 @@ namespace Hachiko
             float _speed = 0.0f;
             float _current_idle_cooldown = 0.0f;
             float _enraged = 0.0f;
-            float _enemy_dissolve_time = 3.0f;
+            float _enemy_dissolve_time = 1.0f;
             float _enemy_dissolving_time_progress = 0.0f;
             const float _enemy_dissolving = 1 / math::Sqrt(_enemy_dissolve_time);
             float _parasite_dissolve_time = 10.0f;
