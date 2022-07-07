@@ -107,6 +107,11 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	{
 		_walking_dust_particles = _walking_dust->GetComponent<ComponentParticleSystem>();
 	}
+	if (_heal_effect != nullptr)
+	{
+		_heal_effect_particles_1 = _heal_effect->GetComponent<ComponentParticleSystem>();
+		_heal_effect_particles_2 = _heal_effect->GetComponentInDescendants<ComponentParticleSystem>();
+	}
 
 	_combat_stats = game_object->GetComponent<Stats>();
 	// Player doesnt use all combat stats since some depend on weapon
@@ -476,7 +481,7 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 		{
 			_dash_end = corrected_dash_destination;
 		}
-		else 
+		else
 		{
 			_dash_end = _dash_start;
 		}
@@ -949,6 +954,8 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
 					_combat_stats->Heal(1);
+					_heal_effect_particles_1->Restart();
+					_heal_effect_particles_2->Restart();
 					UpdateHealthBar();
 					// Generate a random number for the weapon
 					std::random_device rd;
