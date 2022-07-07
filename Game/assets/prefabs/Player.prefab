@@ -582,7 +582,7 @@ child:
                                                         enabled: true
                                                         position: [0, 0, 0]
                                                         rotation: [0, 0, 0.8756, 0.483]
-                                                        scale: [0.9966, 0.9966, 1]
+                                                        scale: [0.9964, 0.9964, 1]
                                                     child:
                                                       - name: Jaw_Down_Parasite_$AssimpFbx$_Rotation
                                                         enabled: true
@@ -622,7 +622,7 @@ child:
                                                                         enabled: true
                                                                         position: [0, 0, 0]
                                                                         rotation: [-0.483, 0.8756, 0, 0]
-                                                                        scale: [0.9966, 1, 0.9966]
+                                                                        scale: [0.9964, 1, 0.9964]
                                                                     child:
                                                                       - name: Zero
                                                                         enabled: true
@@ -750,7 +750,7 @@ child:
                                         enabled: true
                                         position: [0, 0, 0]
                                         rotation: [0, 0, 0.9832, 0.1824]
-                                        scale: [0.9966, 0.9966, 1]
+                                        scale: [0.9964, 0.9964, 1]
                                     child:
                                       - name: RightWing_$AssimpFbx$_Rotation
                                         enabled: true
@@ -1130,10 +1130,10 @@ child:
           lights: false
           renderer: true
         parameters:
-          duration: 0.2
+          duration: 0.1
           loop: false
-          life: [true, true, 0, [0.2, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
-          speed: [true, true, 0, [30, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          life: [true, true, 0, [0.1, 5], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
+          speed: [true, true, 0, [70, 5], 0.5, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
           size: [true, true, 0, [1, 1], 0.25, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
           rotation: [true, true, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
           delay: [true, false, 0, [0, 0], 1, [0, 0], [0.25, 0.25], [0.5, 0.5], [0.75, 0.75], [1, 1], [0, 0]]
