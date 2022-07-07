@@ -62,6 +62,7 @@ namespace Hachiko
 
             GameObject* _terrain = nullptr;
             GameObject* _player = nullptr;
+            ComponentAudioSource* _audio_source;
         };
     }
 }
