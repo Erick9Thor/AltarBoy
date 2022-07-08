@@ -325,6 +325,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClInclude Include="misc\LevelManager.h" />
     <ClInclude Include="misc\PillarCheckpoint.h" />
     <ClInclude Include="entities\player\CombatVisualEffectsPool.h" />
+    <ClInclude Include="TriggerAnim.h" />
     <ClInclude Include="ui\BackToMainMenu.h" />
     <ClInclude Include="entities\player\CombatManager.h" />
     <ClInclude Include="entities\enemies\BugAnimationManager.h" />
@@ -743,6 +744,7 @@ RD /S /Q "$(TargetDir)"</Command>
     <ClCompile Include="misc\LevelManager.cpp" />
     <ClCompile Include="misc\PillarCheckpoint.cpp" />
     <ClCompile Include="entities\player\CombatVisualEffectsPool.cpp" />
+    <ClCompile Include="TriggerAnim.cpp" />
     <ClCompile Include="ui\BackToMainMenu.cpp" />
     <ClCompile Include="entities\player\CombatManager.cpp" />
     <ClCompile Include="entities\enemies\BugAnimationManager.cpp" />

@@ -230,6 +230,8 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	// Run movement simulation
 	MovementController();
 
+	CheckGoal(_player_position);
+
 	// Rotate player to the necessary direction:
 	WalkingOrientationController();
 
@@ -443,6 +445,10 @@ void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& 
 		dash_destination = corrected_dash_destination;
 		// Get corrected position with a lot of width radius (navmesh seems to not always match the wall properly)
 		corrected_dash_destination = Navigation::GetCorrectedPosition(dash_destination, float3(5.f, 0.5f, 5.f));
+		if (corrected_dash_destination.x >= FLT_MAX)
+		{
+			_level_manager->Respawn(this);
+		}
 	}
 	else
 	{
@@ -677,6 +683,10 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
 			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
+			if (_player_position.x >= FLT_MAX)
+			{
+				_level_manager->Respawn(this);
+			}
 		}
 	}
 	else if (IsStunned())
@@ -692,6 +702,10 @@ void Hachiko::Scripting::PlayerController::MovementController()
 		else
 		{
 			_player_position = GetCorrectedPosition(_knock_end);
+			if (_player_position.x >= FLT_MAX)
+			{
+				_player_position = _knock_end;
+			}
 			_state = PlayerState::IDLE;
 		}
 	}
@@ -923,12 +937,13 @@ void Hachiko::Scripting::PlayerController::AttackController()
 
 void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_position)
 {
-	_state = PlayerState::PICK_UP;
-	if (_enemies == nullptr) {
+	if (_enemies == nullptr) 
+	{
 		return;
 	}
 
 	std::vector<GameObject*>& enemy_packs = _enemies->children;
+	
 	for (int i = 0; i < enemy_packs.size(); ++i)
 	{
 		GameObject* pack = enemy_packs[i];
@@ -939,7 +954,6 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 		std::vector<GameObject*>& enemies = pack->children;
 
-
 		for (int i = 0; i < enemies.size(); ++i)
 		{
 			if (enemies[i]->active && 1.5f >= _player_transform->GetGlobalPosition().Distance(enemies[i]->GetTransform()->GetGlobalPosition()))
@@ -948,27 +962,32 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 
 				if (enemy_controller->IsAlive() == false && enemy_controller->ParasiteDropped())
 				{
+
+					_state = PlayerState::PICK_UP;
+
 					enemy_controller->GetParasite();
+
+					// Make player invulnerable for a period of time:
+					_invulnerability_time_remaining = _invulnerability_time;
+					
 					if (_player_geometry != nullptr)
 					{
 						_player_geometry->ChangeEmissiveColor(float4(0.0f, 255.0f, 0.0f, 255.0f), 0.3f, true);
 					}
+
 					_combat_stats->Heal(1);
+
 					_heal_effect_particles_1->Restart();
 					_heal_effect_particles_2->Restart();
+
 					UpdateHealthBar();
-					// Generate a random number for the weapon
-					std::random_device rd;
-					std::mt19937 gen(rd());
-					int num_of_weapons = static_cast <int>(WeaponUsed::SIZE) - 1;
-					std::uniform_int_distribution<> dist(0, weapons.size() - 1);
-					int new_wpn_num = dist(gen);
-					_current_weapon = new_wpn_num;
+
+					// Select a random weapon:
+					_current_weapon = RandomUtil::RandomIntBetween(0, weapons.size() - 1);
 					break;
 				}
 			}
 		}
-
 	}
 	
 	ChangeGOWeapon();
@@ -1031,6 +1050,10 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 	_state = PlayerState::STUNNED;
 	_knock_start = _player_transform->GetGlobalPosition();
 	_knock_end = Navigation::GetCorrectedPosition(_player_transform->GetGlobalPosition() + direction, float3(10.0f, 10.0f, 10.0f));
+	if (_knock_end.x >= FLT_MAX)
+	{
+		_knock_end = _knock_start;
+	}
 	_stun_time = _stun_duration;
 	_player_transform->LookAtDirection(-direction);
 }
@@ -1186,11 +1209,15 @@ void Hachiko::Scripting::PlayerController::ToggleGodMode()
 	_state = PlayerState::IDLE;
 	if (!_god_mode)
 	{
-		HE_LOG("FALLING");
-		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(3.0f, 3.0f, 3.0f));
+		_dash_start = _player_position;
+		float3 corrected_position = Navigation::GetCorrectedPosition(_player_position, float3(1500.0f, 1500.0f, 1500.0f));
 		if (corrected_position.x < FLT_MAX)
 		{
 			_player_position = corrected_position;
+		}
+		else
+		{
+			_player_position = float3::zero;
 		}
 		// Started falling
 		_state = PlayerState::FALLING;
@@ -1203,7 +1230,7 @@ void Hachiko::Scripting::PlayerController::CheckGoal(const float3& current_posit
 
 	if (Distance(current_position, goal_position) < 10.0f)
 	{
-		//SceneManagement::SwitchScene(12124061992092393469);
+		SceneManagement::SwitchScene(Scenes::LEVEL2);
 	}
 }
 

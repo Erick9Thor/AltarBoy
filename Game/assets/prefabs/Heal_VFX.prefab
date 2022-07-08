@@ -6,8 +6,8 @@ component:
     type: 1
     enabled: true
     position: [0, 0, 0]
-    rotation: [0, 0, 0, 1]
-    scale: [9, 1, 9]
+    rotation: [0, 0.886, 0, 0.4636]
+    scale: [2, 2, 2]
   - !<particle_system>
     type: 22
     enabled: true
@@ -105,10 +105,10 @@ child:
           type: 0
           properties: [360, 0, [0, 0, 0], 2, 0, [0, 0, 0], [1, 1, 1], 2]
         texture:
-          texture_id: 16243791998999790856
-          tiles: [1, 0]
+          texture_id: 3291545039621372658
+          tiles: [2, 1]
           flip: [false, false]
-          total_tiles: 1
+          total_tiles: 2
         modifiers:
           velocity:
             active: true

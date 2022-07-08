@@ -31,6 +31,10 @@ void Hachiko::Scripting::GauntletManager::OnAwake()
 	if (_pack_1) _enemy_packs.push_back(_pack_1);
 	if (_pack_2) _enemy_packs.push_back(_pack_2);
 	if (_pack_3) _enemy_packs.push_back(_pack_3);
+	for (GameObject* _pack : _enemy_packs)
+	{
+		_pack->SetActive(false);
+	}
 }
 
 void Hachiko::Scripting::GauntletManager::OnStart()
@@ -146,6 +150,6 @@ void Hachiko::Scripting::GauntletManager::CloseDoors()
 void Hachiko::Scripting::GauntletManager::SpawnRound(unsigned round)
 {
 	if (round >= _enemy_packs.size()) return;
-	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
 	_combat_manager->ActivateEnemyPack(_enemy_packs[round]);
+	_combat_manager->ResetEnemyPack(_enemy_packs[round], true);
 }

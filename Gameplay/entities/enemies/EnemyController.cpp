@@ -203,7 +203,7 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 		return;
 	}
 
-	_player_pos = _player->GetTransform()->GetGlobalPosition();
+	_player_pos = _player_controller->GetGameObject()->GetTransform()->GetGlobalPosition();
 	_current_pos = transform->GetGlobalPosition();
 
 	IdleController();
@@ -310,12 +310,17 @@ void Hachiko::Scripting::EnemyController::DeathController()
 	default:
 		if (!_will_die && _enemy_type == EnemyType::WORM)
 		{
+			_audio_manager->UnregisterCombat();
 			_state = BugState::HIDEN;
 			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
 			return;
 		}
 		else
 		{
+			if (_enemy_type == EnemyType::WORM)
+			{
+				_audio_manager->UnregisterCombat();
+			}
 			_state = BugState::DEAD;
 			game_object->GetComponent<ComponentAgent>()->RemoveFromCrowd();
 			return;
@@ -596,9 +601,15 @@ void Hachiko::Scripting::EnemyController::Spawn()
 	switch (_enemy_type)
 	{
 	case EnemyType::BEETLE:
+		_current_spawning_time = _spawning_time;
 		if (_enemy_body)
 		{
-			_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), _current_spawning_time, true);
+			_enemy_body->SetActive(true);
+			_enemy_body->ChangeEmissiveColor(float4(0.3f, 0.5f, 1.0f, 1.0f), _spawning_time, true);
+		}
+		if (_parasite)
+		{
+			_parasite->SetActive(false);
 		}
 		_has_spawned = true;
 		_state = BugState::SPAWNING;
@@ -609,6 +620,10 @@ void Hachiko::Scripting::EnemyController::Spawn()
 		if (_enemy_body)
 		{
 			_enemy_body->SetActive(false);
+		}
+		if (_parasite)
+		{
+			_parasite->SetActive(false);
 		}
 		_state = BugState::INVALID;
 		_small_dust_particles->Restart();
@@ -628,8 +643,9 @@ void Hachiko::Scripting::EnemyController::CheckState()
 		return;
 	}
 
-	if ((_previous_state == BugState::ATTACKING || _previous_state == BugState::MOVING) && 
+	if (((_previous_state == BugState::ATTACKING || _previous_state == BugState::MOVING) && 
 		(current_state == BugState::IDLE || current_state == BugState::MOVING_BACK || current_state == BugState::DEAD))
+		|| (_enemy_type == EnemyType::WORM && (current_state == BugState::DEAD || (current_state == BugState::HIDEN))))
 	{
 		if (_already_in_combat)
 		{
@@ -637,8 +653,9 @@ void Hachiko::Scripting::EnemyController::CheckState()
 			_already_in_combat = false;
 		}
 	} 
-	else if ((current_state == BugState::ATTACKING || current_state == BugState::MOVING) &&
+	else if (((current_state == BugState::ATTACKING || current_state == BugState::MOVING) &&
 		     (_previous_state == BugState::IDLE || _previous_state == BugState::MOVING_BACK || _previous_state == BugState::DEAD))
+		|| (_enemy_type == EnemyType::WORM && current_state != BugState::DEAD && current_state != BugState::HIDEN))
 	{
 		if (!_already_in_combat)
 		{
@@ -697,6 +714,18 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_previous_state = BugState::INVALID;
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
+	_parasite_dropped = false;
+
+	if (_enemy_body)
+	{
+		_enemy_body->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+	}
+	
+	if (_parasite)
+	{
+		_parasite->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+		_parasite->SetActive(false);
+	}
 
 	if (_blood_trail_particles != nullptr)
 	{
