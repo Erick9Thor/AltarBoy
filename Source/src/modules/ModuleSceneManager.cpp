@@ -32,9 +32,7 @@ bool Hachiko::ModuleSceneManager::Init()
     };
     App->event->Subscribe(Event::Type::RESTORE_EDITOR_HISTORY_ENTRY, handleSceneSwapping);
 
-#ifdef PLAY_BUILD
-    main_scene->Start();
-#else
+#ifndef PLAY_BUILD
     EditorPreferences* editor_prefs = App->preferences->GetEditorPreference();
     scene_autosave = editor_prefs->GetAutosave();
 #endif
@@ -376,21 +374,6 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
-
-    // TODO: If we make empty scenes have a game object with a camera component
-    // attached by default, add the following lines to CreateEmptyScene as well
-#ifdef PLAY_BUILD
-    main_scene->Start();
-    ComponentCamera* main_camera = main_scene->GetMainCamera();
-    App->camera->SetRenderingCamera(main_camera);
-    main_scene->SetCullingCamera(main_camera);
-#else
-    if (IsScenePlaying())
-    {
-        App->camera->SetRenderingCamera(main_scene->GetMainCamera());
-        main_scene->SetCullingCamera(main_scene->GetMainCamera());
-    }
-#endif // PLAY_MODE
 }
 
 void Hachiko::ModuleSceneManager::SetSceneResource(ResourceScene* new_scene_resource)
