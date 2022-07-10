@@ -668,6 +668,9 @@
     <ClCompile Include="vendors\OpenSimplex\OpenSimplex2S.cpp">
       <Filter>Vendors\OpenSimplex</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\ComponentVideo.cpp">
+      <Filter>Core\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2512,6 +2515,9 @@
     <ClInclude Include="src\utils\RandomUtilDefinitions.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\components\ComponentVideo.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -3117,6 +3123,7 @@
     <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl">
       <Filter>Vendors\NodeEditor</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hachiko.rc" />
