@@ -90,6 +90,9 @@ void CalculateSpecularDiffuseSmoothness(
 
     diffuse *= material_tint_color;
     specular *= material_tint_color.rgb;
+
+    // DEBUG:
+    smoothness = material_smoothness;
 }
 
 vec3 CalculateEmissive(sampler2DArray emissive_texture, vec2 texture_coords, int layer_index, vec4 material_emissive_color, uint material_emissive_flag)
