@@ -1,0 +1,345 @@
+scene_name: IBL_Test
+navmesh_id: 9416437340025253989
+skybox:
+  right_cube_id: 9903994588415658106
+  left_cube_id: 6194178469579215156
+  top_cube_id: 342680972867528335
+  bottom_cube_id: 8592987921860084934
+  center_cube_id: 16847455934009710530
+  back_cube_id: 13332398804663529779
+root_id: 10645621298767026490
+child:
+  - id: 12691514141471867287
+    name: Main Camera
+    enabled: true
+    component:
+      - !<transform>
+        id: 9746408267688629635
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+      - !<camera>
+        id: 2781947498413559196
+        type: 4
+        enabled: true
+        frustum:
+          near_distance: 1
+          far_distance: 100
+          fov: 65
+          position: [0, 0, 0]
+          front: [0, 0, 1]
+          up: [0, 1, 0]
+          pinned_camera: [0, 0, 0]
+  - id: 14947386269294968267
+    name: sphere1
+    enabled: true
+    component:
+      - !<transform>
+        id: 18161668957050210643
+        type: 1
+        enabled: true
+        position: [0, 4, 4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 8004327353742932710
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 2447736173458779084
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 9674801744727514743
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 3444076536058255441
+            tint_color: [1, 1, 1, 1]
+  - id: 11009806209740289012
+    name: sphere2
+    enabled: true
+    component:
+      - !<transform>
+        id: 1212766368186878539
+        type: 1
+        enabled: true
+        position: [0, 4, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 2312610322263995624
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 17087535113894902358
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 5500087311015279286
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 4884103858623475532
+            tint_color: [1, 1, 1, 1]
+  - id: 12075222632124468286
+    name: sphere3
+    enabled: true
+    component:
+      - !<transform>
+        id: 13543947014654882970
+        type: 1
+        enabled: true
+        position: [0, 4, -4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 9574703778060577957
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 13804218187573485779
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 5027056884576465317
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 11910666910834414284
+            tint_color: [1, 1, 1, 1]
+  - id: 10458395936731889421
+    name: sphere4
+    enabled: true
+    component:
+      - !<transform>
+        id: 9756489548585871427
+        type: 1
+        enabled: true
+        position: [0, 0, 4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 12081956171921898681
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 9364812934993536710
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 4414122564266969343
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 6428505712118018926
+            tint_color: [1, 1, 1, 1]
+  - id: 5755670896960093635
+    name: sphere5
+    enabled: true
+    component:
+      - !<transform>
+        id: 11049047437943980010
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 17028934280762330195
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 13514249789967669993
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 3789224484951729140
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 12291389658110169198
+            tint_color: [1, 1, 1, 1]
+  - id: 9245130431972411254
+    name: sphere6
+    enabled: true
+    component:
+      - !<transform>
+        id: 5527636689168922306
+        type: 1
+        enabled: true
+        position: [0, 0, -4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 12311191662655512517
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 7068852976678593151
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 16693083054307645274
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 16733880181252141783
+            tint_color: [1, 1, 1, 1]
+  - id: 3683562140497851196
+    name: sphere7
+    enabled: true
+    component:
+      - !<transform>
+        id: 15481858161993215654
+        type: 1
+        enabled: true
+        position: [0, -4, 4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 2344027434263368316
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 9732126414875456851
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 1172408831151422499
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 1024790705491279531
+            tint_color: [1, 1, 1, 1]
+  - id: 14757371225931617588
+    name: sphere8
+    enabled: true
+    component:
+      - !<transform>
+        id: 7701108853230127394
+        type: 1
+        enabled: true
+        position: [0, -4, 0]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 420110662898769224
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 14262823977349478514
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 6049710099502866496
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 12558127870677345992
+            tint_color: [1, 1, 1, 1]
+  - id: 12589444830187812759
+    name: sphere9
+    enabled: true
+    component:
+      - !<transform>
+        id: 11786269087384362813
+        type: 1
+        enabled: true
+        position: [0, -4, -4]
+        rotation: [0, 0, 0, 1]
+        scale: [1, 1, 1]
+    child:
+      - id: 8990480214463211427
+        name: Sphere001
+        enabled: true
+        component:
+          - !<transform>
+            id: 1127085988520063425
+            type: 1
+            enabled: true
+            position: [0, 0, 0]
+            rotation: [-0.7071, 0, 0, 0.7071]
+            scale: [1, 1, 1]
+          - !<mesh_renderer>
+            id: 10439668122994216018
+            type: 2
+            enabled: true
+            mesh_id: 9734251747031717595
+            navigable: false
+            visible: true
+            material_id: 6150167677248885070
+            tint_color: [1, 1, 1, 1]
+  - id: 12763499172195449210
+    name: GameObject
+    enabled: true
+    component:
+      - !<transform>
+        id: 17839041613452058572
+        type: 1
+        enabled: true
+        position: [0, 0, 0]
+        rotation: [0, -0.4226, 0, 0.9063]
+        scale: [1, 1, 1]
+      - id: 1664577274379066964
+        type: 5
+        enabled: true
+        light_type: 5
+        color: [1, 1, 1, 1]
+        intensity: 1
+        draw_direction: false
+        light_bleeding_reduction_amount: 0.25
+        shadow_bias: 0
+        min_variance: 0.001
+        exponent: 14.37
+        blur_scale: 0.62

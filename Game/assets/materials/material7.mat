@@ -1,0 +1,14 @@
+name: "material7\x00l"
+diffuse: 0
+specular: 0
+normals: 0
+metalness: 0
+emissive: 0
+diffuse_color: [1, 0, 0, 1]
+specular_color: [0, 0, 0, 0]
+emissive_color: [0, 0, 0, 0]
+smoothness: 0
+metalness_value: 1
+is_metallic: 1
+smoothness_alpha: 1
+is_transparent: 0
