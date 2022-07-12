@@ -193,19 +193,8 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	_player_position = _player_transform->GetGlobalPosition();
 	_movement_direction = float3::zero;
 
-	if (!IsAlive())
-	{
-		_state = PlayerState::DIE;
-	}
-
-	if (animation->IsAnimationStopped() && IsDying())
-	{
-		_state = PlayerState::IDLE;
-		_level_manager->Respawn(this);
-
-		_player_transform->SetGlobalPosition(_player_position);
-	}
-
+	
+	
 	if (_invulnerability_time_remaining > 0.0f)
 	{
 		_invulnerability_time_remaining -= Time::DeltaTime();
@@ -221,22 +210,30 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 		ToggleGodMode();
 		_god_mode_trigger = false;
 	}
-	// Handle player the input
-	HandleInputAndStatus();
 
-	// Run attack simulation
-	AttackController();
+	if (IsAlive()) 
+	{
+		// Handle player the input
+		HandleInputAndStatus();
 
-	// Run movement simulation
-	MovementController();
+		// Run attack simulation
+		AttackController();
 
-	CheckGoal(_player_position);
+		// Run movement simulation
+		MovementController();
 
-	// Rotate player to the necessary direction:
-	WalkingOrientationController();
+		CheckGoal(_player_position);
 
-	// Apply the position after everything is simulated
-	_player_transform->SetGlobalPosition(_player_position);
+		// Rotate player to the necessary direction:
+		WalkingOrientationController();
+
+		// Apply the position after everything is simulated
+		_player_transform->SetGlobalPosition(_player_position);
+	}
+	else
+	{
+		_state = PlayerState::DIE;
+	}
 
 	CheckState();
 }
@@ -1055,7 +1052,7 @@ void Hachiko::Scripting::PlayerController::RecieveKnockback(const math::float3 d
 		_knock_end = _knock_start;
 	}
 	_stun_time = _stun_duration;
-	_player_transform->LookAtDirection(-direction);
+	//_player_transform->LookAtDirection(-direction);
 }
 
 void Hachiko::Scripting::PlayerController::CheckState()
@@ -1095,6 +1092,9 @@ void Hachiko::Scripting::PlayerController::CheckState()
 		break;
 	case PlayerState::DIE:
 		animation->SendTrigger("isDead");
+		break;
+	case PlayerState::STUNNED:
+		animation->SendTrigger("isIdle");
 		break;
 
 	case PlayerState::INVALID:
@@ -1157,8 +1157,67 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 {
 	_player_position = spawn_pos; // _initial_pos;
 	_combat_stats->_current_hp = 4;
-	UpdateHealthBar();
+	
 	// Reset properly
+
+	_ammo_count = 4;
+	
+	while (!click_buffer.empty())
+	{
+		click_buffer.pop();
+	}
+
+	_dash_charges = 2;
+	_current_dash_duration = 0.f;
+	_dash_progress = 0.0f;
+	_dash_charging_time = 0.0f;
+	_dash_start = float3::zero;
+	_dash_end = float3::zero;
+	_dash_direction = float3::zero;
+
+	// Dash
+	_dash_trail->SetActive(false);
+	_trail_start_pos = float3::zero;
+	_trail_start_scale = float3::zero;
+	_trail_end_pos = float3::zero;
+	_trail_end_scale = float3::zero;
+	_show_dashtrail = false;
+
+	// Attack management
+	_attack_current_cd = 0.0f;
+	_attack_current_duration = 0.0f;
+	_current_attack_cooldown = 0.f;
+	_attack_current_delay = 0.0f;
+	_after_attack_timer = 0.f;;
+	_current_bullet = -1;
+	_attack_idx = 0;
+	_current_weapon = 0;
+	_invulnerability_time_remaining = 0.0f;
+
+	// Movement management
+	_stun_time = 0.0f;
+	_stun_duration = 0.5f;
+	_rotation_progress = 0.0f;
+	_falling_distance = 10.0f;
+	_should_rotate = false;
+	_is_falling = false;
+
+	// Camera
+	_current_cam_setting = 0;
+
+	_movement_direction = float3::zero;
+	_knock_start = float3::zero;
+	_knock_end = float3::zero;
+	_start_fall_pos = float3::zero;
+	_rotation_start = Quat::identity;
+	_rotation_target = Quat::identity;
+
+	// Color
+	_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
+
+	ChangeGOWeapon();
+	UpdateHealthBar();
+	UpdateAmmoUI();
 }
 
 void Hachiko::Scripting::PlayerController::UpdateHealthBar()
