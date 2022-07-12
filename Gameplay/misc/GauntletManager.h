@@ -1,7 +1,6 @@
 #pragma once
 
 #include <scripting/Script.h>
-#include "entities/player/CombatManager.h"
 #include "misc/DoorController.h"
 
 namespace Hachiko
@@ -11,6 +10,7 @@ namespace Hachiko
 	namespace Scripting
 	{
 		class LevelManager;
+		class CombatManager;
 
 		class GauntletManager : public Script
 		{

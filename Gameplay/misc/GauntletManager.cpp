@@ -7,6 +7,7 @@
 
 // TODO: Delete this include:
 #include <modules/ModuleSceneManager.h>
+#include "entities/player/CombatManager.h"
 
 Hachiko::Scripting::GauntletManager::GauntletManager(GameObject* game_object)
 	: Script(game_object, "GauntletManager")
