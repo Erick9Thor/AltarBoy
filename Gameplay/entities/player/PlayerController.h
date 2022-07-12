@@ -12,6 +12,7 @@ namespace Hachiko
 {
 	class GameObject;
 	class ComponentMeshRenderer;
+	class ComponentProgressBar;
 	namespace Scripting
 	{
 		class PlayerCamera;
@@ -72,6 +73,8 @@ namespace Hachiko
 				CombatManager::BulletStats bullet;
 				// Here we define the combo of attacks		
 				float4 color = float4::zero;
+				bool unlimited = true;
+				unsigned charges = 0;
 				GameObject* weapon_go = nullptr;
 				std::vector<PlayerAttack> attacks;
 			};
@@ -90,6 +93,7 @@ namespace Hachiko
 			void RegisterHit(float damage_received, float knockback = 0, math::float3 direction = float3::zero);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
+			void UpdateWeaponChargeUI();
 			void ToggleGodMode();
 
 			bool IsAlive() { return _combat_stats->_current_hp > 0; }
@@ -127,9 +131,9 @@ namespace Hachiko
 			bool IsAttackOnCooldown() const;
 			bool IsInComboWindow() const;
 
-			const Weapon& GetCurrentWeapon() const;
+			Weapon& GetCurrentWeapon();
 			const PlayerAttack& GetNextAttack();
-			const PlayerAttack& GetCurrentAttack() const;
+			const PlayerAttack& GetCurrentAttack();
 
 			// Input and status management
 			void HandleInputAndStatus();
@@ -141,7 +145,7 @@ namespace Hachiko
 			void Dash();
 			void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
 			void MeleeAttack();
-			void ChangeGOWeapon();
+			void ChangeWeapon(unsigned weapon_idx);
 			void RangedAttack();
 			void CancelAttack();
 			float4x4 GetMeleeAttackOrigin(float attack_range) const;
@@ -212,18 +216,20 @@ namespace Hachiko
 			std::vector<GameObject*> ammo_cells;
 			int _ammo_count;
 
+			SERIALIZE_FIELD(GameObject*, _weapon_charge_bar_go);
+			ComponentProgressBar* _weapon_charge_bar = nullptr;
+
 			SERIALIZE_FIELD(GameObject*, _camera);
 			SERIALIZE_FIELD(GameObject*, _ui_damage);
 
-			
-
 			ComponentTransform* _player_transform = nullptr;
-			ComponentAnimation* animation;
-			ComponentParticleSystem* _falling_dust_particles;
-			ComponentParticleSystem* _walking_dust_particles;
-			ComponentParticleSystem* _heal_effect_particles_1;
-			ComponentParticleSystem* _heal_effect_particles_2;
+			ComponentAnimation* animation = nullptr;
+			ComponentParticleSystem* _falling_dust_particles = nullptr;
+			ComponentParticleSystem* _walking_dust_particles = nullptr;
+			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
+			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
 
+			
 			std::vector<Weapon> weapons{};
 
 			// Internal state variables
@@ -256,6 +262,7 @@ namespace Hachiko
 			int _current_bullet = -1;
 			unsigned _attack_idx = 0;
 			unsigned _current_weapon = 0;
+			unsigned _attack_charges = 0;
 			float _invulnerability_time_remaining = 0.0f;
 
 			// Movement management
