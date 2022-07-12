@@ -10,6 +10,8 @@ namespace Hachiko
 	class ComponentTransform;
 	namespace Scripting
 	{
+		class LevelManager;
+
 		class GauntletManager : public Script
 		{
 			SERIALIZATION_METHODS(false)
@@ -22,8 +24,9 @@ namespace Hachiko
 			void OnStart() override;
 			void OnUpdate() override;
 			void ResetGauntlet();
-			bool IsCompleted() const {return completed;}
+			bool IsCompleted() const { return completed; }
 			bool IsFinished() const;
+			bool IsStarted() const { return started; }
 
 			SERIALIZE_FIELD(GameObject*, _combat_manager_go);
 			SERIALIZE_FIELD(float, _trigger_radius);
@@ -51,6 +54,7 @@ namespace Hachiko
 			bool changing_rounds = false;
 			float remaining_between_round_time;
 			CombatManager* _combat_manager = nullptr;
+			LevelManager* _level_manager = nullptr;
 			std::vector<GameObject*> _enemy_packs{};
 			std::vector<DoorController*> _doors{};
 
