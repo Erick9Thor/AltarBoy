@@ -50,6 +50,7 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	melee.name = "Melee";
 	melee.bullet = common_bullet;
 	melee.color = float4(255.0f, 0.0f, 0.0f, 255.0f);
+	melee.unlimited = true;
 	melee.attacks.push_back(GetAttackType(AttackType::COMMON_1));
 	melee.attacks.push_back(GetAttackType(AttackType::COMMON_2));
 	melee.attacks.push_back(GetAttackType(AttackType::COMMON_3));
@@ -58,6 +59,8 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	claw.name = "Claw";
 	claw.bullet = common_bullet;
 	claw.color = float4(0.0f, 0.0f, 255.0f, 255.0f);
+	claw.unlimited = false;
+	claw.charges = 5;
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_1));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_2));
 	claw.attacks.push_back(GetAttackType(AttackType::QUICK_3));
@@ -65,7 +68,9 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	Weapon sword;
 	sword.name = "Sword";
 	sword.bullet = common_bullet;
-	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);;
+	sword.color = float4(0.0f, 255.0f, 0.0f, 255.0f);
+	sword.unlimited = false;
+	sword.charges = 5;
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_1));
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_2));
 	sword.attacks.push_back(GetAttackType(AttackType::HEAVY_3));
@@ -74,7 +79,6 @@ Hachiko::Scripting::PlayerController::PlayerController(GameObject* game_object)
 	weapons.push_back(claw);
 	weapons.push_back(sword);
 
-	_current_weapon = 0;
 	_current_cam_setting = 0;
 }
 
@@ -124,17 +128,13 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	_combat_stats->_current_hp = _combat_stats->_max_hp;
 
 
-	if (!_ammo_cell_1 || !_ammo_cell_2 || !_ammo_cell_3 || !_ammo_cell_4)
-	{
-		HE_LOG("Error loading Ammo Cells UI");
-		return;
-	}
-
 	ammo_cells.push_back(_ammo_cell_1);
 	ammo_cells.push_back(_ammo_cell_2);
 	ammo_cells.push_back(_ammo_cell_3);
 	ammo_cells.push_back(_ammo_cell_4);
 	_ammo_count = MAX_AMMO;
+
+	_weapon_charge_bar = _weapon_charge_bar_go->GetComponent<ComponentProgressBar>();
 
 	// First position and rotation set if no camera is found
 	_cam_positions.push_back(float3(0.0f, 19.0f, 13.0f));
@@ -158,6 +158,8 @@ void Hachiko::Scripting::PlayerController::OnAwake()
 	hp_cells.push_back(_hp_cell_2);
 	hp_cells.push_back(_hp_cell_3);
 	hp_cells.push_back(_hp_cell_4);
+
+	ChangeWeapon(0);
 }
 
 void Hachiko::Scripting::PlayerController::OnStart()
@@ -464,8 +466,15 @@ void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& 
 void Hachiko::Scripting::PlayerController::MeleeAttack()
 {
 	_state = PlayerState::MELEE_ATTACKING;
-	const Weapon& weapon = GetCurrentWeapon();
+	Weapon& weapon = GetCurrentWeapon();
 	const PlayerAttack& attack = GetNextAttack();
+	if (!weapon.unlimited && _attack_charges)
+	{
+		_attack_charges--;
+	}
+
+	UpdateWeaponChargeUI();
+
 	_attack_current_duration = attack.duration;
 	_after_attack_timer = attack.cooldown + _combo_grace_period;
 	
@@ -501,8 +510,20 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	_attack_indicator->ChangeEmissiveColor(attack_color, attack.duration, true);
 }
 
-void Hachiko::Scripting::PlayerController::ChangeGOWeapon()
+void Hachiko::Scripting::PlayerController::ChangeWeapon(unsigned weapon_idx)
 {
+	_current_weapon = weapon_idx;
+	
+	if (weapon_idx >= weapons.size())
+	{
+		_current_weapon = 0;
+	}
+	_attack_charges = GetCurrentWeapon().charges;
+	_weapon_charge_bar->SetMax(_attack_charges);
+	_weapon_charge_bar->SetMin(0);
+
+	UpdateWeaponChargeUI();
+
 	if (_current_weapon == 0) { // MELEE
 		_claw_weapon->SetActive(false);
 		_sword_upper->SetActive(false);
@@ -572,7 +593,7 @@ bool Hachiko::Scripting::PlayerController::IsInComboWindow() const
 	return _after_attack_timer > 0;
 }
 
-const Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon() const
+Hachiko::Scripting::PlayerController::Weapon& Hachiko::Scripting::PlayerController::GetCurrentWeapon()
 {
 	return weapons[_current_weapon];
 }
@@ -595,7 +616,7 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 	return GetCurrentAttack();
 }
 
-const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::PlayerController::GetCurrentAttack() const
+const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::PlayerController::GetCurrentAttack()
 {
 	return GetCurrentWeapon().attacks[_attack_idx];
 }
@@ -930,6 +951,12 @@ void Hachiko::Scripting::PlayerController::AttackController()
 		// Melee attack
 		_attack_indicator->SetActive(false);
 		
+		Weapon& weapon = GetCurrentWeapon();
+		if (!weapon.unlimited && !_attack_charges)
+		{
+			ChangeWeapon(0);
+		}
+			
 		// When attack is over
 		_state = PlayerState::IDLE;
 	}
@@ -983,14 +1010,12 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 					UpdateHealthBar();
 
 					// Select a random weapon:
-					_current_weapon = RandomUtil::RandomIntBetween(0, weapons.size() - 1);
+					ChangeWeapon(RandomUtil::RandomIntBetween(1, weapons.size() - 1));
 					break;
 				}
 			}
 		}
 	}
-	
-	ChangeGOWeapon();
 }
 
 void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, float knockback, float3 direction)
@@ -1202,6 +1227,18 @@ void Hachiko::Scripting::PlayerController::UpdateAmmoUI()
 			ammo_cells[i]->GetComponent(Component::Type::IMAGE)->Enable();
 		}
 	}
+}
+
+void Hachiko::Scripting::PlayerController::UpdateWeaponChargeUI()
+{
+	Weapon& weapon = GetCurrentWeapon();
+	if (weapon.unlimited)
+	{
+		_weapon_charge_bar_go->SetActive(false);
+		return;
+	}
+	_weapon_charge_bar_go->SetActive(true);
+	_weapon_charge_bar->SetFilledValue(_attack_charges);
 }
 
 void Hachiko::Scripting::PlayerController::ToggleGodMode()
