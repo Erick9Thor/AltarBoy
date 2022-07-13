@@ -32,14 +32,16 @@ namespace Hachiko
 			bool isAlive() { return _stats->IsAlive(); };
 
 		private:
+			void SetVisible(bool v);
+			void ResetCrystal();
 			void DestroyCrystal();
+			void RegenCrystal();
 
 		public:
 			Stats* _stats;
 
 		private:
 			ComponentTransform* transform;
-			SERIALIZE_FIELD(GameObject*, _player);
 
 			SERIALIZE_FIELD(GameObject*, _explosion_crystal);
 			SERIALIZE_FIELD(GameObject*, _static_crystal);
@@ -51,13 +53,17 @@ namespace Hachiko
 			SERIALIZE_FIELD(float, _explosion_radius);
 			SERIALIZE_FIELD(float, _timer_explosion);
 			SERIALIZE_FIELD(bool, _explosive_crystal);
+			SERIALIZE_FIELD(float, _regen_time);
 
 			ComponentAudioSource* _audio_source;
 			bool is_destroyed = false;
 			bool is_exploding = false;
+			bool visible = false;
+			float _current_regen_time = 0.f;
+			float _current_explosion_timer = 0.f;
 
 			math::float3 _player_pos;
-			float explosion_duration;
+			
 
 			GameObject* enemies;
 		};

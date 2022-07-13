@@ -7,7 +7,6 @@
 
 Hachiko::Scripting::Spawner::Spawner(GameObject* game_object)
 	: Script(game_object, "Spawner")
-	, _combat_manager(nullptr)
 	, _enemy_pack(nullptr)
 	, _player(nullptr)
 {
@@ -15,9 +14,10 @@ Hachiko::Scripting::Spawner::Spawner(GameObject* game_object)
 
 void Hachiko::Scripting::Spawner::OnAwake()
 {
-	if (_combat_manager)
-	{
-		_combat_manager_script = _combat_manager->GetComponent<CombatManager>();
+	_combat_manager_script = Scenes::GetCombatManager()->GetComponent<CombatManager>();
+	_player = Scenes::GetPlayer();
+	if (_enemy_pack) {
+		_enemy_pack->SetActive(false);
 	}
 }
 
@@ -30,7 +30,7 @@ void Hachiko::Scripting::Spawner::OnUpdate()
 	if (_player && _combat_manager_script && _enemy_pack)
 	{
 		float distance = Distance(game_object->GetTransform()->GetGlobalPosition(), _player->GetTransform()->GetGlobalPosition());
-		if (distance < 5.0f)
+		if (distance < 3.0f)
 		{
 			_combat_manager_script->ActivateEnemyPack(_enemy_pack);
 			game_object->SetActive(false);

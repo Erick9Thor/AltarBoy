@@ -268,6 +268,7 @@ void Hachiko::GeometryBatch::ClearDrawList()
     components.clear();
     transforms.clear();
     //TODO: clear texture batch
+    texture_batch->Clear();
     palettes.clear();
     palettes_per_instance.clear();
 }

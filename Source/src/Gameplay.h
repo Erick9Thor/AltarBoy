@@ -483,3 +483,8 @@ namespace Hachiko::Navigation
     HACHIKO_API math::float3 GetCorrectedPosition(const math::float3& position, const math::float3& extents);
     HACHIKO_API void CorrectPosition(math::float3& position, const math::float3& extents);
 } // namespace Hachiko::Navigation
+
+namespace Hachiko::FileUtility
+{
+    HACHIKO_API const std::string& GetWorkingDirectory();
+} // namespace Hachiko::FileSystem

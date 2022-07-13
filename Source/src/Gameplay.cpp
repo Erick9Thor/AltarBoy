@@ -8,6 +8,7 @@
 #include "Gameplay.h"
 #include "modules/ModuleNavigation.h"
 #include "modules/ModuleDebugDraw.h"
+#include "utils/FileSystem.h"
 #include "debugdraw.h"
 
 #include "components/ComponentAgent.h"
@@ -196,17 +197,19 @@ void Hachiko::Editor::ShowGameObjectDragDropArea(const char* field_name,
 {
     changed = false;
 
-    if ((*game_object) != nullptr)
+    if ((*game_object) != nullptr && game_object != nullptr)
     {
         ImGui::Text((*game_object)->GetName().c_str());
         
         ImGui::SameLine();
         
+        ImGui::PushID(StringUtils::Concat(field_type, "@", field_name, ":CloseButton").c_str());
         if (ImGui::Button("X"))
         {
             *game_object = nullptr;
             changed = true;
         }
+        ImGui::PopID();
         
         ImGui::SameLine();
     }
@@ -343,6 +346,15 @@ math::float3 Hachiko::Navigation::GetCorrectedPosition(const math::float3& posit
 void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::float3& extents)
 {
     return App->navigation->CorrectPosition(position, extents);
+}
+
+/*---------------------------------------------------------------------------*/
+
+/*PROPERTIES-----------------------------------------------------------------*/
+
+HACHIKO_API const std::string& Hachiko::FileUtility::GetWorkingDirectory()
+{
+    return App->file_system.GetWorkingDirectory();
 }
 
 /*---------------------------------------------------------------------------*/

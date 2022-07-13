@@ -62,6 +62,8 @@ namespace Hachiko
         void UpdateBatch(int segment, const std::vector<const ComponentMeshRenderer*>& components, unsigned component_count);
         void BindBatch(int segment, const Program* program, unsigned component_count);
 
+        void Clear();
+
         void ImGuiWindow();
 
     private:
