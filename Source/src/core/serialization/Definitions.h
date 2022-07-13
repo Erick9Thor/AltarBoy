@@ -355,5 +355,10 @@
 #define RENDERER_MATERIAL_ID "material_id"
 #define RENDERER_TINT_COLOR "tint_color"
 
+// ComponentVideo
+#define VIDEO_ID "video_id"
+#define VIDEO_FULLSCREEN "fullscreen"
+#define VIDEO_PROJECTED "projected"
+
 // Script
 #define SCRIPT_NAME "class_name"

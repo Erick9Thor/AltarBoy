@@ -117,10 +117,22 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
 
 void Hachiko::ComponentVideo::Save(YAML::Node& node) const
 {
+    node.SetTag("video");
+    node[VIDEO_ID] = video != nullptr ? video->GetID() : 0;
+    node[VIDEO_PROJECTED] = projected;
+    node[VIDEO_FULLSCREEN] = fullscreen;
+
 }
 
 void Hachiko::ComponentVideo::Load(const YAML::Node& node)
 {
+    if (node[VIDEO_ID].IsDefined() && node[VIDEO_ID].as<UID>() != 0)
+    {
+        video = static_cast<ResourceVideo*>(App->resources->GetResource(Resource::Type::VIDEO, node[VIDEO_ID].as<UID>()));
+    }
+
+    projected = node[VIDEO_PROJECTED].IsDefined() ? node[VIDEO_PROJECTED].as<bool>() : projected;
+    fullscreen = node[VIDEO_FULLSCREEN].IsDefined() ? node[VIDEO_FULLSCREEN].as<bool>() : fullscreen;
 }
 
 void Hachiko::ComponentVideo::Play()
@@ -143,7 +155,6 @@ void Hachiko::ComponentVideo::BindCVMat2GLTexture(cv::Mat& frame)
 {
     if (frame.empty())
     {
-        HE_LOG("ComponentVideo - Empty image");
         return;
     }
 
@@ -176,9 +187,19 @@ bool Hachiko::ComponentVideo::IsPlaying()
 
 void Hachiko::ComponentVideo::SetProjectionMatrices(const ComponentCamera* camera, const Program* program)
 {
+    float4x4 global_matrix = game_object->GetComponent<ComponentTransform>()->GetGlobalMatrix();
+    
+    if (fullscreen)
+    {
+        float3 scale = float3::one;
+        scale.x = App->window->GetWidth() / frame.cols;
+        scale.y = App->window->GetHeight() / frame.rows;
+        global_matrix.Scale(scale);
+    }
+
     if (projected)
     {
-        program->BindUniformFloat4x4("model", game_object->GetComponent<ComponentTransform>()->GetGlobalMatrix().ptr());
+        program->BindUniformFloat4x4("model", global_matrix.ptr());
         program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
         program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
         program->BindUniformInt("ignore_camera", 0);
@@ -248,7 +269,7 @@ void Hachiko::ComponentVideo::CaptureVideo()
 
     if (!video_capture.isOpened())
     {
-        HE_LOG("ComponentVideo - Error while loading video capture");
+        HE_LOG("Error while loading video capture");
         RemoveVideo();
     }
 }
