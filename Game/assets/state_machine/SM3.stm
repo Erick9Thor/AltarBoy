@@ -268,7 +268,7 @@ transitions:
   - transition_source: death
     transition_target: idle
     transition_trigger: isIdle
-    transition_blend: 300
+    transition_blend: 0
   - transition_source: idle
     transition_target: death
     transition_trigger: isDead
@@ -288,4 +288,12 @@ transitions:
   - transition_source: run
     transition_target: fall
     transition_trigger: isFalling
+    transition_blend: 300
+  - transition_source: run
+    transition_target: shot
+    transition_trigger: isShot
+    transition_blend: 300
+  - transition_source: shot
+    transition_target: run
+    transition_trigger: isRun
     transition_blend: 300
