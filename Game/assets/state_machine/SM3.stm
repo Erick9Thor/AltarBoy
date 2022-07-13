@@ -206,6 +206,14 @@ transitions:
     transition_target: swordThree
     transition_trigger: isSwordThree
     transition_blend: 300
+  - transition_source: run
+    transition_target: shot
+    transition_trigger: isShot
+    transition_blend: 300
+  - transition_source: run
+    transition_target: dash
+    transition_trigger: isDash
+    transition_blend: 300
   - transition_source: idle
     transition_target: fall
     transition_trigger: isFalling
