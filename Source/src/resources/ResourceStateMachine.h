@@ -26,6 +26,12 @@ namespace Hachiko
         void EditClipLoop(const std::string& name, bool newLoop);
         void SetClipName(unsigned int index, const std::string& name)
         {
+            // None is a reserved name for clips
+            if (name == "none")
+            {
+                return;
+            }
+
             clips[index].name = name;
         }
 
