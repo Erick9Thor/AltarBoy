@@ -144,6 +144,8 @@ namespace Hachiko
 			// Actions called by handle input
 			void Dash();
 			void CorrectDashDestination(const float3& dash_source, float3& dash_destination);
+			void StoreDashOrigin(const float3& dash_origin);
+			float3 GetLastValidDashOrigin();
 			void MeleeAttack();
 			void ChangeWeapon(unsigned weapon_idx);
 			void RangedAttack();
@@ -228,7 +230,6 @@ namespace Hachiko
 			ComponentParticleSystem* _walking_dust_particles = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_1 = nullptr;
 			ComponentParticleSystem* _heal_effect_particles_2 = nullptr;
-
 			
 			std::vector<Weapon> weapons{};
 
@@ -246,6 +247,8 @@ namespace Hachiko
 			float3 _dash_start = float3::zero;
 			float3 _dash_end = float3::zero;
 			float3 _dash_direction = float3::zero;
+			const unsigned max_dashed_from_positions = 5;
+			std::deque<float3> dashed_from_positions;
 
 			float3 _trail_start_pos = float3::zero;
 			float3 _trail_start_scale = float3::zero;

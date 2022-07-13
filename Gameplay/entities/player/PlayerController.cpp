@@ -421,6 +421,8 @@ void Hachiko::Scripting::PlayerController::Dash()
 	_dash_start = _player_position;
 	_current_dash_duration = _dash_duration;
 
+	StoreDashOrigin(_dash_start);
+
 	// If we are not inputing any direction default to player orientation
 	if (_movement_direction.Equals(float3::zero))
 	{
@@ -461,6 +463,31 @@ void Hachiko::Scripting::PlayerController::CorrectDashDestination(const float3& 
 	{
 		dash_destination = corrected_dash_destination;
 	}
+}
+
+void Hachiko::Scripting::PlayerController::StoreDashOrigin(const float3& dash_origin)
+{
+	dashed_from_positions.push_back(dash_origin);
+	while (dashed_from_positions.size() > max_dashed_from_positions)
+	{
+		dashed_from_positions.pop_front();
+	}
+}
+
+float3 Hachiko::Scripting::PlayerController::GetLastValidDashOrigin()
+{
+	float3 valid_pos(FLT_MAX);
+
+	while (!dashed_from_positions.empty())
+	{
+		valid_pos = GetCorrectedPosition(dashed_from_positions.back());
+		if (valid_pos.x < FLT_MAX)
+		{
+			return valid_pos;
+		}
+		dashed_from_positions.pop_back();
+	}
+	return valid_pos;
 }
 
 void Hachiko::Scripting::PlayerController::MeleeAttack()
@@ -703,7 +730,7 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
-			_player_position = Navigation::GetCorrectedPosition(_dash_start, float3(5.0f, 5.0f, 5.0f));
+			_player_position = GetLastValidDashOrigin();
 			if (_player_position.x >= FLT_MAX)
 			{
 				_level_manager->Respawn(this);
