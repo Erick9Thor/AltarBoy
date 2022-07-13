@@ -90,13 +90,14 @@ namespace Hachiko
 			PlayerState GetState() const;
 
 			void CheckGoal(const float3& current_position);
-			void RegisterHit(float damage_received, float knockback = 0, math::float3 direction = float3::zero);
+			void RegisterHit(int damage, float knockback = 0, math::float3 direction = float3::zero);
 			void UpdateHealthBar();
 			void UpdateAmmoUI();
 			void UpdateWeaponChargeUI();
 			void ToggleGodMode();
 
-			bool IsAlive() { return _combat_stats->_current_hp > 0; }
+			bool IsAlive() const { return _combat_stats->_current_hp > 0; }
+			int GetCurrentHp() const { return _combat_stats->_current_hp; }
 			bool _isInDebug = false;
 
 			int GetAttackIndex() const

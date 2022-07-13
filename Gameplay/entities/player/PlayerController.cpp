@@ -730,11 +730,24 @@ void Hachiko::Scripting::PlayerController::MovementController()
 
 		if (_start_fall_pos.y - _player_position.y > _falling_distance)
 		{
+			// If the player is going to die falling respawn him
+			if (GetCurrentHp() == 1)
+			{
+				_level_manager->Respawn(this);
+				_state = PlayerState::IDLE;
+				return;
+			}
+
+			// Fall dmg
+			RegisterHit(1);
+
+			// If its still alive place it in the first valid position, if none exists respawn it
 			_player_position = GetLastValidDashOrigin();
 			if (_player_position.x >= FLT_MAX)
 			{
 				_level_manager->Respawn(this);
 			}
+			_state = PlayerState::IDLE;
 		}
 	}
 	else if (IsStunned())
@@ -1045,7 +1058,7 @@ void Hachiko::Scripting::PlayerController::PickupParasite(const float3& current_
 	}
 }
 
-void Hachiko::Scripting::PlayerController::RegisterHit(float damage_received, float knockback, float3 direction)
+void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, float knockback, float3 direction)
 {
 	if (_god_mode)
 	{
