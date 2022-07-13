@@ -671,6 +671,9 @@
     <ClCompile Include="src\components\ComponentVideo.cpp">
       <Filter>Core\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\resources\ResourceVideo.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2517,6 +2520,9 @@
     </ClInclude>
     <ClInclude Include="src\components\ComponentVideo.h">
       <Filter>Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resources\ResourceVideo.h">
+      <Filter>Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

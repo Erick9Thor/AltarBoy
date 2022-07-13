@@ -35,6 +35,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredLightingPassProgram();
     CreateShadowMappingProgram();
     CreateParticleProgram();
+    CreateVideoProgram();
 
     if (!forward_program || !deferred_geometry_program || 
         !deferred_lighting_program || !skybox_program || 
@@ -238,6 +239,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
     shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
 
     return shadow_mapping_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateVideoProgram()
+{
+    video_program = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
+    return video_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)

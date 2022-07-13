@@ -105,6 +105,7 @@
 #define SKYBOX_EXTENSION ".hdr"
 #define FONT_EXTENSION ".ttf"
 #define STATE_MACHINE_EXTENSION ".stm"
+#define MP4_VIDEO_EXTENSION ".mp4"
  
 //////////////////////////
 //						//

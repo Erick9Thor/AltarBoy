@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\resources\ResourceVideo.cpp" />
     <ClCompile Include="src\components\ComponentVideo.cpp" />
     <ClCompile Include="src\core\rendering\ShadowManager.cpp" />
     <ClCompile Include="src\core\particles\modifiers\NoiseParticleModifier.cpp" />
@@ -699,6 +700,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\resources\ResourceVideo.h" />
     <ClInclude Include="src\components\ComponentVideo.h" />
     <ClInclude Include="src\utils\RandomUtilDefinitions.h" />
     <ClInclude Include="resource.h" />
