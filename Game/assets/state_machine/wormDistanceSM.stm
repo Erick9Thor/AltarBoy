@@ -1,6 +1,9 @@
 name: wormDistanceSM
 default_node: 0
 clips:
+  - clip_name: none
+    clips_id: 0
+    clips_loop: false
   - clip_name: Appear
     clips_id: 11790258715251408842
     clips_loop: false
