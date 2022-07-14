@@ -385,4 +385,3 @@ Game/*.scene
 Game/library/*
 Game/settings/he.cfg
 Game/assets/models/large/*.fbx
-Game/opencv_world420d.dll

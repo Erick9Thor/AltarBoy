@@ -15,6 +15,6 @@ out vec2 uv0;
 void main()
 {
 
-	gl_Position = (camera.proj * camera.view * model * vec4(in_position.xyz , 1.0)) * (1 - ignore_camera) + vec4(in_position.xyz , 1.0) * ignore_camera;
+	gl_Position = (camera.proj * camera.view * model * vec4(in_position.xyz , 1.0)) * (1 - ignore_camera) + model * vec4(in_position.xyz , 1.0) * ignore_camera;
 	uv0 = in_tex_coord;
 }
