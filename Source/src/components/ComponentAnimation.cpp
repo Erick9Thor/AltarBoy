@@ -80,7 +80,7 @@ void Hachiko::ComponentAnimation::SendTrigger(const std::string& trigger)
             return;
         }
         // If not we check if nodes starting with "ANY" have a transition with said trigger
-        if (state_machine->GetTransitionSource(i).rfind("ANY", 0) != std::string::npos)
+        if (state_machine->GetTransitionSource(i).rfind(state_machine->any_state_node_name, 0) != std::string::npos)
         {
             transition_in_any = i;
         }
@@ -188,7 +188,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 std::vector<UID> uids = App->resources->CreateAsset(Resource::Type::STATE_MACHINE, auxiliary_name);
                 state_machine = static_cast<ResourceStateMachine*>(App->resources->GetResource(Resource::Type::STATE_MACHINE, uids[0]));
                 // Once a new state machine is added a "none" clip is added to it
-                state_machine->AddClip("none", 0, false);
+                state_machine->AddClip(state_machine->none_clip_name, 0, false);
                 ImGui::CloseCurrentPopup();
             }
             ImGui::EndPopup();
@@ -227,7 +227,7 @@ void Hachiko::ComponentAnimation::DrawGui()
                 strcpy_s(name, state_machine->GetClipName(clip_idx).c_str());
 
                 // Don't show clip "none"
-                if (strcmp(name, "none") == 0)
+                if (strcmp(name, state_machine->none_clip_name) == 0)
                 {
                     ++clip_idx;
                     continue;

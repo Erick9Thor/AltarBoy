@@ -424,9 +424,9 @@ void Hachiko::WindowStateMachine::AddAnimationNode(unsigned int index)
     std::string clip = r_state_machine->GetClipName(index);
     std::string name;
 
-    if (clip == "none")
+    if (clip == r_state_machine->none_clip_name)
     {
-        name = "ANY";
+        name = r_state_machine->any_state_node_name;
     }
     else
     {

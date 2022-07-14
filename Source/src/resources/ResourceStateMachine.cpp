@@ -39,7 +39,7 @@ int Hachiko::ResourceStateMachine::FindClip(const std::string& name) const
 {
     int index = 0;
     // Return if it has no clips
-    if (name == "none")
+    if (name == none_clip_name)
     {
         return clips.size();
     }
