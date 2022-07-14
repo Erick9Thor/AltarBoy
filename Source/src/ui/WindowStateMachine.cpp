@@ -399,6 +399,12 @@ void Hachiko::WindowStateMachine::ShowHelp()
         ImGui::Separator();
         ImGui::BulletText("ESC to close a menu.");
         ImGui::Separator();
+        ImGui::Text("Notes:");
+        ImGui::Text("If you select \"none\" as the animation clip a node \"ANY\" will be created.");
+        ImGui::Text("\"ANY\" nodes will have their output transitions checked at every trigger.");
+        ImGui::Text("\"ANY\" outputs will have the lowest priority over other transitions with");
+        ImGui::Text("the same trigger.");
+        ImGui::Separator();
         ImGui::Text("Node legend:           ______________________");
         //ImGui::Text("                      |       Node name      |");
         ImGui::Text("                      |      ");
