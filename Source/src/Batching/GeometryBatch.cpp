@@ -182,6 +182,7 @@ void Hachiko::GeometryBatch::UpdateBatch(int segment)
 {
     // Update transforms, palletes, palletes_per_instance data
     transforms.reserve(components.size());
+
     if (batch->layout.bones)
     {
         palettes_per_instance.reserve(components.size());
@@ -214,6 +215,9 @@ void Hachiko::GeometryBatch::UpdateBatch(int segment)
         }
     }
 
+    // Wait for synchronization manually if it's enabled:
+    WaitSync(segment);
+
     // Update persistent buffers
     memcpy(&transform_buffer_data[component_count * segment], transforms.data(), transforms.size() * sizeof(float4x4));
     if (batch->layout.bones)
@@ -224,6 +228,39 @@ void Hachiko::GeometryBatch::UpdateBatch(int segment)
 
     // Update texture batch
     texture_batch->UpdateBatch(segment, components, component_count);
+}
+
+void Hachiko::GeometryBatch::FenceSync(int segment) 
+{
+#ifdef BATCHING_SYNCED
+    // Correct the segment in case user feeds a segment index higher than 
+    // max_segments - 1:
+    int corrected_segment = segment % BatchingProperties::MAX_SEGMENTS;
+
+    glDeleteSync(buffer_syncs[corrected_segment]);
+    buffer_syncs[corrected_segment] = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+#endif
+}
+
+void Hachiko::GeometryBatch::WaitSync(int segment) 
+{
+#ifdef BATCHING_SYNCED
+    // Correct the segment in case user feeds a segment index higher than
+    // max_segments - 1:
+    int corrected_segment = segment % BatchingProperties::MAX_SEGMENTS;
+
+    if (buffer_syncs[corrected_segment] == nullptr)
+    {
+        return;
+    }
+
+    // Block the main cpu thread until the wait for sync is going on:
+    GLenum waitReturn = GL_UNSIGNALED;
+    while (waitReturn != GL_ALREADY_SIGNALED && waitReturn != GL_CONDITION_SATISFIED)
+    {
+        waitReturn = glClientWaitSync(buffer_syncs[corrected_segment], GL_SYNC_FLUSH_COMMANDS_BIT, 1);
+    }
+#endif // BATCHING_SYNCED
 }
 
 void Hachiko::GeometryBatch::BindBatch(int segment, const Program* program)
@@ -375,16 +412,16 @@ void Hachiko::GeometryBatch::GenerateBuffers()
 {
     //glDeleteBuffers(1, &transform_buffer);
     transform_buffer_data = static_cast<float4x4*>(
-        App->program->CreatePersistentBuffers(transform_buffer, static_cast<int>(ModuleProgram::BINDING::MODEL), BatchManager::max_segments * component_count * sizeof(float4x4)));
+        App->program->CreatePersistentBuffers(transform_buffer, static_cast<int>(ModuleProgram::BINDING::MODEL), BatchingProperties::MAX_SEGMENTS * component_count * sizeof(float4x4)));
     if (batch->layout.bones)
     {
         //glDeleteBuffers(1, &palettes_buffer);
         palettes_buffer_data = static_cast<float4x4*>(
-            App->program->CreatePersistentBuffers(palettes_buffer, static_cast<int>(ModuleProgram::BINDING::PALETTE), BatchManager::max_segments * component_palette_count * sizeof(float4x4)));
+            App->program->CreatePersistentBuffers(palettes_buffer, static_cast<int>(ModuleProgram::BINDING::PALETTE), BatchingProperties::MAX_SEGMENTS * component_palette_count * sizeof(float4x4)));
         //glDeleteBuffers(1, &palettes_per_instances_buffer);
         palettes_per_instances_buffer_data = static_cast<PalettePerInstance*>(App->program->CreatePersistentBuffers(palettes_per_instances_buffer,
                                                                                                                     static_cast<int>(ModuleProgram::BINDING::PALETTE_PER_INSTANCE),
-                                                                                                                    BatchManager::max_segments * component_count * sizeof(PalettePerInstance)));
+                                                                                                                    BatchingProperties::MAX_SEGMENTS * component_count * sizeof(PalettePerInstance)));
     }
 }
 

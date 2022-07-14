@@ -114,7 +114,7 @@ void Hachiko::BatchManager::DrawOpaqueBatches(const Program* program)
         DrawSingleBatch(geometry_batch, program, opaque_buffers_segment);
     }
 
-    opaque_buffers_segment = (opaque_buffers_segment + 1) % BatchManager::max_segments;
+    opaque_buffers_segment = (opaque_buffers_segment + 1) % BatchingProperties::MAX_SEGMENTS;
 }
 
 void Hachiko::BatchManager::DrawTransparentBatches(const Program* program) 
@@ -124,7 +124,7 @@ void Hachiko::BatchManager::DrawTransparentBatches(const Program* program)
         DrawSingleBatch(geometry_batch, program, transparent_buffers_segment);
     }
 
-    transparent_buffers_segment = (transparent_buffers_segment + 1) % BatchManager::max_segments;
+    transparent_buffers_segment = (transparent_buffers_segment + 1) % BatchingProperties::MAX_SEGMENTS;
 }
 
 void Hachiko::BatchManager::ClearOpaqueBatchesDrawList()
@@ -200,4 +200,7 @@ void Hachiko::BatchManager::DrawSingleBatch(GeometryBatch* geometry_batch, const
     glBindBuffer(GL_DRAW_INDIRECT_BUFFER, geometry_batch->indirect_buffer_id); // should not be necesary (bind it before)
     glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, geometry_batch->GetCommandAmount(), 0);
     glBindVertexArray(0);
+
+    // Fence sync if manual sync waiting is enabled:
+    geometry_batch->FenceSync(segment);
 }

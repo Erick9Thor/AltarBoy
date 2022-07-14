@@ -2,6 +2,7 @@
 
 #include "GeometryBatch.h"
 #include "TextureBatch.h"
+#include "BatchingProperties.h"
 
 #include <vector>
 
@@ -31,8 +32,6 @@ namespace Hachiko
         void CleanUp();
 
         void DebugMenu();
-
-        static const int max_segments = 2;
 
     private:
         void ShowDebugMenuForBatches(const std::vector<GeometryBatch*>& batches) const;

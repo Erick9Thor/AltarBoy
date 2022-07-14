@@ -2,6 +2,7 @@
 
 #include "resources/ResourceMesh.h"
 #include "DrawCommand.h"
+#include "BatchingProperties.h"
 
 #include <vector>
 
@@ -41,6 +42,8 @@ namespace Hachiko
 
         void UpdateCommands();
         void UpdateBatch(int segment);
+        void FenceSync(int segment);
+        void WaitSync(int segment);
         void BindBatch(int segment, const Program* program);
 
         void ImGuiWindow();
@@ -76,6 +79,7 @@ namespace Hachiko
         unsigned palettes_buffer;
         unsigned palettes_per_instances_buffer;
 
+        GLsync buffer_syncs[BatchingProperties::MAX_SEGMENTS] = {};
         float4x4* transform_buffer_data = nullptr;
         float4x4* palettes_buffer_data = nullptr;
         PalettePerInstance* palettes_per_instances_buffer_data = nullptr;

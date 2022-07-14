@@ -175,7 +175,7 @@ void Hachiko::TextureBatch::BuildBatch(unsigned component_count)
 
     //glDeleteBuffers(1, &material_buffer);
     material_buffer_data = static_cast<Material*>(
-        App->program->CreatePersistentBuffers(material_buffer, static_cast<int>(ModuleProgram::BINDING::MATERIAL), BatchManager::max_segments * component_count * sizeof(Material)));
+        App->program->CreatePersistentBuffers(material_buffer, static_cast<int>(ModuleProgram::BINDING::MATERIAL), BatchingProperties::MAX_SEGMENTS * component_count * sizeof(Material)));
 
     loaded = true;
 }
