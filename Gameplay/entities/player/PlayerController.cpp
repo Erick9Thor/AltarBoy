@@ -233,6 +233,14 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	else
 	{
 		_state = PlayerState::DIE;
+		// By checking previous state we know that the current animation is the correct one
+		if (_previous_state == PlayerState::DIE && animation->IsAnimationStopped())
+		{
+			_level_manager->Respawn(this);
+
+			// Apply the position after the current position is set to the respawn position
+			_player_transform->SetGlobalPosition(_player_position);
+		}
 	}
 
 	CheckState();
