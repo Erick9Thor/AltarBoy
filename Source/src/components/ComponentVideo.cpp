@@ -72,7 +72,6 @@ void Hachiko::ComponentVideo::DrawGui()
         }
 
         Widgets::Checkbox("Projected", &projected);
-        Widgets::Checkbox("Fullsceen", &fullscreen);
     }
     ImGui::PopID();
 
@@ -126,7 +125,6 @@ void Hachiko::ComponentVideo::Save(YAML::Node& node) const
     node.SetTag("video");
     node[VIDEO_ID] = video != nullptr ? video->GetID() : 0;
     node[VIDEO_PROJECTED] = projected;
-    node[VIDEO_FULLSCREEN] = fullscreen;
 
 }
 
@@ -138,7 +136,6 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
     }
 
     projected = node[VIDEO_PROJECTED].IsDefined() ? node[VIDEO_PROJECTED].as<bool>() : projected;
-    fullscreen = node[VIDEO_FULLSCREEN].IsDefined() ? node[VIDEO_FULLSCREEN].as<bool>() : fullscreen;
 }
 
 void Hachiko::ComponentVideo::Play()
@@ -194,18 +191,8 @@ bool Hachiko::ComponentVideo::IsPlaying()
 void Hachiko::ComponentVideo::SetProjectionMatrices(const ComponentCamera* camera, const Program* program)
 {
     ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
-    float3 scale = transform->GetGlobalScale();
-
-    if (fullscreen)
-    {
-        scale.x = App->window->GetWidth() / (float)frame.cols;
-        scale.y = App->window->GetHeight() / (float)frame.rows;
-    }
-
-    float4x4 model_matrix = float4x4::FromTRS(transform->GetGlobalPosition(), transform->GetGlobalRotation(), scale);
-
     program->BindUniformInt("ignore_camera", projected ? 0 : 1);
-    program->BindUniformFloat4x4("model", model_matrix.ptr());
+    program->BindUniformFloat4x4("model", transform->GetGlobalMatrix().ptr());
     program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
     program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 }

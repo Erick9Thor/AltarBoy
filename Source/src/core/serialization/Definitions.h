@@ -357,7 +357,6 @@
 
 // ComponentVideo
 #define VIDEO_ID "video_id"
-#define VIDEO_FULLSCREEN "fullscreen"
 #define VIDEO_PROJECTED "projected"
 
 // Script

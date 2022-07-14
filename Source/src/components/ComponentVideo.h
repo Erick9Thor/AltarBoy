@@ -35,7 +35,6 @@ namespace Hachiko
     private:
         bool in_scene = false;
         bool projected = false;
-        bool fullscreen = false;
         unsigned int frame_texture = 0;
         float timestamp = 0.0f;
 
