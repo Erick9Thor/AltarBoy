@@ -136,7 +136,22 @@ Hachiko::GameObject* Hachiko::Scene::Raycast(const LineSegment& segment, bool tr
 
     for (GameObject* game_object : game_objects)
     {
-        if (parent_filter && parent_filter != game_object->parent) continue;
+        constexpr unsigned max_levels_search = 5;
+        if (parent_filter)
+        {
+            unsigned level = 0;
+            
+            GameObject* find_parent = game_object->parent;
+
+            while (find_parent && find_parent != parent_filter && level < max_levels_search)
+            {
+                find_parent = find_parent->parent;
+                ++level;
+            }
+
+            if (find_parent != parent_filter) continue;
+        }
+
         if (active_only && !game_object->IsActive()) continue;
         
         auto* mesh_renderer = game_object->GetComponent<ComponentMeshRenderer>();
