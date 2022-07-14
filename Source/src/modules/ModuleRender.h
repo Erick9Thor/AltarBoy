@@ -118,6 +118,11 @@ namespace Hachiko
             return particle_vao;
         }
 
+        [[nodiscard]] const unsigned& GetVideoVao() const
+        {
+            return video_vao;
+        }
+
         void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
             unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
             unsigned width, unsigned height, const Program* program) const;
@@ -198,5 +203,11 @@ namespace Hachiko
         unsigned particle_vbo;
         unsigned particle_ebo;
         unsigned particle_vao;
+
+        // Video
+        void GenerateVideoBuffers();
+        unsigned video_vbo;
+        unsigned video_ebo;
+        unsigned video_vao;
     };
 }

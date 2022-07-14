@@ -94,18 +94,24 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
     const Hachiko::Program* program = App->program->GetVideoProgram();
     program->Activate();
     glDepthMask(GL_FALSE);
-    
+
     if (IsPlaying())
     {
         // read() decodes and captures the next frame.
-        video_capture.read(frame);
-        cv::flip(frame, frame, 0);
+        if (video_capture.read(frame))
+        {
+            cv::flip(frame, frame, 0);
+        }
+        else
+        {
+            Stop();
+        }
     }
 
     BindCVMat2GLTexture(frame);
     SetProjectionMatrices(camera, program);
 
-    glBindVertexArray(App->renderer->GetParticleVao());
+    glBindVertexArray(App->renderer->GetVideoVao());
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
     // Clear
@@ -187,29 +193,21 @@ bool Hachiko::ComponentVideo::IsPlaying()
 
 void Hachiko::ComponentVideo::SetProjectionMatrices(const ComponentCamera* camera, const Program* program)
 {
-    float4x4 global_matrix = game_object->GetComponent<ComponentTransform>()->GetGlobalMatrix();
-    
+    ComponentTransform* transform = GetGameObject()->GetComponent<ComponentTransform>();
+    float3 scale = transform->GetGlobalScale();
+
     if (fullscreen)
     {
-        float3 scale = float3::one;
-        scale.x = App->window->GetWidth() / frame.cols;
-        scale.y = App->window->GetHeight() / frame.rows;
-        global_matrix.Scale(scale);
+        scale.x = App->window->GetWidth() / (float)frame.cols;
+        scale.y = App->window->GetHeight() / (float)frame.rows;
     }
 
-    if (projected)
-    {
-        program->BindUniformFloat4x4("model", global_matrix.ptr());
-        program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
-        program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
-        program->BindUniformInt("ignore_camera", 0);
-    }
-    else
-    {
-        float4x4 matrix = float4x4::identity;
-        program->BindUniformFloat4x4("model", matrix.ptr());
-        program->BindUniformInt("ignore_camera", 1);
-    }
+    float4x4 model_matrix = float4x4::FromTRS(transform->GetGlobalPosition(), transform->GetGlobalRotation(), scale);
+
+    program->BindUniformInt("ignore_camera", projected ? 0 : 1);
+    program->BindUniformFloat4x4("model", model_matrix.ptr());
+    program->BindUniformFloat4x4("view", &camera->GetViewMatrix()[0][0]);
+    program->BindUniformFloat4x4("proj", &camera->GetProjectionMatrix()[0][0]);
 }
 
 void Hachiko::ComponentVideo::AddVideo()
