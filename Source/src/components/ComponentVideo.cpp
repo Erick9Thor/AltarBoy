@@ -307,9 +307,8 @@ void Hachiko::ComponentVideo::DisplayControls()
     ImGui::Begin("Video", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse);
 
     ImGui::TextWrapped(go_label.c_str());
-    ImGui::Text("Playing time: %.1f s", time);
     ImGui::Text("Video fps: %.1f", video_capture.get(cv::CAP_PROP_FPS));
-    ImGui::Text("Capture timestamp: %.1f", video_capture.get(cv::CAP_PROP_POS_MSEC));
+    ImGui::Text("Playing time: %.1f", video_capture.get(cv::CAP_PROP_POS_MSEC) / 1000.0);
     ImGui::Text("Frame index: %.1f", video_capture.get(cv::CAP_PROP_POS_FRAMES));
 
     ImGui::Separator();
