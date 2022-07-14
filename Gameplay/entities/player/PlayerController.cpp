@@ -1215,6 +1215,10 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 	// Color
 	_player_geometry->ChangeTintColor(float4(1.0f, 1.0f, 1.0f, 1.0f), true);
 
+	// State
+	_state = PlayerState::IDLE;
+	_previous_state = PlayerState::INVALID;
+
 	ChangeGOWeapon();
 	UpdateHealthBar();
 	UpdateAmmoUI();
