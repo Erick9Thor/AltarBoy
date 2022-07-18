@@ -1296,10 +1296,6 @@ void Hachiko::Scripting::PlayerController::ResetPlayer(float3 spawn_pos)
 
 	// Dash
 	_dash_trail->SetActive(false);
-	_trail_start_pos = float3::zero;
-	_trail_start_scale = float3::zero;
-	_trail_end_pos = float3::zero;
-	_trail_end_scale = float3::zero;
 	_show_dashtrail = false;
 
 	// Attack management
