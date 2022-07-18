@@ -2512,6 +2512,7 @@
     <ClInclude Include="src\utils\RandomUtilDefinitions.h">
       <Filter>Core\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\Batching\BatchingProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
