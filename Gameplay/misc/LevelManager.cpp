@@ -32,14 +32,14 @@ void Hachiko::Scripting::LevelManager::SetEnemyCount(unsigned count)
 	_enemy_counter->SetText(std::to_string(count).c_str());
 }
 
-void Hachiko::Scripting::LevelManager::Respawn(PlayerController * player)
+float3 Hachiko::Scripting::LevelManager::Respawn()
 {
 	if (_last_gauntlet != nullptr && !_last_gauntlet->IsCompleted())
 	{
 		_last_gauntlet->ResetGauntlet();
 	}
 
-	player->ResetPlayer(GetRespawnPosition());
+	return GetRespawnPosition();
 
 	//Disable gauntlet ui
 }
