@@ -365,59 +365,61 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     batch_manager->ClearTransparentBatchesDrawList();
 
     // If forward pass is disabled on the settings, return:
-    if (!render_forward_pass)
+    if (render_forward_pass)
     {
-        return;
+        // Get transparent meshes:
+        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+
+        if (transparent_targets.size() > 0)
+        {
+            // Get the targets that has transparent materials. These targets will be
+            // rendered with regular forward rendering pass:
+            for (const RenderTarget& target : transparent_targets)
+            {
+                batch_manager->AddDrawComponent(target.mesh_renderer);
+            }
+
+            // Forward rendering pass for transparent game objects:
+            program = App->program->GetForwardProgram();
+            program->Activate();
+
+            EnableBlending();
+
+            //g_buffer.BindForDrawing();
+            //g_buffer.UnbindFogTextures();
+
+            batch_manager->DrawTransparentBatches(program);
+
+            DisableBlending();
+        }
     }
-
-    // Get transparent meshes:
-    const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
-
-    if (transparent_targets.size() <= 0)
-    {
-        return;
-    }
-    
-    // Get the targets that has transparent materials. These targets will be
-    // rendered with regular forward rendering pass:
-    for (const RenderTarget& target : transparent_targets)
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
-
-    // Forward rendering pass for transparent game objects:
-    program = App->program->GetForwardProgram();
-    program->Activate();
-
-    EnableBlending();
-
-    batch_manager->DrawTransparentBatches(program);
-
-    DisableBlending();
 
     // ----------------------------- FOG -----------------------------
 
-    program = App->program->GetFogProgram();
-    program->Activate();
+    if (render_fog)
+    {
+        program = App->program->GetFogProgram();
+        program->Activate();
 
-    EnableBlending();
+        EnableBlending();
 
-    const float3 fog_color(0.430f, 0.294f, 0.0215f);
-    const float fog_global_density = 0.02f;
-    const float fog_height_falloff = 0.2f;
-    program->BindUniformFloat3("fog_color", fog_color.ptr());
-    program->BindUniformFloat("fog_global_density", &fog_global_density);
-    program->BindUniformFloat("fog_height_falloff", &fog_height_falloff);
+        const float3 fog_color(0.430f, 0.294f, 0.0215f);
+        const float fog_global_density = 0.01f;
+        const float fog_height_falloff = 0.01f;
+        program->BindUniformFloat3("fog_color", fog_color.ptr());
+        program->BindUniformFloat("fog_global_density", &fog_global_density);
+        program->BindUniformFloat("fog_height_falloff", &fog_height_falloff);
 
-    // Bind all g-buffer textures:
-    g_buffer.BindForReading();
-    g_buffer.BindFogTextures();
+        // Bind all g-buffer textures:
+        g_buffer.BindForReading();
+        g_buffer.BindFogTextures();
 
-    RenderDeferredQuad();
-    glBindVertexArray(0);
-    
-    g_buffer.UnbindFogTextures();
-    DisableBlending();
+        RenderDeferredQuad();
+        glBindVertexArray(0);
+
+        g_buffer.UnbindFogTextures();
+        DisableBlending();
+    }
 
     // ----------------------------- POST PROCCESS -----------------------------
     
@@ -744,6 +746,8 @@ void Hachiko::ModuleRender::DeferredOptions()
     {
         App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
     }
+
+    ImGui::Checkbox("Fog", &render_fog);
 
     ImGui::NewLine();
 
