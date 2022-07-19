@@ -397,10 +397,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // ----------------------------- FOG -----------------------------
 
-    EnableBlending();
-
     program = App->program->GetFogProgram();
     program->Activate();
+
+    EnableBlending();
 
     const float3 fog_color(0.430f, 0.294f, 0.0215f);
     const float fog_global_density = 0.02f;
@@ -410,6 +410,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     program->BindUniformFloat("fog_height_falloff", &fog_height_falloff);
 
     // Bind all g-buffer textures:
+    g_buffer.BindForReading();
     g_buffer.BindFogTextures();
 
     RenderDeferredQuad();
