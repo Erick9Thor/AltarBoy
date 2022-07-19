@@ -35,8 +35,11 @@ namespace Hachiko
     private:
         bool in_scene = false;
         bool projected = false;
+        bool loop = false;
+        bool able_to_capture = false;
         unsigned int frame_texture = 0;
-        float timestamp = 0.0f;
+        float time = 0.0f;
+        float fps = 1.0f;
 
         cv::VideoCapture video_capture;
         cv::Mat frame; // Basic image container.
@@ -47,6 +50,7 @@ namespace Hachiko
         void PublishIntoScene();
         void DetachFromScene();
         void BindCVMat2GLTexture(cv::Mat& frame);
+        void ReadNextVideoFrame();
         bool IsPlaying();
         void SetProjectionMatrices(const ComponentCamera* camera, const Program* program);
         void AddVideo();

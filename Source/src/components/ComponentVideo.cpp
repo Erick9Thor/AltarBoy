@@ -19,7 +19,6 @@ Hachiko::ComponentVideo::~ComponentVideo()
 {
     glDeleteTextures(1, &frame_texture);
     DetachFromScene();
-    video_capture.release();
     RemoveVideo();
 }
 
@@ -37,7 +36,7 @@ void Hachiko::ComponentVideo::Start()
 void Hachiko::ComponentVideo::Restart()
 {
     video_capture.set(cv::CAP_PROP_POS_FRAMES, 0.0f);
-    timestamp = 0.0f;
+    time = 0.0f;
     state = VideoState::PLAYING;
 }
 
@@ -50,10 +49,22 @@ void Hachiko::ComponentVideo::Update()
     }
 #endif //PLAY_BUILD
 
-    if (IsPlaying())
+    time += EngineTimer::delta_time;
+
+    if (time < (1.0 / fps))
     {
-        timestamp += EngineTimer::delta_time * 1000;
-        video_capture.set(cv::CAP_PROP_POS_MSEC, timestamp);
+        able_to_capture = false;
+    }
+    else
+    {
+        able_to_capture = true;
+        time = 0.0f;
+    }
+
+    // Stop before reading last frame, because set frame index to 0 after reading last frame doesn't work as espected.
+    if (video_capture.get(cv::CAP_PROP_FRAME_COUNT) == video_capture.get(cv::CAP_PROP_POS_FRAMES))
+    {
+        loop ? Restart() : Stop();
     }
 }
 
@@ -71,7 +82,13 @@ void Hachiko::ComponentVideo::DrawGui()
             RemoveVideo();
         }
 
+        Widgets::Checkbox("Loop", &loop);
         Widgets::Checkbox("Projected", &projected);
+        Widgets::DragFloatConfig cfg;
+        cfg.min = 1.0f;
+        cfg.speed = 0.1f;
+        cfg.format = "%.2f";
+        Widgets::DragFloat("Fps", fps, &cfg);
     }
     ImGui::PopID();
 
@@ -94,17 +111,9 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
     program->Activate();
     glDepthMask(GL_FALSE);
 
-    if (IsPlaying())
+    if (IsPlaying() && able_to_capture)
     {
-        // read() decodes and captures the next frame.
-        if (video_capture.read(frame))
-        {
-            cv::flip(frame, frame, 0);
-        }
-        else
-        {
-            Stop();
-        }
+        ReadNextVideoFrame();
     }
 
     BindCVMat2GLTexture(frame);
@@ -125,7 +134,7 @@ void Hachiko::ComponentVideo::Save(YAML::Node& node) const
     node.SetTag("video");
     node[VIDEO_ID] = video != nullptr ? video->GetID() : 0;
     node[VIDEO_PROJECTED] = projected;
-
+    node[VIDEO_LOOP] = loop;
 }
 
 void Hachiko::ComponentVideo::Load(const YAML::Node& node)
@@ -136,6 +145,7 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
     }
 
     projected = node[VIDEO_PROJECTED].IsDefined() ? node[VIDEO_PROJECTED].as<bool>() : projected;
+    loop = node[VIDEO_LOOP].IsDefined() ? node[VIDEO_LOOP].as<bool>() : loop;
 }
 
 void Hachiko::ComponentVideo::Play()
@@ -181,6 +191,16 @@ void Hachiko::ComponentVideo::BindCVMat2GLTexture(cv::Mat& frame)
                  frame.ptr()); // The actual image data itself
 
     glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+void Hachiko::ComponentVideo::ReadNextVideoFrame()
+{
+
+
+    if (video_capture.read(frame))
+    {
+        cv::flip(frame, frame, 0);
+    }
 }
 
 bool Hachiko::ComponentVideo::IsPlaying()
@@ -257,6 +277,10 @@ void Hachiko::ComponentVideo::CaptureVideo()
         HE_LOG("Error while loading video capture");
         RemoveVideo();
     }
+    else
+    {
+        fps = video_capture.get(cv::CAP_PROP_FPS);
+    }
 }
 
 void Hachiko::ComponentVideo::PublishIntoScene()
@@ -294,8 +318,7 @@ void Hachiko::ComponentVideo::DisplayControls()
     ImGui::Begin("Video", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoCollapse);
 
     ImGui::TextWrapped(go_label.c_str());
-    ImGui::Text("Video fps: %.1f", video_capture.get(cv::CAP_PROP_FPS));
-    ImGui::Text("Playing time: %.1f", video_capture.get(cv::CAP_PROP_POS_MSEC) / 1000.0);
+    ImGui::Text("Video fps: %.1f", fps);
     ImGui::Text("Frame index: %.1f", video_capture.get(cv::CAP_PROP_POS_FRAMES));
 
     ImGui::Separator();

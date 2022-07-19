@@ -358,6 +358,7 @@
 // ComponentVideo
 #define VIDEO_ID "video_id"
 #define VIDEO_PROJECTED "projected"
+#define VIDEO_LOOP "loop"
 
 // Script
 #define SCRIPT_NAME "class_name"
