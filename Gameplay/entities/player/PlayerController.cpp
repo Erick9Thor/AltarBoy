@@ -420,12 +420,7 @@ void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 
 bool Hachiko::Scripting::PlayerController::HasBufferedClick()
 {
-	if (click_buffer.empty())
-	{
-		return false;
-	}
-
-	return true;
+	return !click_buffer.empty();
 }
 
 float3 Hachiko::Scripting::PlayerController::GetBufferedClick()
@@ -1184,10 +1179,14 @@ void Hachiko::Scripting::PlayerController::CheckState()
 	switch (current_state)
 	{
 	case PlayerState::IDLE:
-		if (_previous_state == PlayerState::READY_TO_RESPAWN)
+		if (_previous_state == PlayerState::READY_TO_RESPAWN) 
+		{
 			animation->SendTrigger("isRespawn");
-		else
+		}
+		else 
+		{
 			animation->SendTrigger("isIdle");
+		}
 		break;
 	case PlayerState::WALKING:
 		animation->SendTrigger("isRun");
