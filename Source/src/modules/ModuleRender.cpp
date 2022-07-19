@@ -384,13 +384,17 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
             program->Activate();
 
             EnableBlending();
-
-            //g_buffer.BindForDrawing();
-            //g_buffer.UnbindFogTextures();
-
             batch_manager->DrawTransparentBatches(program);
-
             DisableBlending();
+
+            g_buffer.BindForDrawing();
+            // Forward depth (Used for fog)
+            program = App->program->GetTransparentDepthProgram();
+            program->Activate();
+                
+            batch_manager->DrawTransparentBatches(program);
+            Program::Deactivate();
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
         }
     }
 
@@ -398,6 +402,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     if (render_fog)
     {
+        // Bind all g-buffer textures:
+        g_buffer.BindForReading();
+        g_buffer.BindFogTextures();
+        
         program = App->program->GetFogProgram();
         program->Activate();
 
@@ -409,10 +417,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         program->BindUniformFloat3("fog_color", fog_color.ptr());
         program->BindUniformFloat("fog_global_density", &fog_global_density);
         program->BindUniformFloat("fog_height_falloff", &fog_height_falloff);
-
-        // Bind all g-buffer textures:
-        g_buffer.BindForReading();
-        g_buffer.BindFogTextures();
 
         RenderDeferredQuad();
         glBindVertexArray(0);

@@ -125,6 +125,11 @@ namespace Hachiko
             return particle_program;
         }
 
+        [[nodiscard]] Program* GetTransparentDepthProgram() const
+        {
+            return transparent_depth_program;
+        }
+
         [[nodiscard]] Program* GetFogProgram() const
         {
             return fog_program;
@@ -160,6 +165,7 @@ namespace Hachiko
         Program* CreateDeferredGeometryPassProgram();
         Program* CreateDeferredLightingPassProgram();
         Program* CreateShadowMappingProgram();
+        Program* CreateTransparentDepthProgram();
         Program* CreateFogProgram();
 
         Program* forward_program = nullptr;
@@ -175,6 +181,7 @@ namespace Hachiko
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
         Program* particle_program = nullptr;
+        Program* transparent_depth_program = nullptr;
         Program* fog_program = nullptr;
 
         // Assume the shader already manages its binding points

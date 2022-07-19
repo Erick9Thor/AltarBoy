@@ -179,6 +179,7 @@ namespace Hachiko
         int deferred_mode = 0;
         bool render_forward_pass = true;
         bool render_fog = true;
+        bool a = true;
 
         // float4 clear_color;
         bool draw_skybox = false;
