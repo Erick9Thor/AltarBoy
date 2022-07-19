@@ -399,7 +399,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     EnableBlending();
 
-    program = App->program->GetDeferredLightingProgram();
+    program = App->program->GetFogProgram();
     program->Activate();
 
     const float3 fog_color(0.430f, 0.294f, 0.0215f);

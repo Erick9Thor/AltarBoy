@@ -127,7 +127,7 @@ namespace Hachiko
 
         [[nodiscard]] Program* GetFogProgram() const
         {
-            return particle_program;
+            return fog_program;
         }
 
         void UpdateCamera(const ComponentCamera* camera) const;
