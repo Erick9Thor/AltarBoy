@@ -35,6 +35,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredLightingPassProgram();
     CreateShadowMappingProgram();
     CreateParticleProgram();
+    CreateTextureCopyProgram();
 
     if (!forward_program || !deferred_geometry_program || 
         !deferred_lighting_program || !skybox_program || 
@@ -42,7 +43,7 @@ bool Hachiko::ModuleProgram::Init()
         !environment_brdf_program || !stencil_program || 
         !ui_image_program || !ui_text_program || 
         !particle_program || !shadow_mapping_program ||
-        !gaussian_filtering_program)
+        !gaussian_filtering_program || !texture_copy_program)
     {
         return false;
     }
@@ -236,6 +237,13 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
 Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
 {
     shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
+
+    return shadow_mapping_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateTextureCopyProgram()
+{
+    shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
 
     return shadow_mapping_program;
 }
