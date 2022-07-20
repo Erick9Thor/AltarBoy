@@ -3,7 +3,7 @@
 
 Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width, 
     unsigned int height, int internal_format, int border, unsigned int format, 
-    unsigned int type, int min_filter, int mag_filter) 
+    unsigned int type, int min_filter, int mag_filter, bool generate_depth) 
     : _width(width) 
     , _height(height) 
     , _internal_format(internal_format)
@@ -12,6 +12,7 @@ Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width,
     , _type(type)
     , _min_filter(min_filter)
     , _mag_filter(mag_filter)
+    , _has_depth(generate_depth)
 {
     // Generate and bind frame buffer:
     glGenFramebuffers(1, &_framebuffer_id);
@@ -22,12 +23,35 @@ Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width,
     glTexImage2D(GL_TEXTURE_2D, 0, _internal_format, _width, _height, _border, _format, _type, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _min_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _mag_filter);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture_id, 0);
+
+    // Generate and bind _depth_id as the depth buffer of the frame buffer:
+    _depth_id = 0;
+    if (_has_depth)
+    {
+        glGenRenderbuffers(1, &_depth_id);
+        glBindRenderbuffer(GL_RENDERBUFFER, _depth_id);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _width, _height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depth_id);
+        glBindFramebuffer(GL_RENDERBUFFER, 0);
+    }
+
+    // Unbind the frame buffer:
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 Hachiko::StandaloneGLTexture::~StandaloneGLTexture()
 {
     // Free texture:
     glDeleteTextures(1, &_texture_id);
+    // Free depth:
+    if (_has_depth)
+    {
+        glDeleteTextures(1, &_depth_id);
+    }
+
     // Free framebuffer:
     glDeleteBuffers(1, &_framebuffer_id);
 }
@@ -64,6 +88,15 @@ void Hachiko::StandaloneGLTexture::Resize(unsigned int width, unsigned int heigh
     glBindTexture(GL_TEXTURE_2D, _texture_id);
     glTexImage2D(GL_TEXTURE_2D, 0, _internal_format, 
         _width, _height, _border, _format, _type, NULL);
+
+    if (_has_depth)
+    {
+        glBindRenderbuffer(GL_RENDERBUFFER, _depth_id);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _width, _height);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
 unsigned int Hachiko::StandaloneGLTexture::GetTextureId() const

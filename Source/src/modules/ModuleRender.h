@@ -13,6 +13,7 @@ namespace Hachiko
 {
     class ComponentCamera;
     class Scene;
+    class StandaloneGLTexture;
 
     struct GpuData
     {
@@ -143,6 +144,7 @@ namespace Hachiko
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager, DrawConfig draw_config);
+        void ApplyBloom(unsigned int source_texture_id);
         
         void SetRenderMode(bool is_deferred);
 
@@ -178,6 +180,13 @@ namespace Hachiko
         unsigned deferred_quad_ebo = 0;
         int deferred_mode = 0;
         bool render_forward_pass = true;
+
+        // TODO: Move these to a blur handler class that encapsulates blurring
+        // behaviour.
+        // Blur related:
+        StandaloneGLTexture* bloom_texture_x_pass = nullptr;
+        StandaloneGLTexture* bloom_texture_y_pass = nullptr;
+        float bloom_intensity = 1.0f;
 
         // float4 clear_color;
         bool draw_skybox = false;

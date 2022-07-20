@@ -7,7 +7,7 @@ namespace Hachiko
     public:
         StandaloneGLTexture(unsigned int width, unsigned int height, 
             int internal_format, int border, unsigned int format, 
-            unsigned int type, int min_filter, int mag_filter);
+            unsigned int type, int min_filter, int mag_filter, bool generate_depth = false);
         ~StandaloneGLTexture();
 
         void Bind() const;
@@ -22,6 +22,7 @@ namespace Hachiko
 
     private:
         unsigned int _texture_id;
+        unsigned int _depth_id;
         unsigned int _framebuffer_id;
         unsigned int _width;
         unsigned int _height;
@@ -31,6 +32,7 @@ namespace Hachiko
         int _border;
         int _min_filter;
         int _mag_filter;
+        bool _has_depth;
     };
 }
 

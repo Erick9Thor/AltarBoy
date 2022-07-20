@@ -7,6 +7,6 @@ layout (binding = 0) uniform sampler2D input_texture;
 
 void main()
 {
-    fragment_color = texture(input_texture, texture_coords);
+    fragment_color = vec4(texture(input_texture, texture_coords).xyz, 1.0);
 }
  

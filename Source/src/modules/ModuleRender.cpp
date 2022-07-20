@@ -20,6 +20,8 @@
 #include "components/ComponentDirLight.h"
 #include "components/ComponentParticleSystem.h"
 
+#include "core/rendering/StandaloneGLTexture.h"
+
 #include <debugdraw.h>
 
 Hachiko::ModuleRender::ModuleRender() = default;
@@ -41,6 +43,11 @@ bool Hachiko::ModuleRender::Init()
     GenerateFrameBuffer();
 
     shadow_manager.GenerateShadowMap();
+
+    // TODO: Get the emissive texture values from a common place so we are sure
+    // they are using same formats and stuff:
+    bloom_texture_x_pass = new StandaloneGLTexture(800, 600, GL_RGB8, 0, GL_RGB, GL_FLOAT, GL_LINEAR, GL_LINEAR);
+    bloom_texture_y_pass = new StandaloneGLTexture(800, 600, GL_RGB8, 0, GL_RGB, GL_FLOAT, GL_LINEAR, GL_LINEAR);
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -115,6 +122,11 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(const int width, const int height)
     
     // Handle resizing the textures of g-buffer:
     g_buffer.Resize(width, height);
+
+    // TODO: Handle these inside the bloom manager class after creating it:
+    // Handle resizing for bloom textures:
+    bloom_texture_x_pass->Resize(width, height);
+    bloom_texture_y_pass->Resize(width, height);
     
     // Unbind:
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -313,6 +325,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     batch_manager->DrawOpaqueBatches(program);
     Program::Deactivate();
 
+    // Read the emissive texture, copy it and blur it band write to another texture:
+    ApplyBloom(g_buffer.GetEmissiveTexture());
+
     // ------------------------------ LIGHT PASS ------------------------------
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
@@ -336,6 +351,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         shadow_manager.BindShadowMapTexture(5);
     }
 
+    // TODO: Move to the bloom manager class:
+    bloom_texture_x_pass->BindForReading(6);
+
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
     int render_shadows = static_cast<int>(shadow_pass_enabled);
@@ -349,7 +367,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     g_buffer.UnbindTextures();
     Program::Deactivate();
-
 
     // Blit g_buffer depth buffer to frame_buffer to be used for forward
     // rendering pass:
@@ -537,6 +554,57 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     return true;
 }
 
+void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id) 
+{
+    //// Copy source texture to the bloom x texture:
+    ////  Bind bloom x texture for drawing:
+    //bloom_texture_x_pass->BindForDrawing(true);
+    //App->program->GetTextureCopyProgram()->Activate();
+    ////  Bind the source texture as input:
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, source_texture_id);
+    ////  Render the texture to the quad so it's written to our texture:
+    //RenderDeferredQuad();
+    //glBindVertexArray(0);
+    //Program::Deactivate();
+    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    EnableBlending();
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, bloom_texture_x_pass->GetFramebufferId());
+    unsigned int width, height;
+    bloom_texture_x_pass->GetSize(width, height);
+    glViewport(0, 0, width, height);
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    Program* program = App->program->GetTextureCopyProgram();
+    program->Activate();
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, source_texture_id);
+
+    RenderDeferredQuad();
+    glBindVertexArray(0);
+
+    Program::Deactivate();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    g_buffer.UnbindTextures();
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    DisableBlending();
+
+    // Blur the texture, so we have a bloom:
+    ApplyGaussianFilter(bloom_texture_x_pass->GetFramebufferId(), 
+        bloom_texture_x_pass->GetTextureId(),
+        bloom_texture_y_pass->GetFramebufferId(),
+        bloom_texture_y_pass->GetTextureId(),
+        bloom_intensity, fb_width, fb_height, 
+        App->program->GetGaussianFilteringProgram());
+}
+
 void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
     unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
     unsigned width, unsigned height, const Program* program) const
@@ -719,6 +787,11 @@ void Hachiko::ModuleRender::DeferredOptions()
         App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
     }
 
+    ImGui::NewLine();
+
+    ImGui::Text("Bloom");
+    ImGui::Separator();
+    ImGui::DragFloat("Intensity", &bloom_intensity, 0.1f, 0.0f, FLT_MAX);
     ImGui::NewLine();
 
     ImGui::PopID();
@@ -905,6 +978,7 @@ void Hachiko::ModuleRender::RenderDeferredQuad() const
 {
     glBindVertexArray(deferred_quad_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
 }
 
 void Hachiko::ModuleRender::FreeDeferredQuad() 
@@ -930,5 +1004,10 @@ bool Hachiko::ModuleRender::CleanUp()
 
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
+
+    // TODO: Delete these lines after creating a bloom manager class:
+    delete bloom_texture_x_pass;
+    delete bloom_texture_y_pass;
+
     return true;
 }
