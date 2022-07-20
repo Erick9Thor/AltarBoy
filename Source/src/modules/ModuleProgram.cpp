@@ -243,9 +243,9 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateTextureCopyProgram()
 {
-    shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
+    texture_copy_program = CreateProgram(SHADERS_FOLDER "vertex_texture_copy.glsl", SHADERS_FOLDER "fragment_texture_copy.glsl");
 
-    return shadow_mapping_program;
+    return texture_copy_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
