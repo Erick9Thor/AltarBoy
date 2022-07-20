@@ -17,6 +17,7 @@ public:
     void BindForReading() const;
     void BindForDrawing() const;
     [[nodiscard]] bool IsGenerated() const;
+    [[nodiscard]] unsigned int GetEmissiveTexture() const;
 
 private:
     unsigned _g_buffer = 0;
@@ -32,6 +33,11 @@ private:
 inline bool GBuffer::IsGenerated() const
 {
     return _is_generated;
+}
+
+inline unsigned int GBuffer::GetEmissiveTexture() const
+{
+    return _emissive_texture;
 }
 
 } // namespace Hachiko
