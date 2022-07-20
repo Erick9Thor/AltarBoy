@@ -203,7 +203,8 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     if (!active_scene->dir_lights.empty())
         dir_light = active_scene->dir_lights[0];
 
-    App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
+    App->program->UpdateLights(active_scene->GetAmbientIntensity(), active_scene->GetAmbientColor(),
+        dir_light, active_scene->point_lights, active_scene->spot_lights);
 
     Draw(App->scene_manager->GetActiveScene(), camera, culling);
     
@@ -400,7 +401,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // ----------------------------- FOG -----------------------------
 
-    if (render_fog)
+    if (scene->IsFogEnabled())
     {
         // Bind all g-buffer textures:
         g_buffer.BindForReading();
@@ -410,13 +411,10 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         program->Activate();
 
         EnableBlending();
-
-        const float3 fog_color(0.430f, 0.294f, 0.0215f);
-        const float fog_global_density = 0.01f;
-        const float fog_height_falloff = 0.01f;
-        program->BindUniformFloat3("fog_color", fog_color.ptr());
-        program->BindUniformFloat("fog_global_density", &fog_global_density);
-        program->BindUniformFloat("fog_height_falloff", &fog_height_falloff);
+        
+        program->BindUniformFloat3("fog_color", scene->GetFogColor().ptr());
+        program->BindUniformFloat("fog_global_density", scene->GetFogGlobalDensity());
+        program->BindUniformFloat("fog_height_falloff", scene->GetFogHeightFalloff());
 
         RenderDeferredQuad();
         glBindVertexArray(0);
@@ -750,8 +748,6 @@ void Hachiko::ModuleRender::DeferredOptions()
     {
         App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
     }
-
-    ImGui::Checkbox("Fog", &render_fog);
 
     ImGui::NewLine();
 

@@ -139,9 +139,7 @@ namespace Hachiko
         void UpdateCamera(const Frustum& frustum) const;
         void UpdateCamera(const CameraData& camera) const;
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
-        void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
-
-        void OptionsMenu();
+        void UpdateLights(float ambient_intensity, const float4& ambient_color, const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
         void* CreatePersistentBuffers(unsigned& buffer_id, int binding_point, unsigned size);
 
@@ -254,8 +252,5 @@ namespace Hachiko
             unsigned int n_points {};
             unsigned int n_spots {};
         };
-
-        AmbientLight ambient_light;
-        float ambient_strength = 0.05f;
     };
 } // namespace Hachiko

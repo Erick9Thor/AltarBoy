@@ -37,7 +37,6 @@ namespace Hachiko
 
         // --- GameObject Management --- //
         [[nodiscard]] ComponentCamera* GetMainCamera() const;
-        void DestroyGameObject(GameObject* game_object);
         GameObject* CreateNewGameObject(GameObject* parent = nullptr, const char* name = nullptr);
 
         void HandleInputMaterial(ResourceMaterial* material);
@@ -116,8 +115,46 @@ namespace Hachiko
             name = new_name;
         }
 
+        float GetAmbientIntensity() const
+        {
+            return ambient_light_intensity;
+        }
+
+        const float4& GetAmbientColor()
+        {
+            return ambient_light_color;
+        }
+
+        bool IsFogEnabled() const
+        {
+            return fog_enabled;
+        }
+
+        const float3& GetFogColor() const
+        {
+            return fog_color;
+        }
+
+        const float* GetFogGlobalDensity() const
+        {
+            return &fog_global_density;
+        }
+
+        const float* GetFogHeightFalloff() const 
+        {
+            return &fog_height_falloff;
+        }
+
         void Save(YAML::Node& node);
         void Load(const YAML::Node& node, bool meshes_only = false);
+        void LoadAmbientParams(const YAML::Node& node);
+        void SaveAmbientParams(YAML::Node& node);
+        void LoadFogParams(const YAML::Node& node);
+        void SaveFogParams(YAML::Node& node);
+
+        void AmbientLightOptionsMenu();
+        void FogOptionsMenu();
+        void SkyboxOptionsMenu();
 
         void GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds);
 
@@ -152,7 +189,15 @@ namespace Hachiko
         BatchManager* batch_manager = nullptr;
         std::vector<Component*> particles{};
 
-        
+        // Ambient light params
+        float ambient_light_intensity = 0.05f;
+        float4 ambient_light_color = float4::one;
+
+        // Fog params
+        bool fog_enabled = false;
+        float3 fog_color = float3::one;
+        float fog_global_density = 0.01f;
+        float fog_height_falloff = 0.01f;        
 
     public:
         class Memento

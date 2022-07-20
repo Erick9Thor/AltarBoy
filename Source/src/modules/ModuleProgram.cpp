@@ -425,11 +425,16 @@ void Hachiko::ModuleProgram::UpdateMaterial(
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);
 }
 
-void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const
+void Hachiko::ModuleProgram::UpdateLights(float ambient_intensity,
+                                          const float4& ambient_color,
+                                          const ComponentDirLight* dir_light,
+                                          const std::vector<ComponentPointLight*>& point_lights,
+                                          const std::vector<ComponentSpotLight*>& spot_lights) const
 {
     Lights lights_data;
     // Ambient
-    lights_data.ambient = ambient_light;
+    lights_data.ambient.intensity = ambient_intensity;
+    lights_data.ambient.color = ambient_color;
     // Directional Lights
     if (dir_light && dir_light->IsActive() && dir_light->GetGameObject()->active)
     {
@@ -480,13 +485,4 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
         }
     }
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
-}
-
-void Hachiko::ModuleProgram::OptionsMenu()
-{
-    ImGui::PushItemWidth(100.0f);
-    ImGui::Text("Ambient Light");
-    ImGui::InputFloat("Intensity", &ambient_light.intensity);
-    ImGuiUtils::CompactColorPicker("Color", &ambient_light.color[0]);
-    ImGui::PopItemWidth();
 }
