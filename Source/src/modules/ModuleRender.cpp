@@ -601,17 +601,18 @@ void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id)
         bloom_texture_x_pass->GetTextureId(),
         bloom_texture_y_pass->GetFramebufferId(),
         bloom_texture_y_pass->GetTextureId(),
-        bloom_intensity, fb_width, fb_height, 
+        bloom_intensity, 3.0f, 7, fb_width, fb_height, 
         App->program->GetGaussianFilteringProgram());
 }
 
-void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
-    unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
-    unsigned width, unsigned height, const Program* program) const
+void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, 
+    unsigned source_texture, unsigned temp_fbo, unsigned temp_texture, 
+    float blur_scale_amount, float blur_sigma, int blur_size, unsigned width, 
+    unsigned height, const Program* program) const
 {
     // Calculate blur scales:
-    float blur_scale_x = blur_scale_amount * 1.0f / static_cast<float>(width);
-    float blur_scale_y = blur_scale_amount * 1.0f / static_cast<float>(height);
+    float blur_scale_x = blur_scale_amount / static_cast<float>(width);
+    float blur_scale_y = blur_scale_amount / static_cast<float>(height);
     float3 blur_scale_width(blur_scale_x, 0.0f, 0.0f);
     float3 blur_scale_height(0.0f, blur_scale_y, 0.0f);
 
@@ -639,6 +640,8 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, unsigned so
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     program->Activate();
     program->BindUniformFloat3(Uniforms::Filtering::GAUSSIAN_BLUR_SCALE, blur_scale_height.ptr());
+    program->BindUniformFloat(Uniforms::Filtering::GAUSSIAN_BLUR_SIGMA, &blur_sigma);
+    program->BindUniformInt(Uniforms::Filtering::GAUSSIAN_BLUR_PIXELS, blur_size);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, temp_texture);

@@ -668,7 +668,8 @@
     <ClCompile Include="vendors\OpenSimplex\OpenSimplex2S.cpp">
       <Filter>Vendors\OpenSimplex</Filter>
     </ClCompile>
-    <ClCompile Include="StandaloneGLTexture.cpp" />
+    <ClCompile Include="src\core\rendering\StandaloneGLTexture.cpp" />
+    <ClCompile Include="src\core\rendering\BlurPixelSize.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2514,7 +2515,8 @@
       <Filter>Core\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\Batching\BatchingProperties.h" />
-    <ClInclude Include="StandaloneGLTexture.h" />
+    <ClInclude Include="src\core\rendering\StandaloneGLTexture.h" />
+    <ClInclude Include="src\core\rendering\BlurPixelSize.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
