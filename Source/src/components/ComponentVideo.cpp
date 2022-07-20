@@ -135,6 +135,7 @@ void Hachiko::ComponentVideo::Save(YAML::Node& node) const
     node[VIDEO_ID] = video != nullptr ? video->GetID() : 0;
     node[VIDEO_PROJECTED] = projected;
     node[VIDEO_LOOP] = loop;
+    node[VIDEO_FPS] = fps;
 }
 
 void Hachiko::ComponentVideo::Load(const YAML::Node& node)
@@ -146,6 +147,7 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
 
     projected = node[VIDEO_PROJECTED].IsDefined() ? node[VIDEO_PROJECTED].as<bool>() : projected;
     loop = node[VIDEO_LOOP].IsDefined() ? node[VIDEO_LOOP].as<bool>() : loop;
+    fps = node[VIDEO_FPS].IsDefined() ? node[VIDEO_FPS].as<float>() : fps;
 }
 
 void Hachiko::ComponentVideo::Play()
