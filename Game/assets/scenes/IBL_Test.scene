@@ -1,5 +1,6 @@
 scene_name: IBL_Test
 navmesh_id: 9416437340025253989
+ibl: true
 skybox:
   right_cube_id: 9903994588415658106
   left_cube_id: 6194178469579215156

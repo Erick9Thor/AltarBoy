@@ -208,6 +208,7 @@ void Hachiko::Scene::Save(YAML::Node& node)
     node[NAVMESH_ID] = navmesh_id;
 
     // Skybox
+    node[IBL] = skybox->IsIBLActive();
     const TextureCube& cube = skybox->GetCube();
     for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
     {
@@ -241,6 +242,12 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
         }
         // Pass skybox with used uids to be loaded
         skybox = new Skybox(cube);
+
+        if (node[IBL].IsDefined() && node[IBL].as<bool>())
+        {
+           skybox->BuildIBL();
+           skybox->ActivateIBL();
+        }
     }
 
     if (!node[CHILD_NODE].IsDefined())

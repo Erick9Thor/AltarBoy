@@ -17,11 +17,19 @@ namespace Hachiko
         void ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_side);
         void ReleaseCubemap();
 
+        [[nodiscard]] bool IsIBLActive() const
+        {
+            return activate_ibl;
+        }
         const TextureCube& GetCube() const
         {
             return cube;
         }
 
+        void ActivateIBL() 
+        {
+            activate_ibl = true;
+        }
         void BuildIBL();
 
         void DrawImGui();
