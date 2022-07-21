@@ -6,6 +6,7 @@
 #include "core/rendering/RenderList.h"
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
+#include "core/rendering/BlurPixelSize.h"
 
 #include <vector>
 
@@ -187,7 +188,9 @@ namespace Hachiko
         // Blur related:
         StandaloneGLTexture* bloom_texture_x_pass = nullptr;
         StandaloneGLTexture* bloom_texture_y_pass = nullptr;
-        float bloom_intensity = 1.0f;
+        float bloom_intensity = 3.2f;
+        float bloom_sigma = 2.5f;
+        BlurPixelSize::Type bloom_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
 
         // float4 clear_color;
         bool draw_skybox = false;

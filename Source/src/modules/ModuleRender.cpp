@@ -596,12 +596,15 @@ void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id)
 
     DisableBlending();
 
+    const int blur_pixel_size_integer = static_cast<int>(bloom_blur_pixel_size);
+
     // Blur the texture, so we have a bloom:
     ApplyGaussianFilter(bloom_texture_x_pass->GetFramebufferId(), 
         bloom_texture_x_pass->GetTextureId(),
         bloom_texture_y_pass->GetFramebufferId(),
         bloom_texture_y_pass->GetTextureId(),
-        bloom_intensity, 3.0f, 7, fb_width, fb_height, 
+        bloom_intensity, bloom_sigma, 
+        blur_pixel_size_integer, fb_width, fb_height, 
         App->program->GetGaussianFilteringProgram());
 }
 
@@ -796,6 +799,14 @@ void Hachiko::ModuleRender::DeferredOptions()
     ImGui::Separator();
     ImGui::DragFloat("Intensity", &bloom_intensity, 0.1f, 0.0f, FLT_MAX);
     ImGui::NewLine();
+
+    int current_index = BlurPixelSize::ToIndex(bloom_blur_pixel_size);
+    if (Widgets::Combo("Gaussian Blur Pixel Size", &current_index, BlurPixelSize::blur_pixel_sizes_strings, BlurPixelSize::number_of_blur_pixel_sizes))
+    {
+        bloom_blur_pixel_size = BlurPixelSize::FromIndex(current_index);
+    }
+
+    ImGui::DragFloat("Gaussian Blur Sigma", &bloom_sigma, 0.1f, 0.0f, FLT_MAX);
 
     ImGui::PopID();
 }
