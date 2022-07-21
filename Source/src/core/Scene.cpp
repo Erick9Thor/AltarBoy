@@ -222,6 +222,9 @@ void Hachiko::Scene::Save(YAML::Node& node)
     }
     node[NAVMESH_ID] = navmesh_id;
 
+    SaveAmbientParams(node);
+    SaveFogParams(node);
+
     // Skybox
     const TextureCube& cube = skybox->GetCube();
     for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
@@ -242,6 +245,9 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
     SetName(node[SCENE_NAME].as<std::string>().c_str());
     navmesh_id = node[NAVMESH_ID].as<UID>();
     root->SetID(node[ROOT_ID].as<UID>());
+
+    LoadAmbientParams(node);
+    LoadFogParams(node);
 
     RELEASE(skybox);
 
