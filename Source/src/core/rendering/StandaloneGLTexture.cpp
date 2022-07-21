@@ -15,9 +15,11 @@ Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width,
     , _has_depth(generate_depth)
 {
     // Generate and bind frame buffer:
+    _framebuffer_id = 0;
     glGenFramebuffers(1, &_framebuffer_id);
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
     // Generate texture:
+    _texture_id = 0;
     glGenTextures(1, &_texture_id);
     glBindTexture(GL_TEXTURE_2D, _texture_id);
     glTexImage2D(GL_TEXTURE_2D, 0, _internal_format, _width, _height, _border, _format, _type, NULL);
@@ -61,7 +63,7 @@ void Hachiko::StandaloneGLTexture::Bind() const
     glBindTexture(GL_TEXTURE_2D, _texture_id);
 }
 
-void Hachiko::StandaloneGLTexture::BindForDrawing(bool resize_viewport) const 
+void Hachiko::StandaloneGLTexture::BindBuffer(bool resize_viewport) const 
 {
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
@@ -96,6 +98,7 @@ void Hachiko::StandaloneGLTexture::Resize(unsigned int width, unsigned int heigh
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    glBindTexture(GL_TEXTURE_2D, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 

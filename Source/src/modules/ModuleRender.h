@@ -7,6 +7,7 @@
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
 #include "core/rendering/BlurPixelSize.h"
+#include "core/rendering/BloomManager.h"
 
 #include <vector>
 
@@ -124,6 +125,8 @@ namespace Hachiko
             unsigned temp_fbo, unsigned temp_texture, float blur_scale_amount, 
             float blur_sigma, int blur_size, unsigned width, unsigned height, 
             const Program* program) const;
+
+        void RenderNDCQuad() const;
             
         static void EnableBlending(GLenum blend_func_sfactor = GL_SRC_ALPHA, GLenum blend_func_dfactor = GL_ONE_MINUS_SRC_ALPHA, GLenum blend_equation = GL_FUNC_ADD) 
         {
@@ -155,9 +158,8 @@ namespace Hachiko
         void RetrieveLibVersions();
         void RetrieveGpuInfo();
 
-        void GenerateDeferredQuad();
-        void RenderDeferredQuad() const;
-        void FreeDeferredQuad();
+        void GenerateNDCQuad();
+        void FreeNDCQuad();
 
         void* context{};
 
@@ -186,11 +188,12 @@ namespace Hachiko
         // TODO: Move these to a blur handler class that encapsulates blurring
         // behaviour.
         // Blur related:
-        StandaloneGLTexture* bloom_texture_x_pass = nullptr;
-        StandaloneGLTexture* bloom_texture_y_pass = nullptr;
-        float bloom_intensity = 3.2f;
-        float bloom_sigma = 2.5f;
-        BlurPixelSize::Type bloom_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
+        BloomManager bloom_manager;
+        //StandaloneGLTexture* bloom_texture_x_pass = nullptr;
+        //StandaloneGLTexture* bloom_texture_y_pass = nullptr;
+        //float bloom_intensity = 3.2f;
+        //float bloom_sigma = 2.5f;
+        //BlurPixelSize::Type bloom_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
 
         // float4 clear_color;
         bool draw_skybox = false;

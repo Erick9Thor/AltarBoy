@@ -157,6 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\rendering\BloomManager.cpp" />
     <ClCompile Include="src\core\rendering\BlurPixelSize.cpp" />
     <ClCompile Include="src\core\rendering\ShadowManager.cpp" />
     <ClCompile Include="src\core\particles\modifiers\NoiseParticleModifier.cpp" />
@@ -700,6 +701,7 @@
     <ClCompile Include="vendors\recast\include\Recast\SampleInterfaces.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\core\rendering\BloomManager.h" />
     <ClInclude Include="src\Batching\BatchingProperties.h" />
     <ClInclude Include="src\core\rendering\BlurPixelSize.h" />
     <ClInclude Include="src\utils\RandomUtilDefinitions.h" />

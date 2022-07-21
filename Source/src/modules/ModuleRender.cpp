@@ -39,15 +39,19 @@ bool Hachiko::ModuleRender::Init()
 
     SetGLOptions();
 
-    GenerateDeferredQuad();
+    GenerateNDCQuad();
     GenerateFrameBuffer();
 
     shadow_manager.GenerateShadowMap();
 
     // TODO: Get the emissive texture values from a common place so we are sure
     // they are using same formats and stuff:
-    bloom_texture_x_pass = new StandaloneGLTexture(800, 600, GL_RGB8, 0, GL_RGB, GL_FLOAT, GL_LINEAR, GL_LINEAR);
-    bloom_texture_y_pass = new StandaloneGLTexture(800, 600, GL_RGB8, 0, GL_RGB, GL_FLOAT, GL_LINEAR, GL_LINEAR);
+    /*bloom_texture_x_pass
+        = new StandaloneGLTexture(800, 600, GBuffer::GetEmissiveTextureInternalFormat(), 0, GBuffer::GetEmissiveTextureFormat(), GBuffer::GetEmissiveTextureType(), GL_LINEAR, GL_LINEAR);
+    bloom_texture_y_pass
+        = new StandaloneGLTexture(800, 600, GBuffer::GetEmissiveTextureInternalFormat(), 0, GBuffer::GetEmissiveTextureFormat(), GBuffer::GetEmissiveTextureType(), GL_LINEAR, GL_LINEAR);*/
+
+    bloom_manager.Initialize();
 
 #ifdef _DEBUG
     glEnable(GL_DEBUG_OUTPUT); // Enable output callback
@@ -119,18 +123,9 @@ void Hachiko::ModuleRender::ResizeFrameBuffer(const int width, const int height)
     // Frame buffer texture:
     glBindTexture(GL_TEXTURE_2D, fb_texture);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    
-    // Handle resizing the textures of g-buffer:
-    g_buffer.Resize(width, height);
 
-    // TODO: Handle these inside the bloom manager class after creating it:
-    // Handle resizing for bloom textures:
-    bloom_texture_x_pass->Resize(width, height);
-    bloom_texture_y_pass->Resize(width, height);
-    
     // Unbind:
     glBindTexture(GL_TEXTURE_2D, 0);
-
     glBindRenderbuffer(GL_RENDERBUFFER, depth_stencil_buffer);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
@@ -141,13 +136,24 @@ void Hachiko::ModuleRender::ManageResolution(const ComponentCamera* camera)
     unsigned res_x, res_y;
     camera->GetResolution(res_x, res_y);
 
-    if (res_x != fb_height || res_y != fb_width)
+    if (res_x == fb_height && res_y == fb_width)
     {
-        ResizeFrameBuffer(res_x, res_y);
-        glViewport(0, 0, res_x, res_y);
-        fb_height = res_y;
-        fb_width = res_x;
+        return;
     }
+
+    // Resize frame buffer:
+    ResizeFrameBuffer(res_x, res_y);
+    glViewport(0, 0, res_x, res_y);
+
+    // Cache width and height:
+    fb_width = res_x;
+    fb_height = res_y;
+
+    // Resize textures of g-buffer:
+    g_buffer.Resize(fb_width, fb_height);
+
+    // Resize textures of bloom:
+    bloom_manager.Resize(fb_width, fb_height);
 }
 
 void Hachiko::ModuleRender::CreateContext()
@@ -326,7 +332,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     Program::Deactivate();
 
     // Read the emissive texture, copy it and blur it band write to another texture:
-    ApplyBloom(g_buffer.GetEmissiveTexture());
+    /*ApplyBloom(g_buffer.GetEmissiveTexture());*/
+    bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
 
@@ -351,8 +358,9 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         shadow_manager.BindShadowMapTexture(5);
     }
 
-    // TODO: Move to the bloom manager class:
-    bloom_texture_x_pass->BindForReading(6);
+    //// TODO: Move to the bloom manager class:
+    //bloom_texture_x_pass->BindForReading(6);
+    bloom_manager.BindForReading();
 
     // Bind deferred rendering mode. This can be configured from the editor,
     // and shader sets the fragment color according to this mode:
@@ -362,7 +370,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // Render the final texture from deferred rendering on a quad that is,
     // 1x1 on NDC:
-    RenderDeferredQuad();
+    RenderNDCQuad();
     glBindVertexArray(0);
 
     g_buffer.UnbindTextures();
@@ -554,59 +562,61 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     return true;
 }
 
-void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id) 
-{
-    //// Copy source texture to the bloom x texture:
-    ////  Bind bloom x texture for drawing:
-    //bloom_texture_x_pass->BindForDrawing(true);
-    //App->program->GetTextureCopyProgram()->Activate();
-    ////  Bind the source texture as input:
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, source_texture_id);
-    ////  Render the texture to the quad so it's written to our texture:
-    //RenderDeferredQuad();
-    //glBindVertexArray(0);
-    //Program::Deactivate();
-    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    EnableBlending();
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, bloom_texture_x_pass->GetFramebufferId());
-    unsigned int width, height;
-    bloom_texture_x_pass->GetSize(width, height);
-    glViewport(0, 0, width, height);
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    Program* program = App->program->GetTextureCopyProgram();
-    program->Activate();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, source_texture_id);
-
-    RenderDeferredQuad();
-    glBindVertexArray(0);
-
-    Program::Deactivate();
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-    g_buffer.UnbindTextures();
-    glBindTexture(GL_TEXTURE_2D, 0);
-
-    DisableBlending();
-
-    const int blur_pixel_size_integer = static_cast<int>(bloom_blur_pixel_size);
-
-    // Blur the texture, so we have a bloom:
-    ApplyGaussianFilter(bloom_texture_x_pass->GetFramebufferId(), 
-        bloom_texture_x_pass->GetTextureId(),
-        bloom_texture_y_pass->GetFramebufferId(),
-        bloom_texture_y_pass->GetTextureId(),
-        bloom_intensity, bloom_sigma, 
-        blur_pixel_size_integer, fb_width, fb_height, 
-        App->program->GetGaussianFilteringProgram());
-}
+//void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id) 
+//{
+//    //// Copy source texture to the bloom x texture:
+//    ////  Bind bloom x texture for drawing:
+//    //bloom_texture_x_pass->BindForDrawing(true);
+//    //App->program->GetTextureCopyProgram()->Activate();
+//    ////  Bind the source texture as input:
+//    //glActiveTexture(GL_TEXTURE0);
+//    //glBindTexture(GL_TEXTURE_2D, source_texture_id);
+//    ////  Render the texture to the quad so it's written to our texture:
+//    //RenderDeferredQuad();
+//    //glBindVertexArray(0);
+//    //Program::Deactivate();
+//    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//
+//    EnableBlending();
+//
+//    /*glBindTexture(GL_TEXTURE_2D, 0);
+//    glBindFramebuffer(GL_FRAMEBUFFER, bloom_texture_x_pass->GetFramebufferId());
+//    unsigned int width, height;
+//    bloom_texture_x_pass->GetSize(width, height);
+//    glViewport(0, 0, width, height);
+//
+//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//    */
+//    bloom_texture_x_pass->BindBuffer(true);
+//
+//    //Program* program = App->program->GetTextureCopyProgram();
+//    //program->Activate();
+//    App->program->GetTextureCopyProgram()->Activate();
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, source_texture_id);
+//
+//    RenderNDCQuad();
+//    glBindVertexArray(0);
+//
+//    Program::Deactivate();
+//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//
+//    DisableBlending();
+//
+//    const int blur_pixel_size_integer = static_cast<int>(bloom_blur_pixel_size);
+//
+//    // Blur the texture, so we have a bloom:
+//    ApplyGaussianFilter(bloom_texture_x_pass->GetFramebufferId(), 
+//        bloom_texture_x_pass->GetTextureId(),
+//        bloom_texture_y_pass->GetFramebufferId(),
+//        bloom_texture_y_pass->GetTextureId(),
+//        bloom_intensity, bloom_sigma, 
+//        blur_pixel_size_integer, fb_width, fb_height, 
+//        App->program->GetGaussianFilteringProgram());
+//}
 
 void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, 
     unsigned source_texture, unsigned temp_fbo, unsigned temp_texture, 
@@ -631,7 +641,7 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, source_texture);
 
-    RenderDeferredQuad();
+    RenderNDCQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Program::Deactivate();
@@ -649,7 +659,7 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, temp_texture);
 
-    RenderDeferredQuad();
+    RenderNDCQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Program::Deactivate();
@@ -795,7 +805,7 @@ void Hachiko::ModuleRender::DeferredOptions()
 
     ImGui::NewLine();
 
-    ImGui::Text("Bloom");
+    /*ImGui::Text("Bloom");
     ImGui::Separator();
     ImGui::DragFloat("Intensity", &bloom_intensity, 0.1f, 0.0f, FLT_MAX);
     ImGui::NewLine();
@@ -806,7 +816,7 @@ void Hachiko::ModuleRender::DeferredOptions()
         bloom_blur_pixel_size = BlurPixelSize::FromIndex(current_index);
     }
 
-    ImGui::DragFloat("Gaussian Blur Sigma", &bloom_sigma, 0.1f, 0.0f, FLT_MAX);
+    ImGui::DragFloat("Gaussian Blur Sigma", &bloom_sigma, 0.1f, 0.0f, FLT_MAX);*/
 
     ImGui::PopID();
 }
@@ -955,7 +965,7 @@ void Hachiko::ModuleRender::GenerateParticlesBuffers()
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleRender::GenerateDeferredQuad() 
+void Hachiko::ModuleRender::GenerateNDCQuad() 
 {
     constexpr const float vertices[] = {
         1.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top right
@@ -988,14 +998,14 @@ void Hachiko::ModuleRender::GenerateDeferredQuad()
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleRender::RenderDeferredQuad() const 
+void Hachiko::ModuleRender::RenderNDCQuad() const 
 {
     glBindVertexArray(deferred_quad_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleRender::FreeDeferredQuad() 
+void Hachiko::ModuleRender::FreeNDCQuad() 
 {
     glBindVertexArray(deferred_quad_vao);
     glDisableVertexAttribArray(0);
@@ -1008,7 +1018,7 @@ void Hachiko::ModuleRender::FreeDeferredQuad()
 
 bool Hachiko::ModuleRender::CleanUp()
 {
-    FreeDeferredQuad();
+    FreeNDCQuad();
 
     glDeleteTextures(1, &fb_texture);
     glDeleteBuffers(1, &depth_stencil_buffer);
@@ -1019,9 +1029,9 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
 
-    // TODO: Delete these lines after creating a bloom manager class:
-    delete bloom_texture_x_pass;
-    delete bloom_texture_y_pass;
+    //// TODO: Delete these lines after creating a bloom manager class:
+    //delete bloom_texture_x_pass;
+    //delete bloom_texture_y_pass;
 
     return true;
 }

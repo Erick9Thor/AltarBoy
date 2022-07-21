@@ -11,7 +11,7 @@ namespace Hachiko
         ~StandaloneGLTexture();
 
         void Bind() const;
-        void BindForDrawing(bool resize_viewport = false) const;
+        void BindBuffer(bool resize_viewport = false) const;
         void BindForReading(unsigned int location = 0) const;
         void Unbind() const;
         void Resize(unsigned int width, unsigned int height);

@@ -670,6 +670,7 @@
     </ClCompile>
     <ClCompile Include="src\core\rendering\StandaloneGLTexture.cpp" />
     <ClCompile Include="src\core\rendering\BlurPixelSize.cpp" />
+    <ClCompile Include="src\core\rendering\BloomManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vendors\imgui\imgui_impl_opengl3.h">
@@ -2517,6 +2518,7 @@
     <ClInclude Include="src\Batching\BatchingProperties.h" />
     <ClInclude Include="src\core\rendering\StandaloneGLTexture.h" />
     <ClInclude Include="src\core\rendering\BlurPixelSize.h" />
+    <ClInclude Include="src\core\rendering\BloomManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
