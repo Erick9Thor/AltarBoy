@@ -331,6 +331,9 @@ bool Hachiko::ModuleProgram::CleanUp()
     gaussian_filtering_program->CleanUp();
     delete gaussian_filtering_program;
     
+    video_program->CleanUp();
+    delete video_program;
+
     return true;
 }
 
