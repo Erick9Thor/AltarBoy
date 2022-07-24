@@ -562,62 +562,6 @@ bool Hachiko::ModuleRender::DrawToShadowMap(Scene* scene, ComponentCamera* camer
     return true;
 }
 
-//void Hachiko::ModuleRender::ApplyBloom(unsigned int source_texture_id) 
-//{
-//    //// Copy source texture to the bloom x texture:
-//    ////  Bind bloom x texture for drawing:
-//    //bloom_texture_x_pass->BindForDrawing(true);
-//    //App->program->GetTextureCopyProgram()->Activate();
-//    ////  Bind the source texture as input:
-//    //glActiveTexture(GL_TEXTURE0);
-//    //glBindTexture(GL_TEXTURE_2D, source_texture_id);
-//    ////  Render the texture to the quad so it's written to our texture:
-//    //RenderDeferredQuad();
-//    //glBindVertexArray(0);
-//    //Program::Deactivate();
-//    //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//
-//    EnableBlending();
-//
-//    /*glBindTexture(GL_TEXTURE_2D, 0);
-//    glBindFramebuffer(GL_FRAMEBUFFER, bloom_texture_x_pass->GetFramebufferId());
-//    unsigned int width, height;
-//    bloom_texture_x_pass->GetSize(width, height);
-//    glViewport(0, 0, width, height);
-//
-//    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//    */
-//    bloom_texture_x_pass->BindBuffer(true);
-//
-//    //Program* program = App->program->GetTextureCopyProgram();
-//    //program->Activate();
-//    App->program->GetTextureCopyProgram()->Activate();
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, source_texture_id);
-//
-//    RenderNDCQuad();
-//    glBindVertexArray(0);
-//
-//    Program::Deactivate();
-//    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//
-//    glBindTexture(GL_TEXTURE_2D, 0);
-//
-//    DisableBlending();
-//
-//    const int blur_pixel_size_integer = static_cast<int>(bloom_blur_pixel_size);
-//
-//    // Blur the texture, so we have a bloom:
-//    ApplyGaussianFilter(bloom_texture_x_pass->GetFramebufferId(), 
-//        bloom_texture_x_pass->GetTextureId(),
-//        bloom_texture_y_pass->GetFramebufferId(),
-//        bloom_texture_y_pass->GetTextureId(),
-//        bloom_intensity, bloom_sigma, 
-//        blur_pixel_size_integer, fb_width, fb_height, 
-//        App->program->GetGaussianFilteringProgram());
-//}
-
 void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo, 
     unsigned source_texture, unsigned temp_fbo, unsigned temp_texture, 
     float blur_scale_amount, float blur_sigma, int blur_size, unsigned width, 
@@ -636,6 +580,8 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     program->Activate();
 
+    program->BindUniformFloat(Uniforms::Filtering::GAUSSIAN_BLUR_SIGMA, &blur_sigma);
+    program->BindUniformInt(Uniforms::Filtering::GAUSSIAN_BLUR_PIXELS, blur_size);
     program->BindUniformFloat3(Uniforms::Filtering::GAUSSIAN_BLUR_SCALE, blur_scale_width.ptr());
 
     glActiveTexture(GL_TEXTURE0);
@@ -750,6 +696,11 @@ void Hachiko::ModuleRender::OptionsMenu()
     {
         ImGuiUtils::CompactColorPicker("Background Color", App->editor->scene_background.ptr());
     }
+
+    ImGui::NewLine();
+    ImGui::Text("Bloom");
+    ImGui::Separator();
+    bloom_manager.DrawEditorContent();
 }
 
 void Hachiko::ModuleRender::DeferredOptions() 
@@ -802,21 +753,6 @@ void Hachiko::ModuleRender::DeferredOptions()
     {
         App->preferences->GetEditorPreference()->SetShadowPassEnabled(shadow_pass_enabled);
     }
-
-    ImGui::NewLine();
-
-    /*ImGui::Text("Bloom");
-    ImGui::Separator();
-    ImGui::DragFloat("Intensity", &bloom_intensity, 0.1f, 0.0f, FLT_MAX);
-    ImGui::NewLine();
-
-    int current_index = BlurPixelSize::ToIndex(bloom_blur_pixel_size);
-    if (Widgets::Combo("Gaussian Blur Pixel Size", &current_index, BlurPixelSize::blur_pixel_sizes_strings, BlurPixelSize::number_of_blur_pixel_sizes))
-    {
-        bloom_blur_pixel_size = BlurPixelSize::FromIndex(current_index);
-    }
-
-    ImGui::DragFloat("Gaussian Blur Sigma", &bloom_sigma, 0.1f, 0.0f, FLT_MAX);*/
 
     ImGui::PopID();
 }

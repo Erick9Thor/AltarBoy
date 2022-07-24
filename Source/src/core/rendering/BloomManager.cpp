@@ -6,6 +6,10 @@
 #include "modules/ModuleProgram.h"
 #include "modules/ModuleRender.h"
 
+constexpr const char* const CONFIG_GAUSSIAN_INTENSITY = "bloom_gaussian_intensity";
+constexpr const char* const CONFIG_GAUSSIAN_SIGMA = "bloom_gaussian_sigma";
+constexpr const char* const CONFIG_GAUSSIAN_BLUR_PIXEL_SIZE = "bloom_gaussian_pixel_size";
+
 Hachiko::BloomManager::BloomManager() 
 {
 
@@ -58,7 +62,7 @@ void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use)
     //App->renderer->DisableBlending();
 
     // Blur the texture, so we have a bloom effect:
-    const int blur_pixel_size_integer = static_cast<int>(bloom_blur_pixel_size);
+    const int blur_pixel_size_integer = static_cast<int>(_gaussian_blur_pixel_size);
     unsigned int width, height;
     _main_texture->GetSize(width, height);
     App->renderer->ApplyGaussianFilter(_main_texture->GetFramebufferId(),
@@ -88,6 +92,56 @@ void Hachiko::BloomManager::Uninitialize()
     _initialized = false;
     delete _main_texture;
     delete _temp_gaussian_texture;
+}
+
+void Hachiko::BloomManager::SaveConfig(YAML::Node& node) const 
+{
+    node[CONFIG_GAUSSIAN_INTENSITY] = _gaussian_intensity;
+    node[CONFIG_GAUSSIAN_SIGMA] = _gaussian_sigma; // Sigma grindset.
+    node[CONFIG_GAUSSIAN_BLUR_PIXEL_SIZE] = static_cast<int>(_gaussian_blur_pixel_size);
+}
+
+void Hachiko::BloomManager::LoadConfig(const YAML::Node& node) 
+{
+    const YAML::Node& gaussian_intensity = node[CONFIG_GAUSSIAN_INTENSITY];
+    if (gaussian_intensity.IsDefined())
+    {
+        _gaussian_intensity = gaussian_intensity.as<float>();
+    }
+
+    const YAML::Node& gaussian_sigma = node[CONFIG_GAUSSIAN_SIGMA];
+    if (gaussian_sigma.IsDefined())
+    {
+        _gaussian_intensity = gaussian_sigma.as<float>();
+    }
+
+    const YAML::Node& gaussian_blur_pixel_size = node[CONFIG_GAUSSIAN_BLUR_PIXEL_SIZE];
+    if (gaussian_blur_pixel_size.IsDefined())
+    {
+        int temp_size = gaussian_blur_pixel_size.as<int>();
+
+        _gaussian_blur_pixel_size = BlurPixelSize::IsValidPixelSize(temp_size) 
+            ? static_cast<BlurPixelSize::Type>(temp_size) 
+            : BloomDefaultValues::PIXEL_SIZE;
+    }
+}
+
+void Hachiko::BloomManager::DrawEditorContent() 
+{
+    static Widgets::DragFloatConfig config_1;
+    config_1.format = "%.9f";
+    config_1.speed = 0.01f;
+    config_1.min = 0.0f;
+    config_1.max = FLT_MAX;
+
+    Widgets::DragFloat("Gaussian Blur Intensity", _gaussian_intensity, &config_1);
+    Widgets::DragFloat("Gaussian Blur Sigma", _gaussian_sigma, &config_1);
+    
+    int current_index = BlurPixelSize::ToIndex(_gaussian_blur_pixel_size);
+    if (Widgets::Combo("Gaussian Blur Pixel Size", &current_index, BlurPixelSize::blur_pixel_sizes_strings, BlurPixelSize::number_of_blur_pixel_sizes))
+    {
+        _gaussian_blur_pixel_size = BlurPixelSize::FromIndex(current_index);
+    }
 }
 
 Hachiko::StandaloneGLTexture* Hachiko::CreateBloomTexture()

@@ -139,6 +139,11 @@ namespace Hachiko
         {
             glDisable(GL_BLEND);
         }
+
+        BloomManager& GetBloomManager()
+        {
+            return bloom_manager;
+        };
     
     private:
         void GenerateFrameBuffer();
@@ -149,8 +154,7 @@ namespace Hachiko
         void DrawForward(Scene* scene, BatchManager* batch_manager);
         void DrawPreForwardPass(Scene* scene, ComponentCamera* camera) const;
         bool DrawToShadowMap(Scene* scene, ComponentCamera* camera, BatchManager* batch_manager, DrawConfig draw_config);
-        void ApplyBloom(unsigned int source_texture_id);
-        
+
         void SetRenderMode(bool is_deferred);
 
         void CreateContext();

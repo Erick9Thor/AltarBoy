@@ -27,17 +27,20 @@ public:
     void ApplyBloom(unsigned int texture_to_use);
     void BindForReading();
     void Uninitialize();
+    void SaveConfig(YAML::Node& node) const;
+    void LoadConfig(const YAML::Node& node);
+    void DrawEditorContent();
 
 private:
     StandaloneGLTexture* _main_texture = nullptr;
     StandaloneGLTexture* _temp_gaussian_texture = nullptr;
     float _gaussian_intensity = BloomDefaultValues::INTENSITY;
     float _gaussian_sigma = BloomDefaultValues::SIGMA;
-    BlurPixelSize::Type bloom_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
+    BlurPixelSize::Type _gaussian_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
     bool _initialized = false;
 };
     
-    // User handles the deletion:
-    StandaloneGLTexture* CreateBloomTexture();
+// User handles the deletion:
+StandaloneGLTexture* CreateBloomTexture();
 
 } // namespace Hachiko
