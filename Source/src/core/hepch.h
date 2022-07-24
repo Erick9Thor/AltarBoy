@@ -66,10 +66,13 @@
 #include <assimp/Importer.hpp>
 #include <assimp/include/assimp/postprocess.h>
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
+extern "C"
+{
+    #include "libavutil/rational.h"
+    #include "libavformat/avformat.h"
+    #include "libavcodec/avcodec.h"
+    #include "libswscale/swscale.h"
+}
 
 //project includes
 #include "Globals.h"

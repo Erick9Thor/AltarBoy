@@ -2,6 +2,13 @@
 
 #include "Component.h"
 
+class AVFormatContext;
+class AVCodecContext;
+class AVPacket;
+class AVFrame;
+class SwsContext;
+class AVRational;
+
 namespace Hachiko
 {
     class ResourceVideo;
@@ -31,30 +38,50 @@ namespace Hachiko
         HACHIKO_API void Pause();
         HACHIKO_API void Stop();
         HACHIKO_API void Restart();
+        HACHIKO_API bool IsPlaying();
 
     private:
         bool in_scene = false;
         bool projected = false;
         bool loop = false;
         bool able_to_capture = false;
+        bool flip_vertical = true;
         unsigned int frame_texture = 0;
         float time = 0.0f;
         float fps = 1.0f;
 
-        cv::VideoCapture video_capture;
-        cv::Mat frame; // Basic image container.
         VideoState state = VideoState::PAUSED;
         ResourceVideo* video = nullptr;
+
+        // LibAV internal state
+        AVFormatContext* format_ctx = nullptr; // Video file context.
+        AVCodecContext* video_codec_ctx = nullptr; // Video Decoder context.
+        AVCodecContext* audio_codec_ctx = nullptr; // Audio decoder context.
+        AVPacket* av_packet = nullptr; // Data packet. This is sent to de decoders to obtain a frame of any type (video or audio).
+        AVFrame* av_frame = nullptr; // Frame Data. This is what a decoder returns after decoding a packet.
+        SwsContext* scaler_ctx = nullptr; // Used for converting the frame data to RGB format.
+        AVRational time_base = {0, 0}; // Used to obtain the FrameTime -> Used to sync video and audio.
+
+        // LibAV external Video data
+        int video_stream_index = -1; // Video data stream inside file.
+        int frame_width = 0; 
+        int frame_height = 0; // Size of video frame.
+        uint8_t* frame_data = nullptr; // Buffer for the frame texture data.
+        float video_frame_time = 0; // Time in seconds when the next audio frame must appear.
 
         void DisplayControls();
         void PublishIntoScene();
         void DetachFromScene();
-        void BindCVMat2GLTexture(cv::Mat& frame);
+
+        void BindFrameToGLTexture();
         void ReadNextVideoFrame();
-        bool IsPlaying();
+
         void SetProjectionMatrices(const ComponentCamera* camera, const Program* program);
         void AddVideo();
-        void RemoveVideo();
-        void CaptureVideo();
+        void RemoveVideoResource();
+        void FreeVideoReader();
+        void CleanFrameBuffer();
+        void OpenVideo();
+        void FlipImage();
     };
 } // namespace Hachiko

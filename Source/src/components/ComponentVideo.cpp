@@ -11,15 +11,19 @@
 
 #include "resources/ResourceVideo.h"
 
+//char av_error[64] = {0};
+//#define libav_err2str(errnum) av_make_error_string(av_error, 64, errnum)
+
 Hachiko::ComponentVideo::ComponentVideo(GameObject* container)
 : Component(Component::Type::VIDEO, container)
 {}
 
 Hachiko::ComponentVideo::~ComponentVideo()
 {
+    FreeVideoReader();
     glDeleteTextures(1, &frame_texture);
     DetachFromScene();
-    RemoveVideo();
+    RemoveVideoResource();
 }
 
 void Hachiko::ComponentVideo::Start()
@@ -30,14 +34,17 @@ void Hachiko::ComponentVideo::Start()
     }
 
     glGenTextures(1, &frame_texture);
-    CaptureVideo();
+    OpenVideo();
 }
 
 void Hachiko::ComponentVideo::Restart()
 {
-    video_capture.set(cv::CAP_PROP_POS_FRAMES, 0.0f);
-    time = 0.0f;
-    state = VideoState::PLAYING;
+    avio_seek(format_ctx->pb, 0, SEEK_SET);
+    int result = av_seek_frame(format_ctx, video_stream_index, -1, 0);
+    if (result >= 0 && !loop)
+    {
+        state = VideoState::STOPPED;
+    }
 }
 
 void Hachiko::ComponentVideo::Update()
@@ -62,10 +69,10 @@ void Hachiko::ComponentVideo::Update()
     }
 
     // Stop before reading last frame, because set frame index to 0 after reading last frame doesn't work as espected.
-    if (video_capture.get(cv::CAP_PROP_FRAME_COUNT) == video_capture.get(cv::CAP_PROP_POS_FRAMES))
-    {
-        loop ? Restart() : Stop();
-    }
+    //if (video_capture.get(cv::CAP_PROP_FRAME_COUNT) == video_capture.get(cv::CAP_PROP_POS_FRAMES))
+    //{
+    //    loop ? Restart() : Stop();
+    //}
 }
 
 void Hachiko::ComponentVideo::DrawGui()
@@ -79,7 +86,7 @@ void Hachiko::ComponentVideo::DrawGui()
         }
         else if (ImGui::Button("Remove video", ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
         {
-            RemoveVideo();
+            RemoveVideoResource();
         }
 
         Widgets::Checkbox("Loop", &loop);
@@ -116,7 +123,7 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
         ReadNextVideoFrame();
     }
 
-    BindCVMat2GLTexture(frame);
+    BindFrameToGLTexture();
     SetProjectionMatrices(camera, program);
 
     glBindVertexArray(App->renderer->GetVideoVao());
@@ -166,43 +173,85 @@ void Hachiko::ComponentVideo::Stop()
     state = VideoState::STOPPED;
 }
 
-void Hachiko::ComponentVideo::BindCVMat2GLTexture(cv::Mat& frame)
+void Hachiko::ComponentVideo::BindFrameToGLTexture()
 {
-    if (frame.empty())
-    {
-        return;
-    }
-
+    // allocate memory and set texture data
     glBindTexture(GL_TEXTURE_2D, frame_texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    // Set texture clamping method
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-    glTexImage2D(GL_TEXTURE_2D, // Type of texture
-                 0, // Pyramid level (for mip-mapping) - 0 is the top level
-                 GL_RGB, // Internal colour format to convert to
-                 frame.cols, // Image width  i.e. 640 for Kinect in standard mode
-                 frame.rows, // Image height i.e. 480 for Kinect in standard mode
-                 0, // Border width in pixels (can either be 1 or 0)
-                 GL_BGR, // Input image format (i.e. GL_RGB, GL_RGBA, GL_BGR etc.)
-                 GL_UNSIGNED_BYTE, // Image data type
-                 frame.ptr()); // The actual image data itself
-
-    glGenerateMipmap(GL_TEXTURE_2D);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame_data);
 }
 
 void Hachiko::ComponentVideo::ReadNextVideoFrame()
 {
-
-
-    if (video_capture.read(frame))
+    int response = -1;
+    int error = 0;
+    while (error >= 0)
     {
-        cv::flip(frame, frame, 0);
+        error = av_read_frame(format_ctx, av_packet);
+
+        if (av_packet->stream_index != video_stream_index)
+        {
+            av_packet_unref(av_packet);
+            continue;
+        }
+
+        //SEEK to frame 0 -> Restart the video timestamp
+        if (error == AVERROR_EOF)
+        {
+            Restart();
+            av_packet_unref(av_packet);
+            break;
+        }
+
+        response = avcodec_send_packet(video_codec_ctx, av_packet);
+        if (response < 0)
+        {
+            //HE_LOG("Failed to decode packet: %s.", libav_err2str(response));
+            return;
+        }
+
+        response = avcodec_receive_frame(video_codec_ctx, av_frame);
+        if (response == AVERROR(EAGAIN) || response == AVERROR_EOF)
+        {
+            av_packet_unref(av_packet);
+            continue;
+        }
+        if (response < 0)
+        {
+            //HE_LOG("Failed to decode frame: %s.", libav_err2str(response));
+            return;
+        }
+
+        av_packet_unref(av_packet);
+        break;
     }
+
+    video_frame_time = av_frame->pts * time_base.num / (float)time_base.den;
+    if (video_frame_time == 0)
+    {
+        time = 0;
+    }
+    
+    if (!scaler_ctx)
+    {
+        // Set SwScaler - Scale frame size + Pixel converter to RGB
+        scaler_ctx = sws_getContext(frame_width, frame_height, video_codec_ctx->pix_fmt, frame_width, frame_height, AV_PIX_FMT_RGB32, SWS_FAST_BILINEAR, nullptr, nullptr, nullptr);
+
+        if (!scaler_ctx)
+        {
+            HE_LOG("Couldn't initialise SwScaler.");
+            return;
+        }
+    }
+
+    // Transform pixel format to RGB and send the data to the framebuffer
+    if (!flip_vertical)
+    {
+        FlipImage();
+    }
+
+    uint8_t* dest[4] = {frame_data, nullptr, nullptr, nullptr};
+    int lin_size[4] = {frame_width * 4, 0, 0, 0};
+    sws_scale(scaler_ctx, av_frame->data, av_frame->linesize, 0, frame_height, dest, lin_size);
 }
 
 bool Hachiko::ComponentVideo::IsPlaying()
@@ -254,35 +303,174 @@ void Hachiko::ComponentVideo::AddVideo()
     if (res != nullptr)
     {
         video = res;
-        CaptureVideo();
+        OpenVideo();
     }
 }
 
-void Hachiko::ComponentVideo::RemoveVideo()
+void Hachiko::ComponentVideo::RemoveVideoResource()
 {
     Stop();
     App->resources->ReleaseResource(video);
     video = nullptr;
 }
 
-void Hachiko::ComponentVideo::CaptureVideo()
+void Hachiko::ComponentVideo::FreeVideoReader()
+{
+    // Close libAV context -  free allocated memory
+    sws_freeContext(scaler_ctx);
+    scaler_ctx = nullptr;
+    avformat_close_input(&format_ctx);
+    avformat_free_context(format_ctx);
+    avcodec_free_context(&video_codec_ctx);
+    avcodec_free_context(&audio_codec_ctx);
+    av_frame_free(&av_frame);
+    av_packet_free(&av_packet);
+
+    // Release frame data buffer
+    RELEASE(frame_data);
+}
+
+void Hachiko::ComponentVideo::OpenVideo()
 {
     if (video == nullptr)
     {
         return;
     }
-    
-    video_capture = cv::VideoCapture(video->GetVideoPath().string());
 
-    if (!video_capture.isOpened())
+    // Open video file
+    format_ctx = avformat_alloc_context();
+    if (!format_ctx)
     {
-        HE_LOG("Error while loading video capture");
-        RemoveVideo();
+        HE_LOG("Couldn't allocate AVFormatContext.");
+        return;
     }
-    else
+    if (avformat_open_input(&format_ctx, video->GetVideoPath().string().c_str(), nullptr, nullptr) != 0)
     {
-        fps = video_capture.get(cv::CAP_PROP_FPS);
+        HE_LOG("Couldn't open video file.");
+        return;
     }
+
+    // DECODING VIDEO
+    // Find a valid video stream in the file
+    video_stream_index = -1;
+    video_stream_index = av_find_best_stream(format_ctx, AVMEDIA_TYPE_VIDEO, -1, -1, nullptr, 0);
+    if (video_stream_index < 0)
+    {
+        HE_LOG("Couldn't find valid video stream inside file.");
+        return;
+    }
+
+    // Find an appropiate video decoder
+    AVCodecParameters* videoCodecParams = format_ctx->streams[video_stream_index]->codecpar;
+    const AVCodec* videoDecoder = avcodec_find_decoder(videoCodecParams->codec_id);
+    if (!videoDecoder)
+    {
+        HE_LOG("Couldn't find valid video decoder.");
+        return;
+    }
+
+    // Set up a video codec context for the decoder
+    video_codec_ctx = avcodec_alloc_context3(videoDecoder);
+    if (!video_codec_ctx)
+    {
+        HE_LOG("Couldn't allocate AVCodecContext.");
+        return;
+    }
+    if (avcodec_parameters_to_context(video_codec_ctx, videoCodecParams) < 0)
+    {
+        HE_LOG("Couldn't initialise AVCodecContext.");
+        return;
+    }
+    if (avcodec_open2(video_codec_ctx, videoDecoder, nullptr) < 0)
+    {
+        HE_LOG("Couldn't open video codec.");
+        return;
+    }
+
+    // Set video parameters and Allocate frame buffer
+    frame_width = videoCodecParams->width;
+    frame_height = videoCodecParams->height;
+    time_base = format_ctx->streams[video_stream_index]->time_base;
+    frame_data = new uint8_t[frame_width * frame_height * 4];
+    //SetVideoFrameSize(frameWidth, frameHeight);
+    CleanFrameBuffer();
+
+    // DECODING AUDIO
+    // Find a valid audio stream in the file
+    //AVCodecParameters* audioCodecParams;
+    //AVCodec* audioDecoder;
+    //audioStreamIndex = -1;
+
+    //audioStreamIndex = av_find_best_stream(formatCtx, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
+    //if (audioStreamIndex < 0)
+    //{
+    //    HE_LOG("Couldn't find valid audio stream inside file.");
+    //    return;
+    //}
+
+    //audioCodecParams = formatCtx->streams[audioStreamIndex]->codecpar;
+    //audioDecoder = avcodec_find_decoder(audioCodecParams->codec_id);
+    //if (!audioDecoder)
+    //{
+    //    HE_LOG("Couldn't find valid audio decoder.");
+    //    return;
+    //}
+
+    //// Set up a audio codec context for the decoder
+    //audioCodecCtx = avcodec_alloc_context3(audioDecoder);
+    //if (!audioCodecCtx)
+    //{
+    //    HE_LOG("Couldn't allocate AVCodecContext.");
+    //    return;
+    //}
+    //if (avcodec_parameters_to_context(audioCodecCtx, audioCodecParams) < 0)
+    //{
+    //    HE_LOG("Couldn't initialise AVCodecContext.");
+    //    return;
+    //}
+    //if (avcodec_open2(audioCodecCtx, audioDecoder, nullptr) < 0)
+    //{
+    //    HE_LOG("Couldn't open video codec.");
+    //    return;
+    //}
+
+    // Allocate memory for packets and frames
+    av_packet = av_packet_alloc();
+    if (!av_packet)
+    {
+        HE_LOG("Couldn't allocate AVPacket.");
+        return;
+    }
+    av_frame = av_frame_alloc();
+    if (!av_frame)
+    {
+        HE_LOG("Couldn't allocate AVFrame.");
+        return;
+    }
+
+    // Set audio parameters
+    /*
+	wanted_spec.freq = aCodecCtx->sample_rate;
+	wanted_spec.format = AUDIO_S16SYS;
+	wanted_spec.channels = aCodecCtx->channels;
+	wanted_spec.silence = 0;
+	wanted_spec.samples = SDL_AUDIO_BUFFER_SIZE;
+	wanted_spec.callback = audio_callback;
+	wanted_spec.userdata = aCodecCtx;
+	*/
+
+    //unsigned timeMs = timer.Stop();
+    //HE_LOG("Video initialised in %ums", timeMs);
+}
+
+void Hachiko::ComponentVideo::FlipImage()
+{
+    av_frame->data[0] += av_frame->linesize[0] * (video_codec_ctx->height - 1);
+    av_frame->linesize[0] *= -1;
+    av_frame->data[1] += av_frame->linesize[1] * (video_codec_ctx->height / 2 - 1);
+    av_frame->linesize[1] *= -1;
+    av_frame->data[2] += av_frame->linesize[2] * (video_codec_ctx->height / 2 - 1);
+    av_frame->linesize[2] *= -1;
 }
 
 void Hachiko::ComponentVideo::PublishIntoScene()
@@ -321,7 +509,7 @@ void Hachiko::ComponentVideo::DisplayControls()
 
     ImGui::TextWrapped(go_label.c_str());
     ImGui::Text("Video fps: %.1f", fps);
-    ImGui::Text("Frame index: %.1f", video_capture.get(cv::CAP_PROP_POS_FRAMES));
+    //ImGui::Text("Frame index: %.1f", video_capture.get(cv::CAP_PROP_POS_FRAMES));
 
     ImGui::Separator();
 
@@ -360,4 +548,9 @@ void Hachiko::ComponentVideo::DisplayControls()
     ImGui::EndTable();
     ImGui::PopStyleVar();
     ImGui::End();
+}
+
+void Hachiko::ComponentVideo::CleanFrameBuffer()
+{
+    memset(frame_data, 0, frame_width * frame_height * 4);
 }
