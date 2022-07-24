@@ -115,10 +115,9 @@ namespace Hachiko
             return draw_deferred;
         }
 
-
-        [[nodiscard]] const unsigned& GetParticleVao() const
+        [[nodiscard]] const unsigned& GetNDCQuadVAO() const
         {
-            return particle_vao;
+            return ndc_quad_vao;
         }
 
         void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
@@ -175,31 +174,23 @@ namespace Hachiko
         unsigned fb_height = 0;
         unsigned fb_width = 0;
 
+        // Normalized Device Coords Quad related:
+        unsigned ndc_quad_vao = 0;
+        unsigned ndc_quad_vbo = 0;
+        unsigned ndc_quad_ebo = 0;
+
         // Shadow Map related:
         ShadowManager shadow_manager;
         bool shadow_pass_enabled = true;
 
-        bool draw_deferred = true;
-
         // Deferred rendering:
         GBuffer g_buffer;
-        unsigned deferred_quad_vao = 0;
-        unsigned deferred_quad_vbo = 0;
-        unsigned deferred_quad_ebo = 0;
+        bool draw_deferred = true;
         int deferred_mode = 0;
         bool render_forward_pass = true;
 
-        // TODO: Move these to a blur handler class that encapsulates blurring
-        // behaviour.
-        // Blur related:
         BloomManager bloom_manager;
-        //StandaloneGLTexture* bloom_texture_x_pass = nullptr;
-        //StandaloneGLTexture* bloom_texture_y_pass = nullptr;
-        //float bloom_intensity = 3.2f;
-        //float bloom_sigma = 2.5f;
-        //BlurPixelSize::Type bloom_blur_pixel_size = BlurPixelSize::Type::Gaussian7x7;
 
-        // float4 clear_color;
         bool draw_skybox = false;
         bool draw_navmesh = false;
         bool outline_selection = true;
@@ -213,10 +204,10 @@ namespace Hachiko
         float current_fps = 0.0f;
         float current_ms = 0.0f;
 
-        // Particle System
-        void GenerateParticlesBuffers();
-        unsigned particle_vbo;
-        unsigned particle_ebo;
-        unsigned particle_vao;
+        //// Particle System
+        //void GenerateParticlesBuffers();
+        //unsigned particle_vbo;
+        //unsigned particle_ebo;
+        //unsigned particle_vao;
     };
 }

@@ -39,10 +39,8 @@ void Hachiko::BloomManager::Resize(unsigned int width, unsigned int height)
     _temp_gaussian_texture->Resize(width, height);
 }
 
-void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use) 
+void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use) const
 {
-    //App->renderer->EnableBlending();
-    
     // Copy texture_to_use to _main_texture:
     // Bind frame buffer attached to main texture:
     _main_texture->BindBuffer(true);
@@ -58,8 +56,6 @@ void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use)
     // Unbind buffers and textures:
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
-
-    //App->renderer->DisableBlending();
 
     // Blur the texture, so we have a bloom effect:
     const int blur_pixel_size_integer = static_cast<int>(_gaussian_blur_pixel_size);
@@ -97,7 +93,7 @@ void Hachiko::BloomManager::Uninitialize()
 void Hachiko::BloomManager::SaveConfig(YAML::Node& node) const 
 {
     node[CONFIG_GAUSSIAN_INTENSITY] = _gaussian_intensity;
-    node[CONFIG_GAUSSIAN_SIGMA] = _gaussian_sigma; // Sigma grindset.
+    node[CONFIG_GAUSSIAN_SIGMA] = _gaussian_sigma; // #sigmagrindset.
     node[CONFIG_GAUSSIAN_BLUR_PIXEL_SIZE] = static_cast<int>(_gaussian_blur_pixel_size);
 }
 

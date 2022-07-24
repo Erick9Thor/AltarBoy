@@ -24,7 +24,7 @@ public:
     
     void Initialize();
     void Resize(unsigned int width, unsigned int height);
-    void ApplyBloom(unsigned int texture_to_use);
+    void ApplyBloom(unsigned int texture_to_use) const;
     void BindForReading();
     void Uninitialize();
     void SaveConfig(YAML::Node& node) const;

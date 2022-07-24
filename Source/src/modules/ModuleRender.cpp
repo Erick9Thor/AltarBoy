@@ -44,13 +44,6 @@ bool Hachiko::ModuleRender::Init()
 
     shadow_manager.GenerateShadowMap();
 
-    // TODO: Get the emissive texture values from a common place so we are sure
-    // they are using same formats and stuff:
-    /*bloom_texture_x_pass
-        = new StandaloneGLTexture(800, 600, GBuffer::GetEmissiveTextureInternalFormat(), 0, GBuffer::GetEmissiveTextureFormat(), GBuffer::GetEmissiveTextureType(), GL_LINEAR, GL_LINEAR);
-    bloom_texture_y_pass
-        = new StandaloneGLTexture(800, 600, GBuffer::GetEmissiveTextureInternalFormat(), 0, GBuffer::GetEmissiveTextureFormat(), GBuffer::GetEmissiveTextureType(), GL_LINEAR, GL_LINEAR);*/
-
     bloom_manager.Initialize();
 
 #ifdef _DEBUG
@@ -62,8 +55,6 @@ bool Hachiko::ModuleRender::Init()
 
     fps_log = std::vector<float>(n_bins);
     ms_log = std::vector<float>(n_bins);
-
-    GenerateParticlesBuffers();
 
     draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
     draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
@@ -267,14 +258,13 @@ void Hachiko::ModuleRender::Draw(Scene* scene, ComponentCamera* camera,
 
     BatchManager* batch_manager = scene->GetBatchManager();
     
-    //render_list.Update(culling->GetFrustum(), scene->GetQuadtree());
-    
     if (draw_deferred)
     {
         DrawDeferred(scene, camera, batch_manager);
     }
     else
     {
+        render_list.Update(culling->GetFrustum(), scene->GetQuadtree());
         DrawPreForwardPass(scene, camera);
         // TODO: Forward rendering still has that weird stuttering bug, fix this.
         DrawForward(scene, batch_manager);
@@ -332,7 +322,6 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     Program::Deactivate();
 
     // Read the emissive texture, copy it and blur it band write to another texture:
-    /*ApplyBloom(g_buffer.GetEmissiveTexture());*/
     bloom_manager.ApplyBloom(g_buffer.GetEmissiveTexture());
 
     // ------------------------------ LIGHT PASS ------------------------------
@@ -357,9 +346,8 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
         // Bind Shadow map texture to texture slot 5:
         shadow_manager.BindShadowMapTexture(5);
     }
-
-    //// TODO: Move to the bloom manager class:
-    //bloom_texture_x_pass->BindForReading(6);
+    
+    // Bind blurred out emissive texture from bloom_manager:
     bloom_manager.BindForReading();
 
     // Bind deferred rendering mode. This can be configured from the editor,
@@ -870,37 +858,6 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     gpu.vram_budget_mb /= 1024;
 }
 
-
-void Hachiko::ModuleRender::GenerateParticlesBuffers()
-{
-    float positions[] = {
-        0.5f,  0.5f,  0.0f, 1.0f, 1.0f, // top right
-        0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // bottom left
-        -0.5f, 0.5f,  0.0f, 0.0f, 1.0f // top left
-    };
-
-    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
-
-    glGenVertexArrays(1, &particle_vao);
-    glBindVertexArray(particle_vao);
-
-    glGenBuffers(1, &particle_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, particle_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
-
-    glGenBuffers(1, &particle_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, particle_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    glBindVertexArray(0);
-}
-
 void Hachiko::ModuleRender::GenerateNDCQuad() 
 {
     constexpr const float vertices[] = {
@@ -911,16 +868,16 @@ void Hachiko::ModuleRender::GenerateNDCQuad()
     };
     constexpr unsigned int indices[] = {2, 1, 0, 0, 3, 2};
 
-    glGenVertexArrays(1, &deferred_quad_vao);
-    glGenBuffers(1, &deferred_quad_vbo);
-    glGenBuffers(1, &deferred_quad_ebo);
+    glGenVertexArrays(1, &ndc_quad_vao);
+    glGenBuffers(1, &ndc_quad_vbo);
+    glGenBuffers(1, &ndc_quad_ebo);
 
-    glBindVertexArray(deferred_quad_vao);
+    glBindVertexArray(ndc_quad_vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, deferred_quad_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, ndc_quad_vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, deferred_quad_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ndc_quad_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Vertices:
@@ -936,19 +893,19 @@ void Hachiko::ModuleRender::GenerateNDCQuad()
 
 void Hachiko::ModuleRender::RenderNDCQuad() const 
 {
-    glBindVertexArray(deferred_quad_vao);
+    glBindVertexArray(ndc_quad_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
 void Hachiko::ModuleRender::FreeNDCQuad() 
 {
-    glBindVertexArray(deferred_quad_vao);
+    glBindVertexArray(ndc_quad_vao);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
-    glDeleteBuffers(1, &deferred_quad_ebo);
-    glDeleteBuffers(1, &deferred_quad_vbo);
-    glDeleteVertexArrays(1, &deferred_quad_vao);
+    glDeleteBuffers(1, &ndc_quad_ebo);
+    glDeleteBuffers(1, &ndc_quad_vbo);
+    glDeleteVertexArrays(1, &ndc_quad_vao);
     glBindVertexArray(0);
 }
 
@@ -964,10 +921,6 @@ bool Hachiko::ModuleRender::CleanUp()
 
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
-
-    //// TODO: Delete these lines after creating a bloom manager class:
-    //delete bloom_texture_x_pass;
-    //delete bloom_texture_y_pass;
 
     return true;
 }
