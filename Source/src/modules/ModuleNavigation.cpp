@@ -276,7 +276,10 @@ dtCrowdAgent* Hachiko::ModuleNavigation::GetEditableAgent(int agent_id) const
 
 bool Hachiko::ModuleNavigation::Raycast(const float3& start_pos, const float3& end_pos, float3& hit_position)
 {
-    if (!scene_navmesh) return false;
+    if (!scene_navmesh) 
+    {
+        return false;
+    }
 
     bool hit = false;
     dtPolyRef poly_ref;
