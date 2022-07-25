@@ -155,6 +155,8 @@ namespace Hachiko
         void RenderDeferredQuad() const;
         void FreeDeferredQuad();
 
+        void LoadingScreen() const;
+
         void* context{};
 
         RenderList render_list;

@@ -166,7 +166,13 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 }
 
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
-{    
+{
+    if (true)
+    {
+        LoadingScreen();
+        return UpdateStatus::UPDATE_CONTINUE;
+    }
+
     ComponentCamera* camera = App->camera->GetRenderingCamera();
     Scene* active_scene = App->scene_manager->GetActiveScene();
 
@@ -931,4 +937,47 @@ bool Hachiko::ModuleRender::CleanUp()
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
     return true;
+}
+
+void Hachiko::ModuleRender::LoadingScreen() const
+{
+    OPTICK_CATEGORY("LoadingScreen", Optick::Category::Rendering);
+
+    Program* img_program = App->program->GetUserInterfaceImageProgram();
+
+    glDepthFunc(GL_ALWAYS);
+
+    unsigned width, height;
+    App->camera->GetRenderingCamera()->GetResolution(width, height);
+
+    ModuleProgram::CameraData camera_data;
+    // position data is unused on the ui program
+    camera_data.pos = float3::zero;
+    camera_data.view = float4x4::identity;
+    camera_data.proj = float4x4::identity; //float4x4::D3DOrthoProjLH(-1, 1, static_cast<float>(width), static_cast<float>(height));
+
+    App->program->UpdateCamera(camera_data);
+
+    // Activate program & bind square:
+    img_program->Activate();
+    App->ui->BindSquare();
+
+    float4x4 model = float4x4::identity;
+    img_program->BindUniformFloat4x4("model", model.ptr());
+    //const ResourceTexture* img_to_draw = image;
+
+    img_program->BindUniformBool("diffuse_flag", false);
+    img_program->BindUniformFloat4("img_color", float4(1.0, 0.0, 0.0, 1.0).ptr());
+    //ModuleTexture::Bind(img_to_draw ? img_to_draw->GetImageId() : 0, static_cast<int>(Hachiko::ModuleProgram::TextureSlots::DIFFUSE));
+
+    img_program->BindUniformFloat2("factor", float2::one.ptr());
+    img_program->BindUniformFloat2("animation_index", float2::one.ptr());
+
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    // Unbind square & deactivate program:
+    App->ui->UnbindSquare();
+    Program::Deactivate();
+
+    glDepthFunc(GL_LESS);    
 }

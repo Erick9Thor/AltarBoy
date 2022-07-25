@@ -13,9 +13,12 @@
 #include "core/preferences/src/EditorPreferences.h"
 #include "importers/SceneImporter.h"
 
+#include "Loader.h"
+
 #include <iostream>
 #include <iomanip>
 #include <ctime>
+#include <thread>
 
 bool Hachiko::ModuleSceneManager::Init()
 {
@@ -333,6 +336,69 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     Scene* new_scene = new Scene();
     if (scene_resource)
     {
+        loading_scene = true;
+
+        Loader::loading = true;
+        std::thread worker(Loader::LoadScene, new_scene, scene_resource);
+
+        if (!keep_navmesh)
+        {
+            App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
+        }
+
+        //new_scene->Load(scene_resource->scene_data);
+
+        worker.join();
+
+        for (auto it = App->resources->loaded_resources.begin(); it != App->resources->loaded_resources.end(); it++)
+        {
+            if (it->second.resource->GetType() == Resource::Type::TEXTURE)
+            {
+                ResourceTexture* texture = static_cast<ResourceTexture*>(it->second.resource);
+                if (!glIsTexture(texture->GetID()))
+                {
+                    texture->GenerateBuffer();
+                }
+            }
+        }
+    }
+    else
+    {
+        if (!keep_navmesh)
+        {
+            App->navigation->SetNavmesh(nullptr);
+        }
+        // This removes current navmesh
+        GameObject* camera_go = new_scene->CreateNewGameObject(new_scene->GetRoot(), "Main Camera");
+        camera_go->CreateComponent(Component::Type::CAMERA);
+    }
+
+    ChangeMainScene(new_scene);
+
+    // If the scene was playing previously, continue playing:
+    if (was_scene_playing)
+    {
+        AttemptScenePlay();
+    }
+}
+
+/* void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
+{
+    // TODO: Refactor this whole load logic and event handling to be as clear
+    // as possible.
+
+    // Stop the scene if it was playing to avoid scripts calling Start:
+    bool was_scene_playing = IsScenePlaying();
+    if (was_scene_playing)
+    {
+        StopScene();
+    }
+
+    SetSceneResource(new_resource);
+
+    Scene* new_scene = new Scene();
+    if (scene_resource)
+    {
         if (!keep_navmesh)
         {
             App->navigation->SetNavmesh(scene_resource->scene_data[NAVMESH_ID].as<UID>());
@@ -358,7 +424,7 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     {
         AttemptScenePlay();
     }
-}
+}*/
 
 void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
 {

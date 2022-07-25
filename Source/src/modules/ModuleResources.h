@@ -34,13 +34,15 @@ namespace Hachiko
         void LoadAsset(const std::string& path);
         std::vector<GameObject*> InstantiatePrefab(UID prefab_uid, GameObject* parent, unsigned n_instances);
 
-    private:
+        // test
         struct ResourceInstance
         {
             Resource* resource = nullptr;
             unsigned n_users = 0;
         };
         std::map<UID, ResourceInstance> loaded_resources;
+        //
+    private:
         unsigned imported_assets = 0;
         unsigned cleaned_resources = 0;
         std::set<UID> managed_uids;

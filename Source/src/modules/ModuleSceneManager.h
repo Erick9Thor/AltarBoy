@@ -87,5 +87,8 @@ namespace Hachiko
         bool scene_autosave = false;
         ResourceScene* scene_resource;
         ResourceNavMesh* navmesh_resource;
+
+        bool loading_scene = false;
+        std::thread loading_scene_worker;
     };
 } // namespace Hachiko
