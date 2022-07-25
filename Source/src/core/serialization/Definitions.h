@@ -359,6 +359,7 @@
 #define VIDEO_ID "video_id"
 #define VIDEO_PROJECTED "projected"
 #define VIDEO_LOOP "loop"
+#define VIDEO_FLIP "flip"
 #define VIDEO_FPS "fps"
 
 // Script

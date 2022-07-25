@@ -133,6 +133,7 @@ void Hachiko::ComponentVideo::Save(YAML::Node& node) const
     node[VIDEO_ID] = video != nullptr ? video->GetID() : 0;
     node[VIDEO_PROJECTED] = projected;
     node[VIDEO_LOOP] = loop;
+    node[VIDEO_FLIP] = flip_vertical;
     node[VIDEO_FPS] = fps;
 }
 
@@ -145,6 +146,7 @@ void Hachiko::ComponentVideo::Load(const YAML::Node& node)
 
     projected = node[VIDEO_PROJECTED].IsDefined() ? node[VIDEO_PROJECTED].as<bool>() : projected;
     loop = node[VIDEO_LOOP].IsDefined() ? node[VIDEO_LOOP].as<bool>() : loop;
+    flip_vertical = node[VIDEO_FLIP].IsDefined() ? node[VIDEO_FLIP].as<bool>() : flip_vertical;
     fps = node[VIDEO_FPS].IsDefined() ? node[VIDEO_FPS].as<float>() : fps;
 }
 
@@ -382,11 +384,13 @@ void Hachiko::ComponentVideo::OpenVideo()
         HE_LOG("Couldn't allocate AVCodecContext.");
         return;
     }
+
     if (avcodec_parameters_to_context(video_codec_ctx, videoCodecParams) < 0)
     {
         HE_LOG("Couldn't initialise AVCodecContext.");
         return;
     }
+
     if (avcodec_open2(video_codec_ctx, videoDecoder, nullptr) < 0)
     {
         HE_LOG("Couldn't open video codec.");
@@ -407,6 +411,7 @@ void Hachiko::ComponentVideo::OpenVideo()
         HE_LOG("Couldn't allocate AVPacket.");
         return;
     }
+
     av_frame = av_frame_alloc();
     if (!av_frame)
     {
