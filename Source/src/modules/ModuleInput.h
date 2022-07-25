@@ -108,6 +108,9 @@ namespace Hachiko
         void UpdateWindowSizeInversedCaches(int width, int height);
         void NotifyMouseAction(const float2& position, MouseEventPayload::Action action);
 
+        // Gamepad Controller
+        const char* GetControllerTypeAsString(SDL_GameControllerType type);
+
     private:
         KeyState* keyboard = nullptr;
         KeyState mouse[NUM_MOUSE_BUTTONS]{};
@@ -115,6 +118,11 @@ namespace Hachiko
         float2 mouse_normalized_position = float2::zero;
         float2 mouse_normalized_motion = float2::zero;
         float2 mouse_pixels_motion = float2::zero;
+
+        // Gamead Controller
+        SDL_GameController* sdl_game_controller = nullptr;
+        SDL_Joystick* sdl_joysttick = nullptr;
+
         int scroll_delta{};
 
         float _window_width_inverse{};

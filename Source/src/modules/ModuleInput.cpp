@@ -34,6 +34,9 @@ bool Hachiko::ModuleInput::Init()
         ret = false;
     }
 
+    // Gamepad Controller
+    SDL_Init(SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC);
+
     return ret;
 }
 
@@ -129,6 +132,26 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             SDL_free(sdl_event.drop.file);
         }
         break;
+
+        case SDL_CONTROLLERDEVICEADDED:
+            {
+                int which = sdl_event.cdevice.which;
+
+                if (SDL_IsGameController(which))
+                {
+                    sdl_game_controller = SDL_GameControllerOpen(which);
+                    HE_LOG("%s number %d was added", GetControllerTypeAsString(SDL_GameControllerTypeForIndex(which)), sdl_event.cdevice.which);
+                }
+            }
+            break;
+        case SDL_CONTROLLERDEVICEREMAPPED:
+            HE_LOG("Controller %d was remapped", sdl_event.cdevice.which);
+            break;
+        case SDL_CONTROLLERDEVICEREMOVED:
+            HE_LOG("%s number was removed", SDL_GameControllerName(sdl_game_controller), sdl_event.cdevice.which);
+            SDL_GameControllerClose(sdl_game_controller);
+            sdl_game_controller = nullptr;
+            break;
         default:
             scroll_delta = 0.0f;
             break;
@@ -203,4 +226,29 @@ bool Hachiko::ModuleInput::CleanUp()
     HE_LOG("Quitting SDL input event subsystem");
     SDL_QuitSubSystem(SDL_INIT_EVENTS);
     return true;
+}
+
+const char* Hachiko::ModuleInput::GetControllerTypeAsString(SDL_GameControllerType type)
+{
+    switch (type)
+    {
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_PS3:
+            return "PS3 Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_PS4:
+            return "PS4 Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_PS5:
+            return "PS5 Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_XBOX360:
+            return "XBOX 360 Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_XBOXONE:
+            return "XBOX One Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO:
+            return "Nintendo Switch Pro Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_AMAZON_LUNA:
+            return "Amazon Luna Controller";
+        case SDL_GameControllerType::SDL_CONTROLLER_TYPE_GOOGLE_STADIA:
+            return "Google Stadia Controller";
+        default:
+            return "UNKNOWN";
+    }
 }
