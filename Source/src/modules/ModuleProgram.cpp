@@ -385,7 +385,7 @@ void Hachiko::ModuleProgram::UpdateMaterial(
     material_data.emissive_flag = material->HasEmissive();
     material_data.emissive_color = material->emissive_color;
     material_data.is_metallic = material->is_metallic;
-    material_data.smoothness_alpha = material->smoothness_alpha;
+    material_data.smoothness_alpha = 1; // default value
     material_data.is_transparent = material->is_transparent;
 
     if (material_data.diffuse_flag)

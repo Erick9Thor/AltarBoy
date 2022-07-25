@@ -200,6 +200,7 @@ void Hachiko::TextureBatch::UpdateBatch(int segment, const std::vector<const Com
         materials[i].diffuse_color = material->diffuse_color;
         materials[i].specular_color = material->specular_color;
         materials[i].emissive_color = material->emissive_color;
+        materials[i].tint_color = components[i]->GetTintColor();
         materials[i].diffuse_flag = material->HasDiffuse();
         materials[i].specular_flag = material->HasSpecular();
         materials[i].normal_flag = material->HasNormal();
@@ -230,9 +231,7 @@ void Hachiko::TextureBatch::UpdateBatch(int segment, const std::vector<const Com
         materials[i].smoothness = material->smoothness;
         materials[i].metalness_value = material->metalness_value;
         materials[i].is_metallic = material->is_metallic;
-        materials[i].smoothness_alpha = material->smoothness_alpha;
         materials[i].is_transparent = material->is_transparent;
-        materials[i].tint_color = components[i]->GetTintColor();
 
         if (components[i]->OverrideMaterialActive())
         {
