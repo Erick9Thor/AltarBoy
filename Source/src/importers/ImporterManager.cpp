@@ -29,6 +29,7 @@ ImporterManager::ImporterManager()
     resource_importers.emplace(Resource::Type::SCENE, &scene);
     resource_importers.emplace(Resource::Type::NAVMESH, &navmesh);
     resource_importers.emplace(Resource::Type::SKYBOX, &skybox);
+    resource_importers.emplace(Resource::Type::STATE_MACHINE, &state_machine);
     resource_importers.emplace(Resource::Type::VIDEO, &video);
 }
 
