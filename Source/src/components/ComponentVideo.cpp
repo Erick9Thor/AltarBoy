@@ -76,6 +76,7 @@ void Hachiko::ComponentVideo::DrawGui()
         }
         else if (ImGui::Button("Remove video", ImVec2(ImGui::GetContentRegionAvail().x, 0.0f)))
         {
+            Stop();
             RemoveVideoResource();
         }
 
@@ -117,8 +118,7 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
     BindFrameToGLTexture();
     SetProjectionMatrices(camera, program);
 
-    glBindVertexArray(App->renderer->GetVideoVao());
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    App->renderer->RenderDeferredQuad();
 
     // Clear
     glBindVertexArray(0);
@@ -316,8 +316,6 @@ void Hachiko::ComponentVideo::AddVideo()
 
 void Hachiko::ComponentVideo::RemoveVideoResource()
 {
-    Stop();
-    FreeVideoReader();
     App->resources->ReleaseResource(video);
     video = nullptr;
 }

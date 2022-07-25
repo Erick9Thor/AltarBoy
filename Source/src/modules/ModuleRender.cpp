@@ -53,7 +53,6 @@ bool Hachiko::ModuleRender::Init()
     ms_log = std::vector<float>(n_bins);
 
     GenerateParticlesBuffers();
-    GenerateVideoBuffers();
 
     draw_skybox = App->preferences->GetEditorPreference()->GetDrawSkybox();
     draw_navmesh = App->preferences->GetEditorPreference()->GetDrawNavmesh();
@@ -865,36 +864,6 @@ void Hachiko::ModuleRender::GenerateParticlesBuffers()
 
     glGenBuffers(1, &particle_ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, particle_ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    glBindVertexArray(0);
-}
-
-void Hachiko::ModuleRender::GenerateVideoBuffers()
-{
-    float positions[] = {
-        1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
-        1.0f, -1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-       -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // bottom left
-       -1.0f,  1.0f, 0.0f, 0.0f, 1.0f  // top left
-    };
-
-    unsigned int indices[] = {2, 1, 0, 0, 3, 2};
-
-    glGenVertexArrays(1, &video_vao);
-    glBindVertexArray(video_vao);
-
-    glGenBuffers(1, &video_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, video_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(sizeof(float) * 3));
-
-    glGenBuffers(1, &video_ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, video_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     glBindVertexArray(0);
 }

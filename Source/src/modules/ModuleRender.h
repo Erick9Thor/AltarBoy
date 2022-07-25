@@ -139,6 +139,8 @@ namespace Hachiko
             glDisable(GL_BLEND);
         }
     
+        void RenderDeferredQuad() const;
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
@@ -157,7 +159,6 @@ namespace Hachiko
         void RetrieveGpuInfo();
 
         void GenerateDeferredQuad();
-        void RenderDeferredQuad() const;
         void FreeDeferredQuad();
 
         void* context{};
@@ -203,11 +204,5 @@ namespace Hachiko
         unsigned particle_vbo;
         unsigned particle_ebo;
         unsigned particle_vao;
-
-        // Video
-        void GenerateVideoBuffers();
-        unsigned video_vbo;
-        unsigned video_ebo;
-        unsigned video_vao;
     };
 }
