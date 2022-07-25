@@ -315,8 +315,6 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     main_scene->FogOptionsMenu();
     ImGui::Separator();
     main_scene->SkyboxOptionsMenu();
-    
-    // App->navigation->DrawOptionsGui();
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)

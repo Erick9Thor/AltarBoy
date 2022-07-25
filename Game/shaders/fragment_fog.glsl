@@ -17,7 +17,6 @@ layout (binding = 3) uniform sampler2D g_position;
 void main()
 {
     vec3  fragment_position = (texture(g_position, texture_coords)).rgb;
-    // vec3 view_direction = normalize(camera.pos - fragment_position);
 
     float point_distance = distance(fragment_position, camera.pos);
     // Equivalent to -view_direction?

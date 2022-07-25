@@ -29,4 +29,11 @@ namespace Hachiko::Uniforms
 
     } // namespace ImageBasedLighting
 
+    namespace Fog
+    {
+        constexpr const char* COLOR = "fog_color";
+        constexpr const char* GLOBAL_DENSITY = "fog_global_density";
+        constexpr const char* HEIGHT_FALLOFF = "fog_height_falloff";
+    }
+
 } // namespace Hachiko::Uniforms

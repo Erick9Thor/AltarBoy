@@ -25,6 +25,24 @@ namespace Hachiko
         friend class ModuleSceneManager;
 
     public:
+
+        struct FogConfig
+        {
+            bool enabled = false;
+            float3 color = float3::one;
+            float global_density = 0.01f;
+            float height_falloff = 0.01f;
+            void LoadFogParams(const YAML::Node& node);
+            void SaveFogParams(YAML::Node& node);
+        };
+
+        struct AmbientLightConfig
+        {
+            float intensity = 0.05f;
+            float4 color = float4::one;
+            void LoadAmbientParams(const YAML::Node& node);
+            void SaveAmbientParams(YAML::Node& node);
+        };
         Scene();
         ~Scene();
 
@@ -115,42 +133,19 @@ namespace Hachiko
             name = new_name;
         }
 
-        float GetAmbientIntensity() const
+        const FogConfig& GetFogConfig()
         {
-            return ambient_light_intensity;
+            return fog;
         }
 
-        const float4& GetAmbientColor()
+        const AmbientLightConfig& GetAmbientLightConfig()
         {
-            return ambient_light_color;
+            return ambient_light;
         }
-
-        bool IsFogEnabled() const
-        {
-            return fog_enabled;
-        }
-
-        const float3& GetFogColor() const
-        {
-            return fog_color;
-        }
-
-        const float* GetFogGlobalDensity() const
-        {
-            return &fog_global_density;
-        }
-
-        const float* GetFogHeightFalloff() const 
-        {
-            return &fog_height_falloff;
-        }
-
+        
         void Save(YAML::Node& node);
         void Load(const YAML::Node& node, bool meshes_only = false);
-        void LoadAmbientParams(const YAML::Node& node);
-        void SaveAmbientParams(YAML::Node& node);
-        void LoadFogParams(const YAML::Node& node);
-        void SaveFogParams(YAML::Node& node);
+        
 
         void AmbientLightOptionsMenu();
         void FogOptionsMenu();
@@ -190,14 +185,10 @@ namespace Hachiko
         std::vector<Component*> particles{};
 
         // Ambient light params
-        float ambient_light_intensity = 0.05f;
-        float4 ambient_light_color = float4::one;
+        AmbientLightConfig ambient_light;
 
         // Fog params
-        bool fog_enabled = false;
-        float3 fog_color = float3::one;
-        float fog_global_density = 0.01f;
-        float fog_height_falloff = 0.01f;        
+        FogConfig fog;      
 
     public:
         class Memento
