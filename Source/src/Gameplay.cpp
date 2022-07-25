@@ -90,6 +90,16 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
     return App->input->GetMouseNormalizedPosition();
 }
 
+HACHIKO_API int& Hachiko::Input::GetxDir()
+{
+    return App->input->GetxDir();
+}
+
+HACHIKO_API int& Hachiko::Input::GetyDir()
+{
+    return App->input->GetyDir();
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*SCENE MANAGEMENT-----------------------------------------------------------*/

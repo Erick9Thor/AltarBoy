@@ -309,6 +309,23 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 		_movement_direction -= math::float3::unitX;
 	}
 
+	if (Input::GetxDir() > 0)
+	{
+		_movement_direction += math::float3::unitX;
+	}
+	else if (Input::GetxDir() < 0)
+	{
+		_movement_direction -= math::float3::unitX;
+	}
+	if (Input::GetyDir() > 0)
+	{
+		_movement_direction += math::float3::unitZ;
+	}
+	else if (Input::GetyDir() < 0)
+	{
+		_movement_direction -= math::float3::unitZ;
+	}
+
 	if (!IsActionLocked())
 	{
 		if (!IsAttackOnCooldown() && _ammo_count > 0 && Input::IsMouseButtonDown(Input::MouseButton::RIGHT))

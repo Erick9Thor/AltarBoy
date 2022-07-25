@@ -10,6 +10,8 @@ namespace Hachiko
 {
     constexpr int MAX_KEYS = 300;
     constexpr int NUM_MOUSE_BUTTONS = 5;
+    //Analog joystick dead zone
+    const int JOYSTICK_DEAD_ZONE = 8000;
 
     enum class KeyState
     {
@@ -101,6 +103,16 @@ namespace Hachiko
             return mouse_pixels_motion;
         }
 
+        [[nodiscard]] int& GetxDir()
+        {
+            return xDir;
+        }
+
+        [[nodiscard]] int& GetyDir()
+        {
+            return yDir;
+        }
+
     private:
         void UpdateInputMaps();
         // TODO: Make ModuleWindow store window size instead of monitor
@@ -110,6 +122,9 @@ namespace Hachiko
 
         // Gamepad Controller
         const char* GetControllerTypeAsString(SDL_GameControllerType type);
+        //Normalized direction
+        int xDir = 0;
+        int yDir = 0;
 
     private:
         KeyState* keyboard = nullptr;
@@ -121,7 +136,7 @@ namespace Hachiko
 
         // Gamead Controller
         SDL_GameController* sdl_game_controller = nullptr;
-        SDL_Joystick* sdl_joysttick = nullptr;
+        SDL_Joystick* sdl_joystick = nullptr;
 
         int scroll_delta{};
 

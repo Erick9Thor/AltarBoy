@@ -56,6 +56,53 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
     while (SDL_PollEvent(&sdl_event) != 0)
     {
         ImGui_ImplSDL2_ProcessEvent(&sdl_event);
+
+        // ------------------------------------//
+        if (sdl_event.type == SDL_JOYAXISMOTION)
+        {
+            //Motion on controller 0
+            if (sdl_event.jaxis.which == 0)
+            {
+                //X axis motion
+                if (sdl_event.jaxis.axis == 0)
+                {
+                    //Left of dead zone
+                    if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+                    {
+                        xDir = -1;
+                    }
+                    //Right of dead zone
+                    else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
+                    {
+                        xDir = 1;
+                    }
+                    else
+                    {
+                        xDir = 0;
+                    }
+                }
+                //Y axis motion
+                else if (sdl_event.jaxis.axis == 1)
+                {
+                    //Below of dead zone
+                    if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+                    {
+                        yDir = -1;
+                    }
+                    //Above of dead zone
+                    else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
+                    {
+                        yDir = 1;
+                    }
+                    else
+                    {
+                        yDir = 0;
+                    }
+                }
+            }
+        }
+        // ------------------------------------//
+
         switch (sdl_event.type)
         {
         case SDL_WINDOWEVENT:
@@ -140,6 +187,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
                 if (SDL_IsGameController(which))
                 {
                     sdl_game_controller = SDL_GameControllerOpen(which);
+                    sdl_joystick = SDL_JoystickOpen(which);
                     HE_LOG("%s number %d was added", GetControllerTypeAsString(SDL_GameControllerTypeForIndex(which)), sdl_event.cdevice.which);
                 }
             }
@@ -150,6 +198,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
         case SDL_CONTROLLERDEVICEREMOVED:
             HE_LOG("%s number was removed", SDL_GameControllerName(sdl_game_controller), sdl_event.cdevice.which);
             SDL_GameControllerClose(sdl_game_controller);
+            SDL_JoystickClose(sdl_joystick);
             sdl_game_controller = nullptr;
             break;
         default:
@@ -224,6 +273,8 @@ void Hachiko::ModuleInput::NotifyMouseAction(const float2& position, MouseEventP
 bool Hachiko::ModuleInput::CleanUp()
 {
     HE_LOG("Quitting SDL input event subsystem");
+    SDL_GameControllerClose(sdl_game_controller);
+    SDL_JoystickClose(sdl_joystick);
     SDL_QuitSubSystem(SDL_INIT_EVENTS);
     return true;
 }
