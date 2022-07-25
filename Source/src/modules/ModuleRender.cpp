@@ -209,7 +209,10 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     
     if (draw_navmesh)
     {
+        
+        EnableBlending();
         App->navigation->DebugDraw();
+        DisableBlending();
     }
 
     EnableBlending();
