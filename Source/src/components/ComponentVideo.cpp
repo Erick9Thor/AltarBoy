@@ -11,9 +11,6 @@
 
 #include "resources/ResourceVideo.h"
 
-//char av_error[64] = {0};
-//#define libav_err2str(errnum) av_make_error_string(av_error, 64, errnum)
-
 Hachiko::ComponentVideo::ComponentVideo(GameObject* container)
 : Component(Component::Type::VIDEO, container)
 {}
@@ -39,11 +36,10 @@ void Hachiko::ComponentVideo::Start()
 
 void Hachiko::ComponentVideo::Restart()
 {
-    avio_seek(format_ctx->pb, 0, SEEK_SET);
-    int result = av_seek_frame(format_ctx, video_stream_index, -1, 0);
-    if (result >= 0 && !loop)
+    int result = Reset();
+    if (result >= 0)
     {
-        state = VideoState::STOPPED;
+        state = VideoState::PLAYING;
     }
 }
 
@@ -54,7 +50,7 @@ void Hachiko::ComponentVideo::Update()
     {
         Start();
     }
-#endif //PLAY_BUILD
+#endif
 
     time += EngineTimer::delta_time;
 
@@ -67,12 +63,6 @@ void Hachiko::ComponentVideo::Update()
         able_to_capture = true;
         time = 0.0f;
     }
-
-    // Stop before reading last frame, because set frame index to 0 after reading last frame doesn't work as espected.
-    //if (video_capture.get(cv::CAP_PROP_FRAME_COUNT) == video_capture.get(cv::CAP_PROP_POS_FRAMES))
-    //{
-    //    loop ? Restart() : Stop();
-    //}
 }
 
 void Hachiko::ComponentVideo::DrawGui()
@@ -91,6 +81,7 @@ void Hachiko::ComponentVideo::DrawGui()
 
         Widgets::Checkbox("Loop", &loop);
         Widgets::Checkbox("Projected", &projected);
+        Widgets::Checkbox("Flip", &flip_vertical);
         Widgets::DragFloatConfig cfg;
         cfg.min = 1.0f;
         cfg.speed = 0.1f;
@@ -169,7 +160,7 @@ void Hachiko::ComponentVideo::Pause()
 
 void Hachiko::ComponentVideo::Stop()
 {
-    Restart();
+    Reset();
     state = VideoState::STOPPED;
 }
 
@@ -177,7 +168,14 @@ void Hachiko::ComponentVideo::BindFrameToGLTexture()
 {
     // allocate memory and set texture data
     glBindTexture(GL_TEXTURE_2D, frame_texture);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame_data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    // Set texture clamping method
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame_data);
+    glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void Hachiko::ComponentVideo::ReadNextVideoFrame()
@@ -197,7 +195,15 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
         //SEEK to frame 0 -> Restart the video timestamp
         if (error == AVERROR_EOF)
         {
-            Restart();
+            if (loop)
+            {
+                Reset();
+            }
+            else
+            {
+                Stop();
+            }
+
             av_packet_unref(av_packet);
             break;
         }
@@ -234,7 +240,7 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
     if (!scaler_ctx)
     {
         // Set SwScaler - Scale frame size + Pixel converter to RGB
-        scaler_ctx = sws_getContext(frame_width, frame_height, video_codec_ctx->pix_fmt, frame_width, frame_height, AV_PIX_FMT_RGB32, SWS_FAST_BILINEAR, nullptr, nullptr, nullptr);
+        scaler_ctx = sws_getContext(frame_width, frame_height, video_codec_ctx->pix_fmt, frame_width, frame_height, AV_PIX_FMT_BGR32, SWS_FAST_BILINEAR, nullptr, nullptr, nullptr);
 
         if (!scaler_ctx)
         {
@@ -244,6 +250,7 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
     }
 
     // Transform pixel format to RGB and send the data to the framebuffer
+    // By default the image is flipped, so consider the negate
     if (!flip_vertical)
     {
         FlipImage();
@@ -310,6 +317,7 @@ void Hachiko::ComponentVideo::AddVideo()
 void Hachiko::ComponentVideo::RemoveVideoResource()
 {
     Stop();
+    FreeVideoReader();
     App->resources->ReleaseResource(video);
     video = nullptr;
 }
@@ -392,47 +400,7 @@ void Hachiko::ComponentVideo::OpenVideo()
     frame_height = videoCodecParams->height;
     time_base = format_ctx->streams[video_stream_index]->time_base;
     frame_data = new uint8_t[frame_width * frame_height * 4];
-    //SetVideoFrameSize(frameWidth, frameHeight);
     CleanFrameBuffer();
-
-    // DECODING AUDIO
-    // Find a valid audio stream in the file
-    //AVCodecParameters* audioCodecParams;
-    //AVCodec* audioDecoder;
-    //audioStreamIndex = -1;
-
-    //audioStreamIndex = av_find_best_stream(formatCtx, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
-    //if (audioStreamIndex < 0)
-    //{
-    //    HE_LOG("Couldn't find valid audio stream inside file.");
-    //    return;
-    //}
-
-    //audioCodecParams = formatCtx->streams[audioStreamIndex]->codecpar;
-    //audioDecoder = avcodec_find_decoder(audioCodecParams->codec_id);
-    //if (!audioDecoder)
-    //{
-    //    HE_LOG("Couldn't find valid audio decoder.");
-    //    return;
-    //}
-
-    //// Set up a audio codec context for the decoder
-    //audioCodecCtx = avcodec_alloc_context3(audioDecoder);
-    //if (!audioCodecCtx)
-    //{
-    //    HE_LOG("Couldn't allocate AVCodecContext.");
-    //    return;
-    //}
-    //if (avcodec_parameters_to_context(audioCodecCtx, audioCodecParams) < 0)
-    //{
-    //    HE_LOG("Couldn't initialise AVCodecContext.");
-    //    return;
-    //}
-    //if (avcodec_open2(audioCodecCtx, audioDecoder, nullptr) < 0)
-    //{
-    //    HE_LOG("Couldn't open video codec.");
-    //    return;
-    //}
 
     // Allocate memory for packets and frames
     av_packet = av_packet_alloc();
@@ -447,20 +415,12 @@ void Hachiko::ComponentVideo::OpenVideo()
         HE_LOG("Couldn't allocate AVFrame.");
         return;
     }
+}
 
-    // Set audio parameters
-    /*
-	wanted_spec.freq = aCodecCtx->sample_rate;
-	wanted_spec.format = AUDIO_S16SYS;
-	wanted_spec.channels = aCodecCtx->channels;
-	wanted_spec.silence = 0;
-	wanted_spec.samples = SDL_AUDIO_BUFFER_SIZE;
-	wanted_spec.callback = audio_callback;
-	wanted_spec.userdata = aCodecCtx;
-	*/
-
-    //unsigned timeMs = timer.Stop();
-    //HE_LOG("Video initialised in %ums", timeMs);
+int Hachiko::ComponentVideo::Reset()
+{
+    avio_seek(format_ctx->pb, 0, SEEK_SET);
+    return av_seek_frame(format_ctx, video_stream_index, -1, 0);
 }
 
 void Hachiko::ComponentVideo::FlipImage()
@@ -509,7 +469,6 @@ void Hachiko::ComponentVideo::DisplayControls()
 
     ImGui::TextWrapped(go_label.c_str());
     ImGui::Text("Video fps: %.1f", fps);
-    //ImGui::Text("Frame index: %.1f", video_capture.get(cv::CAP_PROP_POS_FRAMES));
 
     ImGui::Separator();
 

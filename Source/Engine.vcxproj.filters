@@ -3130,7 +3130,6 @@
       <Filter>Vendors\NodeEditor</Filter>
     </None>
     <None Include="cpp.hint" />
-    <None Include="vendors\libav\bin\libogg-0.dll" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Hachiko.rc" />

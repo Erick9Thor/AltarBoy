@@ -1456,7 +1456,6 @@
     <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_bezier_math.inl" />
     <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_extra_math.inl" />
     <None Include="vendors\imgui-node-editor-0.9\NodeEditor\Source\imgui_node_editor_internal.inl" />
-    <None Include="vendors\libav\bin\libogg-0.dll" />
     <None Include="vendors\MathGeoLib\Geometry\KDTree.inl" />
     <None Include="vendors\MathGeoLib\Geometry\QuadTree.inl" />
     <None Include="vendors\MathGeoLib\Geometry\TriangleMesh_IntersectRay_AVX.inl" />

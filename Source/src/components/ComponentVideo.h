@@ -45,7 +45,7 @@ namespace Hachiko
         bool projected = false;
         bool loop = false;
         bool able_to_capture = false;
-        bool flip_vertical = true;
+        bool flip_vertical = false;
         unsigned int frame_texture = 0;
         float time = 0.0f;
         float fps = 1.0f;
@@ -70,18 +70,20 @@ namespace Hachiko
         float video_frame_time = 0; // Time in seconds when the next audio frame must appear.
 
         void DisplayControls();
+
         void PublishIntoScene();
         void DetachFromScene();
 
+        void FlipImage();
         void BindFrameToGLTexture();
         void ReadNextVideoFrame();
-
         void SetProjectionMatrices(const ComponentCamera* camera, const Program* program);
+
         void AddVideo();
+        void OpenVideo();
         void RemoveVideoResource();
         void FreeVideoReader();
         void CleanFrameBuffer();
-        void OpenVideo();
-        void FlipImage();
+        int Reset();
     };
 } // namespace Hachiko
