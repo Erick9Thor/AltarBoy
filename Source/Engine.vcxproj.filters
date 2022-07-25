@@ -2524,6 +2524,7 @@
     <ClInclude Include="src\resources\ResourceVideo.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="src\Batching\BatchingProperties.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

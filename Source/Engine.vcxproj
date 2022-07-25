@@ -702,6 +702,7 @@
   <ItemGroup>
     <ClInclude Include="src\resources\ResourceVideo.h" />
     <ClInclude Include="src\components\ComponentVideo.h" />
+    <ClInclude Include="src\Batching\BatchingProperties.h" />
     <ClInclude Include="src\utils\RandomUtilDefinitions.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\core\rendering\ShadowManager.h" />
