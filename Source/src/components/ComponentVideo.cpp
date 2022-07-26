@@ -112,7 +112,7 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
 
     if (IsPlaying() && able_to_capture)
     {
-        ReadNextVideoFrame();
+        ReadNextFrame();
     }
 
     BindFrameToGLTexture();
@@ -124,7 +124,7 @@ void Hachiko::ComponentVideo::Draw(ComponentCamera* camera, Program* /*program*/
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glDepthMask(GL_TRUE);
-    program->Deactivate();
+    Hachiko::Program::Deactivate();
 }
 
 void Hachiko::ComponentVideo::Save(YAML::Node& node) const
@@ -166,7 +166,7 @@ void Hachiko::ComponentVideo::Stop()
     state = VideoState::STOPPED;
 }
 
-void Hachiko::ComponentVideo::BindFrameToGLTexture()
+void Hachiko::ComponentVideo::BindFrameToGLTexture() const
 {
     // allocate memory and set texture data
     glBindTexture(GL_TEXTURE_2D, frame_texture);
@@ -180,10 +180,11 @@ void Hachiko::ComponentVideo::BindFrameToGLTexture()
     glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Hachiko::ComponentVideo::ReadNextVideoFrame()
+void Hachiko::ComponentVideo::ReadNextFrame()
 {
     int response = -1;
     int error = 0;
+
     while (error >= 0)
     {
         error = av_read_frame(format_ctx, av_packet);
@@ -213,7 +214,7 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
         response = avcodec_send_packet(video_codec_ctx, av_packet);
         if (response < 0)
         {
-            //HE_LOG("Failed to decode packet: %s.", libav_err2str(response));
+            HE_LOG("Failed to decode packet");
             return;
         }
 
@@ -223,9 +224,10 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
             av_packet_unref(av_packet);
             continue;
         }
+
         if (response < 0)
         {
-            //HE_LOG("Failed to decode frame: %s.", libav_err2str(response));
+            HE_LOG("Failed to decode frame");
             return;
         }
 
@@ -233,12 +235,12 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
         break;
     }
 
-    video_frame_time = av_frame->pts * time_base.num / (float)time_base.den;
+    video_frame_time = static_cast<float>(av_frame->pts * time_base.num) / static_cast<float>(time_base.den);
     if (video_frame_time == 0)
     {
         time = 0;
     }
-    
+
     if (!scaler_ctx)
     {
         // Set SwScaler - Scale frame size + Pixel converter to RGB
@@ -263,7 +265,7 @@ void Hachiko::ComponentVideo::ReadNextVideoFrame()
     sws_scale(scaler_ctx, av_frame->data, av_frame->linesize, 0, frame_height, dest, lin_size);
 }
 
-bool Hachiko::ComponentVideo::IsPlaying()
+bool Hachiko::ComponentVideo::IsPlaying() const
 {
     return state == VideoState::PLAYING;
 }
@@ -369,7 +371,7 @@ void Hachiko::ComponentVideo::OpenVideo()
     }
 
     // Find an appropiate video decoder
-    AVCodecParameters* videoCodecParams = format_ctx->streams[video_stream_index]->codecpar;
+    const AVCodecParameters* videoCodecParams = format_ctx->streams[video_stream_index]->codecpar;
     const AVCodec* videoDecoder = avcodec_find_decoder(videoCodecParams->codec_id);
     if (!videoDecoder)
     {

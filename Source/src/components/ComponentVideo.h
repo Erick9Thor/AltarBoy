@@ -38,7 +38,7 @@ namespace Hachiko
         HACHIKO_API void Pause();
         HACHIKO_API void Stop();
         HACHIKO_API void Restart();
-        HACHIKO_API bool IsPlaying();
+        HACHIKO_API bool IsPlaying() const;
 
     private:
         bool in_scene = false;
@@ -47,7 +47,7 @@ namespace Hachiko
         bool able_to_capture = false;
         bool flip_vertical = false;
         unsigned int frame_texture = 0;
-        float time = 0.0f;
+        double time = 0.0f;
         float fps = 1.0f;
 
         VideoState state = VideoState::PAUSED;
@@ -75,8 +75,8 @@ namespace Hachiko
         void DetachFromScene();
 
         void FlipImage();
-        void BindFrameToGLTexture();
-        void ReadNextVideoFrame();
+        void BindFrameToGLTexture() const;
+        void ReadNextFrame();
         void SetProjectionMatrices(const ComponentCamera* camera, const Program* program);
 
         void AddVideo();
