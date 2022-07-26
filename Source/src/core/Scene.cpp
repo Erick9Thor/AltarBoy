@@ -260,7 +260,6 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
 
         if (node[IBL].IsDefined() && node[IBL].as<bool>())
         {
-           skybox->BuildIBL();
            skybox->ActivateIBL(true);
         }
     }

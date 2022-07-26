@@ -28,6 +28,10 @@ namespace Hachiko
 
         void ActivateIBL(bool active)
         {
+            if (active && !ibl_built)
+            {
+                BuildIBL();
+            }
             activate_ibl = active;
         }
         void BuildIBL();
@@ -49,6 +53,7 @@ namespace Hachiko
         unsigned vbo{};
 
         bool activate_ibl = false;
+        bool ibl_built = false;
         unsigned diffuse_ibl_id = 0;
         unsigned prefiltered_ibl_id = 0;
         unsigned environment_brdf_id = 0;

@@ -280,6 +280,8 @@ void Hachiko::Skybox::BuildIBL()
     GenerateDiffuseIBL();
     GeneratePrefilteredIBL();
     GenerateEnvironmentBRDF();
+
+    ibl_built = true;
 }
 
 void Hachiko::Skybox::GenerateDiffuseIBL()
