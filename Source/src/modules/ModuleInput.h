@@ -148,6 +148,7 @@ namespace Hachiko
         // Gamead Controller
         SDL_GameController* sdl_game_controller = nullptr;
         SDL_Joystick* sdl_joystick = nullptr;
+        SDL_Haptic* sdl_haptic = nullptr;
 
         int scroll_delta{};
 

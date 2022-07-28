@@ -189,6 +189,9 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
                 {
                     sdl_game_controller = SDL_GameControllerOpen(which);
                     sdl_joystick = SDL_JoystickOpen(which);
+                    sdl_haptic = SDL_HapticOpen(which);
+                    SDL_HapticRumbleInit(sdl_haptic);
+                    SDL_HapticRumblePlay(sdl_haptic, 0.3f, 1000);
                     HE_LOG("%s number %d was added", GetControllerTypeAsString(SDL_GameControllerTypeForIndex(which)), sdl_event.cdevice.which);
                 }
             }
@@ -208,7 +211,8 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             break;
         case SDL_CONTROLLERBUTTONUP:
-
+            SDL_HapticRumbleInit(sdl_haptic);
+            SDL_HapticRumblePlay(sdl_haptic, 0.5f, 1000);
             game_controller[sdl_event.cbutton.button] = KeyState::KEY_UP;
 
             break;
