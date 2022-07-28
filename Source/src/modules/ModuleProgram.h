@@ -134,6 +134,11 @@ namespace Hachiko
         {
             return fog_program;
         }
+        
+        [[nodiscard]] Program* GetVideoProgram() const
+        {
+            return video_program;
+        }
 
         void UpdateCamera(const ComponentCamera* camera) const;
         void UpdateCamera(const Frustum& frustum) const;
@@ -165,6 +170,7 @@ namespace Hachiko
         Program* CreateShadowMappingProgram();
         Program* CreateTransparentDepthProgram();
         Program* CreateFogProgram();
+        Program* CreateVideoProgram();
 
         Program* forward_program = nullptr;
         Program* gaussian_filtering_program = nullptr;
@@ -181,6 +187,7 @@ namespace Hachiko
         Program* particle_program = nullptr;
         Program* transparent_depth_program = nullptr;
         Program* fog_program = nullptr;
+        Program* video_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);

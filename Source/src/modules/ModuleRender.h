@@ -134,6 +134,8 @@ namespace Hachiko
             glDisable(GL_BLEND);
         }
     
+        void RenderDeferredQuad() const;
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
@@ -152,7 +154,6 @@ namespace Hachiko
         void RetrieveGpuInfo();
 
         void GenerateDeferredQuad();
-        void RenderDeferredQuad() const;
         void FreeDeferredQuad();
 
         void* context{};

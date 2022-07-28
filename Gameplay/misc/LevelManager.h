@@ -36,7 +36,7 @@ namespace Hachiko
 				return _respawn_position;
 			}
 
-			void Respawn(PlayerController* player);
+			float3 Respawn();
 
 			SERIALIZE_FIELD(float3, _respawn_position);
 			SERIALIZE_FIELD(GameObject*, _gauntlet_ui_go);

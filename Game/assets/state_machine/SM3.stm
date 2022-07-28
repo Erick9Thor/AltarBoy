@@ -234,3 +234,7 @@ transitions:
     transition_target: run
     transition_trigger: isRun
     transition_blend: 300
+  - transition_source: death
+    transition_target: idle
+    transition_trigger: isRespawn
+    transition_blend: 0

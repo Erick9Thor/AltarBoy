@@ -37,6 +37,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateParticleProgram();
     CreateTransparentDepthProgram();
     CreateFogProgram();
+    CreateVideoProgram();
 
     if (!forward_program || !deferred_geometry_program || 
         !deferred_lighting_program || !skybox_program || 
@@ -241,10 +242,17 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
     return shadow_mapping_program;
 }
 
-Hachiko::Program* Hachiko::ModuleProgram::CreateTransparentDepthProgram()
+Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
 {
-    transparent_depth_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_transparent_depth.glsl");
-    return transparent_depth_program;
+    shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
+
+    return shadow_mapping_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateVideoProgram()
+{
+    video_program = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
+    return video_program;
 }
 
 Hachiko::Program* Hachiko::ModuleProgram::CreateFogProgram()
@@ -337,6 +345,9 @@ bool Hachiko::ModuleProgram::CleanUp()
     gaussian_filtering_program->CleanUp();
     delete gaussian_filtering_program;
     
+    video_program->CleanUp();
+    delete video_program;
+
     return true;
 }
 
