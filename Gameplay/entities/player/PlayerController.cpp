@@ -337,7 +337,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			MeleeAttack();
 		}
 		// Keep dash here since it uses the input movement direction
-		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) && _dash_charges > 0)
+		else if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) || (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A)) && _dash_charges > 0)
 		{
 			Dash();
 		}
