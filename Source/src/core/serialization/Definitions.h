@@ -179,6 +179,14 @@
 #define NAVMESH_ID "navmesh_id"
 #define SKYBOX_NODE "skybox"
 #define CUBE_ID "_cube_id"
+#define AMBIENT_LIGHT "ambient_light"
+#define AMBIENT_LIGHT_INTENSITY "intensity"
+#define AMBIENT_LIGHT_COLOR "color"
+#define FOG "fog"
+#define FOG_ENABLED "enabled"
+#define FOG_COLOR "color"
+#define FOG_GLOBAL_DENSITY "global_density"
+#define FOG_HEIGHT_FALLOFF "height_falloff"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"
