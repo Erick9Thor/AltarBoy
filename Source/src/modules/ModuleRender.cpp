@@ -202,8 +202,9 @@ UpdateStatus Hachiko::ModuleRender::Update(const float delta)
     const ComponentDirLight* dir_light = nullptr;
     if (!active_scene->dir_lights.empty())
         dir_light = active_scene->dir_lights[0];
-
-    App->program->UpdateLights(dir_light, active_scene->point_lights, active_scene->spot_lights);
+    const Scene::AmbientLightConfig& ambient_light = active_scene->GetAmbientLightConfig();
+    App->program->UpdateLights(ambient_light.intensity, ambient_light.color,
+        dir_light, active_scene->point_lights, active_scene->spot_lights);
 
     Draw(App->scene_manager->GetActiveScene(), camera, culling);
     
@@ -368,35 +369,65 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
     batch_manager->ClearTransparentBatchesDrawList();
 
     // If forward pass is disabled on the settings, return:
-    if (!render_forward_pass)
+    if (render_forward_pass)
     {
-        return;
+        // Get transparent meshes:
+        const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+
+        if (transparent_targets.size() > 0)
+        {
+            // Get the targets that has transparent materials. These targets will be
+            // rendered with regular forward rendering pass:
+            for (const RenderTarget& target : transparent_targets)
+            {
+                batch_manager->AddDrawComponent(target.mesh_renderer);
+            }
+
+            // Forward rendering pass for transparent game objects:
+            program = App->program->GetForwardProgram();
+            program->Activate();
+
+            EnableBlending();
+            batch_manager->DrawTransparentBatches(program);
+            DisableBlending();
+
+            g_buffer.BindForDrawing();
+            // Forward depth (Used for fog)
+            program = App->program->GetTransparentDepthProgram();
+            program->Activate();
+                
+            batch_manager->DrawTransparentBatches(program);
+            Program::Deactivate();
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frame_buffer);
+        }
     }
 
-    // Get transparent meshes:
-    const std::vector<RenderTarget>& transparent_targets = render_list.GetTransparentTargets();
+    // ----------------------------- FOG -----------------------------
 
-    if (transparent_targets.size() <= 0)
+    const Scene::FogConfig& fog = scene->GetFogConfig();
+    if (fog.enabled)
     {
-        return;
+        // Bind all g-buffer textures:
+        g_buffer.BindForReading();
+        g_buffer.BindFogTextures();
+        
+        program = App->program->GetFogProgram();
+        program->Activate();
+
+        EnableBlending();
+        const Scene::FogConfig& fog = scene->GetFogConfig();
+        program->BindUniformFloat3(Uniforms::Fog::COLOR, fog.color.ptr());
+        program->BindUniformFloat(Uniforms::Fog::GLOBAL_DENSITY, &fog.global_density);
+        program->BindUniformFloat(Uniforms::Fog::HEIGHT_FALLOFF, &fog.height_falloff);
+
+        RenderDeferredQuad();
+        glBindVertexArray(0);
+
+        g_buffer.UnbindFogTextures();
+        DisableBlending();
     }
-    
-    // Get the targets that has transparent materials. These targets will be
-    // rendered with regular forward rendering pass:
-    for (const RenderTarget& target : transparent_targets)
-    {
-        batch_manager->AddDrawComponent(target.mesh_renderer);
-    }
 
-    // Forward rendering pass for transparent game objects:
-    program = App->program->GetForwardProgram();
-    program->Activate();
-
-    EnableBlending();
-
-    batch_manager->DrawTransparentBatches(program);
-
-    DisableBlending();
+    // ----------------------------- POST PROCCESS -----------------------------
     
     Program::Deactivate();
 }

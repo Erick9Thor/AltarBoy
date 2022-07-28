@@ -28,7 +28,10 @@ void Hachiko::WindowConfiguration::Update()
     if (ImGui::CollapsingHeader("Scene"))
     {
         App->scene_manager->OptionsMenu();
-        ImGui::Separator();
+
+    }
+    if (ImGui::CollapsingHeader("Render"))
+    {
         App->renderer->OptionsMenu();
     }
     

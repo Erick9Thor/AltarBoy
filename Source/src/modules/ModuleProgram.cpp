@@ -35,14 +35,18 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredLightingPassProgram();
     CreateShadowMappingProgram();
     CreateParticleProgram();
+    CreateVideoProgram();
+    CreateTransparentDepthProgram();
+    CreateFogProgram();
 
     if (!forward_program || !deferred_geometry_program || 
         !deferred_lighting_program || !skybox_program || 
         !diffuse_ibl_program || !prefiltered_ibl_program || 
         !environment_brdf_program || !stencil_program || 
         !ui_image_program || !ui_text_program || 
-        !particle_program || !shadow_mapping_program ||
-        !gaussian_filtering_program)
+        !particle_program || !shadow_mapping_program || 
+        !gaussian_filtering_program || !transparent_depth_program || 
+        !video_program || !fog_program)
     {
         return false;
     }
@@ -236,8 +240,27 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateDeferredLightingPassProgram()
 Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
 {
     shadow_mapping_program = CreateProgram(SHADERS_FOLDER "vertex_shadow_mapping.glsl", SHADERS_FOLDER "fragment_shadow_mapping.glsl");
-
     return shadow_mapping_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateVideoProgram()
+{
+    video_program = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
+    return video_program;
+}
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateTransparentDepthProgram()
+{
+    transparent_depth_program = CreateProgram(SHADERS_FOLDER "vertex.glsl", SHADERS_FOLDER "fragment_deferred_transparent_depth.glsl");
+    return transparent_depth_program;
+}
+
+
+
+Hachiko::Program* Hachiko::ModuleProgram::CreateFogProgram()
+{
+    fog_program = CreateProgram(SHADERS_FOLDER "vertex_deferred_lighting.glsl", SHADERS_FOLDER "fragment_fog.glsl");
+    return fog_program;
 }
 
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
@@ -324,6 +347,15 @@ bool Hachiko::ModuleProgram::CleanUp()
     gaussian_filtering_program->CleanUp();
     delete gaussian_filtering_program;
     
+    video_program->CleanUp();
+    delete video_program;
+
+    transparent_depth_program->CleanUp();
+    delete transparent_depth_program;
+
+    fog_program->CleanUp();
+    delete fog_program;
+
     return true;
 }
 
@@ -412,11 +444,16 @@ void Hachiko::ModuleProgram::UpdateMaterial(
     UpdateUBO(UBOPoints::MATERIAL, sizeof(MaterialData), &material_data);
 }
 
-void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const
+void Hachiko::ModuleProgram::UpdateLights(float ambient_intensity,
+                                          const float4& ambient_color,
+                                          const ComponentDirLight* dir_light,
+                                          const std::vector<ComponentPointLight*>& point_lights,
+                                          const std::vector<ComponentSpotLight*>& spot_lights) const
 {
     Lights lights_data;
     // Ambient
-    lights_data.ambient = ambient_light;
+    lights_data.ambient.intensity = ambient_intensity;
+    lights_data.ambient.color = ambient_color;
     // Directional Lights
     if (dir_light && dir_light->IsActive() && dir_light->GetGameObject()->active)
     {
@@ -467,10 +504,4 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
         }
     }
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
-}
-
-void Hachiko::ModuleProgram::SetAmbientLight(float intensity, float4 color)
-{
-    ambient_light.intensity = intensity;
-    ambient_light.color = color;
 }
