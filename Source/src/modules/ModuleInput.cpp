@@ -12,6 +12,7 @@ Hachiko::ModuleInput::ModuleInput() :
 {
     memset(keyboard, static_cast<int>(KeyState::KEY_IDLE), sizeof(KeyState) * MAX_KEYS);
     memset(mouse, static_cast<int>(KeyState::KEY_IDLE), sizeof(KeyState) * NUM_MOUSE_BUTTONS);
+    memset(game_controller, static_cast<int>(KeyState::KEY_IDLE), sizeof(KeyState) * SDL_CONTROLLER_BUTTON_MAX);
 }
 
 Hachiko::ModuleInput::~ModuleInput()
@@ -201,6 +202,16 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             SDL_JoystickClose(sdl_joystick);
             sdl_game_controller = nullptr;
             break;
+        case SDL_CONTROLLERBUTTONDOWN: 
+            HE_LOG("%d button down", sdl_event.cbutton.button);
+            game_controller[sdl_event.cbutton.button] = KeyState::KEY_DOWN;
+            
+            break;
+        case SDL_CONTROLLERBUTTONUP:
+
+            game_controller[sdl_event.cbutton.button] = KeyState::KEY_UP;
+
+            break;
         default:
             scroll_delta = 0.0f;
             break;
@@ -252,6 +263,18 @@ void Hachiko::ModuleInput::UpdateInputMaps()
         if (mouse_button == KeyState::KEY_UP)
         {
             mouse_button = KeyState::KEY_IDLE;
+        }
+    }
+
+    for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i) {
+        if (game_controller[i] == KeyState::KEY_DOWN) 
+        {
+            game_controller[i] = KeyState::KEY_REPEAT;
+        }
+
+        if (game_controller[i] == KeyState::KEY_UP)
+        {
+            game_controller[i] = KeyState::KEY_IDLE;
         }
     }
 }

@@ -100,6 +100,16 @@ HACHIKO_API int& Hachiko::Input::GetyDir()
     return App->input->GetyDir();
 }
 
+bool Hachiko::Input::IsGameControllerButtonUp(GameControllerButton id)
+{
+    return App->input->IsGameControllerButtonUp(static_cast<int>(id));
+}
+
+bool Hachiko::Input::IsGameControllerButtonDown(GameControllerButton id)
+{
+    return App->input->IsGameControllerButtonDown(static_cast<int>(id));
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*SCENE MANAGEMENT-----------------------------------------------------------*/

@@ -113,6 +113,16 @@ namespace Hachiko
             return yDir;
         }
 
+        [[nodiscard]] bool IsGameControllerButtonUp(const int id) const
+        {
+            return game_controller[id] == KeyState::KEY_UP;
+        }
+
+        [[nodiscard]] bool IsGameControllerButtonDown(const int id) const
+        {
+            return game_controller[id] == KeyState::KEY_DOWN;
+        }
+
     private:
         void UpdateInputMaps();
         // TODO: Make ModuleWindow store window size instead of monitor
@@ -129,6 +139,7 @@ namespace Hachiko
     private:
         KeyState* keyboard = nullptr;
         KeyState mouse[NUM_MOUSE_BUTTONS]{};
+        KeyState game_controller[SDL_CONTROLLER_BUTTON_MAX]{};
         float2 mouse_pixel_position = float2::zero;
         float2 mouse_normalized_position = float2::zero;
         float2 mouse_normalized_motion = float2::zero;
