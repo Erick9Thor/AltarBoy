@@ -168,9 +168,10 @@ namespace Hachiko
         Program* CreateDeferredGeometryPassProgram();
         Program* CreateDeferredLightingPassProgram();
         Program* CreateShadowMappingProgram();
+        Program* CreateVideoProgram();
         Program* CreateTransparentDepthProgram();
         Program* CreateFogProgram();
-        Program* CreateVideoProgram();
+        
 
         Program* forward_program = nullptr;
         Program* gaussian_filtering_program = nullptr;
@@ -185,9 +186,9 @@ namespace Hachiko
         Program* ui_image_program = nullptr;
         Program* ui_text_program = nullptr;
         Program* particle_program = nullptr;
+        Program* video_program = nullptr;
         Program* transparent_depth_program = nullptr;
         Program* fog_program = nullptr;
-        Program* video_program = nullptr;
 
         // Assume the shader already manages its binding points
         void CreateUBO(UBOPoints binding_point, unsigned size);
