@@ -105,6 +105,7 @@
 #define SKYBOX_EXTENSION ".hdr"
 #define FONT_EXTENSION ".ttf"
 #define STATE_MACHINE_EXTENSION ".stm"
+#define MP4_VIDEO_EXTENSION ".mp4"
  
 //////////////////////////
 //						//
@@ -353,6 +354,13 @@
 #define RENDERER_MESH_ID "mesh_id"
 #define RENDERER_MATERIAL_ID "material_id"
 #define RENDERER_TINT_COLOR "tint_color"
+
+// ComponentVideo
+#define VIDEO_ID "video_id"
+#define VIDEO_PROJECTED "projected"
+#define VIDEO_LOOP "loop"
+#define VIDEO_FLIP "flip"
+#define VIDEO_FPS "fps"
 
 // Script
 #define SCRIPT_NAME "class_name"

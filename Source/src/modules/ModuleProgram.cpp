@@ -35,6 +35,7 @@ bool Hachiko::ModuleProgram::Init()
     CreateDeferredLightingPassProgram();
     CreateShadowMappingProgram();
     CreateParticleProgram();
+    CreateVideoProgram();
 
     if (!forward_program || !deferred_geometry_program || 
         !deferred_lighting_program || !skybox_program || 
@@ -240,6 +241,12 @@ Hachiko::Program* Hachiko::ModuleProgram::CreateShadowMappingProgram()
     return shadow_mapping_program;
 }
 
+Hachiko::Program* Hachiko::ModuleProgram::CreateVideoProgram()
+{
+    video_program = CreateProgram(SHADERS_FOLDER "vertex_video.glsl", SHADERS_FOLDER "fragment_video.glsl");
+    return video_program;
+}
+
 void Hachiko::ModuleProgram::CreateUBO(UBOPoints binding_point, unsigned size)
 {
     glGenBuffers(1, &buffers[static_cast<int>(binding_point)]);
@@ -324,6 +331,9 @@ bool Hachiko::ModuleProgram::CleanUp()
     gaussian_filtering_program->CleanUp();
     delete gaussian_filtering_program;
     
+    video_program->CleanUp();
+    delete video_program;
+
     return true;
 }
 
