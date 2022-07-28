@@ -164,11 +164,7 @@ namespace Hachiko
         {
             return particles;
         }
-
-        void ApplyAmbientLight() const;
-        void ApplyAmbientLight(float intensity, float4 color);
-        void DrawImGui();
-
+        
         std::vector<ComponentDirLight*> dir_lights{};
         std::vector<ComponentPointLight*> point_lights{};
         std::vector<ComponentSpotLight*> spot_lights{};

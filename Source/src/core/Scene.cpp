@@ -234,11 +234,7 @@ void Hachiko::Scene::Save(YAML::Node& node)
         std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
         node[SKYBOX_NODE][side_name] = cube.uids[i];
     }
-
-    // Ambient light
-    node[AMBIENT_LIGHT_INTENSITY] = ambient_light_intensity;
-    node[AMBIENT_LIGHT_COLOR] = ambient_light_color;
-
+    
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -273,15 +269,6 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
         {
            skybox->ActivateIBL(true);
         }
-    }
-
-    if (node[AMBIENT_LIGHT_INTENSITY].IsDefined())
-    {
-        ambient_light_intensity = node[AMBIENT_LIGHT_INTENSITY].as<float>();
-    }
-    if (node[AMBIENT_LIGHT_COLOR].IsDefined())
-    {
-        ambient_light_color = node[AMBIENT_LIGHT_COLOR].as<float4>();
     }
 
     if (!node[CHILD_NODE].IsDefined())
@@ -439,33 +426,6 @@ void Hachiko::Scene::RemoveParticleComponent(const UID& component_id)
     {
         particles.erase(it);
     }
-}
-
-void Hachiko::Scene::ApplyAmbientLight() const
-{
-    App->program->SetAmbientLight(ambient_light_intensity, ambient_light_color);
-}
-
-void Hachiko::Scene::ApplyAmbientLight(float intensity, float4 color) 
-{
-    ambient_light_intensity = intensity;
-    ambient_light_color = color;
-    App->program->SetAmbientLight(ambient_light_intensity, ambient_light_color);
-}
-
-void Hachiko::Scene::DrawImGui()
-{
-    ImGui::PushItemWidth(100.0f);
-    ImGui::Text("Ambient Light");
-    if (ImGui::InputFloat("Intensity", &ambient_light_intensity))
-    {
-        App->program->SetAmbientLight(ambient_light_intensity, ambient_light_color);
-    }
-    if (ImGuiUtils::CompactColorPicker("Color", &ambient_light_color[0]))
-    {
-        App->program->SetAmbientLight(ambient_light_intensity, ambient_light_color);
-    }
-    ImGui::PopItemWidth();
 }
 
 Hachiko::GameObject* Hachiko::Scene::CreateDebugCamera()

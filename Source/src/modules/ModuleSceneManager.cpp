@@ -373,8 +373,6 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
     RELEASE(main_scene);
     main_scene = new_scene;
 
-    main_scene->ApplyAmbientLight();
-
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);
 }
