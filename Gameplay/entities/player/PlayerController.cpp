@@ -350,7 +350,7 @@ void Hachiko::Scripting::PlayerController::HandleInputAndStatus()
 			_state = PlayerState::IDLE;
 		}
 
-		if (Input::IsKeyDown(Input::KeyCode::KEY_F))
+		if (Input::IsKeyDown(Input::KeyCode::KEY_F) || (Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y)))
 		{
 			PickupParasite(_player_position);
 		}
