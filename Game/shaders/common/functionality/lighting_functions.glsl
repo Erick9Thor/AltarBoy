@@ -122,7 +122,7 @@ vec3 GetAmbientLight(in vec3 normal, in vec3 R, float NdotV, float roughness, in
 
         vec3 diffuse = (diffuse_color * (1 - specular_color));
 
-        return diffuse * irradiance + radiance * (specular_color * fab.x + fab.y);
+        return (diffuse * irradiance + radiance * (specular_color * fab.x + fab.y)) * lights.ambient.intensity;
     }
     return diffuse_color * lights.ambient.color.rgb * lights.ambient.intensity;
 }

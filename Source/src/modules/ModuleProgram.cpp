@@ -469,11 +469,8 @@ void Hachiko::ModuleProgram::UpdateLights(const ComponentDirLight* dir_light, co
     UpdateUBO(UBOPoints::LIGHTS, sizeof(Lights), &lights_data);
 }
 
-void Hachiko::ModuleProgram::OptionsMenu()
+void Hachiko::ModuleProgram::SetAmbientLight(float intensity, float4 color)
 {
-    ImGui::PushItemWidth(100.0f);
-    ImGui::Text("Ambient Light");
-    ImGui::InputFloat("Intensity", &ambient_light.intensity);
-    ImGuiUtils::CompactColorPicker("Color", &ambient_light.color[0]);
-    ImGui::PopItemWidth();
+    ambient_light.intensity = intensity;
+    ambient_light.color = color;
 }

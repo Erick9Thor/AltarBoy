@@ -179,6 +179,8 @@
 #define IBL "ibl"
 #define SKYBOX_NODE "skybox"
 #define CUBE_ID "_cube_id"
+#define AMBIENT_LIGHT_INTENSITY "ambient_light_intensity"
+#define AMBIENT_LIGHT_COLOR "ambient_light_color"
 
 // Game Object
 #define GAME_OBJECT_NAME "name"

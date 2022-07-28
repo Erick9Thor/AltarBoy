@@ -133,11 +133,16 @@ namespace Hachiko
             return particles;
         }
 
+        void ApplyAmbientLight() const;
+        void ApplyAmbientLight(float intensity, float4 color);
+        void DrawImGui();
+
         std::vector<ComponentDirLight*> dir_lights{};
         std::vector<ComponentPointLight*> point_lights{};
         std::vector<ComponentSpotLight*> spot_lights{};
 
     private:
+
         std::string name;
         GameObject* root = nullptr;
         ComponentCamera* culling_camera = nullptr;
@@ -147,12 +152,13 @@ namespace Hachiko
 
         Skybox* skybox = nullptr;
         Quadtree* quadtree = nullptr;
+        
+        float ambient_light_intensity = 0.05f;
+        float4 ambient_light_color = float4::one;
 
         bool rebuild_batch = true;
         BatchManager* batch_manager = nullptr;
         std::vector<Component*> particles{};
-
-        
 
     public:
         class Memento

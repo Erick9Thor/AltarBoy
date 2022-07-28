@@ -131,7 +131,7 @@ namespace Hachiko
         void UpdateMaterial(const ComponentMeshRenderer* component_mesh_renderer, const Program* program) const;
         void UpdateLights(const ComponentDirLight* dir_light, const std::vector<ComponentPointLight*>& point_lights, const std::vector<ComponentSpotLight*>& spot_lights) const;
 
-        void OptionsMenu();
+        void SetAmbientLight(float intensity, float4 color);
 
         void* CreatePersistentBuffers(unsigned& buffer_id, int binding_point, unsigned size);
 

@@ -314,6 +314,7 @@ void Hachiko::ModuleSceneManager::OptionsMenu()
     // Skybox
     ImGui::Separator();
     main_scene->GetSkybox()->DrawImGui();
+    main_scene->DrawImGui();
 }
 
 void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
@@ -371,6 +372,8 @@ void Hachiko::ModuleSceneManager::ChangeMainScene(Scene* new_scene)
     to_remove.clear();
     RELEASE(main_scene);
     main_scene = new_scene;
+
+    main_scene->ApplyAmbientLight();
 
     scene_load.SetEventData<SceneLoadEventPayload>(SceneLoadEventPayload::State::LOADED);
     App->event->Publish(scene_load);

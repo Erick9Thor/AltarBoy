@@ -30,9 +30,6 @@ void Hachiko::WindowConfiguration::Update()
         App->scene_manager->OptionsMenu();
         ImGui::Separator();
         App->renderer->OptionsMenu();
-        ImGui::Separator();
-        ImGui::Text("Shader Options");
-        App->program->OptionsMenu();
     }
     
     if (ImGui::CollapsingHeader("Audio"))
