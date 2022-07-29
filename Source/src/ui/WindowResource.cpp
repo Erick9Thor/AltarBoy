@@ -77,9 +77,9 @@ void Hachiko::WindowResource::Update()
         }
     }
 
-    ImGui::Columns(1);
+    ImGui::Columns(3);
     ImGui::Separator();
-
+    int items_counter = 0;
     for (const auto& directory_entry : current_content)
     {
         if (!directory_entry.is_directory)
@@ -99,9 +99,18 @@ void Hachiko::WindowResource::Update()
                     App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
                 }
             }
+
+            ++items_counter;
+
+            if (items_counter > 15)
+            {
+                ImGui::NextColumn();
+                items_counter = 0;
+            }
         }
     }
 
+    ImGui::Columns(1);
     ImGui::End();
 }
 
