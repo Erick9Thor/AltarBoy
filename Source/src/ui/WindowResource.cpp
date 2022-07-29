@@ -7,6 +7,9 @@
 #include "modules/ModuleEvent.h"
 #include "resources/ResourceMaterial.h"
 
+int constexpr MAX_COLUMN_FILES = 3;
+int constexpr MAX_FILES_PER_COLUMN = 20;
+
 Hachiko::WindowResource::WindowResource() : 
     Window("Resources", true)
 {
@@ -77,9 +80,11 @@ void Hachiko::WindowResource::Update()
         }
     }
 
-    ImGui::Columns(3);
+    ImGui::Columns(MAX_COLUMN_FILES);
     ImGui::Separator();
+
     int items_counter = 0;
+
     for (const auto& directory_entry : current_content)
     {
         if (!directory_entry.is_directory)
@@ -88,21 +93,17 @@ void Hachiko::WindowResource::Update()
             {
                 continue;
             }
-
-            auto selection = ImGui::Selectable(directory_entry.name.c_str(), true, ImGuiSelectableFlags_AllowDoubleClick);
             
-            if (ImGui::IsItemHovered())
+            auto selection = ImGui::Selectable(directory_entry.name.c_str(), true, ImGuiSelectableFlags_AllowDoubleClick);
+            if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
             {
-                if (ImGui::IsMouseDoubleClicked(selection))
-                {
-                    LoadAsset(directory_entry.path.string());
-                    App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
-                }
+                LoadAsset(directory_entry.path.string());
+                App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
             }
 
             ++items_counter;
 
-            if (items_counter > 15)
+            if (items_counter > MAX_FILES_PER_COLUMN)
             {
                 ImGui::NextColumn();
                 items_counter = 0;
