@@ -58,52 +58,6 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
     {
         ImGui_ImplSDL2_ProcessEvent(&sdl_event);
 
-        // ------------------------------------//
-        //if (sdl_event.type == SDL_JOYAXISMOTION)
-        //{
-        //    //Motion on controller 0
-        //    if (sdl_event.jaxis.which == 0)
-        //    {
-        //        //X axis motion
-        //        if (sdl_event.jaxis.axis == 0)
-        //        {
-        //            //Left of dead zone
-        //            if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-        //            {
-        //                xDir = -1;
-        //            }
-        //            //Right of dead zone
-        //            else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
-        //            {
-        //                xDir = 1;
-        //            }
-        //            else
-        //            {
-        //                xDir = 0;
-        //            }
-        //        }
-        //        //Y axis motion
-        //        else if (sdl_event.jaxis.axis == 1)
-        //        {
-        //            //Below of dead zone
-        //            if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-        //            {
-        //                yDir = -1;
-        //            }
-        //            //Above of dead zone
-        //            else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
-        //            {
-        //                yDir = 1;
-        //            }
-        //            else
-        //            {
-        //                yDir = 0;
-        //            }
-        //        }
-        //    }
-        //}
-        // ------------------------------------//
-
         switch (sdl_event.type)
         {
         case SDL_WINDOWEVENT:

@@ -104,16 +104,6 @@ namespace Hachiko
             return mouse_pixels_motion;
         }
 
-        [[nodiscard]] int& GetxDir()
-        {
-            return xDir;
-        }
-
-        [[nodiscard]] int& GetyDir()
-        {
-            return yDir;
-        }
-
         [[nodiscard]] bool IsGameControllerButtonUp(const int id) const
         {
             return game_controller[id] == KeyState::KEY_UP;
@@ -153,9 +143,6 @@ namespace Hachiko
 
         // Gamepad Controller
         const char* GetControllerTypeAsString(SDL_GameControllerType type);
-        //Normalized direction
-        int xDir = 0;
-        int yDir = 0;
 
     private:
         KeyState* keyboard = nullptr;

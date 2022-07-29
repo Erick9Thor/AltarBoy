@@ -444,8 +444,6 @@ HACHIKO_API const float2& GetMouseNormalizedMotion();
 HACHIKO_API const float2& GetMousePixelsMotion();
 HACHIKO_API const float2& GetMousePixelPosition();
 HACHIKO_API const float2& GetMouseNormalizedPosition();
-HACHIKO_API int& GetxDir();
-HACHIKO_API int& GetyDir();
 HACHIKO_API bool IsGameControllerButtonUp(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
