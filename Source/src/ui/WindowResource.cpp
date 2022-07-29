@@ -94,8 +94,8 @@ void Hachiko::WindowResource::Update()
                 continue;
             }
             
-            auto selection = ImGui::Selectable(directory_entry.name.c_str(), true, ImGuiSelectableFlags_AllowDoubleClick);
-            if (ImGui::IsMouseDoubleClicked(selection) && ImGui::IsItemHovered())
+            auto selection = ImGui::Selectable(directory_entry.name.c_str(), false, ImGuiSelectableFlags_AllowDoubleClick);
+            if (ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left) && ImGui::IsItemHovered())
             {
                 LoadAsset(directory_entry.path.string());
                 App->event->Publish(Event::Type::CREATE_EDITOR_HISTORY_ENTRY);
