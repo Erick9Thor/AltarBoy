@@ -198,6 +198,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	if (!IsAlive())
 	{
 		_state = PlayerState::DIE;
+		Input::GoBrr(0.5, 1500);
 	}
 
 	if (animation->IsAnimationStopped() && IsDying())
@@ -1091,6 +1092,7 @@ void Hachiko::Scripting::PlayerController::RegisterHit(int damage_received, floa
 		}
 		_combat_stats->ReceiveDamage(damage_received);
 		UpdateHealthBar();
+		Input::GoBrr(0.3f, 500);
 		
 		if (_player_geometry != nullptr)
 		{

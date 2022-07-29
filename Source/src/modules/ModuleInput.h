@@ -129,6 +129,21 @@ namespace Hachiko
             return abs(game_controller_axis[id]) > JOYSTICK_DEAD_ZONE ? game_controller_axis[id] / JOYSTICK_MAX_VALUE : 0;
         }
 
+        [[nodiscard]] void GoBrr(float strength, float duration)
+        {
+            if (!sdl_haptic)
+            {
+                return;
+            }
+
+            if (SDL_HapticRumbleInit(sdl_haptic) != 0)
+            {
+                return;
+            }
+
+            SDL_HapticRumblePlay(sdl_haptic, strength, duration);
+        }
+
     private:
         void UpdateInputMaps();
         // TODO: Make ModuleWindow store window size instead of monitor

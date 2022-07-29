@@ -204,7 +204,10 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             HE_LOG("%s number was removed", SDL_GameControllerName(sdl_game_controller), sdl_event.cdevice.which);
             SDL_GameControllerClose(sdl_game_controller);
             SDL_JoystickClose(sdl_joystick);
+            SDL_HapticClose(sdl_haptic);
             sdl_game_controller = nullptr;
+            sdl_joystick = nullptr;
+            sdl_haptic = nullptr;
 
             break;
         case SDL_CONTROLLERBUTTONDOWN: 

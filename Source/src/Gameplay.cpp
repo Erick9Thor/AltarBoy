@@ -115,6 +115,11 @@ float Hachiko::Input::GetAxisNormalized(GameControllerAxis id)
     return App->input->GetAxisNormalized(static_cast<int>(id));
 }
 
+void Hachiko::Input::GoBrr(float strength, float duration)
+{
+    App->input->GoBrr(strength, duration);
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*SCENE MANAGEMENT-----------------------------------------------------------*/

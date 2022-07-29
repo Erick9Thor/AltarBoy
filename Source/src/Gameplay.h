@@ -450,6 +450,7 @@ HACHIKO_API bool IsGameControllerButtonUp(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
 HACHIKO_API float GetAxisNormalized(GameControllerAxis id);
+HACHIKO_API void GoBrr(float strength, float duration);
 
 } // namespace Hachiko::Input
 
