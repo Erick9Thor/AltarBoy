@@ -110,6 +110,11 @@ bool Hachiko::Input::IsGameControllerButtonDown(GameControllerButton id)
     return App->input->IsGameControllerButtonDown(static_cast<int>(id));
 }
 
+float Hachiko::Input::GetAxisNormalized(GameControllerAxis id)
+{
+    return App->input->GetAxisNormalized(static_cast<int>(id));
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*SCENE MANAGEMENT-----------------------------------------------------------*/

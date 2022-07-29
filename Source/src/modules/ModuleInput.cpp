@@ -59,49 +59,49 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
         ImGui_ImplSDL2_ProcessEvent(&sdl_event);
 
         // ------------------------------------//
-        if (sdl_event.type == SDL_JOYAXISMOTION)
-        {
-            //Motion on controller 0
-            if (sdl_event.jaxis.which == 0)
-            {
-                //X axis motion
-                if (sdl_event.jaxis.axis == 0)
-                {
-                    //Left of dead zone
-                    if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-                    {
-                        xDir = -1;
-                    }
-                    //Right of dead zone
-                    else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
-                    {
-                        xDir = 1;
-                    }
-                    else
-                    {
-                        xDir = 0;
-                    }
-                }
-                //Y axis motion
-                else if (sdl_event.jaxis.axis == 1)
-                {
-                    //Below of dead zone
-                    if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
-                    {
-                        yDir = -1;
-                    }
-                    //Above of dead zone
-                    else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
-                    {
-                        yDir = 1;
-                    }
-                    else
-                    {
-                        yDir = 0;
-                    }
-                }
-            }
-        }
+        //if (sdl_event.type == SDL_JOYAXISMOTION)
+        //{
+        //    //Motion on controller 0
+        //    if (sdl_event.jaxis.which == 0)
+        //    {
+        //        //X axis motion
+        //        if (sdl_event.jaxis.axis == 0)
+        //        {
+        //            //Left of dead zone
+        //            if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+        //            {
+        //                xDir = -1;
+        //            }
+        //            //Right of dead zone
+        //            else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
+        //            {
+        //                xDir = 1;
+        //            }
+        //            else
+        //            {
+        //                xDir = 0;
+        //            }
+        //        }
+        //        //Y axis motion
+        //        else if (sdl_event.jaxis.axis == 1)
+        //        {
+        //            //Below of dead zone
+        //            if (sdl_event.jaxis.value < -JOYSTICK_DEAD_ZONE)
+        //            {
+        //                yDir = -1;
+        //            }
+        //            //Above of dead zone
+        //            else if (sdl_event.jaxis.value > JOYSTICK_DEAD_ZONE)
+        //            {
+        //                yDir = 1;
+        //            }
+        //            else
+        //            {
+        //                yDir = 0;
+        //            }
+        //        }
+        //    }
+        //}
         // ------------------------------------//
 
         switch (sdl_event.type)
@@ -195,6 +195,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
                     HE_LOG("%s number %d was added", GetControllerTypeAsString(SDL_GameControllerTypeForIndex(which)), sdl_event.cdevice.which);
                 }
             }
+
             break;
         case SDL_CONTROLLERDEVICEREMAPPED:
             HE_LOG("Controller %d was remapped", sdl_event.cdevice.which);
@@ -204,6 +205,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             SDL_GameControllerClose(sdl_game_controller);
             SDL_JoystickClose(sdl_joystick);
             sdl_game_controller = nullptr;
+
             break;
         case SDL_CONTROLLERBUTTONDOWN: 
             HE_LOG("%d button down", sdl_event.cbutton.button);
@@ -211,11 +213,37 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             
             break;
         case SDL_CONTROLLERBUTTONUP:
-            SDL_HapticRumbleInit(sdl_haptic);
-            SDL_HapticRumblePlay(sdl_haptic, 0.5f, 1000);
             game_controller[sdl_event.cbutton.button] = KeyState::KEY_UP;
 
             break;
+        case SDL_CONTROLLERAXISMOTION: {
+            // Triggers 
+            if (sdl_event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT || sdl_event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT) 
+            {
+                game_controller_axis[sdl_event.caxis.axis] = sdl_event.caxis.value;
+                HE_LOG("Axis: %d Value: %d", sdl_event.caxis.axis, sdl_event.caxis.value);
+                break;
+            }
+            // Left Joystick Axis
+            if (sdl_event.caxis.value < -JOYSTICK_DEAD_ZONE) 
+            {
+                game_controller_axis[sdl_event.caxis.axis] = sdl_event.caxis.value;
+                HE_LOG("Axis: %d Value: %d", sdl_event.caxis.axis, sdl_event.caxis.value);
+            }
+            // Right Joystick Axis
+            else if (sdl_event.caxis.value > JOYSTICK_DEAD_ZONE) 
+            {
+                game_controller_axis[sdl_event.caxis.axis] = sdl_event.caxis.value;
+                HE_LOG("Axis: %d Value: %d", sdl_event.caxis.axis, sdl_event.caxis.value);
+            }
+            else 
+            {
+                game_controller_axis[sdl_event.caxis.axis] = 0;
+                HE_LOG("Axis: %d Value: %d", sdl_event.caxis.axis, sdl_event.caxis.value);
+            }
+
+            break;
+        }
         default:
             scroll_delta = 0.0f;
             break;

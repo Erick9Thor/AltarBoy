@@ -418,6 +418,19 @@ enum class HACHIKO_API GameControllerButton
     CONTROLLER_BUTTON_MAX = 21
 };
 
+enum class HACHIKO_API GameControllerAxis
+{
+    // These are taken from SDL source code.
+    CONTROLLER_AXIS_INVALID = -1,
+    CONTROLLER_AXIS_LEFTX = 0,
+    CONTROLLER_AXIS_LEFTY = 1,
+    CONTROLLER_AXIS_RIGHTX = 2,
+    CONTROLLER_AXIS_RIGHTY = 3,
+    CONTROLLER_AXIS_TRIGGERLEFT = 4,
+    CONTROLLER_AXIS_TRIGGERRIGHT = 5,
+    CONTROLLER_AXIS_MAX
+};
+
 HACHIKO_API bool IsKeyPressed(KeyCode key);
 HACHIKO_API bool IsKeyUp(KeyCode key);
 HACHIKO_API bool IsKeyDown(KeyCode key);
@@ -435,6 +448,8 @@ HACHIKO_API int& GetxDir();
 HACHIKO_API int& GetyDir();
 HACHIKO_API bool IsGameControllerButtonUp(GameControllerButton id);
 HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
+HACHIKO_API bool IsGameControllerButtonDown(GameControllerButton id);
+HACHIKO_API float GetAxisNormalized(GameControllerAxis id);
 
 } // namespace Hachiko::Input
 
