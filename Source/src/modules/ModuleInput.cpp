@@ -287,6 +287,7 @@ bool Hachiko::ModuleInput::CleanUp()
     HE_LOG("Quitting SDL input event subsystem");
     SDL_GameControllerClose(sdl_game_controller);
     SDL_JoystickClose(sdl_joystick);
+    SDL_HapticClose(sdl_haptic);
     SDL_QuitSubSystem(SDL_INIT_EVENTS);
     return true;
 }
