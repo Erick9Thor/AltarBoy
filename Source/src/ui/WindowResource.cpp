@@ -50,6 +50,8 @@ void Hachiko::WindowResource::Update()
         column_count = 1;
     }
 
+    ImGui::Text(current_path.string().substr(2).c_str());
+    ImGui::Separator();
     ImGui::Columns(column_count, 0, false);
 
     if (!current_path.string()._Equal(root_directory.string()))
