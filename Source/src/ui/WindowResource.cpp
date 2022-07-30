@@ -54,7 +54,7 @@ void Hachiko::WindowResource::Update()
 
     if (!current_path.string()._Equal(root_directory.string()))
     {
-        if (ImGui::Button(ICON_FA_FOLDER_MINUS, {thumbnail_size, thumbnail_size * 0.3f}))
+        if (ImGui::Button(ICON_FA_ARROW_LEFT, {thumbnail_size * 0.5f, thumbnail_size * 0.3f}))
         {
             current_path = current_path.parent_path();
             updated = false;
@@ -126,7 +126,7 @@ void Hachiko::WindowResource::LoadAsset(const std::string& path)
 
 void Hachiko::WindowResource::CreateMaterialGui(const ImVec2 &button_size)
 {
-    if (current_path != "./assets\\materials")
+    if (current_path != "./assets/materials")
     {
         return;
     }
