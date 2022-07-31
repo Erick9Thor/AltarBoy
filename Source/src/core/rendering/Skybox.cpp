@@ -89,28 +89,27 @@ void Hachiko::Skybox::DrawImGui()
         BuildIBL();
     }
 
-    if (ImGui::Button("Reset (debug)"))
+    if (default_ibl == 0)
     {
-        cube.id = default_ibl;
-        default_ibl = 0;
-    }
-
-    if (ImGui::Button("Diffuse (debug)"))
-    {
-        if (default_ibl == 0)
+        if (ImGui::Button("Diffuse (debug)"))
         {
             default_ibl = cube.id;
+            cube.id = diffuse_ibl_id;
         }
-        cube.id = diffuse_ibl_id;
-    }
-
-    if (ImGui::Button("Prefiltered (debug)"))
-    {
-        if (default_ibl == 0)
+        ImGui::SameLine();
+        if (ImGui::Button("Prefiltered (debug)"))
         {
             default_ibl = cube.id;
+            cube.id = prefiltered_ibl_id;
         }
-        cube.id = prefiltered_ibl_id;
+    }
+    else
+    {
+        if (ImGui::Button("Reset (debug)"))
+        {
+            cube.id = default_ibl;
+            default_ibl = 0;
+        }
     }
 
     ImGui::PopID();
