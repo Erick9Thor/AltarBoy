@@ -28,6 +28,8 @@ Hachiko::Skybox::~Skybox()
     ReleaseCubemap();
 
     glDeleteTextures(1, &diffuse_ibl_id);
+    glDeleteTextures(1, &prefiltered_ibl_id);
+    glDeleteTextures(1, &environment_brdf_id);
 }
 
 void Hachiko::Skybox::Draw(ComponentCamera* camera) const
@@ -87,13 +89,27 @@ void Hachiko::Skybox::DrawImGui()
         BuildIBL();
     }
 
-    if (ImGui::Button("Diffuse"))
+    if (ImGui::Button("Reset (debug)"))
     {
+        cube.id = default_ibl;
+        default_ibl = 0;
+    }
+
+    if (ImGui::Button("Diffuse (debug)"))
+    {
+        if (default_ibl == 0)
+        {
+            default_ibl = cube.id;
+        }
         cube.id = diffuse_ibl_id;
     }
 
-    if (ImGui::Button("Prefiltered"))
+    if (ImGui::Button("Prefiltered (debug)"))
     {
+        if (default_ibl == 0)
+        {
+            default_ibl = cube.id;
+        }
         cube.id = prefiltered_ibl_id;
     }
 
@@ -277,6 +293,10 @@ void Hachiko::Skybox::ChangeCubeMapSide(UID texture_uid, TextureCube::Side cube_
 
 void Hachiko::Skybox::BuildIBL() 
 {
+    glDeleteTextures(1, &diffuse_ibl_id);
+    glDeleteTextures(1, &prefiltered_ibl_id);
+    glDeleteTextures(1, &environment_brdf_id);
+
     GenerateDiffuseIBL();
     GeneratePrefilteredIBL();
     GenerateEnvironmentBRDF();

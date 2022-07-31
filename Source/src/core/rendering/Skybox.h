@@ -52,6 +52,7 @@ namespace Hachiko
         unsigned vao{};
         unsigned vbo{};
 
+        unsigned default_ibl = 0;
         bool activate_ibl = false;
         bool ibl_built = false;
         unsigned diffuse_ibl_id = 0;
