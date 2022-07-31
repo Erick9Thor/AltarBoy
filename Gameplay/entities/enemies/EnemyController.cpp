@@ -184,6 +184,12 @@ void Hachiko::Scripting::EnemyController::OnUpdate()
 {
 	CheckState();
 
+	if (_state == BugState::INVALID && !_has_spawned)
+	{
+		Spawn();
+		return;
+	}
+
 	if (_current_spawning_time > 0.0f || _state == BugState::SPAWNING)
 	{
 		SpawnController();
@@ -628,7 +634,7 @@ void Hachiko::Scripting::EnemyController::Spawn()
 		_state = BugState::INVALID;
 		_small_dust_particles->Restart();
 		_current_spawning_time = _spawning_time;
-		_player_camera->Shake(_spawning_time, 0.2f);
+		_player_camera->Shake(_spawning_time, 0.8f);
 		break;
 	}
 }
@@ -710,7 +716,7 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	_is_stunned = false;
 	_has_spawned = false;
 	_attack_delay = 0.3f;
-	_state = BugState::IDLE;
+	_state = BugState::INVALID;
 	_previous_state = BugState::INVALID;
 	_parasite_dissolving_time_progress = 0.f;
 	_enemy_dissolving_time_progress = 0.f;
@@ -730,6 +736,26 @@ void Hachiko::Scripting::EnemyController::ResetEnemy()
 	if (_blood_trail_particles != nullptr)
 	{
 		_blood_trail_particles->Disable();
+	}
+
+	if (_inner_indicator_billboard != nullptr)
+	{
+		_inner_indicator_billboard->Stop();
+	}
+
+	if (_outer_indicator_billboard != nullptr)
+	{
+		_outer_indicator_billboard->Stop();
+	}
+
+	if (_big_dust_particles != nullptr)
+	{
+		_big_dust_particles->Stop();
+	}
+
+	if (_small_dust_particles != nullptr)
+	{
+		_small_dust_particles->Stop();
 	}
 }
 
