@@ -12,7 +12,7 @@ clips:
     clips_loop: true
   - clip_name: RangeAttack
     clips_id: 7582254748141028466
-    clips_loop: true
+    clips_loop: false
   - clip_name: Hit
     clips_id: 9554448594809014923
     clips_loop: false
