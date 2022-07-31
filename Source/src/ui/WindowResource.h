@@ -19,12 +19,12 @@ namespace Hachiko
         ~WindowResource() override = default;
         void Init() override;
         void Update() override;
+        static void Reload();
     private:
         void LoadAsset(const std::string& path);
         void CreateMaterialGui(const ImVec2& button_size);
         void UpdateDirectoryInfo();
 
-        bool updated = false;
         std::string auxiliary_name;
         std::filesystem::path current_path;
         std::vector<Entry> current_content;

@@ -9,6 +9,7 @@
 
 int constexpr MAX_COLUMN_FILES = 3;
 int constexpr MAX_FILES_PER_COLUMN = 20;
+static bool updated;
 
 Hachiko::WindowResource::WindowResource() : 
     Window("Resources", true)
@@ -19,6 +20,7 @@ void Hachiko::WindowResource::Init()
 {
     root_directory = "./assets";
     current_path = root_directory;
+    updated = false;
 }
 
 void Hachiko::WindowResource::Update()
@@ -30,8 +32,6 @@ void Hachiko::WindowResource::Update()
         ImGui::End();
         return;
     }
-
-
 
     if (!updated)
     {
@@ -59,7 +59,7 @@ void Hachiko::WindowResource::Update()
         if (ImGui::Button(ICON_FA_ARROW_LEFT, {thumbnail_size * 0.5f, thumbnail_size * 0.3f}))
         {
             current_path = current_path.parent_path();
-            updated = false;
+            Reload();
             ImGui::End();
             return;
         }
@@ -75,7 +75,7 @@ void Hachiko::WindowResource::Update()
             if (ImGui::Button(StringUtils::Concat(ICON_FA_FOLDER, " ", directory_entry.name).c_str(), {thumbnail_size, thumbnail_size * 0.3f}))
             {
                 current_path = directory_entry.path;
-                updated = false;
+                Reload();
                 break;
             }
             ImGui::NextColumn();
@@ -117,6 +117,11 @@ void Hachiko::WindowResource::Update()
     ImGui::End();
 }
 
+void Hachiko::WindowResource::Reload()
+{
+    updated = false;
+}
+
 void Hachiko::WindowResource::LoadAsset(const std::string& path)
 {
     HE_LOG("Resource file: %s", path.c_str());
@@ -146,6 +151,7 @@ void Hachiko::WindowResource::CreateMaterialGui(const ImVec2 &button_size)
         {
             App->resources->CreateAsset(Resource::Type::MATERIAL, auxiliary_name);
             ImGui::CloseCurrentPopup();
+            Reload();
         }
         ImGui::EndPopup();
     }
