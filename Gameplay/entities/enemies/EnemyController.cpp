@@ -262,6 +262,7 @@ void Hachiko::Scripting::EnemyController::SpawnController()
 			_big_dust_particles->Restart();
 			//Push the player back
 			_combat_manager->EnemyMeleeAttack(transform->GetGlobalMatrix(), push_attack);
+			_attack_cooldown = _combat_stats->_attack_cd;
 			return;
 		}
 
@@ -421,14 +422,16 @@ void Hachiko::Scripting::EnemyController::AttackController()
 		}
 		break;
 	case EnemyType::WORM:
+
 		if (_attack_cooldown > 0.0f)
 		{
 			return;
 		}
 
-		if (_state != BugState::ATTACKING && !_attack_landing)
+		if (_previous_state == BugState::IDLE && _state != BugState::ATTACKING && !_attack_landing)
 		{
 			_state = BugState::ATTACKING;
+			return;
 		}
 
 		WormSpit();
@@ -855,7 +858,7 @@ void Hachiko::Scripting::EnemyController::PatrolMovement()
 
 void Hachiko::Scripting::EnemyController::WormSpit()
 {
-	if (animation->IsAnimationStopped())
+	if (_state == BugState::ATTACKING && animation->IsAnimationStopped())
 	{
 		// We create the attack zone once the firing animation is done
 		_state = BugState::IDLE;
