@@ -11,6 +11,7 @@
 #include "modules/ModuleCamera.h"
 #include "modules/ModuleEvent.h"
 #include "modules/ModuleNavigation.h"
+#include "modules/ModuleProgram.h"
 
 #include "resources/ResourceMaterial.h"
 #include "resources/ResourceAnimation.h"
@@ -226,13 +227,14 @@ void Hachiko::Scene::Save(YAML::Node& node)
     fog.SaveFogParams(node);
 
     // Skybox
+    node[IBL] = skybox->IsIBLActive();
     const TextureCube& cube = skybox->GetCube();
     for (unsigned i = 0; i < static_cast<unsigned>(TextureCube::Side::COUNT); ++i)
     {
         std::string side_name = TextureCube::SideString(static_cast<TextureCube::Side>(i));
         node[SKYBOX_NODE][side_name] = cube.uids[i];
     }
-
+    
     node[ROOT_ID] = GetRoot()->GetID();
     for (int i = 0; i < GetRoot()->children.size(); ++i)
     {
@@ -262,6 +264,11 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
         }
         // Pass skybox with used uids to be loaded
         skybox = new Skybox(cube);
+
+        if (node[IBL].IsDefined() && node[IBL].as<bool>())
+        {
+           skybox->ActivateIBL(true);
+        }
     }
 
     if (!node[CHILD_NODE].IsDefined())

@@ -177,6 +177,7 @@
 #define UNNAMED_SCENE "UnnamedScene"
 #define ROOT_ID "root_id"
 #define NAVMESH_ID "navmesh_id"
+#define IBL "ibl"
 #define SKYBOX_NODE "skybox"
 #define CUBE_ID "_cube_id"
 #define AMBIENT_LIGHT "ambient_light"
