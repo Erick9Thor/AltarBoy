@@ -463,6 +463,7 @@ void Hachiko::Scripting::EnemyController::IdleController()
 	if (_enemy_type == EnemyType::WORM)
 	{
 		_enemy_body->GetTransform()->LookAtTarget(_player_pos);
+		return;
 	}
 
 	if (_state == BugState::IDLE)
