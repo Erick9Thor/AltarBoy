@@ -29,6 +29,7 @@ namespace Hachiko
 			FALLING,
 			STUNNED,
 			DIE,
+			READY_TO_RESPAWN
 		};
 
 		class PlayerController : public Script
@@ -139,7 +140,8 @@ namespace Hachiko
 			// Input and status management
 			void HandleInputAndStatus();
 			void HandleInputBuffering();
-			Input::MouseButton GetBufferedClick();
+			bool HasBufferedClick();
+			float3 GetBufferedClick();
 			void ResetClickBuffer();
 
 			// Actions called by handle input
@@ -172,7 +174,7 @@ namespace Hachiko
 
 		public:
 			SERIALIZE_FIELD(PlayerState, _state);
-			SERIALIZE_FIELD(PlayerState, _previous_state);
+			PlayerState _previous_state = PlayerState::INVALID;
 			float3 _initial_pos = float3::zero;
 
 			SERIALIZE_FIELD(GameObject*, _sword_weapon);
@@ -206,6 +208,8 @@ namespace Hachiko
 
 			SERIALIZE_FIELD(float, _rotation_duration);
 
+			SERIALIZE_FIELD(GameObject*, _death_screen);
+
 			SERIALIZE_FIELD(GameObject*, _hp_cell_1);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_2);
 			SERIALIZE_FIELD(GameObject*, _hp_cell_3);
@@ -238,7 +242,8 @@ namespace Hachiko
 
 			// Input buffer
 			// Use for combo for now, reset when combo ends
-			std::queue<Input::MouseButton> click_buffer{};
+			std::queue<float3> click_buffer{};
+			bool dash_buffer = false;
 
 			// Dash management
 			unsigned _dash_charges = 2;

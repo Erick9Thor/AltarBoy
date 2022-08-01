@@ -13,6 +13,7 @@
 #include "components/ComponentAudioSource.h"
 #include "components/ComponentParticleSystem.h"
 #include "components/ComponentBillboard.h"
+#include "components/ComponentVideo.h"
 
 // UI
 #include "components/ComponentCanvas.h"
@@ -239,6 +240,12 @@ Hachiko::Component* Hachiko::GameObject::CreateComponent(Component::Type type)
             if (!GetComponent<ComponentBillboard>())
             {
                 new_component = new ComponentBillboard(this);
+            }
+            break;
+        case Component::Type::VIDEO:
+            if (!GetComponent<ComponentVideo>())
+            {
+                new_component = new ComponentVideo(this);
             }
             break;
     }

@@ -373,6 +373,11 @@ void Hachiko::Navigation::CorrectPosition(math::float3& position, const math::fl
     return App->navigation->CorrectPosition(position, extents);
 }
 
+bool Hachiko::Navigation::Raycast(const float3& start_pos, const float3& end_pos, float3& hit_position)
+{
+    return App->navigation->Raycast(start_pos, end_pos, hit_position);
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*PROPERTIES-----------------------------------------------------------------*/
