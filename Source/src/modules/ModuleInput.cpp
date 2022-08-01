@@ -156,7 +156,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             HE_LOG("Controller %d was remapped", sdl_event.cdevice.which);
             break;
         case SDL_CONTROLLERDEVICEREMOVED:
-            HE_LOG("%s number was removed", SDL_GameControllerName(sdl_game_controller), sdl_event.cdevice.which);
+            HE_LOG("%s was removed", SDL_GameControllerName(sdl_game_controller), sdl_event.cdevice.which);
             SDL_GameControllerClose(sdl_game_controller);
             SDL_JoystickClose(sdl_joystick);
             SDL_HapticClose(sdl_haptic);
