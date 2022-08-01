@@ -306,7 +306,7 @@ void Hachiko::Scripting::PlayerController::SpawnGameObject() const
 {
 	static int times_hit_g = 0;
 
-	if (!Input::IsKeyDown(Input::KeyCode::KEY_G))
+	if (!Input::IsKeyDown(Input::KeyCode::KEY_G) || !(Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_BACK) && Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_START)))
 	{
 		return;
 	}
