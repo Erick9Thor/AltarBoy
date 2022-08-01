@@ -90,6 +90,11 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
     return App->input->GetMouseNormalizedPosition();
 }
 
+bool Hachiko::Input::IsGamepadModeOn()
+{
+    return App->input->IsGamepadModeOn();
+}
+
 bool Hachiko::Input::IsGameControllerButtonUp(GameControllerButton id)
 {
     return App->input->IsGameControllerButtonUp(static_cast<int>(id));

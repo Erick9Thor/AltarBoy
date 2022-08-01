@@ -104,6 +104,11 @@ namespace Hachiko
             return mouse_pixels_motion;
         }
 
+        [[nodiscard]] bool IsGamepadModeOn() const
+        {
+            return gamepad_mode;
+        }
+
         [[nodiscard]] bool IsGameControllerButtonUp(const int id) const
         {
             return game_controller[id] == KeyState::KEY_UP;
@@ -155,6 +160,7 @@ namespace Hachiko
         float2 mouse_pixels_motion = float2::zero;
 
         // Gamepad Controller
+        bool gamepad_mode = false;
         SDL_GameController* sdl_game_controller = nullptr;
         SDL_Joystick* sdl_joystick = nullptr;
         SDL_Haptic* sdl_haptic = nullptr;

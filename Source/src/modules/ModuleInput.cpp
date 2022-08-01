@@ -147,6 +147,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
                     SDL_HapticRumbleInit(sdl_haptic);
                     SDL_HapticRumblePlay(sdl_haptic, 0.3f, 1000);
                     HE_LOG("%s number %d was added", GetControllerTypeAsString(SDL_GameControllerTypeForIndex(which)), sdl_event.cdevice.which);
+                    gamepad_mode = true;
                 }
             }
 
@@ -162,6 +163,7 @@ UpdateStatus Hachiko::ModuleInput::PreUpdate(const float delta)
             sdl_game_controller = nullptr;
             sdl_joystick = nullptr;
             sdl_haptic = nullptr;
+            gamepad_mode = false;
 
             break;
         case SDL_CONTROLLERBUTTONDOWN: 
