@@ -237,7 +237,7 @@ void Hachiko::Scripting::PlayerController::OnUpdate()
 	{
 		if (_state == PlayerState::READY_TO_RESPAWN)
 		{
-			if (Input::IsKeyPressed(Input::KeyCode::KEY_R)) 
+			if (Input::IsKeyPressed(Input::KeyCode::KEY_R) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_Y))
 			{
 				_death_screen->SetActive(false);
 
@@ -425,7 +425,7 @@ void Hachiko::Scripting::PlayerController::HandleInputBuffering()
 		// Melee combo input buffer
 		click_buffer.push(GetRaycastPosition(_player_position));
 	}
-	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE))
+	if (Input::IsKeyDown(Input::KeyCode::KEY_SPACE) || Input::IsGameControllerButtonDown(Input::GameControllerButton::CONTROLLER_BUTTON_A))
 	{
 		// Dash to cut a combo
 		dash_buffer = true;
@@ -566,6 +566,10 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	{
 		float3 direction = HasBufferedClick() ? GetBufferedClick() : GetRaycastPosition(_player_position);
 		_player_transform->LookAtTarget(direction);
+	}
+	else
+	{
+		GetBufferedClick();
 	}
 
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
