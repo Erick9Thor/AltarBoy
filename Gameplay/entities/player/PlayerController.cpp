@@ -255,6 +255,20 @@ math::float3 Hachiko::Scripting::PlayerController::GetRaycastPosition(
 	const math::Plane plane(math::float3(0.0f, current_position.y, 0.0f),
 		math::float3(0.0f, 1.0f, 0.0f));
 
+	if(Input::IsGamepadModeOn())
+	{
+		const math::float2 gamepad_normalized_position =
+			math::float2(Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTX), Input::GetAxisNormalized(Input::GameControllerAxis::CONTROLLER_AXIS_RIGHTY));
+
+		const math::float2 gamepad_position_view =
+			ComponentCamera::ScreenPositionToView(gamepad_normalized_position);
+
+		const math::LineSegment ray = Debug::GetRenderingCamera()->Raycast(
+			gamepad_position_view.x, gamepad_position_view.y);
+
+		return plane.ClosestPoint(ray);
+	}
+
 	const math::float2 mouse_position_view =
 		ComponentCamera::ScreenPositionToView(Input::GetMouseNormalizedPosition());
 
@@ -509,7 +523,11 @@ void Hachiko::Scripting::PlayerController::MeleeAttack()
 	// Attack will occur in the attack simulation after the delay
 	_attack_current_delay = attack.hit_delay;
 
-	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
+	if (!Input::IsGamepadModeOn())
+	{
+		_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
+	}
+
 	CombatManager* combat_manager = _bullet_emitter->GetComponent<CombatManager>();
 
 	// Move player a bit forward if it wouldnt fall	
@@ -651,7 +669,6 @@ const Hachiko::Scripting::PlayerController::PlayerAttack& Hachiko::Scripting::Pl
 
 void Hachiko::Scripting::PlayerController::RangedAttack()
 {
-	
 	_player_transform->LookAtTarget(GetRaycastPosition(_player_position));
 	const float3 forward = _player_transform->GetFront().Normalized();
 
