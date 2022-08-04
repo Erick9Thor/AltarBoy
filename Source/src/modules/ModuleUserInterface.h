@@ -12,7 +12,7 @@ namespace Hachiko
         ~ModuleUserInterface() override;
 
         bool Init() override;
-        UpdateStatus Update(float delta) override;
+        UpdateStatus Update(const float delta) override;
         bool CleanUp() override;
 
         void DrawUI(const Scene* scene);

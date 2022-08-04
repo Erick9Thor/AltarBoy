@@ -21,7 +21,6 @@
 
 #include "core/preferences/PreferenceManager.h"
 
-
 Hachiko::Application::Application()
 {
     modules.push_back(window = new ModuleWindow());
@@ -83,20 +82,31 @@ UpdateStatus Hachiko::Application::Update()
     GameTimer::Update();
 
     auto ret = UpdateStatus::UPDATE_CONTINUE;
-
-    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+    
+    if (!loading)
     {
-        ret = (*it)->PreUpdate(static_cast<float>(delta));
+        for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+        {
+            ret = (*it)->PreUpdate(static_cast<float>(delta));
+        }
+
+        for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+        {
+            ret = (*it)->Update(static_cast<float>(delta));
+        }
+
+        for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+        {
+            ret = (*it)->PostUpdate(static_cast<float>(delta));
+        }
     }
-
-    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
+    else
     {
-        ret = (*it)->Update(static_cast<float>(delta));
-    }
+        scene_manager->CheckSceneLoading();
 
-    for (auto it = modules.begin(); it != modules.end() && ret == UpdateStatus::UPDATE_CONTINUE; ++it)
-    {
-        ret = (*it)->PostUpdate(static_cast<float>(delta));
+        renderer->LoadingScreen(static_cast<float>(delta));
+        renderer->PostUpdate(static_cast<float>(delta));
+        ret = UpdateStatus::UPDATE_CONTINUE;
     }
 
     return ret;
@@ -118,4 +128,9 @@ bool Hachiko::Application::CleanUp()
 void Hachiko::Application::RequestBrowser(const char* url)
 {
     ShellExecuteA(nullptr, "open", url, nullptr, nullptr, SW_SHOWNORMAL);
+}
+
+bool Hachiko::Application::IsLoading() const
+{
+    return loading || scene_manager->LoadingScene();
 }

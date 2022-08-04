@@ -9,9 +9,7 @@ namespace Hachiko
 {
     namespace Loader
     {
-        bool loading;
-
-        void LoadScene(Scene* loaded_scene, ResourceScene* scene_resource) 
+        void LoadScene(bool& loading, Scene* loaded_scene, ResourceScene* scene_resource) 
         {
             loaded_scene->Load(scene_resource->scene_data);
 

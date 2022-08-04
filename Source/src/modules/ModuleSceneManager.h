@@ -28,8 +28,8 @@ namespace Hachiko
 
         void RebuildBatches();
         
-        UpdateStatus Update(float delta) override;
-        UpdateStatus PostUpdate(float delta) override;
+        UpdateStatus Update(const float delta) override;
+        UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
         void RemoveGameObject(GameObject* go);
@@ -64,6 +64,13 @@ namespace Hachiko
 
         void OptionsMenu();
 
+        [[nodiscard]] bool LoadingScene() const
+        {
+            return loading_scene;
+        }
+
+        void CheckSceneLoading();
+
     private:
         void StopScene();
         void LoadScene(UID new_scene_id);
@@ -89,6 +96,8 @@ namespace Hachiko
         ResourceNavMesh* navmesh_resource;
 
         bool loading_scene = false;
+        bool was_scene_playing = false;
+        Scene* tmp_loading_scene = nullptr;
         std::thread loading_scene_worker;
     };
 } // namespace Hachiko

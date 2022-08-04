@@ -65,12 +65,24 @@ namespace Hachiko
         PreferenceManager* preferences = nullptr;
         FileSystem file_system;
 
+        [[nodiscard]] bool IsLoading() const;
+        void StartLoading() 
+        {
+            loading = true;
+        }
+        void LoadingComplete()
+        {
+            loading = false;
+        }
+
     private:
         PerformanceTimer timer;
 
         double delta = 0;
         double prev_tick_time = 0;
         std::vector<Module*> modules;
+
+        bool loading = false;
     };
 }
 

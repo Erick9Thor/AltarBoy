@@ -11,7 +11,10 @@
 
 namespace Hachiko
 {
+    class GameObject;
     class ComponentCamera;
+    class ComponentTransform2D;
+    class ComponentImage;
     class Scene;
 
     struct GpuData
@@ -43,9 +46,9 @@ namespace Hachiko
         ~ModuleRender() override;
 
         bool Init() override;
-        UpdateStatus PreUpdate(float delta) override;
-        UpdateStatus Update(float delta) override;
-        UpdateStatus PostUpdate(float delta) override;
+        UpdateStatus PreUpdate(const float delta) override;
+        UpdateStatus Update(const float delta) override;
+        UpdateStatus PostUpdate(const float delta) override;
         bool CleanUp() override;
 
         [[nodiscard]] unsigned int GetFrameBuffer() const
@@ -134,6 +137,8 @@ namespace Hachiko
             glDisable(GL_BLEND);
         }
     
+        void LoadingScreen(const float delta);
+
     private:
         void GenerateFrameBuffer();
         void ResizeFrameBuffer(int width, int height) const;
@@ -154,8 +159,6 @@ namespace Hachiko
         void GenerateDeferredQuad();
         void RenderDeferredQuad() const;
         void FreeDeferredQuad();
-
-        void LoadingScreen() const;
 
         void* context{};
 
@@ -200,5 +203,9 @@ namespace Hachiko
         unsigned particle_vbo;
         unsigned particle_ebo;
         unsigned particle_vao;
+
+        GameObject* loading_game_object = nullptr;
+        ComponentTransform2D* loading_transform2d = nullptr;
+        ComponentImage* loading_image = nullptr;
     };
 }

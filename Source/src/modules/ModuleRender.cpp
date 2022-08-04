@@ -15,10 +15,13 @@
 #include "ModuleNavigation.h"
 #include "ModuleInput.h"
 
+#include "core/GameObject.h"
 #include "components/ComponentCamera.h"
 #include "components/ComponentTransform.h"
+#include "components/ComponentTransform2D.h"
 #include "components/ComponentDirLight.h"
 #include "components/ComponentParticleSystem.h"
+#include "components/ComponentImage.h"
 
 #include <debugdraw.h>
 
@@ -60,6 +63,10 @@ bool Hachiko::ModuleRender::Init()
 
     shadow_manager.SetGaussianBlurringEnabled(
         App->preferences->GetEditorPreference()->GetShadowMapGaussianBlurringEnabled());
+
+    GameObject* loading_game_object = new GameObject(nullptr, float4x4::identity, "Loading");
+    loading_transform2d = static_cast<ComponentTransform2D*>(loading_game_object->CreateComponent(Component::Type::TRANSFORM_2D));
+    loading_image = static_cast<ComponentImage*>(loading_game_object->CreateComponent(Component::Type::IMAGE));
 
     return true;
 }
@@ -167,12 +174,6 @@ UpdateStatus Hachiko::ModuleRender::PreUpdate(const float delta)
 
 UpdateStatus Hachiko::ModuleRender::Update(const float delta)
 {
-    if (true)
-    {
-        LoadingScreen();
-        return UpdateStatus::UPDATE_CONTINUE;
-    }
-
     ComponentCamera* camera = App->camera->GetRenderingCamera();
     Scene* active_scene = App->scene_manager->GetActiveScene();
 
@@ -672,6 +673,12 @@ void Hachiko::ModuleRender::OptionsMenu()
     {
         ImGuiUtils::CompactColorPicker("Background Color", App->editor->scene_background.ptr());
     }
+
+    ImGui::Separator();
+    if (loading_image != nullptr)
+    {
+        loading_image->DrawGui();
+    }
 }
 
 void Hachiko::ModuleRender::DeferredOptions() 
@@ -936,28 +943,48 @@ bool Hachiko::ModuleRender::CleanUp()
 
     App->preferences->GetEditorPreference()->SetDrawSkybox(draw_skybox);
     App->preferences->GetEditorPreference()->SetDrawNavmesh(draw_navmesh);
+
+    //delete loading_game_object;
+
     return true;
 }
 
-void Hachiko::ModuleRender::LoadingScreen() const
+void Hachiko::ModuleRender::LoadingScreen(const float delta)
 {
     OPTICK_CATEGORY("LoadingScreen", Optick::Category::Rendering);
+
+    loading_image->Update();
 
     Program* img_program = App->program->GetUserInterfaceImageProgram();
 
     glDepthFunc(GL_ALWAYS);
 
-    unsigned width, height;
-    App->camera->GetRenderingCamera()->GetResolution(width, height);
+    glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
+    glClearColor(1.0, 1.0, 1.0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    int res_x, res_y;
+    App->window->GetWindowSize(res_x, res_y);
+    if (res_x != fb_width || res_y != fb_height)
+    {
+        ResizeFrameBuffer(res_x, res_y);
+        glViewport(0, 0, res_x, res_y);
+        fb_width = res_x;
+        fb_height = res_y;
+    }
 
     ModuleProgram::CameraData camera_data;
     // position data is unused on the ui program
     camera_data.pos = float3::zero;
     camera_data.view = float4x4::identity;
-    camera_data.proj = float4x4::identity; //float4x4::D3DOrthoProjLH(-1, 1, static_cast<float>(width), static_cast<float>(height));
+    camera_data.proj = float4x4::D3DOrthoProjLH(-1, 1, static_cast<float>(fb_width), static_cast<float>(fb_height));
 
     App->program->UpdateCamera(camera_data);
 
+    loading_image->Draw(loading_transform2d, img_program);
+
+    /*
+    
     // Activate program & bind square:
     img_program->Activate();
     App->ui->BindSquare();
@@ -979,5 +1006,11 @@ void Hachiko::ModuleRender::LoadingScreen() const
     App->ui->UnbindSquare();
     Program::Deactivate();
 
-    glDepthFunc(GL_LESS);    
+    */
+
+    glDepthFunc(GL_LESS);
+
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, frame_buffer);
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+    glBlitFramebuffer(0, 0, fb_width, fb_height, 0, 0, fb_width, fb_height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 }

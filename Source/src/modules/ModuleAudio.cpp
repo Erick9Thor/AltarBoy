@@ -155,7 +155,7 @@ bool Hachiko::ModuleAudio::Init()
     return true;
 }
 
-UpdateStatus Hachiko::ModuleAudio::Update(const float delta) 
+UpdateStatus Hachiko::ModuleAudio::Update(const float delta)
 {
     AK::SoundEngine::RenderAudio();
     return UpdateStatus::UPDATE_CONTINUE;

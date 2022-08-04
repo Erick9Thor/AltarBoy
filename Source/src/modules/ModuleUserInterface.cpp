@@ -38,7 +38,7 @@ bool Hachiko::ModuleUserInterface::Init()
     return true;
 }
 
-UpdateStatus Hachiko::ModuleUserInterface::Update(float delta)
+UpdateStatus Hachiko::ModuleUserInterface::Update(const float delta)
 {
 
     // On playbuild mouse position is taken from the Window, not ImGUI
