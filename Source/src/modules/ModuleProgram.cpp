@@ -364,6 +364,9 @@ bool Hachiko::ModuleProgram::CleanUp()
     fog_program->CleanUp();
     delete fog_program;
 
+    texture_copy_program->CleanUp();
+    delete texture_copy_program;
+
     return true;
 }
 
