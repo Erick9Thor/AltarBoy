@@ -16,6 +16,10 @@
 #include "components/ComponentCamera.h"
 #include "components/ComponentDirLight.h"
 
+#ifdef _DEBUG
+#include "core/ErrorHandler.h"
+#endif
+
 Hachiko::ModuleRender::ModuleRender() = default;
 
 Hachiko::ModuleRender::~ModuleRender() = default;
