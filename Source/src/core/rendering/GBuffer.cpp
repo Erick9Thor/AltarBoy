@@ -226,3 +226,17 @@ unsigned int Hachiko::GBuffer::GetEmissiveTextureInternalFormat()
 {
     return GL_RGB8;
 }
+
+void Hachiko::GBuffer::BindFogTextures() const
+{
+    // Bind position texture:
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, _position_texture);
+}
+
+void Hachiko::GBuffer::UnbindFogTextures() const
+{
+    // Unbind position texture:
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}

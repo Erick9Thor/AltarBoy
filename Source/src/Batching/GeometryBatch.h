@@ -83,6 +83,8 @@ namespace Hachiko
         float4x4* transform_buffer_data = nullptr;
         float4x4* palettes_buffer_data = nullptr;
         PalettePerInstance* palettes_per_instances_buffer_data = nullptr;
+
+        bool dirty_draw_components = true;
     };
 
 } // namespace Hachiko

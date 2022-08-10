@@ -16,6 +16,8 @@ public:
     void UnbindTextures() const;
     void BindForReading() const;
     void BindForDrawing() const;
+    void BindFogTextures() const;
+    void UnbindFogTextures() const;
     [[nodiscard]] bool IsGenerated() const;
 
     [[nodiscard]] unsigned int GetEmissiveTexture() const;

@@ -58,6 +58,7 @@ void Hachiko::GeometryBatch::AddMesh(const ComponentMeshRenderer* mesh_renderer)
 
 void Hachiko::GeometryBatch::AddDrawComponent(const ComponentMeshRenderer* mesh)
 {
+    dirty_draw_components = true;
     components.push_back(mesh);
 }
 
@@ -161,8 +162,9 @@ void Hachiko::GeometryBatch::BatchMeshes()
 void Hachiko::GeometryBatch::UpdateCommands() 
 {
     // Update commands data
+    commands.clear();
     commands.reserve(components.size());
-
+    
     unsigned instance = 0;
     for (const ComponentMeshRenderer* component : components)
     {
@@ -181,10 +183,12 @@ void Hachiko::GeometryBatch::UpdateCommands()
 void Hachiko::GeometryBatch::UpdateBatch(int segment)
 {
     // Update transforms, palletes, palletes_per_instance data
+    transforms.clear();
     transforms.reserve(components.size());
 
     if (batch->layout.bones)
     {
+        palettes_per_instance.clear();
         palettes_per_instance.reserve(components.size());
 
         PalettePerInstance palette_per_instance;
@@ -200,7 +204,7 @@ void Hachiko::GeometryBatch::UpdateBatch(int segment)
             palette_per_instance.numBones = component->GetResourceMesh()->num_bones;
             palette_per_instance.paletteOffset = palette_offset;
             palettes_per_instance.push_back(palette_per_instance);
-
+            palettes.clear();
             palettes.resize(palette_offset + palette_per_instance.numBones);
             memcpy(&palettes[palette_offset], component->GetPalette().data(), sizeof(float4x4) * palette_per_instance.numBones);
 
@@ -301,12 +305,8 @@ void Hachiko::GeometryBatch::BindBatch(int segment, const Program* program)
 
 void Hachiko::GeometryBatch::ClearDrawList()
 {
-    commands.clear();
+    dirty_draw_components = true;
     components.clear();
-    transforms.clear();
-    //TODO: clear texture batch
-    palettes.clear();
-    palettes_per_instance.clear();
 }
 
 void Hachiko::GeometryBatch::GenerateVAO()
