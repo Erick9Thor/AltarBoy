@@ -19,14 +19,14 @@ class StandaloneGLTexture;
 class BloomManager
 {
 public:
-    BloomManager();
+    BloomManager() = default;
     ~BloomManager();
     
     void Initialize();
     void Resize(unsigned int width, unsigned int height);
     void ApplyBloom(unsigned int texture_to_use) const;
-    void BindForReading();
-    void Uninitialize();
+    void BindForReading() const;
+    void Dispose();
     void SaveConfig(YAML::Node& node) const;
     void LoadConfig(const YAML::Node& node);
     void DrawEditorContent();

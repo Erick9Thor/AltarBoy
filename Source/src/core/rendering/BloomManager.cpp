@@ -10,14 +10,9 @@ constexpr const char* const CONFIG_GAUSSIAN_INTENSITY = "bloom_gaussian_intensit
 constexpr const char* const CONFIG_GAUSSIAN_SIGMA = "bloom_gaussian_sigma";
 constexpr const char* const CONFIG_GAUSSIAN_BLUR_PIXEL_SIZE = "bloom_gaussian_pixel_size";
 
-Hachiko::BloomManager::BloomManager() 
-{
-
-}
-
 Hachiko::BloomManager::~BloomManager() 
 {
-    Uninitialize();
+    Dispose();
 }
 
 void Hachiko::BloomManager::Initialize() 
@@ -49,7 +44,7 @@ void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use) const
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_to_use);
     // Render the texture_to_used to a quad in full NDC:
-    App->renderer->RenderNDCQuad();
+    App->renderer->RenderFullScreenQuad();
     glBindVertexArray(0);
     // Deactivate copy texture shader:
     Program::Deactivate();
@@ -61,9 +56,9 @@ void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use) const
     const int blur_pixel_size_integer = static_cast<int>(_gaussian_blur_pixel_size);
     unsigned int width, height;
     _main_texture->GetSize(width, height);
-    App->renderer->ApplyGaussianFilter(_main_texture->GetFramebufferId(),
+    App->renderer->ApplyGaussianFilter(_main_texture->GetFrameBufferId(),
                         _main_texture->GetTextureId(),
-                        _temp_gaussian_texture->GetFramebufferId(),
+                        _temp_gaussian_texture->GetFrameBufferId(),
                         _temp_gaussian_texture->GetTextureId(),
                         _gaussian_intensity,
                         _gaussian_sigma,
@@ -73,12 +68,12 @@ void Hachiko::BloomManager::ApplyBloom(unsigned int texture_to_use) const
                         App->program->GetGaussianFilteringProgram());
 }
 
-void Hachiko::BloomManager::BindForReading() 
+void Hachiko::BloomManager::BindForReading() const
 {
     _main_texture->BindForReading(6);
 }
 
-void Hachiko::BloomManager::Uninitialize() 
+void Hachiko::BloomManager::Dispose() 
 {
     if (!_initialized)
     {

@@ -1,6 +1,4 @@
 #include "core/hepch.h"
-
-#include "core/ErrorHandler.h"
 #include "core/rendering/Uniforms.h"
 #include "core/preferences/src/EditorPreferences.h"
 
@@ -16,13 +14,7 @@
 #include "ModuleInput.h"
 
 #include "components/ComponentCamera.h"
-#include "components/ComponentTransform.h"
 #include "components/ComponentDirLight.h"
-#include "components/ComponentParticleSystem.h"
-
-#include "core/rendering/StandaloneGLTexture.h"
-
-#include <debugdraw.h>
 
 Hachiko::ModuleRender::ModuleRender() = default;
 
@@ -39,7 +31,7 @@ bool Hachiko::ModuleRender::Init()
 
     SetGLOptions();
 
-    GenerateNDCQuad();
+    GenerateFullScreenQuad();
     GenerateFrameBuffer();
 
     shadow_manager.GenerateShadowMap();
@@ -358,7 +350,7 @@ void Hachiko::ModuleRender::DrawDeferred(Scene* scene, ComponentCamera* camera,
 
     // Render the final texture from deferred rendering on a quad that is,
     // 1x1 on NDC:
-    RenderNDCQuad();
+    RenderFullScreenQuad();
     glBindVertexArray(0);
 
     g_buffer.UnbindTextures();
@@ -575,7 +567,7 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, source_texture);
 
-    RenderNDCQuad();
+    RenderFullScreenQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Program::Deactivate();
@@ -593,7 +585,7 @@ void Hachiko::ModuleRender::ApplyGaussianFilter(unsigned source_fbo,
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, temp_texture);
 
-    RenderNDCQuad();
+    RenderFullScreenQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     Program::Deactivate();
@@ -830,7 +822,7 @@ void Hachiko::ModuleRender::SetOpenGLAttributes() const
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 }
 
-void Hachiko::ModuleRender::RetrieveLibVersions()
+void Hachiko::ModuleRender::RetrieveLibVersions() const
 {
     HE_LOG("GPU Vendor: %s", glGetString(GL_VENDOR));
     HE_LOG("Renderer: %s", glGetString(GL_RENDERER));
@@ -858,7 +850,7 @@ void Hachiko::ModuleRender::RetrieveGpuInfo()
     gpu.vram_budget_mb /= 1024;
 }
 
-void Hachiko::ModuleRender::GenerateNDCQuad() 
+void Hachiko::ModuleRender::GenerateFullScreenQuad() 
 {
     constexpr const float vertices[] = {
         1.0f,  1.0f,  0.0f, 1.0f, 1.0f, // top right
@@ -868,16 +860,16 @@ void Hachiko::ModuleRender::GenerateNDCQuad()
     };
     constexpr unsigned int indices[] = {2, 1, 0, 0, 3, 2};
 
-    glGenVertexArrays(1, &ndc_quad_vao);
-    glGenBuffers(1, &ndc_quad_vbo);
-    glGenBuffers(1, &ndc_quad_ebo);
+    glGenVertexArrays(1, &full_screen_quad_vao);
+    glGenBuffers(1, &full_screen_quad_vbo);
+    glGenBuffers(1, &full_screen_quad_ebo);
 
-    glBindVertexArray(ndc_quad_vao);
+    glBindVertexArray(full_screen_quad_vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, ndc_quad_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, full_screen_quad_vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ndc_quad_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, full_screen_quad_ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Vertices:
@@ -891,27 +883,27 @@ void Hachiko::ModuleRender::GenerateNDCQuad()
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleRender::RenderNDCQuad() const 
+void Hachiko::ModuleRender::RenderFullScreenQuad() const 
 {
-    glBindVertexArray(ndc_quad_vao);
+    glBindVertexArray(full_screen_quad_vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
-void Hachiko::ModuleRender::FreeNDCQuad() 
+void Hachiko::ModuleRender::FreeFullScreenQuad() const
 {
-    glBindVertexArray(ndc_quad_vao);
+    glBindVertexArray(full_screen_quad_vao);
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
-    glDeleteBuffers(1, &ndc_quad_ebo);
-    glDeleteBuffers(1, &ndc_quad_vbo);
-    glDeleteVertexArrays(1, &ndc_quad_vao);
+    glDeleteBuffers(1, &full_screen_quad_ebo);
+    glDeleteBuffers(1, &full_screen_quad_vbo);
+    glDeleteVertexArrays(1, &full_screen_quad_vao);
     glBindVertexArray(0);
 }
 
 bool Hachiko::ModuleRender::CleanUp()
 {
-    FreeNDCQuad();
+    FreeFullScreenQuad();
 
     glDeleteTextures(1, &fb_texture);
     glDeleteBuffers(1, &depth_stencil_buffer);

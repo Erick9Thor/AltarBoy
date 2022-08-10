@@ -2,22 +2,22 @@
 #include "StandaloneGLTexture.h"
 
 Hachiko::StandaloneGLTexture::StandaloneGLTexture(unsigned int width, 
-    unsigned int height, int internal_format, int border, unsigned int format, 
+    unsigned int height, unsigned int internal_format, int border, unsigned int format, 
     unsigned int type, int min_filter, int mag_filter, bool generate_depth) 
     : _width(width) 
     , _height(height) 
     , _internal_format(internal_format)
-    , _border(border)
     , _format(format)
     , _type(type)
+    , _border(border)
     , _min_filter(min_filter)
     , _mag_filter(mag_filter)
     , _has_depth(generate_depth)
 {
     // Generate and bind frame buffer:
-    _framebuffer_id = 0;
-    glGenFramebuffers(1, &_framebuffer_id);
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
+    _frame_buffer_id = 0;
+    glGenFramebuffers(1, &_frame_buffer_id);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     // Generate texture:
     _texture_id = 0;
     glGenTextures(1, &_texture_id);
@@ -55,7 +55,7 @@ Hachiko::StandaloneGLTexture::~StandaloneGLTexture()
     }
 
     // Free framebuffer:
-    glDeleteBuffers(1, &_framebuffer_id);
+    glDeleteBuffers(1, &_frame_buffer_id);
 }
 
 void Hachiko::StandaloneGLTexture::Bind() const 
@@ -66,7 +66,7 @@ void Hachiko::StandaloneGLTexture::Bind() const
 void Hachiko::StandaloneGLTexture::BindBuffer(bool resize_viewport) const 
 {
     glBindTexture(GL_TEXTURE_2D, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, _framebuffer_id);
+    glBindFramebuffer(GL_FRAMEBUFFER, _frame_buffer_id);
     glViewport(0, 0, _width, _height);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 }
@@ -107,9 +107,9 @@ unsigned int Hachiko::StandaloneGLTexture::GetTextureId() const
     return _texture_id;
 }
 
-unsigned int Hachiko::StandaloneGLTexture::GetFramebufferId() const
+unsigned int Hachiko::StandaloneGLTexture::GetFrameBufferId() const
 {
-    return _framebuffer_id;
+    return _frame_buffer_id;
 }
 
 void Hachiko::StandaloneGLTexture::GetSize(unsigned int& width, unsigned int& height) const 

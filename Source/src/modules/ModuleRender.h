@@ -6,7 +6,6 @@
 #include "core/rendering/RenderList.h"
 #include "core/rendering/GBuffer.h"
 #include "core/rendering/ShadowManager.h"
-#include "core/rendering/BlurPixelSize.h"
 #include "core/rendering/BloomManager.h"
 
 #include <vector>
@@ -115,9 +114,9 @@ namespace Hachiko
             return draw_deferred;
         }
 
-        [[nodiscard]] const unsigned& GetNDCQuadVAO() const
+        [[nodiscard]] const unsigned& GetFullScreenQuadVAO() const
         {
-            return ndc_quad_vao;
+            return full_screen_quad_vao;
         }
 
         void ApplyGaussianFilter(unsigned source_fbo, unsigned source_texture, 
@@ -125,7 +124,7 @@ namespace Hachiko
             float blur_sigma, int blur_size, unsigned width, unsigned height, 
             const Program* program) const;
 
-        void RenderNDCQuad() const;
+        void RenderFullScreenQuad() const;
             
         static void EnableBlending(GLenum blend_func_sfactor = GL_SRC_ALPHA, GLenum blend_func_dfactor = GL_ONE_MINUS_SRC_ALPHA, GLenum blend_equation = GL_FUNC_ADD) 
         {
@@ -158,11 +157,11 @@ namespace Hachiko
 
         void CreateContext();
         static void SetGLOptions();
-        void RetrieveLibVersions();
+        void RetrieveLibVersions() const;
         void RetrieveGpuInfo();
 
-        void GenerateNDCQuad();
-        void FreeNDCQuad();
+        void GenerateFullScreenQuad();
+        void FreeFullScreenQuad() const;
 
         void* context{};
 
@@ -174,10 +173,10 @@ namespace Hachiko
         unsigned fb_height = 0;
         unsigned fb_width = 0;
 
-        // Normalized Device Coords Quad related:
-        unsigned ndc_quad_vao = 0;
-        unsigned ndc_quad_vbo = 0;
-        unsigned ndc_quad_ebo = 0;
+        // Full Screen Quad related:
+        unsigned full_screen_quad_vao = 0;
+        unsigned full_screen_quad_vbo = 0;
+        unsigned full_screen_quad_ebo = 0;
 
         // Shadow Map related:
         ShadowManager shadow_manager;
@@ -203,11 +202,5 @@ namespace Hachiko
         std::vector<float> ms_log;
         float current_fps = 0.0f;
         float current_ms = 0.0f;
-
-        //// Particle System
-        //void GenerateParticlesBuffers();
-        //unsigned particle_vbo;
-        //unsigned particle_ebo;
-        //unsigned particle_vao;
     };
 }
