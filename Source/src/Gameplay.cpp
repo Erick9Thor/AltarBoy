@@ -90,6 +90,31 @@ HACHIKO_API const float2& Hachiko::Input::GetMouseNormalizedPosition()
     return App->input->GetMouseNormalizedPosition();
 }
 
+bool Hachiko::Input::IsGamepadModeOn()
+{
+    return App->input->IsGamepadModeOn();
+}
+
+bool Hachiko::Input::IsGameControllerButtonUp(GameControllerButton id)
+{
+    return App->input->IsGameControllerButtonUp(static_cast<int>(id));
+}
+
+bool Hachiko::Input::IsGameControllerButtonDown(GameControllerButton id)
+{
+    return App->input->IsGameControllerButtonDown(static_cast<int>(id));
+}
+
+float Hachiko::Input::GetAxisNormalized(GameControllerAxis id)
+{
+    return App->input->GetAxisNormalized(static_cast<int>(id));
+}
+
+void Hachiko::Input::GoBrr(float strength, float duration)
+{
+    App->input->GoBrr(strength, duration);
+}
+
 /*---------------------------------------------------------------------------*/
 
 /*SCENE MANAGEMENT-----------------------------------------------------------*/
