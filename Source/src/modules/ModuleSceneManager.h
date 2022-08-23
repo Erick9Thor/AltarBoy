@@ -79,6 +79,8 @@ namespace Hachiko
         void CreateEmptyScene(const char* name = nullptr);
         void ReloadScene();
 
+        void ThreadLoadScene(ResourceScene* scene_resource);
+
         // Deletes current resource it it doesnt come from resource manager (for now assume it when id 0)
         void SetSceneResource(ResourceScene* scene);
         void RefreshSceneResource();

@@ -953,14 +953,12 @@ void Hachiko::ModuleRender::LoadingScreen(const float delta)
 {
     OPTICK_CATEGORY("LoadingScreen", Optick::Category::Rendering);
 
-    loading_image->Update();
-
     Program* img_program = App->program->GetUserInterfaceImageProgram();
 
     glDepthFunc(GL_ALWAYS);
 
     glBindFramebuffer(GL_FRAMEBUFFER, frame_buffer);
-    glClearColor(1.0, 1.0, 1.0, 0);
+    glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
     int res_x, res_y;
@@ -972,6 +970,9 @@ void Hachiko::ModuleRender::LoadingScreen(const float delta)
         fb_width = res_x;
         fb_height = res_y;
     }
+
+    loading_transform2d->SetSize(float2(fb_width, fb_height));
+    loading_image->Update();
 
     ModuleProgram::CameraData camera_data;
     // position data is unused on the ui program

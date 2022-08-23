@@ -2513,7 +2513,6 @@
       <Filter>Core\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\Batching\BatchingProperties.h" />
-    <ClInclude Include="src\Loader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

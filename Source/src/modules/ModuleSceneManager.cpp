@@ -13,8 +13,6 @@
 #include "core/preferences/src/EditorPreferences.h"
 #include "importers/SceneImporter.h"
 
-#include "Loader.h"
-
 #include <iostream>
 #include <iomanip>
 #include <ctime>
@@ -116,6 +114,8 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
 {
     if (!loading_scene)
     {
+        HE_LOG("LOADING");
+
         loading_scene_worker.join();
 
         for (auto it = App->resources->loaded_resources.begin(); it != App->resources->loaded_resources.end(); ++it)
@@ -123,7 +123,7 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
             if (it->second.resource->GetType() == Resource::Type::TEXTURE)
             {
                 ResourceTexture* texture = static_cast<ResourceTexture*>(it->second.resource);
-                if (!glIsTexture(texture->GetID()))
+                //if (!glIsTexture(texture->GetID()))
                 {
                     texture->GenerateBuffer();
                 }
@@ -139,6 +139,8 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
         }
 
         App->LoadingComplete();
+
+        HE_LOG("END LOADING");
     }
 }
 
@@ -367,9 +369,11 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     tmp_loading_scene = new Scene();
     if (scene_resource)
     {
+        HE_LOG("START LOADING");
+
         App->StartLoading();
         loading_scene = true;
-        loading_scene_worker = std::thread(Loader::LoadScene, std::ref(loading_scene), tmp_loading_scene, scene_resource);
+        loading_scene_worker = std::thread(&ModuleSceneManager::ThreadLoadScene, this, scene_resource);
 
         if (!keep_navmesh)
         {
@@ -415,6 +419,13 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
     {
         AttemptScenePlay();
     }
+}
+
+void Hachiko::ModuleSceneManager::ThreadLoadScene(ResourceScene* scene_resource)
+{
+    tmp_loading_scene->Load(scene_resource->scene_data);
+
+    loading_scene = false;
 }
 
 /* void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool keep_navmesh)
