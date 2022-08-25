@@ -65,7 +65,6 @@ namespace Hachiko
         PreferenceManager* preferences = nullptr;
         FileSystem file_system;
 
-        [[nodiscard]] bool IsLoading() const;
         void StartLoading() 
         {
             loading = true;

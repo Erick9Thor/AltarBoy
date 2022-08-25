@@ -123,7 +123,7 @@ void Hachiko::ModuleSceneManager::CheckSceneLoading()
             if (it->second.resource->GetType() == Resource::Type::TEXTURE)
             {
                 ResourceTexture* texture = static_cast<ResourceTexture*>(it->second.resource);
-                //if (!glIsTexture(texture->GetID()))
+                //if (texture->GetID() == 0)
                 {
                     texture->GenerateBuffer();
                 }
@@ -424,6 +424,8 @@ void Hachiko::ModuleSceneManager::LoadScene(ResourceScene* new_resource, bool ke
 void Hachiko::ModuleSceneManager::ThreadLoadScene(ResourceScene* scene_resource)
 {
     tmp_loading_scene->Load(scene_resource->scene_data);
+
+    Sleep(5000);
 
     loading_scene = false;
 }

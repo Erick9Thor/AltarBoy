@@ -8,6 +8,7 @@
 
 #include "utils/UUID.h"
 #include "yaml-cpp/yaml.h"
+#include <set>
 
 namespace Hachiko
 {
@@ -126,6 +127,10 @@ namespace Hachiko
         }
 
         virtual void Load(const YAML::Node& node)
+        {
+        }
+
+        virtual void GetResources(const YAML::Node& node, std::set<UID>& resources_id) 
         {
         }
 

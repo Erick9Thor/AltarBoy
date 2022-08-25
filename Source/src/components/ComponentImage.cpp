@@ -261,6 +261,20 @@ void Hachiko::ComponentImage::Load(const YAML::Node& node)
     time_per_frame = 1.0f / frames_per_second;
 }
 
+void Hachiko::ComponentImage::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+{
+    UID resource_id = node[IMAGE_IMAGE_ID].as<UID>();
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+    resource_id = node[IMAGE_HOVER_IMAGE_ID].as<UID>();
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+}
+
 void Hachiko::ComponentImage::UpdateSize()
 {
     unsigned width, height;

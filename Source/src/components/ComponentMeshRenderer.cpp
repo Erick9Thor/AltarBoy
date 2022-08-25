@@ -257,6 +257,20 @@ void Hachiko::ComponentMeshRenderer::Load(const YAML::Node& node)
     tint_color = node[RENDERER_TINT_COLOR].IsDefined() ? node[RENDERER_TINT_COLOR].as<float4>() : float4::one;
 }
 
+void Hachiko::ComponentMeshRenderer::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+{
+    UID resource_id = node[RENDERER_MESH_ID].as<UID>();
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+    resource_id = node[RENDERER_MATERIAL_ID].as<UID>();
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+}
+
 Hachiko::GameObject* GetRoot(Hachiko::GameObject* posible_root) 
 {
     if (!posible_root)

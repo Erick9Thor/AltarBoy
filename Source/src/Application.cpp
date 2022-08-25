@@ -129,8 +129,3 @@ void Hachiko::Application::RequestBrowser(const char* url)
 {
     ShellExecuteA(nullptr, "open", url, nullptr, nullptr, SW_SHOWNORMAL);
 }
-
-bool Hachiko::Application::IsLoading() const
-{
-    return loading || scene_manager->LoadingScene();
-}

@@ -497,6 +497,15 @@ void Hachiko::ComponentParticleSystem::Load(const YAML::Node& node)
     }
 }
 
+void Hachiko::ComponentParticleSystem::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+{
+    UID resource_id = node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].IsDefined() ? node[PARTICLES_TEXTURE][PARTICLES_TEXTURE_ID].as<UID>() : 0;
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+}
+
 const Hachiko::ParticleSystem::VariableTypeProperty& Hachiko::ComponentParticleSystem::GetParticlesLife() const
 {
     return start_life;

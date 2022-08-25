@@ -64,7 +64,7 @@ namespace Hachiko
 
         void OptionsMenu();
 
-        [[nodiscard]] bool LoadingScene() const
+        [[nodiscard]] bool IsLoadingScene() const
         {
             return loading_scene;
         }

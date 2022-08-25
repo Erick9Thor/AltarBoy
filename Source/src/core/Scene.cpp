@@ -281,6 +281,11 @@ void Hachiko::Scene::Load(const YAML::Node& node, bool meshes_only)
     loaded = true;
 }
 
+void Hachiko::Scene::GetResources(const YAML::Node& node, std::set<UID>& resources_id) 
+{
+    // TODO: 
+}
+
 void Hachiko::Scene::GetNavmeshData(std::vector<float>& scene_vertices, std::vector<int>& scene_triangles, std::vector<float>& scene_normals, AABB& scene_bounds)
 {
     root->Update();

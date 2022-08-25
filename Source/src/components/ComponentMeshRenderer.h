@@ -112,6 +112,7 @@ namespace Hachiko
 
         void Save(YAML::Node& node) const override;
         void Load(const YAML::Node& node) override;
+        void GetResources(const YAML::Node& node, std::set<UID>& resources_id) override;
 
         // BONES
         const std::vector<float4x4>& GetPalette() const

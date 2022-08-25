@@ -123,6 +123,15 @@ void Hachiko::ComponentText::Load(const YAML::Node& node)
     SetFontColor(font_color);
 }
 
+void Hachiko::ComponentText::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+{
+    UID resource_id = node[FONT_ID].IsDefined() ? node[FONT_ID].as<UID>() : 0;
+    if (resource_id)
+    {
+        resource_ids.insert(resource_id);
+    }
+}
+
 void Hachiko::ComponentText::SetText(const char* new_text)
 {
     if (label)

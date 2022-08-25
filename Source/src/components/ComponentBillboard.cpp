@@ -482,6 +482,14 @@ void Hachiko::ComponentBillboard::Load(const YAML::Node& node)
     blend_factor = node[BLEND_FACTOR].IsDefined() ? node[BLEND_FACTOR].as<float>() : blend_factor;
 }
 
+void Hachiko::ComponentBillboard::GetResources(const YAML::Node& node, std::set<UID>& resource_ids)
+{
+    if (node[BILLBOARD_TEXTURE_ID].IsDefined())
+    {
+        resource_ids.insert(node[BILLBOARD_TEXTURE_ID].as<UID>());
+    }
+}
+
 void Hachiko::ComponentBillboard::AddTexture()
 {
     const char* title = "Select billboard texture";
