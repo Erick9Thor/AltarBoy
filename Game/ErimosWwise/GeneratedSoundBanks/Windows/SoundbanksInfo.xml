@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="3355570962">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2518740367">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -411,7 +411,7 @@
 					<IncludedMemoryFiles>
 						<File Id="977051301" Language="SFX">
 							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
-							<Path>SFX\Player\Dash\Impact - Cease Fire_9FEA8B16.wem</Path>
+							<Path>SFX\Player\Dash\Impact - Cease Fire_C0474CF3.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -443,7 +443,7 @@
 					<IncludedMemoryFiles>
 						<File Id="562576200" Language="SFX">
 							<ShortName>Player\Ranged attack\Impact - Lightweight.wav</ShortName>
-							<Path>SFX\Player\Ranged attack\Impact - Lightweight_71F41519.wem</Path>
+							<Path>SFX\Player\Ranged attack\Impact - Lightweight_B1F59B76.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -515,13 +515,13 @@
 					<IncludedMemoryFiles>
 						<File Id="415761682" Language="SFX">
 							<ShortName>Player\Ranged attack\No ammo.wav</ShortName>
-							<Path>SFX\Player\Ranged attack\No ammo_F3617047.wem</Path>
+							<Path>SFX\Player\Ranged attack\No ammo_29610A08.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3965893716">
+		<SoundBank Id="3909959462" Language="SFX" Hash="3619065706">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -550,22 +550,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser">
-					<IncludedMemoryFiles>
-						<File Id="781381782" Language="SFX">
-							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
-							<Path>SFX\Laser\Noise - Swirly Spinner_86AE19BA.wem</Path>
-						</File>
-						<File Id="786404871" Language="SFX">
-							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
-							<Path>SFX\Laser\Sub - Sub Bees_AA994B59.wem</Path>
-						</File>
-						<File Id="985470147" Language="SFX">
-							<ShortName>Laser\Sub - Subtle Meanie.wav</ShortName>
-							<Path>SFX\Laser\Sub - Subtle Meanie_CAC3EAAE.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
+				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser"/>
 				<Event Id="4092857357" Name="Play_Laser_Hit" ObjectPath="\Events\Default Work Unit\Play_Laser_Hit">
 					<IncludedMemoryFiles>
 						<File Id="1053424550" Language="SFX">
