@@ -402,7 +402,7 @@
 				</SwitchGroup>
 			</SwitchGroups>
 		</SoundBank>
-		<SoundBank Id="3768541028" Language="SFX" Hash="2518740367">
+		<SoundBank Id="3768541028" Language="SFX" Hash="2730518902">
 			<ObjectPath>\SoundBanks\Default Work Unit\Attacks</ObjectPath>
 			<ShortName>Attacks</ShortName>
 			<Path>Attacks.bnk</Path>
@@ -411,7 +411,7 @@
 					<IncludedMemoryFiles>
 						<File Id="977051301" Language="SFX">
 							<ShortName>Player\Dash\Impact - Cease Fire.wav</ShortName>
-							<Path>SFX\Player\Dash\Impact - Cease Fire_C0474CF3.wem</Path>
+							<Path>SFX\Player\Dash\Impact - Cease Fire_04610725.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -521,7 +521,7 @@
 				</Event>
 			</IncludedEvents>
 		</SoundBank>
-		<SoundBank Id="3909959462" Language="SFX" Hash="3619065706">
+		<SoundBank Id="3909959462" Language="SFX" Hash="549727102">
 			<ObjectPath>\SoundBanks\Default Work Unit\Enviroment</ObjectPath>
 			<ShortName>Enviroment</ShortName>
 			<Path>Enviroment.bnk</Path>
@@ -550,7 +550,18 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser"/>
+				<Event Id="2270376495" Name="Play_Laser" ObjectPath="\Events\Default Work Unit\Play_Laser">
+					<IncludedMemoryFiles>
+						<File Id="781381782" Language="SFX">
+							<ShortName>Laser\Noise - Swirly Spinner.wav</ShortName>
+							<Path>SFX\Laser\Noise - Swirly Spinner_86AE19BA.wem</Path>
+						</File>
+						<File Id="786404871" Language="SFX">
+							<ShortName>Laser\Sub - Sub Bees.wav</ShortName>
+							<Path>SFX\Laser\Sub - Sub Bees_AA994B59.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
 				<Event Id="4092857357" Name="Play_Laser_Hit" ObjectPath="\Events\Default Work Unit\Play_Laser_Hit">
 					<IncludedMemoryFiles>
 						<File Id="1053424550" Language="SFX">
