@@ -192,12 +192,15 @@ void Hachiko::BatchManager::ShowDebugMenuForBatches(
 void Hachiko::BatchManager::DrawSingleBatch(GeometryBatch* geometry_batch, const Program* program, int segment) const 
 {
     // Update and bind batch
-    geometry_batch->UpdateCommands();
-    geometry_batch->UpdateBatch(segment);
+    if (geometry_batch->dirty_draw_components)
+    {
+        geometry_batch->UpdateCommands();
+        geometry_batch->UpdateBatch(segment);
+        geometry_batch->dirty_draw_components = false;
+    }
+
     geometry_batch->BindBatch(segment, program);
 
-    // Draw
-    glBindBuffer(GL_DRAW_INDIRECT_BUFFER, geometry_batch->indirect_buffer_id); // should not be necesary (bind it before)
     glMultiDrawElementsIndirect(GL_TRIANGLES, GL_UNSIGNED_INT, (GLvoid*)0, geometry_batch->GetCommandAmount(), 0);
     glBindVertexArray(0);
 
